@@ -4,6 +4,7 @@ import { DashboardComponent } from './component/protect-component/AdviserCompone
 import { LeftsidebarComponent } from './component/left-sidebar/leftsidebar/leftsidebar.component';
 import { SubscriptionComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/subscription.component';
 import { MisComponent } from './component/protect-component/AdviserComponent/backOffice/MIS/mis/mis.component';
+import { GayatriComponent } from './component/protect-component/AdviserComponent/gayatri/gayatri.component';
 
 
 const routes: Routes = [
@@ -34,6 +35,10 @@ const routes: Routes = [
       {
         path:'mis',
         component:MisComponent
+      },
+      {
+        path:'gayatri',
+        component:GayatriComponent
       }
       
      ]

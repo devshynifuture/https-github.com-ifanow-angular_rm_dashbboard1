@@ -44,7 +44,8 @@ import { MisComponent } from './component/protect-component/AdviserComponent/bac
 import { HttpService } from './http-service/http-service';
 import { DocumentsSubscriptionsComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/documents-subscriptions/documents-subscriptions.component';
 
-import { SlimLoadingBarService, SlimLoadingBarModule } from "ng2-slim-loading-bar";  
+import { SlimLoadingBarService, SlimLoadingBarModule } from "ng2-slim-loading-bar";
+import { GayatriComponent } from './component/protect-component/AdviserComponent/gayatri/gayatri.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,6 +84,7 @@ import { SlimLoadingBarService, SlimLoadingBarModule } from "ng2-slim-loading-ba
     ApplicantWiseComponent,
     MisComponent,
     DocumentsSubscriptionsComponent,
+    GayatriComponent,
   ],
   imports: [
     BrowserModule,
