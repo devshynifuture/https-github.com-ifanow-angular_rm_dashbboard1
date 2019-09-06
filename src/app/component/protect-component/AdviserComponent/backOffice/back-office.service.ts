@@ -52,6 +52,14 @@ export class BackOfficeService {
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data,10000)
   }
+  normalApi(data)
+  {
+     data ={
+       name:'gayatri',
+       email:'gayatri@gmail.com'
+     }
+    return this.http.get("http://dummy.restapiexample.com/api/v1/employees",data);
+  }
 
 
 

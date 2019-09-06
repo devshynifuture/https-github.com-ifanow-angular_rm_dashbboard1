@@ -26,8 +26,8 @@ export class PlansSettingsComponent implements OnInit {
       data: Fragmentdata,
       autoFocus:false,
       panelClass:'dialogBox',
-      //  position: { top: `30px`,
-      //  right: `40px`},
+       position: { top: `30px`,
+       right: `40px`},
       hasBackdrop: false,
     });
   

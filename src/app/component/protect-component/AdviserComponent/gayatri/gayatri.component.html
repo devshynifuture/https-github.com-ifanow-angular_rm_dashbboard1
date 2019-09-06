@@ -1,0 +1,36 @@
+<div id="ui-subscriptions">
+    <div class="p-40">
+        <div class="bg-white">
+           
+                <div class="row">
+                    <div class="col-md-12 pt-24 ">
+                   
+                          Email: <mat-form-field>
+                                <input matInput>
+
+                              </mat-form-field>
+                    </div>
+              
+                    <div class="col-md-12 pt-24">
+                        Pass :
+                        <mat-form-field>
+                            <input matInput [type]="hide ? 'password' : 'text'">
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                          </mat-form-field>
+                    </div>
+                   
+              
+                        
+               
+                        <button mat-raised-button color="primary" class="mt-20 ml-20" (click)="onSubmit(data)">Login</button>
+                
+            
+                </div>
+            </div>
+            </div>
+     
+        
+   
+
