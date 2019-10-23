@@ -1,8 +1,9 @@
-import {Component, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-add-fixed-fee',
@@ -17,6 +18,7 @@ export class AddFixedFeeComponent implements OnInit {
       data => this.getFeeFormData(data)
     );
   }
+
   isServiceValid;
   isCodeValid;
   isDescriptionValid;
@@ -25,8 +27,10 @@ export class AddFixedFeeComponent implements OnInit {
 
 
   fixedFeeData;
+  advisorId;
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.setValidation(false);
   }
 
@@ -90,7 +94,8 @@ export class AddFixedFeeComponent implements OnInit {
       return;
     } else {
       const obj = {
-        advisorId: 12345,
+        advisorId: this.advisorId,
+        // advisorId: 12345,
         description: this.fixedFeeData.controls.description.value,
         global: false,
         serviceCode: this.fixedFeeData.controls.code.value,

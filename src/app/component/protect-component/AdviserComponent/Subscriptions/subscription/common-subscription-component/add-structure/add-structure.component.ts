@@ -3,6 +3,7 @@ import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {EventEmitter} from 'events';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-add-structure',
@@ -23,9 +24,12 @@ export class AddStructureComponent implements OnInit {
   isPlanValid = false;
   isCodeValid = false;
   isDescValid = false;
+  advisorId;
+
   // planName = {maxLength: 20, placeholder: '', formControlName: 'planName', data: ''};
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
   }
 
   submitPlanData() {
@@ -38,7 +42,7 @@ export class AddStructureComponent implements OnInit {
 
 
   getSinglePlanData(data) {
-    this.editApiCall = data
+    this.editApiCall = data;
     this.planDataForm = this.fb.group({
       planName: [data.name, [Validators.required]],
       code: [data.code, [Validators.required]],
@@ -51,38 +55,39 @@ export class AddStructureComponent implements OnInit {
 
   addPlanData(state) {
     if (this.planDataForm.controls.planName.invalid) {
-      this.isPlanValid = true
+      this.isPlanValid = true;
       return;
     } else if (this.planDataForm.controls.code.invalid) {
-      this.isCodeValid = true
+      this.isCodeValid = true;
       return;
     } else if (this.planDataForm.controls.description.invalid) {
-      this.isDescValid = true
+      this.isDescValid = true;
       return;
     } else {
       if (this.editApiCall == '') {
-        let obj = {
-          "name": this.getFormControl().planName.value,
-          "description": this.getFormControl().description.value,
-          "advisorId": 12345,
-          "logoUrl": "url",
-          "isPublic": 1,
-          "isActive": 1,
-          "code": this.getFormControl().code.value
-        }
+        const obj = {
+          name: this.getFormControl().planName.value,
+          description: this.getFormControl().description.value,
+          // "advisorId": 12345,
+          advisorId: this.advisorId,
+          logoUrl: 'url',
+          isPublic: 1,
+          isActive: 1,
+          code: this.getFormControl().code.value
+        };
         this.subService.addSettingPlanOverviewData(obj).subscribe(
           data => this.addPlanDataResponse(data, obj, state)
-        )
+        );
       } else {
-        let obj = {
-          "name": this.getFormControl().planName.value,
-          "description": this.getFormControl().description.value,
-          "code": this.getFormControl().code.value,
-          "id": this.editApiCall.id
-        }
+        const obj = {
+          name: this.getFormControl().planName.value,
+          description: this.getFormControl().description.value,
+          code: this.getFormControl().code.value,
+          id: this.editApiCall.id
+        };
         this.subService.editPlanSettings(obj).subscribe(
           data => this.addPlanDataResponse(data, obj, state)
-        )
+        );
       }
 
     }
@@ -90,13 +95,13 @@ export class AddStructureComponent implements OnInit {
 
   addPlanDataResponse(data, obj, state) {
     obj.id = data;
-    console.log(obj)
-    this.subinject.pushUpperData(obj)
-    this.subinject.rightSliderData(state)
+    console.log(obj);
+    this.subinject.pushUpperData(obj);
+    this.subinject.rightSliderData(state);
   }
 
   closeNav(state) {
-    this.subinject.rightSliderData(state)
+    this.subinject.rightSliderData(state);
     this.planDataForm.reset();
     this.isPlanValid = false;
     this.isCodeValid = false;

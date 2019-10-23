@@ -1,10 +1,9 @@
-import {Component, OnInit, ElementRef} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import $ from 'jquery';
 import {AuthService} from 'src/app/auth-service/authService';
 import {EventService} from '../../../Data-service/event.service';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import {transition} from '@angular/animations';
 import {SubscriptionInject} from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {RouterOutlet} from "@angular/router";
 
 @Component({
   selector: 'app-leftsidebar',
@@ -30,8 +29,11 @@ export class LeftsidebarComponent implements OnInit {
 
   ngOnInit() {
     this.onResize();
-    this.userInfo = this.authService.getUserInfo();
-    console.log(this.userInfo);
+    this.userInfo = AuthService.getUserInfo();
+
+    // this.userInfo = this.authService.getUserInfo();
+    console.log('111124y9834719070912740912740912470127401470 userInfo', this.userInfo);
+    // console.log(this.authService.getAdvisorId());
   }
 
 

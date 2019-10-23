@@ -205,8 +205,8 @@ export class HttpService {
   changeBase64ToString(res) {
     const encodedata = res.payLoad;
     const datavalue = (Buffer.from(encodedata, 'base64').toString('ascii'));
-    console.log('datavalue: ', datavalue);
-    console.log('encodedata: ', encodedata);
+    // console.log('datavalue: ', datavalue);
+    // console.log('encodedata: ', encodedata);
 
     const responseData = JSON.parse(datavalue);
     return responseData;

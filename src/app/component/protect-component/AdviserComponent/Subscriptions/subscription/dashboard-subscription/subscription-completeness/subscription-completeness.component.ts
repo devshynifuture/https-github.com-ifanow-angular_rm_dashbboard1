@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {DashboardSubscriptionComponent} from '../dashboard-subscription.component';
 import {SubscriptionService} from '../../../subscription.service';
 import {SubscriptionComponent} from '../../subscription.component';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatDialog} from '@angular/material';
 import {SubscriptionPopupComponent} from '../../common-subscription-component/subscription-popup/subscription-popup.component';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-subscription-completeness',
@@ -20,7 +20,8 @@ export class SubscriptionCompletenessComponent implements OnInit {
               public eventService: EventService) {
   }
 
-  advisorId = 2727;
+  // advisorId = 2727;
+  advisorId;
   dataObj;
 //   dataObj=[{'completed':'false','data':'Create Plans, Services & Documents','innerData':'Adding these will set up the foundation for your RIA practice','tab':6}
 // ,{'completed':'false','data':'Set up your Biller profile','innerData':'These details show up in the invoices your clients will receive.','tab':6},
@@ -29,6 +30,7 @@ export class SubscriptionCompletenessComponent implements OnInit {
 // {'completed':'false','data':'Send Document for eSign','innerData':'Email documents to client with one click. Client can review them and proceed for e-singing using Aadhaar based eSign.','tab':5},
 // {'completed':'false','data':'Record Payment','innerData':'Email documents to client with one click. Client can review them and proceed for e-singing using Aadhaar based eSign.','tab':4}]
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.getSubscriptionStagesRecord();
     this.getDashboardResponse();
     this.showLoader = true;
@@ -36,7 +38,8 @@ export class SubscriptionCompletenessComponent implements OnInit {
 
   getSubscriptionStagesRecord() {
     const obj = {
-      advisorId: 2735,
+      // advisorId: 2735,
+      advisorId: this.advisorId,
       amountReceived: 1000,
       changesIfAny: 'nothing',
       paymentDate: '2001-01-01',

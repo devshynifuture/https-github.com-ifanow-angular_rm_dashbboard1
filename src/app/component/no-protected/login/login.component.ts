@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormGroup, FormControl, Validators, FormBuilder} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from 'src/app/auth-service/authService';
 import {EventService} from 'src/app/Data-service/event.service';
@@ -68,13 +68,15 @@ export class LoginComponent implements OnInit {
         data => {
           if (data) {
             console.log('data: ', data);
-            const jsonData = JSON.parse(data);
-            this.authService.setToken('12333nhsdhdh1233');
-            jsonData.advisorId = 2808;
-            jsonData.clientId = 2978;
-            this.router.navigate(['/admin/subscription']);
+            const jsonData = {
+                advisorId: 2808,
+                clientId: 2978,
+                authToken: data,
+                imgUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'
+              }
+            ;
+            this.authService.setToken(data);
 
-            jsonData.imgUrl = 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png';
             this.authService.setUserInfo(jsonData);
             // this.authService.setToken(loginData.payLoad);
             this.eventService.openSnackBar('Login SuccessFully', 'dismiss');

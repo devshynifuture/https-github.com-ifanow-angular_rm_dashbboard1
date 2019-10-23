@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-overview-blank-quotation',
@@ -10,46 +11,57 @@ import { SubscriptionService } from '../../../subscription.service';
 })
 export class OverviewBlankQuotationComponent implements OnInit {
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,private subService:SubscriptionService) { }
+  advisorId;
+
   @Input() blankOverview: any;
   blankDocumentProperties;
   selectedOption;
+
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService) {
+  }
+
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.createForm();
   }
+
   createForm() {
     this.blankDocumentProperties = this.fb.group({
-      docType: [""],
-      docName: [""],
+      docType: [''],
+      docName: [''],
       docAvailability: [],
       selectPlan: []
-    })
+    });
   }
+
   Close(state) {
     this.subInjectService.rightSliderData(state);
   }
+
   selectDocument(value) {
     this.selectedOption = value;
     this.blankDocumentProperties.patchValue({
-      "docAvailability": value
-    })
+      docAvailability: value
+    });
   }
-  saveDocuments() {
-    let obj =
-    {
-      "advisorId": 55,
-      "name": this.blankDocumentProperties.controls.docName.value,
-      "documentTypeId":parseInt(this.blankDocumentProperties.controls.docType.value),
-      "docText": "docText",
-      "description": this.blankDocumentProperties.controls.docName.value,
-      "public": true,
-      "quotation": true,
-      "mappedType": 1,
-      "getMappingId": 5
 
-    }
+  saveDocuments() {
+    const obj = {
+      advisorId: this.advisorId,
+
+      // "advisorId": 55,
+      name: this.blankDocumentProperties.controls.docName.value,
+      documentTypeId: parseInt(this.blankDocumentProperties.controls.docType.value),
+      docText: 'docText',
+      description: this.blankDocumentProperties.controls.docName.value,
+      public: true,
+      quotation: true,
+      mappedType: 1,
+      getMappingId: 5
+
+    };
     this.subService.addSettingDocument(obj).subscribe(
-      data =>console.log(data)
-    )
+      data => console.log(data)
+    );
   }
 }

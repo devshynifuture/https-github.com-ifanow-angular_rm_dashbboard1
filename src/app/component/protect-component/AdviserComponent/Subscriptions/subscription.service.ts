@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {HttpService} from 'src/app/http-service/http-service';
 import {apiConfig} from 'src/app/config/main-config';
 import {appConfig} from 'src/app/config/component-config';
+
 // import {THIS_EXPR} from '@angular/compiler/src/output/output_ast';
 
 class CacheItem<T> {
@@ -47,14 +48,14 @@ export class SubscriptionService {
 
   savePreferenceInvoiceQuotationsSubscription(data) {
     // TODO hardcoded right now for compilation.
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('id', data.id).set('nextNumber', data.nextNumber)
-      .set('prefix', data.prefix).set('type', data.type);
-    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_PREFERENCE_INVOICE_QUOTATIONS_SUBSCRIPTION, {});
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('id', data.id).set('nextNumber', data.nextNumber)
+    //   .set('prefix', data.prefix).set('type', data.type);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_PREFERENCE_INVOICE_QUOTATIONS_SUBSCRIPTION, data);
 
   }
 
   getSubscriptionCompleteStages(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('type', data.type);
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('type', data.type);
     return this.http.post(apiConfig.MAIN_URL + appConfig.DASHBOARD_LETS_BEGIN_SUBSCRIPTION, data);
   }
 
@@ -148,7 +149,7 @@ export class SubscriptionService {
 
   docSentSignedCount(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId);
-    return this.http.get(apiConfig.MAIN_URL+ appConfig.GET_DOCUMENT_COUNT_SIGNED, httpParams);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_COUNT_SIGNED, httpParams);
   }
 
   clientWithSubcribe(data) {
@@ -214,7 +215,9 @@ export class SubscriptionService {
   }
 
   getSubSummary(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('order', data.order).set('flag', data.flag).set('dateType', data.dateType).set('clientId', data.clientId).set('limit', data.limit).set('offset', data.offset);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('order', data.order)
+      .set('flag', data.flag).set('dateType', data.dateType).set('clientId', data.clientId)
+      .set('limit', data.limit).set('offset', data.offset);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUB_SUMMARY, httpParams);
   }
 
@@ -222,74 +225,86 @@ export class SubscriptionService {
     const httpParams = new HttpParams().set('id', data.id).set('module', data.module);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PLAN_INVOICE, httpParams);
   }
-  editPlanSettings(data)
-  {
-    return this.http.put(apiConfig.MAIN_URL+appConfig.EDIT_PLAN_SETTING,data)
+
+  editPlanSettings(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_PLAN_SETTING, data);
   }
-  getModuleServiceData(data)
-  {
-    const httpParams=new HttpParams().set('serviceId',data.serviceId)
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SERVICE_MODULE,httpParams)
+
+  getModuleServiceData(data) {
+    const httpParams = new HttpParams().set('serviceId', data.serviceId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SERVICE_MODULE, httpParams);
   }
-  mapModuleToplanData(data)
-  {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.MAP_MODULE_TO_PLANS,data)
+
+  mapModuleToplanData(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.MAP_MODULE_TO_PLANS, data);
   }
-  getBillerProfile(data){
-    const httpParams=new HttpParams().set('advisorId',data.advisorId).set('subId', data.subId)
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BILLER_PROFILE,httpParams)
+
+  getBillerProfile(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('subId', data.subId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BILLER_PROFILE, httpParams);
   }
-  getPayeerProfile(data){
-    const httpParams=new HttpParams().set('clientId', data.clientId).set('subId', data.subId)
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PAYEE_PROFILE,httpParams)
+
+  getPayeerProfile(data) {
+    const httpParams = new HttpParams().set('clientId', data.clientId).set('subId', data.subId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PAYEE_PROFILE, httpParams);
   }
-  mapDocumentToService(data)
-  {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.MAP_DOCUMENTS_TO_SERVICE,data)
+
+  mapDocumentToService(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.MAP_DOCUMENTS_TO_SERVICE, data);
   }
-  getDataForCreateService(data)
-  {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DATA_FOR_CREATE_SERVICE,data);
+
+  getDataForCreateService(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DATA_FOR_CREATE_SERVICE, data);
   }
-  editModifyFeeStructure(data)
-  {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_FEE_MODIFY_STRUCTURE,data)
+
+  editModifyFeeStructure(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_FEE_MODIFY_STRUCTURE, data);
   }
-  getSubscriptionStartData(data)
-  {
-    let httpParams=new HttpParams().set('advisorId',data.advisorId).set('clientId',data.clientId).set('subId',data.subId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBSCRIPTION_START_DATA,httpParams)
+
+  getSubscriptionStartData(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('subId', data.subId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBSCRIPTION_START_DATA, httpParams);
   }
-  updateInvoiceInfo(data){
-    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_INVOICE,data)
+
+  updateInvoiceInfo(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_INVOICE, data);
   }
-  getServicesListForInvoice(data){
-    let httpParams=new HttpParams().set('advisorId',data.advisorId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SERVICES_LIST,httpParams) 
+
+  getServicesListForInvoice(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SERVICES_LIST, httpParams);
   }
-  addInvoice(data){
-    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_INVOICE,data)
+
+  addInvoice(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_INVOICE, data);
   }
-  setAsPrimary(data){
-    return this.http.put(apiConfig.MAIN_URL + appConfig.SET_AS_PRIMARY,data)
+
+  setAsPrimary(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.SET_AS_PRIMARY, data);
   }
-  getDocumentData(data){
-    let httpParams=new HttpParams().set('advisorId',data.advisorId).set('clientId',data.clientId).set('flag',data.flag);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_GET,httpParams) 
+
+  getDocumentData(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('flag', data.flag);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_GET, httpParams);
   }
-  updateDocumentData(data){
-    return this.http.put(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_UPDATE,data) 
+
+  updateDocumentData(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_UPDATE, data);
   }
-  updateQuotationData(data){
-    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_SUBSCRIPTION_QUOTATIONS,data) 
+
+  updateQuotationData(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_SUBSCRIPTION_QUOTATIONS, data);
   }
-  getEmailTemplate(data){
-    let httpParams=new HttpParams().set('advisorId',data.advisorId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_TEMPLATE,httpParams) 
+
+  getEmailTemplate(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_TEMPLATE, httpParams);
   }
-  updateEmailTemplate(data){
-    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_EMAIL_TEMPLATE,data) 
+
+  updateEmailTemplate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_EMAIL_TEMPLATE, data);
   }
+
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
   }

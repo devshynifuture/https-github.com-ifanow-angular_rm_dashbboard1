@@ -1,10 +1,11 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material';
 import {DeleteSubscriptionComponent} from '../delete-subscription/delete-subscription.component';
 import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 export interface PeriodicElement {
   service: string;
@@ -41,13 +42,15 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
   displayedColumns: string[] = ['service', 'amt', 'type', 'subs', 'status', 'date', 'bdate', 'ndate', 'mode', 'icons'];
 
   @Input() upperData;
+  advisorId;
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.getSummaryDataClient();
     console.log(this.upperData);
   }
 
-  openPlanSlider(value,state,data) {
+  openPlanSlider(value, state, data) {
     this.eventService.sliderData(value);
     /*TODO Removed state param and passed value*/
     this.subInjectService.rightSliderData(state);
@@ -59,7 +62,8 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
     const obj = {
       // 'id':2735, //pass here advisor id for Invoice advisor
       // 'module':1,
-      advisorId: 12345,
+      // advisorId: 12345,
+      advisorId: this.advisorId,
       clientId: this.upperData.id,
       flag: 4,
       dateType: 0,

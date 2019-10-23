@@ -1,8 +1,8 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
-import {SelectionModel} from '@angular/cdk/collections';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -14,6 +14,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
   billerProfileForm: any;
   selected = 0;
+  advisorId;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService) {
     this.subInjectService.singleProfileData.subscribe(
@@ -24,39 +25,40 @@ export class BillerProfileAdvisorComponent implements OnInit {
   @Input() Selected;
 
   ngOnInit() {
-
+    this.advisorId = AuthService.getAdvisorId();
   }
+
   getFormControl() {
     return this.billerProfileForm.controls;
   }
-  
+
   getSingleBillerProfileData(data) {
-    if(data == ""){
-    data = {}
+    if (data == "") {
+      data = {}
     }
     this.billerProfileForm = this.fb.group({
       profileDetailsForm: this.fb.group({
-        gstinNum: [(data.gstin == undefined)?"":data.gstin],
-        panNum: [(data.pan == undefined)?"":data.pan],
-        Address: [(data.billerAddress == undefined)?"":data.billerAddress],
-        state: [(data.state == undefined)?"":data.state],
-        zipCode: [(data.zipCode == undefined)?"":data.zipCode],
-        country: [(data.country == undefined)?"":data.country],
-        city: [(data.city == undefined)?"":data.city]
+        gstinNum: [(data.gstin == undefined) ? "" : data.gstin],
+        panNum: [(data.pan == undefined) ? "" : data.pan],
+        Address: [(data.billerAddress == undefined) ? "" : data.billerAddress],
+        state: [(data.state == undefined) ? "" : data.state],
+        zipCode: [(data.zipCode == undefined) ? "" : data.zipCode],
+        country: [(data.country == undefined) ? "" : data.country],
+        city: [(data.city == undefined) ? "" : data.city]
       }),
       bankDetailsForm: this.fb.group({
-        nameOnBank: [(data == undefined)?"":data.nameAsPerBank],
-        bankName: [(data == undefined)?"":data.bankName],
-        acNo: [(data == undefined)?"":data.acNumber],
-        ifscCode: [(data == undefined)?"":data.ifscCode],
-        address: [(data == undefined)?"":data.bankCity],
-        state: [(data == undefined)?"":data.state],
-        pincode: [(data == undefined)?"":data.bankZipCode],
-        country: [(data == undefined)?"":data.country]
+        nameOnBank: [(data == undefined) ? "" : data.nameAsPerBank],
+        bankName: [(data == undefined) ? "" : data.bankName],
+        acNo: [(data == undefined) ? "" : data.acNumber],
+        ifscCode: [(data == undefined) ? "" : data.ifscCode],
+        address: [(data == undefined) ? "" : data.bankCity],
+        state: [(data == undefined) ? "" : data.state],
+        pincode: [(data == undefined) ? "" : data.bankZipCode],
+        country: [(data == undefined) ? "" : data.country]
       }),
       MiscellaneousData: this.fb.group({
-        footnote: [(data == undefined)?"":data.footnote],
-        terms: [(data == undefined)?"":data.terms]
+        footnote: [(data == undefined) ? "" : data.footnote],
+        terms: [(data == undefined) ? "" : data.terms]
       })
     });
     this.getFormControl().gstinNum.maxLength = 15;
@@ -69,7 +71,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.getFormControl().address.maxLength = 150;
     this.getFormControl().footnote.maxLength = 150;
     this.getFormControl().terms.maxLength = 150;
-    
+
   }
 
   Close(value) {
@@ -89,7 +91,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
   submitBillerForm() {
     const obj = {
       acNumber: this.billerProfileForm.controls.bankDetailsForm.controls.acNo.value,
-      advisorId: 2735,
+      advisorId: this.advisorId,
+      // advisorId: 2735,
       bankCity: this.billerProfileForm.controls.bankDetailsForm.controls.address.value,
       bankCountry: this.billerProfileForm.controls.bankDetailsForm.controls.country.value,
       bankName: this.billerProfileForm.controls.bankDetailsForm.controls.bankName.value,
