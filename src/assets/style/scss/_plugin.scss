@@ -6,13 +6,28 @@
     }
     .fr-wrapper{
         z-index: 0;
+        height: 570px;
     }
     .fr-wrapper.show-placeholder .fr-placeholder{
         height: 615px;
         margin-top: 8px;
     }
-    .fr-toolbar.fr-top{
-        border-radius: 0px !important;
-        border: 1px solid #ddd !important;
-    }
+   
+}
+.fr-toolbar.fr-top{
+    border-radius: 0px !important;
+    border: 1px solid #ddd !important;
+    top: 0px;
+}
+.second-toolbar{
+    display: none;
+}
+.fr-box.fr-basic .fr-wrapper{
+ border-bottom-color: #cccccc !important;
+ width: 770px;
+ min-height: 500px;
+ margin-bottom: 60px;
+}
+.fr-toolbar.fr-top{
+    width: 770px; 
 }
