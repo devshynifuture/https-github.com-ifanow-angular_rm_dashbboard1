@@ -12,7 +12,7 @@ export class AssetsComponent implements OnInit {
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   dataSource = ELEMENT_DATA;
-  displayedColumns1 = ['data', 'amts'];
+  // displayedColumns1 = ['data', 'amts'];
   datasource1 = ELEMENT_DATA1;
   displayedColumns2 = ['sname', 'amts', 'cvalue', 'profit', 'abs', 'xirr', 'pay', 'outs', 'unit', 'date', 'sip', 'icons'];
   datasource2 = ELEMENT_DATA2;
