@@ -52,7 +52,7 @@ export class HttpService {
       .map((res: any) => {
         if (res.status === 200 || res.status === 201) {
           const resData = this.changeBase64ToString(res);
-          console.log('resData: ', resData);
+          console.log('resData: decoded ', resData);
           return resData;
         } else {
 
@@ -205,6 +205,9 @@ export class HttpService {
   changeBase64ToString(res) {
     const encodedata = res.payLoad;
     const datavalue = (Buffer.from(encodedata, 'base64').toString('ascii'));
+    console.log('datavalue: ', datavalue);
+    console.log('encodedata: ', encodedata);
+
     const responseData = JSON.parse(datavalue);
     return responseData;
   }

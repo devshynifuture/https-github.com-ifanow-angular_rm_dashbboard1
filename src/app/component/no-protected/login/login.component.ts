@@ -72,6 +72,8 @@ export class LoginComponent implements OnInit {
             this.authService.setToken('12333nhsdhdh1233');
             jsonData.advisorId = 2808;
             jsonData.clientId = 2978;
+            this.router.navigate(['/admin/subscription']);
+
             jsonData.imgUrl = 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png';
             this.authService.setUserInfo(jsonData);
             // this.authService.setToken(loginData.payLoad);
