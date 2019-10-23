@@ -2,6 +2,7 @@ import {Component, OnInit, Inject, Input} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {SubscriptionService} from '../../AdviserComponent/Subscriptions/subscription.service';
 import {UpperSliderComponent} from '../../AdviserComponent/Subscriptions/subscription/common-subscription-component/upper-slider/upper-slider.component';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -19,10 +20,12 @@ export class ConfirmDialogComponent implements OnInit {
   public positiveMethod: Function;
   @Input()
   public negativeMethod: Function;
+  dataToshow: any;
 
   constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public dialogData: any, private subscription: SubscriptionService) {
-  }
+              @Inject(MAT_DIALOG_DATA) public dialogData: any, private subscription: SubscriptionService,public eventService:EventService) {
+              this.dataToshow=dialogData.dataToShow;
+              }
 
   ngOnInit() {
     console.log(this.dialogData);
@@ -32,6 +35,7 @@ export class ConfirmDialogComponent implements OnInit {
     this.btn1NoData = this.dialogData.btnNo;
     this.btn2YesData = this.dialogData.btnYes;
     this.data = this.dialogData.data;
+    
   }
 
   clickButton2() {
@@ -42,18 +46,20 @@ export class ConfirmDialogComponent implements OnInit {
 
     }
   }
-
+  dialogClose() {
+    this.dialogRef.close();
+  }
   deleteSubscription() {
     let obj={
       advisorId:12345,
-      subscriptionId:18
+      id:18
     }
-    if (this.dialogData.positiveMethod) {
-      this.dialogData.positiveMethod();
-    } else {
-      console.log('positive not defined 11111111111111111111111111111111111111111111');
+    // if (this.dialogData.positiveMethod) {
+    //   this.dialogData.positiveMethod();
+    // } else {
+    //   console.log('positive not defined 11111111111111111111111111111111111111111111');
 
-    }
+    // }
     if (this.dialogData.data == 'SUBSCRIPTION') {
       this.subscription.deleteSubscriptionData(obj).subscribe(
         data => this.deletedData(data)
@@ -71,6 +77,9 @@ export class ConfirmDialogComponent implements OnInit {
   }
 
   deletedData(data) {
-    // this.dialogUppRef.close();
+    if(data == true){
+      this.eventService.openSnackBar("Deleted successfully!","dismiss")
+      this.dialogClose();
+    }
   }
 }

@@ -12,8 +12,9 @@ import { PreferenceEmailInvoiceComponent } from '../../common-subscription-compo
   styleUrls: ['./preferences-settings.component.scss']
 })
 export class PreferencesSettingsComponent implements OnInit {
+  storeData: any;
 
-  constructor(private fb: FormBuilder, public dialog: MatDialog, private subscription: SubscriptionService, public subInjectService: SubscriptionInject, private eventService: EventService) { }
+  constructor(public subService:SubscriptionService,private fb: FormBuilder, public dialog: MatDialog, private subscription: SubscriptionService, public subInjectService: SubscriptionInject, private eventService: EventService) { }
   viewMode = 'tab1';
   advisorId = 2735;
   prefixData;
@@ -24,6 +25,21 @@ export class PreferencesSettingsComponent implements OnInit {
   ngOnInit() {
     this.viewMode = "tab1";
     this.getProfileBillerData();
+    this.getTemplate();
+  }
+  getTemplate()
+  {
+    let obj={
+      'advisorId':2727
+    }
+    this.subService.getEmailTemplate(obj).subscribe(
+      data => this.getTemplateDate(data)
+    );
+  }
+  getTemplateDate(data)
+  {
+    console.log(data);
+    this.storeData=data;
   }
   getProfileBillerData() {
     this.subscription.getPreferenceBillerProfile(this.advisorId).subscribe(
