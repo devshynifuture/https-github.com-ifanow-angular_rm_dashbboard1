@@ -51,7 +51,7 @@
       <mat-sidenav #sidenav mode="side" opened role="navigation">
         <mat-nav-list id="d" class="width-230 pt-0">
           <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0">
-            <img src="{{userInfo}}" class="w-100">
+            <img src="{{userInfo.imgUrl}}" class="w-100">
 
           </mat-toolbar>
           <div *ngIf="showTabs" class="pt-16">
