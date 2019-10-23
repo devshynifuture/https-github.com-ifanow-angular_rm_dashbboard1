@@ -18,34 +18,33 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
     console.log('ModifyFeeDialogComponent constructor: ', this.fragmentData);
     this.storeData=this.fragmentData.Flag;
   }
+
   mailForm = new FormGroup({
     mail_body: new FormControl(''),
 
   });
+
   ngOnInit() {
     }
 
 // Begin ControlValueAccesor methods.
-onChange = (_) => {
-}
-onTouched = () => {
-}
+  onChange = (_) => {
+  }
+  onTouched = () => {
+  }
 
 // Form model content changed.
-writeValue(content: any): void {
-  this.model = content;
-}
+  writeValue(content: any): void {
+    this.model = content;
+  }
 
-registerOnChange(fn: (_: any) => void): void {
-  this.onChange = fn;
-}
+  registerOnChange(fn: (_: any) => void): void {
+    this.onChange = fn;
+  }
 
-registerOnTouched(fn: () => void): void {
-  this.onTouched = fn;
-}
-  // dialogClose() {
-  //   this.eventService.changeUpperSliderState({state: 'close'});
-  // }
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
 
   dialogClose() {
     this.dialogRef.close();

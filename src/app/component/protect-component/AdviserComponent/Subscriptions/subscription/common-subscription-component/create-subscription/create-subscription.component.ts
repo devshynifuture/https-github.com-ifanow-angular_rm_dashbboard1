@@ -60,7 +60,7 @@ export class CreateSubscriptionComponent implements OnInit {
     console.log(this.feeCollectionMode);
   }
 
-  goForward(stepper: MatStepper) {
+  goForward(/*stepper: MatStepper*/) {
     this.stepper.next();
   }
 

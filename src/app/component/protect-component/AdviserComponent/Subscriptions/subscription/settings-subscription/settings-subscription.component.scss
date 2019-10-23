@@ -1,6 +1,9 @@
-::ng-deep .mat-checkbox-checked .mat-checkbox-background, .mat-checkbox-indeterminate .mat-checkbox-background {
-    background-color: #02B875 !important;
-}
-::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
-    background-color: #02B875 !important;
+// ::ng-deep .mat-checkbox-checked .mat-checkbox-background, .mat-checkbox-indeterminate .mat-checkbox-background {
+//     background-color: #02B875 !important;
+// }
+// ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+//     background-color: #02B875 !important;
+// }
+.example-card {
+    border: 1px solid rgba(0, 0, 0, 0.12);
 }

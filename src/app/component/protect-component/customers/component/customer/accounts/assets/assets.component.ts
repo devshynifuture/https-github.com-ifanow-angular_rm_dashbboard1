@@ -12,7 +12,7 @@ export class AssetsComponent implements OnInit {
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   dataSource = ELEMENT_DATA;
-  displayedColumns1 = ['data', 'amts'];
+  // displayedColumns1 = ['data', 'amts'];
   datasource1 = ELEMENT_DATA1;
   displayedColumns2 = ['sname', 'amts', 'cvalue', 'profit', 'abs', 'xirr', 'pay', 'outs', 'unit', 'date', 'sip', 'icons'];
   datasource2 = ELEMENT_DATA2;
@@ -24,6 +24,15 @@ export class AssetsComponent implements OnInit {
   datasource5 = ELEMENT_DATA5;
   displayedColumns6 = ['no', 'owner', 'cvalue', 'camt', 'amt','cdate','rate','mvalue','tenure','type','desc','status','icons'];
   datasource6 = ELEMENT_DATA6;
+  displayedColumns7 = ['no', 'owner', 'type', 'amt','rate','bal','account','bank','desc','status','icons'];
+  datasource7 = ELEMENT_DATA7;
+  displayedColumns8 = ['no', 'owner', 'cash','bal','desc','status','icons'];
+  datasource8 = ELEMENT_DATA8;
+  displayedColumns9 = ['no', 'owner', 'grams','car','price','mvalue','pvalue','desc','status','icons'];
+  datasource9 = ELEMENT_DATA9;
+  displayedColumns10 = ['no', 'owner','cvalue','emp','empc','rate','bal','bacla','year','desc','status','icons'];
+  datasource10 = ELEMENT_DATA10;
+  
   viewMode;
   ngOnInit() {
     this.viewMode="tab1"
@@ -283,4 +292,124 @@ desc:"ICICI FD",status:"LIVE"},
   desc:"",status:""},
  
 
+];
+export interface PeriodicElement7 {
+  no: string;
+  owner: string;
+  type:string;
+  amt:string;
+  rate:string;
+  bal:string;
+  account:string;
+  bank:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA7: PeriodicElement7[] = [
+  {no: '1.', owner: 'Rahul Jain',
+  type:'Savings',amt:"08/02/2019",rate:'8.40%',bal:"1,00,000",account:"980787870909",bank:"ICICI",
+ desc:"ICICI FD",status:"MATURED"},
+ {no: '2.', owner: 'Shilpa Jain',
+ type:'Current',amt:"08/02/2019",rate:'8.60%',bal:"50,000",account:"77676767622",bank:"Axis",
+  desc:"Axis bank FD",status:"LIVE"},
+  {no: '', owner: 'Total',
+  type:'',amt:"",rate:'',bal:"1,50,000",account:"",bank:"",
+  desc:"",status:""},
+ 
+
+];
+export interface PeriodicElement8 {
+  no: string;
+  owner: string;
+  cash:string;
+  bal:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA8: PeriodicElement8[] = [
+  {no: '1.', owner: 'Rahul Jain'
+ ,cash:"94,925",bal:"09/02/2019",
+ desc:"ICICI FD",status:"MATURED"},
+ {no: '2.', owner: 'Shilpa Jain'
+ ,cash:"94,925",bal:"09/02/2019",
+ desc:"Axis bank FD",status:"LIVE"},
+ {no: '', owner: 'Total'
+ ,cash:"1,28,925",bal:"",
+ desc:"",status:""},
+ 
+
+];
+
+export interface PeriodicElement9 {
+  no: string;
+  owner: string;
+  grams:string;
+  car:string;
+  price:string;
+  mvalue:string;
+  pvalue:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA9: PeriodicElement9[] = [
+  {no: '1.', owner: 'Rahul Jain'
+ ,grams:"50 tolas",car:"24",price:"32,000(as on 20/08/2019)",
+ mvalue:"60,000",pvalue:"60,000",desc:"ICICI FD",status:"MATURED"},
+ {no: '2.', owner: 'Rahul Jain'
+ ,grams:"25 tolas",car:"24",price:"32,000(as on 20/08/2019)",
+ mvalue:"60,000",pvalue:"60,000",desc:"ICICI FD",status:"LIVE"},
+ {no: '', owner: 'Total'
+ ,grams:"",car:"",price:"",
+ mvalue:"1,28,925",pvalue:"1,20,000",desc:"",status:""},
+
+];
+export interface PeriodicElement10 {
+  no: string;
+  owner: string;
+  type:string;
+  mvalue:string;
+  pvalue:string;
+  pur:string;
+  rate:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA10: PeriodicElement10[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,type:"Cumulative", mvalue:"60,000",pvalue:"1,00,000",pur:"18/09/2021",rate:"8.40%",desc:"ICICI FD",status:"MATURED"},
+  
+  {no: '2.', owner: 'Shilpa Jain'
+  ,type:"Cumulative", mvalue:"60,000",pvalue:"1,00,000",pur:"18/09/2021",rate:"8.40%",desc:"ICICI FD",status:"LIVE"},
+  {no: '', owner: 'Total'
+  ,type:"", mvalue:"1,20,000",pvalue:"1,50,000",pur:"",rate:"",desc:"",status:""},
+
+];
+
+export interface PeriodicElement11 {
+  no: string;
+  owner: string;
+  cvalue:string;
+  emp:string;
+  empc:string;
+  rate:string;
+  bal:string;
+  bacla:string;
+  year:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA11: PeriodicElement11[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,cvalue:"94,925", emp:"94,925",empc:"94,925",rate:"8.40%",bal:"60,000",bacla:"18/09/2021",year:"2021",desc:"ICICI FD",status:"MATURED"},
+  {no: '2.', owner: 'Shilpa Jain'
+  ,cvalue:"94,925", emp:"94,925",empc:"94,925",rate:"8.40%",bal:"60,000",bacla:"18/09/2021",year:"2021",desc:"ICICI FD",status:"LIVE"},
+  {no: '', owner: 'Total'
+  ,cvalue:"1,28,925", emp:"1,28,925",empc:"1,28,925",rate:"",bal:"1,20,000",bacla:"",year:"",desc:"",status:""},
 ];
