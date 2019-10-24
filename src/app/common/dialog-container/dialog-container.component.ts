@@ -88,9 +88,9 @@ export class DialogContainerComponent implements OnInit {
         this.upperSliderData = data;
       }
     );
-    this.subinject.singleProfileData.subscribe(
-      data =>this.getInvoiceHistoryData(data)
-    );
+    // this.subinject.singleProfileData.subscribe(
+    //   data =>this.getInvoiceHistoryData(data)
+    // );
     // this.eventService.changeUpperSliderState()
   }
 

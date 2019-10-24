@@ -34,6 +34,23 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   advisorId;
   dataSource;
   DataToSend;
+  chips = [
+    'LIVE',
+    'FUTURE',
+    'NOT STARTED',
+    'CANCELLED'
+   ]
+   dateChips=[
+     'Activation date',
+     'Last billing date',
+     'Next billing date'
+   ]
+   filterStatus = []
+   filterDate = []
+   statusIdList = []
+  sendData: any[];
+  senddataTo: any;
+  showFilter = false
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
               private eventService: EventService, private subService: SubscriptionService) {
@@ -117,7 +134,75 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     });
 
   }
+  showFilters(showFilter){
+    if(showFilter == true){
+      this.showFilter = true
+    }else{
+      this.showFilter = false
+    }
+    
+  }
+  addFilters(addFilters){
+    console.log('addFilters',addFilters)
+    if(addFilters == 'LIVE'){
+      this.senddataTo = 2
+    }else if(addFilters == 'NOT STARTED'){
+       this.senddataTo = 1
+    }else if(addFilters == 'FUTURE'){
+        this.senddataTo = 3
+    }else{
+        this.senddataTo = 4
+    }
+    console.log(this.senddataTo)
+    this.filterStatus.push(this.senddataTo)
+    this.sendData = this.filterStatus
+    // this.filterStatus.forEach(element => {
+    //   if(element == 2){
+    //     element = 'LIVE'
+    //   }else if(element == 1){
+    //      element = 'NOT STARTED'
+    //   }else if(element == 3){
+    //       element = 'FUTURE'
+    //   }else{
+    //       element = 'CANCELLED'
+    //   }
+    // });
+    // console.log('this.filterStatus',this.filterStatus)
+    this.callFilter()
+  }
+  filterSubscriptionRes(data){
+    console.log('filterSubscriptionRes',data)
+  }
+  addFiltersDate(dateFilter){
+    console.log('addFilters',dateFilter)
+    this.filterDate.push(dateFilter)
+  }
+  removeDate(item){
+    this.filterDate.splice(item, 1);
+  }
+  remove(item){
+    this.filterStatus.splice(item, 1);
+    this.callFilter()
 
+  }
+  callFilter(){
+    this.statusIdList =  this.sendData
+    let obj = {
+      advisorId : this.advisorId,
+      limit: 10,
+      offset: 0,
+      subscription: {  
+        dateType: 0,
+        statusIdList : this.statusIdList,
+        fromDate:"2000-01-01",
+        toDate:"3000-01-01",
+    }  
+    }
+    console.log('this.statusIdList',this.statusIdList)
+    this.subService.filterSubscription(obj).subscribe(
+      data => this.filterSubscriptionRes(data)
+    );
+  }
   delete(data) {
     const Fragmentdata = {
       Flag: data,

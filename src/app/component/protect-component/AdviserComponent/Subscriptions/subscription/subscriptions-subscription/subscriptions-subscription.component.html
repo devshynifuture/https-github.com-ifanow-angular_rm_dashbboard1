@@ -8,43 +8,41 @@
                 <i class="material-icons mr-12 icon-light c-p v-sub">
                     search
                 </i>
-                <button mat-stroked-button class="btn-default addon mr-12"><i class="material-icons">filter_list</i>FILTERS</button>
+                <button mat-stroked-button class="btn-default addon mr-12"  (click)= "showFilters(showFilter = true)"><i class="material-icons">filter_list</i>FILTERS</button>
                 <button mat-stroked-button class="btn-primary addon"><i class="material-icons">add</i>ADD NEW</button>
             </div>
         </div>
-        <div class="row pt-12">
+        <div class="row pt-12" [ngClass]="showFilter === true ? 'block' : 'none'">
             <div class="col-md-8 p-0 custom-tags">
                 <mat-chip-list >
-                    <mat-chip class="bg-white b-a c-p f-400 p-12">Live <i class="material-icons text-custom ml-12">
+                    <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let status of filterStatus; let ind = index">{{(status == 1)?'NOT STARTED':(status== 2)?'LIVE':(status == 3)?'FUTURE':'CANCELLED'}}<i class="material-icons text-custom ml-12" (click)="remove(ind)">
                                         cancel
                                         </i></mat-chip>
-                    <mat-chip class="bg-white b-a c-p f-400 p-12">Started <i class="material-icons text-custom ml-12">
-                                        cancel
-                                        </i></mat-chip>
-                    <mat-chip class="bg-white b-a c-p f-400 ">01/04/2018 - 31/03/2019 <i class="material-icons text-custom ml-12">
-                                        cancel
-                                        </i></mat-chip>
-
-                </mat-chip-list>
+                                        <mat-chip-list>
+                                                <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let dateFilter of filterDate; let i = index">{{dateFilter}}<i class="material-icons text-custom ml-12" (click)="removeDate(i)">
+                                                        cancel
+                                                </i></mat-chip>
+                                        </mat-chip-list>
+                    </mat-chip-list>
             </div>
-
             <div class="col-md-4 right text-right p-0">
-
-                <button mat-button mat-stroked-button class="br-0 text-custom pr-0" [matMenuTriggerFor]="menu">FILTERS TWO <i class="material-icons">
-                                arrow_drop_down
-                                </i></button>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Item 1</button>
-                    <button mat-menu-item>Item 2</button>
-                </mat-menu>
-                <button mat-button mat-stroked-button class="br-0 ml-12 pr-0 text-custom" [matMenuTriggerFor]="menu">FILTERS ONE <i class="material-icons">
-                                arrow_drop_down
-                                </i></button>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Item 1</button>
-                    <button mat-menu-item>Item 2</button>
-                </mat-menu>
-            </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                                <select class="form-control br-0" id="sel11" [(ngModel)]='selectedOption' (click)="addFilters(selectedOption)">
+                                        <option value = ""[disabled] = "true" >FILTERS ONE</option>
+                                         <option *ngFor="let chip of chips" [ngValue]="chip">{{chip}}</option>
+                                       </select>  
+                        </div>
+                        <div class="col-md-6">
+                                <select class="form-control br-0" id="sel12" [(ngModel)]='selectedOption1' (click)="addFiltersDate(selectedOption1)">
+                                        <option value = ""[disabled] = "true" >FILTERS TWO</option>
+                                        <option *ngFor="let dateAdd of dateChips" [ngValue]="dateAdd">{{dateAdd}}</option>
+                                      </select>
+                        </div>
+                    </div>
+                           
+                       
+                 </div>
         </div>
         <table mat-table [dataSource]="dataSource" id="table-low" class="mt-8">
 

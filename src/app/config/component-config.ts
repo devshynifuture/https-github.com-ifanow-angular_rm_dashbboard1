@@ -70,6 +70,7 @@ export const appConfig = {
   GET_CLIENT_WITH_SCRIPTION: 'subscription/analytics/get',
   GET_INVOICE_TO_BE_REVIEWED: 'subscription/invoice/review/get',
   GET_SUB_SUMMARY: 'subscription/dashboard/summary/get',
+  FILTER_SUBCRIPTION: 'subscription/subscription/filtered/get',
   DASHBOARD_SUBSCRIPTION_LETS_BEGIN: 'subscription/lets-begin/get',
   CANCEL_SUBSCRIPTION: 'subscription/cancelled/subscription/update',
   DELETE_SUBSCRIPTION: 'subscription/subscription/deleted/update',

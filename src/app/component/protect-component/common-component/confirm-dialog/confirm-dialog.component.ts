@@ -72,7 +72,7 @@ export class ConfirmDialogComponent implements OnInit {
     if (this.dialogData.data == 'PLAN') {
       const obj = {
         // advisorId: 12345,
-        advisorId: this.advisorId,
+        advisorId: 12345,
         planId: this.dialogData.planData.id
       };
       this.subscription.deleteSubscriptionPlan(obj).subscribe(
