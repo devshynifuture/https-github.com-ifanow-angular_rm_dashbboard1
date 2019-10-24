@@ -1,30 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 // import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {animate, state, style, transition, trigger} from '@angular/animations';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 
 @Component({
   selector: 'app-upper-slider',
   templateUrl: './upper-slider.component.html',
-  styleUrls: ['./upper-slider.component.scss'],
-  animations: [
-    trigger('upperRightSlider', [
-      state('open', style({
-        left: '40%'
-      })),
-      state('close', style({
-        left: '100%'
-      })),
-      state('closeSlider', style({
-        left: '100%'
-      })),
-      transition('close => open', [animate('0.3s')]),
-      transition('open => close', [animate('0.1s')]),
-      transition('open => closeSlider', [animate('0s')]),
-      transition('closeSlider => open', [animate('0.3s')])
-    ])
-  ]
+  styleUrls: ['./upper-slider.component.scss']
 })
 
 export class UpperSliderComponent implements OnInit {

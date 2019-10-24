@@ -16,7 +16,7 @@
         <div class="col-md-12 text-right">
             <p class="m-0 text-primary c-p pt-8 pb-16" (click)="openModel()">HOW IT WORKS</p>
         </div>
-    </div>  
+    </div>
     <div class="row">
         <div class="col-md-1">
             <h5 class="m-0 pt-4">To</h5>
@@ -38,13 +38,13 @@
                 <h5 class="m-0 pb-40 ">Dear client name,</h5>
 
                 <h5 class="m-0 pb-28">As discussed, PFA the quotation for your review. </h5>
-                
+
                 <h5 class="m-0 pb-28">You need to give your Consent in order to help us proceed further. You can do by Clicking here or on the button below</h5>
-                
-                <button mat-stroked-button class="btn-primary br-0" (click)="closeTab('closeSlider','false')">PROCEED</button>
-                
-                <h5 class="m-0 pt-28 pb-28">Consent link URL: https://www.my-planner.in/consent_confirmation.html</h5>
-                
+
+          <button (click)="closeTab('close','false')" class="btn-primary br-0" mat-stroked-button>PROCEED</button>
+
+          <h5 class="m-0 pt-28 pb-28">Consent link URL: https://www.my-planner.in/consent_confirmation.html</h5>
+
                 <h5 class="m-0 pb-28">Feel free to get back to us if you have any questions.</h5>
         </div>
         <div class="col-md-12">
@@ -65,7 +65,7 @@
                 <h5 class="mb-0 pt-8 text-white c-p"  (click)="Close('close')">Cancel</h5>
             </div>
             <div class="col-md-8 right text-right">
-                <button mat-button  class="btn-bottom br-0 text-inherit" (click)="sentMail()">SEND</button>    
+              <button (click)="sentMail()" class="btn-bottom br-0 text-inherit" mat-button>SEND</button>
             </div>
         </div>
     </div>
@@ -93,7 +93,7 @@
                 <p class="text-primary pt-16 m-0 c-p pb-44"  (click)="openModel()">How It Work</p>
 
     </div>
-   
+
 </div>
 </div>
 <div class="bottom-fixed wrapper-12" >
@@ -102,7 +102,7 @@
                 <h5 class="mb-0 pt-8 text-white c-p"  (click)="Close('close')">Cancel</h5>
             </div> -->
             <div class="col-md-12 right text-right">
-                <button mat-button  class="btn-bottom br-0 text-right" (click)="Close('close')">CLOSE</button>    
+              <button (click)="Close('close')" class="btn-bottom br-0 text-right" mat-button>CLOSE</button>
             </div>
         </div>
     </div>

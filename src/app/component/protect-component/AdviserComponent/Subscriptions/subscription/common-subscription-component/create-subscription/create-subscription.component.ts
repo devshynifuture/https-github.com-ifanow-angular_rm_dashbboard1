@@ -1,12 +1,13 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {MatStepper} from '@angular/material';
-import {EnumServiceService} from '../../enum-service.service';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { MatStepper } from '@angular/material';
+import { EnumServiceService } from '../../enum-service.service';
 import * as _ from 'lodash';
-import {AuthService} from "../../../../../../../auth-service/authService";
+import { AuthService } from "../../../../../../../auth-service/authService";
+import { element } from 'protractor';
 
 
 @Component({
@@ -16,7 +17,7 @@ import {AuthService} from "../../../../../../../auth-service/authService";
 })
 export class CreateSubscriptionComponent implements OnInit {
   constructor(private enumService: EnumServiceService, public subInjectService: SubscriptionInject,
-              private eventService: EventService, private fb: FormBuilder, private subService: SubscriptionService) {
+    private eventService: EventService, private fb: FormBuilder, private subService: SubscriptionService) {
     this.subInjectService.singleProfileData.subscribe(
       data => this.getSubStartDetails(data)
     );
@@ -24,7 +25,7 @@ export class CreateSubscriptionComponent implements OnInit {
 
   @Input() modifyFeeTabChange;
 
-  @ViewChild('stepper', {static: false}) stepper: MatStepper;
+  @ViewChild('stepper',{static:true}) stepper: MatStepper;
   feeStructureData;
   clientData;
   feeMode;
@@ -57,7 +58,7 @@ export class CreateSubscriptionComponent implements OnInit {
   advisorId;
 
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
+    
     this.stepper.selectedIndex = 0;
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     console.log(this.feeCollectionMode);
@@ -65,12 +66,14 @@ export class CreateSubscriptionComponent implements OnInit {
 
   goForward(/*stepper: MatStepper*/) {
     this.stepper.next();
+    console.log(this.subscriptionDetails)
   }
 
   getSubStartDetails(data) {
     this.clientData = data;
     console.log(this.clientData, 'client Data');
-    if (data.feeMode) {
+    if (data.subscriptionPricing.feeTypeId) {
+      this.advisorId = AuthService.getAdvisorId();
       const obj = {
         // advisorId: 2808,
         advisorId: this.advisorId,
@@ -82,7 +85,7 @@ export class CreateSubscriptionComponent implements OnInit {
       );
     } else {
       this.feeStructureFormData = data;
-      this.stepper.next();
+      this.goForward();
       console.log(this.feeStructureFormData, 'feeStructureData');
     }
 
@@ -102,7 +105,11 @@ export class CreateSubscriptionComponent implements OnInit {
 
   selectPayee(data) {
     data.selected = 1;
-    this.selectedPayee.push(data);
+    let obj={
+      id:data.id,
+      share:50
+    }
+    this.selectedPayee.push(obj);
   }
 
   unselectPayee(data) {
@@ -132,63 +139,64 @@ export class CreateSubscriptionComponent implements OnInit {
   }
 
   startSubscsription() {
+    console.log("payee",this.selectedPayee)
+    console.log("biller",this.selectedBiller)
+    console.log("subscription",this.subscriptionDetails)
+    console.log("client",this.clientData)
+    let subAsset=[]
+    this.clientData.subscriptionAssetPricingList[2].otherAssets.forEach(element=>
+      { 
+         subAsset.push(element.subAssetClassId)
+      })
+    let selectedPayee=[]
+    this.clientData  
     const obj = {
-      id: this.clientData.id,
-      // advisorId: 2808,
+      id: this.clientData.subId,
       advisorId: this.advisorId,
 
       billerProfileId: this.selectedBiller.id,
-      clientBillerProfiles: [
-        {
-          id: 5,
-          share: 50
-        },
-        {
-          id: 6,
-          share: 50
-        }
-      ],
+      clientBillerProfiles:this.selectedPayee,
       clientId: this.clientData.clientId,
-      dueDateFrequency: 30,
-      startsOn: '2019-10-16',
+      dueDateFrequency: this.subscriptionDetails.get('dueDateFrequency').value,
+      startsOn: this.subscriptionDetails.get('activationDate').value,
       fromDate: '2019-10-16T13:54:25.983Z',
       subscriptionNumber: this.feeStructureData.subscriptionNo,
-      feeMode: this.clientData.subscriptionPricing.feeTypeId,
+      feeMode: this.subscriptionDetails.get('invoiceSendingMode').value,
       Status: 1,
       subscriptionPricing: {
         autoRenew: 0,
-        billEvery: 0,
+        billEvery: this.clientData.billEvery,
         billingCycle: 0,
-        billingMode: 0,
-        billingNature: 0,
-        feeTypeId: 0,
+        billingMode: this.clientData.billingMode,
+        billingNature: this.clientData.billingNature,
+        feeTypeId: this.clientData.feeTypeId,
         id: 0,
-        pricing: 0,
-        subscriptionAssetPricingList: [
+        pricingList: [
           {
-            assetClassId: 0,
-            debtAllocation: 0,
-            directRegular: 0,
-            equityAllocation: 0,
-            id: 0,
-            liquidAllocation: 0,
-            pricing: 0,
-            subscriptionPricingId: 0,
-            subscriptionSubAssets: [
-              {
-                id: 0,
-                isActive: 0,
-                selected: true,
-                subAssetClassId: 0,
-                subAssetClassName: 'string',
-                subscriptionAssetPricingId: 0
-              }
-            ]
+            directRegular: 1,
+            assetClassId: 1,
+            debtAllocation:this.clientData.subscriptionAssetPricingList[0].debtAllocation ,
+            equityAllocation:this.clientData.subscriptionAssetPricingList[0].equityAllocation,
+            liquidAllocation:this.clientData.subscriptionAssetPricingList[0].liquidAllocation,
+          }, {
+            directRegular: 2,
+            assetClassId: 1,
+            debtAllocation:this.clientData.subscriptionAssetPricingList[1].debtAllocation,
+            equityAllocation:this.clientData.subscriptionAssetPricingList[1].equityAllocation,
+            liquidAllocation:this.clientData.subscriptionAssetPricingList[1].liquidAllocation,
+          },
+          {
+            assetClassId: 2,
+            subAssetIds:subAsset,
+            pricing:this.clientData.subscriptionAssetPricingList[2].pricing 
           }
         ]
       }
     };
     console.log(obj, 'start subscription');
+    this.subService.startSubscription(obj).subscribe(
+      data => console.log("subscription start",data)
+    )
   }
 
 }
