@@ -1,8 +1,8 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from 'src/app/auth-service/authService';
 
 export interface PeriodicElement {
   document: string;
@@ -11,18 +11,21 @@ export interface PeriodicElement {
   sdate: string;
   cdate: string;
   status: string;
-  
+
 }
+
 export class TableStickyHeaderExample {
   displayedColumns1 = ['position', 'name', 'weight', 'symbol'];
   dataSource1 = ELEMENT_DATA1;
 }
+
 export interface PeriodicElement1 {
   name: string;
   position: number;
   weight: number;
   symbol: string;
 }
+
 const ELEMENT_DATA1: PeriodicElement1[] = [
   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
   {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
@@ -58,14 +61,8 @@ export class InvoiceComponent implements OnInit {
   copyStoreData: any;
   serviceList: any;
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService,private auth: AuthService) {
-    this.dataSub = this.subInjectService.singleProfileData.subscribe(
-      data => this.getInvoiceData(data)
-    );
-    this.subInjectService.singleProfileData.subscribe(
-      data => this.getRecordPayment(data)
-    );
-  }
+  @Input() invoiceValue;
+
   dataSub: any;
   storeData;
   showRecord: any;
@@ -80,72 +77,90 @@ export class InvoiceComponent implements OnInit {
   @Input() invoiceData;
   @Input() invoiceInSub;
   @Input() clientData;
-  @Input() invoiceValue
+  editPayment;
   @Output() valueChange = new EventEmitter();
 
   @Input() invoiceTab;
   rPayment;
-  editPayment
+  advisorId;
   editAdd1;
   editAdd2;
 
   displayedColumns: string[] = ['checkbox', 'document', 'plan', 'date', 'sdate', 'cdate', 'status', 'icons'];
   dataSource = ELEMENT_DATA;
 
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService) {
+    this.dataSub = this.subInjectService.singleProfileData.subscribe(
+      data => this.getInvoiceData(data)
+    );
+    this.subInjectService.singleProfileData.subscribe(
+      data => this.getRecordPayment(data)
+    );
+  }
+
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.getServicesList();
     console.log('this.invoiceSubscription', this.invoiceInSub);
     this.showRecord = false;
     this.showEdit = false;
-    this.editAdd1 = false
-    this.editAdd2 = false
+    this.editAdd1 = false;
+    this.editAdd2 = false;
 
-    console.log("invoiceValue+++++++++++",this.invoiceValue)
-    if(this.invoiceValue == 'edit' || this.invoiceValue =='EditInInvoice'){
-      this.auto = true
+    console.log('invoiceValue+++++++++++', this.invoiceValue);
+    if (this.invoiceValue == 'edit' || this.invoiceValue == 'EditInInvoice') {
+      this.auto = true;
       this.showEdit = true;
-      this.storeData = 
-      this.taxStatus = ['IGST(18%)']
-      
+      this.storeData =
+        this.taxStatus = ['IGST(18%)'];
+
     }
   }
+
   keyPress(event: any) {
     const pattern = /[0-9\+\-\ ]/;
 
-    let inputChar = String.fromCharCode(event.charCode);
+    const inputChar = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();
     }
   }
-  getServicesList(){
-    let obj = {
-      advisorId: 12345
-    }
+
+  getServicesList() {
+    const obj = {
+      advisorId: this.advisorId
+      // advisorId: 12345
+    };
     this.subService.getServicesListForInvoice(obj).subscribe(
       data => this.getServicesListForInvoiceRes(data)
     );
   }
-  getServicesListForInvoiceRes(data){
-    console.log('getServicesListForInvoiceRes',data)
-    this.serviceList = data
+
+  getServicesListForInvoiceRes(data) {
+    console.log('getServicesListForInvoiceRes', data);
+    this.serviceList = data;
   }
-  saveCode(codeValue){
-    console.log('codeValue',codeValue)
+
+  saveCode(codeValue) {
+    console.log('codeValue', codeValue);
   }
-  onclickChangeAdd1(editVlaue){
-    if(editVlaue == false){
-      this.editAdd1 = true
-    }else{
-      this.editAdd1 = false
+
+  onclickChangeAdd1(editVlaue) {
+    if (editVlaue == false) {
+      this.editAdd1 = true;
+    } else {
+      this.editAdd1 = false;
     }
   }
-  onclickChangeAdd2(editVlaue){
-    if(editVlaue == false){
-      this.editAdd2 = true
-    }else{
-      this.editAdd2 = false
+
+  onclickChangeAdd2(editVlaue) {
+    if (editVlaue == false) {
+      this.editAdd2 = true;
+    } else {
+      this.editAdd2 = false;
     }
   }
+
   getRecordPayment(data) {
     console.log('payee data', data);
     this.rPayment = this.fb.group({
@@ -165,108 +180,116 @@ export class InvoiceComponent implements OnInit {
     this.getFormControl().notes.maxLength = 10;
 
   }
+
   getInvoiceData(data) {
-    this.copyStoreData = data
+    this.copyStoreData = data;
     this.storeData = data;
-    this.auto = (this.storeData.auto == false)
-    console.log(this.storeData)
-    this.editPayment =  this.fb.group({
-      id:[data.id],
-      clientName : [data.clientName, [Validators.required]],
-      billerAddress:[data.billerAddress, [Validators.required]],
-      billingAddress:[data.billingAddress, [Validators.required]],
-      invoiceNumber:[data.invoiceNumber, [Validators.required]],
-      invoiceDate:[data.invoiceDate, [Validators.required]],
-      finalAmount:[data.finalAmount,[Validators.required]],
-      discount:[data.discount,[Validators.required]],
-      footnote:[data.footnote,[Validators.required]],
-      terms:[data.terms,[Validators.required]],
-      taxStatus :['IGST(18%)'],
-      balanceDue :[(data == undefined)?'':data.balanceDue] ,
-      serviceName :[(data == undefined)?'':data.serviceName],
-      subTotal:[(data == undefined)?'':data.subTotal] ,
-      igstTaxAmount:[data.igstTaxAmount],
-      auto:[data.auto]
+    this.auto = (this.storeData.auto == false);
+    console.log(this.storeData);
+    this.editPayment = this.fb.group({
+      id: [data.id],
+      clientName: [data.clientName, [Validators.required]],
+      billerAddress: [data.billerAddress, [Validators.required]],
+      billingAddress: [data.billingAddress, [Validators.required]],
+      invoiceNumber: [data.invoiceNumber, [Validators.required]],
+      invoiceDate: [data.invoiceDate, [Validators.required]],
+      finalAmount: [data.finalAmount, [Validators.required]],
+      discount: [data.discount, [Validators.required]],
+      footnote: [data.footnote, [Validators.required]],
+      terms: [data.terms, [Validators.required]],
+      taxStatus: ['IGST(18%)'],
+      balanceDue: [(data == undefined) ? '' : data.balanceDue],
+      serviceName: [(data == undefined) ? '' : data.serviceName],
+      subTotal: [(data == undefined) ? '' : data.subTotal],
+      igstTaxAmount: [data.igstTaxAmount],
+      auto: [data.auto]
       // fromDate : [data.services[0].fromDate,[Validators.required]],
 
-    })
+    });
     this.getFormControledit().clientName.maxLength = 10;
     this.getFormControledit().billerAddress.maxLength = 150;
     this.getFormControledit().billingAddress.maxLength = 150;
     this.getFormControledit().invoiceNumber.maxLength = 10;
     this.getFormControledit().footnote.maxLength = 100;
-    this.getFormControledit().terms.maxLength = 100;  
+    this.getFormControledit().terms.maxLength = 100;
   }
-  changeTaxStatus(){
-    this.taxStatus = this.editPayment.value.taxStatus
+
+  changeTaxStatus() {
+    this.taxStatus = this.editPayment.value.taxStatus;
   }
-  updateInvoice(){
-    if(this.getFormControledit().id == undefined){
-      let service = [{
-        serviceName:this.editPayment.value.serviceName
-      }]
-      let obj = {
-        clientName : this.editPayment.value.clientName,
-        billerAddress :this.editPayment.value.billerAddress,
-        billingAddress :this.editPayment.value.billingAddress,
-        invoiceNumber :this.editPayment.value.invoiceNumber,
-        subTotal:this.editPayment.value.subTotal,
-        total:this.editPayment.value.total,
-        discount:this.editPayment.value.discount,
-        finalAmount:this.editPayment.value.finalAmount,
-        invoiceDate:this.editPayment.value.invoiceDate,
-        DueDate:this.editPayment.value.DueDate,
-        igst:(this.editPayment.value.tax == 'IGST(18%)')?18:18,
-        cgst:(this.editPayment.value.tax == 'SGST(9%)|CGST(9%)')?9:9,
-        footnote:this.editPayment.value.footnote,
-        terms:this.editPayment.value.terms,
+
+  updateInvoice() {
+    if (this.getFormControledit().id == undefined) {
+      const service = [{
+        serviceName: this.editPayment.value.serviceName
+      }];
+      const obj = {
+        clientName: this.editPayment.value.clientName,
+        billerAddress: this.editPayment.value.billerAddress,
+        billingAddress: this.editPayment.value.billingAddress,
+        invoiceNumber: this.editPayment.value.invoiceNumber,
+        subTotal: this.editPayment.value.subTotal,
+        total: this.editPayment.value.total,
+        discount: this.editPayment.value.discount,
+        finalAmount: this.editPayment.value.finalAmount,
+        invoiceDate: this.editPayment.value.invoiceDate,
+        DueDate: this.editPayment.value.DueDate,
+        igst: (this.editPayment.value.tax == 'IGST(18%)') ? 18 : 18,
+        cgst: (this.editPayment.value.tax == 'SGST(9%)|CGST(9%)') ? 9 : 9,
+        footnote: this.editPayment.value.footnote,
+        terms: this.editPayment.value.terms,
         services: service,
-      }
-      console.log('this.editPayment',obj)
+      };
+      console.log('this.editPayment', obj);
       this.subService.addInvoice(obj).subscribe(
         data => this.addInvoiceRes(data)
       );
-    }else{
-      let service = [{
-        serviceName:this.editPayment.value.serviceName
-      }]
-      let obj = {
-        id:this.editPayment.value.id,
-        clientName : this.editPayment.value.clientName,
-        billerAddress :this.editPayment.value.billerAddress,
-        billingAddress :this.editPayment.value.billingAddress,
-        finalAmount:this.editPayment.value.finalAmount,
-        invoiceNumber :this.editPayment.value.invoiceNumber,
-        subTotal:this.editPayment.value.subTotal,
-        total:this.editPayment.value.total,
-        discount:this.editPayment.value.discount,
-        invoiceDate:this.editPayment.value.invoiceDate,
-        DueDate:this.editPayment.value.DueDate,
-        igst:(this.editPayment.value.tax == 'IGST(18%)')?18:18,
-        cgst:(this.editPayment.value.tax == 'SGST(9%)|CGST(9%)')?9:9,
-        footnote:this.editPayment.value.footnote,
-        terms:this.editPayment.value.terms,
+    } else {
+      const service = [{
+        serviceName: this.editPayment.value.serviceName
+      }];
+      const obj = {
+        id: this.editPayment.value.id,
+        clientName: this.editPayment.value.clientName,
+        billerAddress: this.editPayment.value.billerAddress,
+        billingAddress: this.editPayment.value.billingAddress,
+        finalAmount: this.editPayment.value.finalAmount,
+        invoiceNumber: this.editPayment.value.invoiceNumber,
+        subTotal: this.editPayment.value.subTotal,
+        total: this.editPayment.value.total,
+        discount: this.editPayment.value.discount,
+        invoiceDate: this.editPayment.value.invoiceDate,
+        DueDate: this.editPayment.value.DueDate,
+        igst: (this.editPayment.value.tax == 'IGST(18%)') ? 18 : 18,
+        cgst: (this.editPayment.value.tax == 'SGST(9%)|CGST(9%)') ? 9 : 9,
+        footnote: this.editPayment.value.footnote,
+        terms: this.editPayment.value.terms,
         services: service,
-      }
-      console.log('this.editPayment',obj)
+      };
+      console.log('this.editPayment', obj);
       this.subService.updateInvoiceInfo(obj).subscribe(
         data => this.updateInvoiceInfoRes(data)
       );
     }
   }
-  updateInvoiceInfoRes(data){
-    console.log('updateInvoiceInfoRes',data);
+
+  updateInvoiceInfoRes(data) {
+    console.log('updateInvoiceInfoRes', data);
   }
-  addInvoiceRes(data){
-    console.log('addInvoiceRes',data)
+
+  addInvoiceRes(data) {
+    console.log('addInvoiceRes', data);
   }
+
   getFormControledit() {
     return this.editPayment.controls;
   }
+
   getFormControl() {
     return this.rPayment.controls;
   }
- saveFormData(state) {
+
+  saveFormData(state) {
     if (this.rPayment.controls.amountReceive.invalid) {
       this.isamountValid = true;
       return;
@@ -281,7 +304,8 @@ export class InvoiceComponent implements OnInit {
       return;
     } else {
       const obj = {
-        advisorId: 12345,
+        advisorId: this.advisorId,
+        // advisorId: 12345,
         amountReceieve: this.rPayment.controls.amountReceive.value,
         chargeIfAny: this.rPayment.controls.charges.value,
         TDS: this.rPayment.controls.tds.value,
@@ -294,6 +318,7 @@ export class InvoiceComponent implements OnInit {
     }
     this.cancel();
   }
+
   recordPayment() {
     this.showRecord = true;
   }
@@ -301,12 +326,13 @@ export class InvoiceComponent implements OnInit {
   cancel() {
     this.showRecord = false;
   }
-  formatter(data)
-  {
-    data=Math.round(data);
+
+  formatter(data) {
+    data = Math.round(data);
     return data;
   }
-  passInvoice(data,event) {
+
+  passInvoice(data, event) {
     console.log(data);
     this.storeData = data;
   }
@@ -328,9 +354,9 @@ export class InvoiceComponent implements OnInit {
     }
 
   }
-  saveInvoice()
-  {
-    console.log(this.editPayment)
+
+  saveInvoice() {
+    console.log(this.editPayment);
   }
-  
+
 }

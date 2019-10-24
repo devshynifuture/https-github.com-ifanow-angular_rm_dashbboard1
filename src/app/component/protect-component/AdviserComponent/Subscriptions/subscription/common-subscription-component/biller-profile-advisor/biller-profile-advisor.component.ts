@@ -1,8 +1,8 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
-import {SelectionModel} from '@angular/cdk/collections';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -13,7 +13,23 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
 
   billerProfileForm: any;
+  isGstin = false;
+  isPanNum = false;
+  isAddress = false;
+  isNameOnBank = false;
+  isAcNo = false;
+  isIFSC = false;
+  isCity = false;
+  isState = false;
+  isCountry  = false;
+  isZipCode = false;
+  isTaxable = false;
+  isFootNote = false;
+  isaddress = false;
+  isTerms = false;
+  isBankName = false;
   selected = 0;
+  advisorId;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService) {
     this.subInjectService.singleProfileData.subscribe(
@@ -24,51 +40,69 @@ export class BillerProfileAdvisorComponent implements OnInit {
   @Input() Selected;
 
   ngOnInit() {
-
+    this.advisorId = AuthService.getAdvisorId();
   }
+
   getFormControl() {
     return this.billerProfileForm.controls;
   }
-  
+  getFrormControlProfile(){
+    return this.billerProfileForm.controls.profileDetailsForm.controls;
+  }
+  getFrormControlBank(){
+    return this.billerProfileForm.controls.bankDetailsForm.controls;
+  }
+  getFrormControlMisc(){
+    return this.billerProfileForm.controls.MiscellaneousData.controls;
+  }
+  keyPress(event: any) {
+    const pattern = /[0-9\+\-\ ]/;
+
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
   getSingleBillerProfileData(data) {
-    if(data == ""){
-    data = {}
+    if (data == "") {
+      data = {}
     }
     this.billerProfileForm = this.fb.group({
       profileDetailsForm: this.fb.group({
-        gstinNum: [(data.gstin == undefined)?"":data.gstin],
-        panNum: [(data.pan == undefined)?"":data.pan],
-        Address: [(data.billerAddress == undefined)?"":data.billerAddress],
-        state: [(data.state == undefined)?"":data.state],
-        zipCode: [(data.zipCode == undefined)?"":data.zipCode],
-        country: [(data.country == undefined)?"":data.country],
-        city: [(data.city == undefined)?"":data.city]
+        gstinNum: [(data.gstin),[Validators.required]],
+        panNum: [(data.pan),[Validators.required]],
+        Address: [(data.billerAddress),[Validators.required]],
+        state: [(data.state),[Validators.required]],
+        zipCode: [(data.zipCode),[Validators.required]],
+        country: [(data.country ),[Validators.required]],
+        city: [(data.city),[Validators.required]]
       }),
       bankDetailsForm: this.fb.group({
-        nameOnBank: [(data == undefined)?"":data.nameAsPerBank],
-        bankName: [(data == undefined)?"":data.bankName],
-        acNo: [(data == undefined)?"":data.acNumber],
-        ifscCode: [(data == undefined)?"":data.ifscCode],
-        address: [(data == undefined)?"":data.bankCity],
-        state: [(data == undefined)?"":data.state],
-        pincode: [(data == undefined)?"":data.bankZipCode],
-        country: [(data == undefined)?"":data.country]
+        nameOnBank: [(data.nameAsPerBank),[Validators.required]],
+        bankName: [(data.bankName),[Validators.required]],
+        acNo: [(data.acNumber),[Validators.required]],
+        ifscCode: [(data.ifscCode),[Validators.required]],
+        address: [(data.bankCity),[Validators.required]],
+        state: [(data.state),[Validators.required]],
+        pincode: [(data.bankZipCode),[Validators.required]],
+        city:[(data.city),Validators.required],
+        country: [(data.country),[Validators.required]],
       }),
       MiscellaneousData: this.fb.group({
-        footnote: [(data == undefined)?"":data.footnote],
-        terms: [(data == undefined)?"":data.terms]
+        footnote: [(data.footnote),[Validators.required]],
+        terms: [(data.terms),[Validators.required]]
       })
     });
-    this.getFormControl().gstinNum.maxLength = 15;
-    this.getFormControl().panNum.maxLength = 10;
-    this.getFormControl().Address.maxLength = 150;
-    this.getFormControl().nameOnBank.maxLength = 25;
-    this.getFormControl().bankName.maxLength = 35;
-    this.getFormControl().acNo.maxLength = 16;
-    this.getFormControl().ifscCode.maxLength = 11;
-    this.getFormControl().address.maxLength = 150;
-    this.getFormControl().footnote.maxLength = 150;
-    this.getFormControl().terms.maxLength = 150;
+    this.getFrormControlProfile().gstinNum.maxLength = 15;
+    this.getFrormControlProfile().panNum.maxLength = 10;
+    this.getFrormControlProfile().Address.maxLength = 150;
+    this.getFrormControlBank().nameOnBank.maxLength = 25;
+    this.getFrormControlBank().bankName.maxLength = 35;
+    this.getFrormControlBank().acNo.maxLength = 16;
+    this.getFrormControlBank().ifscCode.maxLength = 11;
+    this.getFrormControlBank().address.maxLength = 150;
+    this.getFrormControlMisc().footnote.maxLength = 150;
+    this.getFrormControlMisc().terms.maxLength = 150;
     
   }
 
@@ -87,36 +121,86 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   submitBillerForm() {
-    const obj = {
-      acNumber: this.billerProfileForm.controls.bankDetailsForm.controls.acNo.value,
-      advisorId: 2735,
-      bankCity: this.billerProfileForm.controls.bankDetailsForm.controls.address.value,
-      bankCountry: this.billerProfileForm.controls.bankDetailsForm.controls.country.value,
-      bankName: this.billerProfileForm.controls.bankDetailsForm.controls.bankName.value,
-      bankState: this.billerProfileForm.controls.bankDetailsForm.controls.state.value,
-      bankZipCode: this.billerProfileForm.controls.bankDetailsForm.controls.pincode.value,
-      billerAddress: this.billerProfileForm.controls.profileDetailsForm.controls.Address.value,
-      branchAddress: this.billerProfileForm.controls.bankDetailsForm.controls.address.value,
-      city: this.billerProfileForm.controls.profileDetailsForm.controls.city.value,
-      company_display_name: 'stringfgdfg',
-      companyName: 'stringname',
-      country: this.billerProfileForm.controls.profileDetailsForm.controls.country.value,
-      footnote: this.billerProfileForm.controls.MiscellaneousData.controls.footnote.value,
-      gstin: this.billerProfileForm.controls.profileDetailsForm.controls.gstinNum.value,
-      ifscCode: this.billerProfileForm.controls.bankDetailsForm.controls.ifscCode.value,
-      logoUrl: 'www.google.com',
-      nameAsPerBank: this.billerProfileForm.controls.bankDetailsForm.controls.nameOnBank.value,
-      pan: this.billerProfileForm.controls.profileDetailsForm.controls.panNum.value,
-      state: this.billerProfileForm.controls.profileDetailsForm.controls.state.value,
-      terms: this.billerProfileForm.controls.MiscellaneousData.controls.terms.value,
-      zipCode: this.billerProfileForm.controls.profileDetailsForm.controls.zipCode.value
-    };
-    console.log(obj);
-    this.subService.updateBillerProfileSettings(obj).subscribe(
-      data => console.log(data)
-    );
-    this.subService.saveBillerProfileSettings(obj).subscribe(
-      data => console.log(data)
-    );
+    if (this.billerProfileForm.controls.profileDetailsForm.controls.gstinNum.invalid) {
+      this.isGstin = true
+      return;
+    }else if (this.billerProfileForm.controls.profileDetailsForm.controls.panNum.invalid) {
+      this.isPanNum = true
+      return;
+    }else if (this.billerProfileForm.controls.profileDetailsForm.controls.Address.invalid) {
+      this.isAddress = true
+      return;
+    }else if (this.billerProfileForm.controls.profileDetailsForm.controls.city.invalid) {
+      this.isCity = true
+      return;
+    }else if (this.billerProfileForm.controls.profileDetailsForm.controls.state.invalid) {
+      this.isState = true
+      return;
+    }else if (this.billerProfileForm.controls.profileDetailsForm.controls.country.invalid) {
+      this.isCountry = true
+      return;
+    }else if (this.billerProfileForm.controls.profileDetailsForm.controls.pincode.invalid) {
+      this.isZipCode = true
+      return;
+    }else if (this.billerProfileForm.controls.bankDetailsForm.controls.acNo.invalid) {
+      this.isAcNo = true
+      return;
+    }else if (this.billerProfileForm.controls.bankDetailsForm.controls.nameOnBank.invalid) {
+      this.isNameOnBank = true
+      return;
+    }else if (this.billerProfileForm.controls.bankDetailsForm.controls.address.invalid) {
+      this.isaddress = true
+      return;
+    }else if (this.billerProfileForm.controls.bankDetailsForm.controls.ifscCode.invalid) {
+      this.isIFSC = true
+      return;
+    }else if (this.billerProfileForm.controls.bankDetailsForm.controls.city.invalid) {
+      this.isCity = true
+      return;
+    }else if (this.billerProfileForm.controls.bankDetailsForm.controls.state.invalid) {
+      this.isState = true
+      return;
+    }else if (this.billerProfileForm.controls.bankDetailsForm.controls.country.invalid) {
+      this.isCountry = true
+      return;
+    }else if (this.billerProfileForm.controls.bankDetailsForm.controls.pincode.invalid) {
+      this.isZipCode = true
+      return;
+    }else if (this.billerProfileForm.controls.bankDetailsForm.controls.bankName.invalid) {
+      this.isBankName = true
+      return;
+    }else{
+      const obj = {
+        acNumber: this.billerProfileForm.controls.bankDetailsForm.controls.acNo.value,
+        advisorId: 2735,
+        bankCity: this.billerProfileForm.controls.bankDetailsForm.controls.address.value,
+        bankCountry: this.billerProfileForm.controls.bankDetailsForm.controls.country.value,
+        bankName: this.billerProfileForm.controls.bankDetailsForm.controls.bankName.value,
+        bankState: this.billerProfileForm.controls.bankDetailsForm.controls.state.value,
+        bankZipCode: this.billerProfileForm.controls.bankDetailsForm.controls.pincode.value,
+        billerAddress: this.billerProfileForm.controls.profileDetailsForm.controls.Address.value,
+        branchAddress: this.billerProfileForm.controls.bankDetailsForm.controls.address.value,
+        city: this.billerProfileForm.controls.profileDetailsForm.controls.city.value,
+        company_display_name: 'stringfgdfg',
+        companyName: 'stringname',
+        country: this.billerProfileForm.controls.profileDetailsForm.controls.country.value,
+        footnote: this.billerProfileForm.controls.MiscellaneousData.controls.footnote.value,
+        gstin: this.billerProfileForm.controls.profileDetailsForm.controls.gstinNum.value,
+        ifscCode: this.billerProfileForm.controls.bankDetailsForm.controls.ifscCode.value,
+        logoUrl: 'www.google.com',
+        nameAsPerBank: this.billerProfileForm.controls.bankDetailsForm.controls.nameOnBank.value,
+        pan: this.billerProfileForm.controls.profileDetailsForm.controls.panNum.value,
+        state: this.billerProfileForm.controls.profileDetailsForm.controls.state.value,
+        terms: this.billerProfileForm.controls.MiscellaneousData.controls.terms.value,
+        zipCode: this.billerProfileForm.controls.profileDetailsForm.controls.zipCode.value
+      };
+      console.log(obj);
+      this.subService.updateBillerProfileSettings(obj).subscribe(
+        data => console.log(data)
+      );
+      this.subService.saveBillerProfileSettings(obj).subscribe(
+        data => console.log(data)
+      );
+    }
   }
 }

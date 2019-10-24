@@ -13,5 +13,7 @@ export class HowToUseDialogComponent implements OnInit {
   ngOnInit() {
     console.log("fragmentData",this.fragmentData);
   }
-
+  dialogClose() {
+    this.dialogRef.close();
+  }
 }

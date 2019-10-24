@@ -70,6 +70,7 @@ export const appConfig = {
   GET_CLIENT_WITH_SCRIPTION: 'subscription/analytics/get',
   GET_INVOICE_TO_BE_REVIEWED: 'subscription/invoice/review/get',
   GET_SUB_SUMMARY: 'subscription/dashboard/summary/get',
+  FILTER_SUBCRIPTION: 'subscription/subscription/filtered/get',
   DASHBOARD_SUBSCRIPTION_LETS_BEGIN: 'subscription/lets-begin/get',
   CANCEL_SUBSCRIPTION: 'subscription/cancelled/subscription/update',
   DELETE_SUBSCRIPTION: 'subscription/subscription/deleted/update',
@@ -107,5 +108,6 @@ export const appConfig = {
   GET_DOCUMENT_GET:'subscription/document/get',
   GET_DOCUMENT_UPDATE:'subscription/document/edit',
   GET_EMAIL_TEMPLATE:'subscription/email-template/list/get',
+  EDIT_EMAIL_TEMPLATE:'subscription/email-template/edit',
   GET_BASE_64: 'api/v1/test/base64/decode'
 };

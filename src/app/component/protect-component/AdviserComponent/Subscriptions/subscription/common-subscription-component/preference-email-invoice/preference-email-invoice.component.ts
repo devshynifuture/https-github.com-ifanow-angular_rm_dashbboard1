@@ -1,8 +1,10 @@
-import {Component, OnInit, Inject} from '@angular/core';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {EventService} from '../../../../../../../Data-service/event.service';
-import {FormGroup, FormControl} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
+import {HowToUseDialogComponent} from '../how-to-use-dialog/how-to-use-dialog.component';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-preference-email-invoice',
@@ -11,31 +13,22 @@ import {SubscriptionService} from '../../../subscription.service';
 })
 export class PreferenceEmailInvoiceComponent implements OnInit {
   model: any;
+  storeData: any;
 
-
-  constructor(private eventService: EventService, public subService: SubscriptionService) {
-  }
+  advisorId;
 
   mailForm = new FormGroup({
     mail_body: new FormControl(''),
 
   });
 
+  constructor(private eventService: EventService, public subService: SubscriptionService, public dialogRef: MatDialogRef<PreferenceEmailInvoiceComponent>, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public fragmentData: any) {
+    console.log('ModifyFeeDialogComponent constructor: ', this.fragmentData);
+    this.storeData = this.fragmentData.Flag;
+  }
+
   ngOnInit() {
-    this.getTemplate();
-  }
-
-  getTemplate() {
-    const obj = {
-      advisorId: 2727
-    };
-    this.subService.getEmailTemplate(obj).subscribe(
-      data => this.getTemplateDate(data)
-    );
-  }
-
-  getTemplateDate(data) {
-    console.log(data);
+    this.advisorId = AuthService.getAdvisorId();
   }
 
 // Begin ControlValueAccesor methods.
@@ -58,7 +51,53 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
   }
 
   dialogClose() {
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.dialogRef.close();
   }
 
+  saveData(data) {
+    console.log(data);
+    // this.storeData.documentText=data;
+  }
+
+  save() {
+    console.log('here is saved data', this.storeData);
+    this.updateData(this.storeData);
+    this.dialogClose();
+  }
+
+  updateData(data) {
+    console.log(data);
+    const obj = {
+      subject: data.subject,
+      body: data.body,
+      advisorId: this.advisorId,
+
+      // "advisorId":2727,
+      emailTemplateId: 1
+    };
+    this.subService.updateEmailTemplate(obj).subscribe(
+      data => this.getResponseData(data)
+    );
+  }
+
+  getResponseData(data) {
+    console.log('getResponse', data);
+  }
+
+  openDialog(data) {
+    const Fragmentdata = {
+      Flag: data,
+    };
+    const dialogRef = this.dialog.open(HowToUseDialogComponent, {
+      width: '30%',
+      data: Fragmentdata,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+
+  }
 }

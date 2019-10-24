@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {UpperSliderComponent} from '../../common-subscription-component/upper-slider/upper-slider.component';
 import {MatDialog} from '@angular/material';
 import {SubscriptionService} from '../../../subscription.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../../subscription-inject.service';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-plans-settings',
@@ -21,8 +21,10 @@ export class PlansSettingsComponent implements OnInit {
   showLoader;
 
   planSettingData;
+  advisorId;
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.getSettingsPlanData();
     // this.openFragment('', 'plan');
   }
@@ -30,7 +32,9 @@ export class PlansSettingsComponent implements OnInit {
   getSettingsPlanData() {
     this.showLoader = true;
     const obj = {
-      advisorId: 12345
+      // advisorId: 12345
+      advisorId: this.advisorId,
+
     };
     this.subService.getSubscriptionPlanSettingsData(obj).subscribe(
       data => this.getSettingsPlanResponse(data),

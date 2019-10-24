@@ -1,133 +1,134 @@
 <div class="row bb-1 popup-header-fix-100">
-    <div class="col-md-2 border-right-1 p-0">
-        <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" class="pt-8 w-100">
-    </div>
-    <div class="col-md-8 p-0">
-        <p class="f-16 mb-0 pt-24 text-center">Email Template</p>
-    </div>
-    <div class="col-md-2 text-right">
-        <i class="material-icons pt-16 c-p pr-16" (click)="dialogClose()">
-            clear
-        </i>
-    </div>
+  <div class="col-md-2 border-right-1 p-0">
+      <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" class="pt-8 w-100">
+  </div>
+  <div class="col-md-8 p-0">
+      <p class="f-16 mb-0 pt-24 text-center">Email Template</p>
+  </div>
+  <div class="col-md-2 text-right">
+      <i class="material-icons pt-16 c-p" (click)="dialogClose()">
+          clear
+      </i>
+  </div>
 </div>
 <div class="wrapper-20 mt-70 bg-grey lter">
-    <h3 class="m-0 text-center head-common">Dhyaan Ronak Hindocha</h3>
+  <h3 class="m-0 text-center head-common">Dhyaan Ronak Hindocha</h3>
 </div>
-<div>
-<div class="wrapper-100 pt-44">
-    <div class="row pt-44">
-      <div class="col-md-9">
-        <h3 class="mb-8 mt-20">Subject
-        </h3>
-        <input type="text" class="form-control">
-        <!-- <form [formGroup]="mailForm" id="ui-froala"> -->
-            <form [formGroup]="mailForm">
 
-  <!--        formControlName="mail_body"-->
-  <!--        <textarea [froalaEditor]='froalaEditorOptions'  [(froalaModel)]="froalaEditorContent"></textarea>-->
-                <app-froala></app-froala>
-<!--              (click)="onSubmit()"-->
-          <button type="submit"  [disabled]="!mailForm.valid" mat-stroked-button
-                  class="mt-16 btn-primary br-0">Submit
-          </button>
-        </form>
-      </div>
-      <div class="col-md-3 pr-0" id="ui-tc-insert">
-        <h5 class="m-0 pb-8 roboto pt-32">Insert Placeholders</h5>
-        <div class="b-a">
-          <div class="row">
-<!--            (click)="openDialog('howToUse')"-->
-            <div class="col-md-12">
-              <p class="text-primary m-0 pt-8 text-right c-p roboto">How to use?</p>
-            </div>
-          </div>
-          <div class="wrapper-16 pb-0">
-            <div class="row b-a mb-16">
-              <div class="col-md-12 p-0">
-                <div class="bg-grey lter wrapper-12 pt-16">
-                  <p class="m-0 text-black">Agreement date</p>
-                </div>
-                <div class="bg-white wrapper-12" cdkDrag>
-                  <p class="m-0 text-black">agreement-date</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="wrapper-16 pb-0">
-            <div class="row b-a">
-              <div class="col-md-12 p-0">
-                <div class="bg-grey lter wrapper-12 pt-16">
-                  <p class="m-0 text-black">Client name</p>
-                </div>
-                <div class="bg-white wrapper-12">
-                  <p class="m-0 text-black">client name</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="wrapper-16 pb-0">
-            <div class="row b-a">
-              <div class="col-md-12 p-0">
-                <div class="bg-grey lter wrapper-12 pt-16">
-                  <p class="m-0 text-black">Client address</p>
-                </div>
-                <div class="bg-white wrapper-12">
-                  <p class="m-0 text-black">client address</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="wrapper-16 pt-0 pb-0">
-            <h5 class="m-0 pt-20 pb-12 text-black">Services - Fee details</h5>
-            <div class="row b-a">
-              <div class="col-md-12 p-0">
 
-                <div class="bg-grey lter wrapper-12 pt-16">
-                  <p class="m-0 text-black">Investment management & financial planning</p>
-                </div>
-                <div class="bg-white wrapper-12">
-                  <p class="m-0 text-black">IMA124-fee</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="wrapper-16 pb-28">
-            <div class="row b-a">
-              <div class="col-md-12 p-0">
-                <div class="bg-grey lter wrapper-12 pt-16">
-                  <p class="m-0 text-black">Retainer - AUM linked fee</p>
-                </div>
-                <div class="bg-white wrapper-12">
-                  <p class="m-0 text-black">IMA125-fee</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="bottom-fixed wrapper-12 w-100">
+  <div class="wrapper-100 pt-44">
     <div class="row">
-      <div class="col-md-6">
-<!--        (click)="Close('close')"-->
-        <h5 class="mb-0 pt-8 text-white c-p" >Cancel</h5>
-      </div>
-      <!-- <div class="col-md-2 pl-0">
-        <p class="m-0 c-p text-white pt-8">Help</p>
+    <div class="col-md-9">
+            <div class="row pt-44">
+                <div class="col-md-1 p-0">
+                    <h3 class="m-0 pt-4">Subject </h3>
+                  </div>
+              <div class="col-md-11 pl-12 pr-0">
+                <input type="text" class="form-control br-0" [(ngModel)]="storeData.subject">
+              </div>
+            </div>
+                    <form [formGroup]="mailForm" class="mt-20">
+                        <app-froala [(model)]="storeData.body" modelChange="saveData($event)"></app-froala>
+                  <button type="submit" (click)="onSubmit()" [disabled]="!mailForm.valid" mat-stroked-button
+                          class="mt-16 btn-primary br-0">Submit
+                  </button>
+                </form>
+              </div>
+        <div class="col-md-3 pr-0" id="ui-tc-insert">
+            <h5 class="m-0 pb-8 roboto pt-32">Insert Placeholders</h5>
+            <div class="b-a">
+              <div class="row">
+                <div class="col-md-12" (click)="openDialog('howToUse')">
+                  <p class="text-primary m-0 pt-8 text-right c-p roboto">How to use?</p>
+                </div>
+              </div>
+              <div class="wrapper-16 pb-0">
+                <div class="row b-a mb-16">
+                  <div class="col-md-12 p-0">
+                    <div class="bg-grey lter wrapper-12 pt-16">
+                      <p class="m-0 text-black">Agreement date</p>
+                    </div>
+                    <div class="bg-white wrapper-12" cdkDrag>
+                      <p class="m-0 text-black">agreement-date</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="wrapper-16 pb-0">
+                <div class="row b-a">
+                  <div class="col-md-12 p-0">
+                    <div class="bg-grey lter wrapper-12 pt-16">
+                      <p class="m-0 text-black">Client name</p>
+                    </div>
+                    <div class="bg-white wrapper-12">
+                      <p class="m-0 text-black">client name</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="wrapper-16 pb-0">
+                <div class="row b-a">
+                  <div class="col-md-12 p-0">
+                    <div class="bg-grey lter wrapper-12 pt-16">
+                      <p class="m-0 text-black">Client address</p>
+                    </div>
+                    <div class="bg-white wrapper-12">
+                      <p class="m-0 text-black">client address</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="wrapper-16 pt-0 pb-0">
+                <h5 class="m-0 pt-20 pb-12 text-black">Services - Fee details</h5>
+                <div class="row b-a">
+                  <div class="col-md-12 p-0">
+      
+                    <div class="bg-grey lter wrapper-12 pt-16">
+                      <p class="m-0 text-black">Investment management & financial planning</p>
+                    </div>
+                    <div class="bg-white wrapper-12">
+                      <p class="m-0 text-black">IMA124-fee</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="wrapper-16 pb-28">
+                <div class="row b-a">
+                  <div class="col-md-12 p-0">
+                    <div class="bg-grey lter wrapper-12 pt-16">
+                      <p class="m-0 text-black">Retainer - AUM linked fee</p>
+                    </div>
+                    <div class="bg-white wrapper-12">
+                      <p class="m-0 text-black">IMA125-fee</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
 
-      </div> -->
-      <div class="col-md-4 p-0">
-        <div class="row">
-          <div class="col-md-9 p-0">
-            <p class="m-0 c-p text-white pt-8">Saving changes</p>
-          </div>
-          <div class="col-md-3 p-0">
-            <button mat-button class="btn-bottom br-0 text-inherit">SAVE</button>
-          </div>
+
+
+  
+
+<div class="bottom-fixed wrapper-12 w-100">
+  <div class="row">
+    <div class="col-md-8">
+      <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5>
+    </div>
+   
+    <div class="col-md-4 p-0">
+      <div class="row">
+        <div class="col-md-9 right text-right">
+          <p class="m-0 c-p text-white pt-8">Saving changes</p>
+        </div>
+        <div class="col-md-3 p-0">
+          <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()">SAVE</button>
         </div>
       </div>
     </div>
   </div>
 </div>
+

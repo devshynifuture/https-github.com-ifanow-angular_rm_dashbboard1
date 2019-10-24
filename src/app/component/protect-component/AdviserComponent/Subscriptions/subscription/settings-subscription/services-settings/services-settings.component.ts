@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {UpperSliderComponent} from '../../common-subscription-component/upper-slider/upper-slider.component';
 import {MatDialog} from '@angular/material';
 import {SubscriptionService} from '../../../subscription.service';
 import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-services-settings',
@@ -14,13 +14,16 @@ export class ServicesSettingsComponent implements OnInit {
   constructor(public dialog: MatDialog, private subService: SubscriptionService,
               private dataService: EventService, private eventService: EventService) {
   }
+
   button: any;
 
   showLoader;
 
   serviceSettingData;
+  advisorId;
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.getServiceSettingSubData();
   }
 
@@ -45,11 +48,13 @@ export class ServicesSettingsComponent implements OnInit {
   getServiceSettingSubData() {
     this.showLoader = true;
     const obj = {
-      advisorId: 2808
+      // advisorId: 2808
+      advisorId: this.advisorId,
+
     };
     this.subService.getSubscriptionServiceSettingsData(obj).subscribe(
       data => this.getServiceSettingSubResponse(data),
-      err => this.getFilerrorResponse(err)
+      err => this.getFileErrorResponse(err)
     );
   }
 
@@ -59,7 +64,7 @@ export class ServicesSettingsComponent implements OnInit {
     this.showLoader = false;
   }
 
-  getFilerrorResponse(err) {
+  getFileErrorResponse(err) {
     this.dataService.openSnackBar(err, 'Dismiss');
   }
 }

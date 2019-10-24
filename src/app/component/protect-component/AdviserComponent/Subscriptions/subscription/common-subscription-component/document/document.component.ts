@@ -1,12 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
-import { SubscriptionService } from '../../../subscription.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
+import {SubscriptionService} from '../../../subscription.service';
 import * as _ from 'lodash';
-import { AddDocumentComponent } from '../add-document/add-document.component';
+import {AddDocumentComponent} from '../add-document/add-document.component';
+import {AuthService} from "../../../../../../../auth-service/authService";
 // import {element} from 'protractor';
 // import {timingSafeEqual} from 'crypto';
 
@@ -44,24 +45,28 @@ export class DocumentComponent implements OnInit {
   quotationDesignEmail: any;
   @Input() upperData;
 
-  constructor(public subInjectService: SubscriptionInject,
-              private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,public subscription:SubscriptionService) {
-    this.subInjectService.rightSliderDocument.subscribe(
-      data => this.getDocumentsDesignData(data)
-    );
-  }
+  advisorId;
 
   documentDesign;
   planDocumentData;
   serviceDocumentData;
   mappedData = [];
   dataCount;
+
+  constructor(public subInjectService: SubscriptionInject,
+              private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
+              public subscription: SubscriptionService) {
+    this.subInjectService.rightSliderDocument.subscribe(
+      data => this.getDocumentsDesignData(data)
+    );
+  }
   @Input() componentFlag: string;
 
   displayedColumns: string[] = ['checkbox', 'document', 'plan', 'service', 'date', 'sdate', 'cdate', 'status', 'icons'];
   dataSource = ELEMENT_DATA;
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.getplanDocumentData();
     this.getServiceDocumentData();
     this.getdocumentSubData();
@@ -69,17 +74,22 @@ export class DocumentComponent implements OnInit {
     console.log('upperData', this.upperData);
     this.dataCount = 0;
   }
+
   getdocumentSubData() {
     const obj = {
-      advisorId: 12345, // pass here advisor id for Invoice advisor
-      clientId: 79187,
-      flag:4
+      advisorId: this.advisorId,
+
+      // advisorId: 12345, // pass here advisor id for Invoice advisor
+      // clientId: 79187,
+      clientId: this.upperData.id,
+      flag: 4
     };
 
     this.subscription.getDocumentData(obj).subscribe(
       data => this.getdocumentResponseData(data)
     );
   }
+
   openDocument(data) {
     const Fragmentdata = {
       Flag: data,
@@ -94,13 +104,15 @@ export class DocumentComponent implements OnInit {
 
     });
   }
-  getdocumentResponseData(data){
+
+  getdocumentResponseData(data) {
     console.log(data);
     data.forEach(singleData => {
       singleData.documentText = singleData.docText;
     });
-    this.dataSource=data;
-    }
+    this.dataSource = data;
+  }
+
   openPopup(data) {
     const Fragmentdata = {
       Flag: data,
@@ -117,7 +129,7 @@ export class DocumentComponent implements OnInit {
   }
 
   dialogClose() {
-    this.eventService.changeUpperSliderState({ state: 'close' });
+    this.eventService.changeUpperSliderState({state: 'close'});
 
     // this.dialogRef.close();
   }
@@ -155,7 +167,8 @@ export class DocumentComponent implements OnInit {
 
   getplanDocumentData() {
     const obj = {
-      advisorId: 12345,
+      // advisorId: 12345,
+      advisorId: this.advisorId,
       planId: this.upperData.id
     };
     this.subService.getPlanDocumentsData(obj).subscribe(
@@ -175,12 +188,13 @@ export class DocumentComponent implements OnInit {
         this.mappedData.push(element);
       }
     });
-   
+
   }
 
   getServiceDocumentData() {
     const obj = {
-      advisorId: 12345,
+      // advisorId: 12345,
+      advisorId: this.advisorId,
       serviceId: this.upperData.id
     };
     this.subService.getMapDocumentToService(obj).subscribe(
@@ -221,7 +235,8 @@ export class DocumentComponent implements OnInit {
       const obj = [];
       this.mappedData.forEach(element => {
         const data = {
-          advisorId: 12345,
+          // advisorId: 12345,
+          advisorId: this.advisorId,
           documentRepositoryId: element.documentRepositoryId,
           mappingId: this.upperData.id
         };
@@ -240,7 +255,8 @@ export class DocumentComponent implements OnInit {
     const obj = [];
     this.mappedData.forEach(element => {
       const data = {
-        advisorId: 12345,
+        // advisorId: 12345,
+        advisorId: this.advisorId,
         documentRepositoryId: element.documentRepositoryId,
         planId: 10
       };
@@ -267,7 +283,8 @@ export class DocumentComponent implements OnInit {
           mappingId: element.mappingId,
           id: element.id,
           documentRepositoryId: element.documentRepositoryId,
-          advisorId: 12345
+          // advisorId: 12345
+          advisorId: this.advisorId,
         };
         obj.push(data);
       });

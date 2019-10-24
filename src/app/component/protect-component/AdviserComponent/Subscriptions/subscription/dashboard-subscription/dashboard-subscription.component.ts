@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {SubscriptionComponent} from '../subscription.component';
 import {SubscriptionInject} from '../../subscription-inject.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatDialog} from '@angular/material';
@@ -8,6 +7,7 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
 import {SubscriptionService} from '../../subscription.service';
 import {EnumServiceService} from '../enum-service.service';
 import {UtilService} from '../../../../../../services/util.service';
+import {AuthService} from "../../../../../../auth-service/authService";
 
 export interface PeriodicElement {
   name: string;
@@ -37,7 +37,8 @@ export class DashboardSubscriptionComponent implements OnInit {
               public dialog: MatDialog, private subService: SubscriptionService) {
   }
 
-  advisorId = 400;
+  // advisorId = 400;
+  advisorId;
   dataSourceSingCount;
   dataSourceClientWithSub;
   dataSourceInvoiceReviwed;
@@ -47,6 +48,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   displayedColumns: string[] = ['name', 'service', 'amt', 'billing', 'icons'];
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.docSentSignedCountData();
     this.clientWithSubscription();
     this.invoiceToBeReviewed();
@@ -54,28 +56,29 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.getDataForCreateService();
   }
 
-  Open(state,data) {
+  Open(state, data) {
     let feeMode;
-    if(data.feeMode=="FIXED")
-    {
-      feeMode='fixedModifyFees'
-    }
-    else{
-      feeMode='variableModifyFees'
+    if (data.feeMode == 'FIXED') {
+      feeMode = 'fixedModifyFees';
+    } else {
+      feeMode = 'variableModifyFees';
     }
     this.eventService.sidebarData(feeMode);
     this.subInjectService.rightSideData(state);
     this.subInjectService.addSingleProfile(data);
   }
-  openPlanSlider(value, state,data) {
+
+  openPlanSlider(value, state, data) {
     this.eventService.sidebarData(value);
     this.subInjectService.rightSideData(state);
     this.subInjectService.addSingleProfile(data);
-    this.invoiceHisData = data
+    this.invoiceHisData = data;
   }
+
   showSubscriptionSteps() {
     this.showSubStep = true;
   }
+
   delete(data) {
     const Fragmentdata = {
       Flag: data,
@@ -97,7 +100,9 @@ export class DashboardSubscriptionComponent implements OnInit {
     const obj = {
       // 'id':2735, //pass here advisor id for Invoice advisor
       // 'module':1,
-      advisorId: 12345,
+      // advisorId: 12345,
+      advisorId: this.advisorId,
+
       clientId: 0,
       flag: 1,
       dateType: 0,
@@ -156,7 +161,9 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   invoiceToBeReviewed() {
     const obj = {
-      advisorId: 2735,
+      // advisorId: 2735,
+      advisorId: this.advisorId,
+
       limit: 10,
       offset: 1
     };
@@ -204,14 +211,14 @@ export class DashboardSubscriptionComponent implements OnInit {
           feeTypes: [],
           billingNature: [],
           otherAssetTypes: [],
-          feeCollectionMode:[]
+          feeCollectionMode: []
         };
         newJsonForConsumption.billingNature = UtilService.convertObjectToArray(data.billingNature);
-        newJsonForConsumption.otherAssetTypes = UtilService.convertObjectToCustomArray(data.otherAssetTypes,'subAssetClassName','subAssetClassId');
+        newJsonForConsumption.otherAssetTypes = UtilService.convertObjectToCustomArray(data.otherAssetTypes, 'subAssetClassName', 'subAssetClassId');
         newJsonForConsumption.feeTypes = UtilService.convertObjectToArray(data.feeTypes);
         newJsonForConsumption.assetTypes = UtilService.convertObjectToArray(data.assetTypes);
         newJsonForConsumption.billingMode = UtilService.convertObjectToArray(data.billingMode);
-        newJsonForConsumption.feeCollectionMode=UtilService.convertObjectToArray(data.paymentModes)
+        newJsonForConsumption.feeCollectionMode = UtilService.convertObjectToArray(data.paymentModes);
         console.log('data newJsonForConsumption ', newJsonForConsumption);
 
         this.enumService.setGlobalEnumData(newJsonForConsumption);

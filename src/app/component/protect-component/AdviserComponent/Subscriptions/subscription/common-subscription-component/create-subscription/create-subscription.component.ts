@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -6,6 +6,7 @@ import {SubscriptionService} from '../../../subscription.service';
 import {MatStepper} from '@angular/material';
 import {EnumServiceService} from '../../enum-service.service';
 import * as _ from 'lodash';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 
 @Component({
@@ -53,8 +54,10 @@ export class CreateSubscriptionComponent implements OnInit {
     create: ['', [Validators.required]]
   });
   feeStructure = this.fb.group({});
+  advisorId;
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.stepper.selectedIndex = 0;
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     console.log(this.feeCollectionMode);
@@ -69,7 +72,8 @@ export class CreateSubscriptionComponent implements OnInit {
     console.log(this.clientData, 'client Data');
     if (data.feeMode) {
       const obj = {
-        advisorId: 2808,
+        // advisorId: 2808,
+        advisorId: this.advisorId,
         clientId: data.clientId,
         subId: data.id
       };
@@ -130,7 +134,9 @@ export class CreateSubscriptionComponent implements OnInit {
   startSubscsription() {
     const obj = {
       id: this.clientData.id,
-      advisorId: 2808,
+      // advisorId: 2808,
+      advisorId: this.advisorId,
+
       billerProfileId: this.selectedBiller.id,
       clientBillerProfiles: [
         {

@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {UpperSliderComponent} from '../../common-subscription-component/upper-slider/upper-slider.component';
 import {MatDialog} from '@angular/material';
-import {trigger, state, style, transition, animate} from '@angular/animations';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {SubscriptionService} from '../../../subscription.service';
 import {ModifyFeeDialogComponent} from '../../common-subscription-component/modify-fee-dialog/modify-fee-dialog.component';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 // import {CustomHtmlComponent} from "../../../../../../../common/customhtml.component";
 
@@ -17,23 +16,28 @@ import {ModifyFeeDialogComponent} from '../../common-subscription-component/modi
 export class DocumentsSettingsComponent implements OnInit {
   button: any;
   documentSettingData;
-  showLoader
+  showLoader;
 
   constructor(public dialog: MatDialog, public eventService: EventService, public subInjectService: SubscriptionInject,
               private subService: SubscriptionService) {
   }
 
+  advisorId;
+
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     // this.openFragment('documents');
     this.getDocumentsSetting();
   }
 
   getDocumentsSetting() {
     this.showLoader = true;
-    let obj = {
-      "advisorId": 2735
-    }
-    let data = [{}, {}, {}]
+    const obj = {
+      advisorId: this.advisorId,
+
+      // "advisorId": 2735
+    };
+    const data = [{}, {}, {}];
     this.getDocumentsSettingResponse(data);
     // this.subService.getSubscriptionDocumentSetting(obj).subscribe(
     //   data => this.getDocumentsSettingResponse(data)
@@ -154,10 +158,10 @@ export class DocumentsSettingsComponent implements OnInit {
         '<p>It showed a lady fitted out with a fur hat and fur \n' +
         'boa who sat upright, raising a heavy fur muff that \n' +
         'covered the whole of her lower arm towards the \n' +
-        'viewer.</p>\n'
+        'viewer.</p>\n';
     });
-    console.log()
-    this.documentSettingData = data
+    console.log();
+    this.documentSettingData = data;
     this.showLoader = false;
   }
 
@@ -167,7 +171,7 @@ export class DocumentsSettingsComponent implements OnInit {
   }
 
   openFragment(data, singleDocument) {
-    let fragmentData = {
+    const fragmentData = {
       Flag: data,
       data: singleDocument,
       id: 1,

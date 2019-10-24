@@ -223,13 +223,13 @@
                         </div>
 
                         <div class="row">
-                            <div (click)="openEmailInvoice('emailInvoice')" class="col-md-6 c-p">
+                            <div (click)="openEmailInvoice(obj)" class="col-md-6 c-p" *ngFor="let obj of storeData">
                                 <div class="example-card">
-                                <mat-card class="p-0 b-a">
+                                <mat-card class="p-0 b-a mb-20">
                                     <div class="bg-grey lter wrapper-16 pl-24">
                                         <div class="row">
                                             <div class="col-md-11 p-0">
-                                                <h3> Invoice</h3>
+                                                <h3>{{obj.subject}}</h3>
                                             </div>
                                             <div class="col-md-1">
                                                 <i class="material-icons text-right text-custom f-32">
@@ -238,17 +238,18 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- make class -->
                                     <div class="wrapper-20 pl-24">
                                         <div class="row">
                                             <div class="col-md-12 p-0">
-                                                <p>This template is used while sending invoices to your clients.</p>
+                                                <p style="word-break: break-all;">{{obj.body}}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </mat-card>
                             </div>
                             </div>
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <div class="example-card">
                                 <mat-card class="p-0 b-a">
                                     <div class="bg-grey lter wrapper-16 pl-24">
@@ -272,9 +273,9 @@
                                     </div>
                                 </mat-card>
                             </div>
-                            </div>
+                            </div> -->
                         </div>
-                        <div class="row pt-20 pb-20">
+                        <!-- <div class="row pt-20 pb-20">
                             <div class="col-md-6">
                                 <div class="example-card">
                                 <mat-card class="p-0 b-a">
@@ -300,8 +301,8 @@
                                     </div>
                                 </mat-card>
                             </div>
-                            </div>
-                            <div class="col-md-6">
+                            </div> -->
+                            <!-- <div class="col-md-6">
                                 <div class="example-card">
                                 <mat-card class="p-0 b-a">
                                     <div class="bg-grey lter wrapper-16 pl-24">
@@ -326,8 +327,8 @@
                                     </div>
                                 </mat-card>
                             </div>
-                            </div>
-                        </div>
+                            </div> -->
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>
