@@ -52,7 +52,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       // advisorId: 12345,
       advisorId: this.advisorId,
       clientId: 0,
-      flag: 2,
+      flag: 0,
       dateType: 0,
       limit: 10,
       offset: 0,
@@ -65,25 +65,29 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   getSubSummaryRes(data) {
     console.log(data);
-    data.forEach(element => {
-      element.feeMode = (element.feeMode === 1) ? 'FIXED' : 'VARIABLE';
-      element.startsOn = (element.status === 1) ? 'START' : element.startsOn;
-      element.status = (element.status === 1) ? 'NOT STARTED' : (element.status === 2) ?
-        'LIVE' : (element.status === 3) ? 'FUTURE' : 'CANCELLED';
-    });
+    // data.forEach(element => {
+    //   element.feeMode = (element.feeMode === 1) ? 'FIXED' : 'VARIABLE';
+    //   element.startsOn = (element.status === 1) ? 'START' : element.startsOn;
+    //   element.status = (element.status === 1) ? 'NOT STARTED' : (element.status === 2) ?
+    //     'LIVE' : (element.status === 3) ? 'FUTURE' : 'CANCELLED';
+    // });
     this.dataSource = data;
     this.DataToSend = data;
   }
 
   openPlanSlider(value, state, data) {
     this.eventService.sidebarData(value);
+    if(data.subscriptionPricing.feeTypeId==1)
+    {
+     
+    }
     this.subInjectService.rightSideData(state);
     this.subInjectService.addSingleProfile(data);
   }
 
   Open(state, data) {
     let feeMode;
-    if (data.feeMode == "FIXED") {
+    if (data.subscriptionPricing.feeTypeId == 1) {
       feeMode = 'fixedModifyFees'
     } else {
       feeMode = 'variableModifyFees'

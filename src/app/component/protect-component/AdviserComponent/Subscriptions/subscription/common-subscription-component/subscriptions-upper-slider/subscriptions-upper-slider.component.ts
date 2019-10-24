@@ -76,6 +76,18 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
       data => this.getSubSummaryRes(data)
     );
   }
+  Open(state, data) {
+    let feeMode;
+    if (data.feeMode == "FIXED") {
+      feeMode = 'fixedModifyFees'
+    } else {
+      feeMode = 'variableModifyFees'
+    }
+    this.eventService.sidebarData(feeMode);
+    this.subInjectService.rightSideData(state);
+    this.subInjectService.addSingleProfile(data);
+
+  }
 
   getSubSummaryRes(data) {
     console.log(data);
