@@ -10,37 +10,25 @@ import {SubscriptionInject} from '../../component/protect-component/AdviserCompo
   animations: [trigger('dialogContainer', [
     state('open', style({
       opacity: 0.25
-      // 'z-index': 10
     })),
     state('openHelp', style({
       opacity: 0.25
-      // left: '0%',
-      // 'z-index': 10
 // width: '35%'
     })),
     state('close', style({
       opacity: 0
-      // width:'0%'
-      // left: '100%'
-      // 'z-index': -1
 
     })),
     transition('close => open', [style({opacity: 0}),
       animate(300, style({opacity: 0.25}))]),
-    // transition('close => open', [animate('0.3s')]),
-    // transition('open => close', [animate('0.1s')]),
-    // transition('close => openHelp', [animate('0.3s')]),
-    // transition('openHelp => close', [animate('0.1s')])
   ]), trigger('openClose', [
     state('open', style({
       left: '40%'
     })),
     state('openHelp', style({
       left: '65%',
-      // width: '35%'
     })),
     state('close', style({
-      // width:'0%'
       left: '100%'
     })),
 
@@ -70,6 +58,8 @@ export class DialogContainerComponent implements OnInit {
   constructor(private eventService: EventService, private subinject: SubscriptionInject) {
     this.eventService.overlayVisibleData.subscribe(
       data => {
+        console.log('dialog-container constructor overlayVisibleData: ', data);
+
         this.isOverlayVisible = data;
       }
     );
@@ -107,23 +97,28 @@ export class DialogContainerComponent implements OnInit {
 
   ngOnInit() {
   }
-  getInvoiceHistoryData(data){
-    this.invoiceHisData = data
+
+  getInvoiceHistoryData(data) {
+    this.invoiceHisData = data;
   }
+
   getRightSliderData(value) {
     console.log('dialog-container getRightSliderData: ', value);
     if (value === 'close') {
       this.currentState = value;
       setTimeout(() => {
         this.dialogState = value;
+        this.isOverlayVisible = false;
       }, 300);
       // this.eventService.changeOverlayVisible(false);
-    } else {
+    } else if (value === 'open' || value === 'openHelp') {
       this.currentState = value;
 
       setTimeout(() => {
         this.dialogState = value;
+        this.isOverlayVisible = true;
       }, 100);
+    } else {
       // this.eventService.changeOverlayVisible(true);
     }
 

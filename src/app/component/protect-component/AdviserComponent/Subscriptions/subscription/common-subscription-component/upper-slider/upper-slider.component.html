@@ -45,7 +45,7 @@
                    mat-align-tabs="center">
       <mat-tab label="FEE STRUCTURE">
         <!--(serviceEvent)="serviceId=$event"-->
-        <app-fee-structure *ngIf="upperData" [upperData]="upperData"></app-fee-structure>
+        <app-fee-structure [upperData]="upperData"></app-fee-structure>
       </mat-tab>
       <mat-tab #tab [disabled]='upperData==""' label="PLANS" matTooltip="Info about the action">
         <ng-template matTabContent>

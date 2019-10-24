@@ -1,6 +1,6 @@
-import {Component, OnInit, Inject} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 // import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {trigger, state, style, transition, animate} from '@angular/animations';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 
@@ -21,7 +21,7 @@ import {SubscriptionInject} from '../../../subscription-inject.service';
       })),
       transition('close => open', [animate('0.3s')]),
       transition('open => close', [animate('0.1s')]),
-      transition('open => closeSLider', [animate('0s')]),
+      transition('open => closeSlider', [animate('0s')]),
       transition('closeSlider => open', [animate('0.3s')])
     ])
   ]
@@ -55,8 +55,16 @@ export class UpperSliderComponent implements OnInit {
         if (this.fragmentData.Flag === 'plan') {
           this.upperData = this.fragmentData.planData;
         } else if (this.fragmentData.Flag == 'services') {
+          // if (this.fragmentData.FeeData) {
+          // this.upperData = '';
+          // setTimeout(() => {
           this.upperData = this.fragmentData.FeeData;
-          this.selectedServiceTab = 1;
+          // }, 3000);
+          // this.upperData = this.fragmentData.FeeData;
+          // } else {
+          // this.upperData = '';
+          // }
+          // this.selectedServiceTab = 1;
         } else {
           this.upperData = null;
         }
@@ -84,6 +92,7 @@ export class UpperSliderComponent implements OnInit {
   headerDataDocuments = 'EMAIL DOCS WITH E-SIGN REQUEST';
 
   ngOnInit() {
+
   }
 
   dialogClose() {

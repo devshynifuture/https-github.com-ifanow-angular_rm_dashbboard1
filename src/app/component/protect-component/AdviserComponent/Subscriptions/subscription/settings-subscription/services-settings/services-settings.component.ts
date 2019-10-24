@@ -30,7 +30,10 @@ export class ServicesSettingsComponent implements OnInit {
   openFragment(singleService, data) {
     const fragmentData = {
       Flag: data,
+      // Flag: 'plan',
+      // planData: '',
       FeeData: singleService,
+      state: 'open',
       id: 2
     };
     this.eventService.changeUpperSliderState(fragmentData);
