@@ -109,5 +109,6 @@ export const appConfig = {
   GET_DOCUMENT_UPDATE:'subscription/document/edit',
   GET_EMAIL_TEMPLATE:'subscription/email-template/list/get',
   EDIT_EMAIL_TEMPLATE:'subscription/email-template/edit',
+  START_SUBSCRIPTION:'subscription/client/subscription/start',
   GET_BASE_64: 'api/v1/test/base64/decode'
 };
