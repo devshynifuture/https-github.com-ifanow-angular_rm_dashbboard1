@@ -308,6 +308,10 @@ export class SubscriptionService {
   {
     return this.http.post(apiConfig.MAIN_URL + appConfig.START_SUBSCRIPTION,data)
   }
+  filterSubscription(data){
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('limit', data.limit).set('subscription', data.subscription).set('offset', data.offset);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.FILTER_SUBCRIPTION, httpParams);
+  }
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
   }
