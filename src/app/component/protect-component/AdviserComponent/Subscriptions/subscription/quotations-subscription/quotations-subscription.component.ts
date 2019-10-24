@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { SubscriptionService } from '../../subscription.service';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {SubscriptionService} from '../../subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from "../../../../../../auth-service/authService";
 
 export interface PeriodicElement {
   name: string;
-  docname:string;
-  plan:string;
+  docname: string;
+  plan: string;
 
-  cdate:string;
+  cdate: string;
   sdate: string;
   clientsign: string;
-  status:string;
+  status: string;
 }
 
 @Component({
@@ -23,31 +24,36 @@ export interface PeriodicElement {
 })
 export class QuotationsSubscriptionComponent implements OnInit {
 
-  constructor(public eventService:EventService,public subInjectService:SubscriptionInject , public dialog: MatDialog, private subService:SubscriptionService) { }
-
-  ngOnInit() {
-    this.getQuotationsData();
-  }
-  displayedColumns: string[] = ['name', 'docname', 'plan', 'cdate','sdate','clientsign','status','icons'];
+  displayedColumns: string[] = ['name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
+  advisorId;
   dataSource;
 
-  getQuotationsData()
-  {
-    let obj={
-      'advisorId':12345
-    }
-    this.subService.getSubscriptionQuotationData(obj).subscribe(
-      data=>this.getQuotationsDataResponse(data)
-    )
-  }
-  getQuotationsDataResponse(data)
-  {
-    console.log(data);
-    this.dataSource=data
+  constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
+              public dialog: MatDialog, private subService: SubscriptionService) {
   }
 
-  deleteModal(value)
-  {
+  ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.getQuotationsData();
+  }
+
+  getQuotationsData() {
+    const obj = {
+      // advisorId: 12345
+      advisorId: this.advisorId,
+
+    };
+    this.subService.getSubscriptionQuotationData(obj).subscribe(
+      data => this.getQuotationsDataResponse(data)
+    );
+  }
+
+  getQuotationsDataResponse(data) {
+    console.log(data);
+    this.dataSource = data;
+  }
+
+  deleteModal(value) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -61,12 +67,12 @@ export class QuotationsSubscriptionComponent implements OnInit {
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
       }
-    }
+    };
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
-      autoFocus:false,
+      autoFocus: false,
 
     });
 
@@ -75,12 +81,13 @@ export class QuotationsSubscriptionComponent implements OnInit {
     });
 
   }
-  Open(value,state,data)
-  {
-    this.eventService.sidebarData(value)
-    this.subInjectService.rightSideData(state);    
+
+  Open(value, state, data) {
+    this.eventService.sidebarData(value);
+    this.subInjectService.rightSideData(state);
     this.subInjectService.addSingleProfile(data);
   }
+
   // Open(value)
   // {
   //   this.subInjectService.rightSideData(value);

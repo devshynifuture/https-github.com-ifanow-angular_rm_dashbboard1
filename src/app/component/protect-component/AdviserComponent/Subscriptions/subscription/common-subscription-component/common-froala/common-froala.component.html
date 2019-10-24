@@ -1,19 +1,19 @@
 <div *ngIf="showActivityLog==false">
   <div class="row bb-1 popup-header-fix-60">
     <div class="col-md-10 p-0">
-      <h4 class="mb-5 wrapper-20 pb-16 text-left" *ngIf="storeData.clientName==undefined">{{storeData.name}}</h4>
-      <h4 class="mb-5 wrapper-20 pb-16 text-left" *ngIf="storeData.clientName!=undefined">{{storeData.clientName}}</h4>
+      <h4 class="mb-0 wrapper-20 l-22 text-left" *ngIf="storeData.clientName==undefined">{{storeData.name}}</h4>
+      <h4 class="mb-0 wrapper-20 l-22 text-left" *ngIf="storeData.clientName!=undefined">{{storeData.clientName}}</h4>
     </div>
     <div class="col-md-2 text-right">
       <i class="material-icons pt-16 pr-8 c-p" (click)="Close('close')"> clear</i></div>
   </div>
   <div class="row pt-72 bb-1">
     <div class="col-md-8 pt-4 pb-12">
-      <img src="assets/images/svg/mail-light.svg" class="b-a c-p"> 
-      <img src="assets/images/svg/pdf-icons.svg" class="b-a ">
+      <img src="assets/images/svg/mail-light.svg" class="b-a c-p">
+      <img src="assets/images/svg/pdf-icons.svg" class="b-a">
       <img src="assets/images/svg/printer.svg" class="b-a">
-      <img src="assets/images/svg/attech-light.svg" class="b-a wrapper-8">
-      <img src="assets/images/svg/delete.svg" class="b-a wrapper-8 ml-8" (click)="deleteModal()">
+      <img src="assets/images/svg/attech-light.svg" class="wrapper-9 b-a">
+      <img src="assets/images/svg/delete.svg" class="b-a wrapper-9 ml-8">
     </div>
     <div class="col-md-4 pt-4 pb-12">
       <p class="m-0 text-black text-right c-p pr-16 pt-8" (click)="openFroala()">Activity log</p>

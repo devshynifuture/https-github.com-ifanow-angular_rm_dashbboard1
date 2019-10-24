@@ -104,8 +104,8 @@
                         <a mat-menu-item (click)="Open('open',element)" >View & Modify fee structure</a>
                         <a mat-menu-item class="bt-1" (click)="Open('billerSettings','open',element)">Change Biller</a>
                         <a mat-menu-item (click)="Open('changePayee','open',element)">Change Payee</a>
-                        <a mat-menu-item class="bt-1" (click)="delete('cancelSubscription')">Cancel subscription</a>
-                        <a mat-menu-item (click)="deleteModal('SUBSCRIPTION')">Delete subscription</a>
+                        <a mat-menu-item class="bt-1" (click)="delete('cancelSubscription',element)">Cancel subscription</a>
+                        <a mat-menu-item (click)="deleteModal('SUBSCRIPTION',element)">Delete subscription</a>
                     </mat-menu>
                 </td>
             </ng-container>

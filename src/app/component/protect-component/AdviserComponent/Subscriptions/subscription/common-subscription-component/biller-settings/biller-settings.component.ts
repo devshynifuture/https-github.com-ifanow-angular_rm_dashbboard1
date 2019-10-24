@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { SubscriptionService } from '../../../subscription.service';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {SubscriptionService} from '../../../subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-biller-settings',
@@ -9,80 +10,82 @@ import { EventService } from 'src/app/Data-service/event.service';
   styleUrls: ['./biller-settings.component.scss']
 })
 export class BillerSettingsComponent implements OnInit {
-  obj1: { 'advisorId': number; };
+  // obj1: { advisorId: number };
   @Input() upperData;
-  billerSettingData:any;
+  billerSettingData: any;
   dataSub: any;
-  dataObj:any
+  dataObj: any;
   isSelectedPlan: any;
   getSubsciption: any;
   getDataRow: any;
-  constructor(public subInjectService:SubscriptionInject,public subService:SubscriptionService,public eventService:EventService) { 
+  advisorId;
+
+  constructor(public subInjectService: SubscriptionInject, public subService: SubscriptionService, public eventService: EventService) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
-      data=>this.getBillerData(data)
+      data => this.getBillerData(data)
     );
   }
+
   ngOnInit() {
-   
+    this.advisorId = AuthService.getAdvisorId();
   }
-  getBillerData(data){
-    this.getDataRow = data
-      this.dataObj={
-        'advisorId':12345,
-        'subId': this.getDataRow.id
-      }
-      this.subService.getBillerProfile(this.dataObj).subscribe(
-        data=> this.getBillerProfileRes(data)
-      )
-      this.getSubsciption =  this.getDataRow
+
+  getBillerData(data) {
+    this.getDataRow = data;
+    this.dataObj = {
+      // 'advisorId':12345,
+      advisorId: this.advisorId,
+      subId: this.getDataRow.id
+    };
+    this.subService.getBillerProfile(this.dataObj).subscribe(
+      data => this.getBillerProfileRes(data)
+    );
+    this.getSubsciption = this.getDataRow;
 
   }
-  saveChangeBillerSetting()
-  {
-    let obj={
-      id:this.isSelectedPlan.id,
-      subscriptionId:this.getSubsciption.id
-    }
+
+  saveChangeBillerSetting() {
+    const obj = {
+      id: this.isSelectedPlan.id,
+      subscriptionId: this.getSubsciption.id
+    };
     this.subService.changeBillerSetting(obj).subscribe(
-      data=> this.changeBillerSettingData(data)
-    )
+      data => this.changeBillerSettingData(data)
+    );
   }
-  changeBillerSettingData(data)
-  {
-    console.log("data",data)
-    if(data == true){
-      this.eventService.openSnackBar("Biller is updated","OK")
-      this.Close('close')
+
+  changeBillerSettingData(data) {
+    console.log('data', data);
+    if (data == true) {
+      this.eventService.openSnackBar('Biller is updated', 'OK');
+      this.Close('close');
     }
   }
-  getBillerProfileRes(data){
-    console.log("getBillerProfileRes data",data)
-    this.billerSettingData=data;
+
+  getBillerProfileRes(data) {
+    console.log('getBillerProfileRes data', data);
+    this.billerSettingData = data;
     this.billerSettingData.forEach(element => {
-      element.selected = (element.selected == 0)?false:true  
-      });
+      element.selected = (element.selected == 0) ? false : true;
+    });
   }
-  selectedBiller(data,singlePlan)
-  {
+
+  selectedBiller(data, singlePlan) {
     singlePlan.selected = true;
-    console.log('selected value',data)
-    console.log('selected singlePlan',singlePlan);
+    console.log('selected value', data);
+    console.log('selected singlePlan', singlePlan);
     this.billerSettingData.forEach(element => {
       element.selected = false;
     });
     singlePlan.selected = true;
-    this.isSelectedPlan=singlePlan;
+    this.isSelectedPlan = singlePlan;
   }
-  Close(state)
-  {
+
+  Close(state) {
     this.subInjectService.rightSideData(state);
-    this.subInjectService.rightSliderData(state); 
+    this.subInjectService.rightSliderData(state);
   }
-  // planSettingData=[{'title':'RONAK HINDOCHA','code':'ARN123','Address':'#46,Street 1,Lokhandwala Township,Borivali East,Mumbai 400 066'},
-  //                  {'title':'RUPA HINDOCHA','code':'ARN124','Address':'#46,Street 1,Lokhandwala Township,Borivali East,Mumbai 400 066'},
-  //                  {'title':'DHYAAN HINDOCHA','code':'ARN125','Address':'#46,Street 1,Lokhandwala Township,Borivali East,Mumbai 400 066'}]
-  editProfileData(data)
-  {
-    console.log
-  }                 
+
+  editProfileData(data) {
+  }
 }

@@ -1,9 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {Router} from '@angular/router';
-import 'rxjs/Rx';
+// import 'rxjs/Rx';
 import {AuthService} from '../auth-service/authService';
+import 'rxjs-compat/add/observable/of';
+import 'rxjs-compat/add/operator/map';
+import {catchError} from 'rxjs/operators';
 
 const Buffer = require('buffer/').Buffer;
 declare var require: any;
@@ -37,19 +40,25 @@ export class HttpService {
       httpOptions = options;
     }
     return this._http
-      .post(this.baseUrl + url, body, httpOptions)
+      .post(this.baseUrl + url, body, httpOptions).pipe(
+        catchError(err => of([]))
+
+        // catchError(err => {
+        //   console.log('Handling error locally and rethrowing it...', err);
+        //
+        //   // return throwError(err);
+        // })
+      )
       .map((res: any) => {
-        if (res.status === 200) {
+        if (res.status === 200 || res.status === 201) {
           const resData = this.changeBase64ToString(res);
-          console.log(resData);
+          console.log('resData: decoded ', resData);
           return resData;
         } else {
+
           // this._router.navigate(['login']);
-          return;
+          throw new Error(res.message);
         }
-      })
-      .catch((err) => {
-        return Observable.throw(err);
       });
   }
 
@@ -62,7 +71,12 @@ export class HttpService {
       httpOptions = options;
     }
     return this._http
-      .put(this.baseUrl + url, body, httpOptions)
+      .put(this.baseUrl + url, body, httpOptions).pipe(
+        catchError(err => {
+          console.log('Handling error locally and rethrowing it...', err);
+          return throwError(err);
+        })
+      )
       .map((res: any) => {
         if (res.status === 200) {
           const resData = this.changeBase64ToString(res);
@@ -71,9 +85,6 @@ export class HttpService {
         } else {
           this._router.navigate(['login']);
         }
-      })
-      .catch((err) => {
-        return Observable.throw(err);
       });
   }
 
@@ -110,7 +121,12 @@ export class HttpService {
     };
     url = url.trim();
     return this._http
-      .get(this.baseUrl + url, httpOptions)
+      .get(this.baseUrl + url, httpOptions).pipe(
+        catchError(err => {
+          console.log('Handling error locally and rethrowing it...', err);
+          return throwError(err);
+        })
+      )
       .map((res: any) => {
         if (res.status === 'AUTH_TOKEN_EXPIRED') {
           window.alert('Invalid user, please login');
@@ -157,13 +173,18 @@ export class HttpService {
     };
     url = url.trim();
     return this._http
-      .get(this.baseUrl + url, httpOptions)
+      .get(this.baseUrl + url, httpOptions).pipe(
+        catchError(err => {
+          console.log('Handling error locally and rethrowing it...', err);
+          return throwError(err);
+        })
+      )
       .map((res: any) => {
         console.log(res);
 
         if (res.status === 200) {
           const resData = this.changeBase64ToString(res);
-          console.log(resData);
+          console.log('decoded resData', resData);
           return resData;
         } else {
           // this._router.navigate(['login']);
@@ -184,6 +205,9 @@ export class HttpService {
   changeBase64ToString(res) {
     const encodedata = res.payLoad;
     const datavalue = (Buffer.from(encodedata, 'base64').toString('ascii'));
+    // console.log('datavalue: ', datavalue);
+    // console.log('encodedata: ', encodedata);
+
     const responseData = JSON.parse(datavalue);
     return responseData;
   }

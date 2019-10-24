@@ -2,9 +2,9 @@
 <div *ngIf="showSent=='false'">
 <div class="row bb-1 popup-header-fix-60">
         <div class="col-md-10 p-0">
-            <h5 class="mb-4 wrapper-20 roboto" *ngIf="headerData!=undefined">{{headerData}}</h5>
-            <h5 class="mb-4 wrapper-20 roboto" *ngIf="headerDataInvoice!=undefined">{{headerDataInvoice}}</h5>
-            <h5 class="mb-4 wrapper-20 roboto"  *ngIf="headerDataDocuments!=undefined">{{headerDataDocuments}}</h5>
+            <h4 class="m-0 wrapper-20 roboto" *ngIf="headerData!=undefined">{{headerData}}</h4>
+            <h4 class="mb-0 wrapper-20 roboto" *ngIf="headerDataInvoice!=undefined">{{headerDataInvoice}}</h4>
+            <h4 class="mb-0 wrapper-20 roboto"  *ngIf="headerDataDocuments!=undefined">{{headerDataDocuments}}</h4>
         </div>
         <div class="col-md-2 text-right">
             <i  class="material-icons pt-16 pr-8 c-p" (click)="Close('close')"> clear</i>

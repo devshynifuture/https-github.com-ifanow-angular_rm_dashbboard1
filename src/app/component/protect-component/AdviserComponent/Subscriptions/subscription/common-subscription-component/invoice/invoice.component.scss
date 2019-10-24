@@ -23,7 +23,7 @@
   // ::ng-deep .mat-checkbox{
   //     margin-top: -6px;
   // }
-  .height-500{
+  .height-450{
     height: 450px;
     overflow: auto;
     padding-bottom: 20px !important;
@@ -42,4 +42,12 @@
 .select2-container--default .select2-selection--single{
          border: 1px solid #ccc !important; 
      border-radius: 0px !important; 
+}
+.table-container {
+  height: 300px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
 }

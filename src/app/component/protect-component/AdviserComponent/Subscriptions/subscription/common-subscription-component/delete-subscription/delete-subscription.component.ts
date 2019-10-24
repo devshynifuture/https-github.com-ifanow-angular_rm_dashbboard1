@@ -1,6 +1,9 @@
-import { Component, OnInit ,Inject} from '@angular/core';
-import { MAT_DIALOG_DATA,MatDialogRef } from '@angular/material';
-import { SubscriptionService } from '../../../subscription.service';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {SubscriptionService} from '../../../subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from "../../../../../../../auth-service/authService";
+
 @Component({
   selector: 'app-delete-subscription',
   templateUrl: './delete-subscription.component.html',
@@ -8,21 +11,39 @@ import { SubscriptionService } from '../../../subscription.service';
 })
 export class DeleteSubscriptionComponent implements OnInit {
 
-  constructor(public dialogRef:MatDialogRef<DeleteSubscriptionComponent>,@Inject(MAT_DIALOG_DATA) public fragmentData: any ,private subscription:SubscriptionService) { }
-  ngOnInit() {
-    console.log("fragmentData",this.fragmentData);
+  advisorId;
+
+  constructor(public dialogRef: MatDialogRef<DeleteSubscriptionComponent>,
+              @Inject(MAT_DIALOG_DATA) public fragmentData: any, private subscription: SubscriptionService,
+              public eventService: EventService) {
   }
-  cancelSubscription()
-  {
-    let obj={
-      advisorId:12345
-    }
+
+  ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    console.log('fragmentData', this.fragmentData);
+  }
+
+  cancelSubscription() {
+    const obj = {
+      // advisorId: 12345,
+      advisorId: this.advisorId,
+
+      id: 18
+    };
     this.subscription.cancelSubscriptionData(obj).subscribe(
       data => this.canceledData(data)
-    )
+    );
   }
-  canceledData(data)
-  {
-    console.log("data:",data)
+
+  dialogClose() {
+    this.dialogRef.close();
+  }
+
+  canceledData(data) {
+    console.log('data:', data);
+    if (data == true) {
+      this.eventService.openSnackBar('Cancelled successfully!', 'dismiss');
+      this.dialogClose();
+    }
   }
 }

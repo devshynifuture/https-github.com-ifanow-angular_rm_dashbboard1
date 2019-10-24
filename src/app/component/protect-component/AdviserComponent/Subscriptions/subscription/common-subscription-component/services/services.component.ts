@@ -1,10 +1,9 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {UpperSliderComponent} from '../upper-slider/upper-slider.component';
+import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionService} from '../../../subscription.service';
-import {MatDialogRef} from '@angular/material';
 import * as _ from 'lodash';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {EventService} from '../../../../../../../Data-service/event.service';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-services',
@@ -13,23 +12,27 @@ import {EventService} from '../../../../../../../Data-service/event.service';
 })
 export class ServicesComponent implements OnInit {
 
-  constructor( private eventService: EventService,
-               private subService: SubscriptionService, private subinject: SubscriptionInject) {
-  }
+  advisorId;
 
   @Input() componentFlag: string;
   planServiceData;
   mappedData;
   @Input() upperData;
 
+  constructor(private eventService: EventService,
+              private subService: SubscriptionService, private subinject: SubscriptionInject) {
+  }
+
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.getPlanServiceData();
     this.mappedData = [];
   }
 
   getPlanServiceData() {
     const obj = {
-      advisorId: 12345,
+      // advisorId: 12345,
+      advisorId: this.advisorId,
       planId: this.upperData ? this.upperData.id : null
     };
     this.subService.getSettingPlanServiceData(obj).subscribe(
@@ -64,7 +67,7 @@ export class ServicesComponent implements OnInit {
 
   unmapPlanToService(data) {
     data.selected = false;
-    _.remove(this.mappedData, function(delData) {
+    _.remove(this.mappedData, delData => {
       return delData.id == data.id;
     });
     console.log(this.mappedData);
@@ -74,7 +77,8 @@ export class ServicesComponent implements OnInit {
     const obj = [];
     this.mappedData.forEach(element => {
       const data = {
-        advisorId: 12345,
+        // advisorId: 12345,
+        advisorId: this.advisorId,
         global: element.global,
         id: element.id,
         planId: this.upperData ? this.upperData.id : null

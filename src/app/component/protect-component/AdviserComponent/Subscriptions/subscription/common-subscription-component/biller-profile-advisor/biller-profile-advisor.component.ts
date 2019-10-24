@@ -1,8 +1,8 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
-import {SelectionModel} from '@angular/cdk/collections';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -29,6 +29,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   isTerms = false;
   isBankName = false;
   selected = 0;
+  advisorId;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService) {
     this.subInjectService.singleProfileData.subscribe(
@@ -39,8 +40,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
   @Input() Selected;
 
   ngOnInit() {
-
+    this.advisorId = AuthService.getAdvisorId();
   }
+
   getFormControl() {
     return this.billerProfileForm.controls;
   }
@@ -62,8 +64,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
     }
   }
   getSingleBillerProfileData(data) {
-    if(data == ""){
-    data = {}
+    if (data == "") {
+      data = {}
     }
     this.billerProfileForm = this.fb.group({
       profileDetailsForm: this.fb.group({

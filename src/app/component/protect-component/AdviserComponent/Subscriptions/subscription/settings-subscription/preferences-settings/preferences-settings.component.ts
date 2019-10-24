@@ -1,92 +1,127 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionService } from '../../../subscription.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { FormBuilder } from '@angular/forms';
-import { PreferenceEmailInvoiceComponent } from '../../common-subscription-component/preference-email-invoice/preference-email-invoice.component';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionService} from '../../../subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {FormBuilder} from '@angular/forms';
+import {PreferenceEmailInvoiceComponent} from '../../common-subscription-component/preference-email-invoice/preference-email-invoice.component';
+import {AuthService} from '../../../../../../../auth-service/authService';
+
 @Component({
   selector: 'app-preferences-settings',
   templateUrl: './preferences-settings.component.html',
   styleUrls: ['./preferences-settings.component.scss']
 })
 export class PreferencesSettingsComponent implements OnInit {
+  storeData: any;
 
-  constructor(private fb: FormBuilder, public dialog: MatDialog, private subscription: SubscriptionService, public subInjectService: SubscriptionInject, private eventService: EventService) { }
+  advisorId;
+
   viewMode = 'tab1';
-  advisorId = 2735;
+
+  constructor(public subService: SubscriptionService, private fb: FormBuilder,
+              public dialog: MatDialog, private subscription: SubscriptionService,
+              public subInjectService: SubscriptionInject, private eventService: EventService) {
+  }
   prefixData;
   showLoader = false;
   billerProfileData;
   PrefixData;
   selected;
+
   ngOnInit() {
-    this.viewMode = "tab1";
+    this.viewMode = 'tab1';
+    this.advisorId = AuthService.getAdvisorId();
     this.getProfileBillerData();
+    this.getTemplate();
   }
+
+  getTemplate() {
+    const obj = {
+      // advisorId: 2727
+      advisorId: this.advisorId
+    };
+    this.subService.getEmailTemplate(obj).subscribe(
+      data => this.getTemplateDate(data)
+    );
+  }
+
+  getTemplateDate(data) {
+    console.log(data);
+    this.storeData = data;
+  }
+
   getProfileBillerData() {
     this.subscription.getPreferenceBillerProfile(this.advisorId).subscribe(
       data => this.getProfileBillerDataResponse(data)
-    )
+    );
   }
+
   getPrefixData(type) {
-    let obj = {
-      'advisorId': this.advisorId,
-      'type': type
-    }
+    const obj = {
+      advisorId: this.advisorId,
+      type
+    };
     this.showLoader = true;
     this.subscription.getPreferenceInvoiceQuotations(obj).subscribe(
       data => this.getInvoiceQuotationResponse(data, type)
-    )
+    );
   }
+
   savePrefix(data) {
-    let obj = {
-      "advisorId": 2735,
-      "id": 0,
-      "nextNumber": this.prefixData.nextNo,
-      "prefix": this.prefixData.prefix,
-      "type": 1
-    }
+    const obj = {
+      // advisorId: 2735,
+      advisorId: this.advisorId,
+      id: 0,
+      nextNumber: this.prefixData.nextNo,
+      prefix: this.prefixData.prefix,
+      type: 1
+    };
 
     this.subscription.updatePreferenceInvoiceQuotationsSubscription(obj).subscribe(
       data => this.savePrefixResponse(data)
-    )
-     this.subscription.savePreferenceInvoiceQuotationsSubscription(obj).subscribe(
-       data => this.savePrefixResponse(data)
-     )
+    );
+    this.subscription.savePreferenceInvoiceQuotationsSubscription(obj).subscribe(
+      data => this.savePrefixResponse(data)
+    );
   }
+
   savePrefixResponse(data) {
     this.prefixData = data;
   }
+
   getProfileBillerDataResponse(data) {
-    console.log("jksdfsdfaksdf", data)
+    console.log('jksdfsdfaksdf', data);
     this.billerProfileData = data;
   }
+
   getInvoiceQuotationResponse(data, type) {
     this.showLoader = false;
     this.prefixData = this.fb.group({
       prefix: [data.prefix],
       nextNo: [data.nextNumber]
-    })
+    });
 
   }
+
   Open(singleProfile, value, state) {
 
-    this.eventService.sidebarData(value)
+    this.eventService.sidebarData(value);
     this.subInjectService.rightSideData(state);
     this.subInjectService.addSingleProfile(singleProfile);
     this.selected = 0;
   }
+
   deleteModal(value) {
-    let dialogData = {
+    const dialogData = {
       data: value,
       header: 'DELETE',
       body: 'Are you sure you want to delete the document?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
       btnNo: 'DELETE'
-    }
+    };
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
@@ -102,16 +137,16 @@ export class PreferencesSettingsComponent implements OnInit {
   }
 
   openEmailInvoice(data) {
-    let Fragmentdata = {
+    const Fragmentdata = {
       Flag: data,
-      id:1
-    }
- 
+      id: 1
+    };
+
     const dialogRef = this.dialog.open(PreferenceEmailInvoiceComponent, {
-       width: '1400px',
-       data: Fragmentdata,
-       autoFocus:false,
-       panelClass:'dialogBox',
+      width: '1400px',
+      data: Fragmentdata,
+      autoFocus: false,
+      panelClass: 'dialogBox',
     });
 
     dialogRef.afterClosed().subscribe(result => {

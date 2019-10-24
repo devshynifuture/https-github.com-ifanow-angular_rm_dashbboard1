@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {EventService} from 'src/app/Data-service/event.service';
-import {trigger, state, style, transition, animate} from '@angular/animations';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import {SubscriptionInject} from '../subscription-inject.service';
 
 @Component({
@@ -54,7 +54,7 @@ export class SubscriptionComponent implements OnInit {
 
   ngOnInit() {
     this.currentState = 'close';
-    this.selected = 6;
+    // this.selected = 6;
   }
 
   getFileResponseDataAum(data) {

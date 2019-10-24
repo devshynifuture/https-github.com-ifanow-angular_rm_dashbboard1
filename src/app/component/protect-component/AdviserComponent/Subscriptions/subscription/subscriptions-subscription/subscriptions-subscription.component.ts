@@ -1,10 +1,11 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../subscription-inject.service';
 import {MatDialog} from '@angular/material';
 import {DeleteSubscriptionComponent} from '../common-subscription-component/delete-subscription/delete-subscription.component';
 import {SubscriptionService} from '../../subscription.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {AuthService} from "../../../../../../auth-service/authService";
 
 export interface PeriodicElement {
   client: string;
@@ -25,17 +26,21 @@ export interface PeriodicElement {
 })
 export class SubscriptionsSubscriptionComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject, private eventService: EventService, private subService: SubscriptionService) {
-  }
+  displayedColumns: string[] = ['client', 'service', 'amt', 'sub', 'status', 'activation',
+    'lastbilling', 'nextbilling', 'feemode', 'icons'];
 
   subscriptionValue: any;
   @Input() upperData;
-
-  displayedColumns: string[] = ['client', 'service', 'amt', 'sub', 'status', 'activation', 'lastbilling', 'nextbilling', 'feemode', 'icons'];
+  advisorId;
   dataSource;
   DataToSend;
 
+  constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
+              private eventService: EventService, private subService: SubscriptionService) {
+  }
+
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.getSummaryDataAdvisor();
     console.log('upperData', this.upperData);
   }
@@ -44,7 +49,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     const obj = {
       // 'id':2735, //pass here advisor id for Invoice advisor
       // 'module':1,
-      advisorId: 12345,
+      // advisorId: 12345,
+      advisorId: this.advisorId,
       clientId: 0,
       flag: 2,
       dateType: 0,
@@ -69,7 +75,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.DataToSend = data;
   }
 
-  openPlanSlider(value, state,data) {
+  openPlanSlider(value, state, data) {
     this.eventService.sidebarData(value);
     this.subInjectService.rightSideData(state);
     this.subInjectService.addSingleProfile(data);
@@ -77,12 +83,10 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   Open(state, data) {
     let feeMode;
-    if(data.feeMode=="FIXED")
-    {
-      feeMode='fixedModifyFees'
-    }
-    else{
-      feeMode='variableModifyFees'
+    if (data.feeMode == "FIXED") {
+      feeMode = 'fixedModifyFees'
+    } else {
+      feeMode = 'variableModifyFees'
     }
     this.eventService.sidebarData(feeMode);
     this.subInjectService.rightSideData(state);
@@ -90,9 +94,10 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   }
 
-  deleteModal(value) {
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
+      dataToShow: data,
       header: 'DELETE',
       body: 'Are you sure you want to delete the document?',
       body2: 'This cannot be undone',

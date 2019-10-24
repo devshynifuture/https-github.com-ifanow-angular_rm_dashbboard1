@@ -36,6 +36,9 @@
     width: 60%;
     z-index: 10;
     background: #fff !important;
+    // h4{
+    //     line-height: 23px !important;
+    // }
 }
 .popup-header-fix-100{
     position: fixed;
@@ -80,6 +83,7 @@
     position: fixed;
     bottom: 0;
     width: 60%;
+    z-index: 9;
   }
   .button-fix{
     right: 0;

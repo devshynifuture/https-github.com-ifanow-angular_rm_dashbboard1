@@ -1,8 +1,8 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {MatDialogRef} from '@angular/material';
+import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionService} from '../../../subscription.service';
 import * as _ from 'lodash';
 import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-plans',
@@ -18,14 +18,18 @@ export class PlansComponent implements OnInit {
   @Input() upperData;
   servicePlanData;
   mappedPlan = [];
+  advisorId;
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.getPlansMappedToAdvisor();
   }
 
   getPlansMappedToAdvisor() {
     const obj = {
-      advisorid: 12345,
+      // advisorid: 12345,
+      advisorId: this.advisorId,
+
       serviceId: this.upperData ? this.upperData.id : null
     };
     this.subService.getPlansMappedToAdvisor(obj).subscribe(
@@ -73,7 +77,9 @@ export class PlansComponent implements OnInit {
     const obj = [];
     this.mappedPlan.forEach(planData => {
       const data = {
-        advisorId: 12345,
+        // advisorId: 12345,
+        advisorId: this.advisorId,
+
         planId: planData.id,
         serviceId: this.upperData ? this.upperData.id : null
       };
