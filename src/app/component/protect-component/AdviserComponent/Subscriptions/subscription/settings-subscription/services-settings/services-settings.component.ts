@@ -46,14 +46,6 @@ export class ServicesSettingsComponent implements OnInit {
         }
       }
     );
-    /* const dialogRef = this.dialog.open(UpperSliderComponent, {
-       width: '1400px',
-       data: Fragmentdata,
-       autoFocus: false,
-       panelClass: 'dialogBox',
-     });
- */
-
   }
 
   getServiceSettingSubData() {
