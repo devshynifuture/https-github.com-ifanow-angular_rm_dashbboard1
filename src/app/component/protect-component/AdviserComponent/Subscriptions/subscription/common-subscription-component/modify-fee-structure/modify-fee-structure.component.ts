@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { EnumServiceService } from '../../enum-service.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {EnumServiceService} from '../../enum-service.service';
 import * as _ from 'lodash';
 
 @Component({
@@ -11,8 +11,9 @@ import * as _ from 'lodash';
 })
 export class ModifyFeeStructureComponent implements OnInit {
   singleSubscriptionData: any;
+
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subInject: SubscriptionInject,
-    private enumService: EnumServiceService) {
+              private enumService: EnumServiceService) {
     this.subInject.singleProfileData.subscribe(
       data => this.getSubscribeData(data)
     );
@@ -58,14 +59,16 @@ export class ModifyFeeStructureComponent implements OnInit {
     // this.otherAssetData = [];
     // console.log(this.otherAssetData)
   }
+
   getDirectFees() {
     return
   }
+
   getSubscribeData(data) {
     console.log(data);
-    this.singleSubscriptionData=data
+    this.singleSubscriptionData = data
     console.log(this.variableFeeStructureForm);
-    if (data.subscriptionPricing.feeTypeId ==1) {
+    if (data.subscriptionPricing.feeTypeId == 1) {
       this.getFixedFee().fees.setValue(data.subscriptionPricing.pricing);
       this.getFixedFee().billingNature.setValue(data.subscriptionPricing.billingNature);
       this.getFixedFee().billEvery.setValue(data.subscriptionPricing.billEvery);
@@ -143,17 +146,13 @@ export class ModifyFeeStructureComponent implements OnInit {
     if (this.getVariableFee().billEvery.invalid) {
       this.isBillValid = true;
       return;
-    }
-    else if(this.variableFeeStructureForm.get('directFees').invalid || this.variableFeeStructureForm.get('regularFees').invalid)
-    {
-      this.mutualFundFees=true
+    } else if (this.variableFeeStructureForm.get('directFees').invalid || this.variableFeeStructureForm.get('regularFees').invalid) {
+      this.mutualFundFees = true
       return
-    }
-     else if (this.getVariableFee().pricing.invalid) {
+    } else if (this.getVariableFee().pricing.invalid) {
       this.pricing = true;
       return;
-    } 
-     else {
+    } else {
       this.variableData = {
         subscriptionId: 12,
         billingNature: this.getVariableFee().billingNature.value,
@@ -164,26 +163,26 @@ export class ModifyFeeStructureComponent implements OnInit {
             directRegular: 1,
             assetClassId: 1,
             equityAllocation: this.variableFeeStructureForm.get('directFees.equity').value,
-            debtAllocation:this.variableFeeStructureForm.get('directFees.debt').value,
+            debtAllocation: this.variableFeeStructureForm.get('directFees.debt').value,
             liquidAllocation: this.variableFeeStructureForm.get('directFees.liquid').value
           }, {
             directRegular: 2,
             assetClassId: 1,
             equityAllocation: this.variableFeeStructureForm.get('regularFees.equity').value,
-            debtAllocation:  this.variableFeeStructureForm.get('regularFees.debt').value,
+            debtAllocation: this.variableFeeStructureForm.get('regularFees.debt').value,
             liquidAllocation: this.variableFeeStructureForm.get('regularFees.liquid').value
           }, {
             assetClassId: 2,
             otherAssets: this.selectedOtherAssets,
-            pricing:this.variableFeeStructureForm.controls.pricing.value
+            pricing: this.variableFeeStructureForm.controls.pricing.value
           }
         ]
       };
       if (this.createSubData) {
         console.log(this.variableData);
-        this.variableData.feeTypeId=this.singleSubscriptionData.subscriptionPricing.feeTypeId
-        this.variableData.clientId=this.singleSubscriptionData.clientId
-        this.variableData.subId=this.singleSubscriptionData.id
+        this.variableData.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId
+        this.variableData.clientId = this.singleSubscriptionData.clientId
+        this.variableData.subId = this.singleSubscriptionData.id
         this.subInjectService.addSingleProfile(this.variableData)
       }
     }
