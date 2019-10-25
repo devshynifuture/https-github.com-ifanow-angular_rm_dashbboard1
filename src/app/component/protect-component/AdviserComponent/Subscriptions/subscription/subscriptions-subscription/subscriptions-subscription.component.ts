@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { MatDialog } from '@angular/material';
-import { DeleteSubscriptionComponent } from '../common-subscription-component/delete-subscription/delete-subscription.component';
-import { SubscriptionService } from '../../subscription.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { AuthService } from "../../../../../../auth-service/authService";
+import {Component, Input, OnInit} from '@angular/core';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {MatDialog} from '@angular/material';
+import {DeleteSubscriptionComponent} from '../common-subscription-component/delete-subscription/delete-subscription.component';
+import {SubscriptionService} from '../../subscription.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {AuthService} from "../../../../../../auth-service/authService";
 
 export interface PeriodicElement {
   client: string;
@@ -53,7 +53,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   showFilter = false
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
-    private eventService: EventService, private subService: SubscriptionService) {
+              private eventService: EventService, private subService: SubscriptionService) {
   }
 
   ngOnInit() {
@@ -94,25 +94,23 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   openPlanSlider(value, state, data) {
     //data
-    // const billerDataProfile = this.subInjectService.singleProfileData.subscribe(data => {
-    //   billerDataProfile.unsubscribe();
-    //   this.eventService.sidebarData(value);
-    // });
-    // const sideBarSubs = this.eventService.sidebarSubscribeData.subscribe(data => {
-    //   sideBarSubs.unsubscribe();
-    //   this.subInjectService.rightSideData(state);
+    const billerDataProfile = this.subInjectService.singleProfileData.subscribe(data => {
+      this.eventService.sidebarData(value);
 
-    // });
+    });
+    const sideBarSubs = this.eventService.sidebarSubscribeData.subscribe(data => {
+      setTimeout(() => {
+        this.subInjectService.rightSideData(state);
+      }, 500);
+    });
+    setTimeout(() => {
+      billerDataProfile.unsubscribe();
+      sideBarSubs.unsubscribe();
+
+    }, 300);
+    this.subInjectService.addSingleProfile(data);
 
 
-    this.subInjectService.addSingleProfile(data)
-    this.eventService.sidebarData(value);
-    this.subInjectService.rightSideData(state);
-
-
-      //which side tab
-      ;
-    //open close state
   }
 
   Open(state, data) {
@@ -151,6 +149,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     });
 
   }
+
   showFilters(showFilter) {
     if (showFilter == true) {
       this.showFilter = true
@@ -159,6 +158,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     }
 
   }
+
   addFilters(addFilters) {
     console.log('addFilters', addFilters)
     if (addFilters == 'LIVE') {
@@ -187,21 +187,26 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     // console.log('this.filterStatus',this.filterStatus)
     this.callFilter()
   }
+
   filterSubscriptionRes(data) {
     console.log('filterSubscriptionRes', data)
   }
+
   addFiltersDate(dateFilter) {
     console.log('addFilters', dateFilter)
     this.filterDate.push(dateFilter)
   }
+
   removeDate(item) {
     this.filterDate.splice(item, 1);
   }
+
   remove(item) {
     this.filterStatus.splice(item, 1);
     this.callFilter()
 
   }
+
   callFilter() {
     this.statusIdList = this.sendData
     let obj = {
@@ -220,6 +225,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       data => this.filterSubscriptionRes(data)
     );
   }
+
   delete(data) {
     const Fragmentdata = {
       Flag: data,
