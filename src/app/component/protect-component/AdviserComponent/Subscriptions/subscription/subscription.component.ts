@@ -54,7 +54,7 @@ export class SubscriptionComponent implements OnInit {
 
   ngOnInit() {
     this.currentState = 'close';
-    // this.selected = 6;
+    this.selected = 2;
   }
 
   getFileResponseDataAum(data) {
@@ -68,9 +68,9 @@ export class SubscriptionComponent implements OnInit {
   getRightSliderData(value) {
     this.currentState = value;
     if (value === 'close') {
-      this.eventService.changeOverlayVisible(false);
+      // this.eventService.changeOverlayVisible(false);
     } else {
-      this.eventService.changeOverlayVisible(true);
+      // this.eventService.changeOverlayVisible(true);
     }
   }
 

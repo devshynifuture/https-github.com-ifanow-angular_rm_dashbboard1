@@ -1,9 +1,9 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {UpperSliderComponent} from '../common-subscription-component/upper-slider/upper-slider.component';
+import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../subscription-inject.service';
 import {SubscriptionService} from '../../subscription.service';
+import {UtilService} from "../../../../../../services/util.service";
 
 export interface PeriodicElement {
   name: string;
@@ -38,11 +38,11 @@ export class ClientSubscriptionComponent implements OnInit {
       id: 2808
     };
     this.subService.getSubscriptionClientsList(obj).subscribe(
-      data => this.getClientListRespobnse(data)
+      data => this.getClientListResponse(data)
     );
   }
 
-  getClientListRespobnse(data) {
+  getClientListResponse(data) {
     console.log('client-subscription List', data);
     this.dataSource = data;
   }
@@ -60,8 +60,14 @@ export class ClientSubscriptionComponent implements OnInit {
       state: 'open'
     };
 
-    this.eventService.changeUpperSliderState(fragmentData);
-
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
     // const dialogRef = this.dialog.open(UpperSliderComponent, {
     //   width: '1400px',
     //   data: Fragmentdata,

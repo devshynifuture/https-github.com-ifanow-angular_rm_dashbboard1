@@ -8,21 +8,11 @@
     </i>
   </div>
 </div>
-<mat-horizontal-stepper [@.disabled]="true" [linear]="true" #stepper id="ui-stepper" class="pt-72">
+<mat-horizontal-stepper [@.disabled]="true" id="ui-stepper"  #stepper  class="pt-72">
   <!-- TODO   <mat-step  [stepControl]="firstFormGroup">-->
   <mat-step [stepControl]="feeStructureForm">
     <ng-template matStepLabel>Fee Structure</ng-template>
     <app-modify-fee-structure [createSubData]='feeStructureData'></app-modify-fee-structure>
-    <!-- <div class="bottom-fixed wrapper-12">
-      <div class="row">
-        <div class="col-md-4">
-          <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>
-        </div>
-        <div class="col-md-8 right text-right">
-          <button mat-button class="btn-bottom br-0 text-inherit" (click)="goForward()">NEXT STEP</button>
-        </div>
-      </div>
-    </div> -->
   </mat-step>
 
   <!-- TODO   <mat-step [stepControl]="secondFormGroup">-->
@@ -49,7 +39,11 @@
         </div>
         <div class="col-md-6">
           <div class="form-group mb-0">
-            <input type="text" formControlName="activationDate" class="form-control t-50 br-0">
+            <mat-form-field>
+              <input matInput formControlName="activationDate" [matDatepicker]="picker" placeholder="Choose a date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
           </div>
           <mat-error
             [ngClass]="{'v-h':subscriptionDetails.get('activationDate').untouched || subscriptionDetails.get('activationDate').valid}"
@@ -176,7 +170,7 @@
     <ng-template matStepLabel>Payee Settings</ng-template>
     <div class="wrapper-16 pb-44 mb-44">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12">{{selectedPayee.length}}
           <p class="m-0 text-right text-custom roboto">You can map more than one plan to the client</p>
         </div>
       </div>
@@ -225,7 +219,7 @@
           <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-          <button mat-button class="btn-bottom br-0 text-inherit" (click)="goForward()">NEXT STEP</button>
+          <button mat-button class="btn-bottom br-0 text-inherit" [disabled]="selectedPayee.length==0" (click)="goForward()">NEXT STEP</button>
         </div>
       </div>
     </div>
@@ -258,7 +252,7 @@
           <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-          <button mat-button class="btn-bottom br-0 text-inherit" (click)="startSubscsription()">SAVE</button>
+          <button mat-button class="btn-bottom br-0 text-inherit" (click)="startSubscsription();Close('close')">SAVE</button>
         </div>
       </div>
     </div>

@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {SubscriptionService} from '../../../subscription.service';
 import * as _ from 'lodash';
 import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from "../../../../../../../auth-service/authService";
+import {AuthService} from '../../../../../../../auth-service/authService';
 
 @Component({
   selector: 'app-plans',
@@ -23,6 +23,17 @@ export class PlansComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.getPlansMappedToAdvisor();
+  }
+
+
+  @HostListener('window:focus', ['$event'])
+  tabActivation(event) {
+    console.log('112213123y12312398123109237123123781237123712893719823 TAb activated');
+  }
+
+  @HostListener('window:blur', ['$event'])
+  tabDeactivation(event) {
+    console.log('112213123y12312398123109237123123781237123712893719823 TAb deactivated');
   }
 
   getPlansMappedToAdvisor() {

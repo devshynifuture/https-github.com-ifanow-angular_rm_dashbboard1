@@ -18,8 +18,10 @@ export class AssetsComponent implements OnInit {
   datasource2 = ELEMENT_DATA2;
   displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status','icons'];
   datasource3 = ELEMENT_DATA3;
+
   displayedColumns4 = ['no', 'owner', 'type', 'cvalue', 'rate', 'amt','mdate','mvalue','number','desc','status','icons'];
   datasource4 = ELEMENT_DATA4;
+
   displayedColumns5 = ['no', 'owner', 'cvalue', 'rate', 'amt','mdate','number','desc','status','icons'];
   datasource5 = ELEMENT_DATA5;
   displayedColumns6 = ['no', 'owner', 'cvalue', 'camt', 'amt','cdate','rate','mvalue','tenure','type','desc','status','icons'];
@@ -30,9 +32,38 @@ export class AssetsComponent implements OnInit {
   datasource8 = ELEMENT_DATA8;
   displayedColumns9 = ['no', 'owner', 'grams','car','price','mvalue','pvalue','desc','status','icons'];
   datasource9 = ELEMENT_DATA9;
+
   displayedColumns10 = ['no', 'owner','cvalue','emp','empc','rate','bal','bacla','year','desc','status','icons'];
   datasource10 = ELEMENT_DATA10;
+
   
+    displayedColumns11 = ['no', 'owner','cvalue','emp','empc','rate','bal','bacla','year','desc','status','icons'];
+  datasource11 = ELEMENT_DATA11;
+
+  displayedColumns12 = ['no', 'owner','cvalue','total','account','rate','mdate','scheme','ppf','desc','status','icons'];
+  datasource12 = ELEMENT_DATA12;
+
+  displayedColumns13 = ['no', 'owner','name','number','year','amt','reason','desc','status','icons'];
+  datasource13 = ELEMENT_DATA13;
+
+
+  displayedColumns15 = ['no', 'owner','nvalue','date','amt','pay','desc','status','icons'];
+  datasource15 = ELEMENT_DATA15;
+
+  displayedColumns16 = ['no', 'owner','cvalue','rate','amt','number','mdate','desc','status','icons'];
+  datasource16 = ELEMENT_DATA16;
+
+  displayedColumns17 = ['no', 'owner','cvalue','rate','mvalue','mdate','number','desc','status','icons'];
+  datasource17 = ELEMENT_DATA17;
+displayedColumns18 = ['no', 'owner','cvalue','rate','amt','mvalue','mdate','desc','status','icons'];
+datasource18 = ELEMENT_DATA18;
+
+displayedColumns19 = ['no', 'owner','payout','rate','tamt','amt','mdate','desc','status','icons'];
+datasource19 = ELEMENT_DATA19;
+
+displayedColumns20 = ['no', 'owner','cvalue','rate','balance','bdate','desc','status','icons'];
+datasource20 = ELEMENT_DATA20;
+
   viewMode;
   ngOnInit() {
     this.viewMode="tab1"
@@ -412,4 +443,192 @@ const ELEMENT_DATA11: PeriodicElement11[] = [
   ,cvalue:"94,925", emp:"94,925",empc:"94,925",rate:"8.40%",bal:"60,000",bacla:"18/09/2021",year:"2021",desc:"ICICI FD",status:"LIVE"},
   {no: '', owner: 'Total'
   ,cvalue:"1,28,925", emp:"1,28,925",empc:"1,28,925",rate:"",bal:"1,20,000",bacla:"",year:"",desc:"",status:""},
+];
+
+
+
+
+export interface PeriodicElement12 {
+  no: string;
+  owner: string;
+  cvalue:string;
+  total:string;
+  account:string;
+  rate:string;
+  mdate:string;
+  scheme:string;
+  ppf:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA12: PeriodicElement12[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,cvalue:"94,925", total:"94,925",account:"94,925",rate:"8.40%",mdate:"18/09/2021",scheme:"Cumulative",ppf:"980787870909",desc:"ICICI FD",status:"MATURED"},
+  {no: '2.', owner: 'Shilpa Jain'
+  ,cvalue:"94,925", total:"94,925",account:"94,925",rate:"8.40%",mdate:"18/09/2021",scheme:"Cumulative",ppf:"980787870909",desc:"ICICI FD",status:"LIVE"},
+  {no: '', owner: 'Total'
+  ,cvalue:"94,925", total:"1,28,925",account:"1,28,925",rate:"",mdate:"",scheme:"",ppf:"",desc:"",status:""},
+ 
+];
+
+
+export interface PeriodicElement13 {
+  no: string;
+  owner: string;
+  name:string;
+  number:string;
+  year:string;
+  amt:string;
+  reason:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA13: PeriodicElement13[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,name:"Futurewise Technologies", number:"5",year:"5",amt:"1,00,000",reason:"Worked for more than 10 years",desc:"ICICI FD",status:"MATURED"},
+  {no: '2.', owner: 'Shilpa Jain'
+  ,name:"Futurewise Technologies", number:"5",year:"5",amt:"1,00,000",reason:"Worked for more than 10 years",desc:"Axis bank FD",status:"LIVE"},
+  {no: '', owner: 'Total'
+  ,name:"", number:"",year:"",amt:"1,50,000",reason:"",desc:"",status:""},
+];
+
+export interface PeriodicElement15 {
+  no: string;
+  owner: string;
+  nvalue:string;
+  date:string;
+  amt:string;
+  pay:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA15: PeriodicElement15[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,nvalue:"94,925", date:"12/11/2022",amt:"60,000",pay:"Monthly",desc:"ICICI FD",status:"MATURED"},
+  {no: '2.', owner: 'Rahul Jain'
+  ,nvalue:"94,925", date:"12/11/2022",amt:"60,000",pay:"Monthly",desc:"ICICI FD",status:"MATURED"},
+  {no: '', owner: 'Total'
+  ,nvalue:"1,50,000", date:"",amt:"1,50,000",pay:"",desc:"",status:""},
+];
+
+export interface PeriodicElement16 {
+  no: string;
+  owner: string;
+  cvalue:string;
+  rate:string;
+  amt:string;
+  number:string;
+  mdate:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA16: PeriodicElement16[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,cvalue:"94,925", rate:"8.40%",amt:"60,000",number:"76635874357424",mdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
+  {no: '2.', owner: 'Rahul Jain'
+  ,cvalue:"94,925", rate:"8.40%",amt:"60,000",number:"76635874357424",mdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
+  {no: '', owner: 'Total'
+  ,cvalue:"1,28,925", rate:"",amt:"1,20,000",number:"",mdate:"",desc:"",status:""},
+];
+
+
+
+export interface PeriodicElement17 {
+  no: string;
+  owner: string;
+  cvalue:string;
+  rate:string;
+  mvalue:string;
+  mdate:string;
+  number:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA17: PeriodicElement17[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,cvalue:"94,925", rate:"8.40%",mvalue:"60,000",mdate:"18/09/2021",number:"76635874357424",desc:"ICICI FD",status:"MATURED"},
+  {no: '2.', owner: 'Rahul Jain'
+  ,cvalue:"94,925", rate:"8.40%",mvalue:"60,000",mdate:"18/09/2021",number:"76635874357424",desc:"ICICI FD",status:"LIVE"},
+  {no: '', owner: 'Total'
+  ,cvalue:"1,28,925", rate:"",mvalue:"1,28,925",mdate:"",number:"",desc:"",status:""},
+];
+
+export interface PeriodicElement18 {
+  no: string;
+  owner: string;
+  cvalue:string;
+  rate:string;
+  amt:string;
+  mvalue:string;
+  mdate:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA18: PeriodicElement18[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,cvalue:"94,925", rate:"8.40%",amt:"60,000",mvalue:"60,000",mdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
+
+  {no: '2.', owner: 'Rahul Jain'
+  ,cvalue:"94,925", rate:"8.40%",amt:"60,000",mvalue:"60,000",mdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
+
+  {no: '', owner: 'Total'
+  ,cvalue:"1,28,925", rate:"",amt:"1,20,000",mvalue:"60,000",mdate:"",desc:"",status:""},
+];
+
+
+
+
+export interface PeriodicElement19 {
+  no: string;
+  owner: string;
+  payout:string;
+  pdate:string;
+  rate:string;
+  tamt:string;
+  amt:string;
+  mdate:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA19: PeriodicElement19[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,payout:"94,925", pdate:"25/07/2019",rate:"8.40%",tamt:"60,000",amt:"60,000",mdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
+  {no: '1.', owner: 'Rahul Jain'
+  ,payout:"94,925", pdate:"25/07/2019",rate:"8.40%",tamt:"60,000",amt:"60,000",mdate:"18/09/2021",desc:"ICICI FD",status:"LIVE"},
+  {no: '', owner: 'Total'
+  ,payout:"1,28,925", pdate:"",rate:"",tamt:"1,28,925",amt:"1,28,925",mdate:"",desc:"",status:""},
+];
+export interface PeriodicElement20 {
+  no: string;
+  owner: string;
+  cvalue:string;
+  rate:string;
+  balance:string;
+  bdate:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA20: PeriodicElement20[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,cvalue:"94,925", rate:"8.40%",balance:"60,000",bdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
+  {no: '2.', owner: 'Rahul Jain'
+  ,cvalue:"94,925", rate:"8.40%",balance:"60,000",bdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
+  {no: '', owner: 'Total'
+  ,cvalue:"94,925", rate:"",balance:"60,000",bdate:"",desc:"",status:""},
 ];
