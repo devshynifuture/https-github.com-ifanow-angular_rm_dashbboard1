@@ -49,6 +49,7 @@ export class EventService {
 
   sidebarData(message: string) {
     this.sidebarValue.next(message);
+    return this.sidebarSubscribeData;
   }
 
   tabData(message: string) {
