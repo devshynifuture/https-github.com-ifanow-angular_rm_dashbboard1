@@ -48,6 +48,7 @@ export class SubscriptionInject {
   addSingleProfile(obj) {
     /**/
     this.billerData.next(obj);
+    return this.singleProfileData;
   }
 
   private upper=new BehaviorSubject("");

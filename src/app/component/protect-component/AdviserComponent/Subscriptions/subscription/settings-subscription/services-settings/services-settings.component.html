@@ -7,17 +7,17 @@
                 <h4 class="pt-20 pb-28 m-0">Services</h4>
             </div>
         </div>
-    
+
         <div class="row">
-            <div class="col-md-4 pr-20 pb-20 pl-0">
+          <div (click)="openFragment('','services')" class="col-md-4 pr-20 pb-20 pl-0 c-p">
                 <mat-card class="example-card height-470 bg-grey lter">
-    
-                    <mat-card-content>
+
+                  <mat-card-content>
                         <p class="text-center">
-                            <i class="material-icons icon-center" (click)="openFragment('','services')">   add  </i>
+                          <i class="material-icons icon-center"> add </i>
                         </p>
                     </mat-card-content>
-    
+
                 </mat-card>
             </div>
             <div class="col-md-4 pr-20 pb-20 pl-0 " *ngFor="let singleService of serviceSettingData">
@@ -28,10 +28,10 @@
                             <mat-card-subtitle class="pt-4 pb-12">{{singleService.serviceCode}}</mat-card-subtitle>
                         </div>
                     </mat-card-header>
-    
-                    <mat-card-content class="bg-white mb-0">
-    
-                        <div class="row wrapper-20">
+
+                  <mat-card-content class="bg-white mb-0">
+
+                    <div class="row wrapper-20">
                             <div  class="col-md-7 p-0">
                                 <p class="mb-0 text-primitive f-12">FEE TYPE</p>
                                 <label class="bg-header mt-4" *ngIf="singleService.servicePricing.feeTypeId==1">Fixed</label>
@@ -68,7 +68,7 @@
                                 <p class="f-14 text-primitive">DOCUMENTS</p>
                                 <p class="f-24">{{singleService.docCount}}</p>
                             </div>
-    
+
                         </div>
                     </mat-card-content>
                     <mat-card-actions (click)="openFragment(singleService,'services')" class="block text-center pt-20 pb-20 mb-0">

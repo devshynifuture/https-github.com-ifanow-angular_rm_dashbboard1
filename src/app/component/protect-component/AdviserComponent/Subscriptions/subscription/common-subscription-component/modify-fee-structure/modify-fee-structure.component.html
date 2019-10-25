@@ -9,7 +9,7 @@
         </div>
     </div>
 </div>
-<div *ngIf="ModifyFeesChange=='variableModifyFees' || createSubData" class="wrapper-20 pt-36 mb-44 pb-44">
+<div *ngIf="ModifyFeesChange=='variableModifyFees' || createSubData.feeModeName=='variableModify'" class="wrapper-20 pt-36 mb-44 pb-44">
     <div [formGroup]="variableFeeStructureForm">
         <p class="text-primary">VARIABLE </p>
         <h4 class="mb-0 pt-16">Investment management - AUM Linked fee</h4>
@@ -80,16 +80,16 @@
                         </div>
                         <div class="row ui-mff">
                             <div class="col-md-4 p-0 bl-0 br-grey">
-                                <input type="number" pattern="\d*" onKeyPress="if(this.value.length==4) return false;"
-                                    placeholder="%" formGroupName="equity" class="form-control br-0 h-39">
+                                <input type="number" onKeyPress="if(this.value.length==4) return false;"
+                                    placeholder="%" formControlName="equity" class="form-control br-0 h-39">
                             </div>
                             <div class="col-md-4 p-0 br-grey">
-                                <input type="number" pattern="\d*" onKeyPress="if(this.value.length==4) return false;"
-                                    placeholder="%" formGroupName="debt" class="form-control br-0 h-39">
+                                <input type="number" onKeyPress="if(this.value.length==4) return false;"
+                                    placeholder="%" formControlName="debt" class="form-control br-0 h-39">
                             </div>
                             <div class="col-md-4 p-0">
-                                <input type="number" pattern="\d*" onKeyPress="if(this.value.length==4) return false;"
-                                    placeholder="%" formGroupName="liquid" class="form-control br-0 h-39">
+                                <input type="number" onKeyPress="if(this.value.length==4) return false;"
+                                    placeholder="%" formControlName="liquid" class="form-control br-0 h-39">
                             </div>
                         </div>
                     </div>
@@ -109,21 +109,21 @@
                         </div>
                         <div class="row ui-mff">
                             <div class="col-md-4 br-grey p-0 bl-0 bb-grey">
-                                <input type="number" pattern="\d*" onKeyPress="if(this.value.length==4) return false;"
-                                    placeholder="%" formGroupName="equity" class="form-control br-0 h-39 br-grey">
+                                <input type="number" onKeyPress="if(this.value.length==4) return false;"
+                                    placeholder="%" formControlName="equity" class="form-control br-0 h-39 br-grey">
                             </div>
                             <div class="col-md-4 br-grey bb-grey p-0">
-                                <input type="number" pattern="\d*" onKeyPress="if(this.value.length==4) return false;"
-                                    placeholder="%" formGroupName="debt" class="form-control br-0 h-39 br-grey">
+                                <input type="number" onKeyPress="if(this.value.length==4) return false;"
+                                    placeholder="%" formControlName="debt" class="form-control br-0 h-39 br-grey">
                             </div>
                             <div class="col-md-4 br-grey bb-grey p-0">
-                                <input type="number" pattern="\d*" onKeyPress="if(this.value.length==4) return false;"
-                                    placeholder="%" formGroupName="liquid" class="form-control br-0 h-39 br-grey">
+                                <input type="number" onKeyPress="if(this.value.length==4) return false;"
+                                    placeholder="%" formControlName="liquid" class="form-control br-0 h-39 br-grey">
                             </div>
                         </div>
                     </div>
                 </div>
-                <mat-error *ngIf="mutualFundFees" class="f-12 pt-4">Please fill fees details</mat-error>
+                <mat-error [ngClass]="{'v-h': !mutualFundFees}" class="f-12 pt-4">Please fill fees details</mat-error>
             </div>
         </div>
         <div class="row pt-44">
@@ -159,7 +159,7 @@
 
     </div>
 </div>
-<div *ngIf="ModifyFeesChange=='fixedModifyFees'" class="wrapper-20 pt-36 mb-44 pb-44">
+<div *ngIf="ModifyFeesChange=='fixedModifyFees' || createSubData.feeModeName=='feeModify'" class="wrapper-20 pt-36 mb-44 pb-44">
     <div [formGroup]="fixedFeeStructureForm">
         <p class="text-primary">FIXED </p>
         <h4 class="mb-0 pt-16">Financial Planning</h4>

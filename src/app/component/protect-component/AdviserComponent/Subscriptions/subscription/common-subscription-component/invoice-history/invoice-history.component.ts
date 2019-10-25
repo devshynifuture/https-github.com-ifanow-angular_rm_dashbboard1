@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SubscriptionComponent } from '../../subscription.component';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { SubscriptionService } from '../../../subscription.service';
 
@@ -55,13 +54,20 @@ export class InvoiceHistoryComponent implements OnInit {
   }
 
   invoiceDataGet(data){
-    let obj = {
-      module : 3,
-       id : data.id
+    if(data.feeMode)
+    {
+     return
     }
-    this.subService.getInvoices(obj).subscribe(
-      data => this.getInvoiceResponseData(data)
-    );
+    else{
+      // let obj = {
+      //   module : 3,
+      //    id : data.id
+      // }
+      // this.subService.getInvoices(obj).subscribe(
+      //   data => this.getInvoiceResponseData(data)
+      // );
+    }
+    
   }
   getInvoiceResponseData(data){
     console.log('getInvoiceResponseData',data)

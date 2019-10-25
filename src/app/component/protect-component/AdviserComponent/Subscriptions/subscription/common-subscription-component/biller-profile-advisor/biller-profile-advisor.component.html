@@ -22,16 +22,19 @@
                 </div>
                 <div class="col-md-7">
                   <div class="form-group mb-0">
-                    <input type="text" formControlName="gstinNum" maxlength="{{getFrormControlProfile().gstinNum.maxLength}}" autofocus class="form-control br-0 text-left">
+                    <input autofocus class="form-control br-0 text-left" formControlName="gstinNum"
+                           maxlength="{{getFormControlProfile().gstinNum.maxLength}}" type="text">
                   </div>
                   <div class="row pt-0">
                     <div class="col-md-8">
                       <mat-error class="f-12 pt-4"
-                      *ngIf="isGstin && getFrormControlProfile().gstinNum.invalid || (getFrormControlProfile().gstinNum.touched && getFrormControlProfile().gstinNum.invalid)">
+                                 *ngIf="isGstin && getFormControlProfile().gstinNum.invalid || (getFormControlProfile().gstinNum.touched && getFormControlProfile().gstinNum.invalid)">
                       GSTIN number is required</mat-error>
                   </div>
                     <div class="col-md-4">
-                      <p class="mb-0 f-12 text-custom text-right pt-4">{{getFrormControlProfile().gstinNum.value?.length?getFrormControlProfile().gstinNum.value.length:0}}/{{getFrormControlProfile().gstinNum.maxLength}}</p>
+                      <p
+                        class="mb-0 f-12 text-custom text-right pt-4">{{getFormControlProfile().gstinNum.value?.length ? getFormControlProfile().gstinNum.value.length : 0}}
+                        /{{getFormControlProfile().gstinNum.maxLength}}</p>
                   </div>
                 </div>
                 </div>
@@ -42,16 +45,19 @@
                 </div>
                 <div class="col-md-7">
                   <div class="form-group">
-                    <input type="text" formControlName="panNum" maxlength="{{getFrormControlProfile().panNum.maxLength}}" class="form-control br-0 text-left">
+                    <input class="form-control br-0 text-left" formControlName="panNum"
+                           maxlength="{{getFormControlProfile().panNum.maxLength}}" type="text">
                   </div>
                   <div class="row pt-0">
                     <div class="col-md-8">
                       <mat-error class="f-12 pt-4"
-                      *ngIf="isPanNum && getFrormControlProfile().panNum.invalid || (getFrormControlProfile().panNum.touched && getFrormControlProfile().panNum.invalid)">
+                                 *ngIf="isPanNum && getFormControlProfile().panNum.invalid || (getFormControlProfile().panNum.touched && getFormControlProfile().panNum.invalid)">
                       PAN is required</mat-error>
                   </div>
                   <div class="col-md-4">
-                    <p class="mb-0 f-12 text-custom text-right pt-4">{{getFrormControlProfile().panNum.value?.length?getFrormControlProfile().panNum.value.length:0}}/{{getFrormControlProfile().panNum.maxLength}}</p>
+                    <p
+                      class="mb-0 f-12 text-custom text-right pt-4">{{getFormControlProfile().panNum.value?.length ? getFormControlProfile().panNum.value.length : 0}}
+                      /{{getFormControlProfile().panNum.maxLength}}</p>
                 </div>
                 </div>
                 </div>
@@ -62,16 +68,19 @@
                 </div>
                 <div class="col-md-7">
                   <div class="form-group">
-                    <textarea class="form-control br-0" formControlName='Address' maxlength="{{getFrormControlProfile().Address.maxLength}}" rows="5"></textarea>
+                    <textarea class="form-control br-0" formControlName='Address'
+                              maxlength="{{getFormControlProfile().Address.maxLength}}" rows="5"></textarea>
                   </div>
                   <div class="row pt-0">
                     <div class="col-md-8">
                       <mat-error class="f-12 pt-4"
-                      *ngIf="isAddress && getFrormControlProfile().Address.invalid || (getFrormControlProfile().Address.touched && getFrormControlProfile().Address.invalid)">
+                                 *ngIf="isAddress && getFormControlProfile().Address.invalid || (getFormControlProfile().Address.touched && getFormControlProfile().Address.invalid)">
                       Address is required</mat-error>
                   </div>
                   <div class="col-md-12">
-                    <p class="mb-0 f-12 text-custom text-right pt-4">{{getFrormControlProfile().Address.value?.length?getFrormControlProfile().Address.value.length:0}}/{{getFrormControlProfile().Address.maxLength}}</p>
+                    <p
+                      class="mb-0 f-12 text-custom text-right pt-4">{{getFormControlProfile().Address.value?.length ? getFormControlProfile().Address.value.length : 0}}
+                      /{{getFormControlProfile().Address.maxLength}}</p>
                 </div>
                 </div>
                 </div>
@@ -87,7 +96,7 @@
                   <div class="row pt-0">
                     <div class="col-md-8">
                       <mat-error class="f-12 pt-4"
-                      *ngIf="isState && getFrormControlProfile().state.invalid || (getFrormControlProfile().state.touched && getFrormControlProfile().state.invalid)">
+                                 *ngIf="isState && getFormControlProfile().state.invalid || (getFormControlProfile().state.touched && getFormControlProfile().state.invalid)">
                       State is required</mat-error>
                   </div>
                   </div>
@@ -99,12 +108,12 @@
                   </div>
                   <div class="col-md-7">
                     <div class="form-group">
-                      <input type="text" formControlName="zipCode" class="form-control br-0 text-left">
+                      <input class="form-control br-0 text-left" formControlName="pincode" type="text">
                     </div>
                     <div class="row pt-0">
                       <div class="col-md-8">
                         <mat-error class="f-12 pt-4"
-                        *ngIf="isZipCode && getFrormControlProfile().zipCode.invalid || (getFrormControlProfile().zipCode.touched && getFrormControlProfile().zipCode.invalid)">
+                                   *ngIf="isZipCode && getFormControlProfile().pincode.invalid || (getFormControlProfile().pincode.touched && getFormControlProfile().pincode.invalid)">
                         Pincode is required</mat-error>
                     </div>
                     </div>
@@ -121,7 +130,7 @@
                   <div class="row pt-0">
                     <div class="col-md-8">
                       <mat-error class="f-12 pt-4"
-                      *ngIf="isCountry && getFrormControlProfile().country.invalid || (getFrormControlProfile().country.touched && getFrormControlProfile().country.invalid)">
+                                 *ngIf="isCountry && getFormControlProfile().country.invalid || (getFormControlProfile().country.touched && getFormControlProfile().country.invalid)">
                       Country is required</mat-error>
                   </div>
                   </div>
@@ -138,7 +147,7 @@
                   <div class="row pt-0">
                     <div class="col-md-8">
                       <mat-error class="f-12 pt-4"
-                      *ngIf="isCity && getFrormControlProfile().city.invalid || (getFrormControlProfile().city.touched && getFrormControlProfile().city.invalid)">
+                                 *ngIf="isCity && getFormControlProfile().city.invalid || (getFormControlProfile().city.touched && getFormControlProfile().city.invalid)">
                       City is required</mat-error>
                   </div>
                   </div>
@@ -390,8 +399,8 @@
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
-                 
-              </div>
+
+                </div>
               <div class="col-md-12">
                 <p class="mb-0 f-12 text-custom text-right pt-4">{{getFrormControlMisc().terms.value?.length?getFrormControlMisc().terms.value.length:0}}/{{getFrormControlMisc().terms.maxLength}}</p>
             </div>

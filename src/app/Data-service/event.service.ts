@@ -33,6 +33,7 @@ export class EventService {
 
   changeUpperSliderState(sliderState: object) {
     this.upperSliderData.next(sliderState);
+    return this.upperSliderDataObs;
   }
 
   changeOverlayVisible(isVisible: boolean) {
@@ -48,6 +49,7 @@ export class EventService {
 
   sidebarData(message: string) {
     this.sidebarValue.next(message);
+    return this.sidebarSubscribeData;
   }
 
   tabData(message: string) {

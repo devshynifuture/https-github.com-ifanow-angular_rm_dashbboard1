@@ -4,6 +4,7 @@ import {SubscriptionService} from '../../../subscription.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {AuthService} from "../../../../../../../auth-service/authService";
+import {UtilService} from "../../../../../../../services/util.service";
 
 @Component({
   selector: 'app-plans-settings',
@@ -60,7 +61,14 @@ export class PlansSettingsComponent implements OnInit {
       planData: singlePlan,
       state: 'open'
     };
-    this.eventService.changeUpperSliderState(fragmentData);
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          this.getSettingsPlanData();
+          subscription.unsubscribe();
+        }
+      }
+    );
 
     // /* const dialogRef = this.dialog.open(UpperSliderComponent, {
     //    width: '1400px',
