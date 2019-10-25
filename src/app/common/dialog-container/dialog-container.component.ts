@@ -71,9 +71,7 @@ export class DialogContainerComponent implements OnInit {
   }
 
   getRightSliderData(value) {
-
     this.currentState = value;
-
   }
 
   getFileResponseDataAum(data) {

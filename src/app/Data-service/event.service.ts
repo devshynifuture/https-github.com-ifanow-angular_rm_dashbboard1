@@ -33,6 +33,7 @@ export class EventService {
 
   changeUpperSliderState(sliderState: object) {
     this.upperSliderData.next(sliderState);
+    return this.upperSliderDataObs;
   }
 
   changeOverlayVisible(isVisible: boolean) {

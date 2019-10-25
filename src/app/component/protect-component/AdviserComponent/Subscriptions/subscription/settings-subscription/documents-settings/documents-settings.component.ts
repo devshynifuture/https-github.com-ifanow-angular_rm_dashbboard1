@@ -5,6 +5,7 @@ import {SubscriptionInject} from '../../../subscription-inject.service';
 import {SubscriptionService} from '../../../subscription.service';
 import {ModifyFeeDialogComponent} from '../../common-subscription-component/modify-fee-dialog/modify-fee-dialog.component';
 import {AuthService} from "../../../../../../../auth-service/authService";
+import {UtilService} from "../../../../../../../services/util.service";
 
 // import {CustomHtmlComponent} from "../../../../../../../common/customhtml.component";
 
@@ -178,7 +179,15 @@ export class DocumentsSettingsComponent implements OnInit {
       state: 'open'
     };
     if (fragmentData.Flag == 'documents') {
-      this.eventService.changeUpperSliderState(fragmentData);
+      const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+        upperSliderData => {
+          if (UtilService.isDialogClose(upperSliderData)) {
+            this.getDocumentsSetting();
+            subscription.unsubscribe();
+          }
+        }
+      );
+      // this.eventService.changeUpperSliderState(fragmentData);
 
 
     } else {

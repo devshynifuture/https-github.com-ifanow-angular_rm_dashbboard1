@@ -102,6 +102,7 @@ import {InsuranceComponent} from './component/protect-component/customers/compon
 import {ExpensesComponent} from './component/protect-component/customers/component/customer/accounts/expenses/expenses.component';
 import {AddProfileSummaryComponent} from './component/protect-component/customers/component/common-component/add-profile-summary/add-profile-summary.component';
 import {CustomDialogContainerComponent} from './common/custom-dialog-container/custom-dialog-container.component';
+import {BaseComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/base/base.component';
 
 @NgModule({
   declarations: [
@@ -193,7 +194,8 @@ import {CustomDialogContainerComponent} from './common/custom-dialog-container/c
     InsuranceComponent,
     ExpensesComponent,
     AddProfileSummaryComponent,
-    CustomDialogContainerComponent
+    CustomDialogContainerComponent,
+    BaseComponent
   ],
   imports: [
     BrowserModule,
