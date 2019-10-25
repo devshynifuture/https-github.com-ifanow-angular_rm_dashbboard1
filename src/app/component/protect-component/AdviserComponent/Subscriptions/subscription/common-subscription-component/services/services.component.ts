@@ -17,7 +17,7 @@ export class ServicesComponent implements OnInit {
   @Input() componentFlag: string;
   planServiceData;
   mappedData;
-  @Input() upperData;
+  @Input() planData;
 
   constructor(private eventService: EventService,
               private subService: SubscriptionService, private subinject: SubscriptionInject) {
@@ -33,7 +33,7 @@ export class ServicesComponent implements OnInit {
     const obj = {
       // advisorId: 12345,
       advisorId: this.advisorId,
-      planId: this.upperData ? this.upperData.id : null
+      planId: this.planData ? this.planData.id : null
     };
     this.subService.getSettingPlanServiceData(obj).subscribe(
       data => this.getPlanServiceDataResponse(data)
@@ -81,13 +81,18 @@ export class ServicesComponent implements OnInit {
         advisorId: this.advisorId,
         global: element.global,
         id: element.id,
-        planId: this.upperData ? this.upperData.id : null
+        planId: this.planData ? this.planData.id : null
       };
       obj.push(data);
     });
     console.log(obj);
     this.subService.mapServiceToPlanData(obj).subscribe(
-      data => console.log(data)
+      data => this.savePlanMapToServiceResponse(data)
     );
+  }
+  savePlanMapToServiceResponse(data)
+  {
+     console.log("map plan to service Data",data)
+     this.eventService.openSnackBar('Service is mapped', 'OK');
   }
 }

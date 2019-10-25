@@ -4,6 +4,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {EventEmitter} from 'events';
 import {AuthService} from "../../../../../../../auth-service/authService";
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-structure',
@@ -15,7 +16,7 @@ export class AddStructureComponent implements OnInit {
   editApiCall;
   @Output() planData = new EventEmitter();
 
-  constructor(private subinject: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService) {
+  constructor(private eventService: EventService,private subinject: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService) {
     this.subinject.rightSideBarData.subscribe(
       data => this.getSinglePlanData(data)
     );
@@ -70,9 +71,9 @@ export class AddStructureComponent implements OnInit {
           description: this.getFormControl().description.value,
           // "advisorId": 12345,
           advisorId: this.advisorId,
-          logoUrl: 'url',
-          isPublic: 1,
-          isActive: 1,
+          // logoUrl: 'url',
+          // isPublic: 1,
+          // isActive: 1,
           code: this.getFormControl().code.value
         };
         this.subService.addSettingPlanOverviewData(obj).subscribe(
@@ -94,10 +95,11 @@ export class AddStructureComponent implements OnInit {
   }
 
   addPlanDataResponse(data, obj, state) {
-    obj.id = data;
+    obj.id = data.id;
     console.log(obj);
     this.subinject.pushUpperData(obj);
     this.subinject.rightSliderData(state);
+    (this.editApiCall=='')?this.eventService.openSnackBar('Plan is created', 'OK'):this.eventService.openSnackBar('Plan is edited', 'OK');
   }
 
   closeNav(state) {

@@ -94,16 +94,21 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   openPlanSlider(value, state, data) {
     //data
-    const billerDataProfile = this.subInjectService.singleProfileData.subscribe(data => {
-      billerDataProfile.unsubscribe();
-      this.eventService.sidebarData(value);
-    });
-    const sideBarSubs = this.eventService.sidebarSubscribeData.subscribe(data => {
-      sideBarSubs.unsubscribe();
-      this.subInjectService.rightSideData(state);
+    // const billerDataProfile = this.subInjectService.singleProfileData.subscribe(data => {
+    //   billerDataProfile.unsubscribe();
+    //   this.eventService.sidebarData(value);
+    // });
+    // const sideBarSubs = this.eventService.sidebarSubscribeData.subscribe(data => {
+    //   sideBarSubs.unsubscribe();
+    //   this.subInjectService.rightSideData(state);
 
-    });
+    // });
+
+
     this.subInjectService.addSingleProfile(data)
+    this.eventService.sidebarData(value);
+    this.subInjectService.rightSideData(state);
+
 
       //which side tab
       ;

@@ -22,7 +22,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-8">
-                                <mat-error 
+                                <mat-error class="f-12 pt-4" 
                                     [ngClass]="{'d-n': !(isPlanValid && getFormControl().planName.invalid || getFormControl().planName.touched && getFormControl().planName.invalid)}">
                                     Plan name is required</mat-error>
                             </div>
@@ -43,7 +43,7 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <mat-error class="f-12"
-                                    [ngClass]="{'d-n': !(isCodeValid && getFormControl().code.invalid || getFormControl().code.touched && getFormControl().code.invalid)}">
+                                    [ngClass]="{'v-h': !(isCodeValid && getFormControl().code.invalid || getFormControl().code.touched && getFormControl().code.invalid)}">
                                     Code is required</mat-error>
                             </div>
                             <div class="col-md-4">
