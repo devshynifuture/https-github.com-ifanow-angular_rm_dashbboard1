@@ -3,6 +3,7 @@ import {MatDialog} from '@angular/material';
 import {SubscriptionService} from '../../../subscription.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {AuthService} from "../../../../../../../auth-service/authService";
+import {UtilService} from "../../../../../../../services/util.service";
 
 @Component({
   selector: 'app-services-settings',
@@ -30,11 +31,21 @@ export class ServicesSettingsComponent implements OnInit {
   openFragment(singleService, data) {
     const fragmentData = {
       Flag: data,
+      // Flag: 'plan',
+      // planData: '',
       FeeData: singleService,
+      state: 'open',
       id: 2
     };
-    this.eventService.changeUpperSliderState(fragmentData);
-
+    // this.eventService.changeUpperSliderState(fragmentData);
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          this.getServiceSettingSubData();
+          subscription.unsubscribe();
+        }
+      }
+    );
     /* const dialogRef = this.dialog.open(UpperSliderComponent, {
        width: '1400px',
        data: Fragmentdata,
