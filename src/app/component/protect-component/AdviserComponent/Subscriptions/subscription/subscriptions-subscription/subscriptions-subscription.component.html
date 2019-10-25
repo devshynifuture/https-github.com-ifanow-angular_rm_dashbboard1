@@ -12,14 +12,17 @@
                 <button mat-stroked-button class="btn-primary addon"><i class="material-icons">add</i>ADD NEW</button>
             </div>
         </div>
-        <div class="row pt-12" [ngClass]="showFilter === true ? 'block' : 'none'">
+        <div class="row pt-12">
             <div class="col-md-8 p-0 custom-tags">
                 <mat-chip-list >
-                    <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let status of filterStatus; let ind = index">{{(status == 1)?'NOT STARTED':(status== 2)?'LIVE':(status == 3)?'FUTURE':'CANCELLED'}}<i class="material-icons text-custom ml-12" (click)="remove(ind)">
+                    <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let status of filterStatus; let ind = index">
+                        {{(status == 1)?'NOT STARTED':(status== 2)?'LIVE':(status == 3)?'FUTURE':'CANCELLED'}}<i class="material-icons text-custom ml-12" (click)="remove(ind)">
                                         cancel
                                         </i></mat-chip>
                                         <mat-chip-list>
-                                                <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let dateFilter of filterDate; let i = index">{{dateFilter}}<i class="material-icons text-custom ml-12" (click)="removeDate(i)">
+                                                <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let dateFilter of filterDate; let i = index">
+                                                        <input type="date"class="form-control br-0">
+                                                    <i class="material-icons text-custom ml-12" (click)="removeDate(i)">
                                                         cancel
                                                 </i></mat-chip>
                                         </mat-chip-list>

@@ -6,6 +6,7 @@ import {DeleteSubscriptionComponent} from '../common-subscription-component/dele
 import {SubscriptionService} from '../../subscription.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {AuthService} from "../../../../../../auth-service/authService";
+import * as _ from 'lodash';
 
 export interface PeriodicElement {
   client: string;
@@ -51,6 +52,10 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   sendData: any[];
   senddataTo: any;
   showFilter = false
+  dataTocheck: boolean;
+  live: boolean;
+  notStarted: boolean;
+  future: boolean;
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
               private eventService: EventService, private subService: SubscriptionService) {
@@ -154,31 +159,26 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         this.senddataTo = 4
     }
     console.log(this.senddataTo)
-    this.filterStatus.push(this.senddataTo)
+    if (!_.includes(this.filterStatus, this.senddataTo)) {
+      this.filterStatus.push(this.senddataTo)
+    } else {
+      _.remove(this.filterStatus, this.senddataTo);
+    }
     this.sendData = this.filterStatus
-    // this.filterStatus.forEach(element => {
-    //   if(element == 2){
-    //     element = 'LIVE'
-    //   }else if(element == 1){
-    //      element = 'NOT STARTED'
-    //   }else if(element == 3){
-    //       element = 'FUTURE'
-    //   }else{
-    //       element = 'CANCELLED'
-    //   }
-    // });
-    // console.log('this.filterStatus',this.filterStatus)
     this.callFilter()
   }
   filterSubscriptionRes(data){
     console.log('filterSubscriptionRes',data)
+    this.getSubSummaryRes(data)
   }
   addFiltersDate(dateFilter){
     console.log('addFilters',dateFilter)
     this.filterDate.push(dateFilter)
+    this.callFilter()
   }
   removeDate(item){
     this.filterDate.splice(item, 1);
+    this.callFilter()
   }
   remove(item){
     this.filterStatus.splice(item, 1);
@@ -191,12 +191,10 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       advisorId : this.advisorId,
       limit: 10,
       offset: 0,
-      subscription: {  
-        dateType: 0,
-        statusIdList : this.statusIdList,
-        fromDate:"2000-01-01",
-        toDate:"3000-01-01",
-    }  
+      fromDate:"2000-01-01",
+      toDate:"3000-01-01",
+      statusIdList: this.statusIdList,
+      dateType:0
     }
     console.log('this.statusIdList',this.statusIdList)
     this.subService.filterSubscription(obj).subscribe(
