@@ -93,13 +93,9 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
   openPlanSlider(value, state, data) {
-    this.eventService.sidebarData(value);
-    if(data.subscriptionPricing.feeTypeId==1)
-    {
-     
-    }
-    this.subInjectService.rightSideData(state);
     this.subInjectService.addSingleProfile(data);
+    this.eventService.sidebarData(value);
+    this.subInjectService.rightSideData(state);
   }
 
   Open(state, data) {

@@ -125,6 +125,7 @@ export class CreateSubscriptionComponent implements OnInit {
 
   getSubStartDetailsResponse(data) {
     console.log(data);
+    (this.clientData.subscriptionPricing.feeTypeId==1)?data.feeModeName='feeModify':data.feeModeName="variableModify"
     this.feeStructureData = data;
     this.subscriptionDetails.controls.subscription.setValue(data.subscriptionNo);
     this.billersData = data.billers;

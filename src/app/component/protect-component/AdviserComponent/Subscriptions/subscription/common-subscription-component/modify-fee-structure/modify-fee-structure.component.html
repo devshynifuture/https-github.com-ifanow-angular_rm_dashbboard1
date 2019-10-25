@@ -9,7 +9,7 @@
         </div>
     </div>
 </div>
-<div *ngIf="ModifyFeesChange=='variableModifyFees' || createSubData" class="wrapper-20 pt-36 mb-44 pb-44">
+<div *ngIf="ModifyFeesChange=='variableModifyFees' || createSubData.feeModeName=='variableModify'" class="wrapper-20 pt-36 mb-44 pb-44">
     <div [formGroup]="variableFeeStructureForm">
         <p class="text-primary">VARIABLE </p>
         <h4 class="mb-0 pt-16">Investment management - AUM Linked fee</h4>
@@ -159,7 +159,7 @@
 
     </div>
 </div>
-<div *ngIf="ModifyFeesChange=='fixedModifyFees'" class="wrapper-20 pt-36 mb-44 pb-44">
+<div *ngIf="ModifyFeesChange=='fixedModifyFees' || createSubData.feeModeName=='feeModify'" class="wrapper-20 pt-36 mb-44 pb-44">
     <div [formGroup]="fixedFeeStructureForm">
         <p class="text-primary">FIXED </p>
         <h4 class="mb-0 pt-16">Financial Planning</h4>
