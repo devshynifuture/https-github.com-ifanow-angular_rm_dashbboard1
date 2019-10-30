@@ -32,7 +32,7 @@ export class LeftsidebarComponent implements OnInit {
     this.userInfo = AuthService.getUserInfo();
 
     // this.userInfo = this.authService.getUserInfo();
-    console.log('111124y9834719070912740912740912470127401470 userInfo', this.userInfo);
+    // console.log(' userInfo', this.userInfo);
     // console.log(this.authService.getAdvisorId());
   }
 

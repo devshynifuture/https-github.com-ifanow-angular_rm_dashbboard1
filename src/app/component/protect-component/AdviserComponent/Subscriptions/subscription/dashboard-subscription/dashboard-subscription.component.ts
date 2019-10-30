@@ -36,6 +36,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   constructor(private enumService: EnumServiceService,
               public subInjectService: SubscriptionInject, public eventService: EventService,
               public dialog: MatDialog, private subService: SubscriptionService) {
+
   }
 
   // advisorId = 400;
@@ -50,13 +51,14 @@ export class DashboardSubscriptionComponent implements OnInit {
   chart: Chart;
 
   ngOnInit() {
+    this.initChart();
+
     this.advisorId = AuthService.getAdvisorId();
     this.docSentSignedCountData();
     this.clientWithSubscription();
     this.invoiceToBeReviewed();
     this.getSummaryDataDashboard();
     this.getDataForCreateService();
-    this.initChart();
   }
 
   initChart() {
@@ -75,16 +77,20 @@ export class DashboardSubscriptionComponent implements OnInit {
         data: [1, 2, 3],
         type: 'line'
 
-  }]
+      }]
     });
     chart.addPoint(4);
     this.chart = chart;
     chart.addPoint(5);
-    setTimeout(() => {
-      chart.addPoint(6);
-    }, 2000);
 
-    chart.ref$.subscribe(console.log);
+    chart.ref$.subscribe((chartView) => {
+      setTimeout(() => {
+        console.log('12397891273098127389012739812731231982371 chart ref setTimeout')
+        chartView.reflow();
+
+        chart.addPoint(6);
+      }, 100);
+    });
   }
 
   Open(state, data) {
@@ -142,7 +148,9 @@ export class DashboardSubscriptionComponent implements OnInit {
       order: 0,
     };
     this.subService.getSubSummary(obj).subscribe(
-      data => this.getSubSummaryRes(data)
+      data => {
+        this.getSubSummaryRes(data);
+      }
     );
   }
 

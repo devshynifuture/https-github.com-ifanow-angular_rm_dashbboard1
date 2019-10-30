@@ -1,100 +1,117 @@
-#ui-dashboard{
-    padding-top: 130px;
-    .subscription-summary{
-        p{
-            color: #000000;
-       }
-   }
-    h4,h2{
-        font-family: "proxima-nova", sans-serif;
-   }
-}
-.ima{
+#ui-dashboard {
+  padding-top: 130px;
 
-    //background-image: url(/assets/images/svg/Receivablessummary.svg);
-    background-position: left;
-    background-size: cover;
-    min-height: 200px;
-   width: 100%;
-
-}
-hr{
-    border-bottom: 1px solid #DADCE0;
-    width: 90%;
-    margin: 0 auto;
-    display: block;
-}
-.bg-red{
-    background-color: #FFD8D8
-}
-.full-lights{
-    background-color: #F7F8F9;
-}
-.btn-red{
-    background-color: #D01010;
-    color: #FFD5D5 !important;
-    font-size: 20px;
-    font-family: "Roboto", sans-serif;
-    letter-spacing: 0.2px;
-}
-h1{
-    font-family: "Playfair Display";
-    font-style: normal;
-    font-weight: normal;
-    padding-top: 16px;
-    line-height: 40px;
-    letter-spacing: 0.2px;
-    margin-bottom: 0;
-    color: #D01010 !important;
-}
-p{
-    font-family: "Roboto", sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 130%;
-    letter-spacing: 0.2px;
-    color: #004164;
-}
-.btn-red .material-icons{
-    margin-left: 2px;
-    padding-top: 2px;
-}
-.dashboard-img{
-    position: relative;
-    margin-top: -85px;
-}
-#ui-subscription-completeness{
-    padding-top: 50px;
-    .done-icons{
-        background: #02B875;
-        border-radius: 50%;
-        padding: 5px;
-        color: #fff;
-        font-size: 30px;
-        margin-top: 2px;
-        text-align: center;
-   }
-    .default-icons{
-        background:#BCC6CA;
-        border-radius: 50%;
-        padding: 5px;
-        color: #fff;
-        font-size: 30px;
-        margin-top: 2px;
-        text-align: center;
-   }
-    .mat-card:not([class*=mat-elevation-z]){
-        box-shadow: none !important;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        padding: 0;
-   }
-    .w-110{
-        width: 110px !important;
-   }
-}
-.example-container {
-    height: 225px;
-    overflow: auto;
+  .subscription-summary {
+    p {
+      color: #000000;
+    }
   }
+
+  h4, h2 {
+    font-family: "proxima-nova", sans-serif;
+  }
+}
+
+.ima {
+
+  //background-image: url(/assets/images/svg/Receivablessummary.svg);
+  background-position: left;
+  background-size: cover;
+  min-height: 200px;
+  width: 100%;
+
+}
+
+hr {
+  border-bottom: 1px solid #DADCE0;
+  width: 90%;
+  margin: 0 auto;
+  display: block;
+}
+
+.bg-red {
+  background-color: #FFD8D8
+}
+
+.full-lights {
+  background-color: #F7F8F9;
+}
+
+.btn-red {
+  background-color: #D01010;
+  color: #FFD5D5 !important;
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 0.2px;
+}
+
+h1 {
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: normal;
+  padding-top: 16px;
+  line-height: 40px;
+  letter-spacing: 0.2px;
+  margin-bottom: 0;
+  color: #D01010 !important;
+}
+
+p {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 130%;
+  letter-spacing: 0.2px;
+  color: #004164;
+}
+
+.btn-red .material-icons {
+  margin-left: 2px;
+  padding-top: 2px;
+}
+
+.dashboard-img {
+  position: relative;
+  margin-top: -85px;
+}
+
+#ui-subscription-completeness {
+  padding-top: 50px;
+
+  .done-icons {
+    background: #02B875;
+    border-radius: 50%;
+    padding: 5px;
+    color: #fff;
+    font-size: 30px;
+    margin-top: 2px;
+    text-align: center;
+  }
+
+  .default-icons {
+    background: #BCC6CA;
+    border-radius: 50%;
+    padding: 5px;
+    color: #fff;
+    font-size: 30px;
+    margin-top: 2px;
+    text-align: center;
+  }
+
+  .mat-card:not([class*=mat-elevation-z]) {
+    box-shadow: none !important;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0;
+  }
+
+  .w-110 {
+    width: 110px !important;
+  }
+}
+
+.example-container {
+  height: 225px;
+  overflow: auto;
+}
 

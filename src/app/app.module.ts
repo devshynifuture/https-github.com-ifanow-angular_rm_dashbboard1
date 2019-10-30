@@ -103,7 +103,7 @@ import {ExpensesComponent} from './component/protect-component/customers/compone
 import {AddProfileSummaryComponent} from './component/protect-component/customers/component/common-component/add-profile-summary/add-profile-summary.component';
 import {CustomDialogContainerComponent} from './common/custom-dialog-container/custom-dialog-container.component';
 import {BaseComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/base/base.component';
-import {ChartModule} from "angular-highcharts";
+import {ChartModule} from 'angular-highcharts';
 
 @NgModule({
   declarations: [
