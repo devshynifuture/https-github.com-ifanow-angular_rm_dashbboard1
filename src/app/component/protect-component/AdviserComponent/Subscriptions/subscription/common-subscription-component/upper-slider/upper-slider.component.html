@@ -5,8 +5,11 @@
       <img class="pt-8" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
     </div>
     <div class="col-md-8 p-0">
-      <p class="f-16 mb-0 pt-24 text-center">Add plan details, map services/documents to the
+      <p class="f-16 mb-0 pt-24 text-center" *ngIf="fragmentData.Flag=='plan'">Add plan details, map services/documents to the
         selected plan</p>
+      <p class="f-16 mb-0 pt-24 text-center" *ngIf="fragmentData.Flag=='services'">Add fee structure, map plans/documents/modules to the selected service</p>
+      <p class="f-16 mb-0 pt-24 text-center" *ngIf="fragmentData.Flag=='documents'">Add documents, map them to services/plans</p>
+      <p class="f-16 mb-0 pt-24 text-center" *ngIf="fragmentData.Flag=='clients'">Add fee structure, send quotations/invoices, execute documents for the selected client</p>
     </div>
     <div class="col-md-2 text-right">
       <i (click)="dialogClose()" class="material-icons pt-16 c-p pr-16">
