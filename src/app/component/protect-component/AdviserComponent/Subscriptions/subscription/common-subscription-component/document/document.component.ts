@@ -107,10 +107,17 @@ export class DocumentComponent implements OnInit {
 
   getdocumentResponseData(data) {
     console.log(data);
-    data.forEach(singleData => {
-      singleData.documentText = singleData.docText;
-    });
-    this.dataSource = data;
+    if(data==undefined)
+    {
+      return
+    }
+    else{
+      data.forEach(singleData => {
+        singleData.documentText = singleData.docText;
+      });
+      this.dataSource = data;
+     }
+    
   }
 
   openPopup(data) {
@@ -231,7 +238,7 @@ export class DocumentComponent implements OnInit {
   }
 
   saveMappingDocumentToPlans() {
-    if (this.mappedData.length >= 0) {
+
       const obj = [];
       this.mappedData.forEach(element => {
         const data = {
@@ -243,14 +250,15 @@ export class DocumentComponent implements OnInit {
         obj.push(data);
       });
       this.subService.mapDocumentsToPlanData(obj).subscribe(
-        data => console.log('sucessful')
+        data => this.saveMappingDocumentToPlansResponse(data)
       );
-      this.dialogClose();
-    } else {
-      return;
-    }
-  }
 
+  }
+  saveMappingDocumentToPlansResponse(data)
+  {
+    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.openSnackBar('Document is mapped', 'OK');
+  }
   savePlanMapToDocument() {
     const obj = [];
     this.mappedData.forEach(element => {

@@ -51,10 +51,11 @@ export class AddFixedFeeComponent implements OnInit {
       serviceName: [data.serviceName, [Validators.required]],
       code: [data.serviceCode, [Validators.required]],
       description: [data.description, [Validators.required]],
-      fees: [data, [Validators.required]],
-      billingNature: [1],
-      billEvery: [data, [Validators.required]],
-      billingMode: [1]
+      Duration:[data.servicePricing.billingCycle],
+      fees: [data.servicePricing.pricingList[0].pricing, [Validators.required]],
+      billingNature: [data.servicePricing.billingNature],
+      billEvery: [data.servicePricing.billEvery, [Validators.required]],
+      billingMode: [data.servicePricing.billingMode]
     });
     this.getFormControl().serviceName.maxLength = 40;
     this.getFormControl().code.maxLength = 10;

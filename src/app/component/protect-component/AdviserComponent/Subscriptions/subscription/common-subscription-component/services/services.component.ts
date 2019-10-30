@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionService} from '../../../subscription.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionService } from '../../../subscription.service';
 import * as _ from 'lodash';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from '../../../../../../../Data-service/event.service';
-import {AuthService} from "../../../../../../../auth-service/authService";
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from '../../../../../../../Data-service/event.service';
+import { AuthService } from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-services',
@@ -20,7 +20,7 @@ export class ServicesComponent implements OnInit {
   @Input() planData;
 
   constructor(private eventService: EventService,
-              private subService: SubscriptionService, private subinject: SubscriptionInject) {
+    private subService: SubscriptionService, private subinject: SubscriptionInject) {
   }
 
   ngOnInit() {
@@ -56,7 +56,7 @@ export class ServicesComponent implements OnInit {
   }
 
   dialogClose() {
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
   }
 
   mapPlanToService(data, index) {
@@ -70,7 +70,7 @@ export class ServicesComponent implements OnInit {
     _.remove(this.mappedData, delData => {
       return delData.id == data.id;
     });
-    console.log(this.mappedData);
+    console.log(this.mappedData.length);
   }
 
   savePlanMapToService() {
@@ -90,9 +90,8 @@ export class ServicesComponent implements OnInit {
       data => this.savePlanMapToServiceResponse(data)
     );
   }
-  savePlanMapToServiceResponse(data)
-  {
-     console.log("map plan to service Data",data)
-     this.eventService.openSnackBar('Service is mapped', 'OK');
+  savePlanMapToServiceResponse(data) {
+    console.log("map plan to service Data", data)
+    this.eventService.openSnackBar('Service is mapped', 'OK');
   }
 }

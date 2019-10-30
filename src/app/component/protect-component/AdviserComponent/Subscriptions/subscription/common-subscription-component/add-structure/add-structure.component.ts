@@ -95,7 +95,7 @@ export class AddStructureComponent implements OnInit {
   }
 
   addPlanDataResponse(data, obj, state) {
-    obj.id = data.id;
+    obj.id = (this.editApiCall=='')?data:data.id
     console.log(obj);
     this.subinject.pushUpperData(obj);
     this.subinject.rightSliderData(state);
