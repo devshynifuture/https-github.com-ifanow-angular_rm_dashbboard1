@@ -159,8 +159,18 @@
                   <h4 class="f-300 mb-0 pt-8">Subscription summary</h4>
                 </div>
                 <div class="col-md-6 right text-right pr-0">
-                  <button mat-stroked-button class="text-primary br-0">NOT STARTED</button>
-                  <button mat-button class="text-custom">UPCOMING</button>
+                  <!--                  <mat-button-toggle-group #colorToggle="matButtonToggleGroup"-->
+                  <!--                                           value="primary"-->
+                  <!--                                           aria-label="Change color">-->
+                  <!--                    <mat-button-toggle value="primary">NOT STARTED</mat-button-toggle>-->
+                  <!--                    <mat-button-toggle value="accent">UPCOMING</mat-button-toggle>-->
+                  <!--                  </mat-button-toggle-group>-->
+                  <mat-button-toggle-group [(ngModel)]="subscriptionSummaryStatusFilter"   (change)="getSummaryDataDashboard($event.value)" multiple=false>
+                    <mat-button-toggle value=1>NOT STARTED</mat-button-toggle>
+                    <mat-button-toggle value=3>UPCOMING</mat-button-toggle>
+                  </mat-button-toggle-group>
+                  <!-- <button mat-stroked-button class="text-primary br-0">NOT STARTED</button>
+                   <button mat-button class="text-custom">UPCOMING</button>-->
                 </div>
               </div>
               <div class="example-container">

@@ -49,6 +49,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   showSubStep = false;
   displayedColumns: string[] = ['name', 'service', 'amt', 'billing', 'icons'];
   chart: Chart;
+  subscriptionSummaryStatusFilter = '1';
 
   ngOnInit() {
     this.initChart();
@@ -57,7 +58,7 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.docSentSignedCountData();
     this.clientWithSubscription();
     this.invoiceToBeReviewed();
-    this.getSummaryDataDashboard();
+    this.getSummaryDataDashboard(null);
     this.getDataForCreateService();
   }
 
@@ -133,24 +134,43 @@ export class DashboardSubscriptionComponent implements OnInit {
   }
 
 // ******* Dashboard Subscription Summary *******
-  getSummaryDataDashboard() {
-    const obj = {
-      // 'id':2735, //pass here advisor id for Invoice advisor
-      // 'module':1,
-      // advisorId: 12345,
-      advisorId: this.advisorId,
+  getSummaryDataDashboard(eventValue) {
+    /* const obj = {
+       // 'id':2735, //pass here advisor id for Invoice advisor
+       // 'module':1,
+       // advisorId: 12345,
+       advisorId: this.advisorId,
 
-      clientId: 0,
-      flag: 1,
-      dateType: 0,
-      limit: 10,
+       clientId: 0,
+       flag: 1,
+       dateType: 0,
+       limit: 10,
+       offset: 0,
+       order: 0,
+     };
+     this.subService.getSubSummary(obj).subscribe(
+       data => {
+         this.getSubSummaryRes(data);
+       }
+     );*/
+    console.log('filterSubscription this.subscriptionSummaryStatusFilter ', this.subscriptionSummaryStatusFilter);
+
+    const obj = {
+      advisorId: this.advisorId,
+      limit: -1,
       offset: 0,
-      order: 0,
+      dateType: 0,
+      statusIdList: [this.subscriptionSummaryStatusFilter],
+      fromDate: null,
+      toDate: null
+
     };
-    this.subService.getSubSummary(obj).subscribe(
-      data => {
-        this.getSubSummaryRes(data);
-      }
+    console.log('filterSubscription eventValue ', eventValue);
+    console.log('filterSubscription this.subscriptionSummaryStatusFilter ', this.subscriptionSummaryStatusFilter);
+
+    console.log('filterSubscription reqObj ', obj);
+    this.subService.filterSubscription(obj).subscribe(
+      data => this.getSubSummaryRes(data)
     );
   }
 
