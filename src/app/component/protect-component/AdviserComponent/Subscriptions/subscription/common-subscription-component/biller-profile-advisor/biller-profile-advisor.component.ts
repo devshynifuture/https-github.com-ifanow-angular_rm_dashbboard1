@@ -7,6 +7,7 @@ import {AuthService} from '../../../../../../../auth-service/authService';
 @Component({
   selector: 'app-biller-profile-advisor',
   templateUrl: './biller-profile-advisor.component.html',
+  // templateUrl: './invoice-pdf.html',
   styleUrls: ['./biller-profile-advisor.component.scss']
 })
 export class BillerProfileAdvisorComponent implements OnInit {
