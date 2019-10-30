@@ -9,8 +9,9 @@
     </div>
   </div>
 </div>
-<div *ngIf="ModifyFeesChange=='variableModifyFees' ||(createSubData&&createSubData.feeModeName && createSubData.feeModeName=='variableModify')"
-     class="wrapper-20 pt-36 mb-44 pb-44">
+<div
+  *ngIf="ModifyFeesChange=='variableModifyFees' ||(createSubData&&createSubData.feeModeName && createSubData.feeModeName=='variableModify')"
+  class="wrapper-20 pt-36 mb-44 pb-44">
   <div [formGroup]="variableFeeStructureForm">
     <p class="text-primary">VARIABLE </p>
     <h4 class="mb-0 pt-16">Investment management - AUM Linked fee</h4>
@@ -22,12 +23,12 @@
       <div class="col-md-7">
         <mat-radio-group formControlName="billingNature">
           <mat-radio-button value="1" checked=true
-                            [ngClass]="{'b-a-custom': variableFeeStructureForm.get('billingNature').value==1,'text-primary':variableFeeStructureForm.get('billingNature').value==1,'b-a':variableFeeStructureForm.get('billingNature').value==2}"
-                            class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio">Recurring
+            [ngClass]="{'b-a-custom': variableFeeStructureForm.get('billingNature').value==1,'text-primary':variableFeeStructureForm.get('billingNature').value==1,'b-a':variableFeeStructureForm.get('billingNature').value==2}"
+            class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio">Recurring
           </mat-radio-button>
           <mat-radio-button value="2"
-                            [ngClass]="{'b-a-custom': variableFeeStructureForm.get('billingNature').value==2,'text-primary':variableFeeStructureForm.get('billingNature').value==2,'b-a':variableFeeStructureForm.get('billingNature').value==1}"
-                            class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">Once
+            [ngClass]="{'b-a-custom': variableFeeStructureForm.get('billingNature').value==2,'text-primary':variableFeeStructureForm.get('billingNature').value==2,'b-a':variableFeeStructureForm.get('billingNature').value==1}"
+            class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">Once
           </mat-radio-button>
         </mat-radio-group>
       </div>
@@ -41,7 +42,7 @@
           <div class="col-md-5 p-0">
             <div class="form-group">
               <input type="number" pattern="\d*" onKeyPress="if(this.value.length==2) return false;"
-                     formControlName="billEvery" class="form-control br-0">
+                formControlName="billEvery" class="form-control br-0">
             </div>
           </div>
 
@@ -84,16 +85,16 @@
             </div>
             <div class="row ui-mff">
               <div class="col-md-4 p-0 bl-0 br-grey">
-                <input type="number" onKeyPress="if(this.value.length==4) return false;"
-                       placeholder="%" formControlName="equity" class="form-control br-0 h-39">
+                <input type="number" onKeyPress="if(this.value.length==4) return false;" placeholder="%"
+                  formControlName="equity" class="form-control br-0 h-39">
               </div>
               <div class="col-md-4 p-0 br-grey">
-                <input type="number" onKeyPress="if(this.value.length==4) return false;"
-                       placeholder="%" formControlName="debt" class="form-control br-0 h-39">
+                <input type="number" onKeyPress="if(this.value.length==4) return false;" placeholder="%"
+                  formControlName="debt" class="form-control br-0 h-39">
               </div>
               <div class="col-md-4 p-0">
-                <input type="number" onKeyPress="if(this.value.length==4) return false;"
-                       placeholder="%" formControlName="liquid" class="form-control br-0 h-39">
+                <input type="number" onKeyPress="if(this.value.length==4) return false;" placeholder="%"
+                  formControlName="liquid" class="form-control br-0 h-39">
               </div>
             </div>
           </div>
@@ -113,16 +114,16 @@
             </div>
             <div class="row ui-mff">
               <div class="col-md-4 br-grey p-0 bl-0 bb-grey">
-                <input type="number" onKeyPress="if(this.value.length==4) return false;"
-                       placeholder="%" formControlName="equity" class="form-control br-0 h-39 br-grey">
+                <input type="number" onKeyPress="if(this.value.length==4) return false;" placeholder="%"
+                  formControlName="equity" class="form-control br-0 h-39 br-grey">
               </div>
               <div class="col-md-4 br-grey bb-grey p-0">
-                <input type="number" onKeyPress="if(this.value.length==4) return false;"
-                       placeholder="%" formControlName="debt" class="form-control br-0 h-39 br-grey">
+                <input type="number" onKeyPress="if(this.value.length==4) return false;" placeholder="%"
+                  formControlName="debt" class="form-control br-0 h-39 br-grey">
               </div>
               <div class="col-md-4 br-grey bb-grey p-0">
-                <input type="number" onKeyPress="if(this.value.length==4) return false;"
-                       placeholder="%" formControlName="liquid" class="form-control br-0 h-39 br-grey">
+                <input type="number" onKeyPress="if(this.value.length==4) return false;" placeholder="%"
+                  formControlName="liquid" class="form-control br-0 h-39 br-grey">
               </div>
             </div>
           </div>
@@ -143,10 +144,10 @@
             <div class="b-a wrapper-12">
               <mat-chip-list *ngIf="otherAssetData" aria-label="Fish selection">
                 <mat-chip (click)="select(assets)" *ngFor="let assets of otherAssetData"
-                          [ngClass]="{'btn-primary':assets.selected}" class="f-13 f-400 wrapper-16"><i
-                  class="material-icons mr-8 text-grey f-16">
-                  check
-                </i>
+                  [ngClass]="{'btn-primary':assets.selected}" class="f-13 f-400 wrapper-16"><i
+                    class="material-icons mr-8 text-grey f-16">
+                    check
+                  </i>
                   <div *ngIf="assets">{{assets.subAssetClassName}}</div>
                 </mat-chip>
               </mat-chip-list>
@@ -154,7 +155,7 @@
           </div>
           <div class="col-md-2 p-0">
             <input type="number" maxlength="4" formControlName="pricing" placeholder="%"
-                   class="form-control br-0 h-39 br-grey">
+              class="form-control br-0 h-39 br-grey">
           </div>
 
         </div>
@@ -174,11 +175,11 @@
         <h5 class="text-right pt-12 mb-0">Fees</h5>
       </div>
       <div class="col-md-3">
-        <div class="form-group">
-          <input type="text" formControlName="fees" class="form-control br-0">
+        <div class="form-group mb-0">
+          <input type="number" formControlName="fees" class="form-control br-0">
         </div>
         <mat-error class="f-12 pt-4"
-                   *ngIf="isFeeValid && getFixedFee().fees.invalid || getFixedFee().fees.touched && getFixedFee().fees.invalid">
+          [ngClass]="{'v-h':!(isFeeValid && getFixedFee().fees.invalid || getFixedFee().fees.touched && getFixedFee().fees.invalid)}">
           Code is Required
         </mat-error>
       </div>
@@ -192,12 +193,12 @@
       <div class="col-md-7">
         <mat-radio-group formControlName="billingNature">
           <mat-radio-button value="1" checked=true
-                            [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingNature').value==1,'text-primary':fixedFeeStructureForm.get('billingNature').value==1,'b-a':fixedFeeStructureForm.get('billingNature').value==2}"
-                            class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio">Recurring
+            [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingNature').value==1,'text-primary':fixedFeeStructureForm.get('billingNature').value==1,'b-a':fixedFeeStructureForm.get('billingNature').value==2}"
+            class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio">Recurring
           </mat-radio-button>
           <mat-radio-button value="2"
-                            [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingNature').value==2,'text-primary':fixedFeeStructureForm.get('billingNature').value==2,'b-a':fixedFeeStructureForm.get('billingNature').value==1}"
-                            class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">Once
+            [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingNature').value==2,'text-primary':fixedFeeStructureForm.get('billingNature').value==2,'b-a':fixedFeeStructureForm.get('billingNature').value==1}"
+            class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">Once
           </mat-radio-button>
         </mat-radio-group>
       </div>
@@ -209,11 +210,11 @@
       <div class="col-md-7">
         <div class="row">
           <div class="col-md-5 p-0">
-            <div class="form-group">
-              <input type="text" formControlName="billEvery" class="form-control br-0">
+            <div class="form-group mb-0">
+              <input type="number" formControlName="billEvery" class="form-control br-0">
             </div>
             <mat-error class="f-12 pt-4"
-                       *ngIf="isBillValid && getFixedFee().billEvery.invalid || getFixedFee().billEvery.touched && getFixedFee().billEvery.invalid">
+              [ngClass]="{'v-h':!(isBillValid && getFixedFee().billEvery.invalid || getFixedFee().billEvery.touched && getFixedFee().billEvery.invalid)}">
               Code is Required
             </mat-error>
 
@@ -236,12 +237,12 @@
       <div class="col-md-7">
         <mat-radio-group formControlName="billingMode">
           <mat-radio-button value="1"
-                            [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingMode').value==1,'text-primary':fixedFeeStructureForm.get('billingMode').value==1,'b-a':fixedFeeStructureForm.get('billingMode').value==2}"
-                            class="text-custom b-a wrapper-8" checked="true">Start of period
+            [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingMode').value==1,'text-primary':fixedFeeStructureForm.get('billingMode').value==1,'b-a':fixedFeeStructureForm.get('billingMode').value==2}"
+            class="text-custom b-a wrapper-8" checked="true">Start of period
           </mat-radio-button>
           <mat-radio-button value="2"
-                            [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingMode').value==2,'text-primary':fixedFeeStructureForm.get('billingMode').value==2,'b-a':fixedFeeStructureForm.get('billingMode').value==1}"
-                            class="text-custom b-a wrapper-8">End of period
+            [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingMode').value==2,'text-primary':fixedFeeStructureForm.get('billingMode').value==2,'b-a':fixedFeeStructureForm.get('billingMode').value==1}"
+            class="text-custom b-a wrapper-8">End of period
           </mat-radio-button>
         </mat-radio-group>
       </div>

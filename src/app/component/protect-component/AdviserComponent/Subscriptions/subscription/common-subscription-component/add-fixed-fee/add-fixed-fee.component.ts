@@ -74,6 +74,7 @@ export class AddFixedFeeComponent implements OnInit {
       this.fixedFeeData.controls.fees.setValue(data.servicePricing.pricingList[0].pricing)
       this.fixedFeeData.controls.billingNature.setValue(data.servicePricing.billingNature)
       this.fixedFeeData.controls.billingMode.setValue(data.servicePricing.billingMode)
+      this.fixedFeeData.controls.billEvery.setValue(data.servicePricing.billEvery)
     }
 
   }

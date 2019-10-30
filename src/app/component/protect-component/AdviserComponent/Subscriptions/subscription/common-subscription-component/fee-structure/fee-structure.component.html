@@ -64,7 +64,7 @@
                   (click)="openPlanSliderFee(_upperData,'fixedFee','open')">Edit Service</a>
                 <a mat-menu-item *ngIf="_upperData.servicePricing.feeTypeId==2"
                   (click)="openPlanSliderFee(_upperData,'varibleFee','open')">Edit Service</a>
-                <a mat-menu-item (click)="deleteService(_upperData)"></a>
+                <a mat-menu-item (click)="deleteService(_upperData,'SERVICE')">Delete Service</a>
               </mat-menu>
             </div>
           </div>

@@ -81,14 +81,23 @@ export class ConfirmDialogComponent implements OnInit {
         data => this.deletedData(data)
       );
     }
+    if(this.dialogData.data=='SERVICE')
+    {
+      const obj={
+        advisorId:this.advisorId,
+        id:this.dialogData.serviceData.id
+      }
+     this.subscription.deleteService(obj).subscribe(
+       data =>this.deletedData(data)
+     )
+    }
   }
 
   deletedData(data) {
     if (data == true) {
       this.dialogRef.close();
       this.eventService.changeUpperSliderState({state: 'close'});
-      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
-      
+      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');  
     }
   }
 }
