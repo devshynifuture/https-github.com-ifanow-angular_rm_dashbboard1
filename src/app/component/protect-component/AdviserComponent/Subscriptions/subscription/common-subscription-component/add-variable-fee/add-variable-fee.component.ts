@@ -6,6 +6,7 @@ import {EnumServiceService} from '../../enum-service.service';
 import * as _ from 'lodash';
 import {EventService} from 'src/app/Data-service/event.service';
 import {AuthService} from "../../../../../../../auth-service/authService";
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-add-variable-fee',
@@ -28,9 +29,6 @@ export class AddVariableFeeComponent implements OnInit {
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
               private subService: SubscriptionService, private enumService: EnumServiceService, private eventService: EventService) {
-    this.subInjectService.rightSideBarData.subscribe(
-      data => this.getFeeFormUpperData(data)
-    );
   }
 
   ngOnInit() {
@@ -41,6 +39,9 @@ export class AddVariableFeeComponent implements OnInit {
       this.otherAssetData.push(Object.assign({}, element));
     });
     console.log(this.otherAssetData);
+    this.subInjectService.rightSideBarData.subscribe(
+      data => this.getFeeFormUpperData(data)
+    );
   }
 
   setValidation(flag) {
@@ -86,7 +87,7 @@ export class AddVariableFeeComponent implements OnInit {
         code: [data.serviceCode, [Validators.required]],
         description: [data.description, [Validators.required]],
         billEvery: [data.servicePricing.billEvery, [Validators.required]],
-        Duration: [data],
+        Duration: [data.servicePricing.billingCycle],
         directFees: this.fb.group({
           equity: [data.servicePricing.pricingList[0].equityAllocation, [Validators.required]],
           debt: [data.servicePricing.pricingList[0].debtAllocation, [Validators.required]],
@@ -97,9 +98,17 @@ export class AddVariableFeeComponent implements OnInit {
           debt: [data.servicePricing.pricingList[1].debtAllocation, [Validators.required]],
           liquid: [data.servicePricing.pricingList[1].liquidAllocation, [Validators.required]]
         }),
-        otherAssetClassFees: [data.servicePricing.pricingList[2].otherAssets],
+        otherAssetClassFees: [data.servicePricing.pricingList[2].serviceSubAssets],
         pricing: [data.servicePricing.pricingList[2].pricing, [Validators.required]]
       });
+      this.otherAssetData=data.servicePricing.pricingList[2].serviceSubAssets
+      this.otherAssetData.forEach(element=>
+        {
+          if(element.isActive==1)
+          {
+            this.selectedOtherAssets.push(element.subAssetClassId)
+          }
+        })
       this.getFormControl().serviceName.maxLength = 40;
       this.getFormControl().code.maxLength = 10;
       this.getFormControl().description.maxLength = 160;
@@ -125,9 +134,6 @@ export class AddVariableFeeComponent implements OnInit {
       return;
     } else if (this.variableFeeData.controls.code.invalid) {
       this.isCodeValid = true;
-      return;
-    } else if (this.variableFeeData.controls.description.invalid) {
-      this.idDesValid = true;
       return;
     } else if (this.variableFeeData.controls.billEvery.invalid) {
       this.isBillValid = true;
@@ -189,19 +195,19 @@ export class AddVariableFeeComponent implements OnInit {
   }
 
   select(assetData) {
-    (assetData.selected) ? this.unselectAssets(assetData) : this.selectAssets(assetData);
+    (assetData.isActive==1) ? this.unselectAssets(assetData) : this.selectAssets(assetData);
   }
 
   selectAssets(data) {
     console.log(data);
-    data.selected = true;
-    this.selectedOtherAssets.push(parseInt(data.value));
+    data.isActive = 1;
+    this.selectedOtherAssets.push(parseInt(data.subAssetClassId));
   }
 
   unselectAssets(data) {
-    data.selected = false;
+    data.isActive = 0;
     _.remove(this.selectedOtherAssets, function (delData) {
-      return delData.id == data.id;
+      return delData.subAssetClassId == data.subAssetClassId;
     });
   }
 }
