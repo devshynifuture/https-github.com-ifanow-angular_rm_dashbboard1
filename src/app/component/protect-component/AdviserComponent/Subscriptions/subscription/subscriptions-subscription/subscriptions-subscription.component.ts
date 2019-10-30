@@ -130,7 +130,12 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.subInjectService.addSingleProfile(data);
 
   }
-
+  /*openPlanSlider(value, state, data) {
+    this.eventService.sidebarData(value);
+    this.subInjectService.rightSideData(state);
+    this.subInjectService.addSingleProfile(data);
+    this.invoiceHisData = data;
+  }*/
   deleteModal(value, data) {
     const dialogData = {
       data: value,

@@ -29,7 +29,8 @@
             </div>
                     <form [formGroup]="mailForm" class="mt-20">
                         <app-froala [(model)]="storeData.body" modelChange="saveData($event)"></app-froala>
-                  <button type="submit" (click)="onSubmit()" [disabled]="!mailForm.valid" mat-stroked-button
+<!--                      (click)="onSubmit()"-->
+                  <button type="submit"  [disabled]="!mailForm.valid" mat-stroked-button
                           class="mt-16 btn-primary br-0">Submit
                   </button>
                 </form>
@@ -53,7 +54,7 @@
                       <p class="m-0 text-black">{{name.value}}</p>
                     </div>
                   </div>
-                </div>  
+                </div>
               </div>
               <!-- <div class="wrapper-16 pb-0">
                 <div class="row b-a">
@@ -83,7 +84,7 @@
                 <h5 class="m-0 pt-20 pb-12 text-black">Services - Fee details</h5>
                 <div class="row b-a">
                   <div class="col-md-12 p-0">
-      
+
                     <div class="bg-grey lter wrapper-12 pt-16">
                       <p class="m-0 text-black">Investment management & financial planning</p>
                     </div>
@@ -113,14 +114,14 @@
 
 
 
-  
+
 
 <div class="bottom-fixed wrapper-12 w-100">
   <div class="row">
     <div class="col-md-8">
       <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5>
     </div>
-   
+
     <div class="col-md-4 p-0">
       <div class="row">
         <div class="col-md-9 right text-right">
