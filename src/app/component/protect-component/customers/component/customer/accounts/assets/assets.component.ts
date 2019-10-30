@@ -12,8 +12,10 @@ export class AssetsComponent implements OnInit {
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   dataSource = ELEMENT_DATA;
-  // displayedColumns1 = ['data', 'amts'];
+  
+  displayedColumns1 = ['data', 'amts'];
   datasource1 = ELEMENT_DATA1;
+
   displayedColumns2 = ['sname', 'amts', 'cvalue', 'profit', 'abs', 'xirr', 'pay', 'outs', 'unit', 'date', 'sip', 'icons'];
   datasource2 = ELEMENT_DATA2;
   displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status','icons'];
@@ -63,7 +65,14 @@ datasource19 = ELEMENT_DATA19;
 
 displayedColumns20 = ['no', 'owner','cvalue','rate','balance','bdate','desc','status','icons'];
 datasource20 = ELEMENT_DATA20;
+// displayedColumns21 = ['no', 'owner','cvalue','rate','deposit','mvalue','mdate','number','desc','status','icons'];
+// datasource21 = ELEMENT_DATA21;
 
+displayedColumns22 = ['no', 'owner','cvalue','rate','amt','tenure','mvalue','mdate','number','desc','status','icons'];
+datasource22 = ELEMENT_DATA22;
+
+displayedColumns23 = ['no', 'owner','cvalue','mpayout','rate','amt','mvalue','mdate','desc','status','icons'];
+datasource23 = ELEMENT_DATA23;
   viewMode;
   ngOnInit() {
     this.viewMode="tab1"
@@ -631,4 +640,56 @@ const ELEMENT_DATA20: PeriodicElement20[] = [
   ,cvalue:"94,925", rate:"8.40%",balance:"60,000",bdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
   {no: '', owner: 'Total'
   ,cvalue:"94,925", rate:"",balance:"60,000",bdate:"",desc:"",status:""},
+];
+
+
+
+export interface PeriodicElement22 {
+  no: string;
+  owner: string;
+  cvalue:string;
+  rate:string;
+  amt:string;
+  tenure:string;
+  mvalue:string;
+  mdate:string;
+  number:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA22: PeriodicElement22[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,cvalue:"94,925", rate:"8.40%",amt:"60,000",tenure:"5",mvalue:"65,765",mdate:"18/09/2021",number:"980787870909",desc:"ICICI FD",status:"MATURED"},
+  {no: '1.', owner: 'Rahul Jain'
+  ,cvalue:"94,925", rate:"8.40%",amt:"60,000",tenure:"5",mvalue:"65,765",mdate:"18/09/2021",number:"980787870909",desc:"ICICI FD",status:"MATURED"},
+  {no: '', owner: 'Total'
+  ,cvalue:"1,28,925", rate:"",amt:"1,50,000",tenure:"",mvalue:"1,50,000",mdate:"",number:"",desc:"",status:""},
+];
+
+
+
+
+export interface PeriodicElement23 {
+  no: string;
+  owner: string;
+  cvalue:string;
+  mpayout:string;
+  rate:string;
+  amt:string;
+  mvalue:string;
+  mdate:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA23: PeriodicElement23[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,cvalue:"94,925",mpayout:"60,000", rate:"8.40%",amt:"60,000",mvalue:"65,765",mdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
+  {no: '2.', owner: 'Shilpa Jain'
+  ,cvalue:"94,925",mpayout:"60,000", rate:"8.40%",amt:"60,000",mvalue:"65,765",mdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
+  {no: '', owner: 'Total'
+  ,cvalue:"1,28,925",mpayout:"1,28,925", rate:"",amt:"1,28,925",mvalue:"1,28,925",mdate:"",desc:"",status:""},
 ];
