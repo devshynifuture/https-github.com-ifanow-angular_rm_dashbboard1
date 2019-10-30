@@ -79,12 +79,16 @@ export class ModifyFeeStructureComponent implements OnInit {
       this.getVariableFee().billEvery.setValue(data.subscriptionPricing.billEvery);
       // this.getVariableFee().Duration.setValue(data.subscriptionPricing.billingCycle);
       /*//TODO commented for now*/
-      this.getVariableFee().directFees.controls.equity.setValue(data.subscriptionPricing.subscriptionAssetPricingList[0].equityAllocation)
-      this.getVariableFee().directFees.controls.debt.setValue(data.subscriptionPricing.subscriptionAssetPricingList[0].equityAllocation)
-      this.getVariableFee().directFees.controls.liquid.setValue(data.subscriptionPricing.subscriptionAssetPricingList[0].equityAllocation)
-      this.getVariableFee().regularFees.controls.equity.setValue(data.subscriptionPricing.subscriptionAssetPricingList[1].equityAllocation)
-      this.getVariableFee().regularFees.controls.debt.setValue(data.subscriptionPricing.subscriptionAssetPricingList[1].equityAllocation)
-      this.getVariableFee().regularFees.controls.liquid.setValue(data.subscriptionPricing.subscriptionAssetPricingList[1].equityAllocation)
+      this.getVariableFee().directFees.setValue({
+        equity: data.subscriptionPricing.subscriptionAssetPricingList[0].equityAllocation,
+        debt: data.subscriptionPricing.subscriptionAssetPricingList[0].debtAllocation,
+        liquid: data.subscriptionPricing.subscriptionAssetPricingList[0].liquidAllocation
+      });
+      this.getVariableFee().regularFees.setValue({
+        equity: data.subscriptionPricing.subscriptionAssetPricingList[1].equityAllocation,
+        debt: data.subscriptionPricing.subscriptionAssetPricingList[1].debtAllocation,
+        liquid: data.subscriptionPricing.subscriptionAssetPricingList[1].liquidAllocation
+      });
       this.getVariableFee().pricing.setValue(data.subscriptionPricing.pricing);
       this.getVariableFee().otherAssetClassFees.setValue(data.subscriptionPricing.subscriptionAssetPricingList[0].subscriptionSubAssets);
       this.otherAssetData = data.subscriptionPricing.subscriptionAssetPricingList[2].subscriptionSubAssets;
