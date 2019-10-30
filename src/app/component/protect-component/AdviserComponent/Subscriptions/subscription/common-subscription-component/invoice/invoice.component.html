@@ -186,37 +186,38 @@
                     </div>
                 </div>
 
-<div class="table-container">
-  <table mat-table [dataSource]="dataSource1">
+        <table mat-table [dataSource]="dataSource" id="table-low" class="mt-8">
 
-    <!-- Position Column -->
-    <ng-container matColumnDef="position">
-      <th mat-header-cell *matHeaderCellDef> Date </th>
-      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Reference </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-    </ng-container>
-
-    <!-- Weight Column -->
-    <ng-container matColumnDef="weight">
-      <th mat-header-cell *matHeaderCellDef> Payment mode </th>
-      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-    </ng-container>
-
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="symbol">
-      <th mat-header-cell *matHeaderCellDef> Amount </th>
-      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
-  </table>
-</div>
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+              
+                <!-- Position Column -->
+                <ng-container matColumnDef="date">
+                  <th mat-header-cell *matHeaderCellDef>Date </th>
+                  <td mat-cell *matCellDef="let element"> {{element.paymentDate}} </td>
+                </ng-container>
+              
+                <!-- Name Column -->
+                <ng-container matColumnDef="reference">
+                  <th mat-header-cell *matHeaderCellDef> Reference </th>
+                  <td mat-cell *matCellDef="let element"> {{element.notes}} </td>
+                </ng-container>
+              
+                <!-- Weight Column -->
+                <ng-container matColumnDef="paymentMode">
+                  <th mat-header-cell *matHeaderCellDef> Payment mode </th>
+                  <td mat-cell *matCellDef="let element"> {{element.paymentMode}} </td>
+                </ng-container>
+              
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="amount">
+                  <th mat-header-cell *matHeaderCellDef> Amount </th>
+                  <td mat-cell *matCellDef="let element"> {{element.amountReceieve}} </td>
+                </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
 </div>
             </div>
             <div *ngIf="showRecord==true" class="wrapper-20 max-height-100" >
@@ -299,18 +300,20 @@
                                         <h5 class="m-0 pt-8 text-right">payment mode</h5>
                                     </div>
                                     <div class="col-md-5">
-                                        <div class="form-group mb-0">
-                                            <input type="text" class="form-control"  formControlName="paymentMode"  maxlength="{{getFormControl().paymentMode.maxLength}}">
-                                        </div>
+                                            <div class="form-group mb-0">
+                                                    <select class="form-control" id="Category" formControlName="paymentMode" id="sel1">
+                                                      <option *ngFor="let feeCollectionMode of feeCollectionMode" value="{{feeCollectionMode.name}}">{{feeCollectionMode.name}}</option>
+                                                    </select>
+                                                  </div>
                                     <div class="row">
                                         <div class="col-md-10 pr-0">
                                             <mat-error class="f-12 pt-4"
                                                 *ngIf="ismodeValid && getFormControl().paymentMode.invalid || (getFormControl().paymentMode.touched && getFormControl().paymentMode.invalid)">
                                                 feild is required</mat-error>
                                         </div>
-                                        <div class="col-md-2 pl-0">
+                                        <!-- <div class="col-md-2 pl-0">
                                             <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().paymentMode.value?.length?getFormControl().paymentMode.value.length:0}}/{{getFormControl().paymentMode.maxLength}}</p>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     </div>
                                 </div>
@@ -318,10 +321,14 @@
                                     <div class="col-md-5">
                                         <h5 class="m-0 pt-8 text-right">GST treatment</h5>
                                     </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" formControlName="gstTreatment">
-                                        </div>
+                                    <div class="col-md-6">
+                                            <div class="form-group mb-0"> 
+                                                    <select formControlName="gstTreatment" class="form-control" id="sel11">
+                                                      <option>Registered Business - Regular</option>
+                                                      <option>Registered Business - Composition</option>
+                                                      <option>Unregistered Business</option>
+                                                    </select>
+                                                  </div>
                                     </div>
                                 </div>
                                 <div class="row pt-24">
@@ -563,36 +570,42 @@
                            </div>
                        </div>
                    </div>
-                   <div class="row pt-24"> 
-                       <div class="col-md-5">
-                           <h5 class="m-0 pt-8 text-right">payment mode</h5>
-                       </div>
-                       <div class="col-md-5">
-                           <div class="form-group mb-0">
-                               <input type="text" class="form-control"  formControlName="paymentMode"  maxlength="{{getFormControl().paymentMode.maxLength}}">
-                           </div>
-                       <div class="row">
-                           <div class="col-md-10 pr-0">
-                               <mat-error class="f-12 pt-4"
-                                   *ngIf="ismodeValid && getFormControl().paymentMode.invalid || (getFormControl().paymentMode.touched && getFormControl().paymentMode.invalid)">
-                                   feild is required</mat-error>
-                           </div>
-                           <div class="col-md-2  pl-0">
-                               <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().paymentMode.value?.length?getFormControl().paymentMode.value.length:0}}/{{getFormControl().paymentMode.maxLength}}</p>
-                           </div>
-                       </div>
-                       </div>
-                   </div>
                    <div class="row pt-24">
-                       <div class="col-md-5">
-                           <h5 class="m-0 pt-8 text-right">GST treatment</h5>
-                       </div>
-                       <div class="col-md-5">
-                           <div class="form-group">
-                               <input type="text" class="form-control" formControlName="gstTreatment">
-                           </div>
-                       </div>
-                   </div>
+                        <div class="col-md-5">
+                            <h5 class="m-0 pt-8 text-right">payment mode</h5>
+                        </div>
+                        <div class="col-md-5">
+                                <div class="form-group mb-0">
+                                        <select class="form-control" id="Category" formControlName="paymentMode" id="sel1">
+                                          <option *ngFor="let feeCollectionMode of feeCollectionMode" value="{{feeCollectionMode.name}}">{{feeCollectionMode.name}}</option>
+                                        </select>
+                                      </div>
+                        <div class="row">
+                            <div class="col-md-10 pr-0">
+                                <mat-error class="f-12 pt-4"
+                                    *ngIf="ismodeValid && getFormControl().paymentMode.invalid || (getFormControl().paymentMode.touched && getFormControl().paymentMode.invalid)">
+                                    feild is required</mat-error>
+                            </div>
+                            <!-- <div class="col-md-2 pl-0">
+                                <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().paymentMode.value?.length?getFormControl().paymentMode.value.length:0}}/{{getFormControl().paymentMode.maxLength}}</p>
+                            </div> -->
+                        </div>
+                        </div>
+                    </div>
+                   <div class="row pt-24">
+                        <div class="col-md-5">
+                            <h5 class="m-0 pt-8 text-right">GST treatment</h5>
+                        </div>
+                        <div class="col-md-6">
+                                <div class="form-group mb-0"> 
+                                        <select formControlName="gstTreatment" class="form-control" id="sel11">
+                                          <option>Registered Business - Regular</option>
+                                          <option>Registered Business - Composition</option>
+                                          <option>Unregistered Business</option>
+                                        </select>
+                                      </div>
+                        </div>
+                    </div>
                    <div class="row pt-24">
                        <div class="col-md-5">
                            <h5 class="m-0 pt-8 text-right">Notes</h5>

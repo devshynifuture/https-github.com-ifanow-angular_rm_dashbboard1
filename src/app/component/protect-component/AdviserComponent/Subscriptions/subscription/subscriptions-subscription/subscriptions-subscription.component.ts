@@ -7,6 +7,7 @@ import {SubscriptionService} from '../../subscription.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {AuthService} from '../../../../../../auth-service/authService';
 import * as _ from 'lodash';
+import { EnumServiceService } from '../enum-service.service';
 
 export interface PeriodicElement {
   client: string;
@@ -56,13 +57,16 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   live: boolean;
   notStarted: boolean;
   future: boolean;
+  feeCollectionMode: any;
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
-              private eventService: EventService, private subService: SubscriptionService) {
+              private eventService: EventService, private subService: SubscriptionService,public enumService:EnumServiceService) {
   }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
+    console.log("feeeee...",this.feeCollectionMode);
     this.getSummaryDataAdvisor();
     console.log('upperData', this.upperData);
   }
