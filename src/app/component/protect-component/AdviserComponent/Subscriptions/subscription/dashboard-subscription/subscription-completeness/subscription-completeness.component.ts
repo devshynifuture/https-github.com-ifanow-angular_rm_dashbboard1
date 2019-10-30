@@ -31,12 +31,12 @@ export class SubscriptionCompletenessComponent implements OnInit {
 // {'completed':'false','data':'Record Payment','innerData':'Email documents to client with one click. Client can review them and proceed for e-singing using Aadhaar based eSign.','tab':4}]
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.getSubscriptionStagesRecord();
+    // this.getSubscriptionStagesRecord();
     this.getDashboardResponse();
     this.showLoader = true;
   }
 
-  getSubscriptionStagesRecord() {
+  /*getSubscriptionStagesRecord() {
     const obj = {
       // advisorId: 2735,
       advisorId: this.advisorId,
@@ -51,7 +51,7 @@ export class SubscriptionCompletenessComponent implements OnInit {
       data => this.getSubStagesRecordResponse(data)
     );
   }
-
+*/
   getDashboardResponse() {
 
     this.subscription.getDashboardSubscriptionResponse(this.advisorId).subscribe(
@@ -60,15 +60,21 @@ export class SubscriptionCompletenessComponent implements OnInit {
   }
 
   getDashboardData(data) {
-    if (data.length >= 6) {
-      data[0].selectedTab = 6;
-      data[1].selectedTab = 6;
-      data[2].selectedTab = 1;
-      data[3].selectedTab = 3;
-      data[4].selectedTab = 5;
-      data[5].selectedTab = 4;
+    if (data && data.length > 0) {
+      data.forEach((singleData) => {
+      });
+      if (data.length >= 6) {
+        data[0].selectedTab = 6;
+        data[1].selectedTab = 6;
+        data[2].selectedTab = 1;
+        data[3].selectedTab = 3;
+        data[4].selectedTab = 5;
+        data[5].selectedTab = 4;
+      }
     }
     this.dataObj = data;
+    this.showLoader = false;
+
   }
 
   getSubStagesRecordResponse(data) {
@@ -83,7 +89,7 @@ export class SubscriptionCompletenessComponent implements OnInit {
   currentTabs(value) {
     console.log(value.selectedTab);
     this.eventService.tabData(value.selectedTab);
-    value.completed = 'true';
+    value.completed = true;
   }
 
   openPopup(data) {

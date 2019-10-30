@@ -3,7 +3,7 @@ import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from "../../../../../../../auth-service/authService";
+import {AuthService} from '../../../../../../../auth-service/authService';
 
 @Component({
   selector: 'app-add-fixed-fee',
@@ -11,12 +11,10 @@ import {AuthService} from "../../../../../../../auth-service/authService";
   styleUrls: ['./add-fixed-fee.component.scss']
 })
 export class AddFixedFeeComponent implements OnInit {
+  fixedFeeData: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
               private subService: SubscriptionService, private eventService: EventService) {
-    this.subInjectService.rightSideBarData.subscribe(
-      data => this.getFeeFormData(data)
-    );
   }
 
   isServiceValid;
@@ -24,14 +22,33 @@ export class AddFixedFeeComponent implements OnInit {
   isDescriptionValid;
   isFeesValid;
   isbillEvery;
-
-
-  fixedFeeData;
   advisorId;
 
   ngOnInit() {
+    // console.log('AddFixedFeeComponent init');
     this.advisorId = AuthService.getAdvisorId();
     this.setValidation(false);
+    this.createFixedFeeForm();
+    this.subInjectService.rightSideBarData.subscribe(
+      data => this.getFeeFormData(data)
+    );
+  }
+
+  createFixedFeeForm() {
+    this.fixedFeeData = this.fb.group({
+      serviceName: [, [Validators.required]],
+      code: [, [Validators.required]],
+      description: [, [Validators.required]],
+      Duration: [1],
+      fees: [, [Validators.required]],
+      billingNature: [1],
+      billEvery: [, [Validators.required]],
+      billingMode: [1]
+    });
+    this.getFormControl().serviceName.maxLength = 40;
+    this.getFormControl().code.maxLength = 10;
+    this.getFormControl().description.maxLength = 160;
+    this.getFormControl().fees.maxLength = 10;
   }
 
   setValidation(flag) {
@@ -47,26 +64,29 @@ export class AddFixedFeeComponent implements OnInit {
   }
 
   getFeeFormData(data) {
-    this.fixedFeeData = this.fb.group({
-      serviceName: [data.serviceName, [Validators.required]],
-      code: [data.serviceCode, [Validators.required]],
-      description: [data.description, [Validators.required]],
-      fees: [data, [Validators.required]],
-      billingNature: [1],
-      billEvery: [data, [Validators.required]],
-      billingMode: [1]
-    });
-    this.getFormControl().serviceName.maxLength = 40;
-    this.getFormControl().code.maxLength = 10;
-    this.getFormControl().description.maxLength = 160;
-    this.getFormControl().fees.maxLength = 10;
+    if (data == '') {
+      return;
+    } else {
+      // data.servicePricing.billingNature = '1';
+      // console.log(' this isa snd;kasljdlkajsdlkashdlaksd ', data.servicePricing.billingNature);
+      this.fixedFeeData.controls.serviceName.setValue(data.serviceName);
+      this.fixedFeeData.controls.code.setValue(data.serviceCode);
+      this.fixedFeeData.controls.description.setValue(data.description);
+      this.fixedFeeData.controls.Duration.setValue(data.servicePricing.billingCycle);
+      this.fixedFeeData.controls.fees.setValue(data.servicePricing.pricingList[0].pricing);
+      this.fixedFeeData.controls.billingNature.setValue(data.servicePricing.billingNature + '');
+      // this.fixedFeeData.controls.billingNature.setValue('2');
+
+      this.fixedFeeData.controls.billingMode.setValue(data.servicePricing.billingMode);
+      this.fixedFeeData.controls.billEvery.setValue(data.servicePricing.billEvery);
+    }
+
   }
 
   Close(state) {
     this.subInjectService.rightSliderData(state);
     this.setValidation(false);
     this.fixedFeeData.reset();
-
   }
 
   closeTab(state, value) {
@@ -116,7 +136,6 @@ export class AddFixedFeeComponent implements OnInit {
 
         }
       };
-      console.log('jifsdfoisd', obj);
       this.subService.createSettingService(obj).subscribe(
         data => this.saveFeeTypeDataResponse(obj, data, state)
       );

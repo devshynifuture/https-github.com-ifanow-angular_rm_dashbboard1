@@ -85,8 +85,8 @@
 <div *ngIf="invoiceSubscription =='true'">
     <app-invoice [invoiceInSub]='invoiceSub'  [clientData]='invoiceClientData' (valueChange)='display($event)' ></app-invoice>
 </div>
-<div class="pt-130" *ngIf="invoiceSubscription=='EditInInvoice'">
-    <app-invoice [invoiceValue]="invoiceSubscription"></app-invoice>
+<div class="pt-60" *ngIf="invoiceSubscription=='EditInInvoice'">
+    <app-invoice [invoiceValue]="invoiceSubscription" (valueChange)='display($event)'></app-invoice>
 </div>
 <!-- <div class="bg-white pb-44 mt-70">
         <div class="row">

@@ -167,7 +167,7 @@ export class SubscriptionService {
   }
 
   getPlansMappedToAdvisor(data) {
-    const httpParams = new HttpParams().set('advisorid', data.advisorid).set('serviceId', data.serviceId);
+    const httpParams = new HttpParams().set('advisorid', data.advisorId).set('serviceId', data.serviceId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PLAN_MAPPED_TO_ADVISOR, httpParams);
   }
 
@@ -304,14 +304,22 @@ export class SubscriptionService {
   updateEmailTemplate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_EMAIL_TEMPLATE, data);
   }
-  startSubscription(data)
-  {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.START_SUBSCRIPTION,data)
+
+  startSubscription(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.START_SUBSCRIPTION, data)
   }
-  filterSubscription(data){
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('limit', data.limit).set('subscription', data.subscription).set('offset', data.offset);
+
+  filterSubscription(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('fromDate', data.fromDate)
+      .set('toDate', data.toDate).set('dateType', data.dateType).set('limit', data.limit)
+      .set('statusIdList', data.statusIdList).set('offset', data.offset);
     return this.http.get(apiConfig.MAIN_URL + appConfig.FILTER_SUBCRIPTION, httpParams);
   }
+  deleteService(data)
+  {
+   return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SERVICE,data)
+  }
+
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
   }
