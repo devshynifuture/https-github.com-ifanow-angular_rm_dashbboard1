@@ -10,6 +10,10 @@
   ::ng-deep.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
    border-color:#008FFF !important; /*outer ring color change*/
   }
+  ::ng-deep label{
+    margin: 0 !important;
+  }
+ 
   ::ng-deep .mat-horizontal-stepper-header{
     pointer-events: none !important;
   }
