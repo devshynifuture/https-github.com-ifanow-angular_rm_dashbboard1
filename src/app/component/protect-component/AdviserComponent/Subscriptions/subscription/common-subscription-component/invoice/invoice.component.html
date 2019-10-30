@@ -4,7 +4,7 @@
         <div class="col-md-4 p-0">
             <div class="row">
                 <div class="col-md-5 pl-8 pt-4 pr-8">
-                        <h4 class="mb-0 wrapper-8 pt-12">Invoices </h4>
+                        <h4 class="mb-0 wrapper-8 pt-12">Invoices</h4>
                 </div>
                 <div class="col-md-7 text-right pt-4 right">
                     <!-- <button mat-stroked-button class="btn-header btn-xs br-0 f-12 h-28 mt-4">SEND</button> -->
@@ -371,7 +371,7 @@
 </div>
 <div class="row bb-1 pt-72" *ngIf="showRecord==false">
     <div class="col-md-8 text-custom">
-        <img class="c-p" src="assets/images/svg/pencil.svg" (click)="editInvoice()">
+        <!-- <img class="c-p" src="assets/images/svg/pencil.svg" (click)="editInvoice()"> -->
         <img class="b-a " src="assets/images/svg/mail-light.svg">
         <img class="b-a " src="assets/images/svg/pdf-icons.svg">
         <img class="b-a " src="assets/images/svg/printer.svg">
@@ -640,7 +640,7 @@
             <i class="material-icons right pt-20 pr-20 c-p" (click)="()"> clear </i>
         </div>
     </div> -->
-    <div class="row bb-1 popup-header-fix-60">
+    <div class="row  popup-header">
         <div class="col-md-10 pl-0">
             <h4 class="f-400 wrapper-20 mb-0">Edit Invoice of {{storeData.invoiceNumber}}</h4>
         </div>
@@ -650,7 +650,7 @@
                 </i>
         </div>
     </div>
-    <div class="row pt-100">
+    <div class="row pt-40">
         <div class="col-md-3">
             <h5 class="m-0 text-right pt-8">Client name </h5>
         </div>

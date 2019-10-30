@@ -196,21 +196,25 @@
                             </ng-container>
                         <ng-container matColumnDef="date">
                             <th mat-header-cell *matHeaderCellDef class="text-right"> Created date </th>
-                            <td mat-cell *matCellDef="let element" class="text-right"> {{element.startDate}} </td>
+                            <td mat-cell *matCellDef="let element" class="text-right"> {{element.startDate | date:'dd/MM/yyyy'}} </td>
                         </ng-container>
                         <ng-container matColumnDef="sdate">
                             <th mat-header-cell *matHeaderCellDef class="text-right"> Sent date </th>
-                            <td mat-cell *matCellDef="let element" class="text-right"> {{element.sentDate}} </td>
+                            <td mat-cell *matCellDef="let element" class="text-right"> {{element.sentDate  | date:'dd/MM/yyyy'}} </td>
                         </ng-container>
                         <ng-container matColumnDef="cdate">
                             <th mat-header-cell *matHeaderCellDef class="text-right"> Client sign date </th>
-                            <td mat-cell *matCellDef="let element" class="text-right"> {{element.cdate}} </td>
+                            <td mat-cell *matCellDef="let element" class="text-right"> {{element.cdate  | date:'dd/MM/yyyy'}} </td>
                         </ng-container>
-              
                         <ng-container matColumnDef="status">
-                            <th mat-header-cell *matHeaderCellDef> Status </th>
-                            <td mat-cell *matCellDef="let element" class="text-success f-500 c-p" (click)="changeDisplay('readyToSend',element)"> {{element.status}} </td>
-                        </ng-container>
+                            <th *matHeaderCellDef class=" t-10" mat-header-cell> Status</th>
+                            <td *matCellDef="let element" mat-cell>
+                                        <span>
+                                        <span class="text-success t-10 f-500 c-p" *ngIf="element.status==1">READY TO SEND</span>
+                                        <span class="text-success t-10 f-500 c-p" *ngIf="element.status==0">NOT STARTED</span>
+                                        </span>
+                            </td>
+                          </ng-container>
                         <ng-container matColumnDef="icons">
                             <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"> </th>
                             <td mat-cell *matCellDef="let element" style="width: 2%;"><i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
