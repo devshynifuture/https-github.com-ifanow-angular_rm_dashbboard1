@@ -72,7 +72,7 @@ export class CreateSubscriptionComponent implements OnInit {
   getSubStartDetails(data) {
     this.clientData = data;
     console.log(this.clientData, 'client Data');
-    if (data.subscriptionPricing.feeTypeId) {
+    if (data.subscriptionPricing) {
       this.advisorId = AuthService.getAdvisorId();
       const obj = {
         // advisorId: 2808,
@@ -196,8 +196,12 @@ export class CreateSubscriptionComponent implements OnInit {
     };
     console.log(obj, 'start subscription');
     this.subService.startSubscription(obj).subscribe(
-      data => console.log("subscription start",data)
+      data => this.startSubscsriptionResponse(data)
     )
   }
-
+  startSubscsriptionResponse(data)
+  {
+    console.log(data)
+    
+  }
 }
