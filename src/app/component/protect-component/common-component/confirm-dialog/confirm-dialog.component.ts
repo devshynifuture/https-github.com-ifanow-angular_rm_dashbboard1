@@ -1,7 +1,8 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {SubscriptionService} from '../../AdviserComponent/Subscriptions/subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { SubscriptionService } from '../../AdviserComponent/Subscriptions/subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -20,10 +21,10 @@ export class ConfirmDialogComponent implements OnInit {
   @Input()
   public negativeMethod: Function;
   dataToshow: any;
-
+  advisorId;
   constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public dialogData: any, private subscription: SubscriptionService,
-              public eventService: EventService) {
+    @Inject(MAT_DIALOG_DATA) public dialogData: any, private subscription: SubscriptionService,
+    public eventService: EventService) {
     this.dataToshow = dialogData.dataToShow;
   }
 
@@ -35,6 +36,7 @@ export class ConfirmDialogComponent implements OnInit {
     this.btn1NoData = this.dialogData.btnNo;
     this.btn2YesData = this.dialogData.btnYes;
     this.data = this.dialogData.data;
+     this.advisorId= AuthService.getAdvisorId();
 
   }
 
@@ -72,8 +74,8 @@ export class ConfirmDialogComponent implements OnInit {
     if (this.dialogData.data == 'PLAN') {
       const obj = {
         // advisorId: 12345,
-        advisorId: 12345,
-        planId: this.dialogData.planData.id
+        advisorId: this.advisorId,
+        id: this.dialogData.planData.id
       };
       this.subscription.deleteSubscriptionPlan(obj).subscribe(
         data => this.deletedData(data)
@@ -83,8 +85,10 @@ export class ConfirmDialogComponent implements OnInit {
 
   deletedData(data) {
     if (data == true) {
+      this.dialogRef.close();
+      this.eventService.changeUpperSliderState({state: 'close'});
       this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
-      this.dialogClose();
+      
     }
   }
 }

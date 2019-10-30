@@ -45,7 +45,8 @@
                 <div class="row pt-24 text-left">
                   <div class="col-md-6">
                     <p class="text-primitive f-12">FEE TYPE</p>
-                    <label>{{serviceData.feeType}}</label>
+                    <label *ngIf="serviceData.feeTypeId==1">Fixed</label>
+                    <label *ngIf="serviceData.feeTypeId==2">Variable</label>
                   </div>
                   <div class="col-md-6">
                     <p class="text-primitive f-12">BILLING NATURE</p>
@@ -60,8 +61,8 @@
                   </div>
                   <div class="col-md-6">
                     <p class="text-primitive f-12">FEES</p>
-                    <p class="f-18" *ngIf="serviceData.feeType=='fixed'">₹{{serviceData.amount}}/Year</p>
-                    <p class="f-18" *ngIf="serviceData.feeType=='variable'">{{serviceData.amount}}%year</p>
+                    <p class="f-18" *ngIf="serviceData.feeTypeId==1">₹{{serviceData.averageFees}}/Year</p>
+                    <p class="f-18" *ngIf="serviceData.feeTypeId==2">{{serviceData.averageFees}}%year</p>
                   </div>
                 </div>
               </div>
@@ -87,9 +88,7 @@
       <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
     </div>
     <div class="col-md-8 right text-right">
-      <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
-
-
+      <button mat-button class="btn-bottom br-0 text-inherit" (click)="savePlanMapToService()">Save</button>
     </div>
   </div>
 </div>
