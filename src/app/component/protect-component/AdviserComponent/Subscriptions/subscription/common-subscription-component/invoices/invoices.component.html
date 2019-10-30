@@ -102,6 +102,6 @@
       <div class="pt-14 pr-0" >
             <app-terms-agreement [quotationDesignE]="quotationDesignEmail" *ngIf="invoiceDesign=='emailInvoices'"  (valueChange)='display($event)'  ></app-terms-agreement>
             </div>
-            <div class="pt-130">
-             <app-invoice [invoiceValue]="invoiceDesign" *ngIf="invoiceDesign=='edit'"></app-invoice>
+            <div class="pt-180">
+             <app-invoice [invoiceValue]="invoiceDesign" *ngIf="invoiceDesign=='edit'" (valueChange)='display($event)'></app-invoice>
             </div>

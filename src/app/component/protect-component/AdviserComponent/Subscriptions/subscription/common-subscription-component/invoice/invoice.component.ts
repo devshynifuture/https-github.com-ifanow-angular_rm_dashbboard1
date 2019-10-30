@@ -342,7 +342,12 @@ export class InvoiceComponent implements OnInit {
   }
 
   closeEditInv() {
-    this.showEdit = false;
+    if(this.invoiceValue=='EditInInvoice' || this.invoiceValue=='edit'){
+      this.valueChange.emit(this.invoiceValue);
+    }else{
+      this.showEdit = false;
+
+    }
   }
 
   Close(state) {
