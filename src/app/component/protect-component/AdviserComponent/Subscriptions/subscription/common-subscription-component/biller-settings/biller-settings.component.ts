@@ -21,13 +21,14 @@ export class BillerSettingsComponent implements OnInit {
   advisorId;
 
   constructor(public subInjectService: SubscriptionInject, public subService: SubscriptionService, public eventService: EventService) {
-    this.dataSub = this.subInjectService.singleProfileData.subscribe(
-      data => this.getBillerData(data)
-    );
+
   }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.dataSub = this.subInjectService.singleProfileData.subscribe(
+      data => this.getBillerData(data)
+    );
   }
 
   getBillerData(data) {

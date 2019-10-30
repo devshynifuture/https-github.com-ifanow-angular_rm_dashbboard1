@@ -33,51 +33,56 @@
       </div>
       <div class="col-md-4 right text-right p-0">
         <div class="row">
-            <div class="col-md-8 p-0">
-                <h4 class="pt-8 mb-0">Subscriptions</h4>
-            </div>
-            <div class="col-md-4 right text-right p-0">
-                <i class="material-icons mr-12 icon-light c-p v-sub">
-                    search
-                </i>
-                <button mat-stroked-button class="btn-default addon mr-12"  (click)= "showFilters(showFilter = true)"><i class="material-icons">filter_list</i>FILTERS</button>
-                <button mat-stroked-button class="btn-primary addon"><i class="material-icons">add</i>ADD NEW</button>
-            </div>
+          <div class="col-md-8 p-0">
+            <h4 class="pt-8 mb-0">Subscriptions</h4>
+          </div>
+          <div class="col-md-4 right text-right p-0">
+            <i class="material-icons mr-12 icon-light c-p v-sub">
+              search
+            </i>
+            <button mat-stroked-button class="btn-default addon mr-12" (click)="showFilters(showFilter = true)"><i
+              class="material-icons">filter_list</i>FILTERS
+            </button>
+            <button mat-stroked-button class="btn-primary addon"><i class="material-icons">add</i>ADD NEW</button>
+          </div>
         </div>
         <div class="row pt-12">
-            <div class="col-md-8 p-0 custom-tags">
-                <mat-chip-list >
-                    <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let status of filterStatus; let ind = index">
-                        {{(status == 1)?'NOT STARTED':(status== 2)?'LIVE':(status == 3)?'FUTURE':'CANCELLED'}}<i class="material-icons text-custom ml-12" (click)="remove(ind)">
-                                        cancel
-                                        </i></mat-chip>
-                                        <mat-chip-list>
-                                                <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let dateFilter of filterDate; let i = index">
-                                                        <input type="date"class="form-control br-0"  onchange="handler(event);">
-                                                    <i class="material-icons text-custom ml-12" (click)="removeDate(i)">
-                                                        cancel
-                                                </i></mat-chip>
-                                        </mat-chip-list>
-                    </mat-chip-list>
+          <div class="col-md-8 p-0 custom-tags">
+            <mat-chip-list>
+              <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let status of filterStatus; let ind = index">
+                {{(status == 1) ? 'NOT STARTED' : (status == 2) ? 'LIVE' : (status == 3) ? 'FUTURE' : 'CANCELLED'}}<i
+                class="material-icons text-custom ml-12" (click)="remove(ind)">
+                cancel
+              </i></mat-chip>
+              <mat-chip-list>
+                <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let dateFilter of filterDate; let i = index">
+                  <input type="date" class="form-control br-0" onchange="handler(event);">
+                  <i class="material-icons text-custom ml-12" (click)="removeDate(i)">
+                    cancel
+                  </i></mat-chip>
+              </mat-chip-list>
+            </mat-chip-list>
+          </div>
+          <div class="col-md-4 right text-right p-0">
+            <div class="row">
+              <div class="col-md-6">
+                <!--                <select class="form-control br-0" id="sel11" [(ngModel)]='selectedOption'-->
+                <!--                        (click)="addFilters(selectedOption)">-->
+                <!--                  <option value="" [disabled]="true">FILTERS ONE</option>-->
+                <!--                  <option *ngFor="let chip of chips" [ngValue]="chip">{{chip}}</option>-->
+                <!--                </select>-->
+              </div>
+              <div class="col-md-6">
+                <!--                <select class="form-control br-0" id="sel12" [(ngModel)]='selectedOption1'-->
+                <!--                        (click)="addFiltersDate(selectedOption1)">-->
+                <!--                  <option value="" [disabled]="true">FILTERS TWO</option>-->
+                <!--                  <option *ngFor="let dateAdd of dateChips" [ngValue]="dateAdd">{{dateAdd}}</option>-->
+                <!--                </select>-->
+              </div>
             </div>
-            <div class="col-md-4 right text-right p-0">
-                    <div class="row">
-                        <div class="col-md-6">
-                                <select class="form-control br-0" id="sel11" [(ngModel)]='selectedOption' (click)="addFilters(selectedOption)">
-                                        <option value = ""[disabled] = "true" >FILTERS ONE</option>
-                                         <option *ngFor="let chip of chips" [ngValue]="chip">{{chip}}</option>
-                                       </select>  
-                        </div>
-                        <div class="col-md-6">
-                                <select class="form-control br-0" id="sel12" [(ngModel)]='selectedOption1' (click)="addFiltersDate(selectedOption1)">
-                                        <option value = ""[disabled] = "true" >FILTERS TWO</option>
-                                        <option *ngFor="let dateAdd of dateChips" [ngValue]="dateAdd">{{dateAdd}}</option>
-                                      </select>
-                        </div>
-                    </div>
-                           
-                       
-                 </div>
+
+
+          </div>
         </div>
 
 
@@ -97,6 +102,7 @@
       </ng-container>
       <ng-container matColumnDef="amt">
         <th *matHeaderCellDef class="f-18 t-10" mat-header-cell> Fee amount</th>
+
         <td (click)="Open('open',element)" *matCellDef="let element" class="c-p t-10 text-primary text-underline"
             mat-cell> View details
         </td>
@@ -156,8 +162,8 @@
         </i>
           <mat-menu #menu="matMenu">
             <a (click)="Open('open',element)" mat-menu-item>View & Modify fee structure</a>
-            <a (click)="Open('billerSettings','open',element)" class="bt-1" mat-menu-item>Change Biller</a>
-            <a (click)="Open('changePayee','open',element)" mat-menu-item>Change Payee</a>
+            <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change Biller</a>
+            <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change Payee</a>
             <a (click)="delete('cancelSubscription',element)" class="bt-1" mat-menu-item>Cancel
               subscription</a>
             <a (click)="deleteModal('SUBSCRIPTION',element)" mat-menu-item>Delete subscription</a>
