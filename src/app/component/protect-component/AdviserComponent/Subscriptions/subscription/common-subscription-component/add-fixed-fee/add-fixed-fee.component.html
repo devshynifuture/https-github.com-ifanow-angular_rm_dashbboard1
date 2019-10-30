@@ -64,7 +64,7 @@
         <div class="col-md-5 pr-0">
 
             <div class="form-group mb-0">
-                <textarea class="form-control br-0" maxlength="{{getFormControl().code.maxLength}}" formControlName="description" rows="3"></textarea>
+                <textarea class="form-control br-0" maxlength="{{getFormControl().description.maxLength}}" formControlName="description" rows="3"></textarea>
             </div>
             <div class="row">
                 <div class="col-md-8">
@@ -125,23 +125,26 @@
         <div class="col-md-7">
             <div class="row">
                 <div class="col-md-5 p-0">
-                    <div class="form-group mb-0">
-                        <input type="number" formControlName="billEvery" class="form-control br-0">
+                    <div class="form-group">
+                        <input type="number" pattern="\d*" onKeyPress="if(this.value.length==2) return false;"
+                            formControlName="billEvery" class="form-control br-0">
                     </div>
-                    <mat-error class="f-12 pt-4"
+                </div>
+
+                <div class="col-md-5 p-0">
+                    <div class="form-group">
+                        <select class="form-control br-0" formControlName="Duration" id="sel1">
+                            <option value="1">Monthly</option>
+                            <option value="12">Yearly</option>
+                        </select>
+                    </div>
+                </div>
+                <mat-error class="f-12 pt-4"
                         *ngIf="isbillEvery && getFormControl().billEvery.invalid || getFormControl().billEvery.touched && getFormControl().billEvery.invalid">
                         Field is Required</mat-error>
-
-                </div>
-                <div class="col-md-4 p-0">
-                    <button mat-stroked-button class="br-0 min-38 t-92 text-custom">Months <i
-                            class="material-icons right pt-6 text-custom">
-                            arrow_drop_down
-                        </i></button>
-                </div>
             </div>
-
         </div>
+
     </div>
     <div class="row pt-28">
         <div class="col-md-5">

@@ -167,7 +167,7 @@ export class SubscriptionService {
   }
 
   getPlansMappedToAdvisor(data) {
-    const httpParams = new HttpParams().set('advisorid', data.advisorid).set('serviceId', data.serviceId);
+    const httpParams = new HttpParams().set('advisorid', data.advisorId).set('serviceId', data.serviceId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PLAN_MAPPED_TO_ADVISOR, httpParams);
   }
 
