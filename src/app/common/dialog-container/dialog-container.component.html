@@ -1,19 +1,26 @@
-<div [@dialogContainer]="dialogState" *ngIf="isOverlayVisible" class="custom-overlay">
-</div>
-
-<div [@openClose]="currentState" class="right_sidenav">
-  <app-common-froala [changeFooter]='subscriptionTab'  *ngIf="subscriptionTab=='viewDocuments'" [screenType]="subscriptionTab"></app-common-froala>
-  <app-common-froala [changeFooter]='subscriptionTab'  *ngIf="subscriptionTab=='viewDoc'" [screenType]="subscriptionTab"></app-common-froala>
-  <app-common-froala [changeEmailOnly]='subscriptionTab' *ngIf="subscriptionTab=='openEmailQuot'"></app-common-froala>
-  <app-common-froala [changeFooter]='subscriptionTab' *ngIf="subscriptionTab=='emailQuotation'"></app-common-froala>
-  <app-common-froala [changeFooter]='subscriptionTab' *ngIf="subscriptionTab=='viewQuotation'"></app-common-froala>
-  <app-email-quotation [headerData]="headerData" *ngIf="subscriptionTab=='eSignRequest'"></app-email-quotation>
-  <app-email-quotation  [headerDataDocuments]="headerDataDocuments"  *ngIf="subscriptionTab=='eSignRequestDocuments'"></app-email-quotation>
-  <app-invoice-history [invoiceHistoryData]='invoiceHisData'*ngIf="subscriptionTab=='SUBSCRIPTIONS'"></app-invoice-history>
-  <app-invoice-history [invoiceHistoryData]='invoiceHisData' *ngIf="subscriptionTab=='subscriptionFees'"></app-invoice-history>
+<!--<div [@dialogContainer]="dialogState" *ngIf="isOverlayVisible" class="custom-overlay">-->
+<!--</div>-->
+<app-custom-dialog-container [currentState]="currentState">
+  <!--  <div [@openClose]="currentState" class="right_sidenav">-->
+  <app-common-froala *ngIf="subscriptionTab=='viewDocuments'" [changeFooter]='subscriptionTab'
+                     [screenType]="subscriptionTab"></app-common-froala>
+  <app-common-froala *ngIf="subscriptionTab=='viewDoc'" [changeFooter]='subscriptionTab'
+                     [screenType]="subscriptionTab"></app-common-froala>
+  <app-common-froala *ngIf="subscriptionTab=='openEmailQuot'" [changeEmailOnly]='subscriptionTab'></app-common-froala>
+  <app-common-froala *ngIf="subscriptionTab=='emailQuotation'" [changeFooter]='subscriptionTab'></app-common-froala>
+  <app-common-froala *ngIf="subscriptionTab=='viewQuotation'" [changeFooter]='subscriptionTab'></app-common-froala>
+  <app-email-quotation *ngIf="subscriptionTab=='eSignRequest'" [headerData]="headerData"></app-email-quotation>
+  <app-email-quotation *ngIf="subscriptionTab=='eSignRequestDocuments'"
+                       [headerDataDocuments]="headerDataDocuments"></app-email-quotation>
+  <app-invoice-history *ngIf="subscriptionTab=='SUBSCRIPTIONS'"
+                       [invoiceHistoryData]='invoiceHisData'></app-invoice-history>
+  <app-invoice-history *ngIf="subscriptionTab=='subscriptionFees'"
+                       [invoiceHistoryData]='invoiceHisData'></app-invoice-history>
   <app-clients-dashboard *ngIf="subscriptionTab=='dashboardSubscription'"></app-clients-dashboard>
-  <app-modify-fee-structure [ModifyFeesChange]="subscriptionTab" *ngIf="subscriptionTab=='fixedModifyFees' || subscriptionTab =='variableModifyFees'"></app-modify-fee-structure>
-  <app-biller-profile-advisor [Selected]="selectedSubscriptionTab" *ngIf="subscriptionTab=='billerProfile'"></app-biller-profile-advisor>
+  <app-modify-fee-structure *ngIf="subscriptionTab=='fixedModifyFees' || subscriptionTab =='variableModifyFees'"
+                            [ModifyFeesChange]="subscriptionTab"></app-modify-fee-structure>
+  <app-biller-profile-advisor *ngIf="subscriptionTab=='billerProfile'"
+                              [Selected]="selectedSubscriptionTab"></app-biller-profile-advisor>
   <app-help *ngIf="subscriptionTab=='clientHelp'"></app-help>
   <app-biller-settings *ngIf="subscriptionTab=='billerSettings'"></app-biller-settings>
   <!-- <app-payee-settings *ngIf="subscriptionTab=='payeeSettings'"></app-payee-settings> -->
@@ -22,7 +29,8 @@
   <app-change-payee *ngIf="subscriptionTab=='changePayee'"></app-change-payee>
   <app-create-subscription *ngIf="subscriptionTab=='createSub'"></app-create-subscription>
 
-</div>
+  <!--  </div>-->
+</app-custom-dialog-container>
 
 <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
   <app-upper-slider></app-upper-slider>

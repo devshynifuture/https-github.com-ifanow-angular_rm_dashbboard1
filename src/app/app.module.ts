@@ -6,7 +6,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {MaterialModule} from './material/material';
 import {HttpClientModule} from '@angular/common/http';
-import {ReactiveFormsModule, FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LeftsidebarComponent} from './component/left-sidebar/leftsidebar/leftsidebar.component';
 import {AuthService} from './auth-service/authService';
@@ -85,22 +85,24 @@ import {ModifyFeeDialogComponent} from './component/protect-component/AdviserCom
 import {PreferenceEmailInvoiceComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/preference-email-invoice/preference-email-invoice.component';
 import {ConsentTandCComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/consent-tand-c/consent-tand-c.component';
 import {CommonFroalaComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/common-froala/common-froala.component';
-import { ChangePayeeComponent } from './component/change-payee/change-payee.component';
+import {ChangePayeeComponent} from './component/change-payee/change-payee.component';
 import {CustomHtmlComponent} from './common/customhtml/customhtml/custom-html.component';
 import {CustomerComponent} from './component/protect-component/customers/component/customer/customer.component';
 import {AccountsComponent} from './component/protect-component/customers/component/customer/accounts/accounts.component';
 import {SummaryComponent} from './component/protect-component/customers/component/customer/accounts/summary/summary.component';
-import { CustomFormInputComponent } from './common/custom-form-input/custom-form-input.component';
-import { AssetsComponent } from './component/protect-component/customers/component/customer/accounts/assets/assets.component';
+import {CustomFormInputComponent} from './common/custom-form-input/custom-form-input.component';
+import {AssetsComponent} from './component/protect-component/customers/component/customer/accounts/assets/assets.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import { FroalaComponent } from './component/protect-component/common-component/froala/froala.component';
-import { EmailOnlyComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-only/email-only.component';
-import { HowItWorksComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/how-it-works/how-it-works.component';
-import { DialogContainerComponent } from './common/dialog-container/dialog-container.component';
-import { LiabilitiesComponent } from './component/protect-component/customers/component/customer/accounts/liabilities/liabilities.component';
-import { InsuranceComponent } from './component/protect-component/customers/component/customer/accounts/insurance/insurance.component';
-import { ExpensesComponent } from './component/protect-component/customers/component/customer/accounts/expenses/expenses.component';
-import { AddProfileSummaryComponent } from './component/protect-component/customers/component/common-component/add-profile-summary/add-profile-summary.component';
+import {FroalaComponent} from './component/protect-component/common-component/froala/froala.component';
+import {EmailOnlyComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-only/email-only.component';
+import {HowItWorksComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/how-it-works/how-it-works.component';
+import {DialogContainerComponent} from './common/dialog-container/dialog-container.component';
+import {LiabilitiesComponent} from './component/protect-component/customers/component/customer/accounts/liabilities/liabilities.component';
+import {InsuranceComponent} from './component/protect-component/customers/component/customer/accounts/insurance/insurance.component';
+import {ExpensesComponent} from './component/protect-component/customers/component/customer/accounts/expenses/expenses.component';
+import {AddProfileSummaryComponent} from './component/protect-component/customers/component/common-component/add-profile-summary/add-profile-summary.component';
+import {CustomDialogContainerComponent} from './common/custom-dialog-container/custom-dialog-container.component';
+import {BaseComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/base/base.component';
 
 @NgModule({
   declarations: [
@@ -191,7 +193,9 @@ import { AddProfileSummaryComponent } from './component/protect-component/custom
     LiabilitiesComponent,
     InsuranceComponent,
     ExpensesComponent,
-    AddProfileSummaryComponent
+    AddProfileSummaryComponent,
+    CustomDialogContainerComponent,
+    BaseComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {EventService} from 'src/app/Data-service/event.service';
 
@@ -12,7 +12,7 @@ export class FeeStructureComponent implements OnInit {
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService) {
   }
 
-  _upperData;
+  _upperData = '';
   selectedFee;
 
   ngOnInit() {
@@ -24,6 +24,10 @@ export class FeeStructureComponent implements OnInit {
     console.log('FeeStructureComponent upperData set : ', this.upperData);
 
     this._upperData = upperData;
+  }
+
+  get upperData(): any {
+    return this._upperData;
   }
 
   selectedFees(feeType) {
