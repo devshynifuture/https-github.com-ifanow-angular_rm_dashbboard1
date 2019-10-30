@@ -219,12 +219,10 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       advisorId: this.advisorId,
       limit: 10,
       offset: 0,
-      subscription: {
-        dateType: 0,
-        statusIdList: this.statusIdList,
-        fromDate: '2000-01-01',
-        toDate: '3000-01-01',
-      }
+      dateType: 0,
+      statusIdList: this.statusIdList,
+      fromDate: '2000-01-01',
+      toDate: '3000-01-01'
     };
     console.log('this.statusIdList', this.statusIdList);
     this.subService.filterSubscription(obj).subscribe(

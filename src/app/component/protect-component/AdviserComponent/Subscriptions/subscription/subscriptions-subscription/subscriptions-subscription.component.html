@@ -1,6 +1,6 @@
 <div id="pdfDoc" class="bg-white pb-36 mt-70" id="ui-subs">
   <div class="wrapper-20">
-    <div class="row">
+    <div class="row" *ngIf="showFilter==false">
       <div class="col-md-8 p-0">
         <h4 class="pt-8 mb-0">Subscriptions</h4>
       </div>
@@ -11,10 +11,22 @@
         <button (click)="showFilters(showFilter = true)" class="btn-default addon mr-12" mat-stroked-button><i
           class="material-icons">filter_list</i>FILTERS
         </button>
-        <button class="btn-primary addon" mat-stroked-button><i class="material-icons">add</i>ADD NEW</button>
+        <!-- <button class="btn-primary addon" mat-stroked-button><i class="material-icons">add</i>ADD NEW</button> -->
       </div>
     </div>
     <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
+      <div class="row">
+        <div class="col-md-8 p-0">
+            <h4 class="pt-8 mb-0">Subscriptions</h4>
+        </div>
+        <div class="col-md-4 right text-right p-0">
+            <i class="material-icons mr-12 icon-light c-p v-sub">
+                search
+            </i>
+            <button mat-stroked-button class="btn-default addon mr-12"  (click)= "showFilters(showFilter = true)"><i class="material-icons">filter_list</i>FILTERS</button>
+            <!-- <button mat-stroked-button class="btn-primary addon"><i class="material-icons">add</i>ADD NEW</button> -->
+        </div>
+    </div>
       <div class="col-md-8 p-0 custom-tags">
         <mat-chip-list>
           <mat-chip *ngFor="let status of filterStatus; let ind = index"
@@ -31,21 +43,7 @@
           </mat-chip-list>
         </mat-chip-list>
       </div>
-      <div class="col-md-4 right text-right p-0">
-        <div class="row">
-          <div class="col-md-8 p-0">
-            <h4 class="pt-8 mb-0">Subscriptions</h4>
-          </div>
-          <div class="col-md-4 right text-right p-0">
-            <i class="material-icons mr-12 icon-light c-p v-sub">
-              search
-            </i>
-            <button mat-stroked-button class="btn-default addon mr-12" (click)="showFilters(showFilter = true)"><i
-              class="material-icons">filter_list</i>FILTERS
-            </button>
-            <button mat-stroked-button class="btn-primary addon"><i class="material-icons">add</i>ADD NEW</button>
-          </div>
-        </div>
+      <div>
         <div class="row pt-12">
           <div class="col-md-8 p-0 custom-tags">
             <mat-chip-list>

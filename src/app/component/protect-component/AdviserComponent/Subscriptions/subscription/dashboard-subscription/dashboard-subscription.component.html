@@ -1,6 +1,6 @@
 <div class="full-lights pb-36" *ngIf="showSubStep==false" id="ui-dashboard">
   <div class="wrapper-20">
-    <div class="row bg-red mt-20">
+    <div class="row bg-red mt-20 mb-36" *ngIf="showLetsBegin">
       <div class="col-md-5">
         <img src="assets/images/svg/Dashboard.svg" class="dashboard-img">
       </div>
@@ -8,11 +8,11 @@
         <h1>Welcome Ronak Hindocha</h1>
         <p class="mb-0 pt-12">We’re excited to see you here! The dashboard currently looks barren. </p>
         <p> Fret not. We’ll help you in this journey. We’re in this together. </p>
-        <button (click)="showSubscriptionSteps()" mat-flat-button class="btn-red addon mb-28 mt-16">Let’s begin <i
+        <button (click)="showSubscriptionSteps()" mat-flat-button class="btn-red addon mb-28 mt-16">Let's begin <i
           class="material-icons right text-right"> arrow_forward </i></button>
       </div>
     </div>
-    <div class="mt-36 subscription-summary">
+    <div class=" subscription-summary">
       <div class="row">
         <div class="col-md-4 pl-0">
           <div class="bg-white pt-20 pb-16 text-center" *ngIf="dataSourceClientWithSub !=undefined">
@@ -125,22 +125,23 @@
               <h4 class="f-300 roboto pl-16 pt-16 mb-16">Invoices to be reviewed</h4>
             </div>
 
-            <div class="col-md-12 " *ngFor="let invoices of dataSourceInvoiceReviwed">
+            <div class="col-md-12 " *ngFor="let invoice of dataSourceInvoice">
 
               <div class="row pt-16 b-b">
                 <div class="col-md-8 pl-8">
-                  <p class="f-15 mb-28">{{invoices.clientName}}</p>
-                  <p class="f-13 mb-12">{{invoices.invoiceNumber}}</p>
+                  <p class="f-15 mb-28">{{invoice.clientName}}</p>
+                  <p class="f-13 mb-12">{{invoice.invoiceNumber}}</p>
                 </div>
                 <div class="col-md-4 pr-0">
-                  <p class="f-15 mb-28">₹{{invoices.finalAmount}}</p>
-                  <p class="f-13 mb-12">{{invoices.invoiceDate | date:'dd/MM/yyyy'}}</p>
+                  <p class="f-15 mb-28">₹{{invoice.finalAmount}}</p>
+                  <p class="f-13 mb-12">{{invoice.invoiceDate | date:'dd/MM/yyyy'}}</p>
                 </div>
               </div>
             </div>
 
             <div class="col-md-12 text-right pt-8">
-              <a href="#" class="text-black f-14">View all</a>
+              <div (click)="changeParentsTab(4)" class="c-p">View all</div>
+              <!--              <a  class="text-black f-14" ></a>-->
             </div>
           </div>
         </div>
@@ -159,8 +160,19 @@
                   <h4 class="f-300 mb-0 pt-8">Subscription summary</h4>
                 </div>
                 <div class="col-md-6 right text-right pr-0">
-                  <button mat-stroked-button class="text-primary br-0">NOT STARTED</button>
-                  <button mat-button class="text-custom">UPCOMING</button>
+                  <!--                  <mat-button-toggle-group #colorToggle="matButtonToggleGroup"-->
+                  <!--                                           value="primary"-->
+                  <!--                                           aria-label="Change color">-->
+                  <!--                    <mat-button-toggle value="primary">NOT STARTED</mat-button-toggle>-->
+                  <!--                    <mat-button-toggle value="accent">UPCOMING</mat-button-toggle>-->
+                  <!--                  </mat-button-toggle-group>-->
+                  <mat-button-toggle-group [(ngModel)]="subscriptionSummaryStatusFilter"
+                                           (change)="getSummaryDataDashboard($event.value)" multiple=false>
+                    <mat-button-toggle value=1>NOT STARTED</mat-button-toggle>
+                    <mat-button-toggle value=3>UPCOMING</mat-button-toggle>
+                  </mat-button-toggle-group>
+                  <!-- <button mat-stroked-button class="text-primary br-0">NOT STARTED</button>
+                   <button mat-button class="text-custom">UPCOMING</button>-->
                 </div>
               </div>
               <div class="example-container">
@@ -208,7 +220,9 @@
               </div>
             </div>
             <div class="col-md-12 text-right pt-8">
-              <a href="#" class="text-black f-14">View all</a>
+              <div (click)="changeParentsTab(2)" class="c-p">View all</div>
+
+              <!--              <a href="#" class="text-black f-14">View all</a>-->
             </div>
           </div>
         </div>
@@ -216,4 +230,4 @@
     </div>
   </div>
 </div>
-<app-subscription-completeness *ngIf="showSubStep==true"></app-subscription-completeness>
+<app-subscription-completeness *ngIf="showSubStep"></app-subscription-completeness>

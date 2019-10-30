@@ -43,22 +43,32 @@ export class DashboardSubscriptionComponent implements OnInit {
   advisorId;
   dataSourceSingCount;
   dataSourceClientWithSub;
-  dataSourceInvoiceReviwed;
+  dataSourceInvoice;
   subSummaryData;
   dataSource;
   showSubStep = false;
   displayedColumns: string[] = ['name', 'service', 'amt', 'billing', 'icons'];
   chart: Chart;
+  subscriptionSummaryStatusFilter = '1';
+  showLetsBegin = false;
 
   ngOnInit() {
-    this.initChart();
-
     this.advisorId = AuthService.getAdvisorId();
+    this.initChart();
     this.docSentSignedCountData();
     this.clientWithSubscription();
     this.invoiceToBeReviewed();
-    this.getSummaryDataDashboard();
+    this.getSummaryDataDashboard(null);
     this.getDataForCreateService();
+  }
+
+  getDashboardResponse() {
+
+    this.subService.getDashboardSubscriptionResponse(this.advisorId).subscribe(
+      data => {
+        this.showLetsBegin = data;
+      }
+    );
   }
 
   initChart() {
@@ -116,6 +126,11 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.showSubStep = true;
   }
 
+  changeParentsTab(selectedTab) {
+    this.eventService.tabData(selectedTab);
+
+  }
+
   delete(data) {
     const Fragmentdata = {
       Flag: data,
@@ -133,24 +148,43 @@ export class DashboardSubscriptionComponent implements OnInit {
   }
 
 // ******* Dashboard Subscription Summary *******
-  getSummaryDataDashboard() {
-    const obj = {
-      // 'id':2735, //pass here advisor id for Invoice advisor
-      // 'module':1,
-      // advisorId: 12345,
-      advisorId: this.advisorId,
+  getSummaryDataDashboard(eventValue) {
+    /* const obj = {
+       // 'id':2735, //pass here advisor id for Invoice advisor
+       // 'module':1,
+       // advisorId: 12345,
+       advisorId: this.advisorId,
 
-      clientId: 0,
-      flag: 1,
-      dateType: 0,
+       clientId: 0,
+       flag: 1,
+       dateType: 0,
+       limit: 10,
+       offset: 0,
+       order: 0,
+     };
+     this.subService.getSubSummary(obj).subscribe(
+       data => {
+         this.getSubSummaryRes(data);
+       }
+     );*/
+    console.log('filterSubscription this.subscriptionSummaryStatusFilter ', this.subscriptionSummaryStatusFilter);
+
+    const obj = {
+      advisorId: this.advisorId,
       limit: 10,
       offset: 0,
-      order: 0,
+      dateType: 0,
+      statusIdList: [this.subscriptionSummaryStatusFilter],
+      fromDate: null,
+      toDate: null
+
     };
-    this.subService.getSubSummary(obj).subscribe(
-      data => {
-        this.getSubSummaryRes(data);
-      }
+    console.log('filterSubscription eventValue ', eventValue);
+    console.log('filterSubscription this.subscriptionSummaryStatusFilter ', this.subscriptionSummaryStatusFilter);
+
+    console.log('filterSubscription reqObj ', obj);
+    this.subService.filterSubscription(obj).subscribe(
+      data => this.getSubSummaryRes(data)
     );
   }
 
@@ -203,9 +237,8 @@ export class DashboardSubscriptionComponent implements OnInit {
     const obj = {
       // advisorId: 2735,
       advisorId: this.advisorId,
-
       limit: 10,
-      offset: 1
+      offset: 0
     };
     this.subService.invoiceReviewed(obj).subscribe(
       data => this.invoiceToBeReviewedRes(data)
@@ -214,7 +247,7 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   invoiceToBeReviewedRes(data) {
     console.log('invoiceToBeReviewedRes', data);
-    this.dataSourceInvoiceReviwed = data;
+    this.dataSourceInvoice = data;
   }
 
   deleteModal(value) {
