@@ -8,6 +8,7 @@ import {SubscriptionService} from '../../../subscription.service';
 import * as _ from 'lodash';
 import {AddDocumentComponent} from '../add-document/add-document.component';
 import {AuthService} from "../../../../../../../auth-service/authService";
+import { element } from 'protractor';
 // import {element} from 'protractor';
 // import {timingSafeEqual} from 'crypto';
 
@@ -200,7 +201,6 @@ export class DocumentComponent implements OnInit {
 
   getServiceDocumentData() {
     const obj = {
-      // advisorId: 12345,
       advisorId: this.advisorId,
       serviceId: this.upperData.id
     };
@@ -212,6 +212,12 @@ export class DocumentComponent implements OnInit {
   getServiceDocumentDataResponse(data) {
     console.log('service Documents', data.documentList);
     this.serviceDocumentData = data.documentList;
+    this.serviceDocumentData.forEach(element=>{
+      if(element.selected)
+      {
+       this.mappedData.push(element)
+      }
+    })
   }
 
   deleteModal(value) {
@@ -281,9 +287,7 @@ export class DocumentComponent implements OnInit {
   }
 
   mapDocumentToService() {
-    if (this.mappedData.length === 0) {
-      return;
-    } else {
+   
       const obj = [];
       this.mappedData.forEach(element => {
         const data = {
@@ -299,7 +303,7 @@ export class DocumentComponent implements OnInit {
       this.subService.mapDocumentToService(obj).subscribe(
         data => this.mapDocumentToServiceResponse(data)
       );
-    }
+    
   }
 
   mapDocumentToServiceResponse(data) {

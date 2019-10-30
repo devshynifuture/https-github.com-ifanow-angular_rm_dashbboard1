@@ -24,7 +24,7 @@
       <div class="row">
         <div class="col-md-8">
           <mat-error class="f-12 pt-4"
-            *ngIf="isServiceValid && getFormControl().serviceName.invalid || (getFormControl().serviceName.touched && getFormControl().serviceName.invalid)">
+            [ngClass]="{'v-h':!(isServiceValid && getFormControl().serviceName.invalid || (getFormControl().serviceName.touched && getFormControl().serviceName.invalid))}">
             Service Name is Required
           </mat-error>
         </div>
@@ -50,7 +50,7 @@
           <div class="row">
             <div class="col-md-9 pr-0">
               <mat-error class="f-12 pt-4"
-                *ngIf="isCodeValid && getFormControl().code.invalid || getFormControl().code.touched && getFormControl().code.invalid">
+                [ngClass]="{'v-h':!(isCodeValid && getFormControl().code.invalid || getFormControl().code.touched && getFormControl().code.invalid)}">
                 Code is Required
               </mat-error>
             </div>
@@ -74,10 +74,6 @@
         <textarea class="form-control br-0" maxlength="{{getFormControl().description.maxLength}}"
           formControlName="description" rows="3"></textarea>
       </div>
-      <mat-error class="f-12"
-        *ngIf="idDesValid && getFormControl().description.invalid || getFormControl().description.touched && getFormControl().description.invalid">
-        Code is Required
-      </mat-error>
       <div class="row">
         <div class="col-md-6">
           <p class="mb-0 f-12 text-custom">optional</p>
@@ -99,14 +95,9 @@
     <div class="col-md-7">
       <div class="row">
         <div class="col-md-5 p-0">
-          <div class="form-group">
+          <div class="form-group mb-0">
             <input type="text" formControlName="billEvery" class="form-control br-0">
           </div>
-          <mat-error class="f-12 pt-4"
-            *ngIf="isBillValid && getFormControl().billEvery.invalid || getFormControl().billEvery.touched && getFormControl().billEvery.invalid">
-            Code is Required
-          </mat-error>
-
         </div>
         <div class="col-md-5 p-0">
           <div class="form-group">
@@ -116,6 +107,10 @@
               </select>
           </div>
       </div>
+      <mat-error class="f-12 pt-4"
+          [ngClass]="{'v-h':!(isBillValid && getFormControl().billEvery.invalid || getFormControl().billEvery.touched && getFormControl().billEvery.invalid)}">
+            billEvery is Required
+          </mat-error>
       </div>
     </div>
   </div>
@@ -184,7 +179,7 @@
           </div>
         </div>
       </div>
-      <mat-error *ngIf="mutualFundFees" class="f-12 pt-4">Please fill fees details</mat-error>
+      <mat-error [ngClass]="{'v-h':!mutualFundFees}" class="f-12 pt-4">Please fill fees details</mat-error>
     </div>
   </div>
 
@@ -200,7 +195,7 @@
           <div class="b-a wrapper-12">
             <mat-chip-list aria-label="Fish selection">
               <mat-chip (click)="select(assets)" *ngFor="let assets of otherAssetData"
-                [ngClass]="{'btn-primary':assets.selected}" class="f-13 f-400 wrapper-16"><i
+                [ngClass]="{'btn-primary':assets.isActive==1}" class="f-13 f-400 wrapper-16"><i
                   class="material-icons mr-8 text-grey f-16">
                   check
                 </i>

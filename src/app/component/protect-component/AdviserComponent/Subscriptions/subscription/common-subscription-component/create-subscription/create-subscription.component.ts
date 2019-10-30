@@ -25,7 +25,7 @@ export class CreateSubscriptionComponent implements OnInit {
 
   @Input() modifyFeeTabChange;
 
-  @ViewChild('stepper',{static:true}) stepper: MatStepper;
+  @ViewChild('stepper',{static:false}) stepper: MatStepper;
   feeStructureData;
   clientData;
   feeMode;
@@ -59,7 +59,7 @@ export class CreateSubscriptionComponent implements OnInit {
 
   ngOnInit() {
     
-    this.stepper.selectedIndex = 0;
+    // this.stepper.selectedIndex = 0;
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     console.log(this.feeCollectionMode);
   }

@@ -11,12 +11,10 @@ import {AuthService} from "../../../../../../../auth-service/authService";
   styleUrls: ['./add-fixed-fee.component.scss']
 })
 export class AddFixedFeeComponent implements OnInit {
+  fixedFeeData: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
               private subService: SubscriptionService, private eventService: EventService) {
-    this.subInjectService.rightSideBarData.subscribe(
-      data => this.getFeeFormData(data)
-    );
   }
 
   isServiceValid;
@@ -24,16 +22,33 @@ export class AddFixedFeeComponent implements OnInit {
   isDescriptionValid;
   isFeesValid;
   isbillEvery;
-
-
-  fixedFeeData;
   advisorId;
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.setValidation(false);
+    this.createFixedFeeForm()
+    this.subInjectService.rightSideBarData.subscribe(
+      data => this.getFeeFormData(data)
+    );
   }
-
+   createFixedFeeForm()
+   {
+    this.fixedFeeData = this.fb.group({
+      serviceName: [, [Validators.required]],
+      code: [, [Validators.required]],
+      description: [, [Validators.required]],
+      Duration:[1],
+      fees: [, [Validators.required]],
+      billingNature: [1],
+      billEvery: [, [Validators.required]],
+      billingMode: [1]
+    });
+    this.getFormControl().serviceName.maxLength = 40;
+    this.getFormControl().code.maxLength = 10;
+    this.getFormControl().description.maxLength = 160;
+    this.getFormControl().fees.maxLength = 10;
+   }
   setValidation(flag) {
     this.isServiceValid = flag;
     this.isCodeValid = flag;
@@ -47,27 +62,27 @@ export class AddFixedFeeComponent implements OnInit {
   }
 
   getFeeFormData(data) {
-    this.fixedFeeData = this.fb.group({
-      serviceName: [data.serviceName, [Validators.required]],
-      code: [data.serviceCode, [Validators.required]],
-      description: [data.description, [Validators.required]],
-      Duration:[data.servicePricing.billingCycle],
-      fees: [data.servicePricing.pricingList[0].pricing, [Validators.required]],
-      billingNature: [data.servicePricing.billingNature],
-      billEvery: [data.servicePricing.billEvery, [Validators.required]],
-      billingMode: [data.servicePricing.billingMode]
-    });
-    this.getFormControl().serviceName.maxLength = 40;
-    this.getFormControl().code.maxLength = 10;
-    this.getFormControl().description.maxLength = 160;
-    this.getFormControl().fees.maxLength = 10;
+    if(data=='')
+    {
+      return;
+    }
+    else{
+      this.fixedFeeData.controls.serviceName.setValue(data.serviceName)
+      this.fixedFeeData.controls.code.setValue(data.serviceCode)
+      this.fixedFeeData.controls.description.setValue(data.description)
+      this.fixedFeeData.controls.Duration.setValue(data.servicePricing.billingCycle)
+      this.fixedFeeData.controls.fees.setValue(data.servicePricing.pricingList[0].pricing)
+      this.fixedFeeData.controls.billingNature.setValue(data.servicePricing.billingNature)
+      this.fixedFeeData.controls.billingMode.setValue(data.servicePricing.billingMode)
+      this.fixedFeeData.controls.billEvery.setValue(data.servicePricing.billEvery)
+    }
+
   }
 
   Close(state) {
     this.subInjectService.rightSliderData(state);
     this.setValidation(false);
     this.fixedFeeData.reset();
-
   }
 
   closeTab(state, value) {

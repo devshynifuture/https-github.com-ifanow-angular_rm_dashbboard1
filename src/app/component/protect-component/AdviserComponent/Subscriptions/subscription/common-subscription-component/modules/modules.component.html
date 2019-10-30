@@ -25,9 +25,9 @@
                     <div (click)="selectModule(singleFinanceModule)" *ngFor="let singleFinanceModule of ModuleData"
                         class="col-md-3 c-p">
                         <div *ngIf="singleFinanceModule.moduleName=='Financial Planning'">
-                            <mat-checkbox *ngIf="singleFinanceModule.checked" class="custom-checkbox" checked="false">
+                            <mat-checkbox *ngIf="singleFinanceModule.selected" class="custom-checkbox" checked="false">
                             </mat-checkbox>
-                            <div class="b-a wrapper-16 box-height" [ngClass]="{'ba-blue':singleFinanceModule.checked}">
+                            <div class="b-a wrapper-16 box-height" [ngClass]="{'ba-blue':singleFinanceModule.selected}">
                                 <h3 class="pt-10">{{singleFinanceModule.subModuleName}}</h3>
                             </div>
                         </div>
@@ -42,9 +42,9 @@
                     <div (click)="selectModule(singleonlineModule)" *ngFor="let singleonlineModule of ModuleData"
                         class="col-md-3 c-p">
                         <div *ngIf="singleonlineModule.moduleName=='Online Transaction'">
-                                <mat-checkbox *ngIf="singleonlineModule.checked" class="custom-checkbox" checked="false">
+                                <mat-checkbox *ngIf="singleonlineModule.selected" class="custom-checkbox" checked="false">
                                     </mat-checkbox>
-                            <div class="b-a wrapper-16 box-height" [ngClass]="{'ba-blue':singleonlineModule.checked}">
+                            <div class="b-a wrapper-16 box-height" [ngClass]="{'ba-blue':singleonlineModule.selected}">
                                 <h3 class="pt-10">{{singleonlineModule.subModuleName}}</h3>
                             </div>
                         </div>
@@ -59,8 +59,8 @@
                     <div (click)="selectModule(singleMultiModule)" *ngFor="let singleMultiModule of ModuleData"
                         class="col-md-3 c-p">
                         <div *ngIf="singleMultiModule.moduleName=='Multi Asset View'">
-                                <mat-checkbox *ngIf="singleMultiModule.checked" class="custom-checkbox" checked="false"></mat-checkbox>
-                            <div class="b-a wrapper-16 box-height" [ngClass]="{'ba-blue':singleMultiModule.checked}">
+                                <mat-checkbox *ngIf="singleMultiModule.selected" class="custom-checkbox" selected="false"></mat-checkbox>
+                            <div class="b-a wrapper-16 box-height" [ngClass]="{'ba-blue':singleMultiModule.selected}">
                                 <h3 class="pt-10">{{singleMultiModule.subModuleName}}</h3>
                             </div>
                         </div>
@@ -75,9 +75,9 @@
                         <div (click)="selectModule(singleMultiModule)" *ngFor="let singleMultiModule of ModuleData"
                             class="col-md-3 c-p">
                             <div *ngIf="singleMultiModule.moduleName=='Multi Asset View'">
-                                    <mat-checkbox *ngIf="singleMultiModule.checked" class="custom-checkbox" checked="false">
+                                    <mat-checkbox *ngIf="singleMultiModule.selected" class="custom-checkbox" checked="false">
                                         </mat-checkbox>
-                                <div class="b-a wrapper-16 box-height" [ngClass]="{'ba-blue':singleMultiModule.checked}">
+                                <div class="b-a wrapper-16 box-height" [ngClass]="{'ba-blue':singleMultiModule.selected}">
                                     <h3 class="pt-10">{{singleMultiModule.subModuleName}}</h3>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@
                         <div class="ba-blue-2 box-height">
                             <div class="row">
                                 <div class="col-md-12 p-0">
-                                    <mat-checkbox class="custom-checkbox" checked="false"></mat-checkbox>
+                                    <mat-checkbox class="custom-checkbox" selected="false"></mat-checkbox>
                                 </div>
                             </div>
                             <div class="wrapper-16 pt-0">
@@ -105,7 +105,7 @@
                         <div class="ba-blue-2 box-height">
                             <div class="row">
                                 <div class="col-md-12 p-0">
-                                    <mat-checkbox class="custom-checkbox" checked="false"></mat-checkbox>
+                                    <mat-checkbox class="custom-checkbox" selected="false"></mat-checkbox>
                                 </div>
                             </div>
                             <div class="wrapper-16 pt-0">
@@ -117,7 +117,7 @@
                         <div class="ba-blue-2 box-height">
                             <div class="row">
                                 <div class="col-md-12 p-0">
-                                    <mat-checkbox class="custom-checkbox" checked="false"></mat-checkbox>
+                                    <mat-checkbox class="custom-checkbox" selected="false"></mat-checkbox>
                                 </div>
                             </div>
                             <div class="wrapper-16 pt-0">

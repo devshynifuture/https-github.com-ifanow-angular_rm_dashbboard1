@@ -3,6 +3,7 @@ import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {EnumServiceService} from '../../enum-service.service';
 import * as _ from 'lodash';
+import { SubscriptionService } from '../../../subscription.service';
 
 @Component({
   selector: 'app-modify-fee-structure',
@@ -13,7 +14,7 @@ export class ModifyFeeStructureComponent implements OnInit {
   singleSubscriptionData: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subInject: SubscriptionInject,
-              private enumService: EnumServiceService) {
+              private enumService: EnumServiceService,private subService:SubscriptionService) {
     this.subInject.singleProfileData.subscribe(
       data => this.getSubscribeData(data)
     );
@@ -30,10 +31,10 @@ export class ModifyFeeStructureComponent implements OnInit {
   pricing: boolean;
   fixedFeeStructureForm = this.fb.group({
     fees: ['', [Validators.required]],
-    billingNature: [],
-    billEvery: [],
+    billingNature: [1],
+    billEvery: [,[Validators.required]],
     Duration: [1],
-    billingMode: []
+    billingMode: [1]
   });
   variableFeeStructureForm = this.fb.group({
     billingNature: [, [Validators.required]],
@@ -189,11 +190,14 @@ export class ModifyFeeStructureComponent implements OnInit {
         this.variableData.subId = this.singleSubscriptionData.id
         this.subInjectService.addSingleProfile(this.variableData)
       }
+      this.subService.editModifyFeeStructure(this.variableData).subscribe(
+        data=>console.log(data,"modify fee data")
+      )
     }
   }
 
   saveFixedModifyFees() {
-
+    console.log("fixed ")
     if (this.getFixedFee().fees.invalid) {
       this.isFeeValid = true;
       return;
@@ -203,6 +207,7 @@ export class ModifyFeeStructureComponent implements OnInit {
     } else {
       const obj = {
         autoRenew: 0,
+        subscriptionId:this.singleSubscriptionData.id,
         billEvery: this.getFixedFee().billEvery.value,
         billingCycle: 1,
         billingMode: this.getFixedFee().billingMode.value,
@@ -216,7 +221,9 @@ export class ModifyFeeStructureComponent implements OnInit {
         ]
       };
       console.log('fixed fees', obj);
+      this.subService.editModifyFeeStructure(obj).subscribe(
+        data=>console.log(data,"modify fee data")
+      )
     }
-
   }
 }

@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="col-md-10">
                     <mat-error class="f-12 pt-4"
-                        *ngIf="isServiceValid && getFormControl().serviceName.invalid || (getFormControl().serviceName.touched && getFormControl().serviceName.invalid)">
+                        [ngClass]="{'v-h':!(isServiceValid && getFormControl().serviceName.invalid || (getFormControl().serviceName.touched && getFormControl().serviceName.invalid))}">
                         Service name is required</mat-error>
                 </div>
                 <div class="col-md-2">
@@ -46,7 +46,7 @@
                         <div class="row">
                                 <div class="col-md-10 pr-0">
                                         <mat-error class="f-12 pt-4"
-                                        *ngIf="isCodeValid && getFormControl().code.invalid || getFormControl().code.touched && getFormControl().code.invalid">
+                                        [ngClass]="{'v-h':!(isCodeValid && getFormControl().code.invalid || getFormControl().code.touched && getFormControl().code.invalid)}">
                                         Code is Required</mat-error>
                                 </div>
                                 <div class="col-md-2 pl-0">
@@ -69,7 +69,7 @@
             <div class="row">
                 <div class="col-md-8">
                         <mat-error class="f-12 pt-4"
-                        *ngIf="isDescriptionValid && getFormControl().description.invalid || getFormControl().description.touched && getFormControl().description.invalid">
+                        [ngClass]="{'v-h':!(isDescriptionValid && getFormControl().description.invalid || getFormControl().description.touched && getFormControl().description.invalid)}">
                         Description is Required</mat-error>
                 </div>
                 <div class="col-md-2">
@@ -94,7 +94,7 @@
                 <div class="row">
                         <div class="col-md-10">
                                 <mat-error class="f-12 pt-4"
-                                *ngIf="isFeesValid && getFormControl().fees.invalid || getFormControl().fees.touched && getFormControl().fees.invalid">
+                                [ngClass]="{'v-h':!(isFeesValid && getFormControl().fees.invalid || getFormControl().fees.touched && getFormControl().fees.invalid)}">
                                 Fees is Required</mat-error>
                         </div>
                         <div class="col-md-2">
@@ -125,7 +125,7 @@
         <div class="col-md-7">
             <div class="row">
                 <div class="col-md-5 p-0">
-                    <div class="form-group">
+                    <div class="form-group mb-0">
                         <input type="number" pattern="\d*" onKeyPress="if(this.value.length==2) return false;"
                             formControlName="billEvery" class="form-control br-0">
                     </div>
@@ -140,7 +140,7 @@
                     </div>
                 </div>
                 <mat-error class="f-12 pt-4"
-                        *ngIf="isbillEvery && getFormControl().billEvery.invalid || getFormControl().billEvery.touched && getFormControl().billEvery.invalid">
+                        [ngClass]="{'v-h':!(isbillEvery && getFormControl().billEvery.invalid || getFormControl().billEvery.touched && getFormControl().billEvery.invalid)}">
                         Field is Required</mat-error>
             </div>
         </div>
