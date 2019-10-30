@@ -7,7 +7,8 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
 import {SubscriptionService} from '../../subscription.service';
 import {EnumServiceService} from '../enum-service.service';
 import {UtilService} from '../../../../../../services/util.service';
-import {AuthService} from "../../../../../../auth-service/authService";
+import {AuthService} from '../../../../../../auth-service/authService';
+import {Chart} from 'angular-highcharts';
 
 export interface PeriodicElement {
   name: string;
@@ -46,6 +47,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   dataSource;
   showSubStep = false;
   displayedColumns: string[] = ['name', 'service', 'amt', 'billing', 'icons'];
+  chart: Chart;
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -54,6 +56,35 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.invoiceToBeReviewed();
     this.getSummaryDataDashboard();
     this.getDataForCreateService();
+    this.initChart();
+  }
+
+  initChart() {
+    const chart = new Chart({
+      chart: {
+        type: 'line'
+      },
+      title: {
+        text: 'Linechart'
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        name: 'Line 1',
+        data: [1, 2, 3],
+        type: 'line'
+
+  }]
+    });
+    chart.addPoint(4);
+    this.chart = chart;
+    chart.addPoint(5);
+    setTimeout(() => {
+      chart.addPoint(6);
+    }, 2000);
+
+    chart.ref$.subscribe(console.log);
   }
 
   Open(state, data) {
@@ -117,11 +148,12 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   getSubSummaryRes(data) {
     console.log('Summary Data', data);
-    data.forEach(element => {
-      element.feeMode = (element.feeMode == 1) ? 'FIXED' : 'VARIABLE';
-      element.startsOn = (element.status == 1) ? 'START' : element.startsOn;
-      element.status = (element.status == 1) ? 'NOT STARTED' : (element.status == 2) ? 'LIVE' : (element.status == 3) ? 'FUTURE' : 'CANCELLED';
-    });
+    // data.forEach(element => {
+    //   element.feeMode = (element.feeMode == 1) ? 'FIXED' : 'VARIABLE';
+    //   element.startsOn = (element.status == 1) ? 'START' : element.startsOn;
+    //   element.status = (element.status == 1) ? 'NOT STARTED' : (element.status == 2) ?
+    //   'LIVE' : (element.status == 3) ? 'FUTURE' : 'CANCELLED';
+    // });
     this.dataSource = data;
   }
 

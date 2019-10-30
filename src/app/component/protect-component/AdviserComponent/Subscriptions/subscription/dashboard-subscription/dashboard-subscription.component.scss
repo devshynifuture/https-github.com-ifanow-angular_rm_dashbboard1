@@ -10,13 +10,13 @@
    }
 }
 .ima{
-    
-    background-image: url(/assets/images/svg/Receivablessummary.svg);
+
+    //background-image: url(/assets/images/svg/Receivablessummary.svg);
     background-position: left;
     background-size: cover;
     min-height: 200px;
    width: 100%;
-   
+
 }
 hr{
     border-bottom: 1px solid #DADCE0;
@@ -25,7 +25,7 @@ hr{
     display: block;
 }
 .bg-red{
-    background-color: #FFD8D8 
+    background-color: #FFD8D8
 }
 .full-lights{
     background-color: #F7F8F9;
@@ -97,5 +97,4 @@ p{
     height: 225px;
     overflow: auto;
   }
- 
-  
+

@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-md-4 pl-0">
                     <div class="bg-white pt-20 pb-16 text-center" *ngIf="dataSourceClientWithSub !=undefined">
-                      
+
                         <div class="container">
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12">
@@ -106,6 +106,7 @@
                         </div>
                     </div>
                         <div class="ima pl-32">
+                          <div [chart]="chart"></div>
                             <p class="f-300 f-18 mb-0 ">Receivables summary</p>
                             <h2 class="text-primary pt-8 mb-0 c-p">1,23,670</h2>
                         </div>
@@ -121,9 +122,9 @@
                         <div class="col-md-12 p-0 b-b">
                             <h4 class="f-300 roboto pl-16 pt-16 mb-16">Invoices to be reviewed</h4>
                         </div>
-                        
+
                         <div class="col-md-12 " *ngFor="let invoices of dataSourceInvoiceReviwed">
-                            
+
                             <div class="row pt-16 b-b">
                                 <div class="col-md-8 pl-8">
                                     <p class="f-15 mb-28">{{invoices.clientName}}</p>
@@ -135,7 +136,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-md-12 text-right pt-8">
                             <a href="#" class="text-black f-14">View all</a>
                         </div>
