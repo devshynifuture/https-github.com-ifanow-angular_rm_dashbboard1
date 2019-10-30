@@ -68,7 +68,10 @@ export class AddFixedFeeComponent implements OnInit {
       return;
     } else {
       // data.servicePricing.billingNature = '1';
-      // console.log(' this isa snd;kasljdlkajsdlkashdlaksd ', data.servicePricing.billingNature);
+      console.log(' this isa snd;kasljdlkajsdlkashdlaksd ', data.servicePricing.billingNature);
+      console.log(' this isa snd;kasljdlkajsdlkashdlaksd ', data.servicePricing.billingNature + '');
+
+      // data.servicePricing.billingNature + ''
       this.fixedFeeData.controls.serviceName.setValue(data.serviceName);
       this.fixedFeeData.controls.code.setValue(data.serviceCode);
       this.fixedFeeData.controls.description.setValue(data.description);

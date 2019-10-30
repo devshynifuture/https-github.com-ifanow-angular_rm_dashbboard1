@@ -16,7 +16,7 @@ export class SettingsSubscriptionComponent implements OnInit {
   ngOnInit() {
     this.selectedTab = 'PLANS';
     // this.selectedTab = 'SERVICES';
-    // this.selected = 1;
+    this.selected = 1;
   }
 
   tabClick(value) {
