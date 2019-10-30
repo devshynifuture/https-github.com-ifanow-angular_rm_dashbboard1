@@ -26,9 +26,9 @@ export class FeeStructureComponent implements OnInit {
     console.log('FeeStructureComponent upperData set : ', this.upperData);
 
     this._upperData = upperData;
-    setTimeout(() => {
-      this.openPlanSliderFee(upperData, 'fixedFee', 'open');
-    }, 300)
+    // setTimeout(() => {
+    //   this.openPlanSliderFee(upperData, 'fixedFee', 'open');
+    // }, 300)
   }
 
   get upperData(): any {

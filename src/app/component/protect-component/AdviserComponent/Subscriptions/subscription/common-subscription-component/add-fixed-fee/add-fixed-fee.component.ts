@@ -25,7 +25,7 @@ export class AddFixedFeeComponent implements OnInit {
   advisorId;
 
   ngOnInit() {
-    console.log('AddFixedFeeComponent init');
+    // console.log('AddFixedFeeComponent init');
     this.advisorId = AuthService.getAdvisorId();
     this.setValidation(false);
     this.createFixedFeeForm();
@@ -74,8 +74,8 @@ export class AddFixedFeeComponent implements OnInit {
       this.fixedFeeData.controls.description.setValue(data.description);
       this.fixedFeeData.controls.Duration.setValue(data.servicePricing.billingCycle);
       this.fixedFeeData.controls.fees.setValue(data.servicePricing.pricingList[0].pricing);
-      // this.fixedFeeData.controls.billingNature.setValue(data.servicePricing.billingNature);
-      this.fixedFeeData.controls.billingNature.setValue('2');
+      this.fixedFeeData.controls.billingNature.setValue(data.servicePricing.billingNature + '');
+      // this.fixedFeeData.controls.billingNature.setValue('2');
 
       this.fixedFeeData.controls.billingMode.setValue(data.servicePricing.billingMode);
       this.fixedFeeData.controls.billEvery.setValue(data.servicePricing.billEvery);
