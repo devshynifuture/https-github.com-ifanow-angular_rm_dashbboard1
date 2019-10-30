@@ -43,23 +43,32 @@ export class DashboardSubscriptionComponent implements OnInit {
   advisorId;
   dataSourceSingCount;
   dataSourceClientWithSub;
-  dataSourceInvoiceReviwed;
+  dataSourceInvoice;
   subSummaryData;
   dataSource;
   showSubStep = false;
   displayedColumns: string[] = ['name', 'service', 'amt', 'billing', 'icons'];
   chart: Chart;
   subscriptionSummaryStatusFilter = '1';
+  showLetsBegin = false;
 
   ngOnInit() {
-    this.initChart();
-
     this.advisorId = AuthService.getAdvisorId();
+    this.initChart();
     this.docSentSignedCountData();
     this.clientWithSubscription();
     this.invoiceToBeReviewed();
     this.getSummaryDataDashboard(null);
     this.getDataForCreateService();
+  }
+
+  getDashboardResponse() {
+
+    this.subService.getDashboardSubscriptionResponse(this.advisorId).subscribe(
+      data => {
+        this.showLetsBegin = data;
+      }
+    );
   }
 
   initChart() {
@@ -117,6 +126,11 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.showSubStep = true;
   }
 
+  changeParentsTab(selectedTab) {
+    this.eventService.tabData(selectedTab);
+
+  }
+
   delete(data) {
     const Fragmentdata = {
       Flag: data,
@@ -157,7 +171,7 @@ export class DashboardSubscriptionComponent implements OnInit {
 
     const obj = {
       advisorId: this.advisorId,
-      limit: -1,
+      limit: 10,
       offset: 0,
       dateType: 0,
       statusIdList: [this.subscriptionSummaryStatusFilter],
@@ -223,9 +237,8 @@ export class DashboardSubscriptionComponent implements OnInit {
     const obj = {
       // advisorId: 2735,
       advisorId: this.advisorId,
-
       limit: 10,
-      offset: 1
+      offset: 0
     };
     this.subService.invoiceReviewed(obj).subscribe(
       data => this.invoiceToBeReviewedRes(data)
@@ -234,7 +247,7 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   invoiceToBeReviewedRes(data) {
     console.log('invoiceToBeReviewedRes', data);
-    this.dataSourceInvoiceReviwed = data;
+    this.dataSourceInvoice = data;
   }
 
   deleteModal(value) {

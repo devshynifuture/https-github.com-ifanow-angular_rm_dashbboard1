@@ -5,6 +5,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {ValueConverter} from '@angular/compiler/src/render3/view/template';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material';
+import {AuthService} from "../../../../../../auth-service/authService";
 
 export interface PeriodicElement {
   date: string;
@@ -41,20 +42,23 @@ export class InvoicesSubscriptionComponent implements OnInit {
   showPdfInvoice;
   singleInvoiceData;
   showLoader = true;
-
+  advisorId;
   displayedColumns: string[] = ['checkbox', 'date', 'invoicenum', 'name', 'status', 'email', 'duedate', 'amt', 'balance'];
   @Input() invoiceValue
+
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.getInvoiceSubData();
     this.showEdit = false;
     this.invoiceSubscription = 'false';
-    this.invoiceDesign='true';
+    this.invoiceDesign = 'true';
     this.dataCount = 0;
   }
 
   getInvoiceSubData() {
     const obj = {
-      id: 2735, // pass here advisor id for Invoice advisor
+      id: this.advisorId,
+      // id: 2735, // pass here advisor id for Invoice advisor
       module: 1
     };
 
@@ -62,11 +66,13 @@ export class InvoicesSubscriptionComponent implements OnInit {
       data => this.getInvoiceResponseData(data)
     );
   }
-  addInvoice(edit){
+
+  addInvoice(edit) {
     this.invoiceSubscription = edit;
     // this.invoiceDesign = edit;
-    console.log("edit",edit)
+    console.log("edit", edit)
   }
+
   getInvoiceResponseData(data) {
     console.log(data);
     const ELEMENT_DATA = data;
@@ -153,11 +159,12 @@ export class InvoicesSubscriptionComponent implements OnInit {
     console.log(data);
     this.ngOnInit();
   }
-  formatter(data)
-  {
-    data=Math.round(data);
+
+  formatter(data) {
+    data = Math.round(data);
     return data;
   }
+
   deleteModal(value) {
     const dialogData = {
       data: value,
