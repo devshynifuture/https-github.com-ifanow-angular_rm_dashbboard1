@@ -7,7 +7,8 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
 import {SubscriptionService} from '../../subscription.service';
 import {EnumServiceService} from '../enum-service.service';
 import {UtilService} from '../../../../../../services/util.service';
-import {AuthService} from "../../../../../../auth-service/authService";
+import {AuthService} from '../../../../../../auth-service/authService';
+import {Chart} from 'angular-highcharts';
 
 export interface PeriodicElement {
   name: string;
@@ -35,6 +36,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   constructor(private enumService: EnumServiceService,
               public subInjectService: SubscriptionInject, public eventService: EventService,
               public dialog: MatDialog, private subService: SubscriptionService) {
+
   }
 
   // advisorId = 400;
@@ -46,14 +48,49 @@ export class DashboardSubscriptionComponent implements OnInit {
   dataSource;
   showSubStep = false;
   displayedColumns: string[] = ['name', 'service', 'amt', 'billing', 'icons'];
+  chart: Chart;
 
   ngOnInit() {
+    this.initChart();
+
     this.advisorId = AuthService.getAdvisorId();
     this.docSentSignedCountData();
     this.clientWithSubscription();
     this.invoiceToBeReviewed();
     this.getSummaryDataDashboard();
     this.getDataForCreateService();
+  }
+
+  initChart() {
+    const chart = new Chart({
+      chart: {
+        type: 'line'
+      },
+      title: {
+        text: 'Linechart'
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        name: 'Line 1',
+        data: [1, 2, 3],
+        type: 'line'
+
+      }]
+    });
+    chart.addPoint(4);
+    this.chart = chart;
+    chart.addPoint(5);
+
+    chart.ref$.subscribe((chartView) => {
+      setTimeout(() => {
+        console.log('12397891273098127389012739812731231982371 chart ref setTimeout')
+        chartView.reflow();
+
+        chart.addPoint(6);
+      }, 100);
+    });
   }
 
   Open(state, data) {
@@ -111,17 +148,20 @@ export class DashboardSubscriptionComponent implements OnInit {
       order: 0,
     };
     this.subService.getSubSummary(obj).subscribe(
-      data => this.getSubSummaryRes(data)
+      data => {
+        this.getSubSummaryRes(data);
+      }
     );
   }
 
   getSubSummaryRes(data) {
     console.log('Summary Data', data);
-    data.forEach(element => {
-      element.feeMode = (element.feeMode == 1) ? 'FIXED' : 'VARIABLE';
-      element.startsOn = (element.status == 1) ? 'START' : element.startsOn;
-      element.status = (element.status == 1) ? 'NOT STARTED' : (element.status == 2) ? 'LIVE' : (element.status == 3) ? 'FUTURE' : 'CANCELLED';
-    });
+    // data.forEach(element => {
+    //   element.feeMode = (element.feeMode == 1) ? 'FIXED' : 'VARIABLE';
+    //   element.startsOn = (element.status == 1) ? 'START' : element.startsOn;
+    //   element.status = (element.status == 1) ? 'NOT STARTED' : (element.status == 2) ?
+    //   'LIVE' : (element.status == 3) ? 'FUTURE' : 'CANCELLED';
+    // });
     this.dataSource = data;
   }
 

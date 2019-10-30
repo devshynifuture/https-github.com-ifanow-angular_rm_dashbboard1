@@ -5,7 +5,8 @@ import {MatDialog} from '@angular/material';
 import {DeleteSubscriptionComponent} from '../common-subscription-component/delete-subscription/delete-subscription.component';
 import {SubscriptionService} from '../../subscription.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {AuthService} from "../../../../../../auth-service/authService";
+import {AuthService} from '../../../../../../auth-service/authService';
+import * as _ from 'lodash';
 
 export interface PeriodicElement {
   client: string;
@@ -39,18 +40,22 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     'FUTURE',
     'NOT STARTED',
     'CANCELLED'
-  ]
+  ];
   dateChips = [
     'Activation date',
     'Last billing date',
     'Next billing date'
-  ]
-  filterStatus = []
-  filterDate = []
-  statusIdList = []
+  ];
+  filterStatus = [];
+  filterDate = [];
+  statusIdList = [];
   sendData: any[];
   senddataTo: any;
-  showFilter = false
+  showFilter = false;
+  dataTocheck: boolean;
+  live: boolean;
+  notStarted: boolean;
+  future: boolean;
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
               private eventService: EventService, private subService: SubscriptionService) {
@@ -93,7 +98,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
   openPlanSlider(value, state, data) {
-    //data
+    // data
     const billerDataProfile = this.subInjectService.singleProfileData.subscribe(data => {
       this.eventService.sidebarData(value);
 
@@ -116,9 +121,9 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   Open(state, data) {
     let feeMode;
     if (data.subscriptionPricing.feeTypeId == 1) {
-      feeMode = 'fixedModifyFees'
+      feeMode = 'fixedModifyFees';
     } else {
-      feeMode = 'variableModifyFees'
+      feeMode = 'variableModifyFees';
     }
     this.eventService.sidebarData(feeMode);
     this.subInjectService.rightSideData(state);
@@ -152,75 +157,71 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   showFilters(showFilter) {
     if (showFilter == true) {
-      this.showFilter = true
+      this.showFilter = true;
     } else {
-      this.showFilter = false
+      this.showFilter = false;
     }
 
   }
 
   addFilters(addFilters) {
-    console.log('addFilters', addFilters)
+    console.log('addFilters', addFilters);
     if (addFilters == 'LIVE') {
-      this.senddataTo = 2
+      this.senddataTo = 2;
     } else if (addFilters == 'NOT STARTED') {
-      this.senddataTo = 1
+      this.senddataTo = 1;
     } else if (addFilters == 'FUTURE') {
-      this.senddataTo = 3
+      this.senddataTo = 3;
     } else {
-      this.senddataTo = 4
+      this.senddataTo = 4;
     }
-    console.log(this.senddataTo)
-    this.filterStatus.push(this.senddataTo)
-    this.sendData = this.filterStatus
-    // this.filterStatus.forEach(element => {
-    //   if(element == 2){
-    //     element = 'LIVE'
-    //   }else if(element == 1){
-    //      element = 'NOT STARTED'
-    //   }else if(element == 3){
-    //       element = 'FUTURE'
-    //   }else{
-    //       element = 'CANCELLED'
-    //   }
-    // });
-    // console.log('this.filterStatus',this.filterStatus)
-    this.callFilter()
+    console.log(this.senddataTo);
+    if (!_.includes(this.filterStatus, this.senddataTo)) {
+      this.filterStatus.push(this.senddataTo);
+    } else {
+      _.remove(this.filterStatus, this.senddataTo);
+    }
+    this.sendData = this.filterStatus;
+    this.callFilter();
   }
 
   filterSubscriptionRes(data) {
-    console.log('filterSubscriptionRes', data)
+    console.log('filterSubscriptionRes', data);
+    this.getSubSummaryRes(data);
+
   }
 
   addFiltersDate(dateFilter) {
-    console.log('addFilters', dateFilter)
-    this.filterDate.push(dateFilter)
+    console.log('addFilters', dateFilter);
+    this.filterDate.push(dateFilter);
+    this.callFilter();
   }
 
   removeDate(item) {
     this.filterDate.splice(item, 1);
+    this.callFilter();
   }
 
   remove(item) {
     this.filterStatus.splice(item, 1);
-    this.callFilter()
+    this.callFilter();
 
   }
 
   callFilter() {
-    this.statusIdList = this.sendData
-    let obj = {
+    this.statusIdList = this.sendData;
+    const obj = {
       advisorId: this.advisorId,
       limit: 10,
       offset: 0,
       subscription: {
         dateType: 0,
         statusIdList: this.statusIdList,
-        fromDate: "2000-01-01",
-        toDate: "3000-01-01",
+        fromDate: '2000-01-01',
+        toDate: '3000-01-01',
       }
-    }
-    console.log('this.statusIdList', this.statusIdList)
+    };
+    console.log('this.statusIdList', this.statusIdList);
     this.subService.filterSubscription(obj).subscribe(
       data => this.filterSubscriptionRes(data)
     );

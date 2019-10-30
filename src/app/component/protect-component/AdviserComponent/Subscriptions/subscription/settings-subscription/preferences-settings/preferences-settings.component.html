@@ -223,13 +223,13 @@
                         </div>
 
                         <div class="row">
-                            <div (click)="openEmailInvoice(obj)" class="col-md-6 c-p" *ngFor="let obj of storeData">
+                            <div (click)="openEmailInvoice(this.storeData[0])" class="col-md-6 c-p">
                                 <div class="example-card">
-                                <mat-card class="p-0 b-a mb-20">
+                                <mat-card class="p-0 b-a">
                                     <div class="bg-grey lter wrapper-16 pl-24">
                                         <div class="row">
                                             <div class="col-md-11 p-0">
-                                                <h3>{{obj.subject}}</h3>
+                                                <h3>Invoice</h3>
                                             </div>
                                             <div class="col-md-1">
                                                 <i class="material-icons text-right text-custom f-32">
@@ -242,14 +242,14 @@
                                     <div class="wrapper-20 pl-24">
                                         <div class="row">
                                             <div class="col-md-12 p-0">
-                                                <p style="word-break: break-all;">{{obj.body}}</p>
+                                                <p>This template is used while sending invoice to your clients.</p>
                                             </div>
                                         </div>
                                     </div>
                                 </mat-card>
                             </div>
                             </div>
-                            <!-- <div class="col-md-6">
+                            <div class="col-md-6" (click)="openEmailInvoice(this.storeData[1])">
                                 <div class="example-card">
                                 <mat-card class="p-0 b-a">
                                     <div class="bg-grey lter wrapper-16 pl-24">
@@ -273,10 +273,10 @@
                                     </div>
                                 </mat-card>
                             </div>
-                            </div> -->
+                            </div>
                         </div>
-                        <!-- <div class="row pt-20 pb-20">
-                            <div class="col-md-6">
+                        <div class="row pt-20 pb-20">
+                            <div class="col-md-6" (click)="openEmailInvoice(this.storeData[2])">
                                 <div class="example-card">
                                 <mat-card class="p-0 b-a">
                                     <div class="bg-grey lter wrapper-16 pl-24">
@@ -301,14 +301,14 @@
                                     </div>
                                 </mat-card>
                             </div>
-                            </div> -->
-                            <!-- <div class="col-md-6">
+                            </div>
+                            <div class="col-md-6" (click)="openEmailInvoice(this.storeData[3])">
                                 <div class="example-card">
                                 <mat-card class="p-0 b-a">
                                     <div class="bg-grey lter wrapper-16 pl-24">
                                         <div class="row">
                                             <div class="col-md-11 p-0">
-                                                <h3> Documents with0ut eSign request</h3>
+                                                <h3> Documents without eSign request</h3>
                                             </div>
                                             <div class="col-md-1">
                                                 <i class="material-icons text-right text-custom f-32">
@@ -327,8 +327,8 @@
                                     </div>
                                 </mat-card>
                             </div>
-                            </div> -->
-                        <!-- </div> -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
