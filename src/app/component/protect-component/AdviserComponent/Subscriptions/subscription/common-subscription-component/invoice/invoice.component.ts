@@ -274,7 +274,7 @@ dataSource;
 
   changeTaxStatus() {
     this.taxStatus = this.editPayment.value.taxStatus;
-    this.finAmount = (18/100)*this.editPayment.controls.finalAmount.value + this.editPayment.controls.finalAmount.value
+    this.finAmount = (18/100)*this.editPayment.controls.finalAmount.value
   }
 
   updateInvoice() {
