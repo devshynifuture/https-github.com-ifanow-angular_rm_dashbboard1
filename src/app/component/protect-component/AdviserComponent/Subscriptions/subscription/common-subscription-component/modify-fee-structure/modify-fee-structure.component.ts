@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {EnumServiceService} from '../../enum-service.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { EnumServiceService } from '../../enum-service.service';
 import * as _ from 'lodash';
 import { SubscriptionService } from '../../../subscription.service';
 
@@ -12,9 +12,10 @@ import { SubscriptionService } from '../../../subscription.service';
 })
 export class ModifyFeeStructureComponent implements OnInit {
   singleSubscriptionData: any;
+  fixedData: { autoRenew: number; subscriptionId: any; billEvery: any; billingCycle: number; billingMode: any; billingNature: any; feeTypeId: number; subscriptionAssetPricingList: { pricing: any; assetClassId: number; }[]; };
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subInject: SubscriptionInject,
-              private enumService: EnumServiceService,private subService:SubscriptionService) {
+    private enumService: EnumServiceService, private subService: SubscriptionService) {
     this.subInject.singleProfileData.subscribe(
       data => this.getSubscribeData(data)
     );
@@ -32,7 +33,7 @@ export class ModifyFeeStructureComponent implements OnInit {
   fixedFeeStructureForm = this.fb.group({
     fees: ['', [Validators.required]],
     billingNature: [1],
-    billEvery: [,[Validators.required]],
+    billEvery: [, [Validators.required]],
     Duration: [1],
     billingMode: [1]
   });
@@ -69,16 +70,22 @@ export class ModifyFeeStructureComponent implements OnInit {
     console.log(data);
     this.singleSubscriptionData = data
     console.log(this.variableFeeStructureForm);
+    if(this.createSubData)
+    {
+      console.log("ifsdhiofgasiof")
+      return;
+    }
     if (data.subscriptionPricing.feeTypeId == 1) {
       this.getFixedFee().fees.setValue(data.subscriptionPricing.pricing);
       this.getFixedFee().billingNature.setValue(data.subscriptionPricing.billingNature);
       this.getFixedFee().billEvery.setValue(data.subscriptionPricing.billEvery);
+      this.getFixedFee().Duration.setValue(data.subscriptionPricing.billingCycle)
       this.getFixedFee().billingMode.setValue(data.subscriptionPricing.billingMode);
     }
     if (data.subscriptionPricing.feeTypeId == 2) {
       this.getVariableFee().billingNature.setValue(data.subscriptionPricing.billingNature);
       this.getVariableFee().billEvery.setValue(data.subscriptionPricing.billEvery);
-      // this.getVariableFee().Duration.setValue(data.subscriptionPricing.billingCycle);
+      this.getVariableFee().Duration.setValue(data.subscriptionPricing.billingCycle);
       /*//TODO commented for now*/
       this.getVariableFee().directFees.setValue({
         equity: data.subscriptionPricing.subscriptionAssetPricingList[0].equityAllocation,
@@ -190,10 +197,18 @@ export class ModifyFeeStructureComponent implements OnInit {
         this.variableData.subId = this.singleSubscriptionData.id
         this.subInjectService.addSingleProfile(this.variableData)
       }
-      this.subService.editModifyFeeStructure(this.variableData).subscribe(
-        data=>console.log(data,"modify fee data")
-      )
+      else {
+        this.subService.editModifyFeeStructure(this.variableData).subscribe(
+          data => this.saveVariableModifyFeesResponse(data)
+        )
+
+      }
     }
+  }
+
+  saveVariableModifyFeesResponse(data) {
+    console.log("modify variable data", data)
+    this.subInjectService.rightSideData('close')
   }
 
   saveFixedModifyFees() {
@@ -205,25 +220,38 @@ export class ModifyFeeStructureComponent implements OnInit {
       this.isBillValid = true;
       return;
     } else {
-      const obj = {
+       this.fixedData = {
         autoRenew: 0,
-        subscriptionId:this.singleSubscriptionData.id,
+        subscriptionId: this.singleSubscriptionData.id,
         billEvery: this.getFixedFee().billEvery.value,
         billingCycle: 1,
         billingMode: this.getFixedFee().billingMode.value,
         billingNature: this.getFixedFee().billingNature.value,
         feeTypeId: 1,
-        pricingList: [
+        subscriptionAssetPricingList: [
           {
             pricing: this.getFixedFee().fees.value,
             assetClassId: 1
           }
         ]
       };
-      console.log('fixed fees', obj);
-      this.subService.editModifyFeeStructure(obj).subscribe(
-        data=>console.log(data,"modify fee data")
-      )
+      console.log('fixed fees', this.fixedData);
+      if (this.createSubData) {
+        this.fixedData.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId
+        this.fixedData.clientId = this.singleSubscriptionData.clientId
+        this.fixedData.subId = this.singleSubscriptionData.id
+        this.subInjectService.addSingleProfile(this.fixedData)
+      }
+      else {
+        this.subService.editModifyFeeStructure(this.fixedData).subscribe(
+          data => this.saveFixedModifyFeesResponse(data)
+        )
+      }
     }
+  }
+
+  saveFixedModifyFeesResponse(data) {
+    console.log(data, "modify fixed fee data")
+    this.subInjectService.rightSideData('close')
   }
 }

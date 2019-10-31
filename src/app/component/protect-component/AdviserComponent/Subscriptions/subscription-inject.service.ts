@@ -31,6 +31,7 @@ export class SubscriptionInject {
     console.log('dialog-container rightSideData: ', msg);
 
     this.openCloseRightSlider.next(msg);
+    return this.rightSideBarData;
   }
 
   rightSliderData(msg: string) {
