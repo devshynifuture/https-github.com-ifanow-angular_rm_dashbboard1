@@ -41,6 +41,7 @@ export class AppComponent {
       this.lBar.complete();
     }
   }
+
   prepareRoute(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   }
