@@ -260,7 +260,7 @@
     <div *ngIf="ModifyFeesChange=='variableModifyFees'" class="col-md-8 right text-right">
       <button mat-button (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">Save</button>
     </div>
-    <div *ngIf="createSubData" class="col-md-8 right text-right">
+    <div *ngIf="createSubData && singleSubscriptionData.subscriptionPricing" class="col-md-8 right text-right">
       <button *ngIf="singleSubscriptionData.subscriptionPricing.feeTypeId==1" mat-button (click)="saveFixedModifyFees()" class="btn-bottom br-0 text-inherit">NEXT STEP</button>
       <button *ngIf="singleSubscriptionData.subscriptionPricing.feeTypeId==2" mat-button (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">NEXT STEP</button>
     </div>

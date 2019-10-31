@@ -4,64 +4,67 @@
     </div>
     <div class="col-md-2 text-right">
         <i class="material-icons pt-16 pr-16 c-p" (click)="Close('close')">
-                            clear
-                            </i>
+            clear
+        </i>
     </div>
-  </div>
+</div>
 <ng-template matStepLabel>Payee Settings</ng-template>
 
 <div class="wrapper-16 pb-44 mb-44">
-  <div class="row">
-      <div class="col-md-12">
-          <p class="m-0 text-right text-custom roboto">You can map more than one plan to the client</p>
-      </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6 mt-20 hover c-p" *ngFor="let singlePlan of PayeeSettingData;  let i = index">
-              <mat-card class="p-0 b-ua" [ngClass]="singlePlan.selected == true || singlePlan.selected == 1 ? 'ba-blue' : 'b-ua'" (click)="selectedPayee(singlePlan.selected,singlePlan)">
-                  <div class="row bg-grey lter">
-                      <div class="col-md-12 p-0">
-                              <mat-checkbox class="custom-checkbox" [(ngModel)]= "singlePlan.selected"></mat-checkbox>
-                      </div>
-                      <div class="col-md-12 p-0">
-                          <h3 class="m-0 pt-18 pl-24">{{singlePlan.companyDisplayName}}</h3>
-                          <h5 class="m-0 pt-4 pb-44 pl-24 text-custom">ARN123</h5>
-                      </div>
-                  </div>
-                  <div class="wrapper-24">
-                  <div class="row">
-                      <div class="col-md-6 p-0">
-                          <p class="f-12 mb-0 text-primitive">BILLER ADDRESS</p>
-                          <p class="mb-0">{{singlePlan.billerAddress}}</p>
-                          <p class="mb-0">{{singlePlan.city}}</p>
-                          <p class="mb-0">{{singlePlan.state}}</p>
-                          <p class="mb-0">{{singlePlan.country}},{{singlePlan.zipCode}}</p>
-                      </div>
-                      <div class="col-md-6 p-0">
-                          <p class="text-custom m-0 f-12 pl-24"> SPLITTING RATIO (%)</p>
+    <div class="row">
+        <div class="col-md-12">
+            <p class="m-0 text-right text-custom roboto">You can map more than one plan to the client</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mt-20 hover c-p" *ngFor="let singlePlan of PayeeSettingData;  let i = index">
+            <mat-card class="p-0 b-ua"
+                [ngClass]="singlePlan.selected == true || singlePlan.selected == 1 ? 'ba-blue' : 'b-ua'"
+                (click)="selectedPayee(singlePlan.selected,singlePlan)">
+                <div class="row bg-grey lter">
+                    <div class="col-md-12 p-0">
+                        <mat-checkbox class="custom-checkbox" [(ngModel)]="singlePlan.selected"></mat-checkbox>
+                    </div>
+                    <div class="col-md-12 p-0">
+                        <h3 class="m-0 pt-18 pl-24">{{singlePlan.companyDisplayName}}</h3>
+                        <h5 class="m-0 pt-4 pb-44 pl-24 text-custom">ARN123</h5>
+                    </div>
+                </div>
+                <div class="wrapper-24">
+                    <div class="row">
+                        <div class="col-md-6 p-0">
+                            <p class="f-12 mb-0 text-primitive">BILLER ADDRESS</p>
+                            <p class="mb-0">{{singlePlan.billerAddress}}</p>
+                            <p class="mb-0">{{singlePlan.city}}</p>
+                            <p class="mb-0">{{singlePlan.state}}</p>
+                            <p class="mb-0">{{singlePlan.country}},{{singlePlan.zipCode}}</p>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <p class="text-custom m-0 f-12 pl-24"> SPLITTING RATIO (%)</p>
                             <div class="row">
-                              <div class="col-md-8">
-                                  <mat-slider class="ml-24" id="custom-mat-slider" thumbLabel min="1" max="100" (input)="onInputChange($event,singlePlan)"></mat-slider>
-                              </div>
-                              <div class="col-md-4 pr-0 pt-8">
-                                      <p class="m-0 f-13 text-black b-a wrapper-8">{{dataMatSlider}}</p>
-                              </div>
+                                <div class="col-md-8">
+                                    <mat-slider class="ml-24" [disabled]="singlePlan.selected==0" [max]='100'
+                                        [(ngModel)]="singlePlan.share" id="custom-mat-slider"></mat-slider>
+                                </div>
+                                <div class="col-md-4 pr-0 pt-8">
+                                    <p class="m-0 f-13 text-black b-a wrapper-8">{{singlePlan.share}}</p>
+                                </div>
                             </div>
                         </div>
-              </div>
-          </div>
-      </mat-card>
-          </div>
-      </div>
-  </div>
-  <div class="bottom-fixed wrapper-12">
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12">
     <div class="row">
         <div class="col-md-4">
-        <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button  class="btn-bottom br-0 text-inherit"(click)="saveChangePayeeSetting()">Save</button>
-            
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveChangePayeeSetting()">Save</button>
+
 
         </div>
     </div>

@@ -79,12 +79,13 @@ export class ModifyFeeStructureComponent implements OnInit {
       this.getFixedFee().fees.setValue(data.subscriptionPricing.pricing);
       this.getFixedFee().billingNature.setValue(data.subscriptionPricing.billingNature);
       this.getFixedFee().billEvery.setValue(data.subscriptionPricing.billEvery);
+      this.getFixedFee().Duration.setValue(data.subscriptionPricing.billingCycle)
       this.getFixedFee().billingMode.setValue(data.subscriptionPricing.billingMode);
     }
     if (data.subscriptionPricing.feeTypeId == 2) {
       this.getVariableFee().billingNature.setValue(data.subscriptionPricing.billingNature);
       this.getVariableFee().billEvery.setValue(data.subscriptionPricing.billEvery);
-      // this.getVariableFee().Duration.setValue(data.subscriptionPricing.billingCycle);
+      this.getVariableFee().Duration.setValue(data.subscriptionPricing.billingCycle);
       /*//TODO commented for now*/
       this.getVariableFee().directFees.setValue({
         equity: data.subscriptionPricing.subscriptionAssetPricingList[0].equityAllocation,
@@ -237,8 +238,8 @@ export class ModifyFeeStructureComponent implements OnInit {
       console.log('fixed fees', this.fixedData);
       if (this.createSubData) {
         this.fixedData.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId
-        // this.fixedData.clientId = this.singleSubscriptionData.clientId
-        // this.fixedData.subId = this.singleSubscriptionData.id
+        this.fixedData.clientId = this.singleSubscriptionData.clientId
+        this.fixedData.subId = this.singleSubscriptionData.id
         this.subInjectService.addSingleProfile(this.fixedData)
       }
       else {
