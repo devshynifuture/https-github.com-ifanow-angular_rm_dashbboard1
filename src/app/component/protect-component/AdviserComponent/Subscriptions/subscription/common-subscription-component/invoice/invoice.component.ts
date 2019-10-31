@@ -3,52 +3,43 @@ import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from 'src/app/auth-service/authService';
+import { EnumServiceService } from '../../enum-service.service';
 
 export interface PeriodicElement {
-  document: string;
-  plan: string;
   date: string;
-  sdate: string;
-  cdate: string;
-  status: string;
-
+  reference: string;
+  paymentMode: string;
+  amount: number
 }
 
-export class TableStickyHeaderExample {
-  displayedColumns1 = ['position', 'name', 'weight', 'symbol'];
-  dataSource1 = ELEMENT_DATA1;
-}
+// export class TableStickyHeaderExample {
+//   displayedColumns1 = ['position', 'name', 'weight', 'symbol'];
+//   dataSource1 = ELEMENT_DATA1;
+// }
 
-export interface PeriodicElement1 {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+// export interface PeriodicElement1 {
+//   name: string;
+//   position: number;
+//   weight: number;
+//   symbol: string;
+// }
 
-const ELEMENT_DATA1: PeriodicElement1[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
 const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    document: 'Scope of work',
-    plan: 'Starter plan',
-    date: '25/08/2019',
-    sdate: '25/08/2019',
-    cdate: '25/08/2019',
-    status: 'READY TO SEND'
-  },
-
+  {date: '25/08/2019', reference: 'Hydrogen', paymentMode: 'cash', amount: 1000},
+  {date: '25/08/2019', reference: 'Helium', paymentMode: 'nefty', amount:4000 },
+  {date: '25/08/2019', reference: 'Lithium', paymentMode: 'fhfdh', amount: 400},
 ];
+// const ELEMENT_DATA: PeriodicElement[] = [
+//   {
+//     document: 'Scope of work',
+//     plan: 'Starter plan',
+//     date: '25/08/2019',
+//     sdate: '25/08/2019',
+//     cdate: '25/08/2019',
+//     status: 'READY TO SEND'
+//   },
+
+// ];
 
 @Component({
   selector: 'app-invoice',
@@ -85,11 +76,15 @@ export class InvoiceComponent implements OnInit {
   advisorId;
   editAdd1;
   editAdd2;
+dataSource;
+  displayedColumns: string[] =['date', 'reference', 'paymentMode', 'amount'];
+  // dataSource = ELEMENT_DATA;
+  feeCollectionMode: any;
+  formObj: [{
+  }];
+  ELEMENT_DATA: {}[];
 
-  displayedColumns: string[] = ['checkbox', 'document', 'plan', 'date', 'sdate', 'cdate', 'status', 'icons'];
-  dataSource = ELEMENT_DATA;
-
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService) {
+  constructor(public enumService:EnumServiceService,public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getInvoiceData(data)
     );
@@ -101,6 +96,7 @@ export class InvoiceComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.getServicesList();
+    this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     console.log('this.invoiceSubscription', this.invoiceInSub);
     this.showRecord = false;
     this.showEdit = false;
@@ -177,7 +173,7 @@ export class InvoiceComponent implements OnInit {
     this.getFormControl().charges.maxLength = 10;
     this.getFormControl().tds.maxLength = 10;
     this.getFormControl().paymentMode.maxLength = 10;
-    this.getFormControl().notes.maxLength = 10;
+    this.getFormControl().notes.maxLength = 40;
 
   }
 
@@ -303,7 +299,7 @@ export class InvoiceComponent implements OnInit {
       this.ismodeValid = true;
       return;
     } else {
-      const obj = {
+      this.formObj = [{
         advisorId: this.advisorId,
         // advisorId: 12345,
         amountReceieve: this.rPayment.controls.amountReceive.value,
@@ -312,10 +308,14 @@ export class InvoiceComponent implements OnInit {
         paymentDate: this.rPayment.controls.paymentDate.value,
         paymentMode: this.rPayment.controls.paymentMode.value,
         gstTreatment: this.rPayment.controls.gstTreatment.value,
-        notes: this.rPayment.controls.notes.value,
-      };
-      console.log('jifsdfoisd', obj);
-    }
+        notes: this.rPayment.controls.notes.value
+      }];
+      
+  }
+  const ELEMENT_DATA = this.formObj;
+    this.dataSource = ELEMENT_DATA;
+      console.log('form data', this.formObj);
+   this.rPayment.reset();
     this.cancel();
   }
 

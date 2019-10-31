@@ -3,7 +3,7 @@ import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from "../../../../../../../auth-service/authService";
+import {AuthService} from '../../../../../../../auth-service/authService';
 
 @Component({
   selector: 'app-add-fixed-fee',
@@ -25,20 +25,21 @@ export class AddFixedFeeComponent implements OnInit {
   advisorId;
 
   ngOnInit() {
+    // console.log('AddFixedFeeComponent init');
     this.advisorId = AuthService.getAdvisorId();
     this.setValidation(false);
-    this.createFixedFeeForm()
+    this.createFixedFeeForm();
     this.subInjectService.rightSideBarData.subscribe(
       data => this.getFeeFormData(data)
     );
   }
-   createFixedFeeForm()
-   {
+
+  createFixedFeeForm() {
     this.fixedFeeData = this.fb.group({
       serviceName: [, [Validators.required]],
       code: [, [Validators.required]],
       description: [, [Validators.required]],
-      Duration:[1],
+      Duration: [1],
       fees: [, [Validators.required]],
       billingNature: [1],
       billEvery: [, [Validators.required]],
@@ -48,7 +49,8 @@ export class AddFixedFeeComponent implements OnInit {
     this.getFormControl().code.maxLength = 10;
     this.getFormControl().description.maxLength = 160;
     this.getFormControl().fees.maxLength = 10;
-   }
+  }
+
   setValidation(flag) {
     this.isServiceValid = flag;
     this.isCodeValid = flag;
@@ -62,19 +64,24 @@ export class AddFixedFeeComponent implements OnInit {
   }
 
   getFeeFormData(data) {
-    if(data=='')
-    {
+    if (data == '') {
       return;
-    }
-    else{
-      this.fixedFeeData.controls.serviceName.setValue(data.serviceName)
-      this.fixedFeeData.controls.code.setValue(data.serviceCode)
-      this.fixedFeeData.controls.description.setValue(data.description)
-      this.fixedFeeData.controls.Duration.setValue(data.servicePricing.billingCycle)
-      this.fixedFeeData.controls.fees.setValue(data.servicePricing.pricingList[0].pricing)
-      this.fixedFeeData.controls.billingNature.setValue(data.servicePricing.billingNature)
-      this.fixedFeeData.controls.billingMode.setValue(data.servicePricing.billingMode)
-      this.fixedFeeData.controls.billEvery.setValue(data.servicePricing.billEvery)
+    } else {
+      // data.servicePricing.billingNature = '1';
+      console.log(' this isa snd;kasljdlkajsdlkashdlaksd ', data.servicePricing.billingNature);
+      console.log(' this isa snd;kasljdlkajsdlkashdlaksd ', data.servicePricing.billingNature + '');
+
+      // data.servicePricing.billingNature + ''
+      this.fixedFeeData.controls.serviceName.setValue(data.serviceName);
+      this.fixedFeeData.controls.code.setValue(data.serviceCode);
+      this.fixedFeeData.controls.description.setValue(data.description);
+      this.fixedFeeData.controls.Duration.setValue(data.servicePricing.billingCycle);
+      this.fixedFeeData.controls.fees.setValue(data.servicePricing.pricingList[0].pricing);
+      this.fixedFeeData.controls.billingNature.setValue(data.servicePricing.billingNature + '');
+      // this.fixedFeeData.controls.billingNature.setValue('2');
+
+      this.fixedFeeData.controls.billingMode.setValue(data.servicePricing.billingMode);
+      this.fixedFeeData.controls.billEvery.setValue(data.servicePricing.billEvery);
     }
 
   }
@@ -132,7 +139,6 @@ export class AddFixedFeeComponent implements OnInit {
 
         }
       };
-      console.log('jifsdfoisd', obj);
       this.subService.createSettingService(obj).subscribe(
         data => this.saveFeeTypeDataResponse(obj, data, state)
       );

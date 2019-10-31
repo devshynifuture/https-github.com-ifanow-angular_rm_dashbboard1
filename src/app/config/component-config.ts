@@ -110,6 +110,6 @@ export const appConfig = {
   GET_EMAIL_TEMPLATE: 'subscription/email-template/list/get',
   EDIT_EMAIL_TEMPLATE: 'subscription/email-template/edit',
   START_SUBSCRIPTION: 'subscription/client/subscription/start',
-  DELETE_SERVICE:'subscription/service/delete',
+  DELETE_SERVICE: 'subscription/service/delete',
   GET_BASE_64: 'api/v1/test/base64/decode'
 };

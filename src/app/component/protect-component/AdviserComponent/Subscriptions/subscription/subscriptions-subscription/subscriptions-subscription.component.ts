@@ -7,6 +7,7 @@ import {SubscriptionService} from '../../subscription.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {AuthService} from '../../../../../../auth-service/authService';
 import * as _ from 'lodash';
+import { EnumServiceService } from '../enum-service.service';
 
 export interface PeriodicElement {
   client: string;
@@ -56,13 +57,16 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   live: boolean;
   notStarted: boolean;
   future: boolean;
+  feeCollectionMode: any;
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
-              private eventService: EventService, private subService: SubscriptionService) {
+              private eventService: EventService, private subService: SubscriptionService,public enumService:EnumServiceService) {
   }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
+    console.log("feeeee...",this.feeCollectionMode);
     this.getSummaryDataAdvisor();
     console.log('upperData', this.upperData);
   }
@@ -196,11 +200,17 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.sendData = this.filterStatus;
     this.callFilter();
   }
+<<<<<<< HEAD
+  filterSubscriptionRes(data){
+    console.log('filterSubscriptionRes',data)
+    this.getSubSummaryRes(data)
+=======
 
   filterSubscriptionRes(data) {
     console.log('filterSubscriptionRes', data);
     this.getSubSummaryRes(data);
 
+>>>>>>> 4f978ef6da247343630284b85f7644c5dc29839b
   }
 
   addFiltersDate(dateFilter) {
@@ -226,12 +236,12 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       advisorId: this.advisorId,
       limit: 10,
       offset: 0,
-      dateType: 0,
+      fromDate:"2000-01-01",
+      toDate:"3000-01-01",
       statusIdList: this.statusIdList,
-      fromDate: '2000-01-01',
-      toDate: '3000-01-01'
-    };
-    console.log('this.statusIdList', this.statusIdList);
+      dateType:0
+    }
+    console.log('this.statusIdList', this.statusIdList)
     this.subService.filterSubscription(obj).subscribe(
       data => this.filterSubscriptionRes(data)
     );
