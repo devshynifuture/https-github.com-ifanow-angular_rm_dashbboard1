@@ -220,7 +220,7 @@ export class ModifyFeeStructureComponent implements OnInit {
       this.isBillValid = true;
       return;
     } else {
-       this.fixedData = {
+       let obj = {
         autoRenew: 0,
         subscriptionId: this.singleSubscriptionData.id,
         billEvery: this.getFixedFee().billEvery.value,
@@ -228,6 +228,8 @@ export class ModifyFeeStructureComponent implements OnInit {
         billingMode: this.getFixedFee().billingMode.value,
         billingNature: this.getFixedFee().billingNature.value,
         feeTypeId: 1,
+        clientId:'',
+        subId:'',
         subscriptionAssetPricingList: [
           {
             pricing: this.getFixedFee().fees.value,
@@ -235,15 +237,15 @@ export class ModifyFeeStructureComponent implements OnInit {
           }
         ]
       };
-      console.log('fixed fees', this.fixedData);
+      console.log('fixed fees',obj);
       if (this.createSubData) {
-        this.fixedData.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId
-        this.fixedData.clientId = this.singleSubscriptionData.clientId
-        this.fixedData.subId = this.singleSubscriptionData.id
-        this.subInjectService.addSingleProfile(this.fixedData)
+        obj.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId
+        obj.clientId = this.singleSubscriptionData.clientId
+        obj.subId = this.singleSubscriptionData.id
+        this.subInjectService.addSingleProfile(obj)
       }
       else {
-        this.subService.editModifyFeeStructure(this.fixedData).subscribe(
+        this.subService.editModifyFeeStructure(obj).subscribe(
           data => this.saveFixedModifyFeesResponse(data)
         )
       }
