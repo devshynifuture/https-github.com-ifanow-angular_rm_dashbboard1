@@ -184,15 +184,9 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.sendData = this.filterStatus
     this.callFilter()
   }
-<<<<<<< HEAD
   filterSubscriptionRes(data){
     console.log('filterSubscriptionRes',data)
     this.getSubSummaryRes(data)
-=======
-
-  filterSubscriptionRes(data) {
-    console.log('filterSubscriptionRes', data)
->>>>>>> f7f0703e099992890f318c9a89fe2ad8eea5eb32
   }
 
   addFiltersDate(dateFilter) {
@@ -218,19 +212,10 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       advisorId: this.advisorId,
       limit: 10,
       offset: 0,
-<<<<<<< HEAD
       fromDate:"2000-01-01",
       toDate:"3000-01-01",
       statusIdList: this.statusIdList,
       dateType:0
-=======
-      subscription: {
-        dateType: 0,
-        statusIdList: this.statusIdList,
-        fromDate: "2000-01-01",
-        toDate: "3000-01-01",
-      }
->>>>>>> f7f0703e099992890f318c9a89fe2ad8eea5eb32
     }
     console.log('this.statusIdList', this.statusIdList)
     this.subService.filterSubscription(obj).subscribe(
