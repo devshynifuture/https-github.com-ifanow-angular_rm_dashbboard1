@@ -109,7 +109,14 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     });
     const sideBarSubs = this.eventService.sidebarSubscribeData.subscribe(data => {
       setTimeout(() => {
-        this.subInjectService.rightSideData(state);
+       const rightSideDataSub=  this.subInjectService.rightSideData(state).subscribe(
+         data => {
+           if(data==='close')
+           {
+             rightSideDataSub.unsubscribe();
+           }
+         }
+       );
       }, 500);
     });
     setTimeout(() => {
@@ -232,9 +239,10 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     );
   }
 
-  delete(data) {
+  delete(data,value) {
     const Fragmentdata = {
       Flag: data,
+      subData:value
     };
     if (data === 'cancelSubscription') {
       const dialogRef = this.dialog.open(DeleteSubscriptionComponent, {
