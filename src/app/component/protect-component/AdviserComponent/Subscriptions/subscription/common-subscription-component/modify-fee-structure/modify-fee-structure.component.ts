@@ -13,6 +13,7 @@ import { SubscriptionService } from '../../../subscription.service';
 export class ModifyFeeStructureComponent implements OnInit {
   singleSubscriptionData: any;
   fixedData: { autoRenew: number; subscriptionId: any; billEvery: any; billingCycle: number; billingMode: any; billingNature: any; feeTypeId: number; subscriptionAssetPricingList: { pricing: any; assetClassId: number; }[]; };
+  disableForm: boolean;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subInject: SubscriptionInject,
     private enumService: EnumServiceService, private subService: SubscriptionService) {
@@ -58,6 +59,7 @@ export class ModifyFeeStructureComponent implements OnInit {
 
   ngOnInit() {
     this.setValidation(false);
+    this.disableForm=true;
     // this.otherAssetData = [];
     // console.log(this.otherAssetData)
   }
@@ -70,8 +72,7 @@ export class ModifyFeeStructureComponent implements OnInit {
     console.log(data);
     this.singleSubscriptionData = data
     console.log(this.variableFeeStructureForm);
-    if(this.createSubData)
-    {
+    if (this.createSubData) {
       console.log("ifsdhiofgasiof")
       return;
     }
@@ -81,6 +82,10 @@ export class ModifyFeeStructureComponent implements OnInit {
       this.getFixedFee().billEvery.setValue(data.subscriptionPricing.billEvery);
       this.getFixedFee().Duration.setValue(data.subscriptionPricing.billingCycle)
       this.getFixedFee().billingMode.setValue(data.subscriptionPricing.billingMode);
+      if(!this.createSubData)
+      {
+        this.fixedFeeStructureForm.disable();
+      }
     }
     if (data.subscriptionPricing.feeTypeId == 2) {
       this.getVariableFee().billingNature.setValue(data.subscriptionPricing.billingNature);
@@ -105,6 +110,7 @@ export class ModifyFeeStructureComponent implements OnInit {
           this.selectedOtherAssets.push(element);
         }
       });
+      this.variableFeeStructureForm.disable();
     }
     this.modifyFeeData = data;
   }
@@ -119,7 +125,7 @@ export class ModifyFeeStructureComponent implements OnInit {
   Close(state) {
     this.ngOnInit();
     (this.ModifyFeesChange == 'createSub') ? this.subInjectService.rightSliderData(state) : this.subInjectService.rightSideData(state),
-      (this.ModifyFeesChange === 'modifyFees') ? this.subInjectService.rightSliderData(state) :
+      (this.ModifyFeesChange === 'fixedModifyFees' || this.ModifyFeesChange==='variableModifyFees') ? this.subInjectService.rightSliderData(state) :
         this.subInjectService.rightSideData(state);
 
     this.variableFeeStructureForm.reset();
@@ -220,7 +226,7 @@ export class ModifyFeeStructureComponent implements OnInit {
       this.isBillValid = true;
       return;
     } else {
-       let obj = {
+      let obj = {
         autoRenew: 0,
         subscriptionId: this.singleSubscriptionData.id,
         billEvery: this.getFixedFee().billEvery.value,
@@ -228,8 +234,8 @@ export class ModifyFeeStructureComponent implements OnInit {
         billingMode: this.getFixedFee().billingMode.value,
         billingNature: this.getFixedFee().billingNature.value,
         feeTypeId: 1,
-        clientId:'',
-        subId:'',
+        clientId: '',
+        subId: '',
         subscriptionAssetPricingList: [
           {
             pricing: this.getFixedFee().fees.value,
@@ -237,7 +243,7 @@ export class ModifyFeeStructureComponent implements OnInit {
           }
         ]
       };
-      console.log('fixed fees',obj);
+      console.log('fixed fees', obj);
       if (this.createSubData) {
         obj.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId
         obj.clientId = this.singleSubscriptionData.clientId
@@ -255,5 +261,9 @@ export class ModifyFeeStructureComponent implements OnInit {
   saveFixedModifyFeesResponse(data) {
     console.log(data, "modify fixed fee data")
     this.subInjectService.rightSideData('close')
+  }
+  enableForm()
+  {
+    (this.singleSubscriptionData.subscriptionPricing.feeTypeId==1)?this.fixedFeeStructureForm.enable():this.variableFeeStructureForm.enable()
   }
 }

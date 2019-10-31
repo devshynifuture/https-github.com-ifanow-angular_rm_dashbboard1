@@ -3,7 +3,7 @@
   <h3 class="f-bold">CANCEL SUBSCRIPTION</h3>
 <div class="row">
   <div class="col-md-12 p-0">
-      <h5 class="pt-16 pb-16 m-0">This service can be used by the client till the end of term and the subscription will be cancelled on <b>27/06/2020</b></h5>
+      <h5 class="pt-16 pb-16 m-0" *ngIf="fragmentData">This service can be used by the client till the end of term and the subscription will be cancelled on <b>{{fragmentData.subData.nextBillingDate | date:'dd/MM/yyyy'}}</b></h5>
       <button mat-stroked-button class="btn-primary addon">Cancel on Next Renewal</button>
   </div>
 </div>
