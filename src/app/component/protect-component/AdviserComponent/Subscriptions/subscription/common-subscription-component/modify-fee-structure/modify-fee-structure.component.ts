@@ -70,8 +70,7 @@ export class ModifyFeeStructureComponent implements OnInit {
     console.log(data);
     this.singleSubscriptionData = data
     console.log(this.variableFeeStructureForm);
-    if(this.createSubData)
-    {
+    if (this.createSubData) {
       console.log("ifsdhiofgasiof")
       return;
     }
@@ -119,7 +118,7 @@ export class ModifyFeeStructureComponent implements OnInit {
   Close(state) {
     this.ngOnInit();
     (this.ModifyFeesChange == 'createSub') ? this.subInjectService.rightSliderData(state) : this.subInjectService.rightSideData(state),
-      (this.ModifyFeesChange === 'modifyFees') ? this.subInjectService.rightSliderData(state) :
+      (this.ModifyFeesChange === 'fixedModifyFees' || this.ModifyFeesChange==='variableModifyFees') ? this.subInjectService.rightSliderData(state) :
         this.subInjectService.rightSideData(state);
 
     this.variableFeeStructureForm.reset();
@@ -220,7 +219,7 @@ export class ModifyFeeStructureComponent implements OnInit {
       this.isBillValid = true;
       return;
     } else {
-       let obj = {
+      let obj = {
         autoRenew: 0,
         subscriptionId: this.singleSubscriptionData.id,
         billEvery: this.getFixedFee().billEvery.value,
@@ -228,8 +227,8 @@ export class ModifyFeeStructureComponent implements OnInit {
         billingMode: this.getFixedFee().billingMode.value,
         billingNature: this.getFixedFee().billingNature.value,
         feeTypeId: 1,
-        clientId:'',
-        subId:'',
+        clientId: '',
+        subId: '',
         subscriptionAssetPricingList: [
           {
             pricing: this.getFixedFee().fees.value,
@@ -237,7 +236,7 @@ export class ModifyFeeStructureComponent implements OnInit {
           }
         ]
       };
-      console.log('fixed fees',obj);
+      console.log('fixed fees', obj);
       if (this.createSubData) {
         obj.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId
         obj.clientId = this.singleSubscriptionData.clientId

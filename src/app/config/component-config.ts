@@ -92,7 +92,7 @@ export const appConfig = {
   MAP_PLAN_TO_SERVICE_SETTING: 'subscription/map/plan/service',
   UPDATE_INVOICE: 'subscription/invoice/edit',
   CHANGE_PAYEE_SETTING: 'subscription/client-biller/setting/subscription/update',
-  CHANGE_BILLER_SETTING: 'subscription/change/biller-settings/subscription',
+  CHANGE_BILLER_SETTING: 'subscription/change/biller-setting/subscription',
   EDIT_PLAN_SETTING: 'subscription/plan/edit',
   GET_SERVICE_MODULE: 'subscription/service/module/get',
   MAP_MODULE_TO_PLANS: 'subscription/subscription/service/module-list/edit',
@@ -111,5 +111,6 @@ export const appConfig = {
   EDIT_EMAIL_TEMPLATE: 'subscription/email-template/edit',
   START_SUBSCRIPTION: 'subscription/client/subscription/start',
   DELETE_SERVICE: 'subscription/service/delete',
+  GET_CLIENTLIST:'subscription/invoice/payees/get',
   GET_BASE_64: 'api/v1/test/base64/decode'
 };
