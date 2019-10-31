@@ -85,6 +85,8 @@ dataSource;
   formObj: [{
   }];
   ELEMENT_DATA: {}[];
+  clientList: any;
+  finAmount: any;
   feeCalc: boolean;
   isdateValid: boolean;
 
@@ -99,6 +101,7 @@ dataSource;
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.getClients();
     this.getServicesList();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     console.log('this.invoiceSubscription', this.invoiceInSub);
@@ -126,7 +129,64 @@ dataSource;
       event.preventDefault();
     }
   }
+  selectClient(c,data){
+    console.log(c)
+    console.log('ssss',data)
+    // let obj ={
+    //   id : service.clientId,
+    //   module : 2
+    // }
+    // this.subService.getInvoices(obj).subscribe(
+    //   data => this.getInvoiceDataRes(data)
+    // );
+    console.log('getInvoiceDataRes',data)
+    this.storeData = data;
+    this.auto = false
+    this.storeData.auto == false;
+    console.log(this.storeData);
+    this.editPayment = this.fb.group({
+      id: [data.id],
+      clientName: [data.clientName, [Validators.required]],
+      billerAddress: [(data.billerAddress == undefined) ? '' :data.billerAddress, [Validators.required]],
+      billingAddress: [(data.billingAddress == undefined) ? '' : data.billingAddress, [Validators.required]],
+      invoiceNumber: [(data.invoiceNumber == undefined) ? '' : data.invoiceNumber, [Validators.required]],
+      invoiceDate: [(data.invoiceDate == undefined) ? '' : data.invoiceDate, [Validators.required]],
+      finalAmount: [(data.finalAmount == undefined) ? 0 : data.finalAmount, [Validators.required]],
+      discount: [(data.discount == undefined) ? '' : data.discount, [Validators.required]],
+      dueDate : [(data.dueDate == undefined) ? '' : data.dueDate,[Validators.required]],
+      footnote: [(data.footnote == undefined) ? '' : data.footnote, [Validators.required]],
+      terms: [(data.terms == undefined) ? '' : data.terms, [Validators.required]],
+      taxStatus: ['IGST(18%)'],
+      balanceDue: [(data.balanceDue == undefined) ? '' : data.balanceDue],
+      serviceName: [(data.serviceName == undefined) ? '' : data.serviceName],
+      subTotal: [(data.subTotal == undefined) ? '' : data.subTotal],
+      igstTaxAmount: [data.igstTaxAmount],
+      auto: [(data.auto == undefined) ? '' : false]
+    });
+    
+    this.getFormControledit().clientName.maxLength = 10;
+    this.getFormControledit().billerAddress.maxLength = 150;
+    this.getFormControledit().billingAddress.maxLength = 150;
+    this.getFormControledit().invoiceNumber.maxLength = 10;
+    this.getFormControledit().footnote.maxLength = 100;
+    this.getFormControledit().terms.maxLength = 100;
 
+  }
+  getInvoiceDataRes(data){
+    
+  }
+  getClients(){
+    let obj = {
+      advisorId : this.advisorId
+    }
+    this.subService.getClientList(obj).subscribe(
+      data => this.getClientListRes(data)
+    );
+  }
+  getClientListRes(data){
+    console.log('getClientListRes',data)
+    this.clientList = data
+  }
   getServicesList() {
     const obj = {
       advisorId: this.advisorId
@@ -144,6 +204,7 @@ dataSource;
 
   saveCode(codeValue) {
     console.log('codeValue', codeValue);
+
   }
 
   onclickChangeAdd1(editVlaue) {
@@ -195,6 +256,7 @@ dataSource;
       invoiceDate: [data.invoiceDate, [Validators.required]],
       finalAmount: [data.finalAmount, [Validators.required]],
       discount: [data.discount, [Validators.required]],
+      dueDate : [data.dueDate,[Validators.required]],
       footnote: [data.footnote, [Validators.required]],
       terms: [data.terms, [Validators.required]],
       taxStatus: ['IGST(18%)'],
@@ -216,6 +278,7 @@ dataSource;
 
   changeTaxStatus() {
     this.taxStatus = this.editPayment.value.taxStatus;
+    this.finAmount = (18/100)*this.editPayment.controls.finalAmount.value + this.editPayment.controls.finalAmount.value
   }
 
   updateInvoice() {

@@ -22,6 +22,7 @@ export interface PeriodicElement {
   styleUrls: ['./invoices.component.scss']
 })
 export class InvoicesComponent implements OnInit {
+  clientList: any;
 
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, private subService: SubscriptionService, public dialog: MatDialog) {
@@ -49,9 +50,7 @@ export class InvoicesComponent implements OnInit {
       module: 2,
       // 'clientId':this.clientData.id
     };
-    this.subService.getInvoices(obj).subscribe(
-      data => this.getInvoiceListResponse(data)
-    );
+    
   }
 
   openEdit(edit) {

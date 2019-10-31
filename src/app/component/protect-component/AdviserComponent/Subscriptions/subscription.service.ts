@@ -319,6 +319,10 @@ export class SubscriptionService {
   deleteService(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SERVICE, data);
   }
+  getClientList(data){
+    const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENTLIST, httpParams);
+  }
 
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
