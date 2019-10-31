@@ -792,13 +792,15 @@
                            <h5 class="m-0 text-right pt-8">Payment date</h5>
                        </div>
                        <div class="col-md-4">
-                           <div class="form-group">
-                               <input type="date" class="form-control" formControlName="paymentDate">
-                           </div>
+                           <mat-form-field>
+                            <input matInput formControlName="paymentDate" [matDatepicker]="picker" placeholder="Choose a date">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
                            <div class="row">
                             <div class="col-md-10 pr-0">
                                 <mat-error class="f-12 pt-4"
-                                    *ngIf="isdateValid && getFormControl().paymentDate.invalid || (getFormControl().paymentDate.touched && getFormControl().paymentDate.invalid)">
+                                    *ngIf="isdateValid && getFormControl().paymentDate.invalid || (getFormControl().paymentDate.untouched && getFormControl().paymentDate.invalid)">
                                     date is required</mat-error>
                             </div>
                         </div>
