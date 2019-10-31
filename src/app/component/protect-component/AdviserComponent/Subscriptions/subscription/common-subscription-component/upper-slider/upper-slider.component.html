@@ -143,7 +143,7 @@
   <app-overview-blank-quotation [blankOverview]="blankOverview" *ngIf='blankOverview'></app-overview-blank-quotation>
   <app-biller-settings [upperData]="fragmentData.clientData" *ngIf="rightSliderData=='billerSettings'">
   </app-biller-settings>
-  <app-modify-fee-structure [ModifyFeesChange]="rightSliderData" *ngIf="rightSliderData=='modifyFees'">
+  <app-modify-fee-structure [ModifyFeesChange]="rightSliderData" *ngIf="rightSliderData=='fixedModifyFees' || rightSliderData=='variableModifyFees'">
   </app-modify-fee-structure>
   <app-change-payee [upperData]="fragmentData.clientData" *ngIf="rightSliderData=='changePayee'"></app-change-payee>
   <app-email-quotation [headerDataInvoice]="headerDataInvoice" *ngIf="rightSliderData=='eSignInvoices'">
