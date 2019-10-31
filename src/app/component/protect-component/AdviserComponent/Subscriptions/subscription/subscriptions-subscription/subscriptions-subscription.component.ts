@@ -193,17 +193,9 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.sendData = this.filterStatus;
     this.callFilter();
   }
-<<<<<<< HEAD
   filterSubscriptionRes(data){
     console.log('filterSubscriptionRes',data)
     this.getSubSummaryRes(data)
-=======
-
-  filterSubscriptionRes(data) {
-    console.log('filterSubscriptionRes', data);
-    this.getSubSummaryRes(data);
-
->>>>>>> 4f978ef6da247343630284b85f7644c5dc29839b
   }
 
   addFiltersDate(dateFilter) {

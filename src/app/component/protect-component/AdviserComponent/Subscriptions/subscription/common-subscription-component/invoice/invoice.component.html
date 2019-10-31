@@ -671,7 +671,18 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <input type="text"class="form-control br-0" formControlName="clientName" maxlength="{{getFormControledit().clientName.maxLength}}">
+                <div class="row">
+                    <div class="col-md-12 p-0" >
+                        <div class="form-group b-grey"> 
+                          <input matInput placeholder="You can search client" aria-label="client" [matAutocomplete]="auto1" class="form-control br-0 pl-8" formControlName="clientName"> 
+                                      <mat-autocomplete #auto1="matAutocomplete">
+                                      <mat-option  *ngFor="let c of clientList" [value]="c.clientName" (onSelectionChange)="selectClient($event, c)">
+                                            <span>{{c.clientName}}</span>
+                                        </mat-option>
+                                    </mat-autocomplete>
+                    </div>
+                    </div>
+                </div> 
             </div>
             <div class="col-md-12">
                     <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControledit().clientName.value?.length?getFormControledit().clientName.value.length:0}}/{{getFormControledit().clientName.maxLength}}</p>
@@ -679,17 +690,17 @@
             <div class="row pt-20">
                 <div class="col-md-6 p-0">
                     <p class="m-0 text-custom f-12">BILLER ADDRESS</p>
-                    <p *ngIf="editAdd1 == false" class="m-0 text-black w-60">{{storeData.billerAddress}}</p>
+                    <p *ngIf="editAdd1 == false" class="m-0 text-black w-90">{{storeData.billerAddress}}</p>
                     <textarea rows="5" *ngIf="editAdd1 == true" class="form-control br-0" formControlName="billerAddress" maxlength="{{getFormControledit().billerAddress.maxLength}}"></textarea>  
                     <p class="m-0 text-primary" (click)="onclickChangeAdd1(editAdd1)">CHANGE</p>
-                    <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControledit().billerAddress.value?.length?getFormControledit().billerAddress.value.length:0}}/{{getFormControledit().billerAddress.maxLength}}</p>
+                    <p class="mb-0 f-12 text-custom text-right pt-4 pr-36">{{getFormControledit().billerAddress.value?.length?getFormControledit().billerAddress.value.length:0}}/{{getFormControledit().billerAddress.maxLength}}</p>
                 </div>
                 <div class="col-md-6 p-0">
                     <p class="m-0 text-custom f-12">PAYEE ADDRESS</p>
-                    <p *ngIf="editAdd2 == false" class="m-0 text-black w-60">{{storeData.billingAddress}}</p>
+                    <p *ngIf="editAdd2 == false" class="m-0 text-black w-90">{{storeData.billingAddress}}</p>
                     <textarea rows="5"*ngIf="editAdd2 == true" class="form-control br-0" formControlName="billingAddress" maxlength="{{getFormControledit().billingAddress.maxLength}}"></textarea>
                     <p class="m-0 text-primary" (click)="onclickChangeAdd2(editAdd2)">CHANGE</p>
-                    <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControledit().billingAddress.value?.length?getFormControledit().billingAddress.value.length:0}}/{{getFormControledit().billingAddress.maxLength}}</p>
+                    <p class="mb-0 f-12 text-custom text-right pt-4 pr-12">{{getFormControledit().billingAddress.value?.length?getFormControledit().billingAddress.value.length:0}}/{{getFormControledit().billingAddress.maxLength}}</p>
                 </div>
             </div>
         </div>
@@ -719,7 +730,7 @@
                         </div>
                         <div class="col-md-6 pr-0">
                             <div class="form-group mb-0">
-                                <input type="date" value="storeData.invoiceDate | date: 'MM/dd/yyyy'" class="form-control br-0" formControlName="invoiceDate">
+                                <input type="date" class="form-control br-0" formControlName="invoiceDate">
                             </div>
                         </div>
                     </div>
@@ -731,7 +742,7 @@
                         </div>
                         <div class="col-md-6 p-0">
                             <div class="form-group mb-0">
-                                <input type="date" class="form-control br-0" formControlName="invoiceDate">
+                                <input type="date" class="form-control br-0" formControlName="dueDate">
                             </div>
                         </div>
                     </div>
@@ -739,12 +750,12 @@
             </div>
 
             <div class="mt-28 b-a">
-                <div class="row bg-grey lter">
+                <div class="row bg-grey lter b-a">
                     <div class="col-md-6 p-0">
                         <p class="m-0 text-black wrapper-16 f-500">Service Details</p>
                     </div>
                     <div class="col-md-2 p-0">
-                        <p class="m-0 text-black f-500 wrapper-16">Price </p>
+                        <p class="m-0 text-black f-500 wrapper-16">Price ₹ </p>
                     </div>
                     <div class="col-md-2 p-0">
                         <p class="m-0 text-black f-500 wrapper-16">Tax</p>
@@ -753,39 +764,38 @@
                         <p class="m-0 text-black f-500 wrapper-16 text-right">Amount</p>
                     </div>
                 </div>
-                <div class="row bg-white">
+                <div class="row bg-white pt-8">
                     <div class="col-md-6 p-0">
                             <div class="row">
-                                <div class="col-md-9 p-0" >
-                                    <div class="form-group"> 
-                                    <input type="text" list = "serviceName"*ngIf="auto == true"  placeholder="You can search service..."  class="form-control br-0" formControlName="serviceName"  autocomplete="off">  
-                                      <datalist  *ngIf="auto == true" id="serviceName"  class="form-control">
-                                        <option *ngFor="let s of serviceList"value="{{s.serviceName}}"></option>
-                                      </datalist>
-                                    <h5 *ngIf="auto != true" class="m-0 text-center pr-8">{{storeData.services[0].serviceName}}</h5>
-                                </div>
+                                    <div class="form-group b-grey ml-8 w-100"> 
+                                    <input matInput placeholder="You can search service" aria-label="State" [matAutocomplete]="auto" list = "serviceName"  class="form-control br-0 pl-8" formControlName="serviceName"> 
+                                      <mat-autocomplete #auto="matAutocomplete">
+                                      <mat-option *ngFor="let s of serviceList"[value]="s.serviceName">
+                                            <span>{{s.serviceName}}</span>
+                                        </mat-option>
+                                    </mat-autocomplete>
                                 </div>
                             </div> 
                     </div>
                     <div class="col-md-2 p-0">
-                        <input type="text"  *ngIf="auto == true" class="form-control br-0" formControlName="finalAmount">
-                        <h5 *ngIf="auto != true" class="m-0 text-right pr-8">₹{{storeData.finalAmount}}</h5>
+                        <input type="text"  class="form-control br-0" formControlName="finalAmount">
+                        <h5 *ngIf="auto != true" class="m-0 text-center pr-8">{{storeData.finalAmount}}</h5>
                     </div>
                     <div>
-                        <select id="serviceName" *ngIf="storeData.auto == undefined" class="form-control" (change)="changeTaxStatus()" formControlName="taxStatus">
+                        <select id="serviceName" class="form-control" (change)="changeTaxStatus()" formControlName="taxStatus">
                             <option  value="IGST(18%)">IGST(18%)</option>
                             <option value="SGST(9%)|CGST(9%)">SGST(9%)|CGST(9%)</option>
                         </select>
                     </div>{{storeData.taxStatus}}
-                    <div class="col-md-2 p-0" *ngIf="storeData.igst != undefined">
+                    <!-- <div class="col-md-2 p-0" *ngIf="storeData.igst != undefined">
                         <p class="m-0 text-black wrapper-16">IGST({{storeData.igst}})%</p>
                     </div>
                     <div class="col-md-2 p-0" *ngIf="storeData.sgst != undefined">
                             <p class="m-0 text-black wrapper-16">SGST({{storeData.sgst}})%</p>
-                        </div>
+                        </div> -->
                     <div class="col-md-2 p-0">
-                        <input type="text" *ngIf="auto == true" class="form-control br-0"formControlName="igstTaxAmount">
-                        <h5 *ngIf="auto != true && storeData.sgst == undefined" class="m-0 text-right pr-8" >{{storeData.igstTaxAmount}}</h5>
+                        <!-- <input type="text" class="form-control br-0"formControlName="igstTaxAmount"> -->
+                        <h5 class="m-0 text-right pr-8" >{{finAmount}}</h5>
                         <h5 *ngIf="auto != true && storeData.sgst != undefined" class="m-0 text-right pr-8">₹{{storeData.cgstTaxAmount}}</h5>
                     </div>
                 </div>
@@ -797,8 +807,8 @@
                     <h5 class="m-0">Sub total</h5>
                 </div>
                 <div class="col-md-2 p-0">
-                    <h5 *ngIf="auto != true" class="m-0 text-right pr-8">₹{{storeData.subTotal}}</h5>
-                    <input type="text" *ngIf="auto == true" class="form-control br-0" formControlName="subTotal">
+                    <h5 *ngIf="auto == true" class="m-0 text-right pr-8">₹{{storeData.subTotal}}</h5>
+                    <input type="text" *ngIf="auto != true" class="form-control br-0" formControlName="subTotal">
                 </div>
             </div>
             <div class="row pt-20">
@@ -898,7 +908,7 @@
         <div class="col-md-12 right text-right">
             <h5 class="mat-stroked-button br-0 text-light mr-20" (click)="closeEditInv()">CANCEL</h5>
      
-            <button mat-button class="btn-bottom br-0 text-inherit">SAVE</button>
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="updateInvoice()">SAVE</button>
         </div>
     </div>
     <!-- <div class="bottom-fixed wrapper-12" *ngIf="invoiceInSub!='invoiceSubscription'">
