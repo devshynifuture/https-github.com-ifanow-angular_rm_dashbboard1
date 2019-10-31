@@ -315,9 +315,13 @@ export class SubscriptionService {
       .set('statusIdList', data.statusIdList).set('offset', data.offset);
     return this.http.get(apiConfig.MAIN_URL + appConfig.FILTER_SUBCRIPTION, httpParams);
   }
-  deleteService(data)
-  {
-   return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SERVICE,data)
+
+  deleteService(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SERVICE, data);
+  }
+  getClientList(data){
+    const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENTLIST, httpParams);
   }
 
   base_64Data(data) {

@@ -105,6 +105,7 @@ import {CustomDialogContainerComponent} from './common/custom-dialog-container/c
 import {BaseComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/base/base.component';
 import {ChartModule} from 'angular-highcharts';
 import { IncomeComponent } from './component/protect-component/customers/component/customer/accounts/income/income.component';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 @NgModule({
   declarations: [
@@ -211,7 +212,16 @@ import { IncomeComponent } from './component/protect-component/customers/compone
     // CommonSubscriptionComponent,
     SlimLoadingBarModule.forRoot(),
     FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
-    MDBBootstrapModule.forRoot(), DragDropModule, ChartModule
+    MDBBootstrapModule.forRoot(), DragDropModule, ChartModule,
+    NgCircleProgressModule.forRoot({
+      // set defaults here
+      radius: 100,
+      outerStrokeWidth: 16,
+      innerStrokeWidth: 8,
+      outerStrokeColor: '#78C000',
+      innerStrokeColor: '#C7E596',
+      animationDuration: 1000
+    })
   ],
   providers: [AuthService, HttpService],
   bootstrap: [AppComponent],

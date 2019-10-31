@@ -27,8 +27,7 @@ export class DeleteSubscriptionComponent implements OnInit {
     const obj = {
       // advisorId: 12345,
       advisorId: this.advisorId,
-
-      id: 18
+      id: this.fragmentData.subData.id
     };
     this.subscription.cancelSubscriptionData(obj).subscribe(
       data => this.canceledData(data)
