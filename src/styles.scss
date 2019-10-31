@@ -465,7 +465,10 @@ mat-tab-group[vertical] {
         box-shadow: none !important;
     }
 }
-#ui-perferences,#ui-assets,#ui-liabilities{
+#ui-account-summary,#ui-assets,#ui-liabilities,#ui-insurance,#ui-income,#ui-expenses{
+    padding-top: 129px !important;
+}
+#ui-perferences,#ui-assets,#ui-liabilities,#ui-insurance,#ui-income,#ui-expenses{
         .vertical-menu {
 
         height: 100%;
@@ -477,7 +480,7 @@ mat-tab-group[vertical] {
     li{
 
         color: #212121;
-        font-size: 16px;
+        font-size: 14px;
         font-style: normal;
         font-weight: normal;
         padding: 8px 12px 4px;
@@ -493,7 +496,7 @@ mat-tab-group[vertical] {
         padding: 8px;
     }
 }
-#ui-assets,#ui-liabilities{
+#ui-assets,#ui-liabilities,#ui-income{
     li{
         padding-top: 12px;
         padding-left: 24px;
@@ -567,9 +570,7 @@ mat-tab-group[vertical] {
         height: 6px !important;
     }
 }
-#ui-account-summary,#ui-assets,#ui-liabilities{
-    padding-top: 129px !important;
-}
+
 #ui-account-second-head{
     .mat-tab-header{
         background-color: #1F1F1F;
