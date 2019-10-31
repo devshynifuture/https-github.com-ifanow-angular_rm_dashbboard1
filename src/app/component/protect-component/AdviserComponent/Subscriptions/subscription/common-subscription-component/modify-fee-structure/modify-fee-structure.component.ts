@@ -13,6 +13,7 @@ import { SubscriptionService } from '../../../subscription.service';
 export class ModifyFeeStructureComponent implements OnInit {
   singleSubscriptionData: any;
   fixedData: { autoRenew: number; subscriptionId: any; billEvery: any; billingCycle: number; billingMode: any; billingNature: any; feeTypeId: number; subscriptionAssetPricingList: { pricing: any; assetClassId: number; }[]; };
+  disableForm: boolean;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subInject: SubscriptionInject,
     private enumService: EnumServiceService, private subService: SubscriptionService) {
@@ -58,6 +59,7 @@ export class ModifyFeeStructureComponent implements OnInit {
 
   ngOnInit() {
     this.setValidation(false);
+    this.disableForm=true;
     // this.otherAssetData = [];
     // console.log(this.otherAssetData)
   }
@@ -80,6 +82,10 @@ export class ModifyFeeStructureComponent implements OnInit {
       this.getFixedFee().billEvery.setValue(data.subscriptionPricing.billEvery);
       this.getFixedFee().Duration.setValue(data.subscriptionPricing.billingCycle)
       this.getFixedFee().billingMode.setValue(data.subscriptionPricing.billingMode);
+      if(!this.createSubData)
+      {
+        this.fixedFeeStructureForm.disable();
+      }
     }
     if (data.subscriptionPricing.feeTypeId == 2) {
       this.getVariableFee().billingNature.setValue(data.subscriptionPricing.billingNature);
@@ -104,6 +110,7 @@ export class ModifyFeeStructureComponent implements OnInit {
           this.selectedOtherAssets.push(element);
         }
       });
+      this.variableFeeStructureForm.disable();
     }
     this.modifyFeeData = data;
   }
@@ -254,5 +261,9 @@ export class ModifyFeeStructureComponent implements OnInit {
   saveFixedModifyFeesResponse(data) {
     console.log(data, "modify fixed fee data")
     this.subInjectService.rightSideData('close')
+  }
+  enableForm()
+  {
+    (this.singleSubscriptionData.subscriptionPricing.feeTypeId==1)?this.fixedFeeStructureForm.enable():this.variableFeeStructureForm.enable()
   }
 }
