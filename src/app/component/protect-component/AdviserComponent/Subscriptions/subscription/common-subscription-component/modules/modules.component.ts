@@ -4,6 +4,7 @@ import {SubscriptionService} from '../../../subscription.service';
 import * as _ from 'lodash';
 import {UpperSliderComponent} from '../upper-slider/upper-slider.component';
 import {EventService} from 'src/app/Data-service/event.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-modules',
@@ -39,22 +40,28 @@ export class ModulesComponent implements OnInit {
   getModuleDataResponse(data) {
     console.log('Module data', data);
     this.ModuleData = data;
+    this.ModuleData.forEach(element=>{
+      if(element.selected==true)
+      {
+        this.mappedData.push(element)
+      }
+    })
 
   }
 
   selectModule(data) {
-    (data.checked) ? this.unmapModuleToService(data) : this.mapModuleToService(data);
+    (data.selected) ? this.unmapModuleToService(data) : this.mapModuleToService(data);
     console.log(data);
   }
 
   mapModuleToService(data) {
-    data.checked = true;
+    data.selected = true;
     this.mappedData.push(data);
     console.log(this.mappedData.length);
   }
 
   unmapModuleToService(data) {
-    data.checked = false;
+    data.selected = false;
     _.remove(this.mappedData, delData => delData.subModuleId === data.subModuleId);
     console.log(this.mappedData.length);
   }

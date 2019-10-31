@@ -5,8 +5,11 @@
       <img class="pt-8" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
     </div>
     <div class="col-md-8 p-0">
-      <p class="f-16 mb-0 pt-24 text-center">{{this.fragmentData.Flag}}Add plan details, map services/documents to the
+      <p class="f-16 mb-0 pt-24 text-center" *ngIf="fragmentData.Flag=='plan'">Add plan details, map services/documents to the
         selected plan</p>
+      <p class="f-16 mb-0 pt-24 text-center" *ngIf="fragmentData.Flag=='services'">Add fee structure, map plans/documents/modules to the selected service</p>
+      <p class="f-16 mb-0 pt-24 text-center" *ngIf="fragmentData.Flag=='documents'">Add documents, map them to services/plans</p>
+      <p class="f-16 mb-0 pt-24 text-center" *ngIf="fragmentData.Flag=='clients'">Add fee structure, send quotations/invoices, execute documents for the selected client</p>
     </div>
     <div class="col-md-2 text-right">
       <i (click)="dialogClose()" class="material-icons pt-16 c-p pr-16">
@@ -18,7 +21,7 @@
 <div *ngIf="fragmentData&&fragmentData.Flag==='plan'" class="row">
   <div class="col-md-12 p-0">
     <mat-tab-group (selectedTabChange)="tabClick($event)" animationDuration="0ms" class="popup-header-fix-tabs"
-                   mat-align-tabs="center">
+      mat-align-tabs="center">
       <mat-tab #tab delay="500" label="OVERVIEW" placement="left" tooltip="tootip on left">
         <ng-template matTabContent>
           <app-overview [componentFlag]='Flag' [upperData]="upperData"></app-overview>
@@ -26,7 +29,7 @@
       </mat-tab>
       <mat-tab #tab [disabled]='upperData==""' label="SERVICES">
         <ng-template matTabContent>
-          <app-services [componentFlag]='plan' [upperData]="upperData"></app-services>
+          <app-services [componentFlag]='plan' [planData]="upperData"></app-services>
         </ng-template>
       </mat-tab>
       <mat-tab #tab [disabled]='upperData==""' label="DOCUMENTS">
@@ -41,8 +44,7 @@
 <div *ngIf="fragmentData.Flag=='services'" class="row z-value-100">
   <div class="col-md-12 p-0">
     <mat-tab-group (selectedTabChange)="tabClick($event)" [selectedIndex]="selectedServiceTab" animationDuration="0ms"
-                   class="popup-header-fix-tabs"
-                   mat-align-tabs="center">
+      class="popup-header-fix-tabs" mat-align-tabs="center">
       <mat-tab label="FEE STRUCTURE">
         <!--(serviceEvent)="serviceId=$event"-->
         <app-fee-structure [upperData]="upperData"></app-fee-structure>
@@ -56,8 +58,7 @@
       </mat-tab>
       <mat-tab #tab [disabled]='upperData==""' label="DOCUMENTS">
         <ng-template matTabContent>
-          <app-document *ngIf="upperData" [componentFlag]='servicesDocuments'
-                        [upperData]="upperData"></app-document>
+          <app-document *ngIf="upperData" [componentFlag]='servicesDocuments' [upperData]="upperData"></app-document>
         </ng-template>
       </mat-tab>
       <mat-tab #tab [disabled]='upperData==""' label="MODULES">
@@ -72,13 +73,19 @@
   <div class="col-md-12 p-0">
     <mat-tab-group animationDuration="0ms" class="popup-header-fix-tabs" mat-align-tabs="center">
       <mat-tab label="OVERVIEW">
-        <app-overview></app-overview>
+        <ng-template matTabContent>
+          <app-overview></app-overview>
+        </ng-template>
       </mat-tab>
       <mat-tab label="PLANS">
-        <app-plans></app-plans>
+        <ng-template matTabContent>
+          <app-plans></app-plans>
+        </ng-template>
       </mat-tab>
       <mat-tab label="SERVICES">
-        <app-services></app-services>
+        <ng-template matTabContent>
+          <app-services></app-services>
+        </ng-template>
       </mat-tab>
 
     </mat-tab-group>
@@ -108,7 +115,7 @@
       </mat-tab>
       <mat-tab label="DOCUMENTS">
         <app-document *ngIf="subscriptionTab=='DOCUMENTS'" [componentFlag]='clientDocuments'
-                      [upperData]="fragmentData.clientData">
+          [upperData]="fragmentData.clientData">
         </app-document>
       </mat-tab>
       <mat-tab label="SETTINGS">
@@ -128,19 +135,19 @@
   <app-email-quotation [headerData]="headerData" *ngIf="rightSliderData=='eSignQuotations'"></app-email-quotation>
   <app-invoice [invoiceTab]="rightSliderData" *ngIf="rightSliderData=='invoiceUpperSlider'"></app-invoice>
   <app-payee-settings *ngIf="rightSliderData=='payeeSettings'"></app-payee-settings>
-  <app-email-quotation [headerDataDocuments]="headerDataDocuments"
-                       *ngIf="rightSliderData=='eSignDocument'"></app-email-quotation>
+  <app-email-quotation [headerDataDocuments]="headerDataDocuments" *ngIf="rightSliderData=='eSignDocument'">
+  </app-email-quotation>
   <app-create-subscription *ngIf="rightSliderData=='createSub'"></app-create-subscription>
   <app-add-variable-fee *ngIf="rightSliderData=='varibleFee'"></app-add-variable-fee>
   <app-add-fixed-fee *ngIf="rightSliderData=='fixedFee'"></app-add-fixed-fee>
   <app-overview-blank-quotation [blankOverview]="blankOverview" *ngIf='blankOverview'></app-overview-blank-quotation>
-  <app-biller-settings [upperData]="fragmentData.clientData"
-                       *ngIf="rightSliderData=='billerSettings'"></app-biller-settings>
+  <app-biller-settings [upperData]="fragmentData.clientData" *ngIf="rightSliderData=='billerSettings'">
+  </app-biller-settings>
   <app-modify-fee-structure [ModifyFeesChange]="rightSliderData" *ngIf="rightSliderData=='modifyFees'">
   </app-modify-fee-structure>
   <app-change-payee [upperData]="fragmentData.clientData" *ngIf="rightSliderData=='changePayee'"></app-change-payee>
-  <app-email-quotation [headerDataInvoice]="headerDataInvoice"
-                       *ngIf="rightSliderData=='eSignInvoices'"></app-email-quotation>
+  <app-email-quotation [headerDataInvoice]="headerDataInvoice" *ngIf="rightSliderData=='eSignInvoices'">
+  </app-email-quotation>
   <app-email-quotation [headerData]="headerData" *ngIf="rightSliderData=='emailQuot'"></app-email-quotation>
 
   <!--</div>-->

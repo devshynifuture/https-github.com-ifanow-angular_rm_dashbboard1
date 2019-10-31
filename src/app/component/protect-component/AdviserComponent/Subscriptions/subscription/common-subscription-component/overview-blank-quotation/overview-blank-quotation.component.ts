@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from "../../../../../../../auth-service/authService";
 
@@ -27,11 +27,15 @@ export class OverviewBlankQuotationComponent implements OnInit {
 
   createForm() {
     this.blankDocumentProperties = this.fb.group({
-      docType: [''],
-      docName: [''],
+      docType: ['',[Validators.required]],
+      docName: ['',[Validators.required]],
       docAvailability: [],
       selectPlan: []
     });
+  }
+  getFormControl()
+  {
+    return this.blankDocumentProperties.controls;
   }
 
   Close(state) {
@@ -48,8 +52,6 @@ export class OverviewBlankQuotationComponent implements OnInit {
   saveDocuments() {
     const obj = {
       advisorId: this.advisorId,
-
-      // "advisorId": 55,
       name: this.blankDocumentProperties.controls.docName.value,
       documentTypeId: parseInt(this.blankDocumentProperties.controls.docType.value),
       docText: 'docText',

@@ -357,7 +357,7 @@
         color: #595252;
     }
     .mat-tab-label.mat-tab-label-active {
-        border: 1px solid #BCC6CA;
+        outline: 1px solid #BCC6CA;
         width: auto;
         background: transparent;
         color: #008FFF;
@@ -465,7 +465,7 @@ mat-tab-group[vertical] {
         box-shadow: none !important;
     }
 }
-#ui-perferences,#ui-assets{
+#ui-perferences,#ui-assets,#ui-liabilities{
         .vertical-menu {
 
         height: 100%;
@@ -493,7 +493,7 @@ mat-tab-group[vertical] {
         padding: 8px;
     }
 }
-#ui-assets{
+#ui-assets,#ui-liabilities{
     li{
         padding-top: 12px;
         padding-left: 24px;
@@ -567,7 +567,7 @@ mat-tab-group[vertical] {
         height: 6px !important;
     }
 }
-#ui-account-summary,#ui-assets{
+#ui-account-summary,#ui-assets,#ui-liabilities{
     padding-top: 129px !important;
 }
 #ui-account-second-head{
@@ -607,7 +607,7 @@ mat-tab-group[vertical] {
 
 }
 
-.real-estate,.fixed-deposite{
+.real-estate,.fixed-deposite,.scheme-wise,.familymember-wise,.liabilities{
     tr.mat-header-row {
         height: 40px;
         padding: 10px 8px !important;
@@ -617,6 +617,41 @@ mat-tab-group[vertical] {
     height: 40px !important;
   }
   #table-low tbody td{
-      padding: 6px 8px !important
+      padding: 6px 8px !important;
   }
 }
+.cashflow #table-low{
+    .mat-row:last-child{
+        font-weight: normal !important;
+        text-align: left !important;
+    }
+    tr.mat-row {
+        height: 30px !important;
+        padding: 6px 3px !important;
+    }
+    tbody td{
+        padding: 6px 4px !important;
+    }
+    tr.mat-header-row{
+        height: 40px !important;
+        display: none;
+    }
+}
+.liabilities #table-low{
+   th{
+       padding: 10px 6px !important;
+   }
+   .mat-row:last-child{
+    font-weight: bold !important;
+    text-align: right !important;
+}
+}
+.custom-email{
+    p{
+        font-family: "Roboto", sans-serif;
+    }
+    
+        textarea{
+            resize: none;
+        }
+    }

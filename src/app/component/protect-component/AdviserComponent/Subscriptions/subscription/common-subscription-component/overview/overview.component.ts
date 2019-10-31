@@ -47,7 +47,7 @@ export class OverviewComponent implements OnInit {
     const dialogData = {
       data: value,
       header: 'DELETE',
-      body: 'Are you sure you want to delete the document?',
+      body: 'Are you sure you want to delete the plan?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',

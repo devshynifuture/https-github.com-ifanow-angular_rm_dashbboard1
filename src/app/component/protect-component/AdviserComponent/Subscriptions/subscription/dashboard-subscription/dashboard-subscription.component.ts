@@ -7,7 +7,8 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
 import {SubscriptionService} from '../../subscription.service';
 import {EnumServiceService} from '../enum-service.service';
 import {UtilService} from '../../../../../../services/util.service';
-import {AuthService} from "../../../../../../auth-service/authService";
+import {AuthService} from '../../../../../../auth-service/authService';
+import {Chart} from 'angular-highcharts';
 
 export interface PeriodicElement {
   name: string;
@@ -35,25 +36,71 @@ export class DashboardSubscriptionComponent implements OnInit {
   constructor(private enumService: EnumServiceService,
               public subInjectService: SubscriptionInject, public eventService: EventService,
               public dialog: MatDialog, private subService: SubscriptionService) {
+
   }
 
   // advisorId = 400;
   advisorId;
   dataSourceSingCount;
   dataSourceClientWithSub;
-  dataSourceInvoiceReviwed;
+  dataSourceInvoice;
   subSummaryData;
   dataSource;
   showSubStep = false;
   displayedColumns: string[] = ['name', 'service', 'amt', 'billing', 'icons'];
+  chart: Chart;
+  subscriptionSummaryStatusFilter = '1';
+  showLetsBegin = false;
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.initChart();
     this.docSentSignedCountData();
     this.clientWithSubscription();
     this.invoiceToBeReviewed();
-    this.getSummaryDataDashboard();
+    this.getSummaryDataDashboard(null);
     this.getDataForCreateService();
+  }
+
+  getDashboardResponse() {
+
+    this.subService.getDashboardSubscriptionResponse(this.advisorId).subscribe(
+      data => {
+        this.showLetsBegin = data;
+      }
+    );
+  }
+
+  initChart() {
+    const chart = new Chart({
+      chart: {
+        type: 'line'
+      },
+      title: {
+        text: 'Linechart'
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        name: 'Line 1',
+        data: [1, 2, 3],
+        type: 'line'
+
+      }]
+    });
+    chart.addPoint(4);
+    this.chart = chart;
+    chart.addPoint(5);
+
+    chart.ref$.subscribe((chartView) => {
+      setTimeout(() => {
+        console.log('12397891273098127389012739812731231982371 chart ref setTimeout')
+        chartView.reflow();
+
+        chart.addPoint(6);
+      }, 100);
+    });
   }
 
   Open(state, data) {
@@ -79,6 +126,11 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.showSubStep = true;
   }
 
+  changeParentsTab(selectedTab) {
+    this.eventService.tabData(selectedTab);
+
+  }
+
   delete(data) {
     const Fragmentdata = {
       Flag: data,
@@ -96,32 +148,54 @@ export class DashboardSubscriptionComponent implements OnInit {
   }
 
 // ******* Dashboard Subscription Summary *******
-  getSummaryDataDashboard() {
-    const obj = {
-      // 'id':2735, //pass here advisor id for Invoice advisor
-      // 'module':1,
-      // advisorId: 12345,
-      advisorId: this.advisorId,
+  getSummaryDataDashboard(eventValue) {
+    /* const obj = {
+       // 'id':2735, //pass here advisor id for Invoice advisor
+       // 'module':1,
+       // advisorId: 12345,
+       advisorId: this.advisorId,
 
-      clientId: 0,
-      flag: 1,
-      dateType: 0,
+       clientId: 0,
+       flag: 1,
+       dateType: 0,
+       limit: 10,
+       offset: 0,
+       order: 0,
+     };
+     this.subService.getSubSummary(obj).subscribe(
+       data => {
+         this.getSubSummaryRes(data);
+       }
+     );*/
+    console.log('filterSubscription this.subscriptionSummaryStatusFilter ', this.subscriptionSummaryStatusFilter);
+
+    const obj = {
+      advisorId: this.advisorId,
       limit: 10,
       offset: 0,
-      order: 0,
+      dateType: 0,
+      statusIdList: [this.subscriptionSummaryStatusFilter],
+      fromDate: null,
+      toDate: null
+
     };
-    this.subService.getSubSummary(obj).subscribe(
+    console.log('filterSubscription eventValue ', eventValue);
+    console.log('filterSubscription this.subscriptionSummaryStatusFilter ', this.subscriptionSummaryStatusFilter);
+
+    console.log('filterSubscription reqObj ', obj);
+    this.subService.filterSubscription(obj).subscribe(
       data => this.getSubSummaryRes(data)
     );
   }
 
   getSubSummaryRes(data) {
     console.log('Summary Data', data);
-    data.forEach(element => {
-      element.feeMode = (element.feeMode == 1) ? 'FIXED' : 'VARIABLE';
-      element.startsOn = (element.status == 1) ? 'START' : element.startsOn;
-      element.status = (element.status == 1) ? 'NOT STARTED' : (element.status == 2) ? 'LIVE' : (element.status == 3) ? 'FUTURE' : 'CANCELLED';
-    });
+    // data.forEach(element => {
+    //   element.feeMode = (element.feeMode == 1) ? 'FIXED' : 'VARIABLE';
+    //   element.startsOn = (element.status == 1) ? 'START' : element.startsOn;
+    //   element.status = (element.status == 1) ? 'NOT STARTED' : (element.status == 2) ?
+    //   'LIVE' : (element.status == 3) ? 'FUTURE' : 'CANCELLED';
+    // });
     this.dataSource = data;
   }
 
@@ -163,9 +237,8 @@ export class DashboardSubscriptionComponent implements OnInit {
     const obj = {
       // advisorId: 2735,
       advisorId: this.advisorId,
-
       limit: 10,
-      offset: 1
+      offset: 0
     };
     this.subService.invoiceReviewed(obj).subscribe(
       data => this.invoiceToBeReviewedRes(data)
@@ -174,7 +247,7 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   invoiceToBeReviewedRes(data) {
     console.log('invoiceToBeReviewedRes', data);
-    this.dataSourceInvoiceReviwed = data;
+    this.dataSourceInvoice = data;
   }
 
   deleteModal(value) {

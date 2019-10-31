@@ -43,12 +43,17 @@
             <!-- Symbol Column -->
             <ng-container matColumnDef="clientsign">
                 <th mat-header-cell *matHeaderCellDef class="f-18"> Client sign... </th>
-                <td mat-cell *matCellDef="let element"> {{element.clientsign}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.clientsign | date:'dd/MM/yyyy'}} </td>
             </ng-container>
             <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef class="f-18 pr-24"> Status </th>
-                <td mat-cell *matCellDef="let element" class="greentext c-p"  (click)="Open('openEmailQuot','open',element)" > {{element.status}} </td>
-            </ng-container>
+                <th *matHeaderCellDef class=" t-10" mat-header-cell> Status</th>
+                <td *matCellDef="let element" mat-cell (click)="Open('openEmailQuot','open',element)" >
+                            <span>
+                            <span class="text-success t-10 f-500 c-p" *ngIf="element.status==1">READY TO SEND</span>
+                            <span class="text-success t-10 f-500 c-p" *ngIf="element.status==0">NOT STARTED</span>
+                            </span>
+                </td>
+              </ng-container>
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"> </th>
                 <td mat-cell *matCellDef="let element" style="width: 2%;"><i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu">
