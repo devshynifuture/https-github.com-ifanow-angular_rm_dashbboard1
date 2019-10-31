@@ -136,7 +136,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
   }
   updateData(data) {
     const obj = {
-      documentRepositoryId: data.documentRepositoryId, // pass here advisor id for Invoice advisor
+      id: data.documentRepositoryId, // pass here advisor id for Invoice advisor
       docText: data.documentText
     };
     // this.subscription.updateQuotationData(obj).subscribe(

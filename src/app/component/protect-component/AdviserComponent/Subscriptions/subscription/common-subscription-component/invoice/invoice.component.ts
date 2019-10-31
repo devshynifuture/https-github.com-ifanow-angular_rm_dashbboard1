@@ -4,6 +4,8 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import { EnumServiceService } from '../../enum-service.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 export interface PeriodicElement {
   date: string;
@@ -83,8 +85,10 @@ dataSource;
   formObj: [{
   }];
   ELEMENT_DATA: {}[];
+  feeCalc: boolean;
+  isdateValid: boolean;
 
-  constructor(public enumService:EnumServiceService,public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService) {
+  constructor(public enumService:EnumServiceService,public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService,public dialog:MatDialog) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getInvoiceData(data)
     );
@@ -102,6 +106,7 @@ dataSource;
     this.showEdit = false;
     this.editAdd1 = false;
     this.editAdd2 = false;
+    this.feeCalc=false;
 
     console.log('invoiceValue+++++++++++', this.invoiceValue);
     if (this.invoiceValue == 'edit' || this.invoiceValue == 'EditInInvoice') {
@@ -172,7 +177,6 @@ dataSource;
     this.getFormControl().amountReceive.maxLength = 10;
     this.getFormControl().charges.maxLength = 10;
     this.getFormControl().tds.maxLength = 10;
-    this.getFormControl().paymentMode.maxLength = 10;
     this.getFormControl().notes.maxLength = 40;
 
   }
@@ -298,6 +302,8 @@ dataSource;
     } else if (this.rPayment.controls.paymentMode.invalid) {
       this.ismodeValid = true;
       return;
+    } else if(this.rPayment.controls.paymentDate.invalid){
+      this.isdateValid = true;
     } else {
       this.formObj = [{
         advisorId: this.advisorId,
@@ -315,10 +321,157 @@ dataSource;
   const ELEMENT_DATA = this.formObj;
     this.dataSource = ELEMENT_DATA;
       console.log('form data', this.formObj);
-   this.rPayment.reset();
+    this.rPayment.reset();
+    console.log(" this.storeData", this.storeData);
+    let obj={
+      "advisorBillerProfileId": 0,
+      "advisorId": 0,
+      "amount": 0,
+      "amountBeforeDiscount": 0,
+      "amountReceived": 0,
+      "auto": true,
+      "balanceDue": 0,
+      "billerAcNumber": "string",
+      "billerAddress": "string",
+      "billerBankName": "string",
+      "billerBranchAddress": "string",
+      "billerBranchCity": "string",
+      "billerBranchCountry": "string",
+      "billerBranchState": "string",
+      "billerBranchZipCode": "string",
+      "billerCity": "string",
+      "billerCountry": "string",
+      "billerGstin": "string",
+      "billerIfscCode": "string",
+      "billerName": "string",
+      "billerNameAsPerBank": "string",
+      "billerState": "string",
+      "billerZipCode": "string",
+      "billingAddress": "string",
+      "billingCity": "string",
+      "billingCountry": "string",
+      "billingState": "string",
+      "billingZipCode": "string",
+      "cgst": 0,
+      "cgstTaxAmount": 0,
+      "changesIfAny": "string",
+      "clientBillerId": 0,
+      "clientGstin": "string",
+      "clientName": "string",
+      "discount": 0,
+      "dueDate": "2019-10-31T05:07:15.014Z",
+      "email": "string",
+      "finalAmount": 0,
+      "footnote": "string",
+      "fromDate": "2019-10-31T05:07:15.014Z",
+      "id": 0,
+      "igst": 0,
+      "igstTaxAmount": 0,
+      "invoiceDate": "2019-10-31T05:07:15.014Z",
+      "invoiceId": 0,
+      "invoiceNumber": "string",
+      "isAuto": true,
+      "logoUrl": "string",
+      "name": "string",
+      "notes": "string",
+      "payeeAddress": "string",
+      "paymentDate": "2019-10-31T05:07:15.014Z",
+      "paymentMode": 0,
+      "paymentTermId": 0,
+      "placeOfSupply": "string",
+      "sac": "string",
+      "serviceDescription": "string",
+      "services": [
+        {
+          "advisorId": 0,
+          "amount": 0,
+          "averageFees": 0,
+          "billingMode": 0,
+          "billingNature": 0,
+          "createdDate": "2019-10-31T05:07:15.014Z",
+          "debtAllocation": 0,
+          "description": "string",
+          "docCount": 0,
+          "equityAllocation": 0,
+          "feeType": "string",
+          "feeTypeId": 0,
+          "fromDate": "2019-10-31T05:07:15.014Z",
+          "global": true,
+          "id": 0,
+          "lastUpdatedDate": "2019-10-31T05:07:15.014Z",
+          "liquidAllocation": 0,
+          "moduleCount": 0,
+          "planCount": 0,
+          "planId": 0,
+          "planServiceMappingId": 0,
+          "pricing": 0,
+          "selected": true,
+          "serviceCode": "string",
+          "serviceId": 0,
+          "serviceName": "string",
+          "servicePricing": {
+            "autoRenew": 0,
+            "billEvery": 0,
+            "billingCycle": 0,
+            "billingMode": 0,
+            "billingNature": 0,
+            "description": "string",
+            "feeTypeId": 0,
+            "id": 0,
+            "name": "string",
+            "pricingList": [
+              {
+                "asset": "string",
+                "assetClassId": 0,
+                "debtAllocation": 0,
+                "directRegular": 0,
+                "equityAllocation": 0,
+                "id": 0,
+                "liquidAllocation": 0,
+                "otherAssets": [
+                  0
+                ],
+                "pricing": 0,
+                "servicePolicyId": 0,
+                "servicePricingId": 0,
+                "serviceSubAssets": [
+                  {
+                    "isActive": 0,
+                    "servicePricingPolicyId": 0,
+                    "subAssetClassId": 0,
+                    "subAssetClassName": "string"
+                  }
+                ]
+              }
+            ],
+            "serviceId": 0,
+            "subscriptionId": 0,
+            "taxType": 0
+          },
+          "serviceRepoId": 0,
+          "toDate": "2019-10-31T05:07:15.015Z"
+        }
+      ],
+      "sgst": 0,
+      "sgstTaxAmount": 0,
+      "status": "string",
+      "subTotal": 0,
+      "subscriptionId": 0,
+      "terms": "string",
+      "toDate": "2019-10-31T05:07:15.015Z"
+    }
+    this.subService.getSubscriptionCompleteStages(obj).subscribe(
+      data => this.getSubStagesRecordResponse(data)
+    );
     this.cancel();
   }
-
+  getSubStagesRecordResponse(data)
+  {
+    console.log("data",data);
+  }
+  OpenFeeCalc(){
+    this.feeCalc = true;
+  }
   recordPayment() {
     this.showRecord = true;
   }
@@ -353,7 +506,9 @@ dataSource;
   Close(state) {
     if (this.showRecord == true) {
       this.showRecord = false;
-    } else {
+    } else if(this.feeCalc==true){
+      this.feeCalc = false;
+    }else{
       (this.invoiceTab == 'invoiceUpperSlider') ? this.subInjectService.rightSliderData(state) : this.subInjectService.rightSideData(state);
       this.valueChange.emit(this.invoiceInSub);
     }
@@ -362,6 +517,32 @@ dataSource;
 
   saveInvoice() {
     console.log(this.editPayment);
+  }
+  deleteModal(value, data) {
+    const dialogData = {
+      data: value,
+      dataToShow: data,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete the document?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE'
+    };
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+
+  }
+  printPage() {
+    window.print();
   }
 
 }
