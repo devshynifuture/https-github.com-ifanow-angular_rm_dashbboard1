@@ -7,7 +7,6 @@ import { MatStepper } from '@angular/material';
 import { EnumServiceService } from '../../enum-service.service';
 import * as _ from 'lodash';
 import { AuthService } from "../../../../../../../auth-service/authService";
-import { element } from 'protractor';
 
 
 @Component({
