@@ -38,11 +38,11 @@ export class DocumentsSettingsComponent implements OnInit {
 
       // "advisorId": 2735
     };
-    const data = [{}, {}, {}];
-    this.getDocumentsSettingResponse(data);
-    // this.subService.getSubscriptionDocumentSetting(obj).subscribe(
-    //   data => this.getDocumentsSettingResponse(data)
-    // )
+    // const data = [{}, {}, {}];
+    // this.getDocumentsSettingResponse(data);
+    this.subService.getSubscriptionDocumentSetting(obj).subscribe(
+      data => this.getDocumentsSettingResponse(data)
+    )
   }
 
   getDocumentsSettingResponse(data) {
@@ -161,7 +161,7 @@ export class DocumentsSettingsComponent implements OnInit {
         'covered the whole of her lower arm towards the \n' +
         'viewer.</p>\n';
     });
-    console.log();
+    console.log(data);
     this.documentSettingData = data;
     this.showLoader = false;
   }
