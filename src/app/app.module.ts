@@ -110,6 +110,8 @@ import {SingleDocumentViewComponent} from './component/protect-component/Adviser
 // import {ExpensesComponent} from './component/protect-component/customers/component/customer/accounts/expenses/expenses.component';
 // import {AddProfileSummaryComponent} from './component/protect-component/customers/component/common-component/add-profile-summary/add-profile-summary.component';
 // import {IncomeComponent} from './component/protect-component/customers/component/customer/accounts/income/income.component';
+import { MomentDateModule} from '@angular/material-moment-adapter';
+// import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -208,6 +210,7 @@ import {SingleDocumentViewComponent} from './component/protect-component/Adviser
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MomentDateModule,
     // CommonSubscriptionComponent,
     SlimLoadingBarModule.forRoot(),
     FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
