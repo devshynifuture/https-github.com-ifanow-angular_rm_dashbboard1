@@ -95,9 +95,7 @@ export class DashboardSubscriptionComponent implements OnInit {
 
     chart.ref$.subscribe((chartView) => {
       setTimeout(() => {
-        console.log('12397891273098127389012739812731231982371 chart ref setTimeout')
         chartView.reflow();
-
         chart.addPoint(6);
       }, 100);
     });
@@ -105,7 +103,7 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   Open(state, data) {
     let feeMode;
-    if (data.feeMode == 'FIXED') {
+    if (data.feeMode === 'FIXED') {
       feeMode = 'fixedModifyFees';
     } else {
       feeMode = 'variableModifyFees';
@@ -135,15 +133,15 @@ export class DashboardSubscriptionComponent implements OnInit {
     const Fragmentdata = {
       Flag: data,
     };
-    if (data == 'cancelSubscription') {
+    if (data === 'cancelSubscription') {
       const dialogRef = this.dialog.open(DeleteSubscriptionComponent, {
         width: '20%',
         // height:'40%',
         data: Fragmentdata,
         autoFocus: false,
       });
-      dialogRef.afterClosed().subscribe(result => {
-      });
+      /*dialogRef.afterClosed().subscribe(result => {
+      });*/
     }
   }
 
@@ -287,7 +285,8 @@ export class DashboardSubscriptionComponent implements OnInit {
           feeCollectionMode: []
         };
         newJsonForConsumption.billingNature = UtilService.convertObjectToArray(data.billingNature);
-        newJsonForConsumption.otherAssetTypes = UtilService.convertObjectToCustomArray(data.otherAssetTypes, 'subAssetClassName', 'subAssetClassId');
+        newJsonForConsumption.otherAssetTypes = UtilService.convertObjectToCustomArray(data.otherAssetTypes,
+          'subAssetClassName', 'subAssetClassId');
         newJsonForConsumption.feeTypes = UtilService.convertObjectToArray(data.feeTypes);
         newJsonForConsumption.assetTypes = UtilService.convertObjectToArray(data.assetTypes);
         newJsonForConsumption.billingMode = UtilService.convertObjectToArray(data.billingMode);

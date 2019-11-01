@@ -55,10 +55,10 @@ export class ConfirmDialogComponent implements OnInit {
 
   deleteSubscription() {
     const obj = {
-      // advisorId: this.advisorId,
+      advisorId: this.advisorId,
 
       // advisorId: 12345,
-      id: 18
+      id: this.dialogData.dataToShow.id
     };
     // if (this.dialogData.positiveMethod) {
     //   this.dialogData.positiveMethod();

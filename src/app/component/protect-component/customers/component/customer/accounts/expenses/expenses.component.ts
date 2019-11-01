@@ -8,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class ExpensesComponent implements OnInit {
 
   constructor() { }
-
+  viewMode
   ngOnInit() {
+    this.viewMode="tab1"
   }
+
 
 }

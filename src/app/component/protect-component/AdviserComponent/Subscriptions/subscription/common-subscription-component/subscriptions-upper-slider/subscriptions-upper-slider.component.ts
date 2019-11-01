@@ -19,12 +19,7 @@ export interface PeriodicElement {
   mode: string;
 }
 
-// const ELEMENT_DATA: PeriodicElement[] = [
-//   {service: "Financial Planning", amt: "Rs.1,00,000/Quarter", type: "FIXED", subs: 'SUB-0001',status:"LIVE",date:"25/08/2019",bdate:"25/08/2019",ndate:"25/08/2019",mode:"Cheque"},
-//   {service: "Investment management - AUM Linked fee", amt: "View details", type: "VARIABLE", subs: '-',status:"FUTURE",date:"25/08/2019",bdate:"-",ndate:"25/08/2019",mode:"Auto debit"},
-//   {service: "Investment management - AUM Linked fee", amt: "View details", type: "VARIABLE", subs: '-',status:"NOT STARTED",date:"START",bdate:"-",ndate:"25/08/2019",mode:"NEFT/RTGS"},
 
-// ];
 @Component({
 
   selector: 'app-subscriptions-upper-slider',
@@ -51,10 +46,18 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
   }
 
   openPlanSlider(value, state, data) {
+    console.log("upperdata create sub")
     this.eventService.sliderData(value);
-    /*TODO Removed state param and passed value*/
     this.subInjectService.rightSliderData(state);
-    this.subInjectService.addSingleProfile(data);
+    if(data)
+    {
+      data.clientId=this.upperData.id
+      this.subInjectService.addSingleProfile(data);
+    }
+    else{
+      this.subInjectService.pushUpperData(data)
+    }
+    
 
   }
 
@@ -78,34 +81,27 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
   }
   Open(state, data) {
     let feeMode;
-    if (data.feeMode == "FIXED") {
-      feeMode = 'fixedModifyFees'
+    if (data.subscriptionPricing.feeTypeId == 1) {
+      feeMode = 'fixedModifyFees';
     } else {
-      feeMode = 'variableModifyFees'
+      feeMode = 'variableModifyFees';
     }
-    this.eventService.sidebarData(feeMode);
-    this.subInjectService.rightSideData(state);
+    this.eventService.sliderData(feeMode);
+    this.subInjectService.rightSliderData(state);
     this.subInjectService.addSingleProfile(data);
 
   }
 
   getSubSummaryRes(data) {
     console.log(data);
-    this.ELEMENT_DATA = data;
-    this.ELEMENT_DATA.forEach(ele => {
-      ele.clientId = this.upperData.id
-      ele.feeMode = (ele.feeMode == 1) ? 'FIXED' : 'VARIABLE';
-      ele.startsOn = (ele.status == 1) ? 'START' : ele.startsOn;
-      ele.status = (ele.status == 1) ? 'NOT STARTED' : (ele.status == 2) ? 'LIVE' : (ele.status == 3) ? 'FUTURE' : 'CANCELLED';
-    });
-    this.dataSource = this.ELEMENT_DATA;
+    this.dataSource = data;
   }
 
-  deleteModal(value) {
+  deleteModal(value,data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
-      body: 'Are you sure you want to delete the document?',
+      body: 'Are you sure you want to delete the suscription?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
       btnNo: 'DELETE'
@@ -114,6 +110,7 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
+      
       autoFocus: false,
 
     });
@@ -124,9 +121,10 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
 
   }
 
-  delete(data) {
+  delete(data,value) {
     const Fragmentdata = {
       Flag: data,
+      subData:value
     };
     if (data == 'cancelSubscription') {
       const dialogRef = this.dialog.open(DeleteSubscriptionComponent, {
