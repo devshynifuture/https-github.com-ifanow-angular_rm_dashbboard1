@@ -106,13 +106,11 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
     const rightSideDataSub = this.subInjectService.rightSideData(state).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
+        // console.log('this is sidebardata in subs subs : ', sideBarData);
         if (sideBarData == 'close') {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-
+          // console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
           this.getSummaryDataAdvisor();
-
         }
       }
     );
