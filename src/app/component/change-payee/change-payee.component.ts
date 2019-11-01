@@ -79,6 +79,7 @@ export class ChangePayeeComponent implements OnInit {
   }
   selectedPayee(data,singlePlan)
   {
+    console.log(data)
     if(data == true || data == 1){
       singlePlan.selected = false;
     }else {
