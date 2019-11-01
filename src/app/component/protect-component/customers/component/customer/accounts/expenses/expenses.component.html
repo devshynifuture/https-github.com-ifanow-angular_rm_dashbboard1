@@ -169,8 +169,8 @@
                     <td mat-cell *matCellDef="let element" class="br t-15"> {{element.expense}} </td>
                   </ng-container>
                   <ng-container matColumnDef="date">
-                    <th mat-header-cell *matHeaderCellDef class="br t-10"> Date </th>
-                    <td mat-cell *matCellDef="let element" class="br t-10"> {{element.date}} </td>
+                    <th mat-header-cell *matHeaderCellDef class="br t-10 text-left"> Date </th>
+                    <td mat-cell *matCellDef="let element" class="br t-10 text-left"> {{element.date}} </td>
                   </ng-container>
                   <ng-container matColumnDef="desc">
                     <th mat-header-cell *matHeaderCellDef class="br"> Description </th>
@@ -181,8 +181,8 @@
                     <td mat-cell *matCellDef="let element" class="br"> {{element.mode}} </td>
                   </ng-container>
                   <ng-container matColumnDef="amt">
-                    <th mat-header-cell *matHeaderCellDef class="br"> Amount </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.amt}} </td>
+                    <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount </th>
+                    <td mat-cell *matCellDef="let element" class="br text-right"> {{element.amt}} </td>
                   </ng-container>
                   <ng-container matColumnDef="status">
                     <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
