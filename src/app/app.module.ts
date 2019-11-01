@@ -104,6 +104,7 @@ import {AddProfileSummaryComponent} from './component/protect-component/customer
 import {CustomDialogContainerComponent} from './common/custom-dialog-container/custom-dialog-container.component';
 import {BaseComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/base/base.component';
 import {ChartModule} from 'angular-highcharts';
+import { IncomeComponent } from './component/protect-component/customers/component/customer/accounts/income/income.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 
 @NgModule({
@@ -197,7 +198,8 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     ExpensesComponent,
     AddProfileSummaryComponent,
     CustomDialogContainerComponent,
-    BaseComponent
+    BaseComponent,
+    IncomeComponent
   ],
   imports: [
     BrowserModule,

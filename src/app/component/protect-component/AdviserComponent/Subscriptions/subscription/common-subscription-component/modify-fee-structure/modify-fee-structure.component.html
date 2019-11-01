@@ -4,7 +4,7 @@
   </div>
   <div class="col-md-4 text-right">
     <div class="wrapper-12 pb-10">
-      <button mat-stroked-button class="br-0 btn-primary mr-20">EDIT</button>
+      <button mat-stroked-button class="br-0 btn-primary mr-20" (click)="enableForm()">EDIT</button>
       <i class="material-icons c-p v-middle" (click)="Close('close')"> clear</i>
     </div>
   </div>
@@ -41,8 +41,8 @@
         <div class="row">
           <div class="col-md-5 p-0">
             <div class="form-group">
-              <input type="number" pattern="\d*" onKeyPress="if(this.value.length==2) return false;"
-                formControlName="billEvery" class="form-control br-0">
+              <input type="number"  pattern="\d*" onKeyPress="if(this.value.length==2) return false;"
+                formControlName="billEvery" [disabled]="true"   class="form-control br-0">
             </div>
           </div>
 
@@ -255,14 +255,14 @@
       <h5 class="mb-0 pt-4 text-white c-p" (click)="Close('close')">Cancel</h5>
     </div>
     <div *ngIf="ModifyFeesChange=='fixedModifyFees'" class="col-md-8 right text-right">
-      <button mat-button (click)="saveFixedModifyFees()" class="btn-bottom br-0 text-inherit">Save</button>
+      <button mat-button (click)="saveFixedModifyFees()" disabled="fixedFeeStructureForm.invalid" class="btn-bottom br-0 text-inherit">Save</button>
     </div>
     <div *ngIf="ModifyFeesChange=='variableModifyFees'" class="col-md-8 right text-right">
-      <button mat-button (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">Save</button>
+      <button mat-button (click)="saveVariableModifyFees()" disabled="variableFeeStructureForm.invalid" class="btn-bottom br-0 text-inherit">Save</button>
     </div>
     <div *ngIf="createSubData && singleSubscriptionData.subscriptionPricing" class="col-md-8 right text-right">
-      <button *ngIf="singleSubscriptionData.subscriptionPricing.feeTypeId==1" mat-button (click)="saveFixedModifyFees()" class="btn-bottom br-0 text-inherit">NEXT STEP</button>
-      <button *ngIf="singleSubscriptionData.subscriptionPricing.feeTypeId==2" mat-button (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">NEXT STEP</button>
+      <button *ngIf="singleSubscriptionData.subscriptionPricing.feeTypeId==1" disabled="fixedFeeStructureForm.invalid"  mat-button (click)="saveFixedModifyFees()" class="btn-bottom br-0 text-inherit">NEXT STEP</button>
+      <button *ngIf="singleSubscriptionData.subscriptionPricing.feeTypeId==2" disabled="variableFeeStructureForm.invalid" mat-button (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">NEXT STEP</button>
     </div>
   </div>
 </div>
