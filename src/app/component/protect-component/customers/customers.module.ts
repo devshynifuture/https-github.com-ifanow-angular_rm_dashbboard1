@@ -13,11 +13,12 @@ import {ExpensesComponent} from './component/customer/accounts/expenses/expenses
 import {CustomerDocumentsComponent} from './component/customer/accounts/customer-documents/customer-documents.component';
 import {AddProfileSummaryComponent} from './component/common-component/add-profile-summary/add-profile-summary.component';
 import {SchemeLevelTransactionComponent} from './component/common-component/scheme-level-transaction/scheme-level-transaction.component';
+import { DocumentsComponent } from './component/customer/accounts/documents/documents.component';
 
 
 @NgModule({
   declarations: [/*CustomerComponent, AccountsComponent,SummaryComponent,*/ /*AssetsComponent,*/
-    /*LiabilitiesComponent, InsuranceComponent, ExpensesComponent, AddProfileSummaryComponent,  */ SchemeLevelTransactionComponent, IncomeComponent, CustomerDocumentsComponent],
+    /*LiabilitiesComponent, InsuranceComponent, ExpensesComponent, AddProfileSummaryComponent,  */ SchemeLevelTransactionComponent, IncomeComponent, CustomerDocumentsComponent, DocumentsComponent],
   imports: [
     CommonModule,
     CustomersRoutingModule
