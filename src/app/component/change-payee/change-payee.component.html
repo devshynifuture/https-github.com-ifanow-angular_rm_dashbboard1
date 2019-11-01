@@ -13,13 +13,13 @@
 <div class="wrapper-16 pb-44 mb-44">
     <div class="row">
         <div class="col-md-12">
-            <p class="m-0 text-right text-custom roboto">You can map more than one plan to the client</p>
+            <p class="m-0 text-right text-custom roboto">You can map more than one payee</p>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6 mt-20 hover c-p" *ngFor="let singlePlan of PayeeSettingData;  let i = index">
             <mat-card class="p-0 b-ua"
-                [ngClass]="singlePlan.selected == true || singlePlan.selected == 1 ? 'ba-blue' : 'b-ua'"
+            [ngClass]="{'ba-blue': singlePlan.selected == 1,'b-ua':singlePlan.selected == 0}"
                 (click)="selectedPayee(singlePlan.selected,singlePlan)">
                 <div class="row bg-grey lter">
                     <div class="col-md-12 p-0">

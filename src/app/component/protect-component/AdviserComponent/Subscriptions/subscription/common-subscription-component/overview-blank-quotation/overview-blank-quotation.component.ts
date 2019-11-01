@@ -16,15 +16,21 @@ export class OverviewBlankQuotationComponent implements OnInit {
   @Input() blankOverview: any;
   blankDocumentProperties;
   selectedOption;
-
+  isDocType
+  isDocName
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService) {
   }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.createForm();
+    this.setValidation(false)
   }
-
+  setValidation(flag)
+  {
+    this.isDocName=flag;
+    // this.is
+  }
   createForm() {
     this.blankDocumentProperties = this.fb.group({
       docType: ['',[Validators.required]],
@@ -50,6 +56,7 @@ export class OverviewBlankQuotationComponent implements OnInit {
   }
 
   saveDocuments() {
+
     const obj = {
       advisorId: this.advisorId,
       name: this.blankDocumentProperties.controls.docName.value,

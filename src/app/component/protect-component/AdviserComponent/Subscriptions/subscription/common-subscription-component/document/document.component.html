@@ -1,14 +1,15 @@
 <div *ngIf="componentFlag=='plansDocuments'">
-  
+
     <div class="bottom-fixed wrapper-12">
         <div class="row">
             <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5>
+                <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5>
             </div>
             <div class="col-md-8 right text-right">
-                <button mat-button  class="btn-bottom br-0 text-inherit"(click)="saveMappingDocumentToPlans()">Save</button>
-                
-    
+                <button mat-button class="btn-bottom br-0 text-inherit"
+                    (click)="saveMappingDocumentToPlans()">Save</button>
+
+
             </div>
         </div>
     </div>
@@ -41,7 +42,7 @@
         </div>
         <div class="wrapper-40">
             <div class="row text-center padder-80">
-                <div *ngFor="let documentData of planDocumentData" class="col-md-4 c-p pl-10 mb-20 pr-10">
+                <!-- <div *ngFor="let documentData of planDocumentData" class="col-md-4 c-p pl-10 mb-20 pr-10">
                     <div class="example-card">
                     <div (click)="selectDocument(documentData)"
                         [ngClass]="{'ba-blue': documentData.selected,'active': documentData.selected,'b-a':documentData.selected==false}">
@@ -64,6 +65,35 @@
                         </div>
                     </div>
                 </div>
+                </div> -->
+                <div class="col-md-4 pr-20 pb-20 pl-0" *ngFor="let documentData of planDocumentData">
+                    <div (click)="selectDocument(documentData)">
+                        <mat-card [ngClass]="{'ba-blue': documentData.selected,'active': documentData.selected,'b-ua':documentData.selected==false}" class="example-card bg-grey lter p-0">
+                            <mat-card-header class="m-0">
+                                    <!-- [isChecked]="documentData.selected" -->
+                                <app-custom-html [data]="documentData.docText"  id="ui-appcustomhtml" class="bg-white">
+                                
+                                </app-custom-html>
+                            </mat-card-header>
+                            <mat-card-actions class="pb-20 mb-0 p-0">
+                                <div class="row wrapper-8">
+                                    <div class="col-md-10">
+                                        <mat-card-header>
+                                            <mat-card-title class="f-18 p-0 mb-0 pt-12">{{documentData.name}}
+                                            </mat-card-title>
+                                            <mat-card-subtitle class="pt-8 pb-12 mb-0 text-left f-16">
+                                                {{documentData.code}}</mat-card-subtitle>
+
+                                        </mat-card-header>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p class="green text-white f-16">{{documentData.type}}</p>
+                                    </div>
+                                </div>
+                            </mat-card-actions>
+
+                        </mat-card>
+                    </div>
                 </div>
             </div>
         </div>
@@ -76,11 +106,12 @@
                 <p class="text-white f-16 mb-0 pt-12 c-p" (click)="dialogClose()">Cancel</p>
             </div>
             <div class="col-md-6 text-right">
-                <button type="button" mat-stroked-button class="btn-bottom br-0" (click)="mapDocumentToService()">Save</button>
+                <button type="button" mat-stroked-button class="btn-bottom br-0"
+                    (click)="mapDocumentToService()">Save</button>
             </div>
         </div>
     </mat-toolbar>
-    
+
     <div class="bg-grey lter wrapper-20 heading-fix">
         <div class="row">
             <div class="col-md-12">
@@ -110,30 +141,60 @@
         </div>
         <div class="wrapper-40">
             <div class="row text-center padder-80">
-                <div (click)="selectDocument(document)" *ngFor="let document of serviceDocumentData" class="col-md-4 c-p pl-10 pr-10 mt-20">
+                <!-- <div (click)="selectDocument(document)" *ngFor="let document of serviceDocumentData"
+                    class="col-md-4 c-p pl-10 pr-10 mt-20">
                     <div class="example-card">
-                    <div class="b-a" [ngClass]="{'ba-blue': document.selected}">
-                        <mat-checkbox class="custom-checkbox" checked="false"
-                            [ngClass]="{'v-h':document.selected==false}"></mat-checkbox>
-                        <img
-                            src="data:image/jpeg;base64,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">
-                        <div class="bg-grey lter text-left">
-                            <div class="row">
-                                <div class="col-md-10">
+                        <div class="b-a" [ngClass]="{'ba-blue': document.selected}">
+                            <mat-checkbox class="custom-checkbox" checked="false"
+                                [ngClass]="{'v-h':document.selected==false}"></mat-checkbox>
+                            <img
+                                src="data:image/jpeg;base64,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">
+                            <div class="bg-grey lter text-left">
+                                <div class="row">
+                                    <div class="col-md-10">
 
-                                    <h3 class="f-18 p-0 mb-0 pt-12">{{document.name}}</h3>
-                                    <p class="mb-0 pb-36"></p>
+                                        <h3 class="f-18 p-0 mb-0 pt-12">{{document.name}}</h3>
+                                        <p class="mb-0 pb-36"></p>
+
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p class="green text-white f-16"></p>
+                                    </div>
 
                                 </div>
-                                <div class="col-md-2">
-                                    <p class="green text-white f-16"></p>
-                                </div>
-
                             </div>
                         </div>
                     </div>
-                </div>
-                </div>
+                </div> -->
+                <div class="col-md-4 pr-20 pb-20 pl-0" *ngFor="let document of serviceDocumentData">
+                        <div (click)="selectDocument(document)">
+                            <mat-card [ngClass]="{'ba-blue': document.selected,'active': document.selected,'b-ua':document.selected==false}" class="example-card bg-grey lter p-0">
+                                <mat-card-header class="m-0">
+                                        <!-- [isChecked]="document.selected"  -->
+                                    <app-custom-html [data]="document.docText" id="ui-appcustomhtml" class="bg-white">
+                                    
+                                    </app-custom-html>
+                                </mat-card-header>
+                                <mat-card-actions class="pb-20 mb-0 p-0">
+                                    <div class="row wrapper-8">
+                                        <div class="col-md-10">
+                                            <mat-card-header>
+                                                <mat-card-title class="f-18 p-0 mb-0 pt-12">{{document.name}}
+                                                </mat-card-title>
+                                                <mat-card-subtitle class="pt-8 pb-12 mb-0 text-left f-16">
+                                                    {{document.code}}</mat-card-subtitle>
+    
+                                            </mat-card-header>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <p class="green text-white f-16">{{document.type}}</p>
+                                        </div>
+                                    </div>
+                                </mat-card-actions>
+    
+                            </mat-card>
+                        </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -163,11 +224,15 @@
                                 arrow_drop_down
                             </i></button>
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item class="b-t"  *ngIf="dataCount == 0">Select invoice to see more actions</button>
-                            <button mat-menu-item (click)="openDocumentESign('eSignDocument','open')" *ngIf="dataCount != 0">Email with eSign
+                            <button mat-menu-item class="b-t" *ngIf="dataCount == 0">Select invoice to see more
+                                actions</button>
+                            <button mat-menu-item (click)="openDocumentESign('eSignDocument','open')"
+                                *ngIf="dataCount != 0">Email with eSign
                                 request</button>
-                            <button mat-menu-item (click)="changeDisplay('email',dataSource)" *ngIf="dataCount != 0">Email only</button>
-                            <button mat-menu-item class="b-t" (click)="deleteModal('DOCUMENT')" *ngIf="dataCount != 0">Delete
+                            <button mat-menu-item (click)="changeDisplay('email',dataSource)"
+                                *ngIf="dataCount != 0">Email only</button>
+                            <button mat-menu-item class="b-t" (click)="deleteModal('DOCUMENT')"
+                                *ngIf="dataCount != 0">Delete
                                 documents</button>
                         </mat-menu>
                     </div>
@@ -175,54 +240,69 @@
                         <p class="m-0 text-black text-left pt-12">{{dataCount}} Document selected</p>
                     </div>
                     <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
-                          <ng-container matColumnDef="checkbox">
-                                  <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"> <mat-checkbox (change)="selectAll($event)" name="selectAll" [value]="element"></mat-checkbox> </th>
-                                  <td mat-cell *matCellDef="let element" style="width: 2%;" class="c-p">
-                                          <mat-checkbox checked="true" name="selectedData"  [(ngModel)]="element.selected" (change)="changeSelect(element)"></mat-checkbox>
-                                  </td>
-                              </ng-container>
+                        <ng-container matColumnDef="checkbox">
+                            <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;">
+                                <mat-checkbox (change)="selectAll($event)" name="selectAll" [value]="element">
+                                </mat-checkbox>
+                            </th>
+                            <td mat-cell *matCellDef="let element" style="width: 2%;" class="c-p">
+                                <mat-checkbox checked="true" name="selectedData" [(ngModel)]="element.selected"
+                                    (change)="changeSelect(element)"></mat-checkbox>
+                            </td>
+                        </ng-container>
                         <ng-container matColumnDef="document">
                             <th mat-header-cell *matHeaderCellDef> Document name</th>
-                            <td mat-cell *matCellDef="let element" class="c-p" (click)="changeDisplay('documentUpperSlider',element)"> {{element.documentName}} </td>
+                            <td mat-cell *matCellDef="let element" class="c-p"
+                                (click)="changeDisplay('documentUpperSlider',element)"> {{element.documentName}}
+                            </td>
                         </ng-container>
-                        
+
                         <ng-container matColumnDef="plan">
                             <th mat-header-cell *matHeaderCellDef> Plan name </th>
                             <td mat-cell *matCellDef="let element"> {{element.planName}} </td>
                         </ng-container>
                         <ng-container matColumnDef="service">
-                                <th mat-header-cell *matHeaderCellDef> Service name</th>
-                                <td mat-cell *matCellDef="let element"> {{element.serviceName}} </td>
-                            </ng-container>
+                            <th mat-header-cell *matHeaderCellDef> Service name</th>
+                            <td mat-cell *matCellDef="let element"> {{element.serviceName}} </td>
+                        </ng-container>
                         <ng-container matColumnDef="date">
                             <th mat-header-cell *matHeaderCellDef class="text-right"> Created date </th>
-                            <td mat-cell *matCellDef="let element" class="text-right"> {{element.startDate | date:'dd/MM/yyyy'}} </td>
+                            <td mat-cell *matCellDef="let element" class="text-right">
+                                {{element.startDate | date:'dd/MM/yyyy'}} </td>
                         </ng-container>
                         <ng-container matColumnDef="sdate">
                             <th mat-header-cell *matHeaderCellDef class="text-right"> Sent date </th>
-                            <td mat-cell *matCellDef="let element" class="text-right"> {{element.sentDate  | date:'dd/MM/yyyy'}} </td>
+                            <td mat-cell *matCellDef="let element" class="text-right">
+                                {{element.sentDate  | date:'dd/MM/yyyy'}} </td>
                         </ng-container>
                         <ng-container matColumnDef="cdate">
                             <th mat-header-cell *matHeaderCellDef class="text-right"> Client sign date </th>
-                            <td mat-cell *matCellDef="let element" class="text-right"> {{element.cdate  | date:'dd/MM/yyyy'}} </td>
+                            <td mat-cell *matCellDef="let element" class="text-right">
+                                {{element.cdate  | date:'dd/MM/yyyy'}} </td>
                         </ng-container>
                         <ng-container matColumnDef="status">
                             <th *matHeaderCellDef class=" t-10" mat-header-cell> Status</th>
                             <td *matCellDef="let element" mat-cell>
-                                        <span>
-                                        <span class="text-success t-10 f-500 c-p" *ngIf="element.status==1">READY TO SEND</span>
-                                        <span class="text-success t-10 f-500 c-p" *ngIf="element.status==0">NOT STARTED</span>
-                                        </span>
+                                <span>
+                                    <span class="text-success t-10 f-500 c-p" *ngIf="element.status==1">READY TO
+                                        SEND</span>
+                                    <span class="text-success t-10 f-500 c-p" *ngIf="element.status==0">NOT
+                                        STARTED</span>
+                                </span>
                             </td>
-                          </ng-container>
+                        </ng-container>
                         <ng-container matColumnDef="icons">
                             <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"> </th>
-                            <td mat-cell *matCellDef="let element" style="width: 2%;"><i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
-                                                                more_vert
-                                                                </i>
+                            <td mat-cell *matCellDef="let element" style="width: 2%;"><i
+                                    class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu"
+                                    [matMenuTriggerFor]="belowMenu">
+                                    more_vert
+                                </i>
                                 <mat-menu #menu="matMenu">
-                                    <a mat-menu-item (click)="changeDisplay('documentUpper',element)">View & Modify document</a>
-                                    <a mat-menu-item class="bt-1"(click)="deleteModal('DOCUMENT')">Delete document</a>
+                                    <a mat-menu-item (click)="changeDisplay('documentUpper',element)">View & Modify
+                                        document</a>
+                                    <a mat-menu-item class="bt-1" (click)="deleteModal('DOCUMENT')">Delete
+                                        document</a>
                                 </mat-menu>
                             </td>
                         </ng-container>
@@ -230,8 +310,8 @@
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
                 </div>
-              </div>
-              <!-- <div class="bottom-fixed wrapper-16 w-100">
+            </div>
+            <!-- <div class="bottom-fixed wrapper-16 w-100">
                     <div class="row">
                       <div class="col-md-6">
                         <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>
@@ -242,8 +322,8 @@
                      
                     </div>
                   </div> -->
-         </div>
-</div>
+        </div>
+    </div>
 </div>
 
 
@@ -267,13 +347,16 @@
             <app-terms-agreement [quotationDesignE]="quotationDesignEmail" *ngIf="documentDesign=='email'"
                 (valueChange)='display($event)'></app-terms-agreement>
         </div>
-        </div>
-        <div class="pt-60 pr-0">
-            <app-email-only  [emailDocumentSend]="documentDesign" *ngIf="documentDesign=='documentUpperSlider'" (valueChange)='display($event)'></app-email-only>
-        </div>
-        <div>
-                <app-email-only  [emailDocument]="documentDesign" *ngIf="documentDesign=='readyToSend'" (valueChange)='display($event)'></app-email-only>
-        </div>
-        <div>
-                <app-email-only  [emailDocument]="documentDesign" *ngIf="documentDesign=='documentUpper'" (valueChange)='display($event)'></app-email-only>
-        </div>
+    </div>
+    <div class="pt-60 pr-0">
+        <app-email-only [emailDocumentSend]="documentDesign" *ngIf="documentDesign=='documentUpperSlider'"
+            (valueChange)='display($event)'></app-email-only>
+    </div>
+    <div>
+        <app-email-only [emailDocument]="documentDesign" *ngIf="documentDesign=='readyToSend'"
+            (valueChange)='display($event)'></app-email-only>
+    </div>
+    <div>
+        <app-email-only [emailDocument]="documentDesign" *ngIf="documentDesign=='documentUpper'"
+            (valueChange)='display($event)'></app-email-only>
+    </div>

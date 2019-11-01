@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {SubscriptionService} from '../../../subscription.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { SubscriptionService } from '../../../subscription.service';
 import * as _ from 'lodash';
-import {AuthService} from "../../../../../../../auth-service/authService";
+import { AuthService } from "../../../../../../../auth-service/authService";
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-plan-rightslider',
@@ -11,7 +12,7 @@ import {AuthService} from "../../../../../../../auth-service/authService";
 })
 export class PlanRightsliderComponent implements OnInit {
   planSettingData;
-  selectedPlan = [];
+  selectedPlan;
   @Input() clientData;
   advisorId;
 
@@ -26,7 +27,6 @@ export class PlanRightsliderComponent implements OnInit {
   getPlanOfAdvisor() {
     const obj = {
       advisorId: this.advisorId
-      // advisorId: 12345
     };
     this.subService.getPlanOfAdvisorClients(obj).subscribe(
       data => this.planSettingData = data
@@ -34,46 +34,39 @@ export class PlanRightsliderComponent implements OnInit {
   }
 
   createSubscription() {
-    if (this.selectedPlan.length > 0) {
-      const obj = [];
-      this.selectedPlan.forEach(element => {
-        const data = {
+    if (this.selectedPlan) {
+        const data = [{
           advisorId: this.advisorId,
-          // advisorId: 12345,
-          planId: element.id,
+          planId: this.selectedPlan.id,
           clientId: this.clientData.id,
-          planName: element.name
-        };
-        obj.push(data);
-        }
-      );
-      console.log(obj);
-      this.subService.createSubscription(obj).subscribe(
-        data => console.log('create subscriptuion', data)
+          planName: this.selectedPlan.name
+        }];
+      console.log(data);
+      this.subService.createSubscription(data).subscribe(
+        data => this.createSubscriptionResponse(data)
       );
     } else {
       return;
     }
   }
+  createSubscriptionResponse(data) {
+    this.subInjectService.rightSideData('close')
+    this.subInjectService.rightSliderData('close');
+
+  }
 
   select(data) {
-    (data.selected) ? this.unselectPlan(data) : this.selectPlan(data);
-  }
-
-  selectPlan(data) {
-    data.selected = true;
-    this.selectedPlan.push(data);
-    console.log(this.selectedPlan.length);
-  }
-
-  unselectPlan(data) {
-    data.selected = false;
-    _.remove(this.selectedPlan, function (delData) {
-      return delData.id == data.id;
-    });
-    console.log(this.selectedPlan.length);
-  }
-
+    this.planSettingData.forEach(element=>{
+      if(data.id==element.id)
+      {
+        data.selected=true
+        this.selectedPlan=data
+      }
+      else{
+        element.selected=false;
+      }
+    })
+     }
   Close(state) {
     this.subInjectService.rightSliderData(state);
   }

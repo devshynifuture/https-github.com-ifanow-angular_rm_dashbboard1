@@ -54,12 +54,7 @@ export class ConfirmDialogComponent implements OnInit {
   }
 
   deleteSubscription() {
-    const obj = {
-      advisorId: this.advisorId,
-
-      // advisorId: 12345,
-      id: this.dialogData.dataToShow.id
-    };
+    
     // if (this.dialogData.positiveMethod) {
     //   this.dialogData.positiveMethod();
     // } else {
@@ -67,6 +62,10 @@ export class ConfirmDialogComponent implements OnInit {
 
     // }
     if (this.dialogData.data == 'SUBSCRIPTION') {
+      const obj = {
+        advisorId: this.advisorId,
+        id: this.dialogData.dataToShow.id
+      };
       this.subscription.deleteSubscriptionData(obj).subscribe(
         data => this.deletedData(data)
       );

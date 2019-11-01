@@ -89,14 +89,14 @@
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef> Activation date</th>
         <td mat-cell *matCellDef="let element">
-          <!-- <div *ngIf="element.startsOn!='START'"> {{element.startsOn | date:'dd/MM/yyyy'}}</div>
-          <div *ngIf="element.startsOn=='START'" (click)="openPlanSlider('createSub','open',null)">
-            <button mat-stroked-button class="btn-header btn-xs ml-8 br-0 btn-sm">{{element.startsOn}}</button>
-          </div> -->
-          <div (click)="openPlanSlider('createSub','open',element)">
+          <div *ngIf="element.status!=1"> {{element.startsOn | date:'dd/MM/yyyy'}}</div>
+          <div *ngIf="element.status==1" (click)="openPlanSlider('createSub','open',null)">
+            <button mat-stroked-button class="btn-header btn-xs ml-8 br-0 btn-sm">START</button>
+          </div>
+          <!-- <div (click)="openPlanSlider('createSub','open',element)">
               <button class="btn-header btn-xs ml-8 br-0 btn-sm" mat-stroked-button>START
               </button>
-            </div>
+            </div> -->
         </td>
       </ng-container>
       <ng-container matColumnDef="bdate">
@@ -122,7 +122,7 @@
             <a mat-menu-item (click)="openPlanSlider('billerSettings','open',element)">Edit Biller settings</a>
             <a mat-menu-item class="bt-1" (click)="openPlanSlider('changePayee','open',element)">Edit Payee settings</a>
             <a mat-menu-item (click)="delete('cancelSubscription',element)">Cancel subscription</a>
-            <a mat-menu-item class="bt-1" (click)="deleteModal('SUBSCRIPTION')">Delete subscription</a>
+            <a mat-menu-item class="bt-1" (click)="deleteModal('SUBSCRIPTION',element)">Delete subscription</a>
           </mat-menu>
         </td>
       </ng-container>
