@@ -1088,6 +1088,11 @@
                                         </mat-option>
                                     </mat-autocomplete>
                     </div>
+                    <div class="col-md-8">
+                            <mat-error class="f-12 pt-4"
+                            *ngIf="isClientName && getFormControledit().clientName.invalid || (getFormControledit().clientName.touched && getFormControledit().clientName.invalid)">
+                            client name is required</mat-error>
+                         </div>
                     </div>
                 </div> 
             </div>
@@ -1124,6 +1129,11 @@
                             <div class="form-group mb-0">
                                 <input type="email" class="form-control br-0"formControlName="invoiceNumber" maxlength="{{getFormControledit().invoiceNumber.maxLength}}"> 
                             </div>
+                            <div class="col-md-8">
+                                    <mat-error class="f-12 pt-4"
+                                    *ngIf="isInvoiceNumber && getFormControledit().invoiceNumber.invalid || (getFormControledit().invoiceNumber.touched && getFormControledit().invoiceNumber.invalid)">
+                                     Invoice no. is required</mat-error>
+                                 </div>
                             <div class="col-md-12">
                                     <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControledit().invoiceNumber.value?.length?getFormControledit().invoiceNumber.value.length:0}}/{{getFormControledit().invoiceNumber.maxLength}}</p>
                             </div>
@@ -1140,6 +1150,11 @@
                                 <input type="date" class="form-control br-0" formControlName="invoiceDate">
                             </div>
                         </div>
+                        <div class="col-md-8">
+                                <mat-error class="f-12 pt-4"
+                                *ngIf="isInvoiceDate && getFormControledit().invoiceDate.invalid || (getFormControledit().invoiceDate.touched && getFormControledit().invoiceDate.invalid)">
+                                 Invoice date is required</mat-error>
+                             </div>
                     </div>
                 </div>
                 <div class="col-md-4 p-0">
@@ -1152,6 +1167,11 @@
                                 <input type="date" class="form-control br-0" formControlName="dueDate">
                             </div>
                         </div>
+                        <div class="col-md-8">
+                                <mat-error class="f-12 pt-4"
+                                *ngIf="isDueDate && getFormControledit().dueDate.invalid || (getFormControledit().dueDate.touched && getFormControledit().dueDate.invalid)">
+                                Due date is required</mat-error>
+                             </div>
                     </div>
                 </div>
             </div>
@@ -1182,28 +1202,38 @@
                                         </mat-option>
                                     </mat-autocomplete>
                                 </div>
+                                <div class="col-md-8">
+                                        <mat-error class="f-12 pt-4"
+                                        *ngIf="isServiceName && getFormControledit().serviceName.invalid || (getFormControledit().serviceName.touched && getFormControledit().serviceName.invalid)">
+                                        Service name is required</mat-error>
+                                     </div>
                             </div> 
                     </div>
                     <div class="col-md-2 p-0">
-                        <input type="text"  class="form-control br-0" formControlName="finalAmount">
-                        <h5 *ngIf="auto != true" class="m-0 text-center pr-8">{{storeData.finalAmount}}</h5>
+                        <input  class="form-control br-0" formControlName="finalAmount">
+                        <!-- <h5 *ngIf="auto != true" class="m-0 text-center pr-8">{{storeData.finalAmount}}</h5> -->
+                        <div class="col-md-8">
+                                <mat-error class="f-12 pt-4"
+                                *ngIf="isPrice && getFormControledit().finalAmount.invalid || (getFormControledit().finalAmount.touched && getFormControledit().finalAmount.invalid)">
+                                 Price is required</mat-error>
+                             </div>
                     </div>
-                    <div>
-                        <select id="serviceName" class="form-control" (change)="changeTaxStatus()" formControlName="taxStatus">
+                    <div class="col-md-2 p-0">
+                        <select id="serviceName" class="form-control" (change)="changeTaxStatus($event.target.value)" formControlName="taxStatus">
+                            <option  value="">Select tax status</option>
                             <option  value="IGST(18%)">IGST(18%)</option>
                             <option value="SGST(9%)|CGST(9%)">SGST(9%)|CGST(9%)</option>
                         </select>
+                        <div class="col-md-8">
+                                <mat-error class="f-12 pt-4"
+                                *ngIf="isTaxstatus && getFormControledit().taxStatus.invalid || (getFormControledit().taxStatus.touched && getFormControledit().taxStatus.invalid)">
+                                 Tax status is required</mat-error>
+                             </div>
                     </div>{{storeData.taxStatus}}
-                    <!-- <div class="col-md-2 p-0" *ngIf="storeData.igst != undefined">
-                        <p class="m-0 text-black wrapper-16">IGST({{storeData.igst}})%</p>
-                    </div>
-                    <div class="col-md-2 p-0" *ngIf="storeData.sgst != undefined">
-                            <p class="m-0 text-black wrapper-16">SGST({{storeData.sgst}})%</p>
-                        </div> -->
                     <div class="col-md-2 p-0">
-                        <!-- <input type="text" class="form-control br-0"formControlName="igstTaxAmount"> -->
-                        <h5 class="m-0 text-right pr-8" >{{finAmount}}</h5>
-                        <h5 *ngIf="auto != true && storeData.sgst != undefined" class="m-0 text-right pr-8">₹{{storeData.cgstTaxAmount}}</h5>
+                        <h5 *ngIf="storeData.cgstTaxAmount == undefined || storeData.igstTaxAmount" class="m-0 text-right pr-8" >₹{{finAmount}}</h5>
+                        <h5 [hidden]="finAmount !=undefined" *ngIf="storeData.sgst != undefined" class="m-0 text-right pr-8">{{storeData.cgstTaxAmount}}</h5>
+                        <h5  [hidden]="finAmount !=undefined" *ngIf="storeData.igst != undefined" class="m-0 text-right pr-8">{{storeData.igstTaxAmount}}</h5>
                     </div>
                 </div>
 
@@ -1211,38 +1241,29 @@
             <div class="row pt-12">
                 <div class="col-md-8"></div>
                 <div class="col-md-2">
-                    <h5 class="m-0">Sub total</h5>
+                    <h5 class="m-0">Sub total ₹</h5>
                 </div>
                 <div class="col-md-2 p-0">
-                    <h5 *ngIf="auto == true" class="m-0 text-right pr-8">₹{{storeData.subTotal}}</h5>
-                    <input type="text" *ngIf="auto != true" class="form-control br-0" formControlName="subTotal">
+                    <h5 class="m-0 text-right pr-8">{{storeData.subToatal}} </h5>
                 </div>
             </div>
             <div class="row pt-20">
                 <div class="col-md-8"></div>
                 <div class="col-md-2">
-                    <h5 class="m-0">Discount</h5>
+                    <h5 class="m-0">Discount ₹</h5>
                 </div>
-                <div class="col-md-2 p-0">
-                    <input type="text" class="form-control br-0" formControlName="discount">
-                     <!-- <h5 class="m-0 text-right pr-8" *ngIf="auto == false">₹{{storeData.discount}}</h5> -->
+                <div class="col-md-2 p-0 b-grey">
+                        <input class="form-control br-0 text-right"[(ngModel)] ="discount" formControlName="discount">
                 </div>
             </div>
             <div class="row pt-20 pb-12">
                 <div class="col-md-8"></div>
-                <div class="col-md-2" *ngIf="storeData.igst != undefined">
-                    <h5 class="m-0">IGST({{storeData.igst}})%</h5>
-                </div>
                 <div class="col-md-2">
-                        <h5 *ngIf="storeData.sgst != undefined"class="m-0">SGST({{storeData.sgst}})%</h5>
-                        <h5 *ngIf="storeData.sgst != undefined"class="m-0">CGST({{storeData.cgst}})%</h5>
-                        <h5 *ngIf="storeData.sgst == undefined"class="m-0 ">{{taxStatus}}</h5>
-                        
-                    </div>
+                    <h5 class="m-0">{{taxStatus}}</h5>
+                </div>
+              
                 <div class="col-md-2 p-0">
-                        <h5 class="m-0 text-right pr-8" *ngIf="auto != true && storeData.igstTaxAmount == undefined">{{storeData.igstTaxAmount}}</h5>
-                        <input type="text"*ngIf="auto == true"  class="form-control br-0" formControlName="igstTaxAmount">
-                        <h5 *ngIf="auto != true && storeData.sgst != undefined" class="m-0 text-right pr-8">₹{{storeData.cgstTaxAmount}}</h5>
+                        <h5  class="m-0 text-right pr-8">₹{{finAmount}}</h5>
                 </div>
             </div>
             <div class="row pb-8">
@@ -1251,11 +1272,10 @@
                     <h5 class="m-0 text-black pt-8 f-500">Total</h5>
                 </div>
                 <div class="col-md-2 bt-grey p-0">
-                    <!-- <input type="text" class="form-control br-0" formControlName="total"> -->
-                    <h5 class="m-0 text-right pr-8 pt-8 text-black f-500" *ngIf="auto != true">{{storeData.finalAmount}}</h5>
+                    <h5 class="m-0 text-right pr-8 pt-8 text-black f-500" >{{(storeData.subToatal-discount)+finAmount}}</h5>
                 </div>
             </div>
-            <div class="row pb-8">
+            <!-- <div class="row pb-8">
                 <div class="col-md-8"></div>
                 <div class="col-md-2 bt-grey">
                     <h5 class="m-0 text-black pt-8 f-500">Balance due</h5>
@@ -1264,7 +1284,7 @@
                     <h5 class="m-0 text-right pr-8 pt-8 text-black f-500" *ngIf="auto != true">{{storeData.balanceDue}}</h5>
                     <input type="text" *ngIf="auto == true"class="form-control br-0" formControlName="balanceDue">
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="bg-grey lt wrapper-28">

@@ -6,6 +6,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 import { EnumServiceService } from '../../enum-service.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { INT_TYPE } from '@angular/compiler/src/output/output_ast';
 
 export interface PeriodicElement {
   date: string;
@@ -48,6 +49,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   templateUrl: './invoice.component.html',
   styleUrls: ['./invoice.component.scss']
 })
+
 export class InvoiceComponent implements OnInit {
   auto: boolean;
   taxStatus: any;
@@ -66,6 +68,13 @@ export class InvoiceComponent implements OnInit {
   ischargeValid: boolean;
   istdsValid: boolean;
   ismodeValid: boolean;
+  isClientName = false;
+  isServiceName = false;
+  isInvoiceNumber = false
+  isDueDate = false;
+isInvoiceDate = false;
+isTaxstatus = false;
+isPrice = false;
 
   @Input() invoiceData;
   @Input() invoiceInSub;
@@ -89,6 +98,9 @@ dataSource;
   finAmount: any;
   feeCalc: boolean;
   isdateValid: boolean;
+  subToatal: any;
+  finAmountC: number;
+  finAmountS: number;
 
   constructor(public enumService:EnumServiceService,public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService,public dialog:MatDialog) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
@@ -132,13 +144,6 @@ dataSource;
   selectClient(c,data){
     console.log(c)
     console.log('ssss',data)
-    // let obj ={
-    //   id : service.clientId,
-    //   module : 2
-    // }
-    // this.subService.getInvoices(obj).subscribe(
-    //   data => this.getInvoiceDataRes(data)
-    // );
     console.log('getInvoiceDataRes',data)
     this.storeData = data;
     this.auto = false
@@ -148,6 +153,8 @@ dataSource;
       id: [data.id],
       clientName: [data.clientName, [Validators.required]],
       billerAddress: [(data.billerAddress == undefined) ? '' :data.billerAddress, [Validators.required]],
+      billerName:[(data.billerName == undefined) ? '' :data.billerName, [Validators.required]],
+      advisorId:[(data.advisorId == undefined) ? '' :data.advisorId, [Validators.required]],
       billingAddress: [(data.billingAddress == undefined) ? '' : data.billingAddress, [Validators.required]],
       invoiceNumber: [(data.invoiceNumber == undefined) ? '' : data.invoiceNumber, [Validators.required]],
       invoiceDate: [(data.invoiceDate == undefined) ? '' : data.invoiceDate, [Validators.required]],
@@ -156,12 +163,15 @@ dataSource;
       dueDate : [(data.dueDate == undefined) ? '' : data.dueDate,[Validators.required]],
       footnote: [(data.footnote == undefined) ? '' : data.footnote, [Validators.required]],
       terms: [(data.terms == undefined) ? '' : data.terms, [Validators.required]],
-      taxStatus: ['IGST(18%)'],
+      taxStatus: [(data.igst != undefined)?'IGST(18%)':'SGST(9%)|CGST(9%)'],
       balanceDue: [(data.balanceDue == undefined) ? '' : data.balanceDue],
       serviceName: [(data.serviceName == undefined) ? '' : data.serviceName],
       subTotal: [(data.subTotal == undefined) ? '' : data.subTotal],
       igstTaxAmount: [data.igstTaxAmount],
-      auto: [(data.auto == undefined) ? '' : false]
+      auto: [(data.auto == undefined) ? '' : false],
+      advisorBillerProfileId :[(data.advisorBillerProfileId == undefined) ? '' : data.advisorBillerProfileId],
+      clientBillerId: [(data.clientBillerId == undefined) ? '' : data.clientBillerId],
+      clientId :  [(data.clientId == undefined) ? '' : data.clientId],
     });
     
     this.getFormControledit().clientName.maxLength = 10;
@@ -260,8 +270,7 @@ dataSource;
       footnote: [data.footnote, [Validators.required]],
       terms: [data.terms, [Validators.required]],
       taxStatus: ['IGST(18%)'],
-      balanceDue: [(data == undefined) ? '' : data.balanceDue],
-      serviceName: [(data == undefined) ? '' : data.serviceName],
+      serviceName: [(data.services == undefined) ? '' : data.services[0].serviceName,[Validators.required]],
       subTotal: [(data == undefined) ? '' : data.subTotal],
       igstTaxAmount: [data.igstTaxAmount],
       auto: [data.auto]
@@ -276,31 +285,48 @@ dataSource;
     this.getFormControledit().terms.maxLength = 100;
   }
 
-  changeTaxStatus() {
-    this.taxStatus = this.editPayment.value.taxStatus;
-    this.finAmount = (18/100)*this.editPayment.controls.finalAmount.value + this.editPayment.controls.finalAmount.value
+  changeTaxStatus(changeTaxStatus) {
+    console.log('changeTaxStatus',changeTaxStatus)
+    if(changeTaxStatus == 'SGST(9%)|CGST(9%)'){
+      this.finAmountC = (9/100)*this.editPayment.controls.finalAmount.value;
+      this.finAmountS = (9/100)*this.editPayment.controls.finalAmount.value;
+      this.finAmount = this.finAmountC+this.finAmountS+parseInt(this.editPayment.controls.finalAmount.value)
+    }else{
+      this.finAmount = (18/100)*this.editPayment.controls.finalAmount.value+parseInt(this.editPayment.controls.finalAmount.value)
+    }
+    this.storeData.subToatal = this.editPayment.controls.finalAmount.value
+    this.taxStatus =changeTaxStatus
+   
   }
 
   updateInvoice() {
-    if (this.getFormControledit().id == undefined) {
+    if (this.editPayment.value.id == 0) {
       const service = [{
         serviceName: this.editPayment.value.serviceName
       }];
       const obj = {
         clientName: this.editPayment.value.clientName,
+        advisorBillerProfileId :this.editPayment.value.advisorBillerProfileId,
+        billerName:this.editPayment.value.billerName,
+        advisorId:this.editPayment.value.advisorId,
+        clientBillerId:this.editPayment.value.clientBillerId,
         billerAddress: this.editPayment.value.billerAddress,
         billingAddress: this.editPayment.value.billingAddress,
         invoiceNumber: this.editPayment.value.invoiceNumber,
-        subTotal: this.editPayment.value.subTotal,
-        total: this.editPayment.value.total,
+        subTotal: this.editPayment.value.finalAmount,
+        total: (parseInt(this.editPayment.value.finalAmount)-parseInt(this.editPayment.value.discount))+parseInt(this.finAmount),
         discount: this.editPayment.value.discount,
         finalAmount: this.editPayment.value.finalAmount,
         invoiceDate: this.editPayment.value.invoiceDate,
-        DueDate: this.editPayment.value.DueDate,
-        igst: (this.editPayment.value.tax == 'IGST(18%)') ? 18 : 18,
-        cgst: (this.editPayment.value.tax == 'SGST(9%)|CGST(9%)') ? 9 : 9,
+        dueDate: this.editPayment.value.dueDate,
+        igst: (this.editPayment.value.taxStatus == 'IGST(18%)') ? 18 : null,
+        cgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
+        igstTaxAmount: (this.editPayment.value.taxStatus == 'IGST(18%)')? this.finAmount : null ,
+        cgstTaxAmount :  (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountC : null,
+        sgstTaxAmount :  (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountS : null,
         footnote: this.editPayment.value.footnote,
         terms: this.editPayment.value.terms,
+        clientId : this.editPayment.value.clientId,
         services: service,
       };
       console.log('this.editPayment', obj);
@@ -309,7 +335,11 @@ dataSource;
       );
     } else {
       const service = [{
-        serviceName: this.editPayment.value.serviceName
+        serviceName: this.editPayment.value.serviceName,
+        averageFees: this.storeData.services[0].averageFees,
+        description: this.storeData.services[0].description,
+        fromDate: this.storeData.services[0].fromDate,
+        toDate: this.storeData.services[0].toDate,
       }];
       const obj = {
         id: this.editPayment.value.id,
@@ -318,13 +348,16 @@ dataSource;
         billingAddress: this.editPayment.value.billingAddress,
         finalAmount: this.editPayment.value.finalAmount,
         invoiceNumber: this.editPayment.value.invoiceNumber,
-        subTotal: this.editPayment.value.subTotal,
-        total: this.editPayment.value.total,
+        subTotal: this.editPayment.value.finalAmount,
+        total:  (parseInt(this.editPayment.value.finalAmount)-parseInt(this.editPayment.value.discount))+parseInt(this.finAmount),
         discount: this.editPayment.value.discount,
         invoiceDate: this.editPayment.value.invoiceDate,
-        DueDate: this.editPayment.value.DueDate,
-        igst: (this.editPayment.value.tax == 'IGST(18%)') ? 18 : 18,
-        cgst: (this.editPayment.value.tax == 'SGST(9%)|CGST(9%)') ? 9 : 9,
+        dueDate: this.editPayment.value.dueDate,
+        igst: (this.editPayment.value.taxStatus == 'IGST(18%)') ? 18 : null,
+        cgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
+        igstTaxAmount: (this.editPayment.value.taxStatus == 'IGST(18%)')? this.finAmount : null ,
+        cgstTaxAmount :  (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountC : null,
+        sgstTaxAmount :  (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountS : null,
         footnote: this.editPayment.value.footnote,
         terms: this.editPayment.value.terms,
         services: service,
@@ -338,10 +371,16 @@ dataSource;
 
   updateInvoiceInfoRes(data) {
     console.log('updateInvoiceInfoRes', data);
+    if(data == 1){
+      this.Close('close')
+    }
   }
 
   addInvoiceRes(data) {
     console.log('addInvoiceRes', data);
+    if(data == 1){
+      this.Close('close')
+    }
   }
 
   getFormControledit() {
