@@ -104,6 +104,7 @@ dataSource;
     this.getClients();
     this.getServicesList();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
+    this.getPayReceive();
     console.log('this.invoiceSubscription', this.invoiceInSub);
     this.showRecord = false;
     this.showEdit = false;
@@ -128,6 +129,33 @@ dataSource;
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();
     }
+  }
+  getPayReceive(){
+     let obj = {
+      invoiceId : this.storeData.id
+    }
+    this.subService.getPaymentReceive(obj).subscribe(
+      data => this.getRes(data)
+    );
+  }
+  getRes(data){
+    
+    console.log("data",data);
+    this.dataSource=data;
+    // this.feeCollectionMode.forEach(o => {
+    //   if(o.value==this.dataSource.paymentMode){
+    //    this.dataSource.paymentMode=o.name
+    //   }
+    //  });
+     this.feeCollectionMode.forEach(o => {
+      o.value = parseInt(o.value);
+      this.dataSource.forEach(sub =>
+        {
+         if(o.value==sub.paymentMode){
+           sub.paymentMode=o.name;
+         }
+        })
+    });
   }
   selectClient(c,data){
     console.log(c)
@@ -226,7 +254,7 @@ dataSource;
   getRecordPayment(data) {
     console.log('payee data', data);
     this.rPayment = this.fb.group({
-      amountReceive: [data.amountReceive, [Validators.required]],
+      amountReceived: [data.amountReceived, [Validators.required]],
       charges: [data.charges, [Validators.required]],
       tds: [data.tds, [Validators.required]],
       paymentDate: [data.paymentDate],
@@ -235,7 +263,7 @@ dataSource;
       notes: [data.notes]
     });
 
-    this.getFormControl().amountReceive.maxLength = 10;
+    this.getFormControl().amountReceived.maxLength = 10;
     this.getFormControl().charges.maxLength = 10;
     this.getFormControl().tds.maxLength = 10;
     this.getFormControl().notes.maxLength = 40;
@@ -353,7 +381,7 @@ dataSource;
   }
 
   saveFormData(state) {
-    if (this.rPayment.controls.amountReceive.invalid) {
+    if (this.rPayment.controls.amountReceived.invalid) {
       this.isamountValid = true;
       return;
     } else if (this.rPayment.controls.charges.invalid) {
@@ -371,7 +399,7 @@ dataSource;
       this.formObj = [{
         advisorId: this.advisorId,
         // advisorId: 12345,
-        amountReceieve: this.rPayment.controls.amountReceive.value,
+        amountReceived: this.rPayment.controls.amountReceived.value,
         chargeIfAny: this.rPayment.controls.charges.value,
         TDS: this.rPayment.controls.tds.value,
         paymentDate: this.rPayment.controls.paymentDate.value,
@@ -384,159 +412,55 @@ dataSource;
   const ELEMENT_DATA = this.formObj;
     this.dataSource = ELEMENT_DATA;
       console.log('form data', this.formObj);
-    this.rPayment.reset();
     console.log(" this.storeData", this.storeData);
+    this.feeCollectionMode.forEach(o => {
+     if(o.name==this.dataSource[0].paymentMode){
+      this.dataSource[0].paymentMode=o.value
+     }
+    });
+    this.dataSource[0].amountReceived = parseInt(this.dataSource[0].amountReceived);
+    this.dataSource[0].chargeIfAny = parseInt(this.dataSource[0].chargeIfAny);
+    this.dataSource[0].paymentMode = parseInt(this.dataSource[0].paymentMode);
+    this.dataSource[0].paymentDate = this.dataSource[0].paymentDate.toISOString().slice(0,10);
+
     let obj={
-      "advisorBillerProfileId": 0,
-      "advisorId": 0,
-      "amount": 0,
-      "amountBeforeDiscount": 0,
-      "amountReceived": 0,
-      "auto": true,
-      "balanceDue": 0,
-      "billerAcNumber": "string",
-      "billerAddress": "string",
-      "billerBankName": "string",
-      "billerBranchAddress": "string",
-      "billerBranchCity": "string",
-      "billerBranchCountry": "string",
-      "billerBranchState": "string",
-      "billerBranchZipCode": "string",
-      "billerCity": "string",
-      "billerCountry": "string",
-      "billerGstin": "string",
-      "billerIfscCode": "string",
-      "billerName": "string",
-      "billerNameAsPerBank": "string",
-      "billerState": "string",
-      "billerZipCode": "string",
-      "billingAddress": "string",
-      "billingCity": "string",
-      "billingCountry": "string",
-      "billingState": "string",
-      "billingZipCode": "string",
-      "cgst": 0,
-      "cgstTaxAmount": 0,
-      "changesIfAny": "string",
-      "clientBillerId": 0,
-      "clientGstin": "string",
-      "clientName": "string",
-      "discount": 0,
-      "dueDate": "2019-10-31T05:07:15.014Z",
-      "email": "string",
-      "finalAmount": 0,
-      "footnote": "string",
-      "fromDate": "2019-10-31T05:07:15.014Z",
-      "id": 0,
-      "igst": 0,
-      "igstTaxAmount": 0,
-      "invoiceDate": "2019-10-31T05:07:15.014Z",
-      "invoiceId": 0,
-      "invoiceNumber": "string",
-      "isAuto": true,
-      "logoUrl": "string",
-      "name": "string",
-      "notes": "string",
-      "payeeAddress": "string",
-      "paymentDate": "2019-10-31T05:07:15.014Z",
-      "paymentMode": 0,
-      "paymentTermId": 0,
-      "placeOfSupply": "string",
-      "sac": "string",
-      "serviceDescription": "string",
-      "services": [
-        {
-          "advisorId": 0,
-          "amount": 0,
-          "averageFees": 0,
-          "billingMode": 0,
-          "billingNature": 0,
-          "createdDate": "2019-10-31T05:07:15.014Z",
-          "debtAllocation": 0,
-          "description": "string",
-          "docCount": 0,
-          "equityAllocation": 0,
-          "feeType": "string",
-          "feeTypeId": 0,
-          "fromDate": "2019-10-31T05:07:15.014Z",
-          "global": true,
-          "id": 0,
-          "lastUpdatedDate": "2019-10-31T05:07:15.014Z",
-          "liquidAllocation": 0,
-          "moduleCount": 0,
-          "planCount": 0,
-          "planId": 0,
-          "planServiceMappingId": 0,
-          "pricing": 0,
-          "selected": true,
-          "serviceCode": "string",
-          "serviceId": 0,
-          "serviceName": "string",
-          "servicePricing": {
-            "autoRenew": 0,
-            "billEvery": 0,
-            "billingCycle": 0,
-            "billingMode": 0,
-            "billingNature": 0,
-            "description": "string",
-            "feeTypeId": 0,
-            "id": 0,
-            "name": "string",
-            "pricingList": [
-              {
-                "asset": "string",
-                "assetClassId": 0,
-                "debtAllocation": 0,
-                "directRegular": 0,
-                "equityAllocation": 0,
-                "id": 0,
-                "liquidAllocation": 0,
-                "otherAssets": [
-                  0
-                ],
-                "pricing": 0,
-                "servicePolicyId": 0,
-                "servicePricingId": 0,
-                "serviceSubAssets": [
-                  {
-                    "isActive": 0,
-                    "servicePricingPolicyId": 0,
-                    "subAssetClassId": 0,
-                    "subAssetClassName": "string"
-                  }
-                ]
-              }
-            ],
-            "serviceId": 0,
-            "subscriptionId": 0,
-            "taxType": 0
-          },
-          "serviceRepoId": 0,
-          "toDate": "2019-10-31T05:07:15.015Z"
-        }
-      ],
-      "sgst": 0,
-      "sgstTaxAmount": 0,
-      "status": "string",
-      "subTotal": 0,
-      "subscriptionId": 0,
-      "terms": "string",
-      "toDate": "2019-10-31T05:07:15.015Z"
+        "invoiceId":this.storeData.id,
+        "paymentMode":this.dataSource[0].paymentMode,
+        "amountReceived":this.dataSource[0].amountReceived,
+        "paymentDate":this.dataSource[0].paymentDate,
+        "notes":this.dataSource[0].notes,
+        "chargesIfAny":this.dataSource[0].chargeIfAny,
+        "advisorId":this.dataSource[0].advisorId,
+        "referenceNumber":this.storeData.invoiceNumber
     }
     this.subService.getSubscriptionCompleteStages(obj).subscribe(
       data => this.getSubStagesRecordResponse(data)
     );
-    this.cancel();
+ 
   }
   getSubStagesRecordResponse(data)
   {
     console.log("data",data);
+    this.feeCollectionMode.forEach(o => {
+      if(o.value==this.dataSource[0].paymentMode){
+       this.dataSource[0].paymentMode=o.name
+      }
+     });
+     let obj = {
+      invoiceId : this.storeData.id
+    }
+     this.subService.getPaymentReceive(obj).subscribe(
+      data => this.getRes(data)
+    );
+    this.cancel();
   }
   OpenFeeCalc(){
     this.feeCalc = true;
   }
   recordPayment() {
     this.showRecord = true;
+    this.rPayment.reset();
+
   }
 
   cancel() {
