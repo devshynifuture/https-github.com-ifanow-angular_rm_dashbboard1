@@ -7,7 +7,7 @@ import {SubscriptionService} from '../../subscription.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {AuthService} from '../../../../../../auth-service/authService';
 import * as _ from 'lodash';
-import { EnumServiceService } from '../enum-service.service';
+import {EnumServiceService} from '../enum-service.service';
 
 export interface PeriodicElement {
   client: string;
@@ -60,13 +60,13 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   feeCollectionMode: any;
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
-              private eventService: EventService, private subService: SubscriptionService,public enumService:EnumServiceService) {
+              private eventService: EventService, private subService: SubscriptionService, public enumService: EnumServiceService) {
   }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
-    console.log("feeeee...",this.feeCollectionMode);
+    // console.log("feeeee...",this.feeCollectionMode);
     this.getSummaryDataAdvisor();
     console.log('upperData', this.upperData);
   }
@@ -103,27 +103,18 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   openPlanSlider(value, state, data) {
     // data
-    const billerDataProfile = this.subInjectService.singleProfileData.subscribe(data => {
-      this.eventService.sidebarData(value);
 
-    });
-    const sideBarSubs = this.eventService.sidebarSubscribeData.subscribe(data => {
-      setTimeout(() => {
-       const rightSideDataSub=  this.subInjectService.rightSideData(state).subscribe(
-         data => {
-           if(data==='close')
-           {
-             rightSideDataSub.unsubscribe();
-           }
-         }
-       );
-      }, 500);
-    });
-    setTimeout(() => {
-      billerDataProfile.unsubscribe();
-      sideBarSubs.unsubscribe();
-
-    }, 300);
+    const rightSideDataSub = this.subInjectService.rightSideData(state).subscribe(
+      sideBarData => {
+        // console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (sideBarData == 'close') {
+          // console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+          this.getSummaryDataAdvisor();
+        }
+      }
+    );
+    this.eventService.sidebarData(value);
     this.subInjectService.addSingleProfile(data);
 
 
@@ -141,6 +132,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.subInjectService.addSingleProfile(data);
 
   }
+
   /*openPlanSlider(value, state, data) {
     this.eventService.sidebarData(value);
     this.subInjectService.rightSideData(state);
@@ -200,8 +192,9 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.sendData = this.filterStatus;
     this.callFilter();
   }
-  filterSubscriptionRes(data){
-    console.log('filterSubscriptionRes',data)
+
+  filterSubscriptionRes(data) {
+    console.log('filterSubscriptionRes', data)
     this.getSubSummaryRes(data)
   }
 
@@ -228,10 +221,10 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       advisorId: this.advisorId,
       limit: 10,
       offset: 0,
-      fromDate:"2000-01-01",
-      toDate:"3000-01-01",
+      fromDate: "2000-01-01",
+      toDate: "3000-01-01",
       statusIdList: this.statusIdList,
-      dateType:0
+      dateType: 0
     }
     console.log('this.statusIdList', this.statusIdList)
     this.subService.filterSubscription(obj).subscribe(
@@ -239,10 +232,10 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     );
   }
 
-  delete(data,value) {
+  delete(data, value) {
     const Fragmentdata = {
       Flag: data,
-      subData:value
+      subData: value
     };
     if (data === 'cancelSubscription') {
       const dialogRef = this.dialog.open(DeleteSubscriptionComponent, {

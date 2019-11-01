@@ -1091,7 +1091,7 @@
                     <div class="col-md-8">
                             <mat-error class="f-12 pt-4"
                             *ngIf="isClientName && getFormControledit().clientName.invalid || (getFormControledit().clientName.touched && getFormControledit().clientName.invalid)">
-                            client name is required</mat-error>
+                            Client name is required</mat-error>
                          </div>
                     </div>
                 </div> 
@@ -1210,8 +1210,7 @@
                             </div> 
                     </div>
                     <div class="col-md-2 p-0">
-                        <input  class="form-control br-0" formControlName="finalAmount">
-                        <!-- <h5 *ngIf="auto != true" class="m-0 text-center pr-8">{{storeData.finalAmount}}</h5> -->
+                        <input  class="form-control br-0" [(ngModel)] ="finalAmount" formControlName="finalAmount">
                         <div class="col-md-8">
                                 <mat-error class="f-12 pt-4"
                                 *ngIf="isPrice && getFormControledit().finalAmount.invalid || (getFormControledit().finalAmount.touched && getFormControledit().finalAmount.invalid)">
@@ -1230,10 +1229,19 @@
                                  Tax status is required</mat-error>
                              </div>
                     </div>{{storeData.taxStatus}}
+                    <!-- <div class="col-md-2 p-0" *ngIf="storeData.taxStatus == 'IGST(18%)'">
+                            <h5 class="m-0 text-right pr-8">{{storeData.taxStatus}} </h5>
+                    </div> -->
+                    <!-- <div class="col-md-2 p-0" *ngIf="storeData.taxStatus == 'SGST(9%)|CGST(9%)'">
+                            <h5 class="m-0 text-right pr-8">SGST(9%) </h5>
+                    </div>
+                    <div class="col-md-2 p-0" *ngIf="storeData.taxStatus == 'SGST(9%)|CGST(9%)'">
+                            <h5 class="m-0 text-right pr-8">CGST(9%)</h5>
+                    </div> -->
                     <div class="col-md-2 p-0">
-                        <h5 *ngIf="storeData.cgstTaxAmount == undefined || storeData.igstTaxAmount" class="m-0 text-right pr-8" >₹{{finAmount}}</h5>
-                        <h5 [hidden]="finAmount !=undefined" *ngIf="storeData.sgst != undefined" class="m-0 text-right pr-8">{{storeData.cgstTaxAmount}}</h5>
-                        <h5  [hidden]="finAmount !=undefined" *ngIf="storeData.igst != undefined" class="m-0 text-right pr-8">{{storeData.igstTaxAmount}}</h5>
+                        <h5 *ngIf="storeData.cgstTaxAmount == undefined || storeData.igstTaxAmount" class="m-0 text-right pr-8" >₹{{(18/100)*finalAmount + finalAmount || '0'}}</h5>
+                        <h5 [hidden]="finalAmount !=undefined" *ngIf="storeData.sgst != undefined" class="m-0 text-right pr-8">{{storeData.cgstTaxAmount}}</h5>
+                        <h5  [hidden]="finalAmount !=undefined" *ngIf="storeData.igst != undefined" class="m-0 text-right pr-8">{{storeData.igstTaxAmount}}</h5>
                     </div>
                 </div>
 
@@ -1244,7 +1252,7 @@
                     <h5 class="m-0">Sub total ₹</h5>
                 </div>
                 <div class="col-md-2 p-0">
-                    <h5 class="m-0 text-right pr-8">{{storeData.subToatal}} </h5>
+                    <h5 class="m-0 text-right pr-8">{{finalAmount}} </h5>
                 </div>
             </div>
             <div class="row pt-20">
@@ -1258,13 +1266,28 @@
             </div>
             <div class="row pt-20 pb-12">
                 <div class="col-md-8"></div>
-                <div class="col-md-2">
-                    <h5 class="m-0">{{taxStatus}}</h5>
+                <div class="col-md-2" *ngIf="taxStatus == 'IGST(18%)'">
+                    <h5 class="m-0">IGST(18%)</h5>
                 </div>
-              
-                <div class="col-md-2 p-0">
-                        <h5  class="m-0 text-right pr-8">₹{{finAmount}}</h5>
+                <div class="col-md-2" *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'">
+                        <h5 class="m-0">SGST(9%)</h5>
+                    </div>
+                    
+                <div class="col-md-2 p-0" *ngIf="taxStatus == 'IGST(18%)'">
+                        <h5  class="m-0 text-right pr-8">₹{{(18/100)*finalAmount || '0'}}</h5>
                 </div>
+                <div class="col-md-2 p-0" *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'">
+                        <h5  class="m-0 text-right pr-8">₹{{(9/100)*finalAmount || '0'}}</h5>
+                </div>
+            </div>
+            <div class="row pt-20 pb-12">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-2" *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'">
+                            <h5 class="m-0">CGST(9%)</h5>
+                        </div>
+                        <div class="col-md-2 p-0" *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'">
+                                <h5  class="m-0 text-right pr-8">₹{{(9/100)*finalAmount || '0'}}</h5>
+                        </div>
             </div>
             <div class="row pb-8">
                 <div class="col-md-8"></div>
@@ -1272,7 +1295,7 @@
                     <h5 class="m-0 text-black pt-8 f-500">Total</h5>
                 </div>
                 <div class="col-md-2 bt-grey p-0">
-                    <h5 class="m-0 text-right pr-8 pt-8 text-black f-500" >{{(storeData.subToatal-discount)+finAmount}}</h5>
+                    <h5 class="m-0 text-right pr-8 pt-8 text-black f-500" >{{(finalAmount-discount)+(18/100)*finalAmount || '0'}}</h5>
                 </div>
             </div>
             <!-- <div class="row pb-8">
