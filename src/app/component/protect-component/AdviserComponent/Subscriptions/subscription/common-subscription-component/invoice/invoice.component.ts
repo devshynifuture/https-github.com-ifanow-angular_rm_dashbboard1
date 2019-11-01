@@ -101,6 +101,7 @@ dataSource;
   subToatal: any;
   finAmountC: number;
   finAmountS: number;
+  defaultVal: any;
 
   constructor(public enumService:EnumServiceService,public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService,public dialog:MatDialog) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
@@ -156,10 +157,10 @@ dataSource;
       billerName:[(data.billerName == undefined) ? '' :data.billerName, [Validators.required]],
       advisorId:[(data.advisorId == undefined) ? '' :data.advisorId, [Validators.required]],
       billingAddress: [(data.billingAddress == undefined) ? '' : data.billingAddress, [Validators.required]],
-      invoiceNumber: [(data.invoiceNumber == undefined) ? '' : data.invoiceNumber, [Validators.required]],
+      invoiceNumber: [(data.invoiceNumber == undefined) ? this.defaultVal.invoiceNumber : data.invoiceNumber, [Validators.required]],
       invoiceDate: [(data.invoiceDate == undefined) ? '' : data.invoiceDate, [Validators.required]],
-      finalAmount: [(data.finalAmount == undefined) ? 0 : data.finalAmount, [Validators.required]],
-      discount: [(data.discount == undefined) ? '' : data.discount, [Validators.required]],
+      finalAmount: [(data.finalAmount == undefined) ? 0 :parseInt(data.finalAmount), [Validators.required]],
+      discount: [(parseInt(data.discount) == undefined) ? 0 : data.discount, [Validators.required]],
       dueDate : [(data.dueDate == undefined) ? '' : data.dueDate,[Validators.required]],
       footnote: [(data.footnote == undefined) ? '' : data.footnote, [Validators.required]],
       terms: [(data.terms == undefined) ? '' : data.terms, [Validators.required]],
@@ -194,8 +195,9 @@ dataSource;
     );
   }
   getClientListRes(data){
-    console.log('getClientListRes',data)
-    this.clientList = data
+    console.log('getClientListRes',data.payees)
+    this.clientList = data.payees
+    this.defaultVal = data
   }
   getServicesList() {
     const obj = {
@@ -264,8 +266,8 @@ dataSource;
       billingAddress: [data.billingAddress, [Validators.required]],
       invoiceNumber: [data.invoiceNumber, [Validators.required]],
       invoiceDate: [data.invoiceDate, [Validators.required]],
-      finalAmount: [data.finalAmount, [Validators.required]],
-      discount: [data.discount, [Validators.required]],
+      finalAmount: [(parseInt(data.finalAmount) == undefined)? 0 :parseInt(data.finalAmount), [Validators.required]],
+      discount: [(parseInt(data.discount) == undefined)? 0 :data.discount, [Validators.required]],
       dueDate : [data.dueDate,[Validators.required]],
       footnote: [data.footnote, [Validators.required]],
       terms: [data.terms, [Validators.required]],
