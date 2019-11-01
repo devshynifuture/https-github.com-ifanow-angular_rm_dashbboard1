@@ -26,7 +26,6 @@ export class PlanRightsliderComponent implements OnInit {
   getPlanOfAdvisor() {
     const obj = {
       advisorId: this.advisorId
-      // advisorId: 12345
     };
     this.subService.getPlanOfAdvisorClients(obj).subscribe(
       data => this.planSettingData = data
@@ -49,11 +48,15 @@ export class PlanRightsliderComponent implements OnInit {
       );
       console.log(obj);
       this.subService.createSubscription(obj).subscribe(
-        data => console.log('create subscriptuion', data)
+        data =>this.createSubscriptionResponse(data)
       );
     } else {
       return;
     }
+  }
+  createSubscriptionResponse(data)
+  {
+    this.subInjectService.rightSideData('close')
   }
 
   select(data) {
