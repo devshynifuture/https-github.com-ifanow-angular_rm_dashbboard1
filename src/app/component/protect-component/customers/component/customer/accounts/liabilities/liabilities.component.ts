@@ -26,7 +26,7 @@ export class LiabilitiesComponent implements OnInit {
   clickHandling() {
     console.log('something was clicked');
     // this.openFragment('', 'plan');
-    this.open('open', null);
+    this.open('openHelp', 'liabilityright');
   }
 
   openFragment(singlePlan, data) {
@@ -46,13 +46,8 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   open(state, data) {
-    let feeMode;
-    if (data && data.subscriptionPricing.feeTypeId == 1) {
-      feeMode = 'fixedModifyFees';
-    } else {
-      feeMode = 'variableModifyFees';
-    }
-    this.eventService.sidebarData(feeMode);
+  
+    this.eventService.sidebarData(data);
     this.subinject.rightSideData(state);
     this.subinject.addSingleProfile(data);
 
