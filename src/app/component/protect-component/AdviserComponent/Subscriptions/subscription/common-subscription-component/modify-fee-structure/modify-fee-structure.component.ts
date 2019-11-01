@@ -87,6 +87,7 @@ export class ModifyFeeStructureComponent implements OnInit {
       }
     }
     if (data.subscriptionPricing.feeTypeId == 2) {
+      
       this.getVariableFee().billingNature.setValue(data.subscriptionPricing.billingNature);
       this.getVariableFee().billEvery.setValue(data.subscriptionPricing.billEvery);
       this.getVariableFee().Duration.setValue(data.subscriptionPricing.billingCycle);
