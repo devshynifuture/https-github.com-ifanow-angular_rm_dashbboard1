@@ -115,3 +115,55 @@ p {
   overflow: auto;
 }
 
+//::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+//
+//    background-color: #008FFF !important;
+//  }
+//
+//  ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+//    background-color: #008FFF !important;   /*inner circle color change*/
+//  }
+//
+//  ::ng-deep.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+//   border-color:#008FFF !important; /*outer ring color change*/
+//  }
+//  ::ng-deep .mat-horizontal-stepper-header{
+//    pointer-events: none !important;
+//  }
+
+
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$app-primary: mat-palette($mat-indigo);
+$app-accent:  mat-palette($mat-light-blue, A200, A100, A400);
+
+$app-theme: mat-light-theme($app-primary, $app-accent);
+
+@mixin mix-app-theme($app-theme) {
+  $primary: map-get($app-theme, primary);
+  $accent: map-get($app-theme, accent);
+
+  .mat-button-toggle {
+    //border: 0px !important;
+    //outline: 0px  !important;
+    //z-index: inherit;
+    background-color: white;
+    color: #595252;
+    align-content: center;
+  }
+
+  .mat-button-toggle-checked {
+    background-color: white;
+    //border: 0px !important;
+    //outline: 1px solid #BCC6CA !important;
+    align-content: center;
+    //z-index: inherit;
+    //background-color: mat-color($accent);
+    color: mat-color($accent);
+  }
+}
+
+// Include the mixin
+@include mix-app-theme($app-theme);

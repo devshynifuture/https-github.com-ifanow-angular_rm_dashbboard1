@@ -104,7 +104,9 @@ import {AddProfileSummaryComponent} from './component/protect-component/customer
 import {CustomDialogContainerComponent} from './common/custom-dialog-container/custom-dialog-container.component';
 import {BaseComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/base/base.component';
 import {ChartModule} from 'angular-highcharts';
+import { IncomeComponent } from './component/protect-component/customers/component/customer/accounts/income/income.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { RadioGroupDirectiveDirective } from './common/radio-group-directive.directive';
 
 @NgModule({
   declarations: [
@@ -197,7 +199,9 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     ExpensesComponent,
     AddProfileSummaryComponent,
     CustomDialogContainerComponent,
-    BaseComponent
+    BaseComponent,
+    IncomeComponent,
+    RadioGroupDirectiveDirective
   ],
   imports: [
     BrowserModule,

@@ -26,8 +26,8 @@ export class FroalaComponent implements ControlValueAccessor {
   // Begin ControlValueAccesor methods.
   onChange = (data) => {
     console.log(data)
-    this.plainText = data.replace(/<[^>]*>/g, '');
-    this.save(this.plainText);
+    // this.plainText = data.replace(/<[^>]*>/g, '');
+    this.save(data);
   };
   onTouched = () => {
   };
