@@ -1083,7 +1083,7 @@
                         <div class="form-group b-grey"> 
                           <input matInput placeholder="You can search client" aria-label="client" [matAutocomplete]="auto1" class="form-control br-0 pl-8" formControlName="clientName"> 
                                       <mat-autocomplete #auto1="matAutocomplete">
-                                      <mat-option  *ngFor="let c of clientList" [value]="c.clientName" (onSelectionChange)="selectClient($event, c)">
+                                      <mat-option  *ngFor="let c of clientList.payees" [value]="c.clientName" (onSelectionChange)="selectClient($event, c, clientList.invoiceNumber)">
                                             <span>{{c.clientName}}</span>
                                         </mat-option>
                                     </mat-autocomplete>
@@ -1091,7 +1091,7 @@
                     <div class="col-md-8">
                             <mat-error class="f-12 pt-4"
                             *ngIf="isClientName && getFormControledit().clientName.invalid || (getFormControledit().clientName.touched && getFormControledit().clientName.invalid)">
-                            client name is required</mat-error>
+                            Client name is required</mat-error>
                          </div>
                     </div>
                 </div> 
@@ -1210,8 +1210,7 @@
                             </div> 
                     </div>
                     <div class="col-md-2 p-0">
-                        <input  class="form-control br-0" formControlName="finalAmount">
-                        <!-- <h5 *ngIf="auto != true" class="m-0 text-center pr-8">{{storeData.finalAmount}}</h5> -->
+                        <input  class="form-control br-0" [(ngModel)] ="finalAmount" formControlName="finalAmount">
                         <div class="col-md-8">
                                 <mat-error class="f-12 pt-4"
                                 *ngIf="isPrice && getFormControledit().finalAmount.invalid || (getFormControledit().finalAmount.touched && getFormControledit().finalAmount.invalid)">
@@ -1231,9 +1230,9 @@
                              </div>
                     </div>{{storeData.taxStatus}}
                     <div class="col-md-2 p-0">
-                        <h5 *ngIf="storeData.cgstTaxAmount == undefined || storeData.igstTaxAmount" class="m-0 text-right pr-8" >₹{{finAmount}}</h5>
-                        <h5 [hidden]="finAmount !=undefined" *ngIf="storeData.sgst != undefined" class="m-0 text-right pr-8">{{storeData.cgstTaxAmount}}</h5>
-                        <h5  [hidden]="finAmount !=undefined" *ngIf="storeData.igst != undefined" class="m-0 text-right pr-8">{{storeData.igstTaxAmount}}</h5>
+                        <h5 *ngIf="storeData.cgstTaxAmount == undefined || storeData.igstTaxAmount" class="m-0 text-right pr-8" >₹{{(18/100)*finalAmount + finalAmount || '0'}}</h5>
+                        <h5 [hidden]="finalAmount !=undefined" *ngIf="storeData.sgst != undefined" class="m-0 text-right pr-8">{{storeData.cgstTaxAmount}}</h5>
+                        <h5  [hidden]="finalAmount !=undefined" *ngIf="storeData.igst != undefined" class="m-0 text-right pr-8">{{storeData.igstTaxAmount}}</h5>
                     </div>
                 </div>
 
@@ -1244,7 +1243,7 @@
                     <h5 class="m-0">Sub total ₹</h5>
                 </div>
                 <div class="col-md-2 p-0">
-                    <h5 class="m-0 text-right pr-8">{{storeData.subToatal}} </h5>
+                    <h5 class="m-0 text-right pr-8">{{finalAmount}} </h5>
                 </div>
             </div>
             <div class="row pt-20">
@@ -1263,7 +1262,7 @@
                 </div>
               
                 <div class="col-md-2 p-0">
-                        <h5  class="m-0 text-right pr-8">₹{{finAmount}}</h5>
+                        <h5  class="m-0 text-right pr-8">₹{{(18/100)*finalAmount || '0'}}</h5>
                 </div>
             </div>
             <div class="row pb-8">
@@ -1272,7 +1271,7 @@
                     <h5 class="m-0 text-black pt-8 f-500">Total</h5>
                 </div>
                 <div class="col-md-2 bt-grey p-0">
-                    <h5 class="m-0 text-right pr-8 pt-8 text-black f-500" >{{(storeData.subToatal-discount)+finAmount}}</h5>
+                    <h5 class="m-0 text-right pr-8 pt-8 text-black f-500" >{{(finalAmount-discount)+(18/100)*finalAmount || '0'}}</h5>
                 </div>
             </div>
             <!-- <div class="row pb-8">
