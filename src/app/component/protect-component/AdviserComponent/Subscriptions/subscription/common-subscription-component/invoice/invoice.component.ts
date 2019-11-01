@@ -142,7 +142,7 @@ dataSource;
       event.preventDefault();
     }
   }
-  selectClient(c,data , inv){
+  selectClient(c,data){
     console.log(c)
     console.log('ssss',data)
     console.log('getInvoiceDataRes',data)
@@ -159,7 +159,7 @@ dataSource;
       billingAddress: [(data.billingAddress == undefined) ? '' : data.billingAddress, [Validators.required]],
       invoiceNumber: [(data.invoiceNumber == undefined) ? this.defaultVal.invoiceNumber : data.invoiceNumber, [Validators.required]],
       invoiceDate: [(data.invoiceDate == undefined) ? '' : data.invoiceDate, [Validators.required]],
-      finalAmount: [(parseInt(data.finalAmount) == undefined) ? 0 :parseInt(data.finalAmount), [Validators.required]],
+      finalAmount: [(data.finalAmount == undefined) ? 0 :parseInt(data.finalAmount), [Validators.required]],
       discount: [(parseInt(data.discount) == undefined) ? 0 : data.discount, [Validators.required]],
       dueDate : [(data.dueDate == undefined) ? '' : data.dueDate,[Validators.required]],
       footnote: [(data.footnote == undefined) ? '' : data.footnote, [Validators.required]],
@@ -196,7 +196,7 @@ dataSource;
   }
   getClientListRes(data){
     console.log('getClientListRes',data.payees)
-    this.clientList = data
+    this.clientList = data.payees
     this.defaultVal = data
   }
   getServicesList() {

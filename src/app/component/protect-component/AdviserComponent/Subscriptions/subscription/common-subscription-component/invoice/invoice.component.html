@@ -1083,7 +1083,7 @@
                         <div class="form-group b-grey"> 
                           <input matInput placeholder="You can search client" aria-label="client" [matAutocomplete]="auto1" class="form-control br-0 pl-8" formControlName="clientName"> 
                                       <mat-autocomplete #auto1="matAutocomplete">
-                                      <mat-option  *ngFor="let c of clientList.payees" [value]="c.clientName" (onSelectionChange)="selectClient($event, c, clientList.invoiceNumber)">
+                                      <mat-option  *ngFor="let c of clientList" [value]="c.clientName" (onSelectionChange)="selectClient($event, c)">
                                             <span>{{c.clientName}}</span>
                                         </mat-option>
                                     </mat-autocomplete>
@@ -1229,6 +1229,15 @@
                                  Tax status is required</mat-error>
                              </div>
                     </div>{{storeData.taxStatus}}
+                    <!-- <div class="col-md-2 p-0" *ngIf="storeData.taxStatus == 'IGST(18%)'">
+                            <h5 class="m-0 text-right pr-8">{{storeData.taxStatus}} </h5>
+                    </div> -->
+                    <!-- <div class="col-md-2 p-0" *ngIf="storeData.taxStatus == 'SGST(9%)|CGST(9%)'">
+                            <h5 class="m-0 text-right pr-8">SGST(9%) </h5>
+                    </div>
+                    <div class="col-md-2 p-0" *ngIf="storeData.taxStatus == 'SGST(9%)|CGST(9%)'">
+                            <h5 class="m-0 text-right pr-8">CGST(9%)</h5>
+                    </div> -->
                     <div class="col-md-2 p-0">
                         <h5 *ngIf="storeData.cgstTaxAmount == undefined || storeData.igstTaxAmount" class="m-0 text-right pr-8" >₹{{(18/100)*finalAmount + finalAmount || '0'}}</h5>
                         <h5 [hidden]="finalAmount !=undefined" *ngIf="storeData.sgst != undefined" class="m-0 text-right pr-8">{{storeData.cgstTaxAmount}}</h5>
@@ -1257,13 +1266,28 @@
             </div>
             <div class="row pt-20 pb-12">
                 <div class="col-md-8"></div>
-                <div class="col-md-2">
-                    <h5 class="m-0">{{taxStatus}}</h5>
+                <div class="col-md-2" *ngIf="taxStatus == 'IGST(18%)'">
+                    <h5 class="m-0">IGST(18%)</h5>
                 </div>
-              
-                <div class="col-md-2 p-0">
+                <div class="col-md-2" *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'">
+                        <h5 class="m-0">SGST(9%)</h5>
+                    </div>
+                    
+                <div class="col-md-2 p-0" *ngIf="taxStatus == 'IGST(18%)'">
                         <h5  class="m-0 text-right pr-8">₹{{(18/100)*finalAmount || '0'}}</h5>
                 </div>
+                <div class="col-md-2 p-0" *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'">
+                        <h5  class="m-0 text-right pr-8">₹{{(9/100)*finalAmount || '0'}}</h5>
+                </div>
+            </div>
+            <div class="row pt-20 pb-12">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-2" *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'">
+                            <h5 class="m-0">CGST(9%)</h5>
+                        </div>
+                        <div class="col-md-2 p-0" *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'">
+                                <h5  class="m-0 text-right pr-8">₹{{(9/100)*finalAmount || '0'}}</h5>
+                        </div>
             </div>
             <div class="row pb-8">
                 <div class="col-md-8"></div>
