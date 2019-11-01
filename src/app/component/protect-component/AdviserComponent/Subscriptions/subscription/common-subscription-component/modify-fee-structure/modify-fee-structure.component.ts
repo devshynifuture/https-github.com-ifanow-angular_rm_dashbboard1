@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { EnumServiceService } from '../../enum-service.service';
 import * as _ from 'lodash';
 import { SubscriptionService } from '../../../subscription.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-modify-fee-structure',
@@ -104,12 +105,21 @@ export class ModifyFeeStructureComponent implements OnInit {
       });
       this.getVariableFee().pricing.setValue(data.subscriptionPricing.pricing);
       this.getVariableFee().otherAssetClassFees.setValue(data.subscriptionPricing.subscriptionAssetPricingList[0].subscriptionSubAssets);
+      this.otherAssetData=[]
       this.otherAssetData = data.subscriptionPricing.subscriptionAssetPricingList[2].subscriptionSubAssets;
-      this.otherAssetData.forEach(element => {
-        if (element.selected == true) {
-          this.selectedOtherAssets.push(element);
-        }
-      });
+      if(this.selectedOtherAssets.length==0)
+      {
+        this.otherAssetData.forEach(element => {
+          if (element.selected == true) {
+            this.selectedOtherAssets.push(element);
+          }
+        });
+      }
+      else{
+        this.otherAssetData.forEach(element=>{
+          element.selected==false
+        })
+      }
       if(this.singleSubscriptionData.status!=1)
       {
         this.variableFeeStructureForm.disable();
