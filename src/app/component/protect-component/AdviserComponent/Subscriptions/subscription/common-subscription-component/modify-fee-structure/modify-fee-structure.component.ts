@@ -59,8 +59,7 @@ export class ModifyFeeStructureComponent implements OnInit {
 
   ngOnInit() {
     this.setValidation(false);
-    this.disableForm=true;
-    // this.otherAssetData = [];
+      // this.otherAssetData = [];
     // console.log(this.otherAssetData)
   }
 
@@ -82,7 +81,7 @@ export class ModifyFeeStructureComponent implements OnInit {
       this.getFixedFee().billEvery.setValue(data.subscriptionPricing.billEvery);
       this.getFixedFee().Duration.setValue(data.subscriptionPricing.billingCycle)
       this.getFixedFee().billingMode.setValue(data.subscriptionPricing.billingMode);
-      if(!this.createSubData)
+      if(this.singleSubscriptionData.status!=1)
       {
         this.fixedFeeStructureForm.disable();
       }
@@ -110,7 +109,11 @@ export class ModifyFeeStructureComponent implements OnInit {
           this.selectedOtherAssets.push(element);
         }
       });
-      this.variableFeeStructureForm.disable();
+      if(this.singleSubscriptionData.status!=1)
+      {
+        this.variableFeeStructureForm.disable();
+      }
+      
     }
     this.modifyFeeData = data;
   }
