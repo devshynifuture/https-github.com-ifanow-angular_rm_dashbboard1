@@ -347,10 +347,12 @@
          </div>
          <div class="col-md-5">
          <div class="form-group mb-0"> 
-         <select formControlName="gstTreatment" class="form-control" >
-         <option value="0">Registered Business - Regular</option>
-         <option value="1">Registered Business - Composition</option>
-         <option value="3">Unregistered Business</option>
+         <select formControlName="gstTreatment" class="form-control">
+                <option value="0" disabled selected hidden>Select gst treatment</option>
+                <option *ngFor="let gst of this.gstTreatment" value="{{gst.name}}">{{gst.name}}</option>
+         <!-- <option value="1">Registered Business - Regular</option>
+         <option value="2">Registered Business - Composition</option>
+         <option value="3">Unregistered Business</option> -->
          </select>
          </div>
          <div class="row">
@@ -859,9 +861,9 @@
          <div class="col-md-5">
          <div class="form-group mb-0"> 
          <select formControlName="gstTreatment" class="form-control" >
-         <option value="0">Registered Business - Regular</option>
-         <option value="1">Registered Business - Composition</option>
-         <option value="2">Unregistered Business</option>
+         <option value="1">Registered Business - Regular</option>
+         <option value="2">Registered Business - Composition</option>
+         <option value="3">Unregistered Business</option>
          </select>
          </div>
          <div class="row">
