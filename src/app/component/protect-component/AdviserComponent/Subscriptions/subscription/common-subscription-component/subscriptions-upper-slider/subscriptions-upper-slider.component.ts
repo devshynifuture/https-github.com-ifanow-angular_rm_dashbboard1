@@ -1,11 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {DeleteSubscriptionComponent} from '../delete-subscription/delete-subscription.component';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from "../../../../../../../auth-service/authService";
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { DeleteSubscriptionComponent } from '../delete-subscription/delete-subscription.component';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from "../../../../../../../auth-service/authService";
 
 export interface PeriodicElement {
   service: string;
@@ -46,19 +46,14 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
   }
 
   openPlanSlider(value, state, data) {
-    console.log("upperdata create sub")
+    // console.log("upperdata create sub")
+    (data.subscriptionPricing.feeTypeId == 1) ? value = "createSubFixed" : value = "createSubVariable";
     this.eventService.sliderData(value);
+    this.eventService.sidebarData(value)
     this.subInjectService.rightSliderData(state);
-    if(data)
-    {
-      data.clientId=this.upperData.id
-      this.subInjectService.addSingleProfile(data);
-    }
-    else{
-      this.subInjectService.pushUpperData(data)
-    }
-    
-
+    data.clientId = this.upperData.id
+    this.subInjectService.addSingleProfile(data);
+    // this.subInjectService.pushUpperData(data)
   }
 
   getSummaryDataClient() {
@@ -97,10 +92,10 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
     this.dataSource = data;
   }
 
-  deleteModal(value,data) {
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
-      dataToShow:data,
+      dataToShow: data,
       header: 'DELETE',
       body: 'Are you sure you want to delete the suscription?',
       body2: 'This cannot be undone',
@@ -111,7 +106,7 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
-      
+
       autoFocus: false,
 
     });
@@ -122,10 +117,10 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
 
   }
 
-  delete(data,value) {
+  delete(data, value) {
     const Fragmentdata = {
       Flag: data,
-      subData:value
+      subData: value
     };
     if (data == 'cancelSubscription') {
       const dialogRef = this.dialog.open(DeleteSubscriptionComponent, {

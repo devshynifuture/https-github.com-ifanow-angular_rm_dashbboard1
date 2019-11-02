@@ -17,9 +17,7 @@
   <app-invoice-history *ngIf="subscriptionTab=='subscriptionFees'"
                        [invoiceHistoryData]='invoiceHisData'></app-invoice-history>
   <app-clients-dashboard *ngIf="subscriptionTab=='dashboardSubscription'"></app-clients-dashboard>
-  <app-fixed-fee *ngIf="subscriptionTab=='fixedModifyFees'">
-    <!-- || subscriptionTab =='variableModifyFees' -->
-  </app-fixed-fee>
+  <app-fixed-fee *ngIf="subscriptionTab=='fixedModifyFees'"></app-fixed-fee>
   <app-variable-fee *ngIf="subscriptionTab=='variableModifyFees'"></app-variable-fee>
   <app-biller-profile-advisor *ngIf="subscriptionTab=='billerProfile'"
                               [Selected]="selectedSubscriptionTab"></app-biller-profile-advisor>
