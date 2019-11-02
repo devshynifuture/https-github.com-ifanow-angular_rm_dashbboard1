@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-libilities-right',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LibilitiesRightComponent implements OnInit {
 
-  constructor() { }
+  constructor(private subinject: SubscriptionInject) { }
 
   ngOnInit() {
   }
-
+  closeNav(state) {
+    this.subinject.rightSideData(state);
+  }
 }
