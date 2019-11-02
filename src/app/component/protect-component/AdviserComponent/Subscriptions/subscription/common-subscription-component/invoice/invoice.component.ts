@@ -69,6 +69,7 @@ export interface PeriodicElement {
 })
 
 export class InvoiceComponent implements OnInit {
+  [x: string]: any;
   auto: boolean;
   taxStatus: any;
   copyStoreData: any;
@@ -120,6 +121,7 @@ export class InvoiceComponent implements OnInit {
   finAmountC: number;
   finAmountS: number;
   defaultVal: any;
+  finalAmount : any;
   editFormData: boolean;
 
   constructor(public enumService: EnumServiceService, public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
@@ -143,7 +145,6 @@ export class InvoiceComponent implements OnInit {
     this.editAdd1 = false;
     this.editAdd2 = false;
     this.feeCalc = false;
-
     console.log('invoiceValue+++++++++++', this.invoiceValue);
     if (this.invoiceValue == 'edit' || this.invoiceValue == 'EditInInvoice') {
       this.auto = true;
@@ -196,29 +197,29 @@ export class InvoiceComponent implements OnInit {
     // );
     console.log('getInvoiceDataRes',data)
     this.storeData = data;
+    this.storeData.billerAddress = this.defaultVal.biller.billerAddress
     this.auto = false;
     this.storeData.auto == false;
     console.log(this.storeData);
     this.editPayment = this.fb.group({
       id: [data.id],
       clientName: [data.clientName, [Validators.required]],
-      billerAddress: [(data.billerAddress == undefined) ? '' : data.billerAddress, [Validators.required]],
       billerName: [(data.billerName == undefined) ? '' : data.billerName, [Validators.required]],
       advisorId: [(data.advisorId == undefined) ? '' : data.advisorId, [Validators.required]],
+      billerAddress:[this.defaultVal.biller.billerAddress],
       billingAddress: [(data.billingAddress == undefined) ? '' : data.billingAddress, [Validators.required]],
+      finalAmount:[(parseInt(data.finalAmount) == undefined) ? '' : parseInt(data.finalAmount), [Validators.required]],
+      discount:[(data.discount == undefined) ? '' : data.discount, [Validators.required]],
       invoiceNumber: [(data.invoiceNumber == undefined) ? this.defaultVal.invoiceNumber : data.invoiceNumber, [Validators.required]],
       invoiceDate: [(data.invoiceDate == undefined) ? '' : data.invoiceDate, [Validators.required]],
-      finalAmount: [(data.finalAmount == undefined) ? 0 : parseInt(data.finalAmount), [Validators.required]],
-      discount: [(parseInt(data.discount) == undefined) ? 0 : data.discount, [Validators.required]],
-      dueDate: [(data.dueDate == undefined) ? '' : data.dueDate, [Validators.required]],
-      footnote: [(data.footnote == undefined) ? '' : data.footnote, [Validators.required]],
-      terms: [(data.terms == undefined) ? '' : data.terms, [Validators.required]],
       taxStatus: [(data.igst != undefined) ? 'IGST(18%)' : 'SGST(9%)|CGST(9%)'],
       balanceDue: [(data.balanceDue == undefined) ? '' : data.balanceDue],
       serviceName: [(data.serviceName == undefined) ? '' : data.serviceName],
       subTotal: [(data.subTotal == undefined) ? '' : data.subTotal],
+      footnote:[(data.footnote == undefined) ? '' : data.footnote, [Validators.required]],
+      terms:[(data.terms == undefined) ? '' : data.terms, [Validators.required]],
       igstTaxAmount: [data.igstTaxAmount],
-      auto: [(data.auto == undefined) ? '' : false],
+      auto: [(data.auto == undefined) ? '' : data.auto],
       advisorBillerProfileId: [(data.advisorBillerProfileId == undefined) ? '' : data.advisorBillerProfileId],
       clientBillerId: [(data.clientBillerId == undefined) ? '' : data.clientBillerId],
       clientId: [(data.clientId == undefined) ? '' : data.clientId],
@@ -226,11 +227,15 @@ export class InvoiceComponent implements OnInit {
 
     this.getFormControledit().clientName.maxLength = 10;
     this.getFormControledit().billerAddress.maxLength = 150;
-    this.getFormControledit().billingAddress.maxLength = 150;
+     this.getFormControledit().billingAddress.maxLength = 150;
     this.getFormControledit().invoiceNumber.maxLength = 10;
     this.getFormControledit().footnote.maxLength = 100;
     this.getFormControledit().terms.maxLength = 100;
-
+    if(data.auto == true){
+      this.editPayment.controls.isServiceName.disable()
+    }
+    this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value))?0:this.editPayment.controls.finalAmount.value;
+    this.discount = (isNaN(this.editPayment.controls.finalAmount.value))?0:this.editPayment.controls.discount.value;
   }
 
   getInvoiceDataRes(data) {
@@ -250,6 +255,10 @@ export class InvoiceComponent implements OnInit {
     console.log('getClientListRes', data.payees);
     this.clientList = data.payees;
     this.defaultVal = data;
+    this.editPayment.controls.billerAddress.setValue(data.biller.billerAddress);
+    this.editPayment.controls.footnote.setValue(data.biller.footnote);
+    this.editPayment.controls.terms.setValue(data.biller.terms);
+    this.editPayment.controls.invoiceNumber.setValue(data.invoiceNumber);
   }
 
   getServicesList() {
@@ -312,13 +321,13 @@ export class InvoiceComponent implements OnInit {
   getInvoiceData(data) {
     this.copyStoreData = data;
     this.storeData = data;
-    this.auto = (this.storeData.auto == false);
+    this.auto = this.storeData.auto
     console.log(this.storeData);
     this.editPayment = this.fb.group({
       id: [data.id],
       clientName: [data.clientName, [Validators.required]],
       billerAddress: [data.billerAddress, [Validators.required]],
-      billingAddress: [data.billingAddress, [Validators.required]],
+      billingAddress: [(data.billingAddress == undefined)? '':data.billingAddress , [Validators.required]],
       invoiceNumber: [data.invoiceNumber, [Validators.required]],
       invoiceDate: [data.invoiceDate, [Validators.required]],
       finalAmount: [(parseInt(data.finalAmount) == undefined) ? 0 : parseInt(data.finalAmount), [Validators.required]],
@@ -340,6 +349,12 @@ export class InvoiceComponent implements OnInit {
     this.getFormControledit().invoiceNumber.maxLength = 10;
     this.getFormControledit().footnote.maxLength = 100;
     this.getFormControledit().terms.maxLength = 100;
+    this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value))?0:this.editPayment.controls.finalAmount.value;
+    this.discount = (isNaN(this.editPayment.controls.finalAmount.value))?0:this.editPayment.controls.discount.value;
+    this.auto = this.editPayment.controls.auto.value
+    if(data.auto == true){
+      this.editPayment.controls.serviceName.disable()
+    }
   }
 
   changeTaxStatus(changeTaxStatus) {
@@ -401,6 +416,7 @@ export class InvoiceComponent implements OnInit {
       const obj = {
         id: this.editPayment.value.id,
         clientName: this.editPayment.value.clientName,
+        auto: this.editPayment.value.auto,
         billerAddress: this.editPayment.value.billerAddress,
         billingAddress: this.editPayment.value.billingAddress,
         finalAmount: this.editPayment.value.finalAmount,
@@ -576,6 +592,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   closeEditInv() {
+    // this.editPayment.reset();
     if (this.invoiceValue == 'EditInInvoice' || this.invoiceValue == 'edit') {
       this.valueChange.emit(this.invoiceValue);
     } else {
