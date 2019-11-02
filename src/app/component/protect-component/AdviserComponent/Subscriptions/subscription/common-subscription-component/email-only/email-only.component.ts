@@ -1,12 +1,14 @@
-import { Component, OnInit, forwardRef, Input, EventEmitter, Output } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { SubscriptionService } from '../../../subscription.service';
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {SubscriptionService} from '../../../subscription.service';
 
 @Component({
   selector: 'app-email-only',
-  templateUrl: './email-only.component.html',
+  // templateUrl: './email-only.component.html',
+  templateUrl: './invoice-pdf.html',
+
   styleUrls: ['./email-only.component.scss'],
   providers: [
     {
@@ -21,18 +23,20 @@ export class EmailOnlyComponent implements OnInit {
   dataSub: any;
   storeData: any;
 
-  constructor(public eventService:EventService,public subInjectService:SubscriptionInject,public subscription:SubscriptionService) { 
+  constructor(public eventService: EventService, public subInjectService: SubscriptionInject, public subscription: SubscriptionService) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
-      data=>this.getcommanFroalaData(data)
+      data => this.getcommanFroalaData(data)
     );
   }
+
   @Input() emailSend;
   @Input() emailSendfooter;
   @Input() emailDocumentSend;
   @Input() emailDocument;
   @Output() valueChange = new EventEmitter();
   @Input() quotationData;
-  config: Object = {
+
+  config = {
     charCounterCount: false
   };
 
@@ -41,68 +45,57 @@ export class EmailOnlyComponent implements OnInit {
     console.log(this.emailDocumentSend);
     console.log(this.quotationData);
   }
+
 // Begin ControlValueAccesor methods.
-onChange = (_) => {
-}
-onTouched = () => {
-}
+  onChange = (_) => {
+  }
+  onTouched = () => {
+  }
 
 // Form model content changed.
-writeValue(content: any): void {
-  this.model = content;
-}
-
-registerOnChange(fn: (_: any) => void): void {
-  this.onChange = fn;
-}
-
-registerOnTouched(fn: () => void): void {
-  this.onTouched = fn;
-}
-Close(value) {
-  this.valueChange.emit(this.emailSend);
-}
-openEmailQuot(value,state)
-{
-  this.eventService.sliderData(value);
-  this.subInjectService.rightSliderData(state)
- // this.subInjectService.addSingleProfile(data)
-}
-getcommanFroalaData(data){
-  console.log(data)
-  this.storeData=data;
-}
-saveData(data)
-  {
-    console.log(data);
-    this.storeData.documentText=data;
+  writeValue(content: any): void {
+    this.model = content;
   }
-  save(){
-    console.log("here is saved data",this.storeData);
-    if(this.emailSend=='emailQuotation'){
-      this.updateDataQuot(this.storeData);
-    }else{
-      this.updateData(this.storeData);
-    }
+
+  registerOnChange(fn: (_: any) => void): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+
+  Close(value) {
+    this.valueChange.emit(this.emailSend);
+  }
+
+  openEmailQuot(value, state) {
+    this.eventService.sliderData(value);
+    this.subInjectService.rightSliderData(state);
+    // this.subInjectService.addSingleProfile(data)
+  }
+
+  getcommanFroalaData(data) {
+    console.log(data);
+    this.storeData = data;
+  }
+/*
+
+  saveData(data) {
+    console.log(data);
+    this.storeData.documentText = data;
+  }
+*/
+
+  save() {
+    console.log('here is saved data', this.storeData);
+    this.updateData(this.storeData);
     this.Close('close');
   }
-  updateDataQuot(data) {
-    const obj = {
-      id: data.id, // pass here advisor id for Invoice advisor
-      docText: data.documentText,
-      quotation:true
-    };
-    // this.subscription.updateQuotationData(obj).subscribe(
-    //   data => this.getResponseData(data)
-    // );
 
-    this.subscription.updateDocumentData(obj).subscribe(
-      data => this.getResponseData(data)
-    );
-  }
   updateData(data) {
     const obj = {
-      id: data.id, // pass here advisor id for Invoice advisor
+      id: data.documentRepositoryId, // pass here advisor id for Invoice advisor
       docText: data.documentText
     };
     // this.subscription.updateQuotationData(obj).subscribe(
@@ -113,7 +106,13 @@ saveData(data)
       data => this.getResponseData(data)
     );
   }
-  getResponseData(data){
+
+  getResponseData(data) {
     console.log(data);
+  }
+
+  saveData(data) {
+    console.log(data);
+    this.storeData = data;
   }
 }
