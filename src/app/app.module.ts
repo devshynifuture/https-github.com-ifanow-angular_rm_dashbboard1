@@ -100,7 +100,6 @@ import {ChartModule} from 'angular-highcharts';
 import { IncomeComponent } from './component/protect-component/customers/component/customer/accounts/income/income.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { RadioGroupDirectiveDirective } from './common/radio-group-directive.directive';
-import { DocumentsComponent } from './component/protect-component/customers/component/customer/accounts/documents/documents.component';
 import { SingleDocumentViewComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/single-document-view/single-document-view.component';
 
 
@@ -116,6 +115,7 @@ import { SingleDocumentViewComponent } from './component/protect-component/Advis
 // import {AddProfileSummaryComponent} from './component/protect-component/customers/component/common-component/add-profile-summary/add-profile-summary.component';
 // import {IncomeComponent} from './component/protect-component/customers/component/customer/accounts/income/income.component';
 import { MomentDateModule} from '@angular/material-moment-adapter';
+import { LibilitiesRightComponent } from './component/protect-component/customers/component/customer/accounts/liabilities/libilities-right/libilities-right.component';
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 @NgModule({
@@ -203,11 +203,9 @@ import { MomentDateModule} from '@angular/material-moment-adapter';
     CustomDialogContainerComponent,
     BaseComponent,
     RadioGroupDirectiveDirective,
-    DocumentsComponent,
-    SingleDocumentViewComponent
+    SingleDocumentViewComponent,
+    LibilitiesRightComponent,
   
-
-
   ],
   imports: [
     BrowserModule,

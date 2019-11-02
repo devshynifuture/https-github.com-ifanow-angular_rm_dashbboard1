@@ -15,6 +15,7 @@ import {AddProfileSummaryComponent} from './component/common-component/add-profi
 import {SchemeLevelTransactionComponent} from './component/common-component/scheme-level-transaction/scheme-level-transaction.component';
 // import { LiabilityrightComponent } from './component/customer/accounts/liabilities/liabilityright/liabilityright.component';
 import {MaterialModule} from '../../../material/material';
+import { DocumentsComponent } from './component/customer/accounts/documents/documents.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import {MaterialModule} from '../../../material/material';
     ExpensesComponent,
     AddProfileSummaryComponent,
     IncomeComponent,
+    DocumentsComponent
     ],
   imports: [
     CommonModule,
