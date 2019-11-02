@@ -131,12 +131,29 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
   }
   save(){
     console.log("here is saved data",this.storeData);
-    this.updateData(this.storeData);
-    this.Close('close');
+    if(this.changeFooter=='emailQuotation'){
+      this.updateDataQuot(this.storeData);
+    }else{
+      this.updateData(this.storeData);
+    }    this.Close('close');
+  }
+  updateDataQuot(data) {
+    const obj = {
+      id: data.id, // pass here advisor id for Invoice advisor
+      docText: data.documentText,
+      quotation:true
+    };
+    // this.subscription.updateQuotationData(obj).subscribe(
+    //   data => this.getResponseData(data)
+    // );
+
+    this.subscription.updateDocumentData(obj).subscribe(
+      data => this.getResponseData(data)
+    );
   }
   updateData(data) {
     const obj = {
-      id: data.documentRepositoryId, // pass here advisor id for Invoice advisor
+      id: data.id, // pass here advisor id for Invoice advisor
       docText: data.documentText
     };
     // this.subscription.updateQuotationData(obj).subscribe(
