@@ -87,27 +87,31 @@ import {ConsentTandCComponent} from './component/protect-component/AdviserCompon
 import {CommonFroalaComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/common-froala/common-froala.component';
 import {ChangePayeeComponent} from './component/change-payee/change-payee.component';
 import {CustomHtmlComponent} from './common/customhtml/customhtml/custom-html.component';
-import {CustomerComponent} from './component/protect-component/customers/component/customer/customer.component';
-import {AccountsComponent} from './component/protect-component/customers/component/customer/accounts/accounts.component';
-import {SummaryComponent} from './component/protect-component/customers/component/customer/accounts/summary/summary.component';
 import {CustomFormInputComponent} from './common/custom-form-input/custom-form-input.component';
-import {AssetsComponent} from './component/protect-component/customers/component/customer/accounts/assets/assets.component';
+
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {FroalaComponent} from './component/protect-component/common-component/froala/froala.component';
 import {EmailOnlyComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-only/email-only.component';
 import {HowItWorksComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/how-it-works/how-it-works.component';
 import {DialogContainerComponent} from './common/dialog-container/dialog-container.component';
-import {LiabilitiesComponent} from './component/protect-component/customers/component/customer/accounts/liabilities/liabilities.component';
-import {InsuranceComponent} from './component/protect-component/customers/component/customer/accounts/insurance/insurance.component';
-import {ExpensesComponent} from './component/protect-component/customers/component/customer/accounts/expenses/expenses.component';
-import {AddProfileSummaryComponent} from './component/protect-component/customers/component/common-component/add-profile-summary/add-profile-summary.component';
 import {CustomDialogContainerComponent} from './common/custom-dialog-container/custom-dialog-container.component';
 import {BaseComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/base/base.component';
 import {ChartModule} from 'angular-highcharts';
-import { IncomeComponent } from './component/protect-component/customers/component/customer/accounts/income/income.component';
-import { NgCircleProgressModule } from 'ng-circle-progress';
-import { RadioGroupDirectiveDirective } from './common/radio-group-directive.directive';
-import { SingleDocumentViewComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/single-document-view/single-document-view.component';
+import {NgCircleProgressModule} from 'ng-circle-progress';
+import {RadioGroupDirectiveDirective} from './common/radio-group-directive.directive';
+import {SingleDocumentViewComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/single-document-view/single-document-view.component';
+
+// import {CustomerComponent} from './component/protect-component/customers/component/customer/customer.component';
+// import {AccountsComponent} from './component/protect-component/customers/component/customer/accounts/accounts.component';
+// import {SummaryComponent} from './component/protect-component/customers/component/customer/accounts/summary/summary.component';
+// import {AssetsComponent} from './component/protect-component/customers/component/customer/accounts/assets/assets.component';
+// import {LiabilitiesComponent} from './component/protect-component/customers/component/customer/accounts/liabilities/liabilities.component';
+// import {InsuranceComponent} from './component/protect-component/customers/component/customer/accounts/insurance/insurance.component';
+// import {ExpensesComponent} from './component/protect-component/customers/component/customer/accounts/expenses/expenses.component';
+// import {AddProfileSummaryComponent} from './component/protect-component/customers/component/common-component/add-profile-summary/add-profile-summary.component';
+// import {IncomeComponent} from './component/protect-component/customers/component/customer/accounts/income/income.component';
+import { MomentDateModule} from '@angular/material-moment-adapter';
+// import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -185,25 +189,18 @@ import { SingleDocumentViewComponent } from './component/protect-component/Advis
     CustomHtmlComponent,
     ConsentTandCComponent,
     CommonFroalaComponent,
-    CustomerComponent,
-    AccountsComponent,
-    SummaryComponent,
     ChangePayeeComponent,
     CustomFormInputComponent,
-    AssetsComponent,
     FroalaComponent,
     EmailOnlyComponent,
     HowItWorksComponent,
     DialogContainerComponent,
-    LiabilitiesComponent,
-    InsuranceComponent,
-    ExpensesComponent,
-    AddProfileSummaryComponent,
     CustomDialogContainerComponent,
     BaseComponent,
-    IncomeComponent,
     RadioGroupDirectiveDirective,
-    SingleDocumentViewComponent
+    SingleDocumentViewComponent,
+
+
   ],
   imports: [
     BrowserModule,
@@ -213,6 +210,7 @@ import { SingleDocumentViewComponent } from './component/protect-component/Advis
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MomentDateModule,
     // CommonSubscriptionComponent,
     SlimLoadingBarModule.forRoot(),
     FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
@@ -233,7 +231,7 @@ import { SingleDocumentViewComponent } from './component/protect-component/Advis
     ConfirmDialogComponent, SubscriptionPopupComponent,
     DeleteSubscriptionComponent, HowToUseDialogComponent,
     AddDocumentComponent, PreferenceEmailInvoiceComponent,
-    ModifyFeeDialogComponent, ConsentTandCComponent , HowItWorksComponent]
+    ModifyFeeDialogComponent, ConsentTandCComponent, HowItWorksComponent]
 })
 export class AppModule {
 }
