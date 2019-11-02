@@ -115,6 +115,8 @@ import { SingleDocumentViewComponent } from './component/protect-component/Advis
 // import {AddProfileSummaryComponent} from './component/protect-component/customers/component/common-component/add-profile-summary/add-profile-summary.component';
 // import {IncomeComponent} from './component/protect-component/customers/component/customer/accounts/income/income.component';
 import { MomentDateModule} from '@angular/material-moment-adapter';
+import { FixedFeeComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/fixed-fee/fixed-fee.component';
+import { VariableFeeComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/variable-fee/variable-fee.component';
 import { LibilitiesRightComponent } from './component/protect-component/customers/component/customer/accounts/liabilities/libilities-right/libilities-right.component';
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -204,6 +206,9 @@ import { LibilitiesRightComponent } from './component/protect-component/customer
     BaseComponent,
     RadioGroupDirectiveDirective,
     SingleDocumentViewComponent,
+    FixedFeeComponent,
+    VariableFeeComponent,
+
     LibilitiesRightComponent,
   
   ],
