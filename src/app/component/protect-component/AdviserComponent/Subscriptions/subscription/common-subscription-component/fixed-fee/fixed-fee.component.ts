@@ -44,6 +44,7 @@ export class FixedFeeComponent implements OnInit {
   Close(state) {
     this.ngOnInit();
     this.subInjectService.rightSideData(state)
+    this.subInjectService.rightSliderData(state)
     this.fixedFeeStructureForm.reset();
   }
   saveFixedModifyFees() {
