@@ -7,47 +7,65 @@ import {EnumServiceService} from '../../enum-service.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material';
 import {INT_TYPE} from '@angular/compiler/src/output/output_ast';
-
+import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'LL',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+export const APP_DATE_FORMATS = {
+  parse: {
+    dateInput: {month: 'short', year: 'numeric', day: 'numeric'},
+  },
+  display: {
+    dateInput: 'input',
+    monthYearLabel: {year: 'numeric', month: 'numeric'},
+    dateA11yLabel: {
+      year: 'numeric', month: 'long', day: 'numeric'
+    },
+    monthYearA11yLabel: {year: 'numeric', month: 'long'},
+  }
+};
+export const MY_FORMATS2 = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 export interface PeriodicElement {
   date: string;
   reference: string;
   paymentMode: string;
   amount: number;
 }
-
-// export class TableStickyHeaderExample {
-//   displayedColumns1 = ['position', 'name', 'weight', 'symbol'];
-//   dataSource1 = ELEMENT_DATA1;
-// }
-
-// export interface PeriodicElement1 {
-//   name: string;
-//   position: number;
-//   weight: number;
-//   symbol: string;
-// }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {date: '25/08/2019', reference: 'Hydrogen', paymentMode: 'cash', amount: 1000},
-  {date: '25/08/2019', reference: 'Helium', paymentMode: 'nefty', amount: 4000},
-  {date: '25/08/2019', reference: 'Lithium', paymentMode: 'fhfdh', amount: 400},
-];
-// const ELEMENT_DATA: PeriodicElement[] = [
-//   {
-//     document: 'Scope of work',
-//     plan: 'Starter plan',
-//     date: '25/08/2019',
-//     sdate: '25/08/2019',
-//     cdate: '25/08/2019',
-//     status: 'READY TO SEND'
-//   },
-
-// ];
-
 @Component({
   selector: 'app-invoice',
   templateUrl: './invoice.component.html',
-  styleUrls: ['./invoice.component.scss']
+  styleUrls: ['./invoice.component.scss'],
+  providers: [
+    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
+    // {
+    //   provide: DateAdapter,
+    //   useClass: MomentDateAdapter,
+    //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    // },
+    // { provide: MAT_DATE_LOCALE, useValue: 'en' },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+  ],
+
 })
 
 export class InvoiceComponent implements OnInit {
@@ -68,6 +86,7 @@ export class InvoiceComponent implements OnInit {
   ischargeValid: boolean;
   istdsValid: boolean;
   ismodeValid: boolean;
+  isgstValid:boolean;
   isClientName = false;
   isServiceName = false;
   isInvoiceNumber = false;
@@ -88,7 +107,7 @@ export class InvoiceComponent implements OnInit {
   editAdd1;
   editAdd2;
   dataSource;
-  displayedColumns: string[] = ['date', 'reference', 'paymentMode', 'amount'];
+  displayedColumns: string[] = ['date', 'reference', 'paymentMode', 'amount','icons'];
   // dataSource = ELEMENT_DATA;
   feeCollectionMode: any;
   formObj: [{}];
@@ -101,6 +120,7 @@ export class InvoiceComponent implements OnInit {
   finAmountC: number;
   finAmountS: number;
   defaultVal: any;
+  editFormData: boolean;
 
   constructor(public enumService: EnumServiceService, public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
@@ -154,11 +174,6 @@ export class InvoiceComponent implements OnInit {
     
     console.log("data",data);
     this.dataSource=data;
-    // this.feeCollectionMode.forEach(o => {
-    //   if(o.value==this.dataSource.paymentMode){
-    //    this.dataSource.paymentMode=o.name
-    //   }
-    //  });
      this.feeCollectionMode.forEach(o => {
       o.value = parseInt(o.value);
       this.dataSource.forEach(sub =>
@@ -277,16 +292,18 @@ export class InvoiceComponent implements OnInit {
     console.log('payee data', data);
     this.rPayment = this.fb.group({
       amountReceived: [data.amountReceived, [Validators.required]],
-      charges: [data.charges, [Validators.required]],
+      chargesIfAny: [data.chargesIfAny, [Validators.required]],
       tds: [data.tds, [Validators.required]],
-      paymentDate: [data.paymentDate],
+      paymentDate: [data.paymentDate ,[Validators.required]],
       paymentMode: [data.paymentMode, [Validators.required]],
-      gstTreatment: [data.gstTreatment],
-      notes: [data.notes]
+      gstTreatment: [data.gstTreatment,[Validators.required]],
+      notes: [data.notes],
+      id:[data.id],
+      editFormData:[true]
     });
 
     this.getFormControl().amountReceived.maxLength = 10;
-    this.getFormControl().charges.maxLength = 10;
+    this.getFormControl().chargesIfAny.maxLength = 10;
     this.getFormControl().tds.maxLength = 10;
     this.getFormControl().notes.maxLength = 40;
 
@@ -431,11 +448,11 @@ export class InvoiceComponent implements OnInit {
     return this.rPayment.controls;
   }
 
-  saveFormData(state) {
+  saveFormData() {
     if (this.rPayment.controls.amountReceived.invalid) {
       this.isamountValid = true;
       return;
-    } else if (this.rPayment.controls.charges.invalid) {
+    } else if (this.rPayment.controls.chargesIfAny.invalid) {
       this.ischargeValid = true;
       return;
     } else if (this.rPayment.controls.tds.invalid) {
@@ -446,12 +463,14 @@ export class InvoiceComponent implements OnInit {
       return;
     } else if (this.rPayment.controls.paymentDate.invalid) {
       this.isdateValid = true;
-    } else {
+    } if(this.rPayment.controls.gstTreatment.invalid){
+      this.isgstValid=true;
+    }else {
       this.formObj = [{
         advisorId: this.advisorId,
         // advisorId: 12345,
         amountReceived: this.rPayment.controls.amountReceived.value,
-        chargeIfAny: this.rPayment.controls.charges.value,
+        chargeIfAny: this.rPayment.controls.chargesIfAny.value,
         TDS: this.rPayment.controls.tds.value,
         paymentDate: this.rPayment.controls.paymentDate.value,
         paymentMode: this.rPayment.controls.paymentMode.value,
@@ -462,8 +481,6 @@ export class InvoiceComponent implements OnInit {
     }
     const ELEMENT_DATA = this.formObj;
     this.dataSource = ELEMENT_DATA;
-      console.log('form data', this.formObj);
-    console.log(" this.storeData", this.storeData);
     this.feeCollectionMode.forEach(o => {
      if(o.name==this.dataSource[0].paymentMode){
       this.dataSource[0].paymentMode=o.value
@@ -473,8 +490,19 @@ export class InvoiceComponent implements OnInit {
     this.dataSource[0].chargeIfAny = parseInt(this.dataSource[0].chargeIfAny);
     this.dataSource[0].paymentMode = parseInt(this.dataSource[0].paymentMode);
     this.dataSource[0].paymentDate = this.dataSource[0].paymentDate.toISOString().slice(0,10);
-
-    let obj={
+    if(this.editFormData!=undefined){
+        let obj={
+        "id":this.rPayment.controls.id.value,
+        "paymentMode":this.dataSource[0].paymentMode,
+        "amountReceived":this.dataSource[0].amountReceived,
+        "chargesIfAny":this.dataSource[0].chargeIfAny,
+        "notes":this.dataSource[0].notes
+      }
+      this.subService.editPaymentReceive(obj).subscribe(
+        data => this.getSubStagesRecordResponse(data)
+      );
+    }else{
+      let obj={
         "invoiceId":this.storeData.id,
         "paymentMode":this.dataSource[0].paymentMode,
         "amountReceived":this.dataSource[0].amountReceived,
@@ -488,6 +516,8 @@ export class InvoiceComponent implements OnInit {
       data => this.getSubStagesRecordResponse(data)
     );
  
+    }
+   
   }
   getSubStagesRecordResponse(data)
   {
@@ -515,9 +545,14 @@ export class InvoiceComponent implements OnInit {
     this.rPayment.reset();
 
   }
-
+  editForm(data){
+    this.editFormData=true;
+    this.showRecord = true;
+    this.getRecordPayment(data);
+  }
   cancel() {
     this.showRecord = false;
+    this.rPayment.reset();
   }
 
   formatter(data) {
@@ -528,6 +563,12 @@ export class InvoiceComponent implements OnInit {
   passInvoice(data, event) {
     console.log(data);
     this.storeData = data;
+    let obj = {
+      invoiceId : data.id
+    }
+     this.subService.getPaymentReceive(obj).subscribe(
+      data => this.getRes(data)
+    );
   }
 
   editInvoice() {
