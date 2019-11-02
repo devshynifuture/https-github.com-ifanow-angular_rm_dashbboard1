@@ -75,6 +75,7 @@ export class VariableFeeComponent implements OnInit {
   Close(state) {
     this.ngOnInit();
     this.subInjectService.rightSideData(state)
+    this.subInjectService.rightSliderData(state)
     this.variableFeeStructureForm.reset();
     console.log(this.createSubData)
   }
