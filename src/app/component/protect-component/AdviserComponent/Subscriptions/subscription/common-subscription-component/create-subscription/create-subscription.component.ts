@@ -56,6 +56,7 @@ export const MY_FORMATS2 = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
+
 @Component({
   selector: 'app-create-subscription',
   templateUrl: './create-subscription.component.html',
@@ -65,19 +66,30 @@ export const MY_FORMATS2 = {
   ],
 })
 export class CreateSubscriptionComponent implements OnInit {
-  subFeeMode: void;
+  @Input() subFeeMode;
+
   constructor(private enumService: EnumServiceService, public subInjectService: SubscriptionInject,
               private eventService: EventService, private fb: FormBuilder, private subService: SubscriptionService) {
     this.subInjectService.singleProfileData.subscribe(
       data => this.getSubStartDetails(data)
     );
     this.eventService.sidebarSubscribeData.subscribe(
-      data=>this.subFeeMode=data
-    )
+      data => this.subFeeMode = data
+    );
     // this.subInjectService.ta
   }
 
-  @Input() modifyFeeTabChange;
+  inputData;
+
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    this.getSubStartDetails(data);
+  }
+
+  get data() {
+    return this.inputData;
+  }
 
   @ViewChild('stepper', {static: false}) stepper: MatStepper;
   feeStructureData;
@@ -122,13 +134,15 @@ export class CreateSubscriptionComponent implements OnInit {
   }
 
   goForward(/*stepper: MatStepper*/) {
-    this.stepper.next();
+    if (this.stepper) {
+      this.stepper.next();
+    }
     console.log(this.subscriptionDetails);
   }
 
   getSubStartDetails(data) {
     this.clientData = data;
-    console.log(this.clientData, 'client Data');
+    console.log('client Data: ', this.clientData);
     if (data.subscriptionPricing) {
       this.advisorId = AuthService.getAdvisorId();
       const obj = {
@@ -145,8 +159,6 @@ export class CreateSubscriptionComponent implements OnInit {
       this.goForward();
       console.log(this.feeStructureFormData, 'feeStructureData');
     }
-
-
   }
 
   select(value, data) {
