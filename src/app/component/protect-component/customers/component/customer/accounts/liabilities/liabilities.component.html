@@ -91,7 +91,7 @@
               </button>
               <mat-menu #menu1="matMenu" class="add-new">
                 <button mat-menu-item class="b-b">
-                  <div class="row">
+                  <div (click)="openPortfolioSummary('portfolioSummary','open')" class="row">
                     <div class="col-md-2 pr-8 text-right">
                       <img src="assets/images/svg/dark-three-dot.svg">
                     </div>
