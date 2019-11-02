@@ -1293,10 +1293,10 @@
                  <h5 class="m-0">SGST(9%)</h5>
               </div>
               <div class="col-md-2 p-0" *ngIf="taxStatus == 'IGST(18%)'">
-                 <h5  class="m-0 text-right pr-8">₹{{(18/100)*finalAmount || '0'}}</h5>
+                 <h5  class="m-0 text-right pr-8">₹{{18/100*(finalAmount-discount) || '0'}}</h5>
               </div>
               <div class="col-md-2 p-0" *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'">
-                 <h5  class="m-0 text-right pr-8">₹{{(9/100)*finalAmount || '0'}}</h5>
+                 <h5  class="m-0 text-right pr-8">₹{{9/100*(finalAmount-discount) || '0'}}</h5>
               </div>
            </div>
            <div class="row pt-20 pb-12">
@@ -1305,7 +1305,7 @@
                  <h5 class="m-0">CGST(9%)</h5>
               </div>
               <div class="col-md-2 p-0" *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'">
-                 <h5  class="m-0 text-right pr-8">₹{{(9/100)*finalAmount || '0'}}</h5>
+                 <h5  class="m-0 text-right pr-8">₹{{9/100*(finalAmount-discount) || '0'}}</h5>
               </div>
            </div>
            <div class="row pb-8">
@@ -1314,7 +1314,7 @@
                  <h5 class="m-0 text-black pt-8 f-500">Total</h5>
               </div>
               <div class="col-md-2 bt-grey p-0">
-                 <h5 class="m-0 text-right pr-8 pt-8 text-black f-500" >{{18/100*(finalAmount-discount) || '0'}}</h5>
+                 <h5 class="m-0 text-right pr-8 pt-8 text-black f-500" >{{(finalAmount-discount)++(18/100*(finalAmount-discount)) || '0'}}</h5>
               </div>
            </div>
         </div>
