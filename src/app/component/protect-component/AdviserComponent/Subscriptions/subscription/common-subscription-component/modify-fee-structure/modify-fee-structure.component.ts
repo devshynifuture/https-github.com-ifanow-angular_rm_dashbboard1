@@ -18,7 +18,7 @@ export class ModifyFeeStructureComponent implements OnInit {
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subInject: SubscriptionInject,
               private enumService: EnumServiceService, private subService: SubscriptionService) {
-    this.subInject.singleProfileData.subscribe(
+    this.subInjectService.singleProfileData.subscribe(
       data => this.getSubscribeData(data)
     );
   }
