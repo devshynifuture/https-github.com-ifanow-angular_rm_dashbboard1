@@ -69,6 +69,7 @@ export interface PeriodicElement {
 })
 
 export class InvoiceComponent implements OnInit {
+  discount: any;
   [x: string]: any;
   auto: boolean;
   taxStatus: any;
@@ -132,13 +133,14 @@ export class InvoiceComponent implements OnInit {
       data => this.getRecordPayment(data)
     );
   }
-
+ 
   ngOnInit() {
     
     this.advisorId = AuthService.getAdvisorId();
     this.getClients();
     this.getServicesList();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
+    console.log('this.feeCollectionMode',this.feeCollectionMode);
     this.getPayReceive();
     console.log('this.invoiceSubscription', this.invoiceInSub);
     this.showRecord = false;
@@ -155,6 +157,11 @@ export class InvoiceComponent implements OnInit {
 
     }
   }
+  gstTreatment=[
+  {name: "Registered Business - Regular", value: 0},
+  {name: "Registered Business - Composition", value: 1},
+  {name: "Unregistered Business", value: 2}
+]
 
   keyPress(event: any) {
     const pattern = /[0-9\+\-\ ]/;
@@ -306,7 +313,7 @@ export class InvoiceComponent implements OnInit {
       tds: [data.tds, [Validators.required]],
       paymentDate: [data.paymentDate ,[Validators.required]],
       paymentMode: [data.paymentMode, [Validators.required]],
-      gstTreatment: [data.gstTreatment,[Validators.required]],
+      gstTreatment: [(data.gstTreatmentId == 1)?'Registered Business - Regular':(data.gstTreatmentId == 2)?'Registered Business - Composition':'Unregistered Business',[Validators.required]],
       notes: [data.notes],
       id:[data.id],
       editFormData:[true]
@@ -505,9 +512,16 @@ export class InvoiceComponent implements OnInit {
       this.dataSource[0].paymentMode=o.value
      }
     });
+    this.gstTreatment.forEach(o => {
+      if(o.name==this.dataSource[0].gstTreatment){
+       this.dataSource[0].gstTreatment=o.value
+      }
+     });
     this.dataSource[0].amountReceived = parseInt(this.dataSource[0].amountReceived);
     this.dataSource[0].chargeIfAny = parseInt(this.dataSource[0].chargeIfAny);
     this.dataSource[0].paymentMode = parseInt(this.dataSource[0].paymentMode);
+    this.dataSource[0].gstTreatment = parseInt(this.dataSource[0].gstTreatment);
+    this.dataSource[0].TDS = parseInt(this.dataSource[0].TDS);
     this.dataSource[0].paymentDate = this.dataSource[0].paymentDate.toISOString().slice(0,10);
     if(this.editFormData!=undefined){
         let obj={
@@ -515,7 +529,9 @@ export class InvoiceComponent implements OnInit {
         "paymentMode":this.dataSource[0].paymentMode,
         "amountReceived":this.dataSource[0].amountReceived,
         "chargesIfAny":this.dataSource[0].chargeIfAny,
-        "notes":this.dataSource[0].notes
+        "notes":this.dataSource[0].notes,
+        "tds":this.dataSource[0].TDS,
+        "gstTreatmentId":this.dataSource[0].gstTreatment
       }
       this.subService.editPaymentReceive(obj).subscribe(
         data => this.getSubStagesRecordResponse(data)
@@ -526,10 +542,13 @@ export class InvoiceComponent implements OnInit {
         "paymentMode":this.dataSource[0].paymentMode,
         "amountReceived":this.dataSource[0].amountReceived,
         "paymentDate":this.dataSource[0].paymentDate,
+        "tds":this.dataSource[0].TDS,
         "notes":this.dataSource[0].notes,
         "chargesIfAny":this.dataSource[0].chargeIfAny,
         "advisorId":this.dataSource[0].advisorId,
-        "referenceNumber":this.storeData.invoiceNumber
+        "referenceNumber":this.storeData.invoiceNumber,
+        "gstTreatmentId":this.dataSource[0].gstTreatment
+
     }
     this.subService.getSubscriptionCompleteStages(obj).subscribe(
       data => this.getSubStagesRecordResponse(data)
