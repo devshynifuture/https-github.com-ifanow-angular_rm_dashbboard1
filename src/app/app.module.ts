@@ -97,9 +97,13 @@ import {DialogContainerComponent} from './common/dialog-container/dialog-contain
 import {CustomDialogContainerComponent} from './common/custom-dialog-container/custom-dialog-container.component';
 import {BaseComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/base/base.component';
 import {ChartModule} from 'angular-highcharts';
-import {NgCircleProgressModule} from 'ng-circle-progress';
-import {RadioGroupDirectiveDirective} from './common/radio-group-directive.directive';
-import {SingleDocumentViewComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/single-document-view/single-document-view.component';
+import { IncomeComponent } from './component/protect-component/customers/component/customer/accounts/income/income.component';
+import { NgCircleProgressModule } from 'ng-circle-progress';
+import { RadioGroupDirectiveDirective } from './common/radio-group-directive.directive';
+import { SingleDocumentViewComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/single-document-view/single-document-view.component';
+
+
+
 
 // import {CustomerComponent} from './component/protect-component/customers/component/customer/customer.component';
 // import {AccountsComponent} from './component/protect-component/customers/component/customer/accounts/accounts.component';
@@ -200,9 +204,8 @@ import { LibilitiesRightComponent } from './component/protect-component/customer
     BaseComponent,
     RadioGroupDirectiveDirective,
     SingleDocumentViewComponent,
-    LibilitiesRightComponent
-
-
+    LibilitiesRightComponent,
+  
   ],
   imports: [
     BrowserModule,
