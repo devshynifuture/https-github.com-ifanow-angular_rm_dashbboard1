@@ -28,6 +28,11 @@ export class LiabilitiesComponent implements OnInit {
     // this.openFragment('', 'plan');
     this.open('openHelp', 'liabilityright');
   }
+  openPortfolioSummary(value,state)
+  {
+    this.subinject.rightSideData(state)
+    this.eventService.sidebarData(value)
+  }
 
   openFragment(singlePlan, data) {
     this.subinject.pushUpperData(singlePlan);

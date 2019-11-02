@@ -19,6 +19,7 @@
     "@angular/core": "~8.1.2",
     "@angular/forms": "~8.1.2",
     "@angular/material": "github:angular/material2-builds#8.2.x",
+    "@angular/material-moment-adapter": "^8.2.3",
     "@angular/platform-browser": "~8.1.2",
     "@angular/platform-browser-dynamic": "~8.1.2",
     "@angular/router": "~8.1.2",

@@ -100,6 +100,7 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
   deleteModal(value,data) {
     const dialogData = {
       data: value,
+      dataToShow:data,
       header: 'DELETE',
       body: 'Are you sure you want to delete the suscription?',
       body2: 'This cannot be undone',

@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-assets',
@@ -7,7 +9,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class AssetsComponent implements OnInit {
 
-  constructor() {
+  constructor(private subService:SubscriptionInject,private eventService:EventService) {
   }
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
@@ -80,6 +82,11 @@ datasource23 = ELEMENT_DATA23;
 
   getPrefixData(type) {
 
+  }
+  openPortfolioSummary(value,state)
+  {
+    this.subService.rightSideData(state)
+    this.eventService.sidebarData(value)
   }
 }
 

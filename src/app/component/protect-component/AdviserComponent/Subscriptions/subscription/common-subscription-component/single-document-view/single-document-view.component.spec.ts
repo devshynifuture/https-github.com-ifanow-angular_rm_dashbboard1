@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LiabilityrightComponent } from './liabilityright.component';
+import { SingleDocumentViewComponent } from './single-document-view.component';
 
-describe('LiabilityrightComponent', () => {
-  let component: LiabilityrightComponent;
-  let fixture: ComponentFixture<LiabilityrightComponent>;
+describe('SingleDocumentViewComponent', () => {
+  let component: SingleDocumentViewComponent;
+  let fixture: ComponentFixture<SingleDocumentViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LiabilityrightComponent ]
+      declarations: [ SingleDocumentViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LiabilityrightComponent);
+    fixture = TestBed.createComponent(SingleDocumentViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

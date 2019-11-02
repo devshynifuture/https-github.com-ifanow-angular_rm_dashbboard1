@@ -28,8 +28,8 @@
   <app-invoice *ngIf="subscriptionTab=='invoiceUpperSlider'"></app-invoice>
   <app-change-payee *ngIf="subscriptionTab=='changePayee'"></app-change-payee>
   <app-create-subscription *ngIf="subscriptionTab=='createSub'"></app-create-subscription>
-<app-liabilityright *ngIf="subscriptionTab=='liabilityright'"></app-liabilityright>
-  <!--  </div>-->
+<!-- <app-liabilityright *ngIf="subscriptionTab=='liabilityright'"></app-liabilityright> -->
+  <app-libilities-right *ngIf="subscriptionTab=='portfolioSummary'"></app-libilities-right>
 </app-custom-dialog-container>
 
 <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
