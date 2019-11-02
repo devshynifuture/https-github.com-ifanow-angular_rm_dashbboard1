@@ -25,6 +25,8 @@ import {SubscriptionInject} from '../../component/protect-component/AdviserCompo
 //
 export class DialogContainerComponent implements OnInit {
   invoiceHisData: any;
+  inputData;
+  fragmentData;
 
   constructor(private eventService: EventService, private subinject: SubscriptionInject) {
     this.eventService.overlayVisibleData.subscribe(
@@ -38,6 +40,7 @@ export class DialogContainerComponent implements OnInit {
     this.eventService.sidebarSubscribeData.subscribe(
       data => this.getFileResponseDataAum(data)
     );
+
     this.eventService.tabChangeData.subscribe(
       data => this.getSubscriptionTabChangeData(data)
     );
@@ -46,6 +49,15 @@ export class DialogContainerComponent implements OnInit {
         this.upperSliderData = data;
       }
     );
+    this.subinject.newRightSliderDataObs.subscribe((data) => {
+      this.fragmentData = data;
+      console.log('fragmentData dialog container: ', this.fragmentData);
+      this.getRightSliderData(this.fragmentData.state);
+      this.getFileResponseDataAum(this.fragmentData.Flag);
+      this.inputData = this.fragmentData.data;
+      // this
+
+    });
     // this.subinject.singleProfileData.subscribe(
     //   data =>this.getInvoiceHistoryData(data)
     // );

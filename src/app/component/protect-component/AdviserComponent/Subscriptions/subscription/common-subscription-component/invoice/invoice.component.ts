@@ -135,6 +135,7 @@ export class InvoiceComponent implements OnInit {
   }
  
   ngOnInit() {
+    
     this.advisorId = AuthService.getAdvisorId();
     this.getClients();
     this.getServicesList();
@@ -400,6 +401,7 @@ export class InvoiceComponent implements OnInit {
         dueDate: this.editPayment.value.dueDate,
         igst: (this.editPayment.value.taxStatus == 'IGST(18%)') ? 18 : null,
         cgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
+        sgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
         igstTaxAmount: (this.editPayment.value.taxStatus == 'IGST(18%)') ? this.finAmount : null,
         cgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountC : null,
         sgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountS : null,
@@ -435,6 +437,7 @@ export class InvoiceComponent implements OnInit {
         dueDate: this.editPayment.value.dueDate,
         igst: (this.editPayment.value.taxStatus == 'IGST(18%)') ? 18 : null,
         cgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
+        sgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
         igstTaxAmount: (this.editPayment.value.taxStatus == 'IGST(18%)') ? this.finAmount : null,
         cgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountC : null,
         sgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountS : null,
