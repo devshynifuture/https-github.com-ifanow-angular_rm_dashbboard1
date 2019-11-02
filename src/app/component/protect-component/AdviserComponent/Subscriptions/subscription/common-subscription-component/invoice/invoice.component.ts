@@ -7,47 +7,65 @@ import {EnumServiceService} from '../../enum-service.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material';
 import {INT_TYPE} from '@angular/compiler/src/output/output_ast';
-
+import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'LL',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+export const APP_DATE_FORMATS = {
+  parse: {
+    dateInput: {month: 'short', year: 'numeric', day: 'numeric'},
+  },
+  display: {
+    dateInput: 'input',
+    monthYearLabel: {year: 'numeric', month: 'numeric'},
+    dateA11yLabel: {
+      year: 'numeric', month: 'long', day: 'numeric'
+    },
+    monthYearA11yLabel: {year: 'numeric', month: 'long'},
+  }
+};
+export const MY_FORMATS2 = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 export interface PeriodicElement {
   date: string;
   reference: string;
   paymentMode: string;
   amount: number;
 }
-
-// export class TableStickyHeaderExample {
-//   displayedColumns1 = ['position', 'name', 'weight', 'symbol'];
-//   dataSource1 = ELEMENT_DATA1;
-// }
-
-// export interface PeriodicElement1 {
-//   name: string;
-//   position: number;
-//   weight: number;
-//   symbol: string;
-// }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {date: '25/08/2019', reference: 'Hydrogen', paymentMode: 'cash', amount: 1000},
-  {date: '25/08/2019', reference: 'Helium', paymentMode: 'nefty', amount: 4000},
-  {date: '25/08/2019', reference: 'Lithium', paymentMode: 'fhfdh', amount: 400},
-];
-// const ELEMENT_DATA: PeriodicElement[] = [
-//   {
-//     document: 'Scope of work',
-//     plan: 'Starter plan',
-//     date: '25/08/2019',
-//     sdate: '25/08/2019',
-//     cdate: '25/08/2019',
-//     status: 'READY TO SEND'
-//   },
-
-// ];
-
 @Component({
   selector: 'app-invoice',
   templateUrl: './invoice.component.html',
-  styleUrls: ['./invoice.component.scss']
+  styleUrls: ['./invoice.component.scss'],
+  providers: [
+    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
+    // {
+    //   provide: DateAdapter,
+    //   useClass: MomentDateAdapter,
+    //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    // },
+    // { provide: MAT_DATE_LOCALE, useValue: 'en' },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+  ],
+
 })
 
 export class InvoiceComponent implements OnInit {
@@ -68,6 +86,7 @@ export class InvoiceComponent implements OnInit {
   ischargeValid: boolean;
   istdsValid: boolean;
   ismodeValid: boolean;
+  isgstValid:boolean;
   isClientName = false;
   isServiceName = false;
   isInvoiceNumber = false;
@@ -88,7 +107,7 @@ export class InvoiceComponent implements OnInit {
   editAdd1;
   editAdd2;
   dataSource;
-  displayedColumns: string[] = ['date', 'reference', 'paymentMode', 'amount'];
+  displayedColumns: string[] = ['date', 'reference', 'paymentMode', 'amount','icons'];
   // dataSource = ELEMENT_DATA;
   feeCollectionMode: any;
   formObj: [{}];
@@ -101,6 +120,7 @@ export class InvoiceComponent implements OnInit {
   finAmountC: number;
   finAmountS: number;
   defaultVal: any;
+  editFormData: boolean;
 
   constructor(public enumService: EnumServiceService, public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
@@ -116,6 +136,7 @@ export class InvoiceComponent implements OnInit {
     this.getClients();
     this.getServicesList();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
+    this.getPayReceive();
     console.log('this.invoiceSubscription', this.invoiceInSub);
     this.showRecord = false;
     this.showEdit = false;
@@ -141,11 +162,39 @@ export class InvoiceComponent implements OnInit {
       event.preventDefault();
     }
   }
-
-  selectClient(c, data) {
-    console.log(c);
-    console.log('ssss', data);
-    console.log('getInvoiceDataRes', data);
+  getPayReceive(){
+     let obj = {
+      invoiceId : this.storeData.id
+    }
+    this.subService.getPaymentReceive(obj).subscribe(
+      data => this.getRes(data)
+    );
+  }
+  getRes(data){
+    
+    console.log("data",data);
+    this.dataSource=data;
+     this.feeCollectionMode.forEach(o => {
+      o.value = parseInt(o.value);
+      this.dataSource.forEach(sub =>
+        {
+         if(o.value==sub.paymentMode){
+           sub.paymentMode=o.name;
+         }
+        })
+    });
+  }
+  selectClient(c,data){
+    console.log(c)
+    console.log('ssss',data)
+    // let obj ={
+    //   id : service.clientId,
+    //   module : 2
+    // }
+    // this.subService.getInvoices(obj).subscribe(
+    //   data => this.getInvoiceDataRes(data)
+    // );
+    console.log('getInvoiceDataRes',data)
     this.storeData = data;
     this.auto = false;
     this.storeData.auto == false;
@@ -242,17 +291,19 @@ export class InvoiceComponent implements OnInit {
   getRecordPayment(data) {
     console.log('payee data', data);
     this.rPayment = this.fb.group({
-      amountReceive: [data.amountReceive, [Validators.required]],
-      charges: [data.charges, [Validators.required]],
+      amountReceived: [data.amountReceived, [Validators.required]],
+      chargesIfAny: [data.chargesIfAny, [Validators.required]],
       tds: [data.tds, [Validators.required]],
-      paymentDate: [data.paymentDate],
+      paymentDate: [data.paymentDate ,[Validators.required]],
       paymentMode: [data.paymentMode, [Validators.required]],
-      gstTreatment: [data.gstTreatment],
-      notes: [data.notes]
+      gstTreatment: [data.gstTreatment,[Validators.required]],
+      notes: [data.notes],
+      id:[data.id],
+      editFormData:[true]
     });
 
-    this.getFormControl().amountReceive.maxLength = 10;
-    this.getFormControl().charges.maxLength = 10;
+    this.getFormControl().amountReceived.maxLength = 10;
+    this.getFormControl().chargesIfAny.maxLength = 10;
     this.getFormControl().tds.maxLength = 10;
     this.getFormControl().notes.maxLength = 40;
 
@@ -397,11 +448,11 @@ export class InvoiceComponent implements OnInit {
     return this.rPayment.controls;
   }
 
-  saveFormData(state) {
-    if (this.rPayment.controls.amountReceive.invalid) {
+  saveFormData() {
+    if (this.rPayment.controls.amountReceived.invalid) {
       this.isamountValid = true;
       return;
-    } else if (this.rPayment.controls.charges.invalid) {
+    } else if (this.rPayment.controls.chargesIfAny.invalid) {
       this.ischargeValid = true;
       return;
     } else if (this.rPayment.controls.tds.invalid) {
@@ -412,12 +463,14 @@ export class InvoiceComponent implements OnInit {
       return;
     } else if (this.rPayment.controls.paymentDate.invalid) {
       this.isdateValid = true;
-    } else {
+    } if(this.rPayment.controls.gstTreatment.invalid){
+      this.isgstValid=true;
+    }else {
       this.formObj = [{
         advisorId: this.advisorId,
         // advisorId: 12345,
-        amountReceieve: this.rPayment.controls.amountReceive.value,
-        chargeIfAny: this.rPayment.controls.charges.value,
+        amountReceived: this.rPayment.controls.amountReceived.value,
+        chargeIfAny: this.rPayment.controls.chargesIfAny.value,
         TDS: this.rPayment.controls.tds.value,
         paymentDate: this.rPayment.controls.paymentDate.value,
         paymentMode: this.rPayment.controls.paymentMode.value,
@@ -428,154 +481,59 @@ export class InvoiceComponent implements OnInit {
     }
     const ELEMENT_DATA = this.formObj;
     this.dataSource = ELEMENT_DATA;
-    console.log('form data', this.formObj);
-    this.rPayment.reset();
-    console.log(' this.storeData', this.storeData);
-    const obj = {
-      advisorBillerProfileId: 0,
-      advisorId: 0,
-      amount: 0,
-      amountBeforeDiscount: 0,
-      amountReceived: 0,
-      auto: true,
-      balanceDue: 0,
-      billerAcNumber: 'string',
-      billerAddress: 'string',
-      billerBankName: 'string',
-      billerBranchAddress: 'string',
-      billerBranchCity: 'string',
-      billerBranchCountry: 'string',
-      billerBranchState: 'string',
-      billerBranchZipCode: 'string',
-      billerCity: 'string',
-      billerCountry: 'string',
-      billerGstin: 'string',
-      billerIfscCode: 'string',
-      billerName: 'string',
-      billerNameAsPerBank: 'string',
-      billerState: 'string',
-      billerZipCode: 'string',
-      billingAddress: 'string',
-      billingCity: 'string',
-      billingCountry: 'string',
-      billingState: 'string',
-      billingZipCode: 'string',
-      cgst: 0,
-      cgstTaxAmount: 0,
-      changesIfAny: 'string',
-      clientBillerId: 0,
-      clientGstin: 'string',
-      clientName: 'string',
-      discount: 0,
-      dueDate: '2019-10-31T05:07:15.014Z',
-      email: 'string',
-      finalAmount: 0,
-      footnote: 'string',
-      fromDate: '2019-10-31T05:07:15.014Z',
-      id: 0,
-      igst: 0,
-      igstTaxAmount: 0,
-      invoiceDate: '2019-10-31T05:07:15.014Z',
-      invoiceId: 0,
-      invoiceNumber: 'string',
-      isAuto: true,
-      logoUrl: 'string',
-      name: 'string',
-      notes: 'string',
-      payeeAddress: 'string',
-      paymentDate: '2019-10-31T05:07:15.014Z',
-      paymentMode: 0,
-      paymentTermId: 0,
-      placeOfSupply: 'string',
-      sac: 'string',
-      serviceDescription: 'string',
-      services: [
-        {
-          advisorId: 0,
-          amount: 0,
-          averageFees: 0,
-          billingMode: 0,
-          billingNature: 0,
-          createdDate: '2019-10-31T05:07:15.014Z',
-          debtAllocation: 0,
-          description: 'string',
-          docCount: 0,
-          equityAllocation: 0,
-          feeType: 'string',
-          feeTypeId: 0,
-          fromDate: '2019-10-31T05:07:15.014Z',
-          global: true,
-          id: 0,
-          lastUpdatedDate: '2019-10-31T05:07:15.014Z',
-          liquidAllocation: 0,
-          moduleCount: 0,
-          planCount: 0,
-          planId: 0,
-          planServiceMappingId: 0,
-          pricing: 0,
-          selected: true,
-          serviceCode: 'string',
-          serviceId: 0,
-          serviceName: 'string',
-          servicePricing: {
-            autoRenew: 0,
-            billEvery: 0,
-            billingCycle: 0,
-            billingMode: 0,
-            billingNature: 0,
-            description: 'string',
-            feeTypeId: 0,
-            id: 0,
-            name: 'string',
-            pricingList: [
-              {
-                asset: 'string',
-                assetClassId: 0,
-                debtAllocation: 0,
-                directRegular: 0,
-                equityAllocation: 0,
-                id: 0,
-                liquidAllocation: 0,
-                otherAssets: [
-                  0
-                ],
-                pricing: 0,
-                servicePolicyId: 0,
-                servicePricingId: 0,
-                serviceSubAssets: [
-                  {
-                    isActive: 0,
-                    servicePricingPolicyId: 0,
-                    subAssetClassId: 0,
-                    subAssetClassName: 'string'
-                  }
-                ]
-              }
-            ],
-            serviceId: 0,
-            subscriptionId: 0,
-            taxType: 0
-          },
-          serviceRepoId: 0,
-          toDate: '2019-10-31T05:07:15.015Z'
-        }
-      ],
-      sgst: 0,
-      sgstTaxAmount: 0,
-      status: 'string',
-      subTotal: 0,
-      subscriptionId: 0,
-      terms: 'string',
-      toDate: '2019-10-31T05:07:15.015Z'
-    };
+    this.feeCollectionMode.forEach(o => {
+     if(o.name==this.dataSource[0].paymentMode){
+      this.dataSource[0].paymentMode=o.value
+     }
+    });
+    this.dataSource[0].amountReceived = parseInt(this.dataSource[0].amountReceived);
+    this.dataSource[0].chargeIfAny = parseInt(this.dataSource[0].chargeIfAny);
+    this.dataSource[0].paymentMode = parseInt(this.dataSource[0].paymentMode);
+    this.dataSource[0].paymentDate = this.dataSource[0].paymentDate.toISOString().slice(0,10);
+    if(this.editFormData!=undefined){
+        let obj={
+        "id":this.rPayment.controls.id.value,
+        "paymentMode":this.dataSource[0].paymentMode,
+        "amountReceived":this.dataSource[0].amountReceived,
+        "chargesIfAny":this.dataSource[0].chargeIfAny,
+        "notes":this.dataSource[0].notes
+      }
+      this.subService.editPaymentReceive(obj).subscribe(
+        data => this.getSubStagesRecordResponse(data)
+      );
+    }else{
+      let obj={
+        "invoiceId":this.storeData.id,
+        "paymentMode":this.dataSource[0].paymentMode,
+        "amountReceived":this.dataSource[0].amountReceived,
+        "paymentDate":this.dataSource[0].paymentDate,
+        "notes":this.dataSource[0].notes,
+        "chargesIfAny":this.dataSource[0].chargeIfAny,
+        "advisorId":this.dataSource[0].advisorId,
+        "referenceNumber":this.storeData.invoiceNumber
+    }
     this.subService.getSubscriptionCompleteStages(obj).subscribe(
       data => this.getSubStagesRecordResponse(data)
     );
-    this.cancel();
+ 
+    }
+   
   }
-
-  getSubStagesRecordResponse(data) {
-    console.log('data', data);
+  getSubStagesRecordResponse(data)
+  {
+    console.log("data",data);
+    this.feeCollectionMode.forEach(o => {
+      if(o.value==this.dataSource[0].paymentMode){
+       this.dataSource[0].paymentMode=o.name
+      }
+     });
+     let obj = {
+      invoiceId : this.storeData.id
+    }
+     this.subService.getPaymentReceive(obj).subscribe(
+      data => this.getRes(data)
+    );
+    this.cancel();
   }
 
   OpenFeeCalc() {
@@ -584,10 +542,17 @@ export class InvoiceComponent implements OnInit {
 
   recordPayment() {
     this.showRecord = true;
-  }
+    this.rPayment.reset();
 
+  }
+  editForm(data){
+    this.editFormData=true;
+    this.showRecord = true;
+    this.getRecordPayment(data);
+  }
   cancel() {
     this.showRecord = false;
+    this.rPayment.reset();
   }
 
   formatter(data) {
@@ -598,6 +563,12 @@ export class InvoiceComponent implements OnInit {
   passInvoice(data, event) {
     console.log(data);
     this.storeData = data;
+    let obj = {
+      invoiceId : data.id
+    }
+     this.subService.getPaymentReceive(obj).subscribe(
+      data => this.getRes(data)
+    );
   }
 
   editInvoice() {

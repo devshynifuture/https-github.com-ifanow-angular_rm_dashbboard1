@@ -194,13 +194,13 @@
                 <!-- Position Column -->
                 <ng-container matColumnDef="date">
                   <th mat-header-cell *matHeaderCellDef>Date </th>
-                  <td mat-cell *matCellDef="let element"> {{element.paymentDate}} </td>
+                  <td mat-cell *matCellDef="let element"> {{element.paymentDate | date:'dd/MM/yyyy'}} </td>
                 </ng-container>
               
                 <!-- Name Column -->
                 <ng-container matColumnDef="reference">
                   <th mat-header-cell *matHeaderCellDef> Reference </th>
-                  <td mat-cell *matCellDef="let element"> {{element.notes}} </td>
+                  <td mat-cell *matCellDef="let element"> {{storeData.invoiceNumber}} </td>
                 </ng-container>
               
                 <!-- Weight Column -->
@@ -211,14 +211,24 @@
               
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="amount">
-                  <th mat-header-cell *matHeaderCellDef> Amount </th>
-                  <td mat-cell *matCellDef="let element"> {{element.amountReceieve}} </td>
+                  <th mat-header-cell *matHeaderCellDef> Amount(₹)</th>
+                  <td mat-cell *matCellDef="let element"> {{element.amountReceived}} </td>
                 </ng-container>
-              
+                <ng-container matColumnDef="icons">
+                    <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
+                    <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menu"
+                        class="material-icons c-p iconscolors">
+                        more_vert
+                      </i>
+                      <mat-menu #menu="matMenu">
+                        <a mat-menu-item (click)="editForm(element,storeData.id)">Edit</a>
+                      </mat-menu>
+                    </td>
+                  </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
               </table>
-</div>
+            </div>
             </div>
             <div *ngIf="showRecord==true" class="wrapper-20 max-height-100" >
                  <h4 class="mb-0 pt-16">Record Payment</h4>
@@ -229,16 +239,16 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group mb-0">
-                                            <input type="text"  (keypress)="keyPress($event)" class="form-control" maxlength="{{getFormControl().amountReceive.maxLength}}" formControlName="amountReceive">
+                                            <input type="text"  (keypress)="keyPress($event)" class="form-control" maxlength="{{getFormControl().amountReceived.maxLength}}" formControlName="amountReceived">
                                         </div>
                                     <div class="row">
                                         <div class="col-md-10 pr-0">
                                             <mat-error class="f-12 pt-4"
-                                                *ngIf="isamountValid && getFormControl().amountReceive.invalid || (getFormControl().amountReceive.touched && getFormControl().amountReceive.invalid)">
+                                                *ngIf="isamountValid && getFormControl().amountReceived.invalid || (getFormControl().amountReceived.touched && getFormControl().amountReceived.invalid)">
                                                 amount received is required</mat-error>
                                         </div>
                                         <div class="col-md-2 pl-0">
-                                            <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().amountReceive.value?.length?getFormControl().amountReceive.value.length:0}}/{{getFormControl().amountReceive.maxLength}}</p>
+                                            <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().amountReceived.value?.length?getFormControl().amountReceived.value.length:0}}/{{getFormControl().amountReceived.maxLength}}</p>
                                         </div>
                                     </div>
                                     </div>
@@ -249,17 +259,17 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group mb-0">
-                                            <input type="text"  (keypress)="keyPress($event)" class="form-control"  maxlength="{{getFormControl().charges.maxLength}}" formControlName="charges">
+                                            <input type="text"  (keypress)="keyPress($event)" class="form-control"  maxlength="{{getFormControl().chargesIfAny.maxLength}}" formControlName="chargesIfAny">
                                         </div>
                                         <div class="row">
                                             <div class="col-md-10 pr-0">
-                                                <!-- <p class="f-12 m-0 text-left text-custom pt-4" *ngIf="getFormControl().charges.untouched">Assistive text</p> -->
+                                                <!-- <p class="f-12 m-0 text-left text-custom pt-4" *ngIf="getFormControl().chargesIfAny.untouched">Assistive text</p> -->
                                                 <mat-error class="f-12 pt-4"
-                                                    *ngIf="ischargeValid && getFormControl().charges.invalid || (getFormControl().charges.touched && getFormControl().charges.invalid)">
-                                                    charges is required</mat-error>
+                                                    *ngIf="ischargeValid && getFormControl().chargesIfAny.invalid || (getFormControl().chargesIfAny.touched && getFormControl().chargesIfAny.invalid)">
+                                                    chargesIfAny is required</mat-error>
                                             </div>
                                             <div class="col-md-2 pl-0">
-                                                <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().charges.value?.length?getFormControl().charges.value.length:0}}/{{getFormControl().charges.maxLength}}</p>
+                                                <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().chargesIfAny.value?.length?getFormControl().chargesIfAny.value.length:0}}/{{getFormControl().chargesIfAny.maxLength}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -290,14 +300,19 @@
                                         <h5 class="m-0 text-right pt-8">Payment date</h5>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <input type="date" class="form-control" formControlName="paymentDate">
-                                        </div>
+                                        </div> -->
+                                        <mat-form-field>
+                                            <input matInput formControlName="paymentDate" [matDatepicker]="picker" placeholder="Choose a date">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                          </mat-form-field>
                                         <div class="row">
                                             <div class="col-md-10 pr-0">
                                                 <mat-error class="f-12 pt-4"
                                                     *ngIf="isdateValid && getFormControl().paymentDate.invalid || (getFormControl().paymentDate.touched && getFormControl().paymentDate.invalid)">
-                                                    date is required</mat-error>
+                                                   payment date is required</mat-error>
                                             </div>
                                         </div>
                                     </div>
@@ -308,9 +323,9 @@
                                     </div>
                                     <div class="col-md-5">
                                             <div class="form-group mb-0">
-                                                    <select class="form-control" id="Category" formControlName="paymentMode" id="sel1">
+                                                    <select class="form-control" id="Category" formControlName="paymentMode" >
                                                         <option value="0" disabled selected hidden>Select payment mode</option>
-                                                        <option *ngFor="let feeCollectionMode of feeCollectionMode" value="{{feeCollectionMode.name}}">{{feeCollectionMode.name}}</option>
+                                                        <option  *ngFor="let feeCollectionMode of feeCollectionMode" value="{{feeCollectionMode.name}}">{{feeCollectionMode.name}}</option>
                                                     </select>
                                                   </div>
                                     <div class="row">
@@ -337,6 +352,13 @@
                                                       <option value="3">Unregistered Business</option>
                                                     </select>
                                                   </div>
+                                                  <div class="row">
+                                                    <div class="col-md-10 pr-0">
+                                                        <mat-error class="f-12 pt-4"
+                                                            *ngIf="isgstValid && getFormControl().gstTreatment.invalid || (getFormControl().gstTreatment.touched && getFormControl().gstTreatment.invalid)">
+                                                            gst treatment is required</mat-error>
+                                                    </div>
+                                                </div>     
                                     </div>
                                 </div>
                                 <div class="row pt-24">
@@ -713,7 +735,7 @@
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="amount">
                   <th mat-header-cell *matHeaderCellDef> Amount </th>
-                  <td mat-cell *matCellDef="let element"> {{element.amountReceieve}} </td>
+                  <td mat-cell *matCellDef="let element"> {{element.amountReceived}} </td>
                 </ng-container>
               
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -730,16 +752,16 @@
                        </div>
                        <div class="col-md-4">
                            <div class="form-group mb-0">
-                               <input type="text"  (keypress)="keyPress($event)" class="form-control" maxlength="{{getFormControl().amountReceive.maxLength}}" formControlName="amountReceive">
+                               <input type="text"  (keypress)="keyPress($event)" class="form-control" maxlength="{{getFormControl().amountReceived.maxLength}}" formControlName="amountReceived">
                            </div>
                        <div class="row">
                            <div class="col-md-10">
                                <mat-error class="f-12 pt-4"
-                                   *ngIf="isamountValid && getFormControl().amountReceive.invalid || (getFormControl().amountReceive.touched && getFormControl().amountReceive.invalid)">
+                                   *ngIf="isamountValid && getFormControl().amountReceived.invalid || (getFormControl().amountReceived.touched && getFormControl().amountReceived.invalid)">
                                    amount received is required</mat-error>
                            </div>
                            <div class="col-md-2 pl-0">
-                               <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().amountReceive.value?.length?getFormControl().amountReceive.value.length:0}}/{{getFormControl().amountReceive.maxLength}}</p>
+                               <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().amountReceived.value?.length?getFormControl().amountReceived.value.length:0}}/{{getFormControl().amountReceived.maxLength}}</p>
                            </div>
                        </div>
                        </div>
@@ -750,18 +772,18 @@
                        </div>
                        <div class="col-md-4">
                            <div class="form-group mb-0">
-                               <input type="text"  (keypress)="keyPress($event)" class="form-control"  maxlength="{{getFormControl().charges.maxLength}}" formControlName="charges">
+                               <input type="text"  (keypress)="keyPress($event)" class="form-control"  maxlength="{{getFormControl().chargesIfAny.maxLength}}" formControlName="chargesIfAny">
                            </div>
                           
                            <div class="row">
                                <div class="col-md-10 pr-0">
-                                    <!-- <p class="f-12 m-0 text-left text-custom pt-4" *ngIf="getFormControl().charges.untouched">Assistive text</p>                                            -->
+                                    <!-- <p class="f-12 m-0 text-left text-custom pt-4" *ngIf="getFormControl().chargesIfAny.untouched">Assistive text</p>                                            -->
                                     <mat-error class="f-12 pt-4"
-                                       *ngIf="ischargeValid && getFormControl().charges.invalid || (getFormControl().charges.touched && getFormControl().charges.invalid)">
-                                       charges is required</mat-error>
+                                       *ngIf="ischargeValid && getFormControl().chargesIfAny.invalid || (getFormControl().chargesIfAny.touched && getFormControl().chargesIfAny.invalid)">
+                                       chargesIfAny is required</mat-error>
                                </div>
                                <div class="col-md-2 pl-0">
-                                   <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().charges.value?.length?getFormControl().charges.value.length:0}}/{{getFormControl().charges.maxLength}}</p>
+                                   <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().chargesIfAny.value?.length?getFormControl().chargesIfAny.value.length:0}}/{{getFormControl().chargesIfAny.maxLength}}</p>
                                </div>
                            </div>
                        </div>
@@ -792,14 +814,16 @@
                            <h5 class="m-0 text-right pt-8">Payment date</h5>
                        </div>
                        <div class="col-md-4">
-                           <div class="form-group">
-                               <input type="date" class="form-control" formControlName="paymentDate">
-                           </div>
+                            <mat-form-field>
+                            <input matInput formControlName="paymentDate" [matDatepicker]="picker" placeholder="Choose a date">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
                            <div class="row">
                             <div class="col-md-10 pr-0">
                                 <mat-error class="f-12 pt-4"
-                                    *ngIf="isdateValid && getFormControl().paymentDate.invalid || (getFormControl().paymentDate.touched && getFormControl().paymentDate.invalid)">
-                                    date is required</mat-error>
+                                    *ngIf="isdateValid && getFormControl().paymentDate.invalid || (getFormControl().paymentDate.untouched && getFormControl().paymentDate.invalid)">
+                                   payment date is required</mat-error>
                             </div>
                         </div>
                        </div>
@@ -839,6 +863,13 @@
                                           <option value="2">Unregistered Business</option>
                                         </select>
                                       </div>
+                                      <div class="row">
+                                        <div class="col-md-10 pr-0">
+                                            <mat-error class="f-12 pt-4"
+                                                *ngIf="isgstValid && getFormControl().gstTreatment.invalid || (getFormControl().gstTreatment.touched && getFormControl().gstTreatment.invalid)">
+                                                gst treatment is required</mat-error>
+                                        </div>
+                                    </div>  
                         </div>
                     </div>
                    <div class="row pt-24">

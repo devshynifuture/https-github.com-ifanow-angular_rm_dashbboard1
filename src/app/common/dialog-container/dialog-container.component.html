@@ -32,6 +32,8 @@
   <app-create-subscription *ngIf="subscriptionTab=='createSubFixed' || subscriptionTab=='createSubVariable'"></app-create-subscription>
 
   <!--  </div>-->
+<!-- <app-liabilityright *ngIf="subscriptionTab=='liabilityright'"></app-liabilityright> -->
+  <app-libilities-right *ngIf="subscriptionTab=='portfolioSummary'"></app-libilities-right>
 </app-custom-dialog-container>
 
 <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">

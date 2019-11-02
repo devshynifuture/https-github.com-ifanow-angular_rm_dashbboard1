@@ -70,7 +70,8 @@
                     <div (click)="selectDocument(documentData)">
                         <mat-card [ngClass]="{'ba-blue': documentData.selected,'active': documentData.selected,'b-ua':documentData.selected==false}" class="example-card bg-grey lter p-0">
                             <mat-card-header class="m-0">
-                                <app-custom-html [data]="documentData.docText" [isChecked]="documentData.selected" id="ui-appcustomhtml" class="bg-white">
+                                    <!-- [isChecked]="documentData.selected" -->
+                                <app-custom-html [data]="documentData.docText"  id="ui-appcustomhtml" class="bg-white">
                                 
                                 </app-custom-html>
                             </mat-card-header>
@@ -169,7 +170,8 @@
                         <div (click)="selectDocument(document)">
                             <mat-card [ngClass]="{'ba-blue': document.selected,'active': document.selected,'b-ua':document.selected==false}" class="example-card bg-grey lter p-0">
                                 <mat-card-header class="m-0">
-                                    <app-custom-html [data]="document.docText" [isChecked]="document.selected" id="ui-appcustomhtml" class="bg-white">
+                                        <!-- [isChecked]="document.selected"  -->
+                                    <app-custom-html [data]="document.docText" id="ui-appcustomhtml" class="bg-white">
                                     
                                     </app-custom-html>
                                 </mat-card-header>
