@@ -103,7 +103,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   openPlanSlider(value, state, data) {
     // data
-
+    // // // (dat.subscriptionPricing.feeTypeId==1)?dat.feeMode="fixed":dat.feeMode="variable"
     const rightSideDataSub = this.subInjectService.rightSideData(state).subscribe(
       sideBarData => {
         // console.log('this is sidebardata in subs subs : ', sideBarData);
@@ -114,6 +114,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         }
       }
     );
+    (data.subscriptionPricing.feeTypeId==1)?value="createSubFixed":value="createSubVariable";
+    (value=='createSubFixed'|| value=='createSubVariable')?data.isCreateSub=true:data.isCreateSub=false
     this.eventService.sidebarData(value);
     this.subInjectService.addSingleProfile(data);
 

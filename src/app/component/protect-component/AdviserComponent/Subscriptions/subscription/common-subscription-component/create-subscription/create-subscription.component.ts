@@ -65,11 +65,16 @@ export const MY_FORMATS2 = {
   ],
 })
 export class CreateSubscriptionComponent implements OnInit {
+  subFeeMode: void;
   constructor(private enumService: EnumServiceService, public subInjectService: SubscriptionInject,
               private eventService: EventService, private fb: FormBuilder, private subService: SubscriptionService) {
     this.subInjectService.singleProfileData.subscribe(
       data => this.getSubStartDetails(data)
     );
+    this.eventService.sidebarSubscribeData.subscribe(
+      data=>this.subFeeMode=data
+    )
+    // this.subInjectService.ta
   }
 
   @Input() modifyFeeTabChange;
@@ -181,7 +186,6 @@ export class CreateSubscriptionComponent implements OnInit {
 
   getSubStartDetailsResponse(data) {
     console.log(data);
-    (this.clientData.subscriptionPricing.feeTypeId == 1) ? data.feeModeName = 'feeModify' : data.feeModeName = 'variableModify';
     this.feeStructureData = data;
     this.subscriptionDetails.controls.subscription.setValue(data.subscriptionNo);
     this.billersData = data.billers;
