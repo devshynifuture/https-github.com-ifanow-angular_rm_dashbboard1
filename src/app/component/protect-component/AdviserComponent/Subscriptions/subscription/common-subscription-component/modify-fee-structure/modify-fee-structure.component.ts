@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { EnumServiceService } from '../../enum-service.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {EnumServiceService} from '../../enum-service.service';
 import * as _ from 'lodash';
-import { SubscriptionService } from '../../../subscription.service';
+import {SubscriptionService} from '../../../subscription.service';
+import {element} from 'protractor';
 
 @Component({
   selector: 'app-modify-fee-structure',
@@ -16,7 +17,7 @@ export class ModifyFeeStructureComponent implements OnInit {
   disableForm: boolean;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subInject: SubscriptionInject,
-    private enumService: EnumServiceService, private subService: SubscriptionService) {
+              private enumService: EnumServiceService, private subService: SubscriptionService) {
     this.subInject.singleProfileData.subscribe(
       data => this.getSubscribeData(data)
     );
@@ -59,35 +60,34 @@ export class ModifyFeeStructureComponent implements OnInit {
 
   ngOnInit() {
     this.setValidation(false);
-    this.disableForm=true;
     // this.otherAssetData = [];
     // console.log(this.otherAssetData)
   }
 
   getDirectFees() {
-    return
+    return;
   }
 
   getSubscribeData(data) {
     console.log(data);
-    this.singleSubscriptionData = data
+    this.singleSubscriptionData = data;
     console.log(this.variableFeeStructureForm);
     if (this.createSubData) {
-      console.log("ifsdhiofgasiof")
+      console.log('ifsdhiofgasiof');
       return;
     }
     if (data.subscriptionPricing.feeTypeId == 1) {
       this.getFixedFee().fees.setValue(data.subscriptionPricing.pricing);
       this.getFixedFee().billingNature.setValue(data.subscriptionPricing.billingNature);
       this.getFixedFee().billEvery.setValue(data.subscriptionPricing.billEvery);
-      this.getFixedFee().Duration.setValue(data.subscriptionPricing.billingCycle)
+      this.getFixedFee().Duration.setValue(data.subscriptionPricing.billingCycle);
       this.getFixedFee().billingMode.setValue(data.subscriptionPricing.billingMode);
-      if(!this.createSubData)
-      {
+      if (this.singleSubscriptionData.status != 1) {
         this.fixedFeeStructureForm.disable();
       }
     }
     if (data.subscriptionPricing.feeTypeId == 2) {
+
       this.getVariableFee().billingNature.setValue(data.subscriptionPricing.billingNature);
       this.getVariableFee().billEvery.setValue(data.subscriptionPricing.billEvery);
       this.getVariableFee().Duration.setValue(data.subscriptionPricing.billingCycle);
@@ -104,13 +104,23 @@ export class ModifyFeeStructureComponent implements OnInit {
       });
       this.getVariableFee().pricing.setValue(data.subscriptionPricing.pricing);
       this.getVariableFee().otherAssetClassFees.setValue(data.subscriptionPricing.subscriptionAssetPricingList[0].subscriptionSubAssets);
+      this.otherAssetData = [];
       this.otherAssetData = data.subscriptionPricing.subscriptionAssetPricingList[2].subscriptionSubAssets;
-      this.otherAssetData.forEach(element => {
-        if (element.selected == true) {
-          this.selectedOtherAssets.push(element);
-        }
-      });
-      this.variableFeeStructureForm.disable();
+      if (this.selectedOtherAssets.length == 0) {
+        this.otherAssetData.forEach(element => {
+          if (element.selected == true) {
+            this.selectedOtherAssets.push(element);
+          }
+        });
+      } else {
+        this.otherAssetData.forEach(element => {
+          element.selected == false;
+        });
+      }
+      if (this.singleSubscriptionData.status != 1) {
+        this.variableFeeStructureForm.disable();
+      }
+
     }
     this.modifyFeeData = data;
   }
@@ -125,7 +135,7 @@ export class ModifyFeeStructureComponent implements OnInit {
   Close(state) {
     this.ngOnInit();
     (this.ModifyFeesChange == 'createSub') ? this.subInjectService.rightSliderData(state) : this.subInjectService.rightSideData(state),
-      (this.ModifyFeesChange === 'fixedModifyFees' || this.ModifyFeesChange==='variableModifyFees') ? this.subInjectService.rightSliderData(state) :
+      (this.ModifyFeesChange === 'fixedModifyFees' || this.ModifyFeesChange === 'variableModifyFees') ? this.subInjectService.rightSliderData(state) :
         this.subInjectService.rightSideData(state);
 
     this.variableFeeStructureForm.reset();
@@ -148,7 +158,7 @@ export class ModifyFeeStructureComponent implements OnInit {
   selectAssets(data) {
     data.selected = true;
     this.selectedOtherAssets.push(data);
-    console.log(this.selectedOtherAssets)
+    console.log(this.selectedOtherAssets);
   }
 
   unselectAssets(data) {
@@ -156,17 +166,17 @@ export class ModifyFeeStructureComponent implements OnInit {
     _.remove(this.selectedOtherAssets, delData => {
       return delData.subAssetClassId == data.subAssetClassId;
     });
-    console.log(this.selectedOtherAssets)
+    console.log(this.selectedOtherAssets);
   }
 
   saveVariableModifyFees() {
-    console.log()
+    console.log();
     if (this.getVariableFee().billEvery.invalid) {
       this.isBillValid = true;
       return;
     } else if (this.variableFeeStructureForm.get('directFees').invalid || this.variableFeeStructureForm.get('regularFees').invalid) {
-      this.mutualFundFees = true
-      return
+      this.mutualFundFees = true;
+      return;
     } else if (this.getVariableFee().pricing.invalid) {
       this.pricing = true;
       return;
@@ -198,27 +208,26 @@ export class ModifyFeeStructureComponent implements OnInit {
       };
       if (this.createSubData) {
         console.log(this.variableData);
-        this.variableData.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId
-        this.variableData.clientId = this.singleSubscriptionData.clientId
-        this.variableData.subId = this.singleSubscriptionData.id
-        this.subInjectService.addSingleProfile(this.variableData)
-      }
-      else {
+        this.variableData.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId;
+        this.variableData.clientId = this.singleSubscriptionData.clientId;
+        this.variableData.subId = this.singleSubscriptionData.id;
+        this.subInjectService.addSingleProfile(this.variableData);
+      } else {
         this.subService.editModifyFeeStructure(this.variableData).subscribe(
           data => this.saveVariableModifyFeesResponse(data)
-        )
+        );
 
       }
     }
   }
 
   saveVariableModifyFeesResponse(data) {
-    console.log("modify variable data", data)
-    this.subInjectService.rightSideData('close')
+    console.log('modify variable data', data);
+    this.subInjectService.rightSideData('close');
   }
 
   saveFixedModifyFees() {
-    console.log("fixed ")
+    console.log('fixed ');
     if (this.getFixedFee().fees.invalid) {
       this.isFeeValid = true;
       return;
@@ -226,7 +235,7 @@ export class ModifyFeeStructureComponent implements OnInit {
       this.isBillValid = true;
       return;
     } else {
-      let obj = {
+      const obj = {
         autoRenew: 0,
         subscriptionId: this.singleSubscriptionData.id,
         billEvery: this.getFixedFee().billEvery.value,
@@ -245,25 +254,24 @@ export class ModifyFeeStructureComponent implements OnInit {
       };
       console.log('fixed fees', obj);
       if (this.createSubData) {
-        obj.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId
-        obj.clientId = this.singleSubscriptionData.clientId
-        obj.subId = this.singleSubscriptionData.id
-        this.subInjectService.addSingleProfile(obj)
-      }
-      else {
+        obj.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId;
+        obj.clientId = this.singleSubscriptionData.clientId;
+        obj.subId = this.singleSubscriptionData.id;
+        this.subInjectService.addSingleProfile(obj);
+      } else {
         this.subService.editModifyFeeStructure(obj).subscribe(
           data => this.saveFixedModifyFeesResponse(data)
-        )
+        );
       }
     }
   }
 
   saveFixedModifyFeesResponse(data) {
-    console.log(data, "modify fixed fee data")
-    this.subInjectService.rightSideData('close')
+    console.log(data, 'modify fixed fee data');
+    this.subInjectService.rightSideData('close');
   }
-  enableForm()
-  {
-    (this.singleSubscriptionData.subscriptionPricing.feeTypeId==1)?this.fixedFeeStructureForm.enable():this.variableFeeStructureForm.enable()
+
+  enableForm() {
+    (this.singleSubscriptionData.subscriptionPricing.feeTypeId == 1) ? this.fixedFeeStructureForm.enable() : this.variableFeeStructureForm.enable();
   }
 }

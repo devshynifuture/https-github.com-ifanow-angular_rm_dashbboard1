@@ -66,11 +66,16 @@ export class BillerSettingsComponent implements OnInit {
   getBillerProfileRes(data) {
     console.log('getBillerProfileRes data', data);
     this.billerSettingData = data;
-    this.billerSettingData.forEach(element => {
-      element.selected = (element.selected == 0) ? false : true;
-      this.isSelectedPlan=element
-    });
-    
+    if(this.billerSettingData.length==1)
+    {
+      this.billerSettingData[0].selected=true
+    }
+    else{
+      this.billerSettingData.forEach(element => {
+        element.selected = (element.selected == 0) ? false : true;
+        this.isSelectedPlan=element
+      });
+    }  
   }
 
   selectedBiller(data, singlePlan) {

@@ -9,7 +9,7 @@ export class CustomHtmlComponent implements OnInit {
   @Input() data: any;
   constructor() { }
 
-
+  @Input() isChecked;
   ngOnInit() {
   }
 

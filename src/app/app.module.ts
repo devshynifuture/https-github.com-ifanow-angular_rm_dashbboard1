@@ -108,6 +108,7 @@ import { IncomeComponent } from './component/protect-component/customers/compone
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { RadioGroupDirectiveDirective } from './common/radio-group-directive.directive';
 import { DocumentsComponent } from './component/protect-component/customers/component/customer/accounts/documents/documents.component';
+import { SingleDocumentViewComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/single-document-view/single-document-view.component';
 
 @NgModule({
   declarations: [
@@ -203,7 +204,8 @@ import { DocumentsComponent } from './component/protect-component/customers/comp
     BaseComponent,
     IncomeComponent,
     RadioGroupDirectiveDirective,
-    DocumentsComponent
+    DocumentsComponent,
+    SingleDocumentViewComponent
   ],
   imports: [
     BrowserModule,

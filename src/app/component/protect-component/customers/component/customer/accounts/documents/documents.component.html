@@ -5,7 +5,6 @@
                 <li (click)="viewMode ='tab1'" [ngClass]="{'b-ua':viewMode =='tab1'}" class="b-ua c-p">
                     <div class="row">
                         <div class="col-md-12 p-0">Expenses</div>
-
                     </div>
                 </li>
                 <li (click)="viewMode ='tab2'" [ngClass]="{'b-ua':viewMode =='tab2'}" class="c-p">
@@ -46,7 +45,7 @@
 
                             <img src="assets/images/svg/grid.svg" class="c-p mr-12">
                             <button mat-stroked-button class="btn-default addon mr-12 v-middle"> HELP</button>
-                            <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"><i class="material-icons">add</i>ADD NEW</button>
+                            <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"><i class="material-icons">add</i> NEW</button>
                             <mat-menu #menu1="matMenu" class="add-new">
                                 <button mat-menu-item>
                     <div class="row">
@@ -85,7 +84,7 @@
 
 
                     <div class="row">
-                        <div class="col-md-8 p-0">
+                        <div class="col-md-9 p-0">
                             <table mat-table [dataSource]="dataSource" class="" id="table-low">
 
                                 <!--- Note that these columns can be defined in any order.
@@ -128,10 +127,16 @@
                                       more_vert
                                       </i>
                                         <mat-menu #menu4="matMenu">
-                                            <button mat-menu-item>Preview</button>
-                                            <button mat-menu-item>Share</button>
-                                            <button mat-menu-item>Activity</button>
-                                            <button mat-menu-item>Delete</button>
+                                            <button mat-menu-item><img src="assets/images/svg/preview.svg" class="mr-4">Preview</button>
+                                            <button mat-menu-item><img src="assets/images/svg/share.svg" class="mr-4"> Share</button>
+                                            <button mat-menu-item><img src="assets/images/svg/shareable.svg" class="mr-4"> Get shareable link</button>
+                                            <button mat-menu-item><img src="assets/images/svg/star-border-icon.svg" class="mr-4">Add to starred</button>
+                                            <button mat-menu-item><img src="assets/images/svg/edit-name.svg" class="mr-4">Rename</button>
+                                            <button mat-menu-item><img src="assets/images/svg/info-icon.svg" class="mr-4">View activity</button>
+                                            <button mat-menu-item><img src="assets/images/svg/move-to-icon.svg" class="mr-4">Move to</button>
+                                            <button mat-menu-item><img src="assets/images/svg/file-copy.svg" class="mr-4">Copy to</button>
+                                            <button mat-menu-item><img src="assets/images/svg/download-icon.svg" class="mr-4">Download</button>
+                                            <button mat-menu-item><img src="assets/images/svg/delete-icon.svg" class="mr-4">Delete</button>
                                         </mat-menu>
                                     </td>
                                 </ng-container>
@@ -139,14 +144,18 @@
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                             </table>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="bg-grey lter mb-24 boxGrey f-14">
-                                <!-- Select a file to see more details -->
+                                Select a file to see more details
 
-                                <mat-grid-list cols="2" rowHeight="2:2">
-                                    <mat-grid-tile>1</mat-grid-tile>
-                                    <mat-grid-tile>2</mat-grid-tile>
-                                </mat-grid-list>
+                                <!-- <mat-grid-list cols="2" rowHeight="2:2">
+                                    <mat-grid-tile>
+                                        <img src="assets/images/svg/file-perview.svg" class="mr-4">
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+
+                                    </mat-grid-tile>
+                                </mat-grid-list> -->
 
                             </div>
 
@@ -154,7 +163,7 @@
                                 <div class="col">
                                     <p class="text-primary f-14 c-p mb-12 "><img src="/assets/images/svg/upload.svg" class="mr-8"> Upload file</p>
                                     <p class="text-primary f-14 c-p mb-12 "><img src="/assets/images/svg/upload.svg" class="mr-8"> Upload folder</p>
-                                    <p class="text-primary f-14 c-p mb-12 "><img src="/assets/images/svg/upload.svg" class="mr-8">New folder</p>
+                                    <p (click)="openDialog()" class="text-primary f-14 c-p mb-12 "><img src="/assets/images/svg/upload.svg" class="mr-8">New folder</p>
                                 </div>
                             </div>
                         </div>
