@@ -21,7 +21,7 @@ export class UpperSliderComponent implements OnInit {
       data => this.setRightSliderData(data)
     );
     this.subinject.upperRightSliderDataObs.subscribe(data => {
-      const rightSliderFragData = data;
+      const rightSliderFragData: object = data;
       this.setRightSliderData(rightSliderFragData.Flag);
       this.getStateData(data.state);
     });

@@ -9,7 +9,7 @@ export class SubscriptionInject {
   private newRightSliderData = new BehaviorSubject<object>({state: 'close', fragmentData: {}, flag: ''});
   newRightSliderDataObs = this.newRightSliderData.asObservable();
 
-  private upperRightSliderData = new BehaviorSubject<object>({state: 'close', fragmentData: {}, flag: ''});
+  private upperRightSliderData = new BehaviorSubject<any>({state: 'close', fragmentData: {}, flag: ''});
   upperRightSliderDataObs = this.upperRightSliderData.asObservable();
   // right slider part
   private openCloseRightSlider = new BehaviorSubject<any>('close');

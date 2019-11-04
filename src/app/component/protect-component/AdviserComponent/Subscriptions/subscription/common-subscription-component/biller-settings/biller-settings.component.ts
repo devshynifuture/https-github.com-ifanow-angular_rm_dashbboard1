@@ -26,13 +26,13 @@ export class BillerSettingsComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.dataSub = this.subInjectService.singleProfileData.subscribe(
+    this.dataSub = this.subInjectService.newRightSliderDataObs.subscribe(
       data => this.getBillerData(data)
     );
   }
 
   getBillerData(data) {
-    this.getDataRow = data;
+    this.getDataRow = data.data;
     this.dataObj = {
       // 'advisorId':12345,
       advisorId: this.advisorId,
