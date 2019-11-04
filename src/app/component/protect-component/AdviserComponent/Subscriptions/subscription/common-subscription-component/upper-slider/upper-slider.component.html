@@ -137,7 +137,7 @@
   <app-payee-settings *ngIf="rightSliderData=='payeeSettings'"></app-payee-settings>
   <app-email-quotation [headerDataDocuments]="headerDataDocuments" *ngIf="rightSliderData=='eSignDocument'">
   </app-email-quotation>
-  <app-create-subscription *ngIf="rightSliderData=='createSubFixed' || rightSliderData=='createSubVariable'"></app-create-subscription>
+  <app-create-subscription [data]="upperFeesData" *ngIf="rightSliderData=='createSubFixed' || rightSliderData=='createSubVariable'"></app-create-subscription>
   <app-add-variable-fee *ngIf="rightSliderData=='varibleFee'"></app-add-variable-fee>
   <app-add-fixed-fee *ngIf="rightSliderData=='fixedFee'"></app-add-fixed-fee>
   <app-overview-blank-quotation [blankOverview]="blankOverview" *ngIf='blankOverview'></app-overview-blank-quotation>

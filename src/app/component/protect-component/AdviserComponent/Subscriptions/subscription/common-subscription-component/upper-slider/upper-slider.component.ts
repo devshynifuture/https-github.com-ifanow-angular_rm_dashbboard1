@@ -12,7 +12,7 @@ import {SubscriptionInject} from '../../../subscription-inject.service';
 export class UpperSliderComponent implements OnInit {
   fragmentData;
   selectedServiceTab = 0;
-
+  upperFeesData;
   constructor(private eventService: EventService, private subinject: SubscriptionInject
               // public dialogRef: MatDialogRef<UpperSliderComponent>,
               // @Inject(MAT_DIALOG_DATA) public fragmentData: any
@@ -22,6 +22,7 @@ export class UpperSliderComponent implements OnInit {
     );
     this.subinject.upperRightSliderDataObs.subscribe(data => {
       const rightSliderFragData = data;
+      this.upperFeesData=data
       this.setRightSliderData(rightSliderFragData.Flag);
       this.getStateData(data.state);
     });
