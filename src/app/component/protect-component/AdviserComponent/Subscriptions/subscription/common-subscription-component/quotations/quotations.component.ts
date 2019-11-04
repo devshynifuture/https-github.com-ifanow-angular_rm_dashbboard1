@@ -37,9 +37,10 @@ export class QuotationsComponent implements OnInit {
   quotationDesign;
   dataCount;
   @Input() upperData;
-  displayedColumns: string[] = ['checkbox', 'document', 'plan', 'date', 'sdate', 'cdate', 'status','send', 'icons'];
+  displayedColumns: string[] = ['checkbox', 'document', 'plan', 'date', 'sdate', 'cdate', 'status', 'send', 'icons'];
   dataSource;
-  changeEmail='footerChange';
+  changeEmail = 'footerChange';
+
   ngOnInit() {
     this.quotationDesign = 'true';
     console.log('quotation');
@@ -77,6 +78,10 @@ export class QuotationsComponent implements OnInit {
   openQuotationsESign(value, state) {
     this.subInjectService.rightSliderData(state);
     this.eventService.sliderData(value);
+  }
+
+  openRightSlider() {
+
   }
 
   getQuotationDesignData(data) {
@@ -158,8 +163,8 @@ export class QuotationsComponent implements OnInit {
     console.log(data);
     this.ngOnInit();
   }
-  viewQuotation(value,data)
-  {
+
+  viewQuotation(value, data) {
     this.quotationDesign = value;
     console.log(data);
     this.subInjectService.addSingleProfile(data);

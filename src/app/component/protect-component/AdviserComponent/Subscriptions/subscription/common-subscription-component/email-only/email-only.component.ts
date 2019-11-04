@@ -36,6 +36,16 @@ export class EmailOnlyComponent implements OnInit {
   @Output() valueChange = new EventEmitter();
   @Input() quotationData;
 
+  _inputData;
+
+  @Input() set inputData(inputData) {
+    this._inputData = inputData;
+  }
+
+  get inputData() {
+    return this._inputData;
+  }
+
   config = {
     charCounterCount: false
   };
@@ -79,13 +89,14 @@ export class EmailOnlyComponent implements OnInit {
     console.log(data);
     this.storeData = data;
   }
-/*
 
-  saveData(data) {
-    console.log(data);
-    this.storeData.documentText = data;
-  }
-*/
+  /*
+
+    saveData(data) {
+      console.log(data);
+      this.storeData.documentText = data;
+    }
+  */
 
   save() {
     console.log('here is saved data', this.storeData);
