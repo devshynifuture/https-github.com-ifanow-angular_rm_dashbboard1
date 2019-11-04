@@ -115,6 +115,8 @@ export const appConfig = {
   SET_PRIMARY_BILLER: 'subscription/setting/billerprofile/setprimary',
   GET_PAYMENT_RECEIVE: 'subscription/invoice/payment/received/list/get',
   EDIT_PAYMENT_RECEIVE: 'subscription/invoice/payment/received/edit',
+  GET_TEMPLATE: 'subscription/emailtemplate/get',
   GET_EMAIL_TEMPLATE_FILTER: 'subscription/emailtemplate/get',
+
   GET_BASE_64: 'api/v1/test/base64/decode'
 };

@@ -132,12 +132,12 @@ export class InvoiceComponent implements OnInit {
   editFormData: boolean;
 
   constructor(public enumService: EnumServiceService, public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
-    // this.dataSub = this.subInjectService.singleProfileData.subscribe(
-    //   data => this.getInvoiceData(data)
-    // );
-    // this.subInjectService.singleProfileData.subscribe(
-    //   data => this.getRecordPayment(data)
-    // );
+    this.dataSub = this.subInjectService.singleProfileData.subscribe(
+      data => this.getInvoiceData(data)
+    );
+    this.subInjectService.singleProfileData.subscribe(
+      data => this.getRecordPayment(data)
+    );
   }
 
   @Input()
@@ -145,6 +145,7 @@ export class InvoiceComponent implements OnInit {
     this.inputData = data;
     console.log('InvoiceComponent inputData', this.inputData);
     this.getInvoiceData(data);
+    this.getRecordPayment(data);
   }
 
   get data() {
@@ -242,7 +243,7 @@ export class InvoiceComponent implements OnInit {
       invoiceDate: [(data.invoiceDate == undefined) ? '' : data.invoiceDate, [Validators.required]],
       taxStatus: [(data.igst != undefined) ? 'IGST(18%)' : 'SGST(9%)|CGST(9%)'],
       balanceDue: [(data.balanceDue == undefined) ? '' : data.balanceDue],
-      serviceName: [(data.serviceName == undefined) ? '' : data.serviceName],
+      serviceName: [(data.services.length == 0) ? '' : data.services[0].serviceName, [Validators.required]],
       subTotal: [(data.subTotal == undefined) ? '' : data.subTotal],
       footnote: [(data.footnote == undefined) ? '' : data.footnote, [Validators.required]],
       terms: [(data.terms == undefined) ? '' : data.terms, [Validators.required]],
@@ -365,7 +366,7 @@ export class InvoiceComponent implements OnInit {
       footnote: [data.footnote, [Validators.required]],
       terms: [data.terms, [Validators.required]],
       taxStatus: ['IGST(18%)'],
-      serviceName: [(data.services == undefined) ? '' : data.services[0].serviceName, [Validators.required]],
+      serviceName: [(data.services.length == 0) ? '0' : data.services[0].serviceName, [Validators.required]],
       subTotal: [(data == undefined) ? '' : data.subTotal],
       igstTaxAmount: [data.igstTaxAmount],
       auto: [data.auto]
@@ -380,7 +381,7 @@ export class InvoiceComponent implements OnInit {
     this.getFormControledit().terms.maxLength = 100;
     this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.finalAmount.value;
     this.discount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.discount.value;
-    this.auto = this.editPayment.controls.auto.value
+    this.auto = this.editPayment.controls.auto.value;
     if (data.auto == true) {
       this.editPayment.controls.serviceName.disable()
     }
