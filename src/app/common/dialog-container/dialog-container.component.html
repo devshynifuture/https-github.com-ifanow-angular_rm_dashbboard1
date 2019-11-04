@@ -20,7 +20,7 @@
   <app-fixed-fee *ngIf="subscriptionTab=='fixedModifyFees'"></app-fixed-fee>
   <app-variable-fee *ngIf="subscriptionTab=='variableModifyFees'"></app-variable-fee>
   <app-biller-profile-advisor *ngIf="subscriptionTab=='billerProfile'"
-                              [Selected]="selectedSubscriptionTab"></app-biller-profile-advisor>
+  [data]="inputData"  [Selected]="selectedSubscriptionTab"></app-biller-profile-advisor>
   <app-help *ngIf="subscriptionTab=='clientHelp'"></app-help>
   <app-biller-settings *ngIf="subscriptionTab=='billerSettings'"></app-biller-settings>
   <!-- <app-payee-settings *ngIf="subscriptionTab=='payeeSettings'"></app-payee-settings> -->

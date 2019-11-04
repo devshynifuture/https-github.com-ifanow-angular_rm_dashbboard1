@@ -1187,8 +1187,14 @@
                     </div>
                     <div class="col-md-6 pr-0">
                        <div class="form-group mb-0">
-                          <input type="date" class="form-control br-0" formControlName="invoiceDate">
+                          <!-- <input type="date" class="form-control br-0" formControlName="invoiceDate"> -->
+                        
                        </div>
+                       <mat-form-field>
+                        <input matInput formControlName="invoiceDate" [matDatepicker]="picker4" placeholder="Choose a date">
+                        <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                        <mat-datepicker #picker4></mat-datepicker>
+                        </mat-form-field>
                     </div>
                     <div class="col-md-8">
                        <mat-error class="f-12 pt-4"
@@ -1205,7 +1211,12 @@
                     </div>
                     <div class="col-md-6 p-0">
                        <div class="form-group mb-0">
-                          <input type="date" class="form-control br-0" formControlName="dueDate">
+                          <!-- <input type="date" class="form-control br-0" formControlName="dueDate"> -->
+                          <mat-form-field>
+                           <input matInput formControlName="dueDate" [matDatepicker]="picker3" placeholder="Choose a date">
+                           <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                           <mat-datepicker #picker3></mat-datepicker>
+                           </mat-form-field>
                        </div>
                     </div>
                     <div class="col-md-8">
