@@ -13,12 +13,20 @@ export class FixedFeeComponent implements OnInit {
   singleSubscriptionData: any;
   isFeeValid: boolean;
   isBillValid: boolean;
-  @Input() createSubData; 
-  constructor(private fb: FormBuilder,public subInjectService: SubscriptionInject,private subService: SubscriptionService) {
-    this.subInjectService.newRightSliderDataObs.subscribe(
-      data => this.getSubscribeData(data)
-    );
-   }
+  @Input() createSubData;
+  constructor(private fb: FormBuilder, public subInjectService: SubscriptionInject, private subService: SubscriptionService) {
+    // this.subInjectService.newRightSliderDataObs.subscribe(
+    //   data => this.getSubscribeData(data)
+    // );
+  }
+  @Input()
+  set data(data) {
+    this.getSubscribeData(data);
+  }
+  @Input()
+  set createFeeData(data) {
+    this.getSubscribeData(data)
+  }
   fixedFeeStructureForm = this.fb.group({
     fees: ['', [Validators.required]],
     billingNature: [1],
@@ -31,15 +39,13 @@ export class FixedFeeComponent implements OnInit {
   getFixedFee() {
     return this.fixedFeeStructureForm.controls;
   }
-  getSubscribeData(data)
-  {
-    const fixedData=data.data
-    if(data=='')
-    {
+  getSubscribeData(data) {
+    const fixedData = data
+    if (data == '') {
       return;
     }
-    else{
-      this.singleSubscriptionData=fixedData
+    else {
+      this.singleSubscriptionData = fixedData
       this.getFixedFee().fees.setValue(fixedData.subscriptionPricing.pricing);
       this.getFixedFee().billingNature.setValue(fixedData.subscriptionPricing.billingNature);
       this.getFixedFee().billEvery.setValue(fixedData.subscriptionPricing.billEvery);
@@ -101,7 +107,7 @@ export class FixedFeeComponent implements OnInit {
       } else {
         this.subService.editModifyFeeStructure(obj).subscribe(
           data => this.saveFixedModifyFeesResponse(data)
-        ); 
+        );
       }
     }
   }

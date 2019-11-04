@@ -92,19 +92,13 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   getSubSummaryRes(data) {
     console.log(data);
-    // data.forEach(element => {
-    //   element.feeMode = (element.feeMode === 1) ? 'FIXED' : 'VARIABLE';
-    //   element.startsOn = (element.status === 1) ? 'START' : element.startsOn;
-    //   element.status = (element.status === 1) ? 'NOT STARTED' : (element.status === 2) ?
-    //     'LIVE' : (element.status === 3) ? 'FUTURE' : 'CANCELLED';
-    // });
     this.dataSource = data;
     this.DataToSend = data;
   }
 
   openPlanSlider(value, state, data) {
     (value=="billerSettings"|| value=='changePayee')?value:(data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable'
-    data.isCreateSub = true;
+    data.isCreateSub = false;
     const fragmentData = {
       Flag: value,
       data,
@@ -126,6 +120,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   Open(state, data) {
     let feeMode;
+    data.isCreateSub = true;
     (data.subscriptionPricing.feeTypeId == 1)?feeMode = 'fixedModifyFees':feeMode = 'variableModifyFees';
     const fragmentData = {
       Flag: feeMode,

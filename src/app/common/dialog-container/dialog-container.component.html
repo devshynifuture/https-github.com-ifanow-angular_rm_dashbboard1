@@ -17,8 +17,8 @@
   <app-invoice-history *ngIf="subscriptionTab=='subscriptionFees'"
                        [invoiceHistoryData]='invoiceHisData'></app-invoice-history>
   <app-clients-dashboard *ngIf="subscriptionTab=='dashboardSubscription'"></app-clients-dashboard>
-  <app-fixed-fee *ngIf="subscriptionTab=='fixedModifyFees'"></app-fixed-fee>
-  <app-variable-fee *ngIf="subscriptionTab=='variableModifyFees'"></app-variable-fee>
+  <app-fixed-fee [data]="fragmentData" *ngIf="subscriptionTab=='fixedModifyFees'"></app-fixed-fee>
+  <app-variable-fee [data]="fragmentData" *ngIf="subscriptionTab=='variableModifyFees'"></app-variable-fee>
   <app-biller-profile-advisor *ngIf="subscriptionTab=='billerProfile'"
   [data]="inputData"  [Selected]="selectedSubscriptionTab"></app-biller-profile-advisor>
   <app-help *ngIf="subscriptionTab=='clientHelp'"></app-help>
@@ -28,8 +28,8 @@
   <app-invoice *ngIf="subscriptionTab=='invoiceUpperSlider'"></app-invoice>
   <!-- <app-invoice  [data]="inputData" *ngIf="subscriptionTab=='invoiceUpperSlider'"></app-invoice> -->
   <app-change-payee *ngIf="subscriptionTab=='changePayee'"></app-change-payee>
-  <app-create-subscription *ngIf="subscriptionTab=='createSubFixed' || subscriptionTab=='createSubVariable'"
-                           [data]="inputData" [subFeeMode]="subscriptionTab"></app-create-subscription>
+  <app-create-subscription  [data]="fragmentData" *ngIf="subscriptionTab=='createSubFixed' || subscriptionTab=='createSubVariable'"
+                            [subFeeMode]="subscriptionTab"></app-create-subscription>
 
   <!--  </div>-->
   <!-- <app-liabilityright *ngIf="subscriptionTab=='liabilityright'"></app-liabilityright> -->

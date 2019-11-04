@@ -47,13 +47,9 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
   }
 
   openPlanSlider(value, state, data) {
-    // console.log("upperdata create sub")
     (value=="billerSettings"|| value=='changePayee')?value:(data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable'
-    // this.eventService.sliderData(value);
-    // this.eventService.sidebarData(value)
-    // this.subInjectService.rightSliderData(state);
     data.clientId = this.upperData.id
-    data.isCreateSub = true;
+    data.isCreateSub = false;
     const fragmentData = {
       Flag: value,
       data:data,
@@ -92,6 +88,7 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
   }
   Open(state, data) {
     let feeMode;
+    data.isCreateSub = true;
     (data.subscriptionPricing.feeTypeId == 1)?feeMode = 'fixedModifyFees':feeMode = 'variableModifyFees';
     const fragmentData = {
       Flag: feeMode,
