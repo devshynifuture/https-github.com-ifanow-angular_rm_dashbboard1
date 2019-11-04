@@ -13,7 +13,7 @@ export class FixedFeeComponent implements OnInit {
   isBillValid: boolean;
   @Input() createSubData; 
   constructor(private fb: FormBuilder,public subInjectService: SubscriptionInject) {
-    this.subInjectService.singleProfileData.subscribe(
+    this.subInjectService.newRightSliderDataObs.subscribe(
       data => this.getSubscribeData(data)
     );
    }
@@ -31,12 +31,18 @@ export class FixedFeeComponent implements OnInit {
   }
   getSubscribeData(data)
   {
-    this.singleSubscriptionData=data
-    this.getFixedFee().fees.setValue(data.subscriptionPricing.pricing);
-    this.getFixedFee().billingNature.setValue(data.subscriptionPricing.billingNature);
-    this.getFixedFee().billEvery.setValue(data.subscriptionPricing.billEvery);
-    this.getFixedFee().Duration.setValue(data.subscriptionPricing.billingCycle);
-    this.getFixedFee().billingMode.setValue(data.subscriptionPricing.billingMode);
+    if(data=='')
+    {
+      return;
+    }
+    else{
+      this.singleSubscriptionData=data
+      this.getFixedFee().fees.setValue(data.subscriptionPricing.pricing);
+      this.getFixedFee().billingNature.setValue(data.subscriptionPricing.billingNature);
+      this.getFixedFee().billEvery.setValue(data.subscriptionPricing.billEvery);
+      this.getFixedFee().Duration.setValue(data.subscriptionPricing.billingCycle);
+      this.getFixedFee().billingMode.setValue(data.subscriptionPricing.billingMode);
+    }
   }
   enableForm() {
     this.fixedFeeStructureForm.enable();

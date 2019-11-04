@@ -103,23 +103,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
   openPlanSlider(value, state, data) {
-    // data
-    // // // (dat.subscriptionPricing.feeTypeId==1)?dat.feeMode="fixed":dat.feeMode="variable"
-    // const rightSideDataSub = this.subInjectService.rightSideData(state).subscribe(
-    //   sideBarData => {
-    //     // console.log('this is sidebardata in subs subs : ', sideBarData);
-    //     if (sideBarData == 'close') {
-    //       // console.log('this is sidebardata in subs subs 2: ', sideBarData);
-    //       rightSideDataSub.unsubscribe();
-    //       this.getSummaryDataAdvisor();
-    //     }
-    //   }
-    // );
-    (data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable';
+    (value=="billerSettings"|| value=='changePayee')?value:(data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable'
     data.isCreateSub = true;
-    // (value == 'createSubFixed' || value == 'createSubVariable') ? data.isCreateSub = true : data.isCreateSub = false;
-    // this.eventService.sidebarData(value);
-    // this.subInjectService.addSingleProfile(data);
     const fragmentData = {
       Flag: value,
       data,
@@ -141,23 +126,28 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   Open(state, data) {
     let feeMode;
-    if (data.subscriptionPricing.feeTypeId == 1) {
-      feeMode = 'fixedModifyFees';
-    } else {
-      feeMode = 'variableModifyFees';
-    }
-    this.eventService.sidebarData(feeMode);
-    this.subInjectService.rightSideData(state);
-    this.subInjectService.addSingleProfile(data);
+    (data.subscriptionPricing.feeTypeId == 1)?feeMode = 'fixedModifyFees':feeMode = 'variableModifyFees';
+    // this.eventService.sidebarData(feeMode);
+    // this.subInjectService.rightSideData(state);
+    // this.subInjectService.addSingleProfile(data);
+    const fragmentData = {
+      Flag: feeMode,
+      data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+          this.getSummaryDataAdvisor();
+        }
+      }
+    );
 
   }
-
-  /*openPlanSlider(value, state, data) {
-    this.eventService.sidebarData(value);
-    this.subInjectService.rightSideData(state);
-    this.subInjectService.addSingleProfile(data);
-    this.invoiceHisData = data;
-  }*/
   deleteModal(value, data) {
     const dialogData = {
       data: value,
