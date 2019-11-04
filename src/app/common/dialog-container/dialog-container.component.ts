@@ -27,6 +27,16 @@ export class DialogContainerComponent implements OnInit {
   invoiceHisData: any;
   inputData;
   fragmentData;
+  selectedSubscriptionTab: any;
+
+  isOverlayVisible;
+  currentState;
+  subscriptionTab;
+  dialogState;
+
+  upperSliderData;
+  headerData = 'EMAIL QUOTATION';
+  headerDataDocuments = 'EMAIL DOCS WITH E-SIGN REQUEST';
 
   constructor(private eventService: EventService, private subinject: SubscriptionInject) {
     this.eventService.overlayVisibleData.subscribe(
@@ -52,9 +62,10 @@ export class DialogContainerComponent implements OnInit {
     this.subinject.newRightSliderDataObs.subscribe((data) => {
       this.fragmentData = data;
       console.log('fragmentData dialog container: ', this.fragmentData);
-      this.getRightSliderData(this.fragmentData.state);
       this.getFileResponseDataAum(this.fragmentData.Flag);
       this.inputData = this.fragmentData.data;
+      this.getRightSliderData(this.fragmentData.state);
+
       // this
 
     });
@@ -64,16 +75,6 @@ export class DialogContainerComponent implements OnInit {
     // this.eventService.changeUpperSliderState()
   }
 
-  selectedSubscriptionTab: any;
-
-  isOverlayVisible;
-  currentState;
-  subscriptionTab;
-  dialogState;
-
-  upperSliderData;
-  headerData = 'EMAIL QUOTATION';
-  headerDataDocuments = 'EMAIL DOCS WITH E-SIGN REQUEST';
 
   ngOnInit() {
   }
