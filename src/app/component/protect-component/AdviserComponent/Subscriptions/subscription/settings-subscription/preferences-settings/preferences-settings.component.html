@@ -40,7 +40,7 @@
                                     </div>
                                     <div class="col-md-4">
 
-                                        <button mat-stroked-button class="text-primary br-0">PRIMARY</button>
+                                        <button mat-stroked-button *ngIf="singleBillerProfile.isPrimary == true" class="text-primary br-0">PRIMARY</button>
                                     </div>
                                 </div>
                             </div>
@@ -50,7 +50,7 @@
                                     more_vert
                                 </i>
                                 <mat-menu #menu="matMenu">
-                                    <a mat-menu-item>Set as Primary</a>
+                                    <a mat-menu-item (click)="getBillerPrimary(singleBillerProfile)">Set as Primary</a>
                                     <a mat-menu-item (click)="Open(singleBillerProfile,'billerProfile','open')">Edit
                                         Biller Profile</a>
                                     <a mat-menu-item class="bt-1" (click)="deleteModal('SUBSCRIPTION')">Delete Biller

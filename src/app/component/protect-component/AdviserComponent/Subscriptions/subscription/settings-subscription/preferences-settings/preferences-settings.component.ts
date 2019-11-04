@@ -57,7 +57,25 @@ export class PreferencesSettingsComponent implements OnInit {
       data => this.getProfileBillerDataResponse(data)
     );
   }
-
+  getBillerPrimary(data){
+    let obj = {
+      advisorId:this.advisorId,
+      id : data.id
+    }
+    this.subscription.setBillerPrimary(obj).subscribe(
+      data => this.setBillerPrimaryRes(data)
+    );
+  }
+  setBillerPrimaryRes(data){
+    console.log(data)
+    this.billerProfileData.forEach(element => {
+      if(element.id == data){
+        element.isPrimary = true
+      }else{
+        element.isPrimary = false
+      }
+    });
+  }
   getPrefixData(type) {
     const obj = {
       advisorId: this.advisorId,
