@@ -43,3 +43,22 @@ input.mat-input-element:focus{
 // .form-group{
 //     margin-bottom: 0 !important;
 // }
+
+#custom-radio{
+    .mat-radio-label{
+        margin: 0;
+        padding: 8px;
+    }
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+
+    background-color: #008FFF !important;
+  }
+
+ .mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #008FFF !important;   /*inner circle color change*/
+  }
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+   border-color:#008FFF !important; /*outer ring color change*/
+  }
+}

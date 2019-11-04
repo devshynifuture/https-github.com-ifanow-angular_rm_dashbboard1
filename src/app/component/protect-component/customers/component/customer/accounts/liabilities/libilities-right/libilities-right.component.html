@@ -1,5 +1,5 @@
 <!-- ADD PORTFOLIO SUMMARY -->
-<div class="popup-header-fix-60">
+<!-- <div class="popup-header-fix-60">
   <div class="row bb-1">
     <div class="col-md-8 p-0">
       <h4 class="mb-2 wrapper-20">ADD PORTFOLIO SUMMARY</h4>
@@ -15,7 +15,7 @@
   <div class="pt-72">
   <div class="row pt-40">
       <div class="col-md-5 text-right">
-          <h5 class="m-0">Owner</h5>
+          <h5 class="m-0 pt-8">Owner</h5>
           <p class="m-0 f-12 text-custom">In whose name is this asset</p>
       </div>
       <div class="col-md-5">
@@ -26,7 +26,7 @@
   </div>
   <div class="row pt-40">
       <div class="col-md-5 text-right">
-          <h5 class="m-0">Current market value</h5>
+          <h5 class="m-0 pt-8">Current market value</h5>
           <p class="m-0 f-12 text-custom">This has to updated<br>
               manually at all times</p>
       </div>
@@ -38,7 +38,7 @@
   </div>
   <div class="row pt-40">
       <div class="col-md-5 text-right">
-          <h5 class="m-0">Value as on</h5>
+          <h5 class="m-0 pt-8">Value as on</h5>
          
       </div>
       <div class="col-md-3">
@@ -48,7 +48,7 @@
   </div>
   <div class="row pt-40">
       <div class="col-md-5 text-right">
-          <h5 class="m-0">Amount invested</h5>
+          <h5 class="m-0 pt-12">Amount invested</h5>
        
       </div>
       <div class="col-md-3">
@@ -62,7 +62,7 @@
   </div>
   <div class="row pt-40">
       <div class="col-md-5 text-right">
-          <h5 class="m-0">Description</h5>
+          <h5 class="m-0 pt-12">Description</h5>
           
       </div>
       <div class="col-md-5">
@@ -71,30 +71,44 @@
              </div>
       </div>
   </div>
+  <div class="row pt-40">
+    <div class="col-md-5 text-right">
+        <h5 class="m-0 pt-12">Nominee</h5>
+        
+    </div>
+    <div class="col-md-5">
+           <div class="form-group mb-0">
+             <input type="text" class="form-control br-0">
+           </div>
+           <div class="col-md-12">
+            <p class="m-0 f-12 pt-4 text-custom">Optional</p>
+          </div>
+    </div>
   </div>
-  <div class="bottom-fixed wrapper-12">
+  </div> -->
+<!-- <div class="bottom-fixed wrapper-12">
   <div class="row">
       <div class="col-md-10">
           <h5 class="mb-0 pt-8 text-white c-p" (click)="closeNav('close')">Cancel</h5>
       </div>
       <div class="col-md-2 pr-0">
-          <button mat-stroked-button class="br-0 btn-bottom">Save</button>
+          <button mat-stroked-button class="br-0 btn-bottom right">Save</button>
       </div>
   </div>
-  </div>
+  </div> -->
 <!-- end ADD PORTFOLIO SUMMARY -->
 <!-- start ADD SCHEME LEVEL TRANSACTIONS -->
 <!-- <div class="popup-header-fix-60">
-    <div class="row bb-1">
-      <div class="col-md-8 p-0">
-        <h4 class="mb-2 wrapper-20">ADD SCHEME LEVEL TRANSACTIONS</h4>
-      </div>
-      <div class="col-md-4 text-right">
-        <div class="wrapper-12">
-          <i class="material-icons c-p pt-8 v-middle" (click)="closeNav('close')"> clear</i>
-        </div>
+  <div class="row bb-1">
+    <div class="col-md-8 p-0">
+      <h4 class="mb-0 wrapper-20">ADD SCHEME LEVEL TRANSACTIONS</h4>
+    </div>
+    <div class="col-md-4 text-right">
+      <div class="wrapper-12">
+        <i class="material-icons c-p pt-8 v-middle" (click)="closeNav('close')"> clear</i>
       </div>
     </div>
+  </div>
   </div>
   <div class="pt-72 pl-24 pr-24 pb-24">
   <div class="row pt-40">
@@ -149,60 +163,688 @@
       </div>
     </div>
   </div>
+  <hr>
   <div class="row">
     <div class="col-md-12 p-0">
-      <h4 class="m-0 text-black pb-28">TRANSACTIONS</h4>
+      <h4 class="m-0 text-black">TRANSACTIONS</h4>
     </div>
   </div>
-  <div class="row">
+  <div class="row pt-28">
     <div class="col-md-3 pl-0">
       <h5 class="m-0 pb-8">Transaction type</h5>
-      <div class="form-group mb-0">
-          <select class="form-control br-0" id="sel1">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-          </select>
-        </div>
-        
+     
     </div>
     <div class="col-md-3">
-        <h5 class="m-0 pb-8">Date</h5>
+      <h5 class="m-0 pb-8">Date</h5>
     </div>
-     <div class="col-md-3 pl-0">
+    <div class="col-md-3 pl-0">
       <h5 class="m-0 pb-8">Transaction amount</h5>
-      <div class="form-group mb-0">
-         <input type="text" class="form-control br-0">
-        </div>
+     
     </div>
     <div class="col-md-2 pl-0">
-        <h5 class="m-0 pb-8">Units</h5>
-        <div class="form-group mb-0">
-           <input type="text" class="form-control br-0">
-          </div>
-      </div>
-    <div class="col-md-1 p-0">
-      <div class="pt-32">
-        <i class="material-icons text-custom c-p">
-            add
-            </i>
-            <i class="material-icons text-custom c-p">
-                remove
-                </i>
-              </div>
+      <h5 class="m-0 pb-8">Units</h5>
+    
     </div>
    
   </div>
-  
-  </div> -->
-  <div class="bottom-fixed wrapper-12">
-    <div class="row">
-      <div class="col-md-10">
-        <h5 class="mb-0 pt-8 text-white c-p" (click)="closeNav('close')">Cancel</h5>
+  <div class="row pb-36">
+    <div class="col-md-3 pl-0">
+    
+      <div class="form-group mb-0">
+        <select class="form-control br-0" id="sel1">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+        </select>
       </div>
-      <div class="col-md-2 pr-0">
-        <button mat-stroked-button class="br-0 btn-bottom">Save</button>
+    </div>
+    <div class="col-md-3">
+     
+    </div>
+    <div class="col-md-3 pl-0">
+     
+      <div class="form-group mb-0">
+        <input type="text" class="form-control br-0">
+      </div>
+    </div>
+    <div class="col-md-2 pl-0">
+     
+      <div class="form-group mb-0">
+        <input type="text" class="form-control br-0">
+      </div>
+    </div>
+    <div class="col-md-1 p-0">
+      <div class="pt-8">
+        <i class="material-icons text-custom c-p">
+        add
+        </i>
+        <i class="material-icons text-custom c-p right text-right">
+        remove
+        </i>
       </div>
     </div>
   </div>
+  <div class="row pb-36">
+    <div class="col-md-3 pl-0">
+    
+      <div class="form-group mb-0">
+        <select class="form-control br-0" id="sel1">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-3">
+     
+    </div>
+    <div class="col-md-3 pl-0">
+     
+      <div class="form-group mb-0">
+        <input type="text" class="form-control br-0">
+      </div>
+    </div>
+    <div class="col-md-2 pl-0">
+     
+      <div class="form-group mb-0">
+        <input type="text" class="form-control br-0">
+      </div>
+    </div>
+    <div class="col-md-1 p-0">
+      <div class="pt-8">
+        <i class="material-icons text-custom c-p">
+        add
+        </i>
+        <i class="material-icons text-custom c-p right text-right">
+        remove
+        </i>
+      </div>
+    </div>
+  </div>
+  <div class="row pb-36">
+    <div class="col-md-3 pl-0">
+    
+      <div class="form-group mb-0">
+        <select class="form-control br-0" id="sel1">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-3">
+     
+    </div>
+    <div class="col-md-3 pl-0">
+     
+      <div class="form-group mb-0">
+        <input type="text" class="form-control br-0">
+      </div>
+    </div>
+    <div class="col-md-2 pl-0">
+     
+      <div class="form-group mb-0">
+        <input type="text" class="form-control br-0">
+      </div>
+    </div>
+    <div class="col-md-1 p-0">
+      <div class="pt-8">
+        <i class="material-icons text-custom c-p">
+        add
+        </i>
+        <i class="material-icons text-custom c-p right text-right">
+        remove
+        </i>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="bottom-fixed wrapper-12">
+  <div class="row">
+    <div class="col-md-10">
+      <h5 class="mb-0 pt-8 text-white c-p" (click)="closeNav('close')">Cancel</h5>
+    </div>
+    <div class="col-md-2 pr-0">
+      <button mat-stroked-button class="br-0 btn-bottom right">Save</button>
+    </div>
+  </div>
+  </div> -->
+<!-- ADD SCRIP LEVEL TRANSACTIONS Start -->
+<!-- <div class="popup-header-fix-60">
+  <div class="row bb-1">
+    <div class="col-md-8 p-0">
+      <h4 class="mb-0 wrapper-20">ADD SCRIP LEVEL TRANSACTIONS</h4>
+    </div>
+    <div class="col-md-4 text-right">
+      <div class="wrapper-12">
+        <i class="material-icons c-p pt-8 v-middle" (click)="closeNav('close')"> clear</i>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pt-72 pl-24 pr-24 pb-24">
+  <div class="row pt-40">
+    <div class="col-md-4 pl-0">
+      <h5 class="m-0 pb-8">Owner</h5>
+      <div class="form-group mb-0">
+        <select class="form-control br-0" id="sel1">
+        </select>
+      </div>
+    </div>
+    <div class="col-md-5 p-0">
+      <h5 class="m-0 pb-8">Scrip name</h5>
+      <div class="form-group mb-0">
+        <input type="text" class="form-control br-0" placeholder="Start typing to see scheme names" [matMenuTriggerFor]="menu">
+        <mat-menu #menu="matMenu" class="text-black">
+          <button mat-menu-item>3i Infotech Ltd</button>
+          <button mat-menu-item>Aashee Infotech Ltd</button>
+          <button mat-menu-item>ACI Infocom Ltd</button>
+          <button mat-menu-item>AGS Infotech Ltd</button>
+          <button mat-menu-item>Axon Infotech Ltd</button>
+          <button mat-menu-item>Baron Infotech Ltd</button>
+          <button mat-menu-item>Infosys Technologies Ltd</button>
+          <button mat-menu-item>Blue star Infotech Ltd</button>
+          <button mat-menu-item class="text-center b-a"> + New scrip </button>
+        </mat-menu>
+      </div>
+      <div class="col-md-12 pl-8 pr-8 pt-8">
+        <p class="m-0 f-11 text-custom">Last closing price: 390.27</p>
+      </div>
+    </div>
+    <div class="col-md-3 pr-0">
+      <h5 class="m-0 pb-8">Portfolio name</h5>
+      <div class="form-group mb-0">
+        <button mat-button [matMenuTriggerFor]="menu" class="b-a w-100 br-0 pr-0"><i class="material-icons right text-custom">
+        arrow_drop_down
+        </i></button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>HDFC Securities</button>
+          <button mat-menu-item>Sharekhan</button>
+          <button mat-menu-item class="b-a text-center text-black br-0 pr-8">+ New portfolio</button>
+        </mat-menu>
+      </div>
+      <div class="col-md-12 pl-8 pr-0 pt-8">
+        <p class="m-0 f-11 text-custom">If you have multiple portfolios, you can tag this scrip to one.</p>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-24">
+    <div class="col-md-4 p-0">
+    </div>
+    <div class="col-md-8 p-0">
+      <div class="row">
+        <div class="col-md-4 pl-0">
+          <h5 class="m-0 pb-8">Folio number</h5>
+          <div class="form-group mb-0">
+            <input type="text" class="form-control br-0">
+          </div>
+        </div>
+        <div class="col-md-4 p-0">
+          <h5 class="m-0 pb-8">SIP</h5>
+          <div class="form-group mb-0">
+            <input type="text" class="form-control br-0">
+          </div>
+        </div>
+        <div class="col-md-4 pr-0">
+          <h5 class="m-0 pb-8">Tag  <img src="/assets/images/svg/toggle.svg"  matTooltip="You can add tag to a scheme to better classify it. Tags are open ended, so you can use whatever tags you want. FYI, tag wise reports can be generated as well."></h5>
+          <div class="form-group mb-0">
+            <input type="text" class="form-control br-0" value="Managed">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-12 p-0">
+      <h4 class="m-0 text-black">TRANSACTIONS</h4>
+    </div>
+  </div>
+  <div class="mb-28">
+    <div class="row pt-28">
+      <div class="col-md-3 pl-0">
+        <h5 class="m-0 pb-8">Transaction type</h5>
+      </div>
+      <div class="col-md-3">
+        <h5 class="m-0 pb-8">Date</h5>
+      </div>
+      <div class="col-md-3 pl-0">
+        <h5 class="m-0 pb-8">Transaction amount</h5>
+      </div>
+      <div class="col-md-2 pl-0">
+        <h5 class="m-0 pb-8">Units</h5>
+      </div>
+    </div>
+    <div class="row pb-36">
+      <div class="col-md-3 pl-0">
+        <div class="form-group mb-0">
+          <select class="form-control br-0" id="sel1">
+            <option></option>
+            <option></option>
+            <option></option>
+            <option></option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-3 pl-0">
+        <div class="form-group mb-0">
+          <input type="text" class="form-control br-0">
+        </div>
+      </div>
+      <div class="col-md-2 pl-0">
+        <div class="form-group mb-0">
+          <input type="text" class="form-control br-0">
+        </div>
+      </div>
+      <div class="col-md-1 p-0">
+        <div class="pt-8">
+          <i class="material-icons text-custom c-p">
+          add
+          </i>
+          <i class="material-icons text-custom c-p right text-right">
+          remove
+          </i>
+        </div>
+      </div>
+    </div>
+    <div class="row pb-36">
+      <div class="col-md-3 pl-0">
+        <div class="form-group mb-0">
+          <select class="form-control br-0" id="sel1">
+            <option></option>
+            <option></option>
+            <option></option>
+            <option></option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-3 pl-0">
+        <div class="form-group mb-0">
+          <input type="text" class="form-control br-0">
+        </div>
+      </div>
+      <div class="col-md-2 pl-0">
+        <div class="form-group mb-0">
+          <input type="text" class="form-control br-0">
+        </div>
+      </div>
+      <div class="col-md-1 p-0">
+        <div class="pt-8">
+          <i class="material-icons text-custom c-p">
+          add
+          </i>
+          <i class="material-icons text-custom c-p right text-right">
+          remove
+          </i>
+        </div>
+      </div>
+    </div>
+    <div class="row pb-36">
+      <div class="col-md-3 pl-0">
+        <div class="form-group mb-0">
+          <select class="form-control br-0" id="sel1">
+            <option></option>
+            <option></option>
+            <option></option>
+            <option></option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-3 pl-0">
+        <div class="form-group mb-0">
+          <input type="text" class="form-control br-0">
+        </div>
+      </div>
+      <div class="col-md-2 pl-0">
+        <div class="form-group mb-0">
+          <input type="text" class="form-control br-0">
+        </div>
+      </div>
+      <div class="col-md-1 p-0">
+        <div class="pt-8">
+          <i class="material-icons text-custom c-p">
+          add
+          </i>
+          <i class="material-icons text-custom c-p right text-right">
+          remove
+          </i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+
+<!-- start ADD Fixed DEPOSIT (fixed DEPOSIT) -->
+<!-- <div class="popup-header-fix-60">
+  <div class="row bb-1">
+    <div class="col-md-8 p-0">
+      <h4 class="mb-0 wrapper-20">ADD Fixed DEPOSIT</h4>
+    </div>
+    <div class="col-md-4 text-right">
+      <div class="wrapper-12">
+        <i class="material-icons c-p pt-8 v-middle" (click)="closeNav('close')"> clear</i>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pt-72 pl-24 pr-24 pb-24">
+  <div class="row pt-40">
+    <div class="col-md-5 text-right">
+        <h5 class="m-0 pt-8">Owner</h5>
+        <p class="m-0 f-12 text-custom">In whose name is this asset</p>
+    </div>
+    <div class="col-md-5">
+           <div class="form-group mb-0">
+             <input type="text" class="form-control br-0">
+           </div>
+    </div>
+</div>
+ 
+<div class="row pt-40">
+  <div class="col-md-5 text-right">
+      <h5 class="m-0 pt-8">Type of fixed deposit</h5>
+  </div>
+  <div class="col-md-5">
+         <div class="form-group mb-0">
+           <input type="text" class="form-control br-0" [matMenuTriggerFor]="menu">
+         </div>
+  </div>
+</div>
+
+<div class="row pt-40">
+  <div class="col-md-5 text-right">
+      <h5 class="m-0 pt-8">Amount invested</h5>
+  </div>
+  <div class="col-md-3">
+         <div class="form-group mb-0">
+           <input type="text" class="form-control br-0" value="₹">
+         </div>
+  </div>
+</div>
+<div class="row pt-40">
+  <div class="col-md-5 text-right">
+      <h5 class="m-0 pt-8">Commencement date</h5>
+  </div>
+  <div class="col-md-3">
+    
+  </div>
+</div>
+<div class="row pt-40">
+  <div class="col-md-5 text-right">
+      <h5 class="m-0 pt-8">Interest rate</h5>
+  </div>
+  <div class="col-md-3">
+         <div class="form-group mb-0">
+           <input type="text" class="form-control br-0" value="%">
+         </div>
+  </div>
+</div>
+<div class="row pt-40">
+  <div class="col-md-5 text-right">
+      <h5 class="m-0 pt-8">Interest compounding</h5>
+  </div>
+  <div class="col-md-3">
+    <button mat-button [matMenuTriggerFor]="menu" class="br-0 b-a w-100 pr-8"><i class="material-icons text-custom right">
+      arrow_drop_down
+      </i></button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Daily</button>
+      <button mat-menu-item>Monthly</button>
+      <button mat-menu-item>Quarterly</button>
+      <button mat-menu-item>Semi annually</button>
+      <button mat-menu-item>Annually</button>
+    </mat-menu>
+  </div>
+</div>
+<div class="row pt-40">
+  <div class="col-md-5 text-right">
+      <h5 class="m-0 pt-8">FD end date</h5>
+  </div>
+  <div class="col-md-6 pr-0">
+    <mat-radio-group aria-label="Select an option" id="custom-radio">
+      <mat-radio-button value="1" class="b-ua text-custom">I have tenure</mat-radio-button>
+      <mat-radio-button value="2" class="b-a-custom text-primary">I have maturity date</mat-radio-button>
+    </mat-radio-group>
+  </div>
+</div>
+<div class="row pt-40">
+  <div class="col-md-5 text-right">
+      <h5 class="m-0 pt-8">Maturity date</h5>
+  </div>
+  <div class="col-md-3">
+  
+  </div>
+</div>
+<div class="row pt-40">
+  <div class="col-md-5 text-right">
+      <h5 class="m-0 pt-8">Interest Payout option</h5>
+  </div>
+  <div class="col-md-3">
+    <button mat-button [matMenuTriggerFor]="menu" class="br-0 b-a w-100 pr-8"><i class="material-icons text-custom right">
+      arrow_drop_down
+      </i></button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Cumulative payout</button>
+      <button mat-menu-item>Interest payout</button>
+    </mat-menu>
+  </div>
+</div>
+<div class="row pt-40">
+  <div class="col-md-5 text-right">
+      <h5 class="m-0 pt-8">Ownership type</h5>
+  </div>
+  <div class="col-md-5">
+    <button mat-button [matMenuTriggerFor]="menu" class="br-0 b-a w-100 pr-8"><i class="material-icons text-custom right">
+      arrow_drop_down
+      </i></button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Joint</button>
+      <button mat-menu-item>Single</button>
+    </mat-menu>
+  </div>
+</div>
+<div class="row pt-40">
+  <div class="col-md-5 text-right">
+      <h5 class="m-0 pt-8 text-custom">Show less</h5>
+  </div>
+  <div class="col-md-5">
+
+  </div>
+</div>
+<div class="row pt-40">
+  <div class="col-md-5 text-right">
+      <h5 class="m-0 pt-8">FD Number</h5>
+  </div>
+  <div class="col-md-5">
+    <div class="form-group mb-0">
+      <input type="text" class="form-control br-0">
+    </div>
+    <div class="col-md-12">
+      <p class="f-12 m-0 text-custom">Optional</p>
+    </div>
+  </div>
+</div>
+<div class="row pt-40">
+  <div class="col-md-5 text-right">
+      <h5 class="m-0 pt-8">Bank Account Number</h5>
+  </div>
+  <div class="col-md-5">
+    <div class="form-group mb-0">
+      <input type="text" class="form-control br-0">
+    </div>
+    <div class="col-md-12">
+      <p class="f-12 m-0 text-custom">Optional</p>
+    </div>
+  </div>
+</div>
+<div class="row pt-40">
+  <div class="col-md-5 text-right">
+      <h5 class="m-0 pt-8">Bank Account Number</h5>
+  </div>
+  <div class="col-md-5">
+    <div class="form-group mb-0">
+      <input type="text" class="form-control br-0">
+    </div>
+    <div class="col-md-12">
+      <p class="f-12 m-0 text-custom">Optional</p>
+    </div>
+  </div>
+</div>
+<div class="row pt-40">
+  <div class="col-md-5 text-right">
+      <h5 class="m-0 pt-8">Institution name</h5>
+  </div>
+  <div class="col-md-5">
+    <div class="form-group mb-0">
+      <input type="text" class="form-control br-0">
+    </div>
+    <div class="col-md-12">
+      <p class="f-12 m-0 text-custom">Optional</p>
+    </div>
+  </div>
+</div>
+<div class="row pt-40">
+  <div class="col-md-5 text-right">
+      <h5 class="m-0 pt-8">Description</h5>
+  </div>
+  <div class="col-md-5">
+    <div class="form-group mb-0">
+      <input type="text" class="form-control br-0">
+    </div>
+    <div class="col-md-12">
+      <p class="f-12 m-0 text-custom">Optional</p>
+    </div>
+  </div>
+</div>
+</div> -->
+
+
+<!-- start Fixed deposit - 980787870909 - ICICI FD -->
+<div class="popup-header-fix-60">
+  <div class="row bb-1">
+    <div class="col-md-8 p-0">
+      <h4 class="mb-0 wrapper-20">Fixed deposit - 980787870909 - ICICI FD</h4>
+    </div>
+    <div class="col-md-4 text-right">
+      <div class="wrapper-12">
+        <i class="material-icons c-p pt-8 v-middle" (click)="closeNav('close')"> clear</i>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row pt-100">
+  <div class="col-md-9">
+    <div class="row">
+    <div class="col-md-1 pl-0">
+    <img src="/assets/images/svg/Advice-icons.svg" class="right text-right">
+    </div>
+    <div class="col-md-11 pl-0">
+      <h4 class="m-0 f-700 text-black roboto">ADVICE [scenario 1]</h4>
+      <h5 class="m-0 pt-8 text-black roboto"> Pre close this fixed deposit<span class="given ml-8">GIVEN</span></h5>
+      <p class="m-0 text-custom pt-8 roboto">Given your financial goals you should pre-close this Fixed Deposit. You need more exposure to equity products that can offer higher growth within your portfolio. We will give you advice on where to re-invest the amount in the action plan section.</p>
+    </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-md-1 pl-0 pt-28">
+        <img src="/assets/images/svg/linked-goal.svg" class="right text-right">
+        </div>
+        <div class="col-md-11 bt-grey pl-0 pt-28">
+          <h4 class="m-0 f-700 text-black roboto">LINKED GOALS</h4>
+          <div class="row pt-8">
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+              <h5 class="m-0 text-black">Dhyaan’s Higher Education</h5>
+              <div class="row pt-8">
+                <div class="col-md-6 p-0">
+                  <p class="f-12 m-0 text-custom">GOAL YEAR</p>
+                  <h5 class="m-0">2024</h5>
+                </div>
+                <div class="col-md-6 p-0">
+                    <p class="f-12 m-0 text-custom">AMOUNT ALLOCATED</p>
+                    <h5 class="m-0">₹25,000 (25%)</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="row pt-28">
+            <div class="col-md-1 pl-0 pt-28">
+            <img src="/assets/images/svg/action-sm.svg" class="right text-right">
+            </div>
+            <div class="col-md-11 bt-grey pl-0 pt-28">
+              <h4 class="m-0 f-700 text-black roboto">ACTION PLAN</h4>
+              <div class="row pt-8">
+                <div class="col-md-12 p-0">
+                    <h5 class="m-0 text-black">Start the pre-closure process<span class="delayed ml-8">DELAYED</span></h5>
+                    <div class="row pt-8">
+                        <div class="col-md-5 p-0">
+                          <p class="m-0 text-custom f-12">DUE DATE</p>
+                          <h5 class="m-0 text-black">19/09/2019</h5>
+                        </div>
+                        <div class="col-md-7 p-0">
+                           <p class="m-0 text-custom f-12">ASSIGNED TO</p>
+                          <h5 class="m-0 text-black">Rupa Ronak Hindocha</h5>
+                        </div>
+                      </div>
+                </div>
+           
+              </div>
+            </div>
+            </div>
+            <div class="row pt-28">
+                <div class="col-md-1 pl-0 pt-28">
+                <img src="/assets/images/svg/task-sm.svg" class="right text-right">
+                </div>
+                <div class="col-md-11 bt-grey pl-0 pt-28">
+                  <h4 class="m-0 f-700 text-black roboto">TASK</h4>
+                  <div class="row pt-8 pb-44">
+                    <div class="col-md-12 p-0">
+                        <h5 class="m-0 text-black">Re-invest the FD proceeds.<span class="notstart ml-8">NOT STARTED</span></h5>
+                        <div class="row pt-8">
+                            <div class="col-md-4 p-0">
+                              <p class="m-0 text-custom f-12">DUE DATE</p>
+                              <h5 class="m-0 text-black">19/09/2019</h5>
+                            </div>
+                            <div class="col-md-8 p-0">
+                               <p class="m-0 text-custom f-12">ASSIGNED TO</p>
+                              <h5 class="m-0 text-black">Rupa Ronak Hindocha</h5>
+                            </div>
+                          </div>
+                    </div>
+                
+                 <div class="col-md-12 pb-48 pt-12 pl-0">
+                   <p class="m-0"> <mat-checkbox class="text-primary text-line" checked="false">Sub task 1</mat-checkbox></p>
+                    <p class="m-0 pt-12"><mat-checkbox>Sub task 2</mat-checkbox></p>
+                 </div>
+                  </div>
+                </div>
+                </div>
+  </div>
+  <div class="col-md-3">
+      <button mat-stroked-button class="br-0 btn-lt">Advice</button>
+      
+  </div>
+</div>
+<div class="bottom-fixed wrapper-12">
+  <div class="row">
+    <div class="col-md-10">
+      <h5 class="mb-0 pt-8 text-white c-p" (click)="closeNav('close')">Cancel</h5>
+    </div>
+    <div class="col-md-2">
+      <button mat-stroked-button class="br-0 btn-bottom right">Save</button>
+    </div>
+  </div>
+</div>
