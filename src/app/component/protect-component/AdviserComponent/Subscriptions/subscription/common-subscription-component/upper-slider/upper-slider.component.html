@@ -106,7 +106,7 @@
         <!--                  </div>-->
         <!--                  <app-quotations-subscription [upperData]="fragmentData.clientData" [screenType]="1"-->
         <!--                                               *ngIf="subscriptionTab=='QUOTATIONS'"></app-quotations-subscription>-->
-        <app-quotations *ngIf="subscriptionTab=='QUOTATIONS'" [upperData]="fragmentData.clientData">
+        <app-quotations *ngIf="subscriptionTab=='QUOTATIONS'" [clientData]="fragmentData.clientData">
         </app-quotations>
       </mat-tab>
       <mat-tab label="INVOICES">
@@ -150,7 +150,7 @@
   <app-email-quotation [headerDataInvoice]="headerDataInvoice" *ngIf="rightSliderFlag=='eSignInvoices'">
   </app-email-quotation>
   <app-email-quotation [headerData]="headerData" *ngIf="rightSliderFlag=='emailQuot'"></app-email-quotation>
-  <app-email-only [inputData]="documentDesign" *ngIf="rightSliderFlag=='emailonly'"
+  <app-email-only [inputData]="upperRightSideInputData" *ngIf="rightSliderFlag=='emailOnly'"
                   ></app-email-only>
 <!--  (valueChange)='display($event)'-->
   <!--</div>-->

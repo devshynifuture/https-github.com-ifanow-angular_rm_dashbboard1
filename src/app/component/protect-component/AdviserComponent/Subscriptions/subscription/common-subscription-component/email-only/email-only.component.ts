@@ -40,6 +40,8 @@ export class EmailOnlyComponent implements OnInit {
 
   @Input() set inputData(inputData) {
     this._inputData = inputData;
+    console.log('EmailOnlyComponent inputData : ', inputData);
+
   }
 
   get inputData() {
