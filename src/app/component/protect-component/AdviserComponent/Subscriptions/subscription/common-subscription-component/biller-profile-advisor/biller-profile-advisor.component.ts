@@ -31,15 +31,26 @@ export class BillerProfileAdvisorComponent implements OnInit {
   isBankName = false;
   selected = 0;
   advisorId;
+  billerProfileData: any;
+  inputData: any;
+  
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService) {
-    this.subInjectService.singleProfileData.subscribe(
-      data => this.getSingleBillerProfileData(data)
-    );
+    // this.subInjectService.singleProfileData.subscribe(
+    //   data => this.getSingleBillerProfileData(data)
+    // );
   }
 
   @Input() Selected;
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    this.getSingleBillerProfileData(data);
+  }
 
+  get data() {
+    return this.inputData;
+  }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -81,7 +92,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
         state: [(data.state), [Validators.required]],
         pincode: [(data.zipCode), [Validators.required]],
         country: [(data.country), [Validators.required]],
-        city: [(data.city), [Validators.required]]
+        city: [(data.city), [Validators.required]],
+        id : [data.id]
       }),
       bankDetailsForm: this.fb.group({
         nameOnBank: [(data.nameAsPerBank), [Validators.required]],
@@ -111,8 +123,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.getFrormControlMisc().terms.maxLength = 150;
   }
 
-  Close(value) {
-    this.subInjectService.rightSideData(value);
+  Close(data) {
+    // this.subInjectService.rightSideData(value);
+    this.subInjectService.changeNewRightSliderState({state:'close',data})
   }
 
   nextStep(value, eventName) {
@@ -177,7 +190,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     } else {
       const obj = {
         acNumber: this.billerProfileForm.controls.bankDetailsForm.controls.acNo.value,
-        advisorId: 2735,
+        advisorId: this.advisorId,
         bankCity: this.billerProfileForm.controls.bankDetailsForm.controls.address.value,
         bankCountry: this.billerProfileForm.controls.bankDetailsForm.controls.country.value,
         bankName: this.billerProfileForm.controls.bankDetailsForm.controls.bankName.value,
@@ -197,15 +210,27 @@ export class BillerProfileAdvisorComponent implements OnInit {
         pan: this.billerProfileForm.controls.profileDetailsForm.controls.panNum.value,
         state: this.billerProfileForm.controls.profileDetailsForm.controls.state.value,
         terms: this.billerProfileForm.controls.MiscellaneousData.controls.terms.value,
-        zipCode: this.billerProfileForm.controls.profileDetailsForm.controls.pincode.value
+        zipCode: this.billerProfileForm.controls.profileDetailsForm.controls.pincode.value,
+         id :this.billerProfileForm.controls.profileDetailsForm.controls.id.value
       };
       console.log(obj);
-      // this.subService.updateBillerProfileSettings(obj).subscribe(
-      //   data => console.log(data)
-      // );
-      this.subService.saveBillerProfileSettings(obj).subscribe(
-        data => console.log(data)
-      );
+      if(this.billerProfileForm.controls.profileDetailsForm.controls.id.value == undefined){
+        this.subService.saveBillerProfileSettings(obj).subscribe(
+          data => this.closeTab(data)
+        );
+
+      }else{
+        this.subService.updateBillerProfileSettings(obj).subscribe(
+          data => this.closeTab(data)
+        );
+      }
+     
     }
   }
+  closeTab(data) {
+    if(data == true){
+      this.Close(data)
+    }
+  }
+
 }
