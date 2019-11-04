@@ -1,5 +1,5 @@
 <div class="wrapper-20 bg-grey lter heading-fix b-a">
-  <h3 class="m-0 text-center head-common">{{upperData.name}}</h3>
+  <h3 class="m-0 text-center head-common">{{_clientData.name}}</h3>
 </div>
 
 <div *ngIf="quotationDesign=='true'" class="bg-white">
@@ -25,7 +25,9 @@
         </button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item class="b-t" *ngIf="dataCount == 0">Select Quotation to see more actions</button>
-          <button mat-menu-item (click)="openQuotationsESign('eSignQuotations','open')"  *ngIf="dataCount != 0">Email only</button> 
+          <button mat-menu-item (click)="openSendEmail()" *ngIf="dataCount != 0">Email
+            only
+          </button>
           <button mat-menu-item (click)="deleteModal('QUOTATION')" *ngIf="dataCount != 0">Delete Quotations</button>
         </mat-menu>
       </div>
@@ -44,7 +46,8 @@
       </ng-container>
       <ng-container matColumnDef="document">
         <th mat-header-cell *matHeaderCellDef> Document name</th>
-        <td mat-cell *matCellDef="let element" class="c-p" (click)="viewQuotation('emailQuotation',element)"> {{element.documentName}} </td>
+        <td mat-cell *matCellDef="let element" class="c-p"
+            (click)="viewQuotation('emailQuotation',element)"> {{element.documentName}} </td>
       </ng-container>
       <ng-container matColumnDef="plan">
         <th mat-header-cell *matHeaderCellDef> Plan name</th>
@@ -78,13 +81,15 @@
         </td>
       </ng-container>
       <ng-container matColumnDef="send">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element">
-            <div> 
-              <button mat-stroked-button class="btn-header btn-xs br-0 t-50 p-0" (click)="viewQuotation('emailQuotationSend')">SEND</button>
-            </div>
-          </td>
-        </ng-container>
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <div>
+            <button mat-stroked-button class="btn-header btn-xs br-0 t-50 p-0"
+                    (click)="viewQuotation('emailQuotationSend')">SEND
+            </button>
+          </div>
+        </td>
+      </ng-container>
       <ng-container matColumnDef="icons">
         <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"></th>
         <td mat-cell *matCellDef="let element" style="width: 2%;"><i class="material-icons c-p iconscolors"
@@ -104,12 +109,13 @@
   </div>
 </div>
 
-<div  class="pt-130 pr-0"  *ngIf="quotationDesign=='emailQuotation'">
-<app-email-only [emailSend]="quotationDesign" [quotationData]="this.dataSource" (valueChange)='display($event)'></app-email-only>
+<div class="pt-130 pr-0" *ngIf="quotationDesign=='emailQuotation'">
+  <app-email-only [emailSend]="quotationDesign" [quotationData]="this.dataSource"
+                  (valueChange)='display($event)'></app-email-only>
 </div>
-<div  class="pt-130 pr-0"  *ngIf="quotationDesign=='emailQuotationSend'">
-    <app-email-only [emailSendfooter]="changeEmail"  (valueChange)='display($event)'></app-email-only>
-    </div>
+<div class="pt-130 pr-0" *ngIf="quotationDesign=='emailQuotationSend'">
+  <app-email-only [emailSendfooter]="changeEmail" (valueChange)='display($event)'></app-email-only>
+</div>
 <div class="pt-14 pr-0">
   <app-terms-agreement *ngIf="quotationDesign=='termsAgreement'"></app-terms-agreement>
 </div>

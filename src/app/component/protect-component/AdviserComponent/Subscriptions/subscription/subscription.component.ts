@@ -6,7 +6,7 @@ import {SubscriptionInject} from '../subscription-inject.service';
 @Component({
   selector: 'app-subscription',
   templateUrl: './subscription.component.html',
-  styleUrls: ['./subscription.component.css'],
+  styleUrls: ['./subscription.component.scss'],
   animations: [
     trigger('openClose', [
       state('open', style({

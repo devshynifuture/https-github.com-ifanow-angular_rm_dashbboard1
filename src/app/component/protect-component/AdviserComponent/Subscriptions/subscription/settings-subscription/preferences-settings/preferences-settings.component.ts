@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material';
 import {FormBuilder} from '@angular/forms';
 import {PreferenceEmailInvoiceComponent} from '../../common-subscription-component/preference-email-invoice/preference-email-invoice.component';
 import {AuthService} from '../../../../../../../auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-preferences-settings',
@@ -15,10 +16,9 @@ import {AuthService} from '../../../../../../../auth-service/authService';
 })
 export class PreferencesSettingsComponent implements OnInit {
   storeData: any;
-
   advisorId;
-
   viewMode = 'tab1';
+  dataTOget: object;
 
   constructor(public subService: SubscriptionService, private fb: FormBuilder,
               public dialog: MatDialog, private subscription: SubscriptionService,
@@ -57,7 +57,25 @@ export class PreferencesSettingsComponent implements OnInit {
       data => this.getProfileBillerDataResponse(data)
     );
   }
-
+  getBillerPrimary(data){
+    let obj = {
+      advisorId:this.advisorId,
+      id : data.id
+    }
+    this.subscription.setBillerPrimary(obj).subscribe(
+      data => this.setBillerPrimaryRes(data)
+    );
+  }
+  setBillerPrimaryRes(data){
+    console.log(data)
+    this.billerProfileData.forEach(element => {
+      if(element.id == data){
+        element.isPrimary = true
+      }else{
+        element.isPrimary = false
+      }
+    });
+  }
   getPrefixData(type) {
     const obj = {
       advisorId: this.advisorId,
@@ -92,7 +110,7 @@ export class PreferencesSettingsComponent implements OnInit {
   }
 
   getProfileBillerDataResponse(data) {
-    console.log('jksdfsdfaksdf', data);
+    console.log('getProfileBillerDataResponse', data);
     this.billerProfileData = data;
   }
 
@@ -106,11 +124,26 @@ export class PreferencesSettingsComponent implements OnInit {
   }
 
   Open(singleProfile, value, state) {
-
-    this.eventService.sidebarData(value);
-    this.subInjectService.rightSideData(state);
-    this.subInjectService.addSingleProfile(singleProfile);
     this.selected = 0;
+   
+    const fragmentData = {
+      Flag: value,
+      data:singleProfile,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        this.getProfileBillerData()
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', );
+          rightSideDataSub.unsubscribe();
+        }
+      }
+      
+    );
+    // this.billerProfileData = this.dataTOget.data
   }
 
   deleteModal(value) {

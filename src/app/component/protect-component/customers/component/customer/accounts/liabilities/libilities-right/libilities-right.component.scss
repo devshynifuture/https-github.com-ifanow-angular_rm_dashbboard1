@@ -1,3 +1,43 @@
 p.f-12{
     font-family: "Roboto", sans-serif;
 }
+hr{
+    border: 0.5px solid #BCC6CA;
+    margin-top: 24px;
+    margin-bottom: 24px;
+   
+}
+::placeholder{
+    font-size: 12px;
+}
+::ng-deep .mat-menu-content:not(:empty){
+    padding-top: 0;
+    padding-bottom: 0;
+}
+::ng-deep .mat-menu-panel{
+    width: 100%;
+}
+::ng-deep button.mat-menu-item{
+    color: #000000;
+}
+span.given{
+    padding: 1px;
+    color: #008FFF;
+    border: 1px solid #008FFF;
+    border-radius: 2px;
+    font-size: 12px;
+}
+span.delayed{
+    padding: 1px;
+    color: #FF6823;
+    border: 1px solid #FF6823;
+    border-radius: 2px;
+    font-size: 12px;
+}
+span.notstart{
+    padding: 1px;
+    color:#004164;
+    border: 1px solid #004164;
+    border-radius: 2px;
+    font-size: 12px;
+}

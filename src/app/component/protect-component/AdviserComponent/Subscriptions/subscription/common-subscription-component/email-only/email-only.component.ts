@@ -36,14 +36,24 @@ export class EmailOnlyComponent implements OnInit {
   @Output() valueChange = new EventEmitter();
   @Input() quotationData;
 
+  _inputData;
+
+  @Input() set inputData(inputData) {
+    this._inputData = inputData;
+    console.log('EmailOnlyComponent inputData : ', inputData);
+
+  }
+
+  get inputData() {
+    return this._inputData;
+  }
+
   config = {
     charCounterCount: false
   };
 
   ngOnInit() {
-    console.log(this.emailSendfooter);
-    console.log(this.emailDocumentSend);
-    console.log(this.quotationData);
+    this.getEmailTemplate();
   }
 
 // Begin ControlValueAccesor methods.
@@ -68,7 +78,18 @@ export class EmailOnlyComponent implements OnInit {
   Close(value) {
     this.valueChange.emit(this.emailSend);
   }
-
+  getEmailTemplate(){
+    const obj = {
+      advisorId: 2828,
+      templateId:1
+    };
+    this.subscription.getTemplate(obj).subscribe(
+      data => this.getTemplateData(data)
+    );
+  }
+  getTemplateData(data){
+    console.log(data)
+  }
   openEmailQuot(value, state) {
     this.eventService.sliderData(value);
     this.subInjectService.rightSliderData(state);
@@ -79,13 +100,14 @@ export class EmailOnlyComponent implements OnInit {
     console.log(data);
     this.storeData = data;
   }
-/*
 
-  saveData(data) {
-    console.log(data);
-    this.storeData.documentText = data;
-  }
-*/
+  /*
+
+    saveData(data) {
+      console.log(data);
+      this.storeData.documentText = data;
+    }
+  */
 
   save() {
     console.log('here is saved data', this.storeData);

@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { DeleteSubscriptionComponent } from '../delete-subscription/delete-subscription.component';
 import { SubscriptionService } from '../../../subscription.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
+import { UtilService } from 'src/app/services/util.service';
 
 export interface PeriodicElement {
   service: string;
@@ -47,12 +48,27 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
 
   openPlanSlider(value, state, data) {
     // console.log("upperdata create sub")
-    (data.subscriptionPricing.feeTypeId == 1) ? value = "createSubFixed" : value = "createSubVariable";
-    this.eventService.sliderData(value);
-    this.eventService.sidebarData(value)
-    this.subInjectService.rightSliderData(state);
+    (value=="billerSettings"|| value=='changePayee')?value:(data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable'
+    // this.eventService.sliderData(value);
+    // this.eventService.sidebarData(value)
+    // this.subInjectService.rightSliderData(state);
     data.clientId = this.upperData.id
-    this.subInjectService.addSingleProfile(data);
+    data.isCreateSub = true;
+    const fragmentData = {
+      Flag: value,
+      data:data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
     // this.subInjectService.pushUpperData(data)
   }
 
@@ -76,15 +92,22 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
   }
   Open(state, data) {
     let feeMode;
-    if (data.subscriptionPricing.feeTypeId == 1) {
-      feeMode = 'fixedModifyFees';
-    } else {
-      feeMode = 'variableModifyFees';
-    }
-    this.eventService.sliderData(feeMode);
-    this.subInjectService.rightSliderData(state);
-    this.subInjectService.addSingleProfile(data);
-
+    (data.subscriptionPricing.feeTypeId == 1)?feeMode = 'fixedModifyFees':feeMode = 'variableModifyFees';
+    const fragmentData = {
+      Flag: feeMode,
+      data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
 
   getSubSummaryRes(data) {

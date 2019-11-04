@@ -12,14 +12,20 @@ import {SubscriptionInject} from '../../../subscription-inject.service';
 export class UpperSliderComponent implements OnInit {
   fragmentData;
   selectedServiceTab = 0;
-
+  upperRightSideInputData;
   constructor(private eventService: EventService, private subinject: SubscriptionInject
               // public dialogRef: MatDialogRef<UpperSliderComponent>,
               // @Inject(MAT_DIALOG_DATA) public fragmentData: any
   ) {
     this.eventService.rightSliderData.subscribe(
-      data => this.getTabValueData(data)
+      data => this.setRightSliderFlag(data)
     );
+    this.subinject.upperRightSliderDataObs.subscribe(data => {
+      const rightSliderFragData = data;
+      this.upperRightSideInputData=data
+      this.setRightSliderFlag(rightSliderFragData.Flag);
+      this.getStateData(data.state);
+    });
     this.subinject.rightslider.subscribe(
       data => this.getStateData(data)
     );
@@ -50,6 +56,7 @@ export class UpperSliderComponent implements OnInit {
         } else {
           this.upperData = null;
         }
+
         console.log('upperData: ', this.upperData);
         console.log(this.fragmentData);
       }
@@ -59,7 +66,7 @@ export class UpperSliderComponent implements OnInit {
   subscriptionTab: any;
 
   State;
-  rightSliderData;
+  rightSliderFlag;
   upperData;
 
   Flag = 'planOverview';
@@ -91,9 +98,9 @@ export class UpperSliderComponent implements OnInit {
     console.log('upperData', this.upperData);
   }
 
-  getTabValueData(data) {
+  setRightSliderFlag(data) {
     this.blankOverview = data;
-    this.rightSliderData = data;
+    this.rightSliderFlag = data;
     console.log('value', data);
   }
 
