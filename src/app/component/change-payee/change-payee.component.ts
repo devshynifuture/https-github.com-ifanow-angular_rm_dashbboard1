@@ -20,7 +20,7 @@ export class ChangePayeeComponent implements OnInit {
   arraTosend: any;
   dataMatSlider: any;
   constructor(public subInjectService: SubscriptionInject,public subService:SubscriptionService,public eventService:EventService) {
-    this.dataSub = this.subInjectService.singleProfileData.subscribe(
+    this.dataSub = this.subInjectService.newRightSliderDataObs.subscribe(
       data=>this.getPayeeData(data)
     );
   }
@@ -34,7 +34,7 @@ export class ChangePayeeComponent implements OnInit {
     this.subInjectService.rightSliderData(state);
   }
   getPayeeData(data){
-    this.getRowData = data
+    this.getRowData = data.data
     this.dataObj={
       'clientId': this.getRowData.clientId,
       'subId':this.getRowData.id

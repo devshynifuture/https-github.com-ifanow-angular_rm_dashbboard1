@@ -144,12 +144,14 @@
   <app-biller-settings [upperData]="fragmentData.clientData" *ngIf="rightSliderData=='billerSettings'">
   </app-biller-settings>
   <app-fixed-fee *ngIf="rightSliderData=='fixedModifyFees'"></app-fixed-fee>
-  <app-variable-fee *ngIf="rightSliderData=='variableModifyFees'"></app-variable-fee> 
+  <app-variable-fee *ngIf="rightSliderData=='variableModifyFees'"></app-variable-fee>
 
   <app-change-payee [upperData]="fragmentData.clientData" *ngIf="rightSliderData=='changePayee'"></app-change-payee>
   <app-email-quotation [headerDataInvoice]="headerDataInvoice" *ngIf="rightSliderData=='eSignInvoices'">
   </app-email-quotation>
   <app-email-quotation [headerData]="headerData" *ngIf="rightSliderData=='emailQuot'"></app-email-quotation>
-
+  <app-email-only [inputData]="documentDesign" *ngIf="rightSliderData=='emailonly'"
+                  ></app-email-only>
+<!--  (valueChange)='display($event)'-->
   <!--</div>-->
 </app-custom-dialog-container>
