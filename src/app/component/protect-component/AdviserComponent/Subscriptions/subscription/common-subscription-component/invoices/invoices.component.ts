@@ -4,6 +4,7 @@ import {SubscriptionInject} from '../../../subscription-inject.service';
 import {SubscriptionService} from '../../../subscription.service';
 import {MatDialog} from '@angular/material';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { UtilService } from 'src/app/services/util.service';
 
 export interface PeriodicElement {
   Invoicenumber: string;
@@ -23,6 +24,7 @@ export interface PeriodicElement {
 })
 export class InvoicesComponent implements OnInit {
   clientList: any;
+  dataTOget: object;
 
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, private subService: SubscriptionService, public dialog: MatDialog) {
@@ -50,9 +52,18 @@ export class InvoicesComponent implements OnInit {
       module: 2,
       // 'clientId':this.clientData.id
     };
-    
+    this.subService.getInvoices(obj).subscribe(
+      data => this.getInvoiceResponseData(data)
+    );
   }
-
+  getInvoiceResponseData(data) {
+    console.log(data);
+    const ELEMENT_DATA = data;
+    // this.invoiceClientData = data;
+    ELEMENT_DATA.forEach(item => item.selected = false);
+    this.dataSource = ELEMENT_DATA;
+    // this.showLoader = false;
+  }
   openEdit(edit) {
     this.invoiceDesign = edit;
     console.log('edit', edit);
@@ -136,10 +147,26 @@ export class InvoicesComponent implements OnInit {
 
   openInvoice(data, value, state) {
 
-    this.eventService.sliderData(value);
-    this.subInjectService.rightSliderData(state);
-    this.subInjectService.addSingleProfile(data);
-
+    // this.eventService.sliderData(value);
+    // this.subInjectService.rightSliderData(state);
+    // this.subInjectService.addSingleProfile(data);
+    const fragmentData = {
+      Flag: value,
+      data:data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        this.dataTOget = sideBarData;
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', );
+          rightSideDataSub.unsubscribe();
+        }
+      }
+      
+    );
   }
 
   openInvoicesESign(value, state) {

@@ -70,6 +70,7 @@ export interface PeriodicElement {
 
 export class InvoiceComponent implements OnInit {
   discount: any;
+  inputData: any;
   [x: string]: any;
   auto: boolean;
   taxStatus: any;
@@ -96,7 +97,15 @@ export class InvoiceComponent implements OnInit {
   isInvoiceDate = false;
   isTaxstatus = false;
   isPrice = false;
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    this.getInvoiceData(data);
+  }
 
+  get data() {
+    return this.inputData;
+  }
   @Input() invoiceData;
   @Input() invoiceInSub;
   @Input() clientData;
@@ -126,14 +135,14 @@ export class InvoiceComponent implements OnInit {
   editFormData: boolean;
 
   constructor(public enumService: EnumServiceService, public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
-    this.dataSub = this.subInjectService.singleProfileData.subscribe(
-      data => this.getInvoiceData(data)
-    );
-    this.subInjectService.singleProfileData.subscribe(
-      data => this.getRecordPayment(data)
-    );
+    // this.dataSub = this.subInjectService.singleProfileData.subscribe(
+    //   data => this.getInvoiceData(data)
+    // );
+    // this.subInjectService.singleProfileData.subscribe(
+    //   data => this.getRecordPayment(data)
+    // );
   }
- 
+
   ngOnInit() {
     
     this.advisorId = AuthService.getAdvisorId();
@@ -141,7 +150,7 @@ export class InvoiceComponent implements OnInit {
     this.getServicesList();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     console.log('this.feeCollectionMode',this.feeCollectionMode);
-    this.getPayReceive();
+    // this.getPayReceive(data);
     console.log('this.invoiceSubscription', this.invoiceInSub);
     this.showRecord = false;
     this.showEdit = false;
@@ -171,9 +180,9 @@ export class InvoiceComponent implements OnInit {
       event.preventDefault();
     }
   }
-  getPayReceive(){
+  getPayReceive(data){
      let obj = {
-      invoiceId : this.storeData.id
+      invoiceId : data
     }
     this.subService.getPaymentReceive(obj).subscribe(
       data => this.getRes(data)
@@ -311,7 +320,7 @@ export class InvoiceComponent implements OnInit {
       amountReceived: [data.amountReceived, [Validators.required]],
       chargesIfAny: [data.chargesIfAny, [Validators.required]],
       tds: [data.tds, [Validators.required]],
-      paymentDate: [data.paymentDate ,[Validators.required]],
+      paymentDate: [new Date(data.paymentDate) ,[Validators.required]],
       paymentMode: [data.paymentMode, [Validators.required]],
       gstTreatment: [(data.gstTreatmentId == 1)?'Registered Business - Regular':(data.gstTreatmentId == 2)?'Registered Business - Composition':'Unregistered Business',[Validators.required]],
       notes: [data.notes],
@@ -323,6 +332,7 @@ export class InvoiceComponent implements OnInit {
     this.getFormControl().chargesIfAny.maxLength = 10;
     this.getFormControl().tds.maxLength = 10;
     this.getFormControl().notes.maxLength = 40;
+    this.getPayReceive(data.id);
 
   }
 

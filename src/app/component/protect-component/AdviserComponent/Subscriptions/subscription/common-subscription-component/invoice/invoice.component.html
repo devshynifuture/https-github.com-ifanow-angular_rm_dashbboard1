@@ -570,7 +570,7 @@
          </div> 
         </div>
         </div>
-        <div *ngIf="invoiceInSub!='invoiceSubscription'&& showEdit==false">
+<div *ngIf="invoiceInSub!='invoiceSubscription'&& showEdit==false">
         <div class="row bb-1 popup-header-fix-60">
          <div class="col-md-10 pl-0">
          <h4 class="f-400 wrapper-20 mb-0">{{storeData.invoiceNumber}}</h4>
@@ -590,8 +590,9 @@
          <img src="assets/images/svg/delete.svg" class="b-a wrapper-9 ml-8" (click)="deleteModal('INVOICE',element)">
          </div>
          <div class="col-md-4 right text-right">
-         <button mat-stroked-button class="btn-primary br-0 mb-8" *ngIf="storeData.status !='PAID'" (click)="recordPayment()">RECORD PAYMENT</button>
-         </div>
+         <!-- <button mat-stroked-button class="btn-primary br-0 mb-8" *ngIf="storeData.status !='PAID'" (click)="recordPayment()">RECORD PAYMENT</button> -->
+         <button mat-stroked-button class="btn-primary br-0 mb-8" (click)="recordPayment()">RECORD PAYMENT</button>  
+       </div>
         </div>
         
         <div class="b-a m-20 mb-100 pb-28" *ngIf="showRecord==false && feeCalc==false">
@@ -714,36 +715,46 @@
         
          <table mat-table [dataSource]="dataSource" id="table-low" class="mt-8">
         
-         <!--- Note that these columns can be defined in any order.
-         The actual rendered columns are set as a property on the row definition" -->
-         
-         <!-- Position Column -->
-         <ng-container matColumnDef="date">
-         <th mat-header-cell *matHeaderCellDef>Date </th>
-         <td mat-cell *matCellDef="let element"> {{element.paymentDate}} </td>
-         </ng-container>
-         
-         <!-- Name Column -->
-         <ng-container matColumnDef="reference">
-         <th mat-header-cell *matHeaderCellDef> Reference </th>
-         <td mat-cell *matCellDef="let element"> {{element.notes}} </td>
-         </ng-container>
-         
-         <!-- Weight Column -->
-         <ng-container matColumnDef="paymentMode">
-         <th mat-header-cell *matHeaderCellDef> Payment mode </th>
-         <td mat-cell *matCellDef="let element"> {{element.paymentMode}} </td>
-         </ng-container>
-         
-         <!-- Symbol Column -->
-         <ng-container matColumnDef="amount">
-         <th mat-header-cell *matHeaderCellDef> Amount </th>
-         <td mat-cell *matCellDef="let element"> {{element.amountReceived}} </td>
-         </ng-container>
-         
-         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-         </table>
+            <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+            
+            <!-- Position Column -->
+            <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.paymentDate | date:'dd/MM/yyyy'}} </td>
+            </ng-container>
+            
+            <!-- Name Column -->
+            <ng-container matColumnDef="reference">
+            <th mat-header-cell *matHeaderCellDef> Reference </th>
+            <td mat-cell *matCellDef="let element"> {{storeData.invoiceNumber}} </td>
+            </ng-container>
+            
+            <!-- Weight Column -->
+            <ng-container matColumnDef="paymentMode">
+            <th mat-header-cell *matHeaderCellDef> Payment mode </th>
+            <td mat-cell *matCellDef="let element"> {{element.paymentMode}} </td>
+            </ng-container>
+            
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef> Amount(₹)</th>
+            <td mat-cell *matCellDef="let element"> {{element.amountReceived}} </td>
+            </ng-container>
+            <ng-container matColumnDef="icons">
+            <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
+            <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menu"
+            class="material-icons c-p iconscolors">
+            more_vert
+            </i>
+            <mat-menu #menu="matMenu">
+            <a mat-menu-item (click)="editForm(element,storeData.id)">Edit</a>
+            </mat-menu>
+            </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
         </div>
          </div> 
         <div *ngIf="showRecord==true" class="pt-72">
@@ -825,7 +836,7 @@
          <div class="row">
          <div class="col-md-10 pr-0">
          <mat-error class="f-12 pt-4"
-         *ngIf="isdateValid && getFormControl().paymentDate.invalid || (getFormControl().paymentDate.untouched && getFormControl().paymentDate.invalid)">
+         *ngIf="isdateValid && getFormControl().paymentDate.invalid || (getFormControl().paymentDate.touched && getFormControl().paymentDate.invalid)">
          payment date is required</mat-error>
          </div>
          </div>
@@ -860,11 +871,13 @@
          </div>
          <div class="col-md-5">
          <div class="form-group mb-0"> 
-         <select formControlName="gstTreatment" class="form-control" >
-         <option value="1">Registered Business - Regular</option>
-         <option value="2">Registered Business - Composition</option>
-         <option value="3">Unregistered Business</option>
-         </select>
+            <select formControlName="gstTreatment" class="form-control">
+               <option value="0" disabled selected hidden>Select gst treatment</option>
+               <option *ngFor="let gst of this.gstTreatment" value="{{gst.name}}">{{gst.name}}</option>
+        <!-- <option value="1">Registered Business - Regular</option>
+        <option value="2">Registered Business - Composition</option>
+        <option value="3">Unregistered Business</option> -->
+        </select>
          </div>
          <div class="row">
          <div class="col-md-10 pr-0">
