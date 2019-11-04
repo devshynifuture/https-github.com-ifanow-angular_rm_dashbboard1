@@ -127,9 +127,6 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   Open(state, data) {
     let feeMode;
     (data.subscriptionPricing.feeTypeId == 1)?feeMode = 'fixedModifyFees':feeMode = 'variableModifyFees';
-    // this.eventService.sidebarData(feeMode);
-    // this.subInjectService.rightSideData(state);
-    // this.subInjectService.addSingleProfile(data);
     const fragmentData = {
       Flag: feeMode,
       data,

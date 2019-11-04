@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from '../../../subscription-inject.service';
+import { SubscriptionService } from '../../../subscription.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-fixed-fee',
@@ -12,7 +14,7 @@ export class FixedFeeComponent implements OnInit {
   isFeeValid: boolean;
   isBillValid: boolean;
   @Input() createSubData; 
-  constructor(private fb: FormBuilder,public subInjectService: SubscriptionInject) {
+  constructor(private fb: FormBuilder,public subInjectService: SubscriptionInject,private subService: SubscriptionService) {
     this.subInjectService.newRightSliderDataObs.subscribe(
       data => this.getSubscribeData(data)
     );
@@ -31,17 +33,18 @@ export class FixedFeeComponent implements OnInit {
   }
   getSubscribeData(data)
   {
+    const fixedData=data.data
     if(data=='')
     {
       return;
     }
     else{
-      this.singleSubscriptionData=data
-      this.getFixedFee().fees.setValue(data.subscriptionPricing.pricing);
-      this.getFixedFee().billingNature.setValue(data.subscriptionPricing.billingNature);
-      this.getFixedFee().billEvery.setValue(data.subscriptionPricing.billEvery);
-      this.getFixedFee().Duration.setValue(data.subscriptionPricing.billingCycle);
-      this.getFixedFee().billingMode.setValue(data.subscriptionPricing.billingMode);
+      this.singleSubscriptionData=fixedData
+      this.getFixedFee().fees.setValue(fixedData.subscriptionPricing.pricing);
+      this.getFixedFee().billingNature.setValue(fixedData.subscriptionPricing.billingNature);
+      this.getFixedFee().billEvery.setValue(fixedData.subscriptionPricing.billEvery);
+      this.getFixedFee().Duration.setValue(fixedData.subscriptionPricing.billingCycle);
+      this.getFixedFee().billingMode.setValue(fixedData.subscriptionPricing.billingMode);
     }
   }
   enableForm() {
@@ -79,14 +82,27 @@ export class FixedFeeComponent implements OnInit {
         ]
       };
       console.log(obj)
-      // if (this.createSubData) {
-      //   obj.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId;
-      //   obj.clientId = this.singleSubscriptionData.clientId;
-      //   obj.subId = this.singleSubscriptionData.id;
-      //   this.subInjectService.addSingleProfile(obj);
-      // } else {
-        
-      // }
+      if (this.createSubData) {
+        obj.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId;
+        obj.clientId = this.singleSubscriptionData.clientId;
+        obj.subId = this.singleSubscriptionData.id;
+        const fragmentData = {
+          obj,
+        };
+        const rightSideDataSub = this.subInjectService.addSingleProfile(fragmentData).subscribe(
+          sideBarData => {
+            console.log('this is sidebardata in subs subs : ', sideBarData);
+            if (UtilService.isDialogClose(sideBarData)) {
+              console.log('this is sidebardata in subs subs 2: ', sideBarData);
+              rightSideDataSub.unsubscribe();
+            }
+          }
+        );
+      } else {
+        this.subService.editModifyFeeStructure(obj).subscribe(
+          data => this.saveFixedModifyFeesResponse(data)
+        ); 
+      }
     }
   }
 

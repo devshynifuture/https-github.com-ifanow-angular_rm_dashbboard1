@@ -474,7 +474,7 @@ export class DocumentComponent implements OnInit {
         // advisorId: 12345,
         advisorId: this.advisorId,
         documentRepositoryId: element.documentRepositoryId,
-        mappingId: this.upperData.id
+        mappingId:1
       };
       obj.push(data);
     });

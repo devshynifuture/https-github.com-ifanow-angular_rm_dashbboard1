@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { SubscriptionService } from '../../../subscription.service';
 import * as _ from 'lodash';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-variable-fee',
@@ -18,6 +19,7 @@ export class VariableFeeComponent implements OnInit {
   variableData; 
   pricing: boolean;
   @Input() createSubData;
+  singleSubscriptionData: any;
   constructor(private subService: SubscriptionService,private fb: FormBuilder, public subInjectService: SubscriptionInject) { 
     this.subInjectService.newRightSliderDataObs.subscribe(
       data => this.getSubscribeData(data)
@@ -49,31 +51,31 @@ export class VariableFeeComponent implements OnInit {
 
   getSubscribeData(data){
     console.log(data) 
-    const variableData=data.data 
-    if(variableData=='')
+    this.singleSubscriptionData=data.data 
+    if(this.singleSubscriptionData=='')
       {
         return
       }
       else{
-        this.getVariableFee().billingNature.setValue(variableData.subscriptionPricing.billingNature);
-        this.getVariableFee().billEvery.setValue(variableData.subscriptionPricing.billEvery);
-        this.getVariableFee().Duration.setValue(variableData.subscriptionPricing.billingCycle);
+        this.getVariableFee().billingNature.setValue(this.singleSubscriptionData.subscriptionPricing.billingNature);
+        this.getVariableFee().billEvery.setValue(this.singleSubscriptionData.subscriptionPricing.billEvery);
+        this.getVariableFee().Duration.setValue(this.singleSubscriptionData.subscriptionPricing.billingCycle);
         /*//TODO commented for now*/
         this.getVariableFee().directFees.setValue({
-          equity: variableData.subscriptionPricing.subscriptionAssetPricingList[0].equityAllocation,
-          debt: variableData.subscriptionPricing.subscriptionAssetPricingList[0].debtAllocation,
-          liquid: variableData.subscriptionPricing.subscriptionAssetPricingList[0].liquidAllocation
+          equity: this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[0].equityAllocation,
+          debt: this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[0].debtAllocation,
+          liquid: this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[0].liquidAllocation
         });
         this.getVariableFee().regularFees.setValue({
-          equity: variableData.subscriptionPricing.subscriptionAssetPricingList[1].equityAllocation,
-          debt: variableData.subscriptionPricing.subscriptionAssetPricingList[1].debtAllocation,
-          liquid: variableData.subscriptionPricing.subscriptionAssetPricingList[1].liquidAllocation
+          equity: this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[1].equityAllocation,
+          debt: this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[1].debtAllocation,
+          liquid: this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[1].liquidAllocation
         });
-        this.getVariableFee().pricing.setValue(variableData.subscriptionPricing.pricing);
-        this.getVariableFee().otherAssetClassFees.setValue(variableData.subscriptionPricing.subscriptionAssetPricingList[0].subscriptionSubAssets);
+        this.getVariableFee().pricing.setValue(this.singleSubscriptionData.subscriptionPricing.pricing);
+        this.getVariableFee().otherAssetClassFees.setValue(this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[0].subscriptionSubAssets);
         this.otherAssetData = [];
-        this.otherAssetData = variableData.subscriptionPricing.subscriptionAssetPricingList[2].subscriptionSubAssets; 
-        (variableData.isCreateSub)?this.variableFeeStructureForm.enable():this.variableFeeStructureForm.disable()
+        this.otherAssetData = this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[2].subscriptionSubAssets; 
+        (this.singleSubscriptionData.isCreateSub)?this.variableFeeStructureForm.enable():this.variableFeeStructureForm.disable()
     
        }  
       }
@@ -127,6 +129,9 @@ export class VariableFeeComponent implements OnInit {
         billingNature: this.getVariableFee().billingNature.value,
         billingMode: 1,
         billEvery: this.getVariableFee().billEvery.value,
+        feeTypeId:'',
+        clientId:'',
+        subId:'',
         subscriptionAssetPricingList: [
           {
             directRegular: 1,
@@ -147,18 +152,29 @@ export class VariableFeeComponent implements OnInit {
           }
         ]
       };
-      this.subService.editModifyFeeStructure(obj).subscribe(
-        data => this.saveVariableModifyFeesResponse(data)
-      );
-      // if (this.createSubData) {
-      //   console.log(this.variableData);
-      //   this.variableData.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId;
-      //   this.variableData.clientId = this.singleSubscriptionData.clientId;
-      //   this.variableData.subId = this.singleSubscriptionData.id;
-      //   this.subInjectService.addSingleProfile(this.variableData);
-      // }
-      //  else {
-      //  }
+      if (this.createSubData) {
+        obj.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId;
+        obj.clientId = this.singleSubscriptionData.clientId;
+        obj.subId = this.singleSubscriptionData.id;
+        console.log(obj)
+        const fragmentData = {
+          obj,
+        };
+        const rightSideDataSub = this.subInjectService.addSingleProfile(fragmentData).subscribe(
+          sideBarData => {
+            console.log('this is sidebardata in subs subs : ', sideBarData);
+            if (UtilService.isDialogClose(sideBarData)) {
+              console.log('this is sidebardata in subs subs 2: ', sideBarData);
+              rightSideDataSub.unsubscribe();
+            }
+          }
+        );
+      }
+       else {
+        this.subService.editModifyFeeStructure(obj).subscribe(
+          data => this.saveVariableModifyFeesResponse(data)
+        );
+       }
     }
   }
   saveVariableModifyFeesResponse(data) {
