@@ -25,7 +25,7 @@
   <app-biller-settings *ngIf="subscriptionTab=='billerSettings'"></app-biller-settings>
   <!-- <app-payee-settings *ngIf="subscriptionTab=='payeeSettings'"></app-payee-settings> -->
   <app-help *ngIf="subscriptionTab=='documentHelp'"></app-help>
-  <app-invoice *ngIf="subscriptionTab=='invoiceUpperSlider'"></app-invoice>
+  <app-invoice  [data]="inputData" *ngIf="subscriptionTab=='invoiceUpperSlider'"></app-invoice>
   <!-- <app-invoice  [data]="inputData" *ngIf="subscriptionTab=='invoiceUpperSlider'"></app-invoice> -->
   <app-change-payee *ngIf="subscriptionTab=='changePayee'"></app-change-payee>
   <app-create-subscription  [data]="fragmentData" *ngIf="subscriptionTab=='createSubFixed' || subscriptionTab=='createSubVariable'"
