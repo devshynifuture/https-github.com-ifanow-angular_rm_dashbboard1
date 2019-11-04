@@ -70,9 +70,9 @@ export class CreateSubscriptionComponent implements OnInit {
 
   constructor(private enumService: EnumServiceService, public subInjectService: SubscriptionInject,
               private eventService: EventService, private fb: FormBuilder, private subService: SubscriptionService) {
-    this.subInjectService.singleProfileData.subscribe(
-      data => this.getSubStartDetails(data)
-    );
+    // this.subInjectService.singleProfileData.subscribe(
+    //   data => this.getSubStartDetails(data)
+    // );
     this.eventService.sidebarSubscribeData.subscribe(
       data => this.subFeeMode = data
     );
