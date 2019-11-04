@@ -97,15 +97,7 @@ export class InvoiceComponent implements OnInit {
   isInvoiceDate = false;
   isTaxstatus = false;
   isPrice = false;
-  @Input()
-  set data(data) {
-    this.inputData = data;
-    this.getInvoiceData(data);
-  }
 
-  get data() {
-    return this.inputData;
-  }
   @Input() invoiceData;
   @Input() invoiceInSub;
   @Input() clientData;
@@ -142,7 +134,15 @@ export class InvoiceComponent implements OnInit {
     //   data => this.getRecordPayment(data)
     // );
   }
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    this.getInvoiceData(data);
+  }
 
+  get data() {
+    return this.inputData;
+  }
   ngOnInit() {
     
     this.advisorId = AuthService.getAdvisorId();
@@ -159,10 +159,6 @@ export class InvoiceComponent implements OnInit {
     this.feeCalc = false;
     console.log('invoiceValue+++++++++++', this.invoiceValue);
     if (this.invoiceValue == 'edit' || this.invoiceValue == 'EditInInvoice') {
-      this.editPayment.reset();
-      this.finalAmount = 0;
-      this.taxStatus = '';
-      this.discount = 0;
       this.auto = true;
       this.showEdit = true;
       this.storeData =
@@ -209,6 +205,13 @@ export class InvoiceComponent implements OnInit {
   selectClient(c,data){
     console.log(c)
     console.log('ssss',data)
+    // let obj ={
+    //   id : service.clientId,
+    //   module : 2
+    // }
+    // this.subService.getInvoices(obj).subscribe(
+    //   data => this.getInvoiceDataRes(data)
+    // );
     console.log('getInvoiceDataRes',data)
     this.storeData = data;
     this.storeData.billerAddress = this.defaultVal.biller.billerAddress
@@ -246,7 +249,7 @@ export class InvoiceComponent implements OnInit {
     this.getFormControledit().footnote.maxLength = 100;
     this.getFormControledit().terms.maxLength = 100;
     if(data.auto == true){
-      this.editPayment.controls.serviceName.disable()
+      this.editPayment.controls.isServiceName.disable()
     }
     this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value))?0:this.editPayment.controls.finalAmount.value;
     this.discount = (isNaN(this.editPayment.controls.finalAmount.value))?0:this.editPayment.controls.discount.value;
@@ -344,10 +347,10 @@ export class InvoiceComponent implements OnInit {
       billerAddress: [data.billerAddress, [Validators.required]],
       billingAddress: [(data.billingAddress == undefined)? '':data.billingAddress , [Validators.required]],
       invoiceNumber: [data.invoiceNumber, [Validators.required]],
-      invoiceDate: [(new Date(data.invoiceDate) == undefined)? '':(new Date(data.invoiceDate)), [Validators.required]],
+      invoiceDate: [data.invoiceDate, [Validators.required]],
       finalAmount: [(parseInt(data.finalAmount) == undefined) ? 0 : parseInt(data.finalAmount), [Validators.required]],
       discount: [(parseInt(data.discount) == undefined) ? 0 : data.discount, [Validators.required]],
-      dueDate: [(new Date(data.dueDate) == undefined)? '':(new Date(data.dueDate)), [Validators.required]],
+      dueDate: [data.dueDate, [Validators.required]],
       footnote: [data.footnote, [Validators.required]],
       terms: [data.terms, [Validators.required]],
       taxStatus: ['IGST(18%)'],
@@ -355,6 +358,7 @@ export class InvoiceComponent implements OnInit {
       subTotal: [(data == undefined) ? '' : data.subTotal],
       igstTaxAmount: [data.igstTaxAmount],
       auto: [data.auto]
+      // fromDate : [data.services[0].fromDate,[Validators.required]],
 
     });
     this.getFormControledit().clientName.maxLength = 10;
@@ -365,7 +369,6 @@ export class InvoiceComponent implements OnInit {
     this.getFormControledit().terms.maxLength = 100;
     this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value))?0:this.editPayment.controls.finalAmount.value;
     this.discount = (isNaN(this.editPayment.controls.finalAmount.value))?0:this.editPayment.controls.discount.value;
-    this.taxStatus = ['IGST(18%)'];
     this.auto = this.editPayment.controls.auto.value
     if(data.auto == true){
       this.editPayment.controls.serviceName.disable()
@@ -404,8 +407,8 @@ export class InvoiceComponent implements OnInit {
         total: (parseInt(this.editPayment.value.finalAmount) - parseInt(this.editPayment.value.discount)) + parseInt(this.finAmount),
         discount: this.editPayment.value.discount,
         finalAmount: this.editPayment.value.finalAmount,
-        invoiceDate: this.editPayment.controls.invoiceDate.value,
-        dueDate: this.editPayment.controls.dueDate.value,
+        invoiceDate: this.editPayment.value.invoiceDate,
+        dueDate: this.editPayment.value.dueDate,
         igst: (this.editPayment.value.taxStatus == 'IGST(18%)') ? 18 : null,
         cgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
         sgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,

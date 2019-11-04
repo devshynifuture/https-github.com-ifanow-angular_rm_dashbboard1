@@ -156,7 +156,7 @@ export class InvoicesComponent implements OnInit {
       id: 1,
       state: 'open'
     };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         this.dataTOget = sideBarData;

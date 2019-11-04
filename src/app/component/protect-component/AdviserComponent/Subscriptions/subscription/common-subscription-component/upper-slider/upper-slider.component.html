@@ -133,7 +133,7 @@
   <app-plan-rightslider [clientData]="fragmentData.clientData" *ngIf="rightSliderData=='planRightSlider'">
   </app-plan-rightslider>
   <app-email-quotation [headerData]="headerData" *ngIf="rightSliderData=='eSignQuotations'"></app-email-quotation>
-  <app-invoice [invoiceTab]="rightSliderData" *ngIf="rightSliderData=='invoiceUpperSlider'"></app-invoice>
+  <app-invoice [data]="inputData"  [invoiceTab]="rightSliderData"  *ngIf="rightSliderData=='invoiceUpperSlider'"></app-invoice>
   <app-payee-settings *ngIf="rightSliderData=='payeeSettings'"></app-payee-settings>
   <app-email-quotation [headerDataDocuments]="headerDataDocuments" *ngIf="rightSliderData=='eSignDocument'">
   </app-email-quotation>
