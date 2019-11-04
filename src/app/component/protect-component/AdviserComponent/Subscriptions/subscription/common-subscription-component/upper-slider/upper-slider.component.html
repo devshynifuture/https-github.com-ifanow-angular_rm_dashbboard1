@@ -137,14 +137,14 @@
   <app-payee-settings *ngIf="rightSliderFlag=='payeeSettings'"></app-payee-settings>
   <app-email-quotation [headerDataDocuments]="headerDataDocuments" *ngIf="rightSliderFlag=='eSignDocument'">
   </app-email-quotation>
-  <app-create-subscription [data]="upperRightSideInputData" *ngIf="rightSliderFlag=='createSubFixed' || rightSliderFlag=='createSubVariable'"></app-create-subscription>
+  <app-create-subscription [data]="upperRightSideInputData" [subFeeMode]="rightSliderFlag" *ngIf="rightSliderFlag=='createSubFixed' || rightSliderFlag=='createSubVariable'"></app-create-subscription>
   <app-add-variable-fee *ngIf="rightSliderFlag=='varibleFee'"></app-add-variable-fee>
   <app-add-fixed-fee *ngIf="rightSliderFlag=='fixedFee'"></app-add-fixed-fee>
   <app-overview-blank-quotation [blankOverview]="blankOverview" *ngIf='blankOverview'></app-overview-blank-quotation>
   <app-biller-settings [upperData]="fragmentData.clientData" *ngIf="rightSliderFlag=='billerSettings'">
   </app-biller-settings>
-  <app-fixed-fee *ngIf="rightSliderFlag=='fixedModifyFees'"></app-fixed-fee>
-  <app-variable-fee *ngIf="rightSliderFlag=='variableModifyFees'"></app-variable-fee>
+  <app-fixed-fee [data]="upperRightSideInputData" *ngIf="rightSliderFlag=='fixedModifyFees'"></app-fixed-fee>
+  <app-variable-fee [data]="upperRightSideInputData" *ngIf="rightSliderFlag=='variableModifyFees'"></app-variable-fee>
 
   <app-change-payee [upperData]="fragmentData.clientData" *ngIf="rightSliderFlag=='changePayee'"></app-change-payee>
   <app-email-quotation [headerDataInvoice]="headerDataInvoice" *ngIf="rightSliderFlag=='eSignInvoices'">

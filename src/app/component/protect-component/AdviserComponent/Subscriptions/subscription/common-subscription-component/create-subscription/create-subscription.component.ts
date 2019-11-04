@@ -67,26 +67,21 @@ export const MY_FORMATS2 = {
 })
 export class CreateSubscriptionComponent implements OnInit {
   @Input() subFeeMode;
+  feeModeData: any;
 
   constructor(private enumService: EnumServiceService, public subInjectService: SubscriptionInject,
               private eventService: EventService, private fb: FormBuilder, private subService: SubscriptionService) {
-    // this.subInjectService.singleProfileData.subscribe(
-    //   data => this.getSubStartDetails(data)
-    // );
     this.eventService.sidebarSubscribeData.subscribe(
       data => this.subFeeMode = data
     );
-    // this.subInjectService.ta
   }
 
   inputData;
 
   @Input()
   set data(data) {
-    this.inputData = data;
     this.getSubStartDetails(data);
   }
-
   get data() {
     return this.inputData;
   }
@@ -139,23 +134,28 @@ export class CreateSubscriptionComponent implements OnInit {
     }
     console.log(this.subscriptionDetails);
   }
-
+  nextStep(data)
+  {
+   console.log(data)
+   this.goForward()
+  }
   getSubStartDetails(data) {
-    this.clientData = data.obj;
+    this.clientData = data.data;
+    this.feeModeData=data
     console.log('client Data: ', this.clientData);
-    if (data.subscriptionPricing) {
+    if (data.data.subscriptionPricing) {
       this.advisorId = AuthService.getAdvisorId();
       const obj = {
         // advisorId: 2808,
         advisorId: this.advisorId,
-        clientId: data.clientId,
-        subId: data.id
+        clientId: data.data.clientId,
+        subId: data.data.id
       };
       this.subService.getSubscriptionStartData(obj).subscribe(
-        subStartData => this.getSubStartDetailsResponse(subStartData)
+        subStartData => this.getSubStartDetailsResponse(subStartData,data)
       );
     } else {
-      this.feeStructureFormData = data;
+      // this.feeModeData=data
       this.goForward();
       console.log(this.feeStructureFormData, 'feeStructureData');
     }
@@ -196,8 +196,9 @@ export class CreateSubscriptionComponent implements OnInit {
     }
   }
 
-  getSubStartDetailsResponse(data) {
+  getSubStartDetailsResponse(data,feeModeData) {
     console.log(data);
+    this.feeModeData=feeModeData
     this.feeStructureData = data;
     this.subscriptionDetails.controls.subscription.setValue(data.subscriptionNo);
     this.billersData = data.billers;
