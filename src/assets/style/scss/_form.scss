@@ -28,6 +28,18 @@ input[type=number]::-webkit-outer-spin-button {
     box-shadow: none !important;
     border-color: #ced4da !important;
 }
+.mat-form-field-underline{
+    display:  none !important;
+}
+input.mat-input-element{
+    margin: 0;
+    line-height: 2.3;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+input.mat-input-element:focus{
+    outline: none;
+}
 // .form-group{
 //     margin-bottom: 0 !important;
 // }
