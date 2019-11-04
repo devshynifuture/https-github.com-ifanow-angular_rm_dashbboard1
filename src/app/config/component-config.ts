@@ -111,9 +111,10 @@ export const appConfig = {
   EDIT_EMAIL_TEMPLATE: 'subscription/email-template/edit',
   START_SUBSCRIPTION: 'subscription/client/subscription/start',
   DELETE_SERVICE: 'subscription/service/delete',
-  GET_CLIENTLIST:'subscription/invoice/payees/get',
-  SET_PRIMARY_BILLER:'subscription/setting/billerprofile/setprimary',
-  GET_PAYMENT_RECEIVE:'subscription/invoice/payment/received/list/get',
-  EDIT_PAYMENT_RECEIVE:'subscription/invoice/payment/received/edit',
+  GET_CLIENTLIST: 'subscription/invoice/payees/get',
+  SET_PRIMARY_BILLER: 'subscription/setting/billerprofile/setprimary',
+  GET_PAYMENT_RECEIVE: 'subscription/invoice/payment/received/list/get',
+  EDIT_PAYMENT_RECEIVE: 'subscription/invoice/payment/received/edit',
+  GET_EMAIL_TEMPLATE_FILTER: 'subscription/emailtemplate/get',
   GET_BASE_64: 'api/v1/test/base64/decode'
 };

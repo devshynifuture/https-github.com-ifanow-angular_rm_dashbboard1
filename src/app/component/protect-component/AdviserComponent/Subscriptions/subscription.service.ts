@@ -319,21 +319,32 @@ export class SubscriptionService {
   deleteService(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SERVICE, data);
   }
-  getClientList(data){
+
+  getClientList(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENTLIST, httpParams);
   }
-  getPaymentReceive(data){
+
+  getPaymentReceive(data) {
     const httpParams = new HttpParams().set('invoiceId', data.invoiceId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PAYMENT_RECEIVE, httpParams);
   }
+
   editPaymentReceive(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_PAYMENT_RECEIVE, data);
   }
-  setBillerPrimary(data){
+
+  setBillerPrimary(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.SET_PRIMARY_BILLER, data);
   }
-  
+
+  getEmailTemplateFilterData(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('templateType', data.templateId)
+      .set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_TEMPLATE_FILTER, httpParams);
+
+  }
+
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
   }

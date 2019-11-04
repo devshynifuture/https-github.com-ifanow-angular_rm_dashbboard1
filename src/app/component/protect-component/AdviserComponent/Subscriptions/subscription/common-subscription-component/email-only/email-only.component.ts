@@ -37,11 +37,12 @@ export class EmailOnlyComponent implements OnInit {
   @Input() quotationData;
 
   _inputData;
+  emailData;
 
   @Input() set inputData(inputData) {
     this._inputData = inputData;
     console.log('EmailOnlyComponent inputData : ', inputData);
-
+    this.getEmailTemplateFilterData();
   }
 
   get inputData() {
@@ -75,6 +76,22 @@ export class EmailOnlyComponent implements OnInit {
 
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
+  }
+
+  getEmailTemplateFilterData() {
+
+    const data = {
+      advisorId: this._inputData.advisorId,
+      clientId: this._inputData.clientId,
+      templateType: this._inputData.templateType
+    };
+    this.subscription.getEmailTemplateFilterData(data).subscribe(responseData => {
+      this.emailData = responseData;
+    }, error => {
+      this.eventService.openSnackBar(error, 'dismiss', () => {
+        console.log('dismiss was clicked');
+      });
+    });
   }
 
   Close(value) {

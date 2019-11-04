@@ -15,7 +15,7 @@ export class PayeeSettingsComponent implements OnInit {
   payeeSettingsForm;
   sendData;
   updatedData: any;
-  
+
   constructor(public subInjectService:SubscriptionInject, private eventService:EventService,private subService:SubscriptionService,private fb:FormBuilder) {
     // this.eventService.rightSliderData.subscribe(
     //   data =>this.getRightSliderData(data)
@@ -34,7 +34,7 @@ export class PayeeSettingsComponent implements OnInit {
    isBillingAddress = false;
    isPincode = false;
    OnInit() {
-    
+
    }
    @Output() getEditData = new EventEmitter();
 
@@ -68,7 +68,7 @@ export class PayeeSettingsComponent implements OnInit {
       country: [data.country],
       pincode: [data.zipCode, [Validators.required]],
       id:[data.id]
-    }) 
+    })
     this.getFormControl().customerName.maxLength = 50;
     this.getFormControl().displayName.maxLength = 40;
     this.getFormControl().companyName.maxLength = 50;
@@ -79,7 +79,7 @@ export class PayeeSettingsComponent implements OnInit {
     this.getFormControl().billingAddress.maxLength = 150;
     this.getFormControl().pincode.maxLength = 6;
   }
-  
+
   obj=[
     {
         "id": null,
@@ -196,7 +196,7 @@ export class PayeeSettingsComponent implements OnInit {
       this.subService.editPayeeSettings(obj1).subscribe(
         data =>this.editSettingResData(data)
       )
-     
+
       }else{
 
         let obj = {
@@ -216,26 +216,26 @@ export class PayeeSettingsComponent implements OnInit {
           "country": this.getFormControl().country.value,
           "zipCode": this.getFormControl().pincode.value,
           "clientId": 2978,
-          
+
         }
         this.subService.addClientBillerProfile(obj).subscribe(
           data => this.addClientBillerProfileRes(data)
         )
-        
+
       }
     }
-    
+
   }
   addClientBillerProfileRes(data){
     console.log("addClientBillerProfileRes",data)
     this.updatedData = data
-      this.eventService.openSnackBar("Family member added successfully","OK")
+      this.eventService.openSnackBar("Family member added successfully", "OK")
       this.Close('close')
-     
+
   }
   editSettingResData(data) {
    if(data == true){
-    this.eventService.openSnackBar("Family member updated successfully","OK")
+    this.eventService.openSnackBar("Family member updated successfully", "OK")
     this.getEditData.emit(this.sendData)
     this.Close('close')
    }
