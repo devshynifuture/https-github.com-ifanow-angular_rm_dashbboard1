@@ -330,6 +330,10 @@ export class SubscriptionService {
   editPaymentReceive(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_PAYMENT_RECEIVE, data);
   }
+  setBillerPrimary(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.SET_PRIMARY_BILLER, data);
+  }
+  
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
   }
