@@ -5,12 +5,15 @@ import {Injectable} from '@angular/core';
   providedIn: 'root'
 })
 export class SubscriptionInject {
+
+  private newRightSliderData = new BehaviorSubject<object>({state: 'close', fragmentData: {}, flag: ''});
+  newRightSliderDataObs = this.newRightSliderData.asObservable();
+
   // right slider part
   private openCloseRightSlider = new BehaviorSubject<any>('close');
   rightSideBarData = this.openCloseRightSlider.asObservable();
 
   // upper slider part
-
   private openCloseupperSlider = new BehaviorSubject('');
   rightslider = this.openCloseupperSlider.asObservable();
 
@@ -27,6 +30,9 @@ export class SubscriptionInject {
   private billerData = new BehaviorSubject('');
   singleProfileData = this.billerData.asObservable();
 
+  private upper = new BehaviorSubject('');
+  upperData = this.upper.asObservable();
+
   rightSideData(msg) {
     console.log('dialog-container rightSideData: ', msg);
 
@@ -41,10 +47,11 @@ export class SubscriptionInject {
   closeSlider(msg: string) {
     this.openContent.next(msg);
   }
-/*
-  rightDocumentSlider(msg: string) {
-    this.openDocument.next(msg);
-  }*/
+
+  /*
+    rightDocumentSlider(msg: string) {
+      this.openDocument.next(msg);
+    }*/
 
   addSingleProfile(obj) {
     /**/
@@ -52,11 +59,12 @@ export class SubscriptionInject {
     return this.singleProfileData;
   }
 
-  private upper=new BehaviorSubject("");
-  upperData=this.upper.asObservable();
-
-  pushUpperData(data)
-  {
+  pushUpperData(data) {
     this.upper.next(data);
+  }
+
+  changeNewRightSliderState(sliderState: object) {
+    this.newRightSliderData.next(sliderState);
+    return this.newRightSliderDataObs;
   }
 }

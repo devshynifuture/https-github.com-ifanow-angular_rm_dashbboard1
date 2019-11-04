@@ -7,7 +7,7 @@
     </div>
     <div class="row pt-40">
       <div class="col-md-6 hover c-p" (click)="selectedFees('fixed')">
-        <mat-card [ngClass]="{'ba-blue': selectedFee=='fixed','b-a':selectedFee!='fixed'}" class="b-a p-0"
+        <mat-card [ngClass]="{'ba-blue': selectedFee=='fixed','b-ua':selectedFee!='fixed'}" class="b-a p-0"
           (click)="openPlanSliderFee('','fixedFee','open')">
           <div class="row bg-grey lter">
             <div class="col-md-12 p-0">
@@ -23,7 +23,7 @@
 
       </div>
       <div class="col-md-6 hover c-p" (click)="selectedFees('variable')">
-        <mat-card class="b-a p-0" [ngClass]="{'ba-blue': selectedFee=='variable','b-a':selectedFee!='variable'}"
+        <mat-card class="b-a p-0" [ngClass]="{'ba-blue': selectedFee=='variable','b-ua':selectedFee!='variable'}"
           (click)="openPlanSliderFee('','varibleFee','open')">
           <div class="row bg-grey lter">
             <div class="col-md-12 p-0">

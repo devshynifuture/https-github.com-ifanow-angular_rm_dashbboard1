@@ -8,6 +8,7 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
 import {AuthService} from '../../../../../../auth-service/authService';
 import * as _ from 'lodash';
 import {EnumServiceService} from '../enum-service.service';
+import {UtilService} from "../../../../../../services/util.service";
 
 export interface PeriodicElement {
   client: string;
@@ -103,20 +104,38 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   openPlanSlider(value, state, data) {
     // data
-
-    const rightSideDataSub = this.subInjectService.rightSideData(state).subscribe(
+    // // // (dat.subscriptionPricing.feeTypeId==1)?dat.feeMode="fixed":dat.feeMode="variable"
+    // const rightSideDataSub = this.subInjectService.rightSideData(state).subscribe(
+    //   sideBarData => {
+    //     // console.log('this is sidebardata in subs subs : ', sideBarData);
+    //     if (sideBarData == 'close') {
+    //       // console.log('this is sidebardata in subs subs 2: ', sideBarData);
+    //       rightSideDataSub.unsubscribe();
+    //       this.getSummaryDataAdvisor();
+    //     }
+    //   }
+    // );
+    (data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable';
+    data.isCreateSub = true;
+    // (value == 'createSubFixed' || value == 'createSubVariable') ? data.isCreateSub = true : data.isCreateSub = false;
+    // this.eventService.sidebarData(value);
+    // this.subInjectService.addSingleProfile(data);
+    const fragmentData = {
+      Flag: value,
+      data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        // console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (sideBarData == 'close') {
-          // console.log('this is sidebardata in subs subs 2: ', sideBarData);
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
           this.getSummaryDataAdvisor();
         }
       }
     );
-    this.eventService.sidebarData(value);
-    this.subInjectService.addSingleProfile(data);
-
 
   }
 
@@ -194,8 +213,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
   filterSubscriptionRes(data) {
-    console.log('filterSubscriptionRes', data)
-    this.getSubSummaryRes(data)
+    console.log('filterSubscriptionRes', data);
+    this.getSubSummaryRes(data);
   }
 
   addFiltersDate(dateFilter) {
@@ -221,12 +240,12 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       advisorId: this.advisorId,
       limit: 10,
       offset: 0,
-      fromDate: "2000-01-01",
-      toDate: "3000-01-01",
+      fromDate: '2000-01-01',
+      toDate: '3000-01-01',
       statusIdList: this.statusIdList,
       dateType: 0
-    }
-    console.log('this.statusIdList', this.statusIdList)
+    };
+    console.log('this.statusIdList', this.statusIdList);
     this.subService.filterSubscription(obj).subscribe(
       data => this.filterSubscriptionRes(data)
     );

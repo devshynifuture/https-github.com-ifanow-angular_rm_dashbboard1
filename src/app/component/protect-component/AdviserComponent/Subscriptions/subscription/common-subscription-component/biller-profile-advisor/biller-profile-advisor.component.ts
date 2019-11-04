@@ -186,7 +186,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
         billerAddress: this.billerProfileForm.controls.profileDetailsForm.controls.Address.value,
         branchAddress: this.billerProfileForm.controls.bankDetailsForm.controls.address.value,
         city: this.billerProfileForm.controls.profileDetailsForm.controls.city.value,
-        company_display_name: 'stringfgdfg',
+        companyDisplayName: 'stringfgdfg',
         companyName: 'stringname',
         country: this.billerProfileForm.controls.profileDetailsForm.controls.country.value,
         footnote: this.billerProfileForm.controls.MiscellaneousData.controls.footnote.value,
@@ -200,9 +200,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
         zipCode: this.billerProfileForm.controls.profileDetailsForm.controls.pincode.value
       };
       console.log(obj);
-      this.subService.updateBillerProfileSettings(obj).subscribe(
-        data => console.log(data)
-      );
+      // this.subService.updateBillerProfileSettings(obj).subscribe(
+      //   data => console.log(data)
+      // );
       this.subService.saveBillerProfileSettings(obj).subscribe(
         data => console.log(data)
       );

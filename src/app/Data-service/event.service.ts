@@ -21,8 +21,8 @@ export class EventService {
   private rightSliderValue = new BehaviorSubject('');
   rightSliderData = this.rightSliderValue.asObservable();
 
-  private sideNavContainerClassValue = new BehaviorSubject('sidenav-container'); /*blur-filter*/
-  sideNavContainerClassData = this.sideNavContainerClassValue.asObservable();
+  // private sideNavContainerClassValue = new BehaviorSubject('sidenav-container'); /*blur-filter*/
+  // sideNavContainerClassData = this.sideNavContainerClassValue.asObservable();
 
   private overlayVisibleValue = new BehaviorSubject(false);
   overlayVisibleData = this.overlayVisibleValue.asObservable();
@@ -60,7 +60,7 @@ export class EventService {
     this.rightSliderValue.next(msg);
   }
 
-  sideNaveClass(className: string) {
-    this.sideNavContainerClassValue.next(className);
-  }
+  // sideNaveClass(className: string) {
+  //   this.sideNavContainerClassValue.next(className);
+  // }
 }
