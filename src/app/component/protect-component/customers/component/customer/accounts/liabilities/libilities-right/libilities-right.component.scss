@@ -41,3 +41,11 @@ span.notstart{
     border-radius: 2px;
     font-size: 12px;
 }
+::ng-deep .min-160{
+    min-width: 160px !important;
+    font-size: 12px !important;
+}
+::ng-deep li{
+    margin-top: 12px;
+    
+}
