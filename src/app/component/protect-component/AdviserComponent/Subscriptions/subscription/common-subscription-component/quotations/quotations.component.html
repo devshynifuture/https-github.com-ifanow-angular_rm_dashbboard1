@@ -1,5 +1,5 @@
 <div class="wrapper-20 bg-grey lter heading-fix b-a">
-  <h3 class="m-0 text-center head-common">{{upperData.name}}</h3>
+  <h3 class="m-0 text-center head-common">{{_clientData.name}}</h3>
 </div>
 
 <div *ngIf="quotationDesign=='true'" class="bg-white">
@@ -25,7 +25,7 @@
         </button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item class="b-t" *ngIf="dataCount == 0">Select Quotation to see more actions</button>
-          <button mat-menu-item (click)="openQuotationsESign('eSignQuotations','open')" *ngIf="dataCount != 0">Email
+          <button mat-menu-item (click)="openSendEmail()" *ngIf="dataCount != 0">Email
             only
           </button>
           <button mat-menu-item (click)="deleteModal('QUOTATION')" *ngIf="dataCount != 0">Delete Quotations</button>

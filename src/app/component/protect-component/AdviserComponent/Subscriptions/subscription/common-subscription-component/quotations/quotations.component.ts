@@ -8,6 +8,7 @@ import {MatDialog} from '@angular/material';
 import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
 import {SubscriptionService} from '../../../subscription.service';
 import {ConsentTandCComponent} from '../consent-tand-c/consent-tand-c.component';
+import {UtilService} from "../../../../../../../services/util.service";
 
 export interface PeriodicElement {
   document: string;
@@ -36,22 +37,32 @@ export class QuotationsComponent implements OnInit {
   quotationDesignEmail;
   quotationDesign;
   dataCount;
-  @Input() upperData;
+  _clientData;
   displayedColumns: string[] = ['checkbox', 'document', 'plan', 'date', 'sdate', 'cdate', 'status', 'send', 'icons'];
   dataSource;
   changeEmail = 'footerChange';
 
+  @Input()
+  set clientData(clientData) {
+    this._clientData = clientData;
+    this.getQuotationsList();
+  }
+
+  get clientData() {
+    return this._clientData;
+  }
+
   ngOnInit() {
     this.quotationDesign = 'true';
     console.log('quotation');
-    this.getQuotationsList();
+    // this.getQuotationsList();
     this.dataCount = 0;
   }
 
   getQuotationsList() {
     const obj = {
-      clientId: 2970
-      // 'clientId':this.clientData.id
+      // clientId: 2970
+      clientId: this._clientData.id
     };
     this.subAService.getSubscriptionClientsQuotations(obj).subscribe(
       data => this.getQuotationsListResponse(data)
@@ -122,6 +133,41 @@ export class QuotationsComponent implements OnInit {
 
     });
 
+  }
+
+  openSendEmail() {
+    const data = {
+      documentList: []
+    };
+    this.dataSource.forEach(singleElement => {
+      if (singleElement.isChecked) {
+        data.documentList.push(singleElement);
+      }
+    });
+    this.open(data, 'emailOnly');
+  }
+
+  open(data, value) {
+
+    // this.eventService.sliderData(value);
+    // this.subInjectService.rightSliderData(state);
+    // this.subInjectService.addSingleProfile(data);
+
+    const fragmentData = {
+      Flag: value,
+      data: data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ',);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
 
   openPopup(data) {
