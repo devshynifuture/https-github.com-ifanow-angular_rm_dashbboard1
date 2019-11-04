@@ -6,6 +6,7 @@ import {ValueConverter} from '@angular/compiler/src/render3/view/template';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material';
 import {AuthService} from "../../../../../../auth-service/authService";
+import {UtilService} from "../../../../../../services/util.service";
 
 export interface PeriodicElement {
   date: string;
@@ -92,11 +93,28 @@ export class InvoicesSubscriptionComponent implements OnInit {
   openInvoice(data, value, state) {
     this.invoiceSub = value;
     this.invoiceSubscription = 'true';
-//     this.eventService.sidebarData(value)
+    this.eventService.sidebarData(value)
 // this.subscriptionValue = value
 // this.subInjectService.rightSideData(state);
     this.subInjectService.addSingleProfile(data);
+    // const fragmentData = {
+    //   Flag: value,
+    //   data:data,
+    //   id: 1,
+    //   state: 'open'
+    // };
+    // const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+    //   sideBarData => {
+    //     console.log('this is sidebardata in subs subs : ', sideBarData);
+    //     this.dataTOget = sideBarData;
 
+    //     if (UtilService.isDialogClose(sideBarData)) {
+    //       console.log('this is sidebardata in subs subs 2: ', sideBarData);
+    //       rightSideDataSub.unsubscribe();
+    //       this.getSummaryDataAdvisor();
+    //     }
+    //   }
+    // );
   }
 
   getSingleResponseInvoicePdf(data) {
