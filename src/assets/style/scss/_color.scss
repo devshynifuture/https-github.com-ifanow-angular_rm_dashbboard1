@@ -49,6 +49,7 @@ $light:#757575;
 body {
     font-family: 'Roboto', sans-serif;
 }
+
 .bg-custom {
     background: $light !important;
 }
@@ -224,12 +225,15 @@ body {
 .bg-header.lter {
     background-color: $text-header-lter !important;
 }
-.bg-dark{
+
+.bg-dark {
     background-color: #1F1F1F !important;
 }
-.text-black{
+
+.text-black {
     color: $black !important;
 }
+
 .text-primary {
     color: $primary !important;
 }
@@ -244,10 +248,6 @@ body {
 
 .text-warning {
     color: $warning !important;
-}
-
-.text-primary {
-    color: $primary !important;
 }
 
 .text-danger {
@@ -282,9 +282,11 @@ body {
     line-height: 16px !important;
     font-weight: $font300 + 200 !important;
 }
-.text-primitive{
+
+.text-primitive {
     color: $primitive !important;
 }
+
 button {
     padding: 6px 12px;
     text-align: center;
@@ -334,7 +336,7 @@ button.btn-rounded {
     text-align: center !important;
     color: #757575 !important;
     border-radius: 0px !important;
-    position:absolute;
+    position: absolute;
     cursor: pointer;
     .material-icons {
         position: relative;
@@ -343,7 +345,6 @@ button.btn-rounded {
         height: 36px;
         margin: 0px 0px 0px -15px;
         line-height: 32px;
-        
     }
 }
 
@@ -406,11 +407,13 @@ button:active {
     border-color: $text-header-bg !important;
     background-color: $text-header !important;
 }
-.btn-bottom{
+
+.btn-bottom {
     background: #02B875 !important;
     border-color: #02B875 !important;
     color: #fff !important;
 }
+
 .btn-primary:not(:disabled):not(.disabled).active:focus,
 .btn-primary:not(:disabled):not(.disabled):active:focus,
 .show>.btn-primary.dropdown-toggle:focus,
@@ -441,10 +444,11 @@ button:active {
     box-shadow: 0 0 0 0em !important;
 }
 
-.icon-light{
+.icon-light {
     color: $light;
 }
-.text-light{
+
+.text-light {
     color: #757575 !important;
 }
 

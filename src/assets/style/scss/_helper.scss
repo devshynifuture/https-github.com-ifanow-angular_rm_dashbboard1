@@ -36,9 +36,11 @@ $lineheight:20px;
 .f-14 {
     font-size: $smallfont+4 !important;
 }
-.f-15{
+
+.f-15 {
     font-size: 15px !important;
 }
+
 .f-16 {
     font-size: $smallfont+6 !important;
 }
@@ -269,7 +271,8 @@ $lineheight:20px;
 
 .no-padder,
 .p-none,
-.p-n,.p-0 {
+.p-n,
+.p-0 {
     padding: 0 !important;
 }
 
@@ -286,9 +289,12 @@ $lineheight:20px;
 .wrapper-8 {
     padding: $p4*2 !important;
 }
-.wrapper-9,.p-9{
+
+.wrapper-9,
+.p-9 {
     padding: 9px !important;
 }
+
 .p-12,
 .wrapper-12 {
     padding: $p4*3 !important;
@@ -342,24 +348,31 @@ $lineheight:20px;
 .pt-0 {
     padding-top: $zeropx !important;
 }
-.pt-1{
+
+.pt-1 {
     padding-top: 1px !important;
 }
-.pt-2{
+
+.pt-2 {
     padding-top: $p4 - 2 !important;
 }
+
 .pt-4 {
     padding-top: $p4 !important;
 }
-.pt-6{
+
+.pt-6 {
     padding-top: $p4 +2 !important;
 }
+
 .pt-8 {
     padding-top: $p4*2 !important;
 }
-.pt-10{
+
+.pt-10 {
     padding-top: 10px !important;
 }
+
 .pt-12 {
     padding-top: $p4*3 !important;
 }
@@ -399,33 +412,43 @@ $lineheight:20px;
 .pt-48 {
     padding-top: $p4*12 !important;
 }
-.pt-60{
+
+.pt-60 {
     padding-top: 60px !important;
 }
-.pt-72{
+
+.pt-72 {
     padding-top: 72px !important;
 }
-.pt-100{
+
+.pt-100 {
     padding-top: 100px !important;
 }
-.pt-120{
+
+.pt-120 {
     padding-top: 120px !important;
 }
-.pt-125{
+
+.pt-125 {
     padding-top: 125px !important;
 }
-.pt-130{
+
+.pt-130 {
     padding-top: 130px !important;
 }
-.pt-150{
+
+.pt-150 {
     padding-top: 150px !important;
 }
-.pt-170{
+
+.pt-170 {
     padding-top: 170px !important;
 }
-.pt-180{
+
+.pt-180 {
     padding-top: 180px !important;
 }
+
 .pr-0 {
     padding-right: $zeropx !important;
 }
@@ -477,12 +500,15 @@ $lineheight:20px;
 .pr-48 {
     padding-right: $p4*12 !important;
 }
+
 .pr-52 {
     padding-right: 52px !important;
 }
-.pr-76{
+
+.pr-76 {
     padding-right: 76px !important;
 }
+
 .pb-0 {
     padding-bottom: $zeropx !important;
 }
@@ -586,16 +612,20 @@ $lineheight:20px;
 .pl-48 {
     padding-left: $p4*12 !important;
 }
-.pl-120{
+
+.pl-120 {
     padding-left: 120px !important
 }
-.wrapper-100{
+
+.wrapper-100 {
     padding: 100px;
 }
+
 // margin
-.m-auto{
+.m-auto {
     margin: auto !important;
 }
+
 .no-margin,
 .m-none,
 .m-n {
@@ -665,6 +695,7 @@ $lineheight:20px;
 .mt-0 {
     margin-top: $zeropx !important;
 }
+
 .mt-2 {
     margin-top: $p4 - 2 !important;
 }
@@ -712,21 +743,27 @@ $lineheight:20px;
 .mt-44 {
     margin-top: $p4*11 !important;
 }
+
 .mt-65 {
     margin-top: 65px;
 }
+
 .mt-70 {
     margin-top: 70px;
 }
+
 .mt-80 {
     margin-top: 80px;
 }
+
 .mt-60 {
     margin-top: 60px !important;
 }
-.mt-150{
+
+.mt-150 {
     margin-top: 150px;
 }
+
 .mt-46 {
     margin-top: $p4*12 !important;
 }
@@ -786,18 +823,23 @@ $lineheight:20px;
 .mb-0 {
     margin-bottom: $zeropx !important;
 }
-.mb-1{
+
+.mb-1 {
     margin-bottom: 1px !important;
 }
-.mb-2{
+
+.mb-2 {
     margin-bottom: 2px !important;
 }
+
 .mb-4 {
     margin-bottom: $p4 !important;
 }
-.mb-5{
+
+.mb-5 {
     margin-bottom: 5px !important;
 }
+
 .mb-8 {
     margin-bottom: $p4*2 !important;
 }
@@ -841,9 +883,11 @@ $lineheight:20px;
 .mb-48 {
     margin-bottom: $p4*12 !important;
 }
-.mb-100{
+
+.mb-100 {
     margin-bottom: 100px !important;
 }
+
 .ml-0 {
     margin-left: $zeropx !important;
 }
@@ -895,6 +939,7 @@ $lineheight:20px;
 .ml-48 {
     margin-left: $p4*12 !important;
 }
+
 .ml-120 {
     margin-left: 120px !important;
 }
@@ -950,18 +995,23 @@ $lineheight:20px;
 .b {
     border: 1px solid #ddd !important;
 }
-.h-28{
+
+.h-28 {
     height: 28px !important;
 }
-.h-50{
+
+.h-50 {
     height: 50px !important;
 }
+
 .b-red {
     border: 1px solid $red;
 }
-.bl-1{
+
+.bl-1 {
     border-left: 1px solid #ddd !important;
 }
+
 .br-2 {
     border-radius: 2px !important;
 }
@@ -973,27 +1023,35 @@ $lineheight:20px;
 .b-s {
     border: 1px solid !important;
 }
-.bt-none{
+
+.bt-none {
     border-top: 0px !important;
 }
-.bb-none{
+
+.bb-none {
     border-bottom: 0px !important;
 }
+
 .c-p {
     cursor: pointer;
 }
-.br-blue-2{
+
+.br-blue-2 {
     border-right: 2px solid #008FFF !important;
 }
-.ba-dotted{
+
+.ba-dotted {
     border: 1px dotted #BCC6CA;
 }
-.ba-dashed{
+
+.ba-dashed {
     border: 1px dashed #BCC6CA;
 }
-.ba-dashed-2{
+
+.ba-dashed-2 {
     border: 1px dashed #BCC6CA;
 }
-.v-baseline{
+
+.v-baseline {
     vertical-align: baseline !important;
 }

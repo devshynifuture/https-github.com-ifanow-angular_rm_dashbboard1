@@ -29,12 +29,11 @@
     font-size: 14px !important;
     letter-spacing: 0.25px;
     font-family: "Roboto";
-    img{
-    position: absolute;
+    img {
+        position: absolute;
     }
-    span{
-       padding-left: 50px;
-
+    span {
+        padding-left: 50px;
     }
 }
 
@@ -49,7 +48,7 @@
 
 .fix-top .sidenav-link {
     padding-right: 55px !important;
-   margin-top: -12px;
+    margin-top: -12px;
 }
 
 .mat-toolbar-single-row {
@@ -71,6 +70,27 @@
     border-top: 0px !important;
 }
 
+.heading_h4 {
+    margin: 10px 10px 0px 15px;
+    font-weight: 500;
+}
+
+.autoCompleteImg {
+    img {
+        width: 35px;
+        border-radius: 50%;
+    }
+}
+
+.btn-Blue {
+    min-height: auto;
+    border: 1px solid;
+    line-height: normal;
+    height: 20px;
+    padding: 0px 6px;
+    border-radius: 2px;
+}
+
 img.header-img {
     width: 30%;
     border-radius: 50%;
@@ -83,13 +103,12 @@ img.header-img {
     display: flex;
     width: 60%;
     position: relative;
+    align-items: center;
 }
 
 .icon {
     position: absolute;
     left: 1%;
-    right: 75%;
-    top: -11px;
     z-index: 9999;
     color: #707070;
 }
@@ -103,11 +122,18 @@ img.header-img {
     outline: none;
     position: absolute;
     width: 60%;
-    height: 37px;
-    top: -19px;
-    padding-left: 50px;
+    height: 48px;
+    padding-left: 40px;
 }
 
+// .search-field-input {
+//     width: 600px;
+//     height: 48px !important;
+//     font-size: 14px;
+//     .mat-form-field-infix {
+//         width: 100%;
+//     }
+// }
 .search-field:hover,
 .bb-a {
     border: 1px solid #1B69B8 !important;
@@ -171,7 +197,8 @@ img.header-img {
         top: 3px;
     }
 }
-.scorllable{
+
+.scorllable {
     max-height: calc(100vh - 9rem);
     overflow-y: auto;
     padding-bottom: 80px;

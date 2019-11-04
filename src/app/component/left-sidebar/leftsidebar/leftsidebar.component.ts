@@ -4,7 +4,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {EventService} from '../../../Data-service/event.service';
 import {transition} from '@angular/animations';
 import {SubscriptionInject} from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-
+import {FormControl} from '@angular/forms';
 @Component({
   selector: 'app-leftsidebar',
   templateUrl: './leftsidebar.component.html',
@@ -18,7 +18,8 @@ export class LeftsidebarComponent implements OnInit {
   arrow = false;
   userInfo: any;
   sideNavContainerClass;
-
+  myControl = new FormControl();
+  
 
   constructor(private authService: AuthService, private _eref: ElementRef,
               private eventService: EventService, private subinject: SubscriptionInject) {
@@ -96,3 +97,5 @@ export class LeftsidebarComponent implements OnInit {
   // }
 
 }
+ 
+ 
