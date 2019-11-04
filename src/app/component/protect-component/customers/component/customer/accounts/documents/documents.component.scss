@@ -1,8 +1,16 @@
     .boxGrey {
         height: 185px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         color: #83959D;
         padding: 12px;
+        position: relative;
+        p.selectMoreDetails {
+            color: #83959D;
+            font-size: 14px;
+            text-align: center;
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            top: 50%;
+            cursor: pointer;
+        }
     }

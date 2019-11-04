@@ -6,9 +6,7 @@
                 <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5>
             </div>
             <div class="col-md-8 right text-right">
-                <button mat-button class="btn-bottom br-0 text-inherit"
-                    (click)="saveMappingDocumentToPlans()">Save</button>
-
+                <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveMappingDocumentToPlans()">Save</button>
 
             </div>
         </div>
@@ -70,8 +68,9 @@
                     <div (click)="selectDocument(documentData)">
                         <mat-card [ngClass]="{'ba-blue': documentData.selected,'active': documentData.selected,'b-ua':documentData.selected==false}" class="example-card bg-grey lter p-0">
                             <mat-card-header class="m-0">
-                                <app-custom-html [data]="documentData.docText" [isChecked]="documentData.selected" id="ui-appcustomhtml" class="bg-white">
-                                
+                                <!-- [isChecked]="documentData.selected" -->
+                                <app-custom-html [data]="documentData.docText" id="ui-appcustomhtml" class="bg-white">
+
                                 </app-custom-html>
                             </mat-card-header>
                             <mat-card-actions class="pb-20 mb-0 p-0">
@@ -105,8 +104,7 @@
                 <p class="text-white f-16 mb-0 pt-12 c-p" (click)="dialogClose()">Cancel</p>
             </div>
             <div class="col-md-6 text-right">
-                <button type="button" mat-stroked-button class="btn-bottom br-0"
-                    (click)="mapDocumentToService()">Save</button>
+                <button type="button" mat-stroked-button class="btn-bottom br-0" (click)="mapDocumentToService()">Save</button>
             </div>
         </div>
     </mat-toolbar>
@@ -166,33 +164,34 @@
                     </div>
                 </div> -->
                 <div class="col-md-4 pr-20 pb-20 pl-0" *ngFor="let document of serviceDocumentData">
-                        <div (click)="selectDocument(document)">
-                            <mat-card [ngClass]="{'ba-blue': document.selected,'active': document.selected,'b-ua':document.selected==false}" class="example-card bg-grey lter p-0">
-                                <mat-card-header class="m-0">
-                                    <app-custom-html [data]="document.docText" [isChecked]="document.selected" id="ui-appcustomhtml" class="bg-white">
-                                    
-                                    </app-custom-html>
-                                </mat-card-header>
-                                <mat-card-actions class="pb-20 mb-0 p-0">
-                                    <div class="row wrapper-8">
-                                        <div class="col-md-10">
-                                            <mat-card-header>
-                                                <mat-card-title class="f-18 p-0 mb-0 pt-12">{{document.name}}
-                                                </mat-card-title>
-                                                <mat-card-subtitle class="pt-8 pb-12 mb-0 text-left f-16">
-                                                    {{document.code}}</mat-card-subtitle>
-    
-                                            </mat-card-header>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <p class="green text-white f-16">{{document.type}}</p>
-                                        </div>
+                    <div (click)="selectDocument(document)">
+                        <mat-card [ngClass]="{'ba-blue': document.selected,'active': document.selected,'b-ua':document.selected==false}" class="example-card bg-grey lter p-0">
+                            <mat-card-header class="m-0">
+                                <!-- [isChecked]="document.selected"  -->
+                                <app-custom-html [data]="document.docText" id="ui-appcustomhtml" class="bg-white">
+
+                                </app-custom-html>
+                            </mat-card-header>
+                            <mat-card-actions class="pb-20 mb-0 p-0">
+                                <div class="row wrapper-8">
+                                    <div class="col-md-10">
+                                        <mat-card-header>
+                                            <mat-card-title class="f-18 p-0 mb-0 pt-12">{{document.name}}
+                                            </mat-card-title>
+                                            <mat-card-subtitle class="pt-8 pb-12 mb-0 text-left f-16">
+                                                {{document.code}}</mat-card-subtitle>
+
+                                        </mat-card-header>
                                     </div>
-                                </mat-card-actions>
-    
-                            </mat-card>
-                        </div>
+                                    <div class="col-md-2">
+                                        <p class="green text-white f-16">{{document.type}}</p>
+                                    </div>
+                                </div>
+                            </mat-card-actions>
+
+                        </mat-card>
                     </div>
+                </div>
             </div>
         </div>
     </div>
@@ -206,11 +205,9 @@
             <div class="wrapper-20 pt-150">
                 <div class="row">
                     <div class="col-md-12 p-0">
-                        <button mat-stroked-button class="btn-primary br-0 right text-right addon"
-                            (click)="openDocument('addDocument')"><i class="material-icons">
+                        <button mat-stroked-button class="btn-primary br-0 right text-right addon" (click)="openDocument('addDocument')"><i class="material-icons">
                                 add</i> ADD DOCUMENT</button>
-                        <button mat-button class="mr-8 right text-right"
-                            (click)="openPopup('documentHelpPopup')">HELP</button>
+                        <button mat-button class="mr-8 right text-right" (click)="openPopup('documentHelpPopup')">HELP</button>
                     </div>
                 </div>
             </div>
@@ -224,13 +221,10 @@
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item class="b-t" *ngIf="dataCount == 0">Select invoice to see more
                                 actions</button>
-                            <button mat-menu-item (click)="openDocumentESign('eSignDocument','open')"
-                                *ngIf="dataCount != 0">Email with eSign
+                            <button mat-menu-item (click)="openDocumentESign('eSignDocument','open')" *ngIf="dataCount != 0">Email with eSign
                                 request</button>
-                            <button mat-menu-item (click)="changeDisplay('email',dataSource)"
-                                *ngIf="dataCount != 0">Email only</button>
-                            <button mat-menu-item class="b-t" (click)="deleteModal('DOCUMENT')"
-                                *ngIf="dataCount != 0">Delete
+                            <button mat-menu-item (click)="changeDisplay('email',dataSource)" *ngIf="dataCount != 0">Email only</button>
+                            <button mat-menu-item class="b-t" (click)="deleteModal('DOCUMENT')" *ngIf="dataCount != 0">Delete
                                 documents</button>
                         </mat-menu>
                     </div>
@@ -244,14 +238,12 @@
                                 </mat-checkbox>
                             </th>
                             <td mat-cell *matCellDef="let element" style="width: 2%;" class="c-p">
-                                <mat-checkbox checked="true" name="selectedData" [(ngModel)]="element.selected"
-                                    (change)="changeSelect(element)"></mat-checkbox>
+                                <mat-checkbox checked="true" name="selectedData" [(ngModel)]="element.selected" (change)="changeSelect(element)"></mat-checkbox>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="document">
                             <th mat-header-cell *matHeaderCellDef> Document name</th>
-                            <td mat-cell *matCellDef="let element" class="c-p"
-                                (click)="changeDisplay('documentUpperSlider',element)"> {{element.documentName}}
+                            <td mat-cell *matCellDef="let element" class="c-p" (click)="changeDisplay('documentUpperSlider',element)"> {{element.documentName}}
                             </td>
                         </ng-container>
 
@@ -271,12 +263,12 @@
                         <ng-container matColumnDef="sdate">
                             <th mat-header-cell *matHeaderCellDef class="text-right"> Sent date </th>
                             <td mat-cell *matCellDef="let element" class="text-right">
-                                {{element.sentDate  | date:'dd/MM/yyyy'}} </td>
+                                {{element.sentDate | date:'dd/MM/yyyy'}} </td>
                         </ng-container>
                         <ng-container matColumnDef="cdate">
                             <th mat-header-cell *matHeaderCellDef class="text-right"> Client sign date </th>
                             <td mat-cell *matCellDef="let element" class="text-right">
-                                {{element.cdate  | date:'dd/MM/yyyy'}} </td>
+                                {{element.cdate | date:'dd/MM/yyyy'}} </td>
                         </ng-container>
                         <ng-container matColumnDef="status">
                             <th *matHeaderCellDef class=" t-10" mat-header-cell> Status</th>
@@ -284,16 +276,14 @@
                                 <span>
                                     <span class="text-success t-10 f-500 c-p" *ngIf="element.status==1">READY TO
                                         SEND</span>
-                                    <span class="text-success t-10 f-500 c-p" *ngIf="element.status==0">NOT
+                                <span class="text-success t-10 f-500 c-p" *ngIf="element.status==0">NOT
                                         STARTED</span>
                                 </span>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="icons">
                             <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"> </th>
-                            <td mat-cell *matCellDef="let element" style="width: 2%;"><i
-                                    class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu"
-                                    [matMenuTriggerFor]="belowMenu">
+                            <td mat-cell *matCellDef="let element" style="width: 2%;"><i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
                                     more_vert
                                 </i>
                                 <mat-menu #menu="matMenu">
@@ -342,19 +332,15 @@
     <app-terms-agreement *ngIf="documentDesign=='termsAgreement'"></app-terms-agreement>
     <div>
         <div class="pt-140 pr-0">
-            <app-terms-agreement [quotationDesignE]="quotationDesignEmail" *ngIf="documentDesign=='email'"
-                (valueChange)='display($event)'></app-terms-agreement>
+            <app-terms-agreement [quotationDesignE]="quotationDesignEmail" *ngIf="documentDesign=='email'" (valueChange)='display($event)'></app-terms-agreement>
         </div>
     </div>
     <div class="pt-60 pr-0">
-        <app-email-only [emailDocumentSend]="documentDesign" *ngIf="documentDesign=='documentUpperSlider'"
-            (valueChange)='display($event)'></app-email-only>
+        <app-email-only [emailDocumentSend]="documentDesign" *ngIf="documentDesign=='documentUpperSlider'" (valueChange)='display($event)'></app-email-only>
     </div>
     <div>
-        <app-email-only [emailDocument]="documentDesign" *ngIf="documentDesign=='readyToSend'"
-            (valueChange)='display($event)'></app-email-only>
+        <app-email-only [emailDocument]="documentDesign" *ngIf="documentDesign=='readyToSend'" (valueChange)='display($event)'></app-email-only>
     </div>
     <div>
-        <app-email-only [emailDocument]="documentDesign" *ngIf="documentDesign=='documentUpper'"
-            (valueChange)='display($event)'></app-email-only>
+        <app-email-only [emailDocument]="documentDesign" *ngIf="documentDesign=='documentUpper'" (valueChange)='display($event)'></app-email-only>
     </div>

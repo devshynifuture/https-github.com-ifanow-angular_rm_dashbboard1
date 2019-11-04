@@ -106,9 +106,6 @@ export class AddFixedFeeComponent implements OnInit {
     } else if (this.fixedFeeData.controls.code.invalid) {
       this.isCodeValid = true;
       return;
-    } else if (this.fixedFeeData.controls.description.invalid) {
-      this.isDescriptionValid = true;
-      return;
     } else if (this.fixedFeeData.controls.fees.invalid) {
       this.isFeesValid = true;
       return;

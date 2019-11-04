@@ -23,9 +23,9 @@ export class LeftsidebarComponent implements OnInit {
 
   constructor(private authService: AuthService, private _eref: ElementRef,
               private eventService: EventService, private subinject: SubscriptionInject) {
-    this.eventService.sideNavContainerClassData.subscribe(
-      data => this.sideNavContainerClass = data
-    );
+    // this.eventService.sideNavContainerClassData.subscribe(
+    //   data => this.sideNavContainerClass = data
+    // );
   }
 
   ngOnInit() {

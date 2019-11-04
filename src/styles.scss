@@ -398,8 +398,8 @@
     background-color: #fff;
     overflow-x: hidden;
     // transition: 0.4s;
-    border: 1px solid #ddd;
-    border-top: 0px !important;
+    // border: 1px solid #ddd;
+    // border-top: 0px !important;
 }
 
 .right_sidenav a {
@@ -478,7 +478,8 @@ mat-tab-group[vertical] {
 #ui-insurance,
 #ui-income,
 #ui-expenses,
-#ui-document {
+#ui-document,
+#ui-mutualfunds-capital {
     padding-top: 129px !important;
 }
 
@@ -560,7 +561,7 @@ mat-tab-group[vertical] {
         width: 100%;
         top: 0;
         background: #fff;
-        z-index: 999;
+        z-index: 9;
     }
     .left-icons {
         position: fixed;
@@ -618,6 +619,9 @@ mat-tab-group[vertical] {
 }
 
 .real-estate,
+.mutualfunds-capital-equity,
+.mutualfunds-capital-debt,
+.mutualfunds-capital-dividend-summary,
 .fixed-deposite,
 .scheme-wise,
 .familymember-wise,
@@ -670,4 +674,16 @@ mat-tab-group[vertical] {
     textarea {
         resize: none;
     }
+}
+
+.mutualfunds-capital-equity .mat-row:last-child {
+    font-weight: bold !important;
+}
+
+.mutualfunds-capital-debt .mat-row:last-child {
+    font-weight: bold !important;
+}
+
+.mutualfunds-capital-dividend-summary .mat-row:last-child {
+    font-weight: bold !important;
 }

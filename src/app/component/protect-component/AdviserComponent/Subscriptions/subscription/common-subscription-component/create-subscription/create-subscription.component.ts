@@ -56,32 +56,40 @@ export const MY_FORMATS2 = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
+
 @Component({
   selector: 'app-create-subscription',
   templateUrl: './create-subscription.component.html',
   styleUrls: ['./create-subscription.component.scss'],
   providers: [
-    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
-    // application's root module. We provide it at the component level here, due to limitations of
-    // our example generation script.
-    // {
-    //   provide: DateAdapter,
-    //   useClass: MomentDateAdapter,
-    //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    // },
-    // { provide: MAT_DATE_LOCALE, useValue: 'en' },
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 })
 export class CreateSubscriptionComponent implements OnInit {
+  @Input() subFeeMode;
+
   constructor(private enumService: EnumServiceService, public subInjectService: SubscriptionInject,
               private eventService: EventService, private fb: FormBuilder, private subService: SubscriptionService) {
     this.subInjectService.singleProfileData.subscribe(
       data => this.getSubStartDetails(data)
     );
+    this.eventService.sidebarSubscribeData.subscribe(
+      data => this.subFeeMode = data
+    );
+    // this.subInjectService.ta
   }
 
-  @Input() modifyFeeTabChange;
+  inputData;
+
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    this.getSubStartDetails(data);
+  }
+
+  get data() {
+    return this.inputData;
+  }
 
   @ViewChild('stepper', {static: false}) stepper: MatStepper;
   feeStructureData;
@@ -126,13 +134,15 @@ export class CreateSubscriptionComponent implements OnInit {
   }
 
   goForward(/*stepper: MatStepper*/) {
-    this.stepper.next();
+    if (this.stepper) {
+      this.stepper.next();
+    }
     console.log(this.subscriptionDetails);
   }
 
   getSubStartDetails(data) {
     this.clientData = data;
-    console.log(this.clientData, 'client Data');
+    console.log('client Data: ', this.clientData);
     if (data.subscriptionPricing) {
       this.advisorId = AuthService.getAdvisorId();
       const obj = {
@@ -149,8 +159,6 @@ export class CreateSubscriptionComponent implements OnInit {
       this.goForward();
       console.log(this.feeStructureFormData, 'feeStructureData');
     }
-
-
   }
 
   select(value, data) {
@@ -190,7 +198,6 @@ export class CreateSubscriptionComponent implements OnInit {
 
   getSubStartDetailsResponse(data) {
     console.log(data);
-    (this.clientData.subscriptionPricing.feeTypeId == 1) ? data.feeModeName = 'feeModify' : data.feeModeName = 'variableModify';
     this.feeStructureData = data;
     this.subscriptionDetails.controls.subscription.setValue(data.subscriptionNo);
     this.billersData = data.billers;
