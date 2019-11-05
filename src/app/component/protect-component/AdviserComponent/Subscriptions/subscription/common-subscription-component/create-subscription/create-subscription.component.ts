@@ -137,10 +137,11 @@ export class CreateSubscriptionComponent implements OnInit {
   nextStep(data)
   {
    console.log(data)
+   this.clientData=data
    this.goForward()
   }
   getSubStartDetails(data) {
-    this.clientData = data.data;
+    // this.clientData = data.data;
     this.feeModeData=data
     console.log('client Data: ', this.clientData);
     if (data.data.subscriptionPricing) {
@@ -206,8 +207,7 @@ export class CreateSubscriptionComponent implements OnInit {
   }
 
   Close(state) {
-    this.subInjectService.rightSideData(state);
-    this.subInjectService.rightSliderData(state);
+    this.subInjectService.changeUpperRightSliderState({state: 'close'});
     this.stepper.selectedIndex = 0;
     this.subscriptionDetails.reset();
   }
@@ -225,7 +225,7 @@ export class CreateSubscriptionComponent implements OnInit {
         clientBillerProfiles: this.selectedPayee,
         clientId: this.clientData.clientId,
         dueDateFrequency: this.subscriptionDetails.get('dueDateFrequency').value,
-        startsOn: this.subscriptionDetails.get('activationDate').value,
+        startsOn: this.subscriptionDetails.get('activationDate').value._d,
         fromDate: '2019-10-16',
         subscriptionNumber: this.feeStructureData.subscriptionNo,
         feeMode: this.subscriptionDetails.get('invoiceSendingMode').value,

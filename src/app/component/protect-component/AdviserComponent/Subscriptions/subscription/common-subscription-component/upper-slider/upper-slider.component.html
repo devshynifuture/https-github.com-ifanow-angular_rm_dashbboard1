@@ -141,7 +141,7 @@
   <app-add-variable-fee *ngIf="rightSliderFlag=='varibleFee'"></app-add-variable-fee>
   <app-add-fixed-fee *ngIf="rightSliderFlag=='fixedFee'"></app-add-fixed-fee>
   <app-overview-blank-quotation [blankOverview]="blankOverview" *ngIf='blankOverview'></app-overview-blank-quotation>
-  <app-biller-settings [upperData]="fragmentData.clientData" *ngIf="rightSliderFlag=='billerSettings'">
+  <app-biller-settings [clientData]="fragmentData.clientData" *ngIf="rightSliderFlag=='billerSettings'">
   </app-biller-settings>
   <app-fixed-fee [data]="upperRightSideInputData" *ngIf="rightSliderFlag=='fixedModifyFees'"></app-fixed-fee>
   <app-variable-fee [data]="upperRightSideInputData" *ngIf="rightSliderFlag=='variableModifyFees'"></app-variable-fee>

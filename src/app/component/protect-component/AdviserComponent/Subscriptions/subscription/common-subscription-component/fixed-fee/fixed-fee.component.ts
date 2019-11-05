@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { SubscriptionService } from '../../../subscription.service';
@@ -14,10 +14,8 @@ export class FixedFeeComponent implements OnInit {
   isFeeValid: boolean;
   isBillValid: boolean;
   @Input() createSubData;
+  @Output() outputData=new EventEmitter<Object>();
   constructor(private fb: FormBuilder, public subInjectService: SubscriptionInject, private subService: SubscriptionService) {
-    // this.subInjectService.newRightSliderDataObs.subscribe(
-    //   data => this.getSubscribeData(data)
-    // );
   }
   @Input()
   set data(data) {
@@ -88,22 +86,11 @@ export class FixedFeeComponent implements OnInit {
         ]
       };
       console.log(obj)
-      if (this.createSubData) {
+      if (this.singleSubscriptionData.isCreateSub==false) {
         obj.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId;
         obj.clientId = this.singleSubscriptionData.clientId;
         obj.subId = this.singleSubscriptionData.id;
-        const fragmentData = {
-          obj,
-        };
-        const rightSideDataSub = this.subInjectService.addSingleProfile(fragmentData).subscribe(
-          sideBarData => {
-            console.log('this is sidebardata in subs subs : ', sideBarData);
-            if (UtilService.isDialogClose(sideBarData)) {
-              console.log('this is sidebardata in subs subs 2: ', sideBarData);
-              rightSideDataSub.unsubscribe();
-            }
-          }
-        );
+        this.outputData.emit(obj);
       } else {
         this.subService.editModifyFeeStructure(obj).subscribe(
           data => this.saveFixedModifyFeesResponse(data)
