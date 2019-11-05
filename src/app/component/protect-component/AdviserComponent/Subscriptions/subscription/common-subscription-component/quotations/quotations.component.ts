@@ -9,6 +9,7 @@ import {SubscriptionPopupComponent} from '../subscription-popup/subscription-pop
 import {SubscriptionService} from '../../../subscription.service';
 import {ConsentTandCComponent} from '../consent-tand-c/consent-tand-c.component';
 import {UtilService} from "../../../../../../../services/util.service";
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 export interface PeriodicElement {
   document: string;
@@ -41,6 +42,7 @@ export class QuotationsComponent implements OnInit {
   displayedColumns: string[] = ['checkbox', 'document', 'plan', 'date', 'sdate', 'cdate', 'status', 'send', 'icons'];
   dataSource;
   changeEmail = 'footerChange';
+  advisorId;
 
   @Input()
   set clientData(clientData) {
@@ -53,6 +55,7 @@ export class QuotationsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.quotationDesign = 'true';
     console.log('quotation');
     // this.getQuotationsList();
@@ -137,6 +140,9 @@ export class QuotationsComponent implements OnInit {
 
   openSendEmail() {
     const data = {
+      advisorId: this.advisorId,
+      clientData: this._clientData,
+      templateType: 2, //2 is for quotation
       documentList: []
     };
     this.dataSource.forEach(singleElement => {

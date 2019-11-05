@@ -53,6 +53,21 @@ export class ClientSubscriptionComponent implements OnInit {
   }
 
   openFragment(data, clientData) {
+   /* const fragmentData = {
+      Flag: 'emailOnly',
+      data: clientData,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ',);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );*/
     const fragmentData = {
       Flag: data,
       id: 1,
@@ -68,16 +83,6 @@ export class ClientSubscriptionComponent implements OnInit {
         }
       }
     );
-    // const dialogRef = this.dialog.open(UpperSliderComponent, {
-    //   width: '1400px',
-    //   data: Fragmentdata,
-    //   autoFocus: false,
-    //   panelClass: 'dialogBox',
-    // });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //
-    // });
   }
 
 }

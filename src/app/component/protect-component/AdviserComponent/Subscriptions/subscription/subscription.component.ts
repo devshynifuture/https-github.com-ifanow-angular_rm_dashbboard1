@@ -54,7 +54,7 @@ export class SubscriptionComponent implements OnInit {
 
   ngOnInit() {
     this.currentState = 'close';
-    this.selected = 1;
+    // this.selected = 1;
   }
 
   getFileResponseDataAum(data) {
