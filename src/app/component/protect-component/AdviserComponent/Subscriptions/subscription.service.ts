@@ -134,7 +134,7 @@ export class SubscriptionService {
   }
 
   getSubscriptionPlanSettingsData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('mapped', data.mapped);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBSCRIPTION_PLAN_SETTING, httpParams);
   }
 

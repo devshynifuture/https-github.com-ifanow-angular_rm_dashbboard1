@@ -12,7 +12,7 @@
   <app-email-quotation *ngIf="subscriptionTab=='eSignRequest'" [headerData]="headerData"></app-email-quotation>
   <app-email-quotation *ngIf="subscriptionTab=='eSignRequestDocuments'"
                        [headerDataDocuments]="headerDataDocuments"></app-email-quotation>
-  <app-invoice-history *ngIf="subscriptionTab=='SUBSCRIPTIONS'"
+  <app-invoice-history [subData]="fragmentData.data" *ngIf="subscriptionTab=='SUBSCRIPTIONS'"
                        [invoiceHistoryData]='invoiceHisData'></app-invoice-history>
   <app-invoice-history *ngIf="subscriptionTab=='subscriptionFees'"
                        [invoiceHistoryData]='invoiceHisData'></app-invoice-history>
@@ -22,12 +22,12 @@
   <app-biller-profile-advisor *ngIf="subscriptionTab=='billerProfile'"
                               [data]="inputData" [Selected]="selectedSubscriptionTab"></app-biller-profile-advisor>
   <app-help *ngIf="subscriptionTab=='clientHelp'"></app-help>
-  <app-biller-settings *ngIf="subscriptionTab=='billerSettings'"></app-biller-settings>
+  <app-biller-settings [clientData]=fragmentData.data *ngIf="subscriptionTab=='billerSettings'"></app-biller-settings>
   <!-- <app-payee-settings *ngIf="subscriptionTab=='payeeSettings'"></app-payee-settings> -->
   <app-help *ngIf="subscriptionTab=='documentHelp'"></app-help>
   <app-invoice [data]="inputData" *ngIf="subscriptionTab=='invoiceUpperSlider'"></app-invoice>
   <!-- <app-invoice  [data]="inputData" *ngIf="subscriptionTab=='invoiceUpperSlider'"></app-invoice> -->
-  <app-change-payee *ngIf="subscriptionTab=='changePayee'"></app-change-payee>
+  <app-change-payee [upperData]=fragmentData.data *ngIf="subscriptionTab=='changePayee'"></app-change-payee>
   <app-create-subscription [data]="fragmentData"
                            *ngIf="subscriptionTab=='createSubFixed' || subscriptionTab=='createSubVariable'"
                            [subFeeMode]="subscriptionTab"></app-create-subscription>

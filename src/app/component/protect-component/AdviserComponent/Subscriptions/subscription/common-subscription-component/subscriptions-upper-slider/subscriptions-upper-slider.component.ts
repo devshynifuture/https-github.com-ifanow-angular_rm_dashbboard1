@@ -47,9 +47,10 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
   }
 
   openPlanSlider(value, state, data) {
-    (value=="billerSettings"|| value=='changePayee')?value:(data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable'
-    data.clientId = this.upperData.id
-    data.isCreateSub = false;
+    (data==null)?value:
+    (value=="billerSettings"|| value=='changePayee' || value==null)?value:(data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable';
+    (data==null)?data:(data.clientId = this.upperData.id,
+      data.isCreateSub = false)
     const fragmentData = {
       Flag: value,
       data:data,

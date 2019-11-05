@@ -17,7 +17,7 @@
                   <div class="row pt-0">
                   <div class="col-md-8">
                     <mat-error class="f-12 pt-4"
-                    *ngIf="isCustomerName && getFormControl().customerName.invalid || (getFormControl().customerName.touched && getFormControl().customerName.invalid)">
+                    [ngClass]="{'v-h':!(isCustomerName && getFormControl().customerName.invalid || (getFormControl().customerName.touched && getFormControl().customerName.invalid))}">
                     Customer name is required</mat-error>
                     </div>
                   <div class="col-md-4">
@@ -40,7 +40,7 @@
              <div class="row pt-0">
                   <div class="col-md-8">
                     <mat-error class="f-12 pt-4"
-                    *ngIf="isDisplayName && getFormControl().displayName.invalid || (getFormControl().displayName.touched && getFormControl().displayName.invalid)">
+                    [ngClass]="{'v-h':!(isDisplayName && getFormControl().displayName.invalid || (getFormControl().displayName.touched && getFormControl().displayName.invalid))}">
                     Display name is required</mat-error>
                  </div>
                   <div class="col-md-4">
@@ -73,7 +73,7 @@
                   <div class="row pt-0">
                   <div class="col-md-8">
                     <mat-error class="f-12 pt-4"
-                    *ngIf="isCompanyName && getFormControl().companyName.invalid || (getFormControl().companyName.touched && getFormControl().companyName.invalid)">
+                    [ngClass]="{'v-h':!(isCompanyName && getFormControl().companyName.invalid || (getFormControl().companyName.touched && getFormControl().companyName.invalid))}">
                     Company name is required</mat-error>
                  </div>
                   <div class="col-md-4">
@@ -93,7 +93,7 @@
                   <div class="row pt-0">
                     <div class="col-md-8">
                       <mat-error class="f-12 pt-4"
-                      *ngIf="isEmailId && getFormControl().emailId.invalid || (getFormControl().emailId.touched && getFormControl().emailId.invalid)">
+                      [ngClass]="{'v-h':!(isEmailId && getFormControl().emailId.invalid || (getFormControl().emailId.touched && getFormControl().emailId.invalid))}">
                       EmailId is required</mat-error>
                    </div>
                     <div class="col-md-4">
@@ -108,16 +108,16 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group mb-0">
-                    <input type="text" (keypress)="keyPress($event)" formControlName="mobileNo" class="form-control"  maxlength="{{getFormControl().mobileNo.maxLength}}">
+                    <input type="text" (keypress)="keyPress($event)" formControlName="primaryContact" class="form-control"  maxlength="{{getFormControl().primaryContact.maxLength}}">
                   </div>
                   <div class="row pt-0">
                     <div class="col-md-9">
                       <mat-error class="f-12 pt-4"
-                      *ngIf="isMobileNo && getFormControl().mobileNo.invalid || (getFormControl().mobileNo.touched && getFormControl().mobileNo.invalid)">
+                     [ngClass]="{'v-h':!(isMobileNo && getFormControl().primaryContact.invalid || (getFormControl().primaryContact.touched && getFormControl().primaryContact.invalid))}">
                       Mobile No is required</mat-error>
                    </div>
                     <div class="col-md-3">
-                      <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().mobileNo.value?.length?getFormControl().mobileNo.value.length:0}}/{{getFormControl().mobileNo.maxLength}}</p>
+                      <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().primaryContact.value?.length?getFormControl().primaryContact.value.length:0}}/{{getFormControl().primaryContact.maxLength}}</p>
                   </div>
                   </div>
             </div>
@@ -134,7 +134,7 @@
                   <div class="row pt-0">
                     <div class="col-md-8">
                       <mat-error class="f-12 pt-4"
-                      *ngIf="isPan && getFormControl().pan.invalid || (getFormControl().pan.touched && getFormControl().pan.invalid)">
+                      [ngClass]="{'v-h':!(isPan && getFormControl().pan.invalid || (getFormControl().pan.touched && getFormControl().pan.invalid))}">
                       PAN is required</mat-error>
                    </div>
                     <div class="col-md-4">
@@ -168,7 +168,7 @@
                   <div class="row pt-0">
                     <div class="col-md-8">
                       <mat-error class="f-12 pt-4"
-                      *ngIf="isGstIn && getFormControl().gstIn.invalid || (getFormControl().gstIn.touched && getFormControl().gstIn.invalid)">
+                      [ngClass]="{'v-h':!(isGstIn && getFormControl().gstIn.invalid || (getFormControl().gstIn.touched && getFormControl().gstIn.invalid))}">
                       GSTIN is required</mat-error>
                    </div>
                     <div class="col-md-4">
@@ -188,7 +188,7 @@
                   <div class="row pt-0">
                     <div class="col-md-8">
                       <mat-error class="f-12 pt-4"
-                      *ngIf="isBillingAddress && getFormControl().billingAddress.invalid || (getFormControl().billingAddress.touched && getFormControl().billingAddress.invalid)">
+                      [ngClass]="{'v-h':!(isBillingAddress && getFormControl().billingAddress.invalid || (getFormControl().billingAddress.touched && getFormControl().billingAddress.invalid))}">
                       Billing Address is required</mat-error>
                    </div>
                     <div class="col-md-4">
@@ -208,7 +208,7 @@
                   <div class="row pt-0">
                     <div class="col-md-8">
                       <mat-error class="f-12 pt-4"
-                      *ngIf="isPincode && getFormControl().pincode.invalid || (getFormControl().pincode.touched && getFormControl().pincode.invalid)">
+                      [ngClass]="{'v-h':!(isPincode && getFormControl().pincode.invalid || (getFormControl().pincode.touched && getFormControl().pincode.invalid))}">
                       Pin Code is required</mat-error>
                    </div>
                     <div class="col-md-4">

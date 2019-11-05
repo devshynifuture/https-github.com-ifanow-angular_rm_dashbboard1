@@ -35,7 +35,7 @@ export class PlansSettingsComponent implements OnInit {
     const obj = {
       // advisorId: 12345
       advisorId: this.advisorId,
-
+      mapped: false
     };
     this.subService.getSubscriptionPlanSettingsData(obj).subscribe(
       data => this.getSettingsPlanResponse(data),

@@ -47,7 +47,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   subSummaryData;
   dataSource;
   showSubStep = false;
-  displayedColumns: string[] = ['name', 'service', 'amt', 'billing', 'icons'];
+  displayedColumns: string[] = ['name', 'service', 'amt', 'billing'];
   chart: Chart;
   subscriptionSummaryStatusFilter = '1';
   showLetsBegin = false;
@@ -103,21 +103,43 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   Open(state, data) {
     let feeMode;
-    if (data.feeMode === 'FIXED') {
-      feeMode = 'fixedModifyFees';
-    } else {
-      feeMode = 'variableModifyFees';
-    }
-    this.eventService.sidebarData(feeMode);
-    this.subInjectService.rightSideData(state);
-    this.subInjectService.addSingleProfile(data);
+    data.isCreateSub = true;
+    (data.subscriptionPricing.feeTypeId == 1)?feeMode = 'fixedModifyFees':feeMode = 'variableModifyFees';
+    const fragmentData = {
+      Flag: feeMode,
+      data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
 
   openPlanSlider(value, state, data) {
-    this.eventService.sidebarData(value);
-    this.subInjectService.rightSideData(state);
-    this.subInjectService.addSingleProfile(data);
-    this.invoiceHisData = data;
+    (value=="billerSettings"|| value=='changePayee' || value=='SUBSCRIPTIONS')?value:(data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable'
+    data.isCreateSub = false;
+    const fragmentData = {
+      Flag: value,
+      data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
 
   showSubscriptionSteps() {

@@ -141,12 +141,12 @@
   <app-add-variable-fee *ngIf="rightSliderFlag=='varibleFee'"></app-add-variable-fee>
   <app-add-fixed-fee *ngIf="rightSliderFlag=='fixedFee'"></app-add-fixed-fee>
   <app-overview-blank-quotation [blankOverview]="blankOverview" *ngIf='blankOverview'></app-overview-blank-quotation>
-  <app-biller-settings [upperData]="fragmentData.clientData" *ngIf="rightSliderFlag=='billerSettings'">
+  <app-biller-settings [clientData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='billerSettings'">
   </app-biller-settings>
   <app-fixed-fee [data]="upperRightSideInputData" *ngIf="rightSliderFlag=='fixedModifyFees'"></app-fixed-fee>
   <app-variable-fee [data]="upperRightSideInputData" *ngIf="rightSliderFlag=='variableModifyFees'"></app-variable-fee>
 
-  <app-change-payee [upperData]="fragmentData.clientData" *ngIf="rightSliderFlag=='changePayee'"></app-change-payee>
+  <app-change-payee [upperData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='changePayee'"></app-change-payee>
   <app-email-quotation [headerDataInvoice]="headerDataInvoice" *ngIf="rightSliderFlag=='eSignInvoices'">
   </app-email-quotation>
   <app-email-quotation [headerData]="headerData" *ngIf="rightSliderFlag=='emailQuot'"></app-email-quotation>

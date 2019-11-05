@@ -1,16 +1,12 @@
 <div *ngIf="componentFlag=='plansDocuments'">
-
   <div class="bottom-fixed wrapper-12">
     <div class="row">
       <div class="col-md-4">
         <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5>
       </div>
       <div class="col-md-8 right text-right">
-        <button mat-button class="btn-bottom br-0 text-inherit"
-                (click)="saveMappingDocumentToPlans()">Save
+        <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveMappingDocumentToPlans()">Save
         </button>
-
-
       </div>
     </div>
   </div>
@@ -43,30 +39,6 @@
     </div>
     <div class="wrapper-40">
       <div class="row text-center padder-80">
-        <!-- <div *ngFor="let documentData of planDocumentData" class="col-md-4 c-p pl-10 mb-20 pr-10">
-            <div class="example-card">
-            <div (click)="selectDocument(documentData)"
-                [ngClass]="{'ba-blue': documentData.selected,'active': documentData.selected,'b-a':documentData.selected==false}">
-                <mat-checkbox class="custom-checkbox" checked="false" *ngIf="documentData.selected">
-                </mat-checkbox>
-                <img src="{{documentData.src}}">
-                <div class="bg-grey lter text-left">
-                    <div class="row">
-                        <div class="col-md-10">
-
-                            <h3 class="f-18 p-0 mb-0 pt-12">{{documentData.name}} </h3>
-                            <p class="mb-0 pb-36">{{documentData.code}}</p>
-
-                        </div>
-                        <div class="col-md-2">
-                            <p class="green text-white f-16"> {{documentData.type}}</p>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div> -->
         <div class="col-md-4 pr-20 pb-20 pl-0" *ngFor="let documentData of planDocumentData">
           <div (click)="selectDocument(documentData)">
             <mat-card
@@ -74,7 +46,7 @@
               class="example-card bg-grey lter p-0">
               <mat-card-header class="m-0">
                 <!-- [isChecked]="documentData.selected" -->
-                <app-custom-html [data]="documentData.docText" id="ui-appcustomhtml" class="bg-white">
+                <app-custom-html [isChecked]="documentData.selected" [data]="documentData.docText" id="ui-appcustomhtml" class="bg-white">
 
                 </app-custom-html>
               </mat-card-header>
@@ -109,8 +81,7 @@
         <p class="text-white f-16 mb-0 pt-12 c-p" (click)="dialogClose()">Cancel</p>
       </div>
       <div class="col-md-6 text-right">
-        <button type="button" mat-stroked-button class="btn-bottom br-0"
-                (click)="mapDocumentToService()">Save
+        <button type="button" mat-stroked-button class="btn-bottom br-0" (click)="mapDocumentToService()">Save
         </button>
       </div>
     </div>
@@ -177,7 +148,7 @@
               class="example-card bg-grey lter p-0">
               <mat-card-header class="m-0">
                 <!-- [isChecked]="document.selected"  -->
-                <app-custom-html [data]="document.docText" id="ui-appcustomhtml" class="bg-white">
+                <app-custom-html [isChecked]="document.selected" [data]="document.docText" id="ui-appcustomhtml" class="bg-white">
 
                 </app-custom-html>
               </mat-card-header>
@@ -215,11 +186,10 @@
         <div class="row">
           <div class="col-md-12 p-0">
             <button mat-stroked-button class="btn-primary br-0 right text-right addon"
-                    (click)="openDocument('addDocument')"><i class="material-icons">
-              add</i> ADD DOCUMENT
+              (click)="openDocument('addDocument')"><i class="material-icons">
+                add</i> ADD DOCUMENT
             </button>
-            <button mat-button class="mr-8 right text-right"
-                    (click)="openPopup('documentHelpPopup')">HELP
+            <button mat-button class="mr-8 right text-right" (click)="openPopup('documentHelpPopup')">HELP
             </button>
           </div>
         </div>
@@ -228,22 +198,21 @@
         <div class="row">
           <div class="col-md-1 p-0">
             <button mat-button [matMenuTriggerFor]="menu" class="b-a pr-0">Actions <i
-              class="material-icons text-custom">
-              arrow_drop_down
-            </i></button>
+                class="material-icons text-custom">
+                arrow_drop_down
+              </i></button>
             <mat-menu #menu="matMenu">
               <button mat-menu-item class="b-t" *ngIf="dataCount == 0">Select invoice to see more
                 actions
               </button>
-              <button mat-menu-item (click)="openDocumentESign('eSignDocument','open')"
-                      *ngIf="dataCount != 0">Email with eSign
+              <button mat-menu-item (click)="openDocumentESign('eSignDocument','open')" *ngIf="dataCount != 0">Email
+                with eSign
                 request
               </button>
               <button mat-menu-item (click)="openSendEmail()"
                       *ngIf="dataCount != 0">Email only
               </button>
-              <button mat-menu-item class="b-t" (click)="deleteModal('DOCUMENT')"
-                      *ngIf="dataCount != 0">Delete
+              <button mat-menu-item class="b-t" (click)="deleteModal('DOCUMENT')" *ngIf="dataCount != 0">Delete
                 documents
               </button>
             </mat-menu>
@@ -262,8 +231,8 @@
             </ng-container>
             <ng-container matColumnDef="document">
               <th mat-header-cell *matHeaderCellDef> Document name</th>
-              <td mat-cell *matCellDef="let element" class="c-p"
-                  (click)="changeDisplay('documentUpperSlider',element)"> {{element.documentName}}
+              <td mat-cell *matCellDef="let element" class="c-p" (click)="changeDisplay('documentUpperSlider',element)">
+                {{element.documentName}}
               </td>
             </ng-container>
 
@@ -293,21 +262,20 @@
             <ng-container matColumnDef="status">
               <th *matHeaderCellDef class=" t-10" mat-header-cell> Status</th>
               <td *matCellDef="let element" mat-cell>
-                                <span>
-                                    <span class="text-success t-10 f-500 c-p" *ngIf="element.status==1">READY TO
-                                        SEND</span>
-                                    <span class="text-success t-10 f-500 c-p" *ngIf="element.status==0">NOT
-                                        STARTED</span>
-                                </span>
+                <span>
+                  <span class="text-success t-10 f-500 c-p" *ngIf="element.status==1">READY TO
+                    SEND</span>
+                  <span class="text-success t-10 f-500 c-p" *ngIf="element.status==0">NOT
+                    STARTED</span>
+                </span>
               </td>
             </ng-container>
             <ng-container matColumnDef="icons">
               <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"></th>
-              <td mat-cell *matCellDef="let element" style="width: 2%;"><i
-                class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu"
-                [matMenuTriggerFor]="belowMenu">
-                more_vert
-              </i>
+              <td mat-cell *matCellDef="let element" style="width: 2%;"><i class="material-icons c-p iconscolors"
+                  [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
+                  more_vert
+                </i>
                 <mat-menu #menu="matMenu">
                   <a mat-menu-item (click)="changeDisplay('documentUpper',element)">View & Modify
                     document</a>
@@ -355,18 +323,18 @@
   <div>
     <div class="pt-140 pr-0">
       <app-terms-agreement [quotationDesignE]="quotationDesignEmail" *ngIf="documentDesign=='email'"
-                           (valueChange)='display($event)'></app-terms-agreement>
+        (valueChange)='display($event)'></app-terms-agreement>
     </div>
   </div>
   <div class="pt-60 pr-0">
     <app-email-only [emailDocumentSend]="documentDesign" *ngIf="documentDesign=='documentUpperSlider'"
-                    (valueChange)='display($event)'></app-email-only>
+      (valueChange)='display($event)'></app-email-only>
   </div>
   <div>
     <app-email-only [emailDocument]="documentDesign" *ngIf="documentDesign=='readyToSend'"
-                    (valueChange)='display($event)'></app-email-only>
+      (valueChange)='display($event)'></app-email-only>
   </div>
   <div>
     <app-email-only [emailDocument]="documentDesign" *ngIf="documentDesign=='documentUpper'"
-                    (valueChange)='display($event)'></app-email-only>
+      (valueChange)='display($event)'></app-email-only>
   </div>

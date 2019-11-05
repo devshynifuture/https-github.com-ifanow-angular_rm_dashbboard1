@@ -67,7 +67,7 @@ export class PlanRightsliderComponent implements OnInit {
       }
     })
      }
-  Close(state) {
-    this.subInjectService.rightSliderData(state);
+  Close() {
+    this.subInjectService.changeUpperRightSliderState({state: 'close'});
   }
 }
