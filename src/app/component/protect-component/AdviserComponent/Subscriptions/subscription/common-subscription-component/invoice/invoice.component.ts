@@ -363,7 +363,7 @@ export class InvoiceComponent implements OnInit {
       footnote: [data.footnote, [Validators.required]],
       terms: [data.terms, [Validators.required]],
       taxStatus: ['IGST(18%)'],
-      serviceName: [(data.services == undefined) ? '0' : data.services[0].serviceName, [Validators.required]],
+      serviceName: [(data.services == undefined) ? '0' :(data.services.length == 0)? '0': data.services[0].serviceName, [Validators.required]],
       subTotal: [(data == undefined) ? '' : data.subTotal],
       igstTaxAmount: [data.igstTaxAmount],
       auto: [data.auto]
