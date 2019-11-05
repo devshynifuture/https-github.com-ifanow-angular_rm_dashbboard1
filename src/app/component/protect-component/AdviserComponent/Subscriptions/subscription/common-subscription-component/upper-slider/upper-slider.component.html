@@ -110,11 +110,11 @@
         </app-quotations>
       </mat-tab>
       <mat-tab label="INVOICES">
-        <app-invoices *ngIf="subscriptionTab=='INVOICES'" [upperData]="fragmentData.clientData">
+        <app-invoices *ngIf="subscriptionTab=='INVOICES'"  [upperData]="fragmentData.clientData">
         </app-invoices>
       </mat-tab>
       <mat-tab label="DOCUMENTS">
-        <app-document *ngIf="subscriptionTab=='DOCUMENTS'" [componentFlag]='clientDocuments'
+        <app-document *ngIf="subscriptionTab=='DOCUMENTS'" [clientData]="fragmentData.clientData" [componentFlag]='clientDocuments'
           [upperData]="fragmentData.clientData">
         </app-document>
       </mat-tab>
@@ -152,6 +152,7 @@
   <app-email-quotation [headerData]="headerData" *ngIf="rightSliderFlag=='emailQuot'"></app-email-quotation>
   <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnly'"
                   ></app-email-only>
+  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnlyDoc'"></app-email-only>
 <!--  (valueChange)='display($event)'-->
   <!--</div>-->
 </app-custom-dialog-container>

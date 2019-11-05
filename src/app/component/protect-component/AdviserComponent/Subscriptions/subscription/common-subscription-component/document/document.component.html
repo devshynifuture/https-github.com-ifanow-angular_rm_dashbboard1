@@ -239,7 +239,7 @@
                       *ngIf="dataCount != 0">Email with eSign
                 request
               </button>
-              <button mat-menu-item (click)="changeDisplay('email',dataSource)"
+              <button mat-menu-item (click)="openSendEmail()"
                       *ngIf="dataCount != 0">Email only
               </button>
               <button mat-menu-item class="b-t" (click)="deleteModal('DOCUMENT')"
@@ -249,18 +249,16 @@
             </mat-menu>
           </div>
           <div class="col-md-9 p-0">
-            <p class="m-0 text-black text-left pt-12">{{dataCount}} Document selected</p>
+            <p class="m-0 text-black text-left pt-12">{{dataCount}} documents selected</p>
           </div>
           <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
             <ng-container matColumnDef="checkbox">
-              <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;">
-                <mat-checkbox (change)="selectAll($event)" name="selectAll" [value]="element">
-                </mat-checkbox>
-              </th>
-              <td mat-cell *matCellDef="let element" style="width: 2%;" class="c-p">
-                <mat-checkbox checked="true" name="selectedData" [(ngModel)]="element.selected"
-                              (change)="changeSelect(element)"></mat-checkbox>
-              </td>
+              <th mat-header-cell *matHeaderCellDef class="f-18">
+                <mat-checkbox (change)="selectAll($event)" name="selectAll" [value]="element"></mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-checkbox name="selectedData"  class="c-p" [(ngModel)]="element.selected" (change)="changeSelect(element)"></mat-checkbox>
+            </td>
             </ng-container>
             <ng-container matColumnDef="document">
               <th mat-header-cell *matHeaderCellDef> Document name</th>

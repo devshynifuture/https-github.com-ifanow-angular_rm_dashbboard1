@@ -45,11 +45,11 @@ export class EmailOnlyComponent implements OnInit {
     this._inputData = {
       advisorId: 2808,
       clientData: {
-        id: 2978,
-        userEmailId: 'sher@grr.laaa'
+        id: inputData.clientData.id,
+        userEmailId: inputData.clientData.userEmailId
       },
-      documentList: [{id: 84, documentName: 'cc'}],
-      templateType: 2
+      documentList: [{id: inputData.documentList[0].id, documentName: inputData.documentList[0].documentName}],
+      templateType: inputData.templateType
     };
     console.log('EmailOnlyComponent inputData : ', inputData);
     this.getEmailTemplateFilterData();
@@ -103,7 +103,23 @@ export class EmailOnlyComponent implements OnInit {
       });
     });
   }
+  // getEmailTemplateFilterDataforEdit() {
 
+  //   const data = {
+  //     advisorId: 2828,
+  //     clientId: 2978,
+  //     templateType:2
+  //   };
+  //   this.subscription.getEmailTemplateFilterData(data).subscribe(responseData => {
+  //     this.emailData = responseData;
+  //     this.subject = this.emailData.subject;
+  //     this.emailBody = this.emailData.body;
+  //   }, error => {
+  //     this.eventService.openSnackBar(error, 'dismiss', () => {
+  //       console.log('dismiss was clicked');
+  //     });
+  //   });
+  // }
   close() {
     this.subInjectService.changeUpperRightSliderState({state: 'close'});
     this.subInjectService.changeNewRightSliderState({state: 'close'});
@@ -133,7 +149,10 @@ export class EmailOnlyComponent implements OnInit {
 
   getcommanFroalaData(data) {
     console.log(data);
+    this._inputData = data;
+    // this.getEmailTemplateFilterDataforEdit();
     this.emailBody = data;
+
   }
 
   /*
