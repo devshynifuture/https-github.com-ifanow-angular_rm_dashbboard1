@@ -12,7 +12,7 @@
   <app-email-quotation *ngIf="subscriptionTab=='eSignRequest'" [headerData]="headerData"></app-email-quotation>
   <app-email-quotation *ngIf="subscriptionTab=='eSignRequestDocuments'"
                        [headerDataDocuments]="headerDataDocuments"></app-email-quotation>
-  <app-invoice-history *ngIf="subscriptionTab=='SUBSCRIPTIONS'"
+  <app-invoice-history [subData]="fragmentData.data" *ngIf="subscriptionTab=='SUBSCRIPTIONS'"
                        [invoiceHistoryData]='invoiceHisData'></app-invoice-history>
   <app-invoice-history *ngIf="subscriptionTab=='subscriptionFees'"
                        [invoiceHistoryData]='invoiceHisData'></app-invoice-history>

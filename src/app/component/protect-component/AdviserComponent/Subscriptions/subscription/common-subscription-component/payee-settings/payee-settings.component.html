@@ -17,7 +17,7 @@
                   <div class="row pt-0">
                   <div class="col-md-8">
                     <mat-error class="f-12 pt-4"
-                    *ngIf="isCustomerName && getFormControl().customerName.invalid || (getFormControl().customerName.touched && getFormControl().customerName.invalid)">
+                    [ngClass]="{'v-h':!(isCustomerName && getFormControl().customerName.invalid || (getFormControl().customerName.touched && getFormControl().customerName.invalid))}">
                     Customer name is required</mat-error>
                     </div>
                   <div class="col-md-4">
