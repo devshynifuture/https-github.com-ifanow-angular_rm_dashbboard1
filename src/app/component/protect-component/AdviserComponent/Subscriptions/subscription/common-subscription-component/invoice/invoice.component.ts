@@ -168,10 +168,14 @@ export class InvoiceComponent implements OnInit {
     this.feeCalc = false;
     console.log('invoiceValue+++++++++++', this.invoiceValue);
     if (this.invoiceValue == 'edit' || this.invoiceValue == 'EditInInvoice') {
+      this.editPayment.reset();
       this.auto = true;
       this.showEdit = true;
+      this.finalAmount = 0;
+      this.discount = 0;
       this.storeData =
-        this.taxStatus = ['IGST(18%)'];
+      this.taxStatus = ['IGST(18%)'];
+      this.editPayment.controls.serviceName.enable()
 
     }
   }
@@ -217,13 +221,7 @@ export class InvoiceComponent implements OnInit {
   selectClient(c, data) {
     console.log(c)
     console.log('ssss', data)
-    // let obj ={
-    //   id : service.clientId,
-    //   module : 2
-    // }
-    // this.subService.getInvoices(obj).subscribe(
-    //   data => this.getInvoiceDataRes(data)
-    // );
+
     console.log('getInvoiceDataRes', data)
     this.storeData = data;
     this.storeData.billerAddress = this.defaultVal.biller.billerAddress
@@ -232,7 +230,7 @@ export class InvoiceComponent implements OnInit {
     console.log(this.storeData);
     this.editPayment = this.fb.group({
       id: [data.id],
-      clientName: [data.clientName, [Validators.required]],
+      clientName: [(data.clientName == undefined)? '':data.clientName, [Validators.required]],
       billerName: [(data.billerName == undefined) ? '' : data.billerName, [Validators.required]],
       advisorId: [(data.advisorId == undefined) ? '' : data.advisorId, [Validators.required]],
       billerAddress: [this.defaultVal.biller.billerAddress],
@@ -243,7 +241,7 @@ export class InvoiceComponent implements OnInit {
       invoiceDate: [(data.invoiceDate == undefined) ? '' : data.invoiceDate, [Validators.required]],
       taxStatus: [(data.igst != undefined) ? 'IGST(18%)' : 'SGST(9%)|CGST(9%)'],
       balanceDue: [(data.balanceDue == undefined) ? '' : data.balanceDue],
-      serviceName: [(data.services.length == 0) ? '' : data.services[0].serviceName, [Validators.required]],
+      serviceName: [(data.services == undefined) ? '' : data.services[0].serviceName, [Validators.required]],
       subTotal: [(data.subTotal == undefined) ? '' : data.subTotal],
       footnote: [(data.footnote == undefined) ? '' : data.footnote, [Validators.required]],
       terms: [(data.terms == undefined) ? '' : data.terms, [Validators.required]],
@@ -261,7 +259,7 @@ export class InvoiceComponent implements OnInit {
     this.getFormControledit().footnote.maxLength = 100;
     this.getFormControledit().terms.maxLength = 100;
     if (data.auto == true) {
-      this.editPayment.controls.isServiceName.disable()
+      this.editPayment.controls.serviceName.disable()
     }
     this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.finalAmount.value;
     this.discount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.discount.value;
@@ -360,13 +358,13 @@ export class InvoiceComponent implements OnInit {
       billingAddress: [(data.billingAddress == undefined) ? '' : data.billingAddress, [Validators.required]],
       invoiceNumber: [data.invoiceNumber, [Validators.required]],
       invoiceDate: [data.invoiceDate, [Validators.required]],
-      finalAmount: [(parseInt(data.finalAmount) == undefined) ? 0 : parseInt(data.finalAmount), [Validators.required]],
-      discount: [(parseInt(data.discount) == undefined) ? 0 : data.discount, [Validators.required]],
+      finalAmount: [(data.finalAmount== undefined) ? 0 : parseInt(data.finalAmount), [Validators.required]],
+      discount: [(data.discount== undefined) ? 0 : data.discount, [Validators.required]],
       dueDate: [data.dueDate, [Validators.required]],
       footnote: [data.footnote, [Validators.required]],
       terms: [data.terms, [Validators.required]],
       taxStatus: ['IGST(18%)'],
-      serviceName: [(data.services.length == 0) ? '0' : data.services[0].serviceName, [Validators.required]],
+      serviceName: [(data.services == undefined) ? '0' :(data.services.length == 0)? '0': data.services[0].serviceName, [Validators.required]],
       subTotal: [(data == undefined) ? '' : data.subTotal],
       igstTaxAmount: [data.igstTaxAmount],
       auto: [data.auto]
@@ -615,6 +613,12 @@ export class InvoiceComponent implements OnInit {
 
   cancel() {
     this.showRecord = false;
+    let obj = {
+      invoiceId: this.storeData.id
+    }
+    this.subService.getPaymentReceive(obj).subscribe(
+      data => this.getRes(data)
+    );
     this.rPayment.reset();
   }
 

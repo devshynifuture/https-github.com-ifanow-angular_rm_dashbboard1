@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -15,14 +15,9 @@ export class PayeeSettingsComponent implements OnInit {
   payeeSettingsForm;
   sendData;
   updatedData: any;
+  inputData: any;
   
   constructor(public subInjectService:SubscriptionInject, private eventService:EventService,private subService:SubscriptionService,private fb:FormBuilder) {
-    // this.eventService.rightSliderData.subscribe(
-    //   data =>this.getRightSliderData(data)
-    // )
-    this.subInjectService.rightSideBarData.subscribe(
-      data=>this.getClientPayeeSettings(data)
-    )
    }
    isCustomerName = false;
    isDisplayName = false;
@@ -37,6 +32,15 @@ export class PayeeSettingsComponent implements OnInit {
     
    }
    @Output() getEditData = new EventEmitter();
+   @Input()
+  set data(data) {
+    this.inputData = data;
+    this.getClientPayeeSettings(data);
+  }
+
+  get data() {
+    return this.inputData;
+  }
 
    getFormControl() {
     return this.payeeSettingsForm.controls;
@@ -50,7 +54,7 @@ export class PayeeSettingsComponent implements OnInit {
     }
   }
   getClientPayeeSettings(data) {
-
+    data = data.data
     console.log("payee data", data);
     this.payeeSettingsForm = this.fb.group({
       customerName: [data.name, [Validators.required]],
@@ -58,7 +62,7 @@ export class PayeeSettingsComponent implements OnInit {
       customerType:[(data.customerTypeId == 1)?'Bussiness':'Individual'],
       companyName: [data.companyName, [Validators.required]],
       emailId: [data.email, [Validators.required]],
-      mobileNo: [data.mobileNo, [Validators.required]],
+      primaryContact: [data.primaryContact, [Validators.required]],
       pan: [data.pan, [Validators.required]],
       gstTreatment: [(data.gstTreatmentId == 1)?'Registered Business - Regular':(data.gstTreatmentId == 2)?'Registered Business - Composition':'Unregistered Business'],
       gstIn: [data.gstin, [Validators.required]],
@@ -73,7 +77,7 @@ export class PayeeSettingsComponent implements OnInit {
     this.getFormControl().displayName.maxLength = 40;
     this.getFormControl().companyName.maxLength = 50;
     this.getFormControl().emailId.maxLength = 40;
-    this.getFormControl().mobileNo.maxLength = 10;
+    this.getFormControl().primaryContact.maxLength = 10;
     this.getFormControl().pan.maxLength = 10;
     this.getFormControl().gstIn.maxLength = 16;
     this.getFormControl().billingAddress.maxLength = 150;
@@ -135,9 +139,10 @@ export class PayeeSettingsComponent implements OnInit {
   {
     console.log("data",data);
   }
-  Close(state) {
-    this.subInjectService.rightSliderData(state)
-    this.subInjectService.rightSideData(state);
+  Close(data) {
+    // this.subInjectService.rightSliderData(state)
+    // this.subInjectService.rightSideData(state);
+    this.subInjectService.changeUpperRightSliderState({state:'close',data})
   }
   savePayeeSettings() {
     if (this.payeeSettingsForm.controls.customerName.invalid) {
@@ -178,15 +183,14 @@ export class PayeeSettingsComponent implements OnInit {
         "companyName": this.payeeSettingsForm.controls.companyName.value,
         "country": this.payeeSettingsForm.controls.country.value,
         "currency": "string",
-        "customerTypeId": (this.payeeSettingsForm.controls.customerType == 'Bussiness')?1:2,
+        "customerTypeId": (this.payeeSettingsForm.controls.customerType.value == 'Bussiness')?1:2,
         "email":this.payeeSettingsForm.controls.emailId.value,
-        "gstTreatmentId": (this.payeeSettingsForm.controls.gstTreatment == 'Registered Business - Regular')?1:(this.payeeSettingsForm.controls.gstTreatment == 'Registered Business - Composition')?2:3,
+        "gstTreatmentId": (this.payeeSettingsForm.controls.gstTreatment.value == 'Registered Business - Regular')?1:(this.payeeSettingsForm.controls.gstTreatment.value == 'Registered Business - Composition')?2:3,
         "gstin": this.payeeSettingsForm.controls.gstIn.value,
         "payeeTypeId": 1,
         "paymentTermsId": 1,
-        "mobileNo":this.payeeSettingsForm.controls.mobileNo.value,
         "billerAddress": this.payeeSettingsForm.controls.billingAddress.value,
-        "primaryContact":  this.payeeSettingsForm.controls.mobileNo.value,
+        "primaryContact":  this.payeeSettingsForm.controls.primaryContact.value,
         "state": this.payeeSettingsForm.controls.state.value,
         "zipCode": this.payeeSettingsForm.controls.pincode.value,
         "id":this.payeeSettingsForm.controls.id.value,
@@ -202,12 +206,11 @@ export class PayeeSettingsComponent implements OnInit {
         let obj = {
           "customerName":this.getFormControl().customerName.value,
           "gstin": this.getFormControl().gstIn.value,
-          "gstTreatmentId": (this.getFormControl().gstTreatment.value == 'Registered Business - Regular')?1:(this.payeeSettingsForm.controls.gstTreatment == 'Registered Business - Composition')?2:3,
+          "gstTreatmentId": (this.getFormControl().gstTreatment.value == 'Registered Business - Regular')?1:(this.payeeSettingsForm.controls.gstTreatment.value == 'Registered Business - Composition')?2:3,
           "email": this.getFormControl().emailId.value,
           "customerTypeId": (this.getFormControl().customerType.value == 'Bussiness')?'1':'2',
-          "primaryContact": this.getFormControl().mobileNo.value,
+          "primaryContact": this.getFormControl().primaryContact.value,
           "companyName": this.getFormControl().companyName.value,
-          "mobileNo":this.getFormControl().mobileNo.value,
           "companyDisplayName": this.getFormControl().displayName.value,
           "billerAddress": this.getFormControl().billingAddress.value,
           "city": this.getFormControl().city.value,
@@ -229,15 +232,19 @@ export class PayeeSettingsComponent implements OnInit {
   addClientBillerProfileRes(data){
     console.log("addClientBillerProfileRes",data)
     this.updatedData = data
+    this.closeTab(data)
       this.eventService.openSnackBar("Family member added successfully","OK")
-      this.Close('close')
-     
   }
   editSettingResData(data) {
-   if(data == true){
+   if(data.status == 1){
     this.eventService.openSnackBar("Family member updated successfully","OK")
     this.getEditData.emit(this.sendData)
-    this.Close('close')
+    this.closeTab(data)
    }
+  }
+  closeTab(data) {
+    if(data.status == 1){
+      this.Close(data)
+    }
   }
 }

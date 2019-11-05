@@ -25,9 +25,11 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class InvoiceHistoryComponent implements OnInit {
 
   constructor(public subInjectService:SubscriptionInject, private subService: SubscriptionService) { 
-    this.dataSub = this.subInjectService.singleProfileData.subscribe(
-      data=>this.invoiceDataGet(data)
-    );
+    
+  }
+  @Input() set subData(data)
+  {
+   this.invoiceDataGet(data)
   }
   displayedColumns: string[] = ['date', 'invoice', 'status', 'ddate','amount','balance'];
   dataSource;
@@ -54,20 +56,19 @@ export class InvoiceHistoryComponent implements OnInit {
   }
 
   invoiceDataGet(data){
-    if(data.feeMode)
-    {
-     return
-    }
-    else{
-      // let obj = {
-      //   module : 3,
-      //    id : data.id
-      // }
-      // this.subService.getInvoices(obj).subscribe(
-      //   data => this.getInvoiceResponseData(data)
-      // );
-    }
-    
+     if(data===undefined)
+     {
+        return;
+     }
+      else{
+        let obj = {
+          module : 3,
+           id : data.id
+        }
+        this.subService.getInvoices(obj).subscribe(
+          data => this.getInvoiceResponseData(data)
+        );
+      }
   }
   getInvoiceResponseData(data){
     console.log('getInvoiceResponseData',data)

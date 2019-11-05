@@ -213,7 +213,7 @@
                     <th mat-header-cell *matHeaderCellDef> Next billing...</th>
                     <td mat-cell *matCellDef="let element"> {{element.nextBillingDate | date:'dd/MM/yyyy'}} </td>
                   </ng-container>
-                  <ng-container matColumnDef="icons">
+                  <!-- <ng-container matColumnDef="icons">
                     <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"></th>
                     <td mat-cell *matCellDef="let element" style="width: 2%;"><i class="material-icons c-p iconscolors"
                                                                                  [matMenuTriggerFor]="menu">
@@ -228,7 +228,7 @@
                         <a mat-menu-item (click)="deleteModal('SUBSCRIPTION')">Delete subscription</a>
                       </mat-menu>
                     </td>
-                  </ng-container>
+                  </ng-container> -->
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                   </tbody>

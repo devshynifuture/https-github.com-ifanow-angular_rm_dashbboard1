@@ -67,26 +67,21 @@ export const MY_FORMATS2 = {
 })
 export class CreateSubscriptionComponent implements OnInit {
   @Input() subFeeMode;
+  feeModeData: any;
 
   constructor(private enumService: EnumServiceService, public subInjectService: SubscriptionInject,
               private eventService: EventService, private fb: FormBuilder, private subService: SubscriptionService) {
-    // this.subInjectService.singleProfileData.subscribe(
-    //   data => this.getSubStartDetails(data)
-    // );
     this.eventService.sidebarSubscribeData.subscribe(
       data => this.subFeeMode = data
     );
-    // this.subInjectService.ta
   }
 
   inputData;
 
   @Input()
   set data(data) {
-    this.inputData = data;
     this.getSubStartDetails(data);
   }
-
   get data() {
     return this.inputData;
   }
@@ -139,23 +134,29 @@ export class CreateSubscriptionComponent implements OnInit {
     }
     console.log(this.subscriptionDetails);
   }
-
+  nextStep(data)
+  {
+   console.log(data)
+   this.clientData=data
+   this.goForward()
+  }
   getSubStartDetails(data) {
-    this.clientData = data.obj;
+    // this.clientData = data.data;
+    this.feeModeData=data
     console.log('client Data: ', this.clientData);
-    if (data.subscriptionPricing) {
+    if (data.data.subscriptionPricing) {
       this.advisorId = AuthService.getAdvisorId();
       const obj = {
         // advisorId: 2808,
         advisorId: this.advisorId,
-        clientId: data.clientId,
-        subId: data.id
+        clientId: data.data.clientId,
+        subId: data.data.id
       };
       this.subService.getSubscriptionStartData(obj).subscribe(
-        subStartData => this.getSubStartDetailsResponse(subStartData)
+        subStartData => this.getSubStartDetailsResponse(subStartData,data)
       );
     } else {
-      this.feeStructureFormData = data;
+      // this.feeModeData=data
       this.goForward();
       console.log(this.feeStructureFormData, 'feeStructureData');
     }
@@ -196,8 +197,9 @@ export class CreateSubscriptionComponent implements OnInit {
     }
   }
 
-  getSubStartDetailsResponse(data) {
+  getSubStartDetailsResponse(data,feeModeData) {
     console.log(data);
+    this.feeModeData=feeModeData
     this.feeStructureData = data;
     this.subscriptionDetails.controls.subscription.setValue(data.subscriptionNo);
     this.billersData = data.billers;
@@ -205,8 +207,7 @@ export class CreateSubscriptionComponent implements OnInit {
   }
 
   Close(state) {
-    this.subInjectService.rightSideData(state);
-    this.subInjectService.rightSliderData(state);
+    this.subInjectService.changeUpperRightSliderState({state: 'close'});
     this.stepper.selectedIndex = 0;
     this.subscriptionDetails.reset();
   }
@@ -224,7 +225,7 @@ export class CreateSubscriptionComponent implements OnInit {
         clientBillerProfiles: this.selectedPayee,
         clientId: this.clientData.clientId,
         dueDateFrequency: this.subscriptionDetails.get('dueDateFrequency').value,
-        startsOn: this.subscriptionDetails.get('activationDate').value,
+        startsOn: this.subscriptionDetails.get('activationDate').value._d,
         fromDate: '2019-10-16',
         subscriptionNumber: this.feeStructureData.subscriptionNo,
         feeMode: this.subscriptionDetails.get('invoiceSendingMode').value,

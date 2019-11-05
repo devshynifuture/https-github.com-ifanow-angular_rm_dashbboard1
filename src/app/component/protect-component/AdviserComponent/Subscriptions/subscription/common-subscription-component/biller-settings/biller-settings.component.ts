@@ -11,7 +11,7 @@ import {AuthService} from "../../../../../../../auth-service/authService";
 })
 export class BillerSettingsComponent implements OnInit {
   // obj1: { advisorId: number };
-  @Input() upperData;
+  
   billerSettingData: any;
   dataSub: any;
   dataObj: any;
@@ -19,22 +19,23 @@ export class BillerSettingsComponent implements OnInit {
   getSubsciption: any;
   getDataRow: any;
   advisorId;
-
+  @Input() set clientData(clientData)
+  { 
+    this.advisorId = AuthService.getAdvisorId();
+    this.getBillerData(clientData)
+  };
   constructor(public subInjectService: SubscriptionInject, public subService: SubscriptionService, public eventService: EventService) {
 
   }
 
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
-    this.dataSub = this.subInjectService.newRightSliderDataObs.subscribe(
-      data => this.getBillerData(data)
-    );
+    
   }
 
   getBillerData(data) {
-    this.getDataRow = data.data;
+    
+    this.getDataRow = data;
     this.dataObj = {
-      // 'advisorId':12345,
       advisorId: this.advisorId,
       subId: this.getDataRow.id
     };
@@ -42,7 +43,6 @@ export class BillerSettingsComponent implements OnInit {
       data => this.getBillerProfileRes(data)
     );
     this.getSubsciption = this.getDataRow;
-
   }
 
   saveChangeBillerSetting() {

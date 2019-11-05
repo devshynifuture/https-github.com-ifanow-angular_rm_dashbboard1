@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import {AddDocumentComponent} from '../add-document/add-document.component';
 import {AuthService} from "../../../../../../../auth-service/authService";
 import {element} from 'protractor';
+import { UtilService } from 'src/app/services/util.service';
 // import {element} from 'protractor';
 // import {timingSafeEqual} from 'crypto';
 
@@ -54,6 +55,7 @@ export class DocumentComponent implements OnInit {
   serviceDocumentData;
   mappedData = [];
   dataCount;
+  _clientData: any;
 
   constructor(public subInjectService: SubscriptionInject,
               private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
@@ -64,6 +66,15 @@ export class DocumentComponent implements OnInit {
   }
 
   @Input() componentFlag: string;
+  @Input()
+  set clientData(clientData) {
+    this._clientData = clientData;
+    this.getdocumentSubData();
+  }
+
+  get clientData() {
+    return this._clientData;
+  }
 
   displayedColumns: string[] = ['checkbox', 'document', 'plan', 'service', 'date', 'sdate', 'cdate', 'status', 'icons'];
   dataSource = ELEMENT_DATA;
@@ -112,6 +123,7 @@ export class DocumentComponent implements OnInit {
     console.log(data);
     if (data) {
       data.forEach(singleData => {
+        singleData.selected = false;
         singleData.documentText = singleData.docText;
       });
       this.dataSource = data;
@@ -182,7 +194,43 @@ export class DocumentComponent implements OnInit {
     );
 
   }
+  openSendEmail() {
+    const data = {
+      advisorId: this.advisorId,
+      clientData: this._clientData,
+      templateType: 2, //2 is for quotation
+      documentList: []
+    };
+    this.dataSource.forEach(singleElement => {
+      if (singleElement.selected) {
+        data.documentList.push(singleElement);
+      }
+    });
+    this.open(data, 'emailOnlyDoc');
+  }
 
+  open(data, value) {
+
+    // this.eventService.sliderData(value);
+    // this.subInjectService.rightSliderData(state);
+    // this.subInjectService.addSingleProfile(data);
+
+    const fragmentData = {
+      Flag: value,
+      data: data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ',);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
   getplanDocumentDataResponse(data) {
     data.forEach(singleData => {
       singleData.isChecked = false;
@@ -539,6 +587,7 @@ export class DocumentComponent implements OnInit {
   selectAll(event) {
     // const checked = event.target.checked;
     // this.dataSource.forEach(item => item.selected = 'checked');
+
     this.dataCount = 0;
     this.dataSource.forEach(item => {
       //   if(item.selected==false)
@@ -568,7 +617,7 @@ export class DocumentComponent implements OnInit {
 
   }
 
-  changeSelect(data) {
+  changeSelect(ele) {
     this.dataCount = 0;
     this.dataSource.forEach(item => {
       console.log('item item ', item);
@@ -586,5 +635,5 @@ export class DocumentComponent implements OnInit {
     //   this.dataCount--;
     //   data.dataCountd =this.dataCount;
     // }
-  }
+  }  
 }

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../subscription-inject.service';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MAT_DATE_FORMATS} from '@angular/material';
 import {DeleteSubscriptionComponent} from '../common-subscription-component/delete-subscription/delete-subscription.component';
 import {SubscriptionService} from '../../subscription.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
@@ -9,6 +9,43 @@ import {AuthService} from '../../../../../../auth-service/authService';
 import * as _ from 'lodash';
 import {EnumServiceService} from '../enum-service.service';
 import {UtilService} from "../../../../../../services/util.service";
+import {DatePipe} from '@angular/common';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'LL',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+export const APP_DATE_FORMATS = {
+  parse: {
+    dateInput: {month: 'short', year: 'numeric', day: 'numeric'},
+  },
+  display: {
+    dateInput: 'input',
+    monthYearLabel: {year: 'numeric', month: 'numeric'},
+    dateA11yLabel: {
+      year: 'numeric', month: 'long', day: 'numeric'
+    },
+    monthYearA11yLabel: {year: 'numeric', month: 'long'},
+  }
+};
+export const MY_FORMATS2 = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 export interface PeriodicElement {
   client: string;
@@ -25,7 +62,20 @@ export interface PeriodicElement {
 @Component({
   selector: 'app-subscriptions-subscription',
   templateUrl: './subscriptions-subscription.component.html',
-  styleUrls: ['./subscriptions-subscription.component.scss']
+  styleUrls: ['./subscriptions-subscription.component.scss'],
+  providers: [
+    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
+    // {
+    //   provide: DateAdapter,
+    //   useClass: MomentDateAdapter,
+    //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    // },
+    // { provide: MAT_DATE_LOCALE, useValue: 'en' },
+    [DatePipe],
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+  ],
 })
 export class SubscriptionsSubscriptionComponent implements OnInit {
 
@@ -38,30 +88,36 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   dataSource;
   DataToSend;
   chips = [
-    'LIVE',
-    'FUTURE',
-    'NOT STARTED',
-    'CANCELLED'
+    {name: 'LIVE', value: 2},
+    {name: 'FUTURE', value: 3},
+    {name: 'NOT STARTED', value: 1},
+    {name: 'CANCELLED', value: 4}
   ];
   dateChips = [
-    'Activation date',
-    'Last billing date',
-    'Next billing date'
+    {name: 'Activation date', value: 1},
+    {name: 'Last billing date', value: 2},
+    {name: 'Next billing date', value: 3}
   ];
   filterStatus = [];
   filterDate = [];
   statusIdList = [];
-  sendData: any[];
+  // sendData: any[];
   senddataTo: any;
   showFilter = false;
+  selectedStatusFilter;
+  selectedDateFilter;
   dataTocheck: boolean;
   live: boolean;
   notStarted: boolean;
   future: boolean;
   feeCollectionMode: any;
+  getDate: any;
+  getDate2: string;
+  selectedDateRange = {begin: new Date(), end: new Date()};
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
-              private eventService: EventService, private subService: SubscriptionService, public enumService: EnumServiceService) {
+              private eventService: EventService, private subService: SubscriptionService,
+              public enumService: EnumServiceService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -74,9 +130,6 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   getSummaryDataAdvisor() {
     const obj = {
-      // 'id':2735, //pass here advisor id for Invoice advisor
-      // 'module':1,
-      // advisorId: 12345,
       advisorId: this.advisorId,
       clientId: 0,
       flag: 0,
@@ -92,19 +145,13 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   getSubSummaryRes(data) {
     console.log(data);
-    // data.forEach(element => {
-    //   element.feeMode = (element.feeMode === 1) ? 'FIXED' : 'VARIABLE';
-    //   element.startsOn = (element.status === 1) ? 'START' : element.startsOn;
-    //   element.status = (element.status === 1) ? 'NOT STARTED' : (element.status === 2) ?
-    //     'LIVE' : (element.status === 3) ? 'FUTURE' : 'CANCELLED';
-    // });
     this.dataSource = data;
     this.DataToSend = data;
   }
 
   openPlanSlider(value, state, data) {
-    (value=="billerSettings"|| value=='changePayee')?value:(data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable'
-    data.isCreateSub = true;
+    (value == "billerSettings" || value == 'changePayee' || value == 'SUBSCRIPTIONS') ? value : (data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable'
+    data.isCreateSub = false;
     const fragmentData = {
       Flag: value,
       data,
@@ -126,7 +173,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   Open(state, data) {
     let feeMode;
-    (data.subscriptionPricing.feeTypeId == 1)?feeMode = 'fixedModifyFees':feeMode = 'variableModifyFees';
+    data.isCreateSub = true;
+    (data.subscriptionPricing.feeTypeId == 1) ? feeMode = 'fixedModifyFees' : feeMode = 'variableModifyFees';
     const fragmentData = {
       Flag: feeMode,
       data,
@@ -145,6 +193,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     );
 
   }
+
   deleteModal(value, data) {
     const dialogData = {
       data: value,
@@ -175,12 +224,14 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     } else {
       this.showFilter = false;
     }
+    console.log('this.filterStatus: ', this.filterStatus);
+    console.log('this.filterDate: ', this.filterDate);
 
   }
 
   addFilters(addFilters) {
     console.log('addFilters', addFilters);
-    if (addFilters == 'LIVE') {
+    /*if (addFilters == 'LIVE') {
       this.senddataTo = 2;
     } else if (addFilters == 'NOT STARTED') {
       this.senddataTo = 1;
@@ -188,14 +239,15 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       this.senddataTo = 3;
     } else {
       this.senddataTo = 4;
-    }
-    console.log(this.senddataTo);
-    if (!_.includes(this.filterStatus, this.senddataTo)) {
-      this.filterStatus.push(this.senddataTo);
+    }*/
+    // console.log(this.senddataTo);
+    if (!_.includes(this.filterStatus, addFilters)) {
+      this.filterStatus.push(addFilters);
     } else {
-      _.remove(this.filterStatus, this.senddataTo);
+      // _.remove(this.filterStatus, this.senddataTo);
     }
-    this.sendData = this.filterStatus;
+    // this.sendData = this.filterStatus;
+
     this.callFilter();
   }
 
@@ -206,7 +258,15 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   addFiltersDate(dateFilter) {
     console.log('addFilters', dateFilter);
-    this.filterDate.push(dateFilter);
+    this.filterDate = [dateFilter];
+    const beginDate = new Date();
+    beginDate.setMonth(beginDate.getMonth() - 1);
+    UtilService.getStartOfTheDay(beginDate);
+
+    const endDate = new Date();
+    UtilService.getStartOfTheDay(endDate);
+
+    this.selectedDateRange = {begin: beginDate, end: endDate};
     this.callFilter();
   }
 
@@ -221,18 +281,40 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   }
 
+  orgValueChange(value) {
+    console.log(value)
+    this.getDate = this.datePipe.transform(value, 'yyyy-MM-dd');
+    this.callFilter();
+
+  }
+
+  orgValueChange2(value) {
+    console.log(value)
+    this.getDate2 = this.datePipe.transform(value, 'yyyy-MM-dd');
+    this.callFilter();
+
+  }
+
   callFilter() {
-    this.statusIdList = this.sendData;
+    if (this.filterStatus && this.filterStatus.length > 0) {
+      this.statusIdList = [];
+      this.filterStatus.forEach(singleFilter => {
+        this.statusIdList.push(singleFilter.value);
+      });
+    } else {
+      this.statusIdList = [];
+    }
+    // this.statusIdList = (this.sendData == undefined) ? [] : this.sendData;
     const obj = {
       advisorId: this.advisorId,
-      limit: 10,
+      limit: -1,
       offset: 0,
-      fromDate: '2000-01-01',
-      toDate: '3000-01-01',
+      fromDate: this.selectedDateRange ? this.selectedDateRange.begin.toDateString() : null,
+      toDate: this.selectedDateRange ? this.selectedDateRange.end.toDateString() : null,
       statusIdList: this.statusIdList,
-      dateType: 0
+      dateType: this.selectedDateFilter ? this.selectedDateFilter.value : 0
     };
-    console.log('this.statusIdList', this.statusIdList);
+    console.log('this.callFilter req obj : ', obj);
     this.subService.filterSubscription(obj).subscribe(
       data => this.filterSubscriptionRes(data)
     );
