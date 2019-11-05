@@ -18,6 +18,7 @@ import {MaterialModule} from '../../../material/material';
 import { DocumentsComponent } from './component/customer/accounts/documents/documents.component';
 import { MutualFundsCapitalComponent } from './component/customer/accounts/mutual-funds-capital/mutual-funds-capital.component';
 import { BottomSheetComponent } from './component/common-component/bottom-sheet/bottom-sheet.component';
+import { AddLiabilitiesComponent } from './component/common-component/add-liabilities/add-liabilities.component';
 
 
 @NgModule({
@@ -37,7 +38,6 @@ import { BottomSheetComponent } from './component/common-component/bottom-sheet/
     DocumentsComponent,
     MutualFundsCapitalComponent,
     BottomSheetComponent,
-    
     ],
   imports: [
     CommonModule,

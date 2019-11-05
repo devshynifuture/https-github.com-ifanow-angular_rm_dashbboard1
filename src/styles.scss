@@ -622,6 +622,7 @@ mat-tab-group[vertical] {
 .mutualfunds-capital-equity,
 .mutualfunds-capital-debt,
 .mutualfunds-capital-dividend-summary,
+.documentsTable,
 .fixed-deposite,
 .scheme-wise,
 .familymember-wise,
@@ -686,4 +687,9 @@ mat-tab-group[vertical] {
 
 .mutualfunds-capital-dividend-summary .mat-row:last-child {
     font-weight: bold !important;
+}
+
+.btn-dark-black {
+    border: 1px solid $black !important;
+    color: $black !important;
 }

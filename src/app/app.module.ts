@@ -118,6 +118,7 @@ import { MomentDateModule} from '@angular/material-moment-adapter';
 import { FixedFeeComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/fixed-fee/fixed-fee.component';
 import { VariableFeeComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/variable-fee/variable-fee.component';
 import { LibilitiesRightComponent } from './component/protect-component/customers/component/customer/accounts/liabilities/libilities-right/libilities-right.component';
+import { AddLiabilitiesComponent } from './component/protect-component/customers/component/common-component/add-liabilities/add-liabilities.component';
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 @NgModule({
@@ -208,9 +209,9 @@ import { LibilitiesRightComponent } from './component/protect-component/customer
     SingleDocumentViewComponent,
     FixedFeeComponent,
     VariableFeeComponent,
-
     LibilitiesRightComponent,
-  
+    AddLiabilitiesComponent
+    
   ],
   imports: [
     BrowserModule,

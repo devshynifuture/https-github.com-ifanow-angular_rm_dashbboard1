@@ -14,3 +14,53 @@
             cursor: pointer;
         }
     }
+    
+    .mat-row:last-child {
+        font-weight: normal !important;
+        text-align: left !important;
+    }
+    
+    .breadcrumb {
+        padding: 0px;
+        background-color: transparent;
+        font-family: "Roboto", sans-serif !important;
+        li {
+            padding: 0px !important;
+            font-family: "Roboto", sans-serif !important;
+            font-size: 18px !important;
+            color: #000000 !important;
+            a {
+                font-size: 18px;
+                font-family: "Roboto", sans-serif !important;
+                color: #000000 !important;
+                i {
+                    vertical-align: bottom;
+                }
+            }
+        }
+    }
+    
+    .breadcrumb-item+.breadcrumb-item::before {
+        content: ">";
+        font-size: 19px;
+    }
+    
+    .input_class {
+        position: relative;
+        input {
+            height: 36px;
+            color: #83959D;
+            padding-left: 30px;
+            width: 200px;
+        }
+        img {
+            position: absolute;
+            left: 9px;
+            top: 10px;
+        }
+    }
+    
+    .gridIcon {
+        height: 24px;
+        margin-top: 5px;
+    }
