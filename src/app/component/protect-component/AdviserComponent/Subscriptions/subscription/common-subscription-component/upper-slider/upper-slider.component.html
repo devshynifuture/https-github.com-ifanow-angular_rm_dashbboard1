@@ -134,7 +134,7 @@
   </app-plan-rightslider>
   <app-email-quotation [headerData]="headerData" *ngIf="rightSliderFlag=='eSignQuotations'"></app-email-quotation>
   <app-invoice [data]="upperRightSideInputData.data" [invoiceTab]="rightSliderFlag" *ngIf="rightSliderFlag=='invoiceUpperSlider'"></app-invoice>
-  <app-payee-settings *ngIf="rightSliderFlag=='payeeSettings'"></app-payee-settings>
+  <app-payee-settings [data] ="upperRightSideInputData"*ngIf="rightSliderFlag=='payeeSettings'" ></app-payee-settings>
   <app-email-quotation [headerDataDocuments]="headerDataDocuments" *ngIf="rightSliderFlag=='eSignDocument'">
   </app-email-quotation>
   <app-create-subscription [data]="upperRightSideInputData" [subFeeMode]="rightSliderFlag" *ngIf="rightSliderFlag=='createSubFixed' || rightSliderFlag=='createSubVariable'"></app-create-subscription>

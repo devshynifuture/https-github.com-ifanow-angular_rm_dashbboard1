@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -15,14 +15,12 @@ export class PayeeSettingsComponent implements OnInit {
   payeeSettingsForm;
   sendData;
   updatedData: any;
-
+  inputData: any;
+  
   constructor(public subInjectService:SubscriptionInject, private eventService:EventService,private subService:SubscriptionService,private fb:FormBuilder) {
-    // this.eventService.rightSliderData.subscribe(
-    //   data =>this.getRightSliderData(data)
+    // this.subInjectService.rightSideBarData.subscribe(
+    //   data=>this.getClientPayeeSettings(data)
     // )
-    this.subInjectService.rightSideBarData.subscribe(
-      data=>this.getClientPayeeSettings(data)
-    )
    }
    isCustomerName = false;
    isDisplayName = false;
@@ -34,9 +32,18 @@ export class PayeeSettingsComponent implements OnInit {
    isBillingAddress = false;
    isPincode = false;
    OnInit() {
-
+    
    }
    @Output() getEditData = new EventEmitter();
+   @Input()
+  set data(data) {
+    this.inputData = data;
+    this.getClientPayeeSettings(data);
+  }
+
+  get data() {
+    return this.inputData;
+  }
 
    getFormControl() {
     return this.payeeSettingsForm.controls;
@@ -50,7 +57,7 @@ export class PayeeSettingsComponent implements OnInit {
     }
   }
   getClientPayeeSettings(data) {
-
+    data = data.data
     console.log("payee data", data);
     this.payeeSettingsForm = this.fb.group({
       customerName: [data.name, [Validators.required]],
@@ -68,7 +75,7 @@ export class PayeeSettingsComponent implements OnInit {
       country: [data.country],
       pincode: [data.zipCode, [Validators.required]],
       id:[data.id]
-    })
+    }) 
     this.getFormControl().customerName.maxLength = 50;
     this.getFormControl().displayName.maxLength = 40;
     this.getFormControl().companyName.maxLength = 50;
@@ -79,7 +86,7 @@ export class PayeeSettingsComponent implements OnInit {
     this.getFormControl().billingAddress.maxLength = 150;
     this.getFormControl().pincode.maxLength = 6;
   }
-
+  
   obj=[
     {
         "id": null,
@@ -135,9 +142,10 @@ export class PayeeSettingsComponent implements OnInit {
   {
     console.log("data",data);
   }
-  Close(state) {
-    this.subInjectService.rightSliderData(state)
-    this.subInjectService.rightSideData(state);
+  Close(data) {
+    // this.subInjectService.rightSliderData(state)
+    // this.subInjectService.rightSideData(state);
+    this.subInjectService.changeUpperRightSliderState({state:'close',data})
   }
   savePayeeSettings() {
     if (this.payeeSettingsForm.controls.customerName.invalid) {
@@ -196,7 +204,7 @@ export class PayeeSettingsComponent implements OnInit {
       this.subService.editPayeeSettings(obj1).subscribe(
         data =>this.editSettingResData(data)
       )
-
+     
       }else{
 
         let obj = {
@@ -216,28 +224,32 @@ export class PayeeSettingsComponent implements OnInit {
           "country": this.getFormControl().country.value,
           "zipCode": this.getFormControl().pincode.value,
           "clientId": 2978,
-
+          
         }
         this.subService.addClientBillerProfile(obj).subscribe(
           data => this.addClientBillerProfileRes(data)
         )
-
+        
       }
     }
-
+    
   }
   addClientBillerProfileRes(data){
     console.log("addClientBillerProfileRes",data)
     this.updatedData = data
-      this.eventService.openSnackBar("Family member added successfully", "OK")
-      this.Close('close')
-
+    this.closeTab(data)
+      this.eventService.openSnackBar("Family member added successfully","OK")
   }
   editSettingResData(data) {
-   if(data == true){
-    this.eventService.openSnackBar("Family member updated successfully", "OK")
+   if(data.status == 1){
+    this.eventService.openSnackBar("Family member updated successfully","OK")
     this.getEditData.emit(this.sendData)
-    this.Close('close')
+    this.closeTab(data)
    }
+  }
+  closeTab(data) {
+    if(data.status == 1){
+      this.Close(data)
+    }
   }
 }
