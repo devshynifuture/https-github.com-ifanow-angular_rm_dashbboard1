@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../subscription-inject.service';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MAT_DATE_FORMATS} from '@angular/material';
 import {DeleteSubscriptionComponent} from '../common-subscription-component/delete-subscription/delete-subscription.component';
 import {SubscriptionService} from '../../subscription.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
@@ -9,7 +9,42 @@ import {AuthService} from '../../../../../../auth-service/authService';
 import * as _ from 'lodash';
 import {EnumServiceService} from '../enum-service.service';
 import {UtilService} from "../../../../../../services/util.service";
-
+import { DatePipe } from '@angular/common';
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'LL',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+export const APP_DATE_FORMATS = {
+  parse: {
+    dateInput: {month: 'short', year: 'numeric', day: 'numeric'},
+  },
+  display: {
+    dateInput: 'input',
+    monthYearLabel: {year: 'numeric', month: 'numeric'},
+    dateA11yLabel: {
+      year: 'numeric', month: 'long', day: 'numeric'
+    },
+    monthYearA11yLabel: {year: 'numeric', month: 'long'},
+  }
+};
+export const MY_FORMATS2 = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 export interface PeriodicElement {
   client: string;
   service: string;
@@ -25,7 +60,20 @@ export interface PeriodicElement {
 @Component({
   selector: 'app-subscriptions-subscription',
   templateUrl: './subscriptions-subscription.component.html',
-  styleUrls: ['./subscriptions-subscription.component.scss']
+  styleUrls: ['./subscriptions-subscription.component.scss'],
+  providers: [
+    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
+    // {
+    //   provide: DateAdapter,
+    //   useClass: MomentDateAdapter,
+    //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    // },
+    // { provide: MAT_DATE_LOCALE, useValue: 'en' },
+    [DatePipe],
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+  ],
 })
 export class SubscriptionsSubscriptionComponent implements OnInit {
 
@@ -59,9 +107,11 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   notStarted: boolean;
   future: boolean;
   feeCollectionMode: any;
+  getDate: any;
+  getDate2: string;
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
-              private eventService: EventService, private subService: SubscriptionService, public enumService: EnumServiceService) {
+              private eventService: EventService, private subService: SubscriptionService, public enumService: EnumServiceService,private datePipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -196,6 +246,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       _.remove(this.filterStatus, this.senddataTo);
     }
     this.sendData = this.filterStatus;
+    
     this.callFilter();
   }
 
@@ -220,15 +271,26 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.callFilter();
 
   }
+  orgValueChange(value){
+    console.log(value)
+    this.getDate = this.datePipe.transform(value, 'yyyy-MM-dd');
+    this.callFilter();
 
+  }
+  orgValueChange2(value){
+    console.log(value)
+    this.getDate2 = this.datePipe.transform(value, 'yyyy-MM-dd');
+    this.callFilter();
+
+  }
   callFilter() {
-    this.statusIdList = this.sendData;
+    this.statusIdList = (this.sendData == undefined)? [] : this.sendData;
     const obj = {
       advisorId: this.advisorId,
       limit: 10,
       offset: 0,
-      fromDate: '2000-01-01',
-      toDate: '3000-01-01',
+      fromDate: this.getDate,
+      toDate:  this.getDate2,
       statusIdList: this.statusIdList,
       dateType: 0
     };

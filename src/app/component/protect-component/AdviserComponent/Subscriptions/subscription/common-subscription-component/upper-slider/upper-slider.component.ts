@@ -22,7 +22,7 @@ export class UpperSliderComponent implements OnInit {
     );
     this.subinject.upperRightSliderDataObs.subscribe(data => {
       const rightSliderFragData: object = data;
-      this.setRightSliderData(rightSliderFragData.Flag);
+      this.setRightSliderData(rightSliderFragData);
       this.getStateData(data.state);
     });
     this.subinject.rightslider.subscribe(
