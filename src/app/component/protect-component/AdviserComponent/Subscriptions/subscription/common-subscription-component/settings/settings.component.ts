@@ -5,6 +5,7 @@ import { SubscriptionService } from '../../../subscription.service';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-settings',
@@ -61,6 +62,23 @@ export class SettingsComponent implements OnInit {
     this.subInjectService.rightSliderData(state);
     this.subInjectService.rightSideData(profileData);
     console.log("profileData*********",profileData)
+    const fragmentData = {
+      Flag: value,
+      data:profileData,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        this.getSettingProfileData()
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', );
+          rightSideDataSub.unsubscribe();
+        }
+      }
+      
+    );
   }
   deleteModal(value) {
     let dialogData = {
