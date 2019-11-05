@@ -21,7 +21,8 @@ import {SubscriptionService} from '../../../subscription.service';
 export class EmailOnlyComponent implements OnInit {
   model: any;
   dataSub: any;
-  storeData: any;
+  emailBody: any;
+  subject;
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject, public subscription: SubscriptionService) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
@@ -37,11 +38,21 @@ export class EmailOnlyComponent implements OnInit {
   @Input() quotationData;
 
   _inputData;
+  emailData;
 
   @Input() set inputData(inputData) {
     this._inputData = inputData;
+    this._inputData = {
+      advisorId: 2808,
+      clientData: {
+        id: 2978,
+        userEmailId: 'sher@grr.laaa'
+      },
+      documentList: [{id: 84, documentName: 'cc'}],
+      templateType: 2
+    };
     console.log('EmailOnlyComponent inputData : ', inputData);
-
+    this.getEmailTemplateFilterData();
   }
 
   get inputData() {
@@ -53,7 +64,7 @@ export class EmailOnlyComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.getEmailTemplate();
+    // this.getEmailTemplate();
   }
 
 // Begin ControlValueAccesor methods.
@@ -75,21 +86,45 @@ export class EmailOnlyComponent implements OnInit {
     this.onTouched = fn;
   }
 
-  Close(value) {
-    this.valueChange.emit(this.emailSend);
+  getEmailTemplateFilterData() {
+
+    const data = {
+      advisorId: this._inputData.advisorId,
+      clientId: this._inputData.clientData.id,
+      templateType: this._inputData.templateType
+    };
+    this.subscription.getEmailTemplateFilterData(data).subscribe(responseData => {
+      this.emailData = responseData;
+      this.subject = this.emailData.subject;
+      this.emailBody = this.emailData.body;
+    }, error => {
+      this.eventService.openSnackBar(error, 'dismiss', () => {
+        console.log('dismiss was clicked');
+      });
+    });
   }
-  getEmailTemplate(){
+
+  close() {
+    this.subInjectService.changeUpperRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
+
+    // this.valueChange.emit(this.emailSend);
+  }
+
+  getEmailTemplate() {
     const obj = {
       advisorId: 2828,
-      templateId:1
+      templateId: 1
     };
-    this.subscription.getTemplate(obj).subscribe(
+    this.subscription.getEmailTemplateFilterData(obj).subscribe(
       data => this.getTemplateData(data)
     );
   }
-  getTemplateData(data){
-    console.log(data)
+
+  getTemplateData(data) {
+    console.log(data);
   }
+
   openEmailQuot(value, state) {
     this.eventService.sliderData(value);
     this.subInjectService.rightSliderData(state);
@@ -98,7 +133,7 @@ export class EmailOnlyComponent implements OnInit {
 
   getcommanFroalaData(data) {
     console.log(data);
-    this.storeData = data;
+    this.emailBody = data;
   }
 
   /*
@@ -110,9 +145,9 @@ export class EmailOnlyComponent implements OnInit {
   */
 
   save() {
-    console.log('here is saved data', this.storeData);
-    this.updateData(this.storeData);
-    this.Close('close');
+    console.log('here is saved data', this.emailBody);
+    this.updateData(this.emailBody);
+    this.close();
   }
 
   updateData(data) {
@@ -135,6 +170,17 @@ export class EmailOnlyComponent implements OnInit {
 
   saveData(data) {
     console.log(data);
-    this.storeData = data;
+    this.emailBody = data;
+  }
+
+  sendEmail() {
+    const emailRequestData = {
+      body: this.emailBody,
+      subject: this.subject,
+      fromEmail: this.emailData.fromEmail,
+      toEmail: [{emailId: this._inputData.clientData.userEmailId, sendType: 'to'}],
+      documentList: this._inputData.documentList
+    };
+    console.log('send email complete JSON : ', JSON.stringify(emailRequestData));
   }
 }

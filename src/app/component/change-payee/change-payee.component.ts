@@ -73,7 +73,7 @@ export class ChangePayeeComponent implements OnInit {
   changePayeeSettingRes(data){
     console.log('changePayeeSettingRes',data)
     if(data ==  1){
-      this.eventService.openSnackBar("Payee updated successfully","OK")
+      this.eventService.openSnackBar("Payee updated successfully", "OK")
       this.Close('close')
     }
   }
