@@ -100,7 +100,7 @@ export const appConfig = {
   GET_SERVICES_LIST: 'subscription/invoice-service/get',
   ADD_INVOICE: 'subscription/invoice/manual/add',
   GET_PAYEE_PROFILE: 'subscription/client-biller/profiles/get',
-  SET_AS_PRIMARY: 'clients/settings/profile/setprimary',
+  SET_AS_PRIMARY: 'subscription/client/setting/profile/setprimary',
   MAP_DOCUMENTS_TO_SERVICE: 'subscription/mapped/document/service/insert',
   GET_DATA_FOR_CREATE_SERVICE: 'subscription/service/create/details/get',
   EDIT_FEE_MODIFY_STRUCTURE: 'subscription/client/subscription/fees/edit',
