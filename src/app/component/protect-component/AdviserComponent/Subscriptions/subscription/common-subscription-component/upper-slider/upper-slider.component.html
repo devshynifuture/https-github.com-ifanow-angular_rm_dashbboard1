@@ -94,7 +94,7 @@
 <div *ngIf="fragmentData.Flag=='clients'" class="row">
   <div class="col-md-12 p-0 popup-header-fix-tabs">
 
-    <mat-tab-group (selectedTabChange)="tabClick($event)" animationDuration="0ms" mat-align-tabs="center">
+    <mat-tab-group  (selectedTabChange)="tabClick($event)" [selectedIndex]="selectedServiceTab" animationDuration="0ms" mat-align-tabs="center">
 
       <mat-tab label="SUBSCRIPTIONS">
         <app-subscriptions-upper-slider [upperData]="fragmentData.clientData">
@@ -150,7 +150,7 @@
   <app-email-quotation [headerDataInvoice]="headerDataInvoice" *ngIf="rightSliderFlag=='eSignInvoices'">
   </app-email-quotation>
   <app-email-quotation [headerData]="headerData" *ngIf="rightSliderFlag=='emailQuot'"></app-email-quotation>
-  <app-email-only [inputData]="upperRightSideInputData" *ngIf="rightSliderFlag=='emailOnly'"
+  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnly'"
                   ></app-email-only>
 <!--  (valueChange)='display($event)'-->
   <!--</div>-->

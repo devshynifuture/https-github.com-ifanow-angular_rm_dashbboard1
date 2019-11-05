@@ -55,6 +55,7 @@ export class UpperSliderComponent implements OnInit {
           // this.selectedServiceTab = 1;
         } else {
           this.upperData = null;
+          // this.selectedServiceTab = 1;
         }
 
         console.log('upperData: ', this.upperData);

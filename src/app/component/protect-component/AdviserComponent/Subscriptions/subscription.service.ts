@@ -339,7 +339,7 @@ export class SubscriptionService {
   }
 
   getEmailTemplateFilterData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('templateType', data.templateId)
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('templateType', data.templateType)
       .set('clientId', data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_TEMPLATE_FILTER, httpParams);
 

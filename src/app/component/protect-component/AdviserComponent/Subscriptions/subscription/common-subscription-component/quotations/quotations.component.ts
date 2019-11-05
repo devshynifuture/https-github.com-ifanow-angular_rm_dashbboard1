@@ -142,6 +142,7 @@ export class QuotationsComponent implements OnInit {
     const data = {
       advisorId: this.advisorId,
       clientData: this._clientData,
+      templateType: 2, //2 is for quotation
       documentList: []
     };
     this.dataSource.forEach(singleElement => {
