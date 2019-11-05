@@ -1,7 +1,8 @@
 
   <div class="row bb-1 popup-header-fix-60">
     <div class="col-md-10 p-0">
-      <h4 class="mb-0 l-22 wrapper-20">BILLER PROFILE FOR ACME FINANCIAL ADVISORS PVT LTD.</h4>
+      <h4 class="mb-0 l-22 wrapper-20" *ngIf="display=='Add'">ADD BILLER PROFILE</h4>
+      <h4 class="mb-0 l-22 wrapper-20" *ngIf="display!='Add'">EDIT BILLER PROFILE</h4>
     </div>
     <div class="col-md-2 text-right">
       <i class="material-icons pt-16 c-p pr-16" (click)="Close('close')">
@@ -28,7 +29,7 @@
                   <div class="row pt-0">
                     <div class="col-md-8">
                       <mat-error class="f-12 pt-4"
-                                 *ngIf="isGstin && getFormControlProfile().gstinNum.invalid || (getFormControlProfile().gstinNum.touched && getFormControlProfile().gstinNum.invalid)">
+                                 [ngClass]="{'v-h':!(isGstin && getFormControlProfile().gstinNum.invalid || (getFormControlProfile().gstinNum.touched && getFormControlProfile().gstinNum.invalid))}">
                       GSTIN number is required</mat-error>
                   </div>
                     <div class="col-md-4">
@@ -46,12 +47,12 @@
                 <div class="col-md-7">
                   <div class="form-group">
                     <input class="form-control br-0 text-left" formControlName="panNum"
-                           maxlength="{{getFormControlProfile().panNum.maxLength}}" type="text">
+                           maxlength="{{getFormControlProfile().panNum.maxLength}}"  type="text">
                   </div>
                   <div class="row pt-0">
                     <div class="col-md-8">
                       <mat-error class="f-12 pt-4"
-                                 *ngIf="isPanNum && getFormControlProfile().panNum.invalid || (getFormControlProfile().panNum.touched && getFormControlProfile().panNum.invalid)">
+                                 [ngClass]="{'v-h':!(isPanNum && getFormControlProfile().panNum.invalid || (getFormControlProfile().panNum.touched && getFormControlProfile().panNum.invalid))}">
                       PAN is required</mat-error>
                   </div>
                   <div class="col-md-4">
@@ -74,7 +75,7 @@
                   <div class="row pt-0">
                     <div class="col-md-8">
                       <mat-error class="f-12 pt-4"
-                                 *ngIf="isAddress && getFormControlProfile().Address.invalid || (getFormControlProfile().Address.touched && getFormControlProfile().Address.invalid)">
+                                 [ngClass]="{'v-h':!(isAddress && getFormControlProfile().Address.invalid || (getFormControlProfile().Address.touched && getFormControlProfile().Address.invalid))}">
                       Address is required</mat-error>
                   </div>
                   <div class="col-md-12">
@@ -96,7 +97,7 @@
                   <div class="row pt-0">
                     <div class="col-md-8">
                       <mat-error class="f-12 pt-4"
-                                 *ngIf="isState && getFormControlProfile().state.invalid || (getFormControlProfile().state.touched && getFormControlProfile().state.invalid)">
+                                 [ngClass]="{'v-h':!(isState && getFormControlProfile().state.invalid || (getFormControlProfile().state.touched && getFormControlProfile().state.invalid))}">
                       State is required</mat-error>
                   </div>
                   </div>
@@ -113,7 +114,7 @@
                     <div class="row pt-0">
                       <div class="col-md-8">
                         <mat-error class="f-12 pt-4"
-                                   *ngIf="isZipCode && getFormControlProfile().pincode.invalid || (getFormControlProfile().pincode.touched && getFormControlProfile().pincode.invalid)">
+                                   [ngClass]="{'v-h':!(isZipCode && getFormControlProfile().pincode.invalid || (getFormControlProfile().pincode.touched && getFormControlProfile().pincode.invalid))}">
                         Pincode is required</mat-error>
                     </div>
                     </div>
@@ -130,7 +131,7 @@
                   <div class="row pt-0">
                     <div class="col-md-8">
                       <mat-error class="f-12 pt-4"
-                                 *ngIf="isCountry && getFormControlProfile().country.invalid || (getFormControlProfile().country.touched && getFormControlProfile().country.invalid)">
+                                 [ngClass]="{'v-h':!(isCountry && getFormControlProfile().country.invalid || (getFormControlProfile().country.touched && getFormControlProfile().country.invalid))}">
                       Country is required</mat-error>
                   </div>
                   </div>
@@ -147,7 +148,7 @@
                   <div class="row pt-0">
                     <div class="col-md-8">
                       <mat-error class="f-12 pt-4"
-                                 *ngIf="isCity && getFormControlProfile().city.invalid || (getFormControlProfile().city.touched && getFormControlProfile().city.invalid)">
+                                 [ngClass]="{'v-h':!(isCity && getFormControlProfile().city.invalid || (getFormControlProfile().city.touched && getFormControlProfile().city.invalid))}">
                       City is required</mat-error>
                   </div>
                   </div>
@@ -206,7 +207,7 @@
                 <div class="row pt-0">
                   <div class="col-md-8">
                     <mat-error class="f-12 pt-4"
-                    *ngIf="isNameOnBank && getFrormControlBank().nameOnBank.invalid || (getFrormControlBank().nameOnBank.touched && getFrormControlBank().nameOnBank.invalid)">
+                    [ngClass]="{'v-h':!(isNameOnBank && getFrormControlBank().nameOnBank.invalid || (getFrormControlBank().nameOnBank.touched && getFrormControlBank().nameOnBank.invalid))}">
                     Name on bank a/c is required</mat-error>
                 </div>
                 <div class="col-md-12">
@@ -226,7 +227,7 @@
                 <div class="row pt-0">
                   <div class="col-md-8">
                     <mat-error class="f-12 pt-4"
-                    *ngIf="isBankName && getFrormControlBank().bankName.invalid || (getFrormControlBank().bankName.touched && getFrormControlBank().bankName.invalid)">
+                    [ngClass]="{'v-h':!(isBankName && getFrormControlBank().bankName.invalid || (getFrormControlBank().bankName.touched && getFrormControlBank().bankName.invalid))}">
                     Bank name is required</mat-error>
                 </div>
                 <div class="col-md-12">
@@ -241,12 +242,12 @@
               </div>
               <div class="col-md-7">
                 <div class="form-group">
-                  <input type="text" formControlName="acNo" maxlength="{{getFrormControlBank().acNo.maxLength}}" class="form-control br-0 text-left">
+                  <input type="text" formControlName="acNo"  (keypress)="keyPress($event)" maxlength="{{getFrormControlBank().acNo.maxLength}}" class="form-control br-0 text-left">
                 </div>
                 <div class="row pt-0">
                   <div class="col-md-8">
                     <mat-error class="f-12 pt-4"
-                    *ngIf="isAcNo && getFrormControlBank().acNo.invalid || (getFrormControlBank().acNo.touched && getFrormControlBank().acNo.invalid)">
+                    [ngClass]="{'v-h':!(isAcNo && getFrormControlBank().acNo.invalid || (getFrormControlBank().acNo.touched && getFrormControlBank().acNo.invalid))}">
                     Account no. is required</mat-error>
                 </div>
                 <div class="col-md-12">
@@ -266,7 +267,7 @@
                 <div class="row pt-0">
                   <div class="col-md-8">
                     <mat-error class="f-12 pt-4"
-                    *ngIf="isIFSC && getFrormControlBank().ifscCode.invalid || (getFrormControlBank().ifscCode.touched && getFrormControlBank().ifscCode.invalid)">
+                    [ngClass]="{'v-h':!(isIFSC && getFrormControlBank().ifscCode.invalid || (getFrormControlBank().ifscCode.touched && getFrormControlBank().ifscCode.invalid))}">
                     IFSC code is required</mat-error>
                 </div>
                 <div class="col-md-12">
@@ -286,7 +287,7 @@
                 <div class="row pt-0">
                   <div class="col-md-8">
                     <mat-error class="f-12 pt-4"
-                    *ngIf="isaddress && getFrormControlBank().address.invalid || (getFrormControlBank().address && getFrormControlBank().address.invalid)">
+                    [ngClass]="{'v-h':!(isaddress && getFrormControlBank().address.invalid || (getFrormControlBank().address && getFrormControlBank().address.invalid))}">
                     Bank address is required</mat-error>
                 </div>
                 <div class="col-md-12">
@@ -306,7 +307,7 @@
                 <div class="row pt-0">
                   <div class="col-md-8">
                     <mat-error class="f-12 pt-4"
-                    *ngIf="isCity && getFrormControlBank().city.invalid || (getFrormControlBank().city.touched && getFrormControlBank().city.invalid)">
+                    [ngClass]="{'v-h':!(isCity && getFrormControlBank().city.invalid || (getFrormControlBank().city.touched && getFrormControlBank().city.invalid))}">
                     City is required</mat-error>
                 </div>
                 </div>
@@ -323,7 +324,7 @@
                 <div class="row pt-0">
                   <div class="col-md-8">
                     <mat-error class="f-12 pt-4"
-                    *ngIf="isState && getFrormControlBank().state.invalid || (getFrormControlBank().state.touched && getFrormControlBank().state.invalid)">
+                    [ngClass]="{'v-h':!(isState && getFrormControlBank().state.invalid || (getFrormControlBank().state.touched && getFrormControlBank().state.invalid))}">
                     State is required</mat-error>
                 </div>
                 </div>
@@ -341,7 +342,7 @@
                 <div class="row pt-0">
                   <div class="col-md-8">
                     <mat-error class="f-12 pt-4"
-                    *ngIf="isZipCode && getFrormControlBank().pincode.invalid || (getFrormControlBank().pincode.touched && getFrormControlBank().pincode.invalid)">
+                    [ngClass]="{'v-h':!(isZipCode && getFrormControlBank().pincode.invalid || (getFrormControlBank().pincode.touched && getFrormControlBank().pincode.invalid))}">
                     Pincode is required</mat-error>
                 </div>
                 </div>
@@ -357,7 +358,7 @@
                 <div class="row pt-0">
                   <div class="col-md-8">
                     <mat-error class="f-12 pt-4"
-                    *ngIf="isCountry && getFrormControlBank().country.invalid || (getFrormControlBank().country.touched && getFrormControlBank().country.invalid)">
+                    [ngClass]="{'v-h':!(isCountry && getFrormControlBank().country.invalid || (getFrormControlBank().country.touched && getFrormControlBank().country.invalid))}">
                     Country is required</mat-error>
                 </div>
                 </div>
@@ -419,9 +420,10 @@
       <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>
     </div>
     <div class="col-md-8 right text-right">
-      <button mat-button class="btn-bottom br-0 text-inherit" (click)="nextStep(selected,'Save&Next')">SAVE & NEXT <i class="material-icons">
-          arrow_drop_up
-        </i></button>
+      <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="selected!=3" (click)="nextStep(selected,'Save&Next')">NEXT
+          </button>
+        <button mat-button *ngIf="selected==3" class="btn-bottom br-0 text-inherit" (click)="nextStep(selected,'Save&Next')">SAVE
+       </button>
     </div>
   </div>
 </div>

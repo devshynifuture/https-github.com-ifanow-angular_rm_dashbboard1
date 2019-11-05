@@ -97,12 +97,10 @@ import {DialogContainerComponent} from './common/dialog-container/dialog-contain
 import {CustomDialogContainerComponent} from './common/custom-dialog-container/custom-dialog-container.component';
 import {BaseComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/base/base.component';
 import {ChartModule} from 'angular-highcharts';
-import { IncomeComponent } from './component/protect-component/customers/component/customer/accounts/income/income.component';
-import { NgCircleProgressModule } from 'ng-circle-progress';
-import { RadioGroupDirectiveDirective } from './common/radio-group-directive.directive';
-import { SingleDocumentViewComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/single-document-view/single-document-view.component';
-
-
+import {IncomeComponent} from './component/protect-component/customers/component/customer/accounts/income/income.component';
+import {NgCircleProgressModule} from 'ng-circle-progress';
+import {RadioGroupDirectiveDirective} from './common/radio-group-directive.directive';
+import {SingleDocumentViewComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/single-document-view/single-document-view.component';
 
 
 // import {CustomerComponent} from './component/protect-component/customers/component/customer/customer.component';
@@ -114,11 +112,13 @@ import { SingleDocumentViewComponent } from './component/protect-component/Advis
 // import {ExpensesComponent} from './component/protect-component/customers/component/customer/accounts/expenses/expenses.component';
 // import {AddProfileSummaryComponent} from './component/protect-component/customers/component/common-component/add-profile-summary/add-profile-summary.component';
 // import {IncomeComponent} from './component/protect-component/customers/component/customer/accounts/income/income.component';
-import { MomentDateModule} from '@angular/material-moment-adapter';
-import { FixedFeeComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/fixed-fee/fixed-fee.component';
-import { VariableFeeComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/variable-fee/variable-fee.component';
-import { LibilitiesRightComponent } from './component/protect-component/customers/component/customer/accounts/liabilities/libilities-right/libilities-right.component';
+import {MomentDateModule} from '@angular/material-moment-adapter';
+import {FixedFeeComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/fixed-fee/fixed-fee.component';
+import {VariableFeeComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/variable-fee/variable-fee.component';
+import {LibilitiesRightComponent} from './component/protect-component/customers/component/customer/accounts/liabilities/libilities-right/libilities-right.component';
+import {SatDatepickerModule, SatNativeDateModule} from "saturn-datepicker";
 import { AddLiabilitiesComponent } from './component/protect-component/customers/component/common-component/add-liabilities/add-liabilities.component';
+
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 @NgModule({
@@ -210,8 +210,6 @@ import { AddLiabilitiesComponent } from './component/protect-component/customers
     FixedFeeComponent,
     VariableFeeComponent,
     LibilitiesRightComponent,
-    AddLiabilitiesComponent
-    
   ],
   imports: [
     BrowserModule,
@@ -234,7 +232,7 @@ import { AddLiabilitiesComponent } from './component/protect-component/customers
       outerStrokeColor: '#78C000',
       innerStrokeColor: '#C7E596',
       animationDuration: 1000
-    })
+    }), SatDatepickerModule, SatNativeDateModule
   ],
   providers: [AuthService, HttpService],
   bootstrap: [AppComponent],

@@ -3,6 +3,7 @@ import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from '../../../../../../../auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -33,9 +34,10 @@ export class BillerProfileAdvisorComponent implements OnInit {
   advisorId;
   billerProfileData: any;
   inputData: any;
+  display: any;
   
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService) {
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private eventService:EventService) {
     // this.subInjectService.singleProfileData.subscribe(
     //   data => this.getSingleBillerProfileData(data)
     // );
@@ -79,11 +81,12 @@ export class BillerProfileAdvisorComponent implements OnInit {
       event.preventDefault();
     }
   }
-
+  
   getSingleBillerProfileData(data) {
     if (data == '') {
       data = {};
     }
+    this.display=data;
     this.billerProfileForm = this.fb.group({
       profileDetailsForm: this.fb.group({
         gstinNum: [(data.gstin), [Validators.required]],
@@ -229,7 +232,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
   closeTab(data) {
     if(data == true){
-      this.Close(data)
+      this.Close(data);
+      this.eventService.openSnackBar('biller profile is added', 'OK');
+
     }
   }
 

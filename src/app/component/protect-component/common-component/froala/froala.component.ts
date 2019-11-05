@@ -15,8 +15,16 @@ export class FroalaComponent implements ControlValueAccessor {
   }
 
   // End ControlValueAccesor methods.
+  _model;
 
-  @Input() model: any;
+  @Input() set model(model) {
+    this._model = model;
+  };
+
+  get model() {
+    return this._model;
+  }
+
   @Output() modelChange = new EventEmitter();
 
   config: Object = {
@@ -45,7 +53,8 @@ export class FroalaComponent implements ControlValueAccessor {
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
-  save(data){
+
+  save(data) {
     console.log(data)
     this.modelChange.emit(data);
   }

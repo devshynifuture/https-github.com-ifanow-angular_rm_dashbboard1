@@ -12,8 +12,8 @@
   <!-- TODO   <mat-step  [stepControl]="firstFormGroup">-->
   <mat-step [stepControl]="feeStructureForm">
     <ng-template matStepLabel>Fee Structure</ng-template>
-    <app-fixed-fee *ngIf="subFeeMode=='createSubFixed'" [createSubData]='feeStructureData'></app-fixed-fee>
-    <app-variable-fee *ngIf="subFeeMode=='createSubVariable'" [createSubData]='feeStructureData'></app-variable-fee>
+    <app-fixed-fee *ngIf="subFeeMode=='createSubFixed'" (outputData)="nextStep($event)" [createFeeData]="feeModeData" [createSubData]='feeStructureData'></app-fixed-fee>
+    <app-variable-fee *ngIf="subFeeMode=='createSubVariable'" (outputData)="nextStep($event)" [createFeeData]="feeModeData" [createSubData]='feeStructureData'></app-variable-fee>
   </mat-step>
 
   <!-- TODO   <mat-step [stepControl]="secondFormGroup">-->

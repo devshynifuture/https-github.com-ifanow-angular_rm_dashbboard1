@@ -32,7 +32,7 @@
         </mat-menu>
       </div>
       <div class="col-md-9 p-0 ml-8">
-        <p class="m-0 text-black text-left pt-10">{{dataCount}} documents selected</p>
+        <p class="m-0 text-black text-left pt-10">{{dataCount}} quotations selected</p>
       </div>
     </div>
     <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
@@ -114,7 +114,7 @@
                   (valueChange)='display($event)'></app-email-only>
 </div>
 <div class="pt-130 pr-0" *ngIf="quotationDesign=='emailQuotationSend'">
-  <app-email-only [emailSendfooter]="changeEmail" (valueChange)='display($event)'></app-email-only>
+  <app-email-only [inputData]="upperRightSideInputData.data" [emailSendfooter]="changeEmail" (valueChange)='display($event)'></app-email-only>
 </div>
 <div class="pt-14 pr-0">
   <app-terms-agreement *ngIf="quotationDesign=='termsAgreement'"></app-terms-agreement>

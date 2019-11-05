@@ -94,7 +94,7 @@
 <div *ngIf="fragmentData.Flag=='clients'" class="row">
   <div class="col-md-12 p-0 popup-header-fix-tabs">
 
-    <mat-tab-group (selectedTabChange)="tabClick($event)" animationDuration="0ms" mat-align-tabs="center">
+    <mat-tab-group  (selectedTabChange)="tabClick($event)" [selectedIndex]="selectedServiceTab" animationDuration="0ms" mat-align-tabs="center">
 
       <mat-tab label="SUBSCRIPTIONS">
         <app-subscriptions-upper-slider [upperData]="fragmentData.clientData">
@@ -110,11 +110,11 @@
         </app-quotations>
       </mat-tab>
       <mat-tab label="INVOICES">
-        <app-invoices *ngIf="subscriptionTab=='INVOICES'" [upperData]="fragmentData.clientData">
+        <app-invoices *ngIf="subscriptionTab=='INVOICES'"  [upperData]="fragmentData.clientData">
         </app-invoices>
       </mat-tab>
       <mat-tab label="DOCUMENTS">
-        <app-document *ngIf="subscriptionTab=='DOCUMENTS'" [componentFlag]='clientDocuments'
+        <app-document *ngIf="subscriptionTab=='DOCUMENTS'" [clientData]="fragmentData.clientData" [componentFlag]='clientDocuments'
           [upperData]="fragmentData.clientData">
         </app-document>
       </mat-tab>
@@ -134,24 +134,25 @@
   </app-plan-rightslider>
   <app-email-quotation [headerData]="headerData" *ngIf="rightSliderFlag=='eSignQuotations'"></app-email-quotation>
   <app-invoice [data]="upperRightSideInputData.data" [invoiceTab]="rightSliderFlag" *ngIf="rightSliderFlag=='invoiceUpperSlider'"></app-invoice>
-  <app-payee-settings *ngIf="rightSliderFlag=='payeeSettings'"></app-payee-settings>
+  <app-payee-settings [data] ="upperRightSideInputData"*ngIf="rightSliderFlag=='payeeSettings'" ></app-payee-settings>
   <app-email-quotation [headerDataDocuments]="headerDataDocuments" *ngIf="rightSliderFlag=='eSignDocument'">
   </app-email-quotation>
-  <app-create-subscription [data]="upperRightSideInputData" *ngIf="rightSliderFlag=='createSubFixed' || rightSliderFlag=='createSubVariable'"></app-create-subscription>
+  <app-create-subscription [data]="upperRightSideInputData" [subFeeMode]="rightSliderFlag" *ngIf="rightSliderFlag=='createSubFixed' || rightSliderFlag=='createSubVariable'"></app-create-subscription>
   <app-add-variable-fee *ngIf="rightSliderFlag=='varibleFee'"></app-add-variable-fee>
   <app-add-fixed-fee *ngIf="rightSliderFlag=='fixedFee'"></app-add-fixed-fee>
   <app-overview-blank-quotation [blankOverview]="blankOverview" *ngIf='blankOverview'></app-overview-blank-quotation>
-  <app-biller-settings [upperData]="fragmentData.clientData" *ngIf="rightSliderFlag=='billerSettings'">
+  <app-biller-settings [clientData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='billerSettings'">
   </app-biller-settings>
-  <app-fixed-fee *ngIf="rightSliderFlag=='fixedModifyFees'"></app-fixed-fee>
-  <app-variable-fee *ngIf="rightSliderFlag=='variableModifyFees'"></app-variable-fee>
+  <app-fixed-fee [data]="upperRightSideInputData" *ngIf="rightSliderFlag=='fixedModifyFees'"></app-fixed-fee>
+  <app-variable-fee [data]="upperRightSideInputData" *ngIf="rightSliderFlag=='variableModifyFees'"></app-variable-fee>
 
-  <app-change-payee [upperData]="fragmentData.clientData" *ngIf="rightSliderFlag=='changePayee'"></app-change-payee>
+  <app-change-payee [upperData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='changePayee'"></app-change-payee>
   <app-email-quotation [headerDataInvoice]="headerDataInvoice" *ngIf="rightSliderFlag=='eSignInvoices'">
   </app-email-quotation>
   <app-email-quotation [headerData]="headerData" *ngIf="rightSliderFlag=='emailQuot'"></app-email-quotation>
-  <app-email-only [inputData]="upperRightSideInputData" *ngIf="rightSliderFlag=='emailOnly'"
+  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnly'"
                   ></app-email-only>
+  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnlyDoc'"></app-email-only>
 <!--  (valueChange)='display($event)'-->
   <!--</div>-->
 </app-custom-dialog-container>

@@ -40,11 +40,14 @@ export class EventService {
     this.overlayVisibleValue.next(isVisible);
   }
 
-  openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
+  openSnackBar(message: string, action: string = null, actionCallback = null) {
+    const snackBbarref = this.snackBar.open(message, action, {
       duration: 2000,
       panelClass: ['app-bottom-snackbar']
     });
+    if (actionCallback) {
+      snackBbarref.onAction().subscribe(actionCallback);
+    }
   }
 
   sidebarData(message: string) {
