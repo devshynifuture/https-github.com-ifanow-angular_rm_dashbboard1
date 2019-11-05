@@ -302,7 +302,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         this.statusIdList.push(singleFilter.value);
       });
     } else {
-      this.statusIdList = null;
+      this.statusIdList = [];
     }
     // this.statusIdList = (this.sendData == undefined) ? [] : this.sendData;
     const obj = {
@@ -312,9 +312,9 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       fromDate: this.selectedDateRange ? this.selectedDateRange.begin.toDateString() : null,
       toDate: this.selectedDateRange ? this.selectedDateRange.end.toDateString() : null,
       statusIdList: this.statusIdList,
-      dateType: this.selectedDateFilter ? this.selectedDateFilter : 0
+      dateType: this.selectedDateFilter ? this.selectedDateFilter.value : 0
     };
-    console.log('this.statusIdList', this.statusIdList);
+    console.log('this.callFilter req obj : ', obj);
     this.subService.filterSubscription(obj).subscribe(
       data => this.filterSubscriptionRes(data)
     );
