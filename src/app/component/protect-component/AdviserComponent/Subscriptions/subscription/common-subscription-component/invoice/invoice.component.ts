@@ -615,6 +615,12 @@ export class InvoiceComponent implements OnInit {
 
   cancel() {
     this.showRecord = false;
+    let obj = {
+      invoiceId: this.storeData.id
+    }
+    this.subService.getPaymentReceive(obj).subscribe(
+      data => this.getRes(data)
+    );
     this.rPayment.reset();
   }
 

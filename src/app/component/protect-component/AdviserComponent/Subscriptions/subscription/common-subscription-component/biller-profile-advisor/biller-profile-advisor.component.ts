@@ -3,6 +3,7 @@ import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from '../../../../../../../auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -35,7 +36,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   inputData: any;
   
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService) {
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private eventService:EventService) {
     // this.subInjectService.singleProfileData.subscribe(
     //   data => this.getSingleBillerProfileData(data)
     // );
@@ -79,7 +80,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       event.preventDefault();
     }
   }
-
+  
   getSingleBillerProfileData(data) {
     if (data == '') {
       data = {};
@@ -229,7 +230,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
   closeTab(data) {
     if(data == true){
-      this.Close(data)
+      this.Close(data);
+      this.eventService.openSnackBar('biller profile is added', 'OK');
+
     }
   }
 
