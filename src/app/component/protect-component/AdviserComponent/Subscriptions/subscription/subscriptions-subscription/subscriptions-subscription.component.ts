@@ -9,7 +9,8 @@ import {AuthService} from '../../../../../../auth-service/authService';
 import * as _ from 'lodash';
 import {EnumServiceService} from '../enum-service.service';
 import {UtilService} from "../../../../../../services/util.service";
-import { DatePipe } from '@angular/common';
+import {DatePipe} from '@angular/common';
+
 export const MY_FORMATS = {
   parse: {
     dateInput: 'LL',
@@ -45,6 +46,7 @@ export const MY_FORMATS2 = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
+
 export interface PeriodicElement {
   client: string;
   service: string;
@@ -86,22 +88,24 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   dataSource;
   DataToSend;
   chips = [
-    'LIVE',
-    'FUTURE',
-    'NOT STARTED',
-    'CANCELLED'
+    {name: 'LIVE', value: 2},
+    {name: 'FUTURE', value: 3},
+    {name: 'NOT STARTED', value: 1},
+    {name: 'CANCELLED', value: 4}
   ];
   dateChips = [
-    'Activation date',
-    'Last billing date',
-    'Next billing date'
+    {name: 'Activation date', value: 1},
+    {name: 'Last billing date', value: 2},
+    {name: 'Next billing date', value: 3}
   ];
   filterStatus = [];
   filterDate = [];
   statusIdList = [];
-  sendData: any[];
+  // sendData: any[];
   senddataTo: any;
   showFilter = false;
+  selectedStatusFilter;
+  selectedDateFilter;
   dataTocheck: boolean;
   live: boolean;
   notStarted: boolean;
@@ -109,9 +113,11 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   feeCollectionMode: any;
   getDate: any;
   getDate2: string;
+  selectedDateRange = {begin: new Date(), end: new Date()};
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
-              private eventService: EventService, private subService: SubscriptionService, public enumService: EnumServiceService,private datePipe: DatePipe) {
+              private eventService: EventService, private subService: SubscriptionService,
+              public enumService: EnumServiceService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -124,9 +130,6 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   getSummaryDataAdvisor() {
     const obj = {
-      // 'id':2735, //pass here advisor id for Invoice advisor
-      // 'module':1,
-      // advisorId: 12345,
       advisorId: this.advisorId,
       clientId: 0,
       flag: 0,
@@ -147,7 +150,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
   openPlanSlider(value, state, data) {
-    (value=="billerSettings"|| value=='changePayee' || value=='SUBSCRIPTIONS')?value:(data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable'
+    (value == "billerSettings" || value == 'changePayee' || value == 'SUBSCRIPTIONS') ? value : (data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable'
     data.isCreateSub = false;
     const fragmentData = {
       Flag: value,
@@ -171,7 +174,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   Open(state, data) {
     let feeMode;
     data.isCreateSub = true;
-    (data.subscriptionPricing.feeTypeId == 1)?feeMode = 'fixedModifyFees':feeMode = 'variableModifyFees';
+    (data.subscriptionPricing.feeTypeId == 1) ? feeMode = 'fixedModifyFees' : feeMode = 'variableModifyFees';
     const fragmentData = {
       Flag: feeMode,
       data,
@@ -190,6 +193,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     );
 
   }
+
   deleteModal(value, data) {
     const dialogData = {
       data: value,
@@ -220,12 +224,14 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     } else {
       this.showFilter = false;
     }
+    console.log('this.filterStatus: ', this.filterStatus);
+    console.log('this.filterDate: ', this.filterDate);
 
   }
 
   addFilters(addFilters) {
     console.log('addFilters', addFilters);
-    if (addFilters == 'LIVE') {
+    /*if (addFilters == 'LIVE') {
       this.senddataTo = 2;
     } else if (addFilters == 'NOT STARTED') {
       this.senddataTo = 1;
@@ -233,15 +239,15 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       this.senddataTo = 3;
     } else {
       this.senddataTo = 4;
-    }
-    console.log(this.senddataTo);
-    if (!_.includes(this.filterStatus, this.senddataTo)) {
-      this.filterStatus.push(this.senddataTo);
+    }*/
+    // console.log(this.senddataTo);
+    if (!_.includes(this.filterStatus, addFilters)) {
+      this.filterStatus.push(addFilters);
     } else {
-      _.remove(this.filterStatus, this.senddataTo);
+      // _.remove(this.filterStatus, this.senddataTo);
     }
-    this.sendData = this.filterStatus;
-    
+    // this.sendData = this.filterStatus;
+
     this.callFilter();
   }
 
@@ -252,7 +258,15 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   addFiltersDate(dateFilter) {
     console.log('addFilters', dateFilter);
-    this.filterDate.push(dateFilter);
+    this.filterDate = [dateFilter];
+    const beginDate = new Date();
+    beginDate.setMonth(beginDate.getMonth() - 1);
+    UtilService.getStartOfTheDay(beginDate);
+
+    const endDate = new Date();
+    UtilService.getStartOfTheDay(endDate);
+
+    this.selectedDateRange = {begin: beginDate, end: endDate};
     this.callFilter();
   }
 
@@ -266,30 +280,41 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.callFilter();
 
   }
-  orgValueChange(value){
+
+  orgValueChange(value) {
     console.log(value)
     this.getDate = this.datePipe.transform(value, 'yyyy-MM-dd');
     this.callFilter();
 
   }
-  orgValueChange2(value){
+
+  orgValueChange2(value) {
     console.log(value)
     this.getDate2 = this.datePipe.transform(value, 'yyyy-MM-dd');
     this.callFilter();
 
   }
+
   callFilter() {
-    this.statusIdList = (this.sendData == undefined)? [] : this.sendData;
+    if (this.filterStatus && this.filterStatus.length > 0) {
+      this.statusIdList = [];
+      this.filterStatus.forEach(singleFilter => {
+        this.statusIdList.push(singleFilter.value);
+      });
+    } else {
+      this.statusIdList = [];
+    }
+    // this.statusIdList = (this.sendData == undefined) ? [] : this.sendData;
     const obj = {
       advisorId: this.advisorId,
-      limit: 10,
+      limit: -1,
       offset: 0,
-      fromDate: this.getDate,
-      toDate:  this.getDate2,
+      fromDate: this.selectedDateRange ? this.selectedDateRange.begin.toDateString() : null,
+      toDate: this.selectedDateRange ? this.selectedDateRange.end.toDateString() : null,
       statusIdList: this.statusIdList,
-      dateType: 0
+      dateType: this.selectedDateFilter ? this.selectedDateFilter.value : 0
     };
-    console.log('this.statusIdList', this.statusIdList);
+    console.log('this.callFilter req obj : ', obj);
     this.subService.filterSubscription(obj).subscribe(
       data => this.filterSubscriptionRes(data)
     );
