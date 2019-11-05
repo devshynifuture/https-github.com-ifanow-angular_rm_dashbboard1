@@ -62,7 +62,7 @@ export class PayeeSettingsComponent implements OnInit {
       customerType:[(data.customerTypeId == 1)?'Bussiness':'Individual'],
       companyName: [data.companyName, [Validators.required]],
       emailId: [data.email, [Validators.required]],
-      mobileNo: [data.mobileNo, [Validators.required]],
+      primaryContact: [data.primaryContact, [Validators.required]],
       pan: [data.pan, [Validators.required]],
       gstTreatment: [(data.gstTreatmentId == 1)?'Registered Business - Regular':(data.gstTreatmentId == 2)?'Registered Business - Composition':'Unregistered Business'],
       gstIn: [data.gstin, [Validators.required]],
@@ -77,7 +77,7 @@ export class PayeeSettingsComponent implements OnInit {
     this.getFormControl().displayName.maxLength = 40;
     this.getFormControl().companyName.maxLength = 50;
     this.getFormControl().emailId.maxLength = 40;
-    this.getFormControl().mobileNo.maxLength = 10;
+    this.getFormControl().primaryContact.maxLength = 10;
     this.getFormControl().pan.maxLength = 10;
     this.getFormControl().gstIn.maxLength = 16;
     this.getFormControl().billingAddress.maxLength = 150;
@@ -189,9 +189,8 @@ export class PayeeSettingsComponent implements OnInit {
         "gstin": this.payeeSettingsForm.controls.gstIn.value,
         "payeeTypeId": 1,
         "paymentTermsId": 1,
-        "mobileNo":this.payeeSettingsForm.controls.mobileNo.value,
         "billerAddress": this.payeeSettingsForm.controls.billingAddress.value,
-        "primaryContact":  this.payeeSettingsForm.controls.mobileNo.value,
+        "primaryContact":  this.payeeSettingsForm.controls.primaryContact.value,
         "state": this.payeeSettingsForm.controls.state.value,
         "zipCode": this.payeeSettingsForm.controls.pincode.value,
         "id":this.payeeSettingsForm.controls.id.value,
@@ -210,9 +209,8 @@ export class PayeeSettingsComponent implements OnInit {
           "gstTreatmentId": (this.getFormControl().gstTreatment.value == 'Registered Business - Regular')?1:(this.payeeSettingsForm.controls.gstTreatment.value == 'Registered Business - Composition')?2:3,
           "email": this.getFormControl().emailId.value,
           "customerTypeId": (this.getFormControl().customerType.value == 'Bussiness')?'1':'2',
-          "primaryContact": this.getFormControl().mobileNo.value,
+          "primaryContact": this.getFormControl().primaryContact.value,
           "companyName": this.getFormControl().companyName.value,
-          "mobileNo":this.getFormControl().mobileNo.value,
           "companyDisplayName": this.getFormControl().displayName.value,
           "billerAddress": this.getFormControl().billingAddress.value,
           "city": this.getFormControl().city.value,

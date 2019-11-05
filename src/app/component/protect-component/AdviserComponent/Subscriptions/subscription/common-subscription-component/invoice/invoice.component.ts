@@ -174,7 +174,8 @@ export class InvoiceComponent implements OnInit {
       this.finalAmount = 0;
       this.discount = 0;
       this.storeData =
-        this.taxStatus = ['IGST(18%)'];
+      this.taxStatus = ['IGST(18%)'];
+      this.editPayment.controls.serviceName.enable()
 
     }
   }
