@@ -19,20 +19,22 @@ export class BillerSettingsComponent implements OnInit {
   getSubsciption: any;
   getDataRow: any;
   advisorId;
-
+  @Input() set clientData(clientData)
+  { 
+    this.advisorId = AuthService.getAdvisorId();
+    this.getBillerData(clientData)
+  };
   constructor(public subInjectService: SubscriptionInject, public subService: SubscriptionService, public eventService: EventService) {
 
   }
 
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
-    // this.dataSub = this.subInjectService.newRightSliderDataObs.subscribe(
-    //   data => this.getBillerData(data)
-    // );
+    
   }
 
   getBillerData(data) {
-    this.getDataRow = data.data;
+    
+    this.getDataRow = data;
     this.dataObj = {
       advisorId: this.advisorId,
       subId: this.getDataRow.id

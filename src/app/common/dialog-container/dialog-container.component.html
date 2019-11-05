@@ -22,7 +22,7 @@
   <app-biller-profile-advisor *ngIf="subscriptionTab=='billerProfile'"
   [data]="inputData"  [Selected]="selectedSubscriptionTab"></app-biller-profile-advisor>
   <app-help *ngIf="subscriptionTab=='clientHelp'"></app-help>
-  <app-biller-settings *ngIf="subscriptionTab=='billerSettings'"></app-biller-settings>
+  <app-biller-settings [clientData]=fragmentData.data *ngIf="subscriptionTab=='billerSettings'"></app-biller-settings>
   <!-- <app-payee-settings *ngIf="subscriptionTab=='payeeSettings'"></app-payee-settings> -->
   <app-help *ngIf="subscriptionTab=='documentHelp'"></app-help>
   <app-invoice  [data]="inputData" *ngIf="subscriptionTab=='invoiceUpperSlider'"></app-invoice>

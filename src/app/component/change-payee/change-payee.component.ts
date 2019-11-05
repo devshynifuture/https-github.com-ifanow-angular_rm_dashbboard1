@@ -11,7 +11,10 @@ import { MatSliderChange } from '@angular/material';
 })
 export class ChangePayeeComponent implements OnInit {
 
-  @Input() upperData;
+  @Input() set upperData(data)
+  {
+    this.getPayeeData(data)
+  };
   PayeeSettingData: any;
   dataSub: any;
   dataObj;
@@ -20,9 +23,7 @@ export class ChangePayeeComponent implements OnInit {
   arraTosend: any;
   dataMatSlider: any;
   constructor(public subInjectService: SubscriptionInject,public subService:SubscriptionService,public eventService:EventService) {
-    this.dataSub = this.subInjectService.newRightSliderDataObs.subscribe(
-      data=>this.getPayeeData(data)
-    );
+ 
   }
 
   ngOnInit() {
@@ -34,7 +35,7 @@ export class ChangePayeeComponent implements OnInit {
     this.subInjectService.rightSliderData(state);
   }
   getPayeeData(data){
-    this.getRowData = data.data
+    this.getRowData = data
     this.dataObj={
       'clientId': this.getRowData.clientId,
       'subId':this.getRowData.id

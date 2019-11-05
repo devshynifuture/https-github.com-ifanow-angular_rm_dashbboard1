@@ -18,9 +18,6 @@ export class PayeeSettingsComponent implements OnInit {
   inputData: any;
   
   constructor(public subInjectService:SubscriptionInject, private eventService:EventService,private subService:SubscriptionService,private fb:FormBuilder) {
-    // this.subInjectService.rightSideBarData.subscribe(
-    //   data=>this.getClientPayeeSettings(data)
-    // )
    }
    isCustomerName = false;
    isDisplayName = false;
