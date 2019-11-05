@@ -27,7 +27,7 @@
   <app-help *ngIf="subscriptionTab=='documentHelp'"></app-help>
   <app-invoice [data]="inputData" *ngIf="subscriptionTab=='invoiceUpperSlider'"></app-invoice>
   <!-- <app-invoice  [data]="inputData" *ngIf="subscriptionTab=='invoiceUpperSlider'"></app-invoice> -->
-  <app-change-payee *ngIf="subscriptionTab=='changePayee'"></app-change-payee>
+  <app-change-payee [upperData]=fragmentData.data *ngIf="subscriptionTab=='changePayee'"></app-change-payee>
   <app-create-subscription [data]="fragmentData"
                            *ngIf="subscriptionTab=='createSubFixed' || subscriptionTab=='createSubVariable'"
                            [subFeeMode]="subscriptionTab"></app-create-subscription>

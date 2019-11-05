@@ -46,7 +46,7 @@
               class="example-card bg-grey lter p-0">
               <mat-card-header class="m-0">
                 <!-- [isChecked]="documentData.selected" -->
-                <app-custom-html [data]="documentData.docText" id="ui-appcustomhtml" class="bg-white">
+                <app-custom-html [isChecked]="documentData.selected" [data]="documentData.docText" id="ui-appcustomhtml" class="bg-white">
 
                 </app-custom-html>
               </mat-card-header>
@@ -148,7 +148,7 @@
               class="example-card bg-grey lter p-0">
               <mat-card-header class="m-0">
                 <!-- [isChecked]="document.selected"  -->
-                <app-custom-html [data]="document.docText" id="ui-appcustomhtml" class="bg-white">
+                <app-custom-html [isChecked]="document.selected" [data]="document.docText" id="ui-appcustomhtml" class="bg-white">
 
                 </app-custom-html>
               </mat-card-header>
