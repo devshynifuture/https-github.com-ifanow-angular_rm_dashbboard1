@@ -210,6 +210,7 @@ import { AddLiabilitiesComponent } from './component/protect-component/customers
     FixedFeeComponent,
     VariableFeeComponent,
     LibilitiesRightComponent,
+    AddLiabilitiesComponent
   ],
   imports: [
     BrowserModule,

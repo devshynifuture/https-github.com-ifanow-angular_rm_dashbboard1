@@ -80,9 +80,18 @@
                             <h4 class="m-0 text-black roboto">Liabilities</h4>
                         </div>
                         <div class="col-md-8 p-0 right text-right">
-                            <img src="assets/images/svg/download-bordered.svg" class="c-p">
+                            <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1" class="c-p">
+                            <mat-menu #menu1="matMenu">
+                                <button mat-menu-item>PDF</button>
+                                <button mat-menu-item>XLS</button>
+                            </mat-menu>
                             <img src="assets/images/svg/up-down.svg" class="c-p">
-                            <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
+                            <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu" class="c-p mr-12">
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item>Email report</button>
+                                <button mat-menu-item>Option 1</button>
+                                <button mat-menu-item>Option 2</button>
+                            </mat-menu>
                             <button mat-stroked-button class="btn-default addon mr-12 v-middle" (click)="clickHandling()"><i
                 class="material-icons">filter_list</i>FILTERS
               </button>
