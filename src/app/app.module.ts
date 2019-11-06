@@ -118,6 +118,8 @@ import {VariableFeeComponent} from './component/protect-component/AdviserCompone
 import {LibilitiesRightComponent} from './component/protect-component/customers/component/customer/accounts/liabilities/libilities-right/libilities-right.component';
 import {SatDatepickerModule, SatNativeDateModule} from "saturn-datepicker";
 import {CustomCommonModule} from "./common/custom.common.module";
+import {DialogContainerComponent} from "./common/dialog-container/dialog-container.component";
+import {CustomDialogContainerComponent} from "./common/custom-dialog-container/custom-dialog-container.component";
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -209,7 +211,8 @@ import {CustomCommonModule} from "./common/custom.common.module";
     VariableFeeComponent,
 
     LibilitiesRightComponent,
-
+    DialogContainerComponent,
+    CustomDialogContainerComponent
   ],
   imports: [
     CustomCommonModule,
