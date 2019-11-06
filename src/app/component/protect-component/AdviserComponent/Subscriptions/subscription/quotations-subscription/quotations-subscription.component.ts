@@ -6,7 +6,7 @@ import {SubscriptionService} from '../../subscription.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {AuthService} from "../../../../../../auth-service/authService";
 import { UtilService } from 'src/app/services/util.service';
-
+import * as _ from 'lodash';
 export interface PeriodicElement {
   name: string;
   docname: string;
@@ -29,7 +29,20 @@ export class QuotationsSubscriptionComponent implements OnInit {
   advisorId;
   dataSource;
   noData: string;
-
+  filterStatus = [];
+  filterDate = [];
+  statusIdList = [];
+  chips = [
+    {name: 'LIVE', value: 1},
+    {name: 'PAID', value: 2},
+    {name: 'OVERDUE', value: 3}
+  ];
+  dateChips = [
+    {name: 'Created date', value: 1},
+    {name: 'Sent date', value: 2},
+    {name: 'Client consent', value: 3}
+  ];
+  selectedDateRange: { begin: Date; end: Date; };
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
               public dialog: MatDialog, private subService: SubscriptionService) {
   }
@@ -84,6 +97,43 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     });
 
+  }
+  addFilters(addFilters) {
+    console.log('addFilters', addFilters);
+    if (!_.includes(this.filterStatus, addFilters)) {
+      this.filterStatus.push(addFilters);
+    } else {
+      // _.remove(this.filterStatus, this.senddataTo);
+    }
+  }
+
+  filterSubscriptionRes(data) {
+    console.log('filterSubscriptionRes', data);
+    this.dataSource = data;
+    // this.getSubSummaryRes(data);
+  }
+
+  addFiltersDate(dateFilter) {
+    console.log('addFilters', dateFilter);
+   //this.filterDate = [dateFilter];
+    this.filterDate.push(dateFilter);
+    const beginDate = new Date();
+    beginDate.setMonth(beginDate.getMonth() - 1);
+    UtilService.getStartOfTheDay(beginDate);
+
+    const endDate = new Date();
+    UtilService.getStartOfTheDay(endDate);
+
+    this.selectedDateRange = {begin: beginDate, end: endDate};
+  }
+
+  removeDate(item) {
+    this.filterDate.splice(item, 1);
+ 
+  }
+
+  remove(item) {
+    this.filterStatus.splice(item, 1);
   }
 
   Open(value, state, data) {
