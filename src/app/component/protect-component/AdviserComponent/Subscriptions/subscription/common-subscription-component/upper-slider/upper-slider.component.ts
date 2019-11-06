@@ -89,7 +89,7 @@ export class UpperSliderComponent implements OnInit {
     this.eventService.changeUpperSliderState({state: 'close'});
     // this.dialogRef.close();
   }
-
+ 
   getStateData(data) {
     this.State = data;
   }

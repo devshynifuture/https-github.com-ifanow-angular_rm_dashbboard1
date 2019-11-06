@@ -71,6 +71,7 @@ export class PreferencesSettingsComponent implements OnInit {
     this.billerProfileData.forEach(element => {
       if(element.id == data){
         element.isPrimary = true
+        this.eventService.openSnackBar('primary set successfully', 'OK');
       }else{
         element.isPrimary = false
       }

@@ -3,6 +3,9 @@ import {MatDialogRef, MatDialog} from '@angular/material';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionService } from '../../../subscription.service';
 
 @Component({
   selector: 'app-overview',
@@ -11,21 +14,17 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
 })
 export class OverviewComponent implements OnInit {
   overviewDesign: any;
-  singlePlanData = {
-    name: 'Starter Plan',
-    code: 'PLA123',
-    description: 'This plan is ideal for young people who are just starting off their financial journey and want to start saving with a smaller investment amount.'
-  };
-
-  constructor(public dialog: MatDialog, private eventService: EventService, private subinject: SubscriptionInject) {
+  advisorId: any;
+  constructor(public dialog: MatDialog,private subService:SubscriptionService, private eventService: EventService, private subinject: SubscriptionInject,public subInjectService: SubscriptionInject) {
   }
 
 
   @Input() componentFlag: string;
   @Input() upperData;
-
+  singlePlanData;
   ngOnInit() {
     this.overviewDesign = 'true';
+    this.advisorId= AuthService.getAdvisorId();
     // this.openForm('','addPlanDetails','open');
   }
 
@@ -36,23 +35,53 @@ export class OverviewComponent implements OnInit {
   changeDisplay() {
     this.overviewDesign = 'false';
   }
-
-  openForm(data, value, state) {
-    this.eventService.sliderData(value);
-    this.subinject.rightSliderData(state);
-    this.subinject.rightSideData(data);
+  
+  openForm(data, value) {
+    const fragmentData = {
+      Flag: value,
+      data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
 
   deleteModal(singlePlan, value) {
+    this.singlePlanData=singlePlan
     const dialogData = {
       data: value,
       header: 'DELETE',
-      body: 'Are you sure you want to delete the plan?',
+      body: 'Are you sure you want to delete the document GD?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
-      planData: singlePlan
+      positiveMethod: () => {
+        const obj = {
+          // advisorId: 12345,
+          advisorId: this.advisorId,
+          id: this.singlePlanData.id
+        };
+        this.subService.deleteSubscriptionPlan(obj).subscribe(
+          data =>{this.deletedData(data);
+            dialogRef.close();
+
+          }
+        );  
+      
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
     };
+    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
@@ -64,6 +93,11 @@ export class OverviewComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
-
+  }
+  deletedData(data) {
+    if (data == true) {
+      this.eventService.changeUpperSliderState({state: 'close'});
+      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');  
+    }
   }
 }

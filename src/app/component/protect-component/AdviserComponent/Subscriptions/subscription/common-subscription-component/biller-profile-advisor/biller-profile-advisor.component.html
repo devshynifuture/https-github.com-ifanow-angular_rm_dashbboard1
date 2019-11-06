@@ -1,7 +1,8 @@
 
   <div class="row bb-1 popup-header-fix-60">
     <div class="col-md-10 p-0">
-      <h4 class="mb-0 l-22 wrapper-20">BILLER PROFILE FOR ACME FINANCIAL ADVISORS PVT LTD.</h4>
+      <h4 class="mb-0 l-22 wrapper-20" *ngIf="display=='Add'">ADD BILLER PROFILE</h4>
+      <h4 class="mb-0 l-22 wrapper-20" *ngIf="display!='Add'">EDIT BILLER PROFILE</h4>
     </div>
     <div class="col-md-2 text-right">
       <i class="material-icons pt-16 c-p pr-16" (click)="Close('close')">

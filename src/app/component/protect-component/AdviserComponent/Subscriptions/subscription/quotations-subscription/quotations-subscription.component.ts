@@ -5,7 +5,8 @@ import {SubscriptionInject} from '../../subscription-inject.service';
 import {SubscriptionService} from '../../subscription.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {AuthService} from "../../../../../../auth-service/authService";
-
+import { UtilService } from 'src/app/services/util.service';
+import * as _ from 'lodash';
 export interface PeriodicElement {
   name: string;
   docname: string;
@@ -27,7 +28,21 @@ export class QuotationsSubscriptionComponent implements OnInit {
   displayedColumns: string[] = ['name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
   advisorId;
   dataSource;
-
+  noData: string;
+  filterStatus = [];
+  filterDate = [];
+  statusIdList = [];
+  chips = [
+    {name: 'LIVE', value: 1},
+    {name: 'PAID', value: 2},
+    {name: 'OVERDUE', value: 3}
+  ];
+  dateChips = [
+    {name: 'Created date', value: 1},
+    {name: 'Sent date', value: 2},
+    {name: 'Client consent', value: 3}
+  ];
+  selectedDateRange: { begin: Date; end: Date; };
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
               public dialog: MatDialog, private subService: SubscriptionService) {
   }
@@ -49,10 +64,12 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   getQuotationsDataResponse(data) {
-    console.log(data);
-    this.dataSource = data;
+    if(data==undefined){
+      this.noData="No Data Found";
+      }else{console.log(data);
+      this.dataSource = data;
+   }
   }
-
   deleteModal(value) {
     const dialogData = {
       data: value,
@@ -81,11 +98,61 @@ export class QuotationsSubscriptionComponent implements OnInit {
     });
 
   }
+  addFilters(addFilters) {
+    console.log('addFilters', addFilters);
+    if (!_.includes(this.filterStatus, addFilters)) {
+      this.filterStatus.push(addFilters);
+    } else {
+      // _.remove(this.filterStatus, this.senddataTo);
+    }
+  }
+
+  filterSubscriptionRes(data) {
+    console.log('filterSubscriptionRes', data);
+    this.dataSource = data;
+    // this.getSubSummaryRes(data);
+  }
+
+  addFiltersDate(dateFilter) {
+    console.log('addFilters', dateFilter);
+   //this.filterDate = [dateFilter];
+    this.filterDate.push(dateFilter);
+    const beginDate = new Date();
+    beginDate.setMonth(beginDate.getMonth() - 1);
+    UtilService.getStartOfTheDay(beginDate);
+
+    const endDate = new Date();
+    UtilService.getStartOfTheDay(endDate);
+
+    this.selectedDateRange = {begin: beginDate, end: endDate};
+  }
+
+  removeDate(item) {
+    this.filterDate.splice(item, 1);
+ 
+  }
+
+  remove(item) {
+    this.filterStatus.splice(item, 1);
+  }
 
   Open(value, state, data) {
-    this.eventService.sidebarData(value);
-    this.subInjectService.rightSideData(state);
-    this.subInjectService.addSingleProfile(data);
+    const fragmentData = {
+      Flag: value,
+      data:data,
+      id: 1,
+      state: state
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', );
+          rightSideDataSub.unsubscribe();
+        }
+      }
+      
+    );
   }
 
   // Open(value)

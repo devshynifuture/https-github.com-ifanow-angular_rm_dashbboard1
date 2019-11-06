@@ -1,100 +1,103 @@
-<div *ngIf="componentFlag=='servicesPlans'">
-    <div class="bg-grey lter wrapper-20 heading-fix">
-        <h3 class="text-center m-0 head-common">Investment Management Financial Planning</h3>
-    </div>
-  
-    <div class="bg-white pt-72">
-            <div class="row text-right pt-130">
-                    <div class="col-md-7 p-0 pt-4">
-                            <p>Map services to the selected plan.</p>
-                    </div>
-                    <div class="col-md-1 text-left p-0">
-                        <img src="/assets/images/svg/info.svg" class="c-p">
-                    </div>
-                    <div class="col-md-2 right text-right p-0 button-fix">
-                            <button mat-stroked-button class="btn-primary br-0 mt-8">{{mappedPlan.length}} Plans mapped</button>
-                    </div>
-                </div>
-                <div class="wrapper-100 pt-44">
-                <div class="row">
-                    <!-- <div class="col-md-4">
-                            <mat-card class="p-0 ba-green">
-                                <div class="row bg-grey lter">
-                                    <div class="col-md-12 p-0">
-                                            <mat-checkbox class="custom-checkbox" checked="false"></mat-checkbox>
-                                    </div>
-                                    <div class="col-md-12 p-0">
-                                        <h3 class="m-0 pt-18 pl-24">Starter Plan</h3>
-                                        <h5 class="m-0 pt-4 pb-44 pl-24">PLA123</h5>
-                                    </div>
-                                </div>
-                                <div class="wrapper-24">
-                                <div class="row">
-                                    <div class="col-md-12 p-0">
-                                    <p class="f-12 mb-0">DESCRIPTION</p>
-                                    <h5 class="mb-0">This plan is ideal for young people who are just starting off their financial journey and want to start saving with a smaller investment amount.</h5>
-                                </div>
-                            </div>
-                        </div>
-                            </mat-card>
-                    </div> -->
-                    <!-- <div class="col-md-4">
-                            <mat-card class="p-0 b-a">
-                                <div class="row bg-grey lter">
-                                    <div class="col-md-12 p-0">
-                                        <h3 class="m-0 pt-32 pl-24">Starter Plan</h3>
-                                        <h5 class="m-0 pt-4 pb-44 pl-24">PLA123</h5>
-                                    </div>
-                                </div>
-                                <div class="wrapper-24">
-                                <div class="row">
-                                    <div class="col-md-12 p-0">
-                                    <p class="f-12 mb-0">DESCRIPTION</p>
-                                    <h5 class="mb-0">This plan is ideal for young people who are just starting off their financial journey and want to start saving with a smaller investment amount.</h5>
-                                </div>
-                            </div>
-                        </div>
-                            </mat-card>
-                    </div> -->
-                    <div class="col-md-4 pb-40 c-p" *ngFor="let singleServicePlan of servicePlanData">
-                        <div class="example-card">
-                            <mat-card class="p-0 b-a" (click)="selectServicePlan(singleServicePlan)" [ngClass]="{'p-0': singleServicePlan.selected==false,'b-a':singleServicePlan.selected==false,'p-0':singleServicePlan.selected==true,'ba-blue':singleServicePlan.selected==true}">
-                                <div class="row bg-grey lter">
-                                    <div class="col-md-12 p-0">
-                                            <mat-checkbox class="custom-checkbox" checked="false" [ngClass]="{'v-h': singleServicePlan.selected==false}"></mat-checkbox>
-                                    </div>
-                                    <div class="col-md-12 p-0">
-                                        <h3 class="m-0 pt-18 pl-24">{{singleServicePlan.name}}</h3>
-                                        <h5 class="m-0 pt-4 pb-44 pl-24">{{singleServicePlan.code}}</h5>
-                                    </div>
-                                </div>
-                                <div class="wrapper-24">
-                                <div class="row">
-                                    <div class="col-md-12 p-0">
-                                    <p class="f-12 mb-0">DESCRIPTION</p>
-                                    <h5 class="mb-0">{{singleServicePlan.description}}</h5>
-                                </div>
-                            </div>
-                        </div>
-                        </mat-card>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </div>
-    <mat-toolbar class="bottom-fixed">
-            <div class="row w-100">
-                <div class="col-md-6 text-left">
-                    <p class="text-white f-16 mb-0 pt-12 c-p" (click)="dialogClose()">Cancel</p>
-                </div>
-                <div class="col-md-6 text-right">
-                    <button type="button" mat-stroked-button class="btn-bottom br-0" (click)="saveMappedPlans()">Save</button>
-                </div>
-            </div>
-        </mat-toolbar>
+<!--<div *ngIf="componentFlag=='servicesPlans'">-->
+<div class="bg-grey lter wrapper-20 heading-fix">
+  <h3
+    class="text-center m-0 head-common">{{componentFlag == 'servicesPlans' ? _upperData.serviceName : _upperData.docName}}</h3>
 </div>
-<div *ngIf="componentFlag!='servicesPlans'">
-    <p>
-        This is plans in Document
-    </p>
+
+<div class="bg-white pt-72">
+  <div class="row text-right pt-130">
+    <div class="col-md-7 p-0 pt-4">
+      <p>Map services to the selected plan.</p>
+    </div>
+    <div class="col-md-1 text-left p-0">
+      <img src="/assets/images/svg/info.svg" class="c-p">
+    </div>
+    <div class="col-md-2 right text-right p-0 button-fix">
+      <button mat-stroked-button class="btn-primary br-0 mt-8">{{mappedPlan.length}} Plans mapped</button>
+    </div>
+  </div>
+  <div class="wrapper-100 pt-44">
+    <div class="row">
+      <!-- <div class="col-md-4">
+              <mat-card class="p-0 ba-green">
+                  <div class="row bg-grey lter">
+                      <div class="col-md-12 p-0">
+                              <mat-checkbox class="custom-checkbox" checked="false"></mat-checkbox>
+                      </div>
+                      <div class="col-md-12 p-0">
+                          <h3 class="m-0 pt-18 pl-24">Starter Plan</h3>
+                          <h5 class="m-0 pt-4 pb-44 pl-24">PLA123</h5>
+                      </div>
+                  </div>
+                  <div class="wrapper-24">
+                  <div class="row">
+                      <div class="col-md-12 p-0">
+                      <p class="f-12 mb-0">DESCRIPTION</p>
+                      <h5 class="mb-0">This plan is ideal for young people who are just starting off their financial journey and want to start saving with a smaller investment amount.</h5>
+                  </div>
+              </div>
+          </div>
+              </mat-card>
+      </div> -->
+      <!-- <div class="col-md-4">
+              <mat-card class="p-0 b-a">
+                  <div class="row bg-grey lter">
+                      <div class="col-md-12 p-0">
+                          <h3 class="m-0 pt-32 pl-24">Starter Plan</h3>
+                          <h5 class="m-0 pt-4 pb-44 pl-24">PLA123</h5>
+                      </div>
+                  </div>
+                  <div class="wrapper-24">
+                  <div class="row">
+                      <div class="col-md-12 p-0">
+                      <p class="f-12 mb-0">DESCRIPTION</p>
+                      <h5 class="mb-0">This plan is ideal for young people who are just starting off their financial journey and want to start saving with a smaller investment amount.</h5>
+                  </div>
+              </div>
+          </div>
+              </mat-card>
+      </div> -->
+      <div class="col-md-4 pb-40 c-p" *ngFor="let singleServicePlan of servicePlanData">
+        <div class="example-card">
+          <mat-card class="p-0 b-a" (click)="selectServicePlan(singleServicePlan)"
+                    [ngClass]="{'p-0': singleServicePlan.selected==false,'b-a':singleServicePlan.selected==false,'p-0':singleServicePlan.selected==true,'ba-blue':singleServicePlan.selected==true}">
+            <div class="row bg-grey lter">
+              <div class="col-md-12 p-0">
+                <mat-checkbox class="custom-checkbox" checked="false"
+                              [ngClass]="{'v-h': singleServicePlan.selected==false}"></mat-checkbox>
+              </div>
+              <div class="col-md-12 p-0">
+                <h3 class="m-0 pt-18 pl-24">{{singleServicePlan.name}}</h3>
+                <h5 class="m-0 pt-4 pb-44 pl-24">{{singleServicePlan.code}}</h5>
+              </div>
+            </div>
+            <div class="wrapper-24">
+              <div class="row">
+                <div class="col-md-12 p-0">
+                  <p class="f-12 mb-0">DESCRIPTION</p>
+                  <h5 class="mb-0">{{singleServicePlan.description}}</h5>
+                </div>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+<mat-toolbar class="bottom-fixed">
+  <div class="row w-100">
+    <div class="col-md-6 text-left">
+      <p class="text-white f-16 mb-0 pt-12 c-p" (click)="dialogClose()">Cancel</p>
+    </div>
+    <div class="col-md-6 text-right">
+      <button type="button" mat-stroked-button class="btn-bottom br-0" (click)="saveMapping()">Save</button>
+    </div>
+  </div>
+</mat-toolbar>
+<!--</div>-->
+<!--<div *ngIf="componentFlag!='servicesPlans'">-->
+<!--    <p>-->
+<!--        This is plans in Document-->
+<!--    </p>-->
+<!--</div>-->

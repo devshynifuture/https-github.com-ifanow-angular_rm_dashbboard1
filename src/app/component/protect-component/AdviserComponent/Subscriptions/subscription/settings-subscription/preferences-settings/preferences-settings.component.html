@@ -8,15 +8,15 @@
         <div class="row">
             <div class="col-md-2 p-0 pt-1">
                 <ul class="vertical-menu">
-                    <li (click)="viewMode ='tab1'" [ngClass]="{'b-ua':viewMode =='tab1'}" class="c-p">
+                    <li (click)="viewMode ='tab1'" [ngClass]="{'b-ua':viewMode =='tab1','f-bold':viewMode =='tab1'}" class="c-p">
                         Biller profile</li>
-                    <li (click)="viewMode ='tab2';getPrefixData(1)" [ngClass]="{'b-ua':viewMode =='tab2'}" class="c-p">
+                    <li (click)="viewMode ='tab2';getPrefixData(1)" [ngClass]="{'b-ua':viewMode =='tab2','f-bold':viewMode =='tab2'}" class="c-p">
                         Invoice</li>
-                    <li (click)="viewMode ='tab3';getPrefixData(2)" [ngClass]="{'b-ua':viewMode =='tab3'}" class="c-p">
+                    <li (click)="viewMode ='tab3';getPrefixData(2)" [ngClass]="{'b-ua':viewMode =='tab3','f-bold':viewMode =='tab3'}" class="c-p">
                         Quotations</li>
-                    <li (click)="viewMode ='tab4';getPrefixData(3)" [ngClass]="{'b-ua':viewMode =='tab4'}" class=" c-p">
+                    <li (click)="viewMode ='tab4';getPrefixData(3)" [ngClass]="{'b-ua':viewMode =='tab4','f-bold':viewMode =='tab4'}" class=" c-p">
                         Subscriptions</li>
-                    <li (click)="viewMode ='tab5'" [ngClass]="{'b-ua':viewMode =='tab5'}" class=" c-p">
+                    <li (click)="viewMode ='tab5'" [ngClass]="{'b-ua':viewMode =='tab5','f-bold':viewMode =='tab5'}" class=" c-p">
                         Email settings</li>
                 </ul>
 
@@ -24,7 +24,7 @@
             <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode">
                 <div *ngSwitchCase="'tab1'">
                     <div class="wrapper-12 pb-0">
-                        <div class="row" (click)="Open('','billerProfile','open')">
+                        <div class="row" (click)="Open('Add','billerProfile','open')">
                             <div class="col-md-12 right text-right pr-4">
                                 <button mat-stroked-button class="btn-primary addon"><i
                                         class="material-icons">add</i>ADD NEW</button>

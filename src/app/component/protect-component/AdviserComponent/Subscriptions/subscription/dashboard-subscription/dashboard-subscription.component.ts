@@ -32,6 +32,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class DashboardSubscriptionComponent implements OnInit {
   invoiceHisData: any;
+  showLetsBeginData: any;
 
   constructor(private enumService: EnumServiceService,
               public subInjectService: SubscriptionInject, public eventService: EventService,
@@ -55,6 +56,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.initChart();
+    this.getDashboardResponse();
     this.docSentSignedCountData();
     this.clientWithSubscription();
     this.invoiceToBeReviewed();
@@ -66,7 +68,8 @@ export class DashboardSubscriptionComponent implements OnInit {
 
     this.subService.getDashboardSubscriptionResponse(this.advisorId).subscribe(
       data => {
-        this.showLetsBegin = data;
+        this.showLetsBegin = data.show;
+        this.showLetsBeginData=data.advisorAccomplishedSubscriptionFinalList;
       }
     );
   }

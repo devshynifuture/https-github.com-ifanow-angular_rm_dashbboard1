@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
 
 @Component({
   selector: 'app-add-fixed-fee',
@@ -11,10 +11,9 @@ import {AuthService} from '../../../../../../../auth-service/authService';
   styleUrls: ['./add-fixed-fee.component.scss']
 })
 export class AddFixedFeeComponent implements OnInit {
-  fixedFeeData: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private subService: SubscriptionService, private eventService: EventService) {
+    private subService: SubscriptionService, private eventService: EventService) {
   }
 
   isServiceValid;
@@ -23,20 +22,32 @@ export class AddFixedFeeComponent implements OnInit {
   isFeesValid;
   isbillEvery;
   advisorId;
-
+  ischeckFixedData;
+  fixedFeeData = this.fb.group({
+    serviceName: [, [Validators.required]],
+    code: [, [Validators.required]],
+    description: [, [Validators.required]],
+    Duration: [1],
+    fees: [, [Validators.required]],
+    billingNature: [1],
+    billEvery: [, [Validators.required]],
+    billingMode: [1]
+  });
+  @Input() set fixedFee(data)
+  {
+    this.ischeckFixedData=data
+   this.getFeeFormData(data)
+  }
+  @Output() outputFixedData = new EventEmitter();
   ngOnInit() {
-    // console.log('AddFixedFeeComponent init');
     this.advisorId = AuthService.getAdvisorId();
     this.setValidation(false);
-    this.createFixedFeeForm();
-    this.subInjectService.rightSideBarData.subscribe(
-      data => this.getFeeFormData(data)
-    );
+    (this.ischeckFixedData)?console.log("fixed fee Data"):this.createFixedFeeForm('');
   }
 
-  createFixedFeeForm() {
+  createFixedFeeForm(data) {
     this.fixedFeeData = this.fb.group({
-      serviceName: [, [Validators.required]],
+      serviceName: [, [Validators.required,Validators.maxLength(40)]],
       code: [, [Validators.required]],
       description: [, [Validators.required]],
       Duration: [1],
@@ -45,10 +56,10 @@ export class AddFixedFeeComponent implements OnInit {
       billEvery: [, [Validators.required]],
       billingMode: [1]
     });
-    this.getFormControl().serviceName.maxLength = 40;
-    this.getFormControl().code.maxLength = 10;
-    this.getFormControl().description.maxLength = 160;
-    this.getFormControl().fees.maxLength = 10;
+    // this.getFormControl().serviceName.maxLength = 40;
+    // this.getFormControl().code.maxLength = 10;
+    // this.getFormControl().description.maxLength = 160;
+    // this.getFormControl().fees.maxLength = 10;
   }
 
   setValidation(flag) {
@@ -65,6 +76,7 @@ export class AddFixedFeeComponent implements OnInit {
 
   getFeeFormData(data) {
     if (data == '') {
+      this.createFixedFeeForm('')
       return;
     } else {
       // data.servicePricing.billingNature = '1';
@@ -82,14 +94,19 @@ export class AddFixedFeeComponent implements OnInit {
 
       this.fixedFeeData.controls.billingMode.setValue(data.servicePricing.billingMode);
       this.fixedFeeData.controls.billEvery.setValue(data.servicePricing.billEvery);
+
+      // this.getFormControl().serviceName.maxLength = 40;
+      // this.getFormControl().code.maxLength = 10;
+      // this.getFormControl().description.maxLength = 160;
+      // this.getFormControl().fees.maxLength = 10;
     }
 
   }
 
   Close(state) {
-    this.subInjectService.rightSliderData(state);
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
     this.setValidation(false);
-    this.fixedFeeData.reset();
+    this.createFixedFeeForm('');
   }
 
   closeTab(state, value) {
@@ -137,15 +154,14 @@ export class AddFixedFeeComponent implements OnInit {
         }
       };
       this.subService.createSettingService(obj).subscribe(
-        data => this.saveFeeTypeDataResponse(obj, data, state)
+        data => this.saveFeeTypeDataResponse(data, state)
       );
     }
   }
 
-  saveFeeTypeDataResponse(obj, data, state) {
-
-    this.subInjectService.pushUpperData(data);
-    this.subInjectService.rightSliderData(state);
+  saveFeeTypeDataResponse(data, state) {
+    this.outputFixedData.emit(data)
     this.eventService.openSnackBar('Service is Created', 'OK');
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
   }
 }

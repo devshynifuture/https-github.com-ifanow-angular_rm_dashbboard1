@@ -39,6 +39,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
 import { SubscriptionService } from '../../../subscription.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-common-froala',
@@ -55,16 +56,26 @@ import { SubscriptionService } from '../../../subscription.service';
 export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
   dataSub: any;
   storeData: any;
+  inputData: any;
 
   constructor(public subscription:SubscriptionService,public subInjectService: SubscriptionInject , public eventService:EventService ,public dialog:MatDialog) {
-    this.dataSub = this.subInjectService.singleProfileData.subscribe(
-      data=>this.getcommanFroalaData(data)
-    );
+    // this.dataSub = this.subInjectService.singleProfileData.subscribe(
+    //   data=>this.getcommanFroalaData(data)
+    // );
   }
 
   @Input() screenType;
   @Input() changeFooter;
   @Input() changeEmailOnly;
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    this.getcommanFroalaData(data);
+  }
+
+  get data() {
+    return this.inputData;
+  }
   showActivityLog: boolean;
 
   // End ControlValueAccesor methods.
@@ -84,12 +95,16 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
   {
     this.storeData=data;
   }
-  Close(value) {
-    if (this.showActivityLog == true) {
-      this.showActivityLog = false;
-    } else {
-      this.subInjectService.rightSideData(value);
-    }
+  Close(data) {
+    // if (this.showActivityLog == true) {
+    //   this.showActivityLog = false;
+    // } else {
+    //   this.subInjectService.rightSideData(value);
+    // }
+    this.subInjectService.changeNewRightSliderState({state:'close',data})
+
+    // this.subInjectService.changeUpperRightSliderState({value:'close'})
+    // this.subInjectService.changeUpperRightSliderState({value:'close'})
   }
 
   openFroala() {
@@ -189,5 +204,37 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
   
     });
   
+  }
+  // openSendEmail() {
+  //   // const data = {
+  //   //   advisorId: this.advisorId,
+  //   //   clientData: this._clientData,
+  //   //   templateType: 2, //2 is for quotation
+  //   //   documentList: []
+  //   // };
+  //   // this.dataSource.forEach(singleElement => {
+  //   //   if (singleElement.selected) {
+  //   //     data.documentList.push(singleElement);
+  //   //   }
+  //   // });
+  //   this.OpenEmail('emailQuotationFroala');
+  // }
+  openSendEmail(value,state,data) {
+    const fragmentData = {
+      Flag: value,
+      data:data,
+      id: 1,
+      state: state
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', );
+          rightSideDataSub.unsubscribe();
+        }
+      }
+      
+    );
   }
 }

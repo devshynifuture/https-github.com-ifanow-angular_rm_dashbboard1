@@ -93,8 +93,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {FroalaComponent} from './component/protect-component/common-component/froala/froala.component';
 import {EmailOnlyComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-only/email-only.component';
 import {HowItWorksComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/how-it-works/how-it-works.component';
-import {DialogContainerComponent} from './common/dialog-container/dialog-container.component';
-import {CustomDialogContainerComponent} from './common/custom-dialog-container/custom-dialog-container.component';
+// import {DialogContainerComponent} from './common/dialog-container/dialog-container.component';
+// import {CustomDialogContainerComponent} from './common/custom-dialog-container/custom-dialog-container.component';
 import {BaseComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/base/base.component';
 import {ChartModule} from 'angular-highcharts';
 import {IncomeComponent} from './component/protect-component/customers/component/customer/accounts/income/income.component';
@@ -117,6 +117,9 @@ import {FixedFeeComponent} from './component/protect-component/AdviserComponent/
 import {VariableFeeComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/variable-fee/variable-fee.component';
 import {LibilitiesRightComponent} from './component/protect-component/customers/component/customer/accounts/liabilities/libilities-right/libilities-right.component';
 import {SatDatepickerModule, SatNativeDateModule} from "saturn-datepicker";
+import {CustomCommonModule} from "./common/custom.common.module";
+import {DialogContainerComponent} from "./common/dialog-container/dialog-container.component";
+import {CustomDialogContainerComponent} from "./common/custom-dialog-container/custom-dialog-container.component";
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -201,8 +204,6 @@ import {SatDatepickerModule, SatNativeDateModule} from "saturn-datepicker";
     FroalaComponent,
     EmailOnlyComponent,
     HowItWorksComponent,
-    DialogContainerComponent,
-    CustomDialogContainerComponent,
     BaseComponent,
     RadioGroupDirectiveDirective,
     SingleDocumentViewComponent,
@@ -210,9 +211,11 @@ import {SatDatepickerModule, SatNativeDateModule} from "saturn-datepicker";
     VariableFeeComponent,
 
     LibilitiesRightComponent,
-
+    DialogContainerComponent,
+    CustomDialogContainerComponent
   ],
   imports: [
+    CustomCommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,

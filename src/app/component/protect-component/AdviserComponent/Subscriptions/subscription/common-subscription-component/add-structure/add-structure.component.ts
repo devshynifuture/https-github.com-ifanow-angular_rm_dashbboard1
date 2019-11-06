@@ -1,9 +1,9 @@
-import {Component, OnInit, Output} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {EventEmitter} from 'events';
-import {AuthService} from "../../../../../../../auth-service/authService";
+import { Component, OnInit, Output, Input } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { EventEmitter } from '@angular/core';
+import { AuthService } from "../../../../../../../auth-service/authService";
 import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
@@ -12,46 +12,65 @@ import { EventService } from 'src/app/Data-service/event.service';
   styleUrls: ['./add-structure.component.scss']
 })
 export class AddStructureComponent implements OnInit {
-  planDataForm: any;
   editApiCall;
-  @Output() planData = new EventEmitter();
-
-  constructor(private eventService: EventService,private subinject: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService) {
-    this.subinject.rightSideBarData.subscribe(
-      data => this.getSinglePlanData(data)
-    );
+  @Output() planOuputData = new EventEmitter();
+  isCheckPlanData: any;
+  @Input() set planData(data) {
+    this.isCheckPlanData = data
+    this.getSinglePlanData(data)
+  }
+  constructor(private eventService: EventService, private subinject: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService) {
   }
 
   isPlanValid = false;
   isCodeValid = false;
   isDescValid = false;
   advisorId;
-
+  planDataForm = this.fb.group({
+    planName: [, [Validators.required]],
+    code: [, [Validators.required]],
+    description: [, [Validators.required]]
+  });
   // planName = {maxLength: 20, placeholder: '', formControlName: 'planName', data: ''};
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    (this.isCheckPlanData) ? console.log("get planData") : this.createPlanForm('')
   }
 
   submitPlanData() {
 
   }
-
-  getFormControl() {
+  createPlanForm(data) {
+    this.planDataForm = this.fb.group({
+      planName: [data, [Validators.required]],
+      code: [data, [Validators.required]],
+      description: [data, [Validators.required]]
+    })
+    // this.getFormControl().planName.maxLength = 40;
+    // this.getFormControl().code.maxLength = 10;
+    // this.getFormControl().description.maxLength = 160;
+  }
+  getFormControl(): any {
     return this.planDataForm.controls;
   }
 
 
   getSinglePlanData(data) {
-    this.editApiCall = data;
-    this.planDataForm = this.fb.group({
-      planName: [data.name, [Validators.required]],
-      code: [data.code, [Validators.required]],
-      description: [data.description, [Validators.required]]
-    });
-    this.getFormControl().planName.maxLength = 40;
-    this.getFormControl().code.maxLength = 10;
-    this.getFormControl().description.maxLength = 160;
+    if (data == '') {
+      return
+    }
+    else {
+      this.editApiCall = data;
+      this.planDataForm = this.fb.group({
+        planName: [data.name, [Validators.required]],
+        code: [data.code, [Validators.required]],
+        description: [data.description, [Validators.required]]
+      });
+      this.getFormControl().planName.maxLength = 40;
+      this.getFormControl().code.maxLength = 10;
+      this.getFormControl().description.maxLength = 160;
+    }
   }
 
   addPlanData(state) {
@@ -65,7 +84,7 @@ export class AddStructureComponent implements OnInit {
       this.isDescValid = true;
       return;
     } else {
-      if (this.editApiCall == '') {
+      if (this.editApiCall == undefined) {
         const obj = {
           name: this.getFormControl().planName.value,
           description: this.getFormControl().description.value,
@@ -95,15 +114,16 @@ export class AddStructureComponent implements OnInit {
   }
 
   addPlanDataResponse(data, obj, state) {
-    obj.id = (this.editApiCall=='')?data:data.id
-    console.log(obj);
-    this.subinject.pushUpperData(obj);
-    this.subinject.rightSliderData(state);
-    (this.editApiCall=='')?this.eventService.openSnackBar('Plan is created', 'OK'):this.eventService.openSnackBar('Plan is edited', 'OK');
+    // obj.id = (this.editApiCall == '') ? data : data.id
+    // console.log(obj);
+    this.planOuputData.emit(data);
+    (this.editApiCall == '') ? this.eventService.openSnackBar('Plan is created', 'OK') : this.eventService.openSnackBar('Plan is edited', 'OK');
+    this.subinject.changeUpperRightSliderState({ state: 'close' });
+
   }
 
   closeNav(state) {
-    this.subinject.rightSliderData(state);
+    this.subinject.changeUpperRightSliderState({ state: 'close' });
     this.planDataForm.reset();
     this.isPlanValid = false;
     this.isCodeValid = false;

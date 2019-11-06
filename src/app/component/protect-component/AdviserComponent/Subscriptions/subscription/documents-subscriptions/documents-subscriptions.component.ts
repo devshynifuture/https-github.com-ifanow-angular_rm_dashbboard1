@@ -5,6 +5,7 @@ import {MatDialog} from '@angular/material';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionService} from '../../subscription.service';
 import {AuthService} from "../../../../../../auth-service/authService";
+import { UtilService } from 'src/app/services/util.service';
 
 
 export interface PeriodicElement {
@@ -30,6 +31,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
   dataSource: any;
   advisorId;
+  noData: string;
 
   constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public eventService: EventService,
               public subscription: SubscriptionService) {
@@ -42,9 +44,22 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
   // dataSource = ELEMENT_DATA;
   Open(value, state, data) {
-    this.eventService.sidebarData(value);
-    this.subInjectService.rightSideData(state);
-    this.subInjectService.addSingleProfile(data);
+    const fragmentData = {
+      Flag: value,
+      data:data,
+      id: 1,
+      state: state
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', );
+          rightSideDataSub.unsubscribe();
+        }
+      }
+      
+    );
   }
 
 //   Open(value)
@@ -67,11 +82,15 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   }
 
   getdocumentResponseData(data) {
-    console.log(data);
-    data.forEach(singleData => {
-      singleData.documentText = singleData.docText;
-    });
-    this.dataSource = data;
+    if(data==undefined){
+      this.noData="No Data Found";
+    }else{
+      console.log(data);
+      data.forEach(singleData => {
+        singleData.documentText = singleData.docText;
+      });
+      this.dataSource = data;
+    }
   }
 
   deleteModal(value) {

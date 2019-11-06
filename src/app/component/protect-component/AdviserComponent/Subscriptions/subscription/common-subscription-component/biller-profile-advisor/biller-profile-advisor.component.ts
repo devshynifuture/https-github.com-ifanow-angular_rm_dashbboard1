@@ -34,6 +34,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   advisorId;
   billerProfileData: any;
   inputData: any;
+  display: any;
   
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private eventService:EventService) {
@@ -85,6 +86,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     if (data == '') {
       data = {};
     }
+    this.display=data;
     this.billerProfileForm = this.fb.group({
       profileDetailsForm: this.fb.group({
         gstinNum: [(data.gstin), [Validators.required]],
