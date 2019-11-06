@@ -62,7 +62,25 @@ export class QuotationsComponent implements OnInit {
     // this.getQuotationsList();
     this.dataCount = 0;
   }
+  Open(value, state, data) {
+    const fragmentData = {
+      Flag: value,
+      data:data,
+      id: 1,
+      state: state
+    };
+    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', );
+          rightSideDataSub.unsubscribe();
+        }
+      }
+      
+    );
 
+  }
   getQuotationsList() {
     const obj = {
       // clientId: 2970
@@ -221,9 +239,24 @@ export class QuotationsComponent implements OnInit {
   }
 
   viewQuotation(value, data) {
-    this.quotationDesign = value;
-    console.log(data);
-    this.subInjectService.addSingleProfile(data);
+    // this.quotationDesign = value;
+    // console.log(data);
+    // this.subInjectService.addSingleProfile(data);
+    const fragmentData = {
+      Flag: value,
+      data: data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ',);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
   selectAll(event) {
     // const checked = event.target.checked;

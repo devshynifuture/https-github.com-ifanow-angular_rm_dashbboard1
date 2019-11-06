@@ -19,7 +19,11 @@ export class ModifyFeeDialogComponent implements OnInit {
               public subInjectService: SubscriptionInject, public dialog: MatDialog,
               @Inject(MAT_DIALOG_DATA) public fragmentData: any) {
     console.log('ModifyFeeDialogComponent constructor: ', this.fragmentData);
-    this.editorContent = this.fragmentData.data.docText;
+    if(this.fragmentData == ''){
+      this.editorContent = this.fragmentData
+    }else{
+      this.editorContent = this.fragmentData.data.docText;
+    }   
   }
 
   mailForm = new FormGroup({

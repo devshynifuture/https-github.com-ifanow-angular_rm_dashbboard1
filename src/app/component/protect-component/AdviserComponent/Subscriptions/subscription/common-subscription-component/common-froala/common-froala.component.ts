@@ -55,16 +55,26 @@ import { SubscriptionService } from '../../../subscription.service';
 export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
   dataSub: any;
   storeData: any;
+  inputData: any;
 
   constructor(public subscription:SubscriptionService,public subInjectService: SubscriptionInject , public eventService:EventService ,public dialog:MatDialog) {
-    this.dataSub = this.subInjectService.singleProfileData.subscribe(
-      data=>this.getcommanFroalaData(data)
-    );
+    // this.dataSub = this.subInjectService.singleProfileData.subscribe(
+    //   data=>this.getcommanFroalaData(data)
+    // );
   }
 
   @Input() screenType;
   @Input() changeFooter;
   @Input() changeEmailOnly;
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    this.getcommanFroalaData(data);
+  }
+
+  get data() {
+    return this.inputData;
+  }
   showActivityLog: boolean;
 
   // End ControlValueAccesor methods.
@@ -90,6 +100,8 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
     } else {
       this.subInjectService.rightSideData(value);
     }
+    this.subInjectService.changeUpperRightSliderState({value:'close'})
+    this.subInjectService.changeUpperRightSliderState({value:'close'})
   }
 
   openFroala() {
