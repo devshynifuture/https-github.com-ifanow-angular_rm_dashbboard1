@@ -311,15 +311,19 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       advisorId: this.advisorId,
       limit: -1,
       offset: 0,
-      fromDate: (this.filterDate.length > 0) ? this.selectedDateRange.begin.toDateString() : null,
-      toDate:(this.filterDate.length > 0) ? this.selectedDateRange.end.toDateString() : null,
+      fromDate: (this.filterDate.length > 0) ?  this.datePipe.transform(this.selectedDateRange.begin, 'yyyy-MM-dd') : null,
+      toDate:(this.filterDate.length > 0) ?  this.datePipe.transform(this.selectedDateRange.end, 'yyyy-MM-dd') : null,
       statusIdList: this.statusIdList,
-      dateType: this.selectedDateFilter ? this.selectedDateFilter.value : 0
+      dateType: (this.filterDate.length > 0) ? this.selectedDateFilter.value : 0
     };
     console.log('this.callFilter req obj : ', obj);
-    this.subService.filterSubscription(obj).subscribe(
-      data => this.filterSubscriptionRes(data)
-    );
+    if(obj.statusIdList.length == 0 && obj.fromDate == null){
+      this.getSummaryDataAdvisor();
+    }else{
+      this.subService.filterSubscription(obj).subscribe(
+        data => this.filterSubscriptionRes(data)
+      );
+    }
   }
 
   delete(data, value) {
