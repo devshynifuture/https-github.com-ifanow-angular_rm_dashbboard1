@@ -24,7 +24,7 @@
       mat-align-tabs="center">
       <mat-tab #tab delay="500" label="OVERVIEW" placement="left" tooltip="tootip on left">
         <ng-template matTabContent>
-          <app-overview [componentFlag]='Flag' [upperData]="upperData"></app-overview>
+          <app-overview [componentFlag]='Flag'  [upperData]="upperData"></app-overview>
         </ng-template>
       </mat-tab>
       <mat-tab #tab [disabled]='upperData==""' label="SERVICES">
@@ -129,7 +129,7 @@
 <app-custom-dialog-container [currentState]="State">
 
   <!--<div [@upperRightSlider]="State" class="right_sidenav">-->
-  <app-add-structure *ngIf="rightSliderFlag=='addPlanDetails'"></app-add-structure>
+  <app-add-structure (planOuputData)="upperData=$event" [planData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='addPlanDetails'"></app-add-structure>
   <app-plan-rightslider [clientData]="fragmentData.clientData" *ngIf="rightSliderFlag=='planRightSlider'">
   </app-plan-rightslider>
   <app-email-quotation [headerData]="headerData" *ngIf="rightSliderFlag=='eSignQuotations'"></app-email-quotation>
@@ -138,8 +138,8 @@
   <app-email-quotation [headerDataDocuments]="headerDataDocuments" *ngIf="rightSliderFlag=='eSignDocument'">
   </app-email-quotation>
   <app-create-subscription [data]="upperRightSideInputData" [subFeeMode]="rightSliderFlag" *ngIf="rightSliderFlag=='createSubFixed' || rightSliderFlag=='createSubVariable'"></app-create-subscription>
-  <app-add-variable-fee (outputVariableData)="feeTypeData($event)" *ngIf="rightSliderFlag=='varibleFee'"></app-add-variable-fee>
-  <app-add-fixed-fee (outputFixedData)="feeTypeData($event)" *ngIf="rightSliderFlag=='fixedFee'"></app-add-fixed-fee>
+  <app-add-variable-fee [variableFee]="upperRightSideInputData.data" (outputVariableData)="upperData=$event" *ngIf="rightSliderFlag=='varibleFee'"></app-add-variable-fee>
+  <app-add-fixed-fee [fixedFee]="upperRightSideInputData.data" (outputFixedData)="upperData=$event" *ngIf="rightSliderFlag=='fixedFee'"></app-add-fixed-fee>
   <app-overview-blank-quotation [blankOverview]="blankOverview" *ngIf='blankOverview'></app-overview-blank-quotation>
   <app-biller-settings [clientData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='billerSettings'">
   </app-biller-settings>
