@@ -231,23 +231,11 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   addFilters(addFilters) {
     console.log('addFilters', addFilters);
-    /*if (addFilters == 'LIVE') {
-      this.senddataTo = 2;
-    } else if (addFilters == 'NOT STARTED') {
-      this.senddataTo = 1;
-    } else if (addFilters == 'FUTURE') {
-      this.senddataTo = 3;
-    } else {
-      this.senddataTo = 4;
-    }*/
-    // console.log(this.senddataTo);
     if (!_.includes(this.filterStatus, addFilters)) {
       this.filterStatus.push(addFilters);
     } else {
       // _.remove(this.filterStatus, this.senddataTo);
     }
-    // this.sendData = this.filterStatus;
-
     this.callFilter();
   }
 
