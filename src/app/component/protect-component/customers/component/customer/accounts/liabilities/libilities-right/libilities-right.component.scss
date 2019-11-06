@@ -1,5 +1,6 @@
 p.f-12{
     font-family: "Roboto", sans-serif;
+    letter-spacing: 0.4px;
 }
 hr{
     border: 0.5px solid #BCC6CA;
@@ -40,4 +41,12 @@ span.notstart{
     border: 1px solid #004164;
     border-radius: 2px;
     font-size: 12px;
+}
+::ng-deep .min-160{
+    min-width: 160px !important;
+    font-size: 12px !important;
+}
+::ng-deep li{
+    margin-top: 12px;
+    
 }

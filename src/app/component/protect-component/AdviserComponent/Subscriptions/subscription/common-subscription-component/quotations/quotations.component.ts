@@ -168,7 +168,7 @@ export class QuotationsComponent implements OnInit {
       documentList: []
     };
     this.dataSource.forEach(singleElement => {
-      if (singleElement.isChecked) {
+      if (singleElement.selected) {
         data.documentList.push(singleElement);
       }
     });

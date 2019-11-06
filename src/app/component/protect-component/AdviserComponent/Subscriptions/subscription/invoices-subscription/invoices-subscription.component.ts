@@ -42,6 +42,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   filterStatus = [];
   filterDate = [];
   statusIdList = [];
+  showFilter = false;
   selectedDateRange: { begin: Date; end: Date; };
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
