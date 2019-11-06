@@ -138,8 +138,8 @@
   <app-email-quotation [headerDataDocuments]="headerDataDocuments" *ngIf="rightSliderFlag=='eSignDocument'">
   </app-email-quotation>
   <app-create-subscription [data]="upperRightSideInputData" [subFeeMode]="rightSliderFlag" *ngIf="rightSliderFlag=='createSubFixed' || rightSliderFlag=='createSubVariable'"></app-create-subscription>
-  <app-add-variable-fee *ngIf="rightSliderFlag=='varibleFee'"></app-add-variable-fee>
-  <app-add-fixed-fee *ngIf="rightSliderFlag=='fixedFee'"></app-add-fixed-fee>
+  <app-add-variable-fee (outputVariableData)="feeTypeData($event)" *ngIf="rightSliderFlag=='varibleFee'"></app-add-variable-fee>
+  <app-add-fixed-fee (outputFixedData)="feeTypeData($event)" *ngIf="rightSliderFlag=='fixedFee'"></app-add-fixed-fee>
   <app-overview-blank-quotation [blankOverview]="blankOverview" *ngIf='blankOverview'></app-overview-blank-quotation>
   <app-biller-settings [clientData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='billerSettings'">
   </app-biller-settings>
