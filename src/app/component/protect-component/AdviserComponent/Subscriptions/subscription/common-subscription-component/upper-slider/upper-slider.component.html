@@ -78,15 +78,17 @@
     <mat-tab-group animationDuration="0ms" class="popup-header-fix-tabs" mat-align-tabs="center">
       <mat-tab label="OVERVIEW">
         <ng-template matTabContent>
-          <app-overview></app-overview>
+          <app-overview [upperData]="upperData"></app-overview>
         </ng-template>
       </mat-tab>
-      <mat-tab label="PLANS" *ngIf="upperData&&upperData">
+      <mat-tab label="PLANS"
+               *ngIf="upperData&&upperData.documentData&&upperData.documentData.mappingType&&upperData.mappedType==1">
         <ng-template matTabContent>
           <app-plans [componentFlag]='"documents"' [upperData]="upperData"></app-plans>
         </ng-template>
       </mat-tab>
-      <mat-tab label="SERVICES">
+      <mat-tab label="SERVICES"
+               *ngIf="upperData&&upperData.documentData&&upperData.documentData.mappingType&&upperData.mappedType==2">
         <ng-template matTabContent>
           <app-services></app-services>
         </ng-template>
@@ -151,7 +153,8 @@
                         *ngIf="rightSliderFlag=='varibleFee'"></app-add-variable-fee>
   <app-add-fixed-fee [fixedFee]="upperRightSideInputData.data" (outputFixedData)="upperData=$event"
                      *ngIf="rightSliderFlag=='fixedFee'"></app-add-fixed-fee>
-  <app-overview-blank-quotation [blankOverview]="blankOverview" *ngIf='blankOverview'></app-overview-blank-quotation>
+  <app-add-edit-document [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='addEditDocument'"
+                         [fragmentData]="fragmentData"></app-add-edit-document>
   <app-biller-settings [clientData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='billerSettings'">
   </app-biller-settings>
   <app-fixed-fee [data]="upperRightSideInputData" *ngIf="rightSliderFlag=='fixedModifyFees'"></app-fixed-fee>
