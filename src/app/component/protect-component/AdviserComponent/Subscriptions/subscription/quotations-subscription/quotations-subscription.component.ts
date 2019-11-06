@@ -27,6 +27,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   displayedColumns: string[] = ['name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
   advisorId;
   dataSource;
+  noData: string;
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
               public dialog: MatDialog, private subService: SubscriptionService) {
@@ -49,10 +50,12 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   getQuotationsDataResponse(data) {
-    console.log(data);
-    this.dataSource = data;
+    if(data==undefined){
+      this.noData="No Data Found";
+      }else{console.log(data);
+      this.dataSource = data;
+   }
   }
-
   deleteModal(value) {
     const dialogData = {
       data: value,

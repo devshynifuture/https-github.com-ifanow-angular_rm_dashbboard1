@@ -114,6 +114,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   getDate: any;
   getDate2: string;
   selectedDateRange = {begin: new Date(), end: new Date()};
+  noData: string;
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
               private eventService: EventService, private subService: SubscriptionService,
@@ -144,9 +145,12 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
   getSubSummaryRes(data) {
-    console.log(data);
+  if(data==undefined){
+    this.noData="No Data Found";
+  }else{console.log(data);
     this.dataSource = data;
     this.DataToSend = data;
+  }
   }
 
   openPlanSlider(value, state, data) {

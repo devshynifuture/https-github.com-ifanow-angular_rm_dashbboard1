@@ -184,5 +184,6 @@
       <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
       <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
     </table>
+    <h4  *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4>
   </div>
 </div>
