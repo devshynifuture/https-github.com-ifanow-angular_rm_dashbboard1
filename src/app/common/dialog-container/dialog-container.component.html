@@ -7,8 +7,8 @@
   <app-common-froala *ngIf="subscriptionTab=='viewDoc'" [changeFooter]='subscriptionTab'
                      [screenType]="subscriptionTab"></app-common-froala>
   <app-common-froala *ngIf="subscriptionTab=='openEmailQuot'" [changeEmailOnly]='subscriptionTab'></app-common-froala>
-  <app-common-froala *ngIf="subscriptionTab=='emailQuotation'" [changeFooter]='subscriptionTab'></app-common-froala>
-  <app-common-froala *ngIf="subscriptionTab=='viewQuotation'" [changeFooter]='subscriptionTab'></app-common-froala>
+  <app-common-froala *ngIf="subscriptionTab=='emailQuotation'"[data]="inputData" ></app-common-froala>
+  <app-common-froala *ngIf="subscriptionTab=='viewQuotation'"  [data]="inputData" ></app-common-froala>
   <app-email-quotation *ngIf="subscriptionTab=='eSignRequest'" [headerData]="headerData"></app-email-quotation>
   <app-email-quotation *ngIf="subscriptionTab=='eSignRequestDocuments'"
                        [headerDataDocuments]="headerDataDocuments"></app-email-quotation>

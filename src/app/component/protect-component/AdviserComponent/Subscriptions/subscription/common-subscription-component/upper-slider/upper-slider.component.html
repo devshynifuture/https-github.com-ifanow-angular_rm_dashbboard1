@@ -153,6 +153,8 @@
   <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnly'"
                   ></app-email-only>
   <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnlyDoc'"></app-email-only>
+  <app-common-froala [data]="upperRightSideInputData.data"*ngIf="rightSliderFlag=='viewQuotation'"></app-common-froala>
+  <!-- <app-common-froala  [data]="inputData" *ngIf="rightSliderFlag=='viewDocuments'" ></app-common-froala> -->
 <!--  (valueChange)='display($event)'-->
   <!--</div>-->
 </app-custom-dialog-container>
