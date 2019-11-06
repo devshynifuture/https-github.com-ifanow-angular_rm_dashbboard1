@@ -14,6 +14,7 @@ export class PlansComponent implements OnInit {
 
   constructor(private subService: SubscriptionService, private eventService: EventService) {
   }
+
   @Input()
   set upperData(upperData) {
     console.log('FeeStructureComponent upperData set : ', this.upperData);
@@ -27,6 +28,7 @@ export class PlansComponent implements OnInit {
   get upperData(): any {
     return this._upperData;
   }
+
   @Input() componentFlag: string;
   // @Input() upperData;
   servicePlanData;
@@ -35,7 +37,11 @@ export class PlansComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.getPlansMappedToAdvisor();
+    if (this.componentFlag === 'documents') {
+      this.getPlansMappedToDocument();
+    } else {
+      this.getPlansMappedToAdvisor();
+    }
   }
 
 
@@ -55,6 +61,17 @@ export class PlansComponent implements OnInit {
       advisorId: this.advisorId,
 
       serviceId: this.upperData ? this.upperData.id : null
+    };
+    this.subService.getPlansMappedToAdvisor(obj).subscribe(
+      data => this.getPlansMappedToAdvisorResponse(data)
+    );
+  }
+
+  getPlansMappedToDocument() {
+    const obj = {
+      // advisorid: 12345,
+      advisorId: this.advisorId,
+      docRepoId: this.upperData ? this.upperData.documentRepositoryId : null
     };
     this.subService.getPlansMappedToAdvisor(obj).subscribe(
       data => this.getPlansMappedToAdvisorResponse(data)
@@ -95,7 +112,32 @@ export class PlansComponent implements OnInit {
     console.log(data);
   }
 
-  saveMappedPlans() {
+  saveMapping() {
+    if (this.componentFlag === 'documents') {
+      this.saveDocumentPlanMapping();
+    } else {
+      this.saveServicePlanMapping();
+    }
+  }
+
+  saveDocumentPlanMapping() {
+    const obj = [];
+    this.mappedPlan.forEach(planData => {
+      const data = {
+        // advisorId: 12345,
+        advisorId: this.advisorId,
+
+        planId: planData.id,
+        // serviceId: this.upperData ? this.upperData.id : null
+      };
+      obj.push(data);
+    });
+    this.subService.mapPlanToServiceSettings(obj).subscribe(
+      data => this.saveMappedPlansResponse(data)
+    );
+  }
+
+  saveServicePlanMapping() {
     console.log('Mapped Plan', this.mappedPlan);
     console.log('clientId', this.upperData);
     const obj = [];

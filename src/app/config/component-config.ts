@@ -117,6 +117,8 @@ export const appConfig = {
   EDIT_PAYMENT_RECEIVE: 'subscription/invoice/payment/received/edit',
   GET_TEMPLATE: 'subscription/emailtemplate/get',
   GET_EMAIL_TEMPLATE_FILTER: 'subscription/emailtemplate/get',
+  GET_DOCUMENT_MAPPED_PLAN: 'subscription/document/plan/map/get',
+  GET_DOCUMENT_MAPPED_SERVICE: 'subscription/document/service/map/get',
 
   GET_BASE_64: 'api/v1/test/base64/decode'
 };
