@@ -18,6 +18,7 @@ import {MaterialModule} from '../../../material/material';
 import {DocumentsComponent} from './component/customer/accounts/documents/documents.component';
 import {MutualFundsCapitalComponent} from './component/customer/accounts/mutual-funds-capital/mutual-funds-capital.component';
 import {CustomCommonModule} from '../../../common/custom.common.module';
+import {AppModule} from "../../../app.module";
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import {CustomCommonModule} from '../../../common/custom.common.module';
   ],
   imports: [
     CustomCommonModule,
+    AppModule,
     CommonModule,
     CustomersRoutingModule,
     MaterialModule,
