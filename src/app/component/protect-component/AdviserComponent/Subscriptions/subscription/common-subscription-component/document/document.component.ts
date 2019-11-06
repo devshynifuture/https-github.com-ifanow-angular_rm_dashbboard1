@@ -45,7 +45,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class DocumentComponent implements OnInit {
   quotationDesignEmail: any;
-  @Input() upperData;
+  // @Input() upperData;
 
   advisorId;
 
@@ -56,6 +56,7 @@ export class DocumentComponent implements OnInit {
   mappedData = [];
   dataCount;
   _clientData: any;
+  _upperData: any;
 
   constructor(public subInjectService: SubscriptionInject,
               private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
@@ -64,7 +65,19 @@ export class DocumentComponent implements OnInit {
     //   data => this.getDocumentsDesignData(data)
     // );
   }
+  @Input()
+  set upperData(upperData) {
+    console.log('FeeStructureComponent upperData set : ', this.upperData);
 
+    this._upperData = upperData;
+    // setTimeout(() => {
+    //   this.openPlanSliderFee(upperData, 'fixedFee', 'open');
+    // }, 300);
+  }
+
+  get upperData(): any {
+    return this._upperData;
+  }
   @Input() componentFlag: string;
   @Input()
   set clientData(clientData) {
