@@ -253,12 +253,14 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   filterSubscriptionRes(data) {
     console.log('filterSubscriptionRes', data);
-    this.getSubSummaryRes(data);
+    this.dataSource = data;
+    // this.getSubSummaryRes(data);
   }
 
   addFiltersDate(dateFilter) {
     console.log('addFilters', dateFilter);
-    this.filterDate = [dateFilter];
+   //this.filterDate = [dateFilter];
+    this.filterDate.push(dateFilter);
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     UtilService.getStartOfTheDay(beginDate);
@@ -309,8 +311,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       advisorId: this.advisorId,
       limit: -1,
       offset: 0,
-      fromDate: this.selectedDateRange ? this.selectedDateRange.begin.toDateString() : null,
-      toDate: this.selectedDateRange ? this.selectedDateRange.end.toDateString() : null,
+      fromDate: (this.filterDate.length > 0) ? this.selectedDateRange.begin.toDateString() : null,
+      toDate:(this.filterDate.length > 0) ? this.selectedDateRange.end.toDateString() : null,
       statusIdList: this.statusIdList,
       dateType: this.selectedDateFilter ? this.selectedDateFilter.value : 0
     };
