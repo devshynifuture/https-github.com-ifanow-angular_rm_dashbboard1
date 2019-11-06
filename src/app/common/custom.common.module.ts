@@ -8,8 +8,8 @@ import {MaterialModule} from '../material/material';
 
 
 @NgModule({
-  declarations: [DialogContainerComponent, CustomDialogContainerComponent
-
+  declarations: [DialogContainerComponent,
+    CustomDialogContainerComponent
   ],
   imports: [
     MaterialModule,
