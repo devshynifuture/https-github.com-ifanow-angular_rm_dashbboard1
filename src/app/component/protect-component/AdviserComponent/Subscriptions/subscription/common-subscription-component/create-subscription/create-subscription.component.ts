@@ -207,7 +207,7 @@ export class CreateSubscriptionComponent implements OnInit {
   }
 
   Close(state) {
-    this.subInjectService.changeUpperRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
     this.stepper.selectedIndex = 0;
     this.subscriptionDetails.reset();
   }
@@ -265,8 +265,7 @@ export class CreateSubscriptionComponent implements OnInit {
         clientBillerProfiles: this.selectedPayee,
         clientId: this.clientData.clientId,
         dueDateFrequency: this.subscriptionDetails.get('dueDateFrequency').value,
-        startsOn: this.subscriptionDetails.get('activationDate').value,
-        fromDate: '2019-10-16T13:54:25.983Z',
+        startsOn: this.subscriptionDetails.get('activationDate').value._d,
         subscriptionNumber: this.feeStructureData.subscriptionNo,
         feeMode: this.subscriptionDetails.get('invoiceSendingMode').value,
         Status: 1,

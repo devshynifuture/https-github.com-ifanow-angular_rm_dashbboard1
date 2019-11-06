@@ -113,21 +113,34 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
     this.dataSource = data;
   }
 
-  deleteModal(value, data) {
+  deleteModal(value, subData) {
     const dialogData = {
       data: value,
-      dataToShow: data,
       header: 'DELETE',
-      body: 'Are you sure you want to delete the suscription?',
+      body: 'Are you sure you want to delete the document GD?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
-      btnNo: 'DELETE'
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        const obj = {
+          advisorId: this.advisorId,
+          id: subData.id
+        };
+        this.subscription.deleteSubscriptionData(obj).subscribe(
+          data => {this.deletedData(data);
+            dialogRef.close()}
+        ); 
+      
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
     };
+    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
-
       autoFocus: false,
 
     });
@@ -152,6 +165,12 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
       });
+    }
+  }
+  deletedData(data) {
+    if (data == true) {
+      this.eventService.changeUpperSliderState({state: 'close'});
+      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');  
     }
   }
 
