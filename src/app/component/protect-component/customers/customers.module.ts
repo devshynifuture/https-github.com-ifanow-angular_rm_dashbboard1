@@ -15,8 +15,10 @@ import {AddProfileSummaryComponent} from './component/common-component/add-profi
 import {SchemeLevelTransactionComponent} from './component/common-component/scheme-level-transaction/scheme-level-transaction.component';
 // import { LiabilityrightComponent } from './component/customer/accounts/liabilities/liabilityright/liabilityright.component';
 import {MaterialModule} from '../../../material/material';
-import { DocumentsComponent } from './component/customer/accounts/documents/documents.component';
-import { MutualFundsCapitalComponent } from './component/customer/accounts/mutual-funds-capital/mutual-funds-capital.component';
+import {DocumentsComponent} from './component/customer/accounts/documents/documents.component';
+import {MutualFundsCapitalComponent} from './component/customer/accounts/mutual-funds-capital/mutual-funds-capital.component';
+import {CustomCommonModule} from '../../../common/custom.common.module';
+import {AppModule} from "../../../app.module";
 
 
 @NgModule({
@@ -35,9 +37,10 @@ import { MutualFundsCapitalComponent } from './component/customer/accounts/mutua
     IncomeComponent,
     DocumentsComponent,
     MutualFundsCapitalComponent,
-    
-    ],
+  ],
   imports: [
+    CustomCommonModule,
+    AppModule,
     CommonModule,
     CustomersRoutingModule,
     MaterialModule,

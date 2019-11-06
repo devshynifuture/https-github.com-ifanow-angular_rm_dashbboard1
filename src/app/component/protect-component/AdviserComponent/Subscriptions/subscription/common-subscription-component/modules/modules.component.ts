@@ -12,11 +12,24 @@ import { element } from 'protractor';
   styleUrls: ['./modules.component.scss']
 })
 export class ModulesComponent implements OnInit {
+  _upperData: any;
 
   constructor(private subService: SubscriptionService, private eventService: EventService) {
   }
+  @Input()
+  set upperData(upperData) {
+    console.log('FeeStructureComponent upperData set : ', this.upperData);
 
-  @Input() upperData;
+    this._upperData = upperData;
+    // setTimeout(() => {
+    //   this.openPlanSliderFee(upperData, 'fixedFee', 'open');
+    // }, 300);
+  }
+
+  get upperData(): any {
+    return this._upperData;
+  }
+  // @Input() upperData;
   ModuleData;
   mappedData = [];
 

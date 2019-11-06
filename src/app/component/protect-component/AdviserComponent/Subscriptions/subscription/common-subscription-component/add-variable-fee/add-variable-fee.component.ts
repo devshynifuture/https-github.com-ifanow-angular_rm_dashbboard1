@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
@@ -26,7 +26,7 @@ export class AddVariableFeeComponent implements OnInit {
   otherAssetData;
   selectedOtherAssets = [];
   pricing;
-
+  @Output() outputVariableData=new EventEmitter(); 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
               private subService: SubscriptionService, private enumService: EnumServiceService, private eventService: EventService) {
   }
@@ -38,10 +38,11 @@ export class AddVariableFeeComponent implements OnInit {
     this.enumService.getOtherAssetData().forEach(element => {
       this.otherAssetData.push(Object.assign({}, element));
     });
+    this.createVariableFeeForm('')
     console.log(this.otherAssetData);
-    this.subInjectService.rightSideBarData.subscribe(
-      data => this.getFeeFormUpperData(data)
-    );
+    // this.subInjectService.rightSideBarData.subscribe(
+    //   data => this.getFeeFormUpperData(data)
+    // );
   }
 
   setValidation(flag) {
@@ -56,31 +57,35 @@ export class AddVariableFeeComponent implements OnInit {
   getFormControl() {
     return this.variableFeeData.controls;
   }
-
+  createVariableFeeForm(data)
+  {
+    this.variableFeeData = this.fb.group({
+      serviceName: [, [Validators.required]],
+      code: [, [Validators.required]],
+      description: [, [Validators.required]],
+      billEvery: [, [Validators.required]],
+      Duration: [1],
+      directFees: this.fb.group({
+        equity: [, [Validators.required]],
+        debt: [, [Validators.required]],
+        liquid: [, [Validators.required]]
+      }),
+      regularFees: this.fb.group({
+        equity: [, [Validators.required]],
+        debt: [, [Validators.required]],
+        liquid: [, [Validators.required]]
+      }),
+      otherAssetClassFees: [],
+      pricing: [, [Validators.required]]
+    });
+    this.getFormControl().serviceName.maxLength = 40;
+    this.getFormControl().code.maxLength = 10;
+    this.getFormControl().description.maxLength = 160;
+  }
   getFeeFormUpperData(data) {
     if (data == '') {
-      this.variableFeeData = this.fb.group({
-        serviceName: [data, [Validators.required]],
-        code: [data, [Validators.required]],
-        description: [data, [Validators.required]],
-        billEvery: [data, [Validators.required]],
-        Duration: [1],
-        directFees: this.fb.group({
-          equity: [data, [Validators.required]],
-          debt: [data, [Validators.required]],
-          liquid: [data, [Validators.required]]
-        }),
-        regularFees: this.fb.group({
-          equity: [data, [Validators.required]],
-          debt: [data, [Validators.required]],
-          liquid: [data, [Validators.required]]
-        }),
-        otherAssetClassFees: [data],
-        pricing: [data, [Validators.required]]
-      });
-      this.getFormControl().serviceName.maxLength = 40;
-      this.getFormControl().code.maxLength = 10;
-      this.getFormControl().description.maxLength = 160;
+      this.createVariableFeeForm('')
+      return
     } else {
       this.variableFeeData = this.fb.group({
         serviceName: [data.serviceName, [Validators.required]],
@@ -116,9 +121,9 @@ export class AddVariableFeeComponent implements OnInit {
   }
 
   Close(state) {
-    this.subInjectService.rightSliderData(state);
+    this.subInjectService.changeUpperRightSliderState({state: 'close'});
     this.setValidation(false);
-    this.variableFeeData.reset();
+    this.createVariableFeeForm('')
   }
 
   closeTab(state, value) {
@@ -182,16 +187,17 @@ export class AddVariableFeeComponent implements OnInit {
       };
       console.log('jifsdfoisd', obj);
       this.subService.createSettingService(obj).subscribe(
-        data => this.saveVariableFeeDataResponse(data)
+        data => this.saveVariableFeeDataResponse(data,obj)
       );
     }
 
   }
 
-  saveVariableFeeDataResponse(data) {
-    this.subInjectService.pushUpperData(data);
-    this.Close('close');
+  saveVariableFeeDataResponse(data,obj) {
+    this.outputVariableData.emit(data)
     this.eventService.openSnackBar('Service is Created', 'OK');
+    this.subInjectService.changeUpperRightSliderState({state: 'close'});
+
   }
 
   select(assetData) {
