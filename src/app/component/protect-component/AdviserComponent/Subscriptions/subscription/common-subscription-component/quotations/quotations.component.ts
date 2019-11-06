@@ -27,6 +27,7 @@ export interface PeriodicElement {
   styleUrls: ['./quotations.component.scss']
 })
 export class QuotationsComponent implements OnInit {
+  noData: string;
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog,
               private subAService: SubscriptionService) {
@@ -61,7 +62,25 @@ export class QuotationsComponent implements OnInit {
     // this.getQuotationsList();
     this.dataCount = 0;
   }
+  Open(value, state, data) {
+    const fragmentData = {
+      Flag: value,
+      data:data,
+      id: 1,
+      state: state
+    };
+    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', );
+          rightSideDataSub.unsubscribe();
+        }
+      }
+      
+    );
 
+  }
   getQuotationsList() {
     const obj = {
       // clientId: 2970
@@ -73,20 +92,23 @@ export class QuotationsComponent implements OnInit {
   }
 
   selectedInvoice(ele) {
-    console.log('invoice data', ele);
-    if (ele) {
-      this.dataCount--;
-    } else {
-      this.dataCount++;
-    }
+    this.dataCount = 0;
+    this.dataSource.forEach(item => {
+      console.log('item item ', item);
+      if (item.selected) {
+        this.dataCount++;
+      }
+    });
   }
 
   getQuotationsListResponse(data) {
-    data.forEach(singleData => {
+   if(data==undefined){
+    this.noData="No Data Found"
+   }else{ data.forEach(singleData => {
       singleData.isChecked = false;
     });
     console.log('dsfgasdfsdf', data);
-    this.dataSource = data;
+    this.dataSource = data;}
   }
 
   openQuotationsESign(value, state) {
@@ -217,8 +239,56 @@ export class QuotationsComponent implements OnInit {
   }
 
   viewQuotation(value, data) {
-    this.quotationDesign = value;
-    console.log(data);
-    this.subInjectService.addSingleProfile(data);
+    // this.quotationDesign = value;
+    // console.log(data);
+    // this.subInjectService.addSingleProfile(data);
+    const fragmentData = {
+      Flag: value,
+      data: data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ',);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
+  selectAll(event) {
+    // const checked = event.target.checked;
+    // this.dataSource.forEach(item => item.selected = 'checked');
+
+    this.dataCount = 0;
+    this.dataSource.forEach(item => {
+      //   if(item.selected==false)
+      //   {
+      //     item.selected = true;
+      //     this.dataCount++;
+      //   }else{
+      //     item.selected = false;
+      //     this.dataCount--;
+      //   }
+      // });
+      item.selected = event.checked;
+      if (item.selected) {
+        this.dataCount++;
+      }
+      // if(item.dataCountd>=1){
+      //   this.dataCount=1
+      // }else{
+      //   this.dataCount++
+      // }
+    });
+    // if(item.selected=="true"){
+    //   this.dataCount++;
+    // }else{
+    //   this.dataCount--;
+    // }
+
+  }
+
 }

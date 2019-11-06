@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {EnumServiceService} from '../../enum-service.service';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { EnumServiceService } from '../../enum-service.service';
 import * as _ from 'lodash';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from "../../../../../../../auth-service/authService";
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from "../../../../../../../auth-service/authService";
 import { element } from 'protractor';
 
 @Component({
@@ -26,9 +26,14 @@ export class AddVariableFeeComponent implements OnInit {
   otherAssetData;
   selectedOtherAssets = [];
   pricing;
-
+  ischeckVariableData
+  @Input() set variableFee(data) {
+    this.ischeckVariableData = data
+    this.getFeeFormUpperData(data)
+  }
+  @Output() outputVariableData = new EventEmitter();
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private subService: SubscriptionService, private enumService: EnumServiceService, private eventService: EventService) {
+    private subService: SubscriptionService, private enumService: EnumServiceService, private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -38,10 +43,8 @@ export class AddVariableFeeComponent implements OnInit {
     this.enumService.getOtherAssetData().forEach(element => {
       this.otherAssetData.push(Object.assign({}, element));
     });
+    (this.ischeckVariableData) ? console.log("fixed fee Data") : this.createVariableFeeForm('');
     console.log(this.otherAssetData);
-    this.subInjectService.rightSideBarData.subscribe(
-      data => this.getFeeFormUpperData(data)
-    );
   }
 
   setValidation(flag) {
@@ -56,31 +59,34 @@ export class AddVariableFeeComponent implements OnInit {
   getFormControl() {
     return this.variableFeeData.controls;
   }
-
+  createVariableFeeForm(data) {
+    this.variableFeeData = this.fb.group({
+      serviceName: [, [Validators.required]],
+      code: [, [Validators.required]],
+      description: [, [Validators.required]],
+      billEvery: [, [Validators.required]],
+      Duration: [1],
+      directFees: this.fb.group({
+        equity: [, [Validators.required]],
+        debt: [, [Validators.required]],
+        liquid: [, [Validators.required]]
+      }),
+      regularFees: this.fb.group({
+        equity: [, [Validators.required]],
+        debt: [, [Validators.required]],
+        liquid: [, [Validators.required]]
+      }),
+      otherAssetClassFees: [],
+      pricing: [, [Validators.required]]
+    });
+    this.getFormControl().serviceName.maxLength = 40;
+    this.getFormControl().code.maxLength = 10;
+    this.getFormControl().description.maxLength = 160;
+  }
   getFeeFormUpperData(data) {
     if (data == '') {
-      this.variableFeeData = this.fb.group({
-        serviceName: [data, [Validators.required]],
-        code: [data, [Validators.required]],
-        description: [data, [Validators.required]],
-        billEvery: [data, [Validators.required]],
-        Duration: [1],
-        directFees: this.fb.group({
-          equity: [data, [Validators.required]],
-          debt: [data, [Validators.required]],
-          liquid: [data, [Validators.required]]
-        }),
-        regularFees: this.fb.group({
-          equity: [data, [Validators.required]],
-          debt: [data, [Validators.required]],
-          liquid: [data, [Validators.required]]
-        }),
-        otherAssetClassFees: [data],
-        pricing: [data, [Validators.required]]
-      });
-      this.getFormControl().serviceName.maxLength = 40;
-      this.getFormControl().code.maxLength = 10;
-      this.getFormControl().description.maxLength = 160;
+      this.createVariableFeeForm('')
+      return
     } else {
       this.variableFeeData = this.fb.group({
         serviceName: [data.serviceName, [Validators.required]],
@@ -101,14 +107,12 @@ export class AddVariableFeeComponent implements OnInit {
         otherAssetClassFees: [data.servicePricing.pricingList[2].serviceSubAssets],
         pricing: [data.servicePricing.pricingList[2].pricing, [Validators.required]]
       });
-      this.otherAssetData=data.servicePricing.pricingList[2].serviceSubAssets
-      this.otherAssetData.forEach(element=>
-        {
-          if(element.isActive==1)
-          {
-            this.selectedOtherAssets.push(element.subAssetClassId)
-          }
-        })
+      this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
+      this.otherAssetData.forEach(element => {
+        if (element.isActive == 1) {
+          this.selectedOtherAssets.push(element.subAssetClassId)
+        }
+      })
       this.getFormControl().serviceName.maxLength = 40;
       this.getFormControl().code.maxLength = 10;
       this.getFormControl().description.maxLength = 160;
@@ -116,9 +120,9 @@ export class AddVariableFeeComponent implements OnInit {
   }
 
   Close(state) {
-    this.subInjectService.rightSliderData(state);
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
     this.setValidation(false);
-    this.variableFeeData.reset();
+    this.createVariableFeeForm('')
   }
 
   closeTab(state, value) {
@@ -182,20 +186,20 @@ export class AddVariableFeeComponent implements OnInit {
       };
       console.log('jifsdfoisd', obj);
       this.subService.createSettingService(obj).subscribe(
-        data => this.saveVariableFeeDataResponse(data)
+        data => this.saveVariableFeeDataResponse(data, obj)
       );
     }
 
   }
 
-  saveVariableFeeDataResponse(data) {
-    this.subInjectService.pushUpperData(data);
-    this.Close('close');
+  saveVariableFeeDataResponse(data, obj) {
+    this.outputVariableData.emit(data)
     this.eventService.openSnackBar('Service is Created', 'OK');
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
   }
 
   select(assetData) {
-    (assetData.isActive==1) ? this.unselectAssets(assetData) : this.selectAssets(assetData);
+    (assetData.isActive == 1) ? this.unselectAssets(assetData) : this.selectAssets(assetData);
   }
 
   selectAssets(data) {

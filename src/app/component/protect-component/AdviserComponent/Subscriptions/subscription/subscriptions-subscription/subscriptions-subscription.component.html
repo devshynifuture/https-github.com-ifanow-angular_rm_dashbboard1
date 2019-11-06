@@ -49,16 +49,6 @@
                     <sat-datepicker #picker2 [rangeMode]="true">
                     </sat-datepicker>
                     <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
-                    <!-- <input type="date" class="form-control br-0"(change)="updateCalcs($event.target.value)"> -->
-                    <!-- <input matInput [matDatepicker]="picker3" placeholder="Choose a date"
-                            (dateChange)="orgValueChange($event.target.value)">
-                     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-                     <mat-datepicker #picker3></mat-datepicker>
-                     <input matInput [matDatepicker]="picker4" placeholder="Choose a date"
-                            (dateChange)="orgValueChange2($event.target.value)">
-                     <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-                     <mat-datepicker #picker4></mat-datepicker>-->
-<!--                  </div>-->
                   <i class="material-icons text-custom ml-12" (click)="removeDate(i)">
                     cancel
                   </i>
@@ -71,7 +61,7 @@
               <div class="col-md-6">
                 <select class="form-control br-0" id="sel11" [(ngModel)]='selectedStatusFilter'
                         (change)="addFilters(selectedStatusFilter)">
-                  <option value="" [disabled]="true">FILTERS ONE</option>
+                  <option [disabled]="true" selected = "selected">FILTERS ONE</option>
                   <option *ngFor="let chip of chips" [ngValue]="chip">{{chip.name}}</option>
                 </select>
               </div>
@@ -172,10 +162,10 @@
           more_vert
         </i>
           <mat-menu #menu="matMenu">
-            <a (click)="Open('open',element)" mat-menu-item>View & Modify fee structure</a>
-            <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change Biller</a>
-            <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change Payee</a>
-            <a (click)="delete('cancelSubscription',element)" class="bt-1" mat-menu-item>Cancel
+            <a (click)="Open('open',element)" mat-menu-item>View & modify fee structure</a>
+            <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change biller</a>
+            <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change payee</a>
+            <a *ngIf="element.status!=1" (click)="delete('cancelSubscription',element)" class="bt-1" mat-menu-item>Cancel
               subscription</a>
             <a (click)="deleteModal('SUBSCRIPTION',element)" mat-menu-item>Delete subscription</a>
           </mat-menu>
@@ -184,5 +174,8 @@
       <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
       <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
     </table>
+    <h4  *ngIf="dataSource==''" class="text-center pt-72">{{noData}}</h4>
+    <h4  *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4>
+
   </div>
 </div>

@@ -27,6 +27,7 @@ export class ServicesComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.getPlanServiceData();
     this.mappedData = [];
+    console.log('upperdata',this.planData)
   }
 
   getPlanServiceData() {

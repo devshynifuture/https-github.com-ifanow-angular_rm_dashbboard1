@@ -23,12 +23,24 @@ export class DeleteSubscriptionComponent implements OnInit {
     console.log('fragmentData', this.fragmentData);
   }
 
-  cancelSubscription() {
-    const obj = {
-      // advisorId: 12345,
-      advisorId: this.advisorId,
-      id: this.fragmentData.subData.id
-    };
+  cancelSubscription(state) {
+    let obj;
+    if(state=='immediately')
+    {
+       obj = {
+        // advisorId: 12345,
+        advisorId: this.advisorId,
+        id: this.fragmentData.subData.id
+      };
+    }
+    else{
+       obj={
+        "id":this.fragmentData.subData.id,
+        "advisorId":this.advisorId,
+        "cancellationDate":this.fragmentData.subData.nextBillingDate
+        }
+    }
+    
     this.subscription.cancelSubscriptionData(obj).subscribe(
       data => this.canceledData(data)
     );

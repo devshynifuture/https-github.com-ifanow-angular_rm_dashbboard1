@@ -42,7 +42,7 @@ export class ConfirmDialogComponent implements OnInit {
 
   clickButton2() {
     if (this.dialogData.negativeMethod != undefined) {
-      this.dialogData.negativeMethod();
+      this.dialogData.positiveMethod();
     } else {
       console.log('negative not defined 11111111111111111111111111111111111111111111');
 
@@ -55,40 +55,11 @@ export class ConfirmDialogComponent implements OnInit {
 
   deleteSubscription() {
     
-    // if (this.dialogData.positiveMethod) {
-    //   this.dialogData.positiveMethod();
-    // } else {
-    //   console.log('positive not defined 11111111111111111111111111111111111111111111');
+    if (this.dialogData.positiveMethod) {
+      this.dialogData.positiveMethod();
+    } else {
+      console.log('positive not defined 11111111111111111111111111111111111111111111');
 
-    // }
-    if (this.dialogData.data == 'SUBSCRIPTION') {
-      const obj = {
-        advisorId: this.advisorId,
-        id: this.dialogData.dataToShow.id
-      };
-      this.subscription.deleteSubscriptionData(obj).subscribe(
-        data => this.deletedData(data)
-      );
-    }
-    if (this.dialogData.data == 'PLAN') {
-      const obj = {
-        // advisorId: 12345,
-        advisorId: this.advisorId,
-        id: this.dialogData.planData.id
-      };
-      this.subscription.deleteSubscriptionPlan(obj).subscribe(
-        data => this.deletedData(data)
-      );
-    }
-    if(this.dialogData.data=='SERVICE')
-    {
-      const obj={
-        advisorId:this.advisorId,
-        id:this.dialogData.serviceData.id
-      }
-     this.subscription.deleteService(obj).subscribe(
-       data =>this.deletedData(data)
-     )
     }
   }
 

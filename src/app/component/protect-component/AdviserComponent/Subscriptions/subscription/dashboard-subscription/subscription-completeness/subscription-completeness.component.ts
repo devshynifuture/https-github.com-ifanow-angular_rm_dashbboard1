@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit ,Input} from '@angular/core';
 import {SubscriptionService} from '../../../subscription.service';
 import {SubscriptionComponent} from '../../subscription.component';
 import {EventService} from 'src/app/Data-service/event.service';
@@ -19,10 +19,9 @@ export class SubscriptionCompletenessComponent implements OnInit {
   constructor(public dialog: MatDialog, private subscription: SubscriptionService, public sub: SubscriptionComponent,
               public eventService: EventService) {
   }
-
+  @Input() dataObj;
   // advisorId = 2727;
   advisorId;
-  dataObj;
 //   dataObj=[{'completed':'false','data':'Create Plans, Services & Documents','innerData':'Adding these will set up the foundation for your RIA practice','tab':6}
 // ,{'completed':'false','data':'Set up your Biller profile','innerData':'These details show up in the invoices your clients will receive.','tab':6},
 // {'completed':'false','data':'Add Plan to a client','innerData':'Kickstart your core workflow with a client and unfold the magic. Add a Plan to take things forward.','tab':1},
@@ -33,6 +32,7 @@ export class SubscriptionCompletenessComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     // this.getSubscriptionStagesRecord();
     this.getDashboardResponse();
+    // this.getDashboardData(this.dataObj);
     this.showLoader = true;
   }
 
@@ -52,13 +52,18 @@ export class SubscriptionCompletenessComponent implements OnInit {
     );
   }
 */
+  // getDashboardResponse() {
+
+  //   this.subscription.getDashboardSubscriptionResponse(this.advisorId).subscribe(
+  //     data => this.getDashboardData(data)
+  //   );
+  // }
   getDashboardResponse() {
 
     this.subscription.getDashboardSubscriptionResponse(this.advisorId).subscribe(
-      data => this.getDashboardData(data)
+      data => this.getDashboardData(data.advisorAccomplishedSubscriptionFinalList)
     );
   }
-
   getDashboardData(data) {
     if (data && data.length > 0) {
       data.forEach((singleData) => {
@@ -89,7 +94,7 @@ export class SubscriptionCompletenessComponent implements OnInit {
   currentTabs(value) {
     console.log(value.selectedTab);
     this.eventService.tabData(value.selectedTab);
-    value.completed = true;
+    // value.completed = true;
   }
 
   openPopup(data) {
