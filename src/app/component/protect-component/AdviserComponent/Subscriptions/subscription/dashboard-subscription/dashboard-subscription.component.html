@@ -1,4 +1,4 @@
-<div class="full-lights pb-36" *ngIf="showSubStep==false" id="ui-dashboard">
+<div class="full-lights pb-36 " *ngIf="showSubStep==false" id="ui-dashboard" [ngClass]="showLetsBegin==true ? 'pt-130': 'pt-0'  ">
   <div class="wrapper-20">
     <div class="row bg-red mt-20 mb-36" *ngIf="showLetsBegin">
       <div class="col-md-5">
@@ -12,7 +12,7 @@
           class="material-icons right text-right"> arrow_forward </i></button>
       </div>
     </div>
-    <div class=" subscription-summary">
+    <div class=" subscription-summary" [ngClass]="showLetsBegin==true ? 'pt-40': 'pt-100'  ">
       <div class="row">
         <div class="col-md-4 pl-0">
           <div class="bg-white pt-20 pb-16 text-center" *ngIf="dataSourceClientWithSub !=undefined">
@@ -246,4 +246,4 @@
     </div>
   </div>
 </div>
-<app-subscription-completeness *ngIf="showSubStep"></app-subscription-completeness>
+<app-subscription-completeness  *ngIf="showSubStep"></app-subscription-completeness>

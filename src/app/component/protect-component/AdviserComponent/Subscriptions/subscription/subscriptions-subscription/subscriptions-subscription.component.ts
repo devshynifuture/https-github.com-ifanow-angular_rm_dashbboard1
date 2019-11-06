@@ -257,7 +257,12 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   filterSubscriptionRes(data) {
     console.log('filterSubscriptionRes', data);
-    this.dataSource = data;
+    if(data==undefined){
+      this.noData="No Data Found";
+      this.dataSource="";
+    }else{
+      this.dataSource = data;
+    }
     // this.getSubSummaryRes(data);
   }
 
