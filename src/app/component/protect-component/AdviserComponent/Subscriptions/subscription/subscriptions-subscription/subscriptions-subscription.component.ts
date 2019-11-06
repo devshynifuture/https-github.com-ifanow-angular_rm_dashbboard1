@@ -114,6 +114,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   getDate: any;
   getDate2: string;
   selectedDateRange = {begin: new Date(), end: new Date()};
+  noData: string;
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
               private eventService: EventService, private subService: SubscriptionService,
@@ -144,9 +145,12 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
   getSubSummaryRes(data) {
-    console.log(data);
+  if(data==undefined){
+    this.noData="No Data Found";
+  }else{console.log(data);
     this.dataSource = data;
     this.DataToSend = data;
+  }
   }
 
   openPlanSlider(value, state, data) {
@@ -244,34 +248,24 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   addFilters(addFilters) {
     console.log('addFilters', addFilters);
-    /*if (addFilters == 'LIVE') {
-      this.senddataTo = 2;
-    } else if (addFilters == 'NOT STARTED') {
-      this.senddataTo = 1;
-    } else if (addFilters == 'FUTURE') {
-      this.senddataTo = 3;
-    } else {
-      this.senddataTo = 4;
-    }*/
-    // console.log(this.senddataTo);
     if (!_.includes(this.filterStatus, addFilters)) {
       this.filterStatus.push(addFilters);
     } else {
       // _.remove(this.filterStatus, this.senddataTo);
     }
-    // this.sendData = this.filterStatus;
-
     this.callFilter();
   }
 
   filterSubscriptionRes(data) {
     console.log('filterSubscriptionRes', data);
-    this.getSubSummaryRes(data);
+    this.dataSource = data;
+    // this.getSubSummaryRes(data);
   }
 
   addFiltersDate(dateFilter) {
     console.log('addFilters', dateFilter);
-    this.filterDate = [dateFilter];
+   //this.filterDate = [dateFilter];
+    this.filterDate.push(dateFilter);
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     UtilService.getStartOfTheDay(beginDate);
@@ -322,15 +316,19 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       advisorId: this.advisorId,
       limit: -1,
       offset: 0,
-      fromDate: this.selectedDateRange ? this.selectedDateRange.begin.toDateString() : null,
-      toDate: this.selectedDateRange ? this.selectedDateRange.end.toDateString() : null,
+      fromDate: (this.filterDate.length > 0) ?  this.datePipe.transform(this.selectedDateRange.begin, 'yyyy-MM-dd') : null,
+      toDate:(this.filterDate.length > 0) ?  this.datePipe.transform(this.selectedDateRange.end, 'yyyy-MM-dd') : null,
       statusIdList: this.statusIdList,
-      dateType: this.selectedDateFilter ? this.selectedDateFilter.value : 0
+      dateType: (this.filterDate.length > 0) ? this.selectedDateFilter.value : 0
     };
     console.log('this.callFilter req obj : ', obj);
-    this.subService.filterSubscription(obj).subscribe(
-      data => this.filterSubscriptionRes(data)
-    );
+    if(obj.statusIdList.length == 0 && obj.fromDate == null){
+      this.getSummaryDataAdvisor();
+    }else{
+      this.subService.filterSubscription(obj).subscribe(
+        data => this.filterSubscriptionRes(data)
+      );
+    }
   }
 
   delete(data, value) {

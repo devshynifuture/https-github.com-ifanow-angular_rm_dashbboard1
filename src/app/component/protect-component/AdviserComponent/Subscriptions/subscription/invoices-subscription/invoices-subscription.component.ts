@@ -7,6 +7,7 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
 import {MatDialog} from '@angular/material';
 import {AuthService} from "../../../../../../auth-service/authService";
 import {UtilService} from "../../../../../../services/util.service";
+import * as _ from 'lodash';
 
 export interface PeriodicElement {
   date: string;
@@ -26,7 +27,22 @@ export interface PeriodicElement {
   styleUrls: ['./invoices-subscription.component.scss']
 })
 export class InvoicesSubscriptionComponent implements OnInit {
+
+  chips = [
+    {name: 'LIVE', value: 1},
+    {name: 'PAID', value: 2},
+    {name: 'OVERDUE', value: 3}
+  ];
+  dateChips = [
+    {name: 'Date', value: 1},
+    {name: 'Due date', value: 2},
+  ];
   invoiceDesign: string;
+  noData: string;
+  filterStatus = [];
+  filterDate = [];
+  statusIdList = [];
+  selectedDateRange: { begin: Date; end: Date; };
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
               private eventService: EventService, public subscription: SubscriptionService) {
@@ -75,12 +91,16 @@ export class InvoicesSubscriptionComponent implements OnInit {
   }
 
   getInvoiceResponseData(data) {
+    if(data==undefined){
+      this.noData="No Data Found";
+    }else {
     console.log(data);
     const ELEMENT_DATA = data;
     this.invoiceClientData = data;
     ELEMENT_DATA.forEach(item => item.selected = false);
     this.dataSource = ELEMENT_DATA;
     this.showLoader = false;
+  }
   }
 
   // showInvoicePdf(value)
@@ -176,6 +196,43 @@ export class InvoicesSubscriptionComponent implements OnInit {
   display(data) {
     console.log(data);
     this.ngOnInit();
+  }
+  addFilters(addFilters) {
+    console.log('addFilters', addFilters);
+    if (!_.includes(this.filterStatus, addFilters)) {
+      this.filterStatus.push(addFilters);
+    } else {
+      // _.remove(this.filterStatus, this.senddataTo);
+    }
+  }
+
+  filterSubscriptionRes(data) {
+    console.log('filterSubscriptionRes', data);
+    this.dataSource = data;
+    // this.getSubSummaryRes(data);
+  }
+
+  addFiltersDate(dateFilter) {
+    console.log('addFilters', dateFilter);
+   //this.filterDate = [dateFilter];
+    this.filterDate.push(dateFilter);
+    const beginDate = new Date();
+    beginDate.setMonth(beginDate.getMonth() - 1);
+    UtilService.getStartOfTheDay(beginDate);
+
+    const endDate = new Date();
+    UtilService.getStartOfTheDay(endDate);
+
+    this.selectedDateRange = {begin: beginDate, end: endDate};
+  }
+
+  removeDate(item) {
+    this.filterDate.splice(item, 1);
+ 
+  }
+
+  remove(item) {
+    this.filterStatus.splice(item, 1);
   }
 
   formatter(data) {

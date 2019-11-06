@@ -27,6 +27,7 @@ export interface PeriodicElement {
   styleUrls: ['./quotations.component.scss']
 })
 export class QuotationsComponent implements OnInit {
+  noData: string;
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog,
               private subAService: SubscriptionService) {
@@ -91,20 +92,23 @@ export class QuotationsComponent implements OnInit {
   }
 
   selectedInvoice(ele) {
-    console.log('invoice data', ele);
-    if (ele) {
-      this.dataCount--;
-    } else {
-      this.dataCount++;
-    }
+    this.dataCount = 0;
+    this.dataSource.forEach(item => {
+      console.log('item item ', item);
+      if (item.selected) {
+        this.dataCount++;
+      }
+    });
   }
 
   getQuotationsListResponse(data) {
-    data.forEach(singleData => {
+   if(data==undefined){
+    this.noData="No Data Found"
+   }else{ data.forEach(singleData => {
       singleData.isChecked = false;
     });
     console.log('dsfgasdfsdf', data);
-    this.dataSource = data;
+    this.dataSource = data;}
   }
 
   openQuotationsESign(value, state) {
@@ -254,4 +258,37 @@ export class QuotationsComponent implements OnInit {
       }
     );
   }
+  selectAll(event) {
+    // const checked = event.target.checked;
+    // this.dataSource.forEach(item => item.selected = 'checked');
+
+    this.dataCount = 0;
+    this.dataSource.forEach(item => {
+      //   if(item.selected==false)
+      //   {
+      //     item.selected = true;
+      //     this.dataCount++;
+      //   }else{
+      //     item.selected = false;
+      //     this.dataCount--;
+      //   }
+      // });
+      item.selected = event.checked;
+      if (item.selected) {
+        this.dataCount++;
+      }
+      // if(item.dataCountd>=1){
+      //   this.dataCount=1
+      // }else{
+      //   this.dataCount++
+      // }
+    });
+    // if(item.selected=="true"){
+    //   this.dataCount++;
+    // }else{
+    //   this.dataCount--;
+    // }
+
+  }
+
 }

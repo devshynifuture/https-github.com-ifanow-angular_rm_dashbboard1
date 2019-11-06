@@ -1,5 +1,6 @@
 <div class="wrapper-20 bg-grey lter heading-fix b-a">
   <h3 class="m-0 text-center head-common">{{_clientData.name}}</h3>
+
 </div>
 
 <div *ngIf="quotationDesign=='true'" class="bg-white">
@@ -35,13 +36,16 @@
         <p class="m-0 text-black text-left pt-10">{{dataCount}} quotations selected</p>
       </div>
     </div>
-    <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+    <!-- <div *ngIf="dataSource==undefined">
+        <h4 class="text-center">No Data Found</h4>
+            </div> -->
+    <table mat-table [dataSource]="dataSource"  class="mt-8" id="table-low">
       <ng-container matColumnDef="checkbox">
         <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;">
-          <mat-checkbox></mat-checkbox>
+          <mat-checkbox (change)="selectAll($event)" name="selectAll" [value]="element"></mat-checkbox>
         </th>
-        <td mat-cell *matCellDef="let element" style="width: 2%;">
-          <mat-checkbox [(ngModel)]="element.isChecked" (click)="selectedInvoice(element.isChecked)"></mat-checkbox>
+        <td mat-cell *matCellDef="let element">
+            <mat-checkbox name="selectedData"  class="c-p" [(ngModel)]="element.selected" (change)="selectedInvoice(element)"></mat-checkbox>
         </td>
       </ng-container>
       <ng-container matColumnDef="document">
@@ -106,6 +110,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+        <h4  *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4>
   </div>
 </div>
 

@@ -7,9 +7,9 @@ import {SubscriptionPopupComponent} from '../subscription-popup/subscription-pop
 import {SubscriptionService} from '../../../subscription.service';
 import * as _ from 'lodash';
 import {AddDocumentComponent} from '../add-document/add-document.component';
-import {AuthService} from "../../../../../../../auth-service/authService";
+import {AuthService} from '../../../../../../../auth-service/authService';
 import {element} from 'protractor';
-import { UtilService } from 'src/app/services/util.service';
+import {UtilService} from 'src/app/services/util.service';
 // import {element} from 'protractor';
 // import {timingSafeEqual} from 'crypto';
 
@@ -57,6 +57,7 @@ export class DocumentComponent implements OnInit {
   dataCount;
   _clientData: any;
   _upperData: any;
+  noData: string;
 
   constructor(public subInjectService: SubscriptionInject,
               private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
@@ -65,6 +66,7 @@ export class DocumentComponent implements OnInit {
     //   data => this.getDocumentsDesignData(data)
     // );
   }
+
   @Input()
   set upperData(upperData) {
     console.log('FeeStructureComponent upperData set : ', this.upperData);
@@ -78,7 +80,9 @@ export class DocumentComponent implements OnInit {
   get upperData(): any {
     return this._upperData;
   }
+
   @Input() componentFlag: string;
+
   @Input()
   set clientData(clientData) {
     this._clientData = clientData;
@@ -134,7 +138,9 @@ export class DocumentComponent implements OnInit {
 
   getDocumentResponseData(data) {
     console.log(data);
-    if (data) {
+    if (data==undefined){
+      this.noData="No Data Found";
+    }else {
       data.forEach(singleData => {
         singleData.selected = false;
         singleData.documentText = singleData.docText;
@@ -207,11 +213,12 @@ export class DocumentComponent implements OnInit {
     );
 
   }
+
   openSendEmail() {
     const data = {
       advisorId: this.advisorId,
       clientData: this._clientData,
-      templateType: 2, //2 is for quotation
+      templateType: 2, // 2 is for quotation
       documentList: []
     };
     this.dataSource.forEach(singleElement => {
@@ -230,20 +237,19 @@ export class DocumentComponent implements OnInit {
 
     const fragmentData = {
       Flag: value,
-      data: data,
+      data,
       id: 1,
       state: 'open'
     };
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ',);
           rightSideDataSub.unsubscribe();
         }
       }
     );
   }
+
   getplanDocumentDataResponse(data) {
     data.forEach(singleData => {
       singleData.isChecked = false;
@@ -386,7 +392,7 @@ export class DocumentComponent implements OnInit {
     this.serviceDocumentData = data.documentList;
     this.serviceDocumentData.forEach(element => {
       if (element.selected) {
-        this.mappedData.push(element)
+        this.mappedData.push(element);
       }
       element.docText = '<h1>One morning, when Gregor Samsa woke from troubled \n' +
         'dreams.</h1>\n' +
@@ -501,7 +507,7 @@ export class DocumentComponent implements OnInit {
         'boa who sat upright, raising a heavy fur muff that \n' +
         'covered the whole of her lower arm towards the \n' +
         'viewer.</p>\n';
-    })
+    });
   }
 
   deleteModal(value) {
@@ -535,7 +541,7 @@ export class DocumentComponent implements OnInit {
         // advisorId: 12345,
         advisorId: this.advisorId,
         documentRepositoryId: element.documentRepositoryId,
-        mappingId:1
+        mappingId: 1
       };
       obj.push(data);
     });
@@ -648,5 +654,5 @@ export class DocumentComponent implements OnInit {
     //   this.dataCount--;
     //   data.dataCountd =this.dataCount;
     // }
-  }  
+  }
 }

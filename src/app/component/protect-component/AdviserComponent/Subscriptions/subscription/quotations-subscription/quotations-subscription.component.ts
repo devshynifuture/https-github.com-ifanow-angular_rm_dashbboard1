@@ -28,6 +28,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   displayedColumns: string[] = ['name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
   advisorId;
   dataSource;
+  noData: string;
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
               public dialog: MatDialog, private subService: SubscriptionService) {
@@ -50,10 +51,12 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   getQuotationsDataResponse(data) {
-    console.log(data);
-    this.dataSource = data;
+    if(data==undefined){
+      this.noData="No Data Found";
+      }else{console.log(data);
+      this.dataSource = data;
+   }
   }
-
   deleteModal(value) {
     const dialogData = {
       data: value,
@@ -90,7 +93,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
       id: 1,
       state: state
     };
-    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {

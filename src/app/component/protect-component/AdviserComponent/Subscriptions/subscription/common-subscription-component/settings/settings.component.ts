@@ -14,6 +14,7 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class SettingsComponent implements OnInit {
   SettingProfileData: any;
+  noData: string;
 
   constructor(public dialog: MatDialog,private fb:FormBuilder,public subInjectService:SubscriptionInject,
               private eventService:EventService, private subService:SubscriptionService) { }
@@ -54,8 +55,10 @@ export class SettingsComponent implements OnInit {
   }
   getSettingProfileDataResponse(data)
   {
-   console.log('getData biller',data)
-   this.SettingProfileData=data;
+  if(data==undefined){
+    this.noData="No Data Found"
+  }else { console.log('getData biller',data)
+   this.SettingProfileData=data;}
   }
   openPayeeSettings(profileData,value,state)
   {

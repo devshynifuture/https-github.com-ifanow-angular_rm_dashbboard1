@@ -95,11 +95,13 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
     this.storeData=data;
   }
   Close(value) {
-    if (this.showActivityLog == true) {
-      this.showActivityLog = false;
-    } else {
-      this.subInjectService.rightSideData(value);
-    }
+    // if (this.showActivityLog == true) {
+    //   this.showActivityLog = false;
+    // } else {
+    //   this.subInjectService.rightSideData(value);
+    // }
+    this.subInjectService.changeUpperRightSliderState({value:'close'})
+    this.subInjectService.changeUpperRightSliderState({value:'close'})
   }
 
   openFroala() {

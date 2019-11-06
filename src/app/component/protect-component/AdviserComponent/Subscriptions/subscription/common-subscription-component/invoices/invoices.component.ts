@@ -25,6 +25,7 @@ export interface PeriodicElement {
 export class InvoicesComponent implements OnInit {
   clientList: any;
   dataTOget: object;
+  nodata: string;
 
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, private subService: SubscriptionService, public dialog: MatDialog) {
@@ -57,12 +58,13 @@ export class InvoicesComponent implements OnInit {
     );
   }
   getInvoiceResponseData(data) {
-    console.log(data);
-    const ELEMENT_DATA = data;
+    if(data==undefined){
+      this.nodata="No Data Found";
+    }else{const ELEMENT_DATA = data;
     // this.invoiceClientData = data;
     ELEMENT_DATA.forEach(item => item.selected = false);
     this.dataSource = ELEMENT_DATA;
-    // this.showLoader = false;
+   }
   }
   openEdit(edit) {
     this.invoiceDesign = edit;
