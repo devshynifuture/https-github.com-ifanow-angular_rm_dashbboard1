@@ -35,6 +35,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
   billerProfileData: any;
   inputData: any;
   display: any;
+  profileDetailsForm: any;
+  bankDetailsForm: any;
+  MiscellaneousData: any;
   
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private eventService:EventService) {
@@ -49,7 +52,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.inputData = data;
     this.getSingleBillerProfileData(data);
   }
-
+  logUrl=this.fb.group({
+    url:[,[Validators.required]]
+  })
   get data() {
     return this.inputData;
   }
@@ -62,15 +67,15 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   getFormControlProfile() {
-    return this.billerProfileForm.controls.profileDetailsForm.controls;
+    return this.profileDetailsForm.controls;
   }
 
   getFrormControlBank() {
-    return this.billerProfileForm.controls.bankDetailsForm.controls;
+    return this.bankDetailsForm.controls;
   }
 
   getFrormControlMisc() {
-    return this.billerProfileForm.controls.MiscellaneousData.controls;
+    return this.MiscellaneousData.controls;
   }
 
   keyPress(event: any) {
@@ -87,8 +92,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
       data = {};
     }
     this.display=data;
-    this.billerProfileForm = this.fb.group({
-      profileDetailsForm: this.fb.group({
+
+     this.profileDetailsForm= this.fb.group({
         gstinNum: [(data.gstin), [Validators.required]],
         panNum: [(data.pan), [Validators.required]],
         Address: [(data.billerAddress), [Validators.required]],
@@ -98,7 +103,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
         city: [(data.city), [Validators.required]],
         id : [data.id]
       }),
-      bankDetailsForm: this.fb.group({
+      this.bankDetailsForm= this.fb.group({
         nameOnBank: [(data.nameAsPerBank), [Validators.required]],
         bankName: [(data.bankName), [Validators.required]],
         acNo: [(data.acNumber), [Validators.required]],
@@ -109,11 +114,10 @@ export class BillerProfileAdvisorComponent implements OnInit {
         city: [(data.city), Validators.required],
         country: [(data.country), [Validators.required]],
       }),
-      MiscellaneousData: this.fb.group({
+      this.MiscellaneousData= this.fb.group({
         footnote: [(data.footnote), [Validators.required]],
         terms: [(data.terms), [Validators.required]]
       })
-    });
     this.getFormControlProfile().gstinNum.maxLength = 15;
     this.getFormControlProfile().panNum.maxLength = 10;
     this.getFormControlProfile().Address.maxLength = 150;
@@ -132,92 +136,90 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   nextStep(value, eventName) {
-    this.selected = value;
-    if (eventName === 'Save&Next') {
-      (this.selected < 3) ? this.selected++ : this.submitBillerForm();
-    }
-    if (this.billerProfileForm.controls.profileDetailsForm.controls) {
-      console.log();
-    }
+
+    (this.profileDetailsForm.valid)?this.selected=1:console.log("please fill profile Data");
+    (this.logUrl.valid)?this.selected=2:console.log("url is required");
+    (this.bankDetailsForm.valid)?this.selected=3:console.log("bank details required");
+    (this.MiscellaneousData.valid)?this.submitBillerForm():console.log("miscellaneous required")
   }
 
   submitBillerForm() {
-    if (this.billerProfileForm.controls.profileDetailsForm.controls.gstinNum.invalid) {
+    if (this.profileDetailsForm.controls.gstinNum.invalid) {
       this.isGstin = true;
       return;
-    } else if (this.billerProfileForm.controls.profileDetailsForm.controls.panNum.invalid) {
+    } else if (this.profileDetailsForm.controls.panNum.invalid) {
       this.isPanNum = true;
       return;
-    } else if (this.billerProfileForm.controls.profileDetailsForm.controls.Address.invalid) {
+    } else if (this.profileDetailsForm.controls.Address.invalid) {
       this.isAddress = true;
       return;
-    } else if (this.billerProfileForm.controls.profileDetailsForm.controls.city.invalid) {
+    } else if (this.profileDetailsForm.controls.city.invalid) {
       this.isCity = true;
       return;
-    } else if (this.billerProfileForm.controls.profileDetailsForm.controls.state.invalid) {
+    } else if (this.profileDetailsForm.controls.state.invalid) {
       this.isState = true;
       return;
-    } else if (this.billerProfileForm.controls.profileDetailsForm.controls.country.invalid) {
+    } else if (this.profileDetailsForm.controls.country.invalid) {
       this.isCountry = true;
       return;
-    } else if (this.billerProfileForm.controls.profileDetailsForm.controls.pincode.invalid) {
+    } else if (this.profileDetailsForm.controls.pincode.invalid) {
       this.isZipCode = true;
       return;
-    } else if (this.billerProfileForm.controls.bankDetailsForm.controls.acNo.invalid) {
+    } else if (this.bankDetailsForm.controls.acNo.invalid) {
       this.isAcNo = true;
       return;
-    } else if (this.billerProfileForm.controls.bankDetailsForm.controls.nameOnBank.invalid) {
+    } else if (this.bankDetailsForm.controls.nameOnBank.invalid) {
       this.isNameOnBank = true;
       return;
-    } else if (this.billerProfileForm.controls.bankDetailsForm.controls.address.invalid) {
+    } else if (this.bankDetailsForm.controls.address.invalid) {
       this.isaddress = true;
       return;
-    } else if (this.billerProfileForm.controls.bankDetailsForm.controls.ifscCode.invalid) {
+    } else if (this.bankDetailsForm.controls.ifscCode.invalid) {
       this.isIFSC = true;
       return;
-    } else if (this.billerProfileForm.controls.bankDetailsForm.controls.city.invalid) {
+    } else if (this.bankDetailsForm.controls.city.invalid) {
       this.isCity = true;
       return;
-    } else if (this.billerProfileForm.controls.bankDetailsForm.controls.state.invalid) {
+    } else if (this.bankDetailsForm.controls.state.invalid) {
       this.isState = true;
       return;
-    } else if (this.billerProfileForm.controls.bankDetailsForm.controls.country.invalid) {
+    } else if (this.bankDetailsForm.controls.country.invalid) {
       this.isCountry = true;
       return;
-    } else if (this.billerProfileForm.controls.bankDetailsForm.controls.pincode.invalid) {
+    } else if (this.bankDetailsForm.controls.pincode.invalid) {
       this.isZipCode = true;
       return;
-    } else if (this.billerProfileForm.controls.bankDetailsForm.controls.bankName.invalid) {
+    } else if (this.bankDetailsForm.controls.bankName.invalid) {
       this.isBankName = true;
       return;
     } else {
       const obj = {
-        acNumber: this.billerProfileForm.controls.bankDetailsForm.controls.acNo.value,
+        acNumber: this.bankDetailsForm.controls.acNo.value,
         advisorId: this.advisorId,
-        bankCity: this.billerProfileForm.controls.bankDetailsForm.controls.address.value,
-        bankCountry: this.billerProfileForm.controls.bankDetailsForm.controls.country.value,
-        bankName: this.billerProfileForm.controls.bankDetailsForm.controls.bankName.value,
-        bankState: this.billerProfileForm.controls.bankDetailsForm.controls.state.value,
-        bankZipCode: this.billerProfileForm.controls.bankDetailsForm.controls.pincode.value,
-        billerAddress: this.billerProfileForm.controls.profileDetailsForm.controls.Address.value,
-        branchAddress: this.billerProfileForm.controls.bankDetailsForm.controls.address.value,
-        city: this.billerProfileForm.controls.profileDetailsForm.controls.city.value,
+        bankCity: this.bankDetailsForm.controls.address.value,
+        bankCountry: this.bankDetailsForm.controls.country.value,
+        bankName: this.bankDetailsForm.controls.bankName.value,
+        bankState: this.bankDetailsForm.controls.state.value,
+        bankZipCode: this.bankDetailsForm.controls.pincode.value,
+        billerAddress: this.profileDetailsForm.controls.Address.value,
+        branchAddress: this.bankDetailsForm.controls.address.value,
+        city: this.profileDetailsForm.controls.city.value,
         companyDisplayName: 'stringfgdfg',
         companyName: 'stringname',
-        country: this.billerProfileForm.controls.profileDetailsForm.controls.country.value,
-        footnote: this.billerProfileForm.controls.MiscellaneousData.controls.footnote.value,
-        gstin: this.billerProfileForm.controls.profileDetailsForm.controls.gstinNum.value,
-        ifscCode: this.billerProfileForm.controls.bankDetailsForm.controls.ifscCode.value,
+        country: this.profileDetailsForm.controls.country.value,
+        footnote: this.MiscellaneousData.controls.footnote.value,
+        gstin: this.profileDetailsForm.controls.gstinNum.value,
+        ifscCode: this.bankDetailsForm.controls.ifscCode.value,
         logoUrl: 'www.google.com',
-        nameAsPerBank: this.billerProfileForm.controls.bankDetailsForm.controls.nameOnBank.value,
-        pan: this.billerProfileForm.controls.profileDetailsForm.controls.panNum.value,
-        state: this.billerProfileForm.controls.profileDetailsForm.controls.state.value,
-        terms: this.billerProfileForm.controls.MiscellaneousData.controls.terms.value,
-        zipCode: this.billerProfileForm.controls.profileDetailsForm.controls.pincode.value,
-         id :this.billerProfileForm.controls.profileDetailsForm.controls.id.value
+        nameAsPerBank: this.bankDetailsForm.controls.nameOnBank.value,
+        pan: this.profileDetailsForm.controls.panNum.value,
+        state: this.profileDetailsForm.controls.state.value,
+        terms: this.MiscellaneousData.controls.terms.value,
+        zipCode: this.profileDetailsForm.controls.pincode.value,
+         id :this.profileDetailsForm.controls.id.value
       };
       console.log(obj);
-      if(this.billerProfileForm.controls.profileDetailsForm.controls.id.value == undefined){
+      if(this.profileDetailsForm.controls.id.value == undefined){
         this.subService.saveBillerProfileSettings(obj).subscribe(
           data => this.closeTab(data)
         );
