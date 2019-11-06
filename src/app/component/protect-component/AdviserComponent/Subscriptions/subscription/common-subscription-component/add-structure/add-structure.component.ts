@@ -51,7 +51,7 @@ export class AddStructureComponent implements OnInit {
     this.getFormControl().code.maxLength = 10;
     this.getFormControl().description.maxLength = 160;
   }
-  getFormControl() {
+  getFormControl(): any {
     return this.planDataForm.controls;
   }
 
@@ -67,6 +67,9 @@ export class AddStructureComponent implements OnInit {
         code: [data.code, [Validators.required]],
         description: [data.description, [Validators.required]]
       });
+      this.getFormControl().planName.maxLength = 40;
+      this.getFormControl().code.maxLength = 10;
+      this.getFormControl().description.maxLength = 160;
     }
   }
 
@@ -81,7 +84,7 @@ export class AddStructureComponent implements OnInit {
       this.isDescValid = true;
       return;
     } else {
-      if (this.editApiCall ==undefined) {
+      if (this.editApiCall == undefined) {
         const obj = {
           name: this.getFormControl().planName.value,
           description: this.getFormControl().description.value,

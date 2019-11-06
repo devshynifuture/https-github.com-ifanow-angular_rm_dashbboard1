@@ -172,10 +172,10 @@
           more_vert
         </i>
           <mat-menu #menu="matMenu">
-            <a (click)="Open('open',element)" mat-menu-item>View & Modify fee structure</a>
-            <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change Biller</a>
-            <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change Payee</a>
-            <a (click)="delete('cancelSubscription',element)" class="bt-1" mat-menu-item>Cancel
+            <a (click)="Open('open',element)" mat-menu-item>View & modify fee structure</a>
+            <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change biller</a>
+            <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change payee</a>
+            <a *ngIf="element.status!=1" (click)="delete('cancelSubscription',element)" class="bt-1" mat-menu-item>Cancel
               subscription</a>
             <a (click)="deleteModal('SUBSCRIPTION',element)" mat-menu-item>Delete subscription</a>
           </mat-menu>
