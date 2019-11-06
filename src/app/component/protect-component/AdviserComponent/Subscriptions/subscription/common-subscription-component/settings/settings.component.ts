@@ -37,6 +37,7 @@ export class SettingsComponent implements OnInit {
       this.SettingProfileData.forEach(element => {
       if(data == element.id){
         element.isPrimary = true
+        this.eventService.openSnackBar('primary set successfully', 'OK');
       }else{
         element.isPrimary = false
       }

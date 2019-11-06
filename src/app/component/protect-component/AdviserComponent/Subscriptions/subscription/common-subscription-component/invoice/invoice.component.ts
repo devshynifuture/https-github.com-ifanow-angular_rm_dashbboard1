@@ -174,7 +174,8 @@ export class InvoiceComponent implements OnInit {
       this.finalAmount = 0;
       this.discount = 0;
       this.storeData =
-        this.taxStatus = ['IGST(18%)'];
+      this.taxStatus = ['IGST(18%)'];
+      this.editPayment.controls.serviceName.enable()
 
     }
   }
@@ -612,6 +613,12 @@ export class InvoiceComponent implements OnInit {
 
   cancel() {
     this.showRecord = false;
+    let obj = {
+      invoiceId: this.storeData.id
+    }
+    this.subService.getPaymentReceive(obj).subscribe(
+      data => this.getRes(data)
+    );
     this.rPayment.reset();
   }
 
