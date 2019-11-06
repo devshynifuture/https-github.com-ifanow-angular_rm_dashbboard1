@@ -198,16 +198,30 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   }
 
-  deleteModal(value, data) {
+  deleteModal(value, subData) {
     const dialogData = {
       data: value,
-      dataToShow: data,
       header: 'DELETE',
-      body: 'Are you sure you want to delete the document?',
+      body: 'Are you sure you want to delete the document GD?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
-      btnNo: 'DELETE'
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        const obj = {
+          advisorId: this.advisorId,
+          id: subData.id
+        };
+        this.subService.deleteSubscriptionData(obj).subscribe(
+          data => {this.deletedData(data);
+            dialogRef.close()}
+        ); 
+      
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
     };
+    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
@@ -219,7 +233,6 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
-
   }
 
   showFilters(showFilter) {
@@ -235,23 +248,11 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   addFilters(addFilters) {
     console.log('addFilters', addFilters);
-    /*if (addFilters == 'LIVE') {
-      this.senddataTo = 2;
-    } else if (addFilters == 'NOT STARTED') {
-      this.senddataTo = 1;
-    } else if (addFilters == 'FUTURE') {
-      this.senddataTo = 3;
-    } else {
-      this.senddataTo = 4;
-    }*/
-    // console.log(this.senddataTo);
     if (!_.includes(this.filterStatus, addFilters)) {
       this.filterStatus.push(addFilters);
     } else {
       // _.remove(this.filterStatus, this.senddataTo);
     }
-    // this.sendData = this.filterStatus;
-
     this.callFilter();
   }
 
@@ -349,6 +350,12 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
       });
+    }
+  }
+  deletedData(data) {
+    if (data == true) {
+      this.eventService.changeUpperSliderState({state: 'close'});
+      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');  
     }
   }
 }

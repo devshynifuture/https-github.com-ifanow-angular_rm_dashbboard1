@@ -55,27 +55,11 @@ export class ConfirmDialogComponent implements OnInit {
 
   deleteSubscription() {
     
-    // if (this.dialogData.positiveMethod) {
-    //   this.dialogData.positiveMethod();
-    // } else {
-    //   console.log('positive not defined 11111111111111111111111111111111111111111111');
+    if (this.dialogData.positiveMethod) {
+      this.dialogData.positiveMethod();
+    } else {
+      console.log('positive not defined 11111111111111111111111111111111111111111111');
 
-    // }
-    if (this.dialogData.data == 'SUBSCRIPTION') {
-      const obj = {
-        advisorId: this.advisorId,
-        id: this.dialogData.dataToShow.id
-      };
-      this.subscription.deleteSubscriptionData(obj).subscribe(
-        data => this.deletedData(data)
-      );
-    }
-    if (this.dialogData.data == 'PLAN') {
-      
-    }
-    if(this.dialogData.data=='SERVICE')
-    {
-     
     }
   }
 
