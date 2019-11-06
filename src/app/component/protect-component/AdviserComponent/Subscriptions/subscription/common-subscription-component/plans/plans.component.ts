@@ -28,7 +28,7 @@ export class PlansComponent implements OnInit {
     return this._upperData;
   }
   @Input() componentFlag: string;
-  @Input() upperData;
+  // @Input() upperData;
   servicePlanData;
   mappedPlan = [];
   advisorId;
