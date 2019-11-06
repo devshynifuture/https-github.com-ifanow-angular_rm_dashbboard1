@@ -56,10 +56,10 @@ export class AddFixedFeeComponent implements OnInit {
       billEvery: [, [Validators.required]],
       billingMode: [1]
     });
-    this.getFormControl().serviceName.maxLength = 40;
-    this.getFormControl().code.maxLength = 10;
-    this.getFormControl().description.maxLength = 160;
-    this.getFormControl().fees.maxLength = 10;
+    // this.getFormControl().serviceName.maxLength = 40;
+    // this.getFormControl().code.maxLength = 10;
+    // this.getFormControl().description.maxLength = 160;
+    // this.getFormControl().fees.maxLength = 10;
   }
 
   setValidation(flag) {
