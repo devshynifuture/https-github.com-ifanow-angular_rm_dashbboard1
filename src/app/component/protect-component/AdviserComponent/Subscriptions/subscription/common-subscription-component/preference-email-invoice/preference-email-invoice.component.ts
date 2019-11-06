@@ -21,9 +21,11 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
     mail_body: new FormControl(''),
 
   });
+  heading: string;
 
   constructor(private eventService: EventService, public subService: SubscriptionService, public dialogRef: MatDialogRef<PreferenceEmailInvoiceComponent>, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public fragmentData: any) {
     console.log('ModifyFeeDialogComponent constructor: ', this.fragmentData);
+   this.heading =  (this.fragmentData.Flag.id == 1)? 'Invoice':(this.fragmentData.Flag.id == 2)? 'Quotations':(this.fragmentData.Flag.id == 3)?' Documents with eSign request':' Documents without eSign request'; 
     this.storeData = this.fragmentData.Flag;
   }
 
