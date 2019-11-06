@@ -61,7 +61,7 @@
               <div class="col-md-6">
                 <select class="form-control br-0" id="sel11" [(ngModel)]='selectedStatusFilter'
                         (change)="addFilters(selectedStatusFilter)">
-                  <option value="" [disabled]="true">FILTERS ONE</option>
+                  <option [disabled]="true" selected = "selected">FILTERS ONE</option>
                   <option *ngFor="let chip of chips" [ngValue]="chip">{{chip.name}}</option>
                 </select>
               </div>
