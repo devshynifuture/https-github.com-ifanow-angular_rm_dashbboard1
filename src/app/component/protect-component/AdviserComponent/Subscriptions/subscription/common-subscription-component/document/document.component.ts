@@ -57,6 +57,7 @@ export class DocumentComponent implements OnInit {
   dataCount;
   _clientData: any;
   _upperData: any;
+  noData: string;
 
   constructor(public subInjectService: SubscriptionInject,
               private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
@@ -137,7 +138,9 @@ export class DocumentComponent implements OnInit {
 
   getDocumentResponseData(data) {
     console.log(data);
-    if (data) {
+    if (data==undefined){
+      this.noData="No Data Found";
+    }else {
       data.forEach(singleData => {
         singleData.selected = false;
         singleData.documentText = singleData.docText;

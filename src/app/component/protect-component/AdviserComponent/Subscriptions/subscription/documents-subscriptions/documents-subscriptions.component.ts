@@ -31,6 +31,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
   dataSource: any;
   advisorId;
+  noData: string;
 
   constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public eventService: EventService,
               public subscription: SubscriptionService) {
@@ -81,11 +82,15 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   }
 
   getdocumentResponseData(data) {
-    console.log(data);
-    data.forEach(singleData => {
-      singleData.documentText = singleData.docText;
-    });
-    this.dataSource = data;
+    if(data==undefined){
+      this.noData="No Data Found";
+    }else{
+      console.log(data);
+      data.forEach(singleData => {
+        singleData.documentText = singleData.docText;
+      });
+      this.dataSource = data;
+    }
   }
 
   deleteModal(value) {

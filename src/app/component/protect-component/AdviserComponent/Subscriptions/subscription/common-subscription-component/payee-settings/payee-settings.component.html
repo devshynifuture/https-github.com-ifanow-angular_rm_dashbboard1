@@ -1,6 +1,7 @@
 <div class="row bb-1 popup-header-fix-60">
         <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20 lh-22 text-left">DHYAAN RONAK HINDOCHA</h4>
+            <h4 class="mb-0 wrapper-20 lh-22 text-left" *ngIf="inputData.data=='Add'">ADD PAYEE</h4>
+            <h4 class="mb-0 wrapper-20 lh-22 text-left" *ngIf="inputData.data!='Add'">EDIT PAYEE</h4>
             </div>
         <div class="col-md-2 text-right">
             <i class="material-icons pt-16 pr-16 c-p" (click)="Close('close')"> clear</i></div>
