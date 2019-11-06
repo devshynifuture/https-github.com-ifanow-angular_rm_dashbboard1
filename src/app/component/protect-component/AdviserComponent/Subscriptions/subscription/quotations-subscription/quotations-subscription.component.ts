@@ -5,6 +5,7 @@ import {SubscriptionInject} from '../../subscription-inject.service';
 import {SubscriptionService} from '../../subscription.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {AuthService} from "../../../../../../auth-service/authService";
+import { UtilService } from 'src/app/services/util.service';
 
 export interface PeriodicElement {
   name: string;
@@ -83,9 +84,22 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   Open(value, state, data) {
-    this.eventService.sidebarData(value);
-    this.subInjectService.rightSideData(state);
-    this.subInjectService.addSingleProfile(data);
+    const fragmentData = {
+      Flag: value,
+      data:data,
+      id: 1,
+      state: state
+    };
+    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', );
+          rightSideDataSub.unsubscribe();
+        }
+      }
+      
+    );
   }
 
   // Open(value)
