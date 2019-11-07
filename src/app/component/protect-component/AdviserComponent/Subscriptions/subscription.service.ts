@@ -85,7 +85,7 @@ export class SubscriptionService {
   }
 
   getSubscriptionQuotationData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('toDate', data.toDate).set('quotaionFlag', data.quotaionFlag).set('dateType', data.dateType).set('fromDate', data.fromDate);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBSCRIPTION_QUOTATIONS, httpParams);
   }
 

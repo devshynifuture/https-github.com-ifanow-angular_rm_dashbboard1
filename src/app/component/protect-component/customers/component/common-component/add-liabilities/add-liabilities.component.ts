@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-add-liabilities',
@@ -12,11 +13,15 @@ export class AddLiabilitiesComponent implements OnInit {
   displayedColumns1: string[] = [  'year', 'principal', 'interest', 'totalPaid', 'balance'];
   dataSource1 = ELEMENT_DATA1;
 
-  constructor() { }
+  constructor(private subInjectService:SubscriptionInject) { }
 
   ngOnInit() {
   }
 
+  close(){
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+
+  }
 }
 
 export interface PeriodicElement {
