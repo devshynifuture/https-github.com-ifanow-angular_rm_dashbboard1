@@ -57,6 +57,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
   dataSub: any;
   storeData: any;
   inputData: any;
+  templateType: number;
 
   constructor(public subscription:SubscriptionService,public subInjectService: SubscriptionInject , public eventService:EventService ,public dialog:MatDialog) {
     // this.dataSub = this.subInjectService.singleProfileData.subscribe(
@@ -205,26 +206,31 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
     });
   
   }
-  // openSendEmail() {
-  //   // const data = {
-  //   //   advisorId: this.advisorId,
-  //   //   clientData: this._clientData,
-  //   //   templateType: 2, //2 is for quotation
-  //   //   documentList: []
-  //   // };
-  //   // this.dataSource.forEach(singleElement => {
-  //   //   if (singleElement.selected) {
-  //   //     data.documentList.push(singleElement);
-  //   //   }
-  //   // });
-  //   this.OpenEmail('emailQuotationFroala');
-  // }
-  openSendEmail(value,state,data) {
+  openSendEmail() {
+    if(this.storeData.quotation==false){
+      this.templateType=4;
+    }else{
+      this.templateType=2;
+    }
+    const data = {
+      advisorId: 2828,
+      clientData: this.storeData,
+      templateType: this.templateType, //2 is for quotation
+      documentList: [this.storeData]
+    };
+    // this.dataSource.forEach(singleElement => {
+    //   if (singleElement.selected) {
+    //     data.documentList.push(singleElement);
+    //   }
+    // });
+    this.OpenEmail(data,'emailQuotationFroala');
+  }
+  OpenEmail(data,value) {
     const fragmentData = {
       Flag: value,
       data:data,
       id: 1,
-      state: state
+      state: 'open'
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

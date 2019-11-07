@@ -23,11 +23,11 @@ export class EmailOnlyComponent implements OnInit {
   dataSub: any;
   emailBody: any;
   subject;
-
+  doc: any;
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject, public subscription: SubscriptionService) {
-    this.dataSub = this.subInjectService.singleProfileData.subscribe(
-      data => this.getcommanFroalaData(data)
-    );
+    // this.dataSub = this.subInjectService.singleProfileData.subscribe(
+    //   data => this.getcommanFroalaData(data)
+    // );
   }
 
   @Input() emailSend;
@@ -36,7 +36,6 @@ export class EmailOnlyComponent implements OnInit {
   @Input() emailDocument;
   @Output() valueChange = new EventEmitter();
   @Input() quotationData;
-
   _inputData;
   emailData;
   @Input()
@@ -48,7 +47,7 @@ export class EmailOnlyComponent implements OnInit {
         id: data.clientData.id,
         userEmailId: data.clientData.userEmailId
       },
-      documentList: [{id: data.documentList[0].id, documentName: data.documentList[0].documentName}],
+      documentList: [{id: data.documentList.id, documentName: data.documentName}],
       templateType: data.templateType
     };
     this.getEmailTemplateFilterData();
@@ -57,6 +56,17 @@ export class EmailOnlyComponent implements OnInit {
     return this._inputData;
   }
   @Input() set inputData(inputData) {
+    let obj = []
+    this.doc=inputData.documentList;
+    this.doc.forEach(element => {
+      if(element){
+       let obj1={
+         id:element.id,
+         documentName:element.documentName
+       }
+       obj.push(obj1)
+      }
+     });
     this._inputData = inputData;
     this._inputData = {
       advisorId: 2808,
@@ -64,7 +74,8 @@ export class EmailOnlyComponent implements OnInit {
         id: inputData.clientData.id,
         userEmailId: inputData.clientData.userEmailId
       },
-      documentList: [{id: inputData.documentList[0].id, documentName: inputData.documentList[0].documentName}],
+      // documentList: [{id: inputData.documentList.id, documentName: inputData.documentList.documentName}],
+      documentList:obj,
       templateType: inputData.templateType
     };
     console.log('EmailOnlyComponent inputData : ', inputData);
