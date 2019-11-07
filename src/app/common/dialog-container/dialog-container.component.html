@@ -25,6 +25,7 @@
     <app-create-subscription [data]="fragmentData" *ngIf="subscriptionTab=='createSubFixed' || subscriptionTab=='createSubVariable'" [subFeeMode]="subscriptionTab"></app-create-subscription>
     <app-email-only [inputData]="inputData" *ngIf="subscriptionTab=='emailOnly'"></app-email-only>
     <app-email-only [inputData]="inputData" *ngIf="subscriptionTab=='emailQuotationFroala'"></app-email-only>
+    <app-email-only [inputData]="inputData" *ngIf="subscriptionTab=='emailInvoiceFroala'"></app-email-only>
     <app-add-liabilities *ngIf="subscriptionTab=='addLib'"></app-add-liabilities>
 
 </app-custom-dialog-container>

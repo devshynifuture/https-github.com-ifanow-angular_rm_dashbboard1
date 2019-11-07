@@ -677,7 +677,7 @@ export class InvoiceComponent implements OnInit {
   saveInvoice() {
     console.log(this.editPayment);
   }
-  openSendEmail() {
+  openSendEmail(input) {
     if(this.storeData.quotation==false){
       this.templateType=4;
     }else{
@@ -694,7 +694,12 @@ export class InvoiceComponent implements OnInit {
     //     data.documentList.push(singleElement);
     //   }
     // });
-    this.OpenEmail(data,'emailQuotationFroala');
+    if(input=='upper'){
+      this.OpenEmailUpper(data,'emailInvoiceFroala');
+    }else{
+      this.OpenEmail(data,'emailInvoiceFroala');
+
+    }
   }
   OpenEmail(data,value) {
     const fragmentData = {
@@ -704,6 +709,24 @@ export class InvoiceComponent implements OnInit {
       state: 'open'
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', );
+          rightSideDataSub.unsubscribe();
+        }
+      }
+      
+    );
+  }
+  OpenEmailUpper(data,value) {
+    const fragmentData = {
+      Flag: value,
+      data:data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
