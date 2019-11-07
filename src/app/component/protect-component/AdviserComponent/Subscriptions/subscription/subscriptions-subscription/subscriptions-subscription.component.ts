@@ -8,7 +8,7 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
 import {AuthService} from '../../../../../../auth-service/authService';
 import * as _ from 'lodash';
 import {EnumServiceService} from '../enum-service.service';
-import {UtilService} from "../../../../../../services/util.service";
+import {UtilService} from '../../../../../../services/util.service';
 import {DatePipe} from '@angular/common';
 
 export const MY_FORMATS = {
@@ -145,16 +145,17 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
   getSubSummaryRes(data) {
-  if(data==undefined){
-    this.noData="No Data Found";
-  }else{console.log(data);
-    this.dataSource = data;
-    this.DataToSend = data;
-  }
+    if (data) {
+      this.dataSource = data;
+      this.DataToSend = data;
+    } else {
+      // console.log(data);
+      this.noData = 'No Data Found';
+    }
   }
 
   openPlanSlider(value, state, data) {
-    (value == "billerSettings" || value == 'changePayee' || value == 'SUBSCRIPTIONS') ? value : (data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable'
+    (value == 'billerSettings' || value == 'changePayee' || value == 'SUBSCRIPTIONS') ? value : (data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable';
     data.isCreateSub = false;
     const fragmentData = {
       Flag: value,
@@ -175,7 +176,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   }
 
-  Open(state, data) {
+  openFeeEditor(state, data) {
     let feeMode;
     data.isCreateSub = true;
     (data.subscriptionPricing.feeTypeId == 1) ? feeMode = 'fixedModifyFees' : feeMode = 'variableModifyFees';
@@ -212,10 +213,12 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
           id: subData.id
         };
         this.subService.deleteSubscriptionData(obj).subscribe(
-          data => {this.deletedData(data);
-            dialogRef.close()}
-        ); 
-      
+          data => {
+            this.deletedData(data);
+            dialogRef.close();
+          }
+        );
+
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -258,10 +261,10 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   filterSubscriptionRes(data) {
     console.log('filterSubscriptionRes', data);
-    if(data==undefined){
-      this.noData="No Data Found";
-      this.dataSource="";
-    }else{
+    if (data == undefined) {
+      this.noData = 'No Data Found';
+      this.dataSource = '';
+    } else {
       this.dataSource = data;
     }
     // this.getSubSummaryRes(data);
@@ -269,7 +272,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   addFiltersDate(dateFilter) {
     console.log('addFilters', dateFilter);
-   //this.filterDate = [dateFilter];
+    // this.filterDate = [dateFilter];
     this.filterDate.push(dateFilter);
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
@@ -294,14 +297,14 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
   orgValueChange(value) {
-    console.log(value)
+    console.log(value);
     this.getDate = this.datePipe.transform(value, 'yyyy-MM-dd');
     this.callFilter();
 
   }
 
   orgValueChange2(value) {
-    console.log(value)
+    console.log(value);
     this.getDate2 = this.datePipe.transform(value, 'yyyy-MM-dd');
     this.callFilter();
 
@@ -321,15 +324,15 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       advisorId: this.advisorId,
       limit: -1,
       offset: 0,
-      fromDate: (this.filterDate.length > 0) ?  this.datePipe.transform(this.selectedDateRange.begin, 'yyyy-MM-dd') : null,
-      toDate:(this.filterDate.length > 0) ?  this.datePipe.transform(this.selectedDateRange.end, 'yyyy-MM-dd') : null,
+      fromDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.begin, 'yyyy-MM-dd') : null,
+      toDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.end, 'yyyy-MM-dd') : null,
       statusIdList: this.statusIdList,
       dateType: (this.filterDate.length > 0) ? this.selectedDateFilter.value : 0
     };
     console.log('this.callFilter req obj : ', obj);
-    if(obj.statusIdList.length == 0 && obj.fromDate == null){
+    if (obj.statusIdList.length == 0 && obj.fromDate == null) {
       this.getSummaryDataAdvisor();
-    }else{
+    } else {
       this.subService.filterSubscription(obj).subscribe(
         data => this.filterSubscriptionRes(data)
       );
@@ -352,10 +355,11 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       });
     }
   }
+
   deletedData(data) {
-    if (data == true) {
+    if (data) {
       this.eventService.changeUpperSliderState({state: 'close'});
-      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');  
+      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
     }
   }
 }
