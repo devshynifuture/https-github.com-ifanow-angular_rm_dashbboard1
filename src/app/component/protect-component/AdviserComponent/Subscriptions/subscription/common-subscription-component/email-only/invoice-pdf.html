@@ -58,20 +58,18 @@
   </div>
   <div class="row btl-1 pt-16">
     <div class="col-md-9">
-        <!-- <mat-form-field class="example-chip-list">
-            <mat-chip-list #chipList aria-label="Fruit selection">
-              <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable"
-                       [removable]="removable" (removed)="remove(fruit)">
-                {{fruit.name}}
-                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          <mat-chip-list #chipList aria-label="docName selection">
+              <mat-chip *ngFor="let doc of docObj ; let i = index"
+                      (removed)="remove(i)">
+                {{doc.documentName}}
+                <mat-icon matChipRemove>cancel</mat-icon>
               </mat-chip>
-              <input placeholder="New fruit..."
+              <input matInput
                      [matChipInputFor]="chipList"
                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                      [matChipInputAddOnBlur]="addOnBlur"
                      (matChipInputTokenEnd)="add($event)">
             </mat-chip-list>
-          </mat-form-field> -->
       <div class="row">
         <div class="col-md-2">
           <button mat-stroked-button class="btn-primary br-0" (click)="sendEmail()">Send</button>

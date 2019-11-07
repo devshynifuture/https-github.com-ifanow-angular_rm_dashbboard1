@@ -20,16 +20,16 @@
                                                                                   [matMenuTriggerFor]="belowMenu">
           arrow_drop_down
         </i>
-          <mat-menu #menu="matMenu">
+          <!-- <mat-menu #menu="matMenu">
             <a mat-menu-item>Select Quotation to see more actions</a>
-          </mat-menu>
+          </mat-menu> -->
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item class="b-t" *ngIf="dataCount == 0">Select Quotation to see more actions</button>
+          <button mat-menu-item  *ngIf="dataCount == 0">Select Quotation to see more actions</button>
           <button mat-menu-item (click)="openSendEmail()" *ngIf="dataCount != 0">Email
             only
           </button>
-          <button mat-menu-item (click)="deleteModal('QUOTATION')" *ngIf="dataCount != 0">Delete Quotations</button>
+          <button mat-menu-item class="b-t" (click)="deleteModal('QUOTATION')" *ngIf="dataCount != 0">Delete Quotations</button>
         </mat-menu>
       </div>
       <div class="col-md-9 p-0 ml-8">

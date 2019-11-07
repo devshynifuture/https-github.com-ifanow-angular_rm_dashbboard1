@@ -166,7 +166,7 @@ export class PayeeSettingsComponent implements OnInit {
     }else if (this.payeeSettingsForm.controls.gstIn.invalid) {
       this.isCustomerName = true
       return;
-    }else if (this.payeeSettingsForm.controls.mobileNo.invalid) {
+    }else if (this.payeeSettingsForm.controls.primaryContact.invalid) {
       this.isCustomerName = true
       return;
     }else if (this.payeeSettingsForm.controls.billingAddress.invalid) {
