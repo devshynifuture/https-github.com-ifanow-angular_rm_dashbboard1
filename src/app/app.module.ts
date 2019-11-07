@@ -120,6 +120,7 @@ import {SatDatepickerModule, SatNativeDateModule} from "saturn-datepicker";
 import {CustomCommonModule} from "./common/custom.common.module";
 import {DialogContainerComponent} from "./common/dialog-container/dialog-container.component";
 import {CustomDialogContainerComponent} from "./common/custom-dialog-container/custom-dialog-container.component";
+import { AddLiabilitiesComponent } from './component/protect-component/customers/component/common-component/add-liabilities/add-liabilities.component';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -209,10 +210,10 @@ import {CustomDialogContainerComponent} from "./common/custom-dialog-container/c
     SingleDocumentViewComponent,
     FixedFeeComponent,
     VariableFeeComponent,
-
     LibilitiesRightComponent,
     DialogContainerComponent,
-    CustomDialogContainerComponent
+    CustomDialogContainerComponent,
+    AddLiabilitiesComponent
   ],
   imports: [
     CustomCommonModule,
