@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SubjectSubscriber } from 'rxjs/internal/Subject';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-add-insurance',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddInsuranceComponent implements OnInit {
 
-  constructor() { }
+  constructor(private subInjectService:SubscriptionInject) { }
 
   ngOnInit() {
+  }
+
+  close(){
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+
   }
 
 }

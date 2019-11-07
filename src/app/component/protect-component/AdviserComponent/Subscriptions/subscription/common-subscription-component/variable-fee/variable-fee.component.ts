@@ -22,7 +22,7 @@ export class VariableFeeComponent implements OnInit {
   @Input() createSubData;
   @Output() outputData = new EventEmitter<Object>();
   singleSubscriptionData: any;
-
+  isLoading = false;
   constructor(private subService: SubscriptionService, private fb: FormBuilder, public subInjectService: SubscriptionInject) {
   }
 
@@ -213,9 +213,13 @@ export class VariableFeeComponent implements OnInit {
         //   }
         // );
       } else {
+        this.isLoading=true;
         this.subService.editModifyFeeStructure(obj).subscribe(
-          data => this.saveVariableModifyFeesResponse(data)
-        );
+          data => {this.saveVariableModifyFeesResponse(data)
+          this.isLoading=false}
+        ,error =>{
+          this.isLoading=false;
+        });
       }
     }
   }
