@@ -17,7 +17,22 @@ export class ServicesComponent implements OnInit {
   @Input() componentFlag: string;
   planServiceData;
   mappedData;
+  mappedPlan = [];
   @Input() planData;
+  _upperData: any;
+  @Input()
+  set upperData(upperData) {
+    console.log('FeeStructureComponent upperData set : ', this.upperData);
+
+    this._upperData = upperData;
+    // setTimeout(() => {
+    //   this.openPlanSliderFee(upperData, 'fixedFee', 'open');
+    // }, 300);
+  }
+
+  get upperData(): any {
+    return this._upperData;
+  }
 
   constructor(private eventService: EventService,
     private subService: SubscriptionService, private subinject: SubscriptionInject) {
@@ -25,7 +40,13 @@ export class ServicesComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.getPlanServiceData();
+    // this.getPlanServiceData();
+     if(this.componentFlag === 'services'){
+      this.getServicesMapped()
+    }else {
+      this.getPlanServiceData();
+    }
+
     this.mappedData = [];
     console.log('upperdata',this.planData)
   }
@@ -50,7 +71,26 @@ export class ServicesComponent implements OnInit {
       }
     });
   }
+  getServicesMapped(){
 
+    const obj = {
+      // advisorid: 12345,
+      advisorId: this.advisorId,
+      docRepoId: this.upperData ? this.upperData.documentData.documentRepositoryId : null
+    };
+    this.subService.servicesMapped(obj).subscribe(
+      data => this.servicesMappedRes(data)
+    );
+  }
+  servicesMappedRes(data){
+    console.log(data)
+    this.planServiceData = data;
+    this.planServiceData.forEach(element => {
+      if (element.selected == true) {
+        this.mappedData.push(element);
+      }
+    });
+  }
   selectService(data, index) {
     (data.selected) ? this.unmapPlanToService(data) : this.mapPlanToService(data, index);
     console.log(data);
@@ -75,6 +115,40 @@ export class ServicesComponent implements OnInit {
   }
 
   savePlanMapToService() {
+   if(this.componentFlag === 'services'){
+      this.mapDocumentToPlan()
+    }else {
+      this.saveServicePlanMapping();
+    }
+    
+  }
+  mapDocumentToPlan(){
+    const obj = [];
+    this.mappedData.forEach(planData => {
+      const data = {
+        // advisorId: 12345,
+        advisorId: this.advisorId,
+        documentRepositoryId:this.upperData.documentData.documentRepositoryId,
+        mappedType:this.upperData.documentData.mappedType,
+        mappingId: planData.id
+      };
+      obj.push(data);
+    });
+    this.subService.mapDocumentToService(obj).subscribe(
+      data => this.mapPlanToServiceRes(data)
+    );
+  }
+  mapPlanToServiceRes(data){
+    console.log(data)
+    this.eventService.openSnackBar('Service is mapped', 'OK');
+    this.dialogClose()
+
+  }
+  savePlanMapToServiceResponse(data) {
+    console.log("map plan to service Data", data)
+    this.eventService.openSnackBar('Service is mapped', 'OK');
+  }
+  saveServicePlanMapping(){
     const obj = [];
     this.mappedData.forEach(element => {
       const data = {
@@ -90,9 +164,5 @@ export class ServicesComponent implements OnInit {
     this.subService.mapServiceToPlanData(obj).subscribe(
       data => this.savePlanMapToServiceResponse(data)
     );
-  }
-  savePlanMapToServiceResponse(data) {
-    console.log("map plan to service Data", data)
-    this.eventService.openSnackBar('Service is mapped', 'OK');
   }
 }

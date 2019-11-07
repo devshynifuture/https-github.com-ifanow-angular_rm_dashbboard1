@@ -21,6 +21,7 @@ import {CustomCommonModule} from '../../../common/custom.common.module';
 import {AppModule} from "../../../app.module";
 import {BottomSheetComponent} from './component/common-component/bottom-sheet/bottom-sheet.component';
 import {AddLiabilitiesComponent} from './component/common-component/add-liabilities/add-liabilities.component';
+import { AddInsuranceComponent } from './component/common-component/add-insurance/add-insurance.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import {AddLiabilitiesComponent} from './component/common-component/add-liabilit
     IncomeComponent,
     DocumentsComponent,
     MutualFundsCapitalComponent,
-    BottomSheetComponent
+    BottomSheetComponent,
+    // AddInsuranceComponent
   ],
   imports: [
     CustomCommonModule,

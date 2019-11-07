@@ -40,15 +40,15 @@
               </i></mat-chip>
               <mat-chip-list>
                 <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let dateFilter of filterDate; let i = index">
-<!--                  <div class="row">-->
-                    <p>{{dateFilter.name}}</p>
-                    <input matInput
-                           placeholder="Choose a date"
-                           [satDatepicker]="picker2"
-                           [(ngModel)]="selectedDateRange">
-                    <sat-datepicker #picker2 [rangeMode]="true">
-                    </sat-datepicker>
-                    <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
+                  <!--                  <div class="row">-->
+                  <p>{{dateFilter.name}}</p>
+                  <input matInput
+                         placeholder="Choose a date"
+                         [satDatepicker]="picker2"
+                         [(ngModel)]="selectedDateRange">
+                  <sat-datepicker #picker2 [rangeMode]="true">
+                  </sat-datepicker>
+                  <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
                   <i class="material-icons text-custom ml-12" (click)="removeDate(i)">
                     cancel
                   </i>
@@ -61,7 +61,7 @@
               <div class="col-md-6">
                 <select class="form-control br-0" id="sel11" [(ngModel)]='selectedStatusFilter'
                         (change)="addFilters(selectedStatusFilter)">
-                  <option [disabled]="true" selected = "selected">FILTERS ONE</option>
+                  <option [disabled]="true" selected="selected">FILTERS ONE</option>
                   <option *ngFor="let chip of chips" [ngValue]="chip">{{chip.name}}</option>
                 </select>
               </div>
@@ -96,7 +96,7 @@
       <ng-container matColumnDef="amt">
         <th *matHeaderCellDef class="f-18 t-10" mat-header-cell> Fee amount</th>
 
-        <td (click)="Open('open',element)" *matCellDef="let element" class="c-p t-10 text-primary text-underline"
+        <td (click)="openFeeEditor('open',element)" *matCellDef="let element" class="c-p t-10 text-primary text-underline"
             mat-cell> View details
         </td>
       </ng-container>
@@ -162,7 +162,7 @@
           more_vert
         </i>
           <mat-menu #menu="matMenu">
-            <a (click)="Open('open',element)" mat-menu-item>View & modify fee structure</a>
+            <a (click)="openFeeEditor('open',element)" mat-menu-item>View & modify fee structure</a>
             <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change biller</a>
             <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change payee</a>
             <a *ngIf="element.status!=1" (click)="delete('cancelSubscription',element)" class="bt-1" mat-menu-item>Cancel
@@ -174,8 +174,8 @@
       <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
       <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
     </table>
-    <h4  *ngIf="dataSource==''" class="text-center pt-72">{{noData}}</h4>
-    <h4  *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4>
+    <h4 *ngIf="dataSource==''" class="text-center pt-72">{{noData}}</h4>
+    <h4 *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4>
 
   </div>
 </div>

@@ -1,4 +1,4 @@
-<!--<h1>GAURAV</h1>-->
+
 <div class="dialogclose">
   <div class="row popup-header-fix-100">
     <div class="col-md-2 border-right-1 p-0">
@@ -33,7 +33,7 @@
       </mat-tab>
       <mat-tab #tab [disabled]='upperData==""' label="SERVICES">
         <ng-template matTabContent>
-          <app-services [componentFlag]='plan' [planData]="upperData"></app-services>
+          <app-services [componentFlag]='services' [planData]="upperData"></app-services>
         </ng-template>
       </mat-tab>
       <mat-tab #tab [disabled]='upperData==""' label="DOCUMENTS">
@@ -82,15 +82,15 @@
         </ng-template>
       </mat-tab>
       <mat-tab label="PLANS"
-               *ngIf="upperData&&upperData.documentData&&upperData.documentData.mappingType&&upperData.mappedType==1">
+               *ngIf="upperData && upperData.documentData && upperData.documentData.mappedType == 0">
         <ng-template matTabContent>
-          <app-plans [componentFlag]='"documents"' [upperData]="upperData"></app-plans>
+          <app-plans [componentFlag]='"plans"' [upperData]="upperData"></app-plans>
         </ng-template>
       </mat-tab>
       <mat-tab label="SERVICES"
-               *ngIf="upperData&&upperData.documentData&&upperData.documentData.mappingType&&upperData.mappedType==2">
+               *ngIf="upperData && upperData.documentData && upperData.documentData.mappedType == 0">
         <ng-template matTabContent>
-          <app-services></app-services>
+            <app-services [componentFlag]='"services"' [upperData]="upperData"></app-services>
         </ng-template>
       </mat-tab>
 

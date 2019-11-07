@@ -86,6 +86,7 @@ export class DocumentComponent implements OnInit {
   @Input()
   set clientData(clientData) {
     this._clientData = clientData;
+    this.advisorId = AuthService.getAdvisorId();
     this.getdocumentSubData();
   }
 
