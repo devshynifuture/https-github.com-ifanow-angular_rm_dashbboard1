@@ -91,7 +91,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     let fileReader: FileReader = new FileReader();
  
     fileReader.onloadend = function(x) {
-      this.imgUrl=fileReader.result
+      // this.imgUrl=fileReader.result
         }
   }
   
