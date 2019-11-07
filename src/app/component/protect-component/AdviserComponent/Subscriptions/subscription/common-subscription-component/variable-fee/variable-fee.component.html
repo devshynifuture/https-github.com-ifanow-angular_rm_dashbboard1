@@ -167,8 +167,9 @@
     <div class="col-md-4 pl-8">
       <h5 class="mb-0 pt-4 text-white c-p" (click)="close()">Cancel</h5>
     </div>
-    <div [ngClass]="{'v-h':isSave}" class="col-md-8 right text-right">
-      <button mat-button (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">Save</button>
+    <div  class="col-md-8 right text-right">
+      <button [ngClass]="{'v-h':isSave}" mat-button (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">Save</button>
+      <button *ngIf="singleSubscriptionData.isSaveBtn==false" mat-button (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">NEXT STEP</button>
     </div>
   </div>
 </div>

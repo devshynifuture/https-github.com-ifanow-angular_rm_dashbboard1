@@ -157,6 +157,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   openPlanSlider(value, state, data) {
     (value == 'billerSettings' || value == 'changePayee' || value == 'SUBSCRIPTIONS') ? value : (data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable';
     data.isCreateSub = false;
+    data.isSaveBtn=false;
     const fragmentData = {
       Flag: value,
       data,

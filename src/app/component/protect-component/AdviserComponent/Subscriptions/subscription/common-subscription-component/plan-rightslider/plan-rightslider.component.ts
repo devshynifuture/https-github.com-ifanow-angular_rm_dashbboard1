@@ -50,9 +50,7 @@ export class PlanRightsliderComponent implements OnInit {
     }
   }
   createSubscriptionResponse(data) {
-    this.subInjectService.rightSideData('close')
-    this.subInjectService.rightSliderData('close');
-
+    this.Close();
   }
 
   select(data) {

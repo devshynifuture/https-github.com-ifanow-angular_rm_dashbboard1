@@ -206,8 +206,9 @@ export class CreateSubscriptionComponent implements OnInit {
     this.payeesData = data.payees;
   }
 
-  Close(state) {
+  Close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeUpperRightSliderState({state: 'close'});
     this.stepper.selectedIndex = 0;
     this.subscriptionDetails.reset();
   }
