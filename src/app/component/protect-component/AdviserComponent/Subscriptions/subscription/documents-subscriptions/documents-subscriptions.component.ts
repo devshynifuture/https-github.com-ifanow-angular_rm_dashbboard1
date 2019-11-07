@@ -61,6 +61,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     {name: 'Client Signitature', value: 3}
   ];
   selectedDateRange: { begin: Date; end: Date; };
+  showFilter = false;
   constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public eventService: EventService,
               public subscription: SubscriptionService,private datePipe: DatePipe) {
   }
@@ -94,6 +95,16 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 //  {
 //    this.subInjectService.rightSideData(value);
 //  }
+showFilters(showFilter) {
+  if (showFilter == true) {
+    this.showFilter = false;
+  } else {
+    this.showFilter = true;
+  }
+  console.log('this.filterStatus: ', this.filterStatus);
+  console.log('this.filterDate: ', this.filterDate);
+
+}
 
 orgValueChange(selectedDateRange){
   const beginDate = new Date();

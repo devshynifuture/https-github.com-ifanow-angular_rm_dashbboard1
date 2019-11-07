@@ -241,9 +241,9 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   showFilters(showFilter) {
     if (showFilter == true) {
-      this.showFilter = true;
-    } else {
       this.showFilter = false;
+    } else {
+      this.showFilter = true;
     }
     console.log('this.filterStatus: ', this.filterStatus);
     console.log('this.filterDate: ', this.filterDate);

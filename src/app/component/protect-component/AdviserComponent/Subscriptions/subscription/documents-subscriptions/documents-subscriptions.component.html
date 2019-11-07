@@ -8,7 +8,7 @@
                 <i class="material-icons mr-12 icon-light v-sub c-p">
                     search
                 </i>
-                <button mat-stroked-button class="btn-default addon mr-12"><i class="material-icons">filter_list</i>FILTERS</button>
+                <button mat-stroked-button class="btn-default addon mr-12" (click)="showFilters(showFilter)"><i class="material-icons">filter_list</i>FILTERS</button>
                 <button mat-stroked-button class="btn-primary addon"><i class="material-icons">add</i>ADD NEW</button>
             </div>
         </div>
@@ -37,7 +37,7 @@
                     </mat-chip-list>
                   </mat-chip-list>
                 </div>
-                <div class="col-md-4 right text-right p-0">
+                <div class="col-md-4 right text-right p-0"  [ngClass]="showFilter === true ? 'block' : 'none'">
                   <div class="row">
                     <div class="col-md-6">
                       <select class="form-control br-0" id="sel11" [(ngModel)]='selectedStatusFilter'
