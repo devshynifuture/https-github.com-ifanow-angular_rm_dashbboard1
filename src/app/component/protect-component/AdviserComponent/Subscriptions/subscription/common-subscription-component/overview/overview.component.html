@@ -137,5 +137,5 @@
   </div>
 </div>
 <div>
-  <app-terms-agreement *ngIf="overviewDesign=='false'" ></app-terms-agreement>
+  <app-terms-agreement [componentFlag]='Flag' [upperData]="upperData"*ngIf="overviewDesign=='false'" ></app-terms-agreement>
 </div>
