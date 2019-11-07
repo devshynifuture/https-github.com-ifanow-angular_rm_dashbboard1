@@ -40,7 +40,7 @@ import {AppModule} from "../../../app.module";
   ],
   imports: [
     CustomCommonModule,
-    AppModule,
+    // AppModule,
     CommonModule,
     CustomersRoutingModule,
     MaterialModule,
