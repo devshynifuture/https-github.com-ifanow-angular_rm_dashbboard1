@@ -150,9 +150,9 @@
       <ng-container matColumnDef="feemode">
         <th *matHeaderCellDef class="f-18 text-right pr-24 t-12" mat-header-cell> Fee mode</th>
         <td *matCellDef="let element" class="text-right pr-8 t-12" mat-cell>
-          <span>
-            <!-- <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==1">FIXED</span>
-            <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==2">VARIABLE</span> -->
+          <span *ngIf="element.subscriptionPricing">
+            <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==1">FIXED</span>
+            <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==2">VARIABLE</span>
           </span>
         </td>
       </ng-container>
