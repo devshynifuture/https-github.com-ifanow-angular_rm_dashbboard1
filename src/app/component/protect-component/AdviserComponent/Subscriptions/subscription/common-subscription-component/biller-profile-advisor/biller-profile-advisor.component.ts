@@ -86,13 +86,20 @@ export class BillerProfileAdvisorComponent implements OnInit {
       event.preventDefault();
     }
   }
+  public onChange(fileList: FileList): void {
+    let file = fileList[0];
+    let fileReader: FileReader = new FileReader();
+ 
+    fileReader.onloadend = function(x) {
+      this.imgUrl=fileReader.result
+        }
+  }
   
   getSingleBillerProfileData(data) {
     if (data == '') {
       data = {};
     }
     this.display=data;
-
      this.profileDetailsForm= this.fb.group({
         gstinNum: [(data.gstin), [Validators.required]],
         panNum: [(data.pan), [Validators.required]],
@@ -103,6 +110,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
         city: [(data.city), [Validators.required]],
         id : [data.id]
       }),
+      this.logUrl=this.fb.group({
+        url:[data,[Validators.required]]
+      })
       this.bankDetailsForm= this.fb.group({
         nameOnBank: [(data.nameAsPerBank), [Validators.required]],
         bankName: [(data.bankName), [Validators.required]],
