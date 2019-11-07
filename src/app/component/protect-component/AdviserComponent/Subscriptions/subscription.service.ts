@@ -352,6 +352,10 @@ export class SubscriptionService {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('docRepoId', data.docRepoId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_MAPPED_SERVICE, httpParams); 
   }
+  deleteSubSettingBillerProfile(data)
+  {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SUB_SETTING_BILLER_PROFILE,data)
+  }
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
   }

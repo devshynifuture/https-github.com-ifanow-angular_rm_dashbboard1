@@ -119,6 +119,6 @@ export const appConfig = {
   GET_EMAIL_TEMPLATE_FILTER: 'subscription/emailtemplate/get',
   GET_DOCUMENT_MAPPED_PLAN: 'subscription/document/plan/map/get',
   GET_DOCUMENT_MAPPED_SERVICE: 'subscription/document/service/map/get',
-
+  DELETE_SUB_SETTING_BILLER_PROFILE:'subscription/setting/billerprofile/delete',
   GET_BASE_64: 'api/v1/test/base64/decode'
 };
