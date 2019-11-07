@@ -85,7 +85,7 @@ export class VariableFeeComponent implements OnInit {
 
   getSubscribeData(data) {
     console.log(data);
-
+    (data.data.isCreateSub)?this.isSave=true:this.isSave=false
     if (data == undefined) {
       this.createVariableForm('');
       return;
@@ -123,12 +123,6 @@ export class VariableFeeComponent implements OnInit {
   close() {
     this.subInjectService.changeUpperRightSliderState({state: 'close', Flag: ''});
     this.subInjectService.changeNewRightSliderState({state: 'close', Flag: ''});
-
-    // this.ngOnInit();
-    /*  this.subInjectService.rightSideData(state);
-      this.subInjectService.rightSliderData(state);
-      this.variableFeeStructureForm.reset();
-      this.isSave = true;*/
   }
 
   select(assetData) {
