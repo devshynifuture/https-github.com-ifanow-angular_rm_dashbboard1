@@ -8,6 +8,8 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
 import {MatDialog} from '@angular/material';
 import {INT_TYPE} from '@angular/compiler/src/output/output_ast';
 import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { from } from 'rxjs';
+import { UtilService } from 'src/app/services/util.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -74,6 +76,7 @@ export interface PeriodicElement {
 export class InvoiceComponent implements OnInit {
   discount: any;
   inputData: any;
+  templateType: number;
 
   [x: string]: any;
 
@@ -674,7 +677,43 @@ export class InvoiceComponent implements OnInit {
   saveInvoice() {
     console.log(this.editPayment);
   }
-
+  openSendEmail() {
+    if(this.storeData.quotation==false){
+      this.templateType=4;
+    }else{
+      this.templateType=2;
+    }
+    const data = {
+      advisorId: 2828,
+      clientData: this.storeData,
+      templateType: this.templateType, //2 is for quotation
+      documentList: [this.storeData]
+    };
+    // this.dataSource.forEach(singleElement => {
+    //   if (singleElement.selected) {
+    //     data.documentList.push(singleElement);
+    //   }
+    // });
+    this.OpenEmail(data,'emailQuotationFroala');
+  }
+  OpenEmail(data,value) {
+    const fragmentData = {
+      Flag: value,
+      data:data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', );
+          rightSideDataSub.unsubscribe();
+        }
+      }
+      
+    );
+  }
   deleteModal(value, data) {
     const dialogData = {
       data: value,

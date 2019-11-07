@@ -24,6 +24,7 @@ export class EmailOnlyComponent implements OnInit {
   emailBody: any;
   subject;
   doc: any;
+  docObj: any[];
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject, public subscription: SubscriptionService) {
     // this.dataSub = this.subInjectService.singleProfileData.subscribe(
     //   data => this.getcommanFroalaData(data)
@@ -67,6 +68,7 @@ export class EmailOnlyComponent implements OnInit {
        obj.push(obj1)
       }
      });
+    this.docObj=obj;
     this._inputData = inputData;
     this._inputData = {
       advisorId: 2808,
@@ -78,6 +80,7 @@ export class EmailOnlyComponent implements OnInit {
       documentList:obj,
       templateType: inputData.templateType
     };
+    console.log("dsfgsdggggggggg",this.docObj)
     console.log('EmailOnlyComponent inputData : ', inputData);
     this.getEmailTemplateFilterData();
   }
@@ -153,7 +156,11 @@ export class EmailOnlyComponent implements OnInit {
 
     // this.valueChange.emit(this.emailSend);
   }
+  remove(item) {
+    this.docObj.splice(item, 1);
+   // this.callFilter();
 
+  }
   getEmailTemplate() {
     const obj = {
       advisorId: 2828,

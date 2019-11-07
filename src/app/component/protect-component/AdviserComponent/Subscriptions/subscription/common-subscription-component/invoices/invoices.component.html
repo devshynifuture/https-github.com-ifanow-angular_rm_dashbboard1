@@ -22,7 +22,7 @@
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item class="b-t"  *ngIf="dataCount == 0">Select invoice to see more actions</button>
                     <button mat-menu-item (click)="openInvoicesESign('eSignInvoices','open')" *ngIf="dataCount != 0">Email with eSign request</button>
-                    <button mat-menu-item (click)="changeDisplay('emailInvoices')"*ngIf="dataCount != 0">Email only</button>
+                    <button mat-menu-item (click)="openSendEmail()" *ngIf="dataCount != 0">Email only</button>
                     <button mat-menu-item class="b-t" (click)="deleteModal('INVOICE')"*ngIf="dataCount != 0">Delete Invoices</button>
                 </mat-menu>
                 </div>
