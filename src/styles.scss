@@ -589,7 +589,11 @@ mat-tab-group[vertical] {
         border-bottom: 0px !important;
     }
 }
-
+#ui-biller{
+    .form-control{
+        border: 2px solid rgba(25, 25, 25, 0.32) !important;
+    }
+}
 #ui-customer {
     .mat-tab-header {
         border-bottom: 0px !important;
