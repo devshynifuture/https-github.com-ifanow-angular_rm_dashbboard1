@@ -22,7 +22,11 @@ export class LiabilitiesComponent implements OnInit {
   ngOnInit() {
     this.viewMode = 'tab1';
   }
-
+  openAddLib(value,state)
+  {
+    this.subinject.rightSideData(state)
+    this.eventService.sidebarData(value)
+  }
   clickHandling() {
     console.log('something was clicked');
     // this.openFragment('', 'plan');

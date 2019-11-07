@@ -4,7 +4,7 @@
   </div>
   <div class="col-md-4 text-right">
     <div class="wrapper-12 pb-10">
-      <button mat-stroked-button class="br-0 btn-primary mr-20" (click)="enableForm()">EDIT</button>
+      <button [ngClass]="{'v-h':!isSave}" mat-stroked-button class="br-0 btn-primary mr-20" (click)="enableForm()">EDIT</button>
       <i class="material-icons c-p v-middle" (click)="Close('close')"> clear</i>
     </div>
   </div>
@@ -167,12 +167,8 @@
     <div class="col-md-4 pl-8">
       <h5 class="mb-0 pt-4 text-white c-p" (click)="Close('close')">Cancel</h5>
     </div>
-    <div class="col-md-8 right text-right">
+    <div [ngClass]="{'v-h':isSave}" class="col-md-8 right text-right">
       <button mat-button (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">Save</button>
     </div>
-    <!-- <div *ngIf="createSubData && singleSubscriptionData.subscriptionPricing" class="col-md-8 right text-right">
-        <button *ngIf="singleSubscriptionData.subscriptionPricing.feeTypeId==2" mat-button
-          (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">NEXT STEP</button>
-      </div> -->
   </div>
 </div>
