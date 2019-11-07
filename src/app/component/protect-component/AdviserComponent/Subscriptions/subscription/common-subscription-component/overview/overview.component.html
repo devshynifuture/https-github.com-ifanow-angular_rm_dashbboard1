@@ -62,9 +62,9 @@
     <div class="col-md-2">
       <div class="b-a hoverable">
         <div class="action-button">
-          <button mat-stroked-button class="btn-sm btn-primary br-0 ml-24 mr-20 f-14"
+          <!-- <button mat-stroked-button class="btn-sm btn-primary br-0 ml-24 mr-20 f-14"
                   (click)="changeDisplay()">VIEW
-          </button>
+          </button> -->
           <button mat-stroked-button class="btn-sm btn-success br-0 f-14"
                   (click)="openForm('Terms of Agreement')">USE
           </button>
@@ -137,5 +137,5 @@
   </div>
 </div>
 <div>
-  <app-terms-agreement *ngIf="overviewDesign=='false'" ></app-terms-agreement>
+  <app-terms-agreement [componentFlag]='Flag' [upperData]="upperData"*ngIf="overviewDesign=='false'" ></app-terms-agreement>
 </div>

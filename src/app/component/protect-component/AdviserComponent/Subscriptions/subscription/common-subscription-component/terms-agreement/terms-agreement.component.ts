@@ -4,6 +4,8 @@ import {SubscriptionInject} from '../../../subscription-inject.service';
 import {HowToUseDialogComponent} from '../how-to-use-dialog/how-to-use-dialog.component';
 import {MatDialog} from '@angular/material';
 import {SubscriptionService} from '../../../subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-terms-agreement',
@@ -21,19 +23,35 @@ export class TermsAgreementComponent implements OnInit {
   model: any;
   dataSub: any;
   storeData: any;
+  _upperData: any;
+  dataTerms: any;
 
-  constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public subService: SubscriptionService) {
+  constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public subService: SubscriptionService,private eventService:EventService) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getcommanFroalaData(data)
     );
   }
 
   @Input() quotationDesignE;
+  @Input() componentFlag: string;
   @Output() valueChange = new EventEmitter();
   mailForm = new FormGroup({
     mail_body: new FormControl(''),
 
   });
+  @Input()
+  set upperData(upperData) {
+    this._upperData = upperData;
+    console.log('Terms and agreemennt upperData: ', upperData);
+    this.getDataTerms(upperData)
+    if (upperData && upperData.documentData) {
+      // this.changeDisplay();
+    }
+  };
+
+  get upperData() {
+    return this._upperData;
+  }
   // private froalaEditorContent = 'This is Intial Data';
   // public froalaEditorOptions = {
   //   placeholder: 'Edit Me',
@@ -52,19 +70,20 @@ export class TermsAgreementComponent implements OnInit {
   // };
 
   ngOnInit() {
-    console.log('quotationDesign', this.quotationDesignE);
+    console.log('quotationDesign', this._upperData);
   }
 
   Close(value) {
     this.subInjectService.rightSideData(value);
     this.valueChange.emit(this.quotationDesignE);
   }
-
   onSubmit() {
     // TODO: Use EventEmitter with form value
     console.log(this.mailForm.value);
   }
-
+  getDataTerms(data){
+    this.dataTerms = data.documentData
+  }
   openDialog(data) {
     const Fragmentdata = {
       Flag: data,
@@ -80,6 +99,40 @@ export class TermsAgreementComponent implements OnInit {
 
     });
 
+  }
+  OpenEdit(data){
+    const fragmentData = {
+      Flag: 'addEditDocument',
+      data: this._upperData.documentData,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        // console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          // console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+  updateData(data) {
+    const obj = {
+      documentRepositoryId: data.documentRepositoryId, // pass here advisor id for Invoice advisor
+      docText: data.docText
+    };
+    this.subService.updateDocumentData(obj).subscribe(
+      data => this.getResponseData(data)
+    );
+  }
+
+  getResponseData(data) {
+    console.log(data);
+    if(data == 1){
+      this.eventService.openSnackBar("Document updated successfully","OK")
+    }
+    this.eventService.changeUpperSliderState({state: 'close'});
   }
 
   // Begin ControlValueAccesor methods.

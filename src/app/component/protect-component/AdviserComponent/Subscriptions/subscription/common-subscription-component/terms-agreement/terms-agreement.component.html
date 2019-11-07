@@ -1,7 +1,7 @@
 <div class="wrapper-100 pt-150">
   <div class="row pt-44">
     <div class="col-md-9">
-      <h3 class="mb-8 mt-20">Terms of agreement <img src="assets/images/svg/pencil.svg" class="pl-8"/>
+      <h3 class="mb-8 mt-20">{{dataTerms.name}}<img src="assets/images/svg/pencil.svg" (click) = "OpenEdit('Terms of Agreement')"class="pl-8"/>
 
       </h3>
       <!-- <form [formGroup]="mailForm" id="ui-froala"> -->
@@ -9,10 +9,10 @@
 
 <!--        formControlName="mail_body"-->
 <!--        <textarea [froalaEditor]='froalaEditorOptions'  [(froalaModel)]="froalaEditorContent"></textarea>-->
-              <app-froala [(model)]="storeData.documentText" modelChange="saveData($event)"></app-froala>
-        <button type="submit" (click)="onSubmit()" [disabled]="!mailForm.valid" mat-stroked-button
+              <app-froala [(model)]="dataTerms.docText" modelChange="saveData($event)"></app-froala>
+        <!-- <button type="submit" (click)="onSubmit()" [disabled]="!mailForm.valid" mat-stroked-button
                 class="mt-16 btn-primary br-0">Submit
-        </button>
+        </button> -->
       </form>
     </div>
     <div class="col-md-3 pr-0" id="ui-tc-insert">
@@ -95,16 +95,15 @@
       <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>
     </div>
     <div class="col-md-2 pl-0">
-      <p class="m-0 c-p text-white pt-8">Help</p>
+      <!-- <p class="m-0 c-p text-white pt-8">Help</p> -->
 
     </div>
     <div class="col-md-4 p-0">
       <div class="row">
         <div class="col-md-9 p-0">
-          <p class="m-0 c-p text-white pt-8">Saving changes</p>
         </div>
         <div class="col-md-3 p-0">
-          <button mat-button class="btn-bottom br-0 text-inherit">PUBLISH</button>
+          <button mat-button class="btn-bottom br-0 text-inherit"(click)="updateData(dataTerms)">SAVE</button>
         </div>
       </div>
     </div>

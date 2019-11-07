@@ -5,7 +5,7 @@
   <div class="col-md-4 text-right">
     <div class="wrapper-12 pb-10">
       <button [ngClass]="{'v-h':!isSave}" mat-stroked-button class="br-0 btn-primary mr-20" (click)="enableForm()">EDIT</button>
-      <i class="material-icons c-p v-middle" (click)="Close('close')"> clear</i>
+      <i class="material-icons c-p v-middle" (click)="close()"> clear</i>
     </div>
   </div>
 </div>
@@ -20,7 +20,7 @@
       </div>
       <div class="col-md-7">
         <mat-radio-group formControlName="billingNature">
-          <mat-radio-button value="1" checked=true
+          <mat-radio-button value="1"
             [ngClass]="{'b-a-custom': variableFeeStructureForm.get('billingNature').value==1,'text-primary':variableFeeStructureForm.get('billingNature').value==1,'b-a':variableFeeStructureForm.get('billingNature').value==2}"
             class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio">Recurring
           </mat-radio-button>
@@ -165,7 +165,7 @@
 <div class="bottom-fixed wrapper-16">
   <div class="row">
     <div class="col-md-4 pl-8">
-      <h5 class="mb-0 pt-4 text-white c-p" (click)="Close('close')">Cancel</h5>
+      <h5 class="mb-0 pt-4 text-white c-p" (click)="close()">Cancel</h5>
     </div>
     <div  class="col-md-8 right text-right">
       <button [ngClass]="{'v-h':isSave}" mat-button (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">Save</button>
