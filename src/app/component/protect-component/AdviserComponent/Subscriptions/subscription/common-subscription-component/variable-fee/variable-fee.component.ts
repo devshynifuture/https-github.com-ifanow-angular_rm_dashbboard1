@@ -78,8 +78,8 @@ export class VariableFeeComponent implements OnInit {
   }
 
   getSubscribeData(data) {
-    console.log(data)
-
+    console.log(data);
+    (data.data.isCreateSub)?this.isSave=true:this.isSave=false
     if (data == undefined) {
       this.createVariableForm('')
       return
@@ -117,7 +117,7 @@ export class VariableFeeComponent implements OnInit {
     this.subInjectService.rightSideData(state)
     this.subInjectService.rightSliderData(state)
     this.variableFeeStructureForm.reset();
-    this.isSave=true
+    this.isSave=false
   }
   select(assetData) {
     (assetData.selected) ? this.unselectAssets(assetData) : this.selectAssets(assetData);

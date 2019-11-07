@@ -63,6 +63,7 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
+          this.getSummaryDataClient();
         }
       }
     );
@@ -110,8 +111,9 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
 
   getSubSummaryRes(data) {
     console.log(data);
-    this.dataSource = data;
-  }
+      (data)?this.dataSource = data:this.dataSource=[];
+    }
+  
 
   deleteModal(value, subData) {
     const dialogData = {
@@ -169,7 +171,6 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
   }
   deletedData(data) {
     if (data == true) {
-      this.eventService.changeUpperSliderState({state: 'close'});
       this.eventService.openSnackBar('Deleted successfully!', 'dismiss');  
     }
   }
