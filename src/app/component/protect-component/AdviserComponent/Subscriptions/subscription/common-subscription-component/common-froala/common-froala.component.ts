@@ -103,6 +103,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
     //   this.subInjectService.rightSideData(value);
     // }
     this.subInjectService.changeNewRightSliderState({state:'close',data})
+    this.subInjectService.changeUpperRightSliderState({state:'close',data})
 
     // this.subInjectService.changeUpperRightSliderState({value:'close'})
     // this.subInjectService.changeUpperRightSliderState({value:'close'})

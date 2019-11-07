@@ -19,7 +19,8 @@ import {FroalaEditorModule} from "angular-froala-wysiwyg";
     ReactiveFormsModule,
     FroalaEditorModule,
     // AppModule
-  ]
+  ],
+  entryComponents: [ConfirmDialogComponent]
 })
 export class CommonComponentModule {
 }

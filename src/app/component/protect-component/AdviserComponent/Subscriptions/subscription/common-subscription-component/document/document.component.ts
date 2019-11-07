@@ -230,7 +230,7 @@ export class DocumentComponent implements OnInit {
     this.open(data, 'emailOnlyDoc');
   }
 
-  open(data, value) {
+  open(value, data) {
 
     // this.eventService.sliderData(value);
     // this.subInjectService.rightSliderData(state);
@@ -238,7 +238,7 @@ export class DocumentComponent implements OnInit {
 
     const fragmentData = {
       Flag: value,
-      data,
+      data:data,
       id: 1,
       state: 'open'
     };
