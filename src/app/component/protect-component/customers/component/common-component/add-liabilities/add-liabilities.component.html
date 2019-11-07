@@ -6,7 +6,7 @@
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" > clear</i>
+                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
             </div>
         </div>
     </div>
@@ -19,18 +19,8 @@
         </div>
         <div class="col-md-5">
             <div class="form-group mb-0">
-              <input matInput class="form-control br-0">
+                <input matInput class="form-control br-0">
 
-              <mat-form-field>
-                <input matInput type="text" class="form-control br-0">
-                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                <mat-hint>Hint</mat-hint>
-              </mat-form-field>
-              <mat-form-field>
-                <input matInput type="text" class="form-control br-0">
-                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                <mat-hint>Hint</mat-hint>
-              </mat-form-field>
             </div>
         </div>
     </div>

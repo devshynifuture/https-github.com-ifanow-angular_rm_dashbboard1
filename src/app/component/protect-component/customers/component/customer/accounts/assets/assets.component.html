@@ -61,8 +61,8 @@
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i class="material-icons">filter_list</i>FILTERS</button>
                 <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"><i class="material-icons">add</i>ADD NEW</button>
                 <mat-menu #menu1="matMenu" class="add-new">
-                  <button mat-menu-item class="b-b">
-                    <div (click)="openPortfolioSummary('portfolioSummary','open')" class="row">
+                  <button (click)="openPortfolioSummary('portfolioSummary','open')" mat-menu-item class="b-b">
+                    <div class="row">
                       <div class="col-md-2 pr-8 text-right">
                         <img src="assets/images/svg/dark-three-dot.svg">
                       </div>

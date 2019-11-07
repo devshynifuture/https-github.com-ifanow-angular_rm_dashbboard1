@@ -121,6 +121,8 @@ import {CustomCommonModule} from "./common/custom.common.module";
 import {DialogContainerComponent} from "./common/dialog-container/dialog-container.component";
 import {CustomDialogContainerComponent} from "./common/custom-dialog-container/custom-dialog-container.component";
 import { AddLiabilitiesComponent } from './component/protect-component/customers/component/common-component/add-liabilities/add-liabilities.component';
+import { LiabilitiesComponent } from './component/protect-component/customers/component/customer/accounts/liabilities/liabilities.component';
+import { AddInsuranceComponent } from './component/protect-component/customers/component/common-component/add-insurance/add-insurance.component';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -213,7 +215,8 @@ import { AddLiabilitiesComponent } from './component/protect-component/customers
     LibilitiesRightComponent,
     DialogContainerComponent,
     CustomDialogContainerComponent,
-    AddLiabilitiesComponent
+    AddLiabilitiesComponent,
+    AddInsuranceComponent
   ],
   imports: [
     CustomCommonModule,

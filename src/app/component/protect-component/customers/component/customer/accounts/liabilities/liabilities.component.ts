@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 // import {UtilService} from '../../../../../../../services/util.service';
 import {EventService} from '../../../../../../../Data-service/event.service';
 import {SubscriptionInject} from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-liabilities',
@@ -13,7 +14,7 @@ export class LiabilitiesComponent implements OnInit {
   displayedColumns = ['no', 'name', 'type', 'loan', 'ldate', 'today', 'ten', 'rate', 'emi', 'fin', 'status', 'icons'];
   dataSource = ELEMENT_DATA;
 
-  constructor(private eventService: EventService, private subinject: SubscriptionInject) {
+  constructor(private eventService: EventService, private subInjectService: SubscriptionInject) {
   }
 
 
@@ -22,45 +23,31 @@ export class LiabilitiesComponent implements OnInit {
   ngOnInit() {
     this.viewMode = 'tab1';
   }
-  openAddLib(value,state)
+  open(flagValue,data)
   {
-    this.subinject.rightSideData(state)
-    this.eventService.sidebarData(value)
+    const fragmentData = {
+      Flag: flagValue,
+      data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+    
+        }
+      }
+    );
   }
   clickHandling() {
     console.log('something was clicked');
     // this.openFragment('', 'plan');
     this.open('openHelp', 'liabilityright');
   }
-  openPortfolioSummary(value,state)
-  {
-    this.subinject.rightSideData(state)
-    this.eventService.sidebarData(value)
-  }
-
-  openFragment(singlePlan, data) {
-    this.subinject.pushUpperData(singlePlan);
-
-    const fragmentData = {
-      Flag: data,
-      planData: singlePlan,
-      state: 'open'
-    };
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-      upperSliderData => {
-        subscription.unsubscribe();
-      }
-    );
-
-  }
-
-  open(state, data) {
   
-    this.eventService.sidebarData(data);
-    this.subinject.rightSideData(state);
-    this.subinject.addSingleProfile(data);
-
-  }
 }
 
 export interface PeriodicElement {
