@@ -678,16 +678,13 @@ export class InvoiceComponent implements OnInit {
     console.log(this.editPayment);
   }
   openSendEmail(input) {
-    if(this.storeData.quotation==false){
-      this.templateType=4;
-    }else{
-      this.templateType=2;
-    }
+  
     const data = {
       advisorId: 2828,
       clientData: this.storeData,
-      templateType: this.templateType, //2 is for quotation
-      documentList: [this.storeData]
+      templateType: 1, //2 is for quotation
+      documentList: [this.storeData],
+      isInv:true
     };
     // this.dataSource.forEach(singleElement => {
     //   if (singleElement.selected) {

@@ -14,8 +14,8 @@
                                             arrow_drop_down
                                             </i></button>
                                           <mat-menu #menu="matMenu">
-                                              <button mat-menu-item class="b-t"  *ngIf="dataCount == 0">Select invoice to see more actions</button>
-                                              <button mat-menu-item class="b-t" (click)="deleteModal('INVOICE')"*ngIf="dataCount != 0">Delete Invoices</button>
+                                              <button mat-menu-item  *ngIf="dataCount == 0">Select invoice to see more actions</button>
+                                              <button mat-menu-item  (click)="deleteModal('INVOICE')"*ngIf="dataCount != 0">Delete Invoices</button>
                                           </mat-menu>
                               </div>
                               <div class="col-md-8 p-0">

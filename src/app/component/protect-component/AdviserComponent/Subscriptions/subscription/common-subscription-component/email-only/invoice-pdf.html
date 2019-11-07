@@ -59,8 +59,8 @@
   <div class="row btl-1 pt-16">
     <div class="col-md-9">
           <mat-chip-list #chipList aria-label="docName selection">
-              <mat-chip *ngFor="let doc of docObj ; let doc = index" [selectable]="selectable"
-                      (removed)="remove(doc)">
+              <mat-chip *ngFor="let doc of docObj ; let i = index"
+                      (removed)="remove(i)">
                 {{doc.documentName}}
                 <mat-icon matChipRemove>cancel</mat-icon>
               </mat-chip>

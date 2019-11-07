@@ -143,7 +143,8 @@ export class InvoicesComponent implements OnInit {
       advisorId: this.advisorId,
       clientData:this.upperData,
       templateType: 1, //2 is for quotation
-      documentList: []
+      documentList: [],
+      isInv:true
     };
     this.dataSource.forEach(singleElement => {
       if (singleElement.selected) {
