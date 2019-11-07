@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SubscriptionInject } from '../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { SubscriptionService } from '../protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { SubscriptionService } from '../../../subscription.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatSliderChange } from '@angular/material';
 
@@ -23,7 +23,7 @@ export class ChangePayeeComponent implements OnInit {
   arraTosend: any;
   dataMatSlider: any;
   constructor(public subInjectService: SubscriptionInject,public subService:SubscriptionService,public eventService:EventService) {
- 
+
   }
 
   ngOnInit() {

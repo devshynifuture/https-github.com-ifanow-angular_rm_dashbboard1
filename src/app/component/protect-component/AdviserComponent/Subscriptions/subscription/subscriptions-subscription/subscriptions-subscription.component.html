@@ -8,7 +8,7 @@
         <i class="material-icons mr-12 icon-light c-p v-sub">
           search
         </i>
-        <button (click)="showFilters(showFilter = true)" class="btn-default addon mr-12" mat-stroked-button><i
+        <button (click)="showFilters(showFilter)" class="btn-default addon mr-12" mat-stroked-button><i
           class="material-icons">filter_list</i>FILTERS
         </button>
         <!-- <button class="btn-primary addon" mat-stroked-button><i class="material-icons">add</i>ADD NEW</button> -->
@@ -23,7 +23,7 @@
           <i class="material-icons mr-12 icon-light c-p v-sub">
             search
           </i>
-          <button mat-stroked-button class="btn-default addon mr-12" (click)="showFilters(showFilter = true)"><i
+          <button mat-stroked-button class="btn-default addon mr-12" (click)="showFilters(showFilter)"><i
             class="material-icons">filter_list</i>FILTERS
           </button>
           <!-- <button mat-stroked-button class="btn-primary addon"><i class="material-icons">add</i>ADD NEW</button> -->
@@ -45,7 +45,8 @@
                   <input matInput
                          placeholder="Choose a date"
                          [satDatepicker]="picker2"
-                         [(ngModel)]="selectedDateRange">
+                         [(ngModel)]="selectedDateRange"
+                         (dateChange)="orgValueChange(selectedDateRange)">
                   <sat-datepicker #picker2 [rangeMode]="true">
                   </sat-datepicker>
                   <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
@@ -67,7 +68,7 @@
               </div>
               <div class="col-md-6">
                 <select class="form-control br-0" id="sel12" [(ngModel)]='selectedDateFilter'
-                        (change)="addFiltersDate($event)">
+                        (change)="addFiltersDate($event.target.value)">
                   <option value="" [disabled]="true">FILTERS TWO</option>
                   <option *ngFor="let dateAdd of dateChips" [ngValue]="dateAdd">{{dateAdd.name}}</option>
                 </select>
@@ -149,9 +150,9 @@
       <ng-container matColumnDef="feemode">
         <th *matHeaderCellDef class="f-18 text-right pr-24 t-12" mat-header-cell> Fee mode</th>
         <td *matCellDef="let element" class="text-right pr-8 t-12" mat-cell>
-          <span>
-            <!-- <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==1">FIXED</span>
-            <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==2">VARIABLE</span> -->
+          <span *ngIf="element.subscriptionPricing">
+            <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==1">FIXED</span>
+            <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==2">VARIABLE</span>
           </span>
         </td>
       </ng-container>

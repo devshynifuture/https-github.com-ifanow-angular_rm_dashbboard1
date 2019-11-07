@@ -7,6 +7,9 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {AuthService} from "../../../../../../auth-service/authService";
 import { UtilService } from 'src/app/services/util.service';
 import * as _ from 'lodash';
+import { DatePipe } from '@angular/common';
+import { MAT_DATE_FORMATS } from 'saturn-datepicker';
+import { MY_FORMATS2 } from '../subscriptions-subscription/subscriptions-subscription.component';
 export interface PeriodicElement {
   name: string;
   docname: string;
@@ -21,7 +24,20 @@ export interface PeriodicElement {
 @Component({
   selector: 'app-quotations-subscription',
   templateUrl: './quotations-subscription.component.html',
-  styleUrls: ['./quotations-subscription.component.scss']
+  styleUrls: ['./quotations-subscription.component.scss'],
+  providers: [
+    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
+    // {
+    //   provide: DateAdapter,
+    //   useClass: MomentDateAdapter,
+    //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    // },
+    // { provide: MAT_DATE_LOCALE, useValue: 'en' },
+    [DatePipe],
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+  ],
 })
 export class QuotationsSubscriptionComponent implements OnInit {
 
@@ -43,23 +59,33 @@ export class QuotationsSubscriptionComponent implements OnInit {
     {name: 'Client consent', value: 3}
   ];
   selectedDateRange: { begin: Date; end: Date; };
+  selectedDateFilter: any;
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-              public dialog: MatDialog, private subService: SubscriptionService) {
+              public dialog: MatDialog, private subService: SubscriptionService,private datePipe: DatePipe) {
   }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.getQuotationsData();
   }
+  orgValueChange(selectedDateRange){
+    const beginDate = new Date();
+    beginDate.setMonth(beginDate.getMonth() - 1);
+    UtilService.getStartOfTheDay(beginDate);
 
+    const endDate = new Date();
+    UtilService.getStartOfTheDay(endDate)
+    this.selectedDateRange = {begin: selectedDateRange.begin, end: selectedDateRange.end};
+    this.getQuotationsData()
+  }
   getQuotationsData() {
     const obj = {
       // advisorId: 12345
       advisorId: this.advisorId,
-      quotaionFlag : 1,
-      dateType : 0,
-      fromDate:null,
-      toDate:null
+      quotaionFlag : (this.filterDate.length== 0)?1:2,
+      fromDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.begin, 'yyyy-MM-dd') : null,
+      toDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.end, 'yyyy-MM-dd') : null,
+      dateType:  (this.filterDate.length== 0)?0:this.filterDate,
     };
     this.subService.getSubscriptionQuotationData(obj).subscribe(
       data => this.getQuotationsDataResponse(data)
@@ -118,8 +144,10 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
   addFiltersDate(dateFilter) {
     console.log('addFilters', dateFilter);
-   //this.filterDate = [dateFilter];
-    this.filterDate.push(dateFilter);
+    if(this.filterDate.length >= 1){
+      this.filterDate = []
+    }
+    this.filterDate.push((dateFilter=="1: Object")?1:(dateFilter=="2: Object")?2:3);
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     UtilService.getStartOfTheDay(beginDate);
@@ -132,6 +160,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
   removeDate(item) {
     this.filterDate.splice(item, 1);
+    this.getQuotationsData()
  
   }
 

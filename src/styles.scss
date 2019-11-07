@@ -154,7 +154,11 @@
         background-color: $white;
     }
 }
-
+.invoice-history{
+    tr.mat-header-row{
+        height: 52px;
+    }
+}
 #ui-misreport {
     margin-top: 65px;
     h3.top-head {
@@ -565,27 +569,37 @@ mat-tab-group[vertical] {
     .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
         display: none !important;
     }
-    .mat-tab-header {
-        border-bottom: 0px !important;
-    }
+   
     .mat-ink-bar {
         display: none !important;
     }
     .mat-tab-label {
         // border-right:1px solid #ddd;
-        border-bottom-color: transparent !important;
+        // border-bottom-color: transparent !important;
         height: 50px !important;
         min-width: 75px;
+        // border-bottom: 1px solid #DADCE0;
     }
+    // .mat-tab-label-container{
+        
+    //     border-color: #DADCE0 #DADCE0 #fff;
+    // }
     .mat-tab-body-wrapper {
-        border: 1px solid #ddd;
+        border: 1px solid #DADCE0;
+        border-top: 0px !important;
+       
     }
     .mat-tab-label-active {
-        border: 1px solid #ddd;
+        border: 1px solid #DADCE0;
         border-bottom: 0px !important;
     }
+    
 }
-
+#ui-biller{
+    .form-control{
+        border: 2px solid rgba(25, 25, 25, 0.32) !important;
+    }
+}
 #ui-customer {
     .mat-tab-header {
         border-bottom: 0px !important;
