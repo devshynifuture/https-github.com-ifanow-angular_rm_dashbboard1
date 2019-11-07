@@ -82,13 +82,13 @@
         </ng-template>
       </mat-tab>
       <mat-tab label="PLANS"
-               *ngIf="upperData && upperData.documentData && upperData.documentData.mappedType == 0">
+               *ngIf="upperData && upperData.documentData && upperData.documentData.mappedType == 1">
         <ng-template matTabContent>
           <app-plans [componentFlag]='"plans"' [upperData]="upperData"></app-plans>
         </ng-template>
       </mat-tab>
       <mat-tab label="SERVICES"
-               *ngIf="upperData && upperData.documentData && upperData.documentData.mappedType == 0">
+               *ngIf="upperData && upperData.documentData && upperData.documentData.mappedType == 2">
         <ng-template matTabContent>
             <app-services [componentFlag]='"services"' [upperData]="upperData"></app-services>
         </ng-template>
