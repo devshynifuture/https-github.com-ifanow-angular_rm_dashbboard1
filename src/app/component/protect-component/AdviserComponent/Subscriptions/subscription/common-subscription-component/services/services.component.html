@@ -1,7 +1,7 @@
-<div *ngIf="componentFlag=='planServices'">
+<!-- <div *ngIf="componentFlag=='planServices'"> -->
   <div class="bg-grey lter heading-fix">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12" *ngIf="planData != undefined">
         <h2>{{planData.name}}</h2>
       </div>
     </div>
@@ -74,11 +74,11 @@
     </div>
 
   </div>
-</div>
+<!-- </div> -->
 
-<div *ngIf="componentFlag!='planServices'">
+<!-- <div *ngIf="componentFlag!='planServices'">
   <p>This is services in Documents</p>
-</div>
+</div> -->
 
 
 <div class="bottom-fixed wrapper-12 w-100">

@@ -6,7 +6,7 @@
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="closeNav('close')"> clear</i>
+                <i class="material-icons c-p pt-8 v-middle" > clear</i>
             </div>
         </div>
     </div>
@@ -19,7 +19,18 @@
         </div>
         <div class="col-md-5">
             <div class="form-group mb-0">
-                <input type="text" class="form-control br-0">
+              <input matInput class="form-control br-0">
+
+              <mat-form-field>
+                <input matInput type="text" class="form-control br-0">
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                <mat-hint>Hint</mat-hint>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="text" class="form-control br-0">
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                <mat-hint>Hint</mat-hint>
+              </mat-form-field>
             </div>
         </div>
     </div>
@@ -263,7 +274,7 @@
                     </div>
                     <table mat-table [dataSource]="dataSource" class="documentsTable" id="table-low">
 
-                      
+
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef> </th>
                             <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
@@ -323,7 +334,7 @@
             <div class="row">
                 <div class="col-md-12 mt-12 scheduleTable">
                     <table mat-table [dataSource]="dataSource1" class="documentsTable" id="table-low">
- 
+
                         <ng-container matColumnDef="year">
                             <th class="br text-left" mat-header-cell *matHeaderCellDef> Year</th>
                             <td class="br text-left" mat-cell *matCellDef="let element"> {{element.year}} </td>

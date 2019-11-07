@@ -85,7 +85,7 @@ export class SubscriptionService {
   }
 
   getSubscriptionQuotationData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('toDate', data.toDate).set('quotaionFlag', data.quotaionFlag).set('dateType', data.dateType).set('fromDate', data.fromDate);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBSCRIPTION_QUOTATIONS, httpParams);
   }
 
@@ -344,7 +344,14 @@ export class SubscriptionService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_TEMPLATE_FILTER, httpParams);
 
   }
-
+  plansMapped(data){
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('docRepoId', data.docRepoId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_MAPPED_PLAN, httpParams);
+  }
+  servicesMapped(data){
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('docRepoId', data.docRepoId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_MAPPED_SERVICE, httpParams); 
+  }
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
   }
