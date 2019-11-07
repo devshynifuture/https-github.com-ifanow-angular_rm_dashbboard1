@@ -3,7 +3,7 @@ import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from '../../../../../../../auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
+import {EventService} from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -38,26 +38,31 @@ export class BillerProfileAdvisorComponent implements OnInit {
   profileDetailsForm: any;
   bankDetailsForm: any;
   MiscellaneousData: any;
-  
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private eventService:EventService) {
+
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService,
+              private eventService: EventService) {
     // this.subInjectService.singleProfileData.subscribe(
     //   data => this.getSingleBillerProfileData(data)
     // );
   }
 
   @Input() Selected;
+
   @Input()
   set data(data) {
     this.inputData = data;
     this.getSingleBillerProfileData(data);
   }
-  logUrl=this.fb.group({
-    url:[,[Validators.required]]
-  })
+
+  logUrl = this.fb.group({
+    url: [, [Validators.required]]
+  });
+
   get data() {
     return this.inputData;
   }
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -86,48 +91,49 @@ export class BillerProfileAdvisorComponent implements OnInit {
       event.preventDefault();
     }
   }
+
   public onChange(fileList: FileList): void {
-    let file = fileList[0];
-    let fileReader: FileReader = new FileReader();
- 
-    fileReader.onloadend = function(x) {
-      this.imgUrl=fileReader.result
-        }
+    /* let file = fileList[0];
+     let fileReader: FileReader = new FileReader();
+
+     fileReader.onloadend = function(x) {
+       this.imgUrl=fileReader.result
+         }*/
   }
-  
+
   getSingleBillerProfileData(data) {
     if (data == '') {
       data = {};
     }
-    this.display=data;
-     this.profileDetailsForm= this.fb.group({
-        gstinNum: [(data.gstin), [Validators.required]],
-        panNum: [(data.pan), [Validators.required]],
-        Address: [(data.billerAddress), [Validators.required]],
-        state: [(data.state), [Validators.required]],
-        pincode: [(data.zipCode), [Validators.required]],
-        country: [(data.country), [Validators.required]],
-        city: [(data.city), [Validators.required]],
-        id : [data.id]
-      }),
-      this.logUrl=this.fb.group({
-        url:[data,[Validators.required]]
-      })
-      this.bankDetailsForm= this.fb.group({
-        nameOnBank: [(data.nameAsPerBank), [Validators.required]],
-        bankName: [(data.bankName), [Validators.required]],
-        acNo: [(data.acNumber), [Validators.required]],
-        ifscCode: [(data.ifscCode), [Validators.required]],
-        address: [(data.bankCity), [Validators.required]],
-        state: [(data.state), [Validators.required]],
-        pincode: [(data.bankZipCode), [Validators.required]],
-        city: [(data.city), Validators.required],
-        country: [(data.country), [Validators.required]],
-      }),
-      this.MiscellaneousData= this.fb.group({
+    this.display = data;
+    this.profileDetailsForm = this.fb.group({
+      gstinNum: [(data.gstin), [Validators.required]],
+      panNum: [(data.pan), [Validators.required]],
+      Address: [(data.billerAddress), [Validators.required]],
+      state: [(data.state), [Validators.required]],
+      pincode: [(data.zipCode), [Validators.required]],
+      country: [(data.country), [Validators.required]],
+      city: [(data.city), [Validators.required]],
+      id: [data.id]
+    }),
+      this.logUrl = this.fb.group({
+        url: [data, [Validators.required]]
+      });
+    this.bankDetailsForm = this.fb.group({
+      nameOnBank: [(data.nameAsPerBank), [Validators.required]],
+      bankName: [(data.bankName), [Validators.required]],
+      acNo: [(data.acNumber), [Validators.required]],
+      ifscCode: [(data.ifscCode), [Validators.required]],
+      address: [(data.bankCity), [Validators.required]],
+      state: [(data.state), [Validators.required]],
+      pincode: [(data.bankZipCode), [Validators.required]],
+      city: [(data.city), Validators.required],
+      country: [(data.country), [Validators.required]],
+    }),
+      this.MiscellaneousData = this.fb.group({
         footnote: [(data.footnote), [Validators.required]],
         terms: [(data.terms), [Validators.required]]
-      })
+      });
     this.getFormControlProfile().gstinNum.maxLength = 15;
     this.getFormControlProfile().panNum.maxLength = 10;
     this.getFormControlProfile().Address.maxLength = 150;
@@ -142,15 +148,15 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
   Close(data) {
     // this.subInjectService.rightSideData(value);
-    this.subInjectService.changeNewRightSliderState({state:'close',data})
+    this.subInjectService.changeNewRightSliderState({state: 'close', data});
   }
 
   nextStep(value, eventName) {
 
-    (this.profileDetailsForm.valid)?this.selected=1:console.log("please fill profile Data");
-    (this.logUrl.valid)?this.selected=2:console.log("url is required");
-    (this.bankDetailsForm.valid)?this.selected=3:console.log("bank details required");
-    (this.MiscellaneousData.valid)?this.submitBillerForm():console.log("miscellaneous required")
+    (this.profileDetailsForm.valid) ? this.selected = 1 : console.log('please fill profile Data');
+    (this.logUrl.valid) ? this.selected = 2 : console.log('url is required');
+    (this.bankDetailsForm.valid) ? this.selected = 3 : console.log('bank details required');
+    (this.MiscellaneousData.valid) ? this.submitBillerForm() : console.log('miscellaneous required');
   }
 
   submitBillerForm() {
@@ -226,24 +232,25 @@ export class BillerProfileAdvisorComponent implements OnInit {
         state: this.profileDetailsForm.controls.state.value,
         terms: this.MiscellaneousData.controls.terms.value,
         zipCode: this.profileDetailsForm.controls.pincode.value,
-         id :this.profileDetailsForm.controls.id.value
+        id: this.profileDetailsForm.controls.id.value
       };
       console.log(obj);
-      if(this.profileDetailsForm.controls.id.value == undefined){
+      if (this.profileDetailsForm.controls.id.value == undefined) {
         this.subService.saveBillerProfileSettings(obj).subscribe(
           data => this.closeTab(data)
         );
 
-      }else{
+      } else {
         this.subService.updateBillerProfileSettings(obj).subscribe(
           data => this.closeTab(data)
         );
       }
-     
+
     }
   }
+
   closeTab(data) {
-    if(data == true){
+    if (data == true) {
       this.Close(data);
       this.eventService.openSnackBar('biller profile is added', 'OK');
 
