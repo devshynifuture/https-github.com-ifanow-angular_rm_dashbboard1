@@ -56,7 +56,10 @@ export class QuotationsSubscriptionComponent implements OnInit {
     const obj = {
       // advisorId: 12345
       advisorId: this.advisorId,
-
+      quotaionFlag : 1,
+      dateType : 0,
+      fromDate:null,
+      toDate:null
     };
     this.subService.getSubscriptionQuotationData(obj).subscribe(
       data => this.getQuotationsDataResponse(data)

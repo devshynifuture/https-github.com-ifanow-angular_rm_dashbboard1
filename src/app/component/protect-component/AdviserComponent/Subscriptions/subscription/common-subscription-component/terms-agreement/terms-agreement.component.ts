@@ -5,6 +5,7 @@ import {HowToUseDialogComponent} from '../how-to-use-dialog/how-to-use-dialog.co
 import {MatDialog} from '@angular/material';
 import {SubscriptionService} from '../../../subscription.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-terms-agreement',
@@ -98,6 +99,23 @@ export class TermsAgreementComponent implements OnInit {
 
     });
 
+  }
+  OpenEdit(data){
+    const fragmentData = {
+      Flag: 'addEditDocument',
+      data: this._upperData.documentData,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        // console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          // console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
   updateData(data) {
     const obj = {
