@@ -1,0 +1,19 @@
+::ng-deep .mat-checkbox label {
+    margin: inherit !important;
+}
+
+.min-180 {
+    min-width: 180px;
+}
+
+.percentage100 {
+    width: 100%;
+}
+
+.scheduleTable #table-low tr.mat-row {
+    height: auto !important;
+}
+
+.scheduleTable #table-low tr.mat-row td {
+    padding: 6px 4px !important;
+}

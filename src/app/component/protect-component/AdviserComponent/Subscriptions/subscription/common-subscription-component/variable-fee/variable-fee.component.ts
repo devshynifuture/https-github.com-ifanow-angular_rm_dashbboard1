@@ -18,13 +18,11 @@ export class VariableFeeComponent implements OnInit {
   isFeeValid: any;
   variableData;
   pricing: boolean;
+  isSave;
   @Input() createSubData;
   @Output() outputData=new EventEmitter<Object>();
   singleSubscriptionData: any;
   constructor(private subService: SubscriptionService, private fb: FormBuilder, public subInjectService: SubscriptionInject) {
-    // this.subInjectService.newRightSliderDataObs.subscribe(
-    //   data => this.getSubscribeData(data)
-    // );
   }
   @Input()
   set data(data) {
@@ -51,8 +49,29 @@ export class VariableFeeComponent implements OnInit {
     otherAssetClassFees: [],
     pricing: [, [Validators.required]]
   });
+  createVariableForm(data)
+  {
+    this.variableFeeStructureForm = this.fb.group({
+      billingNature: [data, [Validators.required]],
+      billEvery: [data, [Validators.required]],
+      Duration: [1],
+      directFees: this.fb.group({
+        equity: [data, [Validators.required]],
+        debt: [data, [Validators.required]],
+        liquid: [data, [Validators.required]]
+      }),
+      regularFees: this.fb.group({
+        equity: [data, [Validators.required]],
+        debt: [data, [Validators.required]],
+        liquid: [data, [Validators.required]]
+      }),
+      otherAssetClassFees: [],
+      pricing: [data, [Validators.required]]
+    });
+  }
   ngOnInit() {
     this.setValidation(false);
+    this.isSave=true
   }
   getVariableFee() {
     return this.variableFeeStructureForm.controls;
@@ -62,13 +81,14 @@ export class VariableFeeComponent implements OnInit {
     console.log(data)
 
     if (data == undefined) {
+      this.createVariableForm('')
       return
     }
     else {
       this.singleSubscriptionData = data.data
       this.getVariableFee().billingNature.setValue(this.singleSubscriptionData.subscriptionPricing.billingNature);
       this.getVariableFee().billEvery.setValue(this.singleSubscriptionData.subscriptionPricing.billEvery);
-      this.getVariableFee().Duration.setValue(this.singleSubscriptionData.subscriptionPricing.billingCycle);
+      (this.singleSubscriptionData.subscriptionPricing.billingCycle==0)?this.getVariableFee().Duration.setValue(1):this.getVariableFee().Duration.setValue(this.singleSubscriptionData.subscriptionPricing.billingCycle);
       /*//TODO commented for now*/
       this.getVariableFee().directFees.setValue({
         equity: this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[0].equityAllocation,
@@ -90,13 +110,14 @@ export class VariableFeeComponent implements OnInit {
   }
   enableForm() {
     this.variableFeeStructureForm.enable();
+    this.isSave=false
   }
   Close(state) {
     this.ngOnInit();
     this.subInjectService.rightSideData(state)
     this.subInjectService.rightSliderData(state)
     this.variableFeeStructureForm.reset();
-    console.log(this.createSubData)
+    this.isSave=true
   }
   select(assetData) {
     (assetData.selected) ? this.unselectAssets(assetData) : this.selectAssets(assetData);

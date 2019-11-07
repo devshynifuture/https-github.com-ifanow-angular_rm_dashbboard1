@@ -651,6 +651,10 @@ mat-tab-group[vertical] {
 }
 
 .real-estate,
+.mutualfunds-capital-equity,
+.mutualfunds-capital-debt,
+.mutualfunds-capital-dividend-summary,
+.documentsTable,
 .fixed-deposite,
 .scheme-wise,
 .familymember-wise,
@@ -703,4 +707,21 @@ mat-tab-group[vertical] {
     textarea {
         resize: none;
     }
+}
+
+.mutualfunds-capital-equity .mat-row:last-child {
+    font-weight: bold !important;
+}
+
+.mutualfunds-capital-debt .mat-row:last-child {
+    font-weight: bold !important;
+}
+
+.mutualfunds-capital-dividend-summary .mat-row:last-child {
+    font-weight: bold !important;
+}
+
+.btn-dark-black {
+    border: 1px solid $black !important;
+    color: $black !important;
 }

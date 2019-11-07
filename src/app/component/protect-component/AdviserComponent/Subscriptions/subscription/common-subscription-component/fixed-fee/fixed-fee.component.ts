@@ -15,6 +15,7 @@ export class FixedFeeComponent implements OnInit {
   isBillValid: boolean;
   @Input() createSubData;
   @Output() outputData=new EventEmitter<Object>();
+  isSave: boolean;
   constructor(private fb: FormBuilder, public subInjectService: SubscriptionInject, private subService: SubscriptionService) {
   }
   @Input()
@@ -33,6 +34,7 @@ export class FixedFeeComponent implements OnInit {
     billingMode: [1]
   });
   ngOnInit() {
+    this.isSave=true
   }
   getFixedFee() {
     return this.fixedFeeStructureForm.controls;
@@ -53,12 +55,14 @@ export class FixedFeeComponent implements OnInit {
   }
   enableForm() {
     this.fixedFeeStructureForm.enable();
+    this.isSave=false
   }
   Close(state) {
     this.ngOnInit();
     this.subInjectService.rightSideData(state)
     this.subInjectService.rightSliderData(state)
     this.fixedFeeStructureForm.reset();
+    this.isSave=true
   }
   saveFixedModifyFees() {
     if (this.getFixedFee().fees.invalid) {
