@@ -1,19 +1,18 @@
-
-h5{
+h5 {
     color: #212121;
 }
-span{
+
+span {
     font-size: 12px;
-    float:right;
+    float: right;
     color: #A0AEB4;
-   
 }
-.bottom-fixed{
+
+.bottom-fixed {
     z-index: 1 !important;
 }
 
-.form-control.is-invalid
-{
+.form-control.is-invalid {
     background-image: none !important;
     border-color: red !important;
 }
