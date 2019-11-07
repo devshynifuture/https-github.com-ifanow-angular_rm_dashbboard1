@@ -38,10 +38,13 @@ export class PlansComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     if (this.componentFlag === 'documents') {
-      this.getPlansMappedToDocument();
-    } else {
+      this.getPlansMappedToDocument(); 
+    }else if(this.componentFlag === 'plans'){
+      this.getPlansMapped()
+    }else {
       this.getPlansMappedToAdvisor();
     }
+
   }
 
 
@@ -66,10 +69,24 @@ export class PlansComponent implements OnInit {
       data => this.getPlansMappedToAdvisorResponse(data)
     );
   }
-
-  getPlansMappedToDocument() {
+  getPlansMapped(){
     const obj = {
       // advisorid: 12345,
+      advisorId: this.advisorId,
+      docRepoId: this.upperData ? this.upperData.documentData.documentRepositoryId : null
+    };
+    this.subService.plansMapped(obj).subscribe(
+      data => this.getPlansMappedResponse(data)
+    );
+  }
+
+  getPlansMappedResponse(data){
+    console.log(data)
+    this.servicePlanData = data;
+  }
+  getPlansMappedToDocument() {
+    const obj = {
+      // advisorid: 12345,`
       advisorId: this.advisorId,
       docRepoId: this.upperData ? this.upperData.documentRepositoryId : null
     };
@@ -115,11 +132,35 @@ export class PlansComponent implements OnInit {
   saveMapping() {
     if (this.componentFlag === 'documents') {
       this.saveDocumentPlanMapping();
-    } else {
+    } else if(this.componentFlag === 'plans'){
+      this.mapDocumentToPlan()
+    }else if(this.componentFlag === 'services'){
+      this.mapDocumentToPlan()
+    }else {
       this.saveServicePlanMapping();
     }
   }
-
+  mapDocumentToPlan(){
+    const obj = [];
+    this.mappedPlan.forEach(planData => {
+      const data = {
+        // advisorId: 12345,
+        advisorId: this.advisorId,
+        documentRepositoryId:this.upperData.documentData.documentRepositoryId,
+        mappedType:this.upperData.documentData.mappedType,
+        mappingId: planData.id
+      };
+      obj.push(data);
+    });
+    this.subService.mapDocumentToService(obj).subscribe(
+      data => this.mapPlanToServiceRes(data)
+    );
+  }
+  mapPlanToServiceRes(data){
+    console.log(data)
+    this.eventService.openSnackBar('Service is mapped', 'OK');
+    this.dialogClose()
+  }
   saveDocumentPlanMapping() {
     const obj = [];
     this.mappedPlan.forEach(planData => {
@@ -143,7 +184,6 @@ export class PlansComponent implements OnInit {
     const obj = [];
     this.mappedPlan.forEach(planData => {
       const data = {
-        // advisorId: 12345,
         advisorId: this.advisorId,
 
         planId: planData.id,
