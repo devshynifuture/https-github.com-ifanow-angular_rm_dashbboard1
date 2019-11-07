@@ -261,7 +261,7 @@
                                                             </ng-container>
                                                             <ng-container matColumnDef="document">
                                                                 <th mat-header-cell *matHeaderCellDef> Document name</th>
-                                                                <td mat-cell *matCellDef="let element" class="c-p" (click)="changeDisplay('documentUpperSlider',element)">
+                                                                <td mat-cell *matCellDef="let element" class="c-p" (click)="open('viewDocuments',element)">
                                                                     {{element.documentName}}
                                                                 </td>
                                                             </ng-container>
