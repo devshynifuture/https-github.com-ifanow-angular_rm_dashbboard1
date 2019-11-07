@@ -47,13 +47,14 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
   }
 
   openPlanSlider(value, state, data) {
-    (data==null)?value:
-    (value=="billerSettings"|| value=='changePayee' || value==null)?value:(data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable';
-    (data==null)?data:(data.clientId = this.upperData.id,
+    (data == null) ? value :
+      (value == "billerSettings" || value == 'changePayee' || value == null) ? value : (data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable';
+    (data == null) ? data : (data.clientId = this.upperData.id,
       data.isCreateSub = false)
+    data.isSaveBtn = false;
     const fragmentData = {
       Flag: value,
-      data:data,
+      data: data,
       id: 1,
       state: 'open'
     };
@@ -91,7 +92,7 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
   Open(state, data) {
     let feeMode;
     data.isCreateSub = true;
-    (data.subscriptionPricing.feeTypeId == 1)?feeMode = 'fixedModifyFees':feeMode = 'variableModifyFees';
+    (data.subscriptionPricing.feeTypeId == 1) ? feeMode = 'fixedModifyFees' : feeMode = 'variableModifyFees';
     const fragmentData = {
       Flag: feeMode,
       data,
@@ -111,9 +112,9 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
 
   getSubSummaryRes(data) {
     console.log(data);
-      (data)?this.dataSource = data:this.dataSource=[];
-    }
-  
+    (data) ? this.dataSource = data : this.dataSource = [];
+  }
+
 
   deleteModal(value, subData) {
     const dialogData = {
@@ -129,10 +130,12 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
           id: subData.id
         };
         this.subscription.deleteSubscriptionData(obj).subscribe(
-          data => {this.deletedData(data);
-            dialogRef.close()}
-        ); 
-      
+          data => {
+            this.deletedData(data);
+            dialogRef.close()
+          }
+        );
+
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -171,7 +174,7 @@ export class SubscriptionsUpperSliderComponent implements OnInit {
   }
   deletedData(data) {
     if (data == true) {
-      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');  
+      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
     }
   }
 
