@@ -154,7 +154,11 @@
         background-color: $white;
     }
 }
-
+.invoice-history{
+    tr.mat-header-row{
+        height: 52px;
+    }
+}
 #ui-misreport {
     margin-top: 65px;
     h3.top-head {
