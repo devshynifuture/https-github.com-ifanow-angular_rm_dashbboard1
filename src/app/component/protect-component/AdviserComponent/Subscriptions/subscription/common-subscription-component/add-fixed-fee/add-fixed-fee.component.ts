@@ -47,19 +47,19 @@ export class AddFixedFeeComponent implements OnInit {
 
   createFixedFeeForm(data) {
     this.fixedFeeData = this.fb.group({
-      serviceName: [, [Validators.required,Validators.maxLength(40)]],
-      code: [, [Validators.required]],
-      description: [, [Validators.required]],
+      serviceName: [data, [Validators.required,Validators.maxLength(40)]],
+      code: [data, [Validators.required]],
+      description: [data, [Validators.required]],
       Duration: [1],
-      fees: [, [Validators.required]],
+      fees:[data, [Validators.required]],
       billingNature: [1],
-      billEvery: [, [Validators.required]],
+      billEvery: [data, [Validators.required]],
       billingMode: [1]
     });
-    // this.getFormControl().serviceName.maxLength = 40;
-    // this.getFormControl().code.maxLength = 10;
-    // this.getFormControl().description.maxLength = 160;
-    // this.getFormControl().fees.maxLength = 10;
+    this.getFormControl().serviceName.maxLength = 40;
+    this.getFormControl().code.maxLength = 10;
+    this.getFormControl().description.maxLength = 160;
+    this.getFormControl().fees.maxLength = 10;
   }
 
   setValidation(flag) {
@@ -70,7 +70,7 @@ export class AddFixedFeeComponent implements OnInit {
     this.isbillEvery = flag;
   }
 
-  getFormControl() {
+  getFormControl():any {
     return this.fixedFeeData.controls;
   }
 
@@ -95,10 +95,10 @@ export class AddFixedFeeComponent implements OnInit {
       this.fixedFeeData.controls.billingMode.setValue(data.servicePricing.billingMode);
       this.fixedFeeData.controls.billEvery.setValue(data.servicePricing.billEvery);
 
-      // this.getFormControl().serviceName.maxLength = 40;
-      // this.getFormControl().code.maxLength = 10;
-      // this.getFormControl().description.maxLength = 160;
-      // this.getFormControl().fees.maxLength = 10;
+      this.getFormControl().serviceName.maxLength = 40;
+      this.getFormControl().code.maxLength = 10;
+      this.getFormControl().description.maxLength = 160;
+      this.getFormControl().fees.maxLength = 10;
     }
 
   }
