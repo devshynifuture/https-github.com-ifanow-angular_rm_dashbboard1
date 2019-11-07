@@ -19,8 +19,8 @@ import {DocumentsComponent} from './component/customer/accounts/documents/docume
 import {MutualFundsCapitalComponent} from './component/customer/accounts/mutual-funds-capital/mutual-funds-capital.component';
 import {CustomCommonModule} from '../../../common/custom.common.module';
 import {AppModule} from "../../../app.module";
-import { BottomSheetComponent } from './component/common-component/bottom-sheet/bottom-sheet.component';
-import { AddLiabilitiesComponent } from './component/common-component/add-liabilities/add-liabilities.component';
+import {BottomSheetComponent} from './component/common-component/bottom-sheet/bottom-sheet.component';
+import {AddLiabilitiesComponent} from './component/common-component/add-liabilities/add-liabilities.component';
 
 
 @NgModule({
@@ -49,7 +49,7 @@ import { AddLiabilitiesComponent } from './component/common-component/add-liabil
     MaterialModule,
 
   ],
-  entryComponents:[]
+  entryComponents: [BottomSheetComponent]
 })
 export class CustomersModule {
 }
