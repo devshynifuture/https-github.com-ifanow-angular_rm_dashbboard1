@@ -24,7 +24,8 @@
     <app-change-payee [upperData]=fragmentData.data *ngIf="subscriptionTab=='changePayee'"></app-change-payee>
     <app-create-subscription [data]="fragmentData" *ngIf="subscriptionTab=='createSubFixed' || subscriptionTab=='createSubVariable'" [subFeeMode]="subscriptionTab"></app-create-subscription>
     <app-email-only [inputData]="inputData" *ngIf="subscriptionTab=='emailOnly'"></app-email-only>
-    <app-add-liabilities *ngIf="subscriptionTab=='addLib'"></app-add-liabilities>
+    <app-add-liabilities *ngIf="subscriptionTab=='addLiabilities'"></app-add-liabilities>
+    <app-add-insurance *ngIf="subscriptionTab=='addInsurance'"></app-add-insurance>
 
 </app-custom-dialog-container>
 
