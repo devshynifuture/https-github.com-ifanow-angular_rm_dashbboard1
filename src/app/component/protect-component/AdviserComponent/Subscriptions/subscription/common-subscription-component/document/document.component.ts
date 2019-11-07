@@ -218,7 +218,7 @@ export class DocumentComponent implements OnInit {
     const data = {
       advisorId: this.advisorId,
       clientData: this._clientData,
-      templateType: 2, // 2 is for quotation
+      templateType: 4, // 2 is for quotation
       documentList: []
     };
     this.dataSource.forEach(singleElement => {

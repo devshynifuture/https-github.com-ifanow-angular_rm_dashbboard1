@@ -39,7 +39,23 @@ export class EmailOnlyComponent implements OnInit {
 
   _inputData;
   emailData;
-
+  @Input()
+  set data(data) {
+    this._inputData = data;
+    this._inputData = {
+      advisorId: 2808,
+      clientData: {
+        id: data.clientData.id,
+        userEmailId: data.clientData.userEmailId
+      },
+      documentList: [{id: data.documentList[0].id, documentName: data.documentList[0].documentName}],
+      templateType: data.templateType
+    };
+    this.getEmailTemplateFilterData();
+  }
+  get data() {
+    return this._inputData;
+  }
   @Input() set inputData(inputData) {
     this._inputData = inputData;
     this._inputData = {

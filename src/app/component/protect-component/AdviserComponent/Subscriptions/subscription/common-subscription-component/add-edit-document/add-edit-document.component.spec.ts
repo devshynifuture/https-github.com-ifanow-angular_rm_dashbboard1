@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OverviewBlankQuotationComponent } from './overview-blank-quotation.component';
+import { AddEditDocumentComponent } from './add-edit-document.component';
 
 describe('OverviewBlankQuotationComponent', () => {
-  let component: OverviewBlankQuotationComponent;
-  let fixture: ComponentFixture<OverviewBlankQuotationComponent>;
+  let component: AddEditDocumentComponent;
+  let fixture: ComponentFixture<AddEditDocumentComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OverviewBlankQuotationComponent ]
+      declarations: [ AddEditDocumentComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OverviewBlankQuotationComponent);
+    fixture = TestBed.createComponent(AddEditDocumentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

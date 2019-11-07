@@ -79,7 +79,37 @@
         width: 85%;
     }
 }
-
+#ui-dashboard {
+   
+ 
+   .subscription-summary {
+       
+    
+     p {
+       color: #000000;
+     }
+   }
+ 
+   h4, h2 {
+     font-family: "proxima-nova", sans-serif;
+   }
+ }
+ .sub-summary{
+     height: 205px;
+     overflow: auto;
+    tr.mat-header-row{
+        height: 52px;
+    }
+    tr.mat-row{
+        height: 48px;
+    }
+ }
+ .subscription-summary{
+    .mat-button-toggle-appearance-standard .mat-button-toggle-label-content{
+        line-height: 40px;
+        border-radius: 0px;
+    }
+ }
 #ui-subscriptions {
     .cusotm-haeding-main {
         position: fixed;

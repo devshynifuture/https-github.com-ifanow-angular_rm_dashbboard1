@@ -39,16 +39,17 @@ import { AddLiabilitiesComponent } from './component/common-component/add-liabil
     IncomeComponent,
     DocumentsComponent,
     MutualFundsCapitalComponent,
+    BottomSheetComponent
   ],
   imports: [
     CustomCommonModule,
-    AppModule,
+    // AppModule,
     CommonModule,
     CustomersRoutingModule,
     MaterialModule,
 
   ],
-  entryComponents:[BottomSheetComponent]
+  entryComponents:[]
 })
 export class CustomersModule {
 }

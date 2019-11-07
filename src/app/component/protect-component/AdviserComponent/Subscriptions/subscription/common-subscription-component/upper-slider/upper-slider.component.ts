@@ -13,6 +13,7 @@ export class UpperSliderComponent implements OnInit {
   fragmentData;
   selectedServiceTab = 0;
   upperRightSideInputData;
+
   constructor(private eventService: EventService, private subinject: SubscriptionInject
               // public dialogRef: MatDialogRef<UpperSliderComponent>,
               // @Inject(MAT_DIALOG_DATA) public fragmentData: any
@@ -22,7 +23,7 @@ export class UpperSliderComponent implements OnInit {
     );
     this.subinject.upperRightSliderDataObs.subscribe(data => {
       const rightSliderFragData = data;
-      this.upperRightSideInputData=data
+      this.upperRightSideInputData = data
       this.setRightSliderFlag(rightSliderFragData.Flag);
       this.getStateData(data.state);
     });
@@ -54,7 +55,7 @@ export class UpperSliderComponent implements OnInit {
           // }
           // this.selectedServiceTab = 1;
         } else {
-          this.upperData = null;
+          this.upperData = this.fragmentData.data;
           // this.selectedServiceTab = 1;
         }
 
@@ -89,7 +90,7 @@ export class UpperSliderComponent implements OnInit {
     this.eventService.changeUpperSliderState({state: 'close'});
     // this.dialogRef.close();
   }
- 
+
   getStateData(data) {
     this.State = data;
   }
