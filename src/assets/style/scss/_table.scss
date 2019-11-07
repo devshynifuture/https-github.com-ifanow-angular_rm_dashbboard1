@@ -1,83 +1,67 @@
 #table-low {
-  tr {
-    border: 1px solid #DADCE0;
-  }
-
-  thead tr {
-    padding: 14px 8px !important;
-    // height: 40px !important;
-    font-weight: 500;
-    font-size: 14px !important;
-    line-height: 16px !important;
-    color: #202020;
-    background-color: #F5F7F7 !important;
-    letter-spacing: 0.2px;
-
-  }
-
-  th {
-    padding: 14px 8px !important;
-    // height: 40px !important;
-    font-weight: 500;
-    font-size: 14px !important;
-    line-height: 16px !important;
-    color: #202020;
-    background-color: #F5F7F7 !important;
-    letter-spacing: 0.2px;
-
-  }
-
-  tbody td {
-    padding: 12px 8px !important;
-    line-height: 16px !important;
-    font-size: 14px;
-    align-items: center;
-
-    color: #212121;
-    border: 0px !important;
-  }
-
-  .greentext {
-    color: #02B875 !important;
-  }
-
-  .iconscolors {
-    color: #757575 !important;
-  }
+    tr {
+        border: 1px solid #DADCE0;
+    }
+    thead tr {
+        padding: 14px 8px !important;
+        // height: 40px !important;
+        font-weight: 500;
+        font-size: 14px !important;
+        line-height: 16px !important;
+        color: #202020;
+        background-color: #F5F7F7 !important;
+        letter-spacing: 0.2px;
+    }
+    th {
+        padding: 14px 8px !important;
+        // height: 40px !important;
+        font-weight: 500;
+        font-size: 14px !important;
+        line-height: 16px !important;
+        color: #202020;
+        background-color: #F5F7F7 !important;
+        letter-spacing: 0.2px;
+    }
+    tbody td {
+        padding: 12px 8px !important;
+        line-height: 16px !important;
+        font-size: 14px;
+        align-items: center;
+        color: #212121;
+        border: 0px;
+    }
+    .greentext {
+        color: #02B875 !important;
+    }
+    .iconscolors {
+        color: #757575 !important;
+    }
 }
 
 #table-high {
-  tr {
-    border: 1px solid #DADCE0;
-
-  }
-
-  thead tr th {
-    padding: 10px 8px !important;
-    height: 36px !important;
-    background-color: #F5F7F7 !important;
-    font-size: 14px !important;
-
-  }
-
-  tbody td {
-    padding: 4px !important;
-    line-height: 22px !important;
-    height: 28px !important;
-    font-size: 14px;
-    align-items: center;
-    letter-spacing: -0.41px;
-    color: #212121;
-    border: 0px !important;
-    background-color: #fff;
-
-  }
+    tr {
+        border: 1px solid #DADCE0;
+    }
+    thead tr th {
+        padding: 10px 8px !important;
+        height: 36px !important;
+        background-color: #F5F7F7 !important;
+        font-size: 14px !important;
+    }
+    tbody td {
+        padding: 4px !important;
+        line-height: 22px !important;
+        height: 28px !important;
+        font-size: 14px;
+        align-items: center;
+        letter-spacing: -0.41px;
+        color: #212121;
+        border: 0px !important;
+        background-color: #fff;
+    }
 }
 
 // width classes
-
 table {
-  width: 100%;
+    width: 100%;
 }
-
-

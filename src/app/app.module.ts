@@ -77,7 +77,7 @@ import {PayeeSettingsComponent} from './component/protect-component/AdviserCompo
 import {DialogComponent} from './component/dialog/dialog.component';
 import {AddVariableFeeComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/add-variable-fee/add-variable-fee.component';
 import {AddFixedFeeComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/add-fixed-fee/add-fixed-fee.component';
-import {OverviewBlankQuotationComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/overview-blank-quotation/overview-blank-quotation.component';
+import {AddEditDocumentComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/add-edit-document/add-edit-document.component';
 import {CreateSubscriptionComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/create-subscription/create-subscription.component';
 import {HowToUseDialogComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/how-to-use-dialog/how-to-use-dialog.component';
 import {AddDocumentComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/add-document/add-document.component';
@@ -120,6 +120,7 @@ import {SatDatepickerModule, SatNativeDateModule} from "saturn-datepicker";
 import {CustomCommonModule} from "./common/custom.common.module";
 import {DialogContainerComponent} from "./common/dialog-container/dialog-container.component";
 import {CustomDialogContainerComponent} from "./common/custom-dialog-container/custom-dialog-container.component";
+import { AddLiabilitiesComponent } from './component/protect-component/customers/component/common-component/add-liabilities/add-liabilities.component';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -191,7 +192,7 @@ import {CustomDialogContainerComponent} from "./common/custom-dialog-container/c
     CreateSubscriptionComponent,
     AddVariableFeeComponent,
     AddFixedFeeComponent,
-    OverviewBlankQuotationComponent,
+    AddEditDocumentComponent,
     HowToUseDialogComponent,
     AddDocumentComponent,
     ModifyFeeDialogComponent,
@@ -209,10 +210,10 @@ import {CustomDialogContainerComponent} from "./common/custom-dialog-container/c
     SingleDocumentViewComponent,
     FixedFeeComponent,
     VariableFeeComponent,
-
     LibilitiesRightComponent,
     DialogContainerComponent,
-    CustomDialogContainerComponent
+    CustomDialogContainerComponent,
+    AddLiabilitiesComponent
   ],
   imports: [
     CustomCommonModule,

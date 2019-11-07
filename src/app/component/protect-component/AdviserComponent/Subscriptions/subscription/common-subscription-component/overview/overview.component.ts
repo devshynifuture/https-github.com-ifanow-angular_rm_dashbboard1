@@ -3,9 +3,9 @@ import {MatDialogRef, MatDialog} from '@angular/material';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { UtilService } from 'src/app/services/util.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { SubscriptionService } from '../../../subscription.service';
+import {UtilService} from 'src/app/services/util.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {SubscriptionService} from '../../../subscription.service';
 
 @Component({
   selector: 'app-overview',
@@ -13,18 +13,35 @@ import { SubscriptionService } from '../../../subscription.service';
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit {
-  overviewDesign: any;
+  overviewDesign: any = 'true';
   advisorId: any;
-  constructor(public dialog: MatDialog,private subService:SubscriptionService, private eventService: EventService, private subinject: SubscriptionInject,public subInjectService: SubscriptionInject) {
+
+  constructor(public dialog: MatDialog, private subService: SubscriptionService,
+              private eventService: EventService,
+              private subinject: SubscriptionInject, public subInjectService: SubscriptionInject) {
   }
 
-
+  _upperData;
   @Input() componentFlag: string;
-  @Input() upperData;
+
+  @Input()
+  set upperData(upperData) {
+    this._upperData = upperData;
+    console.log('OverviewComponent upperData: ', upperData);
+    if (upperData && upperData.documentData) {
+      this.changeDisplay();
+    }
+  };
+
+  get upperData() {
+    return this._upperData;
+  }
+
   singlePlanData;
+
   ngOnInit() {
-    this.overviewDesign = 'true';
-    this.advisorId= AuthService.getAdvisorId();
+    // this.overviewDesign = 'true';
+    this.advisorId = AuthService.getAdvisorId();
     // this.openForm('','addPlanDetails','open');
   }
 
@@ -35,19 +52,19 @@ export class OverviewComponent implements OnInit {
   changeDisplay() {
     this.overviewDesign = 'false';
   }
-  
-  openForm(data, value) {
+
+  openForm(data) {
     const fragmentData = {
-      Flag: value,
-      data,
+      Flag: 'addEditDocument',
+      data: {docType: data},
       id: 1,
       state: 'open'
     };
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
+        // console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          // console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
       }
@@ -55,7 +72,7 @@ export class OverviewComponent implements OnInit {
   }
 
   deleteModal(singlePlan, value) {
-    this.singlePlanData=singlePlan
+    this.singlePlanData = singlePlan
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -70,12 +87,13 @@ export class OverviewComponent implements OnInit {
           id: this.singlePlanData.id
         };
         this.subService.deleteSubscriptionPlan(obj).subscribe(
-          data =>{this.deletedData(data);
+          data => {
+            this.deletedData(data);
             dialogRef.close();
 
           }
-        );  
-      
+        );
+
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -94,10 +112,11 @@ export class OverviewComponent implements OnInit {
 
     });
   }
+
   deletedData(data) {
     if (data == true) {
       this.eventService.changeUpperSliderState({state: 'close'});
-      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');  
+      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
     }
   }
 }

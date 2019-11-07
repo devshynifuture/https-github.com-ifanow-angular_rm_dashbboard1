@@ -1,88 +1,116 @@
 .b-a {
     border: $border !important;
 }
+
 .bb-dotted {
     border-bottom: 2px dotted #dee5e7 !important;
 }
+
 .b-b {
     border-bottom: 1px solid #dee5e7 !important;
 }
+
 .b-l {
     border-left: 1px solid #dee5e7 !important;
 }
-.b-t{
-    border-top:1px solid #dee5e7 !important;
+
+.b-t {
+    border-top: 1px solid #dee5e7 !important;
 }
-.br{
-    border-right:1px solid #dee5e7 !important;
+
+.br {
+    border-right: 1px solid #dee5e7 !important;
 }
-.bl-0{
+
+.bl-0 {
     border-left: 0px !important;
 }
-.bb-0{
+
+.bb-0 {
     border-bottom: 0px !important;
 }
+
 .border-right-1 {
     border-right: 1px solid #ddd;
 }
-.bb{
+
+.bb {
     border-bottom: 1px solid #DADCE0;
 }
-.bt-1{
+
+.bt-1 {
     border-top: 1px solid rgba(0, 0, 0, 0.12) !important;
 }
-.bb-1{
+
+.bb-1 {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
-.btl-1{
+
+.btl-1 {
     border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
+
 .border-right-u1 {
     box-shadow: inset -2px 0px 0px 0px #008FFF, 0px 0px 0px 0px #008FFF;
 }
-.ba-blue{
+
+.ba-blue {
     outline: 3px solid #008FFF !important;
 }
-.b-0{
-    border:0px !important;
+
+.b-0 {
+    border: 0px !important;
 }
-.b-a-custom{
-    border:1px solid #008FFF !important;
+
+.b-a-custom {
+    border: 1px solid #008FFF !important;
 }
-.ba-t{
-    border:1px solid transparent !important;
+
+.ba-t {
+    border: 1px solid transparent !important;
 }
-.b-ua{
+
+.b-ua {
     outline: 1px solid #dee5e7 !important;
 }
+
 .b-grey {
-    border: 1px solid $grey;
+    border: 1px solid $grey !important;
 }
+
 .bt-grey {
     border-top: 1px solid $grey;
 }
+
 .br-grey {
     border-right: 1px solid $grey;
 }
+
 .bl-grey {
     border-left: 1px solid $grey;
 }
+
 .bb-grey {
     border-bottom: 1px solid $grey !important;
 }
+
 .br-1 {
     border-radius: 1px !important;
 }
+
 .br-2 {
     border-radius: 2px !important;
 }
-.br-0{
+
+.br-0 {
     border-radius: 0px !important;
 }
-.ba-black{
+
+.ba-black {
     border: 1px solid #1F1F1F !important;
 }
-.br-50{
+
+.br-50 {
     border-radius: 50%;
 }
 .b-primitive{

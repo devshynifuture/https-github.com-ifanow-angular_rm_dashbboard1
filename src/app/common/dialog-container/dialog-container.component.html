@@ -1,44 +1,33 @@
 <!--<div [@dialogContainer]="dialogState" *ngIf="isOverlayVisible" class="custom-overlay">-->
 <!--</div>-->
 <app-custom-dialog-container [currentState]="currentState">
-  <!--  <div [@openClose]="currentState" class="right_sidenav">-->
-      <app-email-only [data]="inputData" *ngIf="subscriptionTab=='emailQuotationFroala'"></app-email-only>
-      <app-common-froala *ngIf="subscriptionTab=='viewDocuments'"[data]="inputData" [changeFooter]='subscriptionTab'
-                     [screenType]="subscriptionTab"></app-common-froala>
-  <app-common-froala *ngIf="subscriptionTab=='viewDoc'" [data]="inputData"  [changeFooter]='subscriptionTab'
-                     [screenType]="subscriptionTab"></app-common-froala>
-  <app-common-froala *ngIf="subscriptionTab=='openEmailQuot'" [changeEmailOnly]='subscriptionTab'></app-common-froala>
-  <app-common-froala *ngIf="subscriptionTab=='emailQuotation'" [changeFooter]='subscriptionTab'[data]="inputData"></app-common-froala>
-  <app-common-froala *ngIf="subscriptionTab=='viewQuotation'" [data]="inputData"[changeFooter]='subscriptionTab'></app-common-froala>
-  <app-email-quotation *ngIf="subscriptionTab=='eSignRequest'" [headerData]="headerData"></app-email-quotation>
-  <app-email-quotation *ngIf="subscriptionTab=='eSignRequestDocuments'"
-                       [headerDataDocuments]="headerDataDocuments"></app-email-quotation>
-  <app-invoice-history [subData]="fragmentData.data" *ngIf="subscriptionTab=='SUBSCRIPTIONS'"
-                       [invoiceHistoryData]='invoiceHisData'></app-invoice-history>
-  <app-invoice-history *ngIf="subscriptionTab=='subscriptionFees'"
-                       [invoiceHistoryData]='invoiceHisData'></app-invoice-history>
-  <app-clients-dashboard *ngIf="subscriptionTab=='dashboardSubscription'"></app-clients-dashboard>
-  <app-fixed-fee [data]="fragmentData" *ngIf="subscriptionTab=='fixedModifyFees'"></app-fixed-fee>
-  <app-variable-fee [data]="fragmentData" *ngIf="subscriptionTab=='variableModifyFees'"></app-variable-fee>
-  <app-biller-profile-advisor *ngIf="subscriptionTab=='billerProfile'"
-                              [data]="inputData" [Selected]="selectedSubscriptionTab"></app-biller-profile-advisor>
-  <app-help *ngIf="subscriptionTab=='clientHelp'"></app-help>
-  <app-biller-settings [clientData]=fragmentData.data *ngIf="subscriptionTab=='billerSettings'"></app-biller-settings>
-  <!-- <app-payee-settings *ngIf="subscriptionTab=='payeeSettings'"></app-payee-settings> -->
-  <app-help *ngIf="subscriptionTab=='documentHelp'"></app-help>
-  <app-invoice [data]="inputData" *ngIf="subscriptionTab=='invoiceUpperSlider'"></app-invoice>
-  <!-- <app-invoice  [data]="inputData" *ngIf="subscriptionTab=='invoiceUpperSlider'"></app-invoice> -->
-  <app-change-payee [upperData]=fragmentData.data *ngIf="subscriptionTab=='changePayee'"></app-change-payee>
-  <app-create-subscription [data]="fragmentData"
-                           *ngIf="subscriptionTab=='createSubFixed' || subscriptionTab=='createSubVariable'"
-                           [subFeeMode]="subscriptionTab"></app-create-subscription>
+    <!--  <div [@openClose]="currentState" class="right_sidenav">-->
+    <app-common-froala *ngIf="subscriptionTab=='viewDocuments'" [data]="inputData" [changeFooter]='subscriptionTab' [screenType]="subscriptionTab"></app-common-froala>
+    <app-common-froala *ngIf="subscriptionTab=='viewDoc'" [data]="inputData" [changeFooter]='subscriptionTab' [screenType]="subscriptionTab"></app-common-froala>
+    <app-common-froala *ngIf="subscriptionTab=='openEmailQuot'" [changeEmailOnly]='subscriptionTab'></app-common-froala>
+    <app-common-froala *ngIf="subscriptionTab=='emailQuotation'" [changeFooter]='subscriptionTab' [data]="inputData"></app-common-froala>
+    <app-common-froala *ngIf="subscriptionTab=='viewQuotation'" [data]="inputData" [changeFooter]='subscriptionTab'></app-common-froala>
+    <app-email-quotation *ngIf="subscriptionTab=='eSignRequest'" [headerData]="headerData"></app-email-quotation>
+    <app-email-quotation *ngIf="subscriptionTab=='eSignRequestDocuments'" [headerDataDocuments]="headerDataDocuments"></app-email-quotation>
+    <app-invoice-history [subData]="fragmentData.data" *ngIf="subscriptionTab=='SUBSCRIPTIONS'" [invoiceHistoryData]='invoiceHisData'></app-invoice-history>
+    <app-invoice-history *ngIf="subscriptionTab=='subscriptionFees'" [invoiceHistoryData]='invoiceHisData'></app-invoice-history>
+    <app-clients-dashboard *ngIf="subscriptionTab=='dashboardSubscription'"></app-clients-dashboard>
+    <app-fixed-fee [data]="fragmentData" *ngIf="subscriptionTab=='fixedModifyFees'"></app-fixed-fee>
+    <app-variable-fee [data]="fragmentData" *ngIf="subscriptionTab=='variableModifyFees'"></app-variable-fee>
+    <app-biller-profile-advisor *ngIf="subscriptionTab=='billerProfile'" [data]="inputData" [Selected]="selectedSubscriptionTab"></app-biller-profile-advisor>
+    <app-help *ngIf="subscriptionTab=='clientHelp'"></app-help>
+    <app-biller-settings [clientData]=fragmentData.data *ngIf="subscriptionTab=='billerSettings'"></app-biller-settings>
+    <!-- <app-payee-settings *ngIf="subscriptionTab=='payeeSettings'"></app-payee-settings> -->
+    <app-help *ngIf="subscriptionTab=='documentHelp'"></app-help>
+    <app-invoice [data]="inputData" *ngIf="subscribptionTab=='invoiceUpperSlider'"></app-invoice>
+    <!-- <app-invoice  [data]="inputData" *ngIf="subscriptionTab=='invoiceUpperSlider'"></app-invoice> -->
+    <app-change-payee [upperData]=fragmentData.data *ngIf="subscriptionTab=='changePayee'"></app-change-payee>
+    <app-create-subscription [data]="fragmentData" *ngIf="subscriptionTab=='createSubFixed' || subscriptionTab=='createSubVariable'" [subFeeMode]="subscriptionTab"></app-create-subscription>
+    <app-email-only [inputData]="inputData" *ngIf="subscriptionTab=='emailOnly'"></app-email-only>
+    <app-add-liabilities *ngIf="subscriptionTab=='addLib'"></app-add-liabilities>
 
-  <!--  </div>-->
-  <!-- <app-liabilityright *ngIf="subscriptionTab=='liabilityright'"></app-liabilityright> -->
-  <app-libilities-right *ngIf="subscriptionTab=='portfolioSummary'"></app-libilities-right>
-  <app-email-only [inputData]="inputData" *ngIf="subscriptionTab=='emailOnly'"></app-email-only>
 </app-custom-dialog-container>
 
 <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
-  <app-upper-slider></app-upper-slider>
+    <app-upper-slider></app-upper-slider>
 </div>

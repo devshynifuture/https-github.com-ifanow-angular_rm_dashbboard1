@@ -1,20 +1,222 @@
 <div id="ui-mutualfunds-capital">
     <div class="wrapper-8">
         <div class="row">
-                <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
-                  <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
+            <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
+                <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
                     Overview Report
                     <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
                   </button>
-                  <mat-menu #menu="matMenu">
+                <mat-menu #menu="matMenu">
                     <button mat-menu-item>Overview Report</button>
                     <button mat-menu-item>Summary</button>
                     <button mat-menu-item>All Transactions</button>
                     <button mat-menu-item>Unrealized Transactions</button>
                     <button mat-menu-item>Capital Gains</button>
                     <button mat-menu-item>Goal Linkage</button>
-                  </mat-menu>
-                </div>
-              </div>
+                </mat-menu>
             </div>
+        </div>
+
+        <div class="row pt-28 pb-28">
+            <div class="col-md-4 pl-0">
+                <h4 class="m-0 text-black roboto pt-8">Mutual fund capital gains</h4>
+            </div>
+            <div class="col-md-8 p-0 d-flex justify-content-end">
+                <img class="c-p" src="assets/images/svg/download-bordered.svg">
+                <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
+                <img class="c-p mr-12" src="assets/images/svg/up-down.svg">
+                <button class="btn-default addon mr-12 v-middle mat-stroked-button mat-button-base" mat-stroked-button="">
+                    <span class="mat-button-wrapper"><i class="material-icons">filter_list</i>FILTERS</span>
+                    <div class="mat-button-ripple mat-ripple" matripple="" ng-reflect-centered="false" ng-reflect-disabled="false" ng-reflect-trigger="[object HTMLButtonElement]">
+                    </div>
+                    <div class="mat-button-focus-overlay"></div>
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 pl-0 mb-8">
+                <div class="b-a">
+                    <h5 class="wrapper-8 f-500 f-14 mb-0 text-primary">
+                        EQUITY
+                    </h5>
+                </div>
+                <table mat-table [dataSource]="dataSource" id="table-low" class="mutualfunds-capital-equity">
+
+                    <!--- Note that these columns can be defined in any order.
+                                  The actual rendered columns are set as a property on the row definition" -->
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="schemeName">
+                        <th class="br" mat-header-cell *matHeaderCellDef> Scheme name </th>
+                        <td class="br" mat-cell *matCellDef="let element"> {{element.schemeName}} </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="folioNumber">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> Folio number </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.folioNumber}} </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="investorName">
+                        <th class="br text-left" mat-header-cell *matHeaderCellDef> Investor name </th>
+                        <td class="br text-left" mat-cell *matCellDef="let element"> {{element.investorName}} </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="stGain">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> ST gain </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.stGain}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="stLoss">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> ST loss </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.stLoss}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ltGain">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> LT gain </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.ltGain}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="indexedGain">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> Indexed gain </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.indexedGain}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="liloss">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> LT loss </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.liloss}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="indexedLoss">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> Indexed loss </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.indexedLoss}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </div>
+
+
+
+        <div class="row  ">
+            <div class="col-md-12 pl-0 mb-8">
+                <div class="b-a">
+                    <h5 class="wrapper-8 f-500 f-14 mb-0 text-primary">
+                        DEBT
+                    </h5>
+                </div>
+                <table mat-table [dataSource]="dataSource1" id="table-low" class="mutualfunds-capital-debt">
+
+                    <!--- Note that these columns can be defined in any order.
+                                      The actual rendered columns are set as a property on the row definition" -->
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="schemeName1">
+                        <th class="br" mat-header-cell *matHeaderCellDef> Scheme name </th>
+                        <td class="br" mat-cell *matCellDef="let element"> {{element.schemeName1}} </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="folioNumber">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> Folio number </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.folioNumber}} </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="investorName">
+                        <th class="br text-left" mat-header-cell *matHeaderCellDef> Investor name </th>
+                        <td class="br text-left" mat-cell *matCellDef="let element"> {{element.investorName}} </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="stGain">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> ST gain </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.stGain}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="stLoss">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> ST loss </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.stLoss}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ltGain">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> LT gain </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.ltGain}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="indexedGain">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> Indexed gain </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.indexedGain}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="liloss">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> LT loss </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.liloss}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="indexedLoss">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> Indexed loss </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.indexedLoss}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12 pl-0 mb-8">
+                <div class="b-a">
+                    <h5 class="wrapper-8 f-500 f-14 mb-0 text-primary">
+                        DIVIDEND SUMMARY
+                    </h5>
+                </div>
+                <table mat-table [dataSource]="dataSource2" id="table-low" class="mutualfunds-capital-dividend-summary">
+
+                    <!--- Note that these columns can be defined in any order.
+                                      The actual rendered columns are set as a property on the row definition" -->
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="schemeName2">
+                        <th class="br" mat-header-cell *matHeaderCellDef> Scheme name </th>
+                        <td class="br" mat-cell *matCellDef="let element"> {{element.schemeName2}} </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="folioNumber">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> Folio number </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.folioNumber}} </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="dividendPayoutAmount">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> Dividend payout amount </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.dividendPayoutAmount}} </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="dividendReInvestmentAmount">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> Dividend re-investment amount </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.dividendReInvestmentAmount}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="totalReinvestmentAmount">
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> Total reinvestment amount </th>
+                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.totalReinvestmentAmount}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
 </div>

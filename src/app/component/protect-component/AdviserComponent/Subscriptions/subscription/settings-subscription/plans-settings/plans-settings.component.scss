@@ -18,6 +18,10 @@ h3 {
     padding-left: 80px;
 }
 
+.height105 {
+    height: 105px;
+}
+
 // p{
 //     margin-bottom: 0;
 // }
@@ -32,7 +36,6 @@ h3 p {
 //     margin-right: 30px;
 //     z-index: 2;
 // }
-
 .btn-primary {
     border-radius: 0px !important;
 }
@@ -47,7 +50,6 @@ h3 p {
 }
 
 .box {
-  
     box-sizing: border-box;
     border-radius: 4px;
 }
@@ -76,6 +78,8 @@ label {
     text-align: right;
     line-height: .9;
 }
+
+
 /*
 
 .custom-dialog-container .mat-dialog-container {
@@ -94,59 +98,66 @@ label {
   !* add your styles *!
 }
 */
-//@import "compass/css3";
 
+//@import "compass/css3";
 @mixin transition($transition...) {
-  -moz-transition:    $transition;
-  -o-transition:      $transition;
-  -webkit-transition: $transition;
-  transition:         $transition;
+    -moz-transition: $transition;
+    -o-transition: $transition;
+    -webkit-transition: $transition;
+    transition: $transition;
 }
+
 @mixin transition-property($property...) {
-  -moz-transition-property:    $property;
-  -o-transition-property:      $property;
-  -webkit-transition-property: $property;
-  transition-property:         $property;
+    -moz-transition-property: $property;
+    -o-transition-property: $property;
+    -webkit-transition-property: $property;
+    transition-property: $property;
 }
+
 @mixin transition-duration($duration...) {
-  -moz-transition-property:    $duration;
-  -o-transition-property:      $duration;
-  -webkit-transition-property: $duration;
-  transition-property:         $duration;
+    -moz-transition-property: $duration;
+    -o-transition-property: $duration;
+    -webkit-transition-property: $duration;
+    transition-property: $duration;
 }
+
 @mixin transition-timing-function($timing...) {
-  -moz-transition-timing-function:    $timing;
-  -o-transition-timing-function:      $timing;
-  -webkit-transition-timing-function: $timing;
-  transition-timing-function:         $timing;
+    -moz-transition-timing-function: $timing;
+    -o-transition-timing-function: $timing;
+    -webkit-transition-timing-function: $timing;
+    transition-timing-function: $timing;
 }
+
 @mixin transition-delay($delay...) {
-  -moz-transition-delay:    $delay;
-  -o-transition-delay:      $delay;
-  -webkit-transition-delay: $delay;
-  transition-delay:         $delay;
+    -moz-transition-delay: $delay;
+    -o-transition-delay: $delay;
+    -webkit-transition-delay: $delay;
+    transition-delay: $delay;
 }
 
 a {
-  color: blue;
-  display: inline-block;
-  padding: 10px;
-  text-decoration: none;
-  background-color: orange;
-  border-radius: 4px;
-  @include transition(background-color 1s .5s, color 2s);
+    color: blue;
+    display: inline-block;
+    padding: 10px;
+    text-decoration: none;
+    background-color: orange;
+    border-radius: 4px;
+    @include transition(background-color 1s .5s, color 2s);
 }
+
 a:hover {
-  color: red;
-  background-color: blue;
+    color: red;
+    background-color: blue;
 }
 
 .mat-card-actions {
-height: 20%;
+    height: 20%;
 }
-::ng-deep .example-card{
-  border: 1px solid rgba(0, 0, 0, 0.12);
+
+::ng-deep .example-card {
+    border: 1px solid rgba(0, 0, 0, 0.12);
 }
+
 // ::ng-deep .mat-card:not([class*=mat-elevation-z]){
 //     box-shadow: none !important;
 // }
