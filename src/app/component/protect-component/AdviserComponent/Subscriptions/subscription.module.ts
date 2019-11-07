@@ -150,7 +150,9 @@ export const componentList = [SubscriptionComponent,
     // AppModule
   ],
   exports: componentList,
-  entryComponents: [/*SubscriptionPopupComponent,
+  entryComponents: [
+    DeleteSubscriptionComponent
+    /*SubscriptionPopupComponent,
     , UpperSliderComponent,
     DeleteSubscriptionComponent, HowToUseDialogComponent,
     AddDocumentComponent, PreferenceEmailInvoiceComponent,
