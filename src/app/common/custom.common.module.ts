@@ -4,7 +4,7 @@ import {MaterialModule} from '../material/material';
 import {SubscriptionModule} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {CustomersModule} from '../component/protect-component/customers/customers.module';
+import {AccountModule} from '../component/protect-component/customers/component/customer/accounts/account.module';
 
 // import {AppModule} from "../app.module";
 
@@ -17,7 +17,7 @@ import {CustomersModule} from '../component/protect-component/customers/customer
   imports: [
     MaterialModule,
     SubscriptionModule,
-    CustomersModule,
+    AccountModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule
