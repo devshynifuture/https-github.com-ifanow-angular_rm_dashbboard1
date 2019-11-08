@@ -82,10 +82,9 @@ import {SubscriptionModule} from './component/protect-component/AdviserComponent
     // AddInsuranceComponent
   ],
   imports: [
-    // CustomCommonModule,
+    CustomCommonModule,
     SubscriptionModule,
-    // BrowserModule,
-    // HttpModule,
+    BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     MaterialModule,
@@ -96,7 +95,7 @@ import {SubscriptionModule} from './component/protect-component/AdviserComponent
     // CommonSubscriptionComponent,
     SlimLoadingBarModule.forRoot(),
 
-    MDBBootstrapModule.forRoot(), DragDropModule, CustomCommonModule
+    MDBBootstrapModule.forRoot(), DragDropModule
   ],
   providers: [AuthService, HttpService],
   bootstrap: [AppComponent],

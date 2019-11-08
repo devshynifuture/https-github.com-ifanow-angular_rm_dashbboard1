@@ -63,9 +63,9 @@ const routes: Routes = [
   // },
   {
     path: 'customer-detail',
-    loadChildren: './component/protect-component/customers/customers.module#CustomersModule'
-    // loadChildren: () => import('./component/protect-component/customers/customers.module')
-    //   .then(m => m.CustomersModule)
+    // loadChildren: './component/protect-component/customers/customers.module#CustomersModule'
+    loadChildren: () => import('./component/protect-component/customers/customers.module')
+      .then(m => m.CustomersModule)
   },
   /* {
      path: '',
@@ -75,15 +75,15 @@ const routes: Routes = [
    },*/
   {
     path: '',
-    // redirectTo: '/login',
-    // pathMatch: 'full',
-    component: LoginComponent
+    redirectTo: '/login',
+    pathMatch: 'full',
+    // component: LoginComponent
 
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {enableTracing: true})],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
