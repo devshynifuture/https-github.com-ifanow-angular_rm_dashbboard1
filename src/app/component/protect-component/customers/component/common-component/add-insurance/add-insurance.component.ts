@@ -3,6 +3,7 @@ import { SubjectSubscriber } from 'rxjs/internal/Subject';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../customer/customer.service';
 
 @Component({
   selector: 'app-add-insurance',
@@ -24,7 +25,7 @@ export class AddInsuranceComponent implements OnInit {
   // dataSource3 = ELEMENT_DATA3;
   advisorId: any;
 
-  constructor(private subInjectService:SubscriptionInject,private fb:FormBuilder) { }
+  constructor(private subInjectService:SubscriptionInject,private fb:FormBuilder,private customerService:CustomerService) { }
 
   ngOnInit() {
     this.advisorId=AuthService.getAdvisorId();
@@ -88,6 +89,9 @@ export class AddInsuranceComponent implements OnInit {
       "policyTypeId":1,
       "policyNumber":this.getLifeInsuranceFormFields('policyNum')
       }
+     this.customerService.addLifeInsurance(obj).subscribe(
+       data=>console.log(data)
+     )
   }
   close(){
     this.subInjectService.changeNewRightSliderState({ state: 'close' });

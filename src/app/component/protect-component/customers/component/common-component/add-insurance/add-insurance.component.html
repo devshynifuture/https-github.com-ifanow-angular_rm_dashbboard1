@@ -24,12 +24,17 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput formControlName="lifeAssured" #lifeassured autocomplete="true"
-                            class="form-control br-0">
-                        <mat-error class="text-danger" align="start"></mat-error>
-                        <mat-hint align="end">{{lifeassured.value.length}}/40</mat-hint>
-                    </mat-form-field>
+
+                    <input matInput maxlength="40" formControlName="lifeAssured" #lifeassured autocomplete="true"
+                        class="form-control br-0">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <mat-error class="f-12">sasidl</mat-error>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-hint class="f-12">{{lifeassured.value.length}}/40</mat-hint>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -41,12 +46,17 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput formControlName="proposer" #proposer autocomplete="true"
-                            class="form-control br-0">
-                        <mat-error class="text-danger" align="start"></mat-error>
-                        <mat-hint align="end">{{proposer.value.length}}/40</mat-hint>
-                    </mat-form-field>
+
+                    <input matInput formControlName="proposer" #proposer autocomplete="true" class="form-control br-0">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <mat-error class="f-12">sasidl</mat-error>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-hint class="f-12">{{proposer.value.length}}/40</mat-hint>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -58,12 +68,17 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput formControlName="policyName" #policyname autocomplete="true"
-                            class="form-control br-0">
-                        <mat-error class="text-danger" align="start"></mat-error>
-                        <mat-hint align="end">{{policyname.value.length}}/40</mat-hint>
-                    </mat-form-field>
+
+                    <input matInput formControlName="policyName" #policyname autocomplete="true"
+                        class="form-control br-0">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <mat-error class="f-12">sasidl</mat-error>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-hint class="f-12">{{policyname.value.length}}/40</mat-hint>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -74,12 +89,17 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput formControlName="policyNum" #policynumber autocomplete="true"
-                            class="form-control br-0">
-                        <mat-error class="text-danger" align="start"></mat-error>
-                        <mat-hint align="end">{{policynumber.value.length}}/40</mat-hint>
-                    </mat-form-field>
+
+                    <input matInput formControlName="policyNum" #policynumber autocomplete="true"
+                        class="form-control br-0">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <mat-error class="f-12">sasidl</mat-error>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-hint class="f-12">{{policynumber.value.length}}/40</mat-hint>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -90,16 +110,17 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <!-- <mat-form-field>
+                    <!--
                     <input matInput formControlName="commencementDate" #commencementdate autocomplete="true" class="form-control br-0">
                     <mat-error class="text-danger" align="start"></mat-error>
                     <mat-hint align="end">{{commencementdate.value.length}}/40</mat-hint>
-                </mat-form-field> -->
-                <mat-form-field>
-                        <input matInput formControlName="commencementDate" class="form-control br-0"  [matDatepicker]="picker">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #policyPicker></mat-datepicker>
-                    </mat-form-field>
+                 -->
+
+                    <input matInput formControlName="commencementDate" class="form-control br-0"
+                        [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #policyPicker></mat-datepicker>
+
                 </div>
             </div>
         </div>
@@ -110,12 +131,9 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput formControlName="sumAssured" #sumassured autocomplete="true"
-                            class="form-control br-0">
-                        <mat-error class="text-danger" align="start"></mat-error>
-                        <mat-hint align="end">{{sumassured.value.length}}/40</mat-hint>
-                    </mat-form-field>
+
+                    <input matInput formControlName="sumAssured" #sumassured autocomplete="true"
+                        class="form-control br-0">
                 </div>
             </div>
         </div>
@@ -127,28 +145,22 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <label>Amount</label>
-                    <mat-form-field>
-                        <input matInput formControlName="premiumDetailsAmount" #premiumdetails autocomplete="true"
-                            class="form-control br-0">
-                        <mat-error class="text-danger" align="start"></mat-error>
-                        <mat-hint align="end">{{premiumdetails.value.length}}/40</mat-hint>
-                    </mat-form-field>
+
+                    <input matInput formControlName="premiumDetailsAmount" #premiumdetails autocomplete="true"
+                        class="form-control br-0">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <label>Frequency</label>
-                    <mat-form-field>
-                        <mat-select [(value)]="selected" formControlName="premiumDetailsFrequency" #frequency
-                            autocomplete="true" class="form-control br-0">
-                            <mat-option value="option1">123</mat-option>
-                            <mat-option value="option2">123</mat-option>
-                            <mat-option value="option3">123</mat-option>
-                            <mat-option value="option4">123</mat-option>
-                        </mat-select>
-                        <mat-error class="text-danger" align="start"></mat-error>
-                         <!-- <mat-hint align="end">{{frequency.value.length}}/40</mat-hint> -->
-                    </mat-form-field>
+                    <mat-select [(value)]="selected" formControlName="premiumDetailsFrequency" #frequency
+                        autocomplete="true" class="form-control br-0">
+                        <mat-option value="option1">Monthly</mat-option>
+                        <mat-option value="option2">Quarterly</mat-option>
+                        <mat-option value="option3">Semi annually</mat-option>
+                        <mat-option value="option4">Annually</mat-option>
+                    </mat-select>
+                    <mat-error class="text-danger" align="start"></mat-error>
                 </div>
             </div>
         </div>
@@ -161,23 +173,17 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <label>Policy tenure</label>
-                    <mat-form-field>
-                        <input matInput formControlName="tenureDetailsPolicy" #tenuredetails autocomplete="true"
-                            class="form-control br-0">
-                        <mat-error class="text-danger" align="start"></mat-error>
-                        <mat-hint align="end">{{tenuredetails.value.length}}/40</mat-hint>
-                    </mat-form-field>
+
+                    <input matInput formControlName="tenureDetailsPolicy" #tenuredetails autocomplete="true"
+                        class="form-control br-0">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <label>Premium paying term</label>
-                    <mat-form-field>
-                        <input matInput formControlName="premiumPayingTerm" #premiumterm autocomplete="true"
-                            class="form-control br-0">
-                        <mat-error class="text-danger" align="start"></mat-error>
-                        <mat-hint align="end">{{premiumterm.value.length}}/40</mat-hint>
-                    </mat-form-field>
+
+                    <input matInput formControlName="premiumPayingTerm" #premiumterm autocomplete="true"
+                        class="form-control br-0">
                 </div>
             </div>
         </div>
@@ -188,29 +194,31 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
-                    <label> </label>
-                    <mat-form-field>
-                        <input matInput formControlName="policyStatus" #policystatus autocomplete="true"
-                            class="form-control br-0">
-                        <mat-error class="text-danger" align="start"></mat-error>
-                        <mat-hint align="end">{{policystatus.value.length}}/40</mat-hint>
-                    </mat-form-field>
+                    <label></label>
+                    <!-- <input matInput formControlName="policyStatus" #policystatus autocomplete="true"
+                        class="form-control br-0"> -->
+                        <mat-select formControlName="policyStatus" #frequency
+                        autocomplete="true" class="form-control br-0">
+                        <mat-option value="option1">In force</mat-option>
+                        <mat-option value="option2">Lapsed</mat-option>
+                        <mat-option value="option3">Paid up</mat-option>
+                        <mat-option value="option4">Fully paid up</mat-option>
+                    </mat-select>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <label>Last unpaid premium</label>
-                     <!-- <mat-form-field>
+                    <!--
                         <input matInput formControlName="policyStatusLastUnpaid" #lastunpaid autocomplete="true"
                             class="form-control br-0">
                         <mat-error class="text-danger" align="start"></mat-error>
                         <mat-hint align="end">{{lastunpaid.value.length}}/40</mat-hint>
-                    </mat-form-field> -->
-                    <mat-form-field>
-                        <input matInput formControlName="policyStatusLastUnpaid" [matDatepicker]="policyPicker" class="form-control br-0" >
-                        <mat-datepicker-toggle matSuffix [for]="policyPicker"></mat-datepicker-toggle>
-                        <mat-datepicker #policyPicker></mat-datepicker>
-                    </mat-form-field>
+                     -->
+                    <input matInput formControlName="policyStatusLastUnpaid" [matDatepicker]="policyPicker"
+                        class="form-control br-0">
+                    <mat-datepicker-toggle matSuffix [for]="policyPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #policyPicker></mat-datepicker>
                 </div>
             </div>
         </div>
@@ -307,8 +315,19 @@
             </mat-tab-group>
         </div>
     </div>
-</div> 
-
+</div>
+<div class="bottom-fixed wrapper-16 pb-12">
+        <div class="row">
+            <div class="col-md-4 p-0">
+                <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="Close('close')">Cancel</h5>
+            </div>
+            <div class="col-md-8 right text-right">
+                <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveAddInsurance()">SAVE <i class="material-icons">
+                    arrow_drop_up
+                    </i></button>
+            </div>
+        </div>
+    </div>
 
 
 <!-- Detailed View -->

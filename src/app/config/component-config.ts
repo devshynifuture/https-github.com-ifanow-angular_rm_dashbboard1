@@ -121,5 +121,6 @@ export const appConfig = {
   GET_DOCUMENT_MAPPED_SERVICE: 'subscription/document/service/map/get',
   GET_TOTAL_SALE_RECIVED:'subscription/dashboard/totalsales/feerecieved/get',
   DELETE_SUB_SETTING_BILLER_PROFILE:'subscription/setting/billerprofile/delete',
+  ADD_LIFE_INSURANCE:'account/insurance/life-insurance/term/add',
   GET_BASE_64: 'api/v1/test/base64/decode'
 };
