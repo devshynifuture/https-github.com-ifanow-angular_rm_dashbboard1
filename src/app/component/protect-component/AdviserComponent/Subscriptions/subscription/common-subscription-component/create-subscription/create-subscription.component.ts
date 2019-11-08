@@ -9,53 +9,7 @@ import * as _ from 'lodash';
 import {AuthService} from '../../../../../../../auth-service/authService';
 // import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-
-// Depending on whether rollup is used, moment needs to be imported differently.
-// Since Moment.js doesn't have a default export, we normally need to import using the `* as`
-// syntax. However, rollup creates a synthetic default module and we thus need to import it using
-// the `default as` syntax.
-// import * as _moment from 'moment';
-// tslint:disable-next-line:no-duplicate-imports
-// import {default as _rollupMoment} from 'moment';
-
-// const moment = _rollupMoment || _moment;
-
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'LL',
-  },
-  display: {
-    dateInput: 'LL',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
-
-export const APP_DATE_FORMATS = {
-  parse: {
-    dateInput: {month: 'short', year: 'numeric', day: 'numeric'},
-  },
-  display: {
-    dateInput: 'input',
-    monthYearLabel: {year: 'numeric', month: 'numeric'},
-    dateA11yLabel: {
-      year: 'numeric', month: 'long', day: 'numeric'
-    },
-    monthYearA11yLabel: {year: 'numeric', month: 'long'},
-  }
-};
-export const MY_FORMATS2 = {
-  parse: {
-    dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 
 @Component({
   selector: 'app-create-subscription',
