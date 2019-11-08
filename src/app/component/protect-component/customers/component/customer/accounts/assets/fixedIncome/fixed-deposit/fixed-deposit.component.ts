@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { CustomerService } from '../../../../customer.service';
 
 @Component({
   selector: 'app-fixed-deposit',
@@ -23,7 +24,7 @@ export class FixedDepositComponent implements OnInit {
   isFdNo = false;
   isInstitution = false;
   fixedDeposit: any;
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private custumService : CustomerService) { }
 
   ngOnInit() {
     this.getdataForm()
@@ -123,6 +124,12 @@ saveFixedDeposit(){
       FDType: this.fixedDeposit.controls.FDType.value,
     }
     console.log('fixedDeposit',obj)
+    this.custumService.addFixedDeposit(obj).subscribe(
+      data => this.addFixedDepositRes(data)
+    );
   }
+}
+addFixedDepositRes(data){
+console.log('addFixedDepositRes',data)
 }
 }

@@ -14,4 +14,7 @@ export class CustomerService {
   {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_LIFE_INSURANCE,data)
   }
+  addFixedDeposit(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_FIXEDDEPOSIT,data)
+  }
 }

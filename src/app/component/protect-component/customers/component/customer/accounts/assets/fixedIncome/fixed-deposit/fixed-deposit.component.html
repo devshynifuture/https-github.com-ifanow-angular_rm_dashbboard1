@@ -18,19 +18,19 @@
             <p class="m-0 f-12 text-custom">In whose name is this asset</p>
         </div>
         <div class="col-md-5">
-            <div class="form-group mb-0">     
-                    <input matInput #ownerName class="form-control br-0" formControlName="ownerName">
-                    <div class="row">
-                        <div class="col-md-10">
-                                <mat-error class="f-12 pt-4"
-                                [ngClass]="{'v-h':!(isownerName && getFormControl().ownerName.invalid || getFormControl().ownerName.touched && getFormControl().ownerName.invalid)}">
-                                Owner name is required
-                            </mat-error>
-                        </div>
-                        <div class="col-md-2">
-                                <mat-hint align="end" class="f-12">{{ownerName.value.length}}/40</mat-hint>
-                        </div>
+            <div class="form-group mb-0">
+                <input matInput #ownerName class="form-control br-0" formControlName="ownerName">
+                <div class="row">
+                    <div class="col-md-10">
+                        <mat-error class="f-12 pt-4"
+                            [ngClass]="{'v-h':!(isownerName && getFormControl().ownerName.invalid || getFormControl().ownerName.touched && getFormControl().ownerName.invalid)}">
+                            Owner name is required
+                        </mat-error>
                     </div>
+                    <div class="col-md-2">
+                        <mat-hint align="end" class="f-12">{{ownerName.value.length}}/40</mat-hint>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -40,17 +40,17 @@
             <h5 class="m-0 pt-8">Type of fixed deposit</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">              
-                    <mat-select formControlName="FDType" class="form-control br-0">
-                        <mat-option value="option1">Bank FD</mat-option>
-                        <mat-option value="option2">Corporate FD</mat-option>
-                    </mat-select>
-                    <div class="col-md-10">
+            <div class="form-group mb-0">
+                <mat-select formControlName="FDType" class="form-control br-0">
+                    <mat-option value="option1">Bank FD</mat-option>
+                    <mat-option value="option2">Corporate FD</mat-option>
+                </mat-select>
+                <div class="col-md-10">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isFDType && getFormControl().FDType.invalid || getFormControl().FDType.touched && getFormControl().FDType.invalid)}">
                         Fixed deposit type is required
                     </mat-error>
-                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -61,15 +61,16 @@
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
-                    <input matInput #amountInvest class="form-control br-0" value="₹" formControlName="amountInvest">
-                    <div class="col-md-10">
+                <input matInput #amountInvest class="form-control br-0" value="₹" formControlName="amountInvest">
+                <div class="col-md-10">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isAmountInvest && getFormControl().amountInvest.invalid || getFormControl().amountInvest.touched && getFormControl().amountInvest.invalid)}">
                         Amount invested is required
                     </mat-error>
-                    </div>
-                    <div class="col-md-2">
-                    <mat-hint align="end" class="f-12">{{amountInvest.value.length}}/20</mat-hint></div>
+                </div>
+                <div class="col-md-2">
+                    <mat-hint align="end" class="f-12">{{amountInvest.value.length}}/20</mat-hint>
+                </div>
             </div>
         </div>
     </div>
@@ -81,10 +82,10 @@
             <div class="form-group mb-0">
                 <input type="date" class="form-control br-0" value="date" formControlName="commencementDate">
                 <div class="col-md-10">
-                <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isCommencementDate && getFormControl().commencementDate.invalid || getFormControl().commencementDate.touched && getFormControl().commencementDate.invalid)}">
-                    Commencement date is required
-                </mat-error>
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isCommencementDate && getFormControl().commencementDate.invalid || getFormControl().commencementDate.touched && getFormControl().commencementDate.invalid)}">
+                        Commencement date is required
+                    </mat-error>
                 </div>
             </div>
         </div>
@@ -97,10 +98,10 @@
             <div class="form-group mb-0">
                 <input matInput class="form-control br-0" value="%" formControlName="interestDate">
                 <div class="col-md-10">
-                <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isInterestDate && getFormControl().interestDate.invalid || getFormControl().interestDate.touched && getFormControl().interestDate.invalid)}">
-                    Interest rate is required
-                </mat-error>
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isInterestDate && getFormControl().interestDate.invalid || getFormControl().interestDate.touched && getFormControl().interestDate.invalid)}">
+                        Interest rate is required
+                    </mat-error>
                 </div>
             </div>
         </div>
@@ -110,19 +111,19 @@
             <h5 class="m-0 pt-8">Interest compounding</h5>
         </div>
         <div class="col-md-3">
-                <mat-select formControlName="compound" class="form-control br-0">
-                    <mat-option value="option1">Daily</mat-option>
-                    <mat-option value="option2">Monthly</mat-option>
-                    <mat-option value="option1">Quarterly</mat-option>
-                    <mat-option value="option2">Semi annually </mat-option>
-                    <mat-option value="option1">Annually</mat-option>
-                </mat-select>
-                <div class="col-md-10">
+            <mat-select formControlName="compound" class="form-control br-0">
+                <mat-option value="option1">Daily</mat-option>
+                <mat-option value="option2">Monthly</mat-option>
+                <mat-option value="option1">Quarterly</mat-option>
+                <mat-option value="option2">Semi annually </mat-option>
+                <mat-option value="option1">Annually</mat-option>
+            </mat-select>
+            <div class="col-md-10">
                 <mat-error class="f-12 pt-4"
                     [ngClass]="{'v-h':!(isCompound && getFormControl().compound.invalid || getFormControl().compound.touched && getFormControl().compound.invalid)}">
                     Interest compounding is required
                 </mat-error>
-                </div>
+            </div>
         </div>
     </div>
     <div class="row pt-40">
@@ -135,10 +136,10 @@
                 <mat-radio-button value="2" class="b-a-custom text-primary">I have maturity date</mat-radio-button>
             </mat-radio-group>
             <div class="col-md-10">
-            <mat-error class="f-12 pt-4"
-                [ngClass]="{'v-h':!(isMaturity && getFormControl().maturity.invalid || getFormControl().maturity.touched && getFormControl().maturity.invalid)}">
-                FD end date is required
-            </mat-error>
+                <mat-error class="f-12 pt-4"
+                    [ngClass]="{'v-h':!(isMaturity && getFormControl().maturity.invalid || getFormControl().maturity.touched && getFormControl().maturity.invalid)}">
+                    FD end date is required
+                </mat-error>
             </div>
         </div>
     </div>
@@ -150,10 +151,10 @@
             <div class="form-group mb-0">
                 <input type="date" class="form-control br-0" value="date" formControlName="maturityDate">
                 <div class="col-md-10">
-                <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isMaturityDate && getFormControl().maturityDate.invalid || getFormControl().maturityDate.touched && getFormControl().maturityDate.invalid)}">
-                    Maturity date is required
-                </mat-error>
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isMaturityDate && getFormControl().maturityDate.invalid || getFormControl().maturityDate.touched && getFormControl().maturityDate.invalid)}">
+                        Maturity date is required
+                    </mat-error>
                 </div>
             </div>
         </div>
@@ -163,16 +164,16 @@
             <h5 class="m-0 pt-8">Interest Payout option</h5>
         </div>
         <div class="col-md-3">
-                <mat-select formControlName="payOpt" class="form-control br-0">
-                    <mat-option value="option1"> Cumulative payout</mat-option>
-                    <mat-option value="option2">Interest payout</mat-option>
-                </mat-select>
-                <div class="col-md-10">
-                <mat-error class="f-12 pt-4" 
+            <mat-select formControlName="payOpt" class="form-control br-0">
+                <mat-option value="option1"> Cumulative payout</mat-option>
+                <mat-option value="option2">Interest payout</mat-option>
+            </mat-select>
+            <div class="col-md-10">
+                <mat-error class="f-12 pt-4"
                     [ngClass]="{'v-h':!(isPayOpt && getFormControl().payOpt.invalid || getFormControl().payOpt.touched && getFormControl().payOpt.invalid)}">
                     Interest Payout option is required
                 </mat-error>
-                </div>
+            </div>
         </div>
     </div>
     <div class="row pt-40">
@@ -180,16 +181,16 @@
             <h5 class="m-0 pt-8">Ownership type</h5>
         </div>
         <div class="col-md-5">
-                <mat-select formControlName="ownerType" class="form-control br-0">
-                    <mat-option value="option1"> Joint </mat-option>
-                    <mat-option value="option2">Single </mat-option>
-                </mat-select>
-                <div class="col-md-10">
-                <mat-error class="f-12 pt-4" 
+            <mat-select formControlName="ownerType" class="form-control br-0">
+                <mat-option value="option1"> Joint </mat-option>
+                <mat-option value="option2">Single </mat-option>
+            </mat-select>
+            <div class="col-md-10">
+                <mat-error class="f-12 pt-4"
                     [ngClass]="{'v-h':!(isOwnerType && getFormControl().ownerType.invalid || getFormControl().ownerType.touched && getFormControl().ownerType.invalid)}">
                     Ownership type is required
                 </mat-error>
-                </div>
+            </div>
         </div>
     </div>
     <div class="row pt-40">
@@ -210,15 +211,16 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                        <input matInput #fdNo class="form-control br-0" formControlName="fdNo">
-                         <div class="col-md-10">
+                    <input matInput #fdNo class="form-control br-0" formControlName="fdNo">
+                    <div class="col-md-10">
                         <!-- <mat-error class="f-12 pt-4"
                             [ngClass]="{'v-h':!(isFdNo && getFormControl().fdNo.invalid || getFormControl().fdNo.touched && getFormControl().fdNo.invalid)}">
                             FD Number is required
                         </mat-error> -->
-                        </div>
-                        <div class="col-md-2">
-                        <mat-hint align="end" class="f-12">{{fdNo.value.length}}/10</mat-hint></div>
+                    </div>
+                    <div class="col-md-2">
+                        <mat-hint align="end" class="f-12">{{fdNo.value.length}}/10</mat-hint>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <p class="f-12 m-0 text-custom">Optional</p>
@@ -231,15 +233,16 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                        <input matInput #bankACNo class="form-control br-0" formControlName="bankACNo">
-                         <div class="col-md-10">
+                    <input matInput #bankACNo class="form-control br-0" formControlName="bankACNo">
+                    <div class="col-md-10">
                         <!-- <mat-error class="f-12 pt-4"
                             [ngClass]="{'v-h':!(isBankACNo && getFormControl().bankACNo.invalid || getFormControl().bankACNo.touched && getFormControl().bankACNo.invalid)}">
                             Bank Account Number is required
                         </mat-error> -->
-                        </div>
-                        <div class="col-md-2">
-                        <mat-hint align="end" class="f-12">{{bankACNo.value.length}}/15</mat-hint></div>
+                    </div>
+                    <div class="col-md-2">
+                        <mat-hint align="end" class="f-12">{{bankACNo.value.length}}/15</mat-hint>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <p class="f-12 m-0 text-custom">Optional</p>
@@ -252,15 +255,16 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                        <input matInput #institution class="form-control br-0" formControlName="institution">
-                         <div class="col-md-10">
+                    <input matInput #institution class="form-control br-0" formControlName="institution">
+                    <div class="col-md-10">
                         <!-- <mat-error class="f-12 pt-4"
                             [ngClass]="{'v-h':!(isInstitution && getFormControl().institution.invalid || getFormControl().institution.touched && getFormControl().institution.invalid)}">
                             Institution name is required
                         </mat-error> -->
-                        </div>
-                        <div class="col-md-2">
-                        <mat-hint align="end" class="f-12">{{institution.value.length}}/30</mat-hint></div>
+                    </div>
+                    <div class="col-md-2">
+                        <mat-hint align="end" class="f-12">{{institution.value.length}}/30</mat-hint>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <p class="f-12 m-0 text-custom">Optional</p>
@@ -273,17 +277,16 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput #description class="form-control br-0" formControlName="description">
-                         <div class="col-md-10">
+                    <input matInput #description class="form-control br-0" formControlName="description">
+                    <div class="col-md-10">
                         <!-- <mat-error class="f-12 pt-4"
                             [ngClass]="{'v-h':!(isDescription && getFormControl().description.invalid || getFormControl().description.touched && getFormControl().description.invalid)}">
                             Description is required
                         </mat-error> -->
-                        </div>
-                        <div class="col-md-2">
-                        <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint></div>
-                    </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <p class="f-12 m-0 text-custom">Optional</p>
