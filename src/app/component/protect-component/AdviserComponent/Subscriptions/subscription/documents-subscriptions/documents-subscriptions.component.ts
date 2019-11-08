@@ -61,6 +61,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     {name: 'Client Signitature', value: 3}
   ];
   selectedDateRange: { begin: Date; end: Date; };
+  selectedDateFilter: any;
   showFilter = false;
   constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public eventService: EventService,
               public subscription: SubscriptionService,private datePipe: DatePipe) {
