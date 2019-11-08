@@ -241,9 +241,9 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   showFilters(showFilter) {
     if (showFilter == true) {
-      this.showFilter = true;
-    } else {
       this.showFilter = false;
+    } else {
+      this.showFilter = true;
     }
     console.log('this.filterStatus: ', this.filterStatus);
     console.log('this.filterDate: ', this.filterDate);
@@ -272,9 +272,12 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
   addFiltersDate(dateFilter) {
+    this.filterDate = []
+    if(this.filterDate.length >= 1){
+      this.filterDate = []
+    }
+    this.filterDate.push((dateFilter=="1: Object")?1:(dateFilter=="2: Object")?2:3);
     console.log('addFilters', dateFilter);
-    // this.filterDate = [dateFilter];
-    this.filterDate.push(dateFilter);
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     UtilService.getStartOfTheDay(beginDate);
@@ -297,11 +300,15 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   }
 
-  orgValueChange(value) {
-    console.log(value);
-    this.getDate = this.datePipe.transform(value, 'yyyy-MM-dd');
-    this.callFilter();
+  orgValueChange(selectedDateRange){
+    const beginDate = new Date();
+    beginDate.setMonth(beginDate.getMonth() - 1);
+    UtilService.getStartOfTheDay(beginDate);
 
+    const endDate = new Date();
+    UtilService.getStartOfTheDay(endDate)
+    this.selectedDateRange = {begin: selectedDateRange.begin, end: selectedDateRange.end};
+    this.callFilter()
   }
 
   orgValueChange2(value) {
@@ -328,7 +335,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       fromDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.begin, 'yyyy-MM-dd') : null,
       toDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.end, 'yyyy-MM-dd') : null,
       statusIdList: this.statusIdList,
-      dateType: (this.filterDate.length > 0) ? this.selectedDateFilter.value : 0
+      dateType:  (this.filterDate.length== 0)?0:this.filterDate,
     };
     console.log('this.callFilter req obj : ', obj);
     if (obj.statusIdList.length == 0 && obj.fromDate == null) {

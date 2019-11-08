@@ -147,15 +147,26 @@ export class PreferencesSettingsComponent implements OnInit {
     // this.billerProfileData = this.dataTOget.data
   }
 
-  deleteModal(value) {
+  deleteModal(singleBillerProfile) {
     const dialogData = {
-      data: value,
       header: 'DELETE',
-      body: 'Are you sure you want to delete the document?',
+      body: 'Are you sure you want to delete the biller profile?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
-      btnNo: 'DELETE'
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.subService.deleteSubSettingBillerProfile(singleBillerProfile.id).subscribe(
+          data => {
+            dialogRef.close();
+          }
+        );
+
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
     };
+    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
@@ -167,7 +178,6 @@ export class PreferencesSettingsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
-
   }
 
   openEmailInvoice(data) {

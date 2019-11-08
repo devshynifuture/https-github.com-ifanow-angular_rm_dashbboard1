@@ -5,6 +5,7 @@ import {SubscriptionService} from '../../../subscription.service';
 import {MatDialog} from '@angular/material';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 export interface PeriodicElement {
   Invoicenumber: string;
@@ -26,6 +27,8 @@ export class InvoicesComponent implements OnInit {
   clientList: any;
   dataTOget: object;
   nodata: string;
+  advisorId: any;
+  _clientData: any;
 
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, private subService: SubscriptionService, public dialog: MatDialog) {
@@ -42,6 +45,7 @@ export class InvoicesComponent implements OnInit {
 
   ngOnInit() {
     this.getInvoiceList();
+    this.advisorId = AuthService.getAdvisorId();
     console.log('CLIENT INVOICE ');
     this.invoiceDesign = 'true';
     this.dataCount = 0;
@@ -60,10 +64,12 @@ export class InvoicesComponent implements OnInit {
   getInvoiceResponseData(data) {
     if(data==undefined){
       this.nodata="No Data Found";
-    }else{const ELEMENT_DATA = data;
+    }else{
+      const ELEMENT_DATA = data;
     // this.invoiceClientData = data;
     ELEMENT_DATA.forEach(item => item.selected = false);
     this.dataSource = ELEMENT_DATA;
+    this._clientData=this.dataSource;
    }
   }
   openEdit(edit) {
@@ -132,7 +138,44 @@ export class InvoicesComponent implements OnInit {
     // }
 
   }
+  openSendEmail() {
+    const data = {
+      advisorId: this.advisorId,
+      clientData:this.upperData,
+      templateType: 1, //2 is for quotation
+      documentList: [],
+      isInv:true
+    };
+    this.dataSource.forEach(singleElement => {
+      if (singleElement.selected) {
+        data.documentList.push(singleElement);
+      }
+    });
+    this.open(data, 'emailOnlyInv');
+  }
 
+  open(data, value) {
+
+    // this.eventService.sliderData(value);
+    // this.subInjectService.rightSliderData(state);
+    // this.subInjectService.addSingleProfile(data);
+
+    const fragmentData = {
+      Flag: value,
+      data: data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ',);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
   formatter(data) {
     data = Math.round(data);
     return data;

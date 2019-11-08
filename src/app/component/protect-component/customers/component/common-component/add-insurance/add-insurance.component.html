@@ -1,12 +1,15 @@
 <!-- ADD INSURANCE -->
 <div class="popup-header-fix-60">
     <div class="row bb-1">
-        <div class="col-md-8 p-0">
+        <div class="col-md-7 p-0">
             <h4 class="mb-0 wrapper-20"> ADD LIFE INSURANCE</h4>
         </div>
-        <div class="col-md-4 text-right">
+        <div class="col-md-5 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+                <button mat-button class="btn-dark-black addon mr-8 "> 
+                        <img src="assets/images/svg/insurance-download-icon.svg" class="c-p mr-8"> Import policies 
+                    </button>
+                <i class="material-icons c-p v-middle" (click)="close()"> clear</i>
             </div>
         </div>
     </div>
@@ -22,6 +25,212 @@
             <div class="form-group mb-0">
                 <input matInput class="form-control br-0">
             </div>
+        </div>
+    </div>
+
+    <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Proposer</h5>
+            <p class="m-0 f-12 text-custom">Who has proposed this policy</p>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+                <input matInput class="form-control br-0">
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Policy name</h5>
+            <p class="m-0 f-12 text-custom">Start typing to see policy names</p>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+                <input matInput class="form-control br-0">
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Policy number</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+                <input matInput class="form-control br-0">
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Commencement date</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+                <input matInput class="form-control br-0">
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Sum assured</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+                <input matInput class="form-control br-0">
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-28">Premium details</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0">
+                <label>Amount</label>
+                <input matInput class="form-control br-0">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0">
+                <label>Frequency</label>
+                <input matInput class="form-control br-0">
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-28">Tenure details</h5>
+            <p class="m-0 f-12 text-custom">in years</p>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0">
+                <label>Policy tenure</label>
+                <input matInput class="form-control br-0">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0">
+                <label>Premium paying term</label>
+                <input matInput class="form-control br-0">
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-28">Policy status</h5>
+
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0">
+                <label> </label>
+                <input matInput class="form-control br-0">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0">
+                <label>Last unpaid premium</label>
+                <input matInput class="form-control br-0">
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <p class="m-0 text-primitive f-16 c-p"> + Add more [optional data] </p>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+
+    <!-- <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <p class="m-0 text-primitive f-16 c-p">Show less</p>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div> -->
+    <div class="row pt-40">
+        <div class="col-md-12 tabView">
+            <mat-tab-group animationDuration="0ms">
+                <mat-tab label="Key details">
+                    <div class="row pt-40">
+                        <div class="col-md-5 text-right">
+                            <h5 class="m-0 pt-8">Risk Cover</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group mb-0">
+                                <input matInput class="form-control br-0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-40">
+                        <div class="col-md-5 text-right">
+                            <h5 class="m-0pt-8">Surrender Value</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group mb-0">
+                                <input matInput class="form-control br-0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row pt-40">
+                        <div class="col-md-5 text-right">
+                            <h5 class="m-0 pt-8">Nominee name</h5>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-0">
+                                <input matInput class="form-control br-0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row pt-40">
+                        <div class="col-md-5 text-right">
+                            <h5 class="m-0 pt-8">Nominee name</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group mb-0">
+                                <input matInput class="form-control br-0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row pt-40">
+                        <div class="col-md-5 text-right">
+                            <h5 class="m-0 pt-8">Vested bouns</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group mb-0">
+                                <input matInput class="form-control br-0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row pt-40">
+                        <div class="col-md-5 text-right">
+                            <h5 class="m-0 pt-8">Assumed rate</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group mb-0">
+                                <input matInput class="form-control br-0">
+                            </div>
+                        </div>
+                    </div>
+
+                </mat-tab>
+                <mat-tab label="Cash Flows"> Cash Flows </mat-tab>
+                <mat-tab label="Riders"> Riders </mat-tab>
+                <mat-tab label="Loan details"> Loan details </mat-tab>
+                <mat-tab label="Miscellaneous"> Miscellaneous </mat-tab>
+            </mat-tab-group>
         </div>
     </div>
 </div>
