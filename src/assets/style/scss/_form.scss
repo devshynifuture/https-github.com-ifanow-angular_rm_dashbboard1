@@ -77,3 +77,8 @@ input.mat-input-element:focus{
     padding-right: 8px !important;
     padding-left: 8px !important;
 }
+.mat-form-field-appearance-legacy .mat-hint{
+    color: #757575 !important; 
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+}
