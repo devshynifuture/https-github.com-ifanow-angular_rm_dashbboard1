@@ -21,8 +21,9 @@ import {AddLiabilitiesComponent} from './component/common-component/add-liabilit
 import {AddInsuranceComponent} from './component/common-component/add-insurance/add-insurance.component';
 import {LibilitiesRightComponent} from './component/customer/accounts/liabilities/libilities-right/libilities-right.component';
 import {ChartModule} from 'angular-highcharts';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { FixedDepositComponent } from './component/customer/accounts/assets/fixedIncome/fixed-deposit/fixed-deposit.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { BrowserModule } from '@angular/platform-browser';
     AddLiabilitiesComponent,
     AddInsuranceComponent,
     LibilitiesRightComponent,
+    FixedDepositComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,9 +54,10 @@ import { BrowserModule } from '@angular/platform-browser';
     CustomersRoutingModule,
     MaterialModule,
     ChartModule,
+    FormsModule,
     ReactiveFormsModule
   ],
-  exports: [AddLiabilitiesComponent, AddInsuranceComponent, LibilitiesRightComponent],
+  exports: [AddLiabilitiesComponent, AddInsuranceComponent, LibilitiesRightComponent,FixedDepositComponent,ReactiveFormsModule],
   entryComponents: [BottomSheetComponent]
 })
 export class CustomersModule {
