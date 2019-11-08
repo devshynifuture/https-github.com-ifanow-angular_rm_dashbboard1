@@ -64,9 +64,11 @@ import {CustomDialogContainerComponent} from '../../../../common/custom-dialog-c
 import {FixedFeeComponent} from './subscription/common-subscription-component/fixed-fee/fixed-fee.component';
 import {VariableFeeComponent} from './subscription/common-subscription-component/variable-fee/variable-fee.component';
 import {ChangePayeeComponent} from './subscription/common-subscription-component/change-payee/change-payee.component';
-import {CustomHtmlModule} from "../../../../common/customhtml/customhtml/custom-html.module";
-import {CommonComponentModule} from "../../common-component/common-component.module";
-import {CustomDirectiveModule} from "../../../../common/common-directive.module";
+import {CustomHtmlModule} from '../../../../common/customhtml/customhtml/custom-html.module';
+import {CommonComponentModule} from '../../common-component/common-component.module';
+import {CustomDirectiveModule} from '../../../../common/common-directive.module';
+import {CommonModule} from '@angular/common';
+import {SubscriptionRoutingModule} from "./subscription-routing.module";
 
 export const componentList = [SubscriptionComponent,
   InvoicePdfDocumentComponent,
@@ -129,7 +131,8 @@ export const componentList = [SubscriptionComponent,
   declarations: componentList,
   imports: [
     MaterialModule,
-    BrowserModule,
+    CommonModule,
+    // BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     NgCircleProgressModule.forRoot({
@@ -145,7 +148,8 @@ export const componentList = [SubscriptionComponent,
     FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
     CustomHtmlModule,
     CommonComponentModule,
-    CustomDirectiveModule
+    CustomDirectiveModule,
+    // SubscriptionRoutingModule
     // CustomCommonModule
     // AppModule
   ],
