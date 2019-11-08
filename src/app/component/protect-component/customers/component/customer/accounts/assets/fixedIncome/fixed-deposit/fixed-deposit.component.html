@@ -1,0 +1,218 @@
+<!-- start ADD Fixed DEPOSIT (fixed DEPOSIT) -->
+<div class="popup-header-fix-60">
+  <div class="row bb-1">
+    <div class="col-md-8 p-0">
+      <h4 class="mb-0 wrapper-20">ADD Fixed DEPOSIT</h4>
+    </div>
+    <div class="col-md-4 text-right">
+      <div class="wrapper-12">
+        <i class="material-icons c-p pt-8 v-middle" (click)="closeNav('close')"> clear</i>
+      </div>
+    </div>
+  </div>
+  </div>
+        <div [formGroup]="fixedDeposit" class="pt-72 pl-24 pr-24 pb-24">
+        <div class="row pt-40">
+            <div class="col-md-5 text-right">
+                <h5 class="m-0 pt-8">Owner</h5>
+                <p class="m-0 f-12 text-custom">In whose name is this asset</p>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group mb-0">
+                        <input matInput class="form-control br-0" formControlName="ownerName">
+                </div>
+            </div>
+        </div>
+        
+        <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Type of fixed deposit</h5>
+        </div>
+        <div class="col-md-3">
+                <div class="form-group mb-0">
+                        <button mat-button [matMenuTriggerFor]="menu3" class="br-0 b-a w-100 pr-8"><i class="material-icons text-custom right">
+                                arrow_drop_down
+                        </i></button>
+                        <mat-menu #menu3="matMenu" formControlName="FDType">
+                                <button mat-menu-item>Bank FD</button>
+                                <button mat-menu-item>Corporate FD</button>
+                        </mat-menu>
+                </div>
+        </div>
+        </div>
+        
+        <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Amount invested</h5>
+        </div>
+        <div class="col-md-3">
+                <div class="form-group mb-0">
+                <input matInput class="form-control br-0" value="₹" formControlName="amountInvest">
+                </div>
+        </div>
+        </div>
+        <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Commencement date</h5>
+        </div>
+        <div class="col-md-3">
+                <div class="form-group mb-0">
+                    <input type="date" class="form-control br-0" value="date" formControlName="commencementDate">
+                </div>
+        </div>
+        </div>
+        <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Interest rate</h5>
+        </div>
+        <div class="col-md-3">
+                <div class="form-group mb-0">
+                <input matInput class="form-control br-0" value="%" formControlName="interestDate">
+                </div>
+        </div>
+        </div>
+        <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Interest compounding</h5>
+        </div>
+        <div class="col-md-3">
+            <button mat-button [matMenuTriggerFor]="menu1" class="br-0 b-a w-100 pr-8"><i class="material-icons text-custom right">
+            arrow_drop_down
+            </i></button>
+            <mat-menu #menu1="matMenu" class="form-control br-0" formControlName="compound">
+            <button mat-menu-item>Daily</button>
+            <button mat-menu-item>Monthly</button>
+            <button mat-menu-item>Quarterly</button>
+            <button mat-menu-item>Semi annually</button>  <div ></div>
+            <button mat-menu-item>Annually</button>
+            </mat-menu>
+        </div>
+        </div>
+        <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">FD end date</h5>
+        </div>
+        <div class="col-md-6 pr-0">
+            <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="maturity">
+            <mat-radio-button value="1" class="b-ua text-custom" >I have tenure</mat-radio-button>
+            <mat-radio-button value="2" class="b-a-custom text-primary">I have maturity date</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        </div>
+        <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Maturity date</h5>
+        </div>
+        <div class="col-md-3">
+                <div class="form-group mb-0">
+                        <input type="date" class="form-control br-0" value="date" formControlName="maturityDate">
+                    </div>
+        </div>
+        </div>
+        <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Interest Payout option</h5>
+        </div>
+        <div class="col-md-3">
+            <button mat-button [matMenuTriggerFor]="menu4" class="br-0 b-a w-100 pr-8"><i class="material-icons text-custom right">
+            arrow_drop_down
+            </i></button>
+            <mat-menu #menu4="matMenu" class="form-control br-0" formControlName="payOpt">
+            <button mat-menu-item >Cumulative payout</button>
+            <button mat-menu-item>Interest payout</button>
+            </mat-menu>
+        </div>
+        </div>
+        <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Ownership type</h5>
+        </div>
+        <div class="col-md-5">
+            <button mat-button [matMenuTriggerFor]="menu" class="br-0 b-a w-100 pr-8"><i class="material-icons text-custom right">
+            arrow_drop_down
+            </i></button>
+            <mat-menu #menu="matMenu" class="form-control br-0" formControlName="ownerType">
+            <button mat-menu-item>Joint</button>
+            <button mat-menu-item>Single</button>
+            </mat-menu>
+        </div>
+        </div>
+        <div class="row pt-40">
+        <div class="col-md-5 text-right"  *ngIf="showHide == true">
+            <h5 class="m-0 pt-8 text-custom" (click) = "showLess(showHide)">Show less</h5>
+        </div>
+        <div class="col-md-5 text-right" *ngIf="showHide == false">
+                <h5 class="m-0 pt-8 text-custom" (click) = "showLess(showHide)">+ Add more [optional data] </h5>
+            </div>
+        <div class="col-md-5">
+        
+        </div>
+        </div>
+        <div *ngIf="showHide == true">
+        <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">FD Number</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+            <input type="text" class="form-control br-0" formControlName="fdNo">
+            </div>
+            <div class="col-md-12">
+            <p class="f-12 m-0 text-custom">Optional</p>
+            </div>
+        </div>
+        </div>
+        <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Bank Account Number</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+            <input type="text" class="form-control br-0" formControlName="bankACNo">
+            </div>
+            <div class="col-md-12">
+            <p class="f-12 m-0 text-custom">Optional</p>
+            </div>
+        </div>
+        </div>
+        <!-- <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Bank Account Number</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+            <input type="text" class="form-control br-0" formControlName="bankAcNo">
+            </div>
+            <div class="col-md-12">
+            <p class="f-12 m-0 text-custom">Optional</p>
+            </div>
+        </div>
+        </div> -->
+        <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Institution name</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+            <input type="text" class="form-control br-0" formControlName="institution">
+            </div>
+            <div class="col-md-12">
+            <p class="f-12 m-0 text-custom">Optional</p>
+            </div>
+        </div>
+        </div>
+        <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Description</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+            <input type="text" class="form-control br-0" formControlName="description">
+            </div>
+            <div class="col-md-12">
+            <p class="f-12 m-0 text-custom">Optional</p>
+            </div>
+        </div>
+        </div>
+        </div>
+    </div>
