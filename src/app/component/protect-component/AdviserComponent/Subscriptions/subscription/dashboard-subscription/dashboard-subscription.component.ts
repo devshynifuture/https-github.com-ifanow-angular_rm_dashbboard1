@@ -33,6 +33,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class DashboardSubscriptionComponent implements OnInit {
   invoiceHisData: any;
   showLetsBeginData: any;
+  totalSaleRecived: any;
 
   constructor(private enumService: EnumServiceService,
               public subInjectService: SubscriptionInject, public eventService: EventService,
@@ -62,6 +63,7 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.invoiceToBeReviewed();
     this.getSummaryDataDashboard(null);
     this.getDataForCreateService();
+    this.getTotalRecivedByDash();
   }
 
   getDashboardResponse() {
@@ -144,7 +146,19 @@ export class DashboardSubscriptionComponent implements OnInit {
       }
     );
   }
-
+  getTotalRecivedByDash(){
+    let obj = {
+      advisorId : this.advisorId,
+      period : 0
+    }
+    this.subService.getTotalRecived(obj).subscribe(
+      data => this.getTotalRecivedRes(data)
+    );
+  }
+  getTotalRecivedRes(data){
+    console.log('getTotalRecivedRes',data)
+    this.totalSaleRecived = data
+  }
   showSubscriptionSteps() {
     this.showSubStep = true;
   }

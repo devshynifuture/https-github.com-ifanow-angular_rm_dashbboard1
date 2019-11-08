@@ -34,12 +34,18 @@ input[type=number]::-webkit-outer-spin-button {
 input.mat-input-element{
     margin: 0;
     line-height: 2.3;
-    padding-left: 6px;
-    padding-right: 6px;
+    
+    padding: 6px;
+    height: 40px;
+}
+.mat-input-element{
+    caret-color:#000 !important;
+    font-weight: 400 !important;
 }
 input.mat-input-element:focus{
     outline: none;
 }
+
 // .form-group{
 //     margin-bottom: 0 !important;
 // }
@@ -63,4 +69,7 @@ input.mat-input-element:focus{
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
    border-color:#008FFF !important; /*outer ring color change*/
   }
+}
+.mat-form-field-infix{
+    border-top: 0px !important;
 }
