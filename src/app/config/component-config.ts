@@ -44,6 +44,9 @@ export const appConfig = {
   Update_Password: 'asset/update/password',
   Fileorder_Status_Report_Get: 'asset/fileorder/status/report/get',
 
+  /////////////////////////////Accounts///////////////////////////////////
+  ADD_FIXEDDEPOSIT : 'account/asset/fixed-income/fixed-deposit/add',
+
 ////////////////////////////// subscription////////////////////////////////////////////
 
 
