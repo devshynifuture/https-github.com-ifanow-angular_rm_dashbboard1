@@ -13,7 +13,7 @@
     transition: none !important;
 }
 
-::ng-deep .mat-tab-label-active {
+::ng-deep .tabView .mat-tab-label-active {
     border: 1px solid rgba(25, 25, 25, 0.32) !important;
 }
 
@@ -21,7 +21,15 @@
     transform: none !important;
 }
 
-::ng-deep .mat-tab-label {
-    height: 48px !important;
+::ng-deep .tabView .mat-tab-label {
     border-bottom: 1px solid rgba(25, 25, 25, 0.32) !important;
+    height: 48px !important;
+}
+
+.miscellaneous_table #table-low .mat-header-row {
+    background-color: transparent !important;
+}
+
+.miscellaneous_table #table-low th {
+    background-color: transparent !important;
 }
