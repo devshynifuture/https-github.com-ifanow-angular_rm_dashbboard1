@@ -33,3 +33,25 @@
 .miscellaneous_table #table-low th {
     background-color: transparent !important;
 }
+
+.lifeInsuranceMainBox {
+    .form-group_one {
+        position: relative;
+        .mat-datepicker-toggle {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+        }
+    }
+}
+
+.lifeInsuranceMainBox {
+    .form-group_two {
+        position: relative;
+        .mat-datepicker-toggle {
+            position: absolute;
+            top: 23px;
+            right: 0px;
+        }
+    }
+}
