@@ -9,21 +9,26 @@ export class EnumServiceService {
   constructor() {
   }
 
-  private globalEnumData;
+  private globalEnumData = {
+    otherAssetTypes: [],
+    feeCollectionMode: []
+  };
 
-  setGlobalEnumData(data) {
+public  addToGlobalEnumData(data) {
     // obj.forEach(element =>
     //   {
     //     element.selected=false;
     //   })
-    this.globalEnumData = data;
+    // _.merge(this.globalEnumData, data);
+    /*this.globalEnumData =*/
+    Object.assign(this.globalEnumData, data);
   }
 
   getOtherAssetData() {
     return this.globalEnumData.otherAssetTypes;
   }
-  getFeeCollectionModeData()
-  {
+
+  getFeeCollectionModeData() {
     return this.globalEnumData.feeCollectionMode;
   }
 }
