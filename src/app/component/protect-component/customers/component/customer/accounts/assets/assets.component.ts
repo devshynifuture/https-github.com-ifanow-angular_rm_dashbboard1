@@ -12,7 +12,7 @@ export class AssetsComponent implements OnInit {
 
   constructor(private subInjectService:SubscriptionInject,private eventService:EventService) {
   }
-
+  private loadComponent = false;
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   dataSource = ELEMENT_DATA;
   
@@ -79,6 +79,7 @@ datasource23 = ELEMENT_DATA23;
   viewMode;
   ngOnInit() {
     this.viewMode="tab1"
+    
   }
 
   getPrefixData(type) {

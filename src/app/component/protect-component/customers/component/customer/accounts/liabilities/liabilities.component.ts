@@ -3,6 +3,8 @@ import {Component, OnInit} from '@angular/core';
 import {EventService} from '../../../../../../../Data-service/event.service';
 import {SubscriptionInject} from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
+import { CustomerService } from '../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-liabilities',
@@ -12,9 +14,11 @@ import { UtilService } from 'src/app/services/util.service';
 
 export class LiabilitiesComponent implements OnInit {
   displayedColumns = ['no', 'name', 'type', 'loan', 'ldate', 'today', 'ten', 'rate', 'emi', 'fin', 'status', 'icons'];
-  dataSource = ELEMENT_DATA;
+  // dataSource = ELEMENT_DATA;
+  advisorId: any;
+  dataSource: any;
 
-  constructor(private eventService: EventService, private subInjectService: SubscriptionInject) {
+  constructor(private eventService: EventService, private subInjectService: SubscriptionInject,public custmService:CustomerService) {
   }
 
 
@@ -22,12 +26,14 @@ export class LiabilitiesComponent implements OnInit {
 
   ngOnInit() {
     this.viewMode = 'tab1';
+    this.advisorId = AuthService.getAdvisorId();
+    this.getLiability();
   }
   open(flagValue,data)
   {
     const fragmentData = {
       Flag: flagValue,
-      data,
+      data :data,
       id: 1,
       state: 'open'
     };
@@ -41,6 +47,19 @@ export class LiabilitiesComponent implements OnInit {
         }
       }
     );
+  }
+  getLiability(){
+    let obj={
+      'advisorId':this.advisorId,
+      'clientId':2978
+    }
+    this.custmService.getLiabilty(obj).subscribe(
+      data => this.getLiabiltyRes(data)
+    );
+  }
+  getLiabiltyRes(data){
+    console.log(data);
+    this.dataSource=data.loans;
   }
   clickHandling() {
     console.log('something was clicked');
@@ -65,44 +84,44 @@ export interface PeriodicElement {
 
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    no: '1',
-    name: 'Rahul Jain',
-    type: 'Home loan',
-    loan: '60,000',
-    ldate: '18/09/2021',
-    today: '1,00,000',
-    ten: '5y 9m',
-    rate: '8.40%',
-    emi: '60,000',
-    fin: 'ICICI FD',
-    status: 'MATURED'
-  },
-  {
-    no: '2',
-    name: 'Shilpa Jain',
-    type: 'Home loan',
-    loan: '60,000',
-    ldate: '18/09/2021',
-    today: '1,00,000',
-    ten: '5y 9m',
-    rate: '8.40%',
-    emi: '60,000',
-    fin: 'ICICI FD',
-    status: 'MATURED'
-  },
-  {
-    no: '',
-    name: 'Total',
-    type: '',
-    loan: '1,20,000',
-    ldate: '',
-    today: '1,50,000',
-    ten: '',
-    rate: '',
-    emi: '',
-    fin: '',
-    status: ''
-  },
-];
+// const ELEMENT_DATA: PeriodicElement[] = [
+//   {
+//     no: '1',
+//     name: 'Rahul Jain',
+//     type: 'Home loan',
+//     loan: '60,000',
+//     ldate: '18/09/2021',
+//     today: '1,00,000',
+//     ten: '5y 9m',
+//     rate: '8.40%',
+//     emi: '60,000',
+//     fin: 'ICICI FD',
+//     status: 'MATURED'
+//   },
+//   {
+//     no: '2',
+//     name: 'Shilpa Jain',
+//     type: 'Home loan',
+//     loan: '60,000',
+//     ldate: '18/09/2021',
+//     today: '1,00,000',
+//     ten: '5y 9m',
+//     rate: '8.40%',
+//     emi: '60,000',
+//     fin: 'ICICI FD',
+//     status: 'MATURED'
+//   },
+//   {
+//     no: '',
+//     name: 'Total',
+//     type: '',
+//     loan: '1,20,000',
+//     ldate: '',
+//     today: '1,50,000',
+//     ten: '',
+//     rate: '',
+//     emi: '',
+//     fin: '',
+//     status: ''
+//   },
+// ];
