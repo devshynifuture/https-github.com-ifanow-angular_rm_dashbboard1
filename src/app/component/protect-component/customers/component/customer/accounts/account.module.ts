@@ -22,6 +22,10 @@ import {LibilitiesRightComponent} from "./liabilities/libilities-right/libilitie
 import {IncomeComponent} from "./income/income.component";
 import {LiabilitiesComponent} from "./liabilities/liabilities.component";
 import {ChartModule} from "angular-highcharts";
+import { FactShitComponent } from '../../common-component/fact-shit/fact-shit.component';
+import { TransactionsComponent } from '../../common-component/transactions/transactions.component';
+import { UpperCustomerComponent } from '../../common-component/upper-customer/upper-customer.component';
+import { RightFilterComponent } from '../../common-component/right-filter/right-filter.component';
 
 
 @NgModule({
@@ -45,6 +49,10 @@ import {ChartModule} from "angular-highcharts";
     AddInsuranceComponent,
     LibilitiesRightComponent,
     FixedDepositComponent,
+    FactShitComponent,
+    TransactionsComponent,
+    UpperCustomerComponent,
+    RightFilterComponent
   ],
   imports: [
     // BrowserModule,
@@ -54,8 +62,10 @@ import {ChartModule} from "angular-highcharts";
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [AddLiabilitiesComponent, AddInsuranceComponent, LibilitiesRightComponent, FixedDepositComponent, ReactiveFormsModule],
-  entryComponents: [BottomSheetComponent]
+  exports: [AddLiabilitiesComponent, AddInsuranceComponent, LibilitiesRightComponent,
+     FixedDepositComponent, ReactiveFormsModule,FactShitComponent,TransactionsComponent,UpperCustomerComponent,RightFilterComponent
+    ],
+  entryComponents: [BottomSheetComponent,UpperCustomerComponent]
 })
 export class AccountModule {
 }

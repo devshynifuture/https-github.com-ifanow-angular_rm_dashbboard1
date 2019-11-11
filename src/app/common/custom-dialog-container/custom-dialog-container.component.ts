@@ -21,7 +21,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
       animate(300, style({opacity: 0.25}))]),
   ]), trigger('openClose', [
     state('open', style({
-      left: '40%'
+      left: '35%'
     })),
     state('openHelp', style({
       left: '65%'
