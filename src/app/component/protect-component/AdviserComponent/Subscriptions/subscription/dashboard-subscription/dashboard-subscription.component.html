@@ -1,4 +1,5 @@
-<div class="full-lights pb-36 " *ngIf="showSubStep==false" id="ui-dashboard" [ngClass]="showLetsBegin==true ? 'pt-130': 'pt-0'  ">
+<div class="full-lights pb-36 " *ngIf="showSubStep==false" id="ui-dashboard"
+     [ngClass]="showLetsBegin==true ? 'pt-130': 'pt-0'  ">
   <div class="wrapper-20">
     <div class="row bg-red mt-20 mb-36" *ngIf="showLetsBegin">
       <div class="col-md-5">
@@ -21,20 +22,20 @@
               <div class="row">
                 <div class="col-md-12">
                   <circle-progress class="progress"
-                    [percent]="dataSourceClientWithSub.activeClientPer"
-                    [radius]="100"
-                    [outerStrokeWidth]="10"
-                    [innerStrokeWidth]="10"
-                    [space] = "-10"
-                    [outerStrokeColor]="'#008FFF'"
-                    [innerStrokeColor]="'#e7e8ea'"
-                    [titleFontSize]= "35"
-                    [unitsFontSize]= "35"
-                    [showSubtitle] = "false"
-                    [animation]="true"
-                    [animationDuration]="1000"
-                    [startFromZero]="false"
-                    [responsive]="true"
+                                   [percent]="dataSourceClientWithSub.activeClientPer"
+                                   [radius]="100"
+                                   [outerStrokeWidth]="10"
+                                   [innerStrokeWidth]="10"
+                                   [space]="-10"
+                                   [outerStrokeColor]="'#008FFF'"
+                                   [innerStrokeColor]="'#e7e8ea'"
+                                   [titleFontSize]="35"
+                                   [unitsFontSize]="35"
+                                   [showSubtitle]="false"
+                                   [animation]="true"
+                                   [animationDuration]="1000"
+                                   [startFromZero]="false"
+                                   [responsive]="true"
                   ></circle-progress>
                   <!--<div class="progress blue">
                                             <span class="progress-left">
@@ -80,13 +81,15 @@
                 <div class="col-md-6">
                   <div class="pl-20 pr-20 c-p">
                     <p class="f-300 f-18 mb-0">Total sales</p>
-                    <h2 class="text-primary mb-0 pb-28 pt-8">{{totalSaleRecived.totalSales}}</h2>
+                    <h2
+                      class="text-primary mb-0 pb-28 pt-8">{{totalSaleReceived ? totalSaleReceived.totalSales : '-'}}</h2>
                   </div>
                 </div>
                 <div class="col-md-6 p-0">
                   <div class="pr-20 pl-20 c-p">
                     <p class="f-300 f-18 mb-0">Fee received</p>
-                    <h2 class="text-primary mb-0 pb-28 pt-8">{{totalSaleRecived.feeRecieved}}</h2>
+                    <h2
+                      class="text-primary mb-0 pb-28 pt-8">{{totalSaleReceived ? totalSaleReceived.feeRecieved : '-'}}</h2>
 
                   </div>
                 </div>
@@ -117,7 +120,7 @@
           <div class="bg-white mt-32">
             <div class="row">
               <div class="col-md-12">
-               <i class="material-icons right text-right text-custom pt-8 f-700">
+                <i class="material-icons right text-right text-custom pt-8 f-700">
                   more_horiz
                 </i>
               </div>
@@ -133,7 +136,7 @@
         <div class="col-md-4 pl-0 mt-28">
           <div class="row bg-white pb-44">
             <div class="col-md-12 ">
-             <i class="material-icons pt-8 right text-right text-custom f-700">
+              <i class="material-icons pt-8 right text-right text-custom f-700">
                 more_horiz
               </i>
             </div>
@@ -165,7 +168,7 @@
           <div class="wrapper-16 pt-8 bg-white mt-28 pb-20">
             <div class="row">
               <div class="col-md-12 pr-0">
-               <i class="material-icons right text-right text-custom f-700">
+                <i class="material-icons right text-right text-custom f-700">
                   more_horiz
                 </i>
               </div>
@@ -183,7 +186,8 @@
                   <!--                    <mat-button-toggle value="accent">UPCOMING</mat-button-toggle>-->
                   <!--                  </mat-button-toggle-group>-->
                   <mat-button-toggle-group [(ngModel)]="subscriptionSummaryStatusFilter"
-                                           (change)="getSummaryDataDashboard($event.value)" multiple=false class="subscription-summary">
+                                           (change)="getSummaryDataDashboard($event.value)" multiple=false
+                                           class="subscription-summary">
                     <mat-button-toggle value=1 class="f-14">NOT STARTED</mat-button-toggle>
                     <mat-button-toggle value=3 class="f-14">UPCOMING</mat-button-toggle>
                   </mat-button-toggle-group>
@@ -235,7 +239,7 @@
                 </table>
               </div>
             </div>
-           
+
             <div class="col-md-12 text-right pt-8">
               <div (click)="changeParentsTab(2)" class="c-p">View all</div>
 
@@ -247,4 +251,4 @@
     </div>
   </div>
 </div>
-<app-subscription-completeness  *ngIf="showSubStep"></app-subscription-completeness>
+<app-subscription-completeness *ngIf="showSubStep"></app-subscription-completeness>
