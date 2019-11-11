@@ -10,8 +10,10 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AccountModule} from './component/customer/accounts/account.module';
 
 
+
+
 @NgModule({
-  declarations: [],
+  declarations: [ ],
   imports: [
     // BrowserModule,
     CommonModule,
