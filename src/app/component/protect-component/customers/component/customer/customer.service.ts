@@ -17,4 +17,7 @@ export class CustomerService {
   addFixedDeposit(data){
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_FIXEDDEPOSIT,data)
   }
+  editFixedDeposit(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_FIXEDDEPOSIT,data)
+  }
 }
