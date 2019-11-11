@@ -4,7 +4,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {MatStepper} from '@angular/material';
-import {EnumServiceService} from '../../enum-service.service';
+import {EnumServiceService} from '../../../../../../../services/enum-service.service';
 import * as _ from 'lodash';
 import {AuthService} from '../../../../../../../auth-service/authService';
 // import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';

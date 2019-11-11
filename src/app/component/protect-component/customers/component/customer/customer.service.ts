@@ -25,4 +25,7 @@ export class CustomerService {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIABILITY, httpParams);
   }
+  editFixedDeposit(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_FIXEDDEPOSIT,data)
+  }
 }
