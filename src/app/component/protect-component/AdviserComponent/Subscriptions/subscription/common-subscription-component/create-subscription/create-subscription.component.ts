@@ -9,7 +9,7 @@ import * as _ from 'lodash';
 import {AuthService} from '../../../../../../../auth-service/authService';
 // import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 
 @Component({
   selector: 'app-create-subscription',
@@ -36,6 +36,7 @@ export class CreateSubscriptionComponent implements OnInit {
   set data(data) {
     this.getSubStartDetails(data);
   }
+
   get data() {
     return this.inputData;
   }
@@ -52,10 +53,10 @@ export class CreateSubscriptionComponent implements OnInit {
   selectedPayee = [];
   subscriptionDetails = this.fb.group({
     subscription: [, [Validators.required]],
-    activationDate: [, [Validators.required]],
+    activationDate: [new Date(), [Validators.required]],
     invoiceSendingMode: [1, [Validators.required]],
-    feeCollectionMode: [, [Validators.required]],
-    dueDateFrequency: [, [Validators.required]]
+    feeCollectionMode: [1, [Validators.required]],
+    dueDateFrequency: [5, [Validators.required]]
   });
   subscriptionDetailsStepper = this.fb.group({
     subscriptionDetailsStepper: [, [Validators.required]]
@@ -88,15 +89,16 @@ export class CreateSubscriptionComponent implements OnInit {
     }
     console.log(this.subscriptionDetails);
   }
-  nextStep(data)
-  {
-   console.log(data)
-   this.clientData=data
-   this.goForward()
+
+  nextStep(data) {
+    console.log(data);
+    this.clientData = data;
+    this.goForward();
   }
+
   getSubStartDetails(data) {
     // this.clientData = data.data;
-    this.feeModeData=data
+    this.feeModeData = data;
     console.log('client Data: ', this.clientData);
     if (data.data.subscriptionPricing) {
       this.advisorId = AuthService.getAdvisorId();
@@ -107,7 +109,7 @@ export class CreateSubscriptionComponent implements OnInit {
         subId: data.data.id
       };
       this.subService.getSubscriptionStartData(obj).subscribe(
-        subStartData => this.getSubStartDetailsResponse(subStartData,data)
+        subStartData => this.getSubStartDetailsResponse(subStartData, data)
       );
     } else {
       // this.feeModeData=data
@@ -123,37 +125,35 @@ export class CreateSubscriptionComponent implements OnInit {
         (element.id === data.id) ? element.selected = true : element.selected = false;
       });
     } else {
-      (data.selected === 1) ? this.unselectPayee(data) : this.selectPayee(data);
+      // (data.selected === 1) ? this.unselectPayee(data) : this.selectPayee(data);
     }
   }
 
   selectPayee(data) {
-    data.selected = 1;
+    console.log('selectPayee getSubStartDetailsResponse: ', data);
+
+    this.selectedPayee = [];
+    data.forEach(singlePayee => {
+      if (singlePayee.selected == 1) {
+        const obj = {
+          id: data.id,
+          share: data.share
+        };
+        this.selectedPayee.push(obj);
+      }
+    });
+    /*data.selected = 1;
     const obj = {
       id: data.id,
       share: data.share
     };
-    this.selectedPayee.push(obj);
+    this.selectedPayee.push(obj);*/
   }
 
-  matSliderValue() {
-    return;
-  }
 
-  unselectPayee(data) {
-    if (this.selectedPayee.length === 0) {
-      return;
-    } else {
-      data.selected = 0;
-      _.remove(this.selectedPayee, delData => {
-        return delData.id === data.id;
-      });
-    }
-  }
-
-  getSubStartDetailsResponse(data,feeModeData) {
-    console.log(data);
-    this.feeModeData=feeModeData
+  getSubStartDetailsResponse(data, feeModeData) {
+    console.log('getSubStartDetailsResponse: ', data);
+    this.feeModeData = feeModeData;
     this.feeStructureData = data;
     this.subscriptionDetails.controls.subscription.setValue(data.subscriptionNo);
     this.billersData = data.billers;
