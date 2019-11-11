@@ -232,7 +232,7 @@
           <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-          <button mat-button class="btn-bottom br-0 text-inherit" [disabled]="selectedPayee.length==0"
+          <button mat-button class="btn-bottom br-0 text-inherit" [disabled]="totalSelectedPayeeShare!=100"
                   (click)="goForward()">NEXT STEP
           </button>
         </div>

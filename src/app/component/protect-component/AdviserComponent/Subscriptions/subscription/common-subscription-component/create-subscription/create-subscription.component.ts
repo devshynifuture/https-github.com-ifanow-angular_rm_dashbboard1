@@ -51,6 +51,7 @@ export class CreateSubscriptionComponent implements OnInit {
   feeStructureFormData;
   selectedBiller;
   selectedPayee = [];
+  totalSelectedPayeeShare = 0;
   subscriptionDetails = this.fb.group({
     subscription: [, [Validators.required]],
     activationDate: [new Date(), [Validators.required]],
@@ -133,13 +134,15 @@ export class CreateSubscriptionComponent implements OnInit {
     console.log('selectPayee getSubStartDetailsResponse: ', data);
 
     this.selectedPayee = [];
+    this.totalSelectedPayeeShare = 0;
     data.forEach(singlePayee => {
       if (singlePayee.selected == 1) {
         const obj = {
-          id: data.id,
-          share: data.share
+          id: singlePayee.id,
+          share: singlePayee.share
         };
         this.selectedPayee.push(obj);
+        this.totalSelectedPayeeShare += singlePayee.share;
       }
     });
     /*data.selected = 1;

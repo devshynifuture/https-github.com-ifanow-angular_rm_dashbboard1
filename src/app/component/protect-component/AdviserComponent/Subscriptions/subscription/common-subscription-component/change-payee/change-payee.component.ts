@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {SubscriptionService} from '../../../subscription.service';
 import {EventService} from 'src/app/Data-service/event.service';
@@ -15,9 +15,6 @@ export class ChangePayeeComponent implements OnInit {
     this.getPayeeData(data);
   }
 
-
-  noDataMessage = 'Loading...';
-  _payeeData: any;
   @Input()
   set payeeData(payeeData) {
     this._payeeData = payeeData;
@@ -32,6 +29,14 @@ export class ChangePayeeComponent implements OnInit {
     return this._payeeData;
   }
 
+  constructor(public subInjectService: SubscriptionInject, public subService: SubscriptionService, public eventService: EventService) {
+
+  }
+
+
+  noDataMessage = 'Loading...';
+  _payeeData: any;
+
   @Output() outputData = new EventEmitter<Object>();
 
   dataSub: any;
@@ -42,9 +47,7 @@ export class ChangePayeeComponent implements OnInit {
   dataMatSlider: any;
   clickedOnMatSlider = false;
 
-  constructor(public subInjectService: SubscriptionInject, public subService: SubscriptionService, public eventService: EventService) {
-
-  }
+  totalValue = 0;
 
   ngOnInit() {
     console.log('change payee upperData', this.upperData);
@@ -138,8 +141,6 @@ export class ChangePayeeComponent implements OnInit {
     }
     this.calculateMaxValue();
   }
-
-  totalValue = 0;
 
   calculateMaxValue() {
     this.totalValue = 0;
