@@ -235,10 +235,6 @@
                 <div class="form-group mb-0">
                     <input matInput #bankACNo class="form-control br-0" formControlName="bankACNo">
                     <div class="col-md-10">
-                        <!-- <mat-error class="f-12 pt-4"
-                            [ngClass]="{'v-h':!(isBankACNo && getFormControl().bankACNo.invalid || getFormControl().bankACNo.touched && getFormControl().bankACNo.invalid)}">
-                            Bank Account Number is required
-                        </mat-error> -->
                     </div>
                     <div class="col-md-2">
                         <mat-hint align="end" class="f-12">{{bankACNo.value.length}}/15</mat-hint>
@@ -257,10 +253,6 @@
                 <div class="form-group mb-0">
                     <input matInput #institution class="form-control br-0" formControlName="institution">
                     <div class="col-md-10">
-                        <!-- <mat-error class="f-12 pt-4"
-                            [ngClass]="{'v-h':!(isInstitution && getFormControl().institution.invalid || getFormControl().institution.touched && getFormControl().institution.invalid)}">
-                            Institution name is required
-                        </mat-error> -->
                     </div>
                     <div class="col-md-2">
                         <mat-hint align="end" class="f-12">{{institution.value.length}}/30</mat-hint>
@@ -279,10 +271,6 @@
                 <div class="form-group mb-0">
                     <input matInput #description class="form-control br-0" formControlName="description">
                     <div class="col-md-10">
-                        <!-- <mat-error class="f-12 pt-4"
-                            [ngClass]="{'v-h':!(isDescription && getFormControl().description.invalid || getFormControl().description.touched && getFormControl().description.invalid)}">
-                            Description is required
-                        </mat-error> -->
                     </div>
                     <div class="col-md-2">
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
