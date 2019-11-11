@@ -38,10 +38,13 @@ export class InsuranceComponent implements OnInit {
   viewMode;
   lifeInsuranceList = ["Term", "Traditional", "ULIP"]
   generalLifeInsuranceList = [/*"Health", "Car/2 Wheeler", "Travel", "Personal accident", "Critical illness", "Cancer", "Home", "Others"*/]
+  insuranceTypeId;
   ngOnInit() {
     this.viewMode = "tab1"
     this.advisorId = AuthService.getAdvisorId();
-    // this.getInsuranceData(this.advisorId,);
+    this.getInsuranceData(this.advisorId,2978,1);
+    this.getGlobalDataInsurance();
+    this.insuranceTypeId=1
   }
   getInsuranceData(advisorId, clientId, insuranceId) {
     let obj = {
@@ -54,11 +57,24 @@ export class InsuranceComponent implements OnInit {
     )
   }
   getInsuranceDataResponse(data) {
-    console.log(data)
+    this.dataSource=data.insuranceList
+    console.log("Insurance Data",data)
   }
   
+  getGlobalDataInsurance()
+  {
+    let obj={
 
-  
+    }
+    this.cusService.getInsuranceGlobalData(obj).subscribe(
+      data=>console.log(data)
+    )
+  }
+  getInsuranceTypeData(typeId)
+  {
+    this.insuranceTypeId=typeId
+    this.getInsuranceData(this.advisorId,2978,typeId)
+  }
   toggle(value) {
     if (value === "lifeInsurance") {
      this.generalLifeInsuranceList=[];
