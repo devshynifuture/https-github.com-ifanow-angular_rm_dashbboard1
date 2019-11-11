@@ -43,8 +43,14 @@ export class ChangePayeeComponent implements OnInit {
       subId: this.getRowData.id
     };
     this.subService.getPayeerProfile(this.dataObj).subscribe(
-      data => this.getPayeeProfileRes(data)
-    );
+      responseData => {
+        console.log('getPayeerProfile responseData: ', responseData);
+
+        this.getPayeeProfileRes(responseData);
+      }
+      , error => {
+        console.log('getPayeerProfile error: ', error);
+      });
 
   }
 
