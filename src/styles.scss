@@ -744,3 +744,21 @@ mat-tab-group[vertical] {
     color: #008FFF;
     opacity: 1;
 }
+
+.insurance-ui #table-low {
+    .mat-row:last-child {
+        font-weight: normal !important;
+        text-align: left !important;
+    }
+    tr.mat-row {
+        height: 30px !important;
+        padding: 6px 4px !important;
+    }
+    tbody td {
+        padding: 10px 6px !important;
+    }
+    tr.mat-header-row {
+        height: 40px !important;
+        display: none;
+    }
+}
