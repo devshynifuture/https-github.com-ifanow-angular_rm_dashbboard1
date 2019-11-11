@@ -10,6 +10,7 @@
 ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
     background-color: #ffffff !important;
     height: 1.5px !important;
+    transition: none !important;
 }
 
 ::ng-deep .tabView .mat-tab-label-active {

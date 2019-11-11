@@ -63,6 +63,23 @@ export class LoginComponent implements OnInit {
         id: 0,
         role: 'admin'
       };
+
+
+      /*const jsonData = {
+          advisorId: 2808,
+          clientId: 2978,
+          authToken: 'data',
+          imgUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'
+        }
+      ;
+      this.authService.setToken('data');
+
+      this.authService.setUserInfo(jsonData);
+      // this.authService.setToken(loginData.payLoad);
+      this.eventService.openSnackBar('Login SuccessFully', 'dismiss');
+      this.router.navigate(['/admin/subscription']);*/
+
+
       console.log(loginData);
       this.backOfficeService.loginApi(loginData).subscribe(
         data => {

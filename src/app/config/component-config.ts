@@ -44,6 +44,9 @@ export const appConfig = {
   Update_Password: 'asset/update/password',
   Fileorder_Status_Report_Get: 'asset/fileorder/status/report/get',
 
+  /////////////////////////////Accounts///////////////////////////////////
+  ADD_FIXEDDEPOSIT : 'account/asset/fixed-income/fixed-deposit/add',
+
 ////////////////////////////// subscription////////////////////////////////////////////
 
 
@@ -119,6 +122,8 @@ export const appConfig = {
   GET_EMAIL_TEMPLATE_FILTER: 'subscription/emailtemplate/get',
   GET_DOCUMENT_MAPPED_PLAN: 'subscription/document/plan/map/get',
   GET_DOCUMENT_MAPPED_SERVICE: 'subscription/document/service/map/get',
+  GET_TOTAL_SALE_RECIVED:'subscription/dashboard/totalsales/feerecieved/get',
   DELETE_SUB_SETTING_BILLER_PROFILE:'subscription/setting/billerprofile/delete',
+  ADD_LIFE_INSURANCE:'account/insurance/life-insurance/term/add',
   GET_BASE_64: 'api/v1/test/base64/decode'
 };

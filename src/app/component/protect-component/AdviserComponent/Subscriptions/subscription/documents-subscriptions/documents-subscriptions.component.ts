@@ -9,7 +9,7 @@ import { UtilService } from 'src/app/services/util.service';
 import * as _ from 'lodash';
 import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from 'saturn-datepicker';
-import { MY_FORMATS2 } from '../common-subscription-component/invoice/invoice.component';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 export interface PeriodicElement {
   name: string;
   docname: string;
@@ -61,6 +61,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     {name: 'Client Signitature', value: 3}
   ];
   selectedDateRange: { begin: Date; end: Date; };
+  selectedDateFilter: any;
   showFilter = false;
   constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public eventService: EventService,
               public subscription: SubscriptionService,private datePipe: DatePipe) {
