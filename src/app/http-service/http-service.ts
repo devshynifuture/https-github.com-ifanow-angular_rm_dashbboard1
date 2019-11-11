@@ -51,6 +51,8 @@ export class HttpService {
       )
       .map((res: any) => {
         if (res.status === 200 || res.status === 201) {
+          // console.log('resData: decoded ', res);
+
           const resData = this.changeBase64ToString(res);
           console.log('resData: decoded ', resData);
           return resData;

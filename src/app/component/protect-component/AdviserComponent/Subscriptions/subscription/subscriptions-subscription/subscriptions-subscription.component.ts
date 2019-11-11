@@ -10,42 +10,33 @@ import * as _ from 'lodash';
 import {EnumServiceService} from '../enum-service.service';
 import {UtilService} from '../../../../../../services/util.service';
 import {DatePipe} from '@angular/common';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'LL',
-  },
-  display: {
-    dateInput: 'LL',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
-export const APP_DATE_FORMATS = {
-  parse: {
-    dateInput: {month: 'short', year: 'numeric', day: 'numeric'},
-  },
-  display: {
-    dateInput: 'input',
-    monthYearLabel: {year: 'numeric', month: 'numeric'},
-    dateA11yLabel: {
-      year: 'numeric', month: 'long', day: 'numeric'
-    },
-    monthYearA11yLabel: {year: 'numeric', month: 'long'},
-  }
-};
-export const MY_FORMATS2 = {
-  parse: {
-    dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
+// export const MY_FORMATS = {
+//   parse: {
+//     dateInput: 'LL',
+//   },
+//   display: {
+//     dateInput: 'LL',
+//     monthYearLabel: 'MMM YYYY',
+//     dateA11yLabel: 'LL',
+//     monthYearA11yLabel: 'MMMM YYYY',
+//   },
+// };
+// export const APP_DATE_FORMATS = {
+//   parse: {
+//     dateInput: {month: 'short', year: 'numeric', day: 'numeric'},
+//   },
+//   display: {
+//     dateInput: 'input',
+//     monthYearLabel: {year: 'numeric', month: 'numeric'},
+//     dateA11yLabel: {
+//       year: 'numeric', month: 'long', day: 'numeric'
+//     },
+//     monthYearA11yLabel: {year: 'numeric', month: 'long'},
+//   }
+// };
+
 
 export interface PeriodicElement {
   client: string;

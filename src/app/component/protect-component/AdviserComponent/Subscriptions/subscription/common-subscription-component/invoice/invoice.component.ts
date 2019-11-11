@@ -10,42 +10,8 @@ import {INT_TYPE} from '@angular/compiler/src/output/output_ast';
 import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { from } from 'rxjs';
 import { UtilService } from 'src/app/services/util.service';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'LL',
-  },
-  display: {
-    dateInput: 'LL',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
-export const APP_DATE_FORMATS = {
-  parse: {
-    dateInput: {month: 'short', year: 'numeric', day: 'numeric'},
-  },
-  display: {
-    dateInput: 'input',
-    monthYearLabel: {year: 'numeric', month: 'numeric'},
-    dateA11yLabel: {
-      year: 'numeric', month: 'long', day: 'numeric'
-    },
-    monthYearA11yLabel: {year: 'numeric', month: 'long'},
-  }
-};
-export const MY_FORMATS2 = {
-  parse: {
-    dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
 
 export interface PeriodicElement {
   date: string;
