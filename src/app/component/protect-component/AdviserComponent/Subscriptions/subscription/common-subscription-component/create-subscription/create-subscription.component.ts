@@ -170,7 +170,7 @@ export class CreateSubscriptionComponent implements OnInit {
     this.subscriptionDetails.reset();
   }
 
-  startSubscsription() {
+  startSubscription() {
     console.log('payee', this.selectedPayee);
     console.log('biller', this.selectedBiller);
     console.log('subscription', this.subscriptionDetails);
