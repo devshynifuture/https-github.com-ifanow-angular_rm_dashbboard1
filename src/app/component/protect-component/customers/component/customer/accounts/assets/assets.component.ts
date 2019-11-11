@@ -80,7 +80,23 @@ datasource23 = ELEMENT_DATA23;
   ngOnInit() {
     this.viewMode="tab1"
   }
+  openFragment(data) {
+    // this.subinject.pushUpperData(singlePlan);
 
+    const fragmentData = {
+      Flag: data,
+      // planData: singlePlan,
+      state: 'open'
+    };
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getSettingsPlanData();
+          subscription.unsubscribe();
+        }
+      }
+    );
+    }
   getPrefixData(type) {
 
   }
