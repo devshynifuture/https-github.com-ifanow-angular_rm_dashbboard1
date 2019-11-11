@@ -49,6 +49,10 @@ export const appConfig = {
   ADD_LIFE_INSURANCE:'account/insurance/life-insurance/term/add',
   GET_LIFE_INSURANCE:'account/insurance/list/get',
   GET_INSURANCE_GLOBAL_API:'account/insurance/global/get',
+  ADD_LIABILITY:'account/liability/loan/add',
+  GET_LIABILITY:'account/liability/loan/list/get',
+  EDIT_FIXEDDEPOSIT:'account/asset/fixed-income/fixed-deposit/delete',
+
 ////////////////////////////// subscription////////////////////////////////////////////
 
 
