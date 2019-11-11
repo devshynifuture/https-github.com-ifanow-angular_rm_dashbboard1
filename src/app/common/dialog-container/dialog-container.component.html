@@ -28,7 +28,7 @@
     <app-email-only [inputData]="inputData" *ngIf="subscriptionTab=='emailInvoiceFroala'"></app-email-only>
     <app-add-liabilities *ngIf="subscriptionTab=='addLib'"></app-add-liabilities>
 
-    <app-add-liabilities *ngIf="subscriptionTab=='addLiabilities'"></app-add-liabilities>
+    <app-add-liabilities [inputData]="inputData" *ngIf="subscriptionTab=='addLiabilities'"></app-add-liabilities>
     <app-add-insurance *ngIf="subscriptionTab=='addInsurance'"></app-add-insurance>
      <app-libilities-right *ngIf="subscriptionTab=='portfolioSummary'"></app-libilities-right>
      <app-fixed-deposit *ngIf="subscriptionTab=='addFixedDeposit'"></app-fixed-deposit>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpService} from 'src/app/http-service/http-service';
 import { apiConfig } from 'src/app/config/main-config';
 import { appConfig } from 'src/app/config/component-config';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +17,12 @@ export class CustomerService {
   }
   addFixedDeposit(data){
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_FIXEDDEPOSIT,data)
+  }
+  addLiability(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_LIABILITY,data)
+  }
+  getLiabilty(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIABILITY, httpParams);
   }
 }

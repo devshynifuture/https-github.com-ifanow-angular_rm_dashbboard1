@@ -46,7 +46,8 @@ export const appConfig = {
 
   /////////////////////////////Accounts///////////////////////////////////
   ADD_FIXEDDEPOSIT : 'account/asset/fixed-income/fixed-deposit/add',
-
+  ADD_LIABILITY:'account/liability/loan/add',
+  GET_LIABILITY:'account/liability/loan/list/get',
 ////////////////////////////// subscription////////////////////////////////////////////
 
 
