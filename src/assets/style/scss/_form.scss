@@ -73,3 +73,17 @@ input.mat-input-element:focus{
 .mat-form-field-infix{
     border-top: 0px !important;
 }
+.mat-form-field-subscript-wrapper{
+    padding-right: 8px !important;
+    padding-left: 8px !important;
+}
+.mat-form-field-appearance-legacy .mat-hint{
+    color: #757575 !important; 
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+}
+.mat-datepicker-toggle{
+    position: absolute;
+    float: right;
+    right: 2%;
+}

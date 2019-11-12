@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 // import {UtilService} from '../../../../../../../services/util.service';
-import {EventService} from '../../../../../../../Data-service/event.service';
-import {SubscriptionInject} from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from '../../../../../../../Data-service/event.service';
+import { SubscriptionInject } from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { CustomerService } from '../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -29,8 +29,7 @@ export class LiabilitiesComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.getLiability();
   }
-  open(flagValue,data)
-  {
+  open(flagValue, data) {
     const fragmentData = {
       Flag: flagValue,
       data :data,
@@ -43,7 +42,26 @@ export class LiabilitiesComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-    
+
+        }
+      }
+    );
+  }
+
+  openThirtyPercent(flagValue, data) {
+    const fragmentData = {
+      Flag: flagValue,
+      data,
+      id: 1,
+      state: 'openHelp'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
         }
       }
     );
@@ -88,7 +106,7 @@ export class LiabilitiesComponent implements OnInit {
     // this.openFragment('', 'plan');
     this.open('openHelp', 'liabilityright');
   }
-  
+
 }
 
 export interface PeriodicElement {
