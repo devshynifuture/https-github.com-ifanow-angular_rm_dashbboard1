@@ -52,8 +52,12 @@ export const appConfig = {
   GET_INSURANCE_GLOBAL_API:'account/insurance/global/get',
   ADD_LIABILITY:'account/liability/loan/add',
   GET_LIABILITY:'account/liability/loan/list/get',
+  EDIT_LIABILITY:'account/liability/loan/edit',
   EDIT_FIXEDDEPOSIT:'account/asset/fixed-income/fixed-deposit/delete',
   GET_LIST_FAMILY_MEMBER:'account/income/family-members/get',
+  GET_FIXEDDEPOSIT:'account/asset/fixed-income/fixed-deposit/get',
+  GET_RECURING_DEPOSIT:'account/asset/fixed-income/recurring-deposit/list/get',
+  GET_BONDS:'account/asset/fixed-income/bond/list/get',
 
 ////////////////////////////// subscription////////////////////////////////////////////
 

@@ -43,35 +43,49 @@ export class ClientSubscriptionComponent implements OnInit {
   }
 
   getClientListResponse(data) {
-    console.log('client-subscription List', data);
     this.dataSource = data;
   }
 
   Open(value, state) {
-    this.eventService.sidebarData(value);
-    this.subInjectService.rightSideData(state);
-  }
-
-  openFragment(data, clientData) {
-   /* const fragmentData = {
-      Flag: 'emailOnly',
-      data: clientData,
+    const fragmentData = {
+      Flag: value,
       id: 1,
-      state: 'open'
+      state: state
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ',);
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
       }
-    );*/
+    );
+    // this.eventService.sidebarData(value);
+    // this.subInjectService.rightSideData(state);
+  }
+
+  openFragment(data, clientData) {
+    /* const fragmentData = {
+       Flag: 'emailOnly',
+       data: clientData,
+       id: 1,
+       state: 'open'
+     };
+     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+       sideBarData => {
+         console.log('this is sidebardata in subs subs : ', sideBarData);
+         if (UtilService.isDialogClose(sideBarData)) {
+           console.log('this is sidebardata in subs subs 2: ',);
+           rightSideDataSub.unsubscribe();
+         }
+       }
+     );*/
+    clientData.flag = data;
     const fragmentData = {
-      Flag: data,
+      flag: 'app-subscription-upper-slider',
       id: 1,
-      clientData,
+      data: clientData,
       state: 'open'
     };
 

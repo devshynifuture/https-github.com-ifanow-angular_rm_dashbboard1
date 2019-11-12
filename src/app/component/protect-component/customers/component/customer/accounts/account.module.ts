@@ -33,6 +33,7 @@ import { AddIncomeComponent } from '../../common-component/add-income/add-income
 import { IncomeDetailComponent } from '../../common-component/income-detail/income-detail.component';
 import { OwnerComponentComponent } from './owner-component/owner-component.component';
 import { DetailedViewComponent } from '../../common-component/detailed-view/detailed-view.component';
+import { LiabilitiesDetailComponent } from '../../common-component/liabilities-detail/liabilities-detail.component';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { DetailedViewComponent } from '../../common-component/detailed-view/deta
     AddIncomeComponent,
     IncomeDetailComponent,
     OwnerComponentComponent,
-    DetailedViewComponent
+    DetailedViewComponent,
+    LiabilitiesDetailComponent
   ],
   imports: [
     // BrowserModule,
@@ -76,7 +78,7 @@ import { DetailedViewComponent } from '../../common-component/detailed-view/deta
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [AddLiabilitiesComponent, AddInsuranceComponent, LibilitiesRightComponent, FixedDepositComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent,DetailedViewComponent],
+  exports: [AddLiabilitiesComponent, AddInsuranceComponent, LibilitiesRightComponent, FixedDepositComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent],
   entryComponents: [BottomSheetComponent]
 })
 export class AccountModule {

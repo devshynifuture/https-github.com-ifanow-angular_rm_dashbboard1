@@ -15,8 +15,9 @@ import { AccountModule } from './component/customer/accounts/account.module';
 
 
 
+
 @NgModule({
-  declarations: [ ],
+  declarations: [],
   imports: [
     // BrowserModule,
     CommonModule,

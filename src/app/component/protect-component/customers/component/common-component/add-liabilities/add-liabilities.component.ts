@@ -11,15 +11,6 @@ import { AuthService } from 'src/app/auth-service/authService';
   templateUrl: './add-liabilities.component.html',
   styleUrls: ['./add-liabilities.component.scss'],
   providers: [
-    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
-    // application's root module. We provide it at the component level here, due to limitations of
-    // our example generation script.
-    // {
-    //   provide: DateAdapter,
-    //   useClass: MomentDateAdapter,
-    //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    // },
-    // { provide: MAT_DATE_LOCALE, useValue: 'en' },
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 
@@ -33,7 +24,7 @@ export class AddLiabilitiesComponent implements OnInit {
   productForm: FormGroup;
   show: boolean;
   showTransact: boolean;
-  addLiabilityForm: any;
+  addLiabilityForm;
   isOwner: boolean;
   isLoanType: boolean;
   isLoanAmount: boolean;
@@ -46,19 +37,18 @@ export class AddLiabilitiesComponent implements OnInit {
   option: boolean;
   isPoValid:boolean;
   isOtAmt:boolean;
-  showSelect: any;
+  showSelect: any;                    
   data: any[];
   advisorId: any;
-  _inputData: any;
+  _inputData: any;                    
+
   
 
   constructor(private subInjectService:SubscriptionInject,private fb: FormBuilder,public custumService:CustomerService) { }
   @Input()
   set inputData(inputData) {
     this._inputData = inputData;
-    // this.selectedOption = inputData ? (inputData.public ? (inputData.public === 1 ? '3' : inputData.mappingType) : '3') : '1';
-    // console.log('AddEditDocumentComponent inputData: ', inputData);
-    // this.setFormData(inputData);
+    this.getLiability(inputData);
   }
 
   get inputData() {
@@ -69,9 +59,21 @@ export class AddLiabilitiesComponent implements OnInit {
     this.showTransact=false;
     this.showSelect=false;
     this.advisorId = AuthService.getAdvisorId();
-   this.getLiability();
-
   }
+  // loanType = [
+  //   {name: "Home Loan", value: 1},
+  //   {name: "Vehicle", value: 2},
+  //   {name: "Education", value: 3},
+  //   {name: "Credit Card", value: 4},
+  //   {name: "Personal", value: 5},
+  //   {name: "Mortgage", value: 6}
+  // ]
+  // emiFrequency = [
+  //   {name: "Monthly", value: 1},
+  //   {name: "Quaterly", value: 2},
+  //   {name: "Semi annually", value: 3},
+  //   {name: "Annually", value: 4},
+  // ]
   showMore(){
     this.show=true;
   }
@@ -80,15 +82,11 @@ export class AddLiabilitiesComponent implements OnInit {
   }
   showAddTransact(){
     this.showTransact=true;
-    let array = []
-
-       let obj1={
-        "partPaymentDate": "",
-        "partPayment":"",
-        "option":""
-       }
-       array.push(obj1)
-       this.data=array;
+    if(this.transactEntries.length==0){
+      this.transactEntries.push(this.fb.group({ partPaymentDate: null,
+      partPayment: null,
+      option: null}));
+    }
   }
   close(){
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
@@ -96,60 +94,64 @@ export class AddLiabilitiesComponent implements OnInit {
   select(data){
     this.showSelect=data.checked;
   }
-  getLiability(){
+  getFormControl() {
+    return this.addLiabilityForm.controls;
+  }
+  getLiability(data){
+    if (data == undefined) {
+      data = {};
+    }
     this.addLiabilityForm = this.fb.group({
-      ownerName: [, [Validators.required]],
-      loanType: [, [Validators.required]],
-      loanAmount: [, [Validators.required]],
-      loanTenure: [, [Validators.required]],
-      outstandingCheck:[],
-      poDate: [, [Validators.required]],
-      outstandingAmt: [, [Validators.required]],
-      CommencementDate: [, [Validators.required]],
-      emiFrequency: [, [Validators.required]],
-      interest: [, [Validators.required]],
-      emi: [],
-      finInstitution: [],
+      ownerName: [data.ownerName , [Validators.required]],
+      // loanType:[data.loanTypeId,[Validators.required]],
+      loanType: [(data.loanTypeId), [Validators.required]],
+      loanAmount: [data.loanAmount, [Validators.required]],
+      loanTenure: [data.loanTenure, [Validators.required]],
+      outstandingCheck:[data.principalOutstanding],
+      poDate: [new Date(data.principalOutstandingAsOn), [Validators.required]],
+      outstandingAmt: [data.outstandingAmount, [Validators.required]],
+      CommencementDate: [new Date(data.commencementDate), [Validators.required]],
+      emiFrequency: [(data.frequencyOfPayments), [Validators.required]],
+      // emiFrequency: [data.frequencyOfPayments, [Validators.required]],
+      interest: [data.annualInterestRate, [Validators.required]],
+      emi: [data.emi],
+      finInstitution: [data.financialInstitution],
       collateral: [],
-      transact: this.fb.array([this.fb.group({
-        partPaymentDate: null,
-        partPayment: null,
-        option: null})])
-      // paymentDate: [, [Validators.required]],
-      // paymentAmount: [, [Validators.required]],
-      // option: [, [Validators.required]],
+     transact: this.fb.array([this.fb.group({  partPaymentDate:null,
+      partPayment: null,
+      option: null})])
+      // transact: this.fb.array([this.fb.group({
+      //   partPaymentDate: new Date(data.loanPartPayments[0].partPaymentDate),
+      //   partPayment: data.loanPartPayments[0].partPayment,
+      //   option: data.loanPartPayments[0].option})]),
     });
-    
-     this.getFormControl().ownerName.maxLength = 10;
+    if(data.loanPartPayments!=undefined){
+      data.loanPartPayments.forEach(element => {
+        this.addLiabilityForm.controls.transact=this.fb.array([this.fb.group({
+          partPaymentDate: new Date(element.partPaymentDate),
+          partPayment: element.partPayment,
+          option: element.option})])
+      })
+    }
+    this.getFormControl().ownerName.maxLength = 10;
     this.getFormControl().loanAmount.maxLength = 10;
     this.getFormControl().loanTenure.maxLength = 10;
     this.getFormControl().interest.maxLength = 40;
-    // this.getFormControl().paymentAmount.maxLength = 40;
-    // this.getFormControl().option.maxLength = 40;
   }
   get transactEntries() {
     return this.addLiabilityForm.get('transact') as FormArray;
   }
-    getFormControl() {
-      return this.addLiabilityForm.controls;
-    }
     addTransaction(){
-    
-      // let obj1={
-      //   "partPaymentDate":  "",
-      //   "partPayment":"",
-      //   "option":""
-      //  }
-      // this.data.push(obj1) 
-      this.transactEntries.push(this.fb.group({ partPaymentDate: null,
+      this.transactEntries.push(this.fb.group({ 
+        partPaymentDate: null,
         partPayment: null,
-        option: null}));
+        option: null
+      }));
     }
     removeTransaction(item){
       this.transactEntries.removeAt(item);
     }
     saveFormData(state) {
-
       if (this.addLiabilityForm.controls.ownerName.invalid) {
         this.isOwner = true;
         return;
@@ -173,8 +175,6 @@ export class AddLiabilitiesComponent implements OnInit {
         return;
       } else {
         const obj = {
-        //   advisorId: this.advisorId,
-        // advisorId: 12345,
         ownerName: this.addLiabilityForm.controls.ownerName.value,
         loanType: this.addLiabilityForm.controls.loanType.value,
         loanAmount: this.addLiabilityForm.controls.loanAmount.value,
@@ -196,6 +196,8 @@ export class AddLiabilitiesComponent implements OnInit {
           obj.emi = parseInt(obj.emi);
           obj.loanTenure = parseInt(obj.loanTenure);
           obj.loanType = parseInt(obj.loanType);
+          obj.emiFrequency = parseInt(obj.emiFrequency);
+          obj.outstandingCheck=obj.outstandingCheck.toString();
           obj.CommencementDate = obj.CommencementDate.toISOString().slice(0, 10);
           obj.poDate = obj.poDate.toISOString().slice(0, 10);
           obj.interest = parseInt(obj.interest);
@@ -209,36 +211,85 @@ export class AddLiabilitiesComponent implements OnInit {
             obj.transactData.push(obj1)
             }
            });
-          // obj.transactData=this.addLiabilityForm.value.transact;
-          let objToSend={
-            "advisorId": this.advisorId,
-            "clientId": 2978,
-            "familyMemberId": 16201,
-            "ownerName": obj.ownerName,
-            "loanTypeId": obj.loanType,
-            "loanAmount": obj.loanAmount,
-            "outstandingAmount": obj.outstandingAmt,
-            "loanTenure": obj.loanTenure,
-            "commencementDate": obj.CommencementDate,
-            "principalOutstandingAsOn": obj.poDate,
-            "principalOutstanding":obj.outstandingCheck,
-            "frequencyOfPayments": obj.emiFrequency,
-            "annualInterestRate":obj.interest,
-            "financialInstitution": obj.finInstitution,
-            "loanPartPayments": obj.transactData
-            }
-          console.log("obj",obj);
-          this.custumService.addLiability(objToSend).subscribe(
-            data => this.addLiabilityRes(data)
-          );
-          this.close();
+
+           if(this._inputData=='Add'){
+            let objToSend={
+              "advisorId": this.advisorId,
+              "clientId": 2978,
+              "familyMemberId": 16201,
+              "ownerName": obj.ownerName,
+              "loanTypeId": obj.loanType,
+              "loanAmount": obj.loanAmount,
+              "outstandingAmount": obj.outstandingAmt,
+              "loanTenure": obj.loanTenure,
+              "commencementDate": obj.CommencementDate,
+              "principalOutstandingAsOn": obj.poDate,
+              "principalOutstanding":obj.outstandingCheck,
+              "frequencyOfPayments": obj.emiFrequency,
+              "annualInterestRate":obj.interest,
+              "financialInstitution": obj.finInstitution,
+              "loanPartPayments": obj.transactData
+              }
+            console.log("obj",obj);
+            this.custumService.addLiability(objToSend).subscribe(
+              data => this.addLiabilityRes(data)
+            );
+           }else{
+            let editObj={
+              "familyMemberId":160023,
+              "ownerName":obj.ownerName,
+              "loanTypeId":obj.loanType,
+              "id":this._inputData.id,
+              "loanAmount":obj.loanAmount,
+              "outstandingAmount":obj.outstandingAmt,
+              "loanTenure":obj.loanTenure,
+              "commencementDate":obj.CommencementDate,
+              "principalOutstandingAsOn":obj.poDate,
+              "frequencyOfPayments":obj.emiFrequency,
+              "annualInterestRate":obj.interest,
+              "emi":obj.emi,
+              "financialInstitution":obj.finInstitution
+              }
+              this.custumService.editLiability(editObj).subscribe(
+                data => this.editLiabilityRes(data)
+              );
+           }
         
       }
     }
     addLiabilityRes(data){
       console.log(data);
+      if(data==1){
+        let obj={
+          'advisorId':this.advisorId,
+          'clientId':2978
+        }
+        this.custumService.getLiabilty(obj).subscribe(
+          data => this.getLiabiltyRes(data)
+        );
+        this.close();
+
+      }
+     
     }
-  
+    editLiabilityRes(data){
+      console.log(data);
+      console.log(data);
+      if(data==1){
+        let obj={
+          'advisorId':this.advisorId,
+          'clientId':2978
+        }
+        this.custumService.getLiabilty(obj).subscribe(
+          data => this.getLiabiltyRes(data)
+        );
+        this.close();
+
+      }
+    }
+    getLiabiltyRes(data){
+      console.log(data)
+    }
 }
 
 

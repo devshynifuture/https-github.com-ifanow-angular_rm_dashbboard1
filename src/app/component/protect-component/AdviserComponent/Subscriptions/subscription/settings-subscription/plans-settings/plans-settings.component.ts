@@ -55,10 +55,10 @@ export class PlansSettingsComponent implements OnInit {
 
   openFragment(singlePlan, data) {
     this.subinject.pushUpperData(singlePlan);
-
+    singlePlan.flag = data;
     const fragmentData = {
-      Flag: data,
-      planData: singlePlan,
+      flag: 'app-subscription-upper-slider',
+      data: singlePlan,
       state: 'open'
     };
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(

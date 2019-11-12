@@ -95,7 +95,7 @@
                             <button mat-stroked-button class="btn-default addon mr-12 v-middle" (click)="clickHandling()"><i
                 class="material-icons">filter_list</i>FILTERS
               </button>
-                            <button (click)="open('addLiabilities',null)" mat-stroked-button class="btn-primary addon v-middle"><i
+                            <button (click)="open('addLiabilities','Add')" mat-stroked-button class="btn-primary addon v-middle"><i
                 class="material-icons">add</i>ADD NEW
               </button>
                             <!-- <mat-menu #menu1="matMenu" class="add-new">
@@ -196,8 +196,8 @@
                   more_vert
                 </i>
                                 <mat-menu #menu4="matMenu">
-                                    <button mat-menu-item (click)="open('addLiabilities',element)" >Edit</button>
-                                    <button mat-menu-item>Deatiled View</button>
+                                    <button mat-menu-item (click)="open('addLiabilities',element)">Edit</button>
+                                    <button mat-menu-item (click)="addLiabilitiesDetail('addLiabilitiesDetail')">Deatiled View</button>
                                     <button mat-menu-item>Activity</button>
                                     <button mat-menu-item>Delete</button>
                                 </mat-menu>
@@ -209,5 +209,10 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode">
+                <div div *ngSwitchCase="'tab2'">
+                    dfhdfhdfhdf
+                </div>
+            </div>
     </div>
-</div>\
+</div>

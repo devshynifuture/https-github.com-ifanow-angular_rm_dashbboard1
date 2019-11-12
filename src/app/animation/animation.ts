@@ -71,10 +71,6 @@ export const dialogContainerOpacity = trigger('dialogContainer', [
   state('open', style({
     opacity: 0.25
   })),
-  state('openHelp', style({
-    opacity: 0.25
-// width: '35%'
-  })),
   state('close', style({
     opacity: 0
 
@@ -111,6 +107,9 @@ export const rightSliderAnimation = trigger('openClose', [
   state('open30', style({
     left: '{{from}}%'
   }), {params: {from: (100 - 30)}}),
+  state('openHelp', style({
+    left: '{{from}}%'
+  }), {params: {from: (100 - 35)}}),
 
   state('close', style({
     left: '100%'
