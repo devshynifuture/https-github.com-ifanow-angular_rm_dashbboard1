@@ -1,1 +1,214 @@
-<p>bonds works!</p>
+<!-- start ADD RECURING DEPOSIT (RECURING DEPOSIT) -->
+<div class="popup-header-fix-60">
+        <div class="row bb-1">
+            <div class="col-md-8 p-0">
+                <h4 class="mb-0 wrapper-20">ADD RECURING DEPOSIT</h4>
+            </div>
+            <div class="col-md-4 text-right">
+                <div class="wrapper-12">
+                    <i class="material-icons c-p pt-8 v-middle" (click)="Close()"> clear</i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div [formGroup]="bonds" class="pt-72 pl-24 pr-24 pb-48 mb-44">
+        <!-- <div class="row pt-40">
+            <div class="col-md-5 text-right">
+                <h5 class="m-0 pt-8">Owner</h5>
+                <p class="m-0 f-12 text-custom">In whose name is this asset</p>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group mb-0">
+                    <input matInput #ownerName maxlength="40" class="form-control br-0" formControlName="ownerName">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <mat-error class="f-12 pt-4"
+                                [ngClass]="{'v-h':!(isownerName && getFormControl().ownerName.invalid || getFormControl().ownerName.touched && getFormControl().ownerName.invalid)}">
+                                Owner name is required
+                            </mat-error>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <app-owner-component></app-owner-component>
+        <div class="row pt-40">
+            <div class="col-md-5 text-right">
+                <h5 class="m-0 pt-8">Monthly contrubution</h5>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group mb-0">
+                    <input matInput #monthlyContribution type="text" (keypress)="keyPress($event)" maxlength="20"
+                        class="form-control br-0" value="₹" formControlName="monthlyContribution">
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <mat-error class="f-12 pt-4"
+                            [ngClass]="{'v-h':!(isMonthlyContribution && getFormControl().monthlyContribution.invalid || getFormControl().monthlyContribution.touched && getFormControl().monthlyContribution.invalid)}">
+                            Monthly contrubution is required
+                        </mat-error>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-md-5 text-right">
+                <h5 class="m-0 pt-8">Interest rate</h5>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group mb-0">
+                    <input matInput type="text" (keypress)="keyPress($event)" class="form-control br-0" value="%"
+                        formControlName="interestRate">
+                    <div class="col-md-10">
+                        <mat-error class="f-12 pt-4"
+                            [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
+                            Interest rate is required
+                        </mat-error>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-md-5 text-right">
+                <h5 class="m-0 pt-8">Interest compounding</h5>
+            </div>
+            <div class="col-md-5">
+                <mat-select formControlName="compound" class="form-control br-0">
+                    <mat-option value="1">Daily</mat-option>
+                    <mat-option value="2">Monthly</mat-option>
+                    <mat-option value="3">Quarterly</mat-option>
+                    <mat-option value="4">Semi annually </mat-option>
+                    <mat-option value="5">Annually</mat-option>
+                </mat-select>
+                <div class="col-md-10">
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isCompound && getFormControl().compound.invalid || getFormControl().compound.touched && getFormControl().compound.invalid)}">
+                        Interest compounding is required
+                    </mat-error>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-md-5 text-right">
+                <h5 class="m-0 pt-8">Commencement date</h5>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group mb-0">
+                    <input matInput formControlName="commencementDate" [matDatepicker]="picker" placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <mat-error class="f-12 pt-4"
+                            [ngClass]="{'v-h':!(isCommencementDate && getFormControl().commencementDate.invalid || getFormControl().commencementDate.touched && getFormControl().commencementDate.invalid)}">
+                            Commencement date is required
+                        </mat-error>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-md-5 text-right">
+                <h5 class="m-0 pt-8">Tenure</h5>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group mb-0">
+                    <input matInput type="text" (keypress)="keyPress($event)" class="form-control br-0" value="%"
+                        formControlName="tenure">
+                    <div class="col-md-10">
+                        <mat-error class="f-12 pt-4"
+                            [ngClass]="{'v-h':!(isTenure && getFormControl().tenure.invalid || getFormControl().interestRate.touched && getFormControl().tenure.invalid)}">
+                            Interest rate is required
+                        </mat-error>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-md-5 text-right" *ngIf="showHide == true">
+                <h5 class="m-0 pt-8 text-custom c-p" (click)="showLess(showHide)">Show less</h5>
+            </div>
+            <div class="col-md-5 text-right" *ngIf="showHide == false">
+                <h5 class="m-0 pt-8 text-custom c-p" (click)="showLess(showHide)">+ Add more [optional data] </h5>
+            </div>
+            <div class="col-md-5">
+    
+            </div>
+        </div>
+        <div *ngIf="showHide == true">
+            <div class="row pt-40">
+                <div class="col-md-5 text-right">
+                    <h5 class="m-0 pt-8">RD number</h5>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group mb-0">
+                        <input matInput #rdNo type="text" (keypress)="keyPress($event)" maxlength="10"
+                            class="form-control br-0" formControlName="rdNo">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <p class="f-12 m-0 text-custom">Optional</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-40">
+                <div class="col-md-5 text-right">
+                    <h5 class="m-0 pt-8">Bank name</h5>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group mb-0">
+                        <input matInput #bankName type="text" (keypress)="keyPress($event)" maxlength="15"
+                            class="form-control br-0" formControlName="bankName">
+    
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <p class="f-12 m-0 text-custom">Optional</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-40">
+                <div class="col-md-5 text-right">
+                    <h5 class="m-0 pt-8">Linked bank account</h5>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group mb-0">
+                        <input matInput #linkBankAc maxlength="30" class="form-control br-0" formControlName="linkBankAc">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <p class="f-12 m-0 text-custom">Optional</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-40">
+                <div class="col-md-5 text-right">
+                    <h5 class="m-0 pt-8">Description</h5>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group mb-0">
+                        <input matInput #description maxlength="60" class="form-control br-0" formControlName="description">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <p class="f-12 m-0 text-custom">Optional</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-fixed wrapper-12 pt-16">
+        <div class="row">
+            <div class="col-md-4">
+                <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
+            </div>
+            <div class="col-md-8 right text-right">
+                <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveRecuringDeposit()">Save</button>
+            </div>
+        </div>
+    </div>
