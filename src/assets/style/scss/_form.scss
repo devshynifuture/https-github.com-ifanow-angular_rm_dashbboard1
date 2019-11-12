@@ -82,3 +82,8 @@ input.mat-input-element:focus{
     font-family: "Roboto", sans-serif;
     font-weight: 400;
 }
+.mat-datepicker-toggle{
+    position: absolute;
+    float: right;
+    right: 2%;
+}
