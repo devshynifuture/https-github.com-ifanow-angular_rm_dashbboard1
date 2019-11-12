@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { DatePipe } from '@angular/common';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { SatCalendarHeader } from 'saturn-datepicker';
+import { Observable } from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-fixed-deposit',
@@ -26,8 +29,10 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
   ],
 })
 export class FixedDepositComponent implements OnInit {
+  myControl = new FormControl();
   showHide = false;
   isownerName = false;
+  showTenure = false;
   isDescription = false;
   isBankACNo = false;
   isInterestRate = false;
@@ -46,12 +51,28 @@ export class FixedDepositComponent implements OnInit {
   fixedDeposit: any;
   advisorId: any;
   dataSource: any;
+  s: string[] = ['Sneha', 'gayatri', 'Shivani'];
+ 
+  family: Observable<string[]>;
+  options: any;
+  fdYears: string[];
+  fdMonths: string[];
+  fdDays: string[];
 
   constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
 
   ngOnInit() {
+    let obj = {
+      clientId: 2980
+    }
     this.advisorId = AuthService.getAdvisorId();
     this.getdataForm()
+      this.fdMonths = ['1','2','3','4','5','6','7','8','9','10','11','12']
+      this.fdDays = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31']
+      this.fdYears = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15']
+  }
+  getOwnerListRes(data){
+    console.log('familymember',data)
   }
   keyPress(event: any) {
     const pattern = /[0-9\+\-\ ]/;
@@ -64,11 +85,19 @@ export class FixedDepositComponent implements OnInit {
   Close(){
     this.subInjectService.changeNewRightSliderState({state:'close'})
   }
+  
   showLess(value){
     if(value  == true){
       this.showHide = false;
     }else{
       this.showHide = true;
+    }
+  }
+  haveMaturity(maturity){
+    if(maturity == true){
+      this.showTenure = false;
+    }else{
+      this.showTenure =true;
     }
   }
   getdataForm(){
