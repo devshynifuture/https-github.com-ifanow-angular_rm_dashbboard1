@@ -55,6 +55,9 @@ export const appConfig = {
   EDIT_LIABILITY:'account/liability/loan/edit',
   EDIT_FIXEDDEPOSIT:'account/asset/fixed-income/fixed-deposit/delete',
   GET_LIST_FAMILY_MEMBER:'account/income/family-members/get',
+  GET_FIXEDDEPOSIT:'account/asset/fixed-income/fixed-deposit/get',
+  GET_RECURING_DEPOSIT:'account/asset/fixed-income/recurring-deposit/list/get',
+  GET_BONDS:'account/asset/fixed-income/bond/list/get',
 
 ////////////////////////////// subscription////////////////////////////////////////////
 

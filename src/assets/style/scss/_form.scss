@@ -34,7 +34,7 @@ input[type=number]::-webkit-outer-spin-button {
 input.mat-input-element{
     margin: 0;
     line-height: 2.3;
-    
+    width: 100%;
     padding: 6px;
     height: 40px;
 }
@@ -50,7 +50,7 @@ input.mat-input-element:focus{
 //     margin-bottom: 0 !important;
 // }
 .form-control{
-    border:1px solid rgba(25, 25, 25, 0.32) !important
+    border:1px solid rgba(25, 25, 25, 0.32) !important;
 }
 #custom-radio{
     .mat-radio-label{
@@ -85,5 +85,5 @@ input.mat-input-element:focus{
 .mat-datepicker-toggle{
     position: absolute;
     float: right;
-    right: 4%;
+    right: 2%;
 }
