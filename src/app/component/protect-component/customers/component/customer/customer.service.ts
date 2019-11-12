@@ -35,6 +35,10 @@ export class CustomerService {
   addLiability(data){
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_LIABILITY,data)
   }
+  editLiability(data)
+  {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_LIABILITY,data)
+  }
   getLiabilty(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIABILITY, httpParams);

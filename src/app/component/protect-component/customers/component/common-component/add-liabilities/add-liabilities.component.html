@@ -2,7 +2,9 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">ADD LIABILITIES</h4>
+            <h4 class="mb-0 wrapper-20" *ngIf="_inputData=='Add'">ADD LIABILITIES</h4>
+            <h4 class="mb-0 wrapper-20" *ngIf="_inputData!='Add'">EDIT LIABILITIES</h4>
+
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -34,14 +36,16 @@
                     </div>
         </div>
     </div>
-
+    <!-- <app-owner-component></app-owner-component> -->
     <div class="row pt-40">
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8"> Loan type</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
-                <mat-select formControlName="loanType" class="form-control br-0">
+                <mat-select formControlName="loanType" class="form-control br-0" id="sel1" >
+                    <mat-option disabled selected hidden>Select loan type</mat-option>
+                    <!-- <mat-option *ngFor="let loan of this.loanType" value={{loan.name}}>{{loan.name}}</mat-option> -->
                         <mat-option value="1">Home Loan</mat-option>
                         <mat-option value="2">Vehicle</mat-option>
                         <mat-option value="3">Education</mat-option>
@@ -171,6 +175,7 @@
         <div class="col-md-3">
                 <div class="form-group mb-0">
                         <mat-select formControlName="emiFrequency" class="form-control br-0" >
+                            <!-- |<mat-option *ngFor="let emi of this.emiFrequency" value={{emi.name}}>{{emi.name}}</mat-option> -->
                                 <mat-option value="1">Monthly</mat-option>
                                 <mat-option value="3">Quaterly</mat-option>
                                 <mat-option value="6">Semi annually</mat-option>
@@ -352,7 +357,7 @@
         <div class="col-md-1 p-0">
             <div class="pt-36">
                 <i class="material-icons text-primitive c-p float-left" (click)="addTransaction()">add</i>
-                <i class="material-icons text-primitive c-p float-right" (click)="removeTransaction(i)">remove</i>
+                <i class="material-icons text-primitive c-p float-right" (click)="removeTransaction(pointIndex)">remove</i>
             </div>
         </div>
     </div>
