@@ -53,25 +53,26 @@ export class ClientSubscriptionComponent implements OnInit {
   }
 
   openFragment(data, clientData) {
-   /* const fragmentData = {
-      Flag: 'emailOnly',
-      data: clientData,
-      id: 1,
-      state: 'open'
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ',);
-          rightSideDataSub.unsubscribe();
-        }
-      }
-    );*/
+    /* const fragmentData = {
+       Flag: 'emailOnly',
+       data: clientData,
+       id: 1,
+       state: 'open'
+     };
+     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+       sideBarData => {
+         console.log('this is sidebardata in subs subs : ', sideBarData);
+         if (UtilService.isDialogClose(sideBarData)) {
+           console.log('this is sidebardata in subs subs 2: ',);
+           rightSideDataSub.unsubscribe();
+         }
+       }
+     );*/
+    clientData.flag = data;
     const fragmentData = {
-      Flag: data,
+      flag: 'app-subscription-upper-slider',
       id: 1,
-      clientData,
+      data: clientData,
       state: 'open'
     };
 

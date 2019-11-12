@@ -41,23 +41,8 @@ export class SubscriptionUpperSliderComponent implements OnInit {
         console.log('UpperSlider constructor ngOnInit: ', this.fragmentData);
 
         this.State = 'close';
-        if (this.fragmentData.Flag === 'plan') {
-          this.upperData = this.fragmentData.planData;
-        } else if (this.fragmentData.Flag == 'services') {
-          // if (this.fragmentData.FeeData) {
-          // this.upperData = '';
-          // setTimeout(() => {
-          this.upperData = this.fragmentData.FeeData;
-          // }, 3000);
-          // this.upperData = this.fragmentData.FeeData;
-          // } else {
-          // this.upperData = '';
-          // }
-          // this.selectedServiceTab = 1;
-        } else {
-          this.upperData = this.fragmentData.data;
-          // this.selectedServiceTab = 1;
-        }
+
+        this.upperData = this.fragmentData.data;
 
         console.log('upperData: ', this.upperData);
         console.log(this.fragmentData);
