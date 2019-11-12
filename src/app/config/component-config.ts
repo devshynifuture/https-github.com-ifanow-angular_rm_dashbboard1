@@ -53,6 +53,7 @@ export const appConfig = {
   ADD_LIABILITY:'account/liability/loan/add',
   GET_LIABILITY:'account/liability/loan/list/get',
   EDIT_FIXEDDEPOSIT:'account/asset/fixed-income/fixed-deposit/delete',
+  GET_LIST_FAMILY_MEMBER:'account/income/family-members/get',
 
 ////////////////////////////// subscription////////////////////////////////////////////
 

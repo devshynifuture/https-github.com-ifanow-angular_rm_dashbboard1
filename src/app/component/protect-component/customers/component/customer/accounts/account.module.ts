@@ -22,11 +22,16 @@ import {LibilitiesRightComponent} from "./liabilities/libilities-right/libilitie
 import {IncomeComponent} from "./income/income.component";
 import {LiabilitiesComponent} from "./liabilities/liabilities.component";
 import {ChartModule} from "angular-highcharts";
+import { FactShitComponent } from '../../common-component/fact-shit/fact-shit.component';
+import { TransactionsComponent } from '../../common-component/transactions/transactions.component';
+import { UpperCustomerComponent } from '../../common-component/upper-customer/upper-customer.component';
+import { RightFilterComponent } from '../../common-component/right-filter/right-filter.component';
 import { FixedIncomeComponent } from './assets/fixedIncome/fixed-income/fixed-income.component';
 import { RecuringDepositComponent } from './assets/fixedIncome/recuring-deposit/recuring-deposit.component';
 import { BondsComponent } from './assets/fixedIncome/bonds/bonds.component';
 import { AddIncomeComponent } from '../../common-component/add-income/add-income.component';
 import { IncomeDetailComponent } from '../../common-component/income-detail/income-detail.component';
+import { OwnerComponentComponent } from './owner-component/owner-component.component';
 
 
 @NgModule({
@@ -50,11 +55,16 @@ import { IncomeDetailComponent } from '../../common-component/income-detail/inco
     AddInsuranceComponent,
     LibilitiesRightComponent,
     FixedDepositComponent,
+    FactShitComponent,
+    TransactionsComponent,
+    UpperCustomerComponent,
+    RightFilterComponent,
     FixedIncomeComponent,
     RecuringDepositComponent,
     BondsComponent,
     AddIncomeComponent,
-    IncomeDetailComponent
+    IncomeDetailComponent,
+    OwnerComponentComponent
   ],
   imports: [
     // BrowserModule,
@@ -64,7 +74,7 @@ import { IncomeDetailComponent } from '../../common-component/income-detail/inco
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [AddLiabilitiesComponent, AddInsuranceComponent, LibilitiesRightComponent, FixedDepositComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule,AddIncomeComponent,IncomeDetailComponent],
+  exports: [AddLiabilitiesComponent, AddInsuranceComponent, LibilitiesRightComponent, FixedDepositComponent,OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule,AddIncomeComponent,IncomeDetailComponent,  ReactiveFormsModule,FactShitComponent,TransactionsComponent,UpperCustomerComponent,RightFilterComponent],
   entryComponents: [BottomSheetComponent]
 })
 export class AccountModule {

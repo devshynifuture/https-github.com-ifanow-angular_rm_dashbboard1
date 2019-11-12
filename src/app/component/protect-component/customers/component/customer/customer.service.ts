@@ -42,4 +42,8 @@ export class CustomerService {
   editFixedDeposit(data){
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_FIXEDDEPOSIT,data)
   }
+  getListOfFamilyByClient(data){
+    let httpParams=new HttpParams();
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIST_FAMILY_MEMBER,data)
+  }
 }
