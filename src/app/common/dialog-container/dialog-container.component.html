@@ -27,6 +27,7 @@
     <app-email-only [inputData]="inputData" *ngIf="subscriptionTab=='emailQuotationFroala'"></app-email-only>
     <app-email-only [inputData]="inputData" *ngIf="subscriptionTab=='emailInvoiceFroala'"></app-email-only>
     <app-add-liabilities *ngIf="subscriptionTab=='addLib'"></app-add-liabilities>
+    <app-liabilities-detail *ngIf="subscriptionTab=='addLiabilitiesDetail'"> </app-liabilities-detail>
 
     <app-add-liabilities [inputData]="inputData" *ngIf="subscriptionTab=='addLiabilities'"></app-add-liabilities>
     <app-add-insurance [insuranceData]="fragmentData.data" *ngIf="subscriptionTab=='addInsurance'"></app-add-insurance>
@@ -38,9 +39,8 @@
     <app-income-detail *ngIf="subscriptionTab=='addIncomeDetail'"></app-income-detail>
     <app-right-filter *ngIf="subscriptionTab=='rightFilter'"></app-right-filter>
     <app-detailed-view *ngIf="subscriptionTab=='detailedView'"></app-detailed-view>
-    <app-liabilities-detail *ngIf="subscriptionTab=='addLiabilitiesDetail'"> </app-liabilities-detail>
 </app-custom-dialog-container>
 
 <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
-    <app-subscription-upper-slider></app-subscription-upper-slider>
+    <app-subscription-upper-slider *ngIf="upperSliderData.flag=='app-subscription-upper-slider'"></app-subscription-upper-slider>
 </div>

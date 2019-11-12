@@ -172,13 +172,15 @@ export class DocumentsSettingsComponent implements OnInit {
   }
 
   openFragment(data, singleDocument) {
+    singleDocument.flag = data;
     const fragmentData = {
-      Flag: data,
+      flag: 'app-subscription-upper-slider',
       data: singleDocument,
       id: 1,
       state: 'open'
     };
-    if (fragmentData.Flag == 'documents') {
+
+    if (singleDocument.flag == 'documents') {
       const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
         upperSliderData => {
           if (UtilService.isDialogClose(upperSliderData)) {

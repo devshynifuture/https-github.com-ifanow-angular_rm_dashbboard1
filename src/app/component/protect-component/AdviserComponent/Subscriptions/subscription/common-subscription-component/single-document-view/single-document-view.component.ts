@@ -22,9 +22,10 @@ export class SingleDocumentViewComponent implements OnInit {
   }
 
   editDocument() {
+
     const fragmentData = {
-      Flag: 'documents',
-      data: {documentData: this.singleDocument},
+      flag: 'app-subscription-upper-slider',
+      data: {documentData: this.singleDocument, flag: 'documents'},
       id: 1,
       state: 'open'
     };

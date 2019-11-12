@@ -29,11 +29,12 @@ export class ServicesSettingsComponent implements OnInit {
   }
 
   openFragment(singleService, data) {
+    singleService.flag = data;
     const fragmentData = {
-      Flag: data,
+      flag: 'app-subscription-upper-slider',
       // Flag: 'plan',
       // planData: '',
-      FeeData: singleService,
+      data: singleService,
       state: 'open',
       id: 2
     };
