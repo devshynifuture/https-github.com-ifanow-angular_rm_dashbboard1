@@ -212,7 +212,7 @@ export class AddLiabilitiesComponent implements OnInit {
             }
            });
 
-           if(this._inputData.data=='Add'){
+           if(this._inputData=='Add'){
             let objToSend={
               "advisorId": this.advisorId,
               "clientId": 2978,
@@ -237,7 +237,7 @@ export class AddLiabilitiesComponent implements OnInit {
            }else{
             let editObj={
               "familyMemberId":160023,
-              "ownerName":"shiv Raj",
+              "ownerName":obj.ownerName,
               "loanTypeId":obj.loanType,
               "id":this._inputData.id,
               "loanAmount":obj.loanAmount,
@@ -255,16 +255,41 @@ export class AddLiabilitiesComponent implements OnInit {
               );
            }
         
-            this.close();
       }
     }
     addLiabilityRes(data){
       console.log(data);
+      if(data==1){
+        let obj={
+          'advisorId':this.advisorId,
+          'clientId':2978
+        }
+        this.custumService.getLiabilty(obj).subscribe(
+          data => this.getLiabiltyRes(data)
+        );
+        this.close();
+
+      }
+     
     }
     editLiabilityRes(data){
       console.log(data);
+      console.log(data);
+      if(data==1){
+        let obj={
+          'advisorId':this.advisorId,
+          'clientId':2978
+        }
+        this.custumService.getLiabilty(obj).subscribe(
+          data => this.getLiabiltyRes(data)
+        );
+        this.close();
+
+      }
     }
-  
+    getLiabiltyRes(data){
+      console.log(data)
+    }
 }
 
 
