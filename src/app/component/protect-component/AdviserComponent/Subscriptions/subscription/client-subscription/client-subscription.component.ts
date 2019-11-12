@@ -43,13 +43,26 @@ export class ClientSubscriptionComponent implements OnInit {
   }
 
   getClientListResponse(data) {
-    console.log('client-subscription List', data);
     this.dataSource = data;
   }
 
   Open(value, state) {
-    this.eventService.sidebarData(value);
-    this.subInjectService.rightSideData(state);
+    const fragmentData = {
+      Flag: value,
+      id: 1,
+      state: state
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+    // this.eventService.sidebarData(value);
+    // this.subInjectService.rightSideData(state);
   }
 
   openFragment(data, clientData) {

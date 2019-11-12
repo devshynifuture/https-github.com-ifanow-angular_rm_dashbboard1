@@ -41,25 +41,12 @@ export class CustomDialogContainerComponent implements OnInit {
         this.isOverlayVisible = false;
       }, 300);
       // this.eventService.changeOverlayVisible(false);
-    } else if (value === 'open') {
-
+    }  else {
       this._currentState = value;
-      // this.percentageClose = '40%';
       setTimeout(() => {
-        this.dialogState = value;
+        this.dialogState = 'open';
         this.isOverlayVisible = true;
       }, 100);
-    } else if (value === 'openHelp') {
-      // this.percentageClose = '65%';
-
-      this._currentState = value;
-
-      setTimeout(() => {
-        this.dialogState = value;
-        this.isOverlayVisible = true;
-      }, 100);
-    } else {
-      // this.eventService.changeOverlayVisible(true);
     }
 
   }
