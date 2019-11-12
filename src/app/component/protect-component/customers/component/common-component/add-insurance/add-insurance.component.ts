@@ -4,11 +4,26 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer/customer.service';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { MAT_DATE_FORMATS } from '@angular/material';
 
 @Component({
   selector: 'app-add-insurance',
   templateUrl: './add-insurance.component.html',
-  styleUrls: ['./add-insurance.component.scss']
+  styleUrls: ['./add-insurance.component.scss'],
+  providers: [
+    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
+    // {
+    //   provide: DateAdapter,
+    //   useClass: MomentDateAdapter,
+    //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    // },
+    // { provide: MAT_DATE_LOCALE, useValue: 'en' },
+    // [DatePipe],
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  ],
 })
 export class AddInsuranceComponent implements OnInit {
   // displayedColumns: string[] = [  'name', 'amountTable'];
@@ -37,26 +52,51 @@ export class AddInsuranceComponent implements OnInit {
   ispolicyStatusLastUnpaid: any;
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) { }
   addMoreFlag;
-  @ViewChild('chnageScrollPosition', { static: true }) eleRef: ElementRef
+  @ViewChild('chnageScrollPosition', { static: false }) eleRef: ElementRef
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.addMoreFlag = false
-    this.setValidations(true)
+    this.setValidations(false)
   }
 
   lifeInsuranceForm = this.fb.group({
-    lifeAssured: [, [Validators.required]],
-    proposer: [, [Validators.required]],
-    policyName: [, [Validators.required]],
-    policyNum: [, [Validators.required]],
-    commencementDate: [, [Validators.required]],
-    sumAssured: [, [Validators.required]],
-    premiumDetailsAmount: [, [Validators.required]],
-    premiumDetailsFrequency: [, [Validators.required]],
-    tenureDetailsPolicy: [, [Validators.required]],
-    premiumPayingTerm: [, [Validators.required]],
-    policyStatus: [, [Validators.required]],
-    policyStatusLastUnpaid: [, [Validators.required]]
+    lifeAssured: ['', [Validators.required]],
+    proposer: ['', [Validators.required]],
+    policyName: ['', [Validators.required]],
+    policyNum: ['', [Validators.required]],
+    commencementDate: ['', [Validators.required]],
+    sumAssured: ['', [Validators.required]],
+    premiumDetailsAmount: ['', [Validators.required]],
+    premiumDetailsFrequency: ['', [Validators.required]],
+    tenureDetailsPolicy: ['', [Validators.required]],
+    premiumPayingTerm: ['', [Validators.required]],
+    policyStatus: ['', [Validators.required]],
+    policyStatusLastUnpaid: ['', [Validators.required]]
+  })
+  keyDetailsForm = this.fb.group({
+    riskCover: ['', [Validators.required]],
+    surrenderName: ['',[Validators.required]],
+    nomineeName: ['', [Validators.required]],
+    vestedBonus: ['', [Validators.required]],
+    assumedRate: ['', [Validators.required]]
+  })
+  ridersForm = this.fb.group({
+    accidentalBenefit: ['', [Validators.required]],
+    doubleAccidental: ['', [Validators.required]],
+    termWaiver: ['', [Validators.required]],
+    criticalIlleness: ['', [Validators.required]],
+    premiumWaiver: ['', [Validators.required]],
+    femaleCriticalIlleness: ['', [Validators.required]]
+  })
+  loanDetailsForm = this.fb.group({
+    loanAvailable: ['', [Validators.required]],
+    loanTaken: ['', [Validators.required]],
+    loanTakenOn: ['', [Validators.required]]
+  })
+  Miscellaneous = this.fb.group({
+    permiumPaymentMode: ['', [Validators.required]],
+    advisorName:['', [Validators.required]],
+    serviceBranch:['', [Validators.required]]
   })
   getLifeInsuranceFormFields(controlName) {
     return this.lifeInsuranceForm.get(controlName).value
@@ -81,8 +121,53 @@ export class AddInsuranceComponent implements OnInit {
     console.log(this.eleRef.nativeElement.scrollTop)
   }
   saveAddInsurance() {
-    if ((this.lifeInsuranceForm.get('islifeAssured')).invalid || (this.lifeInsuranceForm.get('isproposer')).invalid || (this.lifeInsuranceForm.get('ispolicyName')).invalid || (this.lifeInsuranceForm.get('ispolicyNum')).invalid || (this.lifeInsuranceForm.get('iscommencementDate')).invalid||(this.lifeInsuranceForm.get('issumAssured')).invalid||(this.lifeInsuranceForm.get('ispremiumDetailsAmount')).invalid||(this.lifeInsuranceForm.get('ispremiumDetailsFrequency')).invalid||(this.lifeInsuranceForm.get('istenureDetailsPolicy')).invalid||(this.lifeInsuranceForm.get('ispremiumPayingTerm')).invalid||(this.lifeInsuranceForm.get('ispolicyStatus')).invalid||(this.lifeInsuranceForm.get('ispolicyStatusLastUnpaid')).invalid) {
-       return
+    if (this.lifeInsuranceForm.get('lifeAssured').invalid) {
+      this.islifeAssured = true
+      return
+    }
+    else if (this.lifeInsuranceForm.get('proposer').invalid) {
+      this.isproposer = true
+      return
+    }
+    else if (this.lifeInsuranceForm.get('policyName').invalid) {
+      this.ispolicyName = true
+      return
+    }
+    else if (this.lifeInsuranceForm.get('policyNum').invalid) {
+      this.ispolicyNum = true
+      return
+    }
+    else if (this.lifeInsuranceForm.get('commencementDate').invalid) {
+      this.iscommencementDate = true
+      return
+    }
+    else if (this.lifeInsuranceForm.get('sumAssured').invalid) {
+      this.issumAssured = true
+      return
+    }
+    else if (this.lifeInsuranceForm.get('premiumDetailsAmount').invalid) {
+      this.ispremiumDetailsAmount = true
+      return
+    }
+    else if (this.lifeInsuranceForm.get('premiumDetailsFrequency').invalid) {
+      this.ispremiumDetailsFrequency = true
+      return
+    }
+    else if (this.lifeInsuranceForm.get('tenureDetailsPolicy').invalid) {
+      this.istenureDetailsPolicy = true
+      return
+    }
+    else if (this.lifeInsuranceForm.get('premiumPayingTerm').invalid) {
+      this.ispremiumPayingTerm = true
+      return
+    }
+    else if (this.lifeInsuranceForm.get('policyStatus').invalid) {
+      this.ispolicyStatus = true
+      return
+    }
+    else if (this.lifeInsuranceForm.get('policyStatusLastUnpaid').invalid) {
+      this.ispolicyStatusLastUnpaid = true
+      return
     }
     else {
       const obj = {
@@ -99,26 +184,26 @@ export class AddInsuranceComponent implements OnInit {
         "frequency": 1,
         "policyTenure": this.getLifeInsuranceFormFields('tenureDetailsPolicy'),
         "premiumPayingTerm": this.getLifeInsuranceFormFields('premiumPayingTerm'),
-        "riskCover": 5000,
-        "surrenderValue": 500,
-        "nominee": "nominee two",
-        "vestedBonus": 2000,
+        "riskCover":this.keyDetailsForm.get('riskCover').value,
+        "surrenderValue":this.keyDetailsForm.get('surrenderName').value,
+        "nominee":this.keyDetailsForm.get('nomineeName').value,
+        "vestedBonus":this.keyDetailsForm.get('vestedBonus').value,
         "assumedRate": 1000,
         "cashflowType": "cash flow 4",
         "cashflowYear": "2020-12-12",
         "cashFlowApproxAmount": 4000,
-        "ridersAccidentalBenifits": 1000,
-        "ridersDoubleAccidentalBenefit": 500,
-        "ridersTermWaiver": 1000,
-        "ridersCriticalIllness": 2000,
-        "ridersPremiumWaiver": 1000,
-        "ridersFemaleCriticalIllness": 1000,
-        "loanAvailable": 10000,
-        "loanTaken": 8000,
+        "ridersAccidentalBenifits": this.ridersForm.get('accidentalBenefit').value,
+        "ridersDoubleAccidentalBenefit":this.ridersForm.get('doubleAccidental').value,
+        "ridersTermWaiver":this.ridersForm.get('termWaiver').value,
+        "ridersCriticalIllness": this.ridersForm.get('criticalIlleness').value,
+        "ridersPremiumWaiver":this.ridersForm.get('premiumWaiver').value,
+        "ridersFemaleCriticalIllness": this.ridersForm.get('femaleCriticalIlleness').value,
+        "loanAvailable":this.loanDetailsForm.get('loanAvailable').value,
+        "loanTaken": this.loanDetailsForm.get('loanTaken').value,
         "loanTakenOn": "2019-12-12",
-        "premiumPaymentMode": "premium payment mode 4",
-        "advisorName": "advisor 4",
-        "serviceBranch": " branch 4",
+        "premiumPaymentMode":this.Miscellaneous.get('permiumPaymentMode').value,
+        "advisorName":this.Miscellaneous.get('advisorName').value,
+        "serviceBranch":this.Miscellaneous.get('serviceBranch').value,
         "policyName": this.getLifeInsuranceFormFields('policyName'),
         "policyTypeId": 1,
         "policyNumber": this.getLifeInsuranceFormFields('policyNum')

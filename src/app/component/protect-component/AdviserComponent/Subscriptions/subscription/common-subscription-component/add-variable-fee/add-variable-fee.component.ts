@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionService } from '../../../subscription.service';
-import { EnumServiceService } from '../../enum-service.service';
+import { EnumServiceService } from '../../../../../../../services/enum-service.service';
 import * as _ from 'lodash';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from "../../../../../../../auth-service/authService";

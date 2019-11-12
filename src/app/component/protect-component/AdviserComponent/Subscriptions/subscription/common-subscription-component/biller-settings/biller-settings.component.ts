@@ -11,7 +11,7 @@ import {AuthService} from "../../../../../../../auth-service/authService";
 })
 export class BillerSettingsComponent implements OnInit {
   // obj1: { advisorId: number };
-  
+
   billerSettingData: any;
   dataSub: any;
   dataObj: any;
@@ -19,21 +19,22 @@ export class BillerSettingsComponent implements OnInit {
   getSubsciption: any;
   getDataRow: any;
   advisorId;
-  @Input() set clientData(clientData)
-  { 
+
+  @Input() set clientData(clientData) {
     this.advisorId = AuthService.getAdvisorId();
-    this.getBillerData(clientData)
+    this.getBillerData(clientData);
   };
+
   constructor(public subInjectService: SubscriptionInject, public subService: SubscriptionService, public eventService: EventService) {
 
   }
 
   ngOnInit() {
-    
+
   }
 
   getBillerData(data) {
-    
+
     this.getDataRow = data;
     this.dataObj = {
       advisorId: this.advisorId,
@@ -66,16 +67,14 @@ export class BillerSettingsComponent implements OnInit {
   getBillerProfileRes(data) {
     console.log('getBillerProfileRes data', data);
     this.billerSettingData = data;
-    if(this.billerSettingData.length==1)
-    {
-      this.billerSettingData[0].selected=true
-    }
-    else{
+    if (this.billerSettingData.length == 1) {
+      this.billerSettingData[0].selected = true
+    } else {
       this.billerSettingData.forEach(element => {
         element.selected = (element.selected == 0) ? false : true;
-        this.isSelectedPlan=element
+        this.isSelectedPlan = element
       });
-    }  
+    }
   }
 
   selectedBiller(data, singlePlan) {

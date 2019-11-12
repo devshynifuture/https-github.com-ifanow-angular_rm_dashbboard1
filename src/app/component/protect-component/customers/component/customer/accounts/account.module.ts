@@ -26,6 +26,11 @@ import { FactShitComponent } from '../../common-component/fact-shit/fact-shit.co
 import { TransactionsComponent } from '../../common-component/transactions/transactions.component';
 import { UpperCustomerComponent } from '../../common-component/upper-customer/upper-customer.component';
 import { RightFilterComponent } from '../../common-component/right-filter/right-filter.component';
+import { FixedIncomeComponent } from './assets/fixedIncome/fixed-income/fixed-income.component';
+import { RecuringDepositComponent } from './assets/fixedIncome/recuring-deposit/recuring-deposit.component';
+import { BondsComponent } from './assets/fixedIncome/bonds/bonds.component';
+import { AddIncomeComponent } from '../../common-component/add-income/add-income.component';
+import { IncomeDetailComponent } from '../../common-component/income-detail/income-detail.component';
 
 
 @NgModule({
@@ -52,7 +57,12 @@ import { RightFilterComponent } from '../../common-component/right-filter/right-
     FactShitComponent,
     TransactionsComponent,
     UpperCustomerComponent,
-    RightFilterComponent
+    RightFilterComponent,
+    FixedIncomeComponent,
+    RecuringDepositComponent,
+    BondsComponent,
+    AddIncomeComponent,
+    IncomeDetailComponent
   ],
   imports: [
     // BrowserModule,
@@ -62,10 +72,8 @@ import { RightFilterComponent } from '../../common-component/right-filter/right-
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [AddLiabilitiesComponent, AddInsuranceComponent, LibilitiesRightComponent,
-     FixedDepositComponent, ReactiveFormsModule,FactShitComponent,TransactionsComponent,UpperCustomerComponent,RightFilterComponent
-    ],
-  entryComponents: [BottomSheetComponent,UpperCustomerComponent]
+  exports: [AddLiabilitiesComponent, AddInsuranceComponent, LibilitiesRightComponent, FixedDepositComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule,AddIncomeComponent,IncomeDetailComponent,  ReactiveFormsModule,FactShitComponent,TransactionsComponent,UpperCustomerComponent,RightFilterComponent],
+  entryComponents: [BottomSheetComponent]
 })
 export class AccountModule {
 }

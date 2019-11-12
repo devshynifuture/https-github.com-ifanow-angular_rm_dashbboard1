@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
-import {EnumServiceService} from '../../enum-service.service';
+import {EnumServiceService} from '../../../../../../../services/enum-service.service';
 import * as _ from 'lodash';
 import {SubscriptionService} from '../../../subscription.service';
 import {element} from 'protractor';
@@ -130,9 +130,9 @@ export class ModifyFeeStructureComponent implements OnInit {
         if (this.singleSubscriptionData.status != 1) {
           this.variableFeeStructureForm.disable();
         }
-  
+
       }
-      
+
     }
     this.modifyFeeData = data;
   }

@@ -5,10 +5,11 @@ import {MatDialog} from '@angular/material';
 import {DeleteSubscriptionComponent} from '../common-subscription-component/delete-subscription/delete-subscription.component';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {SubscriptionService} from '../../subscription.service';
-import {EnumServiceService} from '../enum-service.service';
+import {EnumServiceService} from '../../../../../../services/enum-service.service';
 import {UtilService} from '../../../../../../services/util.service';
 import {AuthService} from '../../../../../../auth-service/authService';
 import {Chart} from 'angular-highcharts';
+import {EnumDataService} from "../../../../../../services/enum-data.service";
 
 export interface PeriodicElement {
   name: string;
@@ -33,7 +34,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class DashboardSubscriptionComponent implements OnInit {
   invoiceHisData: any;
   showLetsBeginData: any;
-  totalSaleRecived: any;
+  totalSaleReceived: any;
 
   constructor(private enumService: EnumServiceService,
               public subInjectService: SubscriptionInject, public eventService: EventService,
@@ -56,13 +57,13 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+
     this.initChart();
     this.getDashboardResponse();
     this.docSentSignedCountData();
     this.clientWithSubscription();
     this.invoiceToBeReviewed();
     this.getSummaryDataDashboard(null);
-    this.getDataForCreateService();
     this.getTotalRecivedByDash();
   }
 
@@ -71,7 +72,7 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.subService.getDashboardSubscriptionResponse(this.advisorId).subscribe(
       data => {
         this.showLetsBegin = data.show;
-        this.showLetsBeginData=data.advisorAccomplishedSubscriptionFinalList;
+        this.showLetsBeginData = data.advisorAccomplishedSubscriptionFinalList;
       }
     );
   }
@@ -109,7 +110,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   Open(state, data) {
     let feeMode;
     data.isCreateSub = true;
-    (data.subscriptionPricing.feeTypeId == 1)?feeMode = 'fixedModifyFees':feeMode = 'variableModifyFees';
+    (data.subscriptionPricing.feeTypeId == 1) ? feeMode = 'fixedModifyFees' : feeMode = 'variableModifyFees';
     const fragmentData = {
       Flag: feeMode,
       data,
@@ -128,7 +129,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   }
 
   openPlanSlider(value, state, data) {
-    (value=="billerSettings"|| value=='changePayee' || value=='SUBSCRIPTIONS')?value:(data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable'
+    (value == "billerSettings" || value == 'changePayee' || value == 'SUBSCRIPTIONS') ? value : (data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable'
     data.isCreateSub = false;
     const fragmentData = {
       Flag: value,
@@ -146,19 +147,22 @@ export class DashboardSubscriptionComponent implements OnInit {
       }
     );
   }
-  getTotalRecivedByDash(){
+
+  getTotalRecivedByDash() {
     let obj = {
-      advisorId : this.advisorId,
-      period : 0
+      advisorId: this.advisorId,
+      period: 0
     }
     this.subService.getTotalRecived(obj).subscribe(
       data => this.getTotalRecivedRes(data)
     );
   }
-  getTotalRecivedRes(data){
-    console.log('getTotalRecivedRes',data)
-    this.totalSaleRecived = data
+
+  getTotalRecivedRes(data) {
+    console.log('getTotalRecivedRes', data)
+    this.totalSaleReceived = data
   }
+
   showSubscriptionSteps() {
     this.showSubStep = true;
   }
@@ -310,30 +314,5 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   }
 
-  getDataForCreateService() {
-    const obj = {};
-    this.subService.getDataForCreateService(obj).subscribe(
-      data => {
-        console.log('data getDataForCreateService ', data);
-        const newJsonForConsumption = {
-          billingMode: [],
-          assetTypes: [],
-          feeTypes: [],
-          billingNature: [],
-          otherAssetTypes: [],
-          feeCollectionMode: []
-        };
-        newJsonForConsumption.billingNature = UtilService.convertObjectToArray(data.billingNature);
-        newJsonForConsumption.otherAssetTypes = UtilService.convertObjectToCustomArray(data.otherAssetTypes,
-          'subAssetClassName', 'subAssetClassId');
-        newJsonForConsumption.feeTypes = UtilService.convertObjectToArray(data.feeTypes);
-        newJsonForConsumption.assetTypes = UtilService.convertObjectToArray(data.assetTypes);
-        newJsonForConsumption.billingMode = UtilService.convertObjectToArray(data.billingMode);
-        newJsonForConsumption.feeCollectionMode = UtilService.convertObjectToArray(data.paymentModes);
-        console.log('data newJsonForConsumption ', newJsonForConsumption);
 
-        this.enumService.setGlobalEnumData(newJsonForConsumption);
-      }
-    );
-  }
 }

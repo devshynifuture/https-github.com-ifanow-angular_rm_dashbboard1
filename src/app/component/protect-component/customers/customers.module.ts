@@ -13,8 +13,10 @@ import { AccountModule } from './component/customer/accounts/account.module';
 // import { TransactionsComponent } from './component/common-component/transactions/transactions.component';
 
 
+
+
 @NgModule({
-  declarations: [],
+  declarations: [ ],
   imports: [
     // BrowserModule,
     CommonModule,

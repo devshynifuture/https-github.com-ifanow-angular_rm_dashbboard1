@@ -3,7 +3,7 @@ import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from 'src/app/auth-service/authService';
-import {EnumServiceService} from '../../enum-service.service';
+import {EnumServiceService} from '../../../../../../../services/enum-service.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material';
 import {INT_TYPE} from '@angular/compiler/src/output/output_ast';
@@ -644,7 +644,7 @@ export class InvoiceComponent implements OnInit {
     console.log(this.editPayment);
   }
   openSendEmail(input) {
-  
+
     const data = {
       advisorId: 2828,
       clientData: this.storeData,
@@ -679,7 +679,7 @@ export class InvoiceComponent implements OnInit {
           rightSideDataSub.unsubscribe();
         }
       }
-      
+
     );
   }
   OpenEmailUpper(data,value) {
@@ -697,7 +697,7 @@ export class InvoiceComponent implements OnInit {
           rightSideDataSub.unsubscribe();
         }
       }
-      
+
     );
   }
   deleteModal(value, data) {

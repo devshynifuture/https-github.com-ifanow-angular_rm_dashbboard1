@@ -46,6 +46,12 @@ export const appConfig = {
 
   /////////////////////////////Accounts///////////////////////////////////
   ADD_FIXEDDEPOSIT : 'account/asset/fixed-income/fixed-deposit/add',
+  ADD_LIFE_INSURANCE:'account/insurance/life-insurance/term/add',
+  GET_LIFE_INSURANCE:'account/insurance/list/get',
+  GET_INSURANCE_GLOBAL_API:'account/insurance/global/get',
+  ADD_LIABILITY:'account/liability/loan/add',
+  GET_LIABILITY:'account/liability/loan/list/get',
+  EDIT_FIXEDDEPOSIT:'account/asset/fixed-income/fixed-deposit/delete',
 
 ////////////////////////////// subscription////////////////////////////////////////////
 
@@ -124,6 +130,5 @@ export const appConfig = {
   GET_DOCUMENT_MAPPED_SERVICE: 'subscription/document/service/map/get',
   GET_TOTAL_SALE_RECIVED:'subscription/dashboard/totalsales/feerecieved/get',
   DELETE_SUB_SETTING_BILLER_PROFILE:'subscription/setting/billerprofile/delete',
-  ADD_LIFE_INSURANCE:'account/insurance/life-insurance/term/add',
   GET_BASE_64: 'api/v1/test/base64/decode'
 };

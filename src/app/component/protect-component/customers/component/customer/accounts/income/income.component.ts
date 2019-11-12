@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-income',
@@ -8,11 +10,47 @@ import { Component, OnInit } from '@angular/core';
 export class IncomeComponent implements OnInit {
   displayedColumns = ['no', 'owner', 'type', 'amt','income','till','rate','status','icons'];
   dataSource = ELEMENT_DATA;
-  constructor() { }
+  constructor( private subInjectService: SubscriptionInject) { }
   viewMode;
   ngOnInit() {
     this.viewMode="tab1"
   }
+  addIncome(flagValue){
+    const fragmentData = {
+      Flag: flagValue,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+    
+        }
+      }
+    );
+  }
+
+  addIncomeDetail(flagValue){
+    const fragmentData = {
+      Flag: flagValue,
+      id: 1,
+      state: 'openHelp'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+    
+        }
+      }
+    );
+  }
+ 
 
 }
 export interface PeriodicElement {
