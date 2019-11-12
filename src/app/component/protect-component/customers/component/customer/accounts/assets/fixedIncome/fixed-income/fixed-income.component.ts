@@ -104,7 +104,6 @@ export interface PeriodicElement4 {
   no: string;
   owner: string;
   type:string;
- 
   cdate:string;
   rate:string;
   amt:string;
