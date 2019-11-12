@@ -1,9 +1,24 @@
-import {animate, animateChild, group, query, style, transition, trigger} from '@angular/animations';
+import {
+  animate,
+  animateChild,
+  animation,
+  group,
+  query,
+  state,
+  style,
+  transition,
+  trigger,
+  useAnimation
+} from '@angular/animations';
 
+export let leftSlideInAnimation = animation([
+  style({left: '{{ from }}%'}),
+  animate('{{ time }}', style({left: '{{ to }}%'}))
+]);
 export const slideInAnimation =
   trigger('routeAnimations', [
     transition('LeftBar <=> ClientDetails', [
-      style({ position: 'relative' }),
+      style({position: 'relative'}),
       query(':enter, :leave', [
         style({
           position: 'absolute',
@@ -13,21 +28,21 @@ export const slideInAnimation =
         })
       ]),
       query(':enter', [
-        style({ left: '-100%'})
+        style({left: '-100%'})
       ]),
       query(':leave', animateChild()),
       group([
         query(':leave', [
-          animate('3000ms ease-out', style({ left: '100%'}))
+          animate('3000ms ease-out', style({left: '100%'}))
         ]),
         query(':enter', [
-          animate('3000ms ease-out', style({ left: '0%'}))
+          animate('3000ms ease-out', style({left: '0%'}))
         ])
       ]),
       query(':enter', animateChild()),
     ]),
     transition('* <=> FilterPage', [
-      style({ position: 'relative' }),
+      style({position: 'relative'}),
       query(':enter, :leave', [
         style({
           position: 'absolute',
@@ -37,17 +52,107 @@ export const slideInAnimation =
         })
       ]),
       query(':enter', [
-        style({ left: '-100%'})
+        style({left: '-100%'})
       ]),
       query(':leave', animateChild()),
       group([
         query(':leave', [
-          animate('2000ms ease-out', style({ left: '100%'}))
+          animate('2000ms ease-out', style({left: '100%'}))
         ]),
         query(':enter', [
-          animate('3000ms ease-out', style({ left: '0%'}))
+          animate('3000ms ease-out', style({left: '0%'}))
         ])
       ]),
       query(':enter', animateChild()),
     ])
   ]);
+
+export const dialogContainerOpacity = trigger('dialogContainer', [
+  state('open', style({
+    opacity: 0.25
+  })),
+  state('openHelp', style({
+    opacity: 0.25
+// width: '35%'
+  })),
+  state('close', style({
+    opacity: 0
+
+  })),
+  transition('close => open', [style({opacity: 0}),
+    animate(300, style({opacity: 0.25}))]),
+]);
+
+export const upperSliderAnimation = trigger('upperSliderOpenClose', [
+  state('open', style({
+    top: '0%'
+  })),
+  state('close', style({
+    // width:'0%'
+    top: '-100%'
+  })),
+
+  transition('close => open', [animate('0.3s')]),
+  transition('open => close', [animate('0.1s')]),
+  transition('close => openHelp', [animate('0.3s')]),
+  transition('openHelp => close', [animate('0.1s')])
+]);
+
+export const rightSliderAnimation = trigger('openClose', [
+  state('open', style({
+    left: '{{from}}%'
+  }), {params: {from: (100 - 60)}}),
+  state('open65', style({
+    left: '{{from}}%'
+  }), {params: {from: (100 - 65)}}),
+  state('open35', style({
+    left: '{{from}}%'
+  }), {params: {from: (100 - 35)}}),
+  state('open30', style({
+    left: '{{from}}%'
+  }), {params: {from: (100 - 30)}}),
+
+  state('close', style({
+    left: '100%'
+  })),
+  transition('close => open', [animate('0.3s')]),
+  transition('open => close', [animate('0.1s')]),
+
+  transition('close => open65', [animate('0.3s')]),
+  transition('open65 => close', [animate('0.1s')]),
+
+  transition('close => open35', [animate('0.3s')]),
+  transition('open35 => close', [animate('0.1s')]),
+
+  transition('close => open30', [animate('0.3s')]),
+  transition('open30 => close', [animate('0.1s')]),
+]);
+
+export const getRightSliderAnimation = (inputPercent) => {
+  return trigger('openClose', [
+    state('open', style({
+      left: '{{from}}%'
+    }), {params: {from: inputPercent}}),
+    state('close', style({
+      left: '100%'
+    })),
+
+    transition('close => open', [animate('0.3s')]),
+    transition('open => close', [animate('0.1s')])
+  ]);
+};
+/*transition('close => open', [useAnimation(leftSlideInAnimation, {
+    params: {
+      from: 40,
+      to: 100,
+      time: '1s'
+    }
+  })]),
+  transition('open => close', [useAnimation(leftSlideInAnimation, {
+    params: {
+      from: 100,
+      to: 40,
+      time: '1s'
+    }
+  })])*/
+

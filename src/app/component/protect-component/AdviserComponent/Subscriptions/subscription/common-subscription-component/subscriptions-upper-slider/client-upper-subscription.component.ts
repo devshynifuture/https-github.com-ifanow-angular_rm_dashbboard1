@@ -23,11 +23,11 @@ export interface PeriodicElement {
 
 @Component({
 
-  selector: 'app-subscriptions-upper-slider',
-  templateUrl: './subscriptions-upper-slider.component.html',
-  styleUrls: ['./subscriptions-upper-slider.component.scss']
+  selector: 'app-client-upper-subscription',
+  templateUrl: './client-upper-subscription.component.html',
+  styleUrls: ['./client-upper-subscription.component.scss']
 })
-export class SubscriptionsUpperSliderComponent implements OnInit {
+export class ClientUpperSubscriptionComponent implements OnInit {
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, public subscription: SubscriptionService) {
   }

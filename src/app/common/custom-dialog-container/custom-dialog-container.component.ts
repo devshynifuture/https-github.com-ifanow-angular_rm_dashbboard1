@@ -1,52 +1,15 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../animation/animation';
 
 @Component({
   selector: 'app-custom-dialog-container',
   templateUrl: './custom-dialog-container.component.html',
   styleUrls: ['./custom-dialog-container.component.scss'],
-  animations: [trigger('dialogContainer', [
-    state('open', style({
-      opacity: 0.25
-    })),
-    state('openHelp', style({
-      opacity: 0.25
-// width: '35%'
-    })),
-    state('close', style({
-      opacity: 0
-
-    })),
-    transition('close => open', [style({opacity: 0}),
-      animate(300, style({opacity: 0.25}))]),
-  ]), trigger('openClose', [
-    state('open', style({
-      left: '40%'
-    })),
-    state('openHelp', style({
-      left: '65%'
-    })),
-    state('close', style({
-      left: '100%'
-    })),
-
-    transition('close => open', [animate('0.3s')]),
-    transition('open => close', [animate('0.1s')])
-  ]),
-    trigger('upperSliderOpenClose', [
-      state('open', style({
-        top: '0%'
-      })),
-      state('close', style({
-        // width:'0%'
-        top: '-100%'
-      })),
-
-      transition('close => open', [animate('0.3s')]),
-      transition('open => close', [animate('0.1s')]),
-      transition('close => openHelp', [animate('0.3s')]),
-      transition('openHelp => close', [animate('0.1s')])
-    ])
+  animations: [
+    dialogContainerOpacity,
+    rightSliderAnimation,
+    // getRightSliderAnimation(40),
+    upperSliderAnimation
   ]
 })
 export class CustomDialogContainerComponent implements OnInit {
