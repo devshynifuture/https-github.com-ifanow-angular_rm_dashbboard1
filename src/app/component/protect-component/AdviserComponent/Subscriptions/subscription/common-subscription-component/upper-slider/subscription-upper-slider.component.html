@@ -1,4 +1,3 @@
-
 <div class="dialogclose">
   <div class="row popup-header-fix-100">
     <div class="col-md-2 border-right-1 p-0">
@@ -25,7 +24,7 @@
 <div *ngIf="fragmentData&&fragmentData.Flag==='plan'" class="row">
   <div class="col-md-12 p-0">
     <mat-tab-group (selectedTabChange)="tabClick($event)" animationDuration="0ms" class="popup-header-fix-tabs"
-                   mat-align-tabs="center">
+      mat-align-tabs="center">
       <mat-tab #tab delay="500" label="OVERVIEW" placement="left" tooltip="tootip on left">
         <ng-template matTabContent>
           <app-overview [componentFlag]='Flag' [upperData]="upperData"></app-overview>
@@ -48,7 +47,7 @@
 <div *ngIf="fragmentData.Flag=='services'" class="row z-value-100">
   <div class="col-md-12 p-0">
     <mat-tab-group (selectedTabChange)="tabClick($event)" [selectedIndex]="selectedServiceTab" animationDuration="0ms"
-                   class="popup-header-fix-tabs" mat-align-tabs="center">
+      class="popup-header-fix-tabs" mat-align-tabs="center">
       <mat-tab label="FEE STRUCTURE">
         <!--(serviceEvent)="serviceId=$event"-->
         <app-fee-structure [upperData]="upperData"></app-fee-structure>
@@ -81,16 +80,14 @@
           <app-overview [upperData]="upperData"></app-overview>
         </ng-template>
       </mat-tab>
-      <mat-tab label="PLANS"
-               *ngIf="upperData && upperData.documentData && upperData.documentData.mappedType == 1">
+      <mat-tab label="PLANS" *ngIf="upperData && upperData.documentData && upperData.documentData.mappedType == 1">
         <ng-template matTabContent>
           <app-plans [componentFlag]='"plans"' [upperData]="upperData"></app-plans>
         </ng-template>
       </mat-tab>
-      <mat-tab label="SERVICES"
-               *ngIf="upperData && upperData.documentData && upperData.documentData.mappedType == 2">
+      <mat-tab label="SERVICES" *ngIf="upperData && upperData.documentData && upperData.documentData.mappedType == 2">
         <ng-template matTabContent>
-            <app-services [componentFlag]='"services"' [upperData]="upperData"></app-services>
+          <app-services [componentFlag]='"services"' [upperData]="upperData"></app-services>
         </ng-template>
       </mat-tab>
 
@@ -101,11 +98,11 @@
   <div class="col-md-12 p-0 popup-header-fix-tabs">
 
     <mat-tab-group (selectedTabChange)="tabClick($event)" [selectedIndex]="selectedServiceTab" animationDuration="0ms"
-                   mat-align-tabs="center">
+      mat-align-tabs="center">
 
       <mat-tab label="SUBSCRIPTIONS">
-        <app-subscriptions-upper-slider [upperData]="fragmentData.clientData">
-        </app-subscriptions-upper-slider>
+        <app-client-upper-subscription [upperData]="fragmentData.clientData">
+        </app-client-upper-subscription>
       </mat-tab>
       <mat-tab label="QUOTATIONS">
         <!--                  <div class="wrapper-20 bg-grey lter heading-fix">-->
@@ -122,8 +119,7 @@
       </mat-tab>
       <mat-tab label="DOCUMENTS">
         <app-document *ngIf="subscriptionTab=='DOCUMENTS'" [clientData]="fragmentData.clientData"
-                      [componentFlag]='clientDocuments'
-                      [upperData]="fragmentData.clientData">
+          [componentFlag]='clientDocuments' [upperData]="fragmentData.clientData">
         </app-document>
       </mat-tab>
       <mat-tab label="SETTINGS">
@@ -138,44 +134,44 @@
 
   <!--<div [@upperRightSlider]="State" class="right_sidenav">-->
   <app-add-structure (planOuputData)="upperData=$event" [planData]="upperRightSideInputData.data"
-                     *ngIf="rightSliderFlag=='addPlanDetails'"></app-add-structure>
+    *ngIf="rightSliderFlag=='addPlanDetails'"></app-add-structure>
   <app-plan-rightslider [clientData]="fragmentData.clientData" *ngIf="rightSliderFlag=='planRightSlider'">
   </app-plan-rightslider>
   <app-email-quotation [headerData]="headerData" *ngIf="rightSliderFlag=='eSignQuotations'"></app-email-quotation>
   <app-invoice [data]="upperRightSideInputData.data" [invoiceTab]="rightSliderFlag"
-               *ngIf="rightSliderFlag=='invoiceUpperSlider'"></app-invoice>
+    *ngIf="rightSliderFlag=='invoiceUpperSlider'"></app-invoice>
   <app-payee-settings [data]="upperRightSideInputData" *ngIf="rightSliderFlag=='payeeSettings'"></app-payee-settings>
   <app-email-quotation [headerDataDocuments]="headerDataDocuments" *ngIf="rightSliderFlag=='eSignDocument'">
   </app-email-quotation>
   <app-create-subscription [data]="upperRightSideInputData" [subFeeMode]="rightSliderFlag"
-                           *ngIf="rightSliderFlag=='createSubFixed' || rightSliderFlag=='createSubVariable'"></app-create-subscription>
+    *ngIf="rightSliderFlag=='createSubFixed' || rightSliderFlag=='createSubVariable'"></app-create-subscription>
   <app-add-variable-fee [variableFee]="upperRightSideInputData.data" (outputVariableData)="upperData=$event"
-                        *ngIf="rightSliderFlag=='varibleFee'"></app-add-variable-fee>
+    *ngIf="rightSliderFlag=='varibleFee'"></app-add-variable-fee>
   <app-add-fixed-fee [fixedFee]="upperRightSideInputData.data" (outputFixedData)="upperData=$event"
-                     *ngIf="rightSliderFlag=='fixedFee'"></app-add-fixed-fee>
+    *ngIf="rightSliderFlag=='fixedFee'"></app-add-fixed-fee>
   <app-add-edit-document [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='addEditDocument'"
-                         [fragmentData]="fragmentData"></app-add-edit-document>
+    [fragmentData]="fragmentData"></app-add-edit-document>
   <app-biller-settings [clientData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='billerSettings'">
   </app-biller-settings>
   <app-fixed-fee [data]="upperRightSideInputData" *ngIf="rightSliderFlag=='fixedModifyFees'"></app-fixed-fee>
   <app-variable-fee [data]="upperRightSideInputData" *ngIf="rightSliderFlag=='variableModifyFees'"></app-variable-fee>
 
-  <app-change-payee [upperData]="upperRightSideInputData.data"
-                    *ngIf="rightSliderFlag=='changePayee'"></app-change-payee>
+  <app-change-payee [upperData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='changePayee'">
+  </app-change-payee>
   <app-email-quotation [headerDataInvoice]="headerDataInvoice" *ngIf="rightSliderFlag=='eSignInvoices'">
   </app-email-quotation>
   <app-email-quotation [headerData]="headerData" *ngIf="rightSliderFlag=='emailQuot'"></app-email-quotation>
-  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnly'"
-  ></app-email-only>
+  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnly'"></app-email-only>
   <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnlyDoc'"></app-email-only>
   <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnlyInv'"></app-email-only>
-  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailInvoiceFroala'"></app-email-only>
+  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailInvoiceFroala'">
+  </app-email-only>
 
   <app-common-froala [data]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='viewQuotation'"
-                     [changeFooter]='rightSliderFlag'></app-common-froala>
+    [changeFooter]='rightSliderFlag'></app-common-froala>
 
   <!--  <app-common-froala [data]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='viewQuotation'"></app-common-froala>-->
-  <app-common-froala  [data]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='viewDocuments'" ></app-common-froala>
+  <app-common-froala [data]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='viewDocuments'"></app-common-froala>
   <!--  (valueChange)='display($event)'-->
   <!--</div>-->
 </app-custom-dialog-container>

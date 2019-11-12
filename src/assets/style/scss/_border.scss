@@ -17,7 +17,9 @@
 .b-t {
     border-top: 1px solid #dee5e7 !important;
 }
-
+.ba-trans{
+    border-top: 1px solid transparent !important;
+}
 .br {
     border-right: 1px solid #dee5e7 !important;
 }
@@ -113,6 +115,7 @@
 .br-50 {
     border-radius: 50%;
 }
+
 .b-primitive{
     border:1px solid #83959D;
 }

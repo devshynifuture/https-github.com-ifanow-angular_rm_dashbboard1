@@ -50,7 +50,7 @@ input.mat-input-element:focus{
 //     margin-bottom: 0 !important;
 // }
 .form-control{
-    border: 1px solid #E8ECEF !important
+    border:1px solid rgba(25, 25, 25, 0.32) !important
 }
 #custom-radio{
     .mat-radio-label{
@@ -72,4 +72,18 @@ input.mat-input-element:focus{
 }
 .mat-form-field-infix{
     border-top: 0px !important;
+}
+.mat-form-field-subscript-wrapper{
+    padding-right: 8px !important;
+    padding-left: 8px !important;
+}
+.mat-form-field-appearance-legacy .mat-hint{
+    color: #757575 !important; 
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+}
+.mat-datepicker-toggle{
+    position: absolute;
+    float: right;
+    right: 4%;
 }

@@ -36,6 +36,7 @@
           <div class="wrapper-8">
             <div class="row">
               <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
+                 
                 <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
                   Overview Report
                   <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
@@ -50,15 +51,17 @@
                 </mat-menu>
               </div>
             </div>
+           
             <div class="row">
               <div class="col-md-4 p-0">
                 <h4 class="m-0 text-black roboto">Mutual fund overview</h4>
+               
               </div>
               <div class="col-md-8 p-0 right text-right">
                 <img src="assets/images/svg/download-bordered.svg" class="c-p">
                 <img src="assets/images/svg/up-down.svg" class="c-p">
                 <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
-                <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i class="material-icons">filter_list</i>FILTERS</button>
+                <button mat-stroked-button class="btn-default addon mr-12 v-middle" (click)="openFragment('rightFilter')"><i class="material-icons">filter_list</i>FILTERS</button>
                 <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"><i class="material-icons">add</i>ADD NEW</button>
                 <mat-menu #menu1="matMenu" class="add-new">
                   <button (click)="openPortfolioSummary('portfolioSummary','open')" mat-menu-item class="b-b">
