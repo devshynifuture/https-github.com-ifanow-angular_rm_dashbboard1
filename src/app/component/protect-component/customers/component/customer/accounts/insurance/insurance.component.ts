@@ -57,7 +57,8 @@ export class InsuranceComponent implements OnInit {
     )
   }
   getInsuranceDataResponse(data) {
-    this.dataSource=data.insuranceList
+
+    (this.insuranceTypeId==1)?this.dataSource=data.insuranceList:console.log("general insurance")
     console.log("Insurance Data",data)
   }
   
@@ -91,6 +92,10 @@ export class InsuranceComponent implements OnInit {
         this.generalLifeInsuranceList.push(i)
       })
     }
+  }
+  editInsurance(data)
+  {
+    console.log(data)
   }
   logAnimation(event)
   {

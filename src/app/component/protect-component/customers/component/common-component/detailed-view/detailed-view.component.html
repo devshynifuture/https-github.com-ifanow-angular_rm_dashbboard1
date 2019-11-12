@@ -1,0 +1,182 @@
+<!-- <div class="popup-header-fix-60">
+    <div class="row bb-1">
+        <div class="col-md-7 p-0">
+            <h4 class="mb-0 wrapper-20"> LIC Jeevan Saral | 9090889898 | Aryan Jain </h4>
+        </div>
+        <div class="col-md-5 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p v-middle" (click)="close()"> clear</i>
+            </div>
+        </div>
+    </div>
+
+
+
+<div class=" pl-24 pr-24 pb-24">
+    <div class="row pt-8">
+        <div class="col-md-6">
+            <div class="insurance-ui">
+                <div class="lter">
+                    <h5 class="m-0 wrapper-8 f-16 f-500 pl-0 bb-0"> Policy details </h5>
+                </div>
+                <table mat-table [dataSource]="dataSource" class="documentsTable" id="table-low">
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="amountTable">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td class="text-right" mat-cell *matCellDef="let element"> {{element.amountTable}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <div class="col-md-12 text-right mt-4 p-0">
+                    <p class="f-12 text-primitive m-0">
+                        Updated: 04/09/2019
+                    </p>
+                </div>
+            </div>
+
+            <div class="insurance-ui">
+                <div class="lter">
+                    <h5 class="m-0 wrapper-8 f-16 f-500 pl-0 bb-0"> Loan details </h5>
+                </div>
+                <table mat-table [dataSource]="dataSource2" class="documentsTable" id="table-low">
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="amountTable">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td class="text-right" mat-cell *matCellDef="let element"> {{element.amountTable}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                </table>
+                <div class="col-md-12 text-right mt-4 p-0">
+                    <p class="f-12 text-primitive m-0">
+                        Updated: 04/09/2019
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="insurance-ui">
+                <div class="lter">
+                    <h5 class="m-0 wrapper-8 f-16 f-500 pl-0 bb-0"> Miscellaneous details </h5>
+                </div>
+                <table mat-table [dataSource]="dataSource2" class="documentsTable" id="table-low">
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="amountTable">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td class="text-right" mat-cell *matCellDef="let element"> {{element.amountTable}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                </table>
+                <div class="col-md-12 text-right mt-4 p-0">
+                    <p class="f-12 text-primitive m-0">
+                        Updated: 04/09/2019
+                    </p>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col-md-6 ">
+            <div class="insurance-ui">
+                <div class="lter">
+                    <h5 class="m-0 wrapper-8 f-16 f-500 pl-0 bb-0"> Key details </h5>
+                </div>
+                <table mat-table [dataSource]="dataSource1" class="documentsTable" id="table-low">
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="amountTable">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td class="text-right" mat-cell *matCellDef="let element"> {{element.amountTable}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                </table>
+                <div class="col-md-12 text-right mt-4 p-0">
+                    <p class="f-12 text-primitive m-0">
+                        Updated: 04/09/2019
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="miscellaneous_table">
+                <div class="lter">
+                    <h5 class="m-0 wrapper-8 f-16 f-500 bb-0"> Miscellaneous details </h5>
+                </div>
+                <table mat-table [dataSource]="dataSource3" class="documentsTable" id="table-low">
+                    <ng-container matColumnDef="tpye">
+                        <th mat-header-cell *matHeaderCellDef> Type </th>
+                        <td mat-cell *matCellDef="let element"> {{element.tpye}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="year">
+                        <th mat-header-cell *matHeaderCellDef> Year </th>
+                        <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="amountTable">
+                        <th class="text-right" mat-header-cell *matHeaderCellDef> Amount </th>
+                        <td class="text-right" mat-cell *matCellDef="let element"> {{element.amountTable}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+                </table>
+                <div class="col-md-12 text-right mt-4 p-0">
+                    <p class="f-12 text-primitive m-0">
+                        Updated: 04/09/2019
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="insurance-ui">
+                <div class="lter">
+                    <h5 class="m-0 wrapper-8 f-16 f-500 bb-0"> Riders </h5>
+                </div>
+                <table mat-table [dataSource]="dataSource1" class="documentsTable" id="table-low">
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="amountTable">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td class="text-right" mat-cell *matCellDef="let element"> {{element.amountTable}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                </table>
+                <div class="col-md-12 text-right mt-4 p-0">
+                    <p class="f-12 text-primitive m-0">
+                        Updated: 04/09/2019
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+</div> -->

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, Optional } from '@angular/core';
 import { SubjectSubscriber } from 'rxjs/internal/Subject';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -50,15 +50,21 @@ export class AddInsuranceComponent implements OnInit {
   ispremiumPayingTerm: any;
   ispolicyStatus: any;
   ispolicyStatusLastUnpaid: any;
+  editInsuranceData: any;
+  insuranceId: any;
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) { }
   addMoreFlag;
   @ViewChild('chnageScrollPosition', { static: false }) eleRef: ElementRef
+  @Input() set insuranceData(data)
+  {
+    this.setInsuranceDataFormField(data)
+  }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.addMoreFlag = false
     this.setValidations(false)
   }
-
+  
   lifeInsuranceForm = this.fb.group({
     lifeAssured: ['', [Validators.required]],
     proposer: ['', [Validators.required]],
@@ -100,6 +106,54 @@ export class AddInsuranceComponent implements OnInit {
   })
   getLifeInsuranceFormFields(controlName) {
     return this.lifeInsuranceForm.get(controlName).value
+  }
+  setInsuranceDataFormField(data)
+  {
+    console.log(data)
+    this.editInsuranceData=data
+    if(data==undefined)
+    {
+      return;
+    }
+    else{
+      // requiredFields
+      this.insuranceId=data.id
+      this.lifeInsuranceForm.controls.lifeAssured.setValue(data.lifeAssuredName)
+      this.lifeInsuranceForm.controls.proposer.setValue('')
+      this.lifeInsuranceForm.controls.policyName.setValue(data.policyName)
+      this.lifeInsuranceForm.controls.policyNum.setValue(data.policyNumber)
+      this.lifeInsuranceForm.controls.commencementDate.setValue(data.commencementDate)
+      this.lifeInsuranceForm.controls.sumAssured.setValue(data.sumAssured)
+      this.lifeInsuranceForm.controls.premiumDetailsAmount.setValue(data.premiumAmount)
+      this.lifeInsuranceForm.controls.premiumDetailsFrequency.setValue(String(data.frequency))
+      this.lifeInsuranceForm.controls.tenureDetailsPolicy.setValue(data.policyTenure)
+      this.lifeInsuranceForm.controls.premiumPayingTerm.setValue(data.premiumPayingTerm)
+      this.lifeInsuranceForm.controls.policyStatus.setValue(String(data.policyStatusId))
+      this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue('')
+
+      // OptionalFields
+
+      this.keyDetailsForm.controls.riskCover.setValue(data.riskCover)
+      this.keyDetailsForm.controls.surrenderName.setValue(data.surrenderValue)
+      this.keyDetailsForm.controls.nomineeName.setValue(data.nominee)
+      this.keyDetailsForm.controls.vestedBonus.setValue(data.vestedBonus)
+      // this.keyDetailsForm.controls.assumedRate.setValue(data)
+
+      this.ridersForm.controls.accidentalBenefit.setValue(data.ridersAccidentalBenifits)
+      this.ridersForm.controls.doubleAccidental.setValue(data.ridersDoubleAccidentalBenefit)
+      this.ridersForm.controls.termWaiver.setValue(data.ridersTermWaiver)
+      this.ridersForm.controls.criticalIlleness.setValue(data.ridersCriticalIllness)
+      this.ridersForm.controls.premiumWaiver.setValue(data.ridersPremiumWaiver)
+      this.ridersForm.controls.femaleCriticalIlleness.setValue(data.ridersFemaleCriticalIllness)
+
+      this.loanDetailsForm.controls.loanAvailable.setValue(data.loanAvailable)
+      this.loanDetailsForm.controls.loanTaken.setValue(data.loanTaken)
+      this.loanDetailsForm.controls.loanTakenOn.setValue(data.loanTakenOn)
+      
+      this.Miscellaneous.controls.permiumPaymentMode.setValue(data.premiumPaymentMode)
+      this.Miscellaneous.controls.advisorName.setValue(data.advisorName)
+      this.Miscellaneous.controls.serviceBranch.setValue(data.serviceBranch)
+    }
   }
   setValidations(flag) {
     this.islifeAssured = flag
@@ -170,10 +224,10 @@ export class AddInsuranceComponent implements OnInit {
       return
     }
     else {
-      const obj = {
+      let obj = {
         "familyMemberIdLifeAssured": 112233,
         "familyMemberIdProposer": 112233,
-        "clientId": 555111,
+        "clientId": 2978,
         "advisorId": this.advisorId,
         "ownerName": "swapnil",
         "commencementDate": this.getLifeInsuranceFormFields('commencementDate'),
@@ -200,17 +254,28 @@ export class AddInsuranceComponent implements OnInit {
         "ridersFemaleCriticalIllness": this.ridersForm.get('femaleCriticalIlleness').value,
         "loanAvailable":this.loanDetailsForm.get('loanAvailable').value,
         "loanTaken": this.loanDetailsForm.get('loanTaken').value,
-        "loanTakenOn": "2019-12-12",
+        "loanTakenOn": this.loanDetailsForm.get('loanTakenOn').value,
         "premiumPaymentMode":this.Miscellaneous.get('permiumPaymentMode').value,
         "advisorName":this.Miscellaneous.get('advisorName').value,
         "serviceBranch":this.Miscellaneous.get('serviceBranch').value,
         "policyName": this.getLifeInsuranceFormFields('policyName'),
         "policyTypeId": 1,
-        "policyNumber": this.getLifeInsuranceFormFields('policyNum')
+        "id":'',
+        "policyNumber": this.getLifeInsuranceFormFields('policyNum'),
+        
       }
-      this.customerService.addLifeInsurance(obj).subscribe(
-        data => console.log(data)
-      )
+      if(this.editInsuranceData)
+      {
+        obj.id=this.insuranceId;
+       this.customerService.editLifeInsuranceData(obj).subscribe(
+         data=>console.log(data)
+       )
+      }
+      else{
+        this.customerService.addLifeInsurance(obj).subscribe(
+          data => console.log(data)
+        )    
+      }
     }
   }
   close() {
