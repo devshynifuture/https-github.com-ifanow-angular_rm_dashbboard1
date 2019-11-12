@@ -42,4 +42,13 @@ export class CustomerService {
     let httpParams=new HttpParams();
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIST_FAMILY_MEMBER,data)
   }
+  getFixedDeposit(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FIXEDDEPOSIT,data)
+  }
+  getRecurringDeposit(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_RECURING_DEPOSIT,data)
+  }
+  getBonds(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BONDS,data)
+  }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../../customer.service';
 import { Validators, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-owner-component',
@@ -9,27 +10,33 @@ import { Observable } from 'rxjs';
   styleUrls: ['./owner-component.component.scss']
 })
 export class OwnerComponentComponent implements OnInit {
+  
   isownerName = false;
   fixedDeposit: any;
   s: string[] = ['Sneha', 'gayatri', 'Shivani'];
+  family: string[];
+  advisorId: any;
 
-  family: Observable<string[]>;
   constructor(private fb: FormBuilder,private custumService : CustomerService) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.getListFamilyMem()
     this.getdataForm()
+    this.family = this.s;
   }
 getListFamilyMem(){
   let obj = {
-    clientId : 2980
+    advisorId:this.advisorId,
+    clientId : 2978
   }
   this.custumService.getListOfFamilyByClient(obj).subscribe(
     data => this.getListOfFamilyByClientRes(data)
   );
 }
 getListOfFamilyByClientRes(data){
-
+console.log('family Memebers',data)
+this.family = data.familyMembersList
 }
 getdataForm(){
   this.fixedDeposit = this.fb.group({
