@@ -20,7 +20,6 @@ import { map, startWith } from 'rxjs/operators';
   ],
 })
 export class FixedDepositComponent implements OnInit {
-  myControl = new FormControl();
   showHide = false;
   isownerName = false;
   showTenure = false;
@@ -57,6 +56,7 @@ export class FixedDepositComponent implements OnInit {
     { name: 'Semi annually ', value: 4 },
     { name: 'Annually', value: 5 }
   ]
+  ownerData: any;
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
   @Input()
   set data(data) {
@@ -119,17 +119,17 @@ export class FixedDepositComponent implements OnInit {
       amountInvest: [(data == undefined) ? '' : data.amountInvested, [Validators.required]],
       commencementDate: [(data == undefined) ? '' : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(data == undefined) ? '' : data.interestRate, [Validators.required]],
-      compound: [(data == undefined)?'':(data.interestCompoundingId), [Validators.required]],
+      compound: [(data == undefined)?'':(data.interestCompoundingId)+"", [Validators.required]],
       institution: [(data == undefined) ? '' : data.institutionName, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       tenure: [(data == undefined) ? '' : data.tenure, [Validators.required]],
       maturity: [(data == undefined) ? '' : data.frequencyOfPayoutPerYear, [Validators.required]],
       maturityDate: [(data == undefined) ? '' : new Date(data.maturityDate), [Validators.required]],
-      payOpt: [(data == undefined) ? '' : (data.interestPayoutOption) ,[Validators.required]],
+      payOpt: [(data == undefined) ? '' : (data.interestPayoutOption)+"" ,[Validators.required]],
       bankACNo: [(data == undefined) ? '' : data.bankACNo, [Validators.required]],
-      ownerType: [(data == undefined) ? '' : (data.ownerType), [Validators.required]],
+      ownerType: [(data == undefined) ? '' : (data.ownerType)+"", [Validators.required]],
       fdNo: [(data == undefined) ? '' : data.fdNumber, [Validators.required]],
-      FDType: [(data == undefined) ? '' : (data.fdType), [Validators.required]],
+      FDType: [(data == undefined) ? '' : (data.fdType)+"", [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]]
     });
 
@@ -137,7 +137,7 @@ export class FixedDepositComponent implements OnInit {
     this.getFormControl().description.maxLength = 60;
     this.getFormControl().fdNo.maxLength = 10;
     this.getFormControl().bankACNo.maxLength = 15;
-    this.compoundValue = this.fixedDeposit.controls.compound.value
+    this.ownerData = this.fixedDeposit.controls;
   }
   getFormControl(): any {
     return this.fixedDeposit.controls;

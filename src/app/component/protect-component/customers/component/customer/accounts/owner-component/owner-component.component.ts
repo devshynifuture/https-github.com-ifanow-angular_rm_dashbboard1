@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CustomerService } from '../../customer.service';
 import { Validators, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -10,22 +10,32 @@ import { AuthService } from 'src/app/auth-service/authService';
   styleUrls: ['./owner-component.component.scss']
 })
 export class OwnerComponentComponent implements OnInit {
-  
+
   isownerName = false;
   fixedDeposit: any;
   s: string[] = ['Sneha', 'gayatri', 'Shivani'];
   family: string[];
   advisorId: any;
+  ownerData: any;
 
   constructor(private fb: FormBuilder,private custumService : CustomerService) { }
+  @Input()
+  set data(data) {
+    this.ownerData = data;
+    this.getListFamilyMem(data);
+  }
 
+  get data() {
+    return this.ownerData;
+  }
   ngOnInit() {
+    console.log('ownerData',this.ownerData)
     this.advisorId = AuthService.getAdvisorId();
-    this.getListFamilyMem()
+    this.getListFamilyMem('')
     this.getdataForm()
     this.family = this.s;
   }
-getListFamilyMem(){
+getListFamilyMem(data){
   let obj = {
     advisorId:this.advisorId,
     clientId : 2978
