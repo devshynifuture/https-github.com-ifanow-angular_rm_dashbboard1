@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
+import { UpperCustomerComponent } from '../../../common-component/upper-customer/upper-customer.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-assets',
@@ -10,7 +12,7 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class AssetsComponent implements OnInit {
 
-  constructor(private subInjectService:SubscriptionInject,private eventService:EventService) {
+  constructor(private subInjectService:SubscriptionInject,private eventService:EventService,public dialog: MatDialog) {
   }
   private loadComponent = false;
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
@@ -80,6 +82,23 @@ datasource23 = ELEMENT_DATA23;
   ngOnInit() {
     this.viewMode="tab1"
     
+  }
+  openFragment(value) {
+    const fragmentData = {
+      Flag:value,
+      id: 1,
+      state: 'openHelp'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
   }
 
   getPrefixData(type) {
