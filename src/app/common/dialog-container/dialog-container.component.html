@@ -29,7 +29,7 @@
     <app-add-liabilities *ngIf="subscriptionTab=='addLib'"></app-add-liabilities>
 
     <app-add-liabilities [inputData]="inputData" *ngIf="subscriptionTab=='addLiabilities'"></app-add-liabilities>
-    <app-add-insurance *ngIf="subscriptionTab=='addInsurance'"></app-add-insurance>
+    <app-add-insurance [insuranceData]="fragmentData.data" *ngIf="subscriptionTab=='addInsurance'"></app-add-insurance>
     <app-libilities-right *ngIf="subscriptionTab=='portfolioSummary'"></app-libilities-right>
     <app-fixed-deposit *ngIf="subscriptionTab=='addFixedDeposit'"></app-fixed-deposit>
     <app-recuring-deposit *ngIf="subscriptionTab=='addRecuringDeposit'"></app-recuring-deposit>
