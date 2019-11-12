@@ -27,7 +27,7 @@ import {AddStructureComponent} from './subscription/common-subscription-componen
 import {ModulesComponent} from './subscription/common-subscription-component/modules/modules.component';
 import {PlansComponent} from './subscription/common-subscription-component/plans/plans.component';
 import {InvoicePdfDocumentComponent} from './subscription/invoices-subscription/invoice-pdf-document/invoice-pdf-document.component';
-import {SubscriptionsUpperSliderComponent} from './subscription/common-subscription-component/subscriptions-upper-slider/subscriptions-upper-slider.component';
+import {ClientUpperSubscriptionComponent} from './subscription/common-subscription-component/subscriptions-upper-slider/client-upper-subscription.component';
 import {DashboardSubscriptionComponent} from './subscription/dashboard-subscription/dashboard-subscription.component';
 import {SubscriptionsSubscriptionComponent} from './subscription/subscriptions-subscription/subscriptions-subscription.component';
 import {ClientSubscriptionComponent} from './subscription/client-subscription/client-subscription.component';
@@ -48,7 +48,7 @@ import {FeeStructureComponent} from './subscription/common-subscription-componen
 import {DocumentComponent} from './subscription/common-subscription-component/document/document.component';
 import {OverviewComponent} from './subscription/common-subscription-component/overview/overview.component';
 import {PreferencesSettingsComponent} from './subscription/settings-subscription/preferences-settings/preferences-settings.component';
-import {UpperSliderComponent} from './subscription/common-subscription-component/upper-slider/upper-slider.component';
+import {SubscriptionUpperSliderComponent} from './subscription/common-subscription-component/upper-slider/subscription-upper-slider.component';
 import {PlansSettingsComponent} from './subscription/settings-subscription/plans-settings/plans-settings.component';
 import {SettingsSubscriptionComponent} from './subscription/settings-subscription/settings-subscription.component';
 import {BrowserModule} from '@angular/platform-browser';
@@ -76,7 +76,7 @@ export const componentList = [SubscriptionComponent,
   QuotationsComponent,
   InvoicesComponent,
   SettingsComponent,
-  SubscriptionsUpperSliderComponent,
+  ClientUpperSubscriptionComponent,
   HelpComponent,
   InvoiceComponent,
   DocumentsSubscriptionsComponent,
@@ -90,7 +90,7 @@ export const componentList = [SubscriptionComponent,
   ServicesSettingsComponent,
   DocumentsSettingsComponent,
   PreferencesSettingsComponent,
-  UpperSliderComponent,
+  SubscriptionUpperSliderComponent,
   OverviewComponent,
   ServicesComponent,
   DocumentComponent,

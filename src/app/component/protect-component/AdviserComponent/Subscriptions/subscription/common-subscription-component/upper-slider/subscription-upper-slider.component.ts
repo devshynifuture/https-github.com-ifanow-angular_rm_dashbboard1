@@ -4,12 +4,12 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 
 @Component({
-  selector: 'app-upper-slider',
-  templateUrl: './upper-slider.component.html',
-  styleUrls: ['./upper-slider.component.scss']
+  selector: 'app-subscription-upper-slider',
+  templateUrl: './subscription-upper-slider.component.html',
+  styleUrls: ['./subscription-upper-slider.component.scss']
 })
 
-export class UpperSliderComponent implements OnInit {
+export class SubscriptionUpperSliderComponent implements OnInit {
   fragmentData;
   selectedServiceTab = 0;
   upperRightSideInputData;
