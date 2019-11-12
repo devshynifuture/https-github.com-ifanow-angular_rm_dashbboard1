@@ -29,9 +29,8 @@
                         class="form-control br-0">
                     <div class="row">
                         <div class="col-md-10">
-                            <mat-error class="f-12 pt-4"
-                                [ngClass]="{'v-h':!(islifeAssured && lifeInsuranceForm.get('lifeAssured').invalid || (lifeInsuranceForm.get('lifeAssured').touched && lifeInsuranceForm.get('lifeAssured').invalid))}">
-                                </mat-error>
+                            <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(islifeAssured && lifeInsuranceForm.get('lifeAssured').invalid || (lifeInsuranceForm.get('lifeAssured').touched && lifeInsuranceForm.get('lifeAssured').invalid))}">This field is required
+                            </mat-error>
                         </div>
                         <div class="col-md-2">
                             <mat-hint class="f-12">{{lifeassured.value.length}}/40</mat-hint>
@@ -53,7 +52,8 @@
                     <div class="row">
                         <div class="col-md-10">
                             <mat-error [ngClass]="{'v-h':!(isproposer && lifeInsuranceForm.get('proposer').invalid || (lifeInsuranceForm.get('proposer').touched && lifeInsuranceForm.get('proposer').invalid))}"
-                                class="f-12 pt-4">sasidl</mat-error>
+                                class="f-12 pt-4">This field is required
+                            </mat-error>
                         </div>
                         <div class="col-md-2">
                             <mat-hint class="f-12">{{proposer.value.length}}/40</mat-hint>
@@ -76,7 +76,8 @@
                         class="form-control br-0">
                     <div class="row">
                         <div class="col-md-10">
-                            <mat-error [ngClass]="{'v-h':!(ispolicyName && lifeInsuranceForm.get('policyName').invalid || (lifeInsuranceForm.get('policyName').touched && lifeInsuranceForm.get('policyName').invalid))}" class="f-12 pt-4">sasidl</mat-error>
+                            <mat-error [ngClass]="{'v-h':!(ispolicyName && lifeInsuranceForm.get('policyName').invalid || (lifeInsuranceForm.get('policyName').touched && lifeInsuranceForm.get('policyName').invalid))}" class="f-12 pt-4">This field is required
+                            </mat-error>
                         </div>
                         <div class="col-md-2">
                             <mat-hint class="f-12">{{policyname.value.length}}/40</mat-hint>
@@ -93,11 +94,12 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
 
-                    <input matInput type="number" formControlName="policyNum" #policynumber autocomplete="off"
+                    <input matInput formControlName="policyNum" #policynumber autocomplete="off"
                         class="form-control br-0">
                     <div class="row">
                         <div class="col-md-10">
-                            <mat-error [ngClass]="{'v-h':!(ispolicyNum && lifeInsuranceForm.get('policyNum').invalid || (lifeInsuranceForm.get('policyNum').touched && lifeInsuranceForm.get('policyNum').invalid))}" class="f-12 pt-4">sasidl</mat-error>
+                            <mat-error [ngClass]="{'v-h':!(ispolicyNum && lifeInsuranceForm.get('policyNum').invalid || (lifeInsuranceForm.get('policyNum').touched && lifeInsuranceForm.get('policyNum').invalid))}" class="f-12 pt-4">This field is required
+                            </mat-error>
                         </div>
                         <div class="col-md-2">
                             <mat-hint class="f-12">{{policynumber.value.length}}/40</mat-hint>
@@ -123,7 +125,8 @@
                         [matDatepicker]="CommencementPicker">
                     <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
                     <mat-datepicker #CommencementPicker></mat-datepicker>
-                    <!-- <mat-error>sadasd</mat-error> -->
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(iscommencementDate && lifeInsuranceForm.get('commencementDate').invalid || (lifeInsuranceForm.get('commencementDate').touched && lifeInsuranceForm.get('commencementDate').invalid))}">This field is required
+                    </mat-error>
                 </div>
             </div>
         </div>
@@ -139,10 +142,11 @@
                         class="form-control br-0">
                     <div class="row">
                         <div class="col-md-10">
-                            <mat-error [ngClass]="{'v-h':!(issumAssured && lifeInsuranceForm.get('sumAssured').invalid || (lifeInsuranceForm.get('sumAssured').touched && lifeInsuranceForm.get('sumAssured').invalid))}" class="f-12 pt-4">sasidl</mat-error>
+                            <mat-error [ngClass]="{'v-h':!(issumAssured && lifeInsuranceForm.get('sumAssured').invalid || (lifeInsuranceForm.get('sumAssured').touched && lifeInsuranceForm.get('sumAssured').invalid))}" class="f-12 pt-4">This field is required
+                            </mat-error>
                         </div>
                         <div class="col-md-2">
-                            <mat-hint class="f-12">{{policyname.value.length}}/40</mat-hint>
+                            <mat-hint class="f-12">{{sumassured.value.length}}/40</mat-hint>
                         </div>
                     </div>
                 </div>
@@ -159,20 +163,22 @@
 
                     <input matInput type="number" formControlName="premiumDetailsAmount" #premiumdetails autocomplete="true"
                         class="form-control br-0">
-                    <mat-error [ngClass]="{'v-h':!(ispremiumDetailsAmount && lifeInsuranceForm.get('premiumDetailsAmount').invalid || (lifeInsuranceForm.get('premiumDetailsAmount').touched && lifeInsuranceForm.get('premiumDetailsAmount').invalid))}" class="f-12 pt-4">sasidl</mat-error>
+                    <mat-error [ngClass]="{'v-h':!(ispremiumDetailsAmount && lifeInsuranceForm.get('premiumDetailsAmount').invalid || (lifeInsuranceForm.get('premiumDetailsAmount').touched && lifeInsuranceForm.get('premiumDetailsAmount').invalid))}" class="f-12 pt-4">This field is required
+                    </mat-error>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <label class="f-16 roboto">Frequency</label>
-                    <mat-select [(value)]="selected" formControlName="premiumDetailsFrequency" #frequency
+                    <mat-select  formControlName="premiumDetailsFrequency" #frequency
                         autocomplete="true" class="form-control br-0">
-                        <mat-option value="option1">Monthly</mat-option>
-                        <mat-option value="option2">Quarterly</mat-option>
-                        <mat-option value="option3">Semi annually</mat-option>
-                        <mat-option value="option4">Annually</mat-option>
+                        <mat-option value='1'>Monthly</mat-option>
+                        <mat-option value='2'>Quarterly</mat-option>
+                        <mat-option value='3'>Semi annually</mat-option>
+                        <mat-option value='4'>Annually</mat-option>
                     </mat-select>
-                    <mat-error [ngClass]="{'v-h':!(ispremiumDetailsFrequency && lifeInsuranceForm.get('premiumDetailsFrequency').invalid || (lifeInsuranceForm.get('premiumDetailsFrequency').touched && lifeInsuranceForm.get('premiumDetailsFrequency').invalid))}" class="f-12 pt-4"></mat-error>
+                    <mat-error [ngClass]="{'v-h':!(ispremiumDetailsFrequency && lifeInsuranceForm.get('premiumDetailsFrequency').invalid || (lifeInsuranceForm.get('premiumDetailsFrequency').touched && lifeInsuranceForm.get('premiumDetailsFrequency').invalid))}" class="f-12 pt-4">This field is required
+                    </mat-error>
                 </div>
             </div>
         </div>
@@ -187,7 +193,8 @@
                     <label class="f-16 roboto">Policy tenure</label>
                     <input matInput type="number" formControlName="tenureDetailsPolicy" #tenuredetails autocomplete="true"
                         class="form-control br-0">
-                    <mat-error [ngClass]="{'v-h':!(istenureDetailsPolicy && lifeInsuranceForm.get('tenureDetailsPolicy').invalid || (lifeInsuranceForm.get('tenureDetailsPolicy').touched && lifeInsuranceForm.get('tenureDetailsPolicy').invalid))}" class="f-12 pt-4" >sasidl</mat-error>
+                    <mat-error [ngClass]="{'v-h':!(istenureDetailsPolicy && lifeInsuranceForm.get('tenureDetailsPolicy').invalid || (lifeInsuranceForm.get('tenureDetailsPolicy').touched && lifeInsuranceForm.get('tenureDetailsPolicy').invalid))}" class="f-12 pt-4" >This field is required
+                    </mat-error>
 
                 </div>
             </div>
@@ -196,7 +203,8 @@
                     <label class="f-16 roboto">Premium paying term</label>
                     <input matInput type="number" formControlName="premiumPayingTerm" #premiumterm autocomplete="true"
                         class="form-control br-0">
-                    <mat-error [ngClass]="{'v-h':!(ispremiumPayingTerm && lifeInsuranceForm.get('premiumPayingTerm').invalid || (lifeInsuranceForm.get('premiumPayingTerm').touched && lifeInsuranceForm.get('premiumPayingTerm').invalid))}" class="f-12 pt-4">sasidl</mat-error>
+                    <mat-error [ngClass]="{'v-h':!(ispremiumPayingTerm && lifeInsuranceForm.get('premiumPayingTerm').invalid || (lifeInsuranceForm.get('premiumPayingTerm').touched && lifeInsuranceForm.get('premiumPayingTerm').invalid))}" class="f-12 pt-4">This field is required
+                    </mat-error>
                 </div>
             </div>
         </div>
@@ -212,12 +220,13 @@
                         class="form-control br-0"> -->
                     <mat-select formControlName="policyStatus" #frequency autocomplete="true"
                         class="form-control mt-28 br-0">
-                        <mat-option value="option1">In force</mat-option>
-                        <mat-option value="option2">Lapsed</mat-option>
-                        <mat-option value="option3">Paid up</mat-option>
-                        <mat-option value="option4">Fully paid up</mat-option>
+                        <mat-option value="1">In force</mat-option>
+                        <mat-option value="2">Lapsed</mat-option>
+                        <mat-option value="3">Paid up</mat-option>
+                        <mat-option value="4">Fully paid up</mat-option>
                     </mat-select>
-                    <mat-error [ngClass]="{'v-h':!(ispolicyStatus && lifeInsuranceForm.get('policyStatus').invalid || (lifeInsuranceForm.get('policyStatus').touched && lifeInsuranceForm.get('policyStatus').invalid))}" class="f-12 pt-4" >sasidl</mat-error>
+                    <mat-error [ngClass]="{'v-h':!(ispolicyStatus && lifeInsuranceForm.get('policyStatus').invalid || (lifeInsuranceForm.get('policyStatus').touched && lifeInsuranceForm.get('policyStatus').invalid))}" class="f-12 pt-4" >This field is required
+                    </mat-error>
                 </div>
             </div>
             <div class="col-md-3">
@@ -226,7 +235,8 @@
                     
                         <input matInput type="number" formControlName="policyStatusLastUnpaid" #lastunpaid autocomplete="true"
                             class="form-control br-0">
-                        <mat-error [ngClass]="{'v-h':!(ispolicyStatusLastUnpaid && lifeInsuranceForm.get('policyStatusLastUnpaid').invalid || (lifeInsuranceForm.get('policyStatusLastUnpaid').touched && lifeInsuranceForm.get('policyStatusLastUnpaid').invalid))}" class="f-12 pt-4" ></mat-error>
+                        <mat-error [ngClass]="{'v-h':!(ispolicyStatusLastUnpaid && lifeInsuranceForm.get('policyStatusLastUnpaid').invalid || (lifeInsuranceForm.get('policyStatusLastUnpaid').touched && lifeInsuranceForm.get('policyStatusLastUnpaid').invalid))}" class="f-12 pt-4" >This field is required
+                        </mat-error>
                         <!-- <mat-hint>{{lastunpaid.value.length}}/40</mat-hint> -->
                     
                     <!-- <input matInput formControlName="policyStatusLastUnpaid" [matDatepicker]="policyPicker"
@@ -430,10 +440,10 @@
 <div class="bottom-fixed wrapper-16 pb-12">
     <div class="row">
         <div class="col-md-4 p-0">
-            <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="Close('close')">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="close()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveAddInsurance()">SAVE11</button>
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveAddInsurance()">SAVE</button>
 
         </div>
     </div>
@@ -441,184 +451,3 @@
 
 
 <!-- Detailed View -->
-<!-- <div class="popup-header-fix-60">
-    <div class="row bb-1">
-        <div class="col-md-7 p-0">
-            <h4 class="mb-0 wrapper-20"> LIC Jeevan Saral | 9090889898 | Aryan Jain </h4>
-        </div>
-        <div class="col-md-5 text-right">
-            <div class="wrapper-12">
-                <i class="material-icons c-p v-middle" (click)="close()"> clear</i>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="pt-72 pl-24 pr-24 pb-24">
-    <div class="row pt-8">
-        <div class="col-md-6">
-            <div class="insurance-ui">
-                <div class="lter">
-                    <h5 class="m-0 wrapper-8 f-16 f-500 pl-0 bb-0"> Policy details </h5>
-                </div>
-                <table mat-table [dataSource]="dataSource" class="documentsTable" id="table-low">
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="amountTable">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td class="text-right" mat-cell *matCellDef="let element"> {{element.amountTable}} </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-                <div class="col-md-12 text-right mt-4 p-0">
-                    <p class="f-12 text-primitive m-0">
-                        Updated: 04/09/2019
-                    </p>
-                </div>
-            </div>
-
-            <div class="insurance-ui">
-                <div class="lter">
-                    <h5 class="m-0 wrapper-8 f-16 f-500 pl-0 bb-0"> Loan details </h5>
-                </div>
-                <table mat-table [dataSource]="dataSource2" class="documentsTable" id="table-low">
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="amountTable">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td class="text-right" mat-cell *matCellDef="let element"> {{element.amountTable}} </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-                </table>
-                <div class="col-md-12 text-right mt-4 p-0">
-                    <p class="f-12 text-primitive m-0">
-                        Updated: 04/09/2019
-                    </p>
-                </div>
-
-            </div>
-
-            <div class="insurance-ui">
-                <div class="lter">
-                    <h5 class="m-0 wrapper-8 f-16 f-500 pl-0 bb-0"> Miscellaneous details </h5>
-                </div>
-                <table mat-table [dataSource]="dataSource2" class="documentsTable" id="table-low">
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="amountTable">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td class="text-right" mat-cell *matCellDef="let element"> {{element.amountTable}} </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-                </table>
-                <div class="col-md-12 text-right mt-4 p-0">
-                    <p class="f-12 text-primitive m-0">
-                        Updated: 04/09/2019
-                    </p>
-                </div>
-            </div>
-
-
-        </div>
-
-        <div class="col-md-6 ">
-            <div class="insurance-ui">
-                <div class="lter">
-                    <h5 class="m-0 wrapper-8 f-16 f-500 pl-0 bb-0"> Key details </h5>
-                </div>
-                <table mat-table [dataSource]="dataSource1" class="documentsTable" id="table-low">
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="amountTable">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td class="text-right" mat-cell *matCellDef="let element"> {{element.amountTable}} </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
-                </table>
-                <div class="col-md-12 text-right mt-4 p-0">
-                    <p class="f-12 text-primitive m-0">
-                        Updated: 04/09/2019
-                    </p>
-                </div>
-            </div>
-
-
-            <div class="miscellaneous_table">
-                <div class="lter">
-                    <h5 class="m-0 wrapper-8 f-16 f-500 bb-0"> Miscellaneous details </h5>
-                </div>
-                <table mat-table [dataSource]="dataSource3" class="documentsTable" id="table-low">
-                    <ng-container matColumnDef="tpye">
-                        <th mat-header-cell *matHeaderCellDef> Type </th>
-                        <td mat-cell *matCellDef="let element"> {{element.tpye}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="year">
-                        <th mat-header-cell *matHeaderCellDef> Year </th>
-                        <td mat-cell *matCellDef="let element"> {{element.year}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="amountTable">
-                        <th class="text-right" mat-header-cell *matHeaderCellDef> Amount </th>
-                        <td class="text-right" mat-cell *matCellDef="let element"> {{element.amountTable}} </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
-                </table>
-                <div class="col-md-12 text-right mt-4 p-0">
-                    <p class="f-12 text-primitive m-0">
-                        Updated: 04/09/2019
-                    </p>
-                </div>
-            </div>
-
-
-            <div class="insurance-ui">
-                <div class="lter">
-                    <h5 class="m-0 wrapper-8 f-16 f-500 bb-0"> Riders </h5>
-                </div>
-                <table mat-table [dataSource]="dataSource1" class="documentsTable" id="table-low">
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="amountTable">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td class="text-right" mat-cell *matCellDef="let element"> {{element.amountTable}} </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
-                </table>
-                <div class="col-md-12 text-right mt-4 p-0">
-                    <p class="f-12 text-primitive m-0">
-                        Updated: 04/09/2019
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->

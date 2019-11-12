@@ -2,7 +2,7 @@ import {Component, OnInit, Input} from '@angular/core';
 import {MatDialogRef} from '@angular/material';
 import {SubscriptionService} from '../../../subscription.service';
 import * as _ from 'lodash';
-import {UpperSliderComponent} from '../upper-slider/upper-slider.component';
+import {SubscriptionUpperSliderComponent} from '../upper-slider/subscription-upper-slider.component';
 import {EventService} from 'src/app/Data-service/event.service';
 import { element } from 'protractor';
 

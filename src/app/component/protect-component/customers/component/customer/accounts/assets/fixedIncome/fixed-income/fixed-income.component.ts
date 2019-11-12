@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../customer.service';
 
 @Component({
   selector: 'app-fixed-income',
@@ -10,9 +12,11 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class FixedIncomeComponent implements OnInit {
   showRequring: any;
+  advisorId: any;
+  dataSourceFixed: any;
  
 
-  constructor(private subInjectService:SubscriptionInject,private eventService:EventService) { }
+  constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService) { }
   viewMode
   displayedColumns4 = ['no', 'owner', 'type', 'cvalue', 'rate', 'amt','mdate','mvalue','number','desc','status','icons'];
   datasource4 = ELEMENT_DATA4;
@@ -23,6 +27,10 @@ export class FixedIncomeComponent implements OnInit {
 
   ngOnInit() {
     this.showRequring = '1'
+    this.advisorId = AuthService.getAdvisorId();
+    this.getFixedDepositList()
+    this.getRecurringDepositList()
+    this.getBondsList()
   }
   Close(){
 
@@ -32,11 +40,50 @@ export class FixedIncomeComponent implements OnInit {
     this.showRequring = (value == "2")? "2":(value == "3")?"3":"1"
   
   }
-  openPortfolioSummary(value,state)
+  getFixedDepositList(){
+    let obj = {
+      clientId:2978,
+      advisorId: this.advisorId
+    }
+    this.custumService.getFixedDeposit(obj).subscribe(
+      data => this.getFixedDepositRes(data)
+    );
+  }
+  getFixedDepositRes(data){
+    console.log('getFixedDepositRes ********** ',data)
+    this.dataSourceFixed = data.fixedDepositList
+  }
+  getRecurringDepositList(){
+    
+    let obj = {
+      clientId:2978,
+      advisorId: this.advisorId
+    }
+    this.custumService.getRecurringDeposit(obj).subscribe(
+      data => this.getRecurringDepositRes(data)
+    );
+  }
+  getRecurringDepositRes(data){
+    console.log('getRecuringDepositRes ******** ',data)
+  }
+  getBondsList(){
+    
+    let obj = {
+      clientId:2978,
+      advisorId: this.advisorId
+    }
+    this.custumService.getBonds(obj).subscribe(
+      data => this.getBondsRes(data)
+    );
+  }
+  getBondsRes(data){
+    console.log('getBondsRes ******** ',data)
+  }
+  openPortfolioSummary(value,state,data)
   {
     const fragmentData = {
       Flag: value,
-      // data,
+      data: data,
       id: 1,
       state: 'open'
     };
@@ -52,11 +99,11 @@ export class FixedIncomeComponent implements OnInit {
     );
   }
 }
+
 export interface PeriodicElement4 {
   no: string;
   owner: string;
   type:string;
- 
   cdate:string;
   rate:string;
   amt:string;

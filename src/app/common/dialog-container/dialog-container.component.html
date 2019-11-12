@@ -2,8 +2,8 @@
 <!--</div>-->
 <app-custom-dialog-container [currentState]="currentState">
     <!--  <div [@openClose]="currentState" class="right_sidenav">-->
-    <app-common-froala *ngIf="subscriptionTab=='viewDocuments'" [data]="inputData" [changeFooter]='subscriptionTab' [screenType]="subscriptionTab"></app-common-froala>
-    <app-common-froala *ngIf="subscriptionTab=='viewDoc'" [data]="inputData" [changeFooter]='subscriptionTab' [screenType]="subscriptionTab"></app-common-froala>
+    <app-common-froala *ngIf="subscriptionTab=='viewDocuments'||subscriptionTab=='viewDoc'" [data]="inputData" [changeFooter]='subscriptionTab' [screenType]="subscriptionTab"></app-common-froala>
+    <!--    <app-common-froala *ngIf="subscriptionTab=='viewDoc'" [data]="inputData" [changeFooter]='subscriptionTab' [screenType]="subscriptionTab"></app-common-froala>-->
     <app-common-froala *ngIf="subscriptionTab=='openEmailQuot'" [changeEmailOnly]='subscriptionTab'></app-common-froala>
     <app-common-froala *ngIf="subscriptionTab=='emailQuotation'" [changeFooter]='subscriptionTab' [data]="inputData"></app-common-froala>
     <app-common-froala *ngIf="subscriptionTab=='viewQuotation'" [data]="inputData" [changeFooter]='subscriptionTab'></app-common-froala>
@@ -29,16 +29,18 @@
     <app-add-liabilities *ngIf="subscriptionTab=='addLib'"></app-add-liabilities>
 
     <app-add-liabilities [inputData]="inputData" *ngIf="subscriptionTab=='addLiabilities'"></app-add-liabilities>
-    <app-add-insurance *ngIf="subscriptionTab=='addInsurance'"></app-add-insurance>
+    <app-add-insurance [insuranceData]="fragmentData.data" *ngIf="subscriptionTab=='addInsurance'"></app-add-insurance>
     <app-libilities-right *ngIf="subscriptionTab=='portfolioSummary'"></app-libilities-right>
-    <app-fixed-deposit *ngIf="subscriptionTab=='addFixedDeposit'"></app-fixed-deposit>
+    <app-fixed-deposit [data]="inputData" *ngIf="subscriptionTab=='addFixedDeposit'"></app-fixed-deposit>
     <app-recuring-deposit *ngIf="subscriptionTab=='addRecuringDeposit'"></app-recuring-deposit>
+    <app-bonds *ngIf="subscriptionTab=='addBonds'"></app-bonds>
     <app-add-income *ngIf="subscriptionTab=='addIncome'"></app-add-income>
     <app-income-detail *ngIf="subscriptionTab=='addIncomeDetail'"></app-income-detail>
     <app-right-filter *ngIf="subscriptionTab=='rightFilter'"></app-right-filter>
+    <app-detailed-view *ngIf="subscriptionTab=='detailedView'"></app-detailed-view>
     <app-liabilities-detail *ngIf="subscriptionTab=='addLiabilitiesDetail'"> </app-liabilities-detail>
 </app-custom-dialog-container>
 
 <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
-    <app-upper-slider></app-upper-slider>
+    <app-subscription-upper-slider></app-subscription-upper-slider>
 </div>

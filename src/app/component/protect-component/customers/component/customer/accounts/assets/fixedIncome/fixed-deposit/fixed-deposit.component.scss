@@ -5,3 +5,9 @@
 ::ng-deep input.mat-input-element{
     border:1px solid rgba(25, 25, 25, 0.32);
 }
+
+::ng-deep .percentage{
+    background: url(/assets/images/svg/perctage.svg) no-repeat scroll 130px 8px;
+    padding-left:20px !important;
+    right: 0;
+}

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UpperSliderComponent } from './upper-slider.component';
+import { SubscriptionUpperSliderComponent } from './subscription-upper-slider.component';
 
 describe('UpperSliderComponent', () => {
-  let component: UpperSliderComponent;
-  let fixture: ComponentFixture<UpperSliderComponent>;
+  let component: SubscriptionUpperSliderComponent;
+  let fixture: ComponentFixture<SubscriptionUpperSliderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UpperSliderComponent ]
+      declarations: [ SubscriptionUpperSliderComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UpperSliderComponent);
+    fixture = TestBed.createComponent(SubscriptionUpperSliderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

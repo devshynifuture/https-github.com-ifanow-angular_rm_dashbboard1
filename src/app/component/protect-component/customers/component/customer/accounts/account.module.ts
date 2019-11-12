@@ -1,27 +1,27 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {CustomerDocumentsComponent} from "./customer-documents/customer-documents.component";
-import {AddProfileSummaryComponent} from "../../common-component/add-profile-summary/add-profile-summary.component";
-import {CustomersRoutingModule} from "../../../customers-routing.module";
-import {MutualFundsCapitalComponent} from "./mutual-funds-capital/mutual-funds-capital.component";
-import {DocumentsComponent} from "./documents/documents.component";
-import {InsuranceComponent} from "./insurance/insurance.component";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {CustomerComponent} from "../customer.component";
-import {MaterialModule} from "../../../../../../material/material";
-import {AddInsuranceComponent} from "../../common-component/add-insurance/add-insurance.component";
-import {AccountsComponent} from "./accounts.component";
-import {AddLiabilitiesComponent} from "../../common-component/add-liabilities/add-liabilities.component";
-import {AssetsComponent} from "./assets/assets.component";
-import {SchemeLevelTransactionComponent} from "../../common-component/scheme-level-transaction/scheme-level-transaction.component";
-import {FixedDepositComponent} from "./assets/fixedIncome/fixed-deposit/fixed-deposit.component";
-import {ExpensesComponent} from "./expenses/expenses.component";
-import {SummaryComponent} from "./summary/summary.component";
-import {BottomSheetComponent} from "../../common-component/bottom-sheet/bottom-sheet.component";
-import {LibilitiesRightComponent} from "./liabilities/libilities-right/libilities-right.component";
-import {IncomeComponent} from "./income/income.component";
-import {LiabilitiesComponent} from "./liabilities/liabilities.component";
-import {ChartModule} from "angular-highcharts";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CustomerDocumentsComponent } from "./customer-documents/customer-documents.component";
+import { AddProfileSummaryComponent } from "../../common-component/add-profile-summary/add-profile-summary.component";
+import { CustomersRoutingModule } from "../../../customers-routing.module";
+import { MutualFundsCapitalComponent } from "./mutual-funds-capital/mutual-funds-capital.component";
+import { DocumentsComponent } from "./documents/documents.component";
+import { InsuranceComponent } from "./insurance/insurance.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CustomerComponent } from "../customer.component";
+import { MaterialModule } from "../../../../../../material/material";
+import { AddInsuranceComponent } from "../../common-component/add-insurance/add-insurance.component";
+import { AccountsComponent } from "./accounts.component";
+import { AddLiabilitiesComponent } from "../../common-component/add-liabilities/add-liabilities.component";
+import { AssetsComponent } from "./assets/assets.component";
+import { SchemeLevelTransactionComponent } from "../../common-component/scheme-level-transaction/scheme-level-transaction.component";
+import { FixedDepositComponent } from "./assets/fixedIncome/fixed-deposit/fixed-deposit.component";
+import { ExpensesComponent } from "./expenses/expenses.component";
+import { SummaryComponent } from "./summary/summary.component";
+import { BottomSheetComponent } from "../../common-component/bottom-sheet/bottom-sheet.component";
+import { LibilitiesRightComponent } from "./liabilities/libilities-right/libilities-right.component";
+import { IncomeComponent } from "./income/income.component";
+import { LiabilitiesComponent } from "./liabilities/liabilities.component";
+import { ChartModule } from "angular-highcharts";
 import { FactShitComponent } from '../../common-component/fact-shit/fact-shit.component';
 import { TransactionsComponent } from '../../common-component/transactions/transactions.component';
 import { UpperCustomerComponent } from '../../common-component/upper-customer/upper-customer.component';
@@ -32,6 +32,7 @@ import { BondsComponent } from './assets/fixedIncome/bonds/bonds.component';
 import { AddIncomeComponent } from '../../common-component/add-income/add-income.component';
 import { IncomeDetailComponent } from '../../common-component/income-detail/income-detail.component';
 import { OwnerComponentComponent } from './owner-component/owner-component.component';
+import { DetailedViewComponent } from '../../common-component/detailed-view/detailed-view.component';
 import { LiabilitiesDetailComponent } from '../../common-component/liabilities-detail/liabilities-detail.component';
 
 
@@ -66,6 +67,7 @@ import { LiabilitiesDetailComponent } from '../../common-component/liabilities-d
     AddIncomeComponent,
     IncomeDetailComponent,
     OwnerComponentComponent,
+    DetailedViewComponent,
     LiabilitiesDetailComponent
   ],
   imports: [
@@ -76,7 +78,7 @@ import { LiabilitiesDetailComponent } from '../../common-component/liabilities-d
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [AddLiabilitiesComponent, AddInsuranceComponent, LibilitiesRightComponent, FixedDepositComponent,OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule,AddIncomeComponent,IncomeDetailComponent, LiabilitiesDetailComponent, ReactiveFormsModule,FactShitComponent,TransactionsComponent,UpperCustomerComponent,RightFilterComponent],
+  exports: [AddLiabilitiesComponent, AddInsuranceComponent, LibilitiesRightComponent, FixedDepositComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent],
   entryComponents: [BottomSheetComponent]
 })
 export class AccountModule {
