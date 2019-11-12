@@ -62,21 +62,17 @@ export class FixedDepositComponent implements OnInit {
   constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
 
   ngOnInit() {
+    let obj = {
+      clientId: 2980
+    }
     this.advisorId = AuthService.getAdvisorId();
     this.getdataForm()
-    this.family = this.myControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
       this.fdMonths = ['1','2','3','4','5','6','7','8','9','10','11','12']
       this.fdDays = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31']
-      this.fdYears = ['1198','1999','2000','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026','2027','2028','2029','2030','2031','2032','2033','2034','2035','2036','2037','2038','2039','2040','2041','2042',]
+      this.fdYears = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15']
   }
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.s.filter(f => f.toLowerCase().includes(filterValue));
+  getOwnerListRes(data){
+    console.log('familymember',data)
   }
   keyPress(event: any) {
     const pattern = /[0-9\+\-\ ]/;
@@ -89,6 +85,7 @@ export class FixedDepositComponent implements OnInit {
   Close(){
     this.subInjectService.changeNewRightSliderState({state:'close'})
   }
+  
   showLess(value){
     if(value  == true){
       this.showHide = false;
