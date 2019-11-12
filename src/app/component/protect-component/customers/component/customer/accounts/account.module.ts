@@ -28,6 +28,7 @@ import { BondsComponent } from './assets/fixedIncome/bonds/bonds.component';
 import { AddIncomeComponent } from '../../common-component/add-income/add-income.component';
 import { IncomeDetailComponent } from '../../common-component/income-detail/income-detail.component';
 import { OwnerComponentComponent } from './owner-component/owner-component.component';
+import { LiabilitiesDetailComponent } from '../../common-component/liabilities-detail/liabilities-detail.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { OwnerComponentComponent } from './owner-component/owner-component.compo
     BondsComponent,
     AddIncomeComponent,
     IncomeDetailComponent,
-    OwnerComponentComponent
+    OwnerComponentComponent,
+    LiabilitiesDetailComponent
   ],
   imports: [
     // BrowserModule,
@@ -66,7 +68,7 @@ import { OwnerComponentComponent } from './owner-component/owner-component.compo
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [AddLiabilitiesComponent, AddInsuranceComponent, LibilitiesRightComponent, FixedDepositComponent, RecuringDepositComponent, OwnerComponentComponent, BondsComponent, ReactiveFormsModule,AddIncomeComponent,IncomeDetailComponent],
+  exports: [AddLiabilitiesComponent, AddInsuranceComponent, LibilitiesRightComponent, FixedDepositComponent, RecuringDepositComponent, OwnerComponentComponent, BondsComponent, ReactiveFormsModule,AddIncomeComponent,IncomeDetailComponent,LiabilitiesDetailComponent],
   entryComponents: [BottomSheetComponent]
 })
 export class AccountModule {

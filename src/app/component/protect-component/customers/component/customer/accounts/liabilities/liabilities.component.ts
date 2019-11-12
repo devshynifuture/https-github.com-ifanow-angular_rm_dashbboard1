@@ -48,6 +48,28 @@ export class LiabilitiesComponent implements OnInit {
       }
     );
   }
+  
+  addLiabilitiesDetail(flagValue){
+    const fragmentData = {
+      Flag: flagValue,
+      id: 1,
+      state: 'openHelp'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+    
+        }
+      }
+    );
+  }
+
+
+
+
   getLiability(){
     let obj={
       'advisorId':this.advisorId,

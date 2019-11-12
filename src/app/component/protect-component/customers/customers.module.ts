@@ -8,13 +8,13 @@ import {ChartModule} from 'angular-highcharts';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 // import {BrowserModule} from '@angular/platform-browser';
 import {AccountModule} from './component/customer/accounts/account.module';
-import { LiabilitiesDetailComponent } from './component/common-component/liabilities-detail/liabilities-detail.component';
+
 
 
 
 
 @NgModule({
-  declarations: [ LiabilitiesDetailComponent],
+  declarations: [],
   imports: [
     // BrowserModule,
     CommonModule,

@@ -1,1 +1,21 @@
-<p>liabilities-detail works!</p>
+<div class="popup-header-fix-60">
+    <div class="row bb-1">
+        <div class="col-md-6 p-0">
+            <h4 class="mb-0 wrapper-20">LIABILITIES - DETAILED VIEW</h4>
+        </div>
+        <div class="col-md-1 text-left">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="addLiabilityForm">
+    <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Owner</h5>
+            <p class="m-0 f-12 text-custom">In whose name is this asset</p>
+        </div>
+    </div>
+</div>
