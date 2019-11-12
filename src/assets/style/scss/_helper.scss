@@ -16,9 +16,11 @@ $lineheight:20px;
 .l-26 {
     line-height: 26px !important;
 }
-.lh-40{
+
+.lh-40 {
     line-height: 40px !important;
 }
+
 .f-8 {
     font-size: $smallfont - 2 !important;
 }
@@ -1066,18 +1068,14 @@ $lineheight:20px;
     vertical-align: baseline !important;
 }
 
-
 // $spaceamounts: (4, 8, 12, 16, 20, 24,28,32,36,40,44,48,52,56,60);
 // $sides: (all,top, bottom, left, right);
-
 // @each $space in $spaceamounts {
 //   @each $side in $sides {
-
 //     @if $side == 'all' {
 //       .m#{$space} {
 //         margin: #{$space}px;
 //       }
-
 //       .p#{$space} {
 //         padding: #{$space}px;
 //       }
@@ -1085,7 +1083,6 @@ $lineheight:20px;
 //       .m#{str-slice($side, 0, 1)}#{$space} {
 //         margin-#{$side}: #{$space}px;
 //       }
-
 //       .p#{str-slice($side, 0, 1)}#{$space} {
 //         padding-#{$side}: #{$space}px;
 //       }
