@@ -66,6 +66,8 @@ export class LiabilitiesComponent implements OnInit {
       }
     );
   }
+
+ 
   
   addLiabilitiesDetail(flagValue){
     const fragmentData = {
