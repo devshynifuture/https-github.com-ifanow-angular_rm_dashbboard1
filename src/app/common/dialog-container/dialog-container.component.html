@@ -2,8 +2,8 @@
 <!--</div>-->
 <app-custom-dialog-container [currentState]="currentState">
     <!--  <div [@openClose]="currentState" class="right_sidenav">-->
-    <app-common-froala *ngIf="subscriptionTab=='viewDocuments'" [data]="inputData" [changeFooter]='subscriptionTab' [screenType]="subscriptionTab"></app-common-froala>
-    <app-common-froala *ngIf="subscriptionTab=='viewDoc'" [data]="inputData" [changeFooter]='subscriptionTab' [screenType]="subscriptionTab"></app-common-froala>
+    <app-common-froala *ngIf="subscriptionTab=='viewDocuments'||subscriptionTab=='viewDoc'" [data]="inputData" [changeFooter]='subscriptionTab' [screenType]="subscriptionTab"></app-common-froala>
+<!--    <app-common-froala *ngIf="subscriptionTab=='viewDoc'" [data]="inputData" [changeFooter]='subscriptionTab' [screenType]="subscriptionTab"></app-common-froala>-->
     <app-common-froala *ngIf="subscriptionTab=='openEmailQuot'" [changeEmailOnly]='subscriptionTab'></app-common-froala>
     <app-common-froala *ngIf="subscriptionTab=='emailQuotation'" [changeFooter]='subscriptionTab' [data]="inputData"></app-common-froala>
     <app-common-froala *ngIf="subscriptionTab=='viewQuotation'" [data]="inputData" [changeFooter]='subscriptionTab'></app-common-froala>

@@ -66,7 +66,7 @@ import {VariableFeeComponent} from './subscription/common-subscription-component
 import {ChangePayeeComponent} from './subscription/common-subscription-component/change-payee/change-payee.component';
 import {CustomHtmlModule} from '../../../../common/customhtml/customhtml/custom-html.module';
 import {CommonComponentModule} from '../../common-component/common-component.module';
-import {CustomDirectiveModule} from '../../../../common/common-directive.module';
+import {CustomDirectiveModule} from '../../../../common/directives/common-directive.module';
 import {CommonModule} from '@angular/common';
 import {SubscriptionRoutingModule} from "./subscription-routing.module";
 
