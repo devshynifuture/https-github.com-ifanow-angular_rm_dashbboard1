@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CustomerService } from '../../customer.service';
 import { Validators, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -19,6 +19,7 @@ export class OwnerComponentComponent implements OnInit {
   ownerData: any;
 
   constructor(private fb: FormBuilder,private custumService : CustomerService) { }
+  @Output() valueChange = new EventEmitter();
   @Input()
   set data(data) {
     this.ownerData = data;
@@ -43,6 +44,10 @@ getListFamilyMem(data){
   this.custumService.getListOfFamilyByClient(obj).subscribe(
     data => this.getListOfFamilyByClientRes(data)
   );
+}
+getOwnerName(value){
+  console.log('selected',value)
+  this.valueChange.emit(value);
 }
 getListOfFamilyByClientRes(data){
 console.log('family Memebers',data)

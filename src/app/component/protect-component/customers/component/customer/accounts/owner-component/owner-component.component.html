@@ -7,8 +7,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                         <mat-select formControlName="ownerName" class="form-control br-0">       
-                         <mat-option value = ''>Search family members</mat-option>      
-                        <mat-option *ngFor="let f of family" [value]="f.userName">
+                         <!-- <mat-option value = ''>Search family members</mat-option>       -->
+                        <mat-option *ngFor="let f of family" [value]="f.userName" (click)="getOwnerName(f)">
                             <span>{{f.userName}}</span>
                         </mat-option>
                         </mat-select>

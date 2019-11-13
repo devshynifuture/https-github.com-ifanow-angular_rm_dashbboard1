@@ -36,7 +36,7 @@
             </div>
         </div>
     </div> -->
-    <app-owner-component [data]= 'ownerData'></app-owner-component>
+    <app-owner-component [data]='ownerData'  (valueChange)='display($event)'></app-owner-component>
     <div class="row pt-24">
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8">Type of fixed deposit</h5>
@@ -83,7 +83,7 @@
         </div>
         <div class="col-md-3 pr-0">
             <div class="form-group mb-0 d-flex">
-                
+
                 <input matInput formControlName="commencementDate" [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
@@ -106,14 +106,14 @@
             <div class="form-group mb-0">
                 <input matInput type="text" (keypress)="keyPress($event)" class="form-control br-0 percentage"
                     formControlName="interestRate">
-                    <div class="row">
-                <div class="col-md-12">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
-                        This field is required
-                    </mat-error>
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-error class="f-12 pt-4"
+                            [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
+                            This field is required
+                        </mat-error>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
     </div>
@@ -166,25 +166,25 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-4 p-0">
-                    <mat-select formControlName="tenure" class="form-control br-0 br-none">
-                        <mat-option value="">Years</mat-option>
-                        <mat-option *ngFor="let Y of fdYears">
+                    <mat-select formControlName="tenureY" class="form-control br-0 br-none">
+                        <mat-option [value]="">Years</mat-option>
+                        <mat-option *ngFor="let Y of fdYears" [value]="Y">
                             <span>{{Y}}</span>
                         </mat-option>
                     </mat-select>
                 </div>
                 <div class="col-md-4 p-0">
-                    <mat-select formControlName="tenure" class="form-control br-0 br-none">
-                        <mat-option value="">Months</mat-option>
-                        <mat-option *ngFor="let M of fdMonths">
+                    <mat-select formControlName="tenureM" class="form-control br-0 br-none">
+                        <mat-option [value]="">Months</mat-option>
+                        <mat-option *ngFor="let M of fdMonths" [value]="M">
                             <span>{{M}}</span>
                         </mat-option>
                     </mat-select>
                 </div>
                 <div class="col-md-4 p-0">
-                    <mat-select formControlName="tenure" class="form-control br-0">
-                        <mat-option value="">Days</mat-option>
-                        <mat-option *ngFor="let D of fdDays">
+                    <mat-select formControlName="tenureD" class="form-control br-0">
+                        <mat-option [value]="">Days</mat-option>
+                        <mat-option *ngFor="let D of fdDays" [value]="D">
                             <span>{{D}}</span>
                         </mat-option>
                     </mat-select>
@@ -192,7 +192,15 @@
             </div>
             <div class="col-md-12">
                 <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isTenure && getFormControl().tenure.invalid || getFormControl().tenure.touched && getFormControl().tenure.invalid)}">
+                    [ngClass]="{'v-h':!(isTenure && getFormControl().tenureY.invalid || getFormControl().tenureY.touched && getFormControl().tenureY.invalid)}">
+                    This field is required
+                </mat-error>
+                <mat-error class="f-12 pt-4"
+                    [ngClass]="{'v-h':!(isTenure && getFormControl().tenureM.invalid || getFormControl().tenureM.touched && getFormControl().tenureM.invalid)}">
+                    This field is required
+                </mat-error>
+                <mat-error class="f-12 pt-4"
+                    [ngClass]="{'v-h':!(isTenure && getFormControl().tenureD.invalid || getFormControl().tenureD.touched && getFormControl().tenureD.invalid)}">
                     This field is required
                 </mat-error>
             </div>
@@ -207,16 +215,16 @@
                 <input matInput formControlName="maturityDate" [matDatepicker]="picker1">
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
-                
+
             </div>
             <div class="row">
-                    <div class="col-md-12">
-                        <mat-error class="f-12 pt-4"
-                            [ngClass]="{'v-h':!(isMaturityDate && getFormControl().maturityDate.invalid || getFormControl().maturityDate.touched && getFormControl().maturityDate.invalid)}">
-                            Maturity date is required
-                        </mat-error>
-                    </div>
-                    </div>
+                <div class="col-md-12">
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isMaturityDate && getFormControl().maturityDate.invalid || getFormControl().maturityDate.touched && getFormControl().maturityDate.invalid)}">
+                        Maturity date is required
+                    </mat-error>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row pt-24">
