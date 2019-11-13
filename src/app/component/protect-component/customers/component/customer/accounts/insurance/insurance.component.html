@@ -3,33 +3,33 @@
         <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
             <ul class=" d-block">
                 <li  class="b-ua c-p">
-                    <div (click)="toggle('lifeInsurance');getInsuranceTypeData(1)" class="row">
+                    <div (click)="toggle('lifeInsurance');getInsuranceTypeData(1,1)" class="row">
                         <div class="col-md-11 p-0 f-700">LIFE INSURANCE</div>
                         <div class="col-md-1 p-0 text-custom">20</div>
                     </div>
                 </li>
-                <li [@listAnimation]="lifeInsuranceList.length" *ngFor="let item of lifeInsuranceList"
-                    [ngClass]="{'b-ua':viewMode =='tab2'}" class="c-p">
+                <li (click)="getInsuranceTypeData(1,item.id)" *ngFor="let item of lifeInsuranceList"
+                    [ngClass]="{'bg-grey lt':item.id==insuranceSubTypeId}" class="c-p">
                     <div>
                         <div class="row">
-                            <div class="col-md-11 p-0">{{item}}</div>
-                            <div class="col-md-1 p-0 text-custom">3</div>
+                            <div class="col-md-11 p-0">{{item.name}}</div>
+                            <div class="col-md-1 p-0 text-custom">{{item.id}}</div>
                         </div>
                         </div>
                 </li>
             </ul>
             <ul class=" d-block">
                 <li class=" c-p">
-                    <div (click)="toggle('generalInsurance');getInsuranceTypeData(2)" class="row">
+                    <div (click)="toggle('generalInsurance');getInsuranceTypeData(2,4)" class="row">
                         <div class="col-md-11 p-0 f-700">GENERAL INSURANCE</div>
                         <div class="col-md-1 p-0 text-custom">1</div>
                     </div>
                 </li>
-                <li [@listAnimation]="generalLifeInsuranceList.length" *ngFor="let item1 of generalLifeInsuranceList"
-                    [ngClass]="{'b-ua':viewMode =='tab6'}" class=" c-p">
+                <li (click)="getInsuranceTypeData(2,item1.id)" *ngFor="let item1 of generalLifeInsuranceList"
+                [ngClass]="{'bg-grey lt':item1.id==insuranceSubTypeId}" class=" c-p">
                     <div class="row">
-                        <div class="col-md-11 p-0">{{item1}}</div>
-                        <div class="col-md-1 p-0 text-custom">2</div>
+                        <div class="col-md-11 p-0">{{item1.name}}</div>
+                        <div class="col-md-1 p-0 text-custom">{{item1.id}}</div>
                     </div>
                 </li>
             </ul>
