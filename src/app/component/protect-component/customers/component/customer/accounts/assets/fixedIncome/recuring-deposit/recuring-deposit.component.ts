@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
@@ -43,11 +43,21 @@ export class RecuringDepositComponent implements OnInit {
   isMaturity = false;
   isDescription = false;
   isTenure = false;
+  inputData: any;
+  ownerName: any;
   constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    this.getdataForm(data);
+  }
 
+  get data() {
+    return this.inputData;
+  }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.getdataForm()
+    // this.getdataForm()
   }
   keyPress(event: any) {
     const pattern = /[0-9\+\-\ ]/;
@@ -60,6 +70,10 @@ export class RecuringDepositComponent implements OnInit {
   Close(){
     this.subInjectService.changeNewRightSliderState({state:'close'})
   }
+  display(value){
+    console.log('value selected', value)
+    this.ownerName = value.userName;
+  }
   showLess(value){
     if(value  == true){
       this.showHide = false;
@@ -67,22 +81,22 @@ export class RecuringDepositComponent implements OnInit {
       this.showHide = true;
     }
   }
-  getdataForm(){
-    if(this.dataSource != undefined){
-      var data = this.dataSource
+  getdataForm(data){
+    if(data == undefined){
+      data = {}
     }
     this.recuringDeposit = this.fb.group({
       ownerName: [(data == undefined)? '':data.ownerName, [Validators.required]],
       monthlyContribution: [(data ==undefined)? '':data.monthlyContribution, [Validators.required]],
       commencementDate: [(data ==undefined)? '' :data.commencementDate, [Validators.required]],
       interestRate: [(data ==undefined)? '' :data.interestRate, [Validators.required]],
-      compound: [(data ==undefined)? '' :data.interestCompoundingId, [Validators.required]],
+      compound: [(data ==undefined)? '' :(data.interestCompounding)+"", [Validators.required]],
       linkBankAc: [(data ==undefined)? '' :data.linkBankAc, [Validators.required]],
       tenure:[(data ==undefined)? '' :data.tenure, [Validators.required]],
       description: [(data ==undefined)? '' :data.description, [Validators.required]],
       bankName: [(data ==undefined)? '' :data.bankName, [Validators.required]],
-      ownerType: [(data ==undefined)? '' :data.ownerType, [Validators.required]],
-      rdNo: [(data ==undefined)? '' :data.rdNo, [Validators.required]],
+      ownerType: [(data ==undefined)? '' :(data.ownershipType)+"", [Validators.required]],
+      rdNo: [(data ==undefined)? '' :data.rdNumber, [Validators.required]],
       id:[(data ==undefined)? '' :data.id, [Validators.required]]
     });
   
@@ -141,12 +155,11 @@ export class RecuringDepositComponent implements OnInit {
       interestPayoutOption: this.recuringDeposit.controls.payOpt.value,
       bankName: this.recuringDeposit.controls.bankName.value,
       rdNumber: this.recuringDeposit.controls.rdNo.value,
-      fdType: this.recuringDeposit.controls.FDType.value,
-      interestCompoundingId:this.recuringDeposit.controls.compound.value
+      // fdType: this.recuringDeposit.controls.FDType.value,
+      interestCompounding:this.recuringDeposit.controls.compound.value
     }
     console.log('recuringDeposit',obj)
     this.dataSource = obj
-    this.getdataForm();
     // if(this.recuringDeposit.controls.id.value == undefined){
     //   this.custumService.addrecuringDeposit(obj).subscribe(
     //     data => this.addrecuringDepositRes(data)

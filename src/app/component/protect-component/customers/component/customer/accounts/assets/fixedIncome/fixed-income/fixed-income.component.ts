@@ -14,6 +14,7 @@ export class FixedIncomeComponent implements OnInit {
   showRequring: any;
   advisorId: any;
   dataSourceFixed: any;
+  dataSourceRecurring: any;
  
 
   constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService) { }
@@ -65,6 +66,7 @@ export class FixedIncomeComponent implements OnInit {
   }
   getRecurringDepositRes(data){
     console.log('getRecuringDepositRes ******** ',data)
+    this.dataSourceRecurring = data.recurringDeposits
   }
   getBondsList(){
     
