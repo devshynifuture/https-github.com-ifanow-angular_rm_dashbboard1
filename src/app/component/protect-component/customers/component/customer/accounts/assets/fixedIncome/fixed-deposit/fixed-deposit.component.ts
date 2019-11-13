@@ -64,6 +64,7 @@ export class FixedDepositComponent implements OnInit {
   getDate: string;
   ownerName: any;
   maturityDate: any;
+  selectedFamilyData: any;
   constructor(private router: Router,private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
   @Input()
   set data(data) {
@@ -101,6 +102,7 @@ export class FixedDepositComponent implements OnInit {
   display(value){
     console.log('value selected', value)
     this.ownerName = value.userName;
+    this.selectedFamilyData = value
   }
   showLess(value) {
     if (value == true) {
@@ -142,7 +144,7 @@ export class FixedDepositComponent implements OnInit {
       tenureY: [(data == undefined) ? '' : data.tenureY, [Validators.required]],
       tenureM: [(data == undefined) ? '' : data.tenureM, [Validators.required]],
       tenureD: [(data == undefined) ? '' : data.tenureD, [Validators.required]],
-      maturity: [(data == undefined) ? '' : data.frequencyOfPayoutPerYear, [Validators.required]],
+      frequencyOfPayoutPerYear: [(data == undefined) ? '' : data.frequencyOfPayoutPerYear, [Validators.required]],
       maturityDate: [(data == undefined) ? '' : new Date(data.maturityDate), [Validators.required]],
       payOpt: [(data == undefined) ? '' : (data.interestPayoutOption)+"" ,[Validators.required]],
       bankACNo: [(data == undefined) ? '' : data.bankACNo, [Validators.required]],
@@ -196,7 +198,7 @@ export class FixedDepositComponent implements OnInit {
       let obj = {
         advisorId: this.advisorId,
         clientId: 2978,
-        familyMemberId: 554466,
+        familyMemberId: this.selectedFamilyData.id,
         ownerName: this.ownerName,
         amountInvested: this.fixedDeposit.controls.amountInvest.value,
         ownerType: this.fixedDeposit.controls.ownerType.value,
@@ -204,7 +206,7 @@ export class FixedDepositComponent implements OnInit {
         commencementDate: this.datePipe.transform(this.fixedDeposit.controls.commencementDate.value, 'yyyy-MM-dd'),
         institutionName: this.fixedDeposit.controls.institution.value,
         description: this.fixedDeposit.controls.description.value,
-        // frequencyOfPayoutPerYear: this.fixedDeposit.controls.maturity.value,
+        frequencyOfPayoutPerYear: this.fixedDeposit.controls.frequencyOfPayoutPerYear.value,
         maturityDate: this.datePipe.transform(this.maturityDate, 'yyyy-MM-dd'),
         interestPayoutOption: this.fixedDeposit.controls.payOpt.value,
         bankACNo: this.fixedDeposit.controls.bankACNo.value,

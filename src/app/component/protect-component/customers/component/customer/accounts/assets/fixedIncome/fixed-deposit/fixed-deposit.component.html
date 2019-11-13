@@ -229,22 +229,24 @@
     </div>
     <div class="row pt-24">
         <div class="col-md-5 text-right">
-            <h5 class="m-0 pt-8">Interest Payout option</h5>
+            <h5 class="m-0 pt-8">Frequency of payout per year</h5>
         </div>
         <div class="col-md-3 pr-0">
-            <mat-select formControlName="payOpt" class="form-control br-0">
-                <mat-option value="payOpt"> Select option</mat-option>
-                <mat-option value="1"> Cumulative payout</mat-option>
-                <mat-option value="2">Interest payout</mat-option>
+            <mat-select formControlName="frequencyOfPayoutPerYear" class="form-control br-0">
+                <mat-option value="frequencyOfPayoutPerYear"> Select option</mat-option>
+                <mat-option value="1"> Monthly</mat-option>
+                <mat-option value="2">quarterly</mat-option>
+                <mat-option value="2">semi-annually</mat-option>
             </mat-select>
             <div class="col-md-10">
                 <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isPayOpt && getFormControl().payOpt.invalid || getFormControl().payOpt.touched && getFormControl().payOpt.invalid)}">
+                    [ngClass]="{'v-h':!(isFrequencyOfPayoutPerYear && getFormControl().frequencyOfPayoutPerYear.invalid || getFormControl().frequencyOfPayoutPerYear.touched && getFormControl().frequencyOfPayoutPerYear.invalid)}">
                     This field is required
                 </mat-error>
             </div>
         </div>
     </div>
+
     <div class="row pt-24">
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8">Ownership type</h5>

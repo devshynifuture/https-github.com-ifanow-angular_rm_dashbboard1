@@ -89,6 +89,7 @@ export class FixedIncomeComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+        this.getFixedDepositList();
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
