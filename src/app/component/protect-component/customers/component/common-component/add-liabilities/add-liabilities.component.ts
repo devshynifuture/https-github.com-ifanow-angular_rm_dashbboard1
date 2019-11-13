@@ -104,14 +104,14 @@ export class AddLiabilitiesComponent implements OnInit {
     this.addLiabilityForm = this.fb.group({
       ownerName: [data.ownerName , [Validators.required]],
       // loanType:[data.loanTypeId,[Validators.required]],
-      loanType: [(data.loanTypeId), [Validators.required]],
+      loanType: [(data.loanTypeId)+"", [Validators.required]],
       loanAmount: [data.loanAmount, [Validators.required]],
       loanTenure: [data.loanTenure, [Validators.required]],
       outstandingCheck:[data.principalOutstanding],
       poDate: [new Date(data.principalOutstandingAsOn), [Validators.required]],
       outstandingAmt: [data.outstandingAmount, [Validators.required]],
       CommencementDate: [new Date(data.commencementDate), [Validators.required]],
-      emiFrequency: [(data.frequencyOfPayments), [Validators.required]],
+      emiFrequency: [(data.frequencyOfPayments)+"", [Validators.required]],
       // emiFrequency: [data.frequencyOfPayments, [Validators.required]],
       interest: [data.annualInterestRate, [Validators.required]],
       emi: [data.emi],
@@ -130,7 +130,7 @@ export class AddLiabilitiesComponent implements OnInit {
         this.addLiabilityForm.controls.transact=this.fb.array([this.fb.group({
           partPaymentDate: new Date(element.partPaymentDate),
           partPayment: element.partPayment,
-          option: element.option})])
+          option: (element.option+"")})])
       })
     }
     this.getFormControl().ownerName.maxLength = 10;

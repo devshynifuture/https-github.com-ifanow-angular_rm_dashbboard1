@@ -17,6 +17,7 @@ export class LiabilitiesComponent implements OnInit {
   // dataSource = ELEMENT_DATA;
   advisorId: any;
   dataSource: any;
+  storeData: any;
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,public custmService:CustomerService) {
   }
@@ -102,6 +103,25 @@ export class LiabilitiesComponent implements OnInit {
   getLiabiltyRes(data){
     console.log(data);
     this.dataSource=data.loans;
+    this.storeData=data.loans.length;
+    data.loans.forEach(element => {
+      switch (element.loanTypeId) {
+        case 1: element.loanTypeId = 'Home Loan';
+            break;
+        case 2: element.loanTypeId = 'Vehicle';
+            break;
+        case 3: element.loanTypeId = 'Education';
+            break;
+        case 4: element.loanTypeId = 'Credit Card';
+            break;
+        case 5: element.loanTypeId = 'Personal';
+            break;
+        case 6: element.loanTypeId = 'Mortgage';
+            break;
+        default:
+          element.loanTypeId = '-';
+    }
+    });
   }
   clickHandling() {
     console.log('something was clicked');

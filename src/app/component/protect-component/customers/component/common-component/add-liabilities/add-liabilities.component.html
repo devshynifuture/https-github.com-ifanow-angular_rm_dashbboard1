@@ -330,28 +330,30 @@
         </div>
         <div class="col-md-3">
             <label class="f-16" >Option</label>
-            <!-- <input type="text" class="form-control br-0" value="%" formControlName="option" > -->
-            <!-- <mat-form-field>
-                    <input matInput #option autocomplete="true" value="₹" class="form-control br-0" formControlName="option">
-                    <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isOption && getFormControl().option.invalid || getFormControl().option.touched && getFormControl().option.invalid)}">
-                    option is required
-                </mat-error>
-                    <mat-hint align="end">{{option.value.length}}/40</mat-hint>
-            </mat-form-field> -->
+     
             <div class="form-group mb-0">
-                    <input matInput #option class="form-control br-0" formControlName="option">
+                    <mat-select formControlName="option" class="form-control br-0" >
+                                <mat-option value="1">Keep the EMI as it is and reduce the term</mat-option>
+                                <mat-option value="2">Keep the term as it is and reduce the EMI</mat-option>
+                            </mat-select>
+                            <div class="col-md-10">
+                                <!-- <mat-error class="f-12 pt-4"
+                                    [ngClass]="{'v-h':!(isOption && getFormControl().option.invalid || getFormControl().option.touched && getFormControl().option.invalid)}">
+                                    Option is required
+                                </mat-error> -->
+                            </div>
+                    <!-- <input matInput #option class="form-control br-0" formControlName="option">
                     <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-10"> -->
                             <!-- <mat-error class="f-12 pt-4"
                                 [ngClass]="{'v-h':!(isOption && getFormControl().option.invalid || getFormControl().option.touched && getFormControl().option.invalid)}">
                             Option is required
                             </mat-error> -->
-                        </div>
+                        <!-- </div>
                         <div class="col-md-2">
                             <mat-hint align="end" class="f-12">{{option.value.length}}/20</mat-hint>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
         </div>
         <div class="col-md-1 p-0">

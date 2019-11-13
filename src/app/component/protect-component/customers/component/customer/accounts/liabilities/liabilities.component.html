@@ -5,7 +5,7 @@
                 <li (click)="viewMode ='tab1'" [ngClass]="{'b-ua':viewMode =='tab1'}" class="b-ua c-p">
                     <div class="row">
                         <div class="col-md-11 p-0">Liabilities</div>
-                        <div class="col-md-1 p-0 text-custom">7</div>
+                        <div class="col-md-1 p-0 text-custom">{{this.storeData}}</div>
                     </div>
                 </li>
                 <li (click)="viewMode ='tab2'" [ngClass]="{'b-ua':viewMode =='tab2'}" class="c-p">
