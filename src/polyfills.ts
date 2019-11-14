@@ -57,7 +57,7 @@
  */
 import 'zone.js/dist/zone';  
 (window as any).global = window;
-import 'web-animations-js';
+// import 'web-animations-js';
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
