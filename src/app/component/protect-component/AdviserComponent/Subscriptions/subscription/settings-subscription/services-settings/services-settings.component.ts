@@ -29,7 +29,7 @@ export class ServicesSettingsComponent implements OnInit {
   }
 
   openFragment(singleService, data) {
-    singleService.flag = data;
+    (singleService=='')?singleService='':singleService.flag=data
     const fragmentData = {
       flag: 'app-subscription-upper-slider',
       // Flag: 'plan',

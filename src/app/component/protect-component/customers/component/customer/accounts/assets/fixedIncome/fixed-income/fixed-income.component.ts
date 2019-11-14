@@ -18,7 +18,7 @@ export class FixedIncomeComponent implements OnInit {
   dataSourceBond: any;
  
 
-  constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService) { }
+  constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService,public util:UtilService) { }
   viewMode
   displayedColumns4 = ['no', 'owner', 'type', 'cvalue', 'rate', 'amt','mdate','mvalue','number','desc','status','icons'];
   datasource4 = ELEMENT_DATA4;
@@ -94,6 +94,8 @@ export class FixedIncomeComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         this.getFixedDepositList();
+        this.getRecurringDepositList()
+        this.getBondsList()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);

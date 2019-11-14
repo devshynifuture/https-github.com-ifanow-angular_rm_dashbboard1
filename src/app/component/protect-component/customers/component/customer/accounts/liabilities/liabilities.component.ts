@@ -17,8 +17,16 @@ export class LiabilitiesComponent implements OnInit {
   // dataSource = ELEMENT_DATA;
   advisorId: any;
   dataSource: any;
-
-  constructor(private eventService: EventService, private subInjectService: SubscriptionInject,public custmService:CustomerService) {
+  storeData: any;
+  dataStore: any;
+  showFilter: any;
+  home=[];
+  vehicle=[];
+  education=[];
+  creditCard=[];
+  personal=[];
+  mortgage=[];
+  constructor(private eventService: EventService, private subInjectService: SubscriptionInject,public custmService:CustomerService,public util:UtilService) {
   }
 
 
@@ -26,8 +34,24 @@ export class LiabilitiesComponent implements OnInit {
 
   ngOnInit() {
     this.viewMode = 'tab1';
+    this.showFilter='tab1';
+    // this.showFilter='tab7';
     this.advisorId = AuthService.getAdvisorId();
     this.getLiability();
+  }
+  sortTable(data){
+    this.showFilter=data;
+    let filterData=[];
+    if(data=='tab1'){
+      this.dataSource=this.dataStore;
+    }else{
+    this.dataStore.forEach(element => {
+      if(element.loanTypeId==data){
+        filterData.push(element);
+      }
+    });
+    this.dataSource=filterData
+  }
   }
   open(flagValue, data) {
     const fragmentData = {
@@ -100,8 +124,27 @@ export class LiabilitiesComponent implements OnInit {
     );
   }
   getLiabiltyRes(data){
+    this.dataStore=data.loans;
+
     console.log(data);
     this.dataSource=data.loans;
+    this.storeData=data.loans.length;
+    this.dataStore.forEach(element => {
+      if(element.loanTypeId==1){
+        this.home.push(element)
+      }else if(element.loanTypeId==2){
+        this.vehicle.push(element);
+      }else if(element.loanTypeId==3){
+        this.education.push(element);
+      }else if(element.loanTypeId==4){
+        this.creditCard.push(element);
+      }else if(element.loanTypeId==5){
+        this.personal.push(element);
+      }else if(element.loanTypeId==6){
+        this.mortgage.push(element);
+      }
+      
+    });
   }
   clickHandling() {
     console.log('something was clicked');
