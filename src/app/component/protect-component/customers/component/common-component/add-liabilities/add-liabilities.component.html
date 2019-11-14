@@ -14,7 +14,7 @@
     </div>
 </div>
 <div class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="addLiabilityForm">
-    <div class="row pt-40">
+    <!-- <div class="row pt-40">
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8">Owner</h5>
             <p class="m-0 f-12 text-custom">In whose name is this asset</p>
@@ -30,8 +30,8 @@
                 </mat-form-field>
             </div>
         </div>
-    </div>
-    <!-- <app-owner-component [data]= 'ownerData'></app-owner-component> -->
+    </div> -->
+    <app-owner-component [data]= 'ownerData' (valueChange)='display($event)'></app-owner-component>
     <div class="row pt-40">
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8"> Loan type</h5>
@@ -272,7 +272,7 @@
                 </mat-form-field>   
             </div>
             <div class="col-md-4">
-                <label class="f-16"> Part Payment Amount{{getFormControl().transact}}
+                <label class="f-16"> Part Payment Amount
                     </label>
                 <div class="form-group mb-0">
                     <mat-form-field>

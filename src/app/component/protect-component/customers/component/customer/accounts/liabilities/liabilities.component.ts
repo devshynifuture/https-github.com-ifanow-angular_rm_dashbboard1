@@ -26,7 +26,7 @@ export class LiabilitiesComponent implements OnInit {
   creditCard=[];
   personal=[];
   mortgage=[];
-  constructor(private eventService: EventService, private subInjectService: SubscriptionInject,public custmService:CustomerService) {
+  constructor(private eventService: EventService, private subInjectService: SubscriptionInject,public custmService:CustomerService,public util:UtilService) {
   }
 
 

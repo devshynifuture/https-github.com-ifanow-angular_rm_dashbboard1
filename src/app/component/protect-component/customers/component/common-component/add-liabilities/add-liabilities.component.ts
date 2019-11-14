@@ -43,6 +43,8 @@ export class AddLiabilitiesComponent implements OnInit {
   advisorId: any;
   _inputData: any;                    
   ownerData: any;
+  ownerName: any;
+  selectedFamilyData: any;
 
   
 
@@ -84,6 +86,11 @@ export class AddLiabilitiesComponent implements OnInit {
   }
   getFormControl() {
     return this.addLiabilityForm.controls;
+  }
+  display(value){
+    console.log('value selected', value)
+    this.ownerName = value.userName;
+    this.selectedFamilyData = value
   }
   getLiability(data){
     if (data == undefined) {
@@ -136,10 +143,11 @@ export class AddLiabilitiesComponent implements OnInit {
       this.transactEntries.removeAt(item);
     }
     saveFormData(state) {
-      if (this.addLiabilityForm.controls.ownerName.invalid) {
-        this.isOwner = true;
-        return;
-      } else if (this.addLiabilityForm.controls.loanType.invalid) {
+      // if (this.addLiabilityForm.controls.ownerName.invalid) {
+      //   this.isOwner = true;
+      //   return;
+      // } else 
+      if (this.addLiabilityForm.controls.loanType.invalid) {
         this.isLoanType = true;
         return;
       } else if (this.addLiabilityForm.controls.loanAmount.invalid) {
@@ -159,7 +167,7 @@ export class AddLiabilitiesComponent implements OnInit {
         return;
       } else {
         const obj = {
-        ownerName: this.addLiabilityForm.controls.ownerName.value,
+        ownerName: this.ownerName,
         loanType: this.addLiabilityForm.controls.loanType.value,
         loanAmount: this.addLiabilityForm.controls.loanAmount.value,
         outstandingCheck: this.addLiabilityForm.controls.outstandingCheck.value,
@@ -200,8 +208,8 @@ export class AddLiabilitiesComponent implements OnInit {
             let objToSend={
               "advisorId": this.advisorId,
               "clientId": 2978,
-              "familyMemberId": 16201,
-              "ownerName": obj.ownerName,
+              "familyMemberId": this.selectedFamilyData.id,
+              "ownerName": this.ownerName,
               "loanTypeId": obj.loanType,
               "loanAmount": obj.loanAmount,
               "outstandingAmount": obj.outstandingAmt,
@@ -221,7 +229,7 @@ export class AddLiabilitiesComponent implements OnInit {
            }else{
             let editObj={
               "familyMemberId":160023,
-              "ownerName":obj.ownerName,
+              "ownerName":this.ownerName,
               "loanTypeId":obj.loanType,
               "id":this._inputData.id,
               "loanAmount":obj.loanAmount,
