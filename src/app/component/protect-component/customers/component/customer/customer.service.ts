@@ -59,4 +59,17 @@ export class CustomerService {
   getBonds(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BONDS,data)
   }
+  addRecurringDeposit(data){
+     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_RECURRING_DEPOSIT,data)
+  }
+  addBonds(data){
+     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_BOND,data)
+  }
+  editRecurringDeposit(data){
+     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_RECURRING_DEPOSIT,data)
+  }
+  editBonds(data){
+   return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_BONDS,data)    
+  }
+
 }

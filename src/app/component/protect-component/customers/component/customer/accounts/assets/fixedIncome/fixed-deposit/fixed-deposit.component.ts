@@ -9,6 +9,9 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { SatCalendarHeader } from 'saturn-datepicker';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import * as moment from 'moment';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-fixed-deposit',
@@ -33,6 +36,7 @@ export class FixedDepositComponent implements OnInit {
   isCompound = false;
   isMaturity = false;
   isMaturityDate = false;
+  isFrequencyOfPayoutPerYear = false;
   isPayOpt = false;
   isOwnerType = false;
   isFdNo = false;
@@ -57,7 +61,13 @@ export class FixedDepositComponent implements OnInit {
     { name: 'Annually', value: 5 }
   ]
   ownerData: any;
-  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
+  tenure: any;
+  getDate: string;
+  ownerName: any;
+  maturityDate: any;
+  selectedFamilyData: any;
+  showFreqPayOpt = false;
+  constructor(private router: Router,private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -73,9 +83,9 @@ export class FixedDepositComponent implements OnInit {
       clientId: 2980
     }
     this.advisorId = AuthService.getAdvisorId();
-    this.fdMonths = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
-    this.fdDays = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31']
-    this.fdYears = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15']
+    this.fdMonths = ['0','1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+    this.fdDays = ['0','1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31']
+    this.fdYears = ['0','1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15']
   }
   getOwnerListRes(data) {
     console.log('familymember', data)
@@ -91,12 +101,21 @@ export class FixedDepositComponent implements OnInit {
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' })
   }
-
+  display(value){
+    console.log('value selected', value)
+    this.ownerName = value.userName;
+    this.selectedFamilyData = value
+  }
   showLess(value) {
     if (value == true) {
       this.showHide = false;
     } else {
       this.showHide = true;
+    }
+  }
+  intrestPayout(value){
+    if(value == 2){
+      this.showFreqPayOpt = true
     }
   }
   haveMaturity(maturity) {
@@ -106,48 +125,60 @@ export class FixedDepositComponent implements OnInit {
       this.showTenure = true;
     }
   }
+  getDateYMD(){
+    this.tenure = this.fixedDeposit.controls.commencementDate.value.add(this.fixedDeposit.controls.tenureM.value, 'months');
+    this.tenure = this.fixedDeposit.controls.commencementDate.value.add(this.fixedDeposit.controls.tenureY.value, 'years');
+    this.tenure = this.fixedDeposit.controls.commencementDate.value.add(this.fixedDeposit.controls.tenureD.value, 'days');
+    this.getDate = this.datePipe.transform(this.tenure , 'yyyy-MM-dd')
+    return this.getDate;
+  }
   getdataForm(data) {
     if(data == undefined){
       data = {}
     }
-    console.log('************###', data)
     if (this.dataSource != undefined) {
       var data = this.dataSource
     }
     this.fixedDeposit = this.fb.group({
-      ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
+      ownerName: [(data == undefined) ? '' : this.ownerName, [Validators.required]],
       amountInvest: [(data == undefined) ? '' : data.amountInvested, [Validators.required]],
       commencementDate: [(data == undefined) ? '' : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(data == undefined) ? '' : data.interestRate, [Validators.required]],
+      maturity:[(data == undefined) ? '' : data.maturity, [Validators.required]],
       compound: [(data == undefined)?'':(data.interestCompoundingId)+"", [Validators.required]],
       institution: [(data == undefined) ? '' : data.institutionName, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      tenure: [(data == undefined) ? '' : data.tenure, [Validators.required]],
-      maturity: [(data == undefined) ? '' : data.frequencyOfPayoutPerYear, [Validators.required]],
+      tenureY: [(data == undefined) ? '' : data.tenureY, [Validators.required]],
+      tenureM: [(data == undefined) ? '' : data.tenureM, [Validators.required]],
+      tenureD: [(data == undefined) ? '' : data.tenureD, [Validators.required]],
+      frequencyOfPayoutPerYear: [(data == undefined) ? '' : data.frequencyOfPayoutPerYear, [Validators.required]],
       maturityDate: [(data == undefined) ? '' : new Date(data.maturityDate), [Validators.required]],
       payOpt: [(data == undefined) ? '' : (data.interestPayoutOption)+"" ,[Validators.required]],
-      bankACNo: [(data == undefined) ? '' : data.bankACNo, [Validators.required]],
-      ownerType: [(data == undefined) ? '' : (data.ownerType)+"", [Validators.required]],
+      bankACNo: [(data == undefined) ? '' : data.bankAcNumber, [Validators.required]],
+      ownerType: [(data == undefined) ? '' : (data.ownershipType)+"", [Validators.required]],
       fdNo: [(data == undefined) ? '' : data.fdNumber, [Validators.required]],
       FDType: [(data == undefined) ? '' : (data.fdType)+"", [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]]
     });
-
     this.getFormControl().ownerName.maxLength = 40;
     this.getFormControl().description.maxLength = 60;
     this.getFormControl().fdNo.maxLength = 10;
     this.getFormControl().bankACNo.maxLength = 15;
     this.ownerData = this.fixedDeposit.controls;
+    this.fixedDeposit.controls.maturityDate.setValue(new Date(data.maturityDate));
   }
   getFormControl(): any {
     return this.fixedDeposit.controls;
   }
   saveFixedDeposit() {
-
-    if (this.fixedDeposit.controls.ownerName.invalid) {
-      this.isownerName = true;
-      return;
-    } else if (this.fixedDeposit.controls.amountInvest.invalid) {
+    if(this.fixedDeposit.controls.maturityDate.invalid == true){
+      this.tenure = this.getDateYMD()
+      this.maturityDate = this.tenure
+    }else{
+      this.maturityDate = this.fixedDeposit.controls.maturityDate.value
+    }
+  
+   if (this.fixedDeposit.controls.amountInvest.invalid) {
       this.isAmountInvest = true;
       return;
     } else if (this.fixedDeposit.controls.ownerType.invalid) {
@@ -162,50 +193,32 @@ export class FixedDepositComponent implements OnInit {
     } else if (this.fixedDeposit.controls.compound.invalid) {
       this.isCompound = true;
       return;
-    } else if (this.fixedDeposit.controls.institution.invalid) {
-      this.isInstitution = true;
-      return;
-    } else if (this.fixedDeposit.controls.description.invalid) {
-      this.isDescription = true;
-      return;
-    } else if (this.fixedDeposit.controls.maturity.invalid) {
-      this.isMaturity = true;
-      return;
-    } else if (this.fixedDeposit.controls.maturityDate.invalid) {
-      this.isMaturityDate = true;
-      return;
     } else if (this.fixedDeposit.controls.payOpt.invalid) {
       this.isPayOpt = true;
-      return;
-    } else if (this.fixedDeposit.controls.bankACNo.invalid) {
-      this.isBankACNo = true;
-      return;
-    } else if (this.fixedDeposit.controls.fdNo.invalid) {
-      this.isFdNo = true;
       return;
     } else if (this.fixedDeposit.controls.FDType.invalid) {
       this.isFDType = true;
       return;
     } else {
-
       let obj = {
         advisorId: this.advisorId,
-        clientId: 998877,
-        familyMemberId: 554466,
-        ownerName: this.fixedDeposit.controls.ownerName.value,
+        clientId: 2978,
+        familyMemberId: this.selectedFamilyData.id,
+        ownerName: this.ownerName,
         amountInvested: this.fixedDeposit.controls.amountInvest.value,
-        ownerType: this.fixedDeposit.controls.ownerType.value,
+        ownershipType: this.fixedDeposit.controls.ownerType.value,
         interestRate: this.fixedDeposit.controls.interestRate.value,
         commencementDate: this.datePipe.transform(this.fixedDeposit.controls.commencementDate.value, 'yyyy-MM-dd'),
         institutionName: this.fixedDeposit.controls.institution.value,
         description: this.fixedDeposit.controls.description.value,
-        frequencyOfPayoutPerYear: this.fixedDeposit.controls.maturity.value,
-        maturityDate: this.datePipe.transform(this.fixedDeposit.controls.maturityDate.value, 'yyyy-MM-dd'),
+        frequencyOfPayoutPerYear: this.fixedDeposit.controls.frequencyOfPayoutPerYear.value,
+        maturityDate: this.datePipe.transform(this.maturityDate, 'yyyy-MM-dd'),
         interestPayoutOption: this.fixedDeposit.controls.payOpt.value,
-        bankACNo: this.fixedDeposit.controls.bankACNo.value,
+        bankAcNumber: this.fixedDeposit.controls.bankACNo.value,
         fdNumber: this.fixedDeposit.controls.fdNo.value,
         fdType: this.fixedDeposit.controls.FDType.value,
-        interestCompoundingId: this.fixedDeposit.controls.compound.value
+        interestCompoundingId: this.fixedDeposit.controls.compound.value,
+        id:this.fixedDeposit.controls.id.value
       }
       console.log('fixedDeposit', obj)
       this.dataSource = obj

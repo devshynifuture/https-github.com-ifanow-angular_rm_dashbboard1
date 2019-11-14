@@ -1,26 +1,22 @@
 <!-- start ADD Fixed DEPOSIT (fixed DEPOSIT) -->
-        <div [formGroup]="fixedDeposit" class="row pt-40">
-            <div class="col-md-5 text-right">
-                <h5 class="m-0 pt-8">Owner</h5>
-                <p class="m-0 f-12 text-custom">In whose name is this asset</p>
-            </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0">
-                        <mat-select formControlName="ownerName" class="form-control br-0">       
-                         <mat-option value = ''>Search family members</mat-option>      
-                        <mat-option *ngFor="let f of family" [value]="f.userName">
-                            <span>{{f.userName}}</span>
-                        </mat-option>
-                        </mat-select>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <mat-error class="f-12 pt-4"
-                                [ngClass]="{'v-h':!(isownerName && getFormControl().ownerName.invalid || getFormControl().ownerName.touched && getFormControl().ownerName.invalid)}">
-                                This field is required
-                            </mat-error>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div [formGroup]="fixedDeposit" class="row pt-40">
+    <div class="col-md-5 pr-0 text-right">
+        <h5 class="m-0 pt-8">Owner</h5>
+        <p class="m-0 f-12 text-custom">In whose name is this asset</p>
+    </div>
+    <div class="col-md-5">
+        <div class="form-group mb-0">
+            <mat-form-field>
+                <mat-select formControlName="ownerName" class="form-control br-0">
+                    <mat-option value=''>Search family members</mat-option>
+                    <mat-option *ngFor="let f of family" [value]="f.userName" (click)="getOwnerName(f)">
+                        <span>{{f.userName}}</span>
+                    </mat-option>
+                </mat-select>
+                <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isownerName && getFormControl().ownerName.invalid || getFormControl().ownerName.touched && getFormControl().ownerName.invalid)}">
+                    This field is required
+                </mat-error>
+            </mat-form-field>
         </div>
-
+    </div>
+</div>

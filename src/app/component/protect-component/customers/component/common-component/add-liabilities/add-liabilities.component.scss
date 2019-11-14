@@ -17,3 +17,35 @@
 .scheduleTable #table-low tr.mat-row td {
     padding: 6px 4px !important;
 }
+
+::ng-deep .mat-checkbox .mat-ripple-element {
+    background: transparent !important;
+}
+
+.checkBoxPositions {
+    position: absolute;
+    top: -5px;
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: #008FFF !important
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0px;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+    width: 1.5em !important;
+}
+
+::ng-deep .mat-datepicker-toggle {
+    position: absolute;
+    right: 8px !important;
+    top: -16px !important;
+}
+
+::ng-deep .mat-form-field {
+    width: 100%;
+}

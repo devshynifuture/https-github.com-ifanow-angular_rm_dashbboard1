@@ -53,11 +53,15 @@ export const appConfig = {
   ADD_LIABILITY:'account/liability/loan/add',
   GET_LIABILITY:'account/liability/loan/list/get',
   EDIT_LIABILITY:'account/liability/loan/edit',
-  EDIT_FIXEDDEPOSIT:'account/asset/fixed-income/fixed-deposit/delete',
+  EDIT_FIXEDDEPOSIT:'account/asset/fixed-income/fixed-deposit/edit',
   GET_LIST_FAMILY_MEMBER:'account/income/family-members/get',
   GET_FIXEDDEPOSIT:'account/asset/fixed-income/fixed-deposit/get',
   GET_RECURING_DEPOSIT:'account/asset/fixed-income/recurring-deposit/list/get',
   GET_BONDS:'account/asset/fixed-income/bond/list/get',
+  ADD_RECURRING_DEPOSIT:'account/asset/fixed-income/recurring-deposit/add',
+  ADD_BOND:'account/asset/fixed-income/bond/add',
+  EDIT_RECURRING_DEPOSIT:'account/asset/fixed-income/recurring-deposit/edit',
+  EDIT_BONDS:'account/asset/fixed-income/bond/edit',
 
 ////////////////////////////// subscription////////////////////////////////////////////
 
