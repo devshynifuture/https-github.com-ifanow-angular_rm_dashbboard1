@@ -20,7 +20,7 @@ export class CustomerService {
   }
   getLifeInsuranceData(data)
   {
-    let httpParams=new HttpParams().set('advisorId',data.advisorId).set('clientId',data.clientId).set('insuranceTypeId',data.insuranceTypeId)
+    let httpParams=new HttpParams().set('advisorId',data.advisorId).set('clientId',data.clientId).set('insuranceSubTypeId',data.insuranceSubTypeId).set('insuranceTypeId',data.insuranceTypeId)
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIFE_INSURANCE,httpParams)
   }
   editLifeInsuranceData(data)
