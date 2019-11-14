@@ -126,7 +126,7 @@ export class BondsComponent implements OnInit {
   let obj = {
     advisorId:this.advisorId,
     clientId: 2978,
-    familyMemberId: (this.familyMemberId == undefined)?this.familyMemberId:this.selectedFamilyData.id,
+    familyMemberId: (this.familyMemberId == undefined)? this.familyMemberId : this.selectedFamilyData.id,
     ownerName: this.ownerName,
     amountInvest:this.bonds.amountInvest.value,
     bondName: this.bonds.controls.monthlyContribution.value,
