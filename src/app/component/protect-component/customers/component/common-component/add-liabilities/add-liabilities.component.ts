@@ -92,6 +92,14 @@ export class AddLiabilitiesComponent implements OnInit {
     this.ownerName = value.userName;
     this.selectedFamilyData = value
   }
+  keyPress(event: any) {
+    const pattern = /[0-9\+\-\ ]/;
+
+    const inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
   getLiability(data){
     if (data == undefined) {
       data = {};
@@ -117,15 +125,15 @@ export class AddLiabilitiesComponent implements OnInit {
     if(data.loanPartPayments!=undefined){
       data.loanPartPayments.forEach(element => {
         this.addLiabilityForm.controls.transact=this.fb.array([this.fb.group({
-          partPaymentDate: new Date(element.partPaymentDate),
-          partPayment: element.partPayment,
-          option: (element.option+"")})])
+          partPaymentDate: [new Date(element.partPaymentDate),[Validators.required]],
+          partPayment: [element.partPayment,Validators.required],
+          option:[ (element.option+""),Validators.required]})])
       })
     }
-    this.getFormControl().ownerName.maxLength = 10;
-    this.getFormControl().loanAmount.maxLength = 10;
-    this.getFormControl().loanTenure.maxLength = 10;
-    this.getFormControl().interest.maxLength = 40;
+    this.getFormControl().loanAmount.maxLength = 20;
+    this.getFormControl().loanTenure.maxLength = 20;
+    this.getFormControl().interest.maxLength = 20;
+    this.getFormControl().outstandingAmt.maxLength = 20;
     this.ownerData = this.addLiabilityForm.controls;
 
   }
@@ -251,33 +259,18 @@ export class AddLiabilitiesComponent implements OnInit {
     }
     addLiabilityRes(data){
       console.log(data);
-      if(data==1){
-        let obj={
-          'advisorId':this.advisorId,
-          'clientId':2978
-        }
-        this.custumService.getLiabilty(obj).subscribe(
-          data => this.getLiabiltyRes(data)
-        );
-        this.close();
+      this.subInjectService.changeNewRightSliderState({ state: 'close', data })
         this.eventService.openSnackBar('Liabilities added successfully', 'OK');    
       }
      
-    }
+    
     editLiabilityRes(data){
       console.log(data);
       console.log(data);
-      if(data==1){
-        let obj={
-          'advisorId':this.advisorId,
-          'clientId':2978
-        }
-        this.custumService.getLiabilty(obj).subscribe(
-          data => this.getLiabiltyRes(data)
-        );
-        this.close();
+        this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+
         this.eventService.openSnackBar('Liabilities edited successfully', 'OK');  
-      }
+      
     }
     getLiabiltyRes(data){
       console.log(data)
