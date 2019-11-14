@@ -78,6 +78,9 @@ datasource22 = ELEMENT_DATA22;
 
 displayedColumns23 = ['no', 'owner','cvalue','mpayout','rate','amt','mvalue','mdate','desc','status','icons'];
 datasource23 = ELEMENT_DATA23;
+
+displayedColumns24 = ['name', 'amt', 'cvalue', 'profile','abt','xirr','pay','withdraw','bal','date','sip'];
+  dataSource24 = ELEMENT_DATA24;
   viewMode;
   ngOnInit() {
     this.viewMode="tab1"
@@ -734,4 +737,49 @@ const ELEMENT_DATA23: PeriodicElement23[] = [
   ,cvalue:"94,925",mpayout:"60,000", rate:"8.40%",amt:"60,000",mvalue:"65,765",mdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
   {no: '', owner: 'Total'
   ,cvalue:"1,28,925",mpayout:"1,28,925", rate:"",amt:"1,28,925",mvalue:"1,28,925",mdate:"",desc:"",status:""},
+];
+
+
+export interface PeriodicElement24 {
+  name: string;
+  amt: string;
+  cvalue:string;
+  profile:string;
+  abt:string;
+  xirr:string;
+  pay:string;
+  
+  withdraw:string;
+  bal:string;
+  date:string;
+  sip:string;
+}
+
+const ELEMENT_DATA24: PeriodicElement24[] = [
+
+  {name: 'DSP Tax Saver Fund - Regular Plan - Growth| 5287365/24| Forum Mitesh Galani', amt: '90,327'
+  ,cvalue:"94,925",profile:"4,597", abt:"26.99",xirr:"8.32",pay:"0"
+  ,withdraw:"23,285",bal:"123.01",date:"24.87"
+  ,sip:"12,000"},
+  {name: 'DSP Tax Saver Fund - Regular Plan - Growth| 5287365/24| Forum Mitesh Galani', amt: '90,327'
+  ,cvalue:"94,925",profile:"4,597", abt:"26.99",xirr:"8.32",pay:"0"
+  ,withdraw:"23,285",bal:"123.01",date:"24.87"
+  ,sip:"12,000"},
+  {name: 'DSP Tax Saver Fund - Regular Plan - Growth| 5287365/24| Forum Mitesh Galani', amt: '90,327'
+  ,cvalue:"94,925",profile:"4,597", abt:"26.99",xirr:"8.32",pay:"0"
+  ,withdraw:"23,285",bal:"123.01",date:"24.87"
+  ,sip:"12,000"},
+  {name: 'DSP Tax Saver Fund - Regular Plan - Growth| 5287365/24| Forum Mitesh Galani', amt: '90,327'
+  ,cvalue:"94,925",profile:"4,597", abt:"26.99",xirr:"8.32",pay:"0"
+  ,withdraw:"23,285",bal:"123.01",date:"24.87"
+  ,sip:"12,000"},
+  {name: 'DSP Tax Saver Fund - Regular Plan - Growth| 5287365/24| Forum Mitesh Galani', amt: '90,327'
+  ,cvalue:"94,925",profile:"4,597", abt:"26.99",xirr:"8.32",pay:"0"
+  ,withdraw:"23,285",bal:"123.01",date:"24.87"
+  ,sip:"12,000"},
+  {name: 'Total', amt: '11,94,456.22'
+  ,cvalue:"11,94,456.22",profile:"11,94,456.22", abt:"826.99",xirr:"8.32",pay:"0"
+  ,withdraw:"11,94,456.22",bal:"123.01",date:""
+  ,sip:"112,000"},
+  
 ];

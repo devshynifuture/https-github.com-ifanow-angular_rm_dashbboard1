@@ -1,3 +1,7 @@
 ::ng-deep #table-low tbody td.br {
     border-right: 1px solid #dee5e7 !important;
   }
+  ::ng-deep .liabilities{
+    height: 320px;
+    overflow: auto;
+  }

@@ -1,107 +1,185 @@
 <div class="row bb-1 popup-header-fix-35">
-    <div class="col-md-10 p-0">
-        <h3 class="m-0 wrapper-16">SELECT FILTERS - SUMMARY REPORT</h3>
-    </div>
-    <div class="col-md-2">
-            <i class="material-icons pt-16 right text-right c-p"> clear </i>
-    </div>
+  <div class="col-md-10 p-0">
+    <h3 class="m-0 wrapper-16">SELECT FILTERS - SUMMARY REPORT</h3>
+  </div>
+  <div class="col-md-2">
+    <i class="material-icons pt-16 right text-right c-p"> clear </i>
+  </div>
 </div>
 <!-- <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="wrapper-20">
-    
-    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding class="bg-grey">
-     
-      <button mat-icon-button disabled></button>
-      {{node.name}} 
-    </mat-tree-node>
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding class="bg-grey">
    
-    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
-    
-     <h2 matTreeNodeToggle
-     [attr.aria-label]="'toggle ' + node.name"> {{node.name}}</h2>
-    </mat-tree-node>
+    <button mat-icon-button disabled></button>
+    {{node.name}} 
+  </mat-tree-node>
+  
+  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+  
+   <h2 matTreeNodeToggle
+   [attr.aria-label]="'toggle ' + node.name"> {{node.name}}</h2>
+  </mat-tree-node>
   </mat-tree> -->
-
 <div class="wrapper-20 pt-72 pb-44 mb-44">
-    <div class="row">
+  <div class="row">
     <div class="col-md-12 p-0">
-    <mat-list role="list">
-    <mat-list-item role="listitem" class="bg-grey lter b-grey">
-        <h5 class="m-0">Family members<span class="text-custom f-14 pl-12">2 selected</span></h5>
-        <i class="material-icons arrowfix-right c-p text-custom">
-            keyboard_arrow_down
-            </i></mat-list-item>
-            <div class="bl-grey br-grey bb-grey">
-    <mat-list-item role="listitem"><mat-checkbox checked="false">Sonesh Dedhia</mat-checkbox></mat-list-item>
-    <mat-list-item role="listitem"><mat-checkbox checked="false">Jinita Dedhia</mat-checkbox></mat-list-item>
-</div>
-  </mat-list>
-  </div>
-  </div>
-  <div class="row pt-20">
-        <div class="col-md-12 p-0">
-        <mat-list role="list">
+      <mat-list role="list">
         <mat-list-item role="listitem" class="bg-grey lter b-grey">
-            <h5 class="m-0">AMC<span class="text-custom f-14 pl-12">1 selected</span></h5>
-            <i class="material-icons arrowfix-right c-p text-custom">
-                keyboard_arrow_down
-                </i></mat-list-item>
-        
-   
+          <h5 class="m-0">Family members<span class="text-custom f-14 pl-12">2 selected</span></h5>
+          <i class="material-icons arrowfix-right c-p text-primitive">
+          keyboard_arrow_down
+          </i>
+        </mat-list-item>
+        <div class="bl-grey br-grey bb-grey">
+          <mat-list-item role="listitem">
+            <mat-checkbox checked="false">Sonesh Dedhia</mat-checkbox>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <mat-checkbox checked="false">Jinita Dedhia</mat-checkbox>
+          </mat-list-item>
+        </div>
       </mat-list>
     </div>
-      </div>
-      <div class="row pt-20">
-            <div class="col-md-12 p-0">
-            <mat-list role="list">
-            <mat-list-item role="listitem" class="bg-grey lter b-grey">
-                <h5 class="m-0">Schemes<span class="text-custom f-14 pl-12">4 selected</span></h5>
-                <i class="material-icons arrowfix-right c-p text-custom">
-                    keyboard_arrow_down
-                    </i></mat-list-item>
-                    <div class="bl-grey br-grey bb-grey">
-            <mat-list-item role="listitem" class="pt-4"><mat-checkbox checked="false" class="wb">UTI Value Opportunities Fund- Regular Plan - Growth <br>Option</mat-checkbox></mat-list-item>
-            <mat-list-item role="listitem"><mat-checkbox checked="false">Axis Bluechip Fund - Growth</mat-checkbox></mat-list-item>
-            <mat-list-item role="listitem"><mat-checkbox checked="false">DSP Small Cap Fund - Regular - Growth</mat-checkbox></mat-list-item>
-            <mat-list-item role="listitem"><mat-checkbox checked="false">HDFC Equity Fund - Growth Option</mat-checkbox></mat-list-item>
-            <mat-list-item role="listitem"><mat-checkbox checked="false">ICICI Prudential Credit Risk Fund - Growth</mat-checkbox></mat-list-item>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-12 p-0">
+      <mat-list role="list">
+        <mat-list-item role="listitem" class="bg-grey lter b-grey">
+          <h5 class="m-0">AMC<span class="text-custom f-14 pl-12">1 selected</span></h5>
+          <i class="material-icons arrowfix-right c-p text-primitive">
+          keyboard_arrow_down
+          </i>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-12 p-0">
+      <mat-list role="list">
+        <mat-list-item role="listitem" class="bg-grey lter b-grey">
+          <h5 class="m-0">Schemes<span class="text-custom f-14 pl-12">4 selected</span></h5>
+          <i class="material-icons arrowfix-right c-p text-primitive">
+          keyboard_arrow_down
+          </i>
+        </mat-list-item>
+        <div class="bl-grey br-grey bb-grey">
+          <mat-list-item role="listitem" class="pt-4">
+            <mat-checkbox checked="false" class="wb">UTI Value Opportunities Fund- Regular Plan - Growth <br>Option</mat-checkbox>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <mat-checkbox checked="false">Axis Bluechip Fund - Growth</mat-checkbox>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <mat-checkbox checked="false">DSP Small Cap Fund - Regular - Growth</mat-checkbox>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <mat-checkbox checked="false">HDFC Equity Fund - Growth Option</mat-checkbox>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <mat-checkbox checked="false">ICICI Prudential Credit Risk Fund - Growth</mat-checkbox>
+          </mat-list-item>
         </div>
-          </mat-list>
-          </div>
-          </div>
-          <div class="row pt-20">
-                <div class="col-md-12 p-0">
-                <mat-list role="list">
-                <mat-list-item role="listitem" class="bg-grey lter b-grey">
-                    <h5 class="m-0">Folios<span class="text-custom f-14 pl-12">All selected</span></h5>
-                    <i class="material-icons arrowfix-right c-p text-custom">
-                        keyboard_arrow_down
-                        </i></mat-list-item>
-                
-           
-              </mat-list>
+      </mat-list>
+    </div>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-12 p-0">
+      <mat-list role="list">
+        <mat-list-item role="listitem" class="bg-grey lter b-grey">
+          <h5 class="m-0">Folios<span class="text-custom f-14 pl-12">All selected</span></h5>
+          <i class="material-icons arrowfix-right c-p text-primitive">
+          keyboard_arrow_down
+          </i>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+  <div class="row pt-12">
+    <div class="col-md-6 p-0">
+      <h5 class="m-0 pb-8">Report as on</h5>
+    </div>
+    <div class="col-md-6 p-0">
+      <h5 class="m-0 pb-8">Report as on</h5>
+      <mat-radio-group aria-label="Select an option" id="custom-radio">
+        <mat-radio-button value="1" class="text-custom b-ua">Yes</mat-radio-button>
+        <mat-radio-button value="2" class="text-primary bu-primary">No</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+  <!-- Transaction view -->
+  <!-- <div class="row pt-20">
+    <div class="col-md-12 p-0">
+      <mat-list role="list">
+        <mat-list-item role="listitem" class="bg-grey lter b-grey">
+          <h5 class="m-0">Transaction view<span class="text-custom f-14 pl-12">12 of 14 selected</span></h5>
+          <i class="material-icons arrowfix-right c-p text-primitive">
+          keyboard_arrow_down
+          </i>
+        </mat-list-item>
+        <div class="bl-grey br-grey bb-grey">
+          <mat-list-item role="listitem" class="pt-4">
+            <img src="assets/images/svg/double-equal.svg" class="pr-8">
+            <mat-checkbox checked="false">Scheme name</mat-checkbox>
+          </mat-list-item>
+          <mat-list-item role="listitem" class="pt-4">
+            <img src="assets/images/svg/double-equal.svg" class="pr-8">
+            <mat-checkbox checked="false">Total cost</mat-checkbox>
+          </mat-list-item>
+          <mat-list-item role="listitem" class="pt-4">
+            <img src="assets/images/svg/double-equal.svg" class="pr-8">
+            <mat-checkbox checked="false">Current value</mat-checkbox>
+          </mat-list-item>
+          <mat-list-item role="listitem" class="pt-4">
+            <img src="assets/images/svg/double-equal.svg" class="pr-8">
+            <mat-checkbox checked="false">Unrealized profit (loss)</mat-checkbox>
+          </mat-list-item>
+        </div>
+      </mat-list>
+    </div>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-12 p-0">
+      <mat-list role="list">
+        <mat-list-item role="listitem" class="bg-grey lter b-grey">
+          <h5 class="m-0">Report type<span class="text-custom f-14 pl-12">Investor wise</span></h5>
+          <i class="material-icons arrowfix-right c-p text-primitive">
+          keyboard_arrow_down
+          </i>
+        </mat-list-item>
+        <div class="bl-grey br-grey bb-grey">
+          <mat-list-item role="listitem" class="pt-4">
+          
+            <div id="custom-radio">
+            <mat-radio-button>Investor wise</mat-radio-button>
             </div>
-              </div>
-              <div class="row pt-12">
-                  <div class="col-md-6 p-0">
-                      <h5 class="m-0 pb-8">Report as on</h5>
-                  </div>
-                  <div class="col-md-6 p-0">
-                        <h5 class="m-0 pb-8">Report as on</h5>
-                        <mat-radio-group aria-label="Select an option" id="custom-radio">
-                                <mat-radio-button value="1" class="text-custom b-ua">Yes</mat-radio-button>
-                                <mat-radio-button value="2" class="text-primary bu-primary">No</mat-radio-button>
-                              </mat-radio-group>
-                  </div>
-              </div>
-      </div>
 
-      <div class="bottom-fixed-35 wrapper-12">
-            <div class="row">
-              <div class="col-md-4">
-                <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('Close')">Cancel</h5>
-              </div>
-              <div class="col-md-8 right text-right">
-                <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveVariableFeeData('2')">GENERATE REPORT</button>
-              </div>
-            </div>
-          </div>
+          </mat-list-item>
+          <mat-list-item role="listitem" class="pt-4">
+            
+            <div id="custom-radio">
+                <mat-radio-button>Category wise</mat-radio-button>
+                </div>
+
+          </mat-list-item>
+          <mat-list-item role="listitem" class="pt-4">
+            
+            <div id="custom-radio">
+                <mat-radio-button>Sub category wise</mat-radio-button>
+                </div>
+
+          </mat-list-item>
+          
+        </div>
+      </mat-list>
+    </div>
+  </div> -->
+</div>
+<div class="bottom-fixed-35 wrapper-12">
+  <div class="row">
+    <div class="col-md-4">
+      <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('Close')">Cancel</h5>
+    </div>
+    <div class="col-md-8 right text-right">
+      <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveVariableFeeData('2')">GENERATE REPORT</button>
+    </div>
+  </div>
+</div>

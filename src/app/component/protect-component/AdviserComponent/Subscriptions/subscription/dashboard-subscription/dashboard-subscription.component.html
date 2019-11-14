@@ -187,7 +187,7 @@
                   <!--                  </mat-button-toggle-group>-->
                   <mat-button-toggle-group [(ngModel)]="subscriptionSummaryStatusFilter"
                                            (change)="getSummaryDataDashboard($event.value)" multiple=false
-                                           class="subscription-summary">
+                                           class="subscription-summary" id="custom-toggle">
                     <mat-button-toggle value=1 class="f-14">NOT STARTED</mat-button-toggle>
                     <mat-button-toggle value=3 class="f-14">UPCOMING</mat-button-toggle>
                   </mat-button-toggle-group>
