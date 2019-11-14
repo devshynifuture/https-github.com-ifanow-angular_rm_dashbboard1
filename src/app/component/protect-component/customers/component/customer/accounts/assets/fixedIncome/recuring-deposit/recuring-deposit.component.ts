@@ -84,7 +84,7 @@ export class RecuringDepositComponent implements OnInit {
   display(value){
     console.log('value selected', value)
     this.ownerName = value.userName;
-    this.selectedFamilyData = value
+    this.familyMemberId = value.id
   }
   showLess(value){
     if(value  == true){
@@ -123,8 +123,10 @@ export class RecuringDepositComponent implements OnInit {
       this.getFormControl().description.maxLength = 60;
       this.getFormControl().rdNo.maxLength = 10;
       this.getFormControl().bankName.maxLength = 15;
-      this.familyMemberId = this.recuringDeposit.controls.familyMemberId.value
-      this.familyMemberId =  this.familyMemberId[0]
+      if(data != undefined){
+        this.familyMemberId = this.recuringDeposit.controls.familyMemberId.value
+        this.familyMemberId =  this.familyMemberId[0]
+      }
       this.ownerData = this.recuringDeposit.controls;
 
   }
@@ -154,7 +156,7 @@ export class RecuringDepositComponent implements OnInit {
     let obj = {
       advisorId:this.advisorId,
       clientId: 2978,
-      familyMemberId: (this.familyMemberId == undefined)?this.familyMemberId:this.selectedFamilyData.id,
+      familyMemberId: this.familyMemberId ,
       ownerName: this.ownerName,
       monthlyContribution: this.recuringDeposit.controls.monthlyContribution.value,
       interestRate : this.recuringDeposit.controls.interestRate.value,
