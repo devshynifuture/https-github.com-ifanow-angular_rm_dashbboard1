@@ -5,6 +5,7 @@ import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { CustomerService } from '../../customer/customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-liabilities',
@@ -41,10 +42,11 @@ export class AddLiabilitiesComponent implements OnInit {
   data: any[];
   advisorId: any;
   _inputData: any;                    
+  ownerData: any;
 
   
 
-  constructor(private subInjectService:SubscriptionInject,private fb: FormBuilder,public custumService:CustomerService) { }
+  constructor(private subInjectService:SubscriptionInject,private fb: FormBuilder,public custumService:CustomerService,public eventService:EventService) { }
   @Input()
   set inputData(inputData) {
     this._inputData = inputData;
@@ -60,20 +62,6 @@ export class AddLiabilitiesComponent implements OnInit {
     this.showSelect=false;
     this.advisorId = AuthService.getAdvisorId();
   }
-  // loanType = [
-  //   {name: "Home Loan", value: 1},
-  //   {name: "Vehicle", value: 2},
-  //   {name: "Education", value: 3},
-  //   {name: "Credit Card", value: 4},
-  //   {name: "Personal", value: 5},
-  //   {name: "Mortgage", value: 6}
-  // ]
-  // emiFrequency = [
-  //   {name: "Monthly", value: 1},
-  //   {name: "Quaterly", value: 2},
-  //   {name: "Semi annually", value: 3},
-  //   {name: "Annually", value: 4},
-  // ]
   showMore(){
     this.show=true;
   }
@@ -103,7 +91,6 @@ export class AddLiabilitiesComponent implements OnInit {
     }
     this.addLiabilityForm = this.fb.group({
       ownerName: [data.ownerName , [Validators.required]],
-      // loanType:[data.loanTypeId,[Validators.required]],
       loanType: [(data.loanTypeId)+"", [Validators.required]],
       loanAmount: [data.loanAmount, [Validators.required]],
       loanTenure: [data.loanTenure, [Validators.required]],
@@ -112,7 +99,6 @@ export class AddLiabilitiesComponent implements OnInit {
       outstandingAmt: [data.outstandingAmount, [Validators.required]],
       CommencementDate: [new Date(data.commencementDate), [Validators.required]],
       emiFrequency: [(data.frequencyOfPayments)+"", [Validators.required]],
-      // emiFrequency: [data.frequencyOfPayments, [Validators.required]],
       interest: [data.annualInterestRate, [Validators.required]],
       emi: [data.emi],
       finInstitution: [data.financialInstitution],
@@ -120,10 +106,6 @@ export class AddLiabilitiesComponent implements OnInit {
      transact: this.fb.array([this.fb.group({  partPaymentDate:null,
       partPayment: null,
       option: null})])
-      // transact: this.fb.array([this.fb.group({
-      //   partPaymentDate: new Date(data.loanPartPayments[0].partPaymentDate),
-      //   partPayment: data.loanPartPayments[0].partPayment,
-      //   option: data.loanPartPayments[0].option})]),
     });
     if(data.loanPartPayments!=undefined){
       data.loanPartPayments.forEach(element => {
@@ -137,6 +119,8 @@ export class AddLiabilitiesComponent implements OnInit {
     this.getFormControl().loanAmount.maxLength = 10;
     this.getFormControl().loanTenure.maxLength = 10;
     this.getFormControl().interest.maxLength = 40;
+    this.ownerData = this.addLiabilityForm.controls;
+
   }
   get transactEntries() {
     return this.addLiabilityForm.get('transact') as FormArray;
@@ -268,7 +252,7 @@ export class AddLiabilitiesComponent implements OnInit {
           data => this.getLiabiltyRes(data)
         );
         this.close();
-
+        this.eventService.openSnackBar('Liabilities added successfully', 'OK');    
       }
      
     }
@@ -284,7 +268,7 @@ export class AddLiabilitiesComponent implements OnInit {
           data => this.getLiabiltyRes(data)
         );
         this.close();
-
+        this.eventService.openSnackBar('Liabilities edited successfully', 'OK');  
       }
     }
     getLiabiltyRes(data){

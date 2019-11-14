@@ -18,7 +18,14 @@ export class LiabilitiesComponent implements OnInit {
   advisorId: any;
   dataSource: any;
   storeData: any;
-
+  dataStore: any;
+  showFilter: any;
+  home=[];
+  vehicle=[];
+  education=[];
+  creditCard=[];
+  personal=[];
+  mortgage=[];
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,public custmService:CustomerService) {
   }
 
@@ -27,8 +34,24 @@ export class LiabilitiesComponent implements OnInit {
 
   ngOnInit() {
     this.viewMode = 'tab1';
+    this.showFilter='tab1';
+    // this.showFilter='tab7';
     this.advisorId = AuthService.getAdvisorId();
     this.getLiability();
+  }
+  sortTable(data){
+    this.showFilter=data;
+    let filterData=[];
+    if(data=='tab1'){
+      this.dataSource=this.dataStore;
+    }else{
+    this.dataStore.forEach(element => {
+      if(element.loanTypeId==data){
+        filterData.push(element);
+      }
+    });
+    this.dataSource=filterData
+  }
   }
   open(flagValue, data) {
     const fragmentData = {
@@ -101,26 +124,26 @@ export class LiabilitiesComponent implements OnInit {
     );
   }
   getLiabiltyRes(data){
+    this.dataStore=data.loans;
+
     console.log(data);
     this.dataSource=data.loans;
     this.storeData=data.loans.length;
-    data.loans.forEach(element => {
-      switch (element.loanTypeId) {
-        case 1: element.loanTypeId = 'Home Loan';
-            break;
-        case 2: element.loanTypeId = 'Vehicle';
-            break;
-        case 3: element.loanTypeId = 'Education';
-            break;
-        case 4: element.loanTypeId = 'Credit Card';
-            break;
-        case 5: element.loanTypeId = 'Personal';
-            break;
-        case 6: element.loanTypeId = 'Mortgage';
-            break;
-        default:
-          element.loanTypeId = '-';
-    }
+    this.dataStore.forEach(element => {
+      if(element.loanTypeId==1){
+        this.home.push(element)
+      }else if(element.loanTypeId==2){
+        this.vehicle.push(element);
+      }else if(element.loanTypeId==3){
+        this.education.push(element);
+      }else if(element.loanTypeId==4){
+        this.creditCard.push(element);
+      }else if(element.loanTypeId==5){
+        this.personal.push(element);
+      }else if(element.loanTypeId==6){
+        this.mortgage.push(element);
+      }
+      
     });
   }
   clickHandling() {

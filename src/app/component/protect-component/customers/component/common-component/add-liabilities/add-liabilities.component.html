@@ -31,7 +31,7 @@
             </div>
         </div>
     </div>
-    <!-- <app-owner-component></app-owner-component> -->
+    <!-- <app-owner-component [data]= 'ownerData'></app-owner-component> -->
     <div class="row pt-40">
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8"> Loan type</h5>
@@ -272,11 +272,12 @@
                 </mat-form-field>   
             </div>
             <div class="col-md-4">
-                <label class="f-16"> Part Payment Amount</label>
+                <label class="f-16"> Part Payment Amount{{getFormControl().transact}}
+                    </label>
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input matInput #partPayment class="form-control br-0" formControlName="partPayment">
-                        <mat-error class="f-12 pt-4">
+                        <mat-error class="f-12 pt-4"  *ngIf="getFormControl().transact.untouched ">
                             is required
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{partPayment.value.length}}/20</mat-hint>
