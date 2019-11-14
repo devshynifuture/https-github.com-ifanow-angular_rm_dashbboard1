@@ -55,9 +55,11 @@ this.family = data.familyMembersList
 }
 getdataForm(){
   this.owner = this.fb.group({
-    ownerName: [(this.ownerData.ownerName.value==undefined)?this.owner.controls.ownerName.value:'', [Validators.required]],  
+    ownerName: [(this.ownerData.ownerName.value==null)?'':this.ownerData.ownerName.value, [Validators.required]],  
   });
-  this.getFormControl().ownerName.setValue(this.ownerData.ownerName.value);
+  if(this.owner.controls.ownerName.value == ''){
+    this.getFormControl().ownerName.setValue(this.ownerData.ownerName.value);
+  }
 }
 getFormControl():any {
   return (this.owner.controls);

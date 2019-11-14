@@ -36,6 +36,8 @@ export class BondsComponent implements OnInit {
   getDate: string;
   selectedFamilyData: any;
   advisorId: any;
+  familyMemberId: any;
+  ownerData: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
   }
@@ -93,12 +95,16 @@ export class BondsComponent implements OnInit {
       bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
       ownerType: [(data == undefined) ? '' : data.ownerType, [Validators.required]],
       rdNo: [(data == undefined) ? '' : data.rdNo, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]]
+      id: [(data == undefined) ? '' : data.id, [Validators.required]],
+      familyMemberId:[[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
 
     this.getFormControl().description.maxLength = 60;
     this.getFormControl().rdNo.maxLength = 10;
     this.getFormControl().bankName.maxLength = 15;
+    this.ownerData = this.bonds.controls;
+    this.familyMemberId = this.bonds.controls.familyMemberId.value
+    this.familyMemberId =  this.familyMemberId[0]
   }
 
   getFormControl(): any {
@@ -120,7 +126,7 @@ export class BondsComponent implements OnInit {
   let obj = {
     advisorId:this.advisorId,
     clientId: 2978,
-    familyMemberId: this.selectedFamilyData.id,
+    familyMemberId: (this.familyMemberId == undefined)?this.familyMemberId:this.selectedFamilyData.id,
     ownerName: this.ownerName,
     amountInvest:this.bonds.amountInvest.value,
     bondName: this.bonds.controls.monthlyContribution.value,
