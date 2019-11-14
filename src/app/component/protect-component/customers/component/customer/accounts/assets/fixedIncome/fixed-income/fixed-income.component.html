@@ -52,31 +52,6 @@
               </div>
             </div>
           </div>
-          <!-- advisorId: 0
-amountInvested: 10000
-clientId: 0
-commencementDate: 1576108800000
-currentValue: 837118.5883510482
-description: "this is futurewise Tech"
-familyMemberId: 105859
-fdNumber: "newFd123"
-fdType: 2
-frequencyOfPayoutPerYear: 2
-id: 1
-interestCompoundingId: 1
-interestPayoutOption: 1
-interestRate: 15
-isActive: 0
-maturityDate: 1619308800000
-maturityValue:
-2.9390058663999884
-e-29
-ownerName: "Vinayak Pandurang Nerlekar"
-payoutAmount: 0
-statusId: false
-tenure: 500
-totalAmountReceived: 0 -->
-
           <div class="example-container mt-8 mb-44 fixed-deposite">
             <table mat-table [dataSource]="dataSourceFixed" id="table-low">
               <ng-container matColumnDef="no">
@@ -176,46 +151,46 @@ totalAmountReceived: 0 -->
             </div>
             
             <div class="example-container mt-8 mb-44 fixed-deposite" >
-                <table mat-table [dataSource]="datasource5" id="table-low">
+                <table mat-table [dataSource]="dataSourceRecurring" id="table-low">
                         <ng-container matColumnDef="no">
                             <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
-                            <td mat-cell *matCellDef="let element" class="br t-2"> {{element.no}} </td>
+                            <td mat-cell *matCellDef="let element  let i = index;" class="br t-2"> {{i+1}} </td>
                         </ng-container>
                         <ng-container matColumnDef="owner">
                             <th mat-header-cell *matHeaderCellDef class="br t-20"> Owner </th>
-                            <td mat-cell *matCellDef="let element" class="br t-20"> {{element.owner}} </td>
+                            <td mat-cell *matCellDef="let element" class="br t-20"> {{element.ownerName}} </td>
                         </ng-container>
             
                         <ng-container matColumnDef="cvalue">
                             <th mat-header-cell *matHeaderCellDef class="br text-right t-10"> Current value </th>
-                            <td mat-cell *matCellDef="let element" class="br text-right t-10"> {{element.cvalue}} </td>
+                            <td mat-cell *matCellDef="let element" class="br text-right t-10"> {{element.currentValue}} </td>
                         </ng-container>
                         <ng-container matColumnDef="rate">
                                 <th mat-header-cell *matHeaderCellDef class="br text-right t-4"> Rate </th>
-                                <td mat-cell *matCellDef="let element" class="br text-right t-4"> {{element.rate}} </td>
+                                <td mat-cell *matCellDef="let element" class="br text-right t-4"> {{element.interestRate}} </td>
                             </ng-container>
             
                         <ng-container matColumnDef="amt">
                             <th mat-header-cell *matHeaderCellDef class="br t-20 text-right"> Monthly contribution </th>
-                            <td mat-cell *matCellDef="let element" class="br t-20 text-right"> {{element.amt}} </td>
+                            <td mat-cell *matCellDef="let element" class="br t-20 text-right"> {{element.monthlyContribution}} </td>
                         </ng-container>
                         <ng-container matColumnDef="mdate">
                                 <th mat-header-cell *matHeaderCellDef class="br t-10 text-left"> Maturity date </th>
-                                <td mat-cell *matCellDef="let element" class="br t-10 text-left"> {{element.mdate}} </td>
+                                <td mat-cell *matCellDef="let element" class="br t-10 text-left"> {{element.maturityDate}} </td>
                             </ng-container>
             
                             <ng-container matColumnDef="number">
                                     <th mat-header-cell *matHeaderCellDef class="br"> RD number </th>
-                                    <td mat-cell *matCellDef="let element" class="br"> {{element.number}} </td>
+                                    <td mat-cell *matCellDef="let element" class="br"> {{element.rdNumber}} </td>
                                 </ng-container>
                             <ng-container matColumnDef="desc">
                                     <th mat-header-cell *matHeaderCellDef class="br"> Description </th>
-                                    <td mat-cell *matCellDef="let element" class="br"> {{element.desc}} </td>
+                                    <td mat-cell *matCellDef="let element" class="br"> {{element.description}} </td>
                                 </ng-container>
             
                         <ng-container matColumnDef="status">
                             <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
-                            <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.status}} </td>
+                            <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.isActive}} </td>
                         </ng-container>
                         <ng-container matColumnDef="icons">
                             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
@@ -223,7 +198,7 @@ totalAmountReceived: 0 -->
                                             more_vert
                                             </i>
                                             <mat-menu #menu4="matMenu">
-                                                    <button mat-menu-item>Edit</button>
+                                                    <button mat-menu-item (click)="openPortfolioSummary('addRecuringDeposit','open',element)">Edit</button>
                                                     <button mat-menu-item>Deatiled View</button>
                                                     <button mat-menu-item>Activity</button>
                                                     <button mat-menu-item>Delete</button>
@@ -266,34 +241,34 @@ totalAmountReceived: 0 -->
             </div>
             </div>
           <div class="example-container mt-8 mb-44 fixed-deposite" >
-            <table mat-table [dataSource]="datasource6" id="table-low">
+            <table mat-table [dataSource]="dataSourceBond" id="table-low">
                     <ng-container matColumnDef="no">
                         <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
-                        <td mat-cell *matCellDef="let element" class="br t-2"> {{element.no}} </td>
+                        <td mat-cell *matCellDef="let element let i = index;" class="br t-2"> {{i+1}} </td>
                     </ng-container>
                     <ng-container matColumnDef="owner">
                         <th mat-header-cell *matHeaderCellDef class="br t-20"> Owner </th>
-                        <td mat-cell *matCellDef="let element" class="br t-20"> {{element.owner}} </td>
+                        <td mat-cell *matCellDef="let element" class="br t-20"> {{element.ownerName}} </td>
                     </ng-container>
             
                     <ng-container matColumnDef="cvalue">
                         <th mat-header-cell *matHeaderCellDef class="br text-right t-17"> Current value </th>
-                        <td mat-cell *matCellDef="let element" class="br text-right t-17"> {{element.cvalue}} </td>
+                        <td mat-cell *matCellDef="let element" class="br text-right t-17"> {{element.currentValue}} </td>
                         <td mat-footer-cell *matFooterCellDef> Total </td>
                     </ng-container>
             
                         <ng-container matColumnDef="camt">
                                 <th mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Coupon amount </th>
-                                <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{element.camt}} </td>
+                                <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{element.couponAmount}} </td>
                                 <td mat-footer-cell *matFooterCellDef> Total </td>
                             </ng-container>
                     <ng-container matColumnDef="amt">
                         <th mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Amount invested </th>
-                        <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{element.amt}} </td>
+                        <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{element.amountInvested}} </td>
                     </ng-container>
                     <ng-container matColumnDef="cdate">
                             <th mat-header-cell *matHeaderCellDef class="br t-14 text-left"> Commencement date </th>
-                            <td mat-cell *matCellDef="let element" class="br t-14 text-left"> {{element.cdate}} </td>
+                            <td mat-cell *matCellDef="let element" class="br t-14 text-left"> {{element.commencementDate}} </td>
                         </ng-container>
                         <ng-container matColumnDef="rate">
                                 <th mat-header-cell *matHeaderCellDef class="br text-right t-4"> Rate </th>
@@ -301,7 +276,7 @@ totalAmountReceived: 0 -->
                             </ng-container>
                     <ng-container matColumnDef="mvalue">
                             <th mat-header-cell *matHeaderCellDef class="br t-16 text-right"> Maturity value </th>
-                            <td mat-cell *matCellDef="let element" class="br t-16 text-right"> {{element.mvalue}} </td>
+                            <td mat-cell *matCellDef="let element" class="br t-16 text-right"> {{element.maturityValue}} </td>
                         </ng-container>
             
                         <ng-container matColumnDef="tenure">
@@ -309,18 +284,18 @@ totalAmountReceived: 0 -->
                                 <td mat-cell *matCellDef="let element" class="br text-right"> {{element.tenure}} </td>
                             </ng-container>
                             <ng-container matColumnDef="type">
-                                    <th mat-header-cell *matHeaderCellDef class="br t-8"> Type </th>
+                                    <th mat-header-cell *matHeaderCellDef class="br t-8"> type </th>
                                     <td mat-cell *matCellDef="let element" class="br t-8"> {{element.type}} </td>
                                 </ng-container>
             
                         <ng-container matColumnDef="desc">
                                 <th mat-header-cell *matHeaderCellDef class="br"> Description </th>
-                                <td mat-cell *matCellDef="let element" class="br"> {{element.desc}} </td>
+                                <td mat-cell *matCellDef="let element" class="br"> {{element.description}} </td>
                             </ng-container>
             
                     <ng-container matColumnDef="status">
                         <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
-                        <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.status}} </td>
+                        <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.active}} </td>
                     </ng-container>
                     <ng-container matColumnDef="icons">
                         <th mat-header-cell *matHeaderCellDef class="t-2"> </th>

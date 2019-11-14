@@ -14,6 +14,8 @@ export class FixedIncomeComponent implements OnInit {
   showRequring: any;
   advisorId: any;
   dataSourceFixed: any;
+  dataSourceRecurring: any;
+  dataSourceBond: any;
  
 
   constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService) { }
@@ -65,6 +67,7 @@ export class FixedIncomeComponent implements OnInit {
   }
   getRecurringDepositRes(data){
     console.log('getRecuringDepositRes ******** ',data)
+    this.dataSourceRecurring = data.recurringDeposits
   }
   getBondsList(){
     
@@ -78,6 +81,7 @@ export class FixedIncomeComponent implements OnInit {
   }
   getBondsRes(data){
     console.log('getBondsRes ******** ',data)
+    this.dataSourceBond = data.bondList
   }
   openPortfolioSummary(value,state,data)
   {
@@ -89,6 +93,7 @@ export class FixedIncomeComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+        this.getFixedDepositList();
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
