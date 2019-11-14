@@ -155,12 +155,11 @@ export const componentList = [SubscriptionComponent,
   ],
   exports: componentList,
   entryComponents: [
-    DeleteSubscriptionComponent
-    /*SubscriptionPopupComponent,
-    , UpperSliderComponent,
+    DeleteSubscriptionComponent,
+    SubscriptionPopupComponent,
     DeleteSubscriptionComponent, HowToUseDialogComponent,
     AddDocumentComponent, PreferenceEmailInvoiceComponent,
-    ModifyFeeDialogComponent, ConsentTandCComponent, HowItWorksComponent*/]
+    ModifyFeeDialogComponent, ConsentTandCComponent, HowItWorksComponent]
 })
 export class SubscriptionModule {
 }
