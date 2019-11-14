@@ -53,10 +53,10 @@ export class OverviewComponent implements OnInit {
     this.overviewDesign = 'false';
   }
 
-  openForm(data) {
+  openForm(data,value) {
     const fragmentData = {
-      Flag: 'addEditDocument',
-      data: {docType: data},
+      Flag: value,
+      data,
       id: 1,
       state: 'open'
     };

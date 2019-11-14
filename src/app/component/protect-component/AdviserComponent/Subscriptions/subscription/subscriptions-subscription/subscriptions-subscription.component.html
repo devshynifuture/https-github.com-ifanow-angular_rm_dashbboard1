@@ -88,7 +88,8 @@
       <ng-container matColumnDef="client">
         <th *matHeaderCellDef class="f-18 t-20" mat-header-cell> Client & Plan details</th>
         <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" *matCellDef="let element" class="c-p t-20"
-            mat-cell> {{element.planName}} </td>
+            mat-cell> {{element.planName}} <br>
+            <small class="text-custom roboto">{{element.clientName}}</small> </td>
       </ng-container>
       <ng-container matColumnDef="service">
         <th *matHeaderCellDef class="f-18 t-12" mat-header-cell> Service name</th>
