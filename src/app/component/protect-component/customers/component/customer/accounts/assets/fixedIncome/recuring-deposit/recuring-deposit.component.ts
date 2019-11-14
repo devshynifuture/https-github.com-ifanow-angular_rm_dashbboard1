@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
@@ -6,6 +6,9 @@ import { DatePipe } from '@angular/common';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import * as moment from 'moment';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-recuring-deposit',
@@ -43,11 +46,29 @@ export class RecuringDepositComponent implements OnInit {
   isMaturity = false;
   isDescription = false;
   isTenure = false;
+  inputData: any;
+  ownerName: any;
+  fdMonths: string[];
+  tenure: any;
+  getDate: string;
+  maturityDate: any;
+  selectedFamilyData: any;
+  ownerData: any;
+  familyMemberId: any;
   constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    this.getdataForm(data);
+  }
 
+  get data() {
+    return this.inputData;
+  }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.getdataForm()
+    // this.getdataForm()
+    this.fdMonths = ['0',	'1',	'2',	'3',	'4',	'5',	'6',	'7',	'8',	'9',	'10',	'11',	'12',	'13',	'14',	'15',	'16',	'17',	'18',	'19',	'20',	'21',	'22',	'23',	'24',	'25',	'26',	'27',	'28',	'29',	'30',	'31',	'32',	'33',	'34',	'35',	'36',	'37',	'38',	'39',	'40',	'41',	'42',	'43',	'44',	'45',	'46',	'47',	'48',	'49',	'50',	'51',	'52',	'53',	'54',	'55',	'56',	'57',	'58',	'59',	'60',	'61',	'62',	'63',	'64',	'65',	'66',	'67',	'68',	'69',	'70',	'71',	'72',	'73',	'74',	'75',	'76',	'77',	'78',	'79',	'80',	'81',	'82',	'83',	'84',	'85',	'86',	'87',	'88',	'89',	'90',	'91',	'92',	'93',	'94',	'95',	'96',	'97',	'98',	'99',	'100',	'101',	'102',	'103',	'104',	'105',	'106',	'107',	'108',	'109',	'110',	'111',	'112',	'113',	'114',	'115',	'116',	'117',	'118',	'119',	'120']
   }
   keyPress(event: any) {
     const pattern = /[0-9\+\-\ ]/;
@@ -60,6 +81,11 @@ export class RecuringDepositComponent implements OnInit {
   Close(){
     this.subInjectService.changeNewRightSliderState({state:'close'})
   }
+  display(value){
+    console.log('value selected', value)
+    this.ownerName = value.userName;
+    this.selectedFamilyData = value
+  }
   showLess(value){
     if(value  == true){
       this.showHide = false;
@@ -67,39 +93,48 @@ export class RecuringDepositComponent implements OnInit {
       this.showHide = true;
     }
   }
-  getdataForm(){
-    if(this.dataSource != undefined){
-      var data = this.dataSource
+  getDateYMD(){
+    let now = moment();
+    this.tenure =moment(this.recuringDeposit.controls.commencementDate.value).add(this.recuringDeposit.controls.tenure.value, 'months');
+    this.getDate = this.datePipe.transform(this.tenure , 'yyyy-MM-dd')
+    return this.getDate;
+  }
+  getdataForm(data){
+    if(data == undefined){
+      data = {}
     }
     this.recuringDeposit = this.fb.group({
       ownerName: [(data == undefined)? '':data.ownerName, [Validators.required]],
       monthlyContribution: [(data ==undefined)? '':data.monthlyContribution, [Validators.required]],
-      commencementDate: [(data ==undefined)? '' :data.commencementDate, [Validators.required]],
+      commencementDate: [(data ==undefined)? '' :new Date(data.commencementDate), [Validators.required]],
       interestRate: [(data ==undefined)? '' :data.interestRate, [Validators.required]],
-      compound: [(data ==undefined)? '' :data.interestCompoundingId, [Validators.required]],
-      linkBankAc: [(data ==undefined)? '' :data.linkBankAc, [Validators.required]],
+      compound: [(data ==undefined)? '' :(data.interestCompounding)+"", [Validators.required]],
+      linkBankAc: [(data ==undefined)? '' :data.linkedBankAccount, [Validators.required]],
       tenure:[(data ==undefined)? '' :data.tenure, [Validators.required]],
       description: [(data ==undefined)? '' :data.description, [Validators.required]],
       bankName: [(data ==undefined)? '' :data.bankName, [Validators.required]],
-      ownerType: [(data ==undefined)? '' :data.ownerType, [Validators.required]],
-      rdNo: [(data ==undefined)? '' :data.rdNo, [Validators.required]],
-      id:[(data ==undefined)? '' :data.id, [Validators.required]]
+      ownerType: [(data ==undefined)? '' :(data.ownershipType)+"", [Validators.required]],
+      rdNo: [(data ==undefined)? '' :data.rdNumber, [Validators.required]],
+      id:[(data ==undefined)? '' :data.id, [Validators.required]],
+      familyMemberId:[[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
   
     this.getFormControl().ownerName.maxLength = 40;
       this.getFormControl().description.maxLength = 60;
       this.getFormControl().rdNo.maxLength = 10;
       this.getFormControl().bankName.maxLength = 15;
+      this.familyMemberId = this.recuringDeposit.controls.familyMemberId.value
+      this.familyMemberId =  this.familyMemberId[0]
+      this.ownerData = this.recuringDeposit.controls;
+
   }
   getFormControl():any {
     return this.recuringDeposit.controls;
   }
-  saveRecuringDeposit(){
-
-  if (this.recuringDeposit.controls.ownerName.invalid) {
-    this.isownerName = true;
-    return;
-  } else if (this.recuringDeposit.controls.mothmonthlyContribution.invalid) {
+  saveRecuringDeposit(){  
+      this.tenure = this.getDateYMD()
+      this.maturityDate = this.tenure
+  if (this.recuringDeposit.controls.monthlyContribution.invalid) {
     this.isMonthlyContribution = true;
     return;
   }else if (this.recuringDeposit.controls.ownerType.invalid) {
@@ -114,57 +149,44 @@ export class RecuringDepositComponent implements OnInit {
   } else if (this.recuringDeposit.controls.compound.invalid) {
     this.isCompound = true;
     return;
-  } else if (this.recuringDeposit.controls.linkBankAc.invalid) {
-    this.isLinkBankAc = true;
-    return;
-  } else if (this.recuringDeposit.controls.description.invalid) {
-    this.isDescription = true;
-    return;
-  }else if (this.recuringDeposit.controls.bankName.invalid) {
-    this.isBankName = true;
-    return;
   }  else {
   
     let obj = {
       advisorId:this.advisorId,
-      clientId:998877,
-      familyMemberId:554466,
-      ownerName: this.recuringDeposit.controls.ownerName.value,
-      amountInvested: this.recuringDeposit.controls.monthlyContribution.value,
-      ownerType: this.recuringDeposit.controls.ownerType.value,
+      clientId: 2978,
+      familyMemberId: (this.familyMemberId == undefined)?this.familyMemberId:this.selectedFamilyData.id,
+      ownerName: this.ownerName,
+      monthlyContribution: this.recuringDeposit.controls.monthlyContribution.value,
       interestRate : this.recuringDeposit.controls.interestRate.value,
       commencementDate: this.datePipe.transform(this.recuringDeposit.controls.commencementDate.value, 'yyyy-MM-dd'),
-      linkBankAc: this.recuringDeposit.controls.linkBankAc.value,
+      linkedBankAccount: this.recuringDeposit.controls.linkBankAc.value,
       description: this.recuringDeposit.controls.description.value,
-      frequencyOfPayoutPerYear: this.recuringDeposit.controls.maturity.value,
-      maturityDate: this.datePipe.transform(this.recuringDeposit.controls.maturityDate.value, 'yyyy-MM-dd'),
-      interestPayoutOption: this.recuringDeposit.controls.payOpt.value,
+      maturityDate: this.datePipe.transform( this.maturityDate, 'yyyy-MM-dd'),
       bankName: this.recuringDeposit.controls.bankName.value,
       rdNumber: this.recuringDeposit.controls.rdNo.value,
-      fdType: this.recuringDeposit.controls.FDType.value,
-      interestCompoundingId:this.recuringDeposit.controls.compound.value
+      interestCompounding:this.recuringDeposit.controls.compound.value,
+      id:this.recuringDeposit.controls.id.value
     }
     console.log('recuringDeposit',obj)
     this.dataSource = obj
-    this.getdataForm();
-    // if(this.recuringDeposit.controls.id.value == undefined){
-    //   this.custumService.addrecuringDeposit(obj).subscribe(
-    //     data => this.addrecuringDepositRes(data)
-    //   );
-    // }else{
-    //   //edit call
-    //   this.custumService.editrecuringDeposit(obj).subscribe(
-    //     data => this.editrecuringDepositRes(data)
-    //   );
-    // }
+    if(this.recuringDeposit.controls.id.value == undefined){
+      this.custumService.addRecurringDeposit(obj).subscribe(
+        data => this.addrecuringDepositRes(data)
+      );
+    }else{
+      //edit call
+      this.custumService.editRecurringDeposit(obj).subscribe(
+        data => this.editrecuringDepositRes(data)
+      );
+    }
  
   }
 }
-// addrecuringDepositRes(data){
-// console.log('addrecuringDepositRes',data)
-// this.subInjectService.changeNewRightSliderState({state:'close',data})
-// }
-// editrecuringDepositRes(data){
-//   this.subInjectService.changeNewRightSliderState({state:'close',data})
-// }
+addrecuringDepositRes(data){
+console.log('addrecuringDepositRes',data)
+this.subInjectService.changeNewRightSliderState({state:'close',data})
+}
+editrecuringDepositRes(data){
+  this.subInjectService.changeNewRightSliderState({state:'close',data})
+}
 }

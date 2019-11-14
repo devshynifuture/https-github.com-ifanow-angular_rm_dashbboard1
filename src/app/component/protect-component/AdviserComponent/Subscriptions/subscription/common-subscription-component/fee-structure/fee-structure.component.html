@@ -43,7 +43,7 @@
 
   </div>
 </div>
-<div *ngIf="_upperData!=''" class="wrapper-44 pt-180">
+<div *ngIf="_upperData" class="wrapper-44 pt-180">
   <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
@@ -54,7 +54,7 @@
               <h3 class="m-0 pt-18 pt-24 f-24 pb-0 pl-24" *ngIf="_upperData">{{_upperData.serviceName}}</h3>
               <h5 class="m-0 pt-4 pb-44 pl-24 text-custom proxima" *ngIf="_upperData">{{_upperData.serviceCode}}</h5>
             </div>
-            <div class="col-md-2">
+            <div *ngIf="_upperData" class="col-md-2">
               <i class="material-icons text-right right text-custom f-28 pt-12 c-p" [matMenuTriggerFor]="menu"
                 [matMenuTriggerFor]="belowMenu">
                 more_vert
@@ -70,7 +70,7 @@
           </div>
           <div class="wrapper-24 pl-0 pr-0">
             <div class="row pb-24">
-              <div *ngIf="_upperData" class="col-md-3 text-left pl-32">
+              <div *ngIf="_upperData==''" class="col-md-3 text-left pl-32">
                 <p class="m-0 text-custom f-12">FEE TYPE</p>
                 <mat-label class="label" *ngIf="_upperData.servicePricing.feeTypeId==1">Fixed</mat-label>
                 <mat-label class="label" *ngIf="_upperData.servicePricing.feeTypeId==2">Variable</mat-label>
@@ -99,7 +99,7 @@
               <div class="row">
                 <div class="col-md-6">
                   <p class="f-12 m-0 text-custom">DESCRIPTION</p>
-                  <h5 class="mb-0 text-black pt-12" *ngIf="_upperData">{{_upperData.description}}</h5>
+                  <h5 class="mb-0 text-black pt-12" *ngIf="_upperData.description">{{_upperData.description}}</h5>
                 </div>
                 <div *ngIf="_upperData.servicePricing.feeTypeId==2" class="col-md-6">
                   <p class="text-custom f-12 m-0">VARIABLE FEE DETAILS</p>
@@ -166,8 +166,7 @@
     <div class="col-md-2"></div>
   </div>
 </div>
-
-<div class="bottom-fixed wrapper-16 w-100">
+<div *ngIf="_upperData=='' || _upperData" class="bottom-fixed wrapper-16 w-100">
   <div class="row">
     <div class="col-md-12">
       <h5 class="mb-0 pt-8 text-white c-p text-left">Cancel</h5>

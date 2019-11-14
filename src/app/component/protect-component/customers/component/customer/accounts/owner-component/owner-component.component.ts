@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CustomerService } from '../../customer.service';
 import { Validators, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -12,13 +12,14 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class OwnerComponentComponent implements OnInit {
 
   isownerName = false;
-  fixedDeposit: any;
+  owner: any;
   s: string[] = ['Sneha', 'gayatri', 'Shivani'];
   family: string[];
   advisorId: any;
   ownerData: any;
 
   constructor(private fb: FormBuilder,private custumService : CustomerService) { }
+  @Output() valueChange = new EventEmitter();
   @Input()
   set data(data) {
     this.ownerData = data;
@@ -44,17 +45,23 @@ getListFamilyMem(data){
     data => this.getListOfFamilyByClientRes(data)
   );
 }
+getOwnerName(value){
+  console.log('selected',value)
+  this.valueChange.emit(value);
+}
 getListOfFamilyByClientRes(data){
 console.log('family Memebers',data)
 this.family = data.familyMembersList
 }
 getdataForm(){
-  this.fixedDeposit = this.fb.group({
-    ownerName: [, [Validators.required]],  
+  this.owner = this.fb.group({
+    ownerName: [(this.ownerData.ownerName.value==null)?'':this.ownerData.ownerName.value, [Validators.required]],  
   });
-  this.getFormControl().ownerName.maxLength = 40;
+  if(this.owner.controls.ownerName.value == ''){
+    this.getFormControl().ownerName.setValue(this.ownerData.ownerName.value);
+  }
 }
 getFormControl():any {
-  return this.fixedDeposit.controls;
+  return (this.owner.controls);
 }
 }

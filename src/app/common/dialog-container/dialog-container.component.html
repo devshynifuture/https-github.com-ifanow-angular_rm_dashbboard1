@@ -33,8 +33,8 @@
     <app-add-insurance [insuranceData]="fragmentData" *ngIf="subscriptionTab=='addInsurance'"></app-add-insurance>
     <app-libilities-right *ngIf="subscriptionTab=='portfolioSummary'"></app-libilities-right>
     <app-fixed-deposit [data]="inputData" *ngIf="subscriptionTab=='addFixedDeposit'"></app-fixed-deposit>
-    <app-recuring-deposit *ngIf="subscriptionTab=='addRecuringDeposit'"></app-recuring-deposit>
-    <app-bonds *ngIf="subscriptionTab=='addBonds'"></app-bonds>
+    <app-recuring-deposit [data]="inputData"*ngIf="subscriptionTab=='addRecuringDeposit'"></app-recuring-deposit>
+    <app-bonds [data]="inputData" *ngIf="subscriptionTab=='addBonds'"></app-bonds>
     <app-add-income *ngIf="subscriptionTab=='addIncome'"></app-add-income>
     <app-income-detail *ngIf="subscriptionTab=='addIncomeDetail'"></app-income-detail>
     <app-right-filter *ngIf="subscriptionTab=='rightFilter'"></app-right-filter>
