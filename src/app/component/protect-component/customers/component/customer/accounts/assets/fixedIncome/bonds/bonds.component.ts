@@ -7,6 +7,7 @@ import {MAT_DATE_FORMATS} from '@angular/material';
 import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth-service/authService';
 
 
 @Component({
@@ -33,6 +34,8 @@ export class BondsComponent implements OnInit {
   tenure: any;
   maturityDate: any;
   getDate: string;
+  selectedFamilyData: any;
+  advisorId: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
   }
@@ -47,6 +50,7 @@ export class BondsComponent implements OnInit {
   }
   ngOnInit() {
     // this.getdataForm()
+    this.advisorId = AuthService.getAdvisorId();
     this.fdMonths = ['0','1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
   }
   display(value){
@@ -112,5 +116,24 @@ export class BondsComponent implements OnInit {
   saveRecuringDeposit() {
     this.tenure = this.getDateYMD()
     this.maturityDate = this.tenure
+
+  let obj = {
+    advisorId:this.advisorId,
+    clientId: 2978,
+    familyMemberId: this.selectedFamilyData.id,
+    ownerName: this.ownerName,
+    amountInvest:this.bonds.amountInvest.value,
+    bondName: this.bonds.controls.monthlyContribution.value,
+    interestRate : this.bonds.controls.interestRate.value,
+    commencementDate: this.datePipe.transform(this.bonds.controls.commencementDate.value, 'yyyy-MM-dd'),
+    linkedBankAccount: this.bonds.controls.linkBankAc.value,
+    description: this.bonds.controls.description.value,
+    maturityDate: this.datePipe.transform( this.maturityDate, 'yyyy-MM-dd'),
+    bankName: this.bonds.controls.bankName.value,
+    compound: this.bonds.controls.interestCompoundingId.value,
+    rdNumber: this.bonds.controls.rdNo.value,
+    interestCompounding:this.bonds.controls.compound.value,
+    id:this.bonds.controls.id.value
   }
+}
 }

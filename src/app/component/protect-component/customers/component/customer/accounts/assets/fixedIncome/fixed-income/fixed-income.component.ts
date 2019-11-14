@@ -18,7 +18,7 @@ export class FixedIncomeComponent implements OnInit {
   dataSourceBond: any;
  
 
-  constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService) { }
+  constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService,public util:UtilService) { }
   viewMode
   displayedColumns4 = ['no', 'owner', 'type', 'cvalue', 'rate', 'amt','mdate','mvalue','number','desc','status','icons'];
   datasource4 = ELEMENT_DATA4;

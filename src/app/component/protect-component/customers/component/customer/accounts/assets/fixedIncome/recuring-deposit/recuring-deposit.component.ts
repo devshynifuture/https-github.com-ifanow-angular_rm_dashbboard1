@@ -157,7 +157,8 @@ export class RecuringDepositComponent implements OnInit {
       maturityDate: this.datePipe.transform( this.maturityDate, 'yyyy-MM-dd'),
       bankName: this.recuringDeposit.controls.bankName.value,
       rdNumber: this.recuringDeposit.controls.rdNo.value,
-      interestCompounding:this.recuringDeposit.controls.compound.value
+      interestCompounding:this.recuringDeposit.controls.compound.value,
+      id:this.recuringDeposit.controls.id.value
     }
     console.log('recuringDeposit',obj)
     this.dataSource = obj
