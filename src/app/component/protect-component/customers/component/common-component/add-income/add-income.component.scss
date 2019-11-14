@@ -8,4 +8,40 @@
     justify-content: center;
     border-radius: 5px;
     flex-direction: column;
+    position: relative;
+}
+
+.borderActive {
+    border: 3px solid #008FFF;
+    background: #DFF1FF;
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background: #008FFF;
+}
+
+::ng-deep .mat-checkbox-background {
+    background: #008FFF;
+}
+
+.icomeCheckBox {
+    position: absolute;
+    top: -6px;
+    right: 0px;
+}
+
+.familyMemberBox {
+    width: calc(100% - 400px);
+    margin: 0px auto;
+}
+
+.memberBorderBox {
+    width: 110px;
+    height: 110px;
+    border: 2px solid #83959D;
+    margin: 0px auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
