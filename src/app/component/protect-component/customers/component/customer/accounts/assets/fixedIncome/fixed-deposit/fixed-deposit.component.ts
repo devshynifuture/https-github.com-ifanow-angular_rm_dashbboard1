@@ -126,10 +126,9 @@ export class FixedDepositComponent implements OnInit {
     }
   }
   getDateYMD(){
-   
-    this.tenure = this.fixedDeposit.controls.commencementDate.value.moment().add(this.fixedDeposit.controls.tenureM.value, 'months');
-    this.tenure = this.fixedDeposit.controls.commencementDate.value.moment().add(this.fixedDeposit.controls.tenureY.value, 'years');
-    this.tenure = this.fixedDeposit.controls.commencementDate.value.moment().add(this.fixedDeposit.controls.tenureD.value, 'days');
+    this.tenure = this.fixedDeposit.controls.commencementDate.value.add(this.fixedDeposit.controls.tenureM.value, 'months');
+    this.tenure = this.fixedDeposit.controls.commencementDate.value.add(this.fixedDeposit.controls.tenureY.value, 'years');
+    this.tenure = this.fixedDeposit.controls.commencementDate.value.add(this.fixedDeposit.controls.tenureD.value, 'days');
     this.getDate = this.datePipe.transform(this.tenure , 'yyyy-MM-dd')
     return this.getDate;
   }
@@ -137,7 +136,6 @@ export class FixedDepositComponent implements OnInit {
     if(data == undefined){
       data = {}
     }
-    console.log('************###', data)
     if (this.dataSource != undefined) {
       var data = this.dataSource
     }
@@ -173,7 +171,7 @@ export class FixedDepositComponent implements OnInit {
     return this.fixedDeposit.controls;
   }
   saveFixedDeposit() {
-    if(this.fixedDeposit.controls.maturityDate.value == undefined){
+    if(this.fixedDeposit.controls.maturityDate.invalid == true){
       this.tenure = this.getDateYMD()
       this.maturityDate = this.tenure
     }else{
@@ -194,9 +192,6 @@ export class FixedDepositComponent implements OnInit {
       return;
     } else if (this.fixedDeposit.controls.compound.invalid) {
       this.isCompound = true;
-      return;
-    } else if (this.fixedDeposit.controls.maturity.invalid) {
-      this.isMaturity = true;
       return;
     } else if (this.fixedDeposit.controls.payOpt.invalid) {
       this.isPayOpt = true;

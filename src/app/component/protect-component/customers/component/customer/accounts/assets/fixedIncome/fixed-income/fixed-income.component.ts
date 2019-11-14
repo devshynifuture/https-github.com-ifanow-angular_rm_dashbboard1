@@ -15,6 +15,7 @@ export class FixedIncomeComponent implements OnInit {
   advisorId: any;
   dataSourceFixed: any;
   dataSourceRecurring: any;
+  dataSourceBond: any;
  
 
   constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService) { }
@@ -80,6 +81,7 @@ export class FixedIncomeComponent implements OnInit {
   }
   getBondsRes(data){
     console.log('getBondsRes ******** ',data)
+    this.dataSourceBond = data.bondList
   }
   openPortfolioSummary(value,state,data)
   {

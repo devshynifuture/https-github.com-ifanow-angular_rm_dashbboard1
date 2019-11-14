@@ -149,9 +149,9 @@
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8">Tenure(in months)</h5>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="form-group mb-0">
-                    <mat-select formControlName="tenureM" class="form-control br-0 br-none">
+                    <mat-select formControlName="tenure" class="form-control br-0 br-none">
                         <mat-option [value]="">Months</mat-option>
                         <mat-option *ngFor="let M of fdMonths" [value]="M">
                             <span>{{M}}</span>
@@ -172,7 +172,7 @@
             </div>
             <div class="col-md-3 pr-0">
                 <mat-select formControlName="type" class="form-control br-0">
-                    <mat-option value="type"> Select option</mat-option>, 
+                    <mat-option value="type"> Select option</mat-option>
                     <mat-option value="1"> Tax free</mat-option>
                     <mat-option value="2">Non tax free</mat-option>
                 </mat-select>

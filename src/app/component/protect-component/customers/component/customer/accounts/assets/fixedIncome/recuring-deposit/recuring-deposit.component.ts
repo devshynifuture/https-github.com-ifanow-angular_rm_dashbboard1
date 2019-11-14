@@ -88,7 +88,7 @@ export class RecuringDepositComponent implements OnInit {
     this.recuringDeposit = this.fb.group({
       ownerName: [(data == undefined)? '':data.ownerName, [Validators.required]],
       monthlyContribution: [(data ==undefined)? '':data.monthlyContribution, [Validators.required]],
-      commencementDate: [(data ==undefined)? '' :data.commencementDate, [Validators.required]],
+      commencementDate: [(data ==undefined)? '' :new Date(data.commencementDate), [Validators.required]],
       interestRate: [(data ==undefined)? '' :data.interestRate, [Validators.required]],
       compound: [(data ==undefined)? '' :(data.interestCompounding)+"", [Validators.required]],
       linkBankAc: [(data ==undefined)? '' :data.linkBankAc, [Validators.required]],
@@ -160,24 +160,24 @@ export class RecuringDepositComponent implements OnInit {
     }
     console.log('recuringDeposit',obj)
     this.dataSource = obj
-    // if(this.recuringDeposit.controls.id.value == undefined){
-    //   this.custumService.addrecuringDeposit(obj).subscribe(
-    //     data => this.addrecuringDepositRes(data)
-    //   );
-    // }else{
-    //   //edit call
-    //   this.custumService.editrecuringDeposit(obj).subscribe(
-    //     data => this.editrecuringDepositRes(data)
-    //   );
-    // }
+    if(this.recuringDeposit.controls.id.value == undefined){
+      this.custumService.addRecurringDeposit(obj).subscribe(
+        data => this.addrecuringDepositRes(data)
+      );
+    }else{
+      //edit call
+      this.custumService.editRecurringDeposit(obj).subscribe(
+        data => this.editrecuringDepositRes(data)
+      );
+    }
  
   }
 }
-// addrecuringDepositRes(data){
-// console.log('addrecuringDepositRes',data)
-// this.subInjectService.changeNewRightSliderState({state:'close',data})
-// }
-// editrecuringDepositRes(data){
-//   this.subInjectService.changeNewRightSliderState({state:'close',data})
-// }
+addrecuringDepositRes(data){
+console.log('addrecuringDepositRes',data)
+this.subInjectService.changeNewRightSliderState({state:'close',data})
+}
+editrecuringDepositRes(data){
+  this.subInjectService.changeNewRightSliderState({state:'close',data})
+}
 }

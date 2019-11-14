@@ -58,6 +58,10 @@ export const appConfig = {
   GET_FIXEDDEPOSIT:'account/asset/fixed-income/fixed-deposit/get',
   GET_RECURING_DEPOSIT:'account/asset/fixed-income/recurring-deposit/list/get',
   GET_BONDS:'account/asset/fixed-income/bond/list/get',
+  ADD_RECURRING_DEPOSIT:'account/asset/fixed-income/recurring-deposit/add',
+  ADD_BOND:'account/asset/fixed-income/bond/add',
+  EDIT_RECURRING_DEPOSIT:'account/asset/fixed-income/recurring-deposit/edit',
+  EDIT_BONDS:'account/asset/fixed-income/bond/edit',
 
 ////////////////////////////// subscription////////////////////////////////////////////
 
