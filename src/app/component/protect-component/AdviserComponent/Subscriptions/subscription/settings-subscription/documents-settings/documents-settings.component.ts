@@ -172,7 +172,8 @@ export class DocumentsSettingsComponent implements OnInit {
   }
 
   openFragment(data, singleDocument) {
-    singleDocument.flag = data;
+    (singleDocument==undefined)?singleDocument=data:singleDocument.flag=data
+    // // singleDocument.flag = data;
     const fragmentData = {
       flag: 'app-subscription-upper-slider',
       data: singleDocument,

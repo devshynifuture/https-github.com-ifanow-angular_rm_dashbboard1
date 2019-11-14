@@ -30,7 +30,7 @@
     <app-liabilities-detail *ngIf="subscriptionTab=='addLiabilitiesDetail'"> </app-liabilities-detail>
 
     <app-add-liabilities [inputData]="inputData" *ngIf="subscriptionTab=='addLiabilities'"></app-add-liabilities>
-    <app-add-insurance [insuranceData]="fragmentData.data" *ngIf="subscriptionTab=='addInsurance'"></app-add-insurance>
+    <app-add-insurance [insuranceData]="fragmentData" *ngIf="subscriptionTab=='addInsurance'"></app-add-insurance>
     <app-libilities-right *ngIf="subscriptionTab=='portfolioSummary'"></app-libilities-right>
     <app-fixed-deposit [data]="inputData" *ngIf="subscriptionTab=='addFixedDeposit'"></app-fixed-deposit>
     <app-recuring-deposit [data]="inputData"*ngIf="subscriptionTab=='addRecuringDeposit'"></app-recuring-deposit>
