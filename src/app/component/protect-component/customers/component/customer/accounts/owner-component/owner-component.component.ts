@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class OwnerComponentComponent implements OnInit {
 
   isownerName = false;
-  fixedDeposit: any;
+  owner: any;
   s: string[] = ['Sneha', 'gayatri', 'Shivani'];
   family: string[];
   advisorId: any;
@@ -54,12 +54,12 @@ console.log('family Memebers',data)
 this.family = data.familyMembersList
 }
 getdataForm(){
-  this.fixedDeposit = this.fb.group({
+  this.owner = this.fb.group({
     ownerName: [this.ownerData.ownerName.value, [Validators.required]],  
   });
   this.getFormControl().ownerName.maxLength = 40;
 }
 getFormControl():any {
-  return this.fixedDeposit.controls;
+  return this.owner.controls;
 }
 }
