@@ -53,6 +53,7 @@ export class RecuringDepositComponent implements OnInit {
   getDate: string;
   maturityDate: any;
   selectedFamilyData: any;
+  ownerData: any;
   constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
   @Input()
   set data(data) {
@@ -120,6 +121,8 @@ export class RecuringDepositComponent implements OnInit {
       this.getFormControl().description.maxLength = 60;
       this.getFormControl().rdNo.maxLength = 10;
       this.getFormControl().bankName.maxLength = 15;
+      this.ownerData = this.recuringDeposit.controls;
+
   }
   getFormControl():any {
     return this.recuringDeposit.controls;
