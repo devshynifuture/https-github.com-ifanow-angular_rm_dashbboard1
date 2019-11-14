@@ -28,10 +28,10 @@ export class FixedFeeComponent implements OnInit {
   }
   fixedFeeStructureForm = this.fb.group({
     fees: ['', [Validators.required]],
-    billingNature: [1],
+    billingNature: ['1'],
     billEvery: [, [Validators.required]],
     Duration: [1],
-    billingMode: [1]
+    billingMode: ['1']
   });
   ngOnInit() {
     this.isSave=true

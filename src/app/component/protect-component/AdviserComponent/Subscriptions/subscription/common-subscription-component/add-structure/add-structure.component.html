@@ -18,7 +18,7 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group mb-0">
-                            <input type="email" formControlName="planName" maxlength="{{getFormControl().planName.maxLength}}" class="form-control br-2">
+                            <input type="email" #planName formControlName="planName" maxlength="40" class="form-control br-2">
                         </div>
                         <div class="row">
                             <div class="col-md-8">
@@ -27,7 +27,7 @@
                                     Plan name is required</mat-error>
                             </div>
                             <div class="col-md-4">
-                                <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().planName.value?.length?getFormControl().planName.value.length:0}}/{{getFormControl().planName.maxLength}}</p>
+                                <p class="mb-0 f-12 text-custom text-right pt-4">{{planName.value.length}}/40</p>
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group mb-0">
-                            <input type="email" formControlName="code" maxlength="{{getFormControl().code.maxLength}}" class="form-control br-2">
+                            <input type="email" #code formControlName="code" maxlength="10" class="form-control br-2">
                         </div>
                         <div class="row">
                             <div class="col-md-8">
@@ -47,7 +47,7 @@
                                     Code is required</mat-error>
                             </div>
                             <div class="col-md-4">
-                                <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().code.value?.length?getFormControl().code.value.length:0}}/{{getFormControl().code.maxLength}}</p>
+                                <p class="mb-0 f-12 text-custom text-right pt-4">{{code.value.length}}/10</p>
                             </div>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group mb-0">
-                            <textarea class="form-control br-2" maxlength="{{getFormControl().description.maxLength}}" formControlName="description" rows="5"></textarea>
+                            <textarea class="form-control br-2" #description maxlength="160" formControlName="description" rows="5"></textarea>
                         </div>
                         <div class="row">
                             <div class="col-md-8">
@@ -67,7 +67,7 @@
                                     Description is required</mat-error>
                             </div>
                             <div class="col-md-4">
-                                <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().description.value?.length?getFormControl().description.value.length:0}}/{{getFormControl().description.maxLength}}</p>
+                                <p class="mb-0 f-12 text-custom text-right pt-4">{{description.value.length}}/160</p>
                             </div>
                         </div>
                     </div>

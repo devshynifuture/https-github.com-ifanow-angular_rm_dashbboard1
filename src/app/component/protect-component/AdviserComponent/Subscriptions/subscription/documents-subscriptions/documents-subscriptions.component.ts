@@ -120,8 +120,14 @@ orgValueChange(selectedDateRange){
     const obj = {
       advisorId: this.advisorId,
       // advisorId: 12345, // pass here advisor id for Invoice advisor
-      clientId: 0,
-      flag: 3
+      clientId: 2978,
+      flag: 4,
+      limit:10,
+      offset:0,
+      dateType:0,
+      fromDate:'2019-01-01',
+      toDate:'2019-11-01',
+      statusIdList:[0,1],
     };
 
     this.subscription.getDocumentData(obj).subscribe(
