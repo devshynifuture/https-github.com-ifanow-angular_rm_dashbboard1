@@ -782,7 +782,9 @@
           </div>
         </div>
         <div *ngSwitchCase="'tab5'">
-          <div class="wrapper-8">
+          <app-retirement-account></app-retirement-account>
+          </div>
+          <!-- <div class="wrapper-8">
             <div class="row pt-28 pb-28">
               <div class="col-md-8 pl-0">
                 <button mat-stroked-button class="br-0 btn-default text-primary">EPF</button>
@@ -921,7 +923,7 @@
                   <tr mat-header-row *matHeaderRowDef="displayedColumns11; sticky: true"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns11;"></tr>
               </table>
-              </div>
+              </div> -->
             <!-- <div class="wrapper-8">
               <div class="row">
                 <div class="col-md-4 p-0">
@@ -1014,7 +1016,7 @@
                     <th mat-header-cell *matHeaderCellDef class="br"> PPF number</th>
                     <td mat-cell *matCellDef="let element" class="br"> {{element.ppf}} </td>
                   </ng-container>
-                  <ng-container matColumnDef="desc">
+                  <ng-container matColumnDef="desc"><div>
                     <th mat-header-cell *matHeaderCellDef class="br"> Description</th>
                     <td mat-cell *matCellDef="let element" class="br"> {{element.desc}} </td>
                   </ng-container>
@@ -1377,8 +1379,8 @@
                   </table>
                 </div>
               </div> -->
-          </div>
-        </div>
+          <!-- </div>
+        </div> -->
         <div *ngSwitchCase="'tab6'">
                 <div class="wrapper-8">
                         <div class="row pt-28 pb-28">
