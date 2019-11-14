@@ -93,7 +93,7 @@ export class FixedDepositComponent implements OnInit {
     console.log('familymember', data)
   }
   keyPress(event: any) {
-    const pattern = /[0-9\+\-\ ]/;
+    const pattern = /[0-9\+\-\. ]/;
 
     const inputChar = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
@@ -106,7 +106,7 @@ export class FixedDepositComponent implements OnInit {
   display(value){
     console.log('value selected', value)
     this.ownerName = value.userName;
-    this.selectedFamilyData = value
+    this.familyMemberId = value.id
   }
   showLess(value) {
     if (value == true) {
