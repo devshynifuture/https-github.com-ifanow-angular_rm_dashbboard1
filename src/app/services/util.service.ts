@@ -54,4 +54,8 @@ export class UtilService {
     return date;
 
   }
+  formatter(data) {
+    data = Math.round(data);
+    return data;
+  }
 }

@@ -55,7 +55,7 @@ this.family = data.familyMembersList
 }
 getdataForm(){
   this.fixedDeposit = this.fb.group({
-    ownerName: [, [Validators.required]],  
+    ownerName: [this.ownerData.ownerName.value, [Validators.required]],  
   });
   this.getFormControl().ownerName.maxLength = 40;
 }
