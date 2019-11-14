@@ -5,6 +5,9 @@ import {SubscriptionInject} from 'src/app/component/protect-component/AdviserCom
 import {DatePipe} from '@angular/common';
 import {MAT_DATE_FORMATS} from '@angular/material';
 import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import * as moment from 'moment';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-bonds',
@@ -27,6 +30,9 @@ export class BondsComponent implements OnInit {
   isRateReturns = false;
   isType = false
   fdMonths: string[];
+  tenure: any;
+  maturityDate: any;
+  getDate: string;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
   }
@@ -46,6 +52,14 @@ export class BondsComponent implements OnInit {
   display(value){
     console.log('value selected', value)
     this.ownerName = value.userName;
+  }
+  Close(){
+    this.subInjectService.changeNewRightSliderState({state:'close'})
+  }
+  getDateYMD(){
+    this.tenure = this.bonds.controls.commencementDate.value.add(this.bonds.controls.tenure.value, 'months');
+    this.getDate = this.datePipe.transform(this.tenure , 'yyyy-MM-dd')
+    return this.getDate;
   }
   showLess(value) {
     if (value == true) {
@@ -86,10 +100,6 @@ export class BondsComponent implements OnInit {
   getFormControl(): any {
     return this.bonds.controls;
   }
-
-  Close() {
-  }
-
   keyPress(event) {
   }
 
@@ -100,5 +110,7 @@ export class BondsComponent implements OnInit {
   isTenure;
 
   saveRecuringDeposit() {
+    this.tenure = this.getDateYMD()
+    this.maturityDate = this.tenure
   }
 }
