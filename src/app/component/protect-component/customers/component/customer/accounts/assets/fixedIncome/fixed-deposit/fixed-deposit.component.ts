@@ -67,6 +67,8 @@ export class FixedDepositComponent implements OnInit {
   maturityDate: any;
   selectedFamilyData: any;
   showFreqPayOpt = false;
+  familyMemberId: any;
+  recuringDeposit: any;
   constructor(private router: Router,private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
   @Input()
   set data(data) {
@@ -158,13 +160,16 @@ export class FixedDepositComponent implements OnInit {
       ownerType: [(data == undefined) ? '' : (data.ownershipType)+"", [Validators.required]],
       fdNo: [(data == undefined) ? '' : data.fdNumber, [Validators.required]],
       FDType: [(data == undefined) ? '' : (data.fdType)+"", [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]]
+      id: [(data == undefined) ? '' : data.id, [Validators.required]],
+      familyMemberId:[[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
     this.getFormControl().ownerName.maxLength = 40;
     this.getFormControl().description.maxLength = 60;
     this.getFormControl().fdNo.maxLength = 10;
     this.getFormControl().bankACNo.maxLength = 15;
     this.ownerData = this.fixedDeposit.controls;
+    this.familyMemberId = this.recuringDeposit.controls.familyMemberId.value
+    this.familyMemberId =  this.familyMemberId[0]
     this.fixedDeposit.controls.maturityDate.setValue(new Date(data.maturityDate));
   }
   getFormControl(): any {
@@ -203,7 +208,7 @@ export class FixedDepositComponent implements OnInit {
       let obj = {
         advisorId: this.advisorId,
         clientId: 2978,
-        familyMemberId: this.selectedFamilyData.id,
+        familyMemberId: (this.familyMemberId == undefined)?this.familyMemberId:this.selectedFamilyData.id,
         ownerName: this.ownerName,
         amountInvested: this.fixedDeposit.controls.amountInvest.value,
         ownershipType: this.fixedDeposit.controls.ownerType.value,

@@ -54,6 +54,7 @@ export class RecuringDepositComponent implements OnInit {
   maturityDate: any;
   selectedFamilyData: any;
   ownerData: any;
+  familyMemberId: any;
   constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
   @Input()
   set data(data) {
@@ -114,13 +115,16 @@ export class RecuringDepositComponent implements OnInit {
       bankName: [(data ==undefined)? '' :data.bankName, [Validators.required]],
       ownerType: [(data ==undefined)? '' :(data.ownershipType)+"", [Validators.required]],
       rdNo: [(data ==undefined)? '' :data.rdNumber, [Validators.required]],
-      id:[(data ==undefined)? '' :data.id, [Validators.required]]
+      id:[(data ==undefined)? '' :data.id, [Validators.required]],
+      familyMemberId:[[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
   
     this.getFormControl().ownerName.maxLength = 40;
       this.getFormControl().description.maxLength = 60;
       this.getFormControl().rdNo.maxLength = 10;
       this.getFormControl().bankName.maxLength = 15;
+      this.familyMemberId = this.recuringDeposit.controls.familyMemberId.value
+      this.familyMemberId =  this.familyMemberId[0]
       this.ownerData = this.recuringDeposit.controls;
 
   }
@@ -150,7 +154,7 @@ export class RecuringDepositComponent implements OnInit {
     let obj = {
       advisorId:this.advisorId,
       clientId: 2978,
-      familyMemberId: this.selectedFamilyData.id,
+      familyMemberId: (this.familyMemberId == undefined)?this.familyMemberId:this.selectedFamilyData.id,
       ownerName: this.ownerName,
       monthlyContribution: this.recuringDeposit.controls.monthlyContribution.value,
       interestRate : this.recuringDeposit.controls.interestRate.value,
@@ -160,7 +164,8 @@ export class RecuringDepositComponent implements OnInit {
       maturityDate: this.datePipe.transform( this.maturityDate, 'yyyy-MM-dd'),
       bankName: this.recuringDeposit.controls.bankName.value,
       rdNumber: this.recuringDeposit.controls.rdNo.value,
-      interestCompounding:this.recuringDeposit.controls.compound.value
+      interestCompounding:this.recuringDeposit.controls.compound.value,
+      id:this.recuringDeposit.controls.id.value
     }
     console.log('recuringDeposit',obj)
     this.dataSource = obj
