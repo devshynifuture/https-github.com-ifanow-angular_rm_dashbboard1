@@ -33,7 +33,8 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatBottomSheetModule
+  MatBottomSheetModule,
+  MatTreeModule
 } from'@angular/material';
 // import { DialogModule } from '@angular/cdk-experimental/dialog';
 // import {MatDialogModule} from '../component/overridden/dialog';
@@ -73,7 +74,8 @@ import {
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    MatTreeModule
   ],
   exports: [
     // DialogModule,
@@ -109,7 +111,8 @@ import {
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    MatTreeModule
   ]
 })
 export class MaterialModule {}

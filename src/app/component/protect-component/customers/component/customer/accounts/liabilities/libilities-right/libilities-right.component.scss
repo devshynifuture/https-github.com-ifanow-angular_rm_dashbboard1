@@ -50,3 +50,14 @@ span.notstart{
     margin-top: 12px;
     
 }
+::ng-deep .mat-list-base .mat-list-item{
+    height: 0px !important;
+    font-size: 12px !important;
+    color: #000000 !important;
+    cursor: pointer;
+    text-decoration: underline;
+}
+::ng-deep .icons-set{
+    width: 28px;
+    
+}
