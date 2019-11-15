@@ -83,9 +83,12 @@ datasource23 = ELEMENT_DATA23;
 
 displayedColumns24 = ['name', 'amt', 'cvalue', 'profile','abt','xirr','pay','withdraw','bal','date','sip'];
   dataSource24 = ELEMENT_DATA24;
+  displayedColumns25 = ['scrip', 'owner', 'bal', 'price','mprice','amt','cvalue','gain','ret','xirr','dividend','icons'];
+  dataSource25 = ELEMENT_DATA25;
+  
   viewMode;
   ngOnInit() {
-    this.viewMode="tab1"
+    this.viewMode="tab2"
     
   }
   openFragment(value) {
@@ -808,3 +811,28 @@ const ELEMENT_DATA24: PeriodicElement24[] = [
   ,sip:"112,000"},
   
 ];
+
+
+
+  export interface PeriodicElement25 {
+    scrip: string;
+    owner: string;
+    bal:string;
+    price:string;
+    mprice:string;
+    amt:string;
+    cvalue:string;
+    gain:string;
+    ret:string;
+    xirr:string;
+    dividend:string;
+  }
+  
+  const ELEMENT_DATA25: PeriodicElement25[] = [
+  
+    {scrip: 'Bharat Forge Ltd', owner: 'Rahul Jain'
+    ,bal:"94,925",price:"29.20", mprice:"33.67",amt:"94,925",cvalue:"1,23,925",gain:"29,230",ret:"12.98%",xirr:"9.08%",dividend:"-"},
+    {scrip: 'V-Guard Industries Ltd', owner: 'Rahul Jain'
+    ,bal:"94,925",price:"29.20", mprice:"33.67",amt:"94,925",cvalue:"1,23,925",gain:"29,230",ret:"12.98%",xirr:"9.08%",dividend:"201"},
+    
+  ];
