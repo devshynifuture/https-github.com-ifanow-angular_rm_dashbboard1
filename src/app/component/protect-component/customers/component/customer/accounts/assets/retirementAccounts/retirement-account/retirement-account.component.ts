@@ -66,6 +66,11 @@ export class RetirementAccountComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+        this.getListEPF()
+        this.getListNPS()
+        this.getListGratuity()
+        this.getListEPS()
+        this.getListSuperannuation()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -175,7 +180,7 @@ const ELEMENT_DATA12: PeriodicElement12[] = [
 
   {
     no: '1.', owner: 'Rahul Jain'
-    , cvalue: "94,925", total: "94,925", account: "94,925",   scheme: "Cumulative", pran: "8.40%", desc: "ICICI FD", status: "MATURED"
+    , cvalue: "94,925", total: "94,925", account: "94,925", scheme: "Cumulative", pran: "8.40%", desc: "ICICI FD", status: "MATURED"
   },
   {
     no: '2.', owner: 'Shilpa Jain'
@@ -183,7 +188,7 @@ const ELEMENT_DATA12: PeriodicElement12[] = [
   },
   {
     no: '', owner: 'Total'
-    , cvalue: "94,925", total: "1,28,925", account: "1,28,925", scheme: "",  pran: "",  desc: "", status: ""
+    , cvalue: "94,925", total: "1,28,925", account: "1,28,925", scheme: "", pran: "", desc: "", status: ""
   },
 
 ];

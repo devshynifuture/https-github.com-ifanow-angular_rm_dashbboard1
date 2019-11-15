@@ -209,7 +209,7 @@ export class FixedDepositComponent implements OnInit {
         advisorId: this.advisorId,
         clientId: 2978,
         familyMemberId: (this.familyMemberId == undefined)?this.familyMemberId:this.selectedFamilyData.id,
-        ownerName: this.ownerName,
+        ownerName: (this.ownerName == undefined)?this.fixedDeposit.controls.ownerName.value:this.ownerName,
         amountInvested: this.fixedDeposit.controls.amountInvest.value,
         ownershipType: this.fixedDeposit.controls.ownerType.value,
         interestRate: this.fixedDeposit.controls.interestRate.value,

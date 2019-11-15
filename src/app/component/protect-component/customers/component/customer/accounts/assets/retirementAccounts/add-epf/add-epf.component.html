@@ -20,7 +20,7 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #employeeContry type="text" (keypress)="keyPress($event)" maxlength="20"
+                    <input matInput #employeeContry type="number"  (utils.keypress)="utils.keyPress($event)" maxlength="20"
                         class="form-control br-0 rupess" formControlName="employeeContry">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isEmployeeContry && getFormControl().employeeContry.invalid || getFormControl().employeeContry.touched && getFormControl().employeeContry.invalid)}">
@@ -38,7 +38,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #employerContry type="text" (keypress)="keyPress($event)" maxlength="20"
+                    <input matInput #employerContry type="number"  (utils.keypress)="utils.keyPress($event)" maxlength="20"
                         class="form-control br-0 rupess" formControlName="employerContry">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isEmployerContry && getFormControl().employerContry.invalid || getFormControl().employerContry.touched && getFormControl().employerContry.invalid)}">
@@ -55,7 +55,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #currentEPFBal type="text" (keypress)="keyPress($event)" maxlength="20"
+                    <input matInput #currentEPFBal type="number"  (utils.keypress)="utils.keyPress($event)" maxlength="20"
                         class="form-control br-0 rupess" formControlName="currentEPFBal">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isCurrentEPFBal && getFormControl().currentEPFBal.invalid || getFormControl().currentEPFBal.touched && getFormControl().currentEPFBal.invalid)}">
@@ -89,7 +89,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #annualSalGrowth type="text" (keypress)="keyPress($event)" maxlength="20"
+                        <input matInput #annualSalGrowth type="number"  (utils.keypress)="utils.keyPress($event)" maxlength="20"
                             class="form-control br-0 rupess" formControlName="annualSalGrowth">
                         <mat-error class="f-12 pt-4"
                             [ngClass]="{'v-h':!(isAnnualSalGrowth && getFormControl().annualSalGrowth.invalid || getFormControl().annualSalGrowth.touched && getFormControl().annualSalGrowth.invalid)}">
@@ -118,7 +118,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #maturityYear maxlength="30" class="form-control br-0"
+                        <input matInput #maturityYear type="number" (utils.keypress)="utils.keyPress($event)" maxlength="30" class="form-control br-0"
                             formControlName="maturityYear">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
@@ -146,7 +146,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankAcNo maxlength="30" class="form-control br-0"
+                        <input matInput #bankAcNo type="number"  (utils.keypress)="utils.keyPress($event)" maxlength="30" class="form-control br-0"
                             formControlName="bankAcNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
@@ -160,7 +160,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" class="form-control br-0"
+                        <input matInput #description  maxlength="60" class="form-control br-0"
                             formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>

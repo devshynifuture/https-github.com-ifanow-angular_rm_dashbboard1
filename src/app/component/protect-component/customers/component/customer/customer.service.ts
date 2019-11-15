@@ -78,7 +78,7 @@ export class CustomerService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_EPF,data)
   }
   editEPF(data){
-   return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EPF,data)
+   return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_EPF,data)
   }
   getNPS(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_NPS,data)
@@ -87,7 +87,7 @@ export class CustomerService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_NPS,data)
   }
   editNPS(data){
-    return this.http.get(apiConfig.MAIN_URL + appConfig.EDIT_NPS,data)
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_NPS,data)
   }
   getGrauity(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GRATUITY,data)
@@ -96,7 +96,7 @@ export class CustomerService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_GRATUITY,data)
   }
   editGratuity(data){
-    return this.http.get(apiConfig.MAIN_URL + appConfig.EDIT_GRATUITY,data)
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_GRATUITY,data)
   }
   getSuperannuation(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUPERANNUATION,data)
@@ -105,7 +105,7 @@ export class CustomerService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_SUPERANNUATION,data)
   }
   editSuperannuation(data){
-    return this.http.get(apiConfig.MAIN_URL + appConfig.EDIT_SUPERANNUATION,data)
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_SUPERANNUATION,data)
   }
   getEPS(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EPS,data)    
@@ -114,6 +114,6 @@ export class CustomerService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_EPS,data)
   }
   editEPS(data){
-    return this.http.get(apiConfig.MAIN_URL + appConfig.EDIT_EPS,data)
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_EPS,data)
   }
 }

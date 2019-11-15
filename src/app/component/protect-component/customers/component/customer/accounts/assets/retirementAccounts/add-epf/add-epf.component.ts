@@ -111,7 +111,7 @@ export class AddEPFComponent implements OnInit {
         advisorId: this.advisorId,
         clientId: 2978,
         familyMemberId: this.familyMemberId,
-        ownerName: this.ownerName,
+        ownerName: (this.ownerName == undefined)?this.epf.controls.ownerName.value:this.ownerName,
         employeesMonthlyContribution: this.epf.controls.employeeContry.value,
         employersMonthlyContribution: this.epf.controls.employerContry.value,
         annualSalaryGrowth: this.epf.controls.currentEPFBal.value,
