@@ -39,7 +39,7 @@
     <app-income-detail *ngIf="subscriptionTab=='addIncomeDetail'"></app-income-detail>
     <app-right-filter *ngIf="subscriptionTab=='rightFilter'"></app-right-filter>
     <app-detailed-view *ngIf="subscriptionTab=='detailedView'"></app-detailed-view>
-    <app-add-epf *ngIf="subscriptionTab=='addEPF'"></app-add-epf>
+    <app-add-epf  [data]="inputData"*ngIf="subscriptionTab=='addEPF'"></app-add-epf>
     <app-add-eps *ngIf="subscriptionTab=='addEPS'"></app-add-eps>
     <app-add-gratuity *ngIf="subscriptionTab=='addGratuity'"></app-add-gratuity>
     <app-add-nps *ngIf="subscriptionTab=='addNPS'"></app-add-nps>

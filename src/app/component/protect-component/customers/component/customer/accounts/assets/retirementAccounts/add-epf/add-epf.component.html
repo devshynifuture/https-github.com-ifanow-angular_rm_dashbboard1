@@ -11,7 +11,7 @@
         </div>
     </div>
 </div>
-<div [formGroup]="fixedDeposit" class="pt-60 pl-24 pr-24 pb-48 mb-44">
+<div [formGroup]="epf" class="pt-60 pl-24 pr-24 pb-48 mb-44">
     <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
     <div class="row pt-24">
         <div class="col-md-5 text-right">
@@ -24,7 +24,7 @@
                         class="form-control br-0 rupess" formControlName="employeeContry">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isEmployeeContry && getFormControl().employeeContry.invalid || getFormControl().employeeContry.touched && getFormControl().employeeContry.invalid)}">
-                        This field is required
+                        Employee's Monthly Contribution is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -42,80 +42,63 @@
                         class="form-control br-0 rupess" formControlName="employerContry">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isEmployerContry && getFormControl().employerContry.invalid || getFormControl().employerContry.touched && getFormControl().employerContry.invalid)}">
-                        This field is required
+                        Employer's Monthly Contribution required
                     </mat-error>
                 </mat-form-field>
             </div>
         </div>
     </div>
     <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Assumed rate of returns</h5>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput #employerContry type="text" (keypress)="keyPress($event)" maxlength="20"
-                            class="form-control br-0 rupess" formControlName="employerContry">
-                        <mat-error class="f-12 pt-4"
-                            [ngClass]="{'v-h':!(isEmployerContry && getFormControl().employerContry.invalid || getFormControl().employerContry.touched && getFormControl().employerContry.invalid)}">
-                            This field is required
-                        </mat-error>
-                    </mat-form-field>
-                </div>
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Current EPF balance</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #currentEPFBal type="text" (keypress)="keyPress($event)" maxlength="20"
+                        class="form-control br-0 rupess" formControlName="currentEPFBal">
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isCurrentEPFBal && getFormControl().currentEPFBal.invalid || getFormControl().currentEPFBal.touched && getFormControl().currentEPFBal.invalid)}">
+                        Current EPF balance is required
+                    </mat-error>
+                </mat-form-field>
             </div>
         </div>
-        <div class="row pt-40">
-                <div class="col-md-5 pr-0 text-right">
-                    <h5 class="m-0 pt-8">Growth rate of employer contribution</h5>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group mb-0">
-                        <mat-form-field>
-                            <input matInput type="text" (keypress)="keyPress($event)" class="form-control br-0 percentage"
-                                formControlName="growthEmployer">
-                            <mat-error class="f-12 pt-4"
-                                [ngClass]="{'v-h':!(isGrowthEmployer && getFormControl().growthEmployer.invalid || getFormControl().growthEmployer.touched && getFormControl().growthEmployer.invalid)}">
-                                This field is required
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
-            <div class="row pt-40">
-                    <div class="col-md-5 pr-0 text-right">
-                        <h5 class="m-0 pt-8">Growth rate of employee contribution</h5>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <input matInput type="text" (keypress)="keyPress($event)" class="form-control br-0 percentage"
-                                    formControlName="growthEmployee">
-                                <mat-error class="f-12 pt-4"
-                                    [ngClass]="{'v-h':!(isGrowthEmployee && getFormControl().growthEmployee.invalid || getFormControl().growthEmployee.touched && getFormControl().growthEmployee.invalid)}">
-                                    This field is required
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </div>
+    </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Date first contribution</h5>
+            <h5 class="m-0 pt-8">Balance as on</h5>
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input matInput formControlName="firstDateContry" [matDatepicker]="picker">
+                <input matInput formControlName="balanceAsOn" [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isFirstDateContry && getFormControl().firstDateContry.invalid || getFormControl().firstDateContry.touched && getFormControl().firstDateContry.invalid)}">
-                    This field is required
+                    [ngClass]="{'v-h':!(isBalanceAsOn && getFormControl().balanceAsOn.invalid || getFormControl().balanceAsOn.touched && getFormControl().balanceAsOn.invalid)}">
+                    Balance as on required
                 </mat-error>
             </mat-form-field>
 
         </div>
     </div>
+    <div class="row pt-24">
+            <div class="col-md-5 text-right">
+                <h5 class="m-0 pt-8">Annual salary growth rate</h5>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput #annualSalGrowth type="text" (keypress)="keyPress($event)" maxlength="20"
+                            class="form-control br-0 rupess" formControlName="annualSalGrowth">
+                        <mat-error class="f-12 pt-4"
+                            [ngClass]="{'v-h':!(isAnnualSalGrowth && getFormControl().annualSalGrowth.invalid || getFormControl().annualSalGrowth.touched && getFormControl().annualSalGrowth.invalid)}">
+                            Annual salary growth rate is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
     <div class="row pt-40">
         <div class="col-md-5 text-right" *ngIf="showHide == true">
             <h5 class="m-0 pt-8 text-custom c-p" (click)="showLess(showHide)">Show less</h5>
@@ -130,13 +113,41 @@
     <div *ngIf="showHide == true">
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Link bank account</h5>
+                <h5 class="m-0 pt-8">Maturity year</h5>
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #linkBankAc maxlength="30" class="form-control br-0"
-                            formControlName="linkBankAc">
+                        <input matInput #maturityYear maxlength="30" class="form-control br-0"
+                            formControlName="maturityYear">
+                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">EPF number</h5>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput type="number"  (utils.keypress)="utils.keyPress($event)" #EPFNo maxlength="30" class="form-control br-0"
+                            formControlName="EPFNo">
+                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Bank account number</h5>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput #bankAcNo maxlength="30" class="form-control br-0"
+                            formControlName="bankAcNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -164,7 +175,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFixedDeposit()">Save</button>
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveEPF()">Save</button>
         </div>
     </div>
 </div>

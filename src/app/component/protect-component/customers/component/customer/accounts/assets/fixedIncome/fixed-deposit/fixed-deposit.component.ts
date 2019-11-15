@@ -168,7 +168,7 @@ export class FixedDepositComponent implements OnInit {
     this.getFormControl().fdNo.maxLength = 10;
     this.getFormControl().bankACNo.maxLength = 15;
     this.ownerData = this.fixedDeposit.controls;
-    this.familyMemberId = this.recuringDeposit.controls.familyMemberId.value
+    this.familyMemberId = this.fixedDeposit.controls.familyMemberId.value
     this.familyMemberId =  this.familyMemberId[0]
     this.fixedDeposit.controls.maturityDate.setValue(new Date(data.maturityDate));
   }

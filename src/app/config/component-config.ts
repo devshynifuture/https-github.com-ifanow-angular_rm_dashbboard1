@@ -62,6 +62,22 @@ export const appConfig = {
   ADD_BOND:'account/asset/fixed-income/bond/add',
   EDIT_RECURRING_DEPOSIT:'account/asset/fixed-income/recurring-deposit/edit',
   EDIT_BONDS:'account/asset/fixed-income/bond/edit',
+  GET_EPF:'account/asset/retirement/epf/list/get',
+  ADD_EPF:'account/asset/retirement/epf/add',
+  EDIT_EPF:'account/asset/retirement/epf/edit',
+  GET_NPS:'account/asset/retirement/nps/list/get',
+  ADD_NPS:'',
+  EDIT_NPS:'',
+  GET_GRATUITY:'account/asset/retirement/gratuity/list/get',
+  ADD_GRATUITY:'account/asset/retirement/gratuity/add',
+  EDIT_GRATUITY:'account/asset/retirement/gratuity/edit',
+  GET_SUPERANNUATION:'account/asset/retirement/superannuation/list/get',
+  ADD_SUPERANNUATION:'account/asset/retirement/superannuation/add',
+  EDIT_SUPERANNUATION:'account/asset/retirement/superannuation/edit',
+  GET_EPS:'account/asset/retirement/eps/list/get',
+  ADD_EPS:'',
+  EDIT_EPS:'',
+
 
 ////////////////////////////// subscription////////////////////////////////////////////
 
