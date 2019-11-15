@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-superannuation',
@@ -32,7 +33,7 @@ export class AddSuperannuationComponent implements OnInit {
   isAssumedRateReturn = false
   isFirstDateContry = false
 
-  constructor(private router: Router,private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
+  constructor(private event :EventService, private router: Router,private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
 
   @Input()
   set data(data) {
@@ -143,9 +144,11 @@ export class AddSuperannuationComponent implements OnInit {
   }
   addSuperannuationRes(data){
     console.log('addrecuringDepositRes', data)
+     this.event.openSnackBar('Added successfully!', 'dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data })
   }
   editSuperannuationRes(data){
+     this.event.openSnackBar('Updated successfully!', 'dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data })
   }
 }

@@ -42,7 +42,9 @@
     <app-add-epf  [data]="inputData"*ngIf="subscriptionTab=='addEPF'"></app-add-epf>
     <app-add-eps [data]="inputData" *ngIf="subscriptionTab=='addEPS'"></app-add-eps>
     <app-add-gratuity [data]="inputData" *ngIf="subscriptionTab=='addGratuity'"></app-add-gratuity>
-    <app-add-nps *ngIf="subscriptionTab=='addNPS'"></app-add-nps>
+    <!-- <app-add-nps *ngIf="subscriptionTab=='addNPS'"></app-add-nps> -->
+    <app-nps-summary-portfolio *ngIf="subscriptionTab=='addSummaryPort'"></app-nps-summary-portfolio>
+    <app-nps-scheme-holding *ngIf="subscriptionTab=='addSchemeHoldings'"></app-nps-scheme-holding>
     <app-add-superannuation [data]="inputData" *ngIf="subscriptionTab=='addSuperannuation'"></app-add-superannuation>
 
 </app-custom-dialog-container>

@@ -40,6 +40,8 @@ import { AddSuperannuationComponent } from './assets/retirementAccounts/add-supe
 import { AddEPSComponent } from './assets/retirementAccounts/add-eps/add-eps.component';
 import { AddGratuityComponent } from './assets/retirementAccounts/add-gratuity/add-gratuity.component';
 import { AddNPSComponent } from './assets/retirementAccounts/add-nps/add-nps.component';
+import { NpsSummaryPortfolioComponent } from './assets/retirementAccounts/add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
+import { NpsSchemeHoldingComponent } from './assets/retirementAccounts/add-nps/nps-scheme-holding/nps-scheme-holding.component';
 
 
 @NgModule({
@@ -81,6 +83,8 @@ import { AddNPSComponent } from './assets/retirementAccounts/add-nps/add-nps.com
     AddEPSComponent,
     AddGratuityComponent,
     AddNPSComponent,
+    NpsSummaryPortfolioComponent,
+    NpsSchemeHoldingComponent,
   ],
   imports: [
     // BrowserModule,
@@ -90,7 +94,7 @@ import { AddNPSComponent } from './assets/retirementAccounts/add-nps/add-nps.com
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [AddLiabilitiesComponent, AddInsuranceComponent, LibilitiesRightComponent, FixedDepositComponent, AddSuperannuationComponent,AddEPSComponent,AddGratuityComponent, AddNPSComponent,AddEPFComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent],
+  exports: [AddLiabilitiesComponent, AddInsuranceComponent,NpsSchemeHoldingComponent, NpsSummaryPortfolioComponent, LibilitiesRightComponent, FixedDepositComponent, AddSuperannuationComponent,AddEPSComponent,AddGratuityComponent, AddNPSComponent,AddEPFComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent],
   entryComponents: [BottomSheetComponent]
 })
 export class AccountModule {

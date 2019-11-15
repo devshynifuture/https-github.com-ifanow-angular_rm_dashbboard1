@@ -8,6 +8,7 @@ import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-epf',
@@ -32,7 +33,7 @@ export class AddEPFComponent implements OnInit {
   ownerData: any;
   advisorId: any;
 
-  constructor(private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public util: UtilService) { }
+  constructor(private event: EventService,private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public util: UtilService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -137,9 +138,11 @@ export class AddEPFComponent implements OnInit {
   }
   addEPFRes(data){
     console.log('addrecuringDepositRes', data)
+    this.event.openSnackBar('Added successfully!', 'dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data })
   }
   editEPFRes(data){
+    this.event.openSnackBar('Updated successfully!', 'dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data })
   }
 }
