@@ -126,7 +126,7 @@ export class BondsComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: 2978,
       familyMemberId: this.familyMemberId,
-      ownerName: this.ownerName,
+      ownerName: (this.ownerName == undefined)?this.bonds.controls.ownerName.value:this.ownerName,
       amountInvested: this.bonds.controls.amountInvest.value,
       bondName: this.bonds.controls.bondName.value,
       // couponAmount: this.bonds.controls.couponAmount.value,

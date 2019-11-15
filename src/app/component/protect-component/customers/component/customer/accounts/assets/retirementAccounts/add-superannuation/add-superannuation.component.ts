@@ -6,6 +6,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-add-superannuation',
@@ -23,6 +24,13 @@ export class AddSuperannuationComponent implements OnInit {
   familyMemberId: any;
   superannuation: any;
   ownerData: any;
+  advisorId: any;
+  isEmployeeContry = false
+  isEmployerContry = false
+  isGrowthEmployer = false
+  isGrowthEmployee = false
+  isAssumedRateReturn = false
+  isFirstDateContry = false
 
   constructor(private router: Router,private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
 
@@ -36,11 +44,15 @@ export class AddSuperannuationComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
   }
   display(value){
     console.log('value selected', value)
     this.ownerName = value.userName;
     this.familyMemberId = value.id
+  }
+  Close() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' })
   }
   showLess(value){
     if(value  == true){
@@ -61,12 +73,13 @@ export class AddSuperannuationComponent implements OnInit {
     }
     this.superannuation = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      employeeContry: [(data == undefined) ? '' : data.employeesMonthlyContribution, [Validators.required]],
-      employerContry: [(data == undefined) ? '' : data.employersMonthlyContribution, [Validators.required]],
-      growthEmployer: [(data == undefined) ? '' : data.growthEmployer, [Validators.required]],
-      growthEmployee:[(data == undefined) ? '' : data.growthEmployee, [Validators.required]],
-      firstDateContry: [(data == undefined)?'':(data.interestCompoundingId)+"", [Validators.required]],
-      linkBankAc: [(data == undefined) ? '' : data.linkBankAccount, [Validators.required]],
+      employeeContry: [(data == undefined) ? '' : data.annualEmployeeContribution, [Validators.required]],
+      employerContry: [(data == undefined) ? '' : data.annualEmployerContribution, [Validators.required]],
+      growthEmployer: [(data == undefined) ? '' : data.growthRateEmployerContribution, [Validators.required]],
+      growthEmployee:[(data == undefined) ? '' : data.growthRateEmployeeContribution, [Validators.required]],
+      firstDateContry: [(data == undefined)?'':new Date(data.firstContributionDate), [Validators.required]],
+      assumedRateReturn:[(data == undefined)?'':(data.assumedRateOfReturn), [Validators.required]],
+      linkBankAc: [(data == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       familyMemberId:[[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
@@ -74,9 +87,65 @@ export class AddSuperannuationComponent implements OnInit {
     this.ownerData = this.superannuation.controls;
     this.familyMemberId = this.superannuation.controls.familyMemberId.value
     this.familyMemberId =  this.familyMemberId[0]
-    this.superannuation.controls.maturityDate.setValue(new Date(data.maturityDate));
+    // this.superannuation.controls.maturityDate.setValue(new Date(data.maturityDate));
   }
   getFormControl(): any {
     return this.superannuation.controls;
+  }
+  saveSuperannuation() {
+    if (this.superannuation.controls.employeeContry.invalid) {
+      this.isEmployeeContry = true;
+      return;
+    } else if (this.superannuation.controls.employerContry.invalid) {
+      this.isEmployerContry = true;
+      return;
+    } else if (this.superannuation.controls.firstDateContry.invalid) {
+      this.isFirstDateContry = true;
+      return;
+    } else if (this.superannuation.controls.growthEmployee.invalid) {
+      this.isGrowthEmployee = true;
+      return;
+    }  else if (this.superannuation.controls.growthEmployer.invalid) {
+      this.isGrowthEmployer = true;
+      return;
+    }   else if (this.superannuation.controls.assumedRateReturn.invalid) {
+      this.isAssumedRateReturn = true;
+      return;
+    }
+     else {
+
+      let obj = {
+        advisorId: this.advisorId,
+        clientId: 2978,
+        familyMemberId: this.familyMemberId,
+        ownerName: (this.ownerName == undefined)?this.superannuation.controls.ownerName.value:this.ownerName,
+        annualEmployeeContribution: this.superannuation.controls.employeeContry.value,
+        annualEmployerContribution: this.superannuation.controls.employerContry.value,
+        growthRateEmployeeContribution: this.superannuation.controls.growthEmployee.value,
+        growthRateEmployerContribution: this.superannuation.controls.growthEmployer.value,
+        firstContributionDate:this.datePipe.transform(this.superannuation.controls.firstDateContry.value, 'yyyy-MM-dd'),
+        assumedRateOfReturn: this.superannuation.controls.assumedRateReturn.value,
+        bankAccountNumber: this.superannuation.controls.linkBankAc.value,
+        description: this.superannuation.controls.description.value,
+        id: this.superannuation.controls.id.value
+      }
+      if (this.superannuation.controls.id.value == undefined) {
+        this.custumService.addSuperannuation(obj).subscribe(
+          data => this.addSuperannuationRes(data)
+        );
+      } else {
+        //edit call
+        this.custumService.editSuperannuation(obj).subscribe(
+          data => this.editSuperannuationRes(data)
+        );
+      }   
+    }
+  }
+  addSuperannuationRes(data){
+    console.log('addrecuringDepositRes', data)
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+  }
+  editSuperannuationRes(data){
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
   }
 }
