@@ -108,6 +108,38 @@ displayedColumns24 = ['name', 'amt', 'cvalue', 'profile','abt','xirr','pay','wit
       }
     );
   }
+  openUpperFragment(data) {
+    /* const fragmentData = {
+       Flag: 'emailOnly',
+       data: clientData,
+       id: 1,
+       state: 'open'
+     };
+     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+       sideBarData => {
+         console.log('this is sidebardata in subs subs : ', sideBarData);
+         if (UtilService.isDialogClose(sideBarData)) {
+           console.log('this is sidebardata in subs subs 2: ',);
+           rightSideDataSub.unsubscribe();
+         }
+       }
+     );*/
+    const fragmentData = {
+      flag: 'app-upper-customer',
+      id: 1,
+      data,
+      state: 'open'
+    };
+
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
+  }
 
   getPrefixData(type) {
 
