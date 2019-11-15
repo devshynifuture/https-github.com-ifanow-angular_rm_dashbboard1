@@ -39,18 +39,15 @@
     <app-income-detail *ngIf="subscriptionTab=='addIncomeDetail'"></app-income-detail>
     <app-right-filter *ngIf="subscriptionTab=='rightFilter'"></app-right-filter>
     <app-detailed-view *ngIf="subscriptionTab=='detailedView'"></app-detailed-view>
-    <app-add-epf *ngIf="subscriptionTab=='addEPF'"></app-add-epf>
+    <app-add-epf [data]="inputData" *ngIf="subscriptionTab=='addEPF'"></app-add-epf>
     <app-add-eps *ngIf="subscriptionTab=='addEPS'"></app-add-eps>
     <app-add-gratuity *ngIf="subscriptionTab=='addGratuity'"></app-add-gratuity>
     <app-add-nps *ngIf="subscriptionTab=='addNPS'"></app-add-nps>
-    <app-add-superannuation *ngIf="subscriptionTab=='addSuperannuation'"></app-add-superannuation>
+    <app-add-superannuation [data]="inputData" *ngIf="subscriptionTab=='addSuperannuation'"></app-add-superannuation>
     <app-add-expenses *ngIf="subscriptionTab=='addExpenses'"></app-add-expenses>
-
-
-
-
 </app-custom-dialog-container>
 
 <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
     <app-subscription-upper-slider *ngIf="upperSliderData.flag=='app-subscription-upper-slider'"></app-subscription-upper-slider>
+    <app-upper-customer *ngIf="upperSliderData.flag=='app-upper-customer'"></app-upper-customer>
 </div>

@@ -164,7 +164,7 @@
           more_vert
         </i>
           <mat-menu #menu="matMenu">
-            <a (click)="openFeeEditor('open',element)" mat-menu-item>View & modify fee structure</a>
+            <a (click)="openFeeEditor('open',element)" mat-menu-item>View & edit fee structure</a>
             <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change biller</a>
             <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change payee</a>
             <a *ngIf="element.status!=1" (click)="delete('cancelSubscription',element)" class="bt-1" mat-menu-item>Cancel

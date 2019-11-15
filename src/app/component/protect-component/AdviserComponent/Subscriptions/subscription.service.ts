@@ -284,10 +284,14 @@ export class SubscriptionService {
   }
 
   getDocumentData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('flag', data.flag);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('flag', data.flag).set('limit',data.limit).set('offset',data.offset).set('dateType',data.dateType).set('fromDate',data.fromDate).set('toDate',data.toDate).set('statusIdList',data.statusIdList);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_GET, httpParams);
   }
-
+  getClientDocumentData(data)
+  {
+    const httpParams = new HttpParams().set('advisorId',data.advisorId).set('clientId',data.clientId).set('flag',data.flag)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_GET,httpParams)
+  }
   updateDocumentData(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_UPDATE, data);
   }

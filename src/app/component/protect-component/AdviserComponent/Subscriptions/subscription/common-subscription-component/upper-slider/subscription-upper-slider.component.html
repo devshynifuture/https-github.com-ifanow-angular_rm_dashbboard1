@@ -38,7 +38,7 @@
       </mat-tab>
       <mat-tab #tab [disabled]='upperData=="plan"' label="DOCUMENTS">
         <ng-template matTabContent>
-          <app-document [componentFlag]='documents' [upperData]="upperData"></app-document>
+          <app-document [componentFlag1]='documents' [upperData]="upperData"></app-document>
         </ng-template>
       </mat-tab>
 
@@ -62,7 +62,7 @@
       </mat-tab>
       <mat-tab #tab [disabled]='upperData==""' label="DOCUMENTS">
         <ng-template matTabContent>
-          <app-document *ngIf="upperData" [componentFlag]='servicesDocuments' [upperData]="upperData"></app-document>
+          <app-document *ngIf="upperData" [componentFlag1]='servicesDocuments' [upperData]="upperData"></app-document>
         </ng-template>
       </mat-tab>
       <mat-tab #tab [disabled]='upperData==""' label="MODULES">
@@ -120,7 +120,7 @@
       </mat-tab>
       <mat-tab label="DOCUMENTS">
         <app-document *ngIf="subscriptionTab=='DOCUMENTS'" [clientData]="fragmentData.data"
-                      [componentFlag]='clientDocuments' [upperData]="fragmentData.data">
+                      [componentFlag1]='clientDocuments' [upperData]="fragmentData.data">
         </app-document>
       </mat-tab>
       <mat-tab label="SETTINGS">

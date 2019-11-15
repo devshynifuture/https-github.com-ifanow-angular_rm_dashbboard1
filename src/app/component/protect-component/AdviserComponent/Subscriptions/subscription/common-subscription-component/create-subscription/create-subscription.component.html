@@ -13,9 +13,9 @@
   <mat-step [stepControl]="feeStructureForm">
     <ng-template matStepLabel>Fee Structure</ng-template>
     <app-fixed-fee *ngIf="subFeeMode=='createSubFixed'" (outputData)="nextStep($event)" [createFeeData]="feeModeData"
-                   [createSubData]='feeStructureData'></app-fixed-fee>
+      [createSubData]='feeStructureData'></app-fixed-fee>
     <app-variable-fee *ngIf="subFeeMode=='createSubVariable'" (outputData)="nextStep($event)"
-                      [createFeeData]="feeModeData" [createSubData]='feeStructureData'></app-variable-fee>
+      [createFeeData]="feeModeData" [createSubData]='feeStructureData'></app-variable-fee>
   </mat-step>
 
   <!-- TODO   <mat-step [stepControl]="secondFormGroup">-->
@@ -62,12 +62,12 @@
         <div class="col-md-6">
           <mat-radio-group formControlName="invoiceSendingMode" aria-label="Select an option">
             <mat-radio-button value="1"
-                              [ngClass]="{'b-a-custom':subscriptionDetails.get('invoiceSendingMode').value==1,'text-primary':subscriptionDetails.get('invoiceSendingMode').value==1,'b-a':subscriptionDetails.get('invoiceSendingMode').value==2}"
-                              checked="true" class="pt-8 pb-8 pr-40 pl-20 custom-radio">Automatic
+              [ngClass]="{'b-a-custom':subscriptionDetails.get('invoiceSendingMode').value==1,'text-primary':subscriptionDetails.get('invoiceSendingMode').value==1,'b-a':subscriptionDetails.get('invoiceSendingMode').value==2}"
+              checked="true" class="pt-8 pb-8 pr-40 pl-20 custom-radio">Automatic
             </mat-radio-button>
             <mat-radio-button value="2"
-                              [ngClass]="{'b-a-custom':subscriptionDetails.get('invoiceSendingMode').value==2,'text-primary':subscriptionDetails.get('invoiceSendingMode').value==2,'b-a':subscriptionDetails.get('invoiceSendingMode').value==1}"
-                              class=" pt-8 pr-40 pb-8 pl-20 custom-radio">Manual
+              [ngClass]="{'b-a-custom':subscriptionDetails.get('invoiceSendingMode').value==2,'text-primary':subscriptionDetails.get('invoiceSendingMode').value==2,'b-a':subscriptionDetails.get('invoiceSendingMode').value==1}"
+              class=" pt-8 pr-40 pb-8 pl-20 custom-radio">Manual
             </mat-radio-button>
           </mat-radio-group>
         </div>
@@ -114,11 +114,14 @@
           <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
+          <button mat-raised-button class="btn-default mr-12 br-0 text-inherit" *ngIf="subscriptionDetails.valid"
+            (click)="goBack()">PREVIOUS
+          </button>
           <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="subscriptionDetails.valid"
-                  (click)="goForward()">NEXT STEP
+            (click)="goForward()">NEXT STEP
           </button>
           <button class="btn-bottom br-0 text-inherit" disabled *ngIf="subscriptionDetails.invalid"
-                  [disabled]="subscriptionDetails.invalid" (click)="goForward()">NEXT STEP
+            [disabled]="subscriptionDetails.invalid" (click)="goForward()">NEXT STEP
           </button>
         </div>
       </div>
@@ -136,7 +139,7 @@
       <div class="row pt-16">
         <div (click)="select('biller',singleBiller)" *ngFor="let singleBiller of billersData" class="col-md-6 mt-20">
           <mat-card class="p-0"
-                    [ngClass]="{'ba-blue':singleBiller.selected==1,'mb-20':true ,'b-ua':singleBiller.selected==0}">
+            [ngClass]="{'ba-blue':singleBiller.selected==1,'mb-20':true ,'b-ua':singleBiller.selected==0}">
             <div class="row bg-grey lter">
               <div class="col-md-12 p-0">
                 <mat-checkbox class="custom-checkbox" [ngClass]="{'v-h':singleBiller.selected==0}" checked="false">
@@ -170,6 +173,9 @@
           <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
+          <button mat-raised-button class="btn-default mr-12 br-0 text-inherit" *ngIf="subscriptionDetails.valid"
+            (click)="goBack()">PREVIOUS
+          </button>
           <button mat-button class="btn-bottom br-0 text-inherit" [disabled]="!selectedBiller" (click)="goForward()">
             NEXT STEP
           </button>
@@ -233,7 +239,7 @@
         </div>
         <div class="col-md-8 right text-right">
           <button mat-button class="btn-bottom br-0 text-inherit" [disabled]="totalSelectedPayeeShare!=100"
-                  (click)="goForward()">NEXT STEP
+            (click)="goForward()">NEXT STEP
           </button>
         </div>
       </div>

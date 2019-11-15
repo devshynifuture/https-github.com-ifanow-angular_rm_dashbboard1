@@ -42,3 +42,9 @@ table {
 ::ng-deep .add-new .mat-menu-panel{
   border-radius: 0px;
 }
+
+::ng-deep .mf-summary{
+  #table-low th{
+padding: 8px 8px !important;
+}
+}
