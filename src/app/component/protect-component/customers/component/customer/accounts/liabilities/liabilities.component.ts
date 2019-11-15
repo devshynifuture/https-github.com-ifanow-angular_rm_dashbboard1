@@ -26,6 +26,7 @@ export class LiabilitiesComponent implements OnInit {
   creditCard=[];
   personal=[];
   mortgage=[];
+  dataToShow: any;
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,public custmService:CustomerService,public util:UtilService) {
   }
 
@@ -37,9 +38,13 @@ export class LiabilitiesComponent implements OnInit {
     this.showFilter='tab1';
     // this.showFilter='tab7';
     this.advisorId = AuthService.getAdvisorId();
-    this.getLiability();
+    this.getLiability('');
   }
   sortTable(data){
+    if(data=="" || data==undefined){
+      this.showFilter='tab1';
+      data='tab1';
+    }
     this.showFilter=data;
     let filterData=[];
     if(data=='tab1'){
@@ -62,9 +67,9 @@ export class LiabilitiesComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getLiability();
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getLiability(sideBarData);
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 
@@ -115,7 +120,8 @@ export class LiabilitiesComponent implements OnInit {
 
 
 
-  getLiability(){
+  getLiability(data){
+    this.dataToShow=data.data;
     let obj={
       'advisorId':this.advisorId,
       'clientId':2978
@@ -125,27 +131,37 @@ export class LiabilitiesComponent implements OnInit {
     );
   }
   getLiabiltyRes(data){
+    this.dataStore=[];
+    this.dataSource=[];
+    this.home=[];
+    this.vehicle=[];
+    this.education=[];
+    this.creditCard=[];
+    this.personal=[];
+    this.mortgage=[];
     this.dataStore=data.loans;
-
     console.log(data);
     this.dataSource=data.loans;
     this.storeData=data.loans.length;
-    this.dataStore.forEach(element => {
-      if(element.loanTypeId==1){
-        this.home.push(element)
-      }else if(element.loanTypeId==2){
-        this.vehicle.push(element);
-      }else if(element.loanTypeId==3){
-        this.education.push(element);
-      }else if(element.loanTypeId==4){
-        this.creditCard.push(element);
-      }else if(element.loanTypeId==5){
-        this.personal.push(element);
-      }else if(element.loanTypeId==6){
-        this.mortgage.push(element);
-      }
-      
-    });
+      this.dataStore.forEach(element => {
+        if(element.loanTypeId==1){
+          this.home.push(element)
+        }else if(element.loanTypeId==2){  
+          this.vehicle.push(element);
+        }else if(element.loanTypeId==3){
+          this.education.push(element);
+        }else if(element.loanTypeId==4){
+          this.creditCard.push(element);
+        }else if(element.loanTypeId==5){
+          this.personal.push(element);
+        }else if(element.loanTypeId==6){
+          this.mortgage.push(element);
+        }
+  
+      });
+     
+    this.sortTable(this.dataToShow);
+
   }
   clickHandling() {
     console.log('something was clicked');
