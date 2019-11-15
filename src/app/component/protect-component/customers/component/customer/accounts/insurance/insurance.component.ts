@@ -9,23 +9,23 @@ import { trigger, transition, query, stagger, animate, style } from '@angular/an
   selector: 'app-insurance',
   templateUrl: './insurance.component.html',
   styleUrls: ['./insurance.component.scss'],
-  animations: [
-    trigger('listAnimation', [
-      transition('* => *', [ // each time the binding value changes
-        query(':leave', [
-          stagger(0.1, [
-            animate('0.1s', style({ opacity: 0 }))
-          ])
-        ], { optional: true }),
-        query(':enter', [
-          style({ opacity: 0 }),
-          stagger(100, [
-            animate('0.1s', style({ opacity: 0 }))
-          ])
-        ], { optional: true })
-      ])
-    ])
-  ]
+  // animations: [
+  //   trigger('listAnimation', [
+  //     transition('* => *', [ // each time the binding value changes
+  //       query(':leave', [
+  //         stagger(0.1, [
+  //           animate('0.1s', style({ opacity: 0 }))
+  //         ])
+  //       ], { optional: true }),
+  //       query(':enter', [
+  //         style({ opacity: 0 }),
+  //         stagger(100, [
+  //           animate('0.1s', style({ opacity: 0 }))
+  //         ])
+  //       ], { optional: true })
+  //     ])
+  //   ])
+  // ]
 })
 
 export class InsuranceComponent implements OnInit {
@@ -34,22 +34,25 @@ export class InsuranceComponent implements OnInit {
   displayedColumns1 = ['no', 'owner', 'cvalue', 'amt', 'mvalue', 'rate', 'mdate', 'type', 'ppf', 'desc', 'status', 'icons'];
   dataSource1 = ELEMENT_DATA1;
   advisorId: any;
+  insuranceSubTypeId: any;
   constructor(private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   viewMode;
-  lifeInsuranceList = ["Term", "Traditional", "ULIP"]
+  lifeInsuranceList = [{ name: "Term", id: 1 }, { name: "Traditional", id: 2 }, { name: "ULIP", id: 3 }]
   generalLifeInsuranceList = [/*"Health", "Car/2 Wheeler", "Travel", "Personal accident", "Critical illness", "Cancer", "Home", "Others"*/]
   insuranceTypeId;
   ngOnInit() {
     this.viewMode = "tab1"
     this.advisorId = AuthService.getAdvisorId();
-    this.getInsuranceData(this.advisorId,2978,1);
+    this.getInsuranceData(this.advisorId, 2978, 1, 1);
     this.getGlobalDataInsurance();
-    this.insuranceTypeId=1
+    this.insuranceTypeId = 1
+    this.insuranceSubTypeId = 1
   }
-  getInsuranceData(advisorId, clientId, insuranceId) {
+  getInsuranceData(advisorId, clientId, insuranceId, insuranceSubTypeId) {
     let obj = {
       'advisorId': advisorId,
       'clientId': clientId,
+      'insuranceSubTypeId': insuranceSubTypeId,
       'insuranceTypeId': insuranceId
     }
     this.cusService.getLifeInsuranceData(obj).subscribe(
@@ -58,54 +61,49 @@ export class InsuranceComponent implements OnInit {
   }
   getInsuranceDataResponse(data) {
 
-    (this.insuranceTypeId==1)?this.dataSource=data.insuranceList:console.log("general insurance")
-    console.log("Insurance Data",data)
+    (this.insuranceTypeId == 1) ? this.dataSource = data.insuranceList : console.log("general insurance")
+    console.log("Insurance Data", data)
   }
-  
-  getGlobalDataInsurance()
-  {
-    let obj={
+
+  getGlobalDataInsurance() {
+    let obj = {
 
     }
     this.cusService.getInsuranceGlobalData(obj).subscribe(
-      data=>console.log(data)
+      data => console.log(data)
     )
   }
-  getInsuranceTypeData(typeId)
-  {
-    this.insuranceTypeId=typeId
-    this.getInsuranceData(this.advisorId,2978,typeId)
+  getInsuranceTypeData(typeId, typeSubId) {
+    this.insuranceTypeId = typeId
+    this.insuranceSubTypeId = typeSubId
+    this.getInsuranceData(this.advisorId, 2978, typeId, typeSubId)
   }
   toggle(value) {
     if (value === "lifeInsurance") {
-     this.generalLifeInsuranceList=[];
-     this.lifeInsuranceList=[];
-     ["Term", "Traditional", "ULIP"].map((i)=>
-      {
+      this.generalLifeInsuranceList = [];
+      this.lifeInsuranceList = [];
+      [{ name: "Term", id: 1 }, { name: "Traditional", id: 2 }, { name: "ULIP", id: 3 }].map((i) => {
         this.lifeInsuranceList.push(i)
       })
-   }
+    }
     else {
-      this.lifeInsuranceList=[];
-      this.generalLifeInsuranceList=[];
-      ["Health", "Car/2 Wheeler", "Travel", "Personal accident", "Critical illness", "Cancer", "Home" ,"Others"].map((i)=>{
+      this.lifeInsuranceList = [];
+      this.generalLifeInsuranceList = [];
+      [{ name: "Health", id: 4 }, { name: "Car/2 Wheeler", id: 5 }, { name: "Travel", id: 6 }, { name: "Personal accident", id: 7 }, { name: "Critical illness", id: 8 }, { name: "Cancer", id: 9 }, { name: "Home", id: 10 }, { name: "Others", id: 11 }].map((i) => {
         this.generalLifeInsuranceList.push(i)
       })
     }
   }
-  editInsurance(data)
-  {
+  editInsurance(data) {
     console.log(data)
   }
-  logAnimation(event)
-  {
-    console.log(event)
-  }
+
   open(flagValue, data) {
     const fragmentData = {
       Flag: flagValue,
       data,
-      id: 1,
+      insuranceTypeId: this.insuranceTypeId,
+      insuranceSubTypeId: this.insuranceSubTypeId,
       state: 'open'
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

@@ -1,15 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
-import {SubscriptionService} from '../../../subscription.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
+import { SubscriptionService } from '../../../subscription.service';
 import * as _ from 'lodash';
-import {AddDocumentComponent} from '../add-document/add-document.component';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {element} from 'protractor';
-import {UtilService} from 'src/app/services/util.service';
+import { AddDocumentComponent } from '../add-document/add-document.component';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { element } from 'protractor';
+import { UtilService } from 'src/app/services/util.service';
 // import {element} from 'protractor';
 // import {timingSafeEqual} from 'crypto';
 
@@ -58,10 +58,11 @@ export class DocumentComponent implements OnInit {
   _clientData: any;
   _upperData: any;
   noData: string;
+  componentFlag: any;
 
   constructor(public subInjectService: SubscriptionInject,
-              private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
-              public subscription: SubscriptionService) {
+    private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
+    public subscription: SubscriptionService) {
     // this.subInjectService.rightSliderDocument.subscribe(
     //   data => this.getDocumentsDesignData(data)
     // );
@@ -81,7 +82,23 @@ export class DocumentComponent implements OnInit {
     return this._upperData;
   }
 
-  @Input() componentFlag: string;
+  @Input() 
+  set componentFlag1(data)
+  {
+    this.componentFlag=data
+    this.advisorId = AuthService.getAdvisorId();
+    if(data==='plansDocuments')
+    {
+      this.getplanDocumentData();
+    }
+    else if(data==="servicesDocuments")
+    {
+      this.getServiceDocumentData();
+    }
+    else{
+      return;
+    }
+  };
 
   @Input()
   set clientData(clientData) {
@@ -98,10 +115,6 @@ export class DocumentComponent implements OnInit {
   dataSource = ELEMENT_DATA;
 
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
-    this.getplanDocumentData();
-    this.getServiceDocumentData();
-    this.getdocumentSubData();
     this.documentDesign = 'true';
     console.log('upperData', this.upperData);
     this.dataCount = 0;
@@ -117,7 +130,7 @@ export class DocumentComponent implements OnInit {
       flag: 4
     };
 
-    this.subscription.getDocumentData(obj).subscribe(
+    this.subscription.getClientDocumentData(obj).subscribe(
       data => this.getDocumentResponseData(data)
     );
   }
@@ -139,9 +152,9 @@ export class DocumentComponent implements OnInit {
 
   getDocumentResponseData(data) {
     console.log(data);
-    if (data==undefined){
-      this.noData="No Data Found";
-    }else {
+    if (data == undefined) {
+      this.noData = "No Data Found";
+    } else {
       data.forEach(singleData => {
         singleData.selected = false;
         singleData.documentText = singleData.docText;
@@ -167,7 +180,7 @@ export class DocumentComponent implements OnInit {
   }
 
   dialogClose() {
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
 
     // this.dialogRef.close();
   }
@@ -238,7 +251,7 @@ export class DocumentComponent implements OnInit {
 
     const fragmentData = {
       Flag: value,
-      data:data,
+      data: data,
       id: 1,
       state: 'open'
     };
@@ -553,7 +566,7 @@ export class DocumentComponent implements OnInit {
   }
 
   saveMappingDocumentToPlansResponse(data) {
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
     this.eventService.openSnackBar('Document is mapped', 'OK');
   }
 

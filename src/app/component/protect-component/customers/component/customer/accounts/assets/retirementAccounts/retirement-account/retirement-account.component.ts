@@ -1,0 +1,203 @@
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
+
+@Component({
+  selector: 'app-retirement-account',
+  templateUrl: './retirement-account.component.html',
+  styleUrls: ['./retirement-account.component.scss']
+})
+export class RetirementAccountComponent implements OnInit {
+  
+  showRequring: any;
+  constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService,public util:UtilService) { }
+  displayedColumns11 = ['no', 'owner','cvalue','emp','empc','rate','bal','bacla','year','desc','status','icons'];
+  datasource11 = ELEMENT_DATA11;
+
+  displayedColumns12 = ['no', 'owner','cvalue','total','account','rate','mdate','scheme','ppf','desc','status','icons'];
+  datasource12 = ELEMENT_DATA12;
+
+  displayedColumns13 = ['no', 'owner','name','number','year','amt','reason','desc','status','icons'];
+  datasource13 = ELEMENT_DATA13;
+
+  displayedColumns14 = ['no', 'owner','aemp','aempe','rate','grate','grateemp','date','desc','status','icons'];
+  datasource14 = ELEMENT_DATA14;
+
+  displayedColumns15 = ['no', 'owner','nvalue','date','amt','pay','desc','status','icons'];
+  datasource15 = ELEMENT_DATA15;
+
+  displayedColumns16 = ['no', 'owner','cvalue','rate','amt','number','mdate','desc','status','icons'];
+  datasource16 = ELEMENT_DATA16;
+
+  ngOnInit() {
+    this.showRequring = '1'
+  }
+  getfixedIncomeData(value){
+    console.log('value++++++',value)
+    this.showRequring = (value == "2")? "2":(value == "3")?"3":(value == "4")?"4":(value == "5")?"5":"1";
+  
+  }
+  openRetirement(value,state,data)
+  {
+    const fragmentData = {
+      Flag: value,
+      data: data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+    
+        }
+      }
+    );
+  }
+}
+export interface PeriodicElement11 {
+  no: string;
+  owner: string;
+  cvalue:string;
+  emp:string;
+  empc:string;
+  rate:string;
+  bal:string;
+  bacla:string;
+  year:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA11: PeriodicElement11[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,cvalue:"94,925", emp:"94,925",empc:"94,925",rate:"8.40%",bal:"60,000",bacla:"18/09/2021",year:"2021",desc:"ICICI FD",status:"MATURED"},
+  {no: '2.', owner: 'Shilpa Jain'
+  ,cvalue:"94,925", emp:"94,925",empc:"94,925",rate:"8.40%",bal:"60,000",bacla:"18/09/2021",year:"2021",desc:"ICICI FD",status:"LIVE"},
+  {no: '', owner: 'Total'
+  ,cvalue:"1,28,925", emp:"1,28,925",empc:"1,28,925",rate:"",bal:"1,20,000",bacla:"",year:"",desc:"",status:""},
+];
+
+
+
+
+export interface PeriodicElement12 {
+  no: string;
+  owner: string;
+  cvalue:string;
+  total:string;
+  account:string;
+  rate:string;
+  mdate:string;
+  scheme:string;
+  ppf:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA12: PeriodicElement12[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,cvalue:"94,925", total:"94,925",account:"94,925",rate:"8.40%",mdate:"18/09/2021",scheme:"Cumulative",ppf:"980787870909",desc:"ICICI FD",status:"MATURED"},
+  {no: '2.', owner: 'Shilpa Jain'
+  ,cvalue:"94,925", total:"94,925",account:"94,925",rate:"8.40%",mdate:"18/09/2021",scheme:"Cumulative",ppf:"980787870909",desc:"ICICI FD",status:"LIVE"},
+  {no: '', owner: 'Total'
+  ,cvalue:"94,925", total:"1,28,925",account:"1,28,925",rate:"",mdate:"",scheme:"",ppf:"",desc:"",status:""},
+ 
+];
+
+
+export interface PeriodicElement13 {
+  no: string;
+  owner: string;
+  name:string;
+  number:string;
+  year:string;
+  amt:string;
+  reason:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA13: PeriodicElement13[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,name:"Futurewise Technologies", number:"5",year:"5",amt:"1,00,000",reason:"Worked for more than 10 years",desc:"ICICI FD",status:"MATURED"},
+  {no: '2.', owner: 'Shilpa Jain'
+  ,name:"Futurewise Technologies", number:"5",year:"5",amt:"1,00,000",reason:"Worked for more than 10 years",desc:"Axis bank FD",status:"LIVE"},
+  {no: '', owner: 'Total'
+  ,name:"", number:"",year:"",amt:"1,50,000",reason:"",desc:"",status:""},
+];
+
+export interface PeriodicElement15 {
+  no: string;
+  owner: string;
+  nvalue:string;
+  date:string;
+  amt:string;
+  pay:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA15: PeriodicElement15[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,nvalue:"94,925", date:"12/11/2022",amt:"60,000",pay:"Monthly",desc:"ICICI FD",status:"MATURED"},
+  {no: '2.', owner: 'Rahul Jain'
+  ,nvalue:"94,925", date:"12/11/2022",amt:"60,000",pay:"Monthly",desc:"ICICI FD",status:"MATURED"},
+  {no: '', owner: 'Total'
+  ,nvalue:"1,50,000", date:"",amt:"1,50,000",pay:"",desc:"",status:""},
+];
+
+export interface PeriodicElement16 {
+  no: string;
+  owner: string;
+  cvalue:string;
+  rate:string;
+  amt:string;
+  number:string;
+  mdate:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA16: PeriodicElement16[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,cvalue:"94,925", rate:"8.40%",amt:"60,000",number:"76635874357424",mdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
+  {no: '2.', owner: 'Rahul Jain'
+  ,cvalue:"94,925", rate:"8.40%",amt:"60,000",number:"76635874357424",mdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
+  {no: '', owner: 'Total'
+  ,cvalue:"1,28,925", rate:"",amt:"1,20,000",number:"",mdate:"",desc:"",status:""},
+];
+
+
+
+export interface PeriodicElement14 {
+  no: string;
+  owner: string;
+  aemp:string;
+  aempe:string;
+  rate:string;
+  grate:string;
+  grateemp:string;
+  date:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA14: PeriodicElement14[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,aemp:"Futurewise Technologies",aempe:"bdjvjf", rate:"5",grate:"5",grateemp:"1,00,000",date:"Worked for more than 10 years",desc:"ICICI FD",status:"MATURED"},
+  {no: '2.', owner: 'Rahul Jain'
+  ,aemp:"Futurewise Technologies",aempe:"bdjvjf", rate:"5",grate:"5",grateemp:"1,00,000",date:"Worked for more than 10 years",desc:"ICICI FD",status:"MATURED"},
+
+  
+];

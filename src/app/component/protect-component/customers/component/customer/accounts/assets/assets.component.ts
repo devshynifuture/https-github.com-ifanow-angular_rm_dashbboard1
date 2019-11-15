@@ -53,7 +53,9 @@ export class AssetsComponent implements OnInit {
   displayedColumns13 = ['no', 'owner','name','number','year','amt','reason','desc','status','icons'];
   datasource13 = ELEMENT_DATA13;
 
-
+  displayedColumns14 = ['no', 'owner','aemp','rate','grate','grateemp','date','desc','status','icons'];
+  datasource14 = ELEMENT_DATA14;
+  
   displayedColumns15 = ['no', 'owner','nvalue','date','amt','pay','desc','status','icons'];
   datasource15 = ELEMENT_DATA15;
 
@@ -550,6 +552,29 @@ const ELEMENT_DATA13: PeriodicElement13[] = [
   ,name:"", number:"",year:"",amt:"1,50,000",reason:"",desc:"",status:""},
 ];
 
+
+
+export interface PeriodicElement14 {
+  no: string;
+  owner: string;
+  aemp:string;
+  rate:string;
+  grate:string;
+  grateemp:string;
+  date:string;
+  desc:string;
+  status:string;
+}
+
+const ELEMENT_DATA14: PeriodicElement14[] = [
+
+  {no: '1.', owner: 'Rahul Jain'
+  ,aemp:"Futurewise Technologies", rate:"5",grate:"5",grateemp:"1,00,000",date:"Worked for more than 10 years",desc:"ICICI FD",status:"MATURED"},
+  {no: '1.', owner: 'Rahul Jain'
+  ,aemp:"Futurewise Technologies", rate:"5",grate:"5",grateemp:"1,00,000",date:"Worked for more than 10 years",desc:"ICICI FD",status:"MATURED"},
+  {no: '1.', owner: 'Rahul Jain'
+  ,aemp:"Futurewise Technologies", rate:"5",grate:"5",grateemp:"1,00,000",date:"Worked for more than 10 years",desc:"ICICI FD",status:"MATURED"},
+];
 export interface PeriodicElement15 {
   no: string;
   owner: string;

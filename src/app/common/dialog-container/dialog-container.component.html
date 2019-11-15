@@ -30,7 +30,7 @@
     <app-liabilities-detail *ngIf="subscriptionTab=='addLiabilitiesDetail'"> </app-liabilities-detail>
 
     <app-add-liabilities [inputData]="inputData" *ngIf="subscriptionTab=='addLiabilities'"></app-add-liabilities>
-    <app-add-insurance [insuranceData]="fragmentData.data" *ngIf="subscriptionTab=='addInsurance'"></app-add-insurance>
+    <app-add-insurance [insuranceData]="fragmentData" *ngIf="subscriptionTab=='addInsurance'"></app-add-insurance>
     <app-libilities-right *ngIf="subscriptionTab=='portfolioSummary'"></app-libilities-right>
     <app-fixed-deposit [data]="inputData" *ngIf="subscriptionTab=='addFixedDeposit'"></app-fixed-deposit>
     <app-recuring-deposit [data]="inputData"*ngIf="subscriptionTab=='addRecuringDeposit'"></app-recuring-deposit>
@@ -39,6 +39,12 @@
     <app-income-detail *ngIf="subscriptionTab=='addIncomeDetail'"></app-income-detail>
     <app-right-filter *ngIf="subscriptionTab=='rightFilter'"></app-right-filter>
     <app-detailed-view *ngIf="subscriptionTab=='detailedView'"></app-detailed-view>
+    <app-add-epf *ngIf="subscriptionTab=='addEPF'"></app-add-epf>
+    <app-add-eps *ngIf="subscriptionTab=='addEPS'"></app-add-eps>
+    <app-add-gratuity *ngIf="subscriptionTab=='addGratuity'"></app-add-gratuity>
+    <app-add-nps *ngIf="subscriptionTab=='addNPS'"></app-add-nps>
+    <app-add-superannuation *ngIf="subscriptionTab=='addSuperannuation'"></app-add-superannuation>
+
 </app-custom-dialog-container>
 
 <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">

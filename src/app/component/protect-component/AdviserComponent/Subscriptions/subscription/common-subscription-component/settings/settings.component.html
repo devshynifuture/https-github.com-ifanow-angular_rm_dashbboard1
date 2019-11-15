@@ -28,8 +28,8 @@
                     <mat-menu #menu="matMenu">
                         <a mat-menu-item (click)="setPrimaryField(profileData)">Set as Primary</a>
                         <a mat-menu-item (click)="openPayeeSettings(profileData,'payeeSettings','open')" >Edit
-                            Biller Profile</a>
-                        <a mat-menu-item class="bt-1" (click)="deleteModal('SUBSCRIPTION')" >Delete Biller
+                            Client Profile</a>
+                        <a mat-menu-item class="bt-1" (click)="deleteModal('SUBSCRIPTION')" >Delete Client
                             Profile</a>
                     </mat-menu>
                             <button mat-stroked-button class="text-primary br-0 right text-right" *ngIf="profileData.isPrimary == true">PRIMARY</button>

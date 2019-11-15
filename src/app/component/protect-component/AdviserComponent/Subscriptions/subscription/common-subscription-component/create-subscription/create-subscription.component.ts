@@ -91,6 +91,11 @@ export class CreateSubscriptionComponent implements OnInit {
     console.log(this.subscriptionDetails);
   }
 
+  goBack()
+  {
+    this.stepper.previous();
+  }
+
   nextStep(data) {
     console.log(data);
     this.clientData = data;
@@ -169,7 +174,7 @@ export class CreateSubscriptionComponent implements OnInit {
     this.stepper.selectedIndex = 0;
     this.subscriptionDetails.reset();
   }
-
+  
   startSubscription() {
     console.log('payee', this.selectedPayee);
     console.log('biller', this.selectedBiller);

@@ -47,9 +47,7 @@ export class AddStructureComponent implements OnInit {
       code: [data, [Validators.required]],
       description: [data, [Validators.required]]
     })
-    // this.getFormControl().planName.maxLength = 40;
-    // this.getFormControl().code.maxLength = 10;
-    // this.getFormControl().description.maxLength = 160;
+
   }
   getFormControl(): any {
     return this.planDataForm.controls;
@@ -57,7 +55,7 @@ export class AddStructureComponent implements OnInit {
 
 
   getSinglePlanData(data) {
-    if (data == '') {
+    if (data == '') {  
       return
     }
     else {
@@ -67,9 +65,6 @@ export class AddStructureComponent implements OnInit {
         code: [data.code, [Validators.required]],
         description: [data.description, [Validators.required]]
       });
-      this.getFormControl().planName.maxLength = 40;
-      this.getFormControl().code.maxLength = 10;
-      this.getFormControl().description.maxLength = 160;
     }
   }
 
