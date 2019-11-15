@@ -78,8 +78,7 @@ datasource20 = ELEMENT_DATA20;
 displayedColumns22 = ['no', 'owner','cvalue','rate','amt','tenure','mvalue','mdate','number','desc','status','icons'];
 datasource22 = ELEMENT_DATA22;
 
-displayedColumns23 = ['no', 'owner','cvalue','mpayout','rate','amt','mvalue','mdate','desc','status','icons'];
-datasource23 = ELEMENT_DATA23;
+
 
 displayedColumns24 = ['name', 'amt', 'cvalue', 'profile','abt','xirr','pay','withdraw','bal','date','sip'];
   dataSource24 = ELEMENT_DATA24;
@@ -723,26 +722,26 @@ const ELEMENT_DATA19: PeriodicElement19[] = [
   {no: '', owner: 'Total'
   ,payout:"1,28,925", pdate:"",rate:"",tamt:"1,28,925",amt:"1,28,925",mdate:"",desc:"",status:""},
 ];
-export interface PeriodicElement20 {
-  no: string;
-  owner: string;
-  cvalue:string;
-  rate:string;
-  balance:string;
-  bdate:string;
-  desc:string;
-  status:string;
-}
+  export interface PeriodicElement20 {
+    no: string;
+    owner: string;
+    cvalue:string;
+    rate:string;
+    balance:string;
+    bdate:string;
+    desc:string;
+    status:string;
+  }
 
-const ELEMENT_DATA20: PeriodicElement20[] = [
+  const ELEMENT_DATA20: PeriodicElement20[] = [
 
-  {no: '1.', owner: 'Rahul Jain'
-  ,cvalue:"94,925", rate:"8.40%",balance:"60,000",bdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
-  {no: '2.', owner: 'Rahul Jain'
-  ,cvalue:"94,925", rate:"8.40%",balance:"60,000",bdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
-  {no: '', owner: 'Total'
-  ,cvalue:"94,925", rate:"",balance:"60,000",bdate:"",desc:"",status:""},
-];
+    {no: '1.', owner: 'Rahul Jain'
+    ,cvalue:"94,925", rate:"8.40%",balance:"60,000",bdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
+    {no: '2.', owner: 'Rahul Jain'
+    ,cvalue:"94,925", rate:"8.40%",balance:"60,000",bdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
+    {no: '', owner: 'Total'
+    ,cvalue:"94,925", rate:"",balance:"60,000",bdate:"",desc:"",status:""},
+  ];
 
 
 
@@ -772,29 +771,6 @@ const ELEMENT_DATA22: PeriodicElement22[] = [
 
 
 
-
-export interface PeriodicElement23 {
-  no: string;
-  owner: string;
-  cvalue:string;
-  mpayout:string;
-  rate:string;
-  amt:string;
-  mvalue:string;
-  mdate:string;
-  desc:string;
-  status:string;
-}
-
-const ELEMENT_DATA23: PeriodicElement23[] = [
-
-  {no: '1.', owner: 'Rahul Jain'
-  ,cvalue:"94,925",mpayout:"60,000", rate:"8.40%",amt:"60,000",mvalue:"65,765",mdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
-  {no: '2.', owner: 'Shilpa Jain'
-  ,cvalue:"94,925",mpayout:"60,000", rate:"8.40%",amt:"60,000",mvalue:"65,765",mdate:"18/09/2021",desc:"ICICI FD",status:"MATURED"},
-  {no: '', owner: 'Total'
-  ,cvalue:"1,28,925",mpayout:"1,28,925", rate:"",amt:"1,28,925",mvalue:"1,28,925",mdate:"",desc:"",status:""},
-];
 
 
 export interface PeriodicElement24 {
