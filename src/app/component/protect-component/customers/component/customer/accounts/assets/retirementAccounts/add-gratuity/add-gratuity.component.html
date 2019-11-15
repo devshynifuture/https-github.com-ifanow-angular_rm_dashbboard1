@@ -10,100 +10,121 @@
         </div>
     </div>
 </div>
-<div class="pb-44 mb-48 pt-100">
-    <div class="row">
-        <div class="col-md-5 text-right">
-            <h5 class="m-0 pt-8">Owner</h5>
-            <p class="m-0 text-custom f-12">In whose name is this asset</p>
-        </div>
-        <div class="col-md-5">
-            <mat-form-field>
-                <input matInput class="form-control br-0">
-            </mat-form-field>
-        </div>
-    </div>
-    <div class="row pt-44">
+<div  [formGroup]="gratuity" class="pb-44 mb-48 pt-100">
+    <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
+    <div class="row pt-24">
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8">Number of completed years</h5>
         </div>
         <div class="col-md-5">
-            <mat-form-field>
-                <input matInput #input class="form-control br-0">
-                <mat-hint class="text-danger" align="start">{{input.value.length}}</mat-hint>
-                <mat-hint align="end">{{input.value.length}}/40</mat-hint>
-            </mat-form-field>
-        </div>
-    </div>
-    <div class="row pt-44">
-        <div class="col-md-5 text-right">
-            <h5 class="m-0 pt-8">Amount recieved</h5>
-        </div>
-        <div class="col-md-5">
-            <mat-form-field>
-                <input matInput #input class="form-control br-0">
-
-            </mat-form-field>
-        </div>
-    </div>
-    <div class="row pt-44">
-        <div class="col-md-5 text-right">
-            <h5 class="m-0 pt-8 text-custom">Show less</h5>
-        </div>
-
-    </div>
-    <div class="row pt-28">
-        <div class="col-md-5 text-right">
-            <h5 class="m-0 pt-8">Name of organization</h5>
-        </div>
-        <div class="col-md-5">
-            <mat-form-field hintLabel="Optional">
-                <input matInput #input class="form-control br-0">
-
-            </mat-form-field>
-        </div>
-    </div>
-    <div class="row pt-44">
-        <div class="col-md-5 text-right">
-            <h5 class="m-0 pt-8">Reason of receipt</h5>
-        </div>
-        <div class="col-md-5">
             <div class="form-group mb-0">
-                <mat-form-field hintLabel="Optional">
-                    <input matInput #input class="form-control br-0">
-
+                <mat-form-field>
+                    <input matInput #noOfcompleteYrs type="number"  (utils.keypress)="utils.keyPress($event)" maxlength="20"
+                        class="form-control br-0 rupess" formControlName="noOfcompleteYrs">
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isNoOfcompleteYrs && getFormControl().noOfcompleteYrs.invalid || getFormControl().noOfcompleteYrs.touched && getFormControl().noOfcompleteYrs.invalid)}">
+                        Employee's Monthly Contribution is required
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
     </div>
-    <div class="row pt-44">
+    <div class="row pt-24">
         <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Amount recieved</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #amountRecived type="number"  (utils.keypress)="utils.keyPress($event)" maxlength="20"
+                        class="form-control br-0 rupess" formControlName="amountRecived">
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isAmountRecived && getFormControl().amountRecived.invalid || getFormControl().amountRecived.touched && getFormControl().amountRecived.invalid)}">
+                        Employee's Monthly Contribution is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row pt-40">
+        <div class="col-md-5 text-right" *ngIf="showHide == true">
+            <h5 class="m-0 pt-8 text-custom c-p" (click)="showLess(showHide)">Show less</h5>
+        </div>
+        <div class="col-md-5 text-right" *ngIf="showHide == false">
+            <h5 class="m-0 pt-8 text-custom c-p" (click)="showLess(showHide)">+ Add more [optional data] </h5>
+        </div>
+        <div class="col-md-5">
+
+        </div>
+    </div>
+<div *ngIf="showHide == true">
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Name of organization</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #nameOfOrg maxlength="30" class="form-control br-0"
+                        formControlName="nameOfOrg">
+                    <mat-hint align="start" class="f-12">Optional</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Reason of receipt</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #resonOfRecipt maxlength="30" class="form-control br-0"
+                        formControlName="resonOfRecipt">
+                    <mat-hint align="start" class="f-12">Optional</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Bank account number</h5>
         </div>
         <div class="col-md-5">
-            <mat-form-field hintLabel="Optional">
-                <input matInput #input class="form-control br-0">
-            </mat-form-field>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #bankAcNo type="number"  (utils.keypress)="utils.keyPress($event)" maxlength="30" class="form-control br-0"
+                        formControlName="bankAcNo">
+                    <mat-hint align="start" class="f-12">Optional</mat-hint>
+                </mat-form-field>
+            </div>
         </div>
     </div>
-    <div class="row pt-44">
-        <div class="col-md-5 text-right">
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Description</h5>
         </div>
         <div class="col-md-5">
-            <mat-form-field hintLabel="Optional">
-                <input matInput #input class="form-control br-0">
-
-            </mat-form-field>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #description  maxlength="60" class="form-control br-0"
+                        formControlName="description">
+                    <mat-hint align="start" class="f-12">Optional</mat-hint>
+                </mat-form-field>
+            </div>
         </div>
     </div>
 </div>
+</div>
 <div class="bottom-fixed wrapper-12 pt-16">
-    <div class="row">
-        <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
-        </div>
-        <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveRecuringDeposit()">Save</button>
-        </div>
+<div class="row">
+    <div class="col-md-4">
+        <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
     </div>
+    <div class="col-md-8 right text-right">
+        <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveEPF()">Save</button>
+    </div>
+</div>
 </div>

@@ -41,7 +41,7 @@
     <app-detailed-view *ngIf="subscriptionTab=='detailedView'"></app-detailed-view>
     <app-add-epf  [data]="inputData"*ngIf="subscriptionTab=='addEPF'"></app-add-epf>
     <app-add-eps *ngIf="subscriptionTab=='addEPS'"></app-add-eps>
-    <app-add-gratuity *ngIf="subscriptionTab=='addGratuity'"></app-add-gratuity>
+    <app-add-gratuity [data]="inputData" *ngIf="subscriptionTab=='addGratuity'"></app-add-gratuity>
     <app-add-nps *ngIf="subscriptionTab=='addNPS'"></app-add-nps>
     <app-add-superannuation [data]="inputData" *ngIf="subscriptionTab=='addSuperannuation'"></app-add-superannuation>
 
