@@ -115,17 +115,7 @@ p {
 //  ::ng-deep .mat-horizontal-stepper-header{
 //    pointer-events: none !important;
 //  }
-::ng-deep .mat-button-toggle-group-appearance-standard, .mat-button-toggle-standalone.mat-button-toggle-appearance-standard{
-  border-radius: 0px !important;
-}
-::ng-deep .mat-button-toggle-appearance-standard{
-  color:#595252 !important;
-}
-::ng-deep .mat-button-toggle-checked{
-  color: #008FFF !important;
-  background-color: #fff !important;
-  
-}
+
 .chart{
   height: 200px;
 }

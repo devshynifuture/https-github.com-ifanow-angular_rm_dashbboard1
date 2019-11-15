@@ -45,6 +45,7 @@ export class AddLiabilitiesComponent implements OnInit {
   ownerData: any;
   ownerName: any;
   selectedFamilyData: any;
+  loanTypeView: any;
 
   
 
@@ -79,7 +80,8 @@ export class AddLiabilitiesComponent implements OnInit {
     }
   }
   close(){
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+   let data=this._inputData.loanTypeId;
+    this.subInjectService.changeNewRightSliderState({ state: 'close',data });
   }
   select(data){
     this.showSelect=data.checked;
@@ -91,6 +93,14 @@ export class AddLiabilitiesComponent implements OnInit {
     console.log('value selected', value)
     this.ownerName = value.userName;
     this.selectedFamilyData = value
+  }
+  keyPress(event: any) {
+    const pattern = /[0-9\+\-\ ]/;
+
+    const inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
   }
   getLiability(data){
     if (data == undefined) {
@@ -117,15 +127,15 @@ export class AddLiabilitiesComponent implements OnInit {
     if(data.loanPartPayments!=undefined){
       data.loanPartPayments.forEach(element => {
         this.addLiabilityForm.controls.transact=this.fb.array([this.fb.group({
-          partPaymentDate: new Date(element.partPaymentDate),
-          partPayment: element.partPayment,
-          option: (element.option+"")})])
+          partPaymentDate: [new Date(element.partPaymentDate),[Validators.required]],
+          partPayment: [element.partPayment,Validators.required],
+          option:[ (element.option+""),Validators.required]})])
       })
     }
-    this.getFormControl().ownerName.maxLength = 10;
-    this.getFormControl().loanAmount.maxLength = 10;
-    this.getFormControl().loanTenure.maxLength = 10;
-    this.getFormControl().interest.maxLength = 40;
+    this.getFormControl().loanAmount.maxLength = 20;
+    this.getFormControl().loanTenure.maxLength = 20;
+    this.getFormControl().interest.maxLength = 20;
+    this.getFormControl().outstandingAmt.maxLength = 20;
     this.ownerData = this.addLiabilityForm.controls;
 
   }
@@ -143,10 +153,6 @@ export class AddLiabilitiesComponent implements OnInit {
       this.transactEntries.removeAt(item);
     }
     saveFormData(state) {
-      // if (this.addLiabilityForm.controls.ownerName.invalid) {
-      //   this.isOwner = true;
-      //   return;
-      // } else 
       if (this.addLiabilityForm.controls.loanType.invalid) {
         this.isLoanType = true;
         return;
@@ -167,7 +173,7 @@ export class AddLiabilitiesComponent implements OnInit {
         return;
       } else {
         const obj = {
-        ownerName: this.ownerName,
+        ownerName:(this.ownerName==null)?this.addLiabilityForm.controls.ownerName.value:this.ownerName,
         loanType: this.addLiabilityForm.controls.loanType.value,
         loanAmount: this.addLiabilityForm.controls.loanAmount.value,
         outstandingCheck: this.addLiabilityForm.controls.outstandingCheck.value,
@@ -188,6 +194,7 @@ export class AddLiabilitiesComponent implements OnInit {
           obj.emi = parseInt(obj.emi);
           obj.loanTenure = parseInt(obj.loanTenure);
           obj.loanType = parseInt(obj.loanType);
+          this.loanTypeView= obj.loanType;
           obj.emiFrequency = parseInt(obj.emiFrequency);
           obj.outstandingCheck=obj.outstandingCheck.toString();
           obj.CommencementDate = obj.CommencementDate.toISOString().slice(0, 10);
@@ -209,7 +216,7 @@ export class AddLiabilitiesComponent implements OnInit {
               "advisorId": this.advisorId,
               "clientId": 2978,
               "familyMemberId": this.selectedFamilyData.id,
-              "ownerName": this.ownerName,
+              "ownerName": obj.ownerName,
               "loanTypeId": obj.loanType,
               "loanAmount": obj.loanAmount,
               "outstandingAmount": obj.outstandingAmt,
@@ -229,7 +236,7 @@ export class AddLiabilitiesComponent implements OnInit {
            }else{
             let editObj={
               "familyMemberId":160023,
-              "ownerName":this.ownerName,
+              "ownerName":obj.ownerName,
               "loanTypeId":obj.loanType,
               "id":this._inputData.id,
               "loanAmount":obj.loanAmount,
@@ -250,33 +257,27 @@ export class AddLiabilitiesComponent implements OnInit {
       }
     }
     addLiabilityRes(data){
-      console.log(data);
       if(data==1){
-        let obj={
-          'advisorId':this.advisorId,
-          'clientId':2978
-        }
-        this.custumService.getLiabilty(obj).subscribe(
-          data => this.getLiabiltyRes(data)
-        );
-        this.close();
-        this.eventService.openSnackBar('Liabilities added successfully', 'OK');    
+        console.log(data);
+        data=this.loanTypeView
+        this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+        this.eventService.openSnackBar('Liabilities added successfully', 'OK');   
+      }else{
+        this.eventService.openSnackBar('Error', 'dismiss');   
+
+      }
+      
       }
      
-    }
+    
     editLiabilityRes(data){
-      console.log(data);
-      console.log(data);
       if(data==1){
-        let obj={
-          'advisorId':this.advisorId,
-          'clientId':2978
-        }
-        this.custumService.getLiabilty(obj).subscribe(
-          data => this.getLiabiltyRes(data)
-        );
-        this.close();
-        this.eventService.openSnackBar('Liabilities edited successfully', 'OK');  
+        console.log(data);
+        data=this.loanTypeView
+        this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+        this.eventService.openSnackBar('Liabilities edited successfully', 'OK'); 
+      }else{
+        this.eventService.openSnackBar('Error', 'dismiss');   
       }
     }
     getLiabiltyRes(data){
@@ -284,14 +285,10 @@ export class AddLiabilitiesComponent implements OnInit {
     }
 }
 
-
-
 export interface PeriodicElement {
   name: string;
   amountTable: string;
 }
-
-
 const ELEMENT_DATA: PeriodicElement[] = [
   { name: 'Loan amount', amountTable: '40,00,000'},
   { name: 'Interest %', amountTable: '8.75%'},
