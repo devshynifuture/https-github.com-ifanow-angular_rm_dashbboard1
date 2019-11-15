@@ -88,7 +88,7 @@ displayedColumns24 = ['name', 'amt', 'cvalue', 'profile','abt','xirr','pay','wit
   
   viewMode;
   ngOnInit() {
-    this.viewMode="tab2"
+    this.viewMode="tab1"
     
   }
   openFragment(value) {
