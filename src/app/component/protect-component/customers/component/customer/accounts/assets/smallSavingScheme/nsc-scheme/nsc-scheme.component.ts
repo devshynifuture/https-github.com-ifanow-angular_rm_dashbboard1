@@ -31,6 +31,6 @@ export class NscSchemeComponent implements OnInit {
   getNscSchemedataResponse(data)
   {
    console.log(data,"NSC")
-   this.datasource=data
+   this.datasource=data.NationalSavingCertificate;
   }
 }

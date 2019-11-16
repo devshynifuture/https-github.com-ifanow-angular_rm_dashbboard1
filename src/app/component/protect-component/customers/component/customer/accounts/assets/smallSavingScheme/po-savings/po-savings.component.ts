@@ -30,7 +30,7 @@ export class PoSavingsComponent implements OnInit {
   }
   getPoSavingSchemedataResponse(data)
   {
-    this.datasource=data
+    this.datasource=data.PostOfficeSavingsList;
     console.log(data)
   }
 

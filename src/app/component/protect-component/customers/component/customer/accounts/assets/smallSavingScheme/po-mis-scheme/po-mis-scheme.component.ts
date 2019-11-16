@@ -17,6 +17,7 @@ export class PoMisSchemeComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId=2978;
+    this.getPoMisSchemedata()
   }
   getPoMisSchemedata()
   {

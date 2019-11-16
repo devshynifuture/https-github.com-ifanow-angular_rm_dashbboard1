@@ -32,7 +32,7 @@ export class SsySchemeComponent implements OnInit {
   getSsySchemedataResponse(data)
   {
     console.log(data)
-   this.datasource=data
+   this.datasource=data.SSYList
 
   }
 }
