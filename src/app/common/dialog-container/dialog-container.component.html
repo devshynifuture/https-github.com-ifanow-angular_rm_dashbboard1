@@ -47,6 +47,8 @@
     <app-nps-scheme-holding *ngIf="subscriptionTab=='addSchemeHoldings'"></app-nps-scheme-holding>
     <app-add-superannuation [data]="inputData" *ngIf="subscriptionTab=='addSuperannuation'"></app-add-superannuation>
     <!-- <app-add-expenses *ngIf="subscriptionTab=='addExpenses'"></app-add-expenses> -->
+    <app-add-real-estate *ngIf="subscriptionTab=='realEstate'"></app-add-real-estate>
+
 </app-custom-dialog-container>
 
 <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
