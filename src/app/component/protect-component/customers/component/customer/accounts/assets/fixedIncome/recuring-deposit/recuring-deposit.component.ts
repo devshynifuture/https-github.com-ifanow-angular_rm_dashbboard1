@@ -157,7 +157,7 @@ export class RecuringDepositComponent implements OnInit {
       advisorId:this.advisorId,
       clientId: 2978,
       familyMemberId: this.familyMemberId ,
-      ownerName: this.ownerName,
+      ownerName: (this.ownerName == undefined)?this.recuringDeposit.controls.ownerName.value:this.ownerName,
       monthlyContribution: this.recuringDeposit.controls.monthlyContribution.value,
       interestRate : this.recuringDeposit.controls.interestRate.value,
       commencementDate: this.datePipe.transform(this.recuringDeposit.controls.commencementDate.value, 'yyyy-MM-dd'),

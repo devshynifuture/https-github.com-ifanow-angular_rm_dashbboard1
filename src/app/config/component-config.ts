@@ -72,6 +72,24 @@ export const appConfig = {
   GET_ASSET_SMALL_SAVING_SCHEME_PO_TD:'account/asset/ssc/po-td/list/get',
   GET_ASSET_SMALL_SAVING_SCHEME_PO_MIS:'account/asset/ssc/po-mis/list/get',
   ////////////////////////////// subscription////////////////////////////////////////////
+  GET_EPF:'account/asset/retirement/epf/list/get',
+  ADD_EPF:'account/asset/retirement/epf/add',
+  EDIT_EPF:'account/asset/retirement/epf/edit',
+  GET_NPS:'account/asset/retirement/nps/list/get',
+  ADD_NPS:'account/asset/retirement/nps/add',
+  EDIT_NPS:'account/asset/retirement/nps/edit',
+  GET_GRATUITY:'account/asset/retirement/gratuity/list/get',
+  ADD_GRATUITY:'account/asset/retirement/gratuity/add',
+  EDIT_GRATUITY:'account/asset/retirement/gratuity/edit',
+  GET_SUPERANNUATION:'account/asset/retirement/superannuation/list/get',
+  ADD_SUPERANNUATION:'account/asset/retirement/superannuation/add',
+  EDIT_SUPERANNUATION:'account/asset/retirement/superannuation/edit',
+  GET_EPS:'account/asset/retirement/eps/list/get',
+  ADD_EPS:'account/asset/retirement/eps/add',
+  EDIT_EPS:'account/asset/retirement/eps/edit',
+
+
+////////////////////////////// subscription////////////////////////////////////////////
 
 
   GET_SUBSCRIPTION_INVOICE: 'subscription/invoice/get',
