@@ -62,6 +62,7 @@ export const appConfig = {
   ADD_BOND:'account/asset/fixed-income/bond/add',
   EDIT_RECURRING_DEPOSIT:'account/asset/fixed-income/recurring-deposit/edit',
   EDIT_BONDS:'account/asset/fixed-income/bond/edit',
+  GET_REAL_ESTATE:'account/asset/real-estate/get',
   GET_EPF:'account/asset/retirement/epf/list/get',
   ADD_EPF:'account/asset/retirement/epf/add',
   EDIT_EPF:'account/asset/retirement/epf/edit',
