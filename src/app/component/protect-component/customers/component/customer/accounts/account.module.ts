@@ -44,6 +44,7 @@ import { RealEstateComponent } from './assets/realEstate/real-estate/real-estate
 import { AddRealEstateComponent } from './assets/realEstate/add-real-estate/add-real-estate.component';
 import { NpsSummaryPortfolioComponent } from './assets/retirementAccounts/add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
 import { NpsSchemeHoldingComponent } from './assets/retirementAccounts/add-nps/nps-scheme-holding/nps-scheme-holding.component';
+import { OtherPayablesComponent } from './liabilities/other-payables/other-payables.component';
 
 
 @NgModule({
@@ -89,6 +90,7 @@ import { NpsSchemeHoldingComponent } from './assets/retirementAccounts/add-nps/n
     AddRealEstateComponent,
     NpsSummaryPortfolioComponent,
     NpsSchemeHoldingComponent,
+    OtherPayablesComponent,
   ],
   imports: [
     // BrowserModule,
