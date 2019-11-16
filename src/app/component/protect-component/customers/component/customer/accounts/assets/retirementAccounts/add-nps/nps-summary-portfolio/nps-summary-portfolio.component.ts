@@ -110,7 +110,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
       data.npsNomineesList.forEach(element => {
         this.summaryNPS.controls.npsNomineesList = this.fb.array([this.fb.group({
           nomineeName: [(element.nomineeName), [Validators.required]],
-          allocation: [(element.nomineePercentageShare + ""), Validators.required],
+          nomineePercentageShare: [(element.nomineePercentageShare + ""), Validators.required],
         })])
       })
     }
@@ -142,7 +142,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   }
   addNominee() {
     this.nominee.push(this.fb.group({
-      nomineeName: null,allocation:null,
+      nomineeName: null,nomineePercentageShare:null,
     }));
   }
   removeNominee(item) {
@@ -166,7 +166,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
         clientId: 2978,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined) ? this.summaryNPS.controls.ownerName.value : this.ownerName,
-        valueAsOn: this.datePipe.transform(this.summaryNPS.controls.valueAsOn.valueAsOn, 'yyyy-MM-dd'),
+        valueAsOn: this.datePipe.transform(this.summaryNPS.controls.valueAsOn.value, 'yyyy-MM-dd'),
         currentValuation: this.summaryNPS.controls.currentValue.value,
         contributionAmount: this.summaryNPS.controls.totalContry.value,
         pran: this.summaryNPS.controls.pran.value,

@@ -143,13 +143,11 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-form-field>
                         <mat-select formControlName="schemeChoice" class="form-control br-0">
                             <mat-option value="">Select option</mat-option>
                             <mat-option value="1">Active-choice investment</mat-option>
                             <mat-option value="2">Auto-choice investment</mat-option>
                         </mat-select>
-                    </mat-form-field>
                     <mat-hint align="start" class="f-12">Optional</mat-hint>
                 </mat-form-field>
             </div>
@@ -189,8 +187,8 @@
                         </div>
                         <div class="col-md-3">
                             <mat-form-field>
-                                <input matInput #allocation maxlength="30" class="form-control br-0 percentage" 
-                                    formControlName="allocation">
+                                <input matInput #nomineePercentageShare maxlength="30" class="form-control br-0 percentage" 
+                                    formControlName="nomineePercentageShare">
                             </mat-form-field>
                         </div>
                         <div class="col-md-5" *ngIf="i==0">
