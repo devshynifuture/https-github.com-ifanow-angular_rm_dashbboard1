@@ -71,6 +71,51 @@ export class CustomerService {
   editBonds(data){
    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_BONDS,data)    
   }
+  getSmallSavingSchemePPFData(data)
+  {
+    let httpParams =new HttpParams().set("advisorId",data.advisorId).set('clientId',data.clientId);
+    return this.http.get(apiConfig.MAIN_URL +appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PPF,httpParams)
+  }
+  getSmallSavingSchemeNSCData(data)
+  {
+    let httpParams =new HttpParams().set("advisorId",data.advisorId).set('clientId',data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_NSC,httpParams)
+  }
+  getSmallSavingSchemeSSYData(data)
+  {
+    let httpParams =new HttpParams().set("advisorId",data.advisorId).set('clientId',data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_SSY,httpParams)
+  }
+  getSmallSavingSchemeKVPData(data)
+  {
+    let httpParams =new HttpParams().set("advisorId",data.advisorId).set('clientId',data.clientId).set('requiredDate',data.requiredDate);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_KVP,httpParams)
+  }
+  getSmallSavingSchemeSCSSData(data)
+  {
+    let httpParams =new HttpParams().set("advisorId",data.advisorId).set('clientId',data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_SCSS,httpParams)
+  }
+  getSmallSavingSchemePOSAVINGData(data)
+  {
+    let httpParams =new HttpParams().set("advisorId",data.advisorId).set('clientId',data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_POSAVING,httpParams)
+  }
+  getSmallSavingSchemePORDData(data)
+  {
+    let httpParams =new HttpParams().set("advisorId",data.advisorId).set('clientId',data.clientId).set('requiredDate',data.requiredDate);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PO_RD,httpParams)
+  }
+  getSmallSavingSchemePOTDData(data)
+  {
+    let httpParams =new HttpParams().set("advisorId",data.advisorId).set('clientId',data.clientId).set('requiredDate',data.requiredDate);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PO_TD,httpParams)
+  }
+  getSmallSavingSchemePOMISData(data)
+  {
+    let httpParams =new HttpParams().set("advisorId",data.advisorId).set('clientId',data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PO_MIS,httpParams)
+  }
   getRealEstate(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_REAL_ESTATE, httpParams);
