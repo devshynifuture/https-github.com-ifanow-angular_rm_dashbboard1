@@ -40,8 +40,6 @@ export class NpsSummaryPortfolioComponent implements OnInit {
       futureContry: this.fb.array([]),
     });
   }
-
-
   @Input()
   set data(data) {
     this.inputData = data;
@@ -99,6 +97,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
       })]),
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
+    this.ownerData = this.summaryNPS.controls;
     if (data != undefined) {
       data.futureContributionList.forEach(element => {
         this.summaryNPS.controls.futureContributionList = this.fb.array([this.fb.group({
@@ -114,7 +113,6 @@ export class NpsSummaryPortfolioComponent implements OnInit {
         })])
       })
     }
-    this.ownerData = this.summaryNPS.controls;
     this.familyMemberId = this.summaryNPS.controls.familyMemberId.value
     this.familyMemberId = this.familyMemberId[0]
 
