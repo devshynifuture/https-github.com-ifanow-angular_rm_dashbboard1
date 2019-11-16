@@ -13,7 +13,7 @@
 </div>
 <div [formGroup]="epf" class="pt-60 pl-24 pr-24 pb-48 mb-44">
     <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
-    <div class="row pt-24">
+    <div class="row pt-40">
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8">Employee's Monthly Contribution</h5>
         </div>
@@ -65,7 +65,7 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input matInput formControlName="balanceAsOn" [matDatepicker]="picker">
+                <input matInput formControlName="balanceAsOn" class="form-control br-0" [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isBalanceAsOn && getFormControl().balanceAsOn.invalid || getFormControl().balanceAsOn.touched && getFormControl().balanceAsOn.invalid)}">
@@ -79,7 +79,7 @@
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8">Annual salary growth rate</h5>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input matInput #annualSalGrowth type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 percentage" formControlName="annualSalGrowth">
