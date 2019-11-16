@@ -40,13 +40,9 @@ import { AddSuperannuationComponent } from './assets/retirementAccounts/add-supe
 import { AddEPSComponent } from './assets/retirementAccounts/add-eps/add-eps.component';
 import { AddGratuityComponent } from './assets/retirementAccounts/add-gratuity/add-gratuity.component';
 import { AddNPSComponent } from './assets/retirementAccounts/add-nps/add-nps.component';
-<<<<<<< HEAD
-import { AddExpensesComponent } from '../../common-component/add-expenses/add-expenses.component';
-=======
 import { NpsSummaryPortfolioComponent } from './assets/retirementAccounts/add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
 import { NpsSchemeHoldingComponent } from './assets/retirementAccounts/add-nps/nps-scheme-holding/nps-scheme-holding.component';
->>>>>>> a1370b780daf0a6e0ac4e99be92c6e44d6a675a6
-
+import { AddExpensesComponent } from '../../common-component/add-expenses/add-expenses.component';
 
 @NgModule({
   declarations: [
@@ -87,12 +83,9 @@ import { NpsSchemeHoldingComponent } from './assets/retirementAccounts/add-nps/n
     AddEPSComponent,
     AddGratuityComponent,
     AddNPSComponent,
-<<<<<<< HEAD
-    AddExpensesComponent
-=======
     NpsSummaryPortfolioComponent,
     NpsSchemeHoldingComponent,
->>>>>>> a1370b780daf0a6e0ac4e99be92c6e44d6a675a6
+    AddExpensesComponent
   ],
   imports: [
     // BrowserModule,
@@ -102,11 +95,7 @@ import { NpsSchemeHoldingComponent } from './assets/retirementAccounts/add-nps/n
     FormsModule,
     ReactiveFormsModule
   ],
-<<<<<<< HEAD
-  exports: [AddLiabilitiesComponent, AddInsuranceComponent, LibilitiesRightComponent, FixedDepositComponent, AddSuperannuationComponent,AddEPSComponent,AddGratuityComponent, AddNPSComponent,AddEPFComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent,AddExpensesComponent],
-=======
-  exports: [AddLiabilitiesComponent, AddInsuranceComponent,NpsSchemeHoldingComponent, NpsSummaryPortfolioComponent, LibilitiesRightComponent, FixedDepositComponent, AddSuperannuationComponent,AddEPSComponent,AddGratuityComponent, AddNPSComponent,AddEPFComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent],
->>>>>>> a1370b780daf0a6e0ac4e99be92c6e44d6a675a6
+  exports: [AddLiabilitiesComponent, AddInsuranceComponent,NpsSchemeHoldingComponent, NpsSummaryPortfolioComponent, LibilitiesRightComponent, FixedDepositComponent, AddSuperannuationComponent,AddEPSComponent,AddGratuityComponent, AddNPSComponent,AddEPFComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent,AddExpensesComponent],
   entryComponents: [BottomSheetComponent]
 })
 export class AccountModule {
