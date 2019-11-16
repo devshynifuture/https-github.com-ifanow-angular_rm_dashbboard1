@@ -6,6 +6,7 @@ import { CustomerService } from '../../../../customer.service';
 import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-eps',
@@ -28,7 +29,7 @@ export class AddEPSComponent implements OnInit {
   isCommencementdate = false;
   isPensionPayFreq = false;
 
-  constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
+  constructor(private event: EventService,private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
 
   @Input()
   set data(data) {
@@ -72,7 +73,7 @@ export class AddEPSComponent implements OnInit {
       commencementDate: [(data == undefined) ? '' : data.commencementDate, [Validators.required]],
       pensionAmount: [(data == undefined) ? '' : data.pensionAmount, [Validators.required]],
       pensionPayFreq: [(data == undefined) ? '' : (data.pensionPayoutFrequencyId)+"", [Validators.required]],
-      bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
+      bankAcNo: [(data == undefined) ? '' : data.linkedBankAccount, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
@@ -105,7 +106,7 @@ export class AddEPSComponent implements OnInit {
         commencementDate: this.eps.controls.commencementDate.value,
         pensionAmount: this.eps.controls.pensionAmount.value,
         pensionPayoutFrequencyId: this.eps.controls.pensionPayFreq.value,
-        bankAccountNumber: this.eps.controls.bankAcNo.value,
+        linkedBankAccount: this.eps.controls.bankAcNo.value,
         description: this.eps.controls.description.value,
         id: this.eps.controls.id.value
       }
@@ -123,9 +124,11 @@ export class AddEPSComponent implements OnInit {
   }
   addEPSRes(data){
     console.log('addrecuringDepositRes', data)
+     this.event.openSnackBar('Added successfully!', 'dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data })
   }
   editEPSRes(data){
+     this.event.openSnackBar('Updated successfully!', 'dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data })
   }
 }

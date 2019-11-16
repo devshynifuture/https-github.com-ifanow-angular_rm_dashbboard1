@@ -8,6 +8,7 @@ import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { EventService } from 'src/app/Data-service/event.service';
 
 
 @Component({
@@ -55,7 +56,7 @@ export class RecuringDepositComponent implements OnInit {
   selectedFamilyData: any;
   ownerData: any;
   familyMemberId: any;
-  constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
+  constructor(private event: EventService,private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -186,9 +187,11 @@ export class RecuringDepositComponent implements OnInit {
 }
 addrecuringDepositRes(data){
 console.log('addrecuringDepositRes',data)
+this.event.openSnackBar('Added successfully!', 'dismiss');
 this.subInjectService.changeNewRightSliderState({state:'close',data})
 }
 editrecuringDepositRes(data){
+  this.event.openSnackBar('Updated successfully!', 'dismiss');
   this.subInjectService.changeNewRightSliderState({state:'close',data})
 }
 }

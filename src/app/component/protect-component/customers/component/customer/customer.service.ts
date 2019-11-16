@@ -116,6 +116,10 @@ export class CustomerService {
     let httpParams =new HttpParams().set("advisorId",data.advisorId).set('clientId',data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PO_MIS,httpParams)
   }
+  getRealEstate(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_REAL_ESTATE, httpParams);
+  }
   getEPF(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EPF,data)
   }

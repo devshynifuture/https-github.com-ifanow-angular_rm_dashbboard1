@@ -50,6 +50,10 @@ import { PoRdSchemeComponent } from './assets/smallSavingScheme/po-rd-scheme/po-
 import { PoTdSchemeComponent } from './assets/smallSavingScheme/po-td-scheme/po-td-scheme.component';
 import { PoMisSchemeComponent } from './assets/smallSavingScheme/po-mis-scheme/po-mis-scheme.component';
 import { SmallSavingSchemeComponent } from './assets/smallSavingScheme/small-saving-scheme/small-saving-scheme.component';
+import { RealEstateComponent } from './assets/realEstate/real-estate/real-estate.component';
+import { AddRealEstateComponent } from './assets/realEstate/add-real-estate/add-real-estate.component';
+import { NpsSummaryPortfolioComponent } from './assets/retirementAccounts/add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
+import { NpsSchemeHoldingComponent } from './assets/retirementAccounts/add-nps/nps-scheme-holding/nps-scheme-holding.component';
 
 
 @NgModule({
@@ -101,6 +105,10 @@ import { SmallSavingSchemeComponent } from './assets/smallSavingScheme/small-sav
     PoTdSchemeComponent,
     PoMisSchemeComponent,
     SmallSavingSchemeComponent,
+    RealEstateComponent,
+    AddRealEstateComponent,
+    NpsSummaryPortfolioComponent,
+    NpsSchemeHoldingComponent,
   ],
   imports: [
     // BrowserModule,
@@ -110,7 +118,7 @@ import { SmallSavingSchemeComponent } from './assets/smallSavingScheme/small-sav
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [AddLiabilitiesComponent, AddInsuranceComponent, LibilitiesRightComponent, FixedDepositComponent, AddSuperannuationComponent,AddEPSComponent,AddGratuityComponent, AddNPSComponent,AddEPFComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent],
+  exports: [AddLiabilitiesComponent, AddInsuranceComponent,NpsSchemeHoldingComponent, NpsSummaryPortfolioComponent, LibilitiesRightComponent, FixedDepositComponent, AddSuperannuationComponent,AddEPSComponent,AddGratuityComponent, AddNPSComponent,AddEPFComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent,AddRealEstateComponent,RealEstateComponent],
   entryComponents: [BottomSheetComponent]
 })
 export class AccountModule {
