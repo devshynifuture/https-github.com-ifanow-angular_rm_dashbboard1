@@ -17,16 +17,13 @@
     <div class="row pt-24">
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8">Current valuation</h5>
-            <p class="m-0 text-custom f-12">This has to be updated<br>
-                manually at all times</p>
+            <p class="m-0 text-custom f-12">This has to be updated<br> manually at all times</p>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #currentValue type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20"
-                        class="form-control br-0 rupess" formControlName="currentValue">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isCurrentValue && getFormControl().currentValue.invalid || getFormControl().currentValue.touched && getFormControl().currentValue.invalid)}">
+                    <input matInput #currentValue type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="currentValue">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isCurrentValue && getFormControl().currentValue.invalid || getFormControl().currentValue.touched && getFormControl().currentValue.invalid)}">
                         Pension amount is required
                     </mat-error>
                 </mat-form-field>
@@ -39,11 +36,10 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input matInput formControlName="valueAsOn" [matDatepicker]="picker">
+                <input matInput formControlName="valueAsOn" class="form-control br-0" [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isValueAsOn && getFormControl().valueAsOn.invalid || getFormControl().valueAsOn.touched && getFormControl().valueAsOn.invalid)}">
+                <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isValueAsOn && getFormControl().valueAsOn.invalid || getFormControl().valueAsOn.touched && getFormControl().valueAsOn.invalid)}">
                     Commencement date is required
                 </mat-error>
             </mat-form-field>
@@ -57,10 +53,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #totalContry type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20"
-                        class="form-control br-0 rupess" formControlName="totalContry">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isTotalContry && getFormControl().totalContry.invalid || getFormControl().totalContry.touched && getFormControl().totalContry.invalid)}">
+                    <input matInput #totalContry type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="totalContry">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isTotalContry && getFormControl().totalContry.invalid || getFormControl().totalContry.touched && getFormControl().totalContry.invalid)}">
                         Pension amount is required
                     </mat-error>
                 </mat-form-field>
@@ -96,8 +90,7 @@
                                 <mat-option value="2">2</mat-option>
                                 <mat-option value="3">3</mat-option>
                             </mat-select>
-                            <mat-error class="f-12 pt-4"
-                                [ngClass]="{'v-h':!(isAccountPref && getFormControl().accountPref.invalid || getFormControl().accountPref.touched && getFormControl().accountPref.invalid)}">
+                            <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isAccountPref && getFormControl().accountPref.invalid || getFormControl().accountPref.touched && getFormControl().accountPref.invalid)}">
                                 is required
                             </mat-error>
                         </mat-form-field>
@@ -112,9 +105,8 @@
                                 <mat-option value="2">2</mat-option>
                                 <mat-option value="3">3</mat-option>
                             </mat-select>
-                            <mat-error class="f-12 pt-4"
-                                [ngClass]="{'v-h':!(isFrequency && getFormControl().frequency.invalid || getFormControl().frequency.touched && getFormControl().frequency.invalid)}">
-                                 required
+                            <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isFrequency && getFormControl().frequency.invalid || getFormControl().frequency.touched && getFormControl().frequency.invalid)}">
+                                required
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -128,8 +120,7 @@
                                 <mat-option value="2">2</mat-option>
                                 <mat-option value="3">3</mat-option>
                             </mat-select>
-                            <mat-error class="f-12 pt-4"
-                                [ngClass]="{'v-h':!(isApproxContry && getFormControl().approxContry.invalid || getFormControl().approxContry.touched && getFormControl().approxContry.invalid)}">
+                            <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isApproxContry && getFormControl().approxContry.invalid || getFormControl().approxContry.touched && getFormControl().approxContry.invalid)}">
                                 is required
                             </mat-error>
                         </mat-form-field>
@@ -137,7 +128,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="pt-8">
-                        <i class="material-icons text-custom c-p" (click)= "addFutureContry()">
+                        <i class="material-icons text-custom c-p" (click)="addFutureContry()">
                             add
                         </i>
                         <i class="material-icons text-custom c-p right text-right">
