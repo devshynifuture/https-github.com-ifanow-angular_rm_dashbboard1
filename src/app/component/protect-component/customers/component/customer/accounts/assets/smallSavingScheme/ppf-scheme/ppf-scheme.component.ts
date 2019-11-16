@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-ppf-scheme',
@@ -11,8 +12,8 @@ export class PPFSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
 
-  constructor(private cusService:CustomerService) { }
-  displayedColumns16 = ['no', 'owner','cvalue','rate','amt','number','mdate','desc','status','icons'];
+  constructor(private cusService:CustomerService,private eventService:EventService) { }
+  displayedColumns = ['no', 'owner','cvalue','rate','amt','number','mdate','desc','status','icons'];
   datasource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -26,7 +27,8 @@ export class PPFSchemeComponent implements OnInit {
       clientId:this.clientId
     }
     this.cusService.getSmallSavingSchemePPFData(obj).subscribe(
-      data=>this.getPpfSchemeDataResponse(data)
+      data=>this.getPpfSchemeDataResponse(data),
+      err=>this.eventService.openSnackBar("server issues")
     )
 
   }

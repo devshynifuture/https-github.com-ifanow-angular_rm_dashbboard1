@@ -1,66 +1,68 @@
 <div class="row">
-        <div class="col-md-4 p-0">
-            <h4 class="m-0 text-black roboto pt-8">Post office savings a/c</h4>
-        </div>
-        <div class="col-md-8 p-0 right text-right">
-            <img src="assets/images/svg/download-bordered.svg" class="c-p">
-            <img src="assets/images/svg/up-down.svg" class="">
-            <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
-        
-            <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i class="material-icons">filter_list</i>FILTERS</button>
-            <button mat-stroked-button class="btn-primary addon v-middle"><i class="material-icons">add</i>ADD NEW</button>
-        </div>
-        </div>
-    <div class="example-container mt-8 real-estate">
-            <table mat-table [dataSource]="datasource" id="table-low">
-            
-                <ng-container matColumnDef="no">
-                    <th mat-header-cell *matHeaderCellDef class="br"> No </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.no}} </td>
-                </ng-container>
-                <ng-container matColumnDef="owner">
-                    <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
-                    <td mat-cell *matCellDef="let element" class="br t-25"> {{element.owner}} </td>
-                </ng-container>
-                <ng-container matColumnDef="cvalue">
-                    <th mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Current value </th>
-                    <td mat-cell *matCellDef="let element" class="br t-14 text-right"> {{element.cvalue}} </td>
-                </ng-container>
-             
-                <ng-container matColumnDef="rate">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right"> Rate </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right"> {{element.rate}} </td>
-                </ng-container>
-                <ng-container matColumnDef="balance">
-                  <th mat-header-cell *matHeaderCellDef class="br text-right">Balance mentioned </th>
-                  <td mat-cell *matCellDef="let element" class="br text-right"> {{element.balance}} </td>
-              </ng-container>
-                <ng-container matColumnDef="bdate">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right">Amount invested </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right"> {{element.bdate}} </td>
-                </ng-container>
-                <ng-container matColumnDef="desc">
-                    <th mat-header-cell *matHeaderCellDef class="br t-10"> Description </th>
-                    <td mat-cell *matCellDef="let element" class="br t-10"> {{element.desc}} </td>
-                </ng-container>
-                <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
-                    <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.status}} </td>
-                </ng-container>
-                <ng-container matColumnDef="icons">
-                    <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                    <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
-                                            more_vert
-                                            </i>
-                        <mat-menu #menubank="matMenu">
-                            <button mat-menu-item>Edit</button>
-                            <button mat-menu-item>Detailed view</button>
-                            <button mat-menu-item>Activity</button>
-                            <button mat-menu-item>Delete</button>
-                        </mat-menu>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns20; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns20;"></tr>
-            </table>
-            </div> 
+    <div class="col-md-4 p-0">
+        <h4 class="m-0 text-black roboto pt-8">Post office savings a/c</h4>
+    </div>
+    <div class="col-md-8 p-0 right text-right">
+        <img src="assets/images/svg/download-bordered.svg" class="c-p">
+        <img src="assets/images/svg/up-down.svg" class="">
+        <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
+
+        <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
+                class="material-icons">filter_list</i>FILTERS</button>
+        <button mat-stroked-button class="btn-primary addon v-middle"><i class="material-icons">add</i>ADD NEW</button>
+    </div>
+</div>
+<div class="example-container mt-8 real-estate">
+    <table mat-table [dataSource]="datasource20" id="table-low">
+
+        <ng-container matColumnDef="no">
+            <th mat-header-cell *matHeaderCellDef class="br"> No </th>
+            <td mat-cell *matCellDef="let element" class="br"> {{element.no}} </td>
+        </ng-container>
+        <ng-container matColumnDef="owner">
+            <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
+            <td mat-cell *matCellDef="let element" class="br t-25"> {{element.owner}} </td>
+        </ng-container>
+        <ng-container matColumnDef="cvalue">
+            <th mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Current value </th>
+            <td mat-cell *matCellDef="let element" class="br t-14 text-right"> {{element.cvalue}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="rate">
+            <th mat-header-cell *matHeaderCellDef class="br text-right"> Rate </th>
+            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.rate}} </td>
+        </ng-container>
+        <ng-container matColumnDef="balanceM">
+            <th mat-header-cell *matHeaderCellDef class="br text-right">Balance mentioned </th>
+            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.balance}} </td>
+        </ng-container>
+        <ng-container matColumnDef="balAs">
+            <th mat-header-cell *matHeaderCellDef class="br text-right">Balance as on</th>
+            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.bdate}} </td>
+        </ng-container>
+        <ng-container matColumnDef="desc">
+            <th mat-header-cell *matHeaderCellDef class="br t-10"> Description </th>
+            <td mat-cell *matCellDef="let element" class="br t-10"> {{element.desc}} </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
+            <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.status}} </td>
+        </ng-container>
+        <ng-container matColumnDef="icons">
+            <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
+            <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black"
+                    [matMenuTriggerFor]="menubank">
+                    more_vert
+                </i>
+                <mat-menu #menubank="matMenu">
+                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item>Detailed view</button>
+                    <button mat-menu-item>Activity</button>
+                    <button mat-menu-item>Delete</button>
+                </mat-menu>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns20; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns20;"></tr>
+    </table>
+</div>

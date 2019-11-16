@@ -12,6 +12,7 @@ export class PoMisSchemeComponent implements OnInit {
   clientId: number;
 
   constructor(private cusService:CustomerService) { }
+  displayedColumns = ['no', 'owner','cvalue','mpayout','rate','amt','mvalue','mdate','desc','status','icons'];
   datasource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();

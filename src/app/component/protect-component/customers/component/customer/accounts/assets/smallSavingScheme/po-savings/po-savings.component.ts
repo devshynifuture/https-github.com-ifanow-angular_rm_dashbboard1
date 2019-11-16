@@ -12,7 +12,7 @@ export class PoSavingsComponent implements OnInit {
   clientId: number;
 
   constructor(private cusService:CustomerService) { }
-  displayedColumns20 = ['no', 'owner', 'cvalue', 'rate', 'balance', 'bdate', 'desc', 'status', 'icons'];
+  displayedColumns20 = ['no', 'owner', 'cvalue', 'rate', 'balanceM', 'balAs', 'desc', 'status', 'icons'];
   datasource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();

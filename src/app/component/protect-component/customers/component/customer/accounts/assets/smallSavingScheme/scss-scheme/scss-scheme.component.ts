@@ -30,7 +30,7 @@ export class ScssSchemeComponent implements OnInit {
     )
   }
   getKvpSchemedataResponse(data: any) {
-    this.datasource=data
+    this.datasource=data.scssList
     console.log(data)
   }
 }
