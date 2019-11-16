@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-expenses',
@@ -6,15 +8,35 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./expenses.component.scss']
 })
 export class ExpensesComponent implements OnInit {
+  [x: string]: any;
 
   displayedColumns = ['no', 'expense', 'date', 'desc','mode','amt','icons'];
   dataSource = ELEMENT_DATA;
 
-  constructor() { }
+  constructor(private subInjectService: SubscriptionInject) { }
   viewMode
   ngOnInit() {
     this.viewMode="tab1"
   }
+
+  
+    openExpenses(value) {
+      const fragmentData = {
+        Flag:value,
+        id: 1,
+        state: 'open35'
+      };
+      const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+        sideBarData => {
+          console.log('this is sidebardata in subs subs : ', sideBarData);
+          if (UtilService.isDialogClose(sideBarData)) {
+            console.log('this is sidebardata in subs subs 2: ', sideBarData);
+            rightSideDataSub.unsubscribe();
+  
+          }
+        }
+      );
+    }
 
 
 }
@@ -35,3 +57,5 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {no: "4", expense: 'Dining out', date: "27/09/2019", desc: '-',mode:"Cash",amt:"4,600"},
   {no: "5", expense: 'Groceries', date: "27/09/2019", desc: '-',mode:"Cash",amt:"4,600"},
 ];
+
+

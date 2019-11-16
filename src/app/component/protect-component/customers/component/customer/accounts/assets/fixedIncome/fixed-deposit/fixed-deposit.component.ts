@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { EventService } from 'src/app/Data-service/event.service';
 
 
 @Component({
@@ -69,7 +70,7 @@ export class FixedDepositComponent implements OnInit {
   showFreqPayOpt = false;
   familyMemberId: any;
   recuringDeposit: any;
-  constructor(private router: Router,private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
+  constructor(private event : EventService ,private router: Router,private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -168,7 +169,7 @@ export class FixedDepositComponent implements OnInit {
     this.getFormControl().fdNo.maxLength = 10;
     this.getFormControl().bankACNo.maxLength = 15;
     this.ownerData = this.fixedDeposit.controls;
-    this.familyMemberId = this.recuringDeposit.controls.familyMemberId.value
+    this.familyMemberId = this.fixedDeposit.controls.familyMemberId.value
     this.familyMemberId =  this.familyMemberId[0]
     this.fixedDeposit.controls.maturityDate.setValue(new Date(data.maturityDate));
   }
@@ -208,8 +209,8 @@ export class FixedDepositComponent implements OnInit {
       let obj = {
         advisorId: this.advisorId,
         clientId: 2978,
-        familyMemberId: (this.familyMemberId == undefined)?this.familyMemberId:this.selectedFamilyData.id,
-        ownerName: this.ownerName,
+        familyMemberId: this.familyMemberId,
+        ownerName: (this.ownerName == undefined)?this.fixedDeposit.controls.ownerName.value:this.ownerName,
         amountInvested: this.fixedDeposit.controls.amountInvest.value,
         ownershipType: this.fixedDeposit.controls.ownerType.value,
         interestRate: this.fixedDeposit.controls.interestRate.value,
@@ -243,9 +244,11 @@ export class FixedDepositComponent implements OnInit {
   }
   addFixedDepositRes(data) {
     console.log('addFixedDepositRes', data)
+    this.event.openSnackBar('Added successfully!', 'dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data })
   }
   editFixedDepositRes(data) {
+    this.event.openSnackBar('Updated successfully!', 'dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data })
   }
 }
