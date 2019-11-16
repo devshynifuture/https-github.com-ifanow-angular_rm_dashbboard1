@@ -20,6 +20,7 @@ export class OwnerComponentComponent implements OnInit {
 
   constructor(private fb: FormBuilder,private custumService : CustomerService) { }
   @Output() valueChange = new EventEmitter();
+  @Output() valueChange2 = new EventEmitter();
   @Input()
   set data(data) {
     this.ownerData = data;
@@ -43,6 +44,7 @@ getListFamilyMem(data){
   }
   this.custumService.getListOfFamilyByClient(obj).subscribe(
     data => this.getListOfFamilyByClientRes(data)
+    
   );
 }
 getOwnerName(value){
@@ -52,6 +54,7 @@ getOwnerName(value){
 getListOfFamilyByClientRes(data){
 console.log('family Memebers',data)
 this.family = data.familyMembersList
+this.valueChange2.emit(data.familyMembersList);
 }
 getdataForm(){
   this.owner = this.fb.group({

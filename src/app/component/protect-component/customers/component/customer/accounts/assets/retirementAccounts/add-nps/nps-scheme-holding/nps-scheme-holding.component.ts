@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
@@ -18,10 +18,26 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
   
 })
 export class NpsSchemeHoldingComponent implements OnInit {
+  inputData: any;
+  familyMemberId: any;
+  ownerName: any;
 
   constructor(private router: Router,private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    // this.getdataForm(data);
+  }
 
+  get data() {
+    return this.inputData;
+  }
   ngOnInit() {
+  }
+  display(value) {
+    console.log('value selected', value)
+    this.ownerName = value.userName;
+    this.familyMemberId = value.id
   }
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' })

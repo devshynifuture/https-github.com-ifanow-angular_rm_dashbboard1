@@ -12,15 +12,7 @@
 </div>
 <div class="row pt-100 pl-20">
     <div class="col-md-3 pr-0">
-        <h5 class="m-0 pb-8">Owner</h5>
-        <button mat-button [matMenuTriggerFor]="menu3" class="b-a w-100 br-0 pr-8"><i
-                class="material-icons right text-primitive">
-                arrow_drop_down
-            </i></button>
-        <mat-menu #menu3="matMenu">
-            <button mat-menu-item>Item 1</button>
-            <button mat-menu-item>Item 2</button>
-        </mat-menu>
+            <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
     </div>
     <div class="col-md-3">
         <h5 class="m-0 pb-8">PRAN</h5>

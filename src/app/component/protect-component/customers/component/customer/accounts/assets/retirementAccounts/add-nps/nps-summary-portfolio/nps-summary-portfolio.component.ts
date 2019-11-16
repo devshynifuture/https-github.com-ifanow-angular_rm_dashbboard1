@@ -6,6 +6,10 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { removeEvent } from 'highcharts';
+import * as _ from 'lodash';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-nps-summary-portfolio',
@@ -28,30 +32,46 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   isFrequency = false;
   isApproxContry = false;
   isAccountPref = false
-  constructor(private router: Router,private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
+  nomineeList: any;
+  advisorId: any;
+  constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
     this.summaryNPS = this.fb.group({
       published: true,
       futureContry: this.fb.array([]),
     });
-   }
+  }
 
 
   @Input()
   set data(data) {
     this.inputData = data;
-     this.getdataForm(data);
+    this.getdataForm(data);
   }
 
   get data() {
     return this.inputData;
   }
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
   }
   display(value) {
     console.log('value selected', value)
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
+  // getNomineesList(){
+  //   this.nomineesList(this.nomineeList)
+  // }
+  // nomineesList(data){
+  //   if(data.length  > 1){
+  //     this.nomineeList = data
+  //     let name = this.ownerName
+  //     var evens = _.remove( this.nomineeList, function(n) {
+  //      return n.userName == name;
+  //    });
+  //   }
+  //  console.log('NomineesList',this.nomineeList)
+  // }
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' })
   }
@@ -59,35 +79,121 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     if (data == undefined) {
       data = {}
     }
+
     this.summaryNPS = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      currentValue: [(data == undefined) ? '' : data.yearsCompleted, [Validators.required]],
-      valueAsOn: [(data == undefined) ? '' : data.amountReceived, [Validators.required]],
-      futureContry:[],
-      totalContry: [(data == undefined) ? '' : data.organizationName, [Validators.required]],
-      resonOfRecipt: [(data == undefined) ? '' : data.reasonOfReceipt, [Validators.required]],
-      bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
-      frequency:[(data == undefined) ? '' : data.frequency, [Validators.required]],
-      accountPref:[(data == undefined) ? '' : data.accountPref, [Validators.required]],
-      approxContry:[(data == undefined) ? '' : data.approxContry, [Validators.required]],
+      currentValue: [(data == undefined) ? '' : data.currentValuation, [Validators.required]],
+      valueAsOn: [(data == undefined) ? '' : new Date(data.valueAsOn), [Validators.required]],
+      schemeChoice: [(data == undefined) ? '' : data.schemeChoice, [Validators.required]],
+      pran: [(data == undefined) ? '' : data.pran, [Validators.required]],
+      totalContry: [(data == undefined) ? '' : data.contributionAmount, [Validators.required]],
+      allocation: [(data == undefined) ? '' : data.allocation, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
+      futureContributionList: this.fb.array([this.fb.group({
+        frequencyId: null,
+        accountPreferenceId: null, approxContribution: null
+      })]),
+      npsNomineesList: this.fb.array([this.fb.group({
+        nomineeName: null,allocation:null,
+      })]),
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
+    if (data != undefined) {
+      data.futureContributionList.forEach(element => {
+        this.summaryNPS.controls.futureContributionList = this.fb.array([this.fb.group({
+          frequencyId: [(element.frequencyId) + "", [Validators.required]],
+          accountPreferenceId: [(element.accountPreferenceId + ""), Validators.required],
+          approxContribution: [(element.approxContribution), Validators.required]
+        })])
+      })
+      data.npsNomineesList.forEach(element => {
+        this.summaryNPS.controls.npsNomineesList = this.fb.array([this.fb.group({
+          nomineeName: [(element.nomineeName), [Validators.required]],
+          allocation: [(element.nomineePercentageShare + ""), Validators.required],
+        })])
+      })
+    }
     this.ownerData = this.summaryNPS.controls;
     this.familyMemberId = this.summaryNPS.controls.familyMemberId.value
     this.familyMemberId = this.familyMemberId[0]
-    
+
   }
   getFormControl(): any {
     return this.summaryNPS.controls;
   }
+  get futureContry() {
+    return this.summaryNPS.get('futureContributionList') as FormArray;
+  }
   addFutureContry() {
-    const creds = this.summaryNPS.controls.futureContry as FormArray;
-    creds.push(this.fb.group({
-      frequency: '',
-      approxContry: '',
-      accountPref:'',
+    this.futureContry.push(this.fb.group({
+      frequencyId: null,
+      accountPreferenceId: null, approxContribution: null
     }));
+
+  }
+  removeFutureContry(item) {
+    if (this.futureContry.value.length > 1) {
+      this.futureContry.removeAt(item);
+    }
+  }
+  get nominee() {
+    return this.summaryNPS.get('npsNomineesList') as FormArray;
+  }
+  addNominee() {
+    this.nominee.push(this.fb.group({
+      nomineeName: null,allocation:null,
+    }));
+  }
+  removeNominee(item) {
+    if (this.nominee.value.length > 1) {
+      this.nominee.removeAt(item);
+    }
+  }
+  summaryNPSSave() {
+    if (this.summaryNPS.controls.valueAsOn.invalid) {
+      this.isValueAsOn = true;
+      return;
+    } else if (this.summaryNPS.controls.totalContry.invalid) {
+      this.isTotalContry = true;
+      return;
+    } else if (this.summaryNPS.controls.currentValue.invalid) {
+      this.isCurrentValue = true;
+      return;
+    } else {
+      let obj = {
+        advisorId: this.advisorId,
+        clientId: 2978,
+        familyMemberId: this.familyMemberId,
+        ownerName: (this.ownerName == undefined) ? this.summaryNPS.controls.ownerName.value : this.ownerName,
+        valueAsOn: this.datePipe.transform(this.summaryNPS.controls.valueAsOn.valueAsOn, 'yyyy-MM-dd'),
+        currentValuation: this.summaryNPS.controls.currentValue.value,
+        contributionAmount: this.summaryNPS.controls.totalContry.value,
+        pran: this.summaryNPS.controls.pran.value,
+        schemeChoice: this.summaryNPS.controls.schemeChoice.value,
+        futureContributionList: this.summaryNPS.controls.futureContributionList.value,
+        npsNomineesList: this.summaryNPS.controls.npsNomineesList.value,
+        description: this.summaryNPS.controls.description.value,
+        id: this.summaryNPS.controls.id.value
+      }
+      if (this.summaryNPS.controls.id.value == undefined) {
+        this.custumService.addNPS(obj).subscribe(
+          data => this.addNPSRes(data)
+        );
+      } else {
+        //edit call
+        this.custumService.editNPS(obj).subscribe(
+          data => this.editNPSRes(data)
+        );
+      }
+    }
+  }
+  addNPSRes(data) {
+    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+  }
+  editNPSRes(data) {
+    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
   }
 }
