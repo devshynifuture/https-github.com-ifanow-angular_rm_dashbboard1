@@ -71,6 +71,7 @@ export const appConfig = {
   GET_ASSET_SMALL_SAVING_SCHEME_PO_RD:'account/asset/ssc/po-rd/list/get',
   GET_ASSET_SMALL_SAVING_SCHEME_PO_TD:'account/asset/ssc/po-td/list/get',
   GET_ASSET_SMALL_SAVING_SCHEME_PO_MIS:'account/asset/ssc/po-mis/list/get',
+  ADD_PPF_SCHEME:'account/asset/saving-scheme/ppf/add',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE:'account/asset/real-estate/get',
   GET_EPF:'account/asset/retirement/epf/list/get',
