@@ -70,7 +70,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
         accountPreferenceId: null, approxContribution: null
       })]),
       npsNomineesList: this.fb.array([this.fb.group({
-        nomineeName: null,allocation:null,
+        nomineeName: null,nomineePercentageShare:null,
       })]),
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
