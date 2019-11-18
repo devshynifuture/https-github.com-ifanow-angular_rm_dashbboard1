@@ -3,6 +3,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-cash-and-bank',
@@ -11,6 +12,7 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class CashAndBankComponent implements OnInit {
   showRequring: string;
+  advisorId: any;
 
   constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService,public util:UtilService) { }
   displayedColumns7 = ['no', 'owner', 'type', 'amt','rate','bal','account','bank','desc','status','icons'];
@@ -19,11 +21,38 @@ export class CashAndBankComponent implements OnInit {
   datasource8 = ELEMENT_DATA8;
   ngOnInit() {
     this.showRequring = '1'
+    this.advisorId = AuthService.getAdvisorId();
+    this.getCashInHandList()
+    this.getBankAccountList()
   }
   getfixedIncomeData(value){
     console.log('value++++++',value)
     this.showRequring = (value == "2")? "2":"1"
   
+  }
+  getBankAccountList(){
+     let obj = {
+      clientId:2978,
+      advisorId: this.advisorId
+    }
+     this.custumService.getBankAccounts(obj).subscribe(
+      data => this.getBankAccountsRes(data)
+    );
+  }
+  getBankAccountsRes(data){
+    console.log('getBankAccountsRes ####',data)
+  }
+  getCashInHandList(){
+     let obj = {
+      clientId:2978,
+      advisorId: this.advisorId
+    }
+     this.custumService.getCashInHand(obj).subscribe(
+      data => this.getCashInHandRes(data)
+    );  
+  }
+  getCashInHandRes(data){
+    console.log('getCashInHandRes ###',data)
   }
   openPortfolioSummary(value,state,data)
   {
