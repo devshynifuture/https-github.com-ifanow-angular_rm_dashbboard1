@@ -27,6 +27,7 @@ export class LiabilitiesComponent implements OnInit {
   personal=[];
   mortgage=[];
   dataToShow: any;
+  OtherData: any;
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,public custmService:CustomerService,public util:UtilService) {
   }
 
@@ -39,6 +40,20 @@ export class LiabilitiesComponent implements OnInit {
     // this.showFilter='tab7';
     this.advisorId = AuthService.getAdvisorId();
     this.getLiability('');
+    this.getPayables();
+  }
+  getPayables(){
+    let obj={
+      'advisorId':this.advisorId,
+      'clientId':2978
+    }
+    this.custmService.getOtherPayables(obj).subscribe(
+      data => this.getOtherPayablesRes(data)
+    );
+  }
+  getOtherPayablesRes(data){
+    console.log(data);
+    this.OtherData=data;
   }
   sortTable(data){
     if(data=="" || data==undefined){

@@ -172,4 +172,16 @@ export class CustomerService {
   getOtherPayables(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.OTHER_PAYABLES,data)    
   }
+  addOtherPayables(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_OTHER_PAYABLES,data)
+  }
+  editOtherPayables(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_OTHER_PAYABLES,data)
+  }
+  addRealEstate(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_REAL_ESTATE,data)
+  }
+  editRealEstate(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_REAL_ESTATE,data)
+  }
 }

@@ -64,6 +64,7 @@ import { AddPoTdComponent } from './assets/smallSavingScheme/common-component/ad
 import { AddPoMisComponent } from './assets/smallSavingScheme/common-component/add-po-mis/add-po-mis.component';
 import { AddPoRdComponent } from './assets/smallSavingScheme/common-component/add-po-rd/add-po-rd.component';
 import { OtherPayablesComponent } from './liabilities/other-payables/other-payables.component';
+import { AddOtherPayablesComponent } from './liabilities/add-other-payables/add-other-payables.component';
 
 
 @NgModule({
@@ -129,6 +130,7 @@ import { OtherPayablesComponent } from './liabilities/other-payables/other-payab
     AddPoMisComponent,
     AddPoRdComponent,
     OtherPayablesComponent,
+    AddOtherPayablesComponent,
 
   ],
   imports: [
@@ -139,7 +141,7 @@ import { OtherPayablesComponent } from './liabilities/other-payables/other-payab
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [AddLiabilitiesComponent, AddInsuranceComponent,NpsSchemeHoldingComponent, NpsSummaryPortfolioComponent, LibilitiesRightComponent, FixedDepositComponent, AddSuperannuationComponent,AddEPSComponent,AddGratuityComponent, AddNPSComponent,AddEPFComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent,AddRealEstateComponent,RealEstateComponent,AddPpfComponent,AddNscComponent,AddSsyComponent,AddKvpComponent,AddScssComponent,AddPoSavingComponent,AddPoMisComponent,AddPoTdComponent,AddPoRdComponent,OtherPayablesComponent,
+  exports: [AddLiabilitiesComponent, AddInsuranceComponent,NpsSchemeHoldingComponent, NpsSummaryPortfolioComponent, LibilitiesRightComponent, FixedDepositComponent, AddSuperannuationComponent,AddEPSComponent,AddGratuityComponent, AddNPSComponent,AddEPFComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent,AddRealEstateComponent,RealEstateComponent,AddPpfComponent,AddNscComponent,AddSsyComponent,AddKvpComponent,AddScssComponent,AddPoSavingComponent,AddPoMisComponent,AddPoTdComponent,AddPoRdComponent,OtherPayablesComponent,AddOtherPayablesComponent,
   ],
   entryComponents: [BottomSheetComponent]
 })
