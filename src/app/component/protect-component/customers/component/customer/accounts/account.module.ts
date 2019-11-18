@@ -130,11 +130,8 @@ import { CashAndBankComponent } from './assets/cash&bank/cash-and-bank/cash-and-
     AddPoRdComponent,
     AddExpensesComponent,
     OtherPayablesComponent,
-<<<<<<< HEAD
     CashAndBankComponent,
 
-=======
->>>>>>> 7760ba46e50285b9baeae57a1927483179aa606f
   ],
   imports: [
     // BrowserModule,
