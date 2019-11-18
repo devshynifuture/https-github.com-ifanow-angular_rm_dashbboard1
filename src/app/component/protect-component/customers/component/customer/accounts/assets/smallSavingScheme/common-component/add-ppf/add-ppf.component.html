@@ -24,7 +24,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input type="number" formControlName="accountBalance" matInput #accountBalance class="form-control rupess br-0" maxlength="">
-                    <mat-error class="f-12 pt-4">
+                    <mat-error *ngIf="ppfSchemeForm.get('accountBalance').invalid" class="f-12 pt-4">
                         Loan amount is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/20</mat-hint>
@@ -91,10 +91,10 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select formControlName="frquency" class="form-control br-0">
-                        <mat-option>Search family members</mat-option>
-                        <mat-option>
-                            <span>DFASDFSD</span>
-                        </mat-option>
+                        <mat-option value="1" >Monthly</mat-option>
+                        <mat-option value="4" >Quarterly</mat-option>
+                        <mat-option value="6" >Semi annually</mat-option>
+                        <mat-option value="12" >Annually</mat-option>
                     </mat-select>
                     <mat-error class="f-12 pt-4">
                         This field is required
@@ -182,12 +182,12 @@
             </p>
         </div>
     </div>
-    <div *ngIf="" [formGroup]="transactionForm"> 
+    <div *ngFor="let singleTransaction of transactionList" [formGroup]="transactionForm"> 
         <div class="row pt-40">
             <div class="col-md-4">
                 <label class="f-16">Transaction type</label>
                 <mat-form-field>
-                    <input matInput formControlName="transactionType" #partPayment class="form-control br-0">
+                    <input matInput formControlName="transactionType" [(ngModel)]="singleTransaction.paymentType" #partPayment class="form-control br-0">
                     <mat-error class="f-12 pt-4">
                         is required
                     </mat-error>
@@ -200,7 +200,7 @@
                 </label>
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="date" [matDatepicker]="picker">
+                        <input matInput formControlName="date" [(ngModel)]="singleTransaction.date" [matDatepicker]="picker">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error class="f-12 pt-4">
@@ -213,7 +213,7 @@
                 <label class="f-16">Amount</label>
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="amount" #partPayment class="form-control br-0">
+                        <input matInput formControlName="amount" [(ngModel)]="singleTransaction.amount" #partPayment class="form-control br-0">
                         <mat-error class="f-12 pt-4">
                             is required
                         </mat-error>

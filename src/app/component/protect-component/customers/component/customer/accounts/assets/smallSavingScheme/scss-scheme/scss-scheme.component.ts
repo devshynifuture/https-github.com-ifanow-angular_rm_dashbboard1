@@ -35,7 +35,7 @@ export class ScssSchemeComponent implements OnInit {
     this.datasource=data.scssList
     console.log(data)
   }
-  addSCSS(value)
+  addOpenSCSS(value)
   {
     const fragmentData = {
       Flag:value,

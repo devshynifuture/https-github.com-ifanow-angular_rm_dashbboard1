@@ -176,4 +176,16 @@ export class CustomerService {
   {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_PPF_SCHEME,data)
   }
+  addNSCScheme(data)
+  {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_NSC_SCHEME,data)
+  }
+  addSSYScheme(data)
+  {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_SSY_SCHEME,data)
+  }
+  addSCSSScheme(data)
+  {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_SCSS_SCHEME,data)
+  }
 }
