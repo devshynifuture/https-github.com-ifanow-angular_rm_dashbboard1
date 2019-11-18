@@ -82,17 +82,17 @@ export class BondsComponent implements OnInit {
       data = {}
     }
     this.bonds = this.fb.group({
-      ownerName: [(data == undefined) ? '' : this.ownerName, [Validators.required]],
+      ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       bondName: [(data == undefined) ? '' : data.bondName, [Validators.required]],
-      type: [(data == undefined) ? '' : data.type, [Validators.required]],
+      type: [(data == undefined) ? '' :( data.type)+"", [Validators.required]],
       amountInvest: [(data == undefined) ? '' : data.amountInvested, [Validators.required]],
       rateReturns: [(data == undefined) ? '' : data.rateOfReturn, [Validators.required]],
-      couponOption: [(data == undefined) ? '' : data.couponPayoutFrequencyId, [Validators.required]],
-      commencementDate: [(data == undefined) ? '' : data.commencementDate, [Validators.required]],
+      couponOption: [(data == undefined) ? '' :( data.couponPayoutFrequencyId)+"", [Validators.required]],
+      commencementDate: [(data == undefined) ? '' : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(data == undefined) ? '' : data.couponRate, [Validators.required]],
-      compound: [(data == undefined) ? '' : data.compounding, [Validators.required]],
+      compound: [(data == undefined) ? '' :( data.compounding)+"", [Validators.required]],
       linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount, [Validators.required]],
-      tenure: [(data == undefined) ? '' : data.tenure, [Validators.required]],
+      tenure: [(data == undefined) ? '' :( data.tenure)+"", [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],

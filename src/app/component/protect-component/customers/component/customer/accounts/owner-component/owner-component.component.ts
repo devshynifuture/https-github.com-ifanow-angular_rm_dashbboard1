@@ -18,7 +18,7 @@ export class OwnerComponentComponent implements OnInit {
   advisorId: any;
   ownerData: any;
 
-  constructor(private fb: FormBuilder,private custumService : CustomerService) { }
+  constructor(private fb: FormBuilder, private custumService: CustomerService) { }
   @Output() valueChange = new EventEmitter();
   @Input()
   set data(data) {
@@ -30,38 +30,38 @@ export class OwnerComponentComponent implements OnInit {
     return this.ownerData;
   }
   ngOnInit() {
-    console.log('ownerData',this.ownerData)
+    console.log('ownerData', this.ownerData)
     this.advisorId = AuthService.getAdvisorId();
     this.getListFamilyMem('')
     this.getdataForm()
     this.family = this.s;
   }
-getListFamilyMem(data){
-  let obj = {
-    advisorId:this.advisorId,
-    clientId : 2978
+  getListFamilyMem(data) {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: 2978
+    }
+    this.custumService.getListOfFamilyByClient(obj).subscribe(
+      data => this.getListOfFamilyByClientRes(data)
+    );
   }
-  this.custumService.getListOfFamilyByClient(obj).subscribe(
-    data => this.getListOfFamilyByClientRes(data)
-  );
-}
-getOwnerName(value){
-  console.log('selected',value)
-  this.valueChange.emit(value);
-}
-getListOfFamilyByClientRes(data){
-console.log('family Memebers',data)
-this.family = data.familyMembersList
-}
-getdataForm(){
-  this.owner = this.fb.group({
-    ownerName: [(this.ownerData.ownerName.value==null)?'':this.ownerData.ownerName.value, [Validators.required]],  
-  });
-  if(this.owner.controls.ownerName.value == ''){
-    this.getFormControl().ownerName.setValue(this.ownerData.ownerName.value);
+  getOwnerName(value) {
+    console.log('selected', value)
+    this.valueChange.emit(value);
   }
-}
-getFormControl():any {
-  return (this.owner.controls);
-}
+  getListOfFamilyByClientRes(data) {
+    console.log('family Memebers', data)
+    this.family = data.familyMembersList
+  }
+  getdataForm() {
+    this.owner = this.fb.group({
+      ownerName: [(this.ownerData.ownerName.value == null) ? '' : this.ownerData.ownerName.value, [Validators.required]],
+    });
+    if (this.owner.controls.ownerName.value == '') {
+      this.getFormControl().ownerName.setValue(this.ownerData.ownerName.value);
+    }
+  }
+  getFormControl(): any {
+    return (this.owner.controls);
+  }
 }

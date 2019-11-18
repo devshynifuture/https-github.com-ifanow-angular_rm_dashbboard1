@@ -10,267 +10,231 @@
         </div>
     </div>
 </div>
-<div class="row pt-100 pl-20">
-    <div class="col-md-3 pr-0">
-        <h5 class="m-0 pb-8">Owner</h5>
-        <button mat-button [matMenuTriggerFor]="menu3" class="b-a w-100 br-0 pr-8"><i
-                class="material-icons right text-primitive">
-                arrow_drop_down
-            </i></button>
-        <mat-menu #menu3="matMenu">
-            <button mat-menu-item>Item 1</button>
-            <button mat-menu-item>Item 2</button>
-        </mat-menu>
-    </div>
-    <div class="col-md-3">
-        <h5 class="m-0 pb-8">PRAN</h5>
-        <div class="form-group mb-0">
-            <input type="text" class="form-control br-0" value="₹">
+<div [formGroup]="schemeHoldingsNPS">
+    <div class="row pt-100 pl-20">
+        <div class="col-md-3 pr-0">
+            <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
         </div>
-        <div class="col-md-12 p-0">
-            <p class="m-0 f-12 text-custom pt-4">Permanent Retirement Account Number</p>
-        </div>
-    </div>
-    <div class="col-md-3 pl-0">
-        <h5 class="m-0 pb-8">Description</h5>
-        <div class="form-group mb-0">
-            <input type="text" class="form-control br-0" value="₹">
-        </div>
-        <div class="col-md-12 p-0">
-            <p class="m-0 f-12 text-custom pt-4">Optional</p>
-        </div>
-    </div>
-</div>
-<div class="row pl-20 pt-20">
-    <div class="col-md-12">
-        <h4 class="m-0 text-black">HOLDINGS</h4>
-    </div>
-</div>
-<div class="row pl-20 pt-20">
-    <div class="col-md-3">
-        <h5 class="m-0 pb-8">Scheme name</h5>
-    </div>
-    <div class="col-md-2">
-        <h5 class="m-0 pb-8">Total Units</h5>
-    </div>
-    <div class="col-md-3">
-        <h5 class="m-0 pb-8">Holdings as on</h5>
-    </div>
-    <div class="col-md-4">
-        <h5 class="m-0 pb-8">Total Net Contribution</h5>
-    </div>
-</div>
-<div class="row pl-20">
-    <div class="col-md-3 pr-0">
-        <div class="form-group mb-0">
-            <input type="text" class="form-control br-0">
-        </div>
-    </div>
-    <div class="col-md-2 pr-0">
-        <div class="form-group mb-0">
-            <input type="text" class="form-control br-0">
-        </div>
-        <div class="col-md-12 pr-0">
-            <p class="m-0 f-11 text-custom pt-4">As in statement</p>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group mb-0">
-            <input type="text" class="form-control br-0">
-        </div>
-    </div>
-    <div class="col-md-2 p-0">
-        <div class="form-group mb-0">
-            <input type="text" class="form-control br-0" value="₹">
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="pt-8">
-            <i class="material-icons text-custom c-p">
-                add
-            </i>
-            <i class="material-icons text-custom c-p right text-right pr-24">
-                remove
-            </i>
-        </div>
-    </div>
-</div>
-<div class="row pl-20 pt-20">
-    <div class="col-md-3 pr-0">
-        <div class="form-group mb-0">
-            <input type="text" class="form-control br-0">
-        </div>
-    </div>
-    <div class="col-md-2 pr-0">
-        <div class="form-group mb-0">
-            <input type="text" class="form-control br-0">
-        </div>
-        <div class="col-md-12 pr-0">
-            <p class="m-0 f-11 text-custom pt-4">As in statement</p>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group mb-0">
-            <input type="text" class="form-control br-0">
-        </div>
-    </div>
-    <div class="col-md-2 p-0">
-        <div class="form-group mb-0">
-            <input type="text" class="form-control br-0" value="₹">
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="pt-8">
-            <i class="material-icons text-custom c-p">
-                add
-            </i>
-            <i class="material-icons text-custom c-p right text-right pr-24">
-                remove
-            </i>
-        </div>
-    </div>
-</div>
-<hr class="w-90">
-<div class="row pt-28 pb-8">
-    <div class="col-md-3">
-        <h5 class="m-0 text-right">Future contribution</h5>
-    </div>
-    <div class="col-md-9 p-0">
-        <div class="row pb-8">
-            <div class="col-md-4 pr-0">
-                <h5 class="m-0">Account preference</h5>
+        <div class="col-md-3">
+            <h5 class="m-0 pb-8">PRAN</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #pran type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20"
+                        class="form-control br-0 rupess" formControlName="pran">
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isPran && getFormControl().pran.invalid || getFormControl().pran.touched && getFormControl().pran.invalid)}">
+                        Pension amount is required
+                    </mat-error>
+                </mat-form-field>
             </div>
-            <div class="col-md-4 pr-0">
-                <h5 class="m-0">Frequency</h5>
-            </div>
-            <div class="col-md-4 pr-0">
-                <h5 class="m-0">Approx contribution</h5>
+            <div class="col-md-12 p-0">
+                <p class="m-0 f-12 text-custom pt-4">Permanent Retirement Account Number</p>
             </div>
         </div>
-        <div class="row">
+        <div class="col-md-3 pl-0">
+            <h5 class="m-0 pb-8">Description</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #description maxlength="30" class="form-control br-0" formControlName="description">
+                    <mat-hint align="start" class="f-12">Optional</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pl-20 pt-20">
+        <div class="col-md-12">
+            <h4 class="m-0 text-black">HOLDINGS</h4>
+        </div>
+    </div>
+    <div class="row pl-20 pt-20">
+        <div class="col-md-3">
+            <h5 class="m-0 pb-8">Scheme name</h5>
+        </div>
+        <div class="col-md-2">
+            <h5 class="m-0 pb-8">Total Units</h5>
+        </div>
+        <div class="col-md-3">
+            <h5 class="m-0 pb-8">Holdings as on</h5>
+        </div>
+        <div class="col-md-4">
+            <h5 class="m-0 pb-8">Total Net Contribution</h5>
+        </div>
+    </div>
+    <div formArrayName="holdingList">
+        <div class="row pl-20" *ngFor="let creds of holdings.controls; let i = index" [formGroupName]="i">
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
-                    <select class="form-control br-0" name="sellist1">
-                        <option>Tier I</option>
-                        <option>Tier II </option>
-                        <option>NPS Lite</option>
-                        <option>Atal pension yojna</option>
-                    </select>
+                    <mat-form-field>
+                        <input matInput placeholder="Search scheme" aria-label="State" [matAutocomplete]="auto"
+                            list="schemeName" class="form-control br-0 pl-8" formControlName="schemeName">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let s of schemeList" [value]="s.schemeName">
+                                <span>{{s.schemeName}}</span>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-3 pr-0">
+            <div class="col-md-2 p-0">
                 <div class="form-group mb-0">
-                    <select class="form-control br-0" name="sellist1">
-                        <option>Monthly</option>
-                        <option>Quarterly</option>
-                        <option>Semi annually</option>
-                        <option>Annually</option>
-                    </select>
+                    <mat-form-field>
+                        <input matInput #totalUnits type="number" (utils.keypress)="utils.keyPress($event)"
+                            maxlength="20" class="form-control br-0 rupess" formControlName="totalUnits">
+                    </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-3 pr-0">
+            <div class="col-md-3">
                 <div class="form-group mb-0">
-                    <select class="form-control br-0" name="sellist1">
-                        <option>Monthly</option>
-                        <option>Quarterly</option>
-                        <option>Semi annually</option>
-                        <option>Annually</option>
-                    </select>
+                    <mat-form-field>
+                        <input matInput formControlName="holdingAsOn" [matDatepicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
                 </div>
             </div>
-        </div>
-        <div class="row pt-20">
-            <div class="col-md-3 pr-0">
+            <div class="col-md-2 pr-0">
                 <div class="form-group mb-0">
-                    <select class="form-control br-0" name="sellist1">
-                        <option>Monthly</option>
-                        <option>Quarterly</option>
-                        <option>Semi annually</option>
-                        <option>Annually</option>
-                    </select>
+                    <mat-form-field>
+                        <input matInput #totalNetContry type="number" (utils.keypress)="utils.keyPress($event)"
+                            maxlength="20" class="form-control br-0 rupess" formControlName="totalNetContry">
+                    </mat-form-field>
                 </div>
-            </div>
-            <div class="col-md-3 pr-0">
-                <div class="form-group mb-0">
-                    <select class="form-control br-0" name="sellist1">
-                        <option>Monthly</option>
-                        <option>Quarterly</option>
-                        <option>Semi annually</option>
-                        <option>Annually</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-3 pr-0">
-                <div class="form-group mb-0">
-                    <select class="form-control br-0" name="sellist1">
-                        <option>Monthly</option>
-                        <option>Quarterly</option>
-                        <option>Semi annually</option>
-                        <option>Annually</option>
-                    </select>
+                <div class="col-md-12 pr-0">
+                    <p class="m-0 f-11 text-custom pt-4">As in statement</p>
                 </div>
             </div>
         </div>
 
-    </div>
-    <div class="row pt-44 pl-20">
-        <div class="col-md-3">
-            <h5 class="m-0">Nominee</h5>
+        <div class="col-md-2">
+            <div class="pt-8">
+                <i class="material-icons text-custom c-p" (click)="addHoldings()">
+                    add
+                </i>
+                <i class="material-icons text-custom c-p right text-right pr-24" (click)="removeHoldings()">
+                    remove
+                </i>
+            </div>
         </div>
-        <div class="col-md-9">
+    </div>
+    <hr class="w-90">
+    <div class="row pt-44">
+        <div class="col-md-3">
+            <h5 class="m-0">Future contribution</h5>
+        </div>
+        <div class="col-md-9 p-0">
             <div class="row">
-                <div class="col-md-4 pr-0">
-                    <div class="form-group mb-0">
-                        <select class="form-control br-0">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                        </select>
-                    </div>
-                    <div class="col-md-12">
-                        <p class="m-0 text-custom f-12">optional</p>
-                    </div>
+                <div class="col-md-3 pr-0">
+                    <h5 class="m-0">Account preference</h5>
                 </div>
                 <div class="col-md-3 pr-0">
-                    <div class="form-group mb-0">
-                        <input type="text" class="form-control br-0">
-                    </div>
+                    <h5 class="m-0">Frequency</h5>
                 </div>
-                <div class="col-md-4 pr-0">
-                    <p class="m-0 text-custom pt-12 c-p">+ Add nominee</p>
+                <div class="col-md-3 pr-0">
+                    <h5 class="m-0">Approx contribution</h5>
+                </div>
+
+            </div>
+            <div class="row" formArrayName="futureContributionList">
+                <div class="row" *ngFor="let creds of futureContry.controls; let i = index" [formGroupName]="i">
+                    <div class="col-md-3 pt-8">
+
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select formControlName="accountPreferenceId" class="form-control br-0">
+                                    <mat-option value="">Select option</mat-option>
+                                    <mat-option value="1">Tier I</mat-option>
+                                    <mat-option value="2">Tier II</mat-option>
+                                    <mat-option value="3">NPS Lite</mat-option>
+                                    <mat-option value="3">Atal pension yojna</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-3 pr-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select formControlName="frequencyId" class="form-control br-0">
+                                    <mat-option value="">Select option</mat-option>
+                                    <mat-option value="1">Monthly</mat-option>
+                                    <mat-option value="2">Quarterly</mat-option>
+                                    <mat-option value="3">Semi annually</mat-option>
+                                    <mat-option value="3">Annually</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-3 pr-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <input matInput #currentValue type="number" (utils.keypress)="utils.keyPress($event)"
+                                    maxlength="20" class="form-control br-0 rupess"
+                                    formControlName="approxContribution">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="pt-8">
+                            <i class="material-icons text-custom c-p" (click)="addFutureContry()">
+                                add
+                            </i>
+                            <i class="material-icons text-custom c-p right text-right" (click)="removeFutureContry(i)">
+                                remove
+                            </i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row pt-20 pb-44">
-        <div class="col-md-3">
-            <h5 class="m-0 text-right">Nominee</h5>
-        </div>
-        <div class="col-md-9">
-            <div class="row">
-                <div class="col-md-4 pr-0">
-                    <div class="form-group mb-0">
-                        <select class="form-control br-0">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                        </select>
+    <div class=" pt-44" formArrayName="npsNomineesList">
+        <div class="row" *ngFor="let creds of nominee.controls; let i = index" [formGroupName]="i">
+            <div class="col-md-5 text-right pr-0">
+                <h5 class="m-0 pt-8">Nominee{{i+1}}</h5>
+            </div>
+            <div class="col-md-7 pr-0">
+                <div class="form-group mb-0">
+                    <div class="row">
+                        <div class="col-md-4 p-0">
+                            <mat-form-field>
+                                <mat-select formControlName="nomineeName" class="form-control br-0">
+                                    <mat-option value="">Select option</mat-option>
+                                    <mat-option value="1">1</mat-option>
+                                    <mat-option value="2">2</mat-option>
+                                    <mat-option value="3">3</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field>
+                                <input matInput #nomineePercentageShare maxlength="30"
+                                    class="form-control br-0 percentage" formControlName="nomineePercentageShare">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-5" *ngIf="i==0">
+                            <p class="m-0 text-custom pt-12" (click)="addNominee()">+ Add nominee</p>
+                        </div>
+                        <div class="col-md-3" *ngIf="i > 0">
+                            <p class="m-0 text-custom pt-12" (click)="removeNominee(i)">Remove</p>
+                        </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-md-12">
-                        <p class="m-0 text-custom f-12">optional</p>
+                        <p class="f-12 text-custom pt-4 mb-0">Optional</p>
                     </div>
-                </div>
-                <div class="col-md-3 pr-0">
-                    <div class="form-group mb-0">
-                        <input type="text" class="form-control br-0">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <p class="m-0 text-custom c-p pt-12">Remove</p>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
+<div class="bottom-fixed wrapper-12 pt-16">
+        <div class="row">
+            <div class="col-md-4">
+                <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
+            </div>
+            <div class="col-md-8 right text-right">
+                <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveSchemeHolding()">Save</button>
+            </div>
+        </div>
+    </div>
