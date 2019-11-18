@@ -7,6 +7,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-nps-scheme-holding',
@@ -23,21 +24,24 @@ export class NpsSchemeHoldingComponent implements OnInit {
   familyMemberId: any;
   ownerName: any;
   schemeHoldingsNPS: any;
+  isPran = false
   advisorId: any;
   ownerData: any;
+  schemes: any[];
+  schemeList: any;
 
-  constructor(private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
+  constructor(private event : EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
   @Input()
   set data(data) {
     this.inputData = data;
    this.getdataForm(data);
   }
-  isPran = false;
   get data() {
     return this.inputData;
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
+    this.getGlobalList()
   }
 
   display(value) {
@@ -45,7 +49,16 @@ export class NpsSchemeHoldingComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
-
+  getGlobalList(){
+    this.custumService.getGlobal().subscribe(
+        data => this.getGlobalRes(data)
+    );
+  }
+  getGlobalRes(data){
+ 
+    console.log('getGlobalRes',data)
+    this.schemeList = data.npsScheme;
+  }
   getdataForm(data) {
     if (data == undefined) {
       data = {}
@@ -53,16 +66,12 @@ export class NpsSchemeHoldingComponent implements OnInit {
 
     this.schemeHoldingsNPS = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      currentValue: [(data == undefined) ? '' : data.currentValuation, [Validators.required]],
-      valueAsOn: [(data == undefined) ? '' : new Date(data.valueAsOn), [Validators.required]],
-      schemeChoice: [(data == undefined) ? '' : data.schemeChoice, [Validators.required]],
+      schemeChoice: [(data == undefined) ? '' : (data.schemeChoice)+"", [Validators.required]],
       pran: [(data == undefined) ? '' : data.pran, [Validators.required]],
-      totalContry: [(data == undefined) ? '' : data.contributionAmount, [Validators.required]],
-      allocation: [(data == undefined) ? '' : data.allocation, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       holdingList: this.fb.array([this.fb.group({
-        schemeName: null, holdingAsOn: null,
+        name: null, holdingAsOn: null,
         totalUnits: null, totalNetContry: null
       })]),
       futureContributionList: this.fb.array([this.fb.group({
@@ -84,7 +93,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
   }
   addHoldings() {
     this.holdings.push(this.fb.group({
-      schemeName: null, holdingAsOn: null,
+      name: null, holdingAsOn: null,
       totalUnits: null, totalNetContry: null
     }));
 
@@ -126,42 +135,41 @@ export class NpsSchemeHoldingComponent implements OnInit {
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' })
   }
-  saveSchemeHoldings() {
-    // if (this.schemeHoldingsNPS.controls.valueAsOn.invalid) {
-    //   this.isValueAsOn = true;
-    //   return;
-    // } else if (this.schemeHoldingsNPS.controls.totalContry.invalid) {
-    //   this.isTotalContry = true;
-    //   return;
-    // } else if (this.schemeHoldingsNPS.controls.currentValue.invalid) {
-    //   this.isCurrentValue = true;
-    //   return;
-    // } else {
-    //   let obj = {
-    //     advisorId: this.advisorId,
-    //     clientId: 2978,
-    //     familyMemberId: this.familyMemberId,
-    //     ownerName: (this.ownerName == undefined) ? this.schemeHoldingsNPS.controls.ownerName.value : this.ownerName,
-    //     valueAsOn: this.datePipe.transform(this.schemeHoldingsNPS.controls.valueAsOn.value, 'yyyy-MM-dd'),
-    //     currentValuation: this.schemeHoldingsNPS.controls.currentValue.value,
-    //     contributionAmount: this.schemeHoldingsNPS.controls.totalContry.value,
-    //     pran: this.schemeHoldingsNPS.controls.pran.value,
-    //     schemeChoice: this.schemeHoldingsNPS.controls.schemeChoice.value,
-    //     futureContributionList: this.schemeHoldingsNPS.controls.futureContributionList.value,
-    //     npsNomineesList: this.schemeHoldingsNPS.controls.npsNomineesList.value,
-    //     description: this.schemeHoldingsNPS.controls.description.value,
-    //     id: this.schemeHoldingsNPS.controls.id.value
-    //   }
-    //   if (this.schemeHoldingsNPS.controls.id.value == undefined) {
-    //     this.custumService.addNPS(obj).subscribe(
-    //       data => this.addNPSRes(data)
-    //     );
-    //   } else {
-    //     //edit call
-    //     this.custumService.editNPS(obj).subscribe(
-    //       data => this.editNPSRes(data)
-    //     );
-    //   }
-    // }
+  saveSchemeHolding() {
+    if (this.schemeHoldingsNPS.controls.pran.invalid) {
+      this.isPran = true;
+      return;
+    } else {
+      let obj = {
+        advisorId: this.advisorId,
+        clientId: 2978,
+        familyMemberId: this.familyMemberId,
+        ownerName: (this.ownerName == undefined) ? this.schemeHoldingsNPS.controls.ownerName.value : this.ownerName,
+        pran: this.schemeHoldingsNPS.controls.pran.value,
+        holdingList:this.schemeHoldingsNPS.controls.holdingList.vlaue,
+        futureContributionList: this.schemeHoldingsNPS.controls.futureContributionList.value,
+        npsNomineesList: this.schemeHoldingsNPS.controls.npsNomineesList.value,
+        description: this.schemeHoldingsNPS.controls.description.value,
+        id: this.schemeHoldingsNPS.controls.id.value
+      }
+      if (this.schemeHoldingsNPS.controls.id.value == undefined) {
+        this.custumService.addNPS(obj).subscribe(
+          data => this.addNPSRes(data)
+        );
+      } else {
+        //edit call
+        this.custumService.editNPS(obj).subscribe(
+          data => this.editNPSRes(data)
+        );
+      }
+    }
+  }
+  addNPSRes(data){
+    this.event.openSnackBar('Added successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+  }
+  editNPSRes(data){
+    this.event.openSnackBar('Updated successfully!', 'dismiss');
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
   }
 }
