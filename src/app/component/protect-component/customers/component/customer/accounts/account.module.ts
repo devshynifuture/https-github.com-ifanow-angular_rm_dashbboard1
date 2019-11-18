@@ -64,6 +64,7 @@ import { AddPoTdComponent } from './assets/smallSavingScheme/common-component/ad
 import { AddPoMisComponent } from './assets/smallSavingScheme/common-component/add-po-mis/add-po-mis.component';
 import { AddPoRdComponent } from './assets/smallSavingScheme/common-component/add-po-rd/add-po-rd.component';
 import { OtherPayablesComponent } from './liabilities/other-payables/other-payables.component';
+import { CashAndBankComponent } from './assets/cash&bank/cash-and-bank/cash-and-bank.component';
 
 
 @NgModule({
@@ -129,6 +130,7 @@ import { OtherPayablesComponent } from './liabilities/other-payables/other-payab
     AddPoMisComponent,
     AddPoRdComponent,
     OtherPayablesComponent,
+    CashAndBankComponent,
 
   ],
   imports: [
