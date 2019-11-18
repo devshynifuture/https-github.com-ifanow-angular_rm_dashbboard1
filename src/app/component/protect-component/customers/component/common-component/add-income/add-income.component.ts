@@ -6,10 +6,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-income.component.scss']
 })
 export class AddIncomeComponent implements OnInit {
-
+  showHide= false;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  showLess(value){
+    if(value == true){
+      this.showHide = false;
+    }
+    else{
+      this.showHide = true;
+    }
+
   }
 
 }

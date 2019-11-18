@@ -8,6 +8,7 @@ import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { EventService } from 'src/app/Data-service/event.service';
 
 
 @Component({
@@ -55,7 +56,7 @@ export class RecuringDepositComponent implements OnInit {
   selectedFamilyData: any;
   ownerData: any;
   familyMemberId: any;
-  constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
+  constructor(private event: EventService,private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -157,7 +158,7 @@ export class RecuringDepositComponent implements OnInit {
       advisorId:this.advisorId,
       clientId: 2978,
       familyMemberId: this.familyMemberId ,
-      ownerName: this.ownerName,
+      ownerName: (this.ownerName == undefined)?this.recuringDeposit.controls.ownerName.value:this.ownerName,
       monthlyContribution: this.recuringDeposit.controls.monthlyContribution.value,
       interestRate : this.recuringDeposit.controls.interestRate.value,
       commencementDate: this.datePipe.transform(this.recuringDeposit.controls.commencementDate.value, 'yyyy-MM-dd'),
@@ -186,9 +187,11 @@ export class RecuringDepositComponent implements OnInit {
 }
 addrecuringDepositRes(data){
 console.log('addrecuringDepositRes',data)
+this.event.openSnackBar('Added successfully!', 'dismiss');
 this.subInjectService.changeNewRightSliderState({state:'close',data})
 }
 editrecuringDepositRes(data){
+  this.event.openSnackBar('Updated successfully!', 'dismiss');
   this.subInjectService.changeNewRightSliderState({state:'close',data})
 }
 }
