@@ -184,4 +184,44 @@ export class CustomerService {
   editRealEstate(data){
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_REAL_ESTATE,data)
   }
+  addPPFScheme(data)
+  {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_PPF_SCHEME,data)
+  }
+  getBankAccounts(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BANK_ACCOUNTS,data)    
+  }
+  addBankAccounts(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_BANK_ACCOUNTS,data)
+  }
+  editBankAcounts(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_BANK_ACCOUNTS,data)
+  }
+  getCashInHand(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CASH_IN_HAND,data)    
+  }
+  addCashInHand(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_CASH_IN_HAND,data)
+  }
+  editCashInHand(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_CASH_IN_HAND,data)
+  }
+  getGold(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GOLD,data)    
+  }
+  addGold(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_GOLD,data)
+  }
+  editGold(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_GOLD,data)
+  }
+  getOthers(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_OTHERS,data)    
+  }
+  addOthers(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_OTHERS,data)
+  }
+  editOthers(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_OTHERS,data)
+  }
 }

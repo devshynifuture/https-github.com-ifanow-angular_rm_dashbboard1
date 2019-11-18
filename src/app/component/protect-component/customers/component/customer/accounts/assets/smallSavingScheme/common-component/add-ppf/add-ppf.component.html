@@ -2,7 +2,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20" *ngIf="_inputData!='Add'">ADD PUBLIC PROVIDENT FUND (PPF)</h4>
+            <h4 class="mb-0 wrapper-20" >ADD PUBLIC PROVIDENT FUND (PPF)</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -13,27 +13,7 @@
 </div>
 <div class="pt-72 pl-24 pr-24 pb-48 mb-48">
     <div [formGroup]="ppfSchemeForm">
-    <div class="row pt-40">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Owner</h5>
-            <p class="m-0 f-12 text-custom">In whose name is this asset</p>
-        </div>
-        <div class="col-md-5">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <mat-select formControlName="owner" class="form-control br-0">
-                        <mat-option>Search family members</mat-option>
-                        <mat-option>
-                            <span>DFASDFSD</span>
-                        </mat-option>
-                    </mat-select>
-                    <mat-error class="f-12 pt-4">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
+        <app-owner-component [data]= 'ownerData' (valueChange)='display($event)'></app-owner-component>
     <div class="row pt-40">
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8">Account balance</h5>
@@ -65,6 +45,23 @@
                     <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                     <mat-datepicker #balanceAsOn></mat-datepicker>
                     <mat-error class="f-12 pt-4">This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Commencement date</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group form-group_one mb-0">
+                <mat-form-field>
+                    <input matInput formControlName="commencementDate" class="form-control br-0" [matDatepicker]="CommencementPicker">
+                    <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #CommencementPicker></mat-datepicker>
+                    <mat-error class="f-12 pt-4" 
+                >This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -238,7 +235,7 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right">
+        <div (click)="addPPF()" class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
         </div>
     </div>
