@@ -62,6 +62,7 @@ export const appConfig = {
   ADD_BOND:'account/asset/fixed-income/bond/add',
   EDIT_RECURRING_DEPOSIT:'account/asset/fixed-income/recurring-deposit/edit',
   EDIT_BONDS:'account/asset/fixed-income/bond/edit',
+  GET_GLOBAl:'account/asset/nps/global-data/get',
   GET_ASSET_SMALL_SAVING_SCHEME_PPF:'account/asset/ssc/ppf/list/get',
   GET_ASSET_SMALL_SAVING_SCHEME_NSC:'account/asset/ssc/nsc/list/get',
   GET_ASSET_SMALL_SAVING_SCHEME_SSY:'account/asset/ssc/ssy/list/get',

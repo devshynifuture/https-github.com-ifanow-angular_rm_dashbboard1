@@ -165,6 +165,10 @@ export class CustomerService {
   editEPS(data){
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_EPS,data)
   }
+  getGlobal(){
+    const httpParams = new HttpParams();
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAl,httpParams)  
+  }  
   getOtherPayables(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.OTHER_PAYABLES,data)    
   }
