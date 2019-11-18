@@ -172,4 +172,8 @@ export class CustomerService {
   getOtherPayables(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.OTHER_PAYABLES,data)    
   }
+  addPPFScheme(data)
+  {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_PPF_SCHEME,data)
+  }
 }
