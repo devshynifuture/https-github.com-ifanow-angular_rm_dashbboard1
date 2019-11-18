@@ -65,6 +65,9 @@ import { AddPoMisComponent } from './assets/smallSavingScheme/common-component/a
 import { AddPoRdComponent } from './assets/smallSavingScheme/common-component/add-po-rd/add-po-rd.component';
 import { AddExpensesComponent } from '../../common-component/add-expenses/add-expenses.component';
 import { OtherPayablesComponent } from './liabilities/other-payables/other-payables.component';
+import { AddOtherPayablesComponent } from './liabilities/add-other-payables/add-other-payables.component';
+
+
 import { CashAndBankComponent } from './assets/cash&bank/cash-and-bank/cash-and-bank.component';
 import { CommoditiesComponent } from './assets/commodities/commodities/commodities.component';
 import { GoldComponent } from './assets/commodities/gold/gold.component';
@@ -135,6 +138,7 @@ import { CashInHandComponent } from './assets/cash&bank/cash-in-hand/cash-in-han
     AddPoRdComponent,
     AddExpensesComponent,
     OtherPayablesComponent,
+    AddOtherPayablesComponent,
     CashAndBankComponent,
     CommoditiesComponent,
     GoldComponent,

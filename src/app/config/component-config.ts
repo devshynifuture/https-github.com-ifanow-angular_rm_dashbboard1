@@ -84,6 +84,10 @@ export const appConfig = {
   GET_ASSET_SMALL_SAVING_SCHEME_PO_RD:'account/asset/ssc/po-rd/list/get',
   GET_ASSET_SMALL_SAVING_SCHEME_PO_TD:'account/asset/ssc/po-td/list/get',
   GET_ASSET_SMALL_SAVING_SCHEME_PO_MIS:'account/asset/ssc/po-mis/list/get',
+  ADD_OTHER_PAYABLES:'account/liability/otherpayables/add',
+  EDIT_OTHER_PAYABLES:'account/liability/otherpayables/edit',
+  ADD_REAL_ESTATE:'account/asset/real-estate/add',
+  EDIT_REAL_ESTATE:'account/asset/real-estate/edit',
   ADD_PPF_SCHEME:'account/asset/saving-scheme/ppf/add',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE:'account/asset/real-estate/get',
