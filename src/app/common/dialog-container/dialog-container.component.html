@@ -48,7 +48,7 @@
     <app-add-superannuation [data]="inputData" *ngIf="subscriptionTab=='addSuperannuation'"></app-add-superannuation>
     <!-- <app-add-expenses *ngIf="subscriptionTab=='addExpenses'"></app-add-expenses> -->
     <app-add-real-estate *ngIf="subscriptionTab=='realEstate'"></app-add-real-estate>
-    <app-add-ppf *ngIf="subscriptionTab=='addPPF'"></app-add-ppf>
+    <app-add-ppf [data]="inputData"*ngIf="subscriptionTab=='addPPF'"></app-add-ppf>
     <app-add-nsc *ngIf="subscriptionTab=='addNSC'"></app-add-nsc>
     <app-add-ssy *ngIf="subscriptionTab=='addSSY'"></app-add-ssy>
     <app-add-kvp *ngIf="subscriptionTab=='addKVP'"></app-add-kvp>
