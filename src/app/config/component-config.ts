@@ -89,7 +89,7 @@ export const appConfig = {
   GET_EPS:'account/asset/retirement/eps/list/get',
   ADD_EPS:'account/asset/retirement/eps/add',
   EDIT_EPS:'account/asset/retirement/eps/edit',
-
+  OTHER_PAYABLES:'account/liability/otherpayables/get',
 
 ////////////////////////////// subscription////////////////////////////////////////////
 

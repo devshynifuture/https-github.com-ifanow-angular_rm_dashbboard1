@@ -167,6 +167,9 @@ export class CustomerService {
   }
   getGlobal(){
     const httpParams = new HttpParams();
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAl,httpParams)    
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAl,httpParams)  
+  }  
+  getOtherPayables(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.OTHER_PAYABLES,data)    
   }
 }

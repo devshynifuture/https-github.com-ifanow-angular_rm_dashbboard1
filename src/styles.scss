@@ -768,3 +768,19 @@ mat-tab-group[vertical] {
         display: none;
     }
 }
+.stock-overview#table-low{
+    th{
+        padding: 6px 5px !important;
+        
+    }
+    tr.mat-header-row{
+        height: 48px !important;
+    }
+    tbody td{
+        padding: 3px 8px !important;
+    }
+    tr.mat-row{
+        height: 36px !important;
+    }
+    
+}
