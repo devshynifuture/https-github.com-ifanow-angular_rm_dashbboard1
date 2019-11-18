@@ -63,9 +63,12 @@ import { AddPoSavingComponent } from './assets/smallSavingScheme/common-componen
 import { AddPoTdComponent } from './assets/smallSavingScheme/common-component/add-po-td/add-po-td.component';
 import { AddPoMisComponent } from './assets/smallSavingScheme/common-component/add-po-mis/add-po-mis.component';
 import { AddPoRdComponent } from './assets/smallSavingScheme/common-component/add-po-rd/add-po-rd.component';
+import { AddExpensesComponent } from '../../common-component/add-expenses/add-expenses.component';
 import { OtherPayablesComponent } from './liabilities/other-payables/other-payables.component';
-
-
+import { CashAndBankComponent } from './assets/cash&bank/cash-and-bank/cash-and-bank.component';
+import { CommoditiesComponent } from './assets/commodities/commodities/commodities.component';
+import { GoldComponent } from './assets/commodities/gold/gold.component';
+import { OthersComponent } from './assets/commodities/others/others.component';
 @NgModule({
   declarations: [
     SchemeLevelTransactionComponent,
@@ -128,7 +131,12 @@ import { OtherPayablesComponent } from './liabilities/other-payables/other-payab
     AddPoTdComponent,
     AddPoMisComponent,
     AddPoRdComponent,
+    AddExpensesComponent,
     OtherPayablesComponent,
+    CashAndBankComponent,
+    CommoditiesComponent,
+    GoldComponent,
+    OthersComponent,
 
   ],
   imports: [
@@ -139,8 +147,7 @@ import { OtherPayablesComponent } from './liabilities/other-payables/other-payab
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [AddLiabilitiesComponent, AddInsuranceComponent,NpsSchemeHoldingComponent, NpsSummaryPortfolioComponent, LibilitiesRightComponent, FixedDepositComponent, AddSuperannuationComponent,AddEPSComponent,AddGratuityComponent, AddNPSComponent,AddEPFComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent,AddRealEstateComponent,RealEstateComponent,AddPpfComponent,AddNscComponent,AddSsyComponent,AddKvpComponent,AddScssComponent,AddPoSavingComponent,AddPoMisComponent,AddPoTdComponent,AddPoRdComponent,OtherPayablesComponent,
-  ],
+  exports: [AddLiabilitiesComponent, AddInsuranceComponent,NpsSchemeHoldingComponent, NpsSummaryPortfolioComponent, LibilitiesRightComponent, FixedDepositComponent, AddSuperannuationComponent,AddEPSComponent,AddGratuityComponent, AddNPSComponent,AddEPFComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent,AddRealEstateComponent,RealEstateComponent,AddPpfComponent,AddNscComponent,AddSsyComponent,AddKvpComponent,AddScssComponent,AddPoSavingComponent,AddPoMisComponent,AddPoTdComponent,AddPoRdComponent,AddExpensesComponent,OtherPayablesComponent],
   entryComponents: [BottomSheetComponent]
 })
 export class AccountModule {
