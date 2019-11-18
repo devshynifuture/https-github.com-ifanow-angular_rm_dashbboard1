@@ -66,6 +66,9 @@ import { AddPoRdComponent } from './assets/smallSavingScheme/common-component/ad
 import { AddExpensesComponent } from '../../common-component/add-expenses/add-expenses.component';
 import { OtherPayablesComponent } from './liabilities/other-payables/other-payables.component';
 import { CashAndBankComponent } from './assets/cash&bank/cash-and-bank/cash-and-bank.component';
+import { CommoditiesComponent } from './assets/commodities/commodities/commodities.component';
+import { GoldComponent } from './assets/commodities/gold/gold.component';
+import { OthersComponent } from './assets/commodities/others/others.component';
 @NgModule({
   declarations: [
     SchemeLevelTransactionComponent,
@@ -131,6 +134,9 @@ import { CashAndBankComponent } from './assets/cash&bank/cash-and-bank/cash-and-
     AddExpensesComponent,
     OtherPayablesComponent,
     CashAndBankComponent,
+    CommoditiesComponent,
+    GoldComponent,
+    OthersComponent,
 
   ],
   imports: [
