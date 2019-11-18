@@ -54,6 +54,25 @@ export class CommoditiesComponent implements OnInit {
   getOthersRes(data){
     console.log('getOthersRes @@@@',data)
   }
+  openCommodities(value,state,data)
+  {
+    const fragmentData = {
+      Flag: value,
+      data: data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+    
+        }
+      }
+    );
+  }
 }
 export interface PeriodicElement9 {
   no: string;

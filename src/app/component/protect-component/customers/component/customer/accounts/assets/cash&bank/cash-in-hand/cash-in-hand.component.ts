@@ -5,24 +5,27 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
-  selector: 'app-others',
-  templateUrl: './others.component.html',
-  styleUrls: ['./others.component.scss'], providers: [
+  selector: 'app-cash-in-hand',
+  templateUrl: './cash-in-hand.component.html',
+  styleUrls: ['./cash-in-hand.component.scss'],
+  providers: [
     [DatePipe],
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
-export class OthersComponent implements OnInit {
+export class CashInHandComponent implements OnInit {
   inputData: any;
   ownerName: any;
   familyMemberId: any;
-  showHide = false;
-  isTypeOfCommodity =false;
-  isMarketValue = false;
-  others: any;
+  isCahsBalance =false;
+  isBalanceAsOn = false
   ownerData: any;
+  cashInHand: any;
+  showHide = false;
+  advisorId: any;
 
   constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
   @Input()
@@ -35,6 +38,7 @@ export class OthersComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
   }
   display(value) {
     console.log('value selected', value)
@@ -55,24 +59,23 @@ export class OthersComponent implements OnInit {
     if (data == undefined) {
       data = {}
     }
-    this.others = this.fb.group({
+    this.cashInHand = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      typeOfCommodity:[(data == undefined) ? '' : (data.bankName)+"", [Validators.required]],
-      marketValue:[(data == undefined) ? '' : (data.bankName)+"", [Validators.required]],
-      purchaseVlaue:[(data == undefined) ? '' : (data.intrestCompoundingId)+"", [Validators.required]],
-      interestRate:[(data == undefined) ? '' : data.interestRate, [Validators.required]],
-      dateOfPurchase:[(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
-      growthRate: [(data == undefined) ? '' : data.accountBalance, [Validators.required]],
+      balanceAsOn: [(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
+      cashBalance: [(data == undefined) ? '' : data.cashBalance, [Validators.required]],
+      bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
-    this.ownerData = this.others.controls;
-    this.familyMemberId = this.others.controls.familyMemberId.value
+    this.ownerData = this.cashInHand.controls;
+    this.familyMemberId = this.cashInHand.controls.familyMemberId.value
     this.familyMemberId = this.familyMemberId[0]
   }
   getFormControl(): any {
-     return this.others.controls;
+    return this.cashInHand.controls;
   }
+  saveCashInHand(){
 
+  }
 }

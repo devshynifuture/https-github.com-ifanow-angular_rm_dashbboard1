@@ -39,6 +39,7 @@ export class CashAndBankComponent implements OnInit {
       data => this.getBankAccountsRes(data)
     );
   }
+
   getBankAccountsRes(data){
     console.log('getBankAccountsRes ####',data)
   }
@@ -54,7 +55,7 @@ export class CashAndBankComponent implements OnInit {
   getCashInHandRes(data){
     console.log('getCashInHandRes ###',data)
   }
-  openPortfolioSummary(value,state,data)
+  openCashAndBank(value,state,data)
   {
     const fragmentData = {
       Flag: value,

@@ -10,20 +10,20 @@
                     Cash in hand</mat-button-toggle>
             </mat-button-toggle-group>
         </div>
-    </div>
-    <div class="col-md-4 right text-right  pr-0">
-        <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
-            Overview Report
-            <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-            <button mat-menu-item>Overview Report</button>
-            <button mat-menu-item>Summary</button>
-            <button mat-menu-item>All Transactions</button>
-            <button mat-menu-item>Unrealized Transactions</button>
-            <button mat-menu-item>Capital Gains</button>
-            <button mat-menu-item>Goal Linkage</button>
-        </mat-menu>
+        <div class="col-md-4 right text-right  pr-0">
+            <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
+                Overview Report
+                <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>Overview Report</button>
+                <button mat-menu-item>Summary</button>
+                <button mat-menu-item>All Transactions</button>
+                <button mat-menu-item>Unrealized Transactions</button>
+                <button mat-menu-item>Capital Gains</button>
+                <button mat-menu-item>Goal Linkage</button>
+            </mat-menu>
+        </div>
     </div>
     <div *ngIf="showRequring == '1'">
         <div class="row">
@@ -36,7 +36,7 @@
                 <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                         class="material-icons">filter_list</i>FILTERS</button>
-                <button mat-stroked-button class="btn-primary addon v-middle"><i class="material-icons">add</i>ADD
+                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openCashAndBank('addBankAccounts','open')"><i class="material-icons">add</i>ADD
                     NEW</button>
             </div>
         </div>
@@ -89,7 +89,7 @@
                             more_vert
                         </i>
                         <mat-menu #menubank="matMenu">
-                            <button mat-menu-item>Edit</button>
+                            <button mat-menu-item (click)="openCashAndBank('addBankAccounts','open',element)">Edit</button>
                             <button mat-menu-item>Detailed view</button>
                             <button mat-menu-item>Activity</button>
                             <button mat-menu-item>Delete</button>
@@ -114,7 +114,7 @@
 
                     <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                             class="material-icons">filter_list</i>FILTERS</button>
-                    <button mat-stroked-button class="btn-primary addon v-middle"><i class="material-icons">add</i>ADD
+                    <button mat-stroked-button class="btn-primary addon v-middle" (click)="openCashAndBank('addCashInHand','open')"><i class="material-icons">add</i>ADD
                         NEW</button>
                 </div>
             </div>
@@ -153,7 +153,7 @@
                                 more_vert
                             </i>
                             <mat-menu #menubank="matMenu">
-                                <button mat-menu-item>Edit</button>
+                                <button mat-menu-item (click)="openCashAndBank('addCashInHand','open',element)">Edit</button>
                                 <button mat-menu-item>Detailed view</button>
                                 <button mat-menu-item>Activity</button>
                                 <button mat-menu-item>Delete</button>
