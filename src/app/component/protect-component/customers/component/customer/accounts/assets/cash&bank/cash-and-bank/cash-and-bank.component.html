@@ -101,26 +101,6 @@
     </div>
 </div>
     <div class="wrapper-8">
-        <div class="row pt-28 pb-28">
-
-            <div class="col-md-8 pl-0">
-                <button mat-stroked-button class="br-0 btn-default text-primary">Bank accounts</button>
-                <button mat-button class="br-0 text-custom">Cash in hand</button>
-            </div>
-            <div class="col-md-4 right text-right  pr-0">
-                <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">Overview Report
-                    <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Overview Report</button>
-                    <button mat-menu-item>Summary</button>
-                    <button mat-menu-item>All Transactions</button>
-                    <button mat-menu-item>Unrealized Transactions</button>
-                    <button mat-menu-item>Capital Gains</button>
-                    <button mat-menu-item>Goal Linkage</button>
-                </mat-menu>
-            </div>
-        </div>
         <div *ngIf="showRequring == '2'">
         <div class="row">
             <div class="col-md-4 p-0">
