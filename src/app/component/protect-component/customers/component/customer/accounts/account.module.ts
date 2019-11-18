@@ -54,6 +54,15 @@ import { RealEstateComponent } from './assets/realEstate/real-estate/real-estate
 import { AddRealEstateComponent } from './assets/realEstate/add-real-estate/add-real-estate.component';
 import { NpsSummaryPortfolioComponent } from './assets/retirementAccounts/add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
 import { NpsSchemeHoldingComponent } from './assets/retirementAccounts/add-nps/nps-scheme-holding/nps-scheme-holding.component';
+import { AddPpfComponent } from './assets/smallSavingScheme/common-component/add-ppf/add-ppf.component';
+import { AddNscComponent } from './assets/smallSavingScheme/common-component/add-nsc/add-nsc.component';
+import { AddSsyComponent } from './assets/smallSavingScheme/common-component/add-ssy/add-ssy.component';
+import { AddKvpComponent } from './assets/smallSavingScheme/common-component/add-kvp/add-kvp.component';
+import { AddScssComponent } from './assets/smallSavingScheme/common-component/add-scss/add-scss.component';
+import { AddPoSavingComponent } from './assets/smallSavingScheme/common-component/add-po-saving/add-po-saving.component';
+import { AddPoTdComponent } from './assets/smallSavingScheme/common-component/add-po-td/add-po-td.component';
+import { AddPoMisComponent } from './assets/smallSavingScheme/common-component/add-po-mis/add-po-mis.component';
+import { AddPoRdComponent } from './assets/smallSavingScheme/common-component/add-po-rd/add-po-rd.component';
 import { AddExpensesComponent } from '../../common-component/add-expenses/add-expenses.component';
 
 @NgModule({
@@ -109,6 +118,15 @@ import { AddExpensesComponent } from '../../common-component/add-expenses/add-ex
     AddRealEstateComponent,
     NpsSummaryPortfolioComponent,
     NpsSchemeHoldingComponent,
+    AddPpfComponent,
+    AddNscComponent,
+    AddSsyComponent,
+    AddKvpComponent,
+    AddScssComponent,
+    AddPoSavingComponent,
+    AddPoTdComponent,
+    AddPoMisComponent,
+    AddPoRdComponent,
     AddExpensesComponent
   ],
   imports: [
@@ -119,7 +137,7 @@ import { AddExpensesComponent } from '../../common-component/add-expenses/add-ex
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [AddLiabilitiesComponent, AddInsuranceComponent,NpsSchemeHoldingComponent, NpsSummaryPortfolioComponent, LibilitiesRightComponent, FixedDepositComponent, AddSuperannuationComponent,AddEPSComponent,AddGratuityComponent, AddNPSComponent,AddEPFComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent,AddRealEstateComponent,RealEstateComponent,AddExpensesComponent],
+  exports: [AddLiabilitiesComponent, AddInsuranceComponent,NpsSchemeHoldingComponent, NpsSummaryPortfolioComponent, LibilitiesRightComponent, FixedDepositComponent, AddSuperannuationComponent,AddEPSComponent,AddGratuityComponent, AddNPSComponent,AddEPFComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent,AddRealEstateComponent,RealEstateComponent,AddPpfComponent,AddNscComponent,AddSsyComponent,AddKvpComponent,AddScssComponent,AddPoSavingComponent,AddPoMisComponent,AddPoTdComponent,AddPoRdComponent,AddExpensesComponent],
   entryComponents: [BottomSheetComponent]
 })
 export class AccountModule {
