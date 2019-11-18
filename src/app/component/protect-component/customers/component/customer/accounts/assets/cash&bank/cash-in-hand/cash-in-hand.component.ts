@@ -62,7 +62,7 @@ export class CashInHandComponent implements OnInit {
     this.cashInHand = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       balanceAsOn: [(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
-      cashBalance: [(data == undefined) ? '' : data.cashBalance, [Validators.required]],
+      cashBalance: [(data == undefined) ? '' : data.cashValue, [Validators.required]],
       bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
@@ -76,6 +76,43 @@ export class CashInHandComponent implements OnInit {
     return this.cashInHand.controls;
   }
   saveCashInHand(){
+    
+      if (this.cashInHand.controls.balanceAsOn.invalid) {
+        this.isBalanceAsOn = true;
+        return;
+      } else if (this.cashInHand.controls.cashBalance.invalid) {
+        this.isCahsBalance = true;
+        return;
+      } else {
+        let obj = {
+          advisorId: this.advisorId,
+          clientId: 2978,
+          familyMemberId: this.familyMemberId,
+          ownerName: (this.ownerName == undefined) ? this.cashInHand.controls.ownerName.value : this.ownerName,
+          balanceAsOn: this.cashInHand.controls.balanceAsOn.value,
+          cashValue: this.cashInHand.controls.cashBalance.value,
+          bankAccountNumber: this.cashInHand.controls.bankAcNo.value,
+          description: this.cashInHand.controls.description.value,
+          id: this.cashInHand.controls.id.value
+        }
+        if (this.cashInHand.controls.id.value == undefined) {
+          this.custumService.addCashInHand(obj).subscribe(
+            data => this.addCashInHandRes(data)
+          );
+        } else {
+          //edit call
+          this.custumService.editCashInHand(obj).subscribe(
+            data => this.editCashInHandRes(data)
+          );
+        }
+      }
+    }
+    addCashInHandRes(data) {
+      console.log('addrecuringDepositRes', data)
+      this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    }
+    editCashInHandRes(data) {
+      this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    }
 
-  }
 }

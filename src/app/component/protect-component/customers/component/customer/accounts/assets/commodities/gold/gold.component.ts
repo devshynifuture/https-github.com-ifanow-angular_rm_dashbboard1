@@ -5,6 +5,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-gold',
@@ -28,6 +29,7 @@ export class GoldComponent implements OnInit {
   isPurchaseYear = false
   isCarats = false
   showHide = false;
+  advisorId: any;
 
   constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
 
@@ -41,7 +43,9 @@ export class GoldComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId()
   }
+  
   display(value) {
     console.log('value selected', value)
     this.ownerName = value.userName;
@@ -82,6 +86,61 @@ export class GoldComponent implements OnInit {
   }
   getFormControl(): any {
      return this.gold.controls;
+  }
+  saveGold(){
+    if (this.gold.controls.balanceAsOn.invalid) {
+      this.isBalanceAsOn = true;
+      return;
+    } else if (this.gold.controls.totalsGrams.invalid) {
+      this.isTotalsGrams = true;
+      return;
+    } else if (this.gold.controls.appPurValue.invalid) {
+      this.iAppPurValue = true;
+      return;
+    } else if (this.gold.controls.noTolasGramsPur.invalid) {
+      this.isNoTolasGramsPur = true;
+      return;
+    } else if (this.gold.controls.purchaseYear.invalid) {
+      this.isPurchaseYear = true;
+      return;
+    } else if (this.gold.controls.carats.invalid) {
+      this.isCarats = true;
+      return;
+    } else {
+      let obj = {
+        advisorId: this.advisorId,
+        clientId: 2978,
+        familyMemberId: this.familyMemberId,
+        ownerName: (this.ownerName == undefined) ? this.gold.controls.ownerName.value : this.ownerName,
+        appPurValue:this.gold.controls.appPurValue.value,
+        noTolasGramsPur:this.gold.controls.noTolasGramsPur.value,
+        totalsGrams:this.gold.controls.totalsGrams.value,
+        interestRate:this.gold.controls.interestRate.value,
+        purchaseYear:this.gold.controls.purchaseYear.value,
+        carats:this.gold.controls.carats.value,
+        balanceAsOn: this.gold.controls.balanceAsOn.value,
+        bankAccountNumber: this.gold.controls.bankAcNo.value,
+        description: this.gold.controls.description.value,
+        id: this.gold.controls.id.value
+      }
+      if (this.gold.controls.id.value == undefined) {
+        this.custumService.addGold(obj).subscribe(
+          data => this.addGoldRes(data)
+        );
+      } else {
+        //edit call
+        this.custumService.editGold(obj).subscribe(
+          data => this.editGoldRes(data)
+        );
+      }
+    }
+  }
+  addGoldRes(data) {
+    console.log('addrecuringDepositRes', data)
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+  }
+  editGoldRes(data) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
   }
 
 }

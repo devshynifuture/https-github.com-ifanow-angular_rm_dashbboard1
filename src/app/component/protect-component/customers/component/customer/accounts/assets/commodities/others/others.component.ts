@@ -5,6 +5,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-others',
@@ -23,6 +24,7 @@ export class OthersComponent implements OnInit {
   isMarketValue = false;
   others: any;
   ownerData: any;
+  advisorId: any;
 
   constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
   @Input()
@@ -35,6 +37,7 @@ export class OthersComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId()
   }
   display(value) {
     console.log('value selected', value)
@@ -73,6 +76,47 @@ export class OthersComponent implements OnInit {
   }
   getFormControl(): any {
      return this.others.controls;
+  }
+  saveOthers(){
+
+    if (this.others.controls.typeOfCommodity.invalid) {
+      this.isTypeOfCommodity = true;
+      return;
+    } else if (this.others.controls.isMarketValue.invalid) {
+      this.isMarketValue = true;
+      return;
+    } else {
+      let obj = {
+        advisorId: this.advisorId,
+        clientId: 2978,
+        familyMemberId: this.familyMemberId,
+        ownerName: (this.ownerName == undefined) ? this.others.controls.ownerName.value : this.ownerName,
+        typeOfCommodity:this.others.controls.appPurValue.value,
+        marketValue:this.others.controls.noTolasGramsPur.value,
+        purchaseVlaue:this.others.controls.purchaseYear.value,
+        interestRate:this.others.controls.interestRate.value,
+        dateOfPurchase: this.others.controls.balanceAsOn.value,
+        description: this.others.controls.description.value,
+        id: this.others.controls.id.value
+      }
+      if (this.others.controls.id.value == undefined) {
+        this.custumService.addOthers(obj).subscribe(
+          data => this.addOthersRes(data)
+        );
+      } else {
+        //edit call
+        this.custumService.editOthers(obj).subscribe(
+          data => this.editOthersRes(data)
+        );
+      }
+    }
+  }
+  addOthersRes(data) {
+    console.log('addrecuringDepositRes', data)
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+  }
+  editOthersRes(data) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
   }
 
 }

@@ -18,6 +18,8 @@ export class CommoditiesComponent implements OnInit {
   displayedColumns10 = ['no', 'owner','type','mvalue','pvalue','pur','rate','desc','status','icons'];
   datasource10 = ELEMENT_DATA10;
   advisorId: any;
+  goldList: any;
+  otherCommodityList: any;
   constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService,public util:UtilService) { }
   ngOnInit() {
     this.showRequring = '1'
@@ -41,6 +43,7 @@ export class CommoditiesComponent implements OnInit {
   }
   getGoldRes(data){
     console.log('getGoldList @@@@',data)
+    this.goldList = data.goldList
   }
   getOtherList(){
     let obj = {
@@ -53,6 +56,7 @@ export class CommoditiesComponent implements OnInit {
   }
   getOthersRes(data){
     console.log('getOthersRes @@@@',data)
+    this.otherCommodityList = data.otherCommodityList
   }
   openCommodities(value,state,data)
   {
@@ -64,6 +68,8 @@ export class CommoditiesComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+        this.getGoldList()
+        this.getOtherList()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);

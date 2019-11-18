@@ -65,8 +65,8 @@ export class BankAccountsComponent implements OnInit {
     this.bankAccounts = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       accountType: [(data == undefined) ? '' : (data.accountType) + "", [Validators.required]],
-      bankName: [(data == undefined) ? '' : (data.bankName) + "", [Validators.required]],
-      compound: [(data == undefined) ? '' : (data.intrestCompoundingId) + "", [Validators.required]],
+      bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
+      compound: [(data == undefined) ? '' : (data.interestCompounding) + "", [Validators.required]],
       interestRate: [(data == undefined) ? '' : data.interestRate, [Validators.required]],
       balanceAsOn: [(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       accountBalance: [(data == undefined) ? '' : data.accountBalance, [Validators.required]],
@@ -83,29 +83,30 @@ export class BankAccountsComponent implements OnInit {
     return this.bankAccounts.controls;
   }
   saveCashInHand() {
-    if (this.bankAccounts.controls.amountRecived.invalid) {
+    if (this.bankAccounts.controls.balanceAsOn.invalid) {
       this.isBalanceAsOn = true;
       return;
-    } else if (this.bankAccounts.controls.noOfcompleteYrs.invalid) {
+    } else if (this.bankAccounts.controls.compound.invalid) {
       this.isCompound = true;
       return;
-    } else if (this.bankAccounts.controls.noOfcompleteYrs.invalid) {
+    } else if (this.bankAccounts.controls.interestRate.invalid) {
       this.isInterestRate = true;
       return;
-    } else if (this.bankAccounts.controls.noOfcompleteYrs.invalid) {
+    } else if (this.bankAccounts.controls.accountBalance.invalid) {
       this.isAccountBalance = true;
       return;
     } else {
-
+ 
       let obj = {
         advisorId: this.advisorId,
         clientId: 2978,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined) ? this.bankAccounts.controls.ownerName.value : this.ownerName,
-        yearsCompleted: this.bankAccounts.controls.noOfcompleteYrs.value,
-        amountReceived: this.bankAccounts.controls.amountRecived.value,
-        organizationName: this.bankAccounts.controls.nameOfOrg.value,
-        reasonOfReceipt: this.bankAccounts.controls.resonOfRecipt.value,
+        accountType: this.bankAccounts.controls.accountType.value,
+        bankName: this.bankAccounts.controls.bankName.value,
+        interestCompounding: this.bankAccounts.controls.compound.value,
+        interestRate: this.bankAccounts.controls.interestRate.value,
+        accountBalance:this.bankAccounts.controls.accountBalance.value,
         bankAccountNumber: this.bankAccounts.controls.bankAcNo.value,
         description: this.bankAccounts.controls.description.value,
         id: this.bankAccounts.controls.id.value
