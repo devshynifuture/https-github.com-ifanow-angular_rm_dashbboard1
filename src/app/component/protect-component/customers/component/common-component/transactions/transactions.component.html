@@ -1,1 +1,125 @@
-<p>transactions works!</p>
+<div id="ui-mf-transactions" class="">
+    
+        <div class="row second-fix">
+          <div class="col-md-12 bg-dark">
+            <h2 class="m-0 wrapper-24 text-white text-center">Aditya Birla Sun Life Equity Fund Direct Growth</h2>
+          </div>
+        </div>
+     
+      <div class="wrapper-100 pt-170 pb-0">
+          <div class="row d-flex justify-content-center">
+        
+            <div class="col-md-6">
+              <div class="d-flex">
+                <mat-chip-list aria-label="Fish selection">
+                  <mat-chip>Equity</mat-chip>
+                  <mat-chip>Multi Cap</mat-chip>
+                </mat-chip-list>
+                <div class="pl-20">
+                  <img src="/assets/images/svg/yellow-star.svg" class="c-p">
+                  <img src="/assets/images/svg/yellow-star.svg" class="c-p">
+                  <img src="/assets/images/svg/yellow-star.svg" class="c-p">
+                  <img src="/assets/images/svg/light-star.svg" class="c-p">
+                  <img src="/assets/images/svg/light-star.svg" class="c-p">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <button mat-button class="btn-black right br-0">INVEST NOW</button>
+            </div>
+           
+          </div>
+          <div class="row d-flex justify-content-center p-20">
+            <div class="col-md-9 p-0">
+              <div class="row trans-bg">
+                <div class="col-md-4 p-0">
+                  <p class="m-0 f-12 text-white">CURRENT VALUE</p>
+                  <div class="row">
+                    <div class="col-md-7 p-0">
+                      <h1 class="m-0 text-white f-26 proxima">₹ 9,23,920</h1>
+                    </div>
+                    <div class="col-md-5 p-0">
+                      <h5 class="m-0 text-white pt-8 proxima">+9.68%</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 p-0">
+                  <p class="m-0 f-12 text-white">PROFIT (LOSS)</p>
+                  <h1 class="m-0 text-white proxima f-26">₹ 47,590</h1>
+                </div>
+                <div class="col-md-4 p-0">
+                  <p class="m-0 f-12 text-white">INVESTOR NAME</p>
+                  <h3 class="m-0 text-white f-18">Ronak Hasmukh Hindocha</h3>
+                  <p class="m-0 text-white">23243434/78</p>
+                </div>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+          </div>
+      </div>
+       <div class="">
+         
+              <div class="row d-flex justify-content-center">
+                  <div class="col-md-2"></div>
+                <div class="col-md-8  transactions">
+                  <p class="m-0 f-500 roboto pl-16 text-black">Top Holdings</p>
+                  <div class="mt-8" id="table-low">
+                    <table mat-table [dataSource]="dataSource" class="">
+                   
+                      <ng-container matColumnDef="srno">
+                        <th mat-header-cell *matHeaderCellDef class="br t-8"> Sr. no. </th>
+                        <td mat-cell *matCellDef="let element"  class="br t-8"> {{element.srno}} </td>
+                      </ng-container>
+                   
+                      <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef  class="br t-20"> Transaction type </th>
+                        <td mat-cell *matCellDef="let element"  class="br t-20"> {{element.type}} </td>
+                      </ng-container>
+                   
+                      <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef  class="br text-left"> Date </th>
+                        <td mat-cell *matCellDef="let element"  class="br text-left"> {{element.date}} </td>
+                      </ng-container>
+                 
+                      <ng-container matColumnDef="amt">
+                        <th mat-header-cell *matHeaderCellDef  class="br text-right"> Amount </th>
+                        <td mat-cell *matCellDef="let element"  class="br text-right"> {{element.amt}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="nav">
+                        <th mat-header-cell *matHeaderCellDef  class="br text-right"> NAV </th>
+                        <td mat-cell *matCellDef="let element"  class="br text-right"> {{element.nav}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="unit">
+                        <th mat-header-cell *matHeaderCellDef  class="br text-right"> Unit </th>
+                        <td mat-cell *matCellDef="let element"  class="br text-right"> {{element.unit}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="bunit">
+                        <th mat-header-cell *matHeaderCellDef  class="br text-right"> Balance unit </th>
+                        <td mat-cell *matCellDef="let element"  class="br text-right"> {{element.bunit}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="days">
+                        <th mat-header-cell *matHeaderCellDef  class="br text-right"> Days </th>
+                        <td mat-cell *matCellDef="let element"  class="br text-right"> {{element.days}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="icons">
+                        <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
+                        <td *matCellDef="let element" class="t-2" mat-cell><i 
+                          class="material-icons c-p iconscolors">
+                          more_vert
+                          </i>
+                        </td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-md-2 pl-0 text-center pt-48">
+                  <button mat-button class="btn-black br-0">ADD TRANSACTION</button>
+                  <p class="m-0 text-primitive pt-12">you can add transactions to this folio manually too. </p>
+                  <p class="m-0 text-primitive pt-12">But, it is strongly recommended that you use an automated method.</p>
+                </div>
+              </div>
+            </div>
+      
+      </div>
