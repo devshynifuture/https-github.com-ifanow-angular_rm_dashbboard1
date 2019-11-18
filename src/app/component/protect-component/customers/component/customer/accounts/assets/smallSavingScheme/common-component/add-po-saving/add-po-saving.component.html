@@ -70,14 +70,15 @@
         <div class="col-md-5">
         </div>
     </div>
-    <div *ngIf="isOptionalField==false">
+    <div [formGroup]="poSavingOptionalForm" *ngIf="isOptionalField==false">
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">PO branch</h5>
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput #fdNo type="text" maxlength="10" class="form-control br-0">
+                    <mat-form-field> <input matInput formControlName="poBranch" #fdNo type="text" maxlength="10"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -89,7 +90,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput #bankACNo type="text" maxlength="15" class="form-control br-0">
+                    <mat-form-field> <input matInput formControlName="nominee" #bankACNo type="text" maxlength="15"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -101,7 +103,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput #institution maxlength="30" class="form-control br-0">
+                    <mat-form-field> <input matInput formControlName="bankAccNo" #institution maxlength="30"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -113,7 +116,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput #description maxlength="60" class="form-control br-0">
+                    <mat-form-field> <input matInput formControlName="description" #description maxlength="60"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -128,8 +132,8 @@
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
-        </div>
-        <div class="col-md-8 right text-right"> <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+        </div >
+        <div (click)="addPOSaving()" class="col-md-8 right text-right"> <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
         </div>
     </div>
 </div>

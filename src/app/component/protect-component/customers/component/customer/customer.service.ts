@@ -188,6 +188,14 @@ export class CustomerService {
   {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_SCSS_SCHEME,data)
   }
+  addPOSAVINGScheme(data)
+  {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_PO_SAVING,data)
+  }
+  addPORDScheme(data)
+  {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_PO_RD_SCHEME,data)
+  }
   getBankAccounts(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BANK_ACCOUNTS,data)    
   }

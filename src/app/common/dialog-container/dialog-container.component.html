@@ -54,8 +54,8 @@
     <app-add-scss  [data]="inputData" *ngIf="subscriptionTab=='addSCSS'"></app-add-scss>
     <app-add-po-saving [data]="inputData" *ngIf="subscriptionTab=='addPOSAVING'"></app-add-po-saving>
     <app-add-po-mis *ngIf="subscriptionTab=='addPOMIS'"></app-add-po-mis>
-    <app-add-po-rd *ngIf="subscriptionTab=='addPORD'"></app-add-po-rd>
-    <app-add-po-td *ngIf="subscriptionTab=='addPOTD'"></app-add-po-td>
+    <app-add-po-rd [data]="inputData" *ngIf="subscriptionTab=='addPORD'"></app-add-po-rd>
+    <app-add-po-td [data]="inputData" *ngIf="subscriptionTab=='addPOTD'"></app-add-po-td>
 
     <app-add-expenses *ngIf="subscriptionTab=='addExpenses'"></app-add-expenses>
     <!-- <app-add-eps *ngIf="subscriptionTab=='addEPS'"></app-add-eps> -->
