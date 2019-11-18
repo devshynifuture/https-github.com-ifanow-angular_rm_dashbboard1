@@ -33,6 +33,7 @@
     <app-add-insurance [insuranceData]="fragmentData" *ngIf="subscriptionTab=='addInsurance'"></app-add-insurance>
     <app-libilities-right *ngIf="subscriptionTab=='portfolioSummary'"></app-libilities-right>
     <app-fixed-deposit [data]="inputData" *ngIf="subscriptionTab=='addFixedDeposit'"></app-fixed-deposit>
+    <app-add-other-payables [inputData]="inputData" *ngIf="subscriptionTab=='addOtherPayables'"></app-add-other-payables>
     <app-recuring-deposit [data]="inputData" *ngIf="subscriptionTab=='addRecuringDeposit'"></app-recuring-deposit>
     <app-bonds [data]="inputData" *ngIf="subscriptionTab=='addBonds'"></app-bonds>
     <app-add-income *ngIf="subscriptionTab=='addIncome'"></app-add-income>
@@ -46,7 +47,11 @@
     <app-nps-summary-portfolio [data]="inputData" *ngIf="subscriptionTab=='addSummaryPort'"></app-nps-summary-portfolio>
     <app-nps-scheme-holding [data]="inputData" *ngIf="subscriptionTab=='addSchemeHoldings'"></app-nps-scheme-holding>
     <app-add-superannuation [data]="inputData" *ngIf="subscriptionTab=='addSuperannuation'"></app-add-superannuation>
-    <app-add-real-estate *ngIf="subscriptionTab=='realEstate'"></app-add-real-estate>
+    <app-bank-accounts  [data]="inputData" *ngIf="subscriptionTab=='addBankAccounts'"></app-bank-accounts>
+    <app-cash-in-hand  [data]="inputData"*ngIf="subscriptionTab=='addCashInHand'"></app-cash-in-hand>
+    <app-gold [data]="inputData" *ngIf="subscriptionTab=='addGold'"></app-gold>
+    <app-others [data]="inputData" *ngIf="subscriptionTab=='addOthers'"></app-others>
+<app-add-real-estate [inputData]="inputData" *ngIf="subscriptionTab=='realEstate'"></app-add-real-estate>
     <app-add-ppf [data]="inputData"*ngIf="subscriptionTab=='addPPF'"></app-add-ppf>
     <app-add-nsc *ngIf="subscriptionTab=='addNSC'"></app-add-nsc>
     <app-add-ssy *ngIf="subscriptionTab=='addSSY'"></app-add-ssy>

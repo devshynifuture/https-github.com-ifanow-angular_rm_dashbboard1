@@ -35,34 +35,41 @@
         </div>
     </div>
     <div class="col-md-2 p-0">
-      <h5 class="m-0 text-primitive pt-8 c-p pt-44" (click)="addCoOwner()">+ Add co-owner</h5>
+      <h5 class="m-0 text-primitive pt-8 c-p pt-44" (click)="addNewCoOwner(true)">+ Add co-owner</h5>
     </div>
     </div>
     <div class="pt-44 pb-48 mb-44">
-        <div class="row " *ngIf="addOwner==true">
-        <div class="col-md-3 text-right">
-          <h5 class="m-0 pt-8">Co-owner 1</h5>
+        <div class="row pt-24" formArrayName="getCoOwnerName" *ngIf="addOwner==true">
+            <div  class="row pt-24" *ngFor="let obj of getCoOwner.controls; let pointIndex=index" [formGroupName]="pointIndex">
+        <div class="col-md-5 text-right">
+          <h5 class="m-0 pt-8 ">Co-owner{{pointIndex+1}}</h5>
         </div>
-        <div class="col-md-5">
-          <button mat-button [matMenuTriggerFor]="menu" class="b-a br-0 w-100"><i class="material-icons right text-primitive">
-          arrow_drop_down
-          </i></button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item>Item 1</button>
-            <button mat-menu-item>Item 2</button>
-          </mat-menu>
-        </div>
-        <div class="col-md-1">
+        <div class="col-md-3">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input matInput class="b-a" type="text"  formControlName="coOwnerPercent">
-                
-                </mat-form-field>
+                <mat-select formControlName="coOwnerName" class="form-control br-0">
+                    <mat-option value=''>Search family members</mat-option>
+                    <mat-option *ngFor="let f of family" [value]="f.userName">
+                        <span>{{f.userName}}</span>
+                    </mat-option>
+                </mat-select>
+                <!-- <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isownerName && getFormControl().ownerName.invalid || getFormControl().ownerName.touched && getFormControl().ownerName.invalid)}">
+                    This field is required
+                </mat-error> -->
             </div>
         </div>
+        <div class="col-md-2">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput class="b-a" type="text"  formControlName="coOwnerPer">
+                    
+                    </mat-form-field>
+                </div>
+            </div>
         <div class="col-md-2 p-0">
-          <h5 class="m-0 text-primitive pt-8 c-p" (click)="removeCoOwner()"> Remove</h5>
+            <!-- <h5 class="m-0 text-primitive pt-8 c-p" (click)="addNewCoOwner()" *ngIf="pointIndex==0">+ Add co-owner</h5> -->
+            <h5 class="m-0 text-primitive pt-8 c-p" (click)="removeCoOwner(pointIndex)">Remove</h5>
         </div>
+    </div>
         </div>
     <div class="row pt-44">
     <div class="col-md-5 text-right">
@@ -283,15 +290,21 @@
     <div class="row pt-24" formArrayName="getNomineeName">
         <div  class="row pt-24" *ngFor="let obj of getNominee.controls; let pointIndex=index" [formGroupName]="pointIndex">
     <div class="col-md-5 text-right">
-      <h5 class="m-0 pt-8 ">Nominee{{pointIndex}}</h5>
+        <h5 class="m-0 pt-8 " *ngIf="pointIndex==0">Nominee</h5>
+      <h5 class="m-0 pt-8 " *ngIf="pointIndex!=0">Nominee{{pointIndex}}</h5>
     </div>
     <div class="col-md-3">
-            <mat-form-field>
-                    <mat-select class="form-control br-0" formControlName="nomineeName">
-                        <mat-option value="1">item1</mat-option>
-                        <mat-option value="3">item2</mat-option>
-                    </mat-select>
-                </mat-form-field>
+            <div class="form-group mb-0">
+                <mat-select formControlName="nomineeName" class="form-control br-0">
+                    <mat-option value=''>Search family members</mat-option>
+                    <mat-option *ngFor="let f of family" [value]="f.userName">
+                        <span>{{f.userName}}</span>
+                    </mat-option>
+                </mat-select>
+                <!-- <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isownerName && getFormControl().ownerName.invalid || getFormControl().ownerName.touched && getFormControl().ownerName.invalid)}">
+                    This field is required
+                </mat-error> -->
+            </div>
       <div class="col-md-12 p-0">
         <p class="m-0 f-12 text-custom pt-4">Optional</p>
       </div>
@@ -305,8 +318,8 @@
             </div>
         </div>
     <div class="col-md-2 p-0">
-        <h5 class="m-0 text-primitive pt-8 c-p" (click)="addNominee()" >+ Add Nominee</h5>
-        <h5 class="m-0 text-primitive pt-8 c-p" (click)="removeNominee(pointIndex)" >Remove</h5>
+        <h5 class="m-0 text-primitive pt-8 c-p" (click)="addNominee()" *ngIf="pointIndex==0">+ Add Nominee</h5>
+        <h5 class="m-0 text-primitive pt-8 c-p" (click)="removeNominee(pointIndex)" *ngIf="pointIndex > 0">Remove</h5>
     </div>
 </div>
     </div>

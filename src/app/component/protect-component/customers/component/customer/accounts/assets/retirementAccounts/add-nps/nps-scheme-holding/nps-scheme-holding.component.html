@@ -76,10 +76,10 @@
             <div class="col-md-4">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput aria-label="State" [matAutocomplete]="auto" list="name" class="form-control br-0 " formControlName="name">
+                        <input matInput placeholder="Search scheme" aria-label="State" [matAutocomplete]="auto" list="schemeName" class="form-control br-0 pl-8" formControlName="schemeName">
                         <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let s of schemeList" [value]="s.name">
-                                <span>{{s.name}}</span>
+                            <mat-option *ngFor="let s of schemeList" [value]="s.schemeName">
+                                <span>{{s.schemeName}}</span>
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
