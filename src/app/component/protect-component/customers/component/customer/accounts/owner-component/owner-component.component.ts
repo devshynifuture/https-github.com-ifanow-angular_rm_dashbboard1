@@ -32,7 +32,7 @@ export class OwnerComponentComponent implements OnInit {
   ngOnInit() {
     console.log('ownerData', this.ownerData)
     this.advisorId = AuthService.getAdvisorId();
-    this.getListFamilyMem('')
+    this.getListFamilyMem('');
     this.getdataForm()
     this.family = this.s;
   }
@@ -47,6 +47,7 @@ export class OwnerComponentComponent implements OnInit {
   }
   getOwnerName(value) {
     console.log('selected', value)
+    value.familyList = this.family
     this.valueChange.emit(value);
   }
   getListOfFamilyByClientRes(data) {
