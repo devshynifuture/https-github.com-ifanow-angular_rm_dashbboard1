@@ -20,7 +20,7 @@ import {AccountModule} from '../component/protect-component/customers/component/
     AccountModule,
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
     // AppModule
   ],
   exports: [DialogContainerComponent]

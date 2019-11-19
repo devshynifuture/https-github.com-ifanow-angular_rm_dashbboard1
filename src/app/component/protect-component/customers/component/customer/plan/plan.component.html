@@ -1,0 +1,49 @@
+<div id="advisor-home">
+    <button mat-stroked-button class="btn-yellow"> <i class="material-icons mr-12">
+            keyboard_backspace
+        </i>ADVISOR HOME</button>
+</div>
+<mat-tab-group [selectedIndex]="selected" mat-align-tabs="center" id="ui-account-second-head" animationDuration="0ms">
+    <mat-tab label="SUMMARY">
+        <ng-template matTabContent>
+           <app-summary-plan></app-summary-plan>
+        </ng-template>
+        <!-- <app-assets></app-assets> -->
+    </mat-tab>
+    <mat-tab label="profile">
+        <ng-template matTabContent>
+            <!-- <app-assets></app-assets> -->
+            <!-- <app-mutual-funds-capital></app-mutual-funds-capital> -->
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="INSURANCE">
+        <ng-template matTabContent>
+            <!-- <app-liabilities></app-liabilities> -->
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="GOALS">
+        <ng-template matTabContent>
+            <!-- <app-insurance></app-insurance> -->
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="taxES">
+        <ng-template matTabContent>
+            <!-- <app-income></app-income> -->
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="CASH FLOWS">
+        <ng-template matTabContent>
+            <!-- <app-expenses></app-expenses> -->
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="investmentS">
+        <ng-template matTabContent>
+            <!-- <app-documents></app-documents> -->
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="scenarios">
+        <ng-template matTabContent>
+            <!-- <app-documents></app-documents> -->
+        </ng-template>
+    </mat-tab>
+</mat-tab-group>
