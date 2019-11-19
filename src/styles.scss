@@ -750,7 +750,29 @@ mat-tab-group[vertical] {
     color: #008FFF;
     opacity: 1;
 }
+#ui-mf-transactions{
+    background-color: #F5F7F7 !important;
+    min-height: 100vh;
+}
+#mutualfund-main-popup{
+    .mat-tab-header{
+        border-bottom: 0px !important;
+        position: fixed;
+        z-index: 999;
+        width: 100%;
+        background-color: #fff;
+    }
+    .second-fix{
+        margin-top: 64px !important;
+        position: fixed;
+        width: 100%;
+        z-index: 999;
 
+     }
+     .mat-radio-label-content{
+         display: block !important;
+     }
+}
 .insurance-ui #table-low {
     .mat-row:last-child {
         font-weight: normal !important;
@@ -783,4 +805,9 @@ mat-tab-group[vertical] {
         height: 36px !important;
     }
     
+}
+.transactions#table-low{
+    tr.mat-header-row{
+        height: 44px !important;
+    }
 }

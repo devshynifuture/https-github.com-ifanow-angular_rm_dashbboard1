@@ -30,8 +30,9 @@ export class GoldComponent implements OnInit {
   isCarats = false
   showHide = false;
   advisorId: any;
+  fdYears: string[];
 
-  constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
+  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
 
   @Input()
   set data(data) {
@@ -44,8 +45,10 @@ export class GoldComponent implements OnInit {
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
+    this.fdYears = [
+      '1950',	'1951',	'1952',	'1953',	'1954',	'1955',	'1956',	'1957',	'1958',	'1959',	'1960',	'1961',	'1962',	'1963',	'1964',	'1965',	'1966',	'1967',	'1968',	'1969',	'1970',	'1971',	'1972',	'1973',	'1974',	'1975',	'1976',	'1977',	'1978',	'1979',	'1980',	'1981',	'1982',	'1983',	'1984',	'1985',	'1986',	'1987',	'1988',	'1989',	'1990',	'1991',	'1992',	'1993',	'1994',	'1995',	'1996',	'1997',	'1998',	'1999',	'2000',	'2001',	'2002',	'2003',	'2004',	'2005',	'2006',	'2007',	'2008',	'2009',	'2010',	'2011',	'2012',	'2013',	'2014',	'2015',	'2016',	'2017',	'2018',	'2019']
   }
-  
+
   display(value) {
     console.log('value selected', value)
     this.ownerName = value.userName;
@@ -61,22 +64,20 @@ export class GoldComponent implements OnInit {
       this.showHide = true;
     }
   }
-  getdataForm(data){
+  getdataForm(data) {
     if (data == undefined) {
       data = {}
     }
     this.gold = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      appPurValue:[(data == undefined) ? '' : (data.accountType)+"", [Validators.required]],
-      totalsGrams:[(data == undefined) ? '' : (data.bankName)+"", [Validators.required]],
-      noTolasGramsPur:[(data == undefined) ? '' : (data.bankName)+"", [Validators.required]],
-      compound:[(data == undefined) ? '' : (data.intrestCompoundingId)+"", [Validators.required]],
-      interestRate:[(data == undefined) ? '' : data.interestRate, [Validators.required]],
-      purchaseYear: [(data == undefined) ? '' : (data.purchaseYear), [Validators.required]],
-      balanceAsOn:[(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
-      carats: [(data == undefined) ? '' : data.accountBalance, [Validators.required]],
-      bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
+      appPurValue: [(data == undefined) ? '' : (data.approximatePurchaseValue) + "", [Validators.required]],
+      totalsGrams: [(data == undefined) ? '' : (data.gramsOrTola) + "", [Validators.required]],
+      noTolasGramsPur: [(data == undefined) ? '' : (data.purchasedGramsOrTola), [Validators.required]],
+      tenure: [(data == undefined) ? '' : (data.purchaseYear), [Validators.required]],
+      carats: [(data == undefined) ? '' : data.carat, [Validators.required]],
+      marketValue: [(data == undefined) ? '' : data.marketValue, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
+      bankAcNo: [(data == undefined) ? '' : data.bankAcNo, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
@@ -85,13 +86,10 @@ export class GoldComponent implements OnInit {
     this.familyMemberId = this.familyMemberId[0]
   }
   getFormControl(): any {
-     return this.gold.controls;
+    return this.gold.controls;
   }
-  saveGold(){
-    if (this.gold.controls.balanceAsOn.invalid) {
-      this.isBalanceAsOn = true;
-      return;
-    } else if (this.gold.controls.totalsGrams.invalid) {
+  saveGold() {
+    if (this.gold.controls.totalsGrams.invalid) {
       this.isTotalsGrams = true;
       return;
     } else if (this.gold.controls.appPurValue.invalid) {
@@ -112,14 +110,13 @@ export class GoldComponent implements OnInit {
         clientId: 2978,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined) ? this.gold.controls.ownerName.value : this.ownerName,
-        appPurValue:this.gold.controls.appPurValue.value,
-        noTolasGramsPur:this.gold.controls.noTolasGramsPur.value,
-        totalsGrams:this.gold.controls.totalsGrams.value,
-        interestRate:this.gold.controls.interestRate.value,
-        purchaseYear:this.gold.controls.purchaseYear.value,
-        carats:this.gold.controls.carats.value,
-        balanceAsOn: this.gold.controls.balanceAsOn.value,
-        bankAccountNumber: this.gold.controls.bankAcNo.value,
+        approximatePurchaseValue: this.gold.controls.appPurValue.value,
+        gramsOrTola: this.gold.controls.totalsGrams.value,
+        purchasedGramsOrTola: this.gold.controls.noTolasGramsPur.value,
+        totalsGrams: this.gold.controls.totalsGrams.value,
+        purchaseYear: this.gold.controls.tenure.value,
+        carat: this.gold.controls.carats.value,
+        marketValue: this.gold.controls.marketValue.value,
         description: this.gold.controls.description.value,
         id: this.gold.controls.id.value
       }

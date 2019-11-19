@@ -14,29 +14,14 @@
     </div>
 </div>
 <div class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="addLiabilityForm">
-    <!-- <div class="row pt-40">
-        <div class="col-md-5 text-right">
-            <h5 class="m-0 pt-8">Owner</h5>
-            <p class="m-0 f-12 text-custom">In whose name is this asset</p>
-        </div>
-        <div class="col-md-5 pl-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input matInput #ownerName class="form-control br-0" formControlName="ownerName">
-                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isOwner && getFormControl().ownerName.invalid || getFormControl().ownerName.touched && getFormControl().ownerName.invalid)}">
-                        Owner name is required
-                    </mat-error>
-                    <mat-hint align="end" class="f-12">{{ownerName.value.length}}/40</mat-hint>
-                </mat-form-field>
-            </div>
-        </div>
-    </div> -->
-    <app-owner-component [data]= 'ownerData' (valueChange)='display($event)'></app-owner-component>
+
+    <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
+
     <div class="row pt-40">
-        <div class="col-md-5 text-right">
+        <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8"> Loan type</h5>
         </div>
-        <div class="col-md-5 pl-0">
+        <div class="col-md-5 ">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select formControlName="loanType" class="form-control br-0" id="sel1">
@@ -58,10 +43,10 @@
     </div>
 
     <div class="row pt-40">
-        <div class="col-md-5 text-right">
+        <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Original loan amount</h5>
         </div>
-        <div class="col-md-3 p-0">
+        <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input matInput #loanAmount class="form-control rupess br-0" (keypress)="keyPress($event)" formControlName="loanAmount" maxlength="{{getFormControl().loanAmount.maxLength}}">
@@ -75,10 +60,10 @@
     </div>
 
     <div class="row pt-40">
-        <div class="col-md-5 text-right">
+        <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Loan tenure</h5>
         </div>
-        <div class="col-md-3 p-0">
+        <div class="col-md-3 ">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input matInput #loanTenure class="form-control br-0" (keypress)="keyPress($event)" formControlName="loanTenure" maxlength="{{getFormControl().loanTenure.maxLength}}">
@@ -93,19 +78,19 @@
 
 
     <div class="row pt-40">
-        <div class="col-md-5 text-right">
+        <div class="col-md-5 pr-0 text-right">
             <p class="m-0"> I want to enter principal outstanding </p>
         </div>
-        <div class="col-md-3 pl-0">
+        <div class="col-md-3 ">
             <mat-checkbox class="text-primary checkBoxPositions text-line" (change)="select($event)" formControlName="outstandingCheck"></mat-checkbox>
         </div>
     </div>
 
     <div class="row pt-40" *ngIf="showSelect==true">
-        <div class="col-md-5 text-right">
+        <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-40">Principal outstanding details</h5>
         </div>
-        <div class="col-md-3 pl-0">
+        <div class="col-md-3 ">
             <div class="form-group mb-0">
                 <label>Outstanding as on</label>
                 <mat-form-field>
@@ -132,10 +117,10 @@
     </div>
 
     <div class="row pt-40">
-        <div class="col-md-5 text-right">
+        <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Commencement date</h5>
         </div>
-        <div class="col-md-3 pl-0">
+        <div class="col-md-3 ">
             <mat-form-field>
                 <input class="form-control br-0" matInput [matDatepicker]="picker" formControlName="CommencementDate">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -147,10 +132,10 @@
         </div>
     </div>
     <div class="row pt-40">
-        <div class="col-md-5 text-right">
+        <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">EMI frequency</h5>
         </div>
-        <div class="col-md-3 pl-0">
+        <div class="col-md-3 ">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select formControlName="emiFrequency" class="form-control br-0">
@@ -169,10 +154,10 @@
         </div>
     </div>
     <div class="row pt-40">
-        <div class="col-md-5 text-right">
+        <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Annual interest rate</h5>
         </div>
-        <div class="col-md-3 pl-0">
+        <div class="col-md-3  ">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input matInput #interest class="form-control br-0" (keypress)="keyPress($event)" formControlName="interest" maxlength="{{getFormControl().interest.maxLength}}">
@@ -186,10 +171,10 @@
     </div>
 
     <div class="row pt-40" *ngIf="this.show==false">
-        <div class="col-md-5 text-right">
+        <div class="col-md-5 pr-0 text-right">
             <p class="m-0 text-primitive f-16 c-p" (click)="showMore()"> + Add more [optional data] </p>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 ">
 
         </div>
     </div>
@@ -204,10 +189,10 @@
         </div>
 
         <div class="row pt-40">
-            <div class="col-md-5 text-right">
+            <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">EMI</h5>
             </div>
-            <div class="col-md-3 pl-0">
+            <div class="col-md-3 ">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input matInput #emi class="form-control br-0 rupess" (keypress)="keyPress($event)" formControlName="emi">
@@ -219,10 +204,10 @@
         </div>
 
         <div class="row pt-40">
-            <div class="col-md-5 text-right">
+            <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Financial Institution</h5>
             </div>
-            <div class="col-md-3 pl-0">
+            <div class="col-md-3  ">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input matInput #finInstitution class="form-control br-0" formControlName="finInstitution">
@@ -234,10 +219,10 @@
         </div>
 
         <div class="row pt-40">
-            <div class="col-md-5 text-right">
+            <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Collateral</h5>
             </div>
-            <div class="col-md-3 pl-0">
+            <div class="col-md-3 ">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input matInput #collateral class="form-control br-0" formControlName="collateral">
@@ -268,9 +253,9 @@
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error class="f-12 pt-4">
-                      Part Payment date is required
+                        Part Payment date is required
                     </mat-error>
-                </mat-form-field>   
+                </mat-form-field>
             </div>
             <div class="col-md-4">
                 <label class="f-16"> Part Payment Amount
@@ -278,7 +263,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input matInput #partPayment class="form-control br-0" (keypress)="keyPress($event)" formControlName="partPayment">
-                        <mat-error class="f-12 pt-4"  *ngIf="getFormControl().transact.untouched ">
+                        <mat-error class="f-12 pt-4" *ngIf="getFormControl().transact.untouched ">
                             is required
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{partPayment.value.length}}/20</mat-hint>
@@ -290,10 +275,10 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <!-- <input matInput #option class="form-control br-0" formControlName="option"> -->
-                         <mat-select formControlName="option" class="form-control br-0" >
-                                <mat-option value="1">Keep the EMI as it is and reduce the term</mat-option>
-                                <mat-option value="2">Keep the term as it is and reduce the EMI</mat-option>
-                            </mat-select>
+                        <mat-select formControlName="option" class="form-control br-0">
+                            <mat-option value="1">Keep the EMI as it is and reduce the term</mat-option>
+                            <mat-option value="2">Keep the term as it is and reduce the EMI</mat-option>
+                        </mat-select>
                         <mat-error class="f-12 pt-4">
                             is required
                         </mat-error>

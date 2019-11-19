@@ -8,6 +8,15 @@ import { ChartModule } from 'angular-highcharts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import {BrowserModule} from '@angular/platform-browser';
 import { AccountModule } from './component/customer/accounts/account.module';
+import { SummaryPlanComponent } from './component/customer/plan/summary-plan/summary-plan.component';
+import { ProfilePlanComponent } from './component/customer/plan/profile-plan/profile-plan.component';
+import { InsurancePlanComponent } from './component/customer/plan/insurance-plan/insurance-plan.component';
+import { GoalsPlanComponent } from './component/customer/plan/goals-plan/goals-plan.component';
+import { TexesPlanComponent } from './component/customer/plan/texes-plan/texes-plan.component';
+import { CashflowsPlanComponent } from './component/customer/plan/cashflows-plan/cashflows-plan.component';
+import { InvestmentsPlanComponent } from './component/customer/plan/investments-plan/investments-plan.component';
+import { ScenariosPlanComponent } from './component/customer/plan/scenarios-plan/scenarios-plan.component';
+
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
 // import { FactShitComponent } from './component/common-component/fact-shit/fact-shit.component';
 // import { TransactionsComponent } from './component/common-component/transactions/transactions.component';
@@ -17,7 +26,7 @@ import { AccountModule } from './component/customer/accounts/account.module';
 
 
 @NgModule({
-  declarations: [ ],
+  declarations: [],
   imports: [
     // BrowserModule,
     CommonModule,
