@@ -62,14 +62,13 @@
     </div>
 
     <div formArrayName="holdingList">
-        <div class="row pl-20" *ngFor="let creds of holdings.controls; let i = index" [formGroupName]="i">
+        <div class="row pl-20" *ngFor="let creds of holdings.controls; let i = index; let last = last" [formGroupName]="i">
             <div class="col-md-4">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput placeholder="Search scheme" aria-label="State" [matAutocomplete]="auto" list="schemeName" class="form-control br-0 pl-8" formControlName="schemeName">
+                        <input matInput placeholder="Search scheme" aria-label="State" [matAutocomplete]="auto" class="form-control br-0 pl-8" formControlName="schemeName">
                         <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let s of schemeList" [value]="s.schemeName">
-                                <span>{{s.schemeName}}</span>
+                                <mat-option *ngFor="let s of schemeList"  [value]="s.id">{{ s.name }}
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
@@ -94,7 +93,7 @@
             <div class="col-md-2 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #totalNetContry type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="totalNetContry">
+                        <input matInput #totalNetContribution type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="totalNetContribution">
                     </mat-form-field>
                     <mat-hint align="end" class="m-0 f-11 text-custom pt-4">As in statement</mat-hint>
                 </div>
@@ -105,7 +104,7 @@
                 <i class="material-icons text-custom c-p" (click)="addHoldings()">
                             add
                         </i>
-                <i class="material-icons text-custom c-p pl-10" (click)="removeHoldings()">
+                <i class="material-icons text-custom c-p pl-10" (click)="removeHoldings(i)">
                             remove
                         </i>
             </div>

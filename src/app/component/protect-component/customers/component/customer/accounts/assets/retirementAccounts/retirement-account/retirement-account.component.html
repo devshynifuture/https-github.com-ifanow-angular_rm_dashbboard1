@@ -204,7 +204,8 @@
                         more_vert
                         </i>
                         <mat-menu #menubank="matMenu">
-                          <button mat-menu-item  (click)="openRetirement('addSummaryPort','open',element)">Edit</button>
+                          <button mat-menu-item  *ngIf="element.schemeChoice != undefined"(click)="openRetirement('addSummaryPort','open',element)">Edit</button>
+                          <button mat-menu-item *ngIf="element.schemeChoice == undefined" (click)="openRetirement('addSchemeHoldings','open',element)">Edit</button>
                           <button mat-menu-item>Detailed view</button>
                           <button mat-menu-item>Activity</button>
                           <button mat-menu-item>Delete</button>
