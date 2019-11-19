@@ -60,12 +60,12 @@ export class OthersComponent implements OnInit {
     }
     this.others = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      typeOfCommodity:[(data == undefined) ? '' : (data.bankName)+"", [Validators.required]],
-      marketValue:[(data == undefined) ? '' : (data.bankName)+"", [Validators.required]],
-      purchaseVlaue:[(data == undefined) ? '' : (data.intrestCompoundingId)+"", [Validators.required]],
+      typeOfCommodity:[(data == undefined) ? '' : (data.commodityTypeId)+"", [Validators.required]],
+      marketValue:[(data == undefined) ? '' : (data.marketValue), [Validators.required]],
+      purchaseValue:[(data == undefined) ? '' : (data.purchaseValue), [Validators.required]],
       interestRate:[(data == undefined) ? '' : data.interestRate, [Validators.required]],
-      dateOfPurchase:[(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
-      growthRate: [(data == undefined) ? '' : data.accountBalance, [Validators.required]],
+      dateOfPurchase:[(data == undefined) ? '' : new Date(data.dateOfPurchase), [Validators.required]],
+      growthRate: [(data == undefined) ? '' : data.growthRate, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
@@ -82,7 +82,7 @@ export class OthersComponent implements OnInit {
     if (this.others.controls.typeOfCommodity.invalid) {
       this.isTypeOfCommodity = true;
       return;
-    } else if (this.others.controls.isMarketValue.invalid) {
+    } else if (this.others.controls.marketValue.invalid) {
       this.isMarketValue = true;
       return;
     } else {
@@ -91,11 +91,11 @@ export class OthersComponent implements OnInit {
         clientId: 2978,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined) ? this.others.controls.ownerName.value : this.ownerName,
-        typeOfCommodity:this.others.controls.appPurValue.value,
-        marketValue:this.others.controls.noTolasGramsPur.value,
-        purchaseVlaue:this.others.controls.purchaseYear.value,
-        interestRate:this.others.controls.interestRate.value,
-        dateOfPurchase: this.others.controls.balanceAsOn.value,
+        commodityTypeId:this.others.controls.typeOfCommodity.value,
+        marketValue:this.others.controls.marketValue.value,
+        purchaseValue:this.others.controls.purchaseValue.value,
+        growthRate:this.others.controls.growthRate.value,
+        dateOfPurchase:this.datePipe.transform(this.others.controls.dateOfPurchase.value, 'yyyy-MM-dd'),
         description: this.others.controls.description.value,
         id: this.others.controls.id.value
       }
