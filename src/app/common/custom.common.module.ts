@@ -5,8 +5,6 @@ import {SubscriptionModule} from '../component/protect-component/AdviserComponen
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AccountModule} from '../component/protect-component/customers/component/customer/accounts/account.module';
-import { PlanSectionModule } from '../component/protect-component/customers/component/customer/plan-section/plan-section.module';
-
 // import {AppModule} from "../app.module";
 
 
@@ -22,7 +20,6 @@ import { PlanSectionModule } from '../component/protect-component/customers/comp
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    PlanSectionModule
     // AppModule
   ],
   exports: [DialogContainerComponent]

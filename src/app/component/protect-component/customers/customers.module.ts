@@ -8,7 +8,6 @@ import { ChartModule } from 'angular-highcharts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import {BrowserModule} from '@angular/platform-browser';
 import { AccountModule } from './component/customer/accounts/account.module';
-import { PlanSectionModule } from './component/customer/plan-section/plan-section.module';
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
 // import { FactShitComponent } from './component/common-component/fact-shit/fact-shit.component';
 // import { TransactionsComponent } from './component/common-component/transactions/transactions.component';
@@ -28,7 +27,6 @@ import { PlanSectionModule } from './component/customer/plan-section/plan-sectio
     FormsModule,
     ReactiveFormsModule,
     AccountModule,
-    PlanSectionModule
   ],
   exports: [],
   entryComponents: [BottomSheetComponent]
