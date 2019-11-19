@@ -83,6 +83,7 @@ import { GoldComponent } from './assets/commodities/gold/gold.component';
 import { OthersComponent } from './assets/commodities/others/others.component';
 import { BankAccountsComponent } from './assets/cash&bank/bank-accounts/bank-accounts.component';
 import { CashInHandComponent } from './assets/cash&bank/cash-in-hand/cash-in-hand.component';
+import { OwnerColumnComponent } from './owner-component/owner-column/owner-column.component';
 @NgModule({
   declarations: [
     SchemeLevelTransactionComponent,
@@ -163,6 +164,7 @@ import { CashInHandComponent } from './assets/cash&bank/cash-in-hand/cash-in-han
     OthersComponent,
     BankAccountsComponent,
     CashInHandComponent,
+    OwnerColumnComponent,
 
   ],
   imports: [

@@ -89,7 +89,7 @@ export class CashInHandComponent implements OnInit {
           clientId: 2978,
           familyMemberId: this.familyMemberId,
           ownerName: (this.ownerName == undefined) ? this.cashInHand.controls.ownerName.value : this.ownerName,
-          balanceAsOn: this.cashInHand.controls.balanceAsOn.value,
+          balanceAsOn:this.datePipe.transform(this.cashInHand.controls.balanceAsOn.value, 'yyyy-MM-dd'),
           cashValue: this.cashInHand.controls.cashBalance.value,
           bankAccountNumber: this.cashInHand.controls.bankAcNo.value,
           description: this.cashInHand.controls.description.value,

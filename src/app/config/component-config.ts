@@ -98,6 +98,8 @@ export const appConfig = {
   EDIT_SSY_SCHEME:'account/asset/saving-scheme/ssy/edit',
   EDIT_SCSS_SCHEME:'account/asset/saving-scheme/scss/edit',
   EDIT_POSAVING_SCHEME:'account/asset/saving-scheme/po-saving/edit',
+  ADD_POMIS:'account/asset/saving-scheme/pomis/add',
+  EDIT_POMIS:'account/asset/saving-scheme/pomis/edit',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE:'account/asset/real-estate/get',
   GET_EPF:'account/asset/retirement/epf/list/get',
