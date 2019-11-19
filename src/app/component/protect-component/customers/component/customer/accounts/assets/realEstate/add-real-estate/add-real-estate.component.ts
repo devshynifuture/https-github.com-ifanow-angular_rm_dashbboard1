@@ -170,20 +170,38 @@ removeCoOwner(item){
         ownershipPer: null,
        })])
     });
-    if(data.realEstateNominees!=undefined){
+    // if(data.realEstateNominees!=undefined){
+    //   data.realEstateNominees.forEach(element => {
+    //     this.addrealEstateForm.controls.getNomineeName=this.fb.array([this.fb.group({
+    //       name: [element.name,[Validators.required]],
+    //       ownershipPer:[ (element.ownershipPer),Validators.required]})])
+    //   })
+    // }
+    if (data.realEstateNominees != undefined) {
       data.realEstateNominees.forEach(element => {
-        this.addrealEstateForm.controls.getNomineeName=this.fb.array([this.fb.group({
-          name: [element.name,[Validators.required]],
-          ownershipPer:[ (element.ownershipPer),Validators.required]})])
+        this.addrealEstateForm.controls.getNomineeName.push(this.fb.group({
+          name: [(element.name) + "", [Validators.required]],
+          ownershipPer: [(element.ownershipPer + ""), Validators.required]
+        }))
       })
+      this.getNominee.removeAt(0);
+      console.log(this.addrealEstateForm.controls.getNomineeName.value)
     }
-    if(data.realEstateOwners!=undefined){
-      data.realEstateOwners.forEach(element => {
-        this.addrealEstateForm.controls.getCoOwnerName=this.fb.array([this.fb.group({
-          ownerName: [(element.ownerName),[Validators.required]],
-          ownershipPerc: [element.ownershipPerc,Validators.required]})])
-      })
-    }
+      if (data.realEstateOwners != undefined) {
+        data.realEstateOwners.forEach(element => {
+          this.addrealEstateForm.controls.getCoOwnerName.push(this.fb.group({
+            ownerName: [(element.ownerName) + "", [Validators.required]],
+            ownershipPerc: [(element.ownershipPerc + ""), Validators.required]
+          }))
+        })
+      }
+    // if(data.realEstateOwners!=undefined){
+    //   data.realEstateOwners.forEach(element => {
+    //     this.addrealEstateForm.controls.getCoOwnerName=this.fb.array([this.fb.group({
+    //       ownerName: [(element.ownerName),[Validators.required]],
+    //       ownershipPerc: [element.ownershipPerc,Validators.required]})])
+    //   })
+    // }
     this.ownerData = this.addrealEstateForm.controls;
 
     }

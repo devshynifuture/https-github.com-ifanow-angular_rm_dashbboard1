@@ -98,7 +98,7 @@ export class AddPoMisComponent implements OnInit {
       nominee: this.pomisForm.controls.nominee.value,
       accNumber: this.pomisForm.controls.accNumber.value,
       description:this.pomisForm.controls.description.value,
-      familyMemberId:this.pomisForm.controls.familyMemberId.value
+      familyMemberId:this.familyMemberId.id
     
         }
         obj.amtInvested=  parseInt(obj.amtInvested);
