@@ -45,6 +45,7 @@ export class OwnerColumnComponent implements OnInit {
   }
   getOwnerName(value) {
     console.log('selected', value)
+    value.familyList = this.family
     this.valueChange.emit(value);
   }
   getListOfFamilyByClientRes(data) {
