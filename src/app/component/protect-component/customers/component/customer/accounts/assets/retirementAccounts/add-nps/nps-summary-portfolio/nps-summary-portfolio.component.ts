@@ -34,6 +34,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   isAccountPref = false
   nomineeList: any;
   advisorId: any;
+  nomineesListFM: any;
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
     this.summaryNPS = this.fb.group({
       published: true,
@@ -55,21 +56,17 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   display(value) {
     console.log('value selected', value)
     this.ownerName = value.userName;
+    this.nomineesListFM = value.familyList
     this.familyMemberId = value.id
   }
-  // getNomineesList(){
-  //   this.nomineesList(this.nomineeList)
-  // }
-  // nomineesList(data){
-  //   if(data.length  > 1){
-  //     this.nomineeList = data
-  //     let name = this.ownerName
-  //     var evens = _.remove( this.nomineeList, function(n) {
-  //      return n.userName == name;
-  //    });
-  //   }
-  //  console.log('NomineesList',this.nomineeList)
-  // }
+  
+  nomineesList(){
+      let name = this.ownerName
+      var evens = _.remove( this.nomineesListFM, function(n) {
+       return n.userName == name;
+     });
+   console.log('NomineesList',this.nomineeList)
+  }
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' })
   }
@@ -77,7 +74,6 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     if (data == undefined) {
       data = {}
     }
-
     this.summaryNPS = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       currentValue: [(data == undefined) ? '' : data.currentValuation, [Validators.required]],
