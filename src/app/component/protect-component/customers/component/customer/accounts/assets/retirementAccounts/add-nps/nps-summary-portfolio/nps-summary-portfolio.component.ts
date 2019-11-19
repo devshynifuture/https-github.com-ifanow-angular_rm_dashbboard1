@@ -82,10 +82,9 @@ export class NpsSummaryPortfolioComponent implements OnInit {
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       currentValue: [(data == undefined) ? '' : data.currentValuation, [Validators.required]],
       valueAsOn: [(data == undefined) ? '' : new Date(data.valueAsOn), [Validators.required]],
-      schemeChoice: [(data == undefined) ? '' : data.schemeChoice, [Validators.required]],
+      schemeChoice: [(data == undefined) ? '' : (data.schemeChoice)+"", [Validators.required]],
       pran: [(data == undefined) ? '' : data.pran, [Validators.required]],
       totalContry: [(data == undefined) ? '' : data.contributionAmount, [Validators.required]],
-      allocation: [(data == undefined) ? '' : data.allocation, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       futureContributionList: this.fb.array([this.fb.group({
@@ -93,24 +92,24 @@ export class NpsSummaryPortfolioComponent implements OnInit {
         accountPreferenceId: null, approxContribution: null
       })]),
       npsNomineesList: this.fb.array([this.fb.group({
-        nomineeName: null,allocation:null,
+        nomineeName: null,nomineePercentageShare:null,
       })]),
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
     this.ownerData = this.summaryNPS.controls;
     if (data != undefined) {
       data.futureContributionList.forEach(element => {
-        this.summaryNPS.controls.futureContributionList = this.fb.array([this.fb.group({
+        this.summaryNPS.controls.futureContributionList.push(this.fb.group({
           frequencyId: [(element.frequencyId) + "", [Validators.required]],
           accountPreferenceId: [(element.accountPreferenceId + ""), Validators.required],
           approxContribution: [(element.approxContribution), Validators.required]
-        })])
+        }))
       })
       data.npsNomineesList.forEach(element => {
-        this.summaryNPS.controls.npsNomineesList = this.fb.array([this.fb.group({
+        this.summaryNPS.controls.npsNomineesList.push(this.fb.group({
           nomineeName: [(element.nomineeName), [Validators.required]],
-          nomineePercentageShare: [(element.nomineePercentageShare + ""), Validators.required],
-        })])
+          nomineePercentageShare: [element.nomineePercentageShare , Validators.required],
+        }))
       })
     }
     this.familyMemberId = this.summaryNPS.controls.familyMemberId.value

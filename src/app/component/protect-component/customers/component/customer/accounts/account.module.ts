@@ -65,6 +65,15 @@ import { AddPoMisComponent } from './assets/smallSavingScheme/common-component/a
 import { AddPoRdComponent } from './assets/smallSavingScheme/common-component/add-po-rd/add-po-rd.component';
 import { AddExpensesComponent } from '../../common-component/add-expenses/add-expenses.component';
 import { OtherPayablesComponent } from './liabilities/other-payables/other-payables.component';
+import { PlanComponent } from '../plan/plan.component';
+import { SummaryPlanComponent } from '../plan/summary-plan/summary-plan.component';
+import { ProfilePlanComponent } from '../plan/profile-plan/profile-plan.component';
+import { InsurancePlanComponent } from '../plan/insurance-plan/insurance-plan.component';
+import { GoalsPlanComponent } from '../plan/goals-plan/goals-plan.component';
+import { TexesPlanComponent } from '../plan/texes-plan/texes-plan.component';
+import { CashflowsPlanComponent } from '../plan/cashflows-plan/cashflows-plan.component';
+import { InvestmentsPlanComponent } from '../plan/investments-plan/investments-plan.component';
+import { ScenariosPlanComponent } from '../plan/scenarios-plan/scenarios-plan.component';
 import { AddOtherPayablesComponent } from './liabilities/add-other-payables/add-other-payables.component';
 
 
@@ -74,6 +83,7 @@ import { GoldComponent } from './assets/commodities/gold/gold.component';
 import { OthersComponent } from './assets/commodities/others/others.component';
 import { BankAccountsComponent } from './assets/cash&bank/bank-accounts/bank-accounts.component';
 import { CashInHandComponent } from './assets/cash&bank/cash-in-hand/cash-in-hand.component';
+import { OwnerColumnComponent } from './owner-component/owner-column/owner-column.component';
 @NgModule({
   declarations: [
     SchemeLevelTransactionComponent,
@@ -138,6 +148,15 @@ import { CashInHandComponent } from './assets/cash&bank/cash-in-hand/cash-in-han
     AddPoRdComponent,
     AddExpensesComponent,
     OtherPayablesComponent,
+    PlanComponent,
+    SummaryPlanComponent,
+    ProfilePlanComponent,
+    InsurancePlanComponent,
+    GoalsPlanComponent,
+    CashflowsPlanComponent,
+    InvestmentsPlanComponent,
+    ScenariosPlanComponent,
+    TexesPlanComponent,
     AddOtherPayablesComponent,
     CashAndBankComponent,
     CommoditiesComponent,
@@ -145,6 +164,7 @@ import { CashInHandComponent } from './assets/cash&bank/cash-in-hand/cash-in-han
     OthersComponent,
     BankAccountsComponent,
     CashInHandComponent,
+    OwnerColumnComponent,
 
   ],
   imports: [
