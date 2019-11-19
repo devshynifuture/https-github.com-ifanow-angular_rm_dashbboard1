@@ -280,9 +280,7 @@ export class AddLiabilitiesComponent implements OnInit {
         this.eventService.openSnackBar('Error', 'dismiss');   
       }
     }
-    getLiabiltyRes(data){
-      console.log(data)
-    }
+
 }
 
 export interface PeriodicElement {

@@ -35,11 +35,11 @@ export class RealEstateComponent implements OnInit {
     console.log(data)
     this.datasource3=data.realEstateList;
   }
-  open(value)
+  open(value,data)
   {
     const fragmentData = {
       Flag: value,
-      data: '',
+      data: data,
       id: 1,
       state: 'open'
     };
@@ -47,6 +47,7 @@ export class RealEstateComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getRealEstate();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
     

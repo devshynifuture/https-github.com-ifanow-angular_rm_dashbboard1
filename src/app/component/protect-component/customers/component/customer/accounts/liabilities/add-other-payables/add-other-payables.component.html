@@ -1,0 +1,171 @@
+<div class="popup-header-fix-60">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20" *ngIf="_inputData=='Add'">ADD OTHER PAYABLES</h4>
+            <h4 class="mb-0 wrapper-20" *ngIf="_inputData!='Add'">EDIT OTHER PAYABLES</h4>
+
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="otherLiabilityForm">
+    <!-- <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Owner</h5>
+            <p class="m-0 f-12 text-custom">In whose name is this asset</p>
+        </div>
+        <div class="col-md-5 pl-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #ownerName class="form-control br-0" formControlName="ownerName">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isOwner && getFormControl().ownerName.invalid || getFormControl().ownerName.touched && getFormControl().ownerName.invalid)}">
+                        Owner name is required
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{ownerName.value.length}}/40</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div> -->
+    <app-owner-component [data]= 'ownerData' (valueChange)='display($event)'></app-owner-component>
+    <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Date of receipt</h5>
+        </div>
+        <div class="col-md-3 pl-0">
+            <mat-form-field>
+                <input class="form-control br-0" matInput [matDatepicker]="picker" formControlName="dateOfReceipt">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error class="f-12 pt-4" *ngIf="isdateValid && getFormControl().dateOfReceipt.invalid || (getFormControl().dateOfReceipt.touched && getFormControl().dateOfReceipt.invalid)">
+                    Date of receipt is required</mat-error>
+            </mat-form-field>
+
+        </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Creditor name</h5>
+        </div>
+        <div class="col-md-3 p-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #creditorName class="form-control br-0"  formControlName="creditorName" maxlength="{{getFormControl().creditorName.maxLength}}">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isCreditorName && getFormControl().creditorName.invalid || getFormControl().creditorName.touched && getFormControl().creditorName.invalid)}">
+                        Creditor Name  is required
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{creditorName.value.length}}/20</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+     <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Amount borrowed</h5>
+        </div>
+        <div class="col-md-3 p-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #amtBorrowed class="form-control br-0" (keypress)="keyPress($event)" formControlName="amtBorrowed" maxlength="{{getFormControl().amtBorrowed.maxLength}}">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isAmtBorrowed && getFormControl().amtBorrowed.invalid || getFormControl().amtBorrowed.touched && getFormControl().amtBorrowed.invalid)}">
+                       Amount borrowed is required
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{amtBorrowed.value.length}}/20</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Interest</h5>
+        </div>
+        <div class="col-md-3 pl-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #interest class="form-control br-0 percentage" (keypress)="keyPress($event)" formControlName="interest" maxlength="{{getFormControl().interest.maxLength}}">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isinterestRate && getFormControl().interest.invalid || getFormControl().interest.touched && getFormControl().interest.invalid)}">
+                         Interest rate is required
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{interest.value.length}}/20</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Date of repayment</h5>
+        </div>
+        <div class="col-md-3 pl-0">
+            <mat-form-field>
+                <input class="form-control br-0" matInput [matDatepicker]="picker2" formControlName="dateOfRepayment">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+                <mat-error class="f-12 pt-4" *ngIf="isDateOfRepayment && getFormControl().dateOfRepayment.invalid || (getFormControl().dateOfRepayment.touched && getFormControl().dateOfRepayment.invalid)">
+                    Date of repayment  is required</mat-error>
+            </mat-form-field>
+
+        </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Outstanding balance</h5>
+        </div>
+        <div class="col-md-3 p-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #balance class="form-control br-0" (keypress)="keyPress($event)" formControlName="balance" maxlength="{{getFormControl().balance.maxLength}}">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isBalance && getFormControl().balance.invalid || getFormControl().balance.touched && getFormControl().balance.invalid)}">
+                        Outstanding balance is required
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{balance.value.length}}/20</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-40" *ngIf="this.show==false">
+        <div class="col-md-5 text-right">
+            <p class="m-0 text-primitive f-16 c-p" (click)="showMore()"> + Add more [optional data] </p>
+        </div>
+        <div class="col-md-3">
+
+        </div>
+    </div>
+    <div *ngIf="this.show==true">
+        <div class="row pt-40">
+            <div class="col-md-5 text-right">
+                <p class="m-0 text-primitive f-16 c-p" (click)="showLess()"> Show less </p>
+            </div>
+            <div class="col-md-3">
+
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-md-5 text-right">
+                <h5 class="m-0 pt-8">Collateral</h5>
+            </div>
+            <div class="col-md-3 pl-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput #collateral class="form-control br-0" formControlName="collateral">
+                        <mat-hint align="start" class="f-12">Option</mat-hint>
+                        <mat-hint align="end" class="f-12">{{collateral.value.length}}/20</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="bottom-fixed wrapper-12 pt-16">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFormData('close')">Save</button>
+        </div>
+    </div>
+</div>

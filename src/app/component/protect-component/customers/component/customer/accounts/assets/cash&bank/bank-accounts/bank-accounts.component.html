@@ -1,7 +1,7 @@
 <div class="popup-header-fix-60">
         <div class="row bb-1">
             <div class="col-md-8 p-0">
-                <h4 class="mb-0 wrapper-20">ADD GOLD </h4>
+                <h4 class="mb-0 wrapper-20">ADD BANK ACCOUNTS</h4>
             </div>
             <div class="col-md-4 text-right">
                 <div class="wrapper-12">
@@ -11,36 +11,21 @@
         </div>
     </div>
     
-    <div [formGroup]="gold" class="pb-44 mb-48 pt-44">
+    <div [formGroup]="bankAccounts" class="pb-44 mb-48 pt-44">
         <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
-        <div class="row pt-24">
-                <div class="col-md-5 text-right">
-                    <h5 class="m-0 pt-8">Approx. purchase value</h5>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group mb-0">
-                        <mat-form-field>
-                            <input matInput #appPurValue type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0" formControlName="appPurValue">
-                            <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(iAppPurValue && getFormControl().appPurValue.invalid || getFormControl().appPurValue.touched && getFormControl().appPurValue.invalid)}">
-                               this field is required
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
         <div class="row pt-40">
                 <div class="col-md-5 pr-0 text-right">
-                    <h5 class="m-0 pt-8">Tolas/grams</h5>
+                    <h5 class="m-0 pt-8">Account type</h5>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <mat-select formControlName="totalsGrams" class="form-control br-0">
+                            <mat-select formControlName="accountType" class="form-control br-0">
                                 <mat-option value="">Select option</mat-option>
-                                <mat-option value="1">Entry in tolas</mat-option>
-                                <mat-option value="2">Entry in grams</mat-option>
+                                <mat-option value="1">Current</mat-option>
+                                <mat-option value="2">Savings</mat-option>
                             </mat-select>
-                            <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isTotalsGrams && getFormControl().totalsGrams.invalid || getFormControl().totalsGrams.touched && getFormControl().totalsGrams.invalid)}">
+                            <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isAccountType && getFormControl().accountType.invalid || getFormControl().accountType.touched && getFormControl().accountType.invalid)}">
                                 This field is required
                             </mat-error>
                         </mat-form-field>
@@ -49,13 +34,14 @@
             </div>
         <div class="row pt-24">
             <div class="col-md-5 text-right">
-                <h5 class="m-0 pt-8">Number of tolas/grams purchased</h5>
+                <h5 class="m-0 pt-8">Account balance</h5>
+                <p class="m-0 text-custom f-12">Leave bank if you want to enter<br> complete transaction history </p>
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #noTolasGramsPur type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0" formControlName="noTolasGramsPur">
-                        <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isNoTolasGramsPur && getFormControl().noTolasGramsPur.invalid || getFormControl().noTolasGramsPur.touched && getFormControl().noTolasGramsPur.invalid)}">
+                        <input matInput #accountBalance type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0" formControlName="accountBalance">
+                        <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isAccountBalance && getFormControl().accountBalance.invalid || getFormControl().accountBalance.touched && getFormControl().accountBalance.invalid)}">
                            this field is required
                         </mat-error>
                     </mat-form-field>
@@ -65,6 +51,7 @@
         <div class="row pt-24">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8">Balance as on</h5>
+                    <p class="m-0 text-custom f-12">Leave bank if you want to enter<br> complete transaction history </p>
                 </div>
                 <div class="col-md-3">
                     <mat-form-field>
@@ -80,13 +67,13 @@
             </div>
             <div class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
-                        <h5 class="m-0 pt-8">Purchase year</h5>
+                        <h5 class="m-0 pt-8">Interest rate</h5>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput type="text" (keypress)="keyPress($event)" class="form-control br-0 percentage" formControlName="purchaseYear">
-                                <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isPurchaseYear && getFormControl().purchaseYear.invalid || getFormControl().purchaseYear.touched && getFormControl().purchaseYear.invalid)}">
+                                <input matInput type="text" (keypress)="keyPress($event)" class="form-control br-0 percentage" formControlName="interestRate">
+                                <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
                                     This field is required
                                 </mat-error>
                             </mat-form-field>
@@ -95,18 +82,20 @@
                 </div>
             <div class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
-                        <h5 class="m-0 pt-8">Carats</h5>
+                        <h5 class="m-0 pt-8">Interest compounding</h5>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <mat-select formControlName="carats" class="form-control br-0">
+                                <mat-select formControlName="compound" class="form-control br-0">
                                     <mat-option value="">Select option</mat-option>
-                                    <mat-option value="1">18</mat-option>
-                                    <mat-option value="2">22</mat-option>
-                                    <mat-option value="3">24</mat-option>                 
+                                    <mat-option value="1">Daily</mat-option>
+                                    <mat-option value="2">Monthly</mat-option>
+                                    <mat-option value="3">Quarterly</mat-option>
+                                    <mat-option value="4">Semi annually</mat-option>
+                                    <mat-option value="5">Annually</mat-option>
                                 </mat-select>
-                                <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isCarats && getFormControl().carats.invalid || getFormControl().carats.touched && getFormControl().carats.invalid)}">
+                                <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isCompound && getFormControl().compound.invalid || getFormControl().compound.touched && getFormControl().compound.invalid)}">
                                     This field is required
                                 </mat-error>
                             </mat-form-field>
@@ -126,6 +115,19 @@
             </div>
         </div>
         <div *ngIf="showHide == true">
+                <div class="row pt-40">
+                        <div class="col-md-5 pr-0 text-right">
+                            <h5 class="m-0 pt-8">Bank name</h5>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput #bankName  maxlength="30" class="form-control br-0" formControlName="bankName">
+                                    <mat-hint align="start" class="f-12">Optional</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
             <div class="row pt-40">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8">Bank account number</h5>
@@ -160,7 +162,7 @@
                 <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
             </div>
             <div class="col-md-8 right text-right">
-                <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveGold()">Save</button>
+                <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveCashInHand()">Save</button>
             </div>
         </div>
     </div>

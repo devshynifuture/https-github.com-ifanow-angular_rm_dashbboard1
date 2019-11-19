@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-other-payables',
@@ -13,7 +14,7 @@ export class OtherPayablesComponent implements OnInit {
   // dataSource = ELEMENT_DATA;
   advisorId: any;
   dataSource: any;
-  constructor(public custmService:CustomerService,public util:UtilService) { }
+  constructor(public custmService:CustomerService,public util:UtilService,public subInjectService:SubscriptionInject) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -31,6 +32,25 @@ export class OtherPayablesComponent implements OnInit {
   getOtherPayablesRes(data){
     console.log(data);
     this.dataSource=data;
+  }
+  open(flagValue, data) {
+    const fragmentData = {
+      Flag: flagValue,
+      data :data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          this.getPayables();
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
   }
 }
 export interface PeriodicElement {

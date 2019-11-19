@@ -13,11 +13,13 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class CashAndBankComponent implements OnInit {
   showRequring: string;
   advisorId: any;
+  bankAccountList: any;
+  cashInHandList: any;
 
-  constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService,public util:UtilService) { }
-  displayedColumns7 = ['no', 'owner', 'type', 'amt','rate','bal','account','bank','desc','status','icons'];
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService) { }
+  displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc', 'status', 'icons'];
   datasource7 = ELEMENT_DATA7;
-  displayedColumns8 = ['no', 'owner', 'cash','bal','desc','status','icons'];
+  displayedColumns8 = ['no', 'owner', 'cash', 'bal', 'desc', 'status', 'icons'];
   datasource8 = ELEMENT_DATA8;
   ngOnInit() {
     this.showRequring = '1'
@@ -25,37 +27,39 @@ export class CashAndBankComponent implements OnInit {
     this.getCashInHandList()
     this.getBankAccountList()
   }
-  getfixedIncomeData(value){
-    console.log('value++++++',value)
-    this.showRequring = (value == "2")? "2":"1"
-  
+  getfixedIncomeData(value) {
+    console.log('value++++++', value)
+    this.showRequring = (value == "2") ? "2" : "1"
+
   }
-  getBankAccountList(){
-     let obj = {
-      clientId:2978,
+  getBankAccountList() {
+    let obj = {
+      clientId: 2978,
       advisorId: this.advisorId
     }
-     this.custumService.getBankAccounts(obj).subscribe(
+    this.custumService.getBankAccounts(obj).subscribe(
       data => this.getBankAccountsRes(data)
     );
   }
-  getBankAccountsRes(data){
-    console.log('getBankAccountsRes ####',data)
+
+  getBankAccountsRes(data) {
+    console.log('getBankAccountsRes ####', data)
+    this.bankAccountList = data.cashInBankAccounts
   }
-  getCashInHandList(){
-     let obj = {
-      clientId:2978,
+  getCashInHandList() {
+    let obj = {
+      clientId: 2978,
       advisorId: this.advisorId
     }
-     this.custumService.getCashInHand(obj).subscribe(
+    this.custumService.getCashInHand(obj).subscribe(
       data => this.getCashInHandRes(data)
-    );  
+    );
   }
-  getCashInHandRes(data){
-    console.log('getCashInHandRes ###',data)
+  getCashInHandRes(data) {
+    console.log('getCashInHandRes ###', data)
+    this.cashInHandList = data.cashInHands
   }
-  openPortfolioSummary(value,state,data)
-  {
+  openCashAndBank(value, state, data) {
     const fragmentData = {
       Flag: value,
       data: data,
@@ -64,11 +68,13 @@ export class CashAndBankComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+        this.getCashInHandList()
+        this.getBankAccountList()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-    
+
         }
       }
     );
@@ -77,48 +83,60 @@ export class CashAndBankComponent implements OnInit {
 export interface PeriodicElement7 {
   no: string;
   owner: string;
-  type:string;
-  amt:string;
-  rate:string;
-  bal:string;
-  account:string;
-  bank:string;
-  desc:string;
-  status:string;
+  type: string;
+  amt: string;
+  rate: string;
+  bal: string;
+  account: string;
+  bank: string;
+  desc: string;
+  status: string;
 }
 
 const ELEMENT_DATA7: PeriodicElement7[] = [
-  {no: '1.', owner: 'Rahul Jain',
-  type:'Savings',amt:"08/02/2019",rate:'8.40%',bal:"1,00,000",account:"980787870909",bank:"ICICI",
- desc:"ICICI FD",status:"MATURED"},
- {no: '2.', owner: 'Shilpa Jain',
- type:'Current',amt:"08/02/2019",rate:'8.60%',bal:"50,000",account:"77676767622",bank:"Axis",
-  desc:"Axis bank FD",status:"LIVE"},
-  {no: '', owner: 'Total',
-  type:'',amt:"",rate:'',bal:"1,50,000",account:"",bank:"",
-  desc:"",status:""},
- 
+  {
+    no: '1.', owner: 'Rahul Jain',
+    type: 'Savings', amt: "08/02/2019", rate: '8.40%', bal: "1,00,000", account: "980787870909", bank: "ICICI",
+    desc: "ICICI FD", status: "MATURED"
+  },
+  {
+    no: '2.', owner: 'Shilpa Jain',
+    type: 'Current', amt: "08/02/2019", rate: '8.60%', bal: "50,000", account: "77676767622", bank: "Axis",
+    desc: "Axis bank FD", status: "LIVE"
+  },
+  {
+    no: '', owner: 'Total',
+    type: '', amt: "", rate: '', bal: "1,50,000", account: "", bank: "",
+    desc: "", status: ""
+  },
+
 
 ];
 export interface PeriodicElement8 {
   no: string;
   owner: string;
-  cash:string;
-  bal:string;
-  desc:string;
-  status:string;
+  cash: string;
+  bal: string;
+  desc: string;
+  status: string;
 }
 
 const ELEMENT_DATA8: PeriodicElement8[] = [
-  {no: '1.', owner: 'Rahul Jain'
- ,cash:"94,925",bal:"09/02/2019",
- desc:"ICICI FD",status:"MATURED"},
- {no: '2.', owner: 'Shilpa Jain'
- ,cash:"94,925",bal:"09/02/2019",
- desc:"Axis bank FD",status:"LIVE"},
- {no: '', owner: 'Total'
- ,cash:"1,28,925",bal:"",
- desc:"",status:""},
- 
+  {
+    no: '1.', owner: 'Rahul Jain'
+    , cash: "94,925", bal: "09/02/2019",
+    desc: "ICICI FD", status: "MATURED"
+  },
+  {
+    no: '2.', owner: 'Shilpa Jain'
+    , cash: "94,925", bal: "09/02/2019",
+    desc: "Axis bank FD", status: "LIVE"
+  },
+  {
+    no: '', owner: 'Total'
+    , cash: "1,28,925", bal: "",
+    desc: "", status: ""
+  },
+
 
 ];
