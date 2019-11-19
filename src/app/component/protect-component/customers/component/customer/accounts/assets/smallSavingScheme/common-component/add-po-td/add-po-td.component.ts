@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-add-po-td',
@@ -19,7 +20,7 @@ export class AddPoTdComponent implements OnInit {
   advisorId: any;
   isOptionalField: any;
 
-  constructor(private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService) { }
+  constructor(private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService,private subInjectService: SubscriptionInject) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -39,18 +40,18 @@ export class AddPoTdComponent implements OnInit {
       data = {};
     }
     this.POTDForm=this.fb.group({
-      ownerName: [, [Validators.required]],
-      amtInvested:[,[Validators.required]],
+      ownerName: [data.ownerName, [Validators.required]],
+      amtInvested:[data.amountInvested,[Validators.required]],
       commDate:[,[Validators.required]],
-      tenure:[,[Validators.required]],
-      ownershipType:[,[Validators.required]]
+      tenure:[data.tenure,[Validators.required]],
+      ownershipType:[data.ownerTypeId,[Validators.required]]
     })
     this.POTDOptionalForm=this.fb.group({
       poBranch: [],
       nominee: [],
-      tdNum: [],
+      tdNum: [data.tdNumber],
       bankAccNum:[],
-      description:[]
+      description:[data.description]
     })
     this.ownerData = this.POTDForm.controls;
 
@@ -61,6 +62,10 @@ export class AddPoTdComponent implements OnInit {
   ngOnInit() {
     this.advisorId=AuthService.getAdvisorId();
     this.isOptionalField=true
+  }
+  close() {
+    this.isOptionalField = true
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
 }

@@ -24,6 +24,7 @@ export class AddSsyComponent implements OnInit {
   ownerData: any;
   isOptionalField: boolean;
   advisorId: any;
+  editApi: any;
 
   constructor(private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
@@ -43,6 +44,9 @@ export class AddSsyComponent implements OnInit {
   getdataForm(data) {
     if (data == undefined) {
       data = {};
+    }
+    else {
+      this.editApi = data
     }
     this.ssySchemeForm = this.fb.group({
       ownerName: [, [Validators.required]],
@@ -71,34 +75,73 @@ export class AddSsyComponent implements OnInit {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
   }
   addSSYScheme() {
-    let obj =
-    {
-      "clientId": 2978,
-      "advisorId": this.advisorId,
-      "familyMemberId": this.familyMemberId,
-      "ownerName": this.ownerName,
-      "accountBalance": this.ssySchemeForm.get('accBalance').value,
-      "balanceAsOn": this.ssySchemeForm.get('balanceAsOn').value,
-      "commencementDate": this.ssySchemeForm.get('commDate').value,
-      "description": this.ssySchemeOptionalForm.get('description').value,
-      "bankName": this.ssySchemeOptionalForm.get('bankName').value,
-      "linkedBankAccount": this.ssySchemeOptionalForm.get('linkedAcc').value,
-      "agentName": this.ssySchemeOptionalForm.get('agentName').value,
-      "guardianName": this.ssySchemeForm.get('guardian').value,
-
-      "ssyFutureContributionList": [{
-        "futureApproxContribution": this.ssySchemeForm.get('futureAppx').value,
-        "frequency": this.ssySchemeForm.get('futureAppx').value,
-        "nomineeName": this.ssySchemeOptionalForm.get('nominee').value
-
-      }],
-      "ssyTransactionList": []
+    if (this.ssySchemeForm.get('guardian').invalid) {
+      return
     }
+    else if (this.ssySchemeForm.get('accBalance').invalid) {
+      return
+    }
+    else if (this.ssySchemeForm.get('balanceAsOn').invalid) {
+      return
+    }
+    else if (this.ssySchemeForm.get('commDate').invalid) {
+      return
+    }
+    else if (this.ssySchemeForm.get('futureAppx').invalid) {
+      return
+    }
+    else if (this.ssySchemeForm.get('frquency').invalid) {
+      return
+    }
+    else {
+      if (this.editApi) {
+        let obj = {
+          "id": this.editApi.id,
+          "familyMemberId": this.familyMemberId,
+          "ownerName": this.ownerName,
+          "accountBalance": this.ssySchemeForm.get('accBalance').value,
+          "balanceAsOn": this.ssySchemeForm.get('balanceAsOn').value,
+          "commencementDate":this.ssySchemeForm.get('commDate').value,
+          "description":  this.ssySchemeOptionalForm.get('description').value,
+          "bankName": this.ssySchemeOptionalForm.get('bankName').value,
+          "linkedBankAccount":this.ssySchemeOptionalForm.get('linkedAcc').value,
+          "agentName":this.ssySchemeOptionalForm.get('agentName').value,
+          "guardianName": this.ssySchemeForm.get('guardian').value,
+        }
+        this.cusService.editSSYData(obj).subscribe(
+          data=>this.addSSYSchemeResponse(data),
+          err=> this.eventService.openSnackBar(err)
+        )
+      }
+      else {
+        let obj =
+        {
+          "clientId": 2978,
+          "advisorId": this.advisorId,
+          "familyMemberId": this.familyMemberId,
+          "ownerName": this.ownerName,
+          "accountBalance": this.ssySchemeForm.get('accBalance').value,
+          "balanceAsOn": this.ssySchemeForm.get('balanceAsOn').value,
+          "commencementDate": this.ssySchemeForm.get('commDate').value,
+          "description": this.ssySchemeOptionalForm.get('description').value,
+          "bankName": this.ssySchemeOptionalForm.get('bankName').value,
+          "linkedBankAccount": this.ssySchemeOptionalForm.get('linkedAcc').value,
+          "agentName": this.ssySchemeOptionalForm.get('agentName').value,
+          "guardianName": this.ssySchemeForm.get('guardian').value,
 
-    this.cusService.addSSYScheme(obj).subscribe(
-      data => this.addSSYSchemeResponse(data),
-      err => this.eventService.openSnackBar(err)
-    )
+          "ssyFutureContributionList": [{
+            "futureApproxContribution": this.ssySchemeForm.get('futureAppx').value,
+            "frequency": this.ssySchemeForm.get('futureAppx').value,
+            "nomineeName": this.ssySchemeOptionalForm.get('nominee').value
+          }],
+          "ssyTransactionList": []
+        }
+        this.cusService.addSSYScheme(obj).subscribe(
+          data => this.addSSYSchemeResponse(data),
+          err => this.eventService.openSnackBar(err)
+        )
+      }
+    }
   }
   addSSYSchemeResponse(data) {
     console.log(data)

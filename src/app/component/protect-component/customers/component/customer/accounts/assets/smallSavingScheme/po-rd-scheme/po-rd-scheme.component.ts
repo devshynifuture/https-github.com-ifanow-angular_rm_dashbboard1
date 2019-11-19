@@ -25,7 +25,6 @@ export class PoRdSchemeComponent implements OnInit {
     const obj={
       advisorId:this.advisorId,
       clientId:this.clientId,
-      requiredDate:''
     }
     this.cusService.getSmallSavingSchemePORDData(obj).subscribe(
       data=>this.getPoRdSchemedataResponse(data)
@@ -33,13 +32,14 @@ export class PoRdSchemeComponent implements OnInit {
   }
   getPoRdSchemedataResponse(data)
   {
-    this.datasource=data
+    this.datasource=data.PostOfficeRDList
     console.log(data)
   }
-  addPORD(value)
+  addPORD(value,data)
   {
     const fragmentData = {
       Flag:value,
+      data,
       id: 1,
       state: 'open'
     };

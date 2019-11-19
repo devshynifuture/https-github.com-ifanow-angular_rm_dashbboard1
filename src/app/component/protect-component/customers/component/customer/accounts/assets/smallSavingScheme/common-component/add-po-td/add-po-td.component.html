@@ -51,10 +51,8 @@
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select  formControlName="tenure" class="form-control br-0">
-                                <mat-option [value]="">Months</mat-option>
-                                <mat-option *ngFor="let M of fdMonths" [value]="M">
-                                    <span>{{M}}</span>
-                                </mat-option>
+                               <mat-option value="5">5 Months</mat-option>
+                               <mat-option value="10">10 Months</mat-option>
                             </mat-select>
                             <mat-error class="f-12 pt-4" >
                                 Tenure is required
@@ -70,7 +68,6 @@
             <div class="col-md-5">
                 <mat-form-field>
                     <mat-select formControlName="ownershipType" class="form-control br-0">
-                        <mat-option value=""> Select option </mat-option>
                         <mat-option value="1"> Joint </mat-option>
                         <mat-option value="2">Single </mat-option>
                     </mat-select>

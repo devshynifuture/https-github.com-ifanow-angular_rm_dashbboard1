@@ -94,6 +94,10 @@ export const appConfig = {
   ADD_SCSS_SCHEME:'account/asset/saving-scheme/scss/add',
   ADD_PO_SAVING:'account/asset/saving-scheme/po-saving/add',
   ADD_PO_RD_SCHEME:'account/asset/saving-scheme/pord/add',
+  EDIT_NSC_SCHEME:'account/asset/saving-scheme/nsc/edit',
+  EDIT_SSY_SCHEME:'account/asset/saving-scheme/ssy/edit',
+  EDIT_SCSS_SCHEME:'account/asset/saving-scheme/scss/edit',
+  EDIT_POSAVING_SCHEME:'account/asset/saving-scheme/po-saving/edit',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE:'account/asset/real-estate/get',
   GET_EPF:'account/asset/retirement/epf/list/get',

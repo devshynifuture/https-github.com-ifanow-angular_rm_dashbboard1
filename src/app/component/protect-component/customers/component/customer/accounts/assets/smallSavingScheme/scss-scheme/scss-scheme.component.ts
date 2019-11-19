@@ -3,11 +3,16 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 
 @Component({
   selector: 'app-scss-scheme',
   templateUrl: './scss-scheme.component.html',
-  styleUrls: ['./scss-scheme.component.scss']
+  styleUrls: ['./scss-scheme.component.scss'],
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  ]
 })
 export class ScssSchemeComponent implements OnInit {
   advisorId: any;
@@ -35,10 +40,11 @@ export class ScssSchemeComponent implements OnInit {
     this.datasource=data.scssList
     console.log(data)
   }
-  addOpenSCSS(value)
+  addOpenSCSS(value,data)
   {
     const fragmentData = {
       Flag:value,
+      data,
       id: 1,
       state: 'open'
     };

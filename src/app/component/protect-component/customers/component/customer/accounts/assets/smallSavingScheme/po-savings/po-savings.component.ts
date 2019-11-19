@@ -32,13 +32,14 @@ export class PoSavingsComponent implements OnInit {
   }
   getPoSavingSchemedataResponse(data)
   {
-    this.datasource=data.PostOfficeSavingsList;
+    this.datasource=data.PostOfficeRDList;
     console.log(data)
   }
-  addPOSAVING(value)
+  addPOSAVING(value,data)
   {
     const fragmentData = {
       Flag:value,
+      data,
       id: 1,
       state: 'open'
     };

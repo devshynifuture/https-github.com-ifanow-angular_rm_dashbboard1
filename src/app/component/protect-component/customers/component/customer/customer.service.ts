@@ -103,12 +103,12 @@ export class CustomerService {
   }
   getSmallSavingSchemePORDData(data)
   {
-    let httpParams =new HttpParams().set("advisorId",data.advisorId).set('clientId',data.clientId).set('requiredDate',data.requiredDate);
+    let httpParams =new HttpParams().set("advisorId",data.advisorId).set('clientId',data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PO_RD,httpParams)
   }
   getSmallSavingSchemePOTDData(data)
   {
-    let httpParams =new HttpParams().set("advisorId",data.advisorId).set('clientId',data.clientId).set('requiredDate',data.requiredDate);
+    let httpParams =new HttpParams().set("advisorId",data.advisorId).set('clientId',data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PO_TD,httpParams)
   }
   getSmallSavingSchemePOMISData(data)
@@ -243,5 +243,21 @@ export class CustomerService {
   }
   editOthers(data){
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_OTHERS,data)
+  }
+  editNSCData(data)
+  {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_NSC_SCHEME,data)
+  }
+  editSSYData(data)
+  {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_SSY_SCHEME,data)
+  }
+  editSCSSData(data)
+  {
+    return this,this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_SCSS_SCHEME,data)
+  }
+  editPOSAVINGData(data)
+  {
+    return this,this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_SCSS_SCHEME,data)
   }
 }

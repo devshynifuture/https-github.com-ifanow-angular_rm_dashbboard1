@@ -118,19 +118,7 @@ export class AddPpfComponent implements OnInit {
         "bankName": this.optionalppfSchemeForm.get('bankName').value,
         "linkedBankAccount": this.optionalppfSchemeForm.get('linkedBankAccount').value,
         "nomineeName": this.optionalppfSchemeForm.get('nominee').value,
-        "publicprovidendfundtransactionlist": [
-          // {
-          //   "date": "2019-09-01",
-          //   "amount": 87.00,
-          //   "paymentType": "Withdraw"
-          // }
-          // ,
-          // {
-          //   "date": "2019-09-03",
-          //   "amount": 8907.00,
-          //   "paymentType": "Deposite"
-          // }
-        ]
+        "publicprovidendfundtransactionlist":this.transactionList
       }
       this.cusService.addPPFScheme(obj).subscribe(
         data => this.addPPFResponse(data),

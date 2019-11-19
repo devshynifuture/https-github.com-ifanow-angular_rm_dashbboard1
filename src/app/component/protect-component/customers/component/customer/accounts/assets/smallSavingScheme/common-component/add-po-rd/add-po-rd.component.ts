@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-add-po-rd',
@@ -18,8 +19,9 @@ export class AddPoRdComponent implements OnInit {
   ownerData: any;
   PORDForm: any;
   PORDFormoptionalForm: any;
+  editApi: any;
 
-  constructor(private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService) { }
+  constructor(private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService,private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
     this.isOptionalField = true
@@ -46,18 +48,22 @@ export class AddPoRdComponent implements OnInit {
     if (data == undefined) {
       data = {};
     }
+    else
+    {
+      this.editApi=data
+    }
     this.PORDForm = this.fb.group({
-      ownerName: [, [Validators.required]],
-      monthlyContribution: [, [Validators.required]],
-      commDate: [, [Validators.required]],
-      ownership: [, [Validators.required]]
+      ownerName: [data.ownerName, [Validators.required]],
+      monthlyContribution: [data.monthlyContribution, [Validators.required]],
+      commDate: [data.commencementDate, [Validators.required]],
+      ownership: [String(data.ownerTypeId), [Validators.required]]
     })
     this.PORDFormoptionalForm = this.fb.group({
-      rdNum: [],
-      poBranch: [],
-      nominee: [],
+      rdNum: [data.rdNumber],
+      poBranch: [data.postOfficeBranch],
+      nominee: [data.nominee],
       linkedBankAcc: [],
-      description: []
+      description: [data.description]
     })
     this.ownerData = this.PORDForm.controls;
 
@@ -85,5 +91,9 @@ export class AddPoRdComponent implements OnInit {
   addPORDResponse(data)
   {
    console.log(data)
+  }
+  close() {
+    this.isOptionalField = true
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 }

@@ -4,11 +4,16 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 
 @Component({
   selector: 'app-add-scss',
   templateUrl: './add-scss.component.html',
-  styleUrls: ['./add-scss.component.scss']
+  styleUrls: ['./add-scss.component.scss'],
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  ]
 })
 export class AddScssComponent implements OnInit {
   inputData: any;
@@ -19,12 +24,13 @@ export class AddScssComponent implements OnInit {
   advisorId: any;
   ownerData: any;
   isOptionalField: any;
+  editApi: any;
 
-  constructor( private subInjectService: SubscriptionInject,private fb: FormBuilder,private cusService: CustomerService,private eventService: EventService) { }
+  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
-    this.isOptionalField=true
+    this.isOptionalField = true
   }
 
   @Input()
@@ -41,17 +47,20 @@ export class AddScssComponent implements OnInit {
     if (data == undefined) {
       data = {};
     }
+    else {
+      this.editApi = data
+    }
     this.scssSchemeForm = this.fb.group({
-      ownerName: [, [Validators.required]],
-      amtInvested: [, [Validators.required]],
+      ownerName: [data.ownerName, [Validators.required]],
+      amtInvested: [data.amountInvested, [Validators.required]],
       commDate: [, [Validators.required]],
-      ownershipType: [, [Validators.required]]
+      ownershipType: [parseInt(data.ownerTypeId), [Validators.required]]
     })
     this.scssOptionalSchemeForm = this.fb.group({
       poBranch: [],
       nominee: [],
       bankAccNumber: [],
-      description: []
+      description: [data.description]
     })
     this.ownerData = this.scssSchemeForm.controls;
   }
@@ -72,29 +81,50 @@ export class AddScssComponent implements OnInit {
       return
     }
     else {
-      let obj =
-      {
-        "clientId": 2978,
-        "familyMemberId": this.familyMemberId,
-        "advisorId": this.advisorId,
-        "ownerName": this.ownerName,
-        "amountInvested": this.scssSchemeForm.get('amtInvested').value,
-        "commencementDate": this.scssSchemeForm.get('commDate').value,
-        "postOfficeBranch": this.scssOptionalSchemeForm.get('poBranch').value,
-        "bankAccountNumber": this.scssOptionalSchemeForm.get('bankAccNumber').value,
-        "ownerTypeId": this.scssSchemeForm.get('ownershipType').value,
-        "nominee": this.scssOptionalSchemeForm.get('nominee').value,
-        "description": this.scssOptionalSchemeForm.get('description').value
+      if (this.editApi) {
+        let obj = {
+          "id": this.editApi.id,
+          "clientId": 2978,
+          "familyMemberId": this.familyMemberId,
+          "advisorId": this.advisorId,
+          "ownerName": this.ownerName,
+          "amountInvested": this.scssSchemeForm.get('amtInvested').value,
+          "commencementDate": this.scssSchemeForm.get('commDate').value,
+          "postOfficeBranch": this.scssOptionalSchemeForm.get('poBranch').value,
+          "bankAccountNumber": this.scssOptionalSchemeForm.get('bankAccNumber').value,
+          "ownerTypeId": this.scssSchemeForm.get('ownershipType').value,
+          "nominee": this.scssOptionalSchemeForm.get('nominee').value,
+          "description": this.scssOptionalSchemeForm.get('description').value
+        }
+        this.cusService.editSCSSData(obj).subscribe(
+          data => this.addScssResponse(data),
+          err => this.eventService.openSnackBar(err)
+        )
       }
-      this.cusService.addSCSSScheme(obj).subscribe(
-        data=>this.addScssResponse(data),
-        err=>this.eventService.openSnackBar(err)
-      )
+      else {
+        let obj =
+        {
+          "clientId": 2978,
+          "familyMemberId": this.familyMemberId,
+          "advisorId": this.advisorId,
+          "ownerName": this.ownerName,
+          "amountInvested": this.scssSchemeForm.get('amtInvested').value,
+          "commencementDate": this.scssSchemeForm.get('commDate').value,
+          "postOfficeBranch": this.scssOptionalSchemeForm.get('poBranch').value,
+          "bankAccountNumber": this.scssOptionalSchemeForm.get('bankAccNumber').value,
+          "ownerTypeId": this.scssSchemeForm.get('ownershipType').value,
+          "nominee": this.scssOptionalSchemeForm.get('nominee').value,
+          "description": this.scssOptionalSchemeForm.get('description').value
+        }
+        this.cusService.addSCSSScheme(obj).subscribe(
+          data => this.addScssResponse(data),
+          err => this.eventService.openSnackBar(err)
+        )
+      }
     }
   }
-  addScssResponse(data)
-  {
-   console.log(data)
+  addScssResponse(data) {
+    console.log(data)
   }
 
   close() {

@@ -6,6 +6,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-add-nsc',
@@ -23,6 +24,7 @@ export class AddNscComponent implements OnInit {
   nscFormOptionalField: any;
   ownerName: any;
   familyMemberId: any;
+  editApi: any;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -32,11 +34,11 @@ export class AddNscComponent implements OnInit {
   get data() {
     return this.inputData;
   }
-  constructor(private eventService: EventService,private fb: FormBuilder, private subInjectService: SubscriptionInject,private cusService:CustomerService) { }
+  constructor(private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   isOptionalField
   ngOnInit() {
     this.isOptionalField = true
-    this.advisorId=AuthService.getAdvisorId();
+    this.advisorId = AuthService.getAdvisorId();
   }
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
@@ -46,20 +48,23 @@ export class AddNscComponent implements OnInit {
     if (data == undefined) {
       data = {};
     }
+    else {
+      this.editApi = data
+    }
     this.nscFormField = this.fb.group({
-      ownerName: [, [Validators.required]],
-      amountInvested: [, [Validators.required]],
-      commDate: [, [Validators.required]],
-      Tenure: [, [Validators.required]],
-      ownershipType: [, [Validators.required]]
-  
+      ownerName: [String(data.ownerName), [Validators.required]],
+      amountInvested: [data.amountInvested, [Validators.required]],
+      commDate: [data.commencementDate, [Validators.required]],
+      Tenure: [String(data.tenure), [Validators.required]],
+      ownershipType: [String(data.ownerTypeId), [Validators.required]]
+
     })
     this.nscFormOptionalField = this.fb.group({
-      cNo: [, [Validators.required]],
-      poBranch: [, [Validators.required]],
-      nominee: [, [Validators.required]],
-      linkedBankAccount: [, [Validators.required]],
-      description: [, [Validators.required]]
+      cNo: [data.certificateNumber, [Validators.required]],
+      poBranch: [data.postOfficeBranch, [Validators.required]],
+      nominee: [data.nominee, [Validators.required]],
+      linkedBankAccount: [data.bankAccountNumber, [Validators.required]],
+      description: [data.description, [Validators.required]]
     })
     this.ownerData = this.nscFormField.controls;
 
@@ -70,53 +75,71 @@ export class AddNscComponent implements OnInit {
     this.familyMemberId = value.id
   }
   addNSC() {
-    if(this.ownerName==undefined)
-    {
+    if (this.ownerName == undefined) {
       return
     }
-    else if(this.nscFormField.get('amountInvested').invalid)
-    {
+    else if (this.nscFormField.get('amountInvested').invalid) {
       return
     }
-    else if(this.nscFormField.get('commDate').invalid)
-    {
+    else if (this.nscFormField.get('commDate').invalid) {
 
     }
-    else if(this.nscFormField.get('Tenure').invalid)
-    {
+    else if (this.nscFormField.get('Tenure').invalid) {
 
     }
-    else if(this.nscFormField.get('ownershipType').invalid)
-    {
+    else if (this.nscFormField.get('ownershipType').invalid) {
 
     }
-    else{
-    let obj =
-    {
-      "clientId": 2978,
-      "familyMemberId": this.familyMemberId,
-      "advisorId":this.advisorId,
-      "ownerName": this.ownerName,
-      "amountInvested":this.nscFormField.get('amountInvested').value,
-      "commencementDate": this.nscFormField.get('commDate').value._d,
-      "tenure": this.nscFormField.get('Tenure').value,
-      "certificateNumber":this.nscFormOptionalField.get('cNo').value,
-      "postOfficeBranch": this.nscFormOptionalField.get('poBranch').value,
-      "bankAccountNumber": this.nscFormOptionalField.get('linkedBankAccount').value,
-      "ownerTypeId":this.nscFormField.get('ownershipType').value,
-      "nominee":this.nscFormOptionalField.get('nominee').value,
-      "description": this.nscFormOptionalField.get('description').value
+    else {
+      if (this.editApi) {
+        let obj =
+        {
+          "id": this.editApi.id,
+          "familyMemberId": this.familyMemberId,
+          "ownerName": this.ownerName,
+          "amountInvested": this.nscFormField.get('amountInvested').value,
+          "commencementDate": this.nscFormField.get('commDate').value._d,
+          "tenure": this.nscFormField.get('Tenure').value,
+          "certificateNumber": this.nscFormOptionalField.get('cNo').value,
+          "postOfficeBranch": this.nscFormOptionalField.get('poBranch').value,
+          "bankAccountNumber": this.nscFormOptionalField.get('linkedBankAccount').value,
+          "ownerTypeId": parseInt(this.nscFormField.get('ownershipType').value),
+          "nominee": this.nscFormOptionalField.get('nominee').value,
+          "description": this.nscFormOptionalField.get('description').value,
+          "createdDate": "2000-01-01"
+        }
+        this.cusService.editNSCData(obj).subscribe(
+            data => this.addNSCResponse(data),
+            err=>this.eventService.openSnackBar(err)
+          )
+      }
+      else {
+        let obj =
+        {
+          "clientId": 2978,
+          "familyMemberId": this.familyMemberId,
+          "advisorId": this.advisorId,
+          "ownerName": this.ownerName,
+          "amountInvested": this.nscFormField.get('amountInvested').value,
+          "commencementDate": this.nscFormField.get('commDate').value._d,
+          "tenure": this.nscFormField.get('Tenure').value,
+          "certificateNumber": this.nscFormOptionalField.get('cNo').value,
+          "postOfficeBranch": this.nscFormOptionalField.get('poBranch').value,
+          "bankAccountNumber": this.nscFormOptionalField.get('linkedBankAccount').value,
+          "ownerTypeId": parseInt(this.nscFormField.get('ownershipType').value),
+          "nominee": this.nscFormOptionalField.get('nominee').value,
+          "description": this.nscFormOptionalField.get('description').value
+        }
+        console.log(obj)
+        this.cusService.addNSCScheme(obj).subscribe(
+          data => this.addNSCResponse(data),
+          err => this.eventService.openSnackBar(err)
+        )
+      }
     }
-    console.log(obj)
-    this.cusService.addNSCScheme(obj).subscribe(
-      data =>this.addNSCResponse(data),
-      err=>this.eventService.openSnackBar(err)
-    )
   }
-}
-  addNSCResponse(data)
-  {
-   console.log(data)
+  addNSCResponse(data) {
+    console.log(data)
   }
   close() {
     this.isOptionalField = true
