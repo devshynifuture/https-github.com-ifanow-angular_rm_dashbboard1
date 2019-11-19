@@ -10,20 +10,18 @@
         </div>
     </div>
 </div>
-<div [formGroup]="superannuation" class="pt-60 pl-24 pr-24 pb-48 mb-44">
+<div [formGroup]="superannuation" class="pt-100 pl-24 pr-24 pb-48 mb-44">
     <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
     <div class="row pt-24">
         <div class="col-md-5 text-right">
-            <h5 class="m-0 pt-8">Employee's Monthly Contribution</h5>
+            <h5 class="m-0 pt-8">Annual employer contribution</h5>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #employeeContry type="text" (keypress)="keyPress($event)" maxlength="20"
-                        class="form-control br-0 rupess" formControlName="employeeContry">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isEmployeeContry && getFormControl().employeeContry.invalid || getFormControl().employeeContry.touched && getFormControl().employeeContry.invalid)}">
-                        Employee's Monthly Contribution required
+                    <input matInput #employeeContry type="text" (keypress)="keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="employeeContry">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isEmployeeContry && getFormControl().employeeContry.invalid || getFormControl().employeeContry.touched && getFormControl().employeeContry.invalid)}">
+                        Annual employer contribution required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -32,16 +30,14 @@
 
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Employer's Monthly Contribution</h5>
+            <h5 class="m-0 pt-8">Annual employee contribution</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #employerContry type="number" (utils.keypress)="utils.keyPress($event)"
-                        maxlength="20" class="form-control br-0 rupess" formControlName="employerContry">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isEmployerContry && getFormControl().employerContry.invalid || getFormControl().employerContry.touched && getFormControl().employerContry.invalid)}">
-                        Employer's Monthly Contribution is required
+                    <input matInput #employerContry type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="employerContry">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isEmployerContry && getFormControl().employerContry.invalid || getFormControl().employerContry.touched && getFormControl().employerContry.invalid)}">
+                        Annual employee contribution is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -54,10 +50,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #assumedRateReturn type="number" (utils.keypress)="utils.keyPress($event)"
-                        maxlength="20" class="form-control br-0 rupess" formControlName="assumedRateReturn">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isAssumedRateReturn && getFormControl().assumedRateReturn.invalid || getFormControl().assumedRateReturn.touched && getFormControl().assumedRateReturn.invalid)}">
+                    <input matInput #assumedRateReturn type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="assumedRateReturn">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isAssumedRateReturn && getFormControl().assumedRateReturn.invalid || getFormControl().assumedRateReturn.touched && getFormControl().assumedRateReturn.invalid)}">
                         Assumed rate of returns is required
                     </mat-error>
                 </mat-form-field>
@@ -71,10 +65,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="number" (utils.keypress)="utils.keyPress($event)"
-                        class="form-control br-0 percentage" formControlName="growthEmployer">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isGrowthEmployer && getFormControl().growthEmployer.invalid || getFormControl().growthEmployer.touched && getFormControl().growthEmployer.invalid)}">
+                    <input matInput type="number" (utils.keypress)="utils.keyPress($event)" class="form-control br-0 percentage" formControlName="growthEmployer">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isGrowthEmployer && getFormControl().growthEmployer.invalid || getFormControl().growthEmployer.touched && getFormControl().growthEmployer.invalid)}">
                         Growth rate of employer required
                     </mat-error>
                 </mat-form-field>
@@ -88,10 +80,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="text" type="number" (utils.keypress)="utils.keyPress($event)"
-                        class="form-control br-0 percentage" formControlName="growthEmployee">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isGrowthEmployee && getFormControl().growthEmployee.invalid || getFormControl().growthEmployee.touched && getFormControl().growthEmployee.invalid)}">
+                    <input matInput type="text" type="number" (utils.keypress)="utils.keyPress($event)" class="form-control br-0 percentage" formControlName="growthEmployee">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isGrowthEmployee && getFormControl().growthEmployee.invalid || getFormControl().growthEmployee.touched && getFormControl().growthEmployee.invalid)}">
                         Growth rate of employee is required
                     </mat-error>
                 </mat-form-field>
@@ -104,11 +94,10 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input matInput formControlName="firstDateContry" [matDatepicker]="picker">
+                <input matInput formControlName="firstDateContry" class="form-control br-0" [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isFirstDateContry && getFormControl().firstDateContry.invalid || getFormControl().firstDateContry.touched && getFormControl().firstDateContry.invalid)}">
+                <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isFirstDateContry && getFormControl().firstDateContry.invalid || getFormControl().firstDateContry.touched && getFormControl().firstDateContry.invalid)}">
                     Date first contribution is required
                 </mat-error>
             </mat-form-field>
@@ -134,8 +123,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #linkBankAc type="number" (utils.keypress)="utils.keyPress($event)"
-                            maxlength="30" class="form-control br-0" formControlName="linkBankAc">
+                        <input matInput #linkBankAc type="number" (utils.keypress)="utils.keyPress($event)" maxlength="30" class="form-control br-0" formControlName="linkBankAc">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -148,8 +136,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" class="form-control br-0"
-                            formControlName="description">
+                        <input matInput #description maxlength="60" class="form-control br-0" formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>

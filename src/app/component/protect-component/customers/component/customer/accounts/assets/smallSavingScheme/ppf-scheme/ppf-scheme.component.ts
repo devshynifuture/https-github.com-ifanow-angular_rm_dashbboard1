@@ -37,7 +37,7 @@ export class PPFSchemeComponent implements OnInit {
     console.log(data)
     this.datasource = data
   }
-  addPPF(value) {
+  opnAddPPF(value) {
     const fragmentData = {
       Flag:value,
       id: 1,

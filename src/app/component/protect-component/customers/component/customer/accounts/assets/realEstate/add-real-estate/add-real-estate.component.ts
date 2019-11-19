@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { Validators, FormBuilder, FormArray } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-real-estate',
@@ -29,20 +31,42 @@ export class AddRealEstateComponent implements OnInit {
   month: any;
   days: any;
   purchasePeriod: any;
+  family: any;
+  _inputData: any;
 
-  constructor(public subInjectService:SubscriptionInject,private fb: FormBuilder) { }
+  constructor(public custumService:CustomerService,public subInjectService:SubscriptionInject,private fb: FormBuilder,public custmService:CustomerService,public eventService:EventService) { }
+  @Input()
+  set inputData(inputData) {
+    this._inputData = inputData;
+    this.getRealEstate(inputData);
+  }
 
+  get inputData() {
+    return this._inputData;
+  }
   ngOnInit() {
     this.addOwner=false;
     this.showMoreData=false;
     this.showArea=false;
     this.showNominee=false;
     this.advisorId = AuthService.getAdvisorId();
-    this.getRealEstate('');
+    this.getListFamilyMem();
     this.estateDays= ['0','1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
     this.estateMonths=['January','February','March','April','May','June','July','August','September','October','November','December']
   }
-
+  getListFamilyMem() {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: 2978
+    }
+    this.custmService.getListOfFamilyByClient(obj).subscribe(
+      data => this.getListOfFamilyByClientRes(data)
+    );
+  }
+  getListOfFamilyByClientRes(data) {
+    console.log('family Memebers', data)
+    this.family = data.familyMembersList
+  }
   close(){
      this.subInjectService.changeNewRightSliderState({ state: 'close' });
    }
@@ -57,9 +81,9 @@ export class AddRealEstateComponent implements OnInit {
   addCoOwner(){
     this.addOwner=true;
   }
-  removeCoOwner(){
-    this.addOwner=false;
-  }
+  // removeCoOwner(){
+  //   this.addOwner=false;
+  // }
   showMore(){
     this.showMoreData=true;
   }
@@ -96,25 +120,47 @@ export class AddRealEstateComponent implements OnInit {
     }
 
   }
+  get getCoOwner() {
+    return this.addrealEstateForm.get('getCoOwnerName') as FormArray;
+  }
+  addNewCoOwner(data){
+    if(this.addOwner==data){
+      this.getCoOwner.push(this.fb.group({ coOwnerName: null,
+        coOwnerPer: null,
+      }));
+    }else{
+      this.addOwner=data;
+    }
+
+    
+  }
+removeCoOwner(item){
+  // this.showNominee=false
+    this.getCoOwner.removeAt(item);
+
+}
    getRealEstate(data){
     if (data == undefined) {
       data = {};
     }
     this.addrealEstateForm = this.fb.group({
       ownerName:this.ownerName,
+      getCoOwnerName: this.fb.array([this.fb.group({  coOwnerName:null,
+        coOwnerPer: null,
+       })]),
       ownerPercent: [data.ownerPercent , [Validators.required]],
       coOwnerPercent: [(data.coOwnerPercent)+"", [Validators.required]],
-      type: [data.type, [Validators.required]],
+      type: [(data.typeId)+"", [Validators.required]],
       marketValue: [data.marketValue, [Validators.required]],
       year:[data.year],
       month: [data.month, [Validators.required]],
       days:[data.days,[Validators.required]],
       purchaseValue: [data.purchaseValue, [Validators.required]],
-      unit: [data.unit, [Validators.required]],
+      unit: [data.unitId, [Validators.required]],
       ratePerUnit: [data.ratePerUnit, [Validators.required]],
-      stampDuty: [data.stampDuty, [Validators.required]],
-      registration: [data.registration],
-      gst: [data.gst],
+      stampDuty: [data.stampDutyCharge, [Validators.required]],
+      registration: [data.registrationCharge],
+      gst: [data.gstCharge],
       location: [data.location],
       description: [data.description],
       nominee: [data.nominee],
@@ -122,6 +168,20 @@ export class AddRealEstateComponent implements OnInit {
         ownershipPer: null,
        })])
     });
+    if(data.realEstateNominees!=undefined){
+      data.realEstateNominees.forEach(element => {
+        this.addrealEstateForm.controls.getNomineeName=this.fb.array([this.fb.group({
+          name: [element.name,[Validators.required]],
+          ownershipPer:[ (element.ownershipPer),Validators.required]})])
+      })
+    }
+    if(data.realEstateOwners!=undefined){
+      data.realEstateOwners.forEach(element => {
+        this.addrealEstateForm.controls.getCoOwner=this.fb.array([this.fb.group({
+          ownerName: [(element.ownerName),[Validators.required]],
+          ownershipPerc: [element.ownershipPerc,Validators.required]})])
+      })
+    }
     this.ownerData = this.addrealEstateForm.controls;
 
     }
@@ -146,45 +206,96 @@ export class AddRealEstateComponent implements OnInit {
         location:this.addrealEstateForm.controls.location.value,
         description:this.addrealEstateForm.controls.description.value,
         nominee:this.addrealEstateForm.controls.nominee.value,
+        nomineeData:[],
+        ownerData:[],
         }
-        let objToSend={
-          "clientId": 2978,
-            "advisorId": this.advisorId,
-            "typeId": obj.type,
-            "marketValue": obj.marketValue,
-            "purchasePeriod": "2019-10-14",
-            "purchaseValue": obj.purchaseValue,
-            "unitId": obj.unit,
-            "ratePerUnit": obj.ratePerUnit,
-            "stampDutyCharge": obj.stampDuty,
-            "registrationCharge": obj.registration,
-            "gstCharge": obj.gst,
-            "location": obj.location,
-            "description": obj.location,
-            "realEstateOwners": [
-            {
-            "ownerName":this.ownerName,
-            "familyMemberId":2978,
-            "ownershipPerc":obj.ownerName
-            },{
-            "ownerName":"Shyam",
-            "familyMemberId":2978,
-            "ownershipPerc":obj.coOwnerPercent
-            }
-            ],
-            "realEstateNominees":[
-            {
-            "name":obj.nominee,
-            "familyMemberId":2978,
-            "ownershipPer":50
-            },{
-            "name":obj.nominee,
-            "familyMemberId":2978,
-            "ownershipPer":50
-            }
-            ]
+        this.addrealEstateForm.value.getNomineeName.forEach(element => {
+          if(element){
+           let obj1={
+            'name': element.nomineeName,
+            'familyMemberId':this.selectedFamilyData.id,
+            'ownershipPer':parseInt(element.ownershipPer)
+           }
+          obj.nomineeData.push(obj1)
         }
-        console.log(obj);
+      });
+          this.addrealEstateForm.value.getNomineeName.forEach(element => {
+            if(element){
+             let obj1={
+              'name': element.coOwnerName,
+              'familyMemberId':this.selectedFamilyData.id,
+              'ownershipPer':parseInt(element.coOwnerPer)
+             }
+            obj.ownerData.push(obj1)
+            }
+        });
+        if(this._inputData=='Add'){
+          let objToSend={
+            "clientId": 2978,
+              "advisorId": this.advisorId,
+              "typeId": obj.type,
+              "marketValue": obj.marketValue,
+              "purchasePeriod": this.purchasePeriod,
+              "purchaseValue": obj.purchaseValue,
+              "unitId": obj.unit,
+              "ratePerUnit": obj.ratePerUnit,
+              "stampDutyCharge": obj.stampDuty,
+              "registrationCharge": obj.registration,
+              "gstCharge": obj.gst,
+              "location": obj.location,
+              "description": obj.description,
+              "realEstateOwners": obj.ownerData,
+              "realEstateNominees":obj.nomineeData,      
+              }
+          console.log(obj);
+          this.custumService.addRealEstate(objToSend).subscribe(
+            data => this.addRealEstateRes(data)
+          );
+        }else{
+          let objToSend={
+              "id":this._inputData.id,
+              "clientId": 2978,
+              "advisorId":  this.advisorId,
+              "typeId": obj.type,
+              "marketValue":  obj.marketValue,
+              "purchasePeriod": this.purchasePeriod,
+              "purchaseValue": obj.purchaseValue,
+              "unitId":  obj.unit,
+              "ratePerUnit": obj.ratePerUnit,
+              "stampDutyCharge": obj.stampDuty,
+              "registrationCharge": obj.registration,
+              "gstCharge": obj.gst,
+              "location":  obj.location,
+              "description": obj.description,
+              "realEstateOwners": obj.ownerData,
+              "realEstateNominees":obj.nomineeData,      
+              }
+          console.log(obj);
+          this.custumService.editRealEstate(objToSend).subscribe(
+            data => this.editRealEstateRes(data)
+          );
+        }
+      
    }
+   addRealEstateRes(data){
+     console.log(data);
+     if(data){
+      console.log(data);
+      this.subInjectService.changeNewRightSliderState({ state: 'close'})
+      this.eventService.openSnackBar('Liabilities added successfully', 'OK');   
+    }else{
+      this.eventService.openSnackBar('Error', 'dismiss');   
 
-}
+    }
+   }
+   editRealEstateRes(data){
+    console.log(data);
+    if(data){
+      console.log(data);
+      this.subInjectService.changeNewRightSliderState({ state: 'close' })
+      this.eventService.openSnackBar('Liabilities edited successfully', 'OK'); 
+    }else{
+      this.eventService.openSnackBar('Error', 'dismiss');   
+    }
+   }
+  }

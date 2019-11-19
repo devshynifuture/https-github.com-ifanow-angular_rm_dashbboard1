@@ -1,7 +1,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">ADD GRATUITY</h4>
+            <h4 class="mb-0 wrapper-20">ADD EPS</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -10,7 +10,7 @@
         </div>
     </div>
 </div>
-<div  [formGroup]="eps" class="pb-44 mb-48 pt-100">
+<div [formGroup]="eps" class="pb-44 mb-48 pt-100">
     <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
@@ -18,7 +18,7 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input matInput formControlName="commencementDate" [matDatepicker]="picker">
+                <input matInput formControlName="commencementDate" class="form-control br-0" [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isCommencementDate && getFormControl().commencementDate.invalid || getFormControl().commencementDate.touched && getFormControl().commencementDate.invalid)}">
@@ -29,16 +29,14 @@
         </div>
     </div>
     <div class="row pt-24">
-        <div class="col-md-5 text-right">
+        <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Pension amount</h5>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #pensionAmount type="number"  (utils.keypress)="utils.keyPress($event)" maxlength="20"
-                        class="form-control br-0 rupess" formControlName="pensionAmount">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isPensionAmount && getFormControl().pensionAmount.invalid || getFormControl().pensionAmount.touched && getFormControl().pensionAmount.invalid)}">
+                    <input matInput #pensionAmount type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="pensionAmount">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isPensionAmount && getFormControl().pensionAmount.invalid || getFormControl().pensionAmount.touched && getFormControl().pensionAmount.invalid)}">
                         Pension amount is required
                     </mat-error>
                 </mat-form-field>
@@ -67,7 +65,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row pt-40">
         <div class="col-md-5 text-right" *ngIf="showHide == true">
             <h5 class="m-0 pt-8 text-custom c-p" (click)="showLess(showHide)">Show less</h5>
@@ -79,44 +77,42 @@
 
         </div>
     </div>
-<div *ngIf="showHide == true">
-    <div class="row pt-40">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Link bank account</h5>
+    <div *ngIf="showHide == true">
+        <div class="row pt-40">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Link bank account</h5>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput #bankAcNo type="number" (utils.keypress)="utils.keyPress($event)" maxlength="30" class="form-control br-0" formControlName="bankAcNo">
+                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
         </div>
-        <div class="col-md-5">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input matInput #bankAcNo type="number"  (utils.keypress)="utils.keyPress($event)" maxlength="30" class="form-control br-0"
-                        formControlName="bankAcNo">
-                    <mat-hint align="start" class="f-12">Optional</mat-hint>
-                </mat-form-field>
+        <div class="row pt-40">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Description</h5>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput #description maxlength="60" class="form-control br-0" formControlName="description">
+                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row pt-40">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Description</h5>
-        </div>
-        <div class="col-md-5">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input matInput #description  maxlength="60" class="form-control br-0"
-                        formControlName="description">
-                    <mat-hint align="start" class="f-12">Optional</mat-hint>
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-</div>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16">
-<div class="row">
-    <div class="col-md-4">
-        <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveEPF()">Save</button>
+        </div>
     </div>
-    <div class="col-md-8 right text-right">
-        <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveEPF()">Save</button>
-    </div>
-</div>
 </div>

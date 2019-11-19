@@ -2,7 +2,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20" *ngIf="_inputData!='Add'">ADD PUBLIC PROVIDENT FUND (PPF)</h4>
+            <h4 class="mb-0 wrapper-20">ADD PUBLIC PROVIDENT FUND (PPF)</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -11,103 +11,99 @@
         </div>
     </div>
 </div>
-<div class="pt-72 pl-24 pr-24 pb-48 mb-48">
+<div class="pt-100 pl-24 pr-24 pb-48 mb-48">
     <div [formGroup]="ppfSchemeForm">
-    <div class="row pt-40">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Owner</h5>
-            <p class="m-0 f-12 text-custom">In whose name is this asset</p>
-        </div>
-        <div class="col-md-5">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <mat-select formControlName="owner" class="form-control br-0">
-                        <mat-option>Search family members</mat-option>
-                        <mat-option>
-                            <span>DFASDFSD</span>
-                        </mat-option>
-                    </mat-select>
-                    <mat-error class="f-12 pt-4">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
+        <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
+        <div class="row pt-40">
+            <div class="col-md-5 text-right">
+                <h5 class="m-0 pt-8">Account balance</h5>
+                <p class="m-0 f-12 text-custom">Leave blank if you want to enter</p>
+                <p class="m-0 f-12 text-custom">complete transaction history</p>
+            </div>
+            <div class="col-md-3 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input type="number" formControlName="accountBalance" matInput #accountBalance class="form-control rupess br-0" maxlength="">
+                        <mat-error class="f-12 pt-4">
+                            Loan amount is required
+                        </mat-error>
+                        <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/20</mat-hint>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row pt-40">
-        <div class="col-md-5 text-right">
-            <h5 class="m-0 pt-8">Account balance</h5>
-            <p class="m-0 f-12 text-custom">Leave blank if you want to enter</p>
-            <p class="m-0 f-12 text-custom">complete transaction history</p>
-        </div>
-        <div class="col-md-3 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input type="number" formControlName="accountBalance" matInput #accountBalance class="form-control rupess br-0" maxlength="">
-                    <mat-error class="f-12 pt-4">
-                        Loan amount is required
-                    </mat-error>
-                    <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/20</mat-hint>
-                </mat-form-field>
+        <div class="row pt-40">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Balance as on</h5>
+                <p class="m-0 f-12 text-custom">Leave blank if you want to enter</p>
+                <p class="m-0 f-12 text-custom">complete transaction history</p>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group form-group_one mb-0">
+                    <mat-form-field>
+                        <input matInput formControlName="balanceAsOn" class="form-control br-0" [matDatepicker]="balanceAsOn">
+                        <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
+                        <mat-datepicker #balanceAsOn></mat-datepicker>
+                        <mat-error class="f-12 pt-4">This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row pt-40">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Balance as on</h5>
-            <p class="m-0 f-12 text-custom">Leave blank if you want to enter</p>
-            <p class="m-0 f-12 text-custom">complete transaction history</p>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group form-group_one mb-0">
-                <mat-form-field>
-                    <input matInput formControlName="balanceAsOn" class="form-control br-0" [matDatepicker]="balanceAsOn">
-                    <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
-                    <mat-datepicker #balanceAsOn></mat-datepicker>
-                    <mat-error class="f-12 pt-4">This field is required
-                    </mat-error>
-                </mat-form-field>
+        <div class="row pt-40">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Commencement date</h5>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group form-group_one mb-0">
+                    <mat-form-field>
+                        <input matInput formControlName="commencementDate" class="form-control br-0" [matDatepicker]="CommencementPicker">
+                        <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #CommencementPicker></mat-datepicker>
+                        <mat-error class="f-12 pt-4">This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row pt-40">
-        <div class="col-md-5 text-right">
-            <h5 class="m-0 pt-8">Future approx contribution</h5>
-        </div>
-        <div class="col-md-3 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input type="number" formControlName="futureContribution" matInput #futureContribution class="form-control rupess br-0" maxlength="">
-                    <mat-error class="f-12 pt-4">
-                        Loan amount is required
-                    </mat-error>
-                    <mat-hint align="end" class="f-12">{{futureContribution.value.length}}/20</mat-hint>
-                </mat-form-field>
+        <div class="row pt-40">
+            <div class="col-md-5 text-right">
+                <h5 class="m-0 pt-8">Future approx contribution</h5>
+            </div>
+            <div class="col-md-3 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input type="number" formControlName="futureContribution" matInput #futureContribution class="form-control rupess br-0" maxlength="">
+                        <mat-error class="f-12 pt-4">
+                            Loan amount is required
+                        </mat-error>
+                        <mat-hint align="end" class="f-12">{{futureContribution.value.length}}/20</mat-hint>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row pt-40">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Frequency</h5>
-        </div>
-        <div class="col-md-5">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <mat-select formControlName="frquency" class="form-control br-0">
-                        <mat-option>Search family members</mat-option>
-                        <mat-option>
-                            <span>DFASDFSD</span>
-                        </mat-option>
-                    </mat-select>
-                    <mat-error class="f-12 pt-4">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
+        <div class="row pt-40">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Frequency</h5>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select formControlName="frquency" class="form-control br-0">
+                            <mat-option>Search family members</mat-option>
+                            <mat-option>
+                                <span>DFASDFSD</span>
+                            </mat-option>
+                        </mat-select>
+                        <mat-error class="f-12 pt-4">
+                            This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row pt-40">
-    </div>
+        <div class="row pt-40">
+        </div>
         <div *ngIf="isOptionalField==false" (click)="moreFields()" class="col-md-5 text-right">
             <h5 class="m-0 pt-8 text-custom c-p">Show less</h5>
         </div>
@@ -179,13 +175,12 @@
                 TRANSACTIONS</button>
             <p class="f-12 text-primitive mt-12 ">
                 Adding transactions is optional but highly <br> recommended to get better reports
-                <span class="text-primary c-p"
-                    matTooltip="You can add partial transaction history too. E.g. if your A/c commenced in 2012, you can specify balance as on, say 31/03/2017 and enter transactions after 31/03/2017.">
+                <span class="text-primary c-p" matTooltip="You can add partial transaction history too. E.g. if your A/c commenced in 2012, you can specify balance as on, say 31/03/2017 and enter transactions after 31/03/2017.">
                     More info </span>
             </p>
         </div>
     </div>
-    <div *ngIf="" [formGroup]="transactionForm"> 
+    <div *ngIf="" [formGroup]="transactionForm">
         <div class="row pt-40">
             <div class="col-md-4">
                 <label class="f-16">Transaction type</label>
@@ -232,13 +227,13 @@
             </div> -->
         </div>
     </div>
-</div> 
+</div>
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right">
+        <div (click)="addPPF()" class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
         </div>
     </div>

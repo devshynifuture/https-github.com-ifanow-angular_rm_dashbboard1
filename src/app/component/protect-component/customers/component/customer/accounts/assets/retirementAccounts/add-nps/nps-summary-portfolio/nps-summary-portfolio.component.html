@@ -17,33 +17,29 @@
     <div class="row pt-24">
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8">Current valuation</h5>
-            <p class="m-0 text-custom f-12">This has to be updated<br>
-                manually at all times</p>
+            <p class="m-0 text-custom f-12">This has to be updated<br> manually at all times</p>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #currentValue type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20"
-                        class="form-control br-0 rupess" formControlName="currentValue">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isCurrentValue && getFormControl().currentValue.invalid || getFormControl().currentValue.touched && getFormControl().currentValue.invalid)}">
+                    <input matInput #currentValue type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="currentValue">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isCurrentValue && getFormControl().currentValue.invalid || getFormControl().currentValue.touched && getFormControl().currentValue.invalid)}">
                         Pension amount is required
                     </mat-error>
                 </mat-form-field>
             </div>
         </div>
     </div>
-    <div class="row pt-40">
+    <div class="row pt-24">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Value as on</h5>
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input matInput formControlName="valueAsOn" [matDatepicker]="picker">
+                <input matInput formControlName="valueAsOn" class="form-control br-0" [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isValueAsOn && getFormControl().valueAsOn.invalid || getFormControl().valueAsOn.touched && getFormControl().valueAsOn.invalid)}">
+                <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isValueAsOn && getFormControl().valueAsOn.invalid || getFormControl().valueAsOn.touched && getFormControl().valueAsOn.invalid)}">
                     Commencement date is required
                 </mat-error>
             </mat-form-field>
@@ -52,15 +48,13 @@
     </div>
     <div class="row pt-24">
         <div class="col-md-5 text-right">
-            <h5 class="m-0 pt-8">Total contribution</h5>
+            <h5 class="m-0 ">Total contribution</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #totalContry type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20"
-                        class="form-control br-0 rupess" formControlName="totalContry">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isTotalContry && getFormControl().totalContry.invalid || getFormControl().totalContry.touched && getFormControl().totalContry.invalid)}">
+                    <input matInput #totalContry type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="totalContry">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isTotalContry && getFormControl().totalContry.invalid || getFormControl().totalContry.touched && getFormControl().totalContry.invalid)}">
                         Pension amount is required
                     </mat-error>
                 </mat-form-field>
@@ -68,27 +62,15 @@
         </div>
     </div>
 
-    <div class="row pt-44">
-        <div class="col-md-3">
-            <h5 class="m-0">Future contribution</h5>
+    <div class="row pt-24">
+        <div class="col-md-3 text-right">
+            <h5 class="m-0 pt-36">Future contribution</h5>
         </div>
         <div class="col-md-9 p-0">
-            <div class="row">
-                <div class="col-md-3 pr-0">
-                    <h5 class="m-0">Account preference</h5>
-                </div>
-                <div class="col-md-3 pr-0">
-                    <h5 class="m-0">Frequency</h5>
-                </div>
-                <div class="col-md-3 pr-0">
-                    <h5 class="m-0">Approx contribution</h5>
-                </div>
-
-            </div>
-            <div class="row" formArrayName="futureContributionList">
-                <div class="row" *ngFor="let creds of futureContry.controls; let i = index" [formGroupName]="i">
-                    <div class="col-md-3 pt-8">
-
+            <div formArrayName="futureContributionList">
+                <div class="row pb-16" *ngFor="let creds of futureContry.controls; let i = index" [formGroupName]="i">
+                    <div class="col-md-3 p-0">
+                        <label class="mb-5"> Account preference </label>
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select formControlName="accountPreferenceId" class="form-control br-0">
@@ -101,7 +83,8 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-3 pr-0">
+                    <div class="col-md-4">
+                        <label class="mb-5"> Frequency </label>
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select formControlName="frequencyId" class="form-control br-0">
@@ -114,16 +97,16 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-3 pr-0">
+                    <div class="col-md-3 p-0">
+                        <label class="mb-5"> Approx contribution </label>
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput #currentValue type="number" (utils.keypress)="utils.keyPress($event)"
-                                    maxlength="20" class="form-control br-0 rupess" formControlName="approxContribution">
+                                <input matInput #currentValue type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="approxContribution">
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="pt-8">
+                    <div class="col-md-2">
+                        <div class="pt-36">
                             <i class="material-icons text-custom c-p" (click)="addFutureContry()">
                                 add
                             </i>
@@ -136,18 +119,18 @@
             </div>
         </div>
     </div>
-    <div class="row pt-40">
+    <div class="row pt-16">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Scheme choice</h5>
         </div>
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                        <mat-select formControlName="schemeChoice" class="form-control br-0">
-                            <mat-option value="">Select option</mat-option>
-                            <mat-option value="1">Active-choice investment</mat-option>
-                            <mat-option value="2">Auto-choice investment</mat-option>
-                        </mat-select>
+                    <mat-select formControlName="schemeChoice" class="form-control br-0">
+                        <mat-option value="">Select option</mat-option>
+                        <mat-option value="1">Active-choice investment</mat-option>
+                        <mat-option value="2">Auto-choice investment</mat-option>
+                    </mat-select>
                     <mat-hint align="start" class="f-12">Optional</mat-hint>
                 </mat-form-field>
             </div>
@@ -167,8 +150,8 @@
         </div>
     </div>
 
-    <div class=" pt-44" formArrayName="npsNomineesList">
-        <div class="row" *ngFor="let creds of nominee.controls; let i = index" [formGroupName]="i">
+    <div class="pt-44" formArrayName="npsNomineesList">
+        <div class="row pb-16" *ngFor="let creds of nominee.controls; let i = index" [formGroupName]="i">
             <div class="col-md-5 text-right pr-0">
                 <h5 class="m-0 pt-8">Nominee{{i+1}}</h5>
             </div>
@@ -177,7 +160,7 @@
                     <div class="row">
                         <div class="col-md-4 p-0">
                             <mat-form-field>
-                                <mat-select formControlName="nomineeName" class="form-control br-0" >
+                                <mat-select formControlName="nomineeName" class="form-control br-0">
                                     <mat-option value="">Select option</mat-option>
                                     <mat-option value="1">1</mat-option>
                                     <mat-option value="2">2</mat-option>
@@ -187,16 +170,15 @@
                         </div>
                         <div class="col-md-3">
                             <mat-form-field>
-                                <input matInput #nomineePercentageShare maxlength="30" class="form-control br-0 percentage" 
-                                    formControlName="nomineePercentageShare">
+                                <input matInput #nomineePercentageShare maxlength="30" class="form-control br-0 percentage" formControlName="nomineePercentageShare">
                             </mat-form-field>
                         </div>
                         <div class="col-md-5" *ngIf="i==0">
-                                <p class="m-0 text-custom pt-12" (click)="addNominee()">+ Add nominee</p>
-                            </div>
-                            <div class="col-md-3" *ngIf="i > 0">
-                                <p class="m-0 text-custom pt-12" (click)="removeNominee(i)">Remove</p>
-                            </div>
+                            <p class="m-0 c-p text-custom pt-12" (click)="addNominee()">+ Add nominee</p>
+                        </div>
+                        <div class="col-md-3" *ngIf="i > 0">
+                            <p class="m-0 c-p text-custom pt-12" (click)="removeNominee(i)">Remove</p>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -205,10 +187,10 @@
                     </div>
                 </div>
             </div>
-        
+
         </div>
     </div>
-    <div class="row pt-40">
+    <div class="row pt-16">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Description</h5>
         </div>
@@ -223,12 +205,12 @@
     </div>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16">
-        <div class="row">
-            <div class="col-md-4">
-                <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
-            </div>
-            <div class="col-md-8 right text-right">
-                <button mat-button class="btn-bottom br-0 text-inherit" (click)="summaryNPSSave()">Save</button>
-            </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="summaryNPSSave()">Save</button>
         </div>
     </div>
+</div>
