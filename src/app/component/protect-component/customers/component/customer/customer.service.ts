@@ -224,4 +224,10 @@ export class CustomerService {
   editOthers(data){
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_OTHERS,data)
   }
+  addPOMIS(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_POMIS,data)
+  }
+  editPOMIS(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_POMIS,data)
+  }
 }

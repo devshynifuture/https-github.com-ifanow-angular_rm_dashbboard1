@@ -89,6 +89,8 @@ export const appConfig = {
   ADD_REAL_ESTATE:'account/asset/real-estate/add',
   EDIT_REAL_ESTATE:'account/asset/real-estate/edit',
   ADD_PPF_SCHEME:'account/asset/saving-scheme/ppf/add',
+  ADD_POMIS:'account/asset/saving-scheme/pomis/add',
+  EDIT_POMIS:'account/asset/saving-scheme/pomis/edit',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE:'account/asset/real-estate/get',
   GET_EPF:'account/asset/retirement/epf/list/get',

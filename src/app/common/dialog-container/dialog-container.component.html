@@ -58,7 +58,7 @@
     <app-add-kvp *ngIf="subscriptionTab=='addKVP'"></app-add-kvp>
     <app-add-scss *ngIf="subscriptionTab=='addSCSS'"></app-add-scss>
     <app-add-po-saving *ngIf="subscriptionTab=='addPOSAVING'"></app-add-po-saving>
-    <app-add-po-mis *ngIf="subscriptionTab=='addPOMIS'"></app-add-po-mis>
+    <app-add-po-mis  [inputData]="inputData" *ngIf="subscriptionTab=='addPOMIS'"></app-add-po-mis>
     <app-add-po-rd *ngIf="subscriptionTab=='addPORD'"></app-add-po-rd>
     <app-add-po-td *ngIf="subscriptionTab=='addPOTD'"></app-add-po-td>
 
