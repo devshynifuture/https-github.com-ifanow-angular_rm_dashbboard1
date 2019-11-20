@@ -37,8 +37,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   nomineeList: any;
   advisorId: any;
   nomineesListFM: any[];
-  ListFm: Observable<string[]>;
-  options: string[] = ['One', 'Two', 'Three'];
+
   clientId: any;
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
     this.summaryNPS = this.fb.group({
@@ -58,32 +57,27 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.ListFm = this.myControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
-  }
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
   display(value) {
     console.log('value selected', value)
     this.ownerName = value.userName;
-    this.nomineesListFM = value.familyList
+    if(value.familyMembersList.length > 0){
+      this.nomineesListFM = value.familyMembersList
+    }
     this.familyMemberId = value.id
   }
   
-  // nomineesList(){
-  //     let name = this.ownerName
-  //     var evens = _.remove( this.nomineesListFM, function(n) {
-  //      return n.userName == name;
-  //    });
-  //    this.nomineesListFM = evens
-  //  console.log('NomineesList',this.nomineesListFM)
-  // }
+  nomineesList(){
+    if(this.nomineesListFM.length > 0){
+      let name = this.ownerName
+      var evens = _.remove( this.nomineesListFM, function(n) {
+       return n.userName == name;
+     });
+     this.nomineesListFM = evens
+    }
+     
+   console.log('NomineesList',this.nomineesListFM)
+  }
   
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' })

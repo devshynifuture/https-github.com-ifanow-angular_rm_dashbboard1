@@ -54,6 +54,7 @@ export class OwnerComponentComponent implements OnInit {
   getListOfFamilyByClientRes(data) {
     console.log('family Memebers', data)
     this.family = data.familyMembersList
+    this.valueChange.emit(data);
   }
   getdataForm() {
     this.owner = this.fb.group({
