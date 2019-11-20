@@ -4,6 +4,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../subscription-inject.service';
 import {SubscriptionService} from '../../subscription.service';
 import {UtilService} from "../../../../../../services/util.service";
+import {AuthService} from "../../../../../../auth-service/authService";
 
 export interface PeriodicElement {
   name: string;
@@ -27,15 +28,17 @@ export class ClientSubscriptionComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'email', 'num', 'balance'];
   dataSource;
+  advisorId;
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     console.log('clients');
     this.getClientSubscriptionList();
   }
 
   getClientSubscriptionList() {
     const obj = {
-      id: 2808
+      id: this.advisorId
     };
     this.subService.getSubscriptionClientsList(obj).subscribe(
       data => this.getClientListResponse(data)

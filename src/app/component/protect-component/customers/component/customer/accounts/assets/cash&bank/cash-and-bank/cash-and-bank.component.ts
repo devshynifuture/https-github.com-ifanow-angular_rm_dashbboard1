@@ -24,13 +24,16 @@ export class CashAndBankComponent implements OnInit {
   ngOnInit() {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
-    this.getCashInHandList()
     this.getBankAccountList()
   }
   getfixedIncomeData(value) {
     console.log('value++++++', value)
-    this.showRequring = (value == "2") ? "2" : "1"
-
+    this.showRequring = value
+    if(value == '2'){
+      this.getCashInHandList()
+    }else{
+      this.getBankAccountList()
+    }
   }
   getBankAccountList() {
     let obj = {
@@ -68,8 +71,11 @@ export class CashAndBankComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getCashInHandList()
-        this.getBankAccountList()
+        if(value == 'addedbankAc'){
+          this.getCashInHandList()
+        }else{
+        this.getBankAccountList();
+        };
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -77,7 +83,7 @@ export class CashAndBankComponent implements OnInit {
 
         }
       }
-    );
+    );;
   }
 }
 export interface PeriodicElement7 {

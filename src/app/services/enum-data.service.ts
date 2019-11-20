@@ -11,8 +11,9 @@ export class EnumDataService {
   constructor(private enumService: EnumServiceService, private subService: SubscriptionService) {
   }
 
- public getDataForSubscriptionEnumService() {
+  public getDataForSubscriptionEnumService() {
     const obj = {};
+    console.log('getOtherAssetData EnumDataService getDataForSubscriptionEnumService ', this.enumService.getOtherAssetData());
     this.subService.getDataForCreateService(obj).subscribe(
       data => {
         console.log('data getDataForCreateService ', data);
@@ -34,6 +35,8 @@ export class EnumDataService {
         console.log('data newJsonForConsumption ', newJsonForConsumption);
 
         this.enumService.addToGlobalEnumData(newJsonForConsumption);
+        console.log(' post getOtherAssetData EnumDataService getDataForSubscriptionEnumService ', this.enumService.getOtherAssetData());
+
       }
     );
   }

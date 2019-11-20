@@ -113,6 +113,9 @@ export class NpsSchemeHoldingComponent implements OnInit {
           holdingAsOn:[new Date(element.totalNetContribution), Validators.required],
         }))
       })
+      this.nominee.removeAt(0);
+      this.futureContry.removeAt(0);
+      this.holdings.removeAt(0);
     }
 
   }

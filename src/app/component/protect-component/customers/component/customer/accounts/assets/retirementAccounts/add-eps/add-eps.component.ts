@@ -70,7 +70,7 @@ export class AddEPSComponent implements OnInit {
     }
     this.eps = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      commencementDate: [(data == undefined) ? '' : data.commencementDate, [Validators.required]],
+      commencementDate: [(data == undefined) ? '' :new Date(data.commencementDate), [Validators.required]],
       pensionAmount: [(data == undefined) ? '' : data.pensionAmount, [Validators.required]],
       pensionPayFreq: [(data == undefined) ? '' : (data.pensionPayoutFrequencyId)+"", [Validators.required]],
       bankAcNo: [(data == undefined) ? '' : data.linkedBankAccount, [Validators.required]],
@@ -125,10 +125,10 @@ export class AddEPSComponent implements OnInit {
   addEPSRes(data){
     console.log('addrecuringDepositRes', data)
      this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedEps', state: 'close', data })
   }
   editEPSRes(data){
      this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedEps', state: 'close', data })
   }
 }
