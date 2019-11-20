@@ -12,6 +12,20 @@
                 <div class="col-md-12 pl-0">
                     <h3 class="f-16 mt-20 roboto m-0"> Goal tracker </h3>
                 </div>
+
+                <div class="row c-p ba-blue">
+                    <div class="col-md-3 text-center pl-12 pr-12 br-blue-2">
+                        <h5 class="m-0 text-custom pt-24 text-primary">Scenario 1</h5>
+                        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="favoriteSeason">
+                            <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
+                                {{season}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div _ngcontent-kyh-c107="" class="col-md-9 pb-12">
+                        <h5 _ngcontent-kyh-c107="" class="m-0 text-custom pt-12 f-14 pb-8"> In this scenario we have assumed continuation of most products. </h5>
+                    </div>
+                </div>
             </div>
 
 
