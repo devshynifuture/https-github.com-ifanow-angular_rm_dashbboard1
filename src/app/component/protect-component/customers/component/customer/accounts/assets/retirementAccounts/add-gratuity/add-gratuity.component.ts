@@ -121,9 +121,9 @@ export class AddGratuityComponent implements OnInit {
   }
   addGratuityRes(data){
     console.log('addrecuringDepositRes', data)
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedGratuity', state: 'close', data })
   }
   editGratuityRes(data){
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedGratuity', state: 'close', data })
   }
 }
