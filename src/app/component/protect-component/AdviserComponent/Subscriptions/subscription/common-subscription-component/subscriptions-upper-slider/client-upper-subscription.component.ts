@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { DeleteSubscriptionComponent } from '../delete-subscription/delete-subscription.component';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from "../../../../../../../auth-service/authService";
-import { UtilService } from 'src/app/services/util.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {DeleteSubscriptionComponent} from '../delete-subscription/delete-subscription.component';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {UtilService} from 'src/app/services/util.service';
 
 export interface PeriodicElement {
   service: string;
@@ -47,14 +47,23 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   }
 
   openPlanSlider(value, state, data) {
-    (data == null) ? value :
-      (value == "billerSettings" || value == 'changePayee' || value == null) ? value : (data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable';
-    (data == null) ? data : (data.clientId = this.upperData.id,
-      data.isCreateSub = false)
-    data.isSaveBtn = false;
+    if (data) {
+      if (value == 'billerSettings' || value == 'changePayee' || value == null) {
+
+      } else if (data.subscriptionPricing.feeTypeId == 1) {
+        value = 'createSubFixed';
+      } else {
+        value = 'createSubVariable';
+      }
+
+      data.clientId = this.upperData.id;
+      data.isCreateSub = false;
+      data.isSaveBtn = false;
+    } else {
+    }
     const fragmentData = {
       Flag: value,
-      data: data,
+      data,
       id: 1,
       state: 'open'
     };
@@ -89,6 +98,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
       data => this.getSubSummaryRes(data)
     );
   }
+
   Open(state, data) {
     let feeMode;
     data.isCreateSub = true;
@@ -132,7 +142,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         this.subscription.deleteSubscriptionData(obj).subscribe(
           data => {
             this.deletedData(data);
-            dialogRef.close()
+            dialogRef.close();
           }
         );
 
@@ -172,6 +182,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
       });
     }
   }
+
   deletedData(data) {
     if (data == true) {
       this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
