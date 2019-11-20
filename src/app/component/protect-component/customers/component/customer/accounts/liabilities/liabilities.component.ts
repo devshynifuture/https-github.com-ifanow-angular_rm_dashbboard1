@@ -39,8 +39,8 @@ export class LiabilitiesComponent implements OnInit {
     this.showFilter='tab1';
     // this.showFilter='tab7';
     this.advisorId = AuthService.getAdvisorId();
-    this.getLiability('');
     this.getPayables();
+    this.getLiability('');
   }
   getPayables(){
     let obj={
@@ -53,7 +53,7 @@ export class LiabilitiesComponent implements OnInit {
   }
   getOtherPayablesRes(data){
     console.log(data);
-    this.OtherData=data;
+    this.OtherData=data.length;
   }
   sortTable(data){
     if(data=="" || data==undefined){

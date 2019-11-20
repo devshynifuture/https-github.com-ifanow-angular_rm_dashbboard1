@@ -9,23 +9,8 @@
         </div>
     </div>
     <div class="pt-72 pl-24 pr-24 pb-48 mb-48">
-        <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Owner</h5>
-                <p class="m-0 f-12 text-custom">In whose name is this asset</p>
-            </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select class="form-control br-0">
-                            <mat-option>Search family members</mat-option>
-                            <mat-option> <span>DFASDFSD</span> </mat-option>
-                        </mat-select>
-                        <mat-error class="f-12 pt-4"> This field is required </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
+            <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
+            <div [formGroup]="POTDForm">
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Amount invested</h5>
@@ -33,7 +18,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #amountInvest type="text" maxlength="20" class="form-control br-0 rupess">
+                        <input matInput formControlName="amtInvested" #amountInvest type="text" maxlength="20" class="form-control br-0 rupess">
                         <mat-error class="f-12 pt-4">
                             Bond name is requiredbondName
                         </mat-error>
@@ -48,7 +33,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput [matDatepicker]="KVPpicker" class="form-control br-0">
+                        <input matInput formControlName="commDate"  [matDatepicker]="KVPpicker" class="form-control br-0">
                         <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                         <mat-datepicker #KVPpicker></mat-datepicker>
                         <mat-error class="f-12 pt-4">
@@ -65,11 +50,9 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <mat-select  class="form-control br-0">
-                                <mat-option [value]="">Months</mat-option>
-                                <mat-option *ngFor="let M of fdMonths" [value]="M">
-                                    <span>{{M}}</span>
-                                </mat-option>
+                            <mat-select  formControlName="tenure" class="form-control br-0">
+                               <mat-option value="5">5 Months</mat-option>
+                               <mat-option value="10">10 Months</mat-option>
                             </mat-select>
                             <mat-error class="f-12 pt-4" >
                                 Tenure is required
@@ -84,8 +67,7 @@
             </div>
             <div class="col-md-5">
                 <mat-form-field>
-                    <mat-select class="form-control br-0">
-                        <mat-option value=""> Select option </mat-option>
+                    <mat-select formControlName="ownershipType" class="form-control br-0">
                         <mat-option value="1"> Joint </mat-option>
                         <mat-option value="2">Single </mat-option>
                     </mat-select>
@@ -95,24 +77,25 @@
                 </mat-form-field>
             </div>
         </div>
+            </div>
         <div class="row pt-40">
-            <div class="col-md-5 text-right">
+            <div (click)="moreFields()" *ngIf="isOptionalField==false"  class="col-md-5 text-right">
                 <h5 class="m-0 pt-8 text-custom c-p">Show less</h5>
             </div>
-            <div class="col-md-5 text-right">
+            <div (click)="moreFields()" *ngIf="isOptionalField"  class="col-md-5 text-right">
                 <h5 class="m-0 pt-8 text-custom c-p">+ Add more [optional data] </h5>
             </div>
             <div class="col-md-5">
             </div>
         </div>
-        <div>
+        <div [formGroup]="POTDOptionalForm"  *ngIf="isOptionalField==false">
             <div class="row pt-40">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8">PO branch</h5>
                 </div>
                 <div class="col-md-5">
                     <div class="form-group mb-0">
-                        <mat-form-field> <input matInput #fdNo type="text" maxlength="10" class="form-control br-0">
+                        <mat-form-field> <input matInput formControlName="poBranch" #fdNo type="text" maxlength="10" class="form-control br-0">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                         </mat-form-field>
                     </div>
@@ -124,7 +107,7 @@
                 </div>
                 <div class="col-md-5">
                     <div class="form-group mb-0">
-                        <mat-form-field> <input matInput #bankACNo type="text" maxlength="15" class="form-control br-0">
+                        <mat-form-field> <input matInput formControlName="nominee" #bankACNo type="text" maxlength="15" class="form-control br-0">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                         </mat-form-field>
                     </div>
@@ -136,7 +119,7 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group mb-0">
-                            <mat-form-field> <input matInput #bankACNo type="text" maxlength="15" class="form-control br-0">
+                            <mat-form-field> <input matInput formControlName="tdNum" #bankACNo type="text" maxlength="15" class="form-control br-0">
                                 <mat-hint align="start" class="f-12">Optional</mat-hint>
                             </mat-form-field>
                         </div>
@@ -148,7 +131,7 @@
                 </div>
                 <div class="col-md-5">
                     <div class="form-group mb-0">
-                        <mat-form-field> <input matInput #institution maxlength="30" class="form-control br-0">
+                        <mat-form-field> <input matInput formControlName="bankAccNum" #institution maxlength="30" class="form-control br-0">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                         </mat-form-field>
                     </div>
@@ -160,7 +143,7 @@
                 </div>
                 <div class="col-md-5">
                     <div class="form-group mb-0">
-                        <mat-form-field> <input matInput #description maxlength="60" class="form-control br-0">
+                        <mat-form-field> <input matInput formControlName="description" #description maxlength="60" class="form-control br-0">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                         </mat-form-field>
                     </div>

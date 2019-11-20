@@ -23,7 +23,8 @@
             <div class="col-md-3 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input type="number" formControlName="accountBalance" matInput #accountBalance class="form-control rupess br-0" maxlength="">
+                        <input type="number" formControlName="accountBalance" matInput #accountBalance
+                            class="form-control rupess br-0" maxlength="">
                         <mat-error class="f-12 pt-4">
                             Loan amount is required
                         </mat-error>
@@ -41,7 +42,8 @@
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="balanceAsOn" class="form-control br-0" [matDatepicker]="balanceAsOn">
+                        <input matInput formControlName="balanceAsOn" class="form-control br-0"
+                            [matDatepicker]="balanceAsOn">
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
                         <mat-error class="f-12 pt-4">This field is required
@@ -57,7 +59,8 @@
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="commencementDate" class="form-control br-0" [matDatepicker]="CommencementPicker">
+                        <input matInput formControlName="commencementDate" class="form-control br-0"
+                            [matDatepicker]="CommencementPicker">
                         <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
                         <mat-datepicker #CommencementPicker></mat-datepicker>
                         <mat-error class="f-12 pt-4">This field is required
@@ -73,7 +76,8 @@
             <div class="col-md-3 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input type="number" formControlName="futureContribution" matInput #futureContribution class="form-control rupess br-0" maxlength="">
+                        <input type="number" formControlName="futureContribution" matInput #futureContribution
+                            class="form-control rupess br-0" maxlength="">
                         <mat-error class="f-12 pt-4">
                             Loan amount is required
                         </mat-error>
@@ -90,10 +94,10 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select formControlName="frquency" class="form-control br-0">
-                            <mat-option>Search family members</mat-option>
-                            <mat-option>
-                                <span>DFASDFSD</span>
-                            </mat-option>
+                            <mat-option value="1">Monthly</mat-option>
+                            <mat-option value="4">Quarterly</mat-option>
+                            <mat-option value="6">Semi annually</mat-option>
+                            <mat-option value="12">Annually</mat-option>
                         </mat-select>
                         <mat-error class="f-12 pt-4">
                             This field is required
@@ -122,7 +126,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="description" #fdNo type="text" maxlength="10" class="form-control br-0">
+                        <input matInput formControlName="description" #fdNo type="text" maxlength="10"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -135,7 +140,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="bankName" #bankACNo type="text" maxlength="15" class="form-control br-0">
+                        <input matInput formControlName="bankName" #bankACNo type="text" maxlength="15"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -148,7 +154,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="linkedBankAccount" #institution maxlength="30" class="form-control br-0">
+                        <input matInput formControlName="linkedBankAccount" #institution maxlength="30"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -169,36 +176,40 @@
         </div>
     </div>
 
-    <div class="row pt-40 justify-content-md-center ">
+    <div *ngIf="transactionList.length==0" class="row pt-40 justify-content-md-center ">
         <div class="col-md-9 bt-grey text-center">
-            <button (click)="addTransaction()" mat-stroked-button class="btn-dark-black addon mt-16"><i class="material-icons">add</i>ADD
+            <button (click)="addTransaction()" mat-stroked-button class="btn-dark-black addon mt-16"><i
+                    class="material-icons">add</i>ADD
                 TRANSACTIONS</button>
             <p class="f-12 text-primitive mt-12 ">
                 Adding transactions is optional but highly <br> recommended to get better reports
-                <span class="text-primary c-p" matTooltip="You can add partial transaction history too. E.g. if your A/c commenced in 2012, you can specify balance as on, say 31/03/2017 and enter transactions after 31/03/2017.">
+                <span class="text-primary c-p"
+                    matTooltip="You can add partial transaction history too. E.g. if your A/c commenced in 2012, you can specify balance as on, say 31/03/2017 and enter transactions after 31/03/2017.">
                     More info </span>
             </p>
         </div>
     </div>
-    <div *ngIf="" [formGroup]="transactionForm">
+    <div *ngFor="let singleTransaction of transactionList" [formGroup]="transactionForm">
         <div class="row pt-40">
             <div class="col-md-4">
                 <label class="f-16">Transaction type</label>
                 <mat-form-field>
-                    <input matInput formControlName="transactionType" #partPayment class="form-control br-0">
+                    <mat-select formControlName="transactionType" class="form-control br-0">
+                        <mat-option value="1">Deposit</mat-option>
+                        <mat-option value="2">Withdrawl</mat-option>
+                    </mat-select>
                     <mat-error class="f-12 pt-4">
-                        is required
+                        This field is required
                     </mat-error>
-                    <mat-hint align="end" class="f-12">{{partPayment.value.length}}/20</mat-hint>
                 </mat-form-field>
-
             </div>
             <div class="col-md-4">
                 <label class="f-16"> Date
                 </label>
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="date" [matDatepicker]="picker">
+                        <input matInput formControlName="date" [(ngModel)]="singleTransaction.date"
+                            [matDatepicker]="picker">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error class="f-12 pt-4">
@@ -211,7 +222,8 @@
                 <label class="f-16">Amount</label>
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="amount" #partPayment class="form-control br-0">
+                        <input matInput type="number" formControlName="amount" [(ngModel)]="singleTransaction.amount"
+                            #partPayment class="form-control br-0">
                         <mat-error class="f-12 pt-4">
                             is required
                         </mat-error>
@@ -219,12 +231,12 @@
                     </mat-form-field>
                 </div>
             </div>
-            <!-- <div class="col-md-1 p-0">
+            <div class="col-md-1 p-0">
                 <div class="pt-36">
-                    <i class="material-icons text-primitive c-p float-left">add</i>
+                    <i class="material-icons text-primitive c-p float-left" (click)="addTransaction()">add</i>
                     <i class="material-icons text-primitive c-p float-right">remove</i>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
 </div>

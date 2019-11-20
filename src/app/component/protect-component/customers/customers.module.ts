@@ -35,7 +35,7 @@ import { ScenariosPlanComponent } from './component/customer/plan/scenarios-plan
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
-    AccountModule
+    AccountModule,
   ],
   exports: [],
   entryComponents: [BottomSheetComponent]
