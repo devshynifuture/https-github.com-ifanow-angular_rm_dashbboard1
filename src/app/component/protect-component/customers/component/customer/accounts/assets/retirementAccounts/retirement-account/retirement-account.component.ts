@@ -66,11 +66,17 @@ export class RetirementAccountComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getListEPF()
-        this.getListNPS()
-        this.getListGratuity()
-        this.getListEPS()
-        this.getListSuperannuation()
+        if(value == 'added'){
+          this.getListEPF()
+        }else if(value =='addedGratuity'){
+          this.getListGratuity()  
+        }else if(value == 'addedEps'){
+          this.getListEPS()
+        }else if(value == 'addedSuperannuation'){
+          this.getListSuperannuation()
+        }else{
+          this.getListNPS()
+        }
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);

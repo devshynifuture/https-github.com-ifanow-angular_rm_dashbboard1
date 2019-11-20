@@ -34,7 +34,8 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   isAccountPref = false
   nomineeList: any;
   advisorId: any;
-  nomineesListFM: any;
+  nomineesListFM: any[];
+  ListFm: any;
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
     this.summaryNPS = this.fb.group({
       published: true,
@@ -61,11 +62,16 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   }
   
   nomineesList(){
-      let name = this.ownerName
-      var evens = _.remove( this.nomineesListFM, function(n) {
+      let name = (this.ownerName == undefined)?this.summaryNPS.controls.ownerName.value:this.ownerName;
+      var evens = _.remove( this.ListFm, function(n) {
        return n.userName == name;
      });
-   console.log('NomineesList',this.nomineeList)
+     this.ListFm = evens
+   console.log('NomineesList',this.ListFm)
+  }
+  listFm(data){
+    console.log('listFm',data)
+    this.ListFm = data
   }
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' })
@@ -107,6 +113,8 @@ export class NpsSummaryPortfolioComponent implements OnInit {
           nomineePercentageShare: [element.nomineePercentageShare , Validators.required],
         }))
       })
+      this.nominee.removeAt(0);
+      this.futureContry.removeAt(0);
     }
     this.familyMemberId = this.summaryNPS.controls.familyMemberId.value
     this.familyMemberId = this.familyMemberId[0]

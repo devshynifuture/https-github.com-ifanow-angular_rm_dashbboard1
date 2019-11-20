@@ -139,10 +139,10 @@ export class AddEPFComponent implements OnInit {
   addEPFRes(data){
     console.log('addrecuringDepositRes', data)
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'added', state: 'close', data })
   }
   editEPFRes(data){
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'added', state: 'close', data })
   }
 }
