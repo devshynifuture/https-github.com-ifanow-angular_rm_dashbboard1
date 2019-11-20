@@ -34,7 +34,7 @@ export class PoMisSchemeComponent implements OnInit {
   getPoMisSchemedataResponse(data)
   {
     console.log(data)
-    this.datasource=data.PoMisList;
+    this.datasource=data.poMisList;
   }
   addPOMIS(value,data)
   {

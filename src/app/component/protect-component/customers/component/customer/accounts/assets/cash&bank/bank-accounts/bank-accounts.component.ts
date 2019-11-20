@@ -28,6 +28,7 @@ export class BankAccountsComponent implements OnInit {
   bankAccounts: any;
   showHide = false;
   advisorId: any;
+  clientId: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
 
@@ -42,6 +43,7 @@ export class BankAccountsComponent implements OnInit {
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
   }
   display(value) {
     console.log('value selected', value)
@@ -99,7 +101,7 @@ export class BankAccountsComponent implements OnInit {
  
       let obj = {
         advisorId: this.advisorId,
-        clientId: 2978,
+        clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined) ? this.bankAccounts.controls.ownerName.value : this.ownerName,
         accountType: this.bankAccounts.controls.accountType.value,

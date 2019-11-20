@@ -12,6 +12,7 @@ import { UtilService } from 'src/app/services/util.service';
 export class NscSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
+  noData: string;
 
   constructor(private cusService:CustomerService,private subInjectService:SubscriptionInject) { }
   displayedColumns17 = ['no', 'owner','cvalue','rate','mvalue','mdate','number','desc','status','icons'];
@@ -19,6 +20,7 @@ export class NscSchemeComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId=2978;
+    this.datasource=[];
     this.getNscSchemedata();
   }
   getNscSchemedata() {
@@ -33,7 +35,11 @@ export class NscSchemeComponent implements OnInit {
   getNscSchemedataResponse(data)
   {
    console.log(data,"NSC")
-   this.datasource=data.nationalSavingCertificate;
+   if(data.nationalSavingCertificate.length!=0){
+    this.datasource=data.nationalSavingCertificate;
+  }else{
+    this.noData="No Scheme there"
+  }
   }
   
   openAddNSC(value,data)

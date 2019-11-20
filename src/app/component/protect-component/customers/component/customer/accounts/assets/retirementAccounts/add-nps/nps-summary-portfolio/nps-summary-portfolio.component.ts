@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { CustomerService } from '../../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DatePipe } from '@angular/common';
@@ -10,7 +10,8 @@ import { removeEvent } from 'highcharts';
 import * as _ from 'lodash';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
-
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 @Component({
   selector: 'app-nps-summary-portfolio',
   templateUrl: './nps-summary-portfolio.component.html',
@@ -21,6 +22,7 @@ import { EventService } from 'src/app/Data-service/event.service';
   ],
 })
 export class NpsSummaryPortfolioComponent implements OnInit {
+  myControl = new FormControl();
   ownerName: any;
   familyMemberId: any;
   inputData: any;
@@ -35,6 +37,9 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   nomineeList: any;
   advisorId: any;
   nomineesListFM: any[];
+  ListFm: Observable<string[]>;
+  options: string[] = ['One', 'Two', 'Three'];
+  clientId: any;
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
     this.summaryNPS = this.fb.group({
       published: true,
@@ -52,6 +57,17 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.ListFm = this.myControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
+  }
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
   display(value) {
     console.log('value selected', value)
@@ -60,14 +76,14 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     this.familyMemberId = value.id
   }
   
-  nomineesList(){
-      let name = this.ownerName
-      var evens = _.remove( this.nomineesListFM, function(n) {
-       return n.userName == name;
-     });
-     this.nomineesListFM = evens
-   console.log('NomineesList',this.nomineesListFM)
-  }
+  // nomineesList(){
+  //     let name = this.ownerName
+  //     var evens = _.remove( this.nomineesListFM, function(n) {
+  //      return n.userName == name;
+  //    });
+  //    this.nomineesListFM = evens
+  //  console.log('NomineesList',this.nomineesListFM)
+  // }
   
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' })
@@ -160,7 +176,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     } else {
       let obj = {
         advisorId: this.advisorId,
-        clientId: 2978,
+        clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined) ? this.summaryNPS.controls.ownerName.value : this.ownerName,
         valueAsOn: this.datePipe.transform(this.summaryNPS.controls.valueAsOn.value, 'yyyy-MM-dd'),

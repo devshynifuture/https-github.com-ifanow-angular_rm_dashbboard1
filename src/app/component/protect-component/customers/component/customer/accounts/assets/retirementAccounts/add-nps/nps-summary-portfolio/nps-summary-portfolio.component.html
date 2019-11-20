@@ -161,10 +161,10 @@
                         <div class="col-md-4 p-0">
                             <mat-form-field>
                                 <mat-select formControlName="nomineeName" class="form-control br-0" (click)="nomineesList()">
-                                    <input matInput placeholder="Add nominee" aria-label="State" [matAutocomplete]="auto"
+                                    <input [formControl]="myControl" matInput placeholder="Add nominee" aria-label="State" [matAutocomplete]="auto"
                                     list="userName" class="form-control br-0 pl-8" formControlName="userName">
                                  <mat-autocomplete #auto="matAutocomplete">
-                                    <mat-option *ngFor="let s of ListFm" [value]="s.userName">
+                                    <mat-option *ngFor="let s of ListFm  | async" [value]="s.userName">
                                        <span>{{s.userName}}</span>
                                     </mat-option>
                                  </mat-autocomplete>
