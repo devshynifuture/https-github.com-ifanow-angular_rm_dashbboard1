@@ -2,17 +2,17 @@
         <div class="col-md-5 p-0">
             <h4 class="m-0 text-black roboto pt-8">Sukanya samriddhi yojana (SSY)</h4>
         </div>
-        <div class="col-md-7 p-0 right text-right">
+        <div class="col-md-7 p-0 right text-right" *ngIf="datasource!=undefined">
             <img src="assets/images/svg/download-bordered.svg" class="c-p">
             <img src="assets/images/svg/up-down.svg" class="">
             <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
-        
+            {{datasource}}
             <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i class="material-icons">filter_list</i>FILTERS</button>
             <button mat-stroked-button class="btn-primary addon v-middle" (click)="addOpenSSY('addSSY')" ><i class="material-icons">add</i>ADD NEW</button>
         </div>
         </div>
      <div class="example-container mt-8 real-estate">
-                              <table mat-table [dataSource]="datasource16" id="table-low">
+                              <table mat-table [dataSource]="datasource" id="table-low">
                               
                                   <ng-container matColumnDef="no">
                                       <th mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -68,4 +68,7 @@
                                   <tr mat-header-row *matHeaderRowDef="displayedColumns16; sticky: true"></tr>
                                   <tr mat-row *matRowDef="let row; columns: displayedColumns16;"></tr>
                               </table>
-                              </div>
+                              <div *ngIf="datasource==undefined">
+                              <h4  class="text-center pt-72">{{noData}}</h4>
+                            </div>
+                            </div>
