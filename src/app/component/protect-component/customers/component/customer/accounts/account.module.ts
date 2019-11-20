@@ -157,7 +157,7 @@ import {AddScenarioComponent} from '../../common-component/add-scenario/add-scen
     BankAccountsComponent,
     CashInHandComponent,
     OwnerColumnComponent,
-    AddScenarioComponent
+    AddScenarioComponent,
 
   ],
   imports: [

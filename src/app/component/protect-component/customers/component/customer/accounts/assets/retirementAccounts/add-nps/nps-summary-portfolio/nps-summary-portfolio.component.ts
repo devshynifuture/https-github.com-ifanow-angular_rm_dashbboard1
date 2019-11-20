@@ -35,7 +35,6 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   nomineeList: any;
   advisorId: any;
   nomineesListFM: any[];
-  ListFm: any;
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
     this.summaryNPS = this.fb.group({
       published: true,
@@ -62,17 +61,14 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   }
   
   nomineesList(){
-      let name = (this.ownerName == undefined)?this.summaryNPS.controls.ownerName.value:this.ownerName;
-      var evens = _.remove( this.ListFm, function(n) {
+      let name = this.ownerName
+      var evens = _.remove( this.nomineesListFM, function(n) {
        return n.userName == name;
      });
-     this.ListFm = evens
-   console.log('NomineesList',this.ListFm)
+     this.nomineesListFM = evens
+   console.log('NomineesList',this.nomineesListFM)
   }
-  listFm(data){
-    console.log('listFm',data)
-    this.ListFm = data
-  }
+  
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' })
   }

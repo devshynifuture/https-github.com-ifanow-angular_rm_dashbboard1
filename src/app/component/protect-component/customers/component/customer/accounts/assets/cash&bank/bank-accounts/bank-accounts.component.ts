@@ -125,9 +125,9 @@ export class BankAccountsComponent implements OnInit {
   }
   addBankAccountsRes(data) {
     console.log('addrecuringDepositRes', data)
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedbankAc', state: 'close', data })
   }
   editBankAcountsRes(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedbankAc', state: 'close', data })
   }
 }
