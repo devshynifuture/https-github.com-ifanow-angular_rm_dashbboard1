@@ -28,6 +28,8 @@ export class LiabilitiesComponent implements OnInit {
   mortgage=[];
   dataToShow: any;
   OtherData: any;
+  OtherPayableData: any;
+  clientId: any;
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,public custmService:CustomerService,public util:UtilService) {
   }
 
@@ -39,13 +41,14 @@ export class LiabilitiesComponent implements OnInit {
     this.showFilter='tab1';
     // this.showFilter='tab7';
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.getPayables();
     this.getLiability('');
   }
   getPayables(){
     let obj={
       'advisorId':this.advisorId,
-      'clientId':2978
+      'clientId':this.clientId
     }
     this.custmService.getOtherPayables(obj).subscribe(
       data => this.getOtherPayablesRes(data)
@@ -53,6 +56,7 @@ export class LiabilitiesComponent implements OnInit {
   }
   getOtherPayablesRes(data){
     console.log(data);
+    this.OtherPayableData=data;
     this.OtherData=data.length;
   }
   sortTable(data){
@@ -139,7 +143,7 @@ export class LiabilitiesComponent implements OnInit {
     this.dataToShow=data.data;
     let obj={
       'advisorId':this.advisorId,
-      'clientId':2978
+      'clientId':this.clientId
     }
     this.custmService.getLiabilty(obj).subscribe(
       data => this.getLiabiltyRes(data)
@@ -182,6 +186,9 @@ export class LiabilitiesComponent implements OnInit {
     console.log('something was clicked');
     // this.openFragment('', 'plan');
     this.open('openHelp', 'liabilityright');
+  }
+  display(data){
+    this.getPayables();
   }
 
 }

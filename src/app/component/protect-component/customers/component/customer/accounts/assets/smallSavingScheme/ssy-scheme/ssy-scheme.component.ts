@@ -12,6 +12,7 @@ import { UtilService } from 'src/app/services/util.service';
 export class SsySchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
+  noData: string;
 
   constructor(private cusService:CustomerService,private subInjectService:SubscriptionInject) { }
   displayedColumns16 = ['no', 'owner','cvalue','rate','amt','number','mdate','desc','status','icons'];
@@ -34,7 +35,12 @@ export class SsySchemeComponent implements OnInit {
   getSsySchemedataResponse(data)
   {
     console.log(data)
-   this.datasource=data.SSYList
+    if(data.SSYList.length!=0){
+      this.datasource=data.SSYList
+    }else{
+      this.noData="No Scheme Found";
+
+    }
 
   }
   addOpenSSY(value)

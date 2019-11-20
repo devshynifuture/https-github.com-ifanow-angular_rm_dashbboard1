@@ -9,14 +9,16 @@ import { AuthService } from 'src/app/auth-service/authService';
   styleUrls: ['./owner-column.component.scss']
 })
 export class OwnerColumnComponent implements OnInit {
-  ownerData: any;
-  advisorId: any;
+
+  isownerName = false;
+  owner: any;
   s: string[] = ['Sneha', 'gayatri', 'Shivani'];
   family: string[];
-  owner: any;
+  advisorId: any;
+  ownerData: any;
+  clientId: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService) { }
-
   @Output() valueChange = new EventEmitter();
   @Input()
   set data(data) {
@@ -30,14 +32,15 @@ export class OwnerColumnComponent implements OnInit {
   ngOnInit() {
     console.log('ownerData', this.ownerData)
     this.advisorId = AuthService.getAdvisorId();
-    this.getListFamilyMem('')
+    this.clientId = AuthService.getClientId();
+    this.getListFamilyMem('');
     this.getdataForm()
     this.family = this.s;
   }
   getListFamilyMem(data) {
     let obj = {
       advisorId: this.advisorId,
-      clientId: 2978
+      clientId: this.clientId
     }
     this.custumService.getListOfFamilyByClient(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)

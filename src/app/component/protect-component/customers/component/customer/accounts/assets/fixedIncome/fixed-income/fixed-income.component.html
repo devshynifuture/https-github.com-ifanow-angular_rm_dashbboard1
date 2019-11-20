@@ -2,11 +2,11 @@
         <div class="wrapper-8">
           <div class="row pt-28 pb-28">
             <div class="col-md-6 pl-0">
-              <mat-button-toggle-group id="custom-toggle"
+              <mat-button-toggle-group id="custom-toggle" value = "1"
                 (change)="getfixedIncomeData($event.value)" multiple=false>
-                <mat-button-toggle value=1 [ngClass]="showRequring == '1' ? 'btn-default text-custom br-0 text-primary' : 'btn-default text-custom br-0'">Fixed deposits</mat-button-toggle>
-                <mat-button-toggle value=2 [ngClass]="showRequring == '2' ? 'btn-default text-custom br-0 text-primary' : 'btn-default text-custom br-0'">Recurring deposits</mat-button-toggle>
-                <mat-button-toggle value=3 [ngClass]="showRequring == '3' ? 'btn-default text-custom br-0 text-primary' : 'btn-default text-custom br-0'">Bonds</mat-button-toggle>
+                <mat-button-toggle value='1' [ngClass]="showRequring == '1' ? 'btn-default text-custom br-0 text-primary' : 'btn-default text-custom br-0'">Fixed deposits</mat-button-toggle>
+                <mat-button-toggle value='2' [ngClass]="showRequring == '2' ? 'btn-default text-custom br-0 text-primary' : 'btn-default text-custom br-0'">Recurring deposits</mat-button-toggle>
+                <mat-button-toggle value='3' [ngClass]="showRequring == '3' ? 'btn-default text-custom br-0 text-primary' : 'btn-default text-custom br-0'">Bonds</mat-button-toggle>
                 </mat-button-toggle-group>
             </div>
             <div class="col-md-6 right text-right  pr-0">
