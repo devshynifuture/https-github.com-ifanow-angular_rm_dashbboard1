@@ -6,13 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./scenarios-plan.component.scss']
 })
 export class ScenariosPlanComponent implements OnInit {
+  
 
   constructor() { }
+   
   displayedColumns: string[] = ['description', 'year', 'month', 'lumpsum'];
   dataSource = ELEMENT_DATA;
   displayedColumns2: string[] = ['member', 'year', 'status'];
   dataSource2 = ELEMENT_DATA2;
   ngOnInit() {
+    
   }
 
 }
