@@ -61,6 +61,11 @@ export class AddPpfComponent implements OnInit {
       console.log(this.transactionList)
     // }
   }
+  removeTransaction(index)
+  {
+    console.log(index);
+    this.transactionList.splice(1,index);
+  }
   getdataForm(data) {
     if (data == undefined) {
       data = {};
