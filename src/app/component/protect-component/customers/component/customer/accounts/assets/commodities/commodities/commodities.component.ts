@@ -20,10 +20,12 @@ export class CommoditiesComponent implements OnInit {
   advisorId: any;
   goldList: any;
   otherCommodityList: any;
+  clientId: any;
   constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService,public util:UtilService) { }
   ngOnInit() {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.getGoldList()
     
   }
@@ -39,7 +41,7 @@ export class CommoditiesComponent implements OnInit {
   }
   getGoldList(){
     let obj = {
-      clientId:2978,
+      clientId:this.clientId,
       advisorId: this.advisorId
     }
     this.custumService.getGold(obj).subscribe(
@@ -52,7 +54,7 @@ export class CommoditiesComponent implements OnInit {
   }
   getOtherList(){
     let obj = {
-      clientId:2978,
+      clientId:this.clientId,
       advisorId: this.advisorId
     }
     this.custumService.getOthers(obj).subscribe(

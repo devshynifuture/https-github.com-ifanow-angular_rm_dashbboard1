@@ -28,6 +28,7 @@ export class AddEPSComponent implements OnInit {
   isPensionAmount = false
   isCommencementdate = false;
   isPensionPayFreq = false;
+  clientId: any;
 
   constructor(private event: EventService,private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
 
@@ -42,6 +43,7 @@ export class AddEPSComponent implements OnInit {
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
   }
   display(value) {
     console.log('value selected', value)
@@ -100,7 +102,7 @@ export class AddEPSComponent implements OnInit {
     } else {
       let obj = {
         advisorId: this.advisorId,
-        clientId: 2978,
+        clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined)?this.eps.controls.ownerName.value:this.ownerName,
         commencementDate: this.eps.controls.commencementDate.value,
