@@ -262,6 +262,7 @@ removeCoOwner(item){
             data => this.addRealEstateRes(data)
           );
         }else{
+
           console.log(obj);
           this.custumService.editRealEstate(obj).subscribe(
             data => this.editRealEstateRes(data)
