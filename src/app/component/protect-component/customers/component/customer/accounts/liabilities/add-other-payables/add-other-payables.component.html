@@ -12,7 +12,7 @@
         </div>
     </div>
 </div>
-<div class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="otherLiabilityForm">
+<div class="pt-100 pl-24 pr-24 pb-48 mb-48" [formGroup]="otherLiabilityForm">
     <!-- <div class="row pt-40">
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8">Owner</h5>
@@ -30,7 +30,7 @@
             </div>
         </div>
     </div> -->
-    <app-owner-component [data]= 'ownerData' (valueChange)='display($event)'></app-owner-component>
+    <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
     <div class="row pt-40">
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8">Date of receipt</h5>
@@ -53,16 +53,16 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #creditorName class="form-control br-0"  formControlName="creditorName" maxlength="{{getFormControl().creditorName.maxLength}}">
+                    <input matInput #creditorName class="form-control br-0" formControlName="creditorName" maxlength="{{getFormControl().creditorName.maxLength}}">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isCreditorName && getFormControl().creditorName.invalid || getFormControl().creditorName.touched && getFormControl().creditorName.invalid)}">
-                        Creditor Name  is required
+                        Creditor Name is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{creditorName.value.length}}/20</mat-hint>
                 </mat-form-field>
             </div>
         </div>
     </div>
-     <div class="row pt-40">
+    <div class="row pt-40">
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8">Amount borrowed</h5>
         </div>
@@ -71,7 +71,7 @@
                 <mat-form-field>
                     <input matInput #amtBorrowed class="form-control br-0" (keypress)="keyPress($event)" formControlName="amtBorrowed" maxlength="{{getFormControl().amtBorrowed.maxLength}}">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isAmtBorrowed && getFormControl().amtBorrowed.invalid || getFormControl().amtBorrowed.touched && getFormControl().amtBorrowed.invalid)}">
-                       Amount borrowed is required
+                        Amount borrowed is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{amtBorrowed.value.length}}/20</mat-hint>
                 </mat-form-field>
@@ -87,7 +87,7 @@
                 <mat-form-field>
                     <input matInput #interest class="form-control br-0 percentage" (keypress)="keyPress($event)" formControlName="interest" maxlength="{{getFormControl().interest.maxLength}}">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isinterestRate && getFormControl().interest.invalid || getFormControl().interest.touched && getFormControl().interest.invalid)}">
-                         Interest rate is required
+                        Interest rate is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{interest.value.length}}/20</mat-hint>
                 </mat-form-field>
@@ -104,7 +104,7 @@
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
                 <mat-error class="f-12 pt-4" *ngIf="isDateOfRepayment && getFormControl().dateOfRepayment.invalid || (getFormControl().dateOfRepayment.touched && getFormControl().dateOfRepayment.invalid)">
-                    Date of repayment  is required</mat-error>
+                    Date of repayment is required</mat-error>
             </mat-form-field>
 
         </div>

@@ -438,6 +438,7 @@
     // border: 1px solid #ddd;
     // border-top: 0px !important;
 }
+
 .right_sidenav-35 {
     height: 100%;
     position: fixed;
@@ -452,6 +453,7 @@
     // border: 1px solid #ddd;
     // border-top: 0px !important;
 }
+
 .right_sidenav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
@@ -476,7 +478,7 @@
 .upper_slider {
     height: 100%;
     position: fixed;
-    z-index: 222;//10
+    z-index: 222; //10
     top: -100%;
     width: 100%;
     // right: 0;
@@ -523,6 +525,7 @@ mat-tab-group[vertical] {
 }
 
 #ui-account-summary,
+#scenariosPlan,
 #ui-assets,
 #ui-liabilities,
 #ui-insurance,
@@ -681,10 +684,12 @@ mat-tab-group[vertical] {
 .mutualfunds-capital-debt,
 .mutualfunds-capital-dividend-summary,
 .documentsTable,
+.financialGoalsTable,
 .fixed-deposite,
 .scheme-wise,
 .familymember-wise,
-.liabilities,.mf-summary {
+.liabilities,
+.mf-summary {
     tr.mat-header-row {
         height: 40px;
         padding: 10px 8px !important;
@@ -735,10 +740,12 @@ mat-tab-group[vertical] {
     }
 }
 
-.mutualfunds-capital-equity .mat-row:last-child,.mf-summary .mat-row:last-child,.mutualfunds-capital-debt .mat-row:last-child,.mutualfunds-capital-dividend-summary .mat-row:last-child{
+.mutualfunds-capital-equity .mat-row:last-child,
+.mf-summary .mat-row:last-child,
+.mutualfunds-capital-debt .mat-row:last-child,
+.mutualfunds-capital-dividend-summary .mat-row:last-child {
     font-weight: bold !important;
 }
-
 
 .btn-dark-black {
     border: 1px solid $black !important;
@@ -750,29 +757,31 @@ mat-tab-group[vertical] {
     color: #008FFF;
     opacity: 1;
 }
-#ui-mf-transactions{
+
+#ui-mf-transactions {
     background-color: #F5F7F7 !important;
     min-height: 100vh;
 }
-#mutualfund-main-popup{
-    .mat-tab-header{
+
+#mutualfund-main-popup {
+    .mat-tab-header {
         border-bottom: 0px !important;
         position: fixed;
         z-index: 999;
         width: 100%;
         background-color: #fff;
     }
-    .second-fix{
+    .second-fix {
         margin-top: 64px !important;
         position: fixed;
         width: 100%;
         z-index: 999;
-
-     }
-     .mat-radio-label-content{
-         display: block !important;
-     }
+    }
+    .mat-radio-label-content {
+        display: block !important;
+    }
 }
+
 .insurance-ui #table-low {
     .mat-row:last-child {
         font-weight: normal !important;
@@ -790,24 +799,24 @@ mat-tab-group[vertical] {
         display: none;
     }
 }
-.stock-overview#table-low{
-    th{
+
+.stock-overview#table-low {
+    th {
         padding: 6px 5px !important;
-        
     }
-    tr.mat-header-row{
+    tr.mat-header-row {
         height: 48px !important;
     }
-    tbody td{
+    tbody td {
         padding: 3px 8px !important;
     }
-    tr.mat-row{
+    tr.mat-row {
         height: 36px !important;
     }
-    
 }
-.transactions#table-low{
-    tr.mat-header-row{
+
+.transactions#table-low {
+    tr.mat-header-row {
         height: 44px !important;
     }
 }
