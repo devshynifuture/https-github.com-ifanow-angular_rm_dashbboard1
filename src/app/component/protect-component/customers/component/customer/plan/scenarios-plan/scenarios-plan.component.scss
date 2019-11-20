@@ -43,3 +43,17 @@
 .br-grey-1 {
     border-right: 1px solid rgba(25, 25, 25, 0.32);
 }
+
+#table-low tbody td {
+    padding: 8px !important;
+}
+
+.financialGoalsTable {
+    tr.mat-row {
+        // padding: 3px 5px !important;
+        height: 30px !important;
+    }
+    tr.mat-header-row {
+        height: 40px !important;
+    }
+}

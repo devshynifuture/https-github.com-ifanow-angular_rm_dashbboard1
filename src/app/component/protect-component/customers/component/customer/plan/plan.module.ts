@@ -12,6 +12,7 @@ import {CommonModule} from '@angular/common';
 import {MaterialModule} from '../../../../../../material/material';
 import {ChartModule} from 'angular-highcharts';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { AddScenariosComponent } from './scenarios-plan/add-scenarios/add-scenarios.component';
 // import {BrowserModule} from '@angular/platform-browser';
 
 
@@ -31,6 +32,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     InvestmentsPlanComponent,
     ScenariosPlanComponent,
     TexesPlanComponent,
+    AddScenariosComponent,
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [PlanComponent],
+  exports: [PlanComponent,AddScenariosComponent],
   entryComponents: []
 })
 export class PlanModule {
