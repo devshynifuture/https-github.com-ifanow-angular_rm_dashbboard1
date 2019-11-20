@@ -25,6 +25,7 @@ export class AddNscComponent implements OnInit {
   ownerName: any;
   familyMemberId: any;
   editApi: any;
+  transactionData: any;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -74,7 +75,21 @@ export class AddNscComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
+  getFormData(data) {
+    console.log(data)
+    this.transactionData = data.controls
+  }
   addNSC() {
+
+    let finalTransctList = []
+    this.transactionData.forEach(element => {
+      let obj = {
+        "date": element.controls.date.value._d,
+        "amount": element.controls.amount.value,
+        "paymentType": element.controls.transactionType.value
+      }
+      finalTransctList.push(obj)
+    });
     if (this.ownerName == undefined) {
       return
     }
@@ -82,13 +97,13 @@ export class AddNscComponent implements OnInit {
       return
     }
     else if (this.nscFormField.get('commDate').invalid) {
-
+      return
     }
     else if (this.nscFormField.get('Tenure').invalid) {
-
+      return
     }
     else if (this.nscFormField.get('ownershipType').invalid) {
-
+      return
     }
     else {
       if (this.editApi) {

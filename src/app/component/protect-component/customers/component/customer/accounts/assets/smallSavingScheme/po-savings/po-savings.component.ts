@@ -32,7 +32,7 @@ export class PoSavingsComponent implements OnInit {
   }
   getPoSavingSchemedataResponse(data)
   {
-    this.datasource=data.PostOfficeRDList;
+    this.datasource=data;
     console.log(data)
   }
   addPOSAVING(value,data)

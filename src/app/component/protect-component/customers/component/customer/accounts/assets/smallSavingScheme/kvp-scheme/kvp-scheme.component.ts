@@ -19,15 +19,14 @@ export class KvpSchemeComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId=2978;
+    this.clientId=AuthService.getClientId();
     this.getKvpSchemedata()
   }
   getKvpSchemedata()
   {
     const obj={
       advisorId:this.advisorId,
-      clientId:this.clientId,
-      requiredDate:''
+      clientId:this.clientId
     }
     this.cusService.getSmallSavingSchemeKVPData(obj).subscribe(
       data=>this.getKvpSchemedataResponse(data)
@@ -35,12 +34,13 @@ export class KvpSchemeComponent implements OnInit {
   }
   getKvpSchemedataResponse(data)
   {
-    this.datasource=data
+    this.datasource=data.kvpList
     console.log(data)
   }
-  addKVP(value) {
+  addKVP(value,data) {
     const fragmentData = {
       Flag:value,
+      data,
       id: 1,
       state: 'open'
     };

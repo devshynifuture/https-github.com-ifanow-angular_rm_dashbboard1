@@ -4,15 +4,19 @@
       <img class="pt-8" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
     </div>
     <div class="col-md-8 p-0">
-      <p class="f-16 mb-0 pt-24 text-center" *ngIf="fragmentData.data.flag=='plan' || fragmentData.data==='plan'">Add plan details, map
+      <p class="f-16 mb-0 pt-24 text-center" *ngIf="fragmentData.data.flag=='plan' || fragmentData.data==='plan'">Add
+        plan details, map
         services/documents
         to the
         selected plan</p>
-      <p class="f-16 mb-0 pt-24 text-center" *ngIf="fragmentData.data.flag=='services' || fragmentData.data===''">Add fee structure, map
+      <p class="f-16 mb-0 pt-24 text-center" *ngIf="fragmentData.data.flag=='services' || fragmentData.data===''">Add
+        fee structure, map
         plans/documents/modules to the selected service</p>
-      <p class="f-16 mb-0 pt-24 text-center" *ngIf="fragmentData.data.flag=='documents' || fragmentData.data==='documents'">Add documents, map them to
+      <p class="f-16 mb-0 pt-24 text-center"
+         *ngIf="fragmentData.data.flag=='documents' || fragmentData.data==='documents'">Add documents, map them to
         services/plans</p>
-      <p class="f-16 mb-0 pt-24 text-center" *ngIf="fragmentData.data.flag=='clients' || fragmentData.data==='clients'">Add fee structure, send
+      <p class="f-16 mb-0 pt-24 text-center" *ngIf="fragmentData.data.flag=='clients' || fragmentData.data==='clients'"
+         (click)="openClientDetails()">Add fee structure, send
         quotations/invoices, execute documents for the selected client</p>
     </div>
     <div class="col-md-2 text-right">

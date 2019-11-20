@@ -44,7 +44,7 @@ export class AddPpfComponent implements OnInit {
   ngOnInit() {
     this.isOptionalField = true;
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId=2978;
+    this.clientId=AuthService.getClientId();
   }
   display(value) {
     console.log('value selected', value)

@@ -22,6 +22,7 @@ export class AddTransactionComponent implements OnInit {
   get getTransForm() { return this.transactionForm.controls; }
   get getTransFormList() { return this.getTransForm.transactionFormList as FormArray; }
   addTransaction() {
+    console.log(this.getTransFormList)
     this.getTransFormList.push(this.fb.group({
       transactionType: [, [Validators.required]],
       date: [, [Validators.required]],

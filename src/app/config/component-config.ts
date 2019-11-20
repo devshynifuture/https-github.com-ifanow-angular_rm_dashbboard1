@@ -101,6 +101,11 @@ export const appConfig = {
   ADD_POMIS:'account/asset/saving-scheme/pomis/add',
   EDIT_POMIS:'account/asset/saving-scheme/pomis/edit',
   EDIT_PPF_SCHEME:'account/asset/saving-scheme/ppf/edit',
+  ADD_KVP_SCHEME:'account/asset/saving-scheme/kvs/add',
+  EDIT_KVP_SCHEME:'account/asset/saving-scheme/kvs/edit',
+  EDIT_PORD_SCHEME:'account/asset/saving-scheme/pord/edit',
+  ADD_POTD_SCHEME:'account/asset/saving-scheme/potd/add',
+  EDIT_POTD_SCHEME:'account/asset/saving-scheme/potd/edit',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE:'account/asset/real-estate/get',
   GET_EPF:'account/asset/retirement/epf/list/get',

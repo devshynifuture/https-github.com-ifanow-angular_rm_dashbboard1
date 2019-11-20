@@ -3,11 +3,14 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 
 @Component({
   selector: 'app-po-td-scheme',
   templateUrl: './po-td-scheme.component.html',
-  styleUrls: ['./po-td-scheme.component.scss']
+  styleUrls: ['./po-td-scheme.component.scss'],
+  
 })
 export class PoTdSchemeComponent implements OnInit {
   advisorId: any;
@@ -31,7 +34,7 @@ export class PoTdSchemeComponent implements OnInit {
     )
   }
   getPoTdSchemedataResponse(data) {
-    this.datasource = data.PostOfficeTdList
+    this.datasource = data.postOfficeTdList
     console.log(data)
   }
   addPOTD(value,data) {

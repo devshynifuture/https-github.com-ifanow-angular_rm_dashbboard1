@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 // import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../../subscription-inject.service';
+import {Router} from "@angular/router";
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-subscription-upper-slider',
@@ -14,7 +16,8 @@ export class SubscriptionUpperSliderComponent implements OnInit {
   selectedServiceTab = 0;
   upperRightSideInputData;
 
-  constructor(private eventService: EventService, private subinject: SubscriptionInject
+  constructor(private router: Router, private authService: AuthService,
+              private eventService: EventService, private subinject: SubscriptionInject
               // public dialogRef: MatDialogRef<UpperSliderComponent>,
               // @Inject(MAT_DIALOG_DATA) public fragmentData: any
   ) {
@@ -96,5 +99,11 @@ export class SubscriptionUpperSliderComponent implements OnInit {
     this.subscriptionTab = event.tab.textLabel;
   }
 
+  openClientDetails() {
+    this.authService.setClientData(this.fragmentData.data);
+    this.router.navigateByUrl('/customer-detail', {state: this.fragmentData.data});
+    this.dialogClose();
+
+  }
 
 }

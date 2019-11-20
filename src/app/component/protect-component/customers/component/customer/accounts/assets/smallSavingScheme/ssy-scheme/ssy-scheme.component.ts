@@ -18,7 +18,7 @@ export class SsySchemeComponent implements OnInit {
   datasource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId=2978;
+    this.clientId=AuthService.getClientId();;
     this.getSsySchemedata()
   }
   getSsySchemedata()
