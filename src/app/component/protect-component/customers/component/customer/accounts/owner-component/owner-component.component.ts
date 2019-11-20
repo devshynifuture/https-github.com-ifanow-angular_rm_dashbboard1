@@ -17,6 +17,7 @@ export class OwnerComponentComponent implements OnInit {
   family: string[];
   advisorId: any;
   ownerData: any;
+  clientId: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService) { }
   @Output() valueChange = new EventEmitter();
@@ -32,6 +33,7 @@ export class OwnerComponentComponent implements OnInit {
   ngOnInit() {
     console.log('ownerData', this.ownerData)
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.getListFamilyMem('');
     this.getdataForm()
     this.family = this.s;
@@ -39,7 +41,7 @@ export class OwnerComponentComponent implements OnInit {
   getListFamilyMem(data) {
     let obj = {
       advisorId: this.advisorId,
-      clientId: 2978
+      clientId: this.clientId
     }
     this.custumService.getListOfFamilyByClient(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)

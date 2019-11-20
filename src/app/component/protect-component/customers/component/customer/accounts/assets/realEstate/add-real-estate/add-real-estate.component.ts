@@ -35,6 +35,7 @@ export class AddRealEstateComponent implements OnInit {
   _inputData: any;
   isTypeValid: boolean;
   isMvValid: boolean;
+  clientId: any;
 
   constructor(public custumService:CustomerService,public subInjectService:SubscriptionInject,private fb: FormBuilder,public custmService:CustomerService,public eventService:EventService) { }
   @Input()
@@ -52,6 +53,7 @@ export class AddRealEstateComponent implements OnInit {
     this.showArea=false;
     this.showNominee=false;
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.getListFamilyMem();
     this.estateDays= ['0','1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
     this.estateMonths=['January','February','March','April','May','June','July','August','September','October','November','December']
@@ -59,7 +61,7 @@ export class AddRealEstateComponent implements OnInit {
   getListFamilyMem() {
     let obj = {
       advisorId: this.advisorId,
-      clientId: 2978
+      clientId: this.clientId
     }
     this.custmService.getListOfFamilyByClient(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)
@@ -257,7 +259,7 @@ removeCoOwner(item){
         });
         if(this._inputData=='Add'){
           let objToSend={
-            "clientId": 2978,
+            "clientId": this.clientId,
               "advisorId": this.advisorId,
               "typeId": obj.type,
               "marketValue": obj.marketValue,
@@ -280,7 +282,7 @@ removeCoOwner(item){
         }else{
           let objToSend={
               "id":this._inputData.id,
-              "clientId": 2978,
+              "clientId": this.clientId,
               "advisorId":  this.advisorId,
               "typeId": obj.type,
               "marketValue":  obj.marketValue,

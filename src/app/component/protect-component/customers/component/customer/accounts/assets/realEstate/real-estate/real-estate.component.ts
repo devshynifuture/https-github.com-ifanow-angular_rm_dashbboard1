@@ -12,11 +12,13 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class RealEstateComponent implements OnInit {
   advisorId: any;
   datasource3: any;
+  clientId: any;
 
   constructor(public subInjectService:SubscriptionInject,public utilService:UtilService,public custmService:CustomerService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.getRealEstate();
   }
   displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status','icons'];
@@ -25,7 +27,7 @@ export class RealEstateComponent implements OnInit {
   getRealEstate(){
     let obj={
       'advisorId':this.advisorId,
-      'clientId':2978
+      'clientId':this.clientId
     }
     this.custmService.getRealEstate(obj).subscribe(
       data => this.getRealEstateRes(data)

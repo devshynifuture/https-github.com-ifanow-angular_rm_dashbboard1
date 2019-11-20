@@ -46,6 +46,7 @@ export class AddLiabilitiesComponent implements OnInit {
   ownerName: any;
   selectedFamilyData: any;
   loanTypeView: any;
+  clientId: any;
 
   
 
@@ -64,6 +65,7 @@ export class AddLiabilitiesComponent implements OnInit {
     this.showTransact=false;
     this.showSelect=false;
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
   }
   showMore(){
     this.show=true;
@@ -214,7 +216,7 @@ export class AddLiabilitiesComponent implements OnInit {
            if(this._inputData=='Add'){
             let objToSend={
               "advisorId": this.advisorId,
-              "clientId": 2978,
+              "clientId": this.clientId,
               "familyMemberId": this.selectedFamilyData.id,
               "ownerName": obj.ownerName,
               "loanTypeId": obj.loanType,
