@@ -151,7 +151,7 @@
                 </div>
                 </div>
                 <div *ngSwitchCase="'tab2'">
-                        <div class="d-flex justify-content-center mt-150">
+                        <!-- <div class="d-flex justify-content-center mt-150">
                       <div class="row">
                         <div class="col-md-12 text-center">
                             <h3 class="f-22 m-0">Hi Rahul, welcome!</h3>
@@ -159,7 +159,75 @@
                             <button mat-stroked-button class="btn-primary br-0">Take the test</button>
                         </div>
                       </div>
+                      </div> -->
+                      <div class="wrapper-28">
+                      <div class="row">
+                          <div class="col-md-9">
+                              <h3 class="m-0 f-500">Your risk profile helps us understand how much investment risk you can take.</h3>
+                              <div class="pt-20">
+                              <mat-accordion>
+                                <mat-expansion-panel>
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        1. What is your age? 
+                                    </mat-panel-title>
+                                   
+                                  </mat-expansion-panel-header>
+                              
+                                    <mat-radio-group aria-label="Select an option" id="custom-radio">
+                                        <mat-radio-button value="1">0-35</mat-radio-button>
+                                        <mat-radio-button value="2">36-45</mat-radio-button>
+                                        <mat-radio-button value="3">46-55</mat-radio-button>
+                                        <mat-radio-button value="4">56-55</mat-radio-button>
+                                        <mat-radio-button value="5">>65</mat-radio-button>
+                                      </mat-radio-group>
+                                  
+                              
+                                 
+                                </mat-expansion-panel>
+                                <mat-expansion-panel (opened)="panelOpenState = true"
+                                                     (closed)="panelOpenState = false" class="mt-12">
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        2. You have saved for a big vacation.Two weeks before your departure you lose your job. What would you do?
+
+                                    </mat-panel-title>
+                                    
+                                  </mat-expansion-panel-header>
+                                  
+                                </mat-expansion-panel>
+                                <mat-expansion-panel class="mt-12">
+                                    <mat-expansion-panel-header>
+                                      <mat-panel-title>
+                                        3. You have a substantial/huge sum of money to spare for about 6 months after which you need this sum to repay a loan, this sum is currently not invested anywhere. You would:
+
+                                      </mat-panel-title>
+                                     
+                                    </mat-expansion-panel-header>
+                                
+                                  </mat-expansion-panel>
+                              </mat-accordion>
+                              </div>
+                              <button mat-stroked-button class="btn-primary mt-150 br-0 right">SUBMIT</button>
+                          </div>
+                          <div class="col-md-3">
+                              <div class="p-20 b-primitive mt-8">
+                            <mat-progress-bar mode="determinate" value="30"></mat-progress-bar>
+                            <h5 class="pt-8 m-0 pt-12 text-center">3 of 15 completed</h5>
+                            </div>
+                          </div>
                       </div>
+                      </div>
+                    </div>
+                    <div *ngSwitchCase="'tab3'">
+                        <div class="wrapper-28">
+                            <div class="row">
+                                <div class="col-md-12">
+                                        <button mat-stroked-button class="text-primary">Retake risk assessment</button>
+                                        <button mat-stroked-button class="text-primary">History</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
             </div>
         </div>
