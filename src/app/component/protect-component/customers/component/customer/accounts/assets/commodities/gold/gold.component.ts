@@ -134,10 +134,10 @@ export class GoldComponent implements OnInit {
   }
   addGoldRes(data) {
     console.log('addrecuringDepositRes', data)
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedGold', state: 'close', data })
   }
   editGoldRes(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedGold', state: 'close', data })
   }
 
 }

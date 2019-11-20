@@ -31,15 +31,20 @@ export class FixedIncomeComponent implements OnInit {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
     this.getFixedDepositList()
-    this.getRecurringDepositList()
-    this.getBondsList()
   }
   Close(){
 
   }
   getfixedIncomeData(value){
     console.log('value++++++',value)
-    this.showRequring = (value == "2")? "2":(value == "3")?"3":"1"
+    this.showRequring = value
+    if(value == '2'){
+      this.getRecurringDepositList()
+    }else if(value == '3'){
+      this.getBondsList()
+    }else{
+      this.getFixedDepositList()
+    }
   
   }
   getFixedDepositList(){
