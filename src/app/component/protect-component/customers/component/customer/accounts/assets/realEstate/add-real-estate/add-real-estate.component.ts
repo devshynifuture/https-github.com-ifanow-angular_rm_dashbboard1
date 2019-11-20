@@ -218,13 +218,12 @@ removeCoOwner(item){
        }else{
       const obj = {
         ownerName:this.ownerName,
-        // ownerPercent:this.addrealEstateForm.controls.ownerPercent.value,
-        // coOwnerPercent:this.addrealEstateForm.controls.coOwnerPercent.value,
+        clientId: this.clientId,
+        advisorId: this.advisorId,
+        id:this._inputData.id,
         type:this.addrealEstateForm.controls.type.value,
         marketValue:this.addrealEstateForm.controls.marketValue.value,
-        year:this.addrealEstateForm.controls.year.value,
-        month:this.addrealEstateForm.controls.month.value,
-        days:this.addrealEstateForm.controls.days.value,
+        purchasePeriod: this.purchasePeriod,
         purchaseValue:this.addrealEstateForm.controls.purchaseValue.value,
         unit:this.addrealEstateForm.controls.unit.value,
         ratePerUnit:this.addrealEstateForm.controls.ratePerUnit.value,
@@ -258,48 +257,13 @@ removeCoOwner(item){
             }
         });
         if(this._inputData=='Add'){
-          let objToSend={
-            "clientId": this.clientId,
-              "advisorId": this.advisorId,
-              "typeId": obj.type,
-              "marketValue": obj.marketValue,
-              "purchasePeriod": this.purchasePeriod,
-              "purchaseValue": obj.purchaseValue,
-              "unitId": obj.unit,
-              "ratePerUnit": obj.ratePerUnit,
-              "stampDutyCharge": obj.stampDuty,
-              "registrationCharge": obj.registration,
-              "gstCharge": obj.gst,
-              "location": obj.location,
-              "description": obj.description,
-              "realEstateOwners": obj.ownerData,
-              "realEstateNominees":obj.nomineeData,      
-              }
           console.log(obj);
-          this.custumService.addRealEstate(objToSend).subscribe(
+          this.custumService.addRealEstate(obj).subscribe(
             data => this.addRealEstateRes(data)
           );
         }else{
-          let objToSend={
-              "id":this._inputData.id,
-              "clientId": this.clientId,
-              "advisorId":  this.advisorId,
-              "typeId": obj.type,
-              "marketValue":  obj.marketValue,
-              "purchasePeriod": this.purchasePeriod,
-              "purchaseValue": obj.purchaseValue,
-              "unitId":  obj.unit,
-              "ratePerUnit": obj.ratePerUnit,
-              "stampDutyCharge": obj.stampDuty,
-              "registrationCharge": obj.registration,
-              "gstCharge": obj.gst,
-              "location":  obj.location,
-              "description": obj.description,
-              "realEstateOwners": obj.ownerData,
-              "realEstateNominees":obj.nomineeData,      
-              }
           console.log(obj);
-          this.custumService.editRealEstate(objToSend).subscribe(
+          this.custumService.editRealEstate(obj).subscribe(
             data => this.editRealEstateRes(data)
           );
         }
