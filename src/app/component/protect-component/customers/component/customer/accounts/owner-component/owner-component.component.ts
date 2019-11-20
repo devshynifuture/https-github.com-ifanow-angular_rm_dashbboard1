@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CustomerService } from '../../customer.service';
 import { Validators, FormBuilder } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
@@ -41,7 +40,7 @@ export class OwnerComponentComponent implements OnInit {
   getListFamilyMem(data) {
     let obj = {
       advisorId: this.advisorId,
-      clientId: this.clientId
+      clientId: this.clientId,
     }
     this.custumService.getListOfFamilyByClient(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)

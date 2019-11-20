@@ -9,15 +9,16 @@ import { AuthService } from 'src/app/auth-service/authService';
   styleUrls: ['./owner-column.component.scss']
 })
 export class OwnerColumnComponent implements OnInit {
-  ownerData: any;
-  advisorId: any;
+
+  isownerName = false;
+  owner: any;
   s: string[] = ['Sneha', 'gayatri', 'Shivani'];
   family: string[];
-  owner: any;
+  advisorId: any;
+  ownerData: any;
   clientId: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService) { }
-
   @Output() valueChange = new EventEmitter();
   @Input()
   set data(data) {
@@ -32,7 +33,7 @@ export class OwnerColumnComponent implements OnInit {
     console.log('ownerData', this.ownerData)
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getListFamilyMem('')
+    this.getListFamilyMem('');
     this.getdataForm()
     this.family = this.s;
   }

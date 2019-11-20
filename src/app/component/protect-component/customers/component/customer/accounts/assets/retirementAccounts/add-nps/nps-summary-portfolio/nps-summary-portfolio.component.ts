@@ -76,14 +76,14 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     this.familyMemberId = value.id
   }
   
-  nomineesList(){
-      let name = this.ownerName
-      var evens = _.remove( this.nomineesListFM, function(n) {
-       return n.userName == name;
-     });
-     this.nomineesListFM = evens
-   console.log('NomineesList',this.nomineesListFM)
-  }
+  // nomineesList(){
+  //     let name = this.ownerName
+  //     var evens = _.remove( this.nomineesListFM, function(n) {
+  //      return n.userName == name;
+  //    });
+  //    this.nomineesListFM = evens
+  //  console.log('NomineesList',this.nomineesListFM)
+  // }
   
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' })
