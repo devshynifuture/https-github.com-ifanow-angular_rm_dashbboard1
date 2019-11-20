@@ -47,15 +47,15 @@ export class RetirementAccountComponent implements OnInit {
       advisorId: this.advisorId
     }
     this.getListEPF()
-    this.getListNPS()
-    this.getListGratuity()
-    this.getListEPS()
-    this.getListSuperannuation()
+    
+    // this.getListGratuity()
+    // this.getListEPS()
+    // this.getListSuperannuation()
   }
   getfixedIncomeData(value) {
     console.log('value++++++', value)
     this.showRequring = (value == "2") ? "2" : (value == "3") ? "3" : (value == "4") ? "4" : (value == "5") ? "5" : "1";
-
+    (value == '2')?this.getListNPS():(value == '3')?this.getListGratuity():(value == '4')?this.getListSuperannuation():(value == '5')?this.getListEPS():this.getListEPF()
   }
   openRetirement(value, state, data) {
     const fragmentData = {
