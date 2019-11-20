@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile-plan.component.scss']
 })
 export class ProfilePlanComponent implements OnInit {
-
-  constructor() { }
+  viewMode
+  constructor( ) { }
 
   ngOnInit() {
+    this.viewMode="tab1"
   }
 
 }

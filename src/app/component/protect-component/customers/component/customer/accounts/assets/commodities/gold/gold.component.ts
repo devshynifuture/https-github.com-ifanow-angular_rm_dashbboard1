@@ -98,7 +98,7 @@ export class GoldComponent implements OnInit {
     } else if (this.gold.controls.noTolasGramsPur.invalid) {
       this.isNoTolasGramsPur = true;
       return;
-    } else if (this.gold.controls.purchaseYear.invalid) {
+    } else if (this.gold.controls.tenure.invalid) {
       this.isPurchaseYear = true;
       return;
     } else if (this.gold.controls.carats.invalid) {
@@ -134,10 +134,10 @@ export class GoldComponent implements OnInit {
   }
   addGoldRes(data) {
     console.log('addrecuringDepositRes', data)
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedGold', state: 'close', data })
   }
   editGoldRes(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedGold', state: 'close', data })
   }
 
 }

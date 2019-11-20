@@ -13,33 +13,31 @@ export class PoTdSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
 
-  constructor(private cusService:CustomerService,private subInjectService:SubscriptionInject) { }
-  displayedColumns22 = ['no', 'owner','cvalue','rate','amt','tenure','mvalue','mdate','number','desc','status','icons'];
+  constructor(private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
+  displayedColumns22 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'tenure', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
   datasource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId=2978;
+    this.clientId = 2978;
     this.getPoTdSchemedata();
   }
   getPoTdSchemedata() {
-    const obj={
-      advisorId:this.advisorId,
-      clientId:this.clientId,
-      requiredDate:''
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
     }
     this.cusService.getSmallSavingSchemePOTDData(obj).subscribe(
-      data=>this.getPoTdSchemedataResponse(data)
+      data => this.getPoTdSchemedataResponse(data)
     )
   }
-  getPoTdSchemedataResponse(data)
-  {
-    this.datasource=data
+  getPoTdSchemedataResponse(data) {
+    this.datasource = data.PostOfficeTdList
     console.log(data)
   }
-  addPOTD(value)
-  {
+  addPOTD(value,data) {
     const fragmentData = {
-      Flag:value,
+      Flag: value,
+      data,
       id: 1,
       state: 'open'
     };
