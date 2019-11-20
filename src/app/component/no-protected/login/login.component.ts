@@ -75,40 +75,42 @@ export class LoginComponent implements OnInit {
       this.authService.setToken('data');
 
       this.authService.setUserInfo(jsonData);
+      this.authService.setClientData({id: 2978, name: 'Aryendra Kumar Saxena'
+      });
       // this.authService.setToken(loginData.payLoad);
       this.eventService.openSnackBar('Login SuccessFully', 'dismiss');
       this.router.navigate(['/admin/subscription']);
 
 
-    //   console.log(loginData);
-    //   this.backOfficeService.loginApi(loginData).subscribe(
-    //     data => {
-    //       if (data) {
-    //         console.log('data: ', data);
-    //         const jsonData = {
-    //             advisorId: 2808,
-    //             clientId: 2978,
-    //             authToken: data,
-    //             imgUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'
-    //           }
-    //         ;
-    //         this.authService.setToken(data);
+      //   console.log(loginData);
+      //   this.backOfficeService.loginApi(loginData).subscribe(
+      //     data => {
+      //       if (data) {
+      //         console.log('data: ', data);
+      //         const jsonData = {
+      //             advisorId: 2808,
+      //             clientId: 2978,
+      //             authToken: data,
+      //             imgUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'
+      //           }
+      //         ;
+      //         this.authService.setToken(data);
 
-    //         this.authService.setUserInfo(jsonData);
-    //         this.authService.setToken(loginData.payLoad);
-    //         this.eventService.openSnackBar('Login SuccessFully', 'dismiss');
-    //         this.router.navigate(['/admin/subscription']);
+      //         this.authService.setUserInfo(jsonData);
+      //         this.authService.setToken(loginData.payLoad);
+      //         this.eventService.openSnackBar('Login SuccessFully', 'dismiss');
+      //         this.router.navigate(['/admin/subscription']);
 
-    //       }
-    //       this.closeDialog(data);
-    //     },
-    //     err => {
-    //       console.log('error on login: ', err);
-    //       this.eventService.openSnackBar(err, 'dismiss');
-    //     }
-    //   );
-    // }
-      }
+      //       }
+      //       this.closeDialog(data);
+      //     },
+      //     err => {
+      //       console.log('error on login: ', err);
+      //       this.eventService.openSnackBar(err, 'dismiss');
+      //     }
+      //   );
+      // }
+    }
   }
 
   closeDialog(data) {
