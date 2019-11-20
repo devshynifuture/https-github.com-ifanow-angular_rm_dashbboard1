@@ -99,7 +99,9 @@ export class OthersComponent implements OnInit {
         description: this.others.controls.description.value,
         id: this.others.controls.id.value
       }
+
       if (this.others.controls.id.value == undefined) {
+        delete obj.id; 
         this.custumService.addOthers(obj).subscribe(
           data => this.addOthersRes(data)
         );

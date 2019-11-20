@@ -13,7 +13,7 @@ export class PoMisSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
 
-  constructor(private cusService:CustomerService,private subInjectService:SubscriptionInject) { }
+  constructor(private cusService:CustomerService,private subInjectService:SubscriptionInject,public util:UtilService) { }
   displayedColumns = ['no', 'owner','cvalue','mpayout','rate','amt','mvalue','mdate','desc','status','icons'];
   datasource;
   ngOnInit() {
@@ -34,12 +34,13 @@ export class PoMisSchemeComponent implements OnInit {
   getPoMisSchemedataResponse(data)
   {
     console.log(data)
-    this.datasource=data
+    this.datasource=data.PoMisList;
   }
-  addPOMIS(value)
+  addPOMIS(value,data)
   {
     const fragmentData = {
       Flag:value,
+      data:data,
       id: 1,
       state: 'open'
     };
@@ -47,6 +48,7 @@ export class PoMisSchemeComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getPoMisSchemedata();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 

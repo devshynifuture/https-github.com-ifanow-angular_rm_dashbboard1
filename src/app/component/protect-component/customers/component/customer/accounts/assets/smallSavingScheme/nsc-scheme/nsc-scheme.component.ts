@@ -36,10 +36,11 @@ export class NscSchemeComponent implements OnInit {
    this.datasource=data.NationalSavingCertificate;
   }
   
-  addNSC(value)
+  openAddNSC(value,data)
   {
     const fragmentData = {
       Flag:value,
+      data,
       id: 1,
       state: 'open'
     };

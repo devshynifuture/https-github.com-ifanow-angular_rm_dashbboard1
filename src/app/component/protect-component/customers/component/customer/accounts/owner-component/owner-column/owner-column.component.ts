@@ -1,24 +1,22 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CustomerService } from '../../customer.service';
-import { Validators, FormBuilder } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { CustomerService } from '../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
-  selector: 'app-owner-component',
-  templateUrl: './owner-component.component.html',
-  styleUrls: ['./owner-component.component.scss']
+  selector: 'app-owner-column',
+  templateUrl: './owner-column.component.html',
+  styleUrls: ['./owner-column.component.scss']
 })
-export class OwnerComponentComponent implements OnInit {
-
-  isownerName = false;
-  owner: any;
+export class OwnerColumnComponent implements OnInit {
+  ownerData: any;
+  advisorId: any;
   s: string[] = ['Sneha', 'gayatri', 'Shivani'];
   family: string[];
-  advisorId: any;
-  ownerData: any;
+  owner: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService) { }
+
   @Output() valueChange = new EventEmitter();
   @Input()
   set data(data) {
@@ -32,7 +30,7 @@ export class OwnerComponentComponent implements OnInit {
   ngOnInit() {
     console.log('ownerData', this.ownerData)
     this.advisorId = AuthService.getAdvisorId();
-    this.getListFamilyMem('');
+    this.getListFamilyMem('')
     this.getdataForm()
     this.family = this.s;
   }

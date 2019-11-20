@@ -33,6 +33,8 @@ export class AddRealEstateComponent implements OnInit {
   purchasePeriod: any;
   family: any;
   _inputData: any;
+  isTypeValid: boolean;
+  isMvValid: boolean;
 
   constructor(public custumService:CustomerService,public subInjectService:SubscriptionInject,private fb: FormBuilder,public custmService:CustomerService,public eventService:EventService) { }
   @Input()
@@ -108,7 +110,7 @@ export class AddRealEstateComponent implements OnInit {
     return this.addrealEstateForm.get('getNomineeName') as FormArray;
   }
   addNominee(){
-      this.getNominee.push(this.fb.group({ nomineeName: null,
+      this.getNominee.push(this.fb.group({ name: null,
         ownershipPer: null,
       }));
     
@@ -125,8 +127,8 @@ export class AddRealEstateComponent implements OnInit {
   }
   addNewCoOwner(data){
     if(this.addOwner==data){
-      this.getCoOwner.push(this.fb.group({ coOwnerName: null,
-        coOwnerPer: null,
+      this.getCoOwner.push(this.fb.group({ ownerName: null,
+        ownershipPerc: null,
       }));
     }else{
       this.addOwner=data;
@@ -145,11 +147,11 @@ removeCoOwner(item){
     }
     this.addrealEstateForm = this.fb.group({
       ownerName:this.ownerName,
-      getCoOwnerName: this.fb.array([this.fb.group({  coOwnerName:null,
-        coOwnerPer: null,
+      getCoOwnerName: this.fb.array([this.fb.group({  ownerName:null,
+        coOwnerPerc: null,
        })]),
-      ownerPercent: [data.ownerPercent , [Validators.required]],
-      coOwnerPercent: [(data.coOwnerPercent)+"", [Validators.required]],
+      // ownerPercent: [data.ownerPercent , [Validators.required]],
+      // coOwnerPercent: [(data.coOwnerPercent)+"", [Validators.required]],
       type: [(data.typeId)+"", [Validators.required]],
       marketValue: [data.marketValue, [Validators.required]],
       year:[data.year],
@@ -164,34 +166,58 @@ removeCoOwner(item){
       location: [data.location],
       description: [data.description],
       nominee: [data.nominee],
-      getNomineeName: this.fb.array([this.fb.group({  nomineeName:null,
+      getNomineeName: this.fb.array([this.fb.group({  name:null,
         ownershipPer: null,
        })])
     });
-    if(data.realEstateNominees!=undefined){
+    // if(data.realEstateNominees!=undefined){
+    //   data.realEstateNominees.forEach(element => {
+    //     this.addrealEstateForm.controls.getNomineeName=this.fb.array([this.fb.group({
+    //       name: [element.name,[Validators.required]],
+    //       ownershipPer:[ (element.ownershipPer),Validators.required]})])
+    //   })
+    // }
+    if (data.realEstateNominees != undefined) {
       data.realEstateNominees.forEach(element => {
-        this.addrealEstateForm.controls.getNomineeName=this.fb.array([this.fb.group({
-          name: [element.name,[Validators.required]],
-          ownershipPer:[ (element.ownershipPer),Validators.required]})])
+        this.addrealEstateForm.controls.getNomineeName.push(this.fb.group({
+          name: [(element.name) + "", [Validators.required]],
+          ownershipPer: [(element.ownershipPer + ""), Validators.required]
+        }))
       })
+      this.getNominee.removeAt(0);
+      console.log(this.addrealEstateForm.controls.getNomineeName.value)
     }
-    if(data.realEstateOwners!=undefined){
-      data.realEstateOwners.forEach(element => {
-        this.addrealEstateForm.controls.getCoOwner=this.fb.array([this.fb.group({
-          ownerName: [(element.ownerName),[Validators.required]],
-          ownershipPerc: [element.ownershipPerc,Validators.required]})])
-      })
-    }
+      if (data.realEstateOwners != undefined) {
+        data.realEstateOwners.forEach(element => {
+          this.addrealEstateForm.controls.getCoOwnerName.push(this.fb.group({
+            ownerName: [(element.ownerName) + "", [Validators.required]],
+            ownershipPerc: [(element.ownershipPerc + ""), Validators.required]
+          }))
+        })
+      }
+    // if(data.realEstateOwners!=undefined){
+    //   data.realEstateOwners.forEach(element => {
+    //     this.addrealEstateForm.controls.getCoOwnerName=this.fb.array([this.fb.group({
+    //       ownerName: [(element.ownerName),[Validators.required]],
+    //       ownershipPerc: [element.ownershipPerc,Validators.required]})])
+    //   })
+    // }
     this.ownerData = this.addrealEstateForm.controls;
 
     }
    saveFormData(){
     this.getValue=this.getDateYMD()
      console.log(this.getValue);
+     if (this.addrealEstateForm.controls.type.invalid) {
+      this.isTypeValid = true;
+      return;
+       } else if(this.addrealEstateForm.controls.marketValue.invalid){
+        this.isMvValid = true;
+       }else{
       const obj = {
         ownerName:this.ownerName,
-        ownerPercent:this.addrealEstateForm.controls.ownerPercent.value,
-        coOwnerPercent:this.addrealEstateForm.controls.coOwnerPercent.value,
+        // ownerPercent:this.addrealEstateForm.controls.ownerPercent.value,
+        // coOwnerPercent:this.addrealEstateForm.controls.coOwnerPercent.value,
         type:this.addrealEstateForm.controls.type.value,
         marketValue:this.addrealEstateForm.controls.marketValue.value,
         year:this.addrealEstateForm.controls.year.value,
@@ -212,19 +238,19 @@ removeCoOwner(item){
         this.addrealEstateForm.value.getNomineeName.forEach(element => {
           if(element){
            let obj1={
-            'name': element.nomineeName,
+            'name': element.name,
             'familyMemberId':this.selectedFamilyData.id,
             'ownershipPer':parseInt(element.ownershipPer)
            }
           obj.nomineeData.push(obj1)
         }
       });
-          this.addrealEstateForm.value.getNomineeName.forEach(element => {
+          this.addrealEstateForm.value.getCoOwnerName.forEach(element => {
             if(element){
              let obj1={
-              'name': element.coOwnerName,
+              'ownerName': element.ownerName,
               'familyMemberId':this.selectedFamilyData.id,
-              'ownershipPer':parseInt(element.coOwnerPer)
+              'ownershipPerc':parseInt(element.coOwnerPerc)
              }
             obj.ownerData.push(obj1)
             }
@@ -275,7 +301,7 @@ removeCoOwner(item){
             data => this.editRealEstateRes(data)
           );
         }
-      
+       }
    }
    addRealEstateRes(data){
      console.log(data);

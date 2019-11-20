@@ -29,6 +29,8 @@ export class NpsSchemeHoldingComponent implements OnInit {
   ownerData: any;
   schemes: any[];
   schemeList: any;
+  idForscheme: any;
+  idForscheme1: any[];
 
   constructor(private event : EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
   @Input()
@@ -40,8 +42,10 @@ export class NpsSchemeHoldingComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    this.idForscheme1  = []
     this.advisorId = AuthService.getAdvisorId()
     this.getGlobalList()
+  
   }
 
   display(value) {
@@ -59,20 +63,21 @@ export class NpsSchemeHoldingComponent implements OnInit {
     console.log('getGlobalRes',data)
     this.schemeList = data.npsScheme;
   }
+  
   getdataForm(data) {
     if (data == undefined) {
       data = {}
     }
-
     this.schemeHoldingsNPS = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       schemeChoice: [(data == undefined) ? '' : (data.schemeChoice)+"", [Validators.required]],
       pran: [(data == undefined) ? '' : data.pran, [Validators.required]],
+      schemeName:[(data == undefined) ? '' : data.schemeName, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       holdingList: this.fb.array([this.fb.group({
-        name: null, holdingAsOn: null,
-        totalUnits: null, totalNetContry: null
+        schemeName: null, holdingAsOn: null,
+        totalUnits: null, totalNetContribution: null
       })]),
       futureContributionList: this.fb.array([this.fb.group({
         frequencyId: null,
@@ -86,6 +91,29 @@ export class NpsSchemeHoldingComponent implements OnInit {
     this.ownerData = this.schemeHoldingsNPS.controls;
     this.familyMemberId = this.schemeHoldingsNPS.controls.familyMemberId.value
     this.familyMemberId = this.familyMemberId[0]
+    if (data != undefined) {
+      data.futureContributionList.forEach(element => {
+        this.schemeHoldingsNPS.controls.futureContributionList.push(this.fb.group({
+          frequencyId: [(element.frequencyId) + "", [Validators.required]],
+          accountPreferenceId: [(element.accountPreferenceId + ""), Validators.required],
+          approxContribution: [(element.approxContribution), Validators.required]
+        }))
+      })
+      data.npsNomineesList.forEach(element => {
+        this.schemeHoldingsNPS.controls.npsNomineesList.push(this.fb.group({
+          nomineeName: [(element.nomineeName), [Validators.required]],
+          nomineePercentageShare: [element.nomineePercentageShare , Validators.required],
+        }))
+      })
+      data.holdingList.forEach(element => {
+        this.schemeHoldingsNPS.controls.holdingList.push(this.fb.group({
+          schemeName: [(element.schemeId) + "", [Validators.required]],
+          totalUnits: [(element.totalUnits), Validators.required],
+          totalNetContribution: [(element.totalNetContribution), Validators.required],
+          holdingAsOn:[new Date(element.totalNetContribution), Validators.required],
+        }))
+      })
+    }
 
   }
   get holdings() {
@@ -93,13 +121,15 @@ export class NpsSchemeHoldingComponent implements OnInit {
   }
   addHoldings() {
     this.holdings.push(this.fb.group({
-      name: null, holdingAsOn: null,
-      totalUnits: null, totalNetContry: null
+      schemeName: null, holdingAsOn: null,
+      totalUnits: null, totalNetContribution: null
     }));
 
   }
-  removeHoldings() {
-
+  removeHoldings(item) {
+    if(this.holdings.value.length>1){
+      this.holdings.removeAt(item)
+    }
   }
   get futureContry() {
     return this.schemeHoldingsNPS.get('futureContributionList') as FormArray;
@@ -146,7 +176,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined) ? this.schemeHoldingsNPS.controls.ownerName.value : this.ownerName,
         pran: this.schemeHoldingsNPS.controls.pran.value,
-        holdingList:this.schemeHoldingsNPS.controls.holdingList.vlaue,
+        holdingList:this.schemeHoldingsNPS.controls.holdingList.value,
         futureContributionList: this.schemeHoldingsNPS.controls.futureContributionList.value,
         npsNomineesList: this.schemeHoldingsNPS.controls.npsNomineesList.value,
         description: this.schemeHoldingsNPS.controls.description.value,

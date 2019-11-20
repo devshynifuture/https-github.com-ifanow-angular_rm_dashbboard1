@@ -5,6 +5,7 @@ import {SubscriptionModule} from '../component/protect-component/AdviserComponen
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AccountModule} from '../component/protect-component/customers/component/customer/accounts/account.module';
+import {PlanModule} from '../component/protect-component/customers/component/customer/plan/plan.module';
 
 // import {AppModule} from "../app.module";
 
@@ -18,6 +19,7 @@ import {AccountModule} from '../component/protect-component/customers/component/
     MaterialModule,
     SubscriptionModule,
     AccountModule,
+    PlanModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
