@@ -83,6 +83,8 @@ import { GoldComponent } from './assets/commodities/gold/gold.component';
 import { OthersComponent } from './assets/commodities/others/others.component';
 import { BankAccountsComponent } from './assets/cash&bank/bank-accounts/bank-accounts.component';
 import { CashInHandComponent } from './assets/cash&bank/cash-in-hand/cash-in-hand.component';
+import { OwnerColumnComponent } from './owner-component/owner-column/owner-column.component';
+import { AddScenarioComponent } from '../../common-component/add-scenario/add-scenario.component';
 @NgModule({
   declarations: [
     SchemeLevelTransactionComponent,
@@ -163,6 +165,8 @@ import { CashInHandComponent } from './assets/cash&bank/cash-in-hand/cash-in-han
     OthersComponent,
     BankAccountsComponent,
     CashInHandComponent,
+    OwnerColumnComponent,
+    AddScenarioComponent
 
   ],
   imports: [
@@ -173,7 +177,7 @@ import { CashInHandComponent } from './assets/cash&bank/cash-in-hand/cash-in-han
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [AddLiabilitiesComponent, AddInsuranceComponent,AddOtherPayablesComponent,OthersComponent,CashAndBankComponent,BankAccountsComponent,CashInHandComponent,CommoditiesComponent,GoldComponent,NpsSchemeHoldingComponent, NpsSummaryPortfolioComponent, LibilitiesRightComponent, FixedDepositComponent, AddSuperannuationComponent,AddEPSComponent,AddGratuityComponent, AddNPSComponent,AddEPFComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent,AddRealEstateComponent,RealEstateComponent,AddPpfComponent,AddNscComponent,AddSsyComponent,AddKvpComponent,AddScssComponent,AddPoSavingComponent,AddPoMisComponent,AddPoTdComponent,AddPoRdComponent,AddExpensesComponent,OtherPayablesComponent],
+  exports: [AddLiabilitiesComponent, AddInsuranceComponent,AddOtherPayablesComponent,OthersComponent,CashAndBankComponent,BankAccountsComponent,CashInHandComponent,CommoditiesComponent,GoldComponent,NpsSchemeHoldingComponent, NpsSummaryPortfolioComponent, LibilitiesRightComponent, FixedDepositComponent, AddSuperannuationComponent,AddEPSComponent,AddGratuityComponent, AddNPSComponent,AddEPFComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent,AddRealEstateComponent,RealEstateComponent,AddPpfComponent,AddNscComponent,AddSsyComponent,AddKvpComponent,AddScssComponent,AddPoSavingComponent,AddPoMisComponent,AddPoTdComponent,AddPoRdComponent,AddExpensesComponent,OtherPayablesComponent,OwnerColumnComponent,AddScenarioComponent],
   entryComponents: [BottomSheetComponent]
 })
 export class AccountModule {

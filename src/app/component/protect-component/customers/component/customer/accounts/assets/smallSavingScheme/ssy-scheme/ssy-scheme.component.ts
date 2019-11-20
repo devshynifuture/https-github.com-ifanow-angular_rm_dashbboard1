@@ -37,7 +37,7 @@ export class SsySchemeComponent implements OnInit {
    this.datasource=data.SSYList
 
   }
-  addSSY(value)
+  addOpenSSY(value)
   {
     const fragmentData = {
       Flag:value,

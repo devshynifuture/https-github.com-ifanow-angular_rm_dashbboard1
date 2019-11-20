@@ -9,7 +9,7 @@
 
         <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS</button>
-        <button (click)="addNSC('addNSC')" mat-stroked-button class="btn-primary addon v-middle"><i class="material-icons">add</i>ADD NEW</button>
+        <button (click)="openAddNSC('addNSC','')" mat-stroked-button class="btn-primary addon v-middle"><i class="material-icons">add</i>ADD NEW</button>
     </div>
 </div>
 <div class="example-container mt-8 real-estate">
@@ -17,15 +17,15 @@
 
         <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef class="br"> No </th>
-            <td mat-cell *matCellDef="let element" class="br"> {{element.no}} </td>
+            <td mat-cell *matCellDef="let element;let i=index" class="br">{{i+1}}</td>
         </ng-container>
         <ng-container matColumnDef="owner">
             <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
-            <td mat-cell *matCellDef="let element" class="br t-25"> {{element.owner}} </td>
+            <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
             <th mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Current value </th>
-            <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{element.cvalue}} </td>
+            <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{element.currentValue}} </td>
         </ng-container>
         <ng-container matColumnDef="rate">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Rate </th>
@@ -33,20 +33,20 @@
         </ng-container>
         <ng-container matColumnDef="mvalue">
             <th mat-header-cell *matHeaderCellDef class="br text-right">Maturity value </th>
-            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.mvalue}} </td>
+            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.maturityValue}} </td>
         </ng-container>
         <ng-container matColumnDef="mdate">
             <th mat-header-cell *matHeaderCellDef class="br text-left t-7"> Maturity date </th>
-            <td mat-cell *matCellDef="let element" class="br text-left t-7"> {{element.mdate}} </td>
+            <td mat-cell *matCellDef="let element" class="br text-left t-7"> {{element.maturityDate | date:'dd/MM/yyyy'}} </td>
         </ng-container>
         <ng-container matColumnDef="number">
             <th mat-header-cell *matHeaderCellDef class="br t-12 text-left"> Certificate number </th>
-            <td mat-cell *matCellDef="let element" class="br t-12 text-left"> {{element.number}} </td>
+            <td mat-cell *matCellDef="let element" class="br t-12 text-left"> {{element.certificateNumber}} </td>
         </ng-container>
 
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef class="br t-10"> Description </th>
-            <td mat-cell *matCellDef="let element" class="br t-10"> {{element.desc}} </td>
+            <td mat-cell *matCellDef="let element" class="br t-10"> {{element.description}} </td>
         </ng-container>
         <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
@@ -59,7 +59,7 @@
                     more_vert
                 </i>
                 <mat-menu #menubank="matMenu">
-                    <button mat-menu-item>Edit</button>
+                    <button mat-menu-item (click)="openAddNSC('addNSC',element)">Edit</button>
                     <button mat-menu-item>Detailed view</button>
                     <button mat-menu-item>Activity</button>
                     <button mat-menu-item>Delete</button>

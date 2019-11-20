@@ -17,6 +17,7 @@ import { CashflowsPlanComponent } from './component/customer/plan/cashflows-plan
 import { InvestmentsPlanComponent } from './component/customer/plan/investments-plan/investments-plan.component';
 import { ScenariosPlanComponent } from './component/customer/plan/scenarios-plan/scenarios-plan.component';
 
+
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
 // import { FactShitComponent } from './component/common-component/fact-shit/fact-shit.component';
 // import { TransactionsComponent } from './component/common-component/transactions/transactions.component';
@@ -35,7 +36,7 @@ import { ScenariosPlanComponent } from './component/customer/plan/scenarios-plan
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
-    AccountModule
+    AccountModule,
   ],
   exports: [],
   entryComponents: [BottomSheetComponent]

@@ -98,7 +98,7 @@ export class GoldComponent implements OnInit {
     } else if (this.gold.controls.noTolasGramsPur.invalid) {
       this.isNoTolasGramsPur = true;
       return;
-    } else if (this.gold.controls.purchaseYear.invalid) {
+    } else if (this.gold.controls.tenure.invalid) {
       this.isPurchaseYear = true;
       return;
     } else if (this.gold.controls.carats.invalid) {
