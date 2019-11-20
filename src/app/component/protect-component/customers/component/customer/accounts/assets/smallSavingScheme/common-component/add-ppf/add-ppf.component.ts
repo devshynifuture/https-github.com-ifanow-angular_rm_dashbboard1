@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -25,7 +25,11 @@ export class AddPpfComponent implements OnInit {
   ppfSchemeForm;
   transactionForm
   optionalppfSchemeForm;
-  transactionList=[];
+  transactionList = [];
+  addTransactionList: number;
+  transactionData: any;
+  editApi: any;
+  clientId: number;
   constructor(private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   @Input()
@@ -40,6 +44,7 @@ export class AddPpfComponent implements OnInit {
   ngOnInit() {
     this.isOptionalField = true;
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId=2978;
   }
   display(value) {
     console.log('value selected', value)
@@ -49,26 +54,13 @@ export class AddPpfComponent implements OnInit {
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
   }
-  addTransaction() {
-    // if (this.transactionList.length>0) {
-      let obj =
-      {
-        "date": '',
-        "amount": '',
-        "paymentType": ''
-      }
-      this.transactionList.push(obj)
-      console.log(this.transactionList)
-    // }
-  }
-  removeTransaction(index)
-  {
-    console.log(index);
-    this.transactionList.splice(1,index);
-  }
+
   getdataForm(data) {
     if (data == undefined) {
       data = {};
+    }
+    else {
+      this.editApi = data
     }
     this.ppfSchemeForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
@@ -78,11 +70,6 @@ export class AddPpfComponent implements OnInit {
       futureContribution: [, [Validators.required]],
       frquency: [, [Validators.required]],
     })
-    this.transactionForm = this.fb.group({
-      transactionType: [, [Validators.required]],
-      date: [, [Validators.required]],
-      amount: [, [Validators.required]]
-    })
     this.optionalppfSchemeForm = this.fb.group({
       description: [, [Validators.required]],
       bankName: [, [Validators.required]],
@@ -91,9 +78,21 @@ export class AddPpfComponent implements OnInit {
 
     })
     this.ownerData = this.ppfSchemeForm.controls;
-
+  }
+  getFormData(data) {
+    console.log(data)
+    this.transactionData = data.controls
   }
   addPPF() {
+    let finalTransctList = []
+    this.transactionData.forEach(element => {
+      let obj = {
+        "date": element.controls.date.value._d,
+        "amount": element.controls.amount.value,
+        "paymentType": element.controls.transactionType.value
+      }
+      finalTransctList.push(obj)
+    });
     if (this.ppfSchemeForm.get('accountBalance').invalid) {
       // this.ppfSchemeForm.get('accountBalance').status="INVALIDF"
       return;
@@ -111,24 +110,52 @@ export class AddPpfComponent implements OnInit {
       return;
     }
     else {
-      let obj = {
-        "advisorId": this.advisorId,
-        "clientId": 2978,
-        "ownerName": this.ownerName,
-        "familyMemberId": this.familyMemberId,
-        "accountBalance": this.ppfSchemeForm.get('accountBalance').value,
-        "balanceAsOn": this.ppfSchemeForm.get('balanceAsOn').value,
-        "commencementDate": this.ppfSchemeForm.get('commencementDate').value,
-        "description": this.optionalppfSchemeForm.get('description').value,
-        "bankName": this.optionalppfSchemeForm.get('bankName').value,
-        "linkedBankAccount": this.optionalppfSchemeForm.get('linkedBankAccount').value,
-        "nomineeName": this.optionalppfSchemeForm.get('nominee').value,
-        "publicprovidendfundtransactionlist":this.transactionList
+      if (this.editApi) {
+        // let obj = {
+        //   "familyMemberId": this.familyMemberId,
+        //   "ownerName": this.ownerName,
+        //   "accountBalance": this.ppfSchemeForm.get('accountBalance').value,
+        //   "balanceAsOn": this.ppfSchemeForm.get('balanceAsOn').value,
+        //   "commencementDate": "2019-10-10",
+        //   "description": "saving schemes here",
+        //   "bankName": "icici",
+        //   "linkedBankAccount": "bankAcc112233",
+        //   "nomineeName": "dev",
+        //   "agentName": "myPlanner",
+        //   "ppfTransactionType": 1,
+        //   "transactionDate": "2020-12-12",
+        //   "amount": 5000,
+        //   "id": 13,
+        //   "ppfTransactionId": 5
+        // }
+        // this.cusService.editPPF(obj).subscribe(
+        //   data => this.addPPFResponse(data),
+        //   err => this.eventService.openSnackBar(err)
+        // )
       }
-      this.cusService.addPPFScheme(obj).subscribe(
-        data => this.addPPFResponse(data),
-        err => this.eventService.openSnackBar(err)
-      )
+      else {
+        let obj = {
+          "advisorId": this.advisorId,
+          "clientId": this.clientId,
+          "ownerName": this.ownerName,
+          "familyMemberId": this.familyMemberId,
+          "accountBalance": this.ppfSchemeForm.get('accountBalance').value,
+          "balanceAsOn":this.ppfSchemeForm.get('balanceAsOn').value,
+          "commencementDate": this.ppfSchemeForm.get('commencementDate').value,
+          "description": this.optionalppfSchemeForm.get('description').value,
+          "bankName": this.optionalppfSchemeForm.get('bankName').value,
+          "linkedBankAccount": this.optionalppfSchemeForm.get('linkedBankAccount').value,
+          "nomineeName":this.optionalppfSchemeForm.get('nominee').value,
+          "agentName": "akshay",
+          "frequency":this.ppfSchemeForm.get('frquency').value,
+          "futureApproxcontribution":this.ppfSchemeForm.get('futureContribution').value,
+          "publicprovidendfundtransactionlist":finalTransctList
+        }
+        this.cusService.addPPFScheme(obj).subscribe(
+          data => this.addPPFResponse(data),
+          err => this.eventService.openSnackBar(err)
+        )
+      }
     }
   }
   addPPFResponse(data) {

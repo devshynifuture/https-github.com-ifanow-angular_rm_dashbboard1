@@ -266,4 +266,8 @@ export class CustomerService {
   editPOMIS(data){
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_POMIS,data)
   }
+  editPPF(data)
+  {
+   return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_PPF_SCHEME,data)
+  }
 }
