@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {DatePipe} from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
@@ -54,10 +55,12 @@ export class UtilService {
     return date;
 
   }
+
   formatter(data) {
     data = Math.round(data);
     return data;
   }
+
   keyPress(event: any) {
     const pattern = /[0-9\+\-\. ]/;
 
@@ -65,5 +68,9 @@ export class UtilService {
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();
     }
+  }
+
+  static convertDateObjectToDateString(datePipe: DatePipe, date: Date) {
+    return datePipe.transform(date, 'yyyy-MM-dd');
   }
 }

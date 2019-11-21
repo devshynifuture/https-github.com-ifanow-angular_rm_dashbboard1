@@ -85,7 +85,10 @@ export class HttpService {
           console.log(resData);
           return resData;
         } else {
-          this._router.navigate(['login']);
+          const err = new Error(res.message);
+          throwError(err);
+
+          // this._router.navigate(['login']);
         }
       });
   }
