@@ -672,7 +672,8 @@ mat-tab-group[vertical] {
     }
 }
 
-#advisor-home,#plan-home {
+#advisor-home,
+#plan-home {
     position: fixed;
     z-index: 1111;
     margin-top: 78px;
@@ -680,20 +681,21 @@ mat-tab-group[vertical] {
     color: #FFC100;
     margin-left: 20px;
 }
-#plan-home .mat-stroked-button{
+
+#plan-home .mat-stroked-button {
     padding-left: 5px !important;
     padding-right: 10px !important;
 }
-#ui-customer .mat-tab-label{
-    
+
+#ui-customer .mat-tab-label {
     text-transform: uppercase;
 }
+
 .real-estate,
 .mutualfunds-capital-equity,
 .mutualfunds-capital-debt,
 .mutualfunds-capital-dividend-summary,
 .documentsTable,
-.financialGoalsTable,
 .fixed-deposite,
 .scheme-wise,
 .familymember-wise,

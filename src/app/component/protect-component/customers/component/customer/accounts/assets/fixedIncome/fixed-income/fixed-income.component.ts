@@ -16,6 +16,7 @@ export class FixedIncomeComponent implements OnInit {
   dataSourceFixed: any;
   dataSourceRecurring: any;
   dataSourceBond: any;
+  clientId: any;
  
 
   constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService,public util:UtilService) { }
@@ -30,6 +31,7 @@ export class FixedIncomeComponent implements OnInit {
   ngOnInit() {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.getFixedDepositList()
   }
   Close(){
@@ -49,7 +51,7 @@ export class FixedIncomeComponent implements OnInit {
   }
   getFixedDepositList(){
     let obj = {
-      clientId:2978,
+      clientId:this.clientId,
       advisorId: this.advisorId
     }
     this.custumService.getFixedDeposit(obj).subscribe(
@@ -63,7 +65,7 @@ export class FixedIncomeComponent implements OnInit {
   getRecurringDepositList(){
     
     let obj = {
-      clientId:2978,
+      clientId:this.clientId,
       advisorId: this.advisorId
     }
     this.custumService.getRecurringDeposit(obj).subscribe(
@@ -77,7 +79,7 @@ export class FixedIncomeComponent implements OnInit {
   getBondsList(){
     
     let obj = {
-      clientId:2978,
+      clientId:this.clientId,
       advisorId: this.advisorId
     }
     this.custumService.getBonds(obj).subscribe(

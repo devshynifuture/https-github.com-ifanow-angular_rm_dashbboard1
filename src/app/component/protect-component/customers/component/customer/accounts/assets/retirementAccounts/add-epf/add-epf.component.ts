@@ -32,6 +32,7 @@ export class AddEPFComponent implements OnInit {
   epf: any;
   ownerData: any;
   advisorId: any;
+  clientId: any;
 
   constructor(private event: EventService,private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public util: UtilService) { }
   @Input()
@@ -45,6 +46,7 @@ export class AddEPFComponent implements OnInit {
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
   }
   display(value) {
     console.log('value selected', value)
@@ -110,7 +112,7 @@ export class AddEPFComponent implements OnInit {
 
       let obj = {
         advisorId: this.advisorId,
-        clientId: 2978,
+        clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined)?this.epf.controls.ownerName.value:this.ownerName,
         employeesMonthlyContribution: this.epf.controls.employeeContry.value,
