@@ -15,7 +15,7 @@
     </div>
 </div>
 
-<div #chnageScrollPosition class="pt-72 pl-24 pr-24 pb-24">
+<div #chnageScrollPosition class="pt-72 pl-24 pr-24 pb-24 mb-48">
     <div class="lifeInsuranceMainBox" [formGroup]="lifeInsuranceForm">
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
@@ -293,6 +293,51 @@
                 </mat-tab>
                 <mat-tab label="Cash Flows">
                     <!-- add btn required -->
+                    <div class="row pt-40" [formGroup]="cashFlowForm">
+                            <div class="col-md-3 pr-12">
+                                    <h5 class="m-0 pb-8">Cash Flow Type</h5>
+                                </div>
+                                <div class="col-md-3 pr-12">
+                                    <h5 class="m-0 pb-8">Year</h5>
+                                </div>
+                                <div class="col-md-4 pr-12">
+                                    <h5 class="m-0 pb-8">Approx amount</h5>
+                                </div>
+                               <div formArrayName="cashFlow">
+                                   <div      class="row pt-28" *ngFor="let obj of cashFlowEntries.controls; let pointIndex=index"
+                                   [formGroupName]="pointIndex">
+                            <div class="col-md-3">
+                                    <div class="form-group mb-0">
+                                        <!-- <label class="f-16 roboto">Cash Flow Type</label> -->
+                                        <mat-form-field>
+                                                <input type="number" formControlName="cashFlowType" matInput class="form-control br-0">
+                                            </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                        <div class="form-group mb-0">
+                                            <!-- <label class="f-16 roboto">Year</label> -->
+                                            <mat-form-field>
+                                                    <input type="number" formControlName="year" matInput class="form-control br-0">
+                                                </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                            <div class="form-group mb-0">
+                                                <!-- <label class="f-16 roboto">Approx amount</label> -->
+                                                <mat-form-field>
+                                                        <input type="number" formControlName="approxAmt" matInput class="form-control br-0 rupess">
+                                                    </mat-form-field>
+                                            </div>
+                                        </div>
+                                             
+                        <div class="col-md-2 p-0">
+                                <i class="material-icons text-primitive c-p float-left" (click)="addTransaction()">add</i>
+                                <i class="material-icons text-primitive c-p float-right" (click)="removeTransaction(pointIndex)">remove</i>                       
+                         </div>
+                        </div>
+                    </div>
+                    </div>
 
                 </mat-tab>
 

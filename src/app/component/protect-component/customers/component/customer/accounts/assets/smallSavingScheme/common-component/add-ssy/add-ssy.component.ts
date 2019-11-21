@@ -25,6 +25,8 @@ export class AddSsyComponent implements OnInit {
   isOptionalField: boolean;
   advisorId: any;
   editApi: any;
+  transactionData: any;
+  clientId: any;
 
   constructor(private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
@@ -68,14 +70,31 @@ export class AddSsyComponent implements OnInit {
 
   }
   ngOnInit() {
+    this.clientId=AuthService.getClientId();
     this.isOptionalField = true
     this.advisorId = AuthService.getAdvisorId();
   }
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
   }
+  getFormData(data) {
+    console.log(data)
+    this.transactionData = data.controls
+  }
   addSSYScheme() {
-    if (this.ssySchemeForm.get('guardian').invalid) {
+    let finalTransctList = []
+    this.transactionData.forEach(element => {
+      let obj = {
+        "date": element.controls.date.value._d,
+        "amount": element.controls.amount.value,
+        "paymentType": element.controls.transactionType.value
+      }
+      finalTransctList.push(obj)
+    });
+    if (this.ownerName == undefined) {
+      return
+    }
+    else if (this.ssySchemeForm.get('guardian').invalid) {
       return
     }
     else if (this.ssySchemeForm.get('accBalance').invalid) {
@@ -101,22 +120,22 @@ export class AddSsyComponent implements OnInit {
           "ownerName": this.ownerName,
           "accountBalance": this.ssySchemeForm.get('accBalance').value,
           "balanceAsOn": this.ssySchemeForm.get('balanceAsOn').value,
-          "commencementDate":this.ssySchemeForm.get('commDate').value,
-          "description":  this.ssySchemeOptionalForm.get('description').value,
+          "commencementDate": this.ssySchemeForm.get('commDate').value,
+          "description": this.ssySchemeOptionalForm.get('description').value,
           "bankName": this.ssySchemeOptionalForm.get('bankName').value,
-          "linkedBankAccount":this.ssySchemeOptionalForm.get('linkedAcc').value,
-          "agentName":this.ssySchemeOptionalForm.get('agentName').value,
+          "linkedBankAccount": this.ssySchemeOptionalForm.get('linkedAcc').value,
+          "agentName": this.ssySchemeOptionalForm.get('agentName').value,
           "guardianName": this.ssySchemeForm.get('guardian').value,
         }
         this.cusService.editSSYData(obj).subscribe(
-          data=>this.addSSYSchemeResponse(data),
-          err=> this.eventService.openSnackBar(err)
+          data => this.addSSYSchemeResponse(data),
+          err => this.eventService.openSnackBar(err)
         )
       }
       else {
         let obj =
         {
-          "clientId": 2978,
+          "clientId": this.clientId,
           "advisorId": this.advisorId,
           "familyMemberId": this.familyMemberId,
           "ownerName": this.ownerName,
@@ -128,13 +147,12 @@ export class AddSsyComponent implements OnInit {
           "linkedBankAccount": this.ssySchemeOptionalForm.get('linkedAcc').value,
           "agentName": this.ssySchemeOptionalForm.get('agentName').value,
           "guardianName": this.ssySchemeForm.get('guardian').value,
-
           "ssyFutureContributionList": [{
             "futureApproxContribution": this.ssySchemeForm.get('futureAppx').value,
             "frequency": this.ssySchemeForm.get('futureAppx').value,
             "nomineeName": this.ssySchemeOptionalForm.get('nominee').value
           }],
-          "ssyTransactionList": []
+          "ssyTransactionList": finalTransctList
         }
         this.cusService.addSSYScheme(obj).subscribe(
           data => this.addSSYSchemeResponse(data),
@@ -145,6 +163,7 @@ export class AddSsyComponent implements OnInit {
   }
   addSSYSchemeResponse(data) {
     console.log(data)
+    this.close()
   }
 
   close() {

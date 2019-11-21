@@ -88,7 +88,7 @@ export class CustomerService {
   }
   getSmallSavingSchemeKVPData(data)
   {
-    let httpParams =new HttpParams().set("advisorId",data.advisorId).set('clientId',data.clientId).set('requiredDate',data.requiredDate);
+    let httpParams =new HttpParams().set("advisorId",data.advisorId).set('clientId',data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_KVP,httpParams)
   }
   getSmallSavingSchemeSCSSData(data)
@@ -265,5 +265,29 @@ export class CustomerService {
   }
   editPOMIS(data){
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_POMIS,data)
+  }
+  editPPF(data)
+  {
+   return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_PPF_SCHEME,data)
+  }
+  addKVP(data)
+  {
+   return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_KVP_SCHEME,data)
+  }
+  editKVP(data)
+  {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_KVP_SCHEME,data)
+  }
+  editPORD(data)
+  {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_PORD_SCHEME,data)
+  }
+   addPOTD(data)
+  {
+   return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_POTD_SCHEME,data)
+  }
+  editPOTD(data)
+  {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.ADD_POTD_SCHEME,data)
   }
 }

@@ -72,4 +72,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns19; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns19;"></tr>
     </table>
+    <div *ngIf="datasource==undefined">
+        <h4 class="text-center pt-72">{{noData}}</h4>
+    </div>
 </div>

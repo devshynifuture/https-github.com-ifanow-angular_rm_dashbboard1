@@ -78,10 +78,10 @@
     <div class="form-group mb-0">
         <mat-form-field>
             <mat-select  class="form-control br-0" formControlName="type">
-                <mat-option value="1">Residential</mat-option>
+              <mat-option value="0">Land</mat-option>  
+              <mat-option value="1">Residential</mat-option>
                 <mat-option value="2">Secondary</mat-option>
                 <mat-option value="3">Commercial</mat-option>
-                <mat-option value="4">Land</mat-option>
             </mat-select>
             <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isTypeValid && getFormControl().type.invalid || getFormControl().type.touched && getFormControl().type.invalid)}">
                 Type is required
