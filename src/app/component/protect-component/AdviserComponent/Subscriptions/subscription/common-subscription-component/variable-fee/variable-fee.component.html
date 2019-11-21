@@ -142,7 +142,7 @@
         <div class="row" disabled>
           <div class="col-md-10 p-0">
             <div class="b-a wrapper-12">
-              <mat-chip-list *ngIf="otherAssetData" aria-label="Fish selection">
+              <mat-chip-list *ngIf="otherAssetData" [disabled]="!variableFeeStructureForm.enabled" aria-label="Fish selection">
                 <mat-chip (click)="select(assets)" *ngFor="let assets of otherAssetData"
                           [ngClass]="{'btn-primary':assets.selected}" class="f-13 f-400 wrapper-16"><i
                   class="material-icons mr-8 text-grey f-16">
