@@ -43,6 +43,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   getPerAllocation: number;
   sumPer: any;
   showError = false;
+  nomineeData: any;
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
     this.summaryNPS = this.fb.group({
       published: true,
@@ -65,12 +66,11 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   display(value) {
     console.log('value selected', value)
     this.ownerName = value.userName;
-    if(value.familyMembersList.length > 0){
-      this.nomineesListFM = value.familyMembersList
-    }
-    this.familyMemberId = value.id
   }
-  
+  lisNominee(value){
+    console.log(value)
+    this.nomineesListFM = value
+  }
   nomineesList(){
     if(this.nomineesListFM.length > 0){
       let name = this.ownerName
@@ -120,6 +120,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
     this.ownerData = this.summaryNPS.controls;
+    this.nomineeData = this.summaryNPS.controls;
     if (data != undefined) {
       data.futureContributionList.forEach(element => {
         this.summaryNPS.controls.futureContributionList.push(this.fb.group({
@@ -131,6 +132,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
       data.npsNomineesList.forEach(element => {
         this.summaryNPS.controls.npsNomineesList.push(this.fb.group({
           nomineeName: [(element.nomineeName), [Validators.required]],
+          
           nomineePercentageShare: [element.nomineePercentageShare , Validators.required],
         }))
       })
