@@ -106,6 +106,7 @@ export const appConfig = {
   EDIT_PORD_SCHEME:'account/asset/saving-scheme/pord/edit',
   ADD_POTD_SCHEME:'account/asset/saving-scheme/potd/add',
   EDIT_POTD_SCHEME:'account/asset/saving-scheme/potd/edit',
+  GET_ASSET_COUNT_GLOBAL_DATA:'account/asset/count/list',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE:'account/asset/real-estate/get',
   GET_EPF:'account/asset/retirement/epf/list/get',
