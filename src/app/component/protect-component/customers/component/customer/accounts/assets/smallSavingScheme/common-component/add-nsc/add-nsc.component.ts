@@ -82,9 +82,11 @@ export class AddNscComponent implements OnInit {
     console.log(data)
     this.transactionData = data.controls
   }
-  addNSC() {
+  addNSC() { 
 
-    let finalTransctList = []
+    if(this.transactionData)
+    {
+      let finalTransctList = []
     this.transactionData.forEach(element => {
       let obj = {
         "date": element.controls.date.value._d,
@@ -93,6 +95,7 @@ export class AddNscComponent implements OnInit {
       }
       finalTransctList.push(obj)
     });
+    }
     if (this.ownerName == undefined) {
       return
     }
@@ -124,7 +127,6 @@ export class AddNscComponent implements OnInit {
           "ownerTypeId": parseInt(this.nscFormField.get('ownershipType').value),
           "nominee": this.nscFormOptionalField.get('nominee').value,
           "description": this.nscFormOptionalField.get('description').value,
-          "createdDate": "2000-01-01"
         }
         this.cusService.editNSCData(obj).subscribe(
             data => this.addNSCResponse(data),
@@ -157,6 +159,7 @@ export class AddNscComponent implements OnInit {
     }
   }
   addNSCResponse(data) {
+    (this.editApi)?this.eventService.openSnackBar("NSC is edited","dismiss"):this.eventService.openSnackBar("NSC is added","dismiss")
     console.log(data)
     this.close()
   }

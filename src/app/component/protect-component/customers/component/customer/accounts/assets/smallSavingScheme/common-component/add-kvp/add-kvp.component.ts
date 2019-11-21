@@ -59,8 +59,8 @@ export class AddKvpComponent implements OnInit {
     this.KVPFormScheme = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       amtInvested: [data.amountInvested, [Validators.required]],
-      commDate: [data.commencementDate, [Validators.required]],
-      ownerType: [data.ownershipTypeId, [Validators.required]],
+      commDate: [new Date(data.commencementDate), [Validators.required]],
+      ownerType: [String(data.ownershipTypeId), [Validators.required]],
     })
     this.KVPOptionalFormScheme = this.fb.group({
       poBranch: [, [Validators.required]],
@@ -85,26 +85,7 @@ export class AddKvpComponent implements OnInit {
       return
     }
     else {
-      if (this.editApi) {
-        let obj = {
-          "familyMemberId": this.familyMemberId,
-          "ownerName": this.ownerName,
-          "amountInvested": this.KVPFormScheme.get('amtInvested').value,
-          "commencementDate": this.KVPFormScheme.get('commDate').value,
-          "postOfficeBranch": this.KVPOptionalFormScheme.get('poBranch').value,
-          "ownershipTypeId": this.KVPFormScheme.get('ownerType').value,
-          "nomineeName": this.KVPOptionalFormScheme.get('nominee').value,
-          "bankAccountNumber": this.KVPOptionalFormScheme.get('bankAccNum').value,
-          "description": this.KVPOptionalFormScheme.get('description').value,
-          "id": this.editApi.id
-        }
-        this.cusService.editKVP(obj).subscribe(
-          data => this.addKVPResponse(data),
-          err => this.eventService.openSnackBar(err)
-        )
-      }
-      else {
-        let obj =
+      let obj =
         {
           "clientId": this.clientId,
           "advisorId": this.advisorId,
@@ -118,6 +99,14 @@ export class AddKvpComponent implements OnInit {
           "bankAccountNumber": this.KVPOptionalFormScheme.get('bankAccNum').value,
           "description": this.KVPOptionalFormScheme.get('description').value
         }
+      if (this.editApi) {
+        obj['id']=this.editApi.id
+        this.cusService.editKVP(obj).subscribe(
+          data => this.addKVPResponse(data),
+          err => this.eventService.openSnackBar(err)
+        )
+      }
+      else {
         this.cusService.addKVP(obj).subscribe(
           data => this.addKVPResponse(data),
           err => this.eventService.openSnackBar(err)
@@ -126,6 +115,7 @@ export class AddKvpComponent implements OnInit {
     }
   }
   addKVPResponse(data) {
+    (this.editApi) ? this.eventService.openSnackBar("KVP is edited", "dismiss") : this.eventService.openSnackBar("KVP is edited", "added")
    console.log(data)
    this.close();
   }

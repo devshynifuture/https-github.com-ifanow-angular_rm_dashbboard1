@@ -55,7 +55,7 @@ export class AddPoSavingComponent implements OnInit {
     this.poSavingForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       accBal: [data.accountBalance, [Validators.required]],
-      balAsOn: [data.balanceAsOn, [Validators.required]],
+      balAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       ownershipType: [String(data.ownerTypeId), [Validators.required]]
     })
     this.poSavingOptionalForm = this.fb.group({
@@ -125,7 +125,9 @@ export class AddPoSavingComponent implements OnInit {
   }
   addPOSavingResponse(data) {
     this.close();
-    console.log(data)
+    console.log(data);
+    (this.editApi) ? this.eventService.openSnackBar("PO_SAVING is edited", "dismiss") : this.eventService.openSnackBar("PO_SAVING is edited", "added")
+
   }
   close() {
     this.isOptionalField = true
