@@ -98,7 +98,7 @@ import {DatePipe} from "@angular/common";
 
     MDBBootstrapModule.forRoot(), DragDropModule
   ],
-  providers: [AuthService, HttpService,DatePipe],
+  providers: [AuthService, HttpService, DatePipe],
   bootstrap: [AppComponent],
   entryComponents: []
 })

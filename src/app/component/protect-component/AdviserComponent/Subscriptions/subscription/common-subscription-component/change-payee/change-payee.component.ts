@@ -3,11 +3,16 @@ import {SubscriptionInject} from '../../../subscription-inject.service';
 import {SubscriptionService} from '../../../subscription.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatSliderChange} from '@angular/material';
+import {HAMMER_GESTURE_CONFIG} from "@angular/platform-browser";
+import {GestureConfig} from "@angular/material/core";
 
 @Component({
   selector: 'app-change-payee',
   templateUrl: './change-payee.component.html',
-  styleUrls: ['./change-payee.component.scss']
+  styleUrls: ['./change-payee.component.scss'],
+  providers: [
+    {provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig},
+  ]
 })
 export class ChangePayeeComponent implements OnInit {
 

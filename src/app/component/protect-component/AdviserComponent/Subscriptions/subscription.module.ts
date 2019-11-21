@@ -68,6 +68,7 @@ import {CommonComponentModule} from '../../common-component/common-component.mod
 import {CustomDirectiveModule} from '../../../../common/directives/common-directive.module';
 import {CommonModule} from '@angular/common';
 import {SubscriptionRoutingModule} from "./subscription-routing.module";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 export const componentList = [SubscriptionComponent,
   InvoicePdfDocumentComponent,
@@ -128,6 +129,7 @@ export const componentList = [SubscriptionComponent,
 @NgModule({
   declarations: componentList,
   imports: [
+    BrowserAnimationsModule,
     MaterialModule,
     CommonModule,
     // BrowserModule,
