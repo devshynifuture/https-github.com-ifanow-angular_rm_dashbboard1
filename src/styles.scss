@@ -543,6 +543,7 @@ mat-tab-group[vertical] {
 #scenariosPlan,
 #investmentPlan,
 #ui-assets,
+#ui-assets-account,
 #ui-liabilities,
 #ui-insurance,
 #ui-income,
@@ -592,6 +593,23 @@ mat-tab-group[vertical] {
         padding-left: 24px;
         padding-bottom: 8px;
         font-size: 14px;
+    }
+}
+
+#ui-assets-account {
+    .vertical-menu {
+        height: 100vh;
+        display: block !important;
+        width: 100%;
+        text-align: left;
+    }
+    li {
+        height: 40px;
+        line-height: 40px;
+        padding: 0 0px 0 24px;
+        font-size: 14px;
+        text-align: left;
+        margin-bottom: 10px;
     }
 }
 
@@ -846,4 +864,12 @@ mat-tab-group[vertical] {
     tr.mat-header-row {
         height: 44px !important;
     }
+}
+
+.activeColor {
+    background: #D9DEE1;
+}
+
+.width80 {
+    width: 80%;
 }
