@@ -133,7 +133,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     });
     this.ownerData = this.summaryNPS.controls;
     this.nomineeData = this.summaryNPS.controls;
-    if (data != undefined) {
+    if (data.futureContributionList != undefined || data.npsNomineesList != undefined) {
       data.futureContributionList.forEach(element => {
         this.summaryNPS.controls.futureContributionList.push(this.fb.group({
           frequencyId: [(element.frequencyId) + "", [Validators.required]],
