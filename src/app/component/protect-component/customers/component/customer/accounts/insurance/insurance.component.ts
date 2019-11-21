@@ -43,7 +43,7 @@ export class InsuranceComponent implements OnInit {
   ngOnInit() {
     this.viewMode = "tab1"
     this.advisorId = AuthService.getAdvisorId();
-    this.getInsuranceData(this.advisorId, 2978, 1, 1);
+    this.getInsuranceData(this.advisorId, 2978, 1, 2);
     this.getGlobalDataInsurance();
     this.insuranceTypeId = 1
     this.insuranceSubTypeId = 1

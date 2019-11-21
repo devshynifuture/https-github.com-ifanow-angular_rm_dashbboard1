@@ -4,11 +4,16 @@ import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 
 @Component({
   selector: 'app-add-po-td',
   templateUrl: './add-po-td.component.html',
-  styleUrls: ['./add-po-td.component.scss']
+  styleUrls: ['./add-po-td.component.scss'],
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  ]
 })
 export class AddPoTdComponent implements OnInit {
   inputData: any;
@@ -19,8 +24,11 @@ export class AddPoTdComponent implements OnInit {
   POTDOptionalForm: any;
   advisorId: any;
   isOptionalField: any;
+  transactionData: any;
+  editApi: any;
+  clientId: any;
 
-  constructor(private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService,private subInjectService: SubscriptionInject) { }
+  constructor(private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -39,19 +47,22 @@ export class AddPoTdComponent implements OnInit {
     if (data == undefined) {
       data = {};
     }
-    this.POTDForm=this.fb.group({
+    else {
+      this.editApi = data;
+    }
+    this.POTDForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
-      amtInvested:[data.amountInvested,[Validators.required]],
-      commDate:[,[Validators.required]],
-      tenure:[data.tenure,[Validators.required]],
-      ownershipType:[data.ownerTypeId,[Validators.required]]
+      amtInvested: [data.amountInvested, [Validators.required]],
+      commDate: [, [Validators.required]],
+      tenure: [data.tenure, [Validators.required]],
+      ownershipType: [data.ownerTypeId, [Validators.required]]
     })
-    this.POTDOptionalForm=this.fb.group({
+    this.POTDOptionalForm = this.fb.group({
       poBranch: [],
       nominee: [],
       tdNum: [data.tdNumber],
-      bankAccNum:[],
-      description:[data.description]
+      bankAccNum: [],
+      description: [data.description]
     })
     this.ownerData = this.POTDForm.controls;
 
@@ -60,8 +71,71 @@ export class AddPoTdComponent implements OnInit {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
   }
   ngOnInit() {
-    this.advisorId=AuthService.getAdvisorId();
-    this.isOptionalField=true
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId=AuthService.getClientId();
+    this.isOptionalField = true
+  }
+  getFormData(data) {
+    console.log(data)
+    this.transactionData = data.controls
+  }
+  addPOTD() {
+    let finalTransctList = []
+    this.transactionData.forEach(element => {
+      let obj = {
+        "date": element.controls.date.value._d,
+        "amount": element.controls.amount.value,
+        "paymentType": element.controls.transactionType.value
+      }
+      finalTransctList.push(obj)
+    });
+    if (this.ownerName == undefined) {
+      return
+    }
+    else if (this.POTDForm.get('amtInvested').invalid) {
+      return
+    }
+    else if (this.POTDForm.get('commDate').invalid) {
+      return
+    }
+    else if (this.POTDForm.get('tenure').invalid) {
+      return
+    }
+    else if (this.POTDForm.get('ownershipType').invalid) {
+      return
+    }
+    else {
+      if (this.editApi) {
+
+      }
+      else {
+        let obj = {
+          "clientId": this.clientId,
+          "advisorId":this.advisorId,
+          "familyMemberId":this.familyMemberId,
+          "ownerName":this.ownerName,
+          "amountInvested": this.POTDForm.get('amtInvested').value,
+          "commencementDate":this.POTDForm.get('commDate').value,
+          "tenure": this.POTDForm.get('tenure').value,
+          "postOfficeBranch":this.POTDOptionalForm.get('poBranch').value,
+          "ownerTypeId": this.POTDForm.get('ownershipType').value,
+          "nomineeName": this.POTDOptionalForm.get('nominee').value,
+          "tdNumber": this.POTDOptionalForm.get('tdNum').value,
+          "bankAccountNumber": this.POTDOptionalForm.get('bankAccNum').value,
+          "description":this.POTDOptionalForm.get('description').value,
+          "postOfficeTdTransactionList":finalTransctList
+        }
+        this.cusService.editPOTD(obj).subscribe(
+          data=>this.addPOTDResponse(data),
+          err=>this.eventService.openSnackBar(err)
+        )
+      }
+    }
+  }
+  addPOTDResponse(data)
+  {
+    console.log(data)
+    this.close();
   }
   close() {
     this.isOptionalField = true

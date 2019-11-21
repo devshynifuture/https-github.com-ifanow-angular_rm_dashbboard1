@@ -19,7 +19,7 @@ export class SsySchemeComponent implements OnInit {
   datasource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId=2978;
+    this.clientId=AuthService.getClientId();;
     this.getSsySchemedata()
   }
   getSsySchemedata()
@@ -54,6 +54,7 @@ export class SsySchemeComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getSsySchemedata()
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 

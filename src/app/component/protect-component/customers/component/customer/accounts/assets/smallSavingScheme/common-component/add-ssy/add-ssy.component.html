@@ -17,10 +17,10 @@
             </div>
             <div class="col-md-3 p-0">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input formControlName="guardian" type="text" matInput #accountBalance
-                            class="form-control rupess br-0" maxlength="">
+                    <mat-form-field> <input formControlName="guardian" type="text" matInput #guradian
+                            class="form-control br-0" maxlength="">
                         <mat-error class="f-12 pt-4"> Loan amount is required </mat-error>
-                        <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/20</mat-hint>
+                        <mat-hint align="end" class="f-12">{{guradian.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -101,10 +101,10 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select formControlName="frquency" class="form-control br-0">
-                            <mat-option value="1" >Monthly</mat-option>
-                            <mat-option value="4" >Quarterly</mat-option>
-                            <mat-option value="6" >Semi annually</mat-option>
-                            <mat-option value="12" >Annually</mat-option>
+                            <mat-option value="1">Monthly</mat-option>
+                            <mat-option value="4">Quarterly</mat-option>
+                            <mat-option value="6">Semi annually</mat-option>
+                            <mat-option value="12">Annually</mat-option>
                         </mat-select>
                         <mat-error class="f-12 pt-4"> This field is required </mat-error>
                     </mat-form-field>
@@ -120,7 +120,7 @@
             <h5 class="m-0 pt-8 text-custom c-p">+ Add more [optional data] </h5>
         </div>
         <div class="col-md-5">
-        </div>  
+        </div>
     </div>
     <div *ngIf="isOptionalField==false" [formGroup]="ssySchemeOptionalForm">
         <div class="row pt-40">
@@ -129,7 +129,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input formControlName="description" matInput #fdNo type="text" maxlength="10" class="form-control br-0">
+                    <mat-form-field> <input formControlName="description" matInput #fdNo type="text" maxlength="10"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -141,7 +142,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input formControlName="linkedAcc" matInput #institution maxlength="30" class="form-control br-0">
+                    <mat-form-field> <input formControlName="linkedAcc" matInput #institution maxlength="30"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -153,7 +155,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input formControlName="bankName" matInput #bankACNo type="text" maxlength="15" class="form-control br-0">
+                    <mat-form-field> <input formControlName="bankName" matInput #bankACNo type="text" maxlength="15"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -165,7 +168,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input formControlName="nominee" matInput #description maxlength="60" class="form-control br-0">
+                    <mat-form-field> <input formControlName="nominee" matInput #description maxlength="60"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -177,57 +181,23 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input formControlName="agentName" matInput #description maxlength="60" class="form-control br-0">
+                    <mat-form-field> <input formControlName="agentName" matInput #description maxlength="60"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row pt-40 justify-content-md-center ">
-        <div class="col-md-9 bt-grey text-center"> <button mat-stroked-button class="btn-dark-black addon mt-16"><i
-                    class="material-icons">add</i>ADD TRANSACTIONS</button>
-            <p class="f-12 text-primitive mt-12 "> Adding transactions is optional but highly <br> recommended to get
-                better reports <span class="text-primary c-p"
-                    matTooltip="You can add partial transaction history too. E.g. if your A/c commenced in 2012, you can specify balance as on, say 31/03/2017 and enter transactions after 31/03/2017.">
-                    More info </span> </p>
-        </div>
-    </div>
-    <div>
-        <div class="row pt-40">
-            <div class="col-md-4"> <label class="f-16">Transaction type</label>
-                <mat-form-field> <input matInput #partPayment class="form-control br-0">
-                    <mat-error class="f-12 pt-4"> is required </mat-error>
-                    <mat-hint align="end" class="f-12">{{partPayment.value.length}}/20</mat-hint>
-                </mat-form-field>
-            </div>
-            <div class="col-md-4"> <label class="f-16"> Date </label>
-                <div class="form-group mb-0">
-                    <mat-form-field> <input matInput [matDatepicker]="picker">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                        <mat-error class="f-12 pt-4"> Part Payment date is required </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="col-md-3"> <label class="f-16">Amount</label>
-                <div class="form-group mb-0">
-                    <mat-form-field> <input matInput #partPayment class="form-control br-0">
-                        <mat-error class="f-12 pt-4"> is required </mat-error>
-                        <mat-hint align="end" class="f-12">{{partPayment.value.length}}/20</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-            <!-- <div class="col-md-1 p-0"> <div class="pt-36"> <i class="material-icons text-primitive c-p float-left">add</i> <i class="material-icons text-primitive c-p float-right">remove</i> </div> </div> -->
-        </div>
-    </div>
+    <app-add-transaction (outputEvent)="getFormData($event)"></app-add-transaction>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right" (click)="addSSYScheme()"> <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+        <div class="col-md-8 right text-right" (click)="addSSYScheme()"> <button mat-button
+                class="btn-bottom br-0 text-inherit">Save</button>
         </div>
     </div>
 </div>

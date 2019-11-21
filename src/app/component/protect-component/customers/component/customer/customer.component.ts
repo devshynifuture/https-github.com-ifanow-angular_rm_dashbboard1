@@ -8,6 +8,7 @@ import {AuthService} from "../../../../../auth-service/authService";
   styleUrls: ['./customer.component.scss']
 })
 export class CustomerComponent implements OnInit {
+  selected: number;
   clientId;
 
   constructor(private router: Router) {
@@ -16,6 +17,7 @@ export class CustomerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.selected =1;
     const passedParameter = history.state;
     this.clientId = passedParameter ? passedParameter.id : undefined;
     console.log('passedParameter: ', passedParameter);
