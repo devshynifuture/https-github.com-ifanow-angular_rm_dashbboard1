@@ -134,7 +134,8 @@ export class AddPoTdComponent implements OnInit {
   }
   addPOTDResponse(data)
   {
-
+    console.log(data)
+    this.close();
   }
   close() {
     this.isOptionalField = true

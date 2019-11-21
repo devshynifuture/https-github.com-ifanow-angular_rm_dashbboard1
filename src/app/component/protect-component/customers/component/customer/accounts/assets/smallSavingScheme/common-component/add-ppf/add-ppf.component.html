@@ -25,7 +25,7 @@
                     <mat-form-field>
                         <input type="number" formControlName="accountBalance" matInput #accountBalance
                             class="form-control rupess br-0" maxlength="">
-                        <mat-error class="f-12 pt-4">
+                        <mat-error *ngIf="this.ppfSchemeForm.get('accountBalance').invalid" class="f-12 pt-4">
                             Loan amount is required
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/20</mat-hint>

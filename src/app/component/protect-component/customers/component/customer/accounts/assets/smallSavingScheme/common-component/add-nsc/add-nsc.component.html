@@ -36,7 +36,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="commDate" [matDatepicker]="commpicker"
+                        <input matInput formControlName="commDate" [(ngModel)]="commDate" [matDatepicker]="commpicker"
                             class="form-control br-0">
                         <mat-datepicker-toggle matSuffix [for]="commpicker"></mat-datepicker-toggle>
                         <mat-datepicker #commpicker></mat-datepicker>

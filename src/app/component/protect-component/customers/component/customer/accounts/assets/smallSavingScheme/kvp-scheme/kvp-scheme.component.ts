@@ -12,6 +12,7 @@ import { UtilService } from 'src/app/services/util.service';
 export class KvpSchemeComponent implements OnInit {
   clientId: number;
   advisorId: any;
+  noData: string;
 
   constructor(private cusService:CustomerService,private subInjectService:SubscriptionInject) { }
   displayedColumns18 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
@@ -34,8 +35,12 @@ export class KvpSchemeComponent implements OnInit {
   }
   getKvpSchemedataResponse(data)
   {
-    this.datasource=data.kvpList
     console.log(data)
+    if(data.kvpList.length!=0){
+      this.datasource=data.kvpList
+    }else{
+      this.noData="No Scheme Found";
+    }
   }
   addKVP(value,data) {
     const fragmentData = {
@@ -48,6 +53,7 @@ export class KvpSchemeComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getKvpSchemedata()
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 

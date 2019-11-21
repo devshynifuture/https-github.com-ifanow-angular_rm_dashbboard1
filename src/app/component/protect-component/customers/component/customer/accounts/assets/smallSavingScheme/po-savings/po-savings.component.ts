@@ -12,6 +12,7 @@ import { UtilService } from 'src/app/services/util.service';
 export class PoSavingsComponent implements OnInit {
   advisorId: any;
   clientId: number;
+  noData: string;
 
   constructor(private cusService:CustomerService,private subInjectService:SubscriptionInject) { }
   displayedColumns20 = ['no', 'owner', 'cvalue', 'rate', 'balanceM', 'balAs', 'desc', 'status', 'icons'];
@@ -32,8 +33,12 @@ export class PoSavingsComponent implements OnInit {
   }
   getPoSavingSchemedataResponse(data)
   {
-    this.datasource=data;
     console.log(data)
+    if(data.postOfficeSavingList.length!=0){
+      this.datasource=data.postOfficeSavingList
+    }else{
+      this.noData="No Scheme Found";
+    }
   }
   addPOSAVING(value,data)
   {
@@ -47,6 +52,7 @@ export class PoSavingsComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getPoSavingSchemedata()
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 

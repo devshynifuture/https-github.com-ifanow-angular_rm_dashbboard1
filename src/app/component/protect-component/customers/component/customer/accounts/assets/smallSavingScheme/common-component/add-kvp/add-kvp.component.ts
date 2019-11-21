@@ -127,6 +127,7 @@ export class AddKvpComponent implements OnInit {
   }
   addKVPResponse(data) {
    console.log(data)
+   this.close();
   }
   close() {
     this.isOptionalField = true

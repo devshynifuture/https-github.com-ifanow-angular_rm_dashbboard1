@@ -128,6 +128,7 @@ export class AddPoRdComponent implements OnInit {
   }
   addPORDResponse(data) {
     console.log(data)
+    this.close();
   }
   close() {
     this.isOptionalField = true

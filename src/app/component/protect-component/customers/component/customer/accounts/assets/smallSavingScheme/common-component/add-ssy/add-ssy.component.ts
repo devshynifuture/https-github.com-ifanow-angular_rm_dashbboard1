@@ -163,6 +163,7 @@ export class AddSsyComponent implements OnInit {
   }
   addSSYSchemeResponse(data) {
     console.log(data)
+    this.close()
   }
 
   close() {
