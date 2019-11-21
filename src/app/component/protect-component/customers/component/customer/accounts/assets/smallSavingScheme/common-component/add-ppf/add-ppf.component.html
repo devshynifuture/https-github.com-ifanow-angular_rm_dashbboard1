@@ -25,7 +25,7 @@
                     <mat-form-field>
                         <input type="number" formControlName="accountBalance" matInput #accountBalance
                             class="form-control rupess br-0" maxlength="">
-                        <mat-error class="f-12 pt-4">
+                        <mat-error *ngIf="this.ppfSchemeForm.get('accountBalance').invalid" class="f-12 pt-4">
                             Loan amount is required
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/20</mat-hint>
@@ -175,70 +175,7 @@
             </div>
         </div>
     </div>
-
-    <div *ngIf="transactionList.length==0" class="row pt-40 justify-content-md-center ">
-        <div class="col-md-9 bt-grey text-center">
-            <button (click)="addTransaction()" mat-stroked-button class="btn-dark-black addon mt-16"><i
-                    class="material-icons">add</i>ADD
-                TRANSACTIONS</button>
-            <p class="f-12 text-primitive mt-12 ">
-                Adding transactions is optional but highly <br> recommended to get better reports
-                <span class="text-primary c-p"
-                    matTooltip="You can add partial transaction history too. E.g. if your A/c commenced in 2012, you can specify balance as on, say 31/03/2017 and enter transactions after 31/03/2017.">
-                    More info </span>
-            </p>
-        </div>
-    </div>
-    <div *ngFor="let singleTransaction of transactionList" [formGroup]="transactionForm">
-        <div class="row pt-40">
-            <div class="col-md-4">
-                <label class="f-16">Transaction type</label>
-                <mat-form-field>
-                    <mat-select formControlName="transactionType" class="form-control br-0">
-                        <mat-option value="1">Deposit</mat-option>
-                        <mat-option value="2">Withdrawl</mat-option>
-                    </mat-select>
-                    <mat-error class="f-12 pt-4">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div class="col-md-4">
-                <label class="f-16"> Date
-                </label>
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput formControlName="date" [(ngModel)]="singleTransaction.date"
-                            [matDatepicker]="picker">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                        <mat-error class="f-12 pt-4">
-                            Part Payment date is required
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <label class="f-16">Amount</label>
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput type="number" formControlName="amount" [(ngModel)]="singleTransaction.amount"
-                            #partPayment class="form-control br-0">
-                        <mat-error class="f-12 pt-4">
-                            is required
-                        </mat-error>
-                        <mat-hint align="end" class="f-12">{{partPayment.value.length}}/20</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="col-md-1 p-0">
-                <div class="pt-36">
-                    <i class="material-icons text-primitive c-p float-left" (click)="addTransaction()">add</i>
-                    <i class="material-icons text-primitive c-p float-right">remove</i>
-                </div>
-            </div>
-        </div>
-    </div>
+    <app-add-transaction (outputEvent)="getFormData($event)"></app-add-transaction>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">

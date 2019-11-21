@@ -125,6 +125,7 @@ export class AddScssComponent implements OnInit {
   }
   addScssResponse(data) {
     console.log(data)
+    this.close()
   }
 
   close() {

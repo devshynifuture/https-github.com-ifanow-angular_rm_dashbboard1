@@ -1,6 +1,6 @@
 <div *ngIf="clientId">
   <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" class="img-top">
-  <mat-tab-group animationDuration="0ms" mat-align-tabs="center" id="ui-customer">
+  <mat-tab-group [selectedIndex]="selected" animationDuration="0ms" mat-align-tabs="center" id="ui-customer">
 
     <mat-tab label="OVERVIEW">
       <app-plan></app-plan>
