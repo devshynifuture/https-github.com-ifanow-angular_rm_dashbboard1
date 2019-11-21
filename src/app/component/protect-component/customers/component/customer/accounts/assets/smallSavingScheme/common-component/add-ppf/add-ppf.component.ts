@@ -6,6 +6,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { CustomerService } from '../../../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-add-ppf',
@@ -30,6 +31,11 @@ export class AddPpfComponent implements OnInit {
   transactionData: any;
   editApi: any;
   clientId: number;
+  nexNomineePer: any;
+  showError=false;
+  nomineesListFM: any;
+  dataFM: any;
+  familyList: any;
   constructor(private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   @Input()
@@ -51,6 +57,23 @@ export class AddPpfComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
+  nomineesList() {
+    this.dataFM = this.nomineesListFM
+    if (this.dataFM.length > 0) {
+      let name = this.ownerName
+      var evens = _.reject(this.dataFM, function (n) {
+        return n.userName == name;
+      });
+      this.familyList = evens
+    }
+
+    console.log('familyList', this.familyList)
+  }
+
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
   }
@@ -64,20 +87,69 @@ export class AddPpfComponent implements OnInit {
     }
     this.ppfSchemeForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
-      accountBalance: [, [Validators.required]],
-      balanceAsOn: [, [Validators.required]],
-      commencementDate: [, [Validators.required]],
-      futureContribution: [, [Validators.required]],
-      frquency: [, [Validators.required]],
+      accountBalance: [data.accountBalance, [Validators.required]],
+      balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
+      commencementDate: [new Date(data.commencementDate), [Validators.required]],
+      futureContribution: [data.futureApproxcontribution, [Validators.required]],
+      frquency: [data.frequency, [Validators.required]],
     })
     this.optionalppfSchemeForm = this.fb.group({
-      description: [, [Validators.required]],
-      bankName: [, [Validators.required]],
-      linkedBankAccount: [, [Validators.required]],
-      nominee: [, [Validators.required]]
-
+      description: [data.description, [Validators.required]],
+      bankName: [data.bankName, [Validators.required]],
+      linkedBankAccount: [data.linkedBankAccount, [Validators.required]],
+      npsNomineesList: this.fb.array([this.fb.group({
+        nomineeName: null, nomineePercentageShare: [null, [Validators.required, Validators.min(1)]],
+      })]),
     })
     this.ownerData = this.ppfSchemeForm.controls;
+    if (data.npsNomineesList != undefined) {
+     
+      data.npsNomineesList.forEach(element => {
+        this.optionalppfSchemeForm.controls.npsNomineesList.push(this.fb.group({
+          nomineeName: [(element.nomineeName), [Validators.required]],
+
+          nomineePercentageShare: [element.nomineePercentageShare, Validators.required],
+        }))
+      })
+      this.nominee.removeAt(0);
+    }
+  }
+  get nominee() {
+    return this.optionalppfSchemeForm.get('npsNomineesList') as FormArray;
+  }
+  addNominee() {
+    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+      return o.nomineePercentageShare;
+    });
+
+    if (this.nexNomineePer > 100) {
+      this.showError = true
+      console.log('show error Percent cannot be more than 100%')
+    } else {
+      this.showError = false
+    }
+    if (this.showError == false) {
+      this.nominee.push(this.fb.group({
+        nomineeName: null, nomineePercentageShare: null,
+      }));
+    }
+   
+
+  }
+  removeNominee(item) {
+    if (this.nominee.value.length > 1) {
+      this.nominee.removeAt(item);
+    }
+    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+      return o.nomineePercentageShare;
+    });
+
+    if (this.nexNomineePer > 100) {
+      this.showError = true
+      console.log('show error Percent cannot be more than 100%')
+    } else {
+      this.showError = false
+    }
   }
   getFormData(data) {
     console.log(data)
@@ -143,6 +215,7 @@ export class AddPpfComponent implements OnInit {
     }
   }
   addPPFResponse(data) {
+    (this.editApi)?this.eventService.openSnackBar("PPF is edited","dismiss"):this.eventService.openSnackBar("PPF is added","dismiss")
     console.log(data)
     this.close();
   }

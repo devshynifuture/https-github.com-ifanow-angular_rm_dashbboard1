@@ -53,8 +53,8 @@ export class AddScssComponent implements OnInit {
     this.scssSchemeForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       amtInvested: [data.amountInvested, [Validators.required]],
-      commDate: [, [Validators.required]],
-      ownershipType: [parseInt(data.ownerTypeId), [Validators.required]]
+      commDate: [new Date(data.commencementDate), [Validators.required]],
+      ownershipType: [String(data.ownerTypeId), [Validators.required]]
     })
     this.scssOptionalSchemeForm = this.fb.group({
       poBranch: [],
@@ -81,41 +81,27 @@ export class AddScssComponent implements OnInit {
       return
     }
     else {
+      let obj = {
+        "clientId": 2978,
+        "familyMemberId": this.familyMemberId,
+        "advisorId": this.advisorId,
+        "ownerName": this.ownerName,
+        "amountInvested": this.scssSchemeForm.get('amtInvested').value,
+        "commencementDate": this.scssSchemeForm.get('commDate').value,
+        "postOfficeBranch": this.scssOptionalSchemeForm.get('poBranch').value,
+        "bankAccountNumber": this.scssOptionalSchemeForm.get('bankAccNumber').value,
+        "ownerTypeId": this.scssSchemeForm.get('ownershipType').value,
+        "nominee": this.scssOptionalSchemeForm.get('nominee').value,
+        "description": this.scssOptionalSchemeForm.get('description').value
+      }
       if (this.editApi) {
-        let obj = {
-          "id": this.editApi.id,
-          "clientId": 2978,
-          "familyMemberId": this.familyMemberId,
-          "advisorId": this.advisorId,
-          "ownerName": this.ownerName,
-          "amountInvested": this.scssSchemeForm.get('amtInvested').value,
-          "commencementDate": this.scssSchemeForm.get('commDate').value,
-          "postOfficeBranch": this.scssOptionalSchemeForm.get('poBranch').value,
-          "bankAccountNumber": this.scssOptionalSchemeForm.get('bankAccNumber').value,
-          "ownerTypeId": this.scssSchemeForm.get('ownershipType').value,
-          "nominee": this.scssOptionalSchemeForm.get('nominee').value,
-          "description": this.scssOptionalSchemeForm.get('description').value
-        }
+        obj['id'] = this.editApi.id
         this.cusService.editSCSSData(obj).subscribe(
           data => this.addScssResponse(data),
           err => this.eventService.openSnackBar(err)
         )
       }
       else {
-        let obj =
-        {
-          "clientId": 2978,
-          "familyMemberId": this.familyMemberId,
-          "advisorId": this.advisorId,
-          "ownerName": this.ownerName,
-          "amountInvested": this.scssSchemeForm.get('amtInvested').value,
-          "commencementDate": this.scssSchemeForm.get('commDate').value,
-          "postOfficeBranch": this.scssOptionalSchemeForm.get('poBranch').value,
-          "bankAccountNumber": this.scssOptionalSchemeForm.get('bankAccNumber').value,
-          "ownerTypeId": this.scssSchemeForm.get('ownershipType').value,
-          "nominee": this.scssOptionalSchemeForm.get('nominee').value,
-          "description": this.scssOptionalSchemeForm.get('description').value
-        }
         this.cusService.addSCSSScheme(obj).subscribe(
           data => this.addScssResponse(data),
           err => this.eventService.openSnackBar(err)

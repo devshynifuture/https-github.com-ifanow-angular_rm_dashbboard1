@@ -24,7 +24,7 @@ export class ScssSchemeComponent implements OnInit {
   datasource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId=2978;
+    this.clientId=AuthService.getClientId();
     this.getScssSchemedata()
   }
   getScssSchemedata() {

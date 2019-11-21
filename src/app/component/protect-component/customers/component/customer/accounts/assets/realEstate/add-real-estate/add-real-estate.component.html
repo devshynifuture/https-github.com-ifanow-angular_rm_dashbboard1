@@ -131,17 +131,16 @@
         </p>
       </div>
       <div class="col-md-3 p-0">
-        <div class="form-group mb-0">
-          <mat-form-field>
-            <input matInput #marketValue class="form-control rupess br-0" (keypress)="keyPress($event)"
-              formControlName="marketValue" maxlength="{{getFormControl().marketValue.maxLength}}">
-            <mat-error class="f-12 pt-4"
-              [ngClass]="{'v-h':!(isLoanAmount && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}">
-              Market value is required
-            </mat-error>
-            <mat-hint align="end" class="f-12">{{marketValue.value.length}}/20</mat-hint>
-          </mat-form-field>
-        </div>
+          <div class="form-group mb-0">
+              <mat-form-field>
+                  <input matInput #marketValue class="form-control rupess br-0" formControlName="marketValue" maxlength="{{getFormControl().marketValue.maxLength}}">
+                  <mat-error class="f-12 pt-4">
+                      Market value is required
+                      <!-- [ngClass]="{'v-h':!(isLoanAmount && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}" -->
+                  </mat-error>
+                  <mat-hint align="end" class="f-12">{{marketValue.value.length}}/20</mat-hint>
+              </mat-form-field>
+          </div>
       </div>
     </div>
     <div class="row">
@@ -383,4 +382,13 @@
         <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFormData('close')">Save</button>
       </div>
     </div>
-  </div>
+    <div class="bottom-fixed wrapper-12 pt-16">
+        <div class="row">
+            <div class="col-md-4">
+                <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
+            </div>
+            <div class="col-md-8 right text-right">
+                <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFormData()">Save</button>
+            </div>
+        </div>
+    </div>
