@@ -168,8 +168,8 @@
                                        <span>{{s.userName}}</span>
                                     </mat-option>
                                  </mat-autocomplete> -->
-                                    <mat-option value="{{item.userName}}" *ngFor="let item of nomineesListFM">Select option</mat-option>
-                                    {{item.userName}}
+                                    <!-- <mat-option value="{{item.userName}}" *ngFor="let item of nomineesListFM">Select option</mat-option>
+                                    {{item.userName}} -->
                                      <mat-option value = '1'>one
                                     </mat-option>
                                     <mat-option value = '2'>two</mat-option>
@@ -178,7 +178,8 @@
                         </div>
                         <div class="col-md-3">
                             <mat-form-field>
-                                <input matInput #nomineePercentageShare maxlength="30" class="form-control br-0 percentage" formControlName="nomineePercentageShare">
+                                <input matInput #nomineePercentageShare maxlength="30"
+                                class="form-control br-0 percentage" formControlName="nomineePercentageShare">
                             </mat-form-field>
                         </div>
                         <div class="col-md-5" *ngIf="i==0">
