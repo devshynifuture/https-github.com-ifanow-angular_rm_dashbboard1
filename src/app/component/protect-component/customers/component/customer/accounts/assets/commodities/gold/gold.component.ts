@@ -77,6 +77,7 @@ export class GoldComponent implements OnInit {
       noTolasGramsPur: [(data == undefined) ? '' : (data.purchasedGramsOrTola), [Validators.required]],
       tenure: [(data == undefined) ? '' : (data.purchaseYear), [Validators.required]],
       carats: [(data == undefined) ? '' : data.carat, [Validators.required]],
+      balanceAsOn:[(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       marketValue: [(data == undefined) ? '' : data.marketValue, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       bankAcNo: [(data == undefined) ? '' : data.bankAcNo, [Validators.required]],
@@ -102,6 +103,9 @@ export class GoldComponent implements OnInit {
       return;
     } else if (this.gold.controls.tenure.invalid) {
       this.isPurchaseYear = true;
+      return;
+    } else if (this.gold.controls.balanceAsOn.invalid) {
+      this.isBalanceAsOn = true;
       return;
     } else if (this.gold.controls.carats.invalid) {
       this.isCarats = true;
