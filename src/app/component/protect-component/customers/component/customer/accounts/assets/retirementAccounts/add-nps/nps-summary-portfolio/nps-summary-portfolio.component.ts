@@ -177,9 +177,6 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     return this.summaryNPS.get('npsNomineesList') as FormArray;
   }
   addNominee() {
-    this.nominee.push(this.fb.group({
-      nomineeName: null, nomineePercentageShare: null,
-    }));
     this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
       return o.nomineePercentageShare;
     });
@@ -190,6 +187,12 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     } else {
       this.showError = false
     }
+    if (this.showError == false) {
+      this.nominee.push(this.fb.group({
+        nomineeName: null, nomineePercentageShare: null,
+      }));
+    }
+   
 
   }
   removeNominee(item) {
