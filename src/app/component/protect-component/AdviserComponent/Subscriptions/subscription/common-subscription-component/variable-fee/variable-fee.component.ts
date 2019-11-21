@@ -24,7 +24,8 @@ export class VariableFeeComponent implements OnInit {
   singleSubscriptionData: any;
   isLoading = false;
 
-  constructor(private subService: SubscriptionService, private fb: FormBuilder, public subInjectService: SubscriptionInject) {
+  constructor(private subService: SubscriptionService, private fb: FormBuilder,
+              public subInjectService: SubscriptionInject) {
   }
 
   @Input()
@@ -95,7 +96,8 @@ export class VariableFeeComponent implements OnInit {
       console.log('getSubscribeData : ', this.singleSubscriptionData);
       this.getVariableFee().billingNature.setValue(this.singleSubscriptionData.subscriptionPricing.billingNature ? this.singleSubscriptionData.subscriptionPricing.billingNature + '' : '1');
       this.getVariableFee().billEvery.setValue(this.singleSubscriptionData.subscriptionPricing.billEvery);
-      (this.singleSubscriptionData.subscriptionPricing.billingCycle == 0) ? this.getVariableFee().Duration.setValue(1) : this.getVariableFee().Duration.setValue(this.singleSubscriptionData.subscriptionPricing.billingCycle);
+      (this.singleSubscriptionData.subscriptionPricing.billingCycle == 0) ?
+        this.getVariableFee().Duration.setValue(1) : this.getVariableFee().Duration.setValue(this.singleSubscriptionData.subscriptionPricing.billingCycle);
       /*//TODO commented for now*/
       this.getVariableFee().directFees.setValue({
         equity: this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[0].equityAllocation,
@@ -164,7 +166,8 @@ export class VariableFeeComponent implements OnInit {
       return;
     } else {
       const obj = {
-        subscriptionId: 12,
+        subscriptionId: this.singleSubscriptionData.id,
+        // subscriptionId: 12,
         billingNature: this.getVariableFee().billingNature.value,
         billingMode: 1,
         billEvery: this.getVariableFee().billEvery.value,
@@ -186,7 +189,7 @@ export class VariableFeeComponent implements OnInit {
             liquidAllocation: this.variableFeeStructureForm.get('regularFees.liquid').value
           }, {
             assetClassId: 2,
-            otherAssets: this.selectedOtherAssets,
+            subAssetIds: this.getJsonForSelectedSubAsset(),
             pricing: this.variableFeeStructureForm.controls.pricing.value
           }
         ]
@@ -194,7 +197,7 @@ export class VariableFeeComponent implements OnInit {
       if (this.singleSubscriptionData.isCreateSub == false) {
         obj.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId;
         obj.clientId = this.singleSubscriptionData.clientId;
-        obj.subId = this.singleSubscriptionData.id;
+        obj.subscriptionId = this.singleSubscriptionData.id;
         console.log(obj);
         this.outputData.emit(obj);
 
@@ -221,7 +224,18 @@ export class VariableFeeComponent implements OnInit {
     }
   }
 
+  getJsonForSelectedSubAsset() {
+    const selectedSubAssetIds = [];
+    this.selectedOtherAssets.forEach(singleSubAsset => {
+      selectedSubAssetIds.push(singleSubAsset.subAssetClassId);
+    });
+    return selectedSubAssetIds;
+  }
+
   saveVariableModifyFeesResponse(data) {
+    if (this.singleSubscriptionData.isCreateSub) {
+
+    }
     console.log('modify variable data', data);
     // this.close();
   }

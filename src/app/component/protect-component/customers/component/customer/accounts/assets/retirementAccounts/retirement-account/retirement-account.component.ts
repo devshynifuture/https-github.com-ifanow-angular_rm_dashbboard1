@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 })
 export class RetirementAccountComponent implements OnInit {
 
-  showRequring: any;
+  showRequring = '1';
   getObject: {};
   advisorId: any;
   dataGratuityList: any;
@@ -20,6 +20,7 @@ export class RetirementAccountComponent implements OnInit {
   dataEPSList: any;
   EPSList: any;
   dataNPSList: any;
+  clientId: any;
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService) { }
   displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'empc', 'rate', 'bal', 'bacla', 'year', 'desc', 'status', 'icons'];
   datasource11 = ELEMENT_DATA11;
@@ -41,21 +42,17 @@ export class RetirementAccountComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.showRequring = '1'
     this.getObject = {
-      clientId: 2978,
+      clientId: this.clientId,
       advisorId: this.advisorId
     }
     this.getListEPF()
-    this.getListNPS()
-    this.getListGratuity()
-    this.getListEPS()
-    this.getListSuperannuation()
   }
   getfixedIncomeData(value) {
-    console.log('value++++++', value)
-    this.showRequring = (value == "2") ? "2" : (value == "3") ? "3" : (value == "4") ? "4" : (value == "5") ? "5" : "1";
-
+    this.showRequring = value;
+    (value == '2')?this.getListNPS():(value == '3')?this.getListGratuity():(value == '4')?this.getListSuperannuation():(value == '5')?this.getListEPS():this.getListEPF()
   }
   openRetirement(value, state, data) {
     const fragmentData = {
@@ -66,11 +63,17 @@ export class RetirementAccountComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getListEPF()
-        this.getListNPS()
-        this.getListGratuity()
-        this.getListEPS()
-        this.getListSuperannuation()
+        if(value == 'added'){
+          this.getListEPF()
+        }else if(value =='addedGratuity'){
+          this.getListGratuity()  
+        }else if(value == 'addedEps'){
+          this.getListEPS()
+        }else if(value == 'addedSuperannuation'){
+          this.getListSuperannuation()
+        }else{
+          this.getListNPS()
+        }
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -88,7 +91,7 @@ export class RetirementAccountComponent implements OnInit {
   }
   getEPFRes(data) {
     console.log('getEPFRes =', data)
-    this.dataEPSList = data.List_of_epf
+    this.dataEPSList = data.listOfEpf
   }
   getListGratuity() {
     let obj = this.getObject

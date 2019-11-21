@@ -10,6 +10,8 @@ import {AuthService} from '../../../../../../../auth-service/authService';
 // import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {DatePipe} from '@angular/common';
+import {UtilService} from "../../../../../../../services/util.service";
 
 @Component({
   selector: 'app-create-subscription',
@@ -24,7 +26,8 @@ export class CreateSubscriptionComponent implements OnInit {
   feeModeData: any;
 
   constructor(private enumService: EnumServiceService, public subInjectService: SubscriptionInject,
-              private eventService: EventService, private fb: FormBuilder, private subService: SubscriptionService) {
+              private eventService: EventService, private fb: FormBuilder,
+              private subService: SubscriptionService, public datepipe: DatePipe) {
     this.eventService.sidebarSubscribeData.subscribe(
       data => this.subFeeMode = data
     );
@@ -91,8 +94,7 @@ export class CreateSubscriptionComponent implements OnInit {
     console.log(this.subscriptionDetails);
   }
 
-  goBack()
-  {
+  goBack() {
     this.stepper.previous();
   }
 
@@ -174,7 +176,7 @@ export class CreateSubscriptionComponent implements OnInit {
     this.stepper.selectedIndex = 0;
     this.subscriptionDetails.reset();
   }
-  
+
   startSubscription() {
     console.log('payee', this.selectedPayee);
     console.log('biller', this.selectedBiller);
@@ -188,8 +190,8 @@ export class CreateSubscriptionComponent implements OnInit {
         clientBillerProfiles: this.selectedPayee,
         clientId: this.clientData.clientId,
         dueDateFrequency: this.subscriptionDetails.get('dueDateFrequency').value,
-        startsOn: this.subscriptionDetails.get('activationDate').value._d,
-        fromDate: '2019-10-16',
+        startsOn: UtilService.convertDateObjectToDateString(this.datepipe, this.subscriptionDetails.get('activationDate').value),
+        // fromDate: '2019-10-16',
         subscriptionNumber: this.feeStructureData.subscriptionNo,
         feeMode: this.subscriptionDetails.get('invoiceSendingMode').value,
         Status: 1,
@@ -218,8 +220,8 @@ export class CreateSubscriptionComponent implements OnInit {
       this.clientData.subscriptionAssetPricingList[2].otherAssets.forEach(element => {
         subAsset.push(element.subAssetClassId);
       });
-      const selectedPayee = [];
-      this.clientData;
+      // const selectedPayee = [];
+      // this.clientData;
       const obj = {
         id: this.clientData.subId,
         advisorId: this.advisorId,
@@ -228,7 +230,7 @@ export class CreateSubscriptionComponent implements OnInit {
         clientBillerProfiles: this.selectedPayee,
         clientId: this.clientData.clientId,
         dueDateFrequency: this.subscriptionDetails.get('dueDateFrequency').value,
-        startsOn: this.subscriptionDetails.get('activationDate').value._d,
+        startsOn: UtilService.convertDateObjectToDateString(this.datepipe, this.subscriptionDetails.get('activationDate').value),
         subscriptionNumber: this.feeStructureData.subscriptionNo,
         feeMode: this.subscriptionDetails.get('invoiceSendingMode').value,
         Status: 1,
@@ -271,6 +273,6 @@ export class CreateSubscriptionComponent implements OnInit {
 
   startSubscsriptionResponse(data) {
     console.log(data);
-
+    this.Close();
   }
 }

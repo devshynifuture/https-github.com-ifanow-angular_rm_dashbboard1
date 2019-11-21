@@ -28,7 +28,6 @@
     <app-email-only [inputData]="inputData" *ngIf="subscriptionTab=='emailInvoiceFroala'"></app-email-only>
     <app-add-liabilities *ngIf="subscriptionTab=='addLib'"></app-add-liabilities>
     <app-liabilities-detail *ngIf="subscriptionTab=='addLiabilitiesDetail'"> </app-liabilities-detail>
-
     <app-add-liabilities [inputData]="inputData" *ngIf="subscriptionTab=='addLiabilities'"></app-add-liabilities>
     <app-add-insurance [insuranceData]="fragmentData" *ngIf="subscriptionTab=='addInsurance'"></app-add-insurance>
     <app-libilities-right *ngIf="subscriptionTab=='portfolioSummary'"></app-libilities-right>
@@ -58,7 +57,7 @@
     <app-add-kvp *ngIf="subscriptionTab=='addKVP'"></app-add-kvp>
     <app-add-scss [data]="inputData" *ngIf="subscriptionTab=='addSCSS'"></app-add-scss>
     <app-add-po-saving [data]="inputData" *ngIf="subscriptionTab=='addPOSAVING'"></app-add-po-saving>
-    <app-add-po-mis *ngIf="subscriptionTab=='addPOMIS'"></app-add-po-mis>
+    <app-add-po-mis [inputData]="inputData"  *ngIf="subscriptionTab=='addPOMIS'"></app-add-po-mis>
     <app-add-po-rd [data]="inputData" *ngIf="subscriptionTab=='addPORD'"></app-add-po-rd>
     <app-add-po-td [data]="inputData" *ngIf="subscriptionTab=='addPOTD'"></app-add-po-td>
     <app-add-scenarios *ngIf="subscriptionTab=='addScenarios'"></app-add-scenarios>

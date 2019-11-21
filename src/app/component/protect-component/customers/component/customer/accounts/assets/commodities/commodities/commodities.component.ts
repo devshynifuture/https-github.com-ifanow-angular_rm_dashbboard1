@@ -20,21 +20,28 @@ export class CommoditiesComponent implements OnInit {
   advisorId: any;
   goldList: any;
   otherCommodityList: any;
+  clientId: any;
   constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService,public util:UtilService) { }
   ngOnInit() {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.getGoldList()
-    this.getOtherList()
+    
   }
   getfixedIncomeData(value){
     console.log('value++++++',value)
-    this.showRequring = (value == "2")? "2":"1"
+    this.showRequring = value
+    if(value == '2'){
+      this.getGoldList()
+    }else{
+      this.getOtherList()
+    }
   
   }
   getGoldList(){
     let obj = {
-      clientId:2978,
+      clientId:this.clientId,
       advisorId: this.advisorId
     }
     this.custumService.getGold(obj).subscribe(
@@ -47,7 +54,7 @@ export class CommoditiesComponent implements OnInit {
   }
   getOtherList(){
     let obj = {
-      clientId:2978,
+      clientId:this.clientId,
       advisorId: this.advisorId
     }
     this.custumService.getOthers(obj).subscribe(
@@ -68,8 +75,11 @@ export class CommoditiesComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getGoldList()
-        this.getOtherList()
+        if(value == 'addedGold'){
+          this.getGoldList()
+        }else{
+          this.getOtherList()
+        }
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);

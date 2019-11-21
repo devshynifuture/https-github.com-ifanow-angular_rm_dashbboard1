@@ -15,6 +15,7 @@ export class CashAndBankComponent implements OnInit {
   advisorId: any;
   bankAccountList: any;
   cashInHandList: any;
+  clientId: any;
 
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService) { }
   displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc', 'status', 'icons'];
@@ -24,17 +25,21 @@ export class CashAndBankComponent implements OnInit {
   ngOnInit() {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
-    this.getCashInHandList()
+    this.clientId = AuthService.getClientId();
     this.getBankAccountList()
   }
   getfixedIncomeData(value) {
     console.log('value++++++', value)
-    this.showRequring = (value == "2") ? "2" : "1"
-
+    this.showRequring = value
+    if(value == '2'){
+      this.getCashInHandList()
+    }else{
+      this.getBankAccountList()
+    }
   }
   getBankAccountList() {
     let obj = {
-      clientId: 2978,
+      clientId: this.clientId,
       advisorId: this.advisorId
     }
     this.custumService.getBankAccounts(obj).subscribe(
@@ -48,7 +53,7 @@ export class CashAndBankComponent implements OnInit {
   }
   getCashInHandList() {
     let obj = {
-      clientId: 2978,
+      clientId: this.clientId,
       advisorId: this.advisorId
     }
     this.custumService.getCashInHand(obj).subscribe(
@@ -68,8 +73,11 @@ export class CashAndBankComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getCashInHandList()
-        this.getBankAccountList()
+        if(value == 'addedbankAc'){
+          this.getCashInHandList()
+        }else{
+        this.getBankAccountList();
+        };
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -77,7 +85,7 @@ export class CashAndBankComponent implements OnInit {
 
         }
       }
-    );
+    );;
   }
 }
 export interface PeriodicElement7 {

@@ -31,6 +31,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
   schemeList: any;
   idForscheme: any;
   idForscheme1: any[];
+  clientId: any;
 
   constructor(private event : EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
   @Input()
@@ -44,6 +45,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
   ngOnInit() {
     this.idForscheme1  = []
     this.advisorId = AuthService.getAdvisorId()
+    this.clientId = AuthService.getClientId();
     this.getGlobalList()
   
   }
@@ -113,6 +115,9 @@ export class NpsSchemeHoldingComponent implements OnInit {
           holdingAsOn:[new Date(element.totalNetContribution), Validators.required],
         }))
       })
+      this.nominee.removeAt(0);
+      this.futureContry.removeAt(0);
+      this.holdings.removeAt(0);
     }
 
   }
@@ -172,7 +177,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
     } else {
       let obj = {
         advisorId: this.advisorId,
-        clientId: 2978,
+        clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined) ? this.schemeHoldingsNPS.controls.ownerName.value : this.ownerName,
         pran: this.schemeHoldingsNPS.controls.pran.value,

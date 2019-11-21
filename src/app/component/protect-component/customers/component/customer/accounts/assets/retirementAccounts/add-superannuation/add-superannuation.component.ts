@@ -32,6 +32,7 @@ export class AddSuperannuationComponent implements OnInit {
   isGrowthEmployee = false
   isAssumedRateReturn = false
   isFirstDateContry = false
+  clientId: any;
 
   constructor(private event :EventService, private router: Router,private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
 
@@ -46,6 +47,7 @@ export class AddSuperannuationComponent implements OnInit {
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
   }
   display(value){
     console.log('value selected', value)
@@ -117,7 +119,7 @@ export class AddSuperannuationComponent implements OnInit {
 
       let obj = {
         advisorId: this.advisorId,
-        clientId: 2978,
+        clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined)?this.superannuation.controls.ownerName.value:this.ownerName,
         annualEmployeeContribution: this.superannuation.controls.employeeContry.value,
@@ -145,10 +147,10 @@ export class AddSuperannuationComponent implements OnInit {
   addSuperannuationRes(data){
     console.log('addrecuringDepositRes', data)
      this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedSuperannuation', state: 'close', data })
   }
   editSuperannuationRes(data){
      this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedSuperannuation', state: 'close', data })
   }
 }

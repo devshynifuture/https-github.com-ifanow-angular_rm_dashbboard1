@@ -159,12 +159,20 @@
                 <div class="form-group mb-0">
                     <div class="row">
                         <div class="col-md-4 p-0">
-                            <mat-form-field>
-                                <mat-select formControlName="nomineeName" class="form-control br-0" (click)="nomineesList()">
-                                    <mat-option value="">Select option</mat-option>
-                                    <mat-option value="1">1</mat-option>
-                                    <mat-option value="2">2</mat-option>
-                                    <mat-option value="3">3</mat-option>
+                            <mat-form-field >
+                                <mat-select formControlName="nomineeName" class="form-control br-0" >
+                                    <!-- <input matInput placeholder="Add nominee" aria-label="State" [matAutocomplete]="auto"
+                                    list="userName" class="form-control br-0 pl-8" formControlName="userName">
+                                 <mat-autocomplete #auto="matAutocomplete">
+                                    <mat-option *ngFor="let s of nomineesListFM" [value]="s.userName">
+                                       <span>{{s.userName}}</span>
+                                    </mat-option>
+                                 </mat-autocomplete> -->
+                                    <mat-option value="{{item.userName}}" *ngFor="let item of nomineesListFM">Select option</mat-option>
+                                    {{item.userName}}
+                                     <mat-option value = '1'>one
+                                    </mat-option>
+                                    <mat-option value = '2'>two</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>

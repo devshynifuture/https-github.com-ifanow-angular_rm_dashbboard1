@@ -9,7 +9,7 @@ import {EnumServiceService} from '../../../../../../services/enum-service.servic
 import {UtilService} from '../../../../../../services/util.service';
 import {AuthService} from '../../../../../../auth-service/authService';
 import {Chart} from 'angular-highcharts';
-import {EnumDataService} from "../../../../../../services/enum-data.service";
+import {EnumDataService} from '../../../../../../services/enum-data.service';
 
 export interface PeriodicElement {
   name: string;
@@ -129,7 +129,9 @@ export class DashboardSubscriptionComponent implements OnInit {
   }
 
   openPlanSlider(value, state, data) {
-    (value == "billerSettings" || value == 'changePayee' || value == 'SUBSCRIPTIONS') ? value : (data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable'
+    (value == 'billerSettings' || value == 'changePayee' || value == 'SUBSCRIPTIONS') ?
+      value : (data.subscriptionPricing.feeTypeId == 1) ?
+      value = 'createSubFixed' : value = 'createSubVariable';
     data.isCreateSub = false;
     const fragmentData = {
       Flag: value,
@@ -149,18 +151,18 @@ export class DashboardSubscriptionComponent implements OnInit {
   }
 
   getTotalRecivedByDash() {
-    let obj = {
+    const obj = {
       advisorId: this.advisorId,
       period: 0
-    }
+    };
     this.subService.getTotalRecived(obj).subscribe(
       data => this.getTotalRecivedRes(data)
     );
   }
 
   getTotalRecivedRes(data) {
-    console.log('getTotalRecivedRes', data)
-    this.totalSaleReceived = data
+    console.log('getTotalRecivedRes', data);
+    this.totalSaleReceived = data;
   }
 
   showSubscriptionSteps() {

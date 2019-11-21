@@ -26,6 +26,7 @@ export class AddGratuityComponent implements OnInit {
   inputData: any;
   advisorId: any;
   ownerName: any;
+  clientId: any;
 
   constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
 
@@ -40,6 +41,7 @@ export class AddGratuityComponent implements OnInit {
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
   }
   display(value) {
     console.log('value selected', value)
@@ -96,7 +98,7 @@ export class AddGratuityComponent implements OnInit {
   
       let obj = {
         advisorId: this.advisorId,
-        clientId: 2978,
+        clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined)?this.gratuity.controls.ownerName.value:this.ownerName,
         yearsCompleted: this.gratuity.controls.noOfcompleteYrs.value,
@@ -121,9 +123,9 @@ export class AddGratuityComponent implements OnInit {
   }
   addGratuityRes(data){
     console.log('addrecuringDepositRes', data)
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedGratuity', state: 'close', data })
   }
   editGratuityRes(data){
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedGratuity', state: 'close', data })
   }
 }

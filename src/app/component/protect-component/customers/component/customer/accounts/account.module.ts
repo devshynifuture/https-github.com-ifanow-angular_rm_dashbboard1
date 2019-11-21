@@ -155,7 +155,8 @@ import {OwnerColumnComponent} from './owner-component/owner-column/owner-column.
     OthersComponent,
     BankAccountsComponent,
     CashInHandComponent,
-    OwnerColumnComponent
+    OwnerColumnComponent,
+    
 
   ],
   imports: [

@@ -10,7 +10,6 @@
     </div>
 </div>
 <div class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="pomisForm">
-    <div></div>
     <!-- <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Owner</h5>
@@ -36,7 +35,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #amountInvest type="text" maxlength="20" class="form-control br-0 rupess" formControlName="amtInvested">
+                    <input matInput #amtInvested type="text" maxlength="20" class="form-control br-0 rupess" formControlName="amtInvested">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isAmtValid && getFormControl().amtInvested.invalid || getFormControl().amtInvested.touched && getFormControl().amtInvested.invalid)}">
                             Amount Invested is required
                         </mat-error>

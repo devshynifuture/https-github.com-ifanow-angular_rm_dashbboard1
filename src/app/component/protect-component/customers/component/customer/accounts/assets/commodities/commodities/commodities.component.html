@@ -1,11 +1,11 @@
 <div class="wrapper-8">
     <div class="row pt-28 pb-28">
-        <div class="col-md-8 pl-0">
-            <mat-button-toggle-group id="custom-toggle" (change)="getfixedIncomeData($event.value)" multiple=false>
-                <mat-button-toggle value=1
+        <div class="col-md-8 pl-0" id="custom-toggle">
+            <mat-button-toggle-group id="custom-toggle" value = "1" (change)="getfixedIncomeData($event.value)" multiple=false>
+                <mat-button-toggle value='1'
                     [ngClass]="showRequring == '1' ? 'btn-default text-custom br-0 text-primary' : 'btn-default text-custom br-0'">
                     Gold</mat-button-toggle>
-                <mat-button-toggle value=2
+                <mat-button-toggle value='2'
                     [ngClass]="showRequring == '2' ? 'btn-default text-custom br-0 text-primary' : 'btn-default text-custom br-0'">
                     Others</mat-button-toggle>
             </mat-button-toggle-group>
