@@ -84,6 +84,7 @@ import {OthersComponent} from './assets/commodities/others/others.component';
 import {BankAccountsComponent} from './assets/cash&bank/bank-accounts/bank-accounts.component';
 import {CashInHandComponent} from './assets/cash&bank/cash-in-hand/cash-in-hand.component';
 import {OwnerColumnComponent} from './owner-component/owner-column/owner-column.component';
+import { AddTransactionComponent } from './assets/smallSavingScheme/common-component/add-transaction/add-transaction.component';
 
 @NgModule({
   declarations: [
@@ -156,6 +157,8 @@ import {OwnerColumnComponent} from './owner-component/owner-column/owner-column.
     BankAccountsComponent,
     CashInHandComponent,
     OwnerColumnComponent,
+    AddTransactionComponent,
+  
     
 
   ],
