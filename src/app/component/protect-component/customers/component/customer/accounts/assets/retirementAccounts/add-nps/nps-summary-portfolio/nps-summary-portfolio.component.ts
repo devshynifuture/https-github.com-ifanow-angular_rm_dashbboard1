@@ -10,8 +10,8 @@ import { removeEvent } from 'highcharts';
 import * as _ from 'lodash';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 @Component({
   selector: 'app-nps-summary-portfolio',
   templateUrl: './nps-summary-portfolio.component.html',
@@ -39,6 +39,8 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   nomineesListFM: any[];
 
   clientId: any;
+  nexNomineePer: number;
+  getPerAllocation: number;
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
     this.summaryNPS = this.fb.group({
       published: true,
@@ -61,26 +63,29 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   display(value) {
     console.log('value selected', value)
     this.ownerName = value.userName;
-    if(value.familyMembersList.length > 0){
+    if (value.familyMembersList.length > 0) {
       this.nomineesListFM = value.familyMembersList
     }
     this.familyMemberId = value.id
   }
-  
-  nomineesList(){
-    if(this.nomineesListFM.length > 0){
+
+  nomineesList() {
+    if (this.nomineesListFM.length > 0) {
       let name = this.ownerName
-      var evens = _.remove( this.nomineesListFM, function(n) {
-       return n.userName == name;
-     });
-     this.nomineesListFM = evens
+      var evens = _.remove(this.nomineesListFM, function (n) {
+        return n.userName == name;
+      });
+      this.nomineesListFM = evens
     }
-     
-   console.log('NomineesList',this.nomineesListFM)
+
+    console.log('NomineesList', this.nomineesListFM)
   }
-  
+
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' })
+  }
+  onNomineeChange(value) {
+
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -90,7 +95,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       currentValue: [(data == undefined) ? '' : data.currentValuation, [Validators.required]],
       valueAsOn: [(data == undefined) ? '' : new Date(data.valueAsOn), [Validators.required]],
-      schemeChoice: [(data == undefined) ? '' : (data.schemeChoice)+"", [Validators.required]],
+      schemeChoice: [(data == undefined) ? '' : (data.schemeChoice) + "", [Validators.required]],
       pran: [(data == undefined) ? '' : data.pran, [Validators.required]],
       totalContry: [(data == undefined) ? '' : data.contributionAmount, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
@@ -100,7 +105,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
         accountPreferenceId: null, approxContribution: null
       })]),
       npsNomineesList: this.fb.array([this.fb.group({
-        nomineeName: null,nomineePercentageShare:null,
+        nomineeName: null, nomineePercentageShare: null,
       })]),
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
@@ -116,7 +121,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
       data.npsNomineesList.forEach(element => {
         this.summaryNPS.controls.npsNomineesList.push(this.fb.group({
           nomineeName: [(element.nomineeName), [Validators.required]],
-          nomineePercentageShare: [element.nomineePercentageShare , Validators.required],
+          nomineePercentageShare: [element.nomineePercentageShare, Validators.required],
         }))
       })
       this.nominee.removeAt(0);
@@ -149,7 +154,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   }
   addNominee() {
     this.nominee.push(this.fb.group({
-      nomineeName: null,nomineePercentageShare:null,
+      nomineeName: null, nomineePercentageShare: null,
     }));
   }
   removeNominee(item) {
