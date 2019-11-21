@@ -8,8 +8,8 @@ import {MatDialog} from '@angular/material';
 import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
 import {SubscriptionService} from '../../../subscription.service';
 import {ConsentTandCComponent} from '../consent-tand-c/consent-tand-c.component';
-import {UtilService} from "../../../../../../../services/util.service";
-import {AuthService} from "../../../../../../../auth-service/authService";
+import {UtilService} from '../../../../../../../services/util.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
 
 export interface PeriodicElement {
   document: string;
@@ -41,7 +41,7 @@ export class QuotationsComponent implements OnInit {
   dataCount;
   _clientData;
   displayedColumns: string[] = ['checkbox', 'document', 'plan', 'date', 'sdate', 'cdate', 'status', 'send', 'icons'];
-  dataSource;
+  dataSource=[];
   changeEmail = 'footerChange';
   advisorId;
 
@@ -62,25 +62,26 @@ export class QuotationsComponent implements OnInit {
     // this.getQuotationsList();
     this.dataCount = 0;
   }
+
   Open(value, state, data) {
     const fragmentData = {
       Flag: value,
-      data:data,
+      data,
       id: 1,
-      state: state
+      state
     };
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', );
+          console.log('this is sidebardata in subs subs 2: ',);
           rightSideDataSub.unsubscribe();
         }
       }
-      
     );
 
   }
+
   getQuotationsList() {
     const obj = {
       // clientId: 2970
@@ -91,7 +92,7 @@ export class QuotationsComponent implements OnInit {
     );
   }
 
-  selectedInvoice(ele) {
+  selectedInvoice() {
     this.dataCount = 0;
     this.dataSource.forEach(item => {
       console.log('item item ', item);
@@ -101,14 +102,27 @@ export class QuotationsComponent implements OnInit {
     });
   }
 
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    return this.dataCount === this.dataSource.length;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selectAll({checked: false}) : this.selectAll({checked: true});
+  }
+
   getQuotationsListResponse(data) {
-   if(data==undefined){
-    this.noData="No Data Found"
-   }else{ data.forEach(singleData => {
-      singleData.isChecked = false;
-    });
-    console.log('dsfgasdfsdf', data);
-    this.dataSource = data;}
+    if (data == undefined) {
+      this.noData = 'No Data Found';
+    } else {
+      data.forEach(singleData => {
+        singleData.isChecked = false;
+      });
+      console.log('dsfgasdfsdf', data);
+      this.dataSource = data;
+    }
   }
 
   openQuotationsESign(value, state) {
@@ -164,7 +178,7 @@ export class QuotationsComponent implements OnInit {
     const data = {
       advisorId: this.advisorId,
       clientData: this._clientData,
-      templateType: 2, //2 is for quotation
+      templateType: 2, // 2 is for quotation
       documentList: []
     };
     this.dataSource.forEach(singleElement => {
@@ -183,7 +197,7 @@ export class QuotationsComponent implements OnInit {
 
     const fragmentData = {
       Flag: value,
-      data: data,
+      data,
       id: 1,
       state: 'open'
     };
@@ -244,7 +258,7 @@ export class QuotationsComponent implements OnInit {
     // this.subInjectService.addSingleProfile(data);
     const fragmentData = {
       Flag: value,
-      data: data,
+      data,
       id: 1,
       state: 'open'
     };
@@ -258,37 +272,20 @@ export class QuotationsComponent implements OnInit {
       }
     );
   }
+
   selectAll(event) {
     // const checked = event.target.checked;
     // this.dataSource.forEach(item => item.selected = 'checked');
 
     this.dataCount = 0;
-    this.dataSource.forEach(item => {
-      //   if(item.selected==false)
-      //   {
-      //     item.selected = true;
-      //     this.dataCount++;
-      //   }else{
-      //     item.selected = false;
-      //     this.dataCount--;
-      //   }
-      // });
-      item.selected = event.checked;
-      if (item.selected) {
-        this.dataCount++;
-      }
-      // if(item.dataCountd>=1){
-      //   this.dataCount=1
-      // }else{
-      //   this.dataCount++
-      // }
-    });
-    // if(item.selected=="true"){
-    //   this.dataCount++;
-    // }else{
-    //   this.dataCount--;
-    // }
-
+    if (this.dataSource) {
+      this.dataSource.forEach(item => {
+        item.selected = event.checked;
+        if (item.selected) {
+          this.dataCount++;
+        }
+      });
+    }
   }
 
 }

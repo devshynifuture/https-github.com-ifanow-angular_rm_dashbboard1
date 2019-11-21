@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModifyFeeStructureComponent } from './modify-fee-structure.component';
+import { AddScenariosComponent } from './add-scenarios.component';
 
-describe('ModifyFeeStructureComponent', () => {
-  let component: ModifyFeeStructureComponent;
-  let fixture: ComponentFixture<ModifyFeeStructureComponent>;
+describe('AddScenariosComponent', () => {
+  let component: AddScenariosComponent;
+  let fixture: ComponentFixture<AddScenariosComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ModifyFeeStructureComponent ]
+      declarations: [ AddScenariosComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ModifyFeeStructureComponent);
+    fixture = TestBed.createComponent(AddScenariosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

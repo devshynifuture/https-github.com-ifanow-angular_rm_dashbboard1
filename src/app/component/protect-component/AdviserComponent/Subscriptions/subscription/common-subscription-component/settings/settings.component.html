@@ -8,10 +8,10 @@
                         <button (click)="openPayeeSettings('Add','payeeSettings','open')" mat-stroked-button class="btn-primary br-0 right text-right addon"><i class="material-icons">
                                 add</i> ADD MORE</button>
                                <button mat-button class="text-black right br-0 mr-12 text-right">HELP</button>
-                     
+
                 </div>
             </div>
-        </div> 
+        </div>
         <h4  *ngIf="SettingProfileData==undefined" class="text-center pt-72">{{noData}}</h4>
         <div *ngFor="let profileData of SettingProfileData" class="d-flex justify-content-center">
             <div class="row mb-44 wrapper-100 pb-72 pt-8 mb-44">
@@ -74,11 +74,11 @@
                                             <div class="row">
                                             <div class="col-md-12 block p-0 pt-24">
                                                 <p>MOBILE NO</p>
-                                                <h5>{{profileData.mobileNo}}</h5>
+                                                <h5>{{profileData.primaryContact}}</h5>
                                             </div>
-                                           
+
                                             </div>
-                                               
+
                                         </div>
                                         <div class="col-md-3 p-0">
                                                 <p>COMPANY NAME</p>
@@ -97,7 +97,7 @@
                     </div>
                     </div>
                 </div>
-                
+
             </div>
             <!-- <div class="d-flex justify-content-center">
                     <div class="row">
@@ -158,7 +158,7 @@
                                                         <p>COMPANY NAME</p>
                                                         <h5>ABC Industrial automation Pvt. Ltd.</h5>
                                                     </div>
-                                           
+
                                         </div>
                                     </div>
                                 </div>
@@ -166,7 +166,7 @@
                             </div>
                             </div>
                         </div>
-                        
+
                     </div>
       -->
       <!-- <div>
@@ -177,6 +177,6 @@
             <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="dialogClose()">Cancel</h5>
             </div>
-           
+
         </div>
     </div> -->
