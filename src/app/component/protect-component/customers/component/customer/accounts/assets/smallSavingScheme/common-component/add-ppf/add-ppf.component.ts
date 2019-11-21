@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -25,7 +25,11 @@ export class AddPpfComponent implements OnInit {
   ppfSchemeForm;
   transactionForm
   optionalppfSchemeForm;
-  transactionList=[];
+  transactionList = [];
+  addTransactionList: number;
+  transactionData: any;
+  editApi: any;
+  clientId: number;
   constructor(private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   @Input()
@@ -40,6 +44,7 @@ export class AddPpfComponent implements OnInit {
   ngOnInit() {
     this.isOptionalField = true;
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
   }
   display(value) {
     console.log('value selected', value)
@@ -49,48 +54,47 @@ export class AddPpfComponent implements OnInit {
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
   }
-  addTransaction() {
-    // if (this.transactionList.length>0) {
-      let obj =
-      {
-        "date": '',
-        "amount": '',
-        "paymentType": ''
-      }
-      this.transactionList.push(obj)
-      console.log(this.transactionList)
-    // }
-  }
+
   getdataForm(data) {
     if (data == undefined) {
       data = {};
     }
+    else {
+      this.editApi = data
+    }
     this.ppfSchemeForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
-      accountBalance: [, [Validators.required]],
-      balanceAsOn: [, [Validators.required]],
-      commencementDate: [, [Validators.required]],
-      futureContribution: [, [Validators.required]],
-      frquency: [, [Validators.required]],
-    })
-    this.transactionForm = this.fb.group({
-      transactionType: [, [Validators.required]],
-      date: [, [Validators.required]],
-      amount: [, [Validators.required]]
+      accountBalance: [data.accountBalance, [Validators.required]],
+      balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
+      commencementDate: [new Date(data.commencementDate), [Validators.required]],
+      futureContribution: [data.futureApproxcontribution, [Validators.required]],
+      frquency: [data.frequency, [Validators.required]],
     })
     this.optionalppfSchemeForm = this.fb.group({
-      description: [, [Validators.required]],
-      bankName: [, [Validators.required]],
-      linkedBankAccount: [, [Validators.required]],
-      nominee: [, [Validators.required]]
-
+      description: [data.description, [Validators.required]],
+      bankName: [data.bankName, [Validators.required]],
+      linkedBankAccount: [data.linkedBankAccount, [Validators.required]],
+      nominee: [data.nomineeName, [Validators.required]]
     })
     this.ownerData = this.ppfSchemeForm.controls;
-
+  }
+  getFormData(data) {
+    console.log(data)
+    this.transactionData = data.controls
   }
   addPPF() {
+    let finalTransctList = []
+    if (this.transactionData) {
+      this.transactionData.forEach(element => {
+        let obj = {
+          "date": element.controls.date.value._d,
+          "amount": element.controls.amount.value,
+          "paymentType": element.controls.transactionType.value
+        }
+        finalTransctList.push(obj)
+      });
+    }
     if (this.ppfSchemeForm.get('accountBalance').invalid) {
-      // this.ppfSchemeForm.get('accountBalance').status="INVALIDF"
       return;
     }
     else if (this.ppfSchemeForm.get('balanceAsOn').invalid) {
@@ -108,7 +112,7 @@ export class AddPpfComponent implements OnInit {
     else {
       let obj = {
         "advisorId": this.advisorId,
-        "clientId": 2978,
+        "clientId": this.clientId,
         "ownerName": this.ownerName,
         "familyMemberId": this.familyMemberId,
         "accountBalance": this.ppfSchemeForm.get('accountBalance').value,
@@ -118,16 +122,29 @@ export class AddPpfComponent implements OnInit {
         "bankName": this.optionalppfSchemeForm.get('bankName').value,
         "linkedBankAccount": this.optionalppfSchemeForm.get('linkedBankAccount').value,
         "nomineeName": this.optionalppfSchemeForm.get('nominee').value,
-        "publicprovidendfundtransactionlist":this.transactionList
+        "frequency": this.ppfSchemeForm.get('frquency').value,
+        "futureApproxcontribution": this.ppfSchemeForm.get('futureContribution').value,
+        "publicprovidendfundtransactionlist": finalTransctList,
       }
-      this.cusService.addPPFScheme(obj).subscribe(
-        data => this.addPPFResponse(data),
-        err => this.eventService.openSnackBar(err)
-      )
+      if (this.editApi) {
+         obj['id']=this.editApi.id
+        this.cusService.editPPF(obj).subscribe(
+          data => this.addPPFResponse(data),
+          err => this.eventService.openSnackBar(err)
+        )
+      }
+      else {
+        this.cusService.addPPFScheme(obj).subscribe(
+          data => this.addPPFResponse(data),
+          err => this.eventService.openSnackBar(err)
+        )
+      }
     }
   }
   addPPFResponse(data) {
+    (this.editApi)?this.eventService.openSnackBar("PPF is edited","dismiss"):this.eventService.openSnackBar("PPF is added","dismiss")
     console.log(data)
+    this.close();
   }
   close() {
     this.isOptionalField = true

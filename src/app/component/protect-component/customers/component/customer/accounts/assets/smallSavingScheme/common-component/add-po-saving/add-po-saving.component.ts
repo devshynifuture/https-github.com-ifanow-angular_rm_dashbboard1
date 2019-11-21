@@ -26,7 +26,7 @@ export class AddPoSavingComponent implements OnInit {
   poSavingOptionalForm: any;
   editApi: any;
 
-  constructor(private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService,private subInjectService: SubscriptionInject) { }
+  constructor(private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -53,16 +53,16 @@ export class AddPoSavingComponent implements OnInit {
       this.editApi = data
     }
     this.poSavingForm = this.fb.group({
-      ownerName: [, [Validators.required]],
-      accBal: [, [Validators.required]],
-      balAsOn: [, [Validators.required]],
-      ownershipType: [, [Validators.required]]
+      ownerName: [data.ownerName, [Validators.required]],
+      accBal: [data.accountBalance, [Validators.required]],
+      balAsOn: [new Date(data.balanceAsOn), [Validators.required]],
+      ownershipType: [String(data.ownerTypeId), [Validators.required]]
     })
     this.poSavingOptionalForm = this.fb.group({
-      poBranch: [],
-      nominee: [],
-      bankAccNo: [],
-      description: []
+      poBranch: [data.postOfficeBranch],
+      nominee: [data.nominee],
+      bankAccNo: [data.acNumber],
+      description: [data.description]
     })
     this.ownerData = this.poSavingForm.controls;
 
@@ -90,39 +90,44 @@ export class AddPoSavingComponent implements OnInit {
           "familyMemberId": this.familyMemberId,
           "balanceAsOn": this.poSavingForm.get('balAsOn').value,
           "accountBalance": this.poSavingForm.get('accBal').value,
-          "postOfficeBranch":this.poSavingOptionalForm.get('poBranch').value,
+          "postOfficeBranch": this.poSavingOptionalForm.get('poBranch').value,
           "ownerTypeId": this.poSavingForm.get('ownershipType').value,
-          "nominee":this.poSavingOptionalForm.get('nominee').value,
-          "acNumber":  this.poSavingOptionalForm.get('bankAccNo').value,
-          "description":this.poSavingOptionalForm.get('description').value,
+          "nominee": this.poSavingOptionalForm.get('nominee').value,
+          "acNumber": this.poSavingOptionalForm.get('bankAccNo').value,
+          "description": this.poSavingOptionalForm.get('description').value,
           "ownerName": this.ownerName
         }
         this.cusService.editPOSAVINGData(obj).subscribe(
-          data=>this.addPOSavingResponse(data),
-          err=>this.eventService.openSnackBar(err)
+          data => this.addPOSavingResponse(data),
+          err => this.eventService.openSnackBar(err)
         )
       }
-      let obj = {
-        "clientId": 2978,
-        "advisorId": this.advisorId,
-        "familyMemberId": this.familyMemberId,
-        "balanceAsOn": this.poSavingForm.get('balAsOn').value,
-        "accountBalance": this.poSavingForm.get('accBal').value,
-        "postOfficeBranch": this.poSavingOptionalForm.get('poBranch').value,
-        "ownerTypeId": this.poSavingForm.get('ownershipType').value,
-        "nominee": this.poSavingOptionalForm.get('nominee').value,
-        "acNumber": this.poSavingOptionalForm.get('bankAccNo').value,
-        "description": this.poSavingOptionalForm.get('description').value,
-        "ownerName": this.ownerName
+      else {
+        let obj = {
+          "clientId": 2978,
+          "advisorId": this.advisorId,
+          "familyMemberId": this.familyMemberId,
+          "balanceAsOn": this.poSavingForm.get('balAsOn').value,
+          "accountBalance": this.poSavingForm.get('accBal').value,
+          "postOfficeBranch": this.poSavingOptionalForm.get('poBranch').value,
+          "ownerTypeId": this.poSavingForm.get('ownershipType').value,
+          "nominee": this.poSavingOptionalForm.get('nominee').value,
+          "acNumber": this.poSavingOptionalForm.get('bankAccNo').value,
+          "description": this.poSavingOptionalForm.get('description').value,
+          "ownerName": this.ownerName
+        }
+        this.cusService.addPOSAVINGScheme(obj).subscribe(
+          data => this.addPOSavingResponse(data),
+          err => this.eventService.openSnackBar(err)
+        )
       }
-      this.cusService.addPOSAVINGScheme(obj).subscribe(
-        data => this.addPOSavingResponse(data),
-        err => this.eventService.openSnackBar(err)
-      )
     }
   }
   addPOSavingResponse(data) {
-    console.log(data)
+    this.close();
+    console.log(data);
+    (this.editApi) ? this.eventService.openSnackBar("PO_SAVING is edited", "dismiss") : this.eventService.openSnackBar("PO_SAVING is edited", "added")
+
   }
   close() {
     this.isOptionalField = true

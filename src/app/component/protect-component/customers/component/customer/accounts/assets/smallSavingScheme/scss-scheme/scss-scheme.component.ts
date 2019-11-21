@@ -17,13 +17,14 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 export class ScssSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
+  noData: string;
 
   constructor(private cusService:CustomerService,private subInjectService:SubscriptionInject) { }
   displayedColumns19 = ['no', 'owner', 'payout', 'rate', 'tamt', 'amt', 'mdate', 'desc', 'status', 'icons'];
   datasource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId=2978;
+    this.clientId=AuthService.getClientId();
     this.getScssSchemedata()
   }
   getScssSchemedata() {
@@ -37,8 +38,12 @@ export class ScssSchemeComponent implements OnInit {
     )
   }
   getKvpSchemedataResponse(data: any) {
-    this.datasource=data.scssList
     console.log(data)
+    if(data.scssList.length!=0){
+      this.datasource=data.scssList
+    }else{
+      this.noData="No Scheme Found";
+    }
   }
   addOpenSCSS(value,data)
   {
@@ -52,6 +57,7 @@ export class ScssSchemeComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getScssSchemedata()
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 
