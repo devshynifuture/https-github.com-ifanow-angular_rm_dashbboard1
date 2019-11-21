@@ -30,6 +30,11 @@ export class AddPpfComponent implements OnInit {
   transactionData: any;
   editApi: any;
   clientId: number;
+  nexNomineePer: any;
+  showError=false;
+  nomineesListFM: any;
+  dataFM: any;
+  familyList: any;
   constructor(private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   @Input()
@@ -51,6 +56,23 @@ export class AddPpfComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
+  nomineesList() {
+    this.dataFM = this.nomineesListFM
+    if (this.dataFM.length > 0) {
+      let name = this.ownerName
+      var evens = _.reject(this.dataFM, function (n) {
+        return n.userName == name;
+      });
+      this.familyList = evens
+    }
+
+    console.log('familyList', this.familyList)
+  }
+
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
   }
@@ -74,9 +96,59 @@ export class AddPpfComponent implements OnInit {
       description: [data.description, [Validators.required]],
       bankName: [data.bankName, [Validators.required]],
       linkedBankAccount: [data.linkedBankAccount, [Validators.required]],
-      nominee: [data.nomineeName, [Validators.required]]
+      npsNomineesList: this.fb.array([this.fb.group({
+        nomineeName: null, nomineePercentageShare: [null, [Validators.required, Validators.min(1)]],
+      })]),
     })
     this.ownerData = this.ppfSchemeForm.controls;
+    if (data.npsNomineesList != undefined) {
+     
+      data.npsNomineesList.forEach(element => {
+        this.optionalppfSchemeForm.controls.npsNomineesList.push(this.fb.group({
+          nomineeName: [(element.nomineeName), [Validators.required]],
+
+          nomineePercentageShare: [element.nomineePercentageShare, Validators.required],
+        }))
+      })
+      this.nominee.removeAt(0);
+    }
+  }
+  get nominee() {
+    return this.optionalppfSchemeForm.get('npsNomineesList') as FormArray;
+  }
+  addNominee() {
+    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+      return o.nomineePercentageShare;
+    });
+
+    if (this.nexNomineePer > 100) {
+      this.showError = true
+      console.log('show error Percent cannot be more than 100%')
+    } else {
+      this.showError = false
+    }
+    if (this.showError == false) {
+      this.nominee.push(this.fb.group({
+        nomineeName: null, nomineePercentageShare: null,
+      }));
+    }
+   
+
+  }
+  removeNominee(item) {
+    if (this.nominee.value.length > 1) {
+      this.nominee.removeAt(item);
+    }
+    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+      return o.nomineePercentageShare;
+    });
+
+    if (this.nexNomineePer > 100) {
+      this.showError = true
+      console.log('show error Percent cannot be more than 100%')
+    } else {
+      this.showError = false
+    }
   }
   getFormData(data) {
     console.log(data)
