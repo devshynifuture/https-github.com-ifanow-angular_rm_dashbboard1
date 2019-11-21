@@ -120,7 +120,6 @@ export class QuotationsComponent implements OnInit {
       data.forEach(singleData => {
         singleData.isChecked = false;
       });
-      console.log('dsfgasdfsdf', data);
       this.dataSource = data;
     }
   }
