@@ -31,7 +31,7 @@ export class PoTdSchemeComponent implements OnInit {
     )
   }
   getPoTdSchemedataResponse(data) {
-    this.datasource = data.PostOfficeTdList
+    this.datasource = data.postOfficeTdList
     console.log(data)
   }
   addPOTD(value,data) {

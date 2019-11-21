@@ -4,6 +4,7 @@ import { Validators, FormBuilder, FormArray } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-add-real-estate',
@@ -36,6 +37,7 @@ export class AddRealEstateComponent implements OnInit {
   isTypeValid: boolean;
   isMvValid: boolean;
   clientId: any;
+  dataId: any;
 
   constructor(public custumService:CustomerService,public subInjectService:SubscriptionInject,private fb: FormBuilder,public custmService:CustomerService,public eventService:EventService) { }
   @Input()
@@ -79,6 +81,7 @@ export class AddRealEstateComponent implements OnInit {
   }
   display(value){
     console.log('value selected', value)
+    this.dataId=value.id;
     this.ownerName = value.userName;
     this.selectedFamilyData = value
   }
@@ -128,6 +131,12 @@ export class AddRealEstateComponent implements OnInit {
     return this.addrealEstateForm.get('getCoOwnerName') as FormArray;
   }
   addNewCoOwner(data){
+    this.family.forEach(element => {
+        var evens = _.remove(this.family, function(n) {
+          return n.id == this.dataId;
+        });
+      console.log(evens);
+    });
     if(this.addOwner==data){
       this.getCoOwner.push(this.fb.group({ ownerName: null,
         ownershipPerc: null,
@@ -258,6 +267,7 @@ removeCoOwner(item){
         });
         if(this._inputData=='Add'){
           console.log(obj);
+          delete obj.id;
           this.custumService.addRealEstate(obj).subscribe(
             data => this.addRealEstateRes(data)
           );

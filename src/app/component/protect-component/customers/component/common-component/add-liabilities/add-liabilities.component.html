@@ -171,7 +171,7 @@
         <div class="col-md-3  ">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #interest class="form-control br-0" (keypress)="keyPress($event)"
+                    <input matInput #interest class="form-control br-0 percentage" (keypress)="keyPress($event)"
                         formControlName="interest" maxlength="{{getFormControl().interest.maxLength}}">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isinterestRate && getFormControl().interest.invalid || getFormControl().interest.touched && getFormControl().interest.invalid)}">

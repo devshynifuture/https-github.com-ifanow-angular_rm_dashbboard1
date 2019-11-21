@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, Optional } from '@angular/core';
 import { SubjectSubscriber } from 'rxjs/internal/Subject';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer/customer.service';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
@@ -90,6 +90,14 @@ export class AddInsuranceComponent implements OnInit {
     vestedBonus: ['', [Validators.required]],
     assumedRate: ['', [Validators.required]]
   })
+  cashFlowForm = this.fb.group({
+    cashFlow: this.fb.array([this.fb.group({cashFlowType:null,
+      year: null,
+      approxAmt: null})])
+    // cashFlowType: ['', [Validators.required]],
+    // year: ['', [Validators.required]],
+    // approxAmt: ['', [Validators.required]],
+  })
   ridersForm = this.fb.group({
     accidentalBenefit: ['', [Validators.required]],
     doubleAccidental: ['', [Validators.required]],
@@ -111,6 +119,19 @@ export class AddInsuranceComponent implements OnInit {
   getLifeInsuranceFormFields(controlName) {
     return this.lifeInsuranceForm.get(controlName).value
   }
+  get cashFlowEntries() {
+    return this.cashFlowForm.get('cashFlow') as FormArray;
+  }
+    addTransaction(){
+      this.cashFlowEntries.push(this.fb.group({ 
+        cashFlowType: null,
+        year: null,
+        approxAmt: null
+      }));
+    }
+    removeTransaction(item){
+      this.cashFlowEntries.removeAt(item);
+    }
   setInsuranceDataFormField(data) {
     console.log(data.data)
     this.editInsuranceData = data.data
@@ -143,6 +164,20 @@ export class AddInsuranceComponent implements OnInit {
       this.keyDetailsForm.controls.nomineeName.setValue(data.nominee)
       this.keyDetailsForm.controls.vestedBonus.setValue(data.vestedBonus)
       // this.keyDetailsForm.controls.assumedRate.setValue(data)
+
+      // this.cashFlowForm.controls.cashFlowType.setValue(data.cashFlowType)
+      // this.cashFlowForm.controls.year.setValue(data.year)
+      // this.cashFlowForm.controls.approxAmt.setValue(data.approxAmt)
+
+      // if (data.cashFlows != undefined) {
+      //   data.cashFlows.forEach(element => {
+      //     this.cashFlowForm.controls.cashFlow.push(this.fb.group({
+      //       name: [(element.name) + "", [Validators.required]],
+      //       ownershipPer: [(element.ownershipPer + ""), Validators.required]
+      //     }))
+      //   })
+      //   this.cashFlowEntries.removeAt(0);
+      // }
 
       this.ridersForm.controls.accidentalBenefit.setValue(data.ridersAccidentalBenifits)
       this.ridersForm.controls.doubleAccidental.setValue(data.ridersDoubleAccidentalBenefit)
@@ -249,9 +284,9 @@ export class AddInsuranceComponent implements OnInit {
         "nominee": this.keyDetailsForm.get('nomineeName').value,
         "vestedBonus": this.keyDetailsForm.get('vestedBonus').value,
         "assumedRate": 1000,
-        "cashflowType": "cash flow 4",
-        "cashflowYear": "2020-12-12",
-        "cashFlowApproxAmount": 4000,
+        "cashflowType": this.cashFlowForm.get('cashFlowType').value,
+        "cashflowYear": this.cashFlowForm.get('year').value,
+        "cashFlowApproxAmount": this.cashFlowForm.get('approxAmt').value,
         "ridersAccidentalBenifits": this.ridersForm.get('accidentalBenefit').value,
         "ridersDoubleAccidentalBenefit": this.ridersForm.get('doubleAccidental').value,
         "ridersTermWaiver": this.ridersForm.get('termWaiver').value,

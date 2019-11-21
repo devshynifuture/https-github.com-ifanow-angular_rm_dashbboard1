@@ -32,7 +32,7 @@ export class PoRdSchemeComponent implements OnInit {
   }
   getPoRdSchemedataResponse(data)
   {
-    this.datasource=data.PostOfficeRDList
+    this.datasource=data.postOfficeRDList
     console.log(data)
   }
   addPORD(value,data)
