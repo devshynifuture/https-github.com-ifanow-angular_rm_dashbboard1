@@ -1,5 +1,5 @@
 /* tslint:disable:max-line-length */
-import {BrowserModule, HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
+import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {AppRoutingModule} from './app-routing.module';
@@ -41,7 +41,6 @@ import {MomentDateModule} from '@angular/material-moment-adapter';
 import {CustomCommonModule} from './common/custom.common.module';
 import {SubscriptionModule} from './component/protect-component/AdviserComponent/Subscriptions/subscription.module';
 import {DatePipe} from "@angular/common";
-import {GestureConfig} from "@angular/material/core";
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -99,7 +98,7 @@ import {GestureConfig} from "@angular/material/core";
 
     MDBBootstrapModule.forRoot(), DragDropModule
   ],
-  providers: [AuthService, HttpService, DatePipe, {provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig}],
+  providers: [AuthService, HttpService, DatePipe],
   bootstrap: [AppComponent],
   entryComponents: []
 })
