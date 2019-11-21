@@ -9,8 +9,108 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12 pl-0">
-                    <h3 class="f-16 mt-20 roboto m-0"> Goal tracker </h3>
+                <div class="col-md-12 scenarBox p-0">
+                    <h3 class="f-16 mt-20 roboto mb-12 "> Goal tracker </h3>
+
+                    <div class="row c-p lineGreen">
+                        <div class="col-md-3 text-center p-0 br-green-2">
+                            <h5 class="m-0 text-custom pt-12 f-14 ">Scenario 1</h5>
+                            <mat-radio-group aria-label="Select an option">
+                                <mat-radio-button value="1"> </mat-radio-button>
+                            </mat-radio-group>
+
+                        </div>
+                        <div class="col-md-9 pr-0">
+                            <h5 class="m-0 text-custom pt-12 f-14 pb-8">
+                                In this scenario we have assumed continuation of most products.
+                            </h5>
+                        </div>
+                    </div>
+
+                    <div class="row c-p bb-0 lineGrey">
+                        <div class="col-md-3 text-center p-0 br-grey-1">
+                            <h5 class="m-0 text-custom pt-12 f-14">Scenario 2</h5>
+                            <mat-radio-group aria-label="Select an option">
+                                <mat-radio-button value="1"> </mat-radio-button>
+                            </mat-radio-group>
+
+                        </div>
+                        <div class="col-md-9 pr-0">
+                            <h5 class="m-0 text-custom pt-12 f-14 pb-8">
+                                Here we are asking you to surrender fixed deposits to ensure higher returns on investments.
+                            </h5>
+                        </div>
+                    </div>
+
+                    <div class="row c-p lineGrey">
+                        <div class="col-md-3 text-center p-0 br-grey-1">
+                            <h5 class="m-0 text-custom pt-12 f-14">Scenario 3</h5>
+                            <mat-radio-group aria-label="Select an option">
+                                <mat-radio-button value="1"> </mat-radio-button>
+                            </mat-radio-group>
+
+                        </div>
+                        <div class="col-md-9 pr-0">
+                            <h5 class="m-0 text-custom pt-12 f-14 pb-8">
+                                Here we are asking you to surrender fixed deposits to and taking a home loan.
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-md-12 scenarBox p-0">
+                    <h3 class="f-16 mt-20 roboto mb-12 "> Insurance planning </h3>
+                    <div class="row c-p lineGreen">
+                        <div class="col-md-3 text-center p-0 br-green-2">
+                            <h5 class="m-0 text-custom pt-12 f-14 ">Scenario 1</h5>
+                            <mat-radio-group aria-label="Select an option">
+                                <mat-radio-button value="1"> </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div class="col-md-9 pr-0">
+                            <h5 class="m-0 text-custom pt-12 f-14 pb-8">
+                                Assumed continuation of all insurance policies as discussed.
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12 scenarBox p-0">
+                    <h3 class="f-16 mt-20 roboto mb-12 "> Tax planning </h3>
+                    <div class="row c-p lineGreen">
+                        <div class="col-md-3 text-center p-0 br-green-2">
+                            <h5 class="m-0 text-custom pt-12 f-14 ">Scenario 1</h5>
+                            <mat-radio-group aria-label="Select an option">
+                                <mat-radio-button value="1"> </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div class="col-md-9 pr-0">
+                            <h5 class="m-0 text-custom pt-12 f-14 pb-8">
+                                We have assumed that you will continue doing your PPF investments.
+                            </h5>
+                        </div>
+                    </div>
+
+                    <div class="row c-p lineGrey">
+                        <div class="col-md-3 text-center p-0 br-green-2">
+                            <h5 class="m-0 text-custom pt-12 f-14 ">Scenario 2</h5>
+                            <mat-radio-group aria-label="Select an option">
+                                <mat-radio-button value="1"> </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div class="col-md-9 pr-0">
+                            <h5 class="m-0 text-custom pt-12 f-14 pb-8">
+                                We have assumed that you will do minimum PPF investments and utilise the proceeds towards..
+                            </h5>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -21,7 +121,7 @@
         <div class="col-md-9 border_left">
             <div class="d-flex scenariosHeading justify-content-md-between align-items-center ">
                 <p class="f-20 pt-8 roboto m-0"> Scenario impact</p>
-                <button class="bg-warning text-black b-0" mat-raised-button>2 CONFLICTS</button>
+                <button (click)="open('addScenarios')" class="bg-warning text-black b-0" mat-raised-button>2 CONFLICTS</button>
             </div>
 
             <div class="row">
@@ -51,70 +151,70 @@
             <div class="row">
                 <div class="col-md-6 pl-0">
                     <h3 class="f-16 mt-20 roboto f-normal">Financial goals</h3>
-                    <table mat-table [dataSource]="dataSource" id="table-low" class="financialGoalsTable">
-
-                        <!--- Note that these columns can be defined in any order.
+                    <div class="financialGoalsTable">
+                        <table mat-table [dataSource]="dataSource" id="table-low">
+                            <!--- Note that these columns can be defined in any order.
                                   The actual rendered columns are set as a property on the row definition" -->
 
-                        <!-- Position Column -->
-                        <ng-container matColumnDef="description">
-                            <th mat-header-cell *matHeaderCellDef> Description </th>
-                            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-                        </ng-container>
+                            <!-- Position Column -->
+                            <ng-container matColumnDef="description">
+                                <th class="border-right-1" mat-header-cell *matHeaderCellDef> Description </th>
+                                <td class="border-right-1" mat-cell *matCellDef="let element"> {{element.description}} </td>
+                            </ng-container>
 
-                        <ng-container matColumnDef="year">
-                            <th mat-header-cell *matHeaderCellDef> Year </th>
-                            <td mat-cell *matCellDef="let element"> {{element.year}} </td>
-                        </ng-container>
-                        <!-- Name Column -->
-                        <ng-container matColumnDef="month">
-                            <th class="text-right" mat-header-cell *matHeaderCellDef> Month </th>
-                            <td class="text-right" mat-cell *matCellDef="let element"> {{element.month}} </td>
-                        </ng-container>
+                            <ng-container matColumnDef="year">
+                                <th class="border-right-1" mat-header-cell *matHeaderCellDef> Year </th>
+                                <td class="border-right-1" mat-cell *matCellDef="let element"> {{element.year}} </td>
+                            </ng-container>
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="month">
+                                <th class="text-right border-right-1" mat-header-cell *matHeaderCellDef> Month </th>
+                                <td class="text-right border-right-1" mat-cell *matCellDef="let element"> {{element.month}} </td>
+                            </ng-container>
 
-                        <!-- Weight Column -->
-                        <ng-container matColumnDef="lumpsum">
-                            <th class="text-right" mat-header-cell *matHeaderCellDef> Lumpsum </th>
-                            <td class="text-right" mat-cell *matCellDef="let element"> {{element.lumpsum}} </td>
-                        </ng-container>
+                            <!-- Weight Column -->
+                            <ng-container matColumnDef="lumpsum">
+                                <th class="text-right" mat-header-cell *matHeaderCellDef> Lumpsum </th>
+                                <td class="text-right" mat-cell *matCellDef="let element"> {{element.lumpsum}} </td>
+                            </ng-container>
 
-                        <!-- Symbol Column -->
+                            <!-- Symbol Column -->
 
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <h3 class="f-16 mt-20 roboto f-normal">Taxation</h3>
+                    <div class="financialGoalsTable">
+                        <table mat-table [dataSource]="dataSource2" id="table-low">
 
-                    <table mat-table [dataSource]="dataSource2" id="table-low" class=" financialGoalsTable">
-
-                        <!--- Note that these columns can be defined in any order.
+                            <!--- Note that these columns can be defined in any order.
                                       The actual rendered columns are set as a property on the row definition" -->
 
-                        <!-- Position Column -->
-                        <ng-container matColumnDef="member">
-                            <th mat-header-cell *matHeaderCellDef> Family member </th>
-                            <td mat-cell *matCellDef="let element"> {{element.member}} </td>
-                        </ng-container>
+                            <!-- Position Column -->
+                            <ng-container matColumnDef="member">
+                                <th class="border-right-1" mat-header-cell *matHeaderCellDef> Family member </th>
+                                <td class="border-right-1" mat-cell *matCellDef="let element"> {{element.member}} </td>
+                            </ng-container>
 
-                        <ng-container matColumnDef="year">
-                            <th mat-header-cell *matHeaderCellDef> Assessment year </th>
-                            <td mat-cell *matCellDef="let element"> {{element.year}} </td>
-                        </ng-container>
-                        <!-- Name Column -->
-                        <ng-container matColumnDef="status">
-                            <th class="text-right" mat-header-cell *matHeaderCellDef> Status </th>
-                            <td class="text-right" mat-cell *matCellDef="let element"> {{element.status}} </td>
-                        </ng-container>
+                            <ng-container matColumnDef="year">
+                                <th class="border-right-1" mat-header-cell *matHeaderCellDef> Assessment year </th>
+                                <td class="border-right-1" mat-cell *matCellDef="let element"> {{element.year}} </td>
+                            </ng-container>
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="status">
+                                <th class="text-right" mat-header-cell *matHeaderCellDef> Status </th>
+                                <td class="text-right" mat-cell *matCellDef="let element"> {{element.status}} </td>
+                            </ng-container>
 
+                            <!-- Symbol Column -->
 
-
-                        <!-- Symbol Column -->
-
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-                    </table>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                        </table>
+                    </div>
                 </div>
             </div>
 

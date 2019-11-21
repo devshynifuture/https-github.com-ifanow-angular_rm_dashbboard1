@@ -46,21 +46,21 @@
     <app-nps-summary-portfolio [data]="inputData" *ngIf="subscriptionTab=='addSummaryPort'"></app-nps-summary-portfolio>
     <app-nps-scheme-holding [data]="inputData" *ngIf="subscriptionTab=='addSchemeHoldings'"></app-nps-scheme-holding>
     <app-add-superannuation [data]="inputData" *ngIf="subscriptionTab=='addSuperannuation'"></app-add-superannuation>
-    <app-bank-accounts  [data]="inputData" *ngIf="subscriptionTab=='addBankAccounts'"></app-bank-accounts>
-    <app-cash-in-hand  [data]="inputData"*ngIf="subscriptionTab=='addCashInHand'"></app-cash-in-hand>
+    <app-bank-accounts [data]="inputData" *ngIf="subscriptionTab=='addBankAccounts'"></app-bank-accounts>
+    <app-cash-in-hand [data]="inputData" *ngIf="subscriptionTab=='addCashInHand'"></app-cash-in-hand>
     <app-gold [data]="inputData" *ngIf="subscriptionTab=='addGold'"></app-gold>
     <app-others [data]="inputData" *ngIf="subscriptionTab=='addOthers'"></app-others>
-<app-add-real-estate [inputData]="inputData" *ngIf="subscriptionTab=='realEstate'"></app-add-real-estate>
-    <app-add-ppf [data]="inputData"*ngIf="subscriptionTab=='addPPF'"></app-add-ppf>
+    <app-add-real-estate [inputData]="inputData" *ngIf="subscriptionTab=='realEstate'"></app-add-real-estate>
+    <app-add-ppf [data]="inputData" *ngIf="subscriptionTab=='addPPF'"></app-add-ppf>
     <app-add-nsc [data]="inputData" *ngIf="subscriptionTab=='addNSC'"></app-add-nsc>
     <app-add-ssy [data]="inputData" *ngIf="subscriptionTab=='addSSY'"></app-add-ssy>
-    <app-add-kvp  *ngIf="subscriptionTab=='addKVP'"></app-add-kvp>
+    <app-add-kvp *ngIf="subscriptionTab=='addKVP'"></app-add-kvp>
     <app-add-scss [data]="inputData" *ngIf="subscriptionTab=='addSCSS'"></app-add-scss>
     <app-add-po-saving [data]="inputData" *ngIf="subscriptionTab=='addPOSAVING'"></app-add-po-saving>
     <app-add-po-mis [inputData]="inputData"  *ngIf="subscriptionTab=='addPOMIS'"></app-add-po-mis>
     <app-add-po-rd [data]="inputData" *ngIf="subscriptionTab=='addPORD'"></app-add-po-rd>
     <app-add-po-td [data]="inputData" *ngIf="subscriptionTab=='addPOTD'"></app-add-po-td>
-
+    <app-add-scenarios *ngIf="subscriptionTab=='addScenarios'"></app-add-scenarios>
     <app-add-expenses *ngIf="subscriptionTab=='addExpenses'"></app-add-expenses>
     <!-- <app-add-eps *ngIf="subscriptionTab=='addEPS'"></app-add-eps> -->
     <!-- <app-add-gratuity *ngIf="subscriptionTab=='addGratuity'"></app-add-gratuity> -->

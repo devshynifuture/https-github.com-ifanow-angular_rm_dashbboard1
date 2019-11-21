@@ -17,9 +17,11 @@
 .b-t {
     border-top: 1px solid #dee5e7 !important;
 }
-.ba-trans{
+
+.ba-trans {
     border-top: 1px solid transparent !important;
 }
+
 .br {
     border-right: 1px solid #dee5e7 !important;
 }
@@ -33,7 +35,7 @@
 }
 
 .border-right-1 {
-    border-right: 1px solid #ddd;
+    border-right: 1px solid #ddd !important;
 }
 
 .bb {
@@ -59,15 +61,19 @@
 .ba-blue {
     outline: 3px solid #008FFF !important;
 }
-.bu-primary{
-    outline:1px solid #008FFF !important;
+
+.bu-primary {
+    outline: 1px solid #008FFF !important;
 }
+
 .b-0 {
     border: 0px !important;
 }
-.br-none{
+
+.br-none {
     border-right: 0 !important;
 }
+
 .b-a-custom {
     border: 1px solid #008FFF !important;
 }
@@ -120,18 +126,22 @@
     border-radius: 50%;
 }
 
-.b-primitive{
-    border:1px solid #83959D;
+.b-primitive {
+    border: 1px solid #83959D;
 }
-.bt-primitive{
-    border-top:1px solid #83959D;
+
+.bt-primitive {
+    border-top: 1px solid #83959D;
 }
-.br-primitive{
-    border-right:1px solid #83959D;
+
+.br-primitive {
+    border-right: 1px solid #83959D;
 }
-.bb-primitive{
-    border-bottom:1px solid #83959D;
+
+.bb-primitive {
+    border-bottom: 1px solid #83959D;
 }
-.bl-primitive{
-    border-left:1px solid #83959D;
+
+.bl-primitive {
+    border-left: 1px solid #83959D;
 }
