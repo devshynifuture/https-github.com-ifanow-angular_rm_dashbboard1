@@ -1,138 +1,155 @@
 <div *ngIf="showLoader">
-    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+  <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div>
-<div *ngIf="invoiceSubscription=='false'" class="bg-white pb-36 mt-70" id="ui-invoice"  >
-    <div class="wrapper-20">
-        <div class="row">
-            <div class="col-md-1 p-0">
-                <h4 class="pt-8 mb-0">Invoices</h4>
-            </div>
-            <div class="col-md-5 p-0">
-                          <div class="row">
-                              <div class="col-md-3 p-0">
-                                    <button mat-button [matMenuTriggerFor]="menu" class="b-a pr-0 br-0">Actions <i class="material-icons text-custom">
-                                            arrow_drop_down
-                                            </i></button>
-                                          <mat-menu #menu="matMenu">
-                                              <button mat-menu-item  *ngIf="dataCount == 0">Select invoice to see more actions</button>
-                                              <button mat-menu-item  (click)="deleteModal('INVOICE')"*ngIf="dataCount != 0">Delete Invoices</button>
-                                          </mat-menu>
-                              </div>
-                              <div class="col-md-8 p-0">
-                                    <p class="m-0 text-black text-left pt-12">{{dataCount}} invoices selected</p>
-                              </div>
-                          </div>
+<div *ngIf="invoiceSubscription=='false'" class="bg-white pb-36 mt-70" id="ui-invoice">
+  <div class="wrapper-20">
+    <div class="row">
+      <div class="col-md-1 p-0">
+        <h4 class="pt-8 mb-0">Invoices</h4>
       </div>
-            <div class="col-md-6 right text-right p-0">
-                <i class="material-icons mr-12 icon-light v-sub c-p">
-                search
-            </i>
-                <button mat-stroked-button class="btn-default addon mr-12" (click)="showFilters(showFilter = true)"><i
-                    class="material-icons">filter_list</i>FILTERS</button>
-                <button mat-stroked-button class="btn-primary addon" (click)="addInvoice('EditInInvoice')"><i class="material-icons">add</i>ADD NEW</button>
-            </div>
-        </div>
-        <div class="row pt-12">
-            <div class="col-md-8 p-0 custom-tags">
-              <mat-chip-list>
-                <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let status of filterStatus; let ind = index">
-                  {{status.name}}<i
-                  class="material-icons text-custom ml-12" (click)="remove(ind)">
-                  cancel
-                </i></mat-chip>
-                <mat-chip-list>
-                  <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let dateFilter of filterDate; let i = index">
-                      <p>{{dateFilter.name}}</p>
-                      <input matInput
-                             placeholder="Choose a date"
-                             [satDatepicker]="picker2"
-                             [(ngModel)]="selectedDateRange">
-                      <sat-datepicker #picker2 [rangeMode]="true">
-                      </sat-datepicker>
-                      <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
-                    <i class="material-icons text-custom ml-12" (click)="removeDate(i)">
-                      cancel
-                    </i>
-                  </mat-chip>
-                </mat-chip-list>
-              </mat-chip-list>
-            </div>
-            <div class="col-md-4 right text-right p-0">
-              <div class="row">
-                <div class="col-md-6">
-                  <select class="form-control br-0" id="sel11" [(ngModel)]='selectedStatusFilter'
-                          (change)="addFilters(selectedStatusFilter)">
-                    <option value="" [disabled]="true">FILTERS ONE</option>
-                    <option *ngFor="let chip of chips" [ngValue]="chip">{{chip.name}}</option>
-                  </select>
-                </div>
-                <div class="col-md-6">
-                  <select class="form-control br-0" id="sel12" [(ngModel)]='selectedDateFilter'
-                          (change)="addFiltersDate($event)">
-                    <option value="" [disabled]="true">FILTERS TWO</option>
-                    <option *ngFor="let dateAdd of dateChips" [ngValue]="dateAdd">{{dateAdd.name}}</option>
-                  </select>
-                </div>
-              </div>
-  
-  
-            </div>
+      <div class="col-md-5 p-0">
+        <div class="row">
+          <div class="col-md-3 p-0">
+            <button mat-button [matMenuTriggerFor]="menu" class="b-a pr-0 br-0">Actions <i
+              class="material-icons text-custom">
+              arrow_drop_down
+            </i></button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item *ngIf="dataCount == 0">Select invoice to see more actions</button>
+              <button mat-menu-item (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0">Delete Invoices</button>
+            </mat-menu>
           </div>
-        <table mat-table [dataSource]="dataSource" id="table-low" class="mt-8">
-            <ng-container matColumnDef="checkbox">
-                <th mat-header-cell *matHeaderCellDef class="f-18">
-                    <mat-checkbox (change)="selectAll($event)" name="selectAll" [value]="element"></mat-checkbox>
-                </th>
-                <td mat-cell *matCellDef="let element">
-                    <mat-checkbox name="selectedData"  class="c-p" [(ngModel)]="element.selected" (change)="changeSelect(element)"></mat-checkbox>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="date" >
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Date </th>
-                <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceSubscription','open')"> {{element.invoiceDate  | date:'dd/MM/yyyy'}} </td>
-            </ng-container>
-            <ng-container matColumnDef="invoicenum">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Invoice number </th>
-                <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceSubscription','open')"> {{element.invoiceNumber}} </td>
-            </ng-container>
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Client name </th>
-                <td mat-cell *matCellDef="let element" class="c-p"  (click)="openInvoice(element,'invoiceSubscription','open')"> {{element.clientName}} </td>
-            </ng-container>
-            <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Email </th>
-                <td mat-cell *matCellDef="let element" class="c-p"  (click)="openInvoice(element,'invoiceSubscription','open')"> {{element.email}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Status </th>
-                <td mat-cell *matCellDef="let element" [ngClass]="{'text-danger':element.status=='OVERDUE','text-primary':element.status=='SENT','text-success':element.status=='PAID'}" ngcl class="c-p"  (click)="openInvoice(element,'invoiceSubscription','open')"> {{element.status}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="duedate">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Due date </th>
-                <td mat-cell *matCellDef="let element"  (click)="openInvoice(element,'invoiceSubscription','open')"> {{element.dueDate | date:'dd/MM/yyyy'}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="amt">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Amount(₹) </th>
-                <td mat-cell *matCellDef="let element" class="c-p"  (click)="openInvoice(element,'invoiceSubscription','open')"> {{formatter(element.finalAmount)}} </td>
-            </ng-container>
-            <ng-container matColumnDef="balance">
-                <th mat-header-cell *matHeaderCellDef class="f-18 text-right pr-24"> Balance due(₹) </th>
-                <td mat-cell *matCellDef="let element" class="text-right pr-8 c-p" (click)="openInvoice(element,'invoiceSubscription','open')"> {{formatter(element.balanceDue)}} </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-        <h4  *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4>
+          <div class="col-md-8 p-0">
+            <p class="m-0 text-black text-left pt-12">{{dataCount}} invoices selected</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 right text-right p-0">
+        <i class="material-icons mr-12 icon-light v-sub c-p">
+          search
+        </i>
+        <button mat-stroked-button class="btn-default addon mr-12" (click)="showFilters(showFilter = true)"><i
+          class="material-icons">filter_list</i>FILTERS
+        </button>
+        <button mat-stroked-button class="btn-primary addon" (click)="addInvoice('EditInInvoice')"><i
+          class="material-icons">add</i>ADD NEW
+        </button>
+      </div>
     </div>
+    <div class="row pt-12">
+      <div class="col-md-8 p-0 custom-tags">
+        <mat-chip-list>
+          <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let status of filterStatus; let ind = index">
+            {{status.name}}<i
+            class="material-icons text-custom ml-12" (click)="remove(ind)">
+            cancel
+          </i></mat-chip>
+          <mat-chip-list>
+            <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let dateFilter of filterDate; let i = index">
+              <p>{{dateFilter.name}}</p>
+              <input matInput
+                     placeholder="Choose a date"
+                     [satDatepicker]="picker2"
+                     [(ngModel)]="selectedDateRange">
+              <sat-datepicker #picker2 [rangeMode]="true">
+              </sat-datepicker>
+              <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
+              <i class="material-icons text-custom ml-12" (click)="removeDate(i)">
+                cancel
+              </i>
+            </mat-chip>
+          </mat-chip-list>
+        </mat-chip-list>
+      </div>
+      <div class="col-md-4 right text-right p-0">
+        <div class="row">
+          <div class="col-md-6">
+            <select class="form-control br-0" id="sel11" [(ngModel)]='selectedStatusFilter'
+                    (change)="addFilters(selectedStatusFilter)">
+              <option value="" [disabled]="true">FILTERS ONE</option>
+              <option *ngFor="let chip of chips" [ngValue]="chip">{{chip.name}}</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <select class="form-control br-0" id="sel12" [(ngModel)]='selectedDateFilter'
+                    (change)="addFiltersDate($event)">
+              <option value="" [disabled]="true">FILTERS TWO</option>
+              <option *ngFor="let dateAdd of dateChips" [ngValue]="dateAdd">{{dateAdd.name}}</option>
+            </select>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+    <table mat-table [dataSource]="dataSource" id="table-low" class="mt-8">
+      <ng-container matColumnDef="checkbox">
+        <th mat-header-cell *matHeaderCellDef class="f-18">
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="dataCount > 0 && isAllSelected()"
+                        [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll">
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox name="selectedData" class="c-p" [(ngModel)]="element.selected"
+                        (change)="changeSelect()"></mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef class="f-18"> Date</th>
+        <td mat-cell *matCellDef="let element" class="c-p"
+            (click)="openInvoice(element,'invoiceSubscription','open')"> {{element.invoiceDate  | date:'dd/MM/yyyy'}} </td>
+      </ng-container>
+      <ng-container matColumnDef="invoicenum">
+        <th mat-header-cell *matHeaderCellDef class="f-18"> Invoice number</th>
+        <td mat-cell *matCellDef="let element" class="c-p"
+            (click)="openInvoice(element,'invoiceSubscription','open')"> {{element.invoiceNumber}} </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class="f-18"> Client name</th>
+        <td mat-cell *matCellDef="let element" class="c-p"
+            (click)="openInvoice(element,'invoiceSubscription','open')"> {{element.clientName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef class="f-18"> Email</th>
+        <td mat-cell *matCellDef="let element" class="c-p"
+            (click)="openInvoice(element,'invoiceSubscription','open')"> {{element.email}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef class="f-18"> Status</th>
+        <td mat-cell *matCellDef="let element"
+            [ngClass]="{'text-danger':element.status=='OVERDUE','text-primary':element.status=='SENT','text-success':element.status=='PAID'}"
+            ngcl class="c-p" (click)="openInvoice(element,'invoiceSubscription','open')"> {{element.status}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="duedate">
+        <th mat-header-cell *matHeaderCellDef class="f-18"> Due date</th>
+        <td mat-cell *matCellDef="let element"
+            (click)="openInvoice(element,'invoiceSubscription','open')"> {{element.dueDate | date:'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="amt">
+        <th mat-header-cell *matHeaderCellDef class="f-18"> Amount(₹)</th>
+        <td mat-cell *matCellDef="let element" class="c-p"
+            (click)="openInvoice(element,'invoiceSubscription','open')"> {{formatter(element.finalAmount)}} </td>
+      </ng-container>
+      <ng-container matColumnDef="balance">
+        <th mat-header-cell *matHeaderCellDef class="f-18 text-right pr-24"> Balance due(₹)</th>
+        <td mat-cell *matCellDef="let element" class="text-right pr-8 c-p"
+            (click)="openInvoice(element,'invoiceSubscription','open')"> {{formatter(element.balanceDue)}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <h4 *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4>
+  </div>
 </div>
 <div *ngIf="invoiceSubscription =='true'">
-    <app-invoice [invoiceInSub]='invoiceSub'  [clientData]='invoiceClientData' (valueChange)='display($event)' ></app-invoice>
+  <app-invoice [invoiceInSub]='invoiceSub' [clientData]='invoiceClientData'
+               (valueChange)='display($event)'></app-invoice>
 </div>
 <div class="pt-60" *ngIf="invoiceSubscription=='EditInInvoice'">
-    <app-invoice [invoiceValue]="invoiceSubscription" (valueChange)='display($event)'></app-invoice>
+  <app-invoice [invoiceValue]="invoiceSubscription" (valueChange)='display($event)'></app-invoice>
 </div>
 <!-- <div class="bg-white pb-44 mt-70">
         <div class="row">

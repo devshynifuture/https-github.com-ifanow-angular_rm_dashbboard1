@@ -1,15 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
-import { SubscriptionService } from '../../../subscription.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
+import {SubscriptionService} from '../../../subscription.service';
 import * as _ from 'lodash';
-import { AddDocumentComponent } from '../add-document/add-document.component';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { element } from 'protractor';
-import { UtilService } from 'src/app/services/util.service';
+import {AddDocumentComponent} from '../add-document/add-document.component';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {UtilService} from 'src/app/services/util.service';
 // import {element} from 'protractor';
 // import {timingSafeEqual} from 'crypto';
 
@@ -61,8 +60,8 @@ export class DocumentComponent implements OnInit {
   componentFlag: any;
 
   constructor(public subInjectService: SubscriptionInject,
-    private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
-    public subscription: SubscriptionService) {
+              private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
+              public subscription: SubscriptionService) {
     // this.subInjectService.rightSliderDocument.subscribe(
     //   data => this.getDocumentsDesignData(data)
     // );
@@ -82,20 +81,15 @@ export class DocumentComponent implements OnInit {
     return this._upperData;
   }
 
-  @Input() 
-  set componentFlag1(data)
-  {
-    this.componentFlag=data
+  @Input()
+  set componentFlag1(data) {
+    this.componentFlag = data
     this.advisorId = AuthService.getAdvisorId();
-    if(data==='plansDocuments')
-    {
+    if (data === 'plansDocuments') {
       this.getplanDocumentData();
-    }
-    else if(data==="servicesDocuments")
-    {
+    } else if (data === "servicesDocuments") {
       this.getServiceDocumentData();
-    }
-    else{
+    } else {
       return;
     }
   };
@@ -112,7 +106,7 @@ export class DocumentComponent implements OnInit {
   }
 
   displayedColumns: string[] = ['checkbox', 'document', 'plan', 'service', 'date', 'sdate', 'cdate', 'status', 'icons'];
-  dataSource = ELEMENT_DATA;
+  dataSource = [];
 
   ngOnInit() {
     this.documentDesign = 'true';
@@ -180,7 +174,7 @@ export class DocumentComponent implements OnInit {
   }
 
   dialogClose() {
-    this.eventService.changeUpperSliderState({ state: 'close' });
+    this.eventService.changeUpperSliderState({state: 'close'});
 
     // this.dialogRef.close();
   }
@@ -566,7 +560,7 @@ export class DocumentComponent implements OnInit {
   }
 
   saveMappingDocumentToPlansResponse(data) {
-    this.eventService.changeUpperSliderState({ state: 'close' });
+    this.eventService.changeUpperSliderState({state: 'close'});
     this.eventService.openSnackBar('Document is mapped', 'OK');
   }
 
@@ -618,39 +612,16 @@ export class DocumentComponent implements OnInit {
   }
 
   selectAll(event) {
-    // const checked = event.target.checked;
-    // this.dataSource.forEach(item => item.selected = 'checked');
-
     this.dataCount = 0;
     this.dataSource.forEach(item => {
-      //   if(item.selected==false)
-      //   {
-      //     item.selected = true;
-      //     this.dataCount++;
-      //   }else{
-      //     item.selected = false;
-      //     this.dataCount--;
-      //   }
-      // });
       item.selected = event.checked;
       if (item.selected) {
         this.dataCount++;
       }
-      // if(item.dataCountd>=1){
-      //   this.dataCount=1
-      // }else{
-      //   this.dataCount++
-      // }
     });
-    // if(item.selected=="true"){
-    //   this.dataCount++;
-    // }else{
-    //   this.dataCount--;
-    // }
-
   }
 
-  changeSelect(ele) {
+  changeSelect(element) {
     this.dataCount = 0;
     this.dataSource.forEach(item => {
       console.log('item item ', item);
@@ -668,5 +639,16 @@ export class DocumentComponent implements OnInit {
     //   this.dataCount--;
     //   data.dataCountd =this.dataCount;
     // }
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    return this.dataCount === this.dataSource.length;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selectAll({checked: false}) : this.selectAll({checked: true});
   }
 }
