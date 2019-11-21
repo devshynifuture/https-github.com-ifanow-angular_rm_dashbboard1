@@ -158,7 +158,7 @@ import { NomineeComponent } from './owner-component/owner-column/nominee/nominee
     BankAccountsComponent,
     CashInHandComponent,
     OwnerColumnComponent,
-    AddTransactionComponent
+    AddTransactionComponent,
     NomineeComponent,
     
 
