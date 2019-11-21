@@ -28,6 +28,7 @@ export class LiabilitiesComponent implements OnInit {
   mortgage=[];
   dataToShow: any;
   OtherData: any;
+  OtherPayableData: any;
   clientId: any;
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,public custmService:CustomerService,public util:UtilService) {
   }
@@ -55,6 +56,7 @@ export class LiabilitiesComponent implements OnInit {
   }
   getOtherPayablesRes(data){
     console.log(data);
+    this.OtherPayableData=data;
     this.OtherData=data.length;
   }
   sortTable(data){
@@ -184,6 +186,9 @@ export class LiabilitiesComponent implements OnInit {
     console.log('something was clicked');
     // this.openFragment('', 'plan');
     this.open('openHelp', 'liabilityright');
+  }
+  display(data){
+    this.getPayables();
   }
 
 }

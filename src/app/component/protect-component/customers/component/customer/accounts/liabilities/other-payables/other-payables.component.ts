@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { CustomerService } from '../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
@@ -14,11 +14,13 @@ export class OtherPayablesComponent implements OnInit {
   // dataSource = ELEMENT_DATA;
   advisorId: any;
   dataSource: any;
+  @Input() payableData;
+  @Output() OtherDataChange = new EventEmitter();
   constructor(public custmService:CustomerService,public util:UtilService,public subInjectService:SubscriptionInject) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.getPayables();
+    this.dataSource=this.payableData;
   }
   getPayables(){
     let obj={
@@ -32,6 +34,8 @@ export class OtherPayablesComponent implements OnInit {
   getOtherPayablesRes(data){
     console.log(data);
     this.dataSource=data;
+    this.OtherDataChange.emit(this.dataSource);
+
   }
   open(flagValue, data) {
     const fragmentData = {
@@ -43,8 +47,8 @@ export class OtherPayablesComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
+        this.getPayables();
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getPayables();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 

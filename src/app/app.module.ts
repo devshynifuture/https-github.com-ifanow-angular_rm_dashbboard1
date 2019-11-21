@@ -40,6 +40,7 @@ import {BaseComponent} from './component/protect-component/AdviserComponent/Subs
 import {MomentDateModule} from '@angular/material-moment-adapter';
 import {CustomCommonModule} from './common/custom.common.module';
 import {SubscriptionModule} from './component/protect-component/AdviserComponent/Subscriptions/subscription.module';
+import {DatePipe} from "@angular/common";
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -97,7 +98,7 @@ import {SubscriptionModule} from './component/protect-component/AdviserComponent
 
     MDBBootstrapModule.forRoot(), DragDropModule
   ],
-  providers: [AuthService, HttpService],
+  providers: [AuthService, HttpService,DatePipe],
   bootstrap: [AppComponent],
   entryComponents: []
 })
