@@ -32,14 +32,14 @@ export class CommonFroalaComponent implements OnInit {
   }
 }
 */
-import {Component, Input, Output, forwardRef, OnInit} from '@angular/core';
+import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SubscriptionInject} from '../../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { SubscriptionService } from '../../../subscription.service';
-import { UtilService } from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {SubscriptionService} from '../../../subscription.service';
+import {UtilService} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-common-froala',
@@ -59,7 +59,8 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
   inputData: any;
   templateType: number;
 
-  constructor(public subscription:SubscriptionService,public subInjectService: SubscriptionInject , public eventService:EventService ,public dialog:MatDialog) {
+  constructor(public subscription: SubscriptionService, public subInjectService: SubscriptionInject,
+              public eventService: EventService, public dialog: MatDialog) {
     // this.dataSub = this.subInjectService.singleProfileData.subscribe(
     //   data=>this.getcommanFroalaData(data)
     // );
@@ -68,6 +69,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
   @Input() screenType;
   @Input() changeFooter;
   @Input() changeEmailOnly;
+
   @Input()
   set data(data) {
     this.inputData = data;
@@ -77,33 +79,35 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
   get data() {
     return this.inputData;
   }
+
   showActivityLog: boolean;
 
   // End ControlValueAccesor methods.
 
   model: any;
 
-  config: Object = {
+  config = {
     charCounterCount: false
   };
 
   ngOnInit() {
     this.showActivityLog = false;
     console.log('CommonFroalaComponent ngOnInit screenType: ', this.screenType);
-    console.log(this.changeFooter)
+    console.log(this.changeFooter);
   }
-  getcommanFroalaData(data)
-  {
-    this.storeData=data;
+
+  getcommanFroalaData(data) {
+    this.storeData = data;
   }
+
   Close(data) {
     // if (this.showActivityLog == true) {
     //   this.showActivityLog = false;
     // } else {
     //   this.subInjectService.rightSideData(value);
     // }
-    this.subInjectService.changeNewRightSliderState({state:'close',data})
-    this.subInjectService.changeUpperRightSliderState({state:'close',data})
+    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeUpperRightSliderState({state: 'close', data});
 
     // this.subInjectService.changeUpperRightSliderState({value:'close'})
     // this.subInjectService.changeUpperRightSliderState({value:'close'})
@@ -135,39 +139,43 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
-  Open(value,state,data)
-  {
-    this.eventService.sidebarData(value)
-    this.subInjectService.rightSideData(state);    
+
+  Open(value, state, data) {
+    this.eventService.sidebarData(value);
+    this.subInjectService.rightSideData(state);
     this.subInjectService.addSingleProfile(data);
   }
-  saveData(data)
-  {
+
+  saveData(data) {
     console.log(data);
-    this.storeData.documentText=data;
+    this.storeData.documentText = data;
   }
-  save(){
-    console.log("here is saved data",this.storeData);
-    if(this.changeFooter=='emailQuotation'){
+
+  save() {
+    console.log('here is saved data', this.storeData);
+    if (this.changeFooter == 'emailQuotation') {
       this.updateDataQuot(this.storeData);
-    }else{
+    } else {
       this.updateData(this.storeData);
-    }    this.Close('close');
+    }
+    this.Close('close');
   }
+
   updateDataQuot(data) {
     const obj = {
       id: data.id, // pass here advisor id for Invoice advisor
       docText: data.documentText,
-      quotation:true
+      quotation: true
     };
     // this.subscription.updateQuotationData(obj).subscribe(
     //   data => this.getResponseData(data)
     // );
 
     this.subscription.updateDocumentData(obj).subscribe(
-      data => this.getResponseData(data)
+      responseData => this.getResponseData(responseData)
     );
   }
+
   updateData(data) {
     const obj = {
       id: data.id, // pass here advisor id for Invoice advisor
@@ -178,45 +186,47 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
     // );
 
     this.subscription.updateDocumentData(obj).subscribe(
-      data => this.getResponseData(data)
+      responseData => this.getResponseData(responseData)
     );
   }
-  getResponseData(data){
+
+  getResponseData(data) {
     console.log(data);
   }
-  deleteModal(value)
-  {
-    let dialogData = {
-      data:value,
+
+  deleteModal(value) {
+    const dialogData = {
+      data: value,
       header: 'DELETE',
-      body:'Are you sure you want to delete the document?',
-      body2:'This cannot be undone',
-      btnYes:'CANCEL',
-      btnNo:'DELETE'
-    }
+      body: 'Are you sure you want to delete the document?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE'
+    };
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-       width: '400px',
-       data: dialogData,
-       autoFocus:false,
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
 
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
-  
+
     });
-  
+
   }
+
   openSendEmail() {
-    if(this.storeData.quotation==false){
-      this.templateType=4;
-    }else{
-      this.templateType=2;
+    if (this.storeData.quotation) {
+      this.templateType = 2;
+    } else {
+      this.templateType = 4;
     }
     const data = {
       advisorId: 2828,
       clientData: this.storeData,
-      templateType: this.templateType, //2 is for quotation
+      templateType: this.templateType, // 2 is for quotation
       documentList: [this.storeData]
     };
     // this.dataSource.forEach(singleElement => {
@@ -224,24 +234,22 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
     //     data.documentList.push(singleElement);
     //   }
     // });
-    this.OpenEmail(data,'emailQuotationFroala');
+    this.OpenEmail(data, 'emailQuotationFroala');
   }
-  OpenEmail(data,value) {
+
+  OpenEmail(data, value) {
     const fragmentData = {
       Flag: value,
-      data:data,
+      data,
       id: 1,
       state: 'open'
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', );
           rightSideDataSub.unsubscribe();
         }
       }
-      
     );
   }
 }
