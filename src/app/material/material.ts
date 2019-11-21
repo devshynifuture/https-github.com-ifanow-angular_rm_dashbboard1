@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 
 import {
   MatAutocompleteModule,
@@ -35,7 +35,7 @@ import {
   MatTooltipModule,
   MatBottomSheetModule,
   MatTreeModule
-} from'@angular/material';
+} from '@angular/material';
 // import { DialogModule } from '@angular/cdk-experimental/dialog';
 // import {MatDialogModule} from '../component/overridden/dialog';
 
@@ -115,4 +115,5 @@ import {
     MatTreeModule
   ]
 })
-export class MaterialModule {}
+export class MaterialModule {
+}
