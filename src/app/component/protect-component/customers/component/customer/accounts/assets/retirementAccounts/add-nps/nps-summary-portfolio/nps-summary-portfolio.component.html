@@ -159,18 +159,17 @@
                 <div class="form-group mb-0">
                     <div class="row">
                         <div class="col-md-4 p-0">
-                            <mat-form-field >
-                                <mat-select formControlName="nomineeName" class="form-control br-0" >
-                                     <mat-option value = '1'>one
+                            <mat-form-field>
+                                <mat-select formControlName="nomineeName" class="form-control br-0">
+                                    <mat-option value='1'>one
                                     </mat-option>
-                                    <mat-option value = '2'>two</mat-option>
+                                    <mat-option value='2'>two</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
                         <div class="col-md-3">
                             <mat-form-field>
-                                <input matInput #nomineePercentageShare type="number" (utils.keypress)="utils.keyPress($event)"
-                                class="form-control br-0 percentage" formControlName="nomineePercentageShare">
+                                <input matInput #nomineePercentageShare type="number" (utils.keypress)="utils.keyPress($event)" class="form-control br-0 percentage" formControlName="nomineePercentageShare">
                             </mat-form-field>
                         </div>
                         <div class="col-md-5" *ngIf="i==0">
@@ -189,9 +188,14 @@
             </div>
 
         </div>
-        <mat-hint class="f-12 pt-4 text-danger" align="end"  *ngIf="showError== true">
-                Percent cannot be more than 100%
-        </mat-hint>
+        <div class="row">
+            <div class="col-md-7 text-right">
+                <mat-hint class="f-12 pt-4 text-danger" align="end" *ngIf="showError== true">
+                    Percent cannot be more than 100%
+                </mat-hint>
+            </div>
+        </div>
+
     </div>
     <div class="row pt-16">
         <div class="col-md-5 pr-0 text-right">
