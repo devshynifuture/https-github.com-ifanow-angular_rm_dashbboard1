@@ -36,8 +36,8 @@ export class KvpSchemeComponent implements OnInit {
   getKvpSchemedataResponse(data)
   {
     console.log(data)
-    if(data.kvpList.length!=0){
-      this.datasource=data.kvpList
+    if(data.KVPList.length!=0){
+      this.datasource=data.KVPList
     }else{
       this.noData="No Scheme Found";
     }

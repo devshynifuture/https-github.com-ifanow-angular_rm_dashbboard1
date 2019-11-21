@@ -35,8 +35,8 @@ export class NscSchemeComponent implements OnInit {
   getNscSchemedataResponse(data)
   {
    console.log(data,"NSC")
-   if(data.nationalSavingCertificate.length!=0){
-    this.datasource=data.nationalSavingCertificate;
+   if(data.NationalSavingCertificate.length!=0){
+    this.datasource=data.NationalSavingCertificate;
   }else{
     this.noData="No Scheme there"
   }

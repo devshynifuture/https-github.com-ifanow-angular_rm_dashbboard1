@@ -64,18 +64,17 @@ export class AddPpfComponent implements OnInit {
     }
     this.ppfSchemeForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
-      accountBalance: [, [Validators.required]],
-      balanceAsOn: [, [Validators.required]],
-      commencementDate: [, [Validators.required]],
-      futureContribution: [, [Validators.required]],
-      frquency: [, [Validators.required]],
+      accountBalance: [data.accountBalance, [Validators.required]],
+      balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
+      commencementDate: [new Date(data.commencementDate), [Validators.required]],
+      futureContribution: [data.futureApproxcontribution, [Validators.required]],
+      frquency: [data.frequency, [Validators.required]],
     })
     this.optionalppfSchemeForm = this.fb.group({
-      description: [, [Validators.required]],
-      bankName: [, [Validators.required]],
-      linkedBankAccount: [, [Validators.required]],
-      nominee: [, [Validators.required]]
-
+      description: [data.description, [Validators.required]],
+      bankName: [data.bankName, [Validators.required]],
+      linkedBankAccount: [data.linkedBankAccount, [Validators.required]],
+      nominee: [data.nomineeName, [Validators.required]]
     })
     this.ownerData = this.ppfSchemeForm.controls;
   }
@@ -143,6 +142,7 @@ export class AddPpfComponent implements OnInit {
     }
   }
   addPPFResponse(data) {
+    (this.editApi)?this.eventService.openSnackBar("PPF is edited","dismiss"):this.eventService.openSnackBar("PPF is added","dismiss")
     console.log(data)
     this.close();
   }

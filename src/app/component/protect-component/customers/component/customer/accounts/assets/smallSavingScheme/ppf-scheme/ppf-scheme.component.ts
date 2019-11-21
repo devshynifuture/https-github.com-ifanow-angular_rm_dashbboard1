@@ -36,15 +36,16 @@ export class PPFSchemeComponent implements OnInit {
   }
   getPpfSchemeDataResponse(data) {
     console.log(data)
-    if(data!=undefined){
-      this.datasource=data
+    if(data.PPFList.length!=0){
+      this.datasource=data.PPFList
     }else{
       this.noData="No Scheme Found";
     }
   }
-  opnAddPPF(value) {
+  opnAddPPF(value,data) {
     const fragmentData = {
       Flag:value,
+      data,
       id: 1,
       state: 'open'
     };

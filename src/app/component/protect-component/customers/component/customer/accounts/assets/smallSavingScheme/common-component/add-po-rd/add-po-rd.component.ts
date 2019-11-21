@@ -59,7 +59,7 @@ export class AddPoRdComponent implements OnInit {
     this.PORDForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       monthlyContribution: [data.monthlyContribution, [Validators.required]],
-      commDate: [data.commencementDate, [Validators.required]],
+      commDate: [new Date(data.commencementDate), [Validators.required]],
       ownership: [String(data.ownerTypeId), [Validators.required]]
     })
     this.PORDFormoptionalForm = this.fb.group({
@@ -127,6 +127,7 @@ export class AddPoRdComponent implements OnInit {
     }
   }
   addPORDResponse(data) {
+    (this.editApi) ? this.eventService.openSnackBar("PO_RD is edited", "dismiss") : this.eventService.openSnackBar("PO_RD is edited", "added")
     console.log(data)
     this.close();
   }

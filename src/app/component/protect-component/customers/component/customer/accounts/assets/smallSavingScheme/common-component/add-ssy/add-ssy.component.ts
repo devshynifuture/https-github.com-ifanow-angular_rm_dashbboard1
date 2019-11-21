@@ -70,7 +70,7 @@ export class AddSsyComponent implements OnInit {
 
   }
   ngOnInit() {
-    this.clientId=AuthService.getClientId();
+    this.clientId = AuthService.getClientId();
     this.isOptionalField = true
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -162,6 +162,7 @@ export class AddSsyComponent implements OnInit {
     }
   }
   addSSYSchemeResponse(data) {
+    (this.editApi) ? this.eventService.openSnackBar("SSY is edited", "dismiss") : this.eventService.openSnackBar("SSY is edited", "added")
     console.log(data)
     this.close()
   }

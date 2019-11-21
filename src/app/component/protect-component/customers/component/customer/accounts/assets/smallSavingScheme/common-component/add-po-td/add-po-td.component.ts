@@ -53,9 +53,9 @@ export class AddPoTdComponent implements OnInit {
     this.POTDForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       amtInvested: [data.amountInvested, [Validators.required]],
-      commDate: [, [Validators.required]],
+      commDate: [new Date(data.commencementDate), [Validators.required]],
       tenure: [data.tenure, [Validators.required]],
-      ownershipType: [data.ownerTypeId, [Validators.required]]
+      ownershipType: [String(data.ownerTypeId), [Validators.required]]
     })
     this.POTDOptionalForm = this.fb.group({
       poBranch: [],
@@ -72,7 +72,7 @@ export class AddPoTdComponent implements OnInit {
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId=AuthService.getClientId();
+    this.clientId = AuthService.getClientId();
     this.isOptionalField = true
   }
   getFormData(data) {
@@ -81,14 +81,17 @@ export class AddPoTdComponent implements OnInit {
   }
   addPOTD() {
     let finalTransctList = []
-    this.transactionData.forEach(element => {
-      let obj = {
-        "date": element.controls.date.value._d,
-        "amount": element.controls.amount.value,
-        "paymentType": element.controls.transactionType.value
-      }
-      finalTransctList.push(obj)
-    });
+    if (this.transactionData) {
+
+      this.transactionData.forEach(element => {
+        let obj = {
+          "date": element.controls.date.value._d,
+          "amount": element.controls.amount.value,
+          "paymentType": element.controls.transactionType.value
+        }
+        finalTransctList.push(obj)
+      });
+    }
     if (this.ownerName == undefined) {
       return
     }
@@ -111,29 +114,29 @@ export class AddPoTdComponent implements OnInit {
       else {
         let obj = {
           "clientId": this.clientId,
-          "advisorId":this.advisorId,
-          "familyMemberId":this.familyMemberId,
-          "ownerName":this.ownerName,
+          "advisorId": this.advisorId,
+          "familyMemberId": this.familyMemberId,
+          "ownerName": this.ownerName,
           "amountInvested": this.POTDForm.get('amtInvested').value,
-          "commencementDate":this.POTDForm.get('commDate').value,
+          "commencementDate": this.POTDForm.get('commDate').value,
           "tenure": this.POTDForm.get('tenure').value,
-          "postOfficeBranch":this.POTDOptionalForm.get('poBranch').value,
+          "postOfficeBranch": this.POTDOptionalForm.get('poBranch').value,
           "ownerTypeId": this.POTDForm.get('ownershipType').value,
           "nomineeName": this.POTDOptionalForm.get('nominee').value,
           "tdNumber": this.POTDOptionalForm.get('tdNum').value,
           "bankAccountNumber": this.POTDOptionalForm.get('bankAccNum').value,
-          "description":this.POTDOptionalForm.get('description').value,
-          "postOfficeTdTransactionList":finalTransctList
+          "description": this.POTDOptionalForm.get('description').value,
+          "postOfficeTdTransactionList": finalTransctList
         }
-        this.cusService.editPOTD(obj).subscribe(
-          data=>this.addPOTDResponse(data),
-          err=>this.eventService.openSnackBar(err)
+        this.cusService.addPOTD(obj).subscribe(
+          data => this.addPOTDResponse(data),
+          err => this.eventService.openSnackBar(err)
         )
       }
     }
   }
-  addPOTDResponse(data)
-  {
+  addPOTDResponse(data) {
+    (this.editApi) ? this.eventService.openSnackBar("PO_TD is edited", "dismiss") : this.eventService.openSnackBar("PO_TD is edited", "added")
     console.log(data)
     this.close();
   }
