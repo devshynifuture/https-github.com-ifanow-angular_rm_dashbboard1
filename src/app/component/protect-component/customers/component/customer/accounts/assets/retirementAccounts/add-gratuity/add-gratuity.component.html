@@ -12,8 +12,8 @@
 </div>
 <div [formGroup]="gratuity" class="pb-44 mb-48 pt-100">
     <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
-    <div class="row pt-24">
-        <div class="col-md-5 text-right">
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0  text-right">
             <h5 class="m-0 pt-8">Number of completed years</h5>
         </div>
         <div class="col-md-3">
@@ -21,14 +21,14 @@
                 <mat-form-field>
                     <input matInput #noOfcompleteYrs type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0" formControlName="noOfcompleteYrs">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isNoOfcompleteYrs && getFormControl().noOfcompleteYrs.invalid || getFormControl().noOfcompleteYrs.touched && getFormControl().noOfcompleteYrs.invalid)}">
-                        Number of completed years is required
+                        This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
         </div>
     </div>
-    <div class="row pt-24">
-        <div class="col-md-5 text-right">
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0  text-right">
             <h5 class="m-0 pt-8">Amount recieved</h5>
         </div>
         <div class="col-md-3">
@@ -36,7 +36,7 @@
                 <mat-form-field>
                     <input matInput #amountRecived type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="amountRecived">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isAmountRecived && getFormControl().amountRecived.invalid || getFormControl().amountRecived.touched && getFormControl().amountRecived.invalid)}">
-                        Amount recieved is required
+                        This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -55,6 +55,7 @@
 
         </div>
     </div>
+
     <div *ngIf="showHide == true">
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
@@ -69,11 +70,26 @@
                 </div>
             </div>
         </div>
+
+        <div class="row pt-40">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Year of receipt</h5>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput maxlength="30" class="form-control br-0">
+                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Reason of receipt</h5>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input matInput #resonOfRecipt maxlength="30" class="form-control br-0" formControlName="resonOfRecipt">
