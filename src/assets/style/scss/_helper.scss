@@ -775,7 +775,7 @@ $lineheight:20px;
 }
 
 .mt-150 {
-    margin-top: 150px;
+    margin-top: 150px !important;
 }
 
 .mt-46 {
@@ -974,7 +974,7 @@ $lineheight:20px;
     display: $iblock !important;
 }
 
-.g-grid {
+.d-grid {
     display: $grid !important;
 }
 

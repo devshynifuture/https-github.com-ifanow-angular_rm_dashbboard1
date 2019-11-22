@@ -12,5 +12,5 @@ export class ProfilePlanComponent implements OnInit {
   ngOnInit() {
     this.viewMode="tab1"
   }
-
+  panelOpenState = false;
 }

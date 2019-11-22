@@ -107,3 +107,9 @@ input.mat-input-element:focus {
     float: right;
     right: 2%;
 }
+.mat-progress-bar-fill::after{
+    background-color:#008FFF !important;
+}
+.mat-progress-bar-buffer{
+    background-color: #F5F7F7 !important;
+}
