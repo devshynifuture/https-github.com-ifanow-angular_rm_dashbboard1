@@ -23,7 +23,18 @@ export class RetirementAccountComponent implements OnInit {
   EPSList: any;
   dataNPSList: any;
   clientId: any;
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService) { }
+  sumOfcurrentEpfBalance: any;
+  sumOfcurrentValue: any;
+  sumOfemployeesMonthlyContribution: any;
+  sumOfemployersMonthlyContribution: any;
+  sumOfAmountReceived: any;
+  sumOfAnnualEmployeeContribution: any;
+  sumOfAnnualEmployerContribution: any;
+  totalNotionalValue: any;
+  totalPensionAmount: any;
+  totalContribution: any;
+  totalCurrentValue: any;
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService) { }
   displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'empc', 'rate', 'bal', 'bacla', 'year', 'desc', 'status', 'icons'];
   datasource11;
 
@@ -95,6 +106,10 @@ export class RetirementAccountComponent implements OnInit {
   getEPFRes(data) {
     console.log('getEPFRes =', data)
     this.dataEPSList = data.listOfEpf
+    this.sumOfcurrentEpfBalance = data.sumOfcurrentEpfBalance
+    this.sumOfcurrentValue = data.sumOfcurrentValue;
+    this.sumOfemployeesMonthlyContribution = data.sumOfemployeesMonthlyContribution;
+    this.sumOfemployersMonthlyContribution = data.sumOfemployersMonthlyContribution
   }
   getListGratuity() {
     let obj = this.getObject
@@ -105,6 +120,7 @@ export class RetirementAccountComponent implements OnInit {
   getGrauityRes(data) {
     console.log('getGrauityRes =', data)
     this.dataGratuityList = data.gratuityList
+    this.sumOfAmountReceived = data.sumOfAmountReceived
   }
   getListNPS() {
     let obj = this.getObject
@@ -114,7 +130,9 @@ export class RetirementAccountComponent implements OnInit {
   }
   getNPSRes(data) {
     console.log('getNPSRes =', data)
-    this.dataNPSList = data
+    this.dataNPSList = data.npsList
+    this.totalContribution = data.totalContribution
+    this.totalCurrentValue = data.totalCurrentValue
   }
   getListSuperannuation() {
     let obj = this.getObject
@@ -125,6 +143,8 @@ export class RetirementAccountComponent implements OnInit {
   getSuperannuationRes(data) {
     console.log('getSuperannuationRes =', data)
     this.dataSuperannuationList = data.superannuationList
+    this.sumOfAnnualEmployeeContribution = data.sumOfAnnualEmployeeContribution
+    this.sumOfAnnualEmployerContribution = data.sumOfAnnualEmployerContribution
   }
   getListEPS() {
     let obj = this.getObject
@@ -134,7 +154,9 @@ export class RetirementAccountComponent implements OnInit {
   }
   getEPSRes(data) {
     console.log('getEPSRes =', data)
-    this.EPSList = data
+    this.EPSList = data.epsList
+    this.totalNotionalValue = data.totalNotionalValue
+    this.totalPensionAmount = data.totalPensionAmount 
   }
 }
 export interface PeriodicElement11 {

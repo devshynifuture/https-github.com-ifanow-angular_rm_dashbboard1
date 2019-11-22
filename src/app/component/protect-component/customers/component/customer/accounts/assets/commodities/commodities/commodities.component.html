@@ -71,14 +71,14 @@
                 </ng-container>
                 <ng-container matColumnDef="mvalue">
                     <th mat-header-cell *matHeaderCellDef class="br text-right"> Market value </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right "> {{element.marketValue}} </td>
-                     <td mat-footer-cell *matFooterCellDef> </td>
+                    <td mat-cell *matCellDef="let element" class="br text-right "> {{utils.formatter(element.marketValue)}} </td>
+                     <td mat-footer-cell *matFooterCellDef>{{utils.formatter(sumOfMarketValue) || '-'}} </td>
                 </ng-container>
                 <ng-container matColumnDef="pvalue">
                     <th mat-header-cell *matHeaderCellDef class="br text-right"> Purchase value </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right"> {{element.approximatePurchaseValue}}
+                    <td mat-cell *matCellDef="let element" class="br text-right"> {{utils.formatter(element.approximatePurchaseValue)}}
                     </td>
-                     <td mat-footer-cell *matFooterCellDef> </td>
+                     <td mat-footer-cell *matFooterCellDef>{{utils.formatter(sumOfPurchaseValue) || '-'}} </td>
                 </ng-container>
                 <ng-container matColumnDef="desc">
                     <th mat-header-cell *matHeaderCellDef class="br"> Description </th>
@@ -148,13 +148,13 @@
 
                 <ng-container matColumnDef="mvalue">
                     <th mat-header-cell *matHeaderCellDef class="br text-right"> Market value </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right "> {{element.marketValue}} </td>
-                     <td mat-footer-cell *matFooterCellDef> </td>
+                    <td mat-cell *matCellDef="let element" class="br text-right "> {{utils.formatter(element.marketValue)}} </td>
+                     <td mat-footer-cell *matFooterCellDef>{{utils.formatter(sumOfMarketValueOther) || '-'}} </td>
                 </ng-container>
                 <ng-container matColumnDef="pvalue">
                     <th mat-header-cell *matHeaderCellDef class="br text-right"> Purchase value </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right"> {{element.purchaseValue}} </td>
-                     <td mat-footer-cell *matFooterCellDef> </td>
+                    <td mat-cell *matCellDef="let element" class="br text-right"> {{utils.formatter(element.purchaseValue)}} </td>
+                     <td mat-footer-cell *matFooterCellDef> {{utils.formatter(sumOfPurchaseValueOther) || '-'}}</td>
                 </ng-container>
                 <ng-container matColumnDef="pur">
                     <th mat-header-cell *matHeaderCellDef class="br text-left t-8"> Date of purchase </th>
