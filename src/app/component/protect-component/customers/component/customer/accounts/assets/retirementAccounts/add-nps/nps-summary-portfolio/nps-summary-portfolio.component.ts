@@ -138,7 +138,8 @@ export class NpsSummaryPortfolioComponent implements OnInit {
         this.summaryNPS.controls.futureContributionList.push(this.fb.group({
           frequencyId: [(element.frequencyId) + "", [Validators.required]],
           accountPreferenceId: [(element.accountPreferenceId + ""), Validators.required],
-          approxContribution: [(element.approxContribution), Validators.required]
+          approxContribution: [(element.approxContribution), Validators.required],
+          id:[element.id,[Validators.required]]
         }))
       })
       data.npsNomineesList.forEach(element => {
@@ -146,6 +147,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
           nomineeName: [(element.nomineeName), [Validators.required]],
 
           nomineePercentageShare: [element.nomineePercentageShare, Validators.required],
+          id:[element.id,[Validators.required]]
         }))
       })
       this.nominee.removeAt(0);
