@@ -18,39 +18,48 @@
         <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef class="br"> No </th>
             <td mat-cell *matCellDef="let element;let i=index" class="br">{{i+1}}</td>
+             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="owner">
             <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
-            <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
+            <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td> 
+            <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
             <th mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Current value </th>
-            <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{element.currentValue}} </td>
+            <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{element.currentValue}} </td> 
+            <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="rate">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Rate </th>
-            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.rate}} </td>
+            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.rate}} </td> 
+            <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
             <th mat-header-cell *matHeaderCellDef class="br text-right">Maturity value </th>
-            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.maturityValue}} </td>
+            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.maturityValue}} </td> 
+            <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="mdate">
             <th mat-header-cell *matHeaderCellDef class="br text-left t-7"> Maturity date </th>
-            <td mat-cell *matCellDef="let element" class="br text-left t-7"> {{element.maturityDate | date:'dd/MM/yyyy'}} </td>
+            <td mat-cell *matCellDef="let element" class="br text-left t-7"> {{element.maturityDate | date:'dd/MM/yyyy'}} </td> 
+            <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="number">
             <th mat-header-cell *matHeaderCellDef class="br t-12 text-left"> Certificate number </th>
             <td mat-cell *matCellDef="let element" class="br t-12 text-left"> {{element.certificateNumber}} </td>
+             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
 
         <ng-container matColumnDef="desc">
             <th mat-header-cell *matHeaderCellDef class="br t-10"> Description </th>
-            <td mat-cell *matCellDef="let element" class="br t-10"> {{element.description}} </td>
+            <td mat-cell *matCellDef="let element" class="br t-10"> {{element.description}} </td> 
+            <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
-            <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.status}} </td>
+            <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.status}} </td> 
+            <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
@@ -64,10 +73,11 @@
                     <button mat-menu-item>Activity</button>
                     <button mat-menu-item (click)="deleteModal('SUBSCRIPTION',element)">Delete</button>
                 </mat-menu>
-            </td>
+            </td> <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns17; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns17;"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns17;sticky: true"></tr>
     </table>
     <div *ngIf="datasource==undefined">
         <h4  class="text-center pt-72">{{noData}}</h4>
