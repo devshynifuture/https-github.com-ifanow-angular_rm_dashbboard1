@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-gratuity',
@@ -26,8 +27,9 @@ export class AddGratuityComponent implements OnInit {
   inputData: any;
   advisorId: any;
   ownerName: any;
+  clientId: any;
 
-  constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
+  constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe,public utils: UtilService) { }
 
   @Input()
   set data(data) {
@@ -40,6 +42,7 @@ export class AddGratuityComponent implements OnInit {
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
   }
   display(value) {
     console.log('value selected', value)
@@ -96,7 +99,7 @@ export class AddGratuityComponent implements OnInit {
   
       let obj = {
         advisorId: this.advisorId,
-        clientId: 2978,
+        clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined)?this.gratuity.controls.ownerName.value:this.ownerName,
         yearsCompleted: this.gratuity.controls.noOfcompleteYrs.value,

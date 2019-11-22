@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-eps',
@@ -26,10 +27,11 @@ export class AddEPSComponent implements OnInit {
   eps: any;
   ownerData: any;
   isPensionAmount = false
-  isCommencementdate = false;
+  isDate = false;
   isPensionPayFreq = false;
+  clientId: any;
 
-  constructor(private event: EventService,private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe) { }
+  constructor(private event: EventService,private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe,public utils: UtilService) { }
 
   @Input()
   set data(data) {
@@ -42,6 +44,7 @@ export class AddEPSComponent implements OnInit {
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
   }
   display(value) {
     console.log('value selected', value)
@@ -89,7 +92,7 @@ export class AddEPSComponent implements OnInit {
   
   saveEPF() {
     if (this.eps.controls.commencementDate.invalid) {
-      this.isCommencementdate = true;
+      this.isDate = true;
       return;
     } else if (this.eps.controls.pensionAmount.invalid) {
       this.isPensionAmount = true;
@@ -100,7 +103,7 @@ export class AddEPSComponent implements OnInit {
     } else {
       let obj = {
         advisorId: this.advisorId,
-        clientId: 2978,
+        clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined)?this.eps.controls.ownerName.value:this.ownerName,
         commencementDate: this.eps.controls.commencementDate.value,

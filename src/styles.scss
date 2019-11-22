@@ -454,6 +454,21 @@
     // border-top: 0px !important;
 }
 
+.right_sidenav-70 {
+    height: 100%;
+    position: fixed;
+    z-index: 222;
+    top: 0;
+    width: 70%;
+    // right: 0;
+    left: 100%;
+    background-color: #fff;
+    overflow-x: hidden;
+    // transition: 0.4s;
+    // border: 1px solid #ddd;
+    // border-top: 0px !important;
+}
+
 .right_sidenav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
@@ -526,14 +541,17 @@ mat-tab-group[vertical] {
 
 #ui-account-summary,
 #scenariosPlan,
+#investmentPlan,
 #ui-assets,
+#ui-assets-account,
 #ui-liabilities,
 #ui-insurance,
 #ui-income,
 #ui-expenses,
 #ui-document,
 #ui-mutualfunds-capital,
-#ui-profile-plan {
+#ui-profile-plan,
+#ui-planinsurance {
     padding-top: 129px !important;
 }
 
@@ -576,6 +594,23 @@ mat-tab-group[vertical] {
         padding-left: 24px;
         padding-bottom: 8px;
         font-size: 14px;
+    }
+}
+
+#ui-assets-account {
+    .vertical-menu {
+        height: 100vh;
+        display: block !important;
+        width: 100%;
+        text-align: left;
+    }
+    li {
+        height: 40px;
+        line-height: 40px;
+        padding: 0 0px 0 24px;
+        font-size: 14px;
+        text-align: left;
+        margin-bottom: 10px;
     }
 }
 
@@ -672,7 +707,8 @@ mat-tab-group[vertical] {
     }
 }
 
-#advisor-home,#plan-home {
+#advisor-home,
+#plan-home {
     position: fixed;
     z-index: 1111;
     margin-top: 78px;
@@ -680,20 +716,21 @@ mat-tab-group[vertical] {
     color: #FFC100;
     margin-left: 20px;
 }
-#plan-home .mat-stroked-button{
+
+#plan-home .mat-stroked-button {
     padding-left: 5px !important;
     padding-right: 10px !important;
 }
-#ui-customer .mat-tab-label{
-    
+
+#ui-customer .mat-tab-label {
     text-transform: uppercase;
 }
+
 .real-estate,
 .mutualfunds-capital-equity,
 .mutualfunds-capital-debt,
 .mutualfunds-capital-dividend-summary,
 .documentsTable,
-.financialGoalsTable,
 .fixed-deposite,
 .scheme-wise,
 .familymember-wise,
@@ -828,4 +865,12 @@ mat-tab-group[vertical] {
     tr.mat-header-row {
         height: 44px !important;
     }
+}
+
+.activeColor {
+    background: #D9DEE1;
+}
+
+.width80 {
+    width: 80%;
 }

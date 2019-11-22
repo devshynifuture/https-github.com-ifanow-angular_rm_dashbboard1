@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CustomerService } from '../../customer.service';
 import { Validators, FormBuilder } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
@@ -17,9 +16,12 @@ export class OwnerComponentComponent implements OnInit {
   family: string[];
   advisorId: any;
   ownerData: any;
+  clientId: any;
+  sendData: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService) { }
   @Output() valueChange = new EventEmitter();
+  @Output() valueChange1 = new EventEmitter();
   @Input()
   set data(data) {
     this.ownerData = data;
@@ -32,6 +34,7 @@ export class OwnerComponentComponent implements OnInit {
   ngOnInit() {
     console.log('ownerData', this.ownerData)
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.getListFamilyMem('');
     this.getdataForm()
     this.family = this.s;
@@ -39,7 +42,7 @@ export class OwnerComponentComponent implements OnInit {
   getListFamilyMem(data) {
     let obj = {
       advisorId: this.advisorId,
-      clientId: 2978
+      clientId: this.clientId,
     }
     this.custumService.getListOfFamilyByClient(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)
@@ -52,7 +55,9 @@ export class OwnerComponentComponent implements OnInit {
   }
   getListOfFamilyByClientRes(data) {
     console.log('family Memebers', data)
+    this.sendData = data
     this.family = data.familyMembersList
+    this.valueChange1.emit(this.sendData);
   }
   getdataForm() {
     this.owner = this.fb.group({

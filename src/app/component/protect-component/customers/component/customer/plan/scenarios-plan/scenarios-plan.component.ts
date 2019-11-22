@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-scenarios-plan',
@@ -6,16 +8,39 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./scenarios-plan.component.scss']
 })
 export class ScenariosPlanComponent implements OnInit {
+  
 
-  constructor() { }
+  constructor(private subInjectService: SubscriptionInject) { }
+   
   displayedColumns: string[] = ['description', 'year', 'month', 'lumpsum'];
   dataSource = ELEMENT_DATA;
   displayedColumns2: string[] = ['member', 'year', 'status'];
   dataSource2 = ELEMENT_DATA2;
   ngOnInit() {
+    
   }
 
+  open(flagValue){
+    const fragmentData = {
+      Flag: flagValue,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+    
+        }
+      }
+    );
+  }
+  
+
 }
+
 
 export interface PeriodicElement {
   description: string;

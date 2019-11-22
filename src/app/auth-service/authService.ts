@@ -37,5 +37,22 @@ export class AuthService {
     localStorage.setItem('userInfo', JSON.stringify(info));
   }
 
+  setClientData(clientData) {
+    sessionStorage.setItem('clientData', JSON.stringify(clientData));
+    console.log('setClientData : ', clientData);
+  }
+
+  static getClientData() {
+    const clientDataString = sessionStorage.getItem('clientData');
+    console.log('getClientData : ', clientDataString);
+
+    return clientDataString ? JSON.parse(clientDataString) : undefined;
+  }
+
+  static getClientId() {
+    const clientData = this.getClientData();
+    return clientData ? clientData.id : undefined;
+  }
+
   // static get
 }

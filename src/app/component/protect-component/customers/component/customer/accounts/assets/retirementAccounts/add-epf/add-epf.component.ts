@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS, MatSort } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
@@ -20,6 +20,7 @@ import { EventService } from 'src/app/Data-service/event.service';
   ],
 })
 export class AddEPFComponent implements OnInit {
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   isBalanceAsOn = false;
   isAnnualSalGrowth = false;
   isCurrentEPFBal = false;
@@ -32,8 +33,9 @@ export class AddEPFComponent implements OnInit {
   epf: any;
   ownerData: any;
   advisorId: any;
+  clientId: any;
 
-  constructor(private event: EventService,private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public util: UtilService) { }
+  constructor(private event: EventService,private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -45,6 +47,7 @@ export class AddEPFComponent implements OnInit {
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
   }
   display(value) {
     console.log('value selected', value)
@@ -61,12 +64,6 @@ export class AddEPFComponent implements OnInit {
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' })
   }
-  // getDateYMD(){
-  //   let now = moment();
-  //   this.tenure =moment(this.recuringDeposit.controls.commencementDate.value).add(this.recuringDeposit.controls.tenure.value, 'months');
-  //   this.getDate = this.datePipe.transform(this.tenure , 'yyyy-MM-dd')
-  //   return this.getDate;
-  // }
   getdataForm(data) {
     if (data == undefined) {
       data = {}
@@ -88,7 +85,6 @@ export class AddEPFComponent implements OnInit {
     this.ownerData = this.epf.controls;
     this.familyMemberId = this.epf.controls.familyMemberId.value
     this.familyMemberId = this.familyMemberId[0]
-    // this.epf.controls.maturityDate.setValue(new Date(data.maturityDate));
   }
   getFormControl(): any {
     return this.epf.controls;
@@ -110,7 +106,7 @@ export class AddEPFComponent implements OnInit {
 
       let obj = {
         advisorId: this.advisorId,
-        clientId: 2978,
+        clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined)?this.epf.controls.ownerName.value:this.ownerName,
         employeesMonthlyContribution: this.epf.controls.employeeContry.value,

@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-bank-accounts',
@@ -20,6 +21,7 @@ export class BankAccountsComponent implements OnInit {
   ownerName: any;
   inputData: any;
   familyMemberId: any;
+  isAccountType = false
   isBalanceAsOn = false;
   isAccountBalance = false;
   isInterestRate = false;
@@ -28,8 +30,9 @@ export class BankAccountsComponent implements OnInit {
   bankAccounts: any;
   showHide = false;
   advisorId: any;
+  clientId: any;
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
+  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService) { }
 
   @Input()
   set data(data) {
@@ -42,6 +45,7 @@ export class BankAccountsComponent implements OnInit {
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
   }
   display(value) {
     console.log('value selected', value)
@@ -89,6 +93,9 @@ export class BankAccountsComponent implements OnInit {
     } else if (this.bankAccounts.controls.compound.invalid) {
       this.isCompound = true;
       return;
+    } else if (this.bankAccounts.controls.accountType.invalid) {
+      this.isAccountType = true;
+      return;
     } else if (this.bankAccounts.controls.interestRate.invalid) {
       this.isInterestRate = true;
       return;
@@ -99,7 +106,7 @@ export class BankAccountsComponent implements OnInit {
  
       let obj = {
         advisorId: this.advisorId,
-        clientId: 2978,
+        clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined) ? this.bankAccounts.controls.ownerName.value : this.ownerName,
         accountType: this.bankAccounts.controls.accountType.value,

@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-gold',
@@ -31,8 +32,9 @@ export class GoldComponent implements OnInit {
   showHide = false;
   advisorId: any;
   fdYears: string[];
+  clientId: any;
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
+  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService) { }
 
   @Input()
   set data(data) {
@@ -45,6 +47,7 @@ export class GoldComponent implements OnInit {
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
+    this.clientId = AuthService.getClientId();
     this.fdYears = [
       '1950',	'1951',	'1952',	'1953',	'1954',	'1955',	'1956',	'1957',	'1958',	'1959',	'1960',	'1961',	'1962',	'1963',	'1964',	'1965',	'1966',	'1967',	'1968',	'1969',	'1970',	'1971',	'1972',	'1973',	'1974',	'1975',	'1976',	'1977',	'1978',	'1979',	'1980',	'1981',	'1982',	'1983',	'1984',	'1985',	'1986',	'1987',	'1988',	'1989',	'1990',	'1991',	'1992',	'1993',	'1994',	'1995',	'1996',	'1997',	'1998',	'1999',	'2000',	'2001',	'2002',	'2003',	'2004',	'2005',	'2006',	'2007',	'2008',	'2009',	'2010',	'2011',	'2012',	'2013',	'2014',	'2015',	'2016',	'2017',	'2018',	'2019']
   }
@@ -75,6 +78,7 @@ export class GoldComponent implements OnInit {
       noTolasGramsPur: [(data == undefined) ? '' : (data.purchasedGramsOrTola), [Validators.required]],
       tenure: [(data == undefined) ? '' : (data.purchaseYear), [Validators.required]],
       carats: [(data == undefined) ? '' : data.carat, [Validators.required]],
+      balanceAsOn:[(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       marketValue: [(data == undefined) ? '' : data.marketValue, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       bankAcNo: [(data == undefined) ? '' : data.bankAcNo, [Validators.required]],
@@ -101,13 +105,16 @@ export class GoldComponent implements OnInit {
     } else if (this.gold.controls.tenure.invalid) {
       this.isPurchaseYear = true;
       return;
+    } else if (this.gold.controls.balanceAsOn.invalid) {
+      this.isBalanceAsOn = true;
+      return;
     } else if (this.gold.controls.carats.invalid) {
       this.isCarats = true;
       return;
     } else {
       let obj = {
         advisorId: this.advisorId,
-        clientId: 2978,
+        clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined) ? this.gold.controls.ownerName.value : this.ownerName,
         approximatePurchaseValue: this.gold.controls.appPurValue.value,

@@ -15,8 +15,9 @@ export class CashAndBankComponent implements OnInit {
   advisorId: any;
   bankAccountList: any;
   cashInHandList: any;
+  clientId: any;
 
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService) { }
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService) { }
   displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc', 'status', 'icons'];
   datasource7 = ELEMENT_DATA7;
   displayedColumns8 = ['no', 'owner', 'cash', 'bal', 'desc', 'status', 'icons'];
@@ -24,6 +25,7 @@ export class CashAndBankComponent implements OnInit {
   ngOnInit() {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.getBankAccountList()
   }
   getfixedIncomeData(value) {
@@ -37,7 +39,7 @@ export class CashAndBankComponent implements OnInit {
   }
   getBankAccountList() {
     let obj = {
-      clientId: 2978,
+      clientId: this.clientId,
       advisorId: this.advisorId
     }
     this.custumService.getBankAccounts(obj).subscribe(
@@ -51,7 +53,7 @@ export class CashAndBankComponent implements OnInit {
   }
   getCashInHandList() {
     let obj = {
-      clientId: 2978,
+      clientId: this.clientId,
       advisorId: this.advisorId
     }
     this.custumService.getCashInHand(obj).subscribe(

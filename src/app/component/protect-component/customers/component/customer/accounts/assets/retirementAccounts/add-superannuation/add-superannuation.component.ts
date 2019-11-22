@@ -8,6 +8,7 @@ import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-superannuation',
@@ -32,8 +33,9 @@ export class AddSuperannuationComponent implements OnInit {
   isGrowthEmployee = false
   isAssumedRateReturn = false
   isFirstDateContry = false
+  clientId: any;
 
-  constructor(private event :EventService, private router: Router,private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
+  constructor(private event :EventService, private router: Router,private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService) { }
 
   @Input()
   set data(data) {
@@ -46,6 +48,7 @@ export class AddSuperannuationComponent implements OnInit {
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
   }
   display(value){
     console.log('value selected', value)
@@ -117,7 +120,7 @@ export class AddSuperannuationComponent implements OnInit {
 
       let obj = {
         advisorId: this.advisorId,
-        clientId: 2978,
+        clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined)?this.superannuation.controls.ownerName.value:this.ownerName,
         annualEmployeeContribution: this.superannuation.controls.employeeContry.value,

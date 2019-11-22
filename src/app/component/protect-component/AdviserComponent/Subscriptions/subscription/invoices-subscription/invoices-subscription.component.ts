@@ -92,16 +92,16 @@ export class InvoicesSubscriptionComponent implements OnInit {
   }
 
   getInvoiceResponseData(data) {
-    if(data==undefined){
-      this.noData="No Data Found";
-    }else {
-    console.log(data);
-    const ELEMENT_DATA = data;
-    this.invoiceClientData = data;
-    ELEMENT_DATA.forEach(item => item.selected = false);
-    this.dataSource = ELEMENT_DATA;
-    this.showLoader = false;
-  }
+    if (data == undefined) {
+      this.noData = "No Data Found";
+    } else {
+      console.log(data);
+      const ELEMENT_DATA = data;
+      this.invoiceClientData = data;
+      ELEMENT_DATA.forEach(item => item.selected = false);
+      this.dataSource = ELEMENT_DATA;
+      this.showLoader = false;
+    }
   }
 
   // showInvoicePdf(value)
@@ -147,34 +147,15 @@ export class InvoicesSubscriptionComponent implements OnInit {
     // this.dataSource.forEach(item => item.selected = 'checked');
     this.dataCount = 0;
     this.dataSource.forEach(item => {
-      //   if(item.selected==false)
-      //   {
-      //     item.selected = true;
-      //     this.dataCount++;
-      //   }else{
-      //     item.selected = false;
-      //     this.dataCount--;
-      //   }
-      // });
       item.selected = event.checked;
       if (item.selected) {
         this.dataCount++;
       }
-      // if(item.dataCountd>=1){
-      //   this.dataCount=1
-      // }else{
-      //   this.dataCount++
-      // }
     });
-    // if(item.selected=="true"){
-    //   this.dataCount++;
-    // }else{
-    //   this.dataCount--;
-    // }
 
   }
 
-  changeSelect(data) {
+  changeSelect() {
     this.dataCount = 0;
     this.dataSource.forEach(item => {
       console.log('item item ', item);
@@ -182,22 +163,24 @@ export class InvoicesSubscriptionComponent implements OnInit {
         this.dataCount++;
       }
     });
-    // if(data.selected==false)
-    // {
-    //   data.selected = true;
-    //   this.dataCount++;
-    //   data.dataCountd =this.dataCount;
-    // }else{
-    //   data.selected = false;
-    //   this.dataCount--;
-    //   data.dataCountd =this.dataCount;
-    // }
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    return this.dataCount === this.dataSource.length;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selectAll({checked: false}) : this.selectAll({checked: true});
   }
 
   display(data) {
     console.log(data);
     this.ngOnInit();
   }
+
   addFilters(addFilters) {
     console.log('addFilters', addFilters);
     if (!_.includes(this.filterStatus, addFilters)) {
@@ -215,7 +198,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   addFiltersDate(dateFilter) {
     console.log('addFilters', dateFilter);
-   //this.filterDate = [dateFilter];
+    //this.filterDate = [dateFilter];
     this.filterDate.push(dateFilter);
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
@@ -229,7 +212,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   removeDate(item) {
     this.filterDate.splice(item, 1);
- 
+
   }
 
   remove(item) {

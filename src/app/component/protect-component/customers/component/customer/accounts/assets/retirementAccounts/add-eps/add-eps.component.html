@@ -21,7 +21,7 @@
                 <input matInput formControlName="commencementDate" class="form-control br-0" [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isCommencementDate && getFormControl().commencementDate.invalid || getFormControl().commencementDate.touched && getFormControl().commencementDate.invalid)}">
+                <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isDate && getFormControl().commencementDate.invalid || getFormControl().commencementDate.touched && getFormControl().commencementDate.invalid)}">
                     Commencement date is required
                 </mat-error>
             </mat-form-field>

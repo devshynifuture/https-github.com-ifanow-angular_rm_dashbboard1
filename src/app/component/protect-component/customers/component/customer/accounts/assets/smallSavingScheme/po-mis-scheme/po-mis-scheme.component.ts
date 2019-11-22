@@ -3,6 +3,9 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { MatDialog } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-po-mis-scheme',
@@ -13,7 +16,7 @@ export class PoMisSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
 
-  constructor(private cusService:CustomerService,private subInjectService:SubscriptionInject,public util:UtilService) { }
+  constructor(public dialog: MatDialog,private eventService: EventService,private cusService:CustomerService,private subInjectService:SubscriptionInject,public util:UtilService) { }
   displayedColumns = ['no', 'owner','cvalue','mpayout','rate','amt','mvalue','mdate','desc','status','icons'];
   datasource;
   ngOnInit() {
@@ -34,7 +37,42 @@ export class PoMisSchemeComponent implements OnInit {
   getPoMisSchemedataResponse(data)
   {
     console.log(data)
-    this.datasource=data.PoMisList;
+    this.datasource=data.poMisList;
+  }
+  deleteModal(value,data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.cusService.deletePOMIS(data.id).subscribe(
+          data=>{
+            this.eventService.openSnackBar("POMIS is deleted","dismiss")
+            dialogRef.close();
+            this.getPoMisSchemedata();
+          },
+          err=>this.eventService.openSnackBar(err)
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
   addPOMIS(value,data)
   {

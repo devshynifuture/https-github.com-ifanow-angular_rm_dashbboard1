@@ -22,3 +22,38 @@
     border: 1px solid #83959D;
     padding: 10px;
 }
+
+.mat-radio-button {
+    min-width: auto;
+    padding-bottom: 10px;
+}
+
+.lineGrey {
+    border: 1px solid rgba(25, 25, 25, 0.32);
+}
+
+.lineGreen {
+    border: 2px solid #02B875;
+}
+
+.br-green-2 {
+    border-right: 2px solid #02B875;
+}
+
+.br-grey-1 {
+    border-right: 1px solid rgba(25, 25, 25, 0.32);
+}
+
+#table-low tbody td {
+    padding: 8px !important;
+}
+
+.financialGoalsTable {
+    tr.mat-row {
+        // padding: 3px 5px !important;
+        height: 30px !important;
+    }
+    tr.mat-header-row {
+        height: 40px !important;
+    }
+}
