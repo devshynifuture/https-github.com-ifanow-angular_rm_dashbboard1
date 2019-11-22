@@ -2,7 +2,6 @@ body {
     padding: 0;
     margin: 0;
     font-family: 'Roboto', sans-serif;
-       
 }
 
 h1,
@@ -103,11 +102,13 @@ a:hover {
 .text-underline {
     text-decoration: underline !important;
 }
-.wb,.mat-checkbox label{
+
+.wb,
+.mat-checkbox label {
     word-break: break-all !important;
 }
 
-.roboto{
+.roboto {
     font-family: 'Roboto', sans-serif !important;
 }
 
@@ -483,25 +484,22 @@ ul {
 }
 
 .percentage {
-    background: url(/assets/images/svg/perctage.svg) no-repeat scroll 125px 8px !important;
+    background: url(/assets/images/svg/perctage.svg) no-repeat scroll 95% !important;
     padding-right: 25px !important;
     right: 0;
 }
-#custom-toggle{
+
+#custom-toggle {
     border-radius: 1px !important;
-    
-    .mat-button-toggle-appearance-standard{
-        color:#595252 !important;
-      }
-    
-    .mat-button-toggle-checked{
+    .mat-button-toggle-appearance-standard {
+        color: #595252 !important;
+    }
+    .mat-button-toggle-checked {
         color: #008FFF !important;
         background-color: #fff !important;
-       
-      }
-      .mat-button-toggle-label-content{
-          font-size: 14px !important;
-          line-height: 36px !important;
-      }
-     
     }
+    .mat-button-toggle-label-content {
+        font-size: 14px !important;
+        line-height: 36px !important;
+    }
+}

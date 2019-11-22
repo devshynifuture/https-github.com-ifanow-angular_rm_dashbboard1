@@ -1,0 +1,14 @@
+.bottom-footer{
+    overflow: hidden;
+    position: fixed;
+    bottom: 1px;
+    z-index: 9;
+    width: 100%;
+    .mat-stroked-button{
+        height: 40px;
+        float: right;
+        border-color: #008FFF;
+        border-radius: 2px;
+        color: #008FFF;
+    }
+}

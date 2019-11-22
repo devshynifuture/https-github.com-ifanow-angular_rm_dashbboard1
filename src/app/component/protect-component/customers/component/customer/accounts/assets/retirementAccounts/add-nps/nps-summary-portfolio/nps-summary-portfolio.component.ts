@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { UtilService } from 'src/app/services/util.service';
 @Component({
   selector: 'app-nps-summary-portfolio',
   templateUrl: './nps-summary-portfolio.component.html',
@@ -47,7 +48,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   familyList: any;
   dataFM: any[];
   showHide = false;
-  constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
+  constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService) {
     this.summaryNPS = this.fb.group({
       published: true,
       futureContry: this.fb.array([]),
@@ -138,7 +139,8 @@ export class NpsSummaryPortfolioComponent implements OnInit {
         this.summaryNPS.controls.futureContributionList.push(this.fb.group({
           frequencyId: [(element.frequencyId) + "", [Validators.required]],
           accountPreferenceId: [(element.accountPreferenceId + ""), Validators.required],
-          approxContribution: [(element.approxContribution), Validators.required]
+          approxContribution: [(element.approxContribution), Validators.required],
+          id:[element.id,[Validators.required]]
         }))
       })
       data.npsNomineesList.forEach(element => {
@@ -146,6 +148,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
           nomineeName: [(element.nomineeName), [Validators.required]],
 
           nomineePercentageShare: [element.nomineePercentageShare, Validators.required],
+          id:[element.id,[Validators.required]]
         }))
       })
       this.nominee.removeAt(0);

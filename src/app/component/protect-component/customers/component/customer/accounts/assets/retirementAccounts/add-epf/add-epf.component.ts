@@ -35,7 +35,7 @@ export class AddEPFComponent implements OnInit {
   advisorId: any;
   clientId: any;
 
-  constructor(private event: EventService,private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public util: UtilService) { }
+  constructor(private event: EventService,private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService) { }
   @Input()
   set data(data) {
     this.inputData = data;

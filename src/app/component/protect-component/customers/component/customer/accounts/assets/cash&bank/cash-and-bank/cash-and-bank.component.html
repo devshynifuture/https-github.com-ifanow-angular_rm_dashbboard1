@@ -1,11 +1,11 @@
 <div class="wrapper-8">
     <div class="row pt-28 pb-28">
         <div class="col-md-8 pl-0" id="custom-toggle">
-            <button mat-button value='1' (click)="getfixedIncomeData(value = '1')"
+            <button mat-button (click)="getfixedIncomeData('1')"
                 [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}"
                 class="br-0 text-custom">
                 Bank accounts</button>
-            <button mat-button value='2' (click)="getfixedIncomeData(value = '2')"
+            <button mat-button (click)="getfixedIncomeData('2')"
                 [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}"
                 class="br-0 text-custom">
                 Cash in hand </button>

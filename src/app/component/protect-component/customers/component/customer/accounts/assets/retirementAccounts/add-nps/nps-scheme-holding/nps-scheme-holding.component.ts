@@ -8,6 +8,7 @@ import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-nps-scheme-holding',
@@ -33,7 +34,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
   idForscheme1: any[];
   clientId: any;
 
-  constructor(private event : EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
+  constructor(private event : EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -98,13 +99,15 @@ export class NpsSchemeHoldingComponent implements OnInit {
         this.schemeHoldingsNPS.controls.futureContributionList.push(this.fb.group({
           frequencyId: [(element.frequencyId) + "", [Validators.required]],
           accountPreferenceId: [(element.accountPreferenceId + ""), Validators.required],
-          approxContribution: [(element.approxContribution), Validators.required]
+          approxContribution: [(element.approxContribution), Validators.required],
+          id:[element.id,[Validators.required]]
         }))
       })
       data.npsNomineesList.forEach(element => {
         this.schemeHoldingsNPS.controls.npsNomineesList.push(this.fb.group({
           nomineeName: [(element.nomineeName), [Validators.required]],
           nomineePercentageShare: [element.nomineePercentageShare , Validators.required],
+          id:[element.id,[Validators.required]]
         }))
       })
       data.holdingList.forEach(element => {
@@ -113,6 +116,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
           totalUnits: [(element.totalUnits), Validators.required],
           totalNetContribution: [(element.totalNetContribution), Validators.required],
           holdingAsOn:[new Date(element.totalNetContribution), Validators.required],
+          id:[element.id,[Validators.required]]
         }))
       })
       this.nominee.removeAt(0);

@@ -312,9 +312,14 @@
               </mat-form-field>
             </div>
           </div>
+          
           <div class="col-md-2 p-0">
-            <h5 class="m-0 text-primitive pt-8 c-p" (click)="addNominee()">+ Add Nominee</h5>
-            <h5 class="m-0 text-primitive pt-8 c-p" (click)="removeNominee(pointIndex)">Remove</h5>
+              <div class="col-md-3" *ngIf="pointIndex==0">
+                  <h5 class="m-0 text-primitive pt-8 c-p" (click)="addNominee()">+ Add Nominee</h5>
+              </div>
+              <div class="col-md-2" *ngIf="pointIndex > 0">
+                <h5 class="m-0 text-primitive pt-8 c-p" (click)="removeNominee(pointIndex)">Remove</h5>
+              </div>
           </div>
 
         </div>
@@ -342,4 +347,6 @@
           <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFormData()">Save</button>
         </div>
       </div>
+    </div>
+    </div>
     </div>

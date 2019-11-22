@@ -110,7 +110,9 @@ export const rightSliderAnimation = trigger('openClose', [
   state('openHelp', style({
     left: '{{from}}%'
   }), {params: {from: (100 - 35)}}),
-
+  state('open70', style({
+    left: '{{from}}%'
+  }), {params: {from: (100 - 70)}}),
   state('close', style({
     left: '100%'
   })),
@@ -125,6 +127,10 @@ export const rightSliderAnimation = trigger('openClose', [
 
   transition('close => open30', [animate('0.3s')]),
   transition('open30 => close', [animate('0.1s')]),
+
+
+  transition('close => open70', [animate('0.3s')]),
+  transition('open70 => close', [animate('0.1s')]),
 ]);
 
 export const getRightSliderAnimation = (inputPercent) => {
