@@ -143,10 +143,6 @@
                                             <mat-select class="form-control br-0" formControlName="month">
                                                 <mat-option *ngFor="let M of estateMonths ;  index as i" [value]="i">{{M}}</mat-option>
                                             </mat-select>
-                                            <!-- <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isEmiFrequency && getFormControl().emiFrequency.invalid || getFormControl().emiFrequency.touched && getFormControl().emiFrequency.invalid)}">
-                        Emi frequency is required
-                    </mat-error> -->
-                                        </mat-form-field>
 
                                         </mat-form-field>
                                     </div>

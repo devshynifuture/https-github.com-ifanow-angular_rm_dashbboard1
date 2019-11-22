@@ -1,5 +1,5 @@
 <!-- ADD PORTFOLIO SUMMARY NPS -->
-<div class="popup-header-fix-60">
+<div class="popup-header-fix-70">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20">ADD PORTFOLIO SUMMARY</h4>
@@ -16,8 +16,8 @@
         <app-owner-component [data]='ownerData' (valueChange)='display($event)' (valueChange1)='lisNominee($event)'>
         </app-owner-component>
 
-        <div class="row pt-24">
-            <div class="col-md-5 text-right">
+        <div class="row pt-40">
+            <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Current valuation</h5>
                 <p class="m-0 text-custom f-12">This has to be updated<br> manually at all times</p>
             </div>
@@ -48,9 +48,9 @@
 
             </div>
         </div>
-        <div class="row pt-24">
-            <div class="col-md-5 text-right">
-                <h5 class="m-0 ">Total contribution</h5>
+        <div class="row pt-40">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Total contribution</h5>
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
@@ -79,8 +79,8 @@
                     <div class="col-md-3 p-0">
                         <label class="mb-5"> Approx contribution </label>
                     </div>
-
                 </div>
+
                 <div formArrayName="futureContributionList">
                     <div class="row pb-16" *ngFor="let creds of futureContry.controls; let i = index" [formGroupName]="i">
                         <div class="col-md-3 p-0">
@@ -116,15 +116,15 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="">
-                                <i class="material-icons text-custom c-p" (click)="addFutureContry()">
+                        <div class="col-md-2 d-flex align-items-center justify-content-around">
+
+                            <i class="material-icons text-custom c-p" (click)="addFutureContry()">
                                 add
                             </i>
-                                <i class="material-icons text-custom c-p right text-right" (click)="removeFutureContry(i)">
+                            <i class="material-icons text-custom c-p right text-right" (click)="removeFutureContry(i)">
                                 remove
                             </i>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -237,7 +237,7 @@
         </div>
     </div>
 </div>
-<div class="bottom-fixed wrapper-12 pt-16">
+<div class="bottom-fixed-70 wrapper-12 pt-16">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
