@@ -1,51 +1,62 @@
+<div *ngIf="showLoader==true">
+    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+</div>
 <div id="ui-liabilities">
     <div class="row h-100vh">
         <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
             <ul class="vertical-menu">
-                <li (click)="viewMode ='tab1'" (click)="sortTable('tab1')" [ngClass]="{'b-ua':showFilter =='tab1'}" class="c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('tab1')" [ngClass]="{'b-ua':showFilter =='tab1'}"
+                    class="c-p">
                     <div class="row">
-                        <div class="col-md-11 p-0">Liabilities</div>
+                        <div class="col-md-11 p-0 f-700">LIABILITIES</div>
                         <div class="col-md-1 p-0 text-custom">{{this.storeData}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('1')"[ngClass]="{'b-ua':showFilter =='1'}" class="c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('1')" [ngClass]="{'b-ua':showFilter =='1'}"
+                    class="c-p">
                     <div class="row">
                         <div class="col-md-11 p-0">Home</div>
                         <div class="col-md-1 p-0 text-custom">{{this.home.length}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('2')" [ngClass]="{'b-ua':showFilter =='2'}" class="c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('2')" [ngClass]="{'b-ua':showFilter =='2'}"
+                    class="c-p">
                     <div class="row">
                         <div class="col-md-11 p-0">Vehicle</div>
                         <div class="col-md-1 p-0 text-custom">{{this.vehicle.length}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('3')" [ngClass]="{'b-ua':showFilter  =='3'}" class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('3')" [ngClass]="{'b-ua':showFilter  =='3'}"
+                    class=" c-p">
                     <div class="row">
                         <div class="col-md-11 p-0">Education</div>
                         <div class="col-md-1 p-0 text-custom">{{this.education.length}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'"  (click)="sortTable('5')"  [ngClass]="{'b-ua':showFilter =='5'}" class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('5')" [ngClass]="{'b-ua':showFilter =='5'}"
+                    class=" c-p">
                     <div class="row">
                         <div class="col-md-11 p-0">Personal</div>
                         <div class="col-md-1 p-0 text-custom">{{this.personal.length}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'"  (click)="sortTable('7')"  [ngClass]="{'b-ua':showFilter =='tab7'}" class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('7')" [ngClass]="{'b-ua':showFilter =='tab7'}"
+                    class=" c-p">
                     <div class="row">
                         <div class="col-md-11 p-0">Durables</div>
                         <div class="col-md-1 p-0 text-custom">{{0}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('4')" [ngClass]="{'b-ua':showFilter =='4'}" class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('4')" [ngClass]="{'b-ua':showFilter =='4'}"
+                    class=" c-p">
                     <div class="row">
                         <div class="col-md-11 p-0">Credit card</div>
                         <div class="col-md-1 p-0 text-custom">{{this.creditCard.length}}</div>
 
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('6')" [ngClass]="{'b-ua':showFilter =='6'}" class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('6')" [ngClass]="{'b-ua':showFilter =='6'}"
+                    class=" c-p">
                     <div class="row">
                         <div class="col-md-11 p-0">Mortgage</div>
                         <div class="col-md-1 p-0 text-custom">{{this.mortgage.length}}</div>
@@ -53,7 +64,7 @@
                 </li>
                 <li (click)="viewMode ='tab2'" [ngClass]="{'b-ua':viewMode =='tab2'}" class=" c-p">
                     <div class="row">
-                        <div class="col-md-11 p-0">Others</div>
+                        <div class="col-md-11 p-0 f-700">OTHERS</div>
                         <div class="col-md-1 p-0 text-custom">{{OtherData}}</div>
                     </div>
                 </li>
@@ -65,9 +76,10 @@
                     <div class="row">
                         <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
                             <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
-                Overview Report
-                <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
-              </button>
+                                Overview Report
+                                <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
+                                </mat-icon>
+                            </button>
                             <mat-menu #menu="matMenu">
                                 <button mat-menu-item>Overview Report</button>
                                 <button mat-menu-item>Summary</button>
@@ -80,7 +92,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4 p-0">
-                            <h4 class="m-0 text-black roboto" *ngIf="showFilter=='tab1'" >Liabilities</h4>
+                            <h4 class="m-0 text-black roboto" *ngIf="showFilter=='tab1'">Liabilities</h4>
                             <h4 class="m-0 text-black roboto" *ngIf="showFilter=='1'">Home</h4>
 
                             <h4 class="m-0 text-black roboto" *ngIf="showFilter=='2'">Vehicle</h4>
@@ -94,140 +106,130 @@
                             <h4 class="m-0 text-black roboto" *ngIf="showFilter=='6'">Mortgage</h4>
 
                         </div>
-                        <div class="col-md-8 p-0 right text-right">
+                        <div class="col-md-8 p-0 right text-right" *ngIf="showLoader==false && dataSource!=undefined">
                             <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1" class="c-p">
                             <mat-menu #menu1="matMenu">
                                 <button mat-menu-item>PDF</button>
                                 <button mat-menu-item>XLS</button>
                             </mat-menu>
                             <img src="assets/images/svg/up-down.svg" class="c-p">
-                            <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu" class="c-p mr-12">
+                            <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu"
+                                class="c-p mr-12">
                             <mat-menu #menu="matMenu">
                                 <button mat-menu-item>Email report</button>
                                 <button mat-menu-item>Option 1</button>
                                 <button mat-menu-item>Option 2</button>
                             </mat-menu>
-                            <button mat-stroked-button class="btn-default addon mr-12 v-middle" (click)="clickHandling()"><i
-                class="material-icons">filter_list</i>FILTERS
-              </button>
-                            <button (click)="open('addLiabilities','Add')" mat-stroked-button class="btn-primary addon v-middle"><i
-                class="material-icons">add</i>ADD NEW
-              </button>
-                            <!-- <mat-menu #menu1="matMenu" class="add-new">
-                <button mat-menu-item class="b-b">
-                  <div (click)="openPortfolioSummary('portfolioSummary','open')" class="row">
-                    <div class="col-md-2 pr-8 text-right">
-                      <img src="assets/images/svg/dark-three-dot.svg">
-                    </div>
-                    <div class="col-md-10">
-                      <p class="m-0 text-black">Portfolio summary</p>
-                      <p class="m-0 f-13 pt-4 text-custom">Add just the overall portfolio
-                        <br> summary. Time saver!
-                      </p>
-                    </div>
-                  </div>
-                </button>
-                <button mat-menu-item class="b-b">
-                  <div class="row">
-                    <div class="col-md-2 pr-8 text-right">
-                      <img src="assets/images/svg/scheme-icon.svg">
-                    </div>
-                    <div class="col-md-10">
-                      <p class="m-0 text-black">Scheme level transactions</p>
-                      <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
-                        <br> scheme level for better reporting
-                      </p>
-                    </div>
-                  </div>
-                </button>
-                <button mat-menu-item>
-                  <div class="row">
-                    <div class="col-md-2 pr-8 text-right">
-                      <img src="assets/images/svg/dark-download.svg">
-                    </div>
-                    <div class="col-md-10">
-                      <p class="m-0 text-black">Import data</p>
-                      <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
-                        <br> scheme level for better reporting
-                      </p>
-                    </div>
-                  </div>
-                </button>
-              </mat-menu>ADD  -->
+                            <button mat-stroked-button class="btn-default addon mr-12 v-middle"
+                                (click)="clickHandling()"><i class="material-icons">filter_list</i>FILTERS
+                            </button>
+                            <button (click)="open('addLiabilities',showFilter)" mat-stroked-button
+                                class="btn-primary addon v-middle"><i class="material-icons">add</i>ADD NEW
+                            </button>
                         </div>
                     </div>
                 </div>
+
                 <div class="liabilities wrapper-8">
                     <table mat-table [dataSource]="dataSource" id="table-low">
                         <ng-container matColumnDef="no">
                             <th mat-header-cell *matHeaderCellDef class="br"> No.</th>
                             <td mat-cell *matCellDef="let element; let i = index;" class="br"> {{i+1}} </td>
+                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
                         </ng-container>
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef class="br t-18"> Owner</th>
                             <td mat-cell *matCellDef="let element" class="br t-18"> {{element.ownerName}} </td>
+                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700" [hidden]="dataSource==undefined && showLoader==false"> Total </td>
                         </ng-container>
                         <ng-container matColumnDef="type">
                             <th mat-header-cell *matHeaderCellDef class="br t-12"> Type</th>
-                            <td mat-cell *matCellDef="let element" class="br t-12"> {{(element.loanTypeId == 1)?'Home Loan':(element.loanTypeId == 2)?'Vehicle':(element.loanTypeId == 3)?'Education':(element.loanTypeId == 4)?'Credit Card':(element.loanTypeId == 5)?'Personal':'Mortgage'}} </td>
+                            <td mat-cell *matCellDef="let element" class="br t-12">
+                                {{(element.loanTypeId == 1)?'Home Loan':(element.loanTypeId == 2)?'Vehicle':(element.loanTypeId == 3)?'Education':(element.loanTypeId == 4)?'Credit Card':(element.loanTypeId == 5)?'Personal':'Mortgage'}}
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
                         </ng-container>
                         <ng-container matColumnDef="loan">
                             <th mat-header-cell *matHeaderCellDef class="br t-18"> Loan amount</th>
-                            <td mat-cell *matCellDef="let element" class="br t-18"> {{util.formatter(element.loanAmount)}} </td>
+                            <td mat-cell *matCellDef="let element" class="br t-18">
+                                {{util.formatter(element.loanAmount)}} </td>
+                                <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700" [hidden]="dataSource==undefined && showLoader==false">{{util.formatter(totalLoanAmt) || '-'}} </td>
                         </ng-container>
                         <ng-container matColumnDef="ldate">
                             <th mat-header-cell *matHeaderCellDef class="br"> Loan as on</th>
-                            <td mat-cell *matCellDef="let element" class="br"> {{element.commencementDate | date:'dd/MM/yyyy'}} </td>
+                            <td mat-cell *matCellDef="let element" class="br">
+                                {{element.commencementDate | date:'dd/MM/yyyy'}} </td>
+                                <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
                         </ng-container>
                         <ng-container matColumnDef="today">
                             <th mat-header-cell *matHeaderCellDef class="br t-14"> Outstanding as on today
                             </th>
-                            <td mat-cell *matCellDef="let element" class="br t-14"> {{util.formatter(element.outstandingAmount)}} </td>
+                            <td mat-cell *matCellDef="let element" class="br t-14">
+                                {{util.formatter(element.outstandingAmount)}} </td>
+                                <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700"  [hidden]="dataSource==undefined && showLoader==false">{{util.formatter(outStandingAmt) || '-'}}</td>
                         </ng-container>
                         <ng-container matColumnDef="ten">
                             <th mat-header-cell *matHeaderCellDef class="br"> Tenure remaining</th>
                             <td mat-cell *matCellDef="let element" class="br"> {{element.loanTenure}} </td>
+                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
                         </ng-container>
                         <ng-container matColumnDef="rate">
                             <th mat-header-cell *matHeaderCellDef class="br t-14"> Annual interest rate</th>
                             <td mat-cell *matCellDef="let element" class="br t-14"> {{element.annualInterestRate}} </td>
+                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
                         </ng-container>
                         <ng-container matColumnDef="emi">
                             <th mat-header-cell *matHeaderCellDef class="br"> EMI</th>
                             <td mat-cell *matCellDef="let element" class="br"> {{util.formatter(element.emi)}} </td>
+                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
                         </ng-container>
                         <ng-container matColumnDef="fin">
                             <th mat-header-cell *matHeaderCellDef class="br t-14"> Financial institution</th>
-                            <td mat-cell *matCellDef="let element" class="br t-14"> {{element.financialInstitution}} </td>
+                            <td mat-cell *matCellDef="let element" class="br t-14"> {{element.financialInstitution}}</td>
+                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
                         </ng-container>
                         <ng-container matColumnDef="status">
                             <th mat-header-cell *matHeaderCellDef class="br"> Status</th>
                             <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.status}} </td>
+                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
                         </ng-container>
                         <ng-container matColumnDef="icons">
                             <th mat-header-cell *matHeaderCellDef class="t-2"></th>
                             <td mat-cell *matCellDef="let element" class="t-2">
                                 <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">
-                  more_vert
-                </i>
+                                    more_vert
+                                </i>
                                 <mat-menu #menu4="matMenu">
                                     <button mat-menu-item (click)="open('addLiabilities',element)">Edit</button>
-                                    <button mat-menu-item (click)="addLiabilitiesDetail('addLiabilitiesDetail')">Deatiled View</button>
+                                    <button mat-menu-item
+                                        (click)="addLiabilitiesDetail('addLiabilitiesDetail')">Deatiled View</button>
                                     <button mat-menu-item>Activity</button>
                                     <button mat-menu-item>Delete</button>
                                 </mat-menu>
                             </td>
+                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+
                     </table>
+                    <div *ngIf="dataSource==undefined && showLoader==false">
+                        <h4 class="text-center pt-72">{{noData}}</h4>
+                        <div class="text-center pt-16">
+                            <button (click)="open('addLiabilities',showFilter)" mat-stroked-button
+                                class="btn-primary addon v-middle "><i class="material-icons">add</i>ADD NEW
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode" *ngIf="viewMode=='tab2'">
-                <div *ngSwitchCase="'tab2'">
-                    <app-other-payables [payableData]="OtherPayableData" (OtherDataChange)='display($event)'></app-other-payables>
-                    </div>
-                    </div>
+            <div *ngSwitchCase="'tab2'">
+                <app-other-payables [payableData]="OtherPayableData" (OtherDataChange)='display($event)'>
+                </app-other-payables>
+            </div>
+        </div>
     </div>
 </div>
