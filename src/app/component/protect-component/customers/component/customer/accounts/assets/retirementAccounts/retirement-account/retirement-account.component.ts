@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-retirement-account',
@@ -11,7 +12,7 @@ import { AuthService } from 'src/app/auth-service/authService';
   styleUrls: ['./retirement-account.component.scss']
 })
 export class RetirementAccountComponent implements OnInit {
-
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   showRequring = '1';
   getObject: {};
   advisorId: any;
@@ -49,6 +50,7 @@ export class RetirementAccountComponent implements OnInit {
       advisorId: this.advisorId
     }
     this.getListEPF()
+    this.dataEPSList.sort = this.sort;
   }
   getfixedIncomeData(value) {
     this.showRequring = value;

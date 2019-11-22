@@ -6,10 +6,9 @@
 <mat-tab-group [selectedIndex]="selected" mat-align-tabs="center" id="ui-account-second-head" animationDuration="0ms">
     <mat-tab label="SUMMARY">
         <ng-template matTabContent>
-            <!-- <app-summary-plan></app-summary-plan> -->
-            <app-profile-plan></app-profile-plan>
+           <!-- <app-summary-plan></app-summary-plan> -->
+           <app-insurance-plan></app-insurance-plan>
         </ng-template>
-        <!-- <app-assets></app-assets> -->
     </mat-tab>
     <mat-tab label="profile">
         <ng-template matTabContent>
@@ -18,7 +17,7 @@
     </mat-tab>
     <mat-tab label="INSURANCE">
         <ng-template matTabContent>
-
+         <app-insurance-plan></app-insurance-plan>
         </ng-template>
     </mat-tab>
     <mat-tab label="GOALS">

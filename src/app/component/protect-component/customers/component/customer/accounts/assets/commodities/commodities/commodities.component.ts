@@ -21,7 +21,7 @@ export class CommoditiesComponent implements OnInit {
   goldList: any;
   otherCommodityList: any;
   clientId: any;
-  constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService,public util:UtilService) { }
+  constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService,public utils:UtilService) { }
   ngOnInit() {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
