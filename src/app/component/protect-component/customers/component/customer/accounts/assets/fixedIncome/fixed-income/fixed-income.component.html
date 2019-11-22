@@ -2,15 +2,15 @@
         <div class="wrapper-8">
           <div class="row pt-28 pb-28">
             <div class="col-md-8 pl-0">
-                <button mat-button (click)="getfixedIncomeData(id = '1')"
+                <button mat-button (click)="getfixedIncomeData('1')"
                 [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}"
                 class="br-0 text-custom">
                 Fixed deposits</button>
-                <button mat-button  (click)="getfixedIncomeData(id = '2')"
+                <button mat-button (click)="getfixedIncomeData('2')"
                 [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}"
                 class="br-0 text-custom">
                 Recurring deposits</button>
-                <button mat-button  (click)="getfixedIncomeData(id = '3')"
+                <button mat-button (click)="getfixedIncomeData('3')"
                 [ngClass]="{'mat-stroked-button': showRequring == '3','text-primary':showRequring == '3'}"
                 class="br-0 text-custom">
                 Bonds </button>
