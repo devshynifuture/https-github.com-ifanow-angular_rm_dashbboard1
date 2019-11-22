@@ -86,14 +86,12 @@ export class LiabilitiesComponent implements OnInit {
         this.noData = "No Scheme Found";
         this.dataSource = undefined;
       }else{
-        filterData.totalLoanAmount = _.sumBy(filterData, function (o) {
+        this.totalLoanAmt= _.sumBy(filterData, function (o) {
           return o.loanAmount;
         });
-        filterData.totalCapitalOutstanding = _.sumBy(filterData, function (o) {
+        this.outStandingAmt = _.sumBy(filterData, function (o) {
           return o.outstandingAmount;
         });
-        this.totalLoanAmt=filterData.totalLoanAmount;  
-        this.outStandingAmt=data.totalCapitalOutstanding;
         this.dataSource = filterData;
 
       }
