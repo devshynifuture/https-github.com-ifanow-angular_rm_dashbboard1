@@ -4,6 +4,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { UpperCustomerComponent } from '../../../common-component/upper-customer/upper-customer.component';
 import { MatDialog } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../customer.service';
 
 @Component({
   selector: 'app-assets',
@@ -11,8 +13,11 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./assets.component.scss']
 })
 export class AssetsComponent implements OnInit {
+  advisorId: any;
+  clientId: any;
+  assetSideBarData: {}[];
 
-  constructor(private subInjectService:SubscriptionInject,private eventService:EventService,public dialog: MatDialog) {
+  constructor(private subInjectService:SubscriptionInject,private eventService:EventService,public dialog: MatDialog,private cusService:CustomerService) {
   }
   private loadComponent = false;
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
@@ -72,8 +77,7 @@ datasource19 = ELEMENT_DATA19;
 
 displayedColumns20 = ['no', 'owner','cvalue','rate','balance','bdate','desc','status','icons'];
 datasource20 = ELEMENT_DATA20;
-// displayedColumns21 = ['no', 'owner','cvalue','rate','deposit','mvalue','mdate','number','desc','status','icons'];
-// datasource21 = ELEMENT_DATA21;
+
 
 displayedColumns22 = ['no', 'owner','cvalue','rate','amt','tenure','mvalue','mdate','number','desc','status','icons'];
 datasource22 = ELEMENT_DATA22;
@@ -88,6 +92,34 @@ displayedColumns24 = ['name', 'amt', 'cvalue', 'profile','abt','xirr','pay','wit
   viewMode;
   ngOnInit() {
     this.viewMode="tab1"
+    this.advisorId=AuthService.getAdvisorId();
+    this.clientId=AuthService.getClientId();
+    this.getAssetCountGLobalData()
+    this.assetSideBarData=[
+      {name:'Mutual funds',viewmode:'tab1',count:''},
+      {name:'Stocks',viewmode:'tab2',count:''},
+      {name:'Fixed income',viewmode:'tab3',count:''},
+      {name:'Real estate',viewmode:'tab4',count:''},
+      {name:'Retirement accounts',viewmode:'tab5',count:''},
+      {name:'Small saving scheme',viewmode:'tab6',count:''},
+      {name:'Cash & Bank',viewmode:'tab7',count:''},
+      {name:'Commodities',viewmode:'tab8',count:''}
+    ]
+  }
+  getAssetCountGLobalData()
+  {
+     let obj=
+     {
+      advisorId:this.advisorId,
+      clientId:this.clientId
+     }
+     this.cusService.getAssetCountGlobalData(obj).subscribe(
+       data=>this.getAssetCountGLobalDataRes(data)
+     )
+  }
+  
+  getAssetCountGLobalDataRes(data)
+  {
     
   }
   openFragment(value) {

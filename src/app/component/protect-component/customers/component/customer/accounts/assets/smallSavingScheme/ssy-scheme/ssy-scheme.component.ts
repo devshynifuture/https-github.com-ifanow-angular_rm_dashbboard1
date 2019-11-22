@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-ssy-scheme',
@@ -14,7 +15,7 @@ export class SsySchemeComponent implements OnInit {
   clientId: number;
   noData: string;
 
-  constructor(private cusService:CustomerService,private subInjectService:SubscriptionInject) { }
+  constructor(private cusService:CustomerService,private subInjectService:SubscriptionInject,private eventService:EventService) { }
   displayedColumns16 = ['no', 'owner','cvalue','rate','amt','number','mdate','desc','status','icons'];
   datasource;
   ngOnInit() {
@@ -29,7 +30,8 @@ export class SsySchemeComponent implements OnInit {
       clientId:this.clientId
     }
     this.cusService.getSmallSavingSchemeSSYData(obj).subscribe(
-      data=>this.getSsySchemedataResponse(data)
+      data=>this.getSsySchemedataResponse(data),
+      err=>this.eventService.openSnackBar(err)
     )
   }
   getSsySchemedataResponse(data)

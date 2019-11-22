@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-right-filter',
@@ -27,11 +28,15 @@ export class RightFilterComponent implements OnInit {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor() {
+  constructor(private subInjectService:SubscriptionInject) {
     this.dataSource.data = TREE_DATA;
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+  Close(data) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
+
 }
 interface FoodNode {
   name: string;

@@ -260,4 +260,9 @@ export class CustomerService {
   editPOTD(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_POTD_SCHEME, data)
   }
+  getAssetCountGlobalData(data)
+  {
+    let httpParams=new HttpParams().set('advisorId',data.advisorId).set('clientId',data.clientId)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_COUNT_GLOBAL_DATA,httpParams)
+  }
 }

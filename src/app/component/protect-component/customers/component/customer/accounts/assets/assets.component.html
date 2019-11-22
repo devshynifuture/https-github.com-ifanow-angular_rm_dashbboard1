@@ -2,30 +2,30 @@
     <div class="row">
         <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
             <ul class="vertical-menu">
-                <li (click)="viewMode ='tab1'" [ngClass]="{'activeColor':viewMode =='tab1'}" class="c-p roboto">
-                    Mutual funds
+                <li *ngFor="let singleAssetType of assetSideBarData" (click)="viewMode =singleAssetType.viewmode" [ngClass]="{'activeColor lt':viewMode ==singleAssetType.viewmode}" class=" c-p">
+                    {{singleAssetType.name}}
                 </li>
-                <li (click)="viewMode ='tab2'" [ngClass]="{'activeColor':viewMode =='tab2'}" class="c-p roboto">
-                    Stocks
-                </li>
-                <li (click)="viewMode ='tab3'" [ngClass]="{'activeColor':viewMode =='tab3'}" class="c-p roboto">
-                    Fixed income
-                </li>
-                <li (click)="viewMode ='tab4'" [ngClass]="{'activeColor':viewMode =='tab4'}" class=" c-p roboto">
-                    Real estate
-                </li>
-                <li (click)="viewMode ='tab5'" [ngClass]="{'activeColor':viewMode =='tab5'}" class=" c-p roboto">
-                    Retirement accounts
-                </li>
-                <li (click)="viewMode ='tab6'" [ngClass]="{'activeColor':viewMode =='tab6'}" class=" c-p roboto">
-                    Small saving schemes
-                </li>
-                <li (click)="viewMode ='tab7'" [ngClass]="{'activeColor':viewMode =='tab7'}" class=" c-p roboto">
-                    Cash & Bank
-                </li>
-                <li (click)="viewMode ='tab8'" [ngClass]="{'activeColor':viewMode =='tab8'}" class=" c-p roboto">
-                    Commodities
-                </li>
+                <!-- <li (click)="viewMode ='tab2'" [ngClass]="{'bg-grey lt':viewMode =='tab2'}" class="c-p">
+          Stocks
+          </li>
+          <li (click)="viewMode ='tab3'" [ngClass]="{'bg-grey lt':viewMode =='tab3'}" class="c-p">
+          Fixed income
+          </li>
+          <li (click)="viewMode ='tab4'" [ngClass]="{'bg-grey lt':viewMode =='tab4'}" class=" c-p">
+          Real estate
+          </li>
+          <li (click)="viewMode ='tab5'" [ngClass]="{'bg-grey lt':viewMode =='tab5'}" class=" c-p">
+          Retirement accounts
+          </li>
+          <li (click)="viewMode ='tab6'" [ngClass]="{'bg-grey lt':viewMode =='tab6'}" class=" c-p">
+          Small saving schemes
+          </li>
+          <li (click)="viewMode ='tab7'" [ngClass]="{'bg-grey lt':viewMode =='tab7'}" class=" c-p">
+          Cash & Bank
+          </li>
+          <li (click)="viewMode ='tab8'" [ngClass]="{'bg-grey lt':viewMode =='tab8'}" class=" c-p">
+          Commodities
+          </li> -->
             </ul>
         </div>
         <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode">
