@@ -14,6 +14,7 @@ import {ChartModule} from 'angular-highcharts';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AddScenariosComponent } from './scenarios-plan/add-scenarios/add-scenarios.component';
 import { AddInvestmentPlanComponent } from './investments-plan/add-investment-plan/add-investment-plan.component';
+import { AddProfilePlanComponent } from './profile-plan/add-profile-plan/add-profile-plan.component';
 // import {BrowserModule} from '@angular/platform-browser';
 
 
@@ -35,6 +36,7 @@ import { AddInvestmentPlanComponent } from './investments-plan/add-investment-pl
     TexesPlanComponent,
     AddScenariosComponent,
     AddInvestmentPlanComponent,
+    AddProfilePlanComponent,
   ],
   imports: [
     CommonModule,
@@ -43,7 +45,7 @@ import { AddInvestmentPlanComponent } from './investments-plan/add-investment-pl
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [PlanComponent,AddScenariosComponent,AddInvestmentPlanComponent],
+  exports: [PlanComponent,AddScenariosComponent,AddInvestmentPlanComponent,AddProfilePlanComponent],
   entryComponents: []
 })
 export class PlanModule {
