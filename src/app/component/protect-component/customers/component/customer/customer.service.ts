@@ -265,4 +265,31 @@ export class CustomerService {
     let httpParams=new HttpParams().set('advisorId',data.advisorId).set('clientId',data.clientId)
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_COUNT_GLOBAL_DATA,httpParams)
   }
+  deletePPF(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_PPF_SCHEME, data)
+  }
+  deleteNSC(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_NSC_SCHEME, data)
+  }
+  deleteSSY(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SSY_SCHEME, data)
+  }
+  deleteKVP(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_KVP_SCHEME, data)
+  }
+  deleteSCSS(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SCSS_SCHEME, data)
+  }
+  deletePOSAVING(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_POSAVING_SCHEME, data)
+  }
+  deletePORD(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_PORD_SCHEME, data)
+  }
+  deletePOTD(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_POTD_SCHEME, data)
+  }
+  deletePOMIS(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_POMIS_SCHEME, data)
+  }
 }
