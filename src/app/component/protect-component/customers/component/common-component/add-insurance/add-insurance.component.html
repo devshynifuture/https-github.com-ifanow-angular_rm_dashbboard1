@@ -34,7 +34,7 @@
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{lifeassured.value.length}}/40</mat-hint>
                     </mat-form-field> -->
-                    <mat-form-field>
+                    <!-- <mat-form-field>
                         <mat-select (click)="getFamilyMember(option)" formControlName="lifeAssured" #lifeAssured autocomplete="true"
                             class="form-control br-0">
                             <mat-option *ngFor="let option of FamilyMember" [value]="option.userName">{{option.userName}}</mat-option>
@@ -43,7 +43,7 @@
                             [ngClass]="{'v-h':!(ispremiumDetailsFrequency && lifeInsuranceForm.get('premiumDetailsFrequency').invalid || (lifeInsuranceForm.get('premiumDetailsFrequency').touched && lifeInsuranceForm.get('premiumDetailsFrequency').invalid))}"
                             class="f-12 pt-4">This field is required
                         </mat-error>
-                    </mat-form-field>
+                    </mat-form-field> -->
                 </div>
             </div>
         </div>
