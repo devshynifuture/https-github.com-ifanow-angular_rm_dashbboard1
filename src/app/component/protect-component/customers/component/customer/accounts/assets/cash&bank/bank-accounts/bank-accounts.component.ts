@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-bank-accounts',
@@ -20,6 +21,7 @@ export class BankAccountsComponent implements OnInit {
   ownerName: any;
   inputData: any;
   familyMemberId: any;
+  isAccountType = false
   isBalanceAsOn = false;
   isAccountBalance = false;
   isInterestRate = false;
@@ -30,7 +32,7 @@ export class BankAccountsComponent implements OnInit {
   advisorId: any;
   clientId: any;
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) { }
+  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService) { }
 
   @Input()
   set data(data) {
@@ -90,6 +92,9 @@ export class BankAccountsComponent implements OnInit {
       return;
     } else if (this.bankAccounts.controls.compound.invalid) {
       this.isCompound = true;
+      return;
+    } else if (this.bankAccounts.controls.accountType.invalid) {
+      this.isAccountType = true;
       return;
     } else if (this.bankAccounts.controls.interestRate.invalid) {
       this.isInterestRate = true;
