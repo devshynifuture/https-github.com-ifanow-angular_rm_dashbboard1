@@ -16,28 +16,40 @@
     right: 0;
     box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2), 0px 1px 0px rgba(0, 0, 0, 0.12), 0px 3px 3px rgba(0, 0, 0, 0.14);
 }
-.second-fixed{
+
+.second-fixed {
     position: fixed;
     width: 100% !important;
     z-index: 2;
     right: 1%;
     background: #fff;
-
-
 }
-.popup-header-fix-35{
+
+.popup-header-fix-35 {
     position: fixed;
     width: 35%;
     z-index: 10;
     background: #fff !important;
 }
-.popup-header-fix-50{
+
+.popup-header-fix-50 {
     position: fixed;
     width: 50%;
     z-index: 10;
     background: #fff !important;
 }
-.popup-header-fix-60{
+
+.popup-header-fix-70 {
+    position: fixed;
+    width: 70%;
+    z-index: 10;
+    background: #fff !important;
+    // h4{
+    //     line-height: 23px !important;
+    // }
+}
+
+.popup-header-fix-60 {
     position: fixed;
     width: 60%;
     z-index: 10;
@@ -46,51 +58,54 @@
     //     line-height: 23px !important;
     // }
 }
-.popup-header-fix-100{
+
+.popup-header-fix-100 {
     position: fixed;
     width: 100%;
     z-index: 10;
     background: #fff !important;
 }
-.popup-header-fix-tabs{
-    .mat-tab-header{
-    position: fixed;
-    margin-top: 58px;
-    float: right;
-    width: 100%;
-    padding-right: 15px;
-    right: 0;
-    z-index: 10;
-    background: #fff !important;
-    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2), 0px 2px 0px rgba(0, 0, 0, 0.12), 0px 3px 3px rgba(0, 0, 0, 0.14);
-    border-bottom: 0px !important;
-    border-top: 1px solid rgba(0, 0, 0, 0.12);
-    }
-    .heading-fix{
+
+.popup-header-fix-tabs {
+    .mat-tab-header {
         position: fixed;
-    margin-top: 125px;
-    float: right;
-    width: 100%;
-    // padding-right: 15px;
-
-    z-index: 999;
-
+        margin-top: 58px;
+        float: right;
+        width: 100%;
+        padding-right: 15px;
+        right: 0;
+        z-index: 10;
+        background: #fff !important;
+        box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2), 0px 2px 0px rgba(0, 0, 0, 0.12), 0px 3px 3px rgba(0, 0, 0, 0.14);
+        border-bottom: 0px !important;
+        border-top: 1px solid rgba(0, 0, 0, 0.12);
+    }
+    .heading-fix {
+        position: fixed;
+        margin-top: 125px;
+        float: right;
+        width: 100%;
+        // padding-right: 15px;
+        z-index: 999;
     }
 }
+
 .bottom-fixed-50 {
     overflow: hidden;
     background-color: #757575;
     position: fixed;
     bottom: 0;
     width: 50%;
-  }
-  .bottom-fixed-35 {
+}
+
+.bottom-fixed-35 {
     overflow: hidden;
     background-color: #757575;
     position: fixed;
     bottom: 0;
     width: 35%;
-  }
+}
+
 .bottom-fixed {
     overflow: hidden;
     background-color: #757575;
@@ -98,8 +113,9 @@
     bottom: 0;
     width: 60%;
     z-index: 9;
-  }
-  .button-fix{
+}
+
+.button-fix {
     right: 0;
     position: fixed;
     text-align: right;
@@ -107,6 +123,7 @@
     z-index: 2;
     // margin-top: 26px;
 }
+
 .mat-header-row {
     position: sticky;
     top: 0;

@@ -93,18 +93,20 @@ export class NpsSchemeHoldingComponent implements OnInit {
     this.ownerData = this.schemeHoldingsNPS.controls;
     this.familyMemberId = this.schemeHoldingsNPS.controls.familyMemberId.value
     this.familyMemberId = this.familyMemberId[0]
-    if (data != undefined) {
+    if (data.futureContributionList != undefined || data.npsNomineesList != undefined || data.holdingList != undefined) {
       data.futureContributionList.forEach(element => {
         this.schemeHoldingsNPS.controls.futureContributionList.push(this.fb.group({
           frequencyId: [(element.frequencyId) + "", [Validators.required]],
           accountPreferenceId: [(element.accountPreferenceId + ""), Validators.required],
-          approxContribution: [(element.approxContribution), Validators.required]
+          approxContribution: [(element.approxContribution), Validators.required],
+          id:[element.id,[Validators.required]]
         }))
       })
       data.npsNomineesList.forEach(element => {
         this.schemeHoldingsNPS.controls.npsNomineesList.push(this.fb.group({
           nomineeName: [(element.nomineeName), [Validators.required]],
           nomineePercentageShare: [element.nomineePercentageShare , Validators.required],
+          id:[element.id,[Validators.required]]
         }))
       })
       data.holdingList.forEach(element => {
@@ -113,6 +115,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
           totalUnits: [(element.totalUnits), Validators.required],
           totalNetContribution: [(element.totalNetContribution), Validators.required],
           holdingAsOn:[new Date(element.totalNetContribution), Validators.required],
+          id:[element.id,[Validators.required]]
         }))
       })
       this.nominee.removeAt(0);

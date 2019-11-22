@@ -41,6 +41,12 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   clientId: any;
   nexNomineePer: number;
   getPerAllocation: number;
+  sumPer: any;
+  showError = false;
+  nomineeData: any;
+  familyList: any;
+  dataFM: any[];
+  showHide = false;
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
     this.summaryNPS = this.fb.group({
       published: true,
@@ -63,29 +69,45 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   display(value) {
     console.log('value selected', value)
     this.ownerName = value.userName;
-    if (value.familyMembersList.length > 0) {
-      this.nomineesListFM = value.familyMembersList
-    }
-    this.familyMemberId = value.id
   }
-
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
   nomineesList() {
-    if (this.nomineesListFM.length > 0) {
+    this.dataFM = this.nomineesListFM
+    if (this.dataFM.length > 0) {
       let name = this.ownerName
-      var evens = _.remove(this.nomineesListFM, function (n) {
+      var evens = _.reject(this.dataFM, function (n) {
         return n.userName == name;
       });
-      this.nomineesListFM = evens
+      this.familyList = evens
     }
 
-    console.log('NomineesList', this.nomineesListFM)
+    console.log('familyList', this.familyList)
   }
 
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' })
   }
+  showLess(value) {
+    if (value == true) {
+      this.showHide = false;
+    } else {
+      this.showHide = true;
+    }
+  }
   onNomineeChange(value) {
+    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+      return o.nomineePercentageShare;
+    });
 
+    if (this.nexNomineePer > 100) {
+      this.showError = true
+      console.log('show error Percent cannot be more than 100%')
+    } else {
+      this.showError = false
+    }
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -105,23 +127,27 @@ export class NpsSummaryPortfolioComponent implements OnInit {
         accountPreferenceId: null, approxContribution: null
       })]),
       npsNomineesList: this.fb.array([this.fb.group({
-        nomineeName: null, nomineePercentageShare: null,
+        nomineeName: null, nomineePercentageShare: [null, [Validators.required, Validators.min(1)]],
       })]),
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
     this.ownerData = this.summaryNPS.controls;
-    if (data != undefined) {
+    this.nomineeData = this.summaryNPS.controls;
+    if (data.futureContributionList != undefined || data.npsNomineesList != undefined) {
       data.futureContributionList.forEach(element => {
         this.summaryNPS.controls.futureContributionList.push(this.fb.group({
           frequencyId: [(element.frequencyId) + "", [Validators.required]],
           accountPreferenceId: [(element.accountPreferenceId + ""), Validators.required],
-          approxContribution: [(element.approxContribution), Validators.required]
+          approxContribution: [(element.approxContribution), Validators.required],
+          id:[element.id,[Validators.required]]
         }))
       })
       data.npsNomineesList.forEach(element => {
         this.summaryNPS.controls.npsNomineesList.push(this.fb.group({
           nomineeName: [(element.nomineeName), [Validators.required]],
+
           nomineePercentageShare: [element.nomineePercentageShare, Validators.required],
+          id:[element.id,[Validators.required]]
         }))
       })
       this.nominee.removeAt(0);
@@ -153,13 +179,37 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     return this.summaryNPS.get('npsNomineesList') as FormArray;
   }
   addNominee() {
-    this.nominee.push(this.fb.group({
-      nomineeName: null, nomineePercentageShare: null,
-    }));
+    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+      return o.nomineePercentageShare;
+    });
+
+    if (this.nexNomineePer > 100) {
+      this.showError = true
+      console.log('show error Percent cannot be more than 100%')
+    } else {
+      this.showError = false
+    }
+    if (this.showError == false) {
+      this.nominee.push(this.fb.group({
+        nomineeName: null, nomineePercentageShare: null,
+      }));
+    }
+   
+
   }
   removeNominee(item) {
     if (this.nominee.value.length > 1) {
       this.nominee.removeAt(item);
+    }
+    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+      return o.nomineePercentageShare;
+    });
+
+    if (this.nexNomineePer > 100) {
+      this.showError = true
+      console.log('show error Percent cannot be more than 100%')
+    } else {
+      this.showError = false
     }
   }
   summaryNPSSave() {

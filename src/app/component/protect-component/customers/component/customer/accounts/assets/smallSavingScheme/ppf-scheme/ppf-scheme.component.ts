@@ -13,6 +13,7 @@ import { UtilService } from 'src/app/services/util.service';
 export class PPFSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
+  noData: string;
 
   constructor(private cusService: CustomerService, private eventService: EventService,private subInjectService:SubscriptionInject) { }
   displayedColumns = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
@@ -35,11 +36,16 @@ export class PPFSchemeComponent implements OnInit {
   }
   getPpfSchemeDataResponse(data) {
     console.log(data)
-    this.datasource = data
+    if(data.PPFList.length!=0){
+      this.datasource=data.PPFList
+    }else{
+      this.noData="No Scheme Found";
+    }
   }
-  opnAddPPF(value) {
+  opnAddPPF(value,data) {
     const fragmentData = {
       Flag:value,
+      data,
       id: 1,
       state: 'open'
     };
@@ -47,6 +53,7 @@ export class PPFSchemeComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getPpfSchemeData();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 

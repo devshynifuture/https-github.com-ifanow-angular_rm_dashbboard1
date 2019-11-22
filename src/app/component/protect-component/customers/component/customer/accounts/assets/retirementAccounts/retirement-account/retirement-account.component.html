@@ -1,437 +1,453 @@
+<div class="wrapper-8">
+  <div class="row pt-28 pb-28">
+    <div class="col-md-8 pl-0">
 
-    <div class="wrapper-8">
-        <div class="row pt-28 pb-28">
-            <div class="col-md-8 pl-0" id="custom-toggle">
-                <mat-button-toggle-group  value = "1"(change)="getfixedIncomeData($event.value)" multiple=false>
-                    <mat-button-toggle value='1'
-                        [ngClass]="showRequring == '1' ? 'btn-default text-custom br-0 text-primary' : 'btn-default text-custom br-0'">
-                        EPF</mat-button-toggle>
-                    <mat-button-toggle value='2'
-                        [ngClass]="showRequring == '2' ? 'btn-default text-custom br-0 text-primary' : 'btn-default text-custom br-0'">
-                        NPS</mat-button-toggle>
-                    <mat-button-toggle value='3'
-                        [ngClass]="showRequring == '3' ? 'btn-default text-custom br-0 text-primary' : 'btn-default text-custom br-0'">
-                        Gratuity</mat-button-toggle>
-                    <mat-button-toggle value='4'
-                        [ngClass]="showRequring == '4' ? 'btn-default text-custom br-0 text-primary' : 'btn-default text-custom br-0'">
-                        Superannuation</mat-button-toggle>
-                    <mat-button-toggle value='5'
-                        [ngClass]="showRequring == '5' ? 'btn-default text-custom br-0 text-primary' : 'btn-default text-custom br-0'">
-                        EPS</mat-button-toggle>
-                </mat-button-toggle-group>
-            </div>
-            <div class="col-md-4 right text-right  pr-0">
-                <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
-                    Overview Report
-                    <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Overview Report</button>
-                    <button mat-menu-item>Summary</button>
-                    <button mat-menu-item>All Transactions</button>
-                    <button mat-menu-item>Unrealized Transactions</button>
-                    <button mat-menu-item>Capital Gains</button>
-                    <button mat-menu-item>Goal Linkage</button>
-                </mat-menu>
-            </div>
-        </div>
-        <div *ngIf="showRequring == '1'">
-            <div class="row">
-                <div class="col-md-4 p-0">
-                    <h4 class="m-0 text-black roboto pt-8">Employees providend fund (EPF)</h4>
-                </div>
-                <div class="col-md-8 p-0 right text-right">
-                    <img src="assets/images/svg/download-bordered.svg" class="c-p">
-                    <img src="assets/images/svg/up-down.svg" class="">
-                    <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
+      <button mat-button (click)="getfixedIncomeData(value = '1')"
+        [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}"
+        class="br-0 text-custom">
+        EPF</button>
+      <button mat-button (click)="getfixedIncomeData(value = '2')"
+        [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}"
+        class="br-0 text-custom">
+        NPS</button>
+      <button mat-button (click)="getfixedIncomeData(value = '3')"
+        [ngClass]="{'mat-stroked-button': showRequring == '3','text-primary':showRequring == '3'}"
+        class="br-0 text-custom">
+        Gratuity</button>
+      <button mat-button (click)="getfixedIncomeData(value = '4')"
+        [ngClass]="{'mat-stroked-button': showRequring == '4','text-primary':showRequring == '4'}"
+        class="br-0 text-custom">
+        Superannuation</button>
+      <button mat-button (click)="getfixedIncomeData(value = '5')"
+        [ngClass]="{'mat-stroked-button': showRequring == '5','text-primary':showRequring == '5'}"
+        class="br-0 text-custom">
+        EPS</button>
 
-                    <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
-                            class="material-icons">filter_list</i>FILTERS</button>
-                    <button mat-stroked-button class="btn-primary addon v-middle" (click)="openRetirement('addEPF','open')"><i
-                            class="material-icons">add</i>ADD NEW</button>
-                </div>
-            </div>
-            <div class="example-container mt-8 real-estate">
-                <table mat-table [dataSource]="dataEPSList" id="table-low">
-
-                    <ng-container matColumnDef="no">
-                        <th mat-header-cell *matHeaderCellDef class="br"> No </th>
-                        <td mat-cell *matCellDef="let element let i = index" class="br"> {{i+1}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="owner">
-                        <th mat-header-cell *matHeaderCellDef class="br t-18"> Owner </th>
-                        <td mat-cell *matCellDef="let element" class="br t-18"> {{element.ownerName}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="cvalue">
-                        <th mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Current value </th>
-                        <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{element.currentValue}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="emp">
-                        <th mat-header-cell *matHeaderCellDef class="br text-right"> Employee’s contribution </th>
-                        <td mat-cell *matCellDef="let element" class="br text-right"> {{element.employeesMonthlyContribution}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="empc">
-                        <th mat-header-cell *matHeaderCellDef class="br text-right"> Employer’s contribution </th>
-                        <td mat-cell *matCellDef="let element" class="br text-right"> {{element.employersMonthlyContribution}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="rate">
-                        <th mat-header-cell *matHeaderCellDef class="br text-right t-7"> Rate of return </th>
-                        <td mat-cell *matCellDef="let element" class="br text-right t-7"> {{element.rateOfReturns}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="bal">
-                        <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Balance mentioned </th>
-                        <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.currentEpfBalance}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="bacla">
-                        <th mat-header-cell *matHeaderCellDef class="br t-5 text-left">Balance
-                            as on </th>
-                        <td mat-cell *matCellDef="let element" class="br t-5 text-left"> {{element.balanceAsOnDate}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="year">
-                        <th mat-header-cell *matHeaderCellDef class="br text-right">Maturity year </th>
-                        <td mat-cell *matCellDef="let element" class="br text-right"> {{element.maturityYear}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="desc">
-                        <th mat-header-cell *matHeaderCellDef class="br t-10"> Description </th>
-                        <td mat-cell *matCellDef="let element" class="br t-10"> {{element.description}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="status">
-                        <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
-                        <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.status}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="icons">
-                        <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                        <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black"
-                                [matMenuTriggerFor]="menubank">
-                                more_vert
-                            </i>
-                            <mat-menu #menubank="matMenu">
-                                <button mat-menu-item (click)="openRetirement('addEPF','open',element)">Edit</button>
-                                <button mat-menu-item>Detailed view</button>
-                                <button mat-menu-item>Activity</button>
-                                <button mat-menu-item>Delete</button>
-                            </mat-menu>
-                        </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns11; sticky: true"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns11;"></tr>
-                </table>
-            </div>
-        </div>
-        <div class="wrapper-8" *ngIf="showRequring == '2'">
-                <div class="row">
-                  <div class="col-md-4 p-0">
-                    <h4 class="m-0 text-black roboto pt-8">National pension system (NPS)</h4>
-                  </div>
-                  <div class="col-md-8 p-0 right text-right">
-                    <img src="assets/images/svg/download-bordered.svg" class="c-p">
-                    <img src="assets/images/svg/up-down.svg" class="">
-                    <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
-                    <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i class="material-icons">filter_list</i>FILTERS</button>
-                    <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"><i class="material-icons">add</i>ADD NEW</button>
-                    <mat-menu #menu1="matMenu" class="add-new">
-                      <button mat-menu-item class="b-b" (click)="openRetirement('addSummaryPort','open')">
-                        <div class="row">
-                          <div class="col-md-2 pr-8 text-right">
-                            <img src="assets/images/svg/dark-three-dot.svg">
-                          </div>
-                          <div class="col-md-10">
-                            <p class="m-0 text-black">Portfolio summary</p>
-                            <p class="m-0 f-13 pt-4 text-custom">Add just the overall portfolio
-                              <br> summary. Time saver!
-                            </p>
-                          </div>
-                        </div>
-                      </button>
-                      <button mat-menu-item class="b-b" (click)="openRetirement('addSchemeHoldings','open')">
-                        <div class="row">
-                          <div class="col-md-2 pr-8 text-right">
-                            <img src="assets/images/svg/scheme-icon.svg">
-                          </div>
-                          <div class="col-md-10">
-                            <p class="m-0 text-black">Scheme level holdins</p>
-                            <p class="m-0 pt-4 f-13 text-custom">Add only holding
-                              <br>  summay at a scheme level
-                            </p>
-                          </div>
-                        </div>
-                      </button>
-                    </mat-menu>
-                  </div>
-                </div>
-                <div class="example-container mt-8 real-estate">
-                  <table mat-table [dataSource]="dataNPSList" id="table-low">
-                    <ng-container matColumnDef="no">
-                      <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
-                      <td mat-cell *matCellDef="let element; let i = index;" class="br t-2"> {{i+1}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="owner">
-                      <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
-                      <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="cvalue">
-                      <th mat-header-cell *matHeaderCellDef class="br text-right t-17"> Current value </th>
-                      <td mat-cell *matCellDef="let element" class="br text-right t-17"> {{element.currentValuation}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="total">
-                      <th mat-header-cell *matHeaderCellDef class="br text-right"> Total contribution </th>
-                      <td mat-cell *matCellDef="let element" class="br text-right"> {{element.contributionAmount}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="account">
-                      <th mat-header-cell *matHeaderCellDef class="br text-right"> Account preference </th>
-                      <td mat-cell *matCellDef="let element" class="br text-right"> {{element.accountPreference}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="scheme">
-                      <th mat-header-cell *matHeaderCellDef class="br"> Scheme choice</th>
-                      <td mat-cell *matCellDef="let element" class="br"> {{element.schemeChoice}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="pran">
-                        <th mat-header-cell *matHeaderCellDef class="br text-left t-17">PRAN</th>
-                        <td mat-cell *matCellDef="let element" class="br text-left t-17"> {{element.pran}} </td>
-                      </ng-container>
-                    <ng-container matColumnDef="desc">
-                      <th mat-header-cell *matHeaderCellDef class="br"> Description</th>
-                      <td mat-cell *matCellDef="let element" class="br"> {{element.description}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="status">
-                      <th mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
-                      <td mat-cell *matCellDef="let element" class="br t-5 text-primary"> {{element.isActive}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="icons">
-                      <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                      <td mat-cell *matCellDef="let element" class="t-2">
-                        <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
-                        more_vert
-                        </i>
-                        <mat-menu #menubank="matMenu">
-                          <button mat-menu-item  *ngIf="element.schemeChoice != undefined"(click)="openRetirement('addSummaryPort','open',element)">Edit</button>
-                          <button mat-menu-item *ngIf="element.schemeChoice == undefined" (click)="openRetirement('addSchemeHoldings','open',element)">Edit</button>
-                          <button mat-menu-item>Detailed view</button>
-                          <button mat-menu-item>Activity</button>
-                          <button mat-menu-item>Delete</button>
-                        </mat-menu>
-                      </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns12; sticky: true"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns12;"></tr>
-                  </table>
-                </div>
-              </div>
-        <div class="wrapper-8" *ngIf="showRequring == '3'">
-                <div class="row">
-                  <div class="col-md-4 p-0">
-                    <h4 class="m-0 text-black roboto pt-8">Gratuity</h4>
-                  </div>
-                  <div class="col-md-8 p-0 right text-right">
-                    <img src="assets/images/svg/download-bordered.svg" class="c-p">
-                    <img src="assets/images/svg/up-down.svg" class="">
-                    <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
-                    <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i class="material-icons">filter_list</i>FILTERS</button>
-                    <button mat-stroked-button class="btn-primary addon v-middle" (click)= "openRetirement('addGratuity','open')"><i class="material-icons">add</i>ADD NEW</button>
-                  </div>
-                </div>
-                <div class="example-container mt-8 real-estate">
-                  <table mat-table [dataSource]="dataGratuityList" id="table-low">
-                    <ng-container matColumnDef="no">
-                      <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
-                      <td mat-cell *matCellDef="let element let i = index" class="br t-2"> {{i+1}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="owner">
-                      <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
-                      <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="name">
-                      <th mat-header-cell *matHeaderCellDef class="br text-right t-24"> Name of the organization </th>
-                      <td mat-cell *matCellDef="let element" class="br text-right t-24"> {{element.organizationName}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="number">
-                      <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Number of completed years </th>
-                      <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.yearsCompleted}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="year">
-                      <th mat-header-cell *matHeaderCellDef class="br text-right t-8"> Year of receipt </th>
-                      <td mat-cell *matCellDef="let element" class="br text-right t-8"> {{element.yearReceipt}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="amt">
-                      <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Amount recieved</th>
-                      <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.amountReceived}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="reason">
-                      <th mat-header-cell *matHeaderCellDef class="br text-left t-18"> Reason of receipt</th>
-                      <td mat-cell *matCellDef="let element" class="br text-left t-18"> {{element.reasonOfReceipt}} </td>
-                    </ng-container>
-                    
-                    <ng-container matColumnDef="desc">
-                      <th mat-header-cell *matHeaderCellDef class="br"> Description</th>
-                      <td mat-cell *matCellDef="let element" class="br"> {{element.description}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="status">
-                      <th mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
-                      <td mat-cell *matCellDef="let element" class="br t-5 text-primary"> {{element.isActive}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="icons">
-                      <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                      <td mat-cell *matCellDef="let element" class="t-2">
-                        <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
-                        more_vert
-                        </i>
-                        <mat-menu #menubank="matMenu">
-                          <button mat-menu-item (click)= "openRetirement('addGratuity','open', element)">Edit</button>
-                          <button mat-menu-item>Detailed view</button>
-                          <button mat-menu-item>Activity</button>
-                          <button mat-menu-item>Delete</button>
-                        </mat-menu>
-                      </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns13; sticky: true"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns13;"></tr>
-                  </table>
-                </div>
-              </div>
-        <div class="wrapper-8" *ngIf="showRequring == '4'">
-            <div class="row">
-                <div class="col-md-4 p-0">
-                    <h4 class="m-0 text-black roboto pt-8">Superannuation</h4>
-                </div>
-                <div class="col-md-8 p-0 right text-right">
-                    <img src="assets/images/svg/download-bordered.svg" class="c-p">
-                    <img src="assets/images/svg/up-down.svg" class="">
-                    <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
-                    <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
-                            class="material-icons">filter_list</i>FILTERS</button>
-                    <button mat-stroked-button class="btn-primary addon v-middle" (click)="openRetirement('addSuperannuation','open')"><i
-                            class="material-icons">add</i>ADD NEW</button>
-                </div>
-            </div>
-            <div class="example-container mt-8 real-estate">
-                <table mat-table [dataSource]="dataSuperannuationList" id="table-low">
-                    <ng-container matColumnDef="no">
-                        <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
-                        <td mat-cell *matCellDef="let element let i = index" class="br t-2"> {{i+1}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="owner">
-                        <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
-                        <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="aemp">
-                        <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Annual employer... </th>
-                        <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.annualEmployerContribution}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="aempe">
-                        <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Annual employee... </th>
-                        <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.annualEmployeeContribution}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="rate">
-                        <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Assumed rate... </th>
-                        <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.assumedRateOfReturn}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="grate">
-                        <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Growth rate
-                            employer...</th>
-                        <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.growthRateEmployerContribution}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="grateemp">
-                        <th mat-header-cell *matHeaderCellDef class="br text-left t-12"> Growth rate
-                            employee...</th>
-                        <td mat-cell *matCellDef="let element" class="br text-left t-12"> {{element.growthRateEmployeeContribution}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="date">
-                        <th mat-header-cell *matHeaderCellDef class="br text-left t-10"> Date of first contribution</th>
-                        <td mat-cell *matCellDef="let element" class="br text-left t-10"> {{element.firstContributionDate}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="desc">
-                        <th mat-header-cell *matHeaderCellDef class="br t-18"> Description</th>
-                        <td mat-cell *matCellDef="let element" class="br t-18"> {{element.description}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="status">
-                        <th mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
-                        <td mat-cell *matCellDef="let element" class="br t-5 text-primary"> {{element.isActive}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="icons">
-                        <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                        <td mat-cell *matCellDef="let element" class="t-2">
-                            <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
-                                more_vert
-                            </i>
-                            <mat-menu #menubank="matMenu">
-                                <button mat-menu-item (click)="openRetirement('addSuperannuation','open',element)">Edit</button>
-                                <button mat-menu-item>Detailed view</button>
-                                <button mat-menu-item>Activity</button>
-                                <button mat-menu-item>Delete</button>
-                            </mat-menu>
-                        </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns14; sticky: true"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns14;"></tr>
-                </table>
-            </div>
-        </div>
-    <div class="wrapper-8" *ngIf="showRequring == '5'">
-        <div class="row">
-            <div class="col-md-4 p-0">
-                <h4 class="m-0 text-black roboto pt-8">EPS</h4>
-            </div>
-            <div class="col-md-8 p-0 right text-right">
-                <img src="assets/images/svg/download-bordered.svg" class="c-p">
-                <img src="assets/images/svg/up-down.svg" class="">
-                <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
-                <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
-                        class="material-icons">filter_list</i>FILTERS</button>
-                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openRetirement('addEPS','open')"><i
-                        class="material-icons">add</i>ADD NEW</button>
-            </div>
-        </div>
-        <div class="example-container mt-8 real-estate">
-            <table mat-table [dataSource]="EPSList" id="table-low">
-                <ng-container matColumnDef="no">
-                    <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
-                    <td mat-cell *matCellDef="let element let i = index" class="br t-2"> {{i+1}} </td>
-                </ng-container>
-                <ng-container matColumnDef="owner">
-                    <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
-                    <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
-                </ng-container>
-                <ng-container matColumnDef="nvalue">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Notional value </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.notionalValue}} </td>
-                </ng-container>
-                <ng-container matColumnDef="date">
-                    <th mat-header-cell *matHeaderCellDef class="br text-left t-12"> Commencement date </th>
-                    <td mat-cell *matCellDef="let element" class="br text-left t-12"> {{element.commencementDate | date:'dd/MM/yyyy'}} </td>
-                </ng-container>
-                <ng-container matColumnDef="amt">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right t-18"> Pension amount </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right t-18"> {{element.pensionAmount}} </td>
-                </ng-container>
-                <ng-container matColumnDef="pay">
-                    <th mat-header-cell *matHeaderCellDef class="br t-16"> Pension payout frequency</th>
-                    <td mat-cell *matCellDef="let element" class="br t-16"> {{element.pensionPayoutFrequencyId}} </td>
-                </ng-container>
-                <ng-container matColumnDef="desc">
-                    <th mat-header-cell *matHeaderCellDef class="br t-18"> Description</th>
-                    <td mat-cell *matCellDef="let element" class="br t-18"> {{element.description}} </td>
-                </ng-container>
-                <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
-                    <td mat-cell *matCellDef="let element" class="br t-5 text-primary"> {{element.active}} </td>
-                </ng-container>
-                <ng-container matColumnDef="icons">
-                    <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                    <td mat-cell *matCellDef="let element" class="t-2">
-                        <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
-                            more_vert
-                        </i>
-                        <mat-menu #menubank="matMenu">
-                            <button mat-menu-item (click)="openRetirement('addEPS','open',element)">Edit</button>
-                            <button mat-menu-item>Detailed view</button>
-                            <button mat-menu-item>Activity</button>
-                            <button mat-menu-item>Delete</button>
-                        </mat-menu>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns15; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns15;"></tr>
-            </table>
-        </div>
     </div>
+    <div class="col-md-4 right text-right  pr-0">
+      <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
+        Overview Report
+        <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Overview Report</button>
+        <button mat-menu-item>Summary</button>
+        <button mat-menu-item>All Transactions</button>
+        <button mat-menu-item>Unrealized Transactions</button>
+        <button mat-menu-item>Capital Gains</button>
+        <button mat-menu-item>Goal Linkage</button>
+      </mat-menu>
+    </div>
+  </div>
+  <div *ngIf="showRequring == '1'">
+    <div class="row">
+      <div class="col-md-4 p-0">
+        <h4 class="m-0 text-black roboto pt-8">Employees providend fund (EPF)</h4>
+      </div>
+      <div class="col-md-8 p-0 right text-right">
+        <img src="assets/images/svg/download-bordered.svg" class="c-p">
+        <img src="assets/images/svg/up-down.svg" class="">
+        <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
+
+        <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
+            class="material-icons c-p">filter_list</i>FILTERS</button>
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openRetirement('addEPF','open')"><i
+            class="material-icons c-p">add</i>ADD NEW</button>
+      </div>
+    </div>
+    <div class="example-container mt-8 real-estate">
+      <table mat-table [dataSource]="dataEPSList" id="table-low">
+
+        <ng-container matColumnDef="no">
+          <th mat-header-cell *matHeaderCellDef class="br"> No </th>
+          <td mat-cell *matCellDef="let element let i = index" class="br"> {{i+1}} </td>
+        </ng-container>
+        <ng-container matColumnDef="owner">
+          <th mat-header-cell *matHeaderCellDef class="br t-18"> Owner </th>
+          <td mat-cell *matCellDef="let element" class="br t-18"> {{element.ownerName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="cvalue">
+          <th mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Current value </th>
+          <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{element.currentValue}} </td>
+        </ng-container>
+        <ng-container matColumnDef="emp">
+          <th mat-header-cell *matHeaderCellDef class="br text-right"> Employee’s contribution </th>
+          <td mat-cell *matCellDef="let element" class="br text-right"> {{element.employeesMonthlyContribution}} </td>
+        </ng-container>
+        <ng-container matColumnDef="empc">
+          <th mat-header-cell *matHeaderCellDef class="br text-right"> Employer’s contribution </th>
+          <td mat-cell *matCellDef="let element" class="br text-right"> {{element.employersMonthlyContribution}} </td>
+        </ng-container>
+        <ng-container matColumnDef="rate">
+          <th mat-header-cell *matHeaderCellDef class="br text-right t-7"> Rate of return </th>
+          <td mat-cell *matCellDef="let element" class="br text-right t-7"> {{element.rateOfReturns}} </td>
+        </ng-container>
+        <ng-container matColumnDef="bal">
+          <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Balance mentioned </th>
+          <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.currentEpfBalance}} </td>
+        </ng-container>
+        <ng-container matColumnDef="bacla">
+          <th mat-header-cell *matHeaderCellDef class="br t-5 text-left">Balance
+            as on </th>
+          <td mat-cell *matCellDef="let element" class="br t-5 text-left">
+            {{element.balanceAsOnDate | date:'dd/MM/yyyy'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="year">
+          <th mat-header-cell *matHeaderCellDef class="br text-right">Maturity year </th>
+          <td mat-cell *matCellDef="let element" class="br text-right"> {{element.maturityYear}} </td>
+        </ng-container>
+        <ng-container matColumnDef="desc">
+          <th mat-header-cell *matHeaderCellDef class="br t-10"> Description </th>
+          <td mat-cell *matCellDef="let element" class="br t-10"> {{element.description}} </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
+          <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.status}} </td>
+        </ng-container>
+        <ng-container matColumnDef="icons">
+          <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
+          <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black"
+              [matMenuTriggerFor]="menubank">
+              more_vert
+            </i>
+            <mat-menu #menubank="matMenu">
+              <button mat-menu-item class="c-p" (click)="openRetirement('addEPF','open',element)">Edit</button>
+              <button mat-menu-item class="c-p">Detailed view</button>
+              <button mat-menu-item class="c-p">Activity</button>
+              <button mat-menu-item class="c-p">Delete</button>
+            </mat-menu>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns11; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns11;"></tr>
+      </table>
+    </div>
+  </div>
+  <div class="wrapper-8" *ngIf="showRequring == '2'">
+    <div class="row">
+      <div class="col-md-4 p-0">
+        <h4 class="m-0 text-black roboto pt-8">National pension system (NPS)</h4>
+      </div>
+      <div class="col-md-8 p-0 right text-right">
+        <img src="assets/images/svg/download-bordered.svg" class="c-p">
+        <img src="assets/images/svg/up-down.svg" class="">
+        <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
+        <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
+            class="material-icons">filter_list</i>FILTERS</button>
+        <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"><i
+            class="material-icons">add</i>ADD NEW</button>
+        <mat-menu #menu1="matMenu" class="add-new">
+          <button mat-menu-item class="b-b" (click)="openRetirement('addSummaryPort','open')">
+            <div class="row">
+              <div class="col-md-2 pr-8 text-right">
+                <img src="assets/images/svg/dark-three-dot.svg">
+              </div>
+              <div class="col-md-10">
+                <p class="m-0 text-black">Portfolio summary</p>
+                <p class="m-0 f-13 pt-4 text-custom">Add just the overall portfolio
+                  <br> summary. Time saver!
+                </p>
+              </div>
+            </div>
+          </button>
+          <button mat-menu-item class="b-b" (click)="openRetirement('addSchemeHoldings','open')">
+            <div class="row">
+              <div class="col-md-2 pr-8 text-right">
+                <img src="assets/images/svg/scheme-icon.svg">
+              </div>
+              <div class="col-md-10">
+                <p class="m-0 text-black">Scheme level holdins</p>
+                <p class="m-0 pt-4 f-13 text-custom">Add only holding
+                  <br> summay at a scheme level
+                </p>
+              </div>
+            </div>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+    <div class="example-container mt-8 real-estate">
+      <table mat-table [dataSource]="dataNPSList" id="table-low">
+        <ng-container matColumnDef="no">
+          <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
+          <td mat-cell *matCellDef="let element; let i = index;" class="br t-2"> {{i+1}} </td>
+        </ng-container>
+        <ng-container matColumnDef="owner">
+          <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
+          <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="cvalue">
+          <th mat-header-cell *matHeaderCellDef class="br text-right t-17"> Current value </th>
+          <td mat-cell *matCellDef="let element" class="br text-right t-17"> {{element.currentValuation}} </td>
+        </ng-container>
+        <ng-container matColumnDef="total">
+          <th mat-header-cell *matHeaderCellDef class="br text-right"> Total contribution </th>
+          <td mat-cell *matCellDef="let element" class="br text-right"> {{element.contributionAmount}} </td>
+        </ng-container>
+        <ng-container matColumnDef="scheme">
+          <th mat-header-cell *matHeaderCellDef class="br"> Scheme choice</th>
+          <td mat-cell *matCellDef="let element" class="br">
+            {{(element.schemeChoice == '1')?'Active-choice investment':(element.schemeChoice == '2')?'Auto-choice investment':'-'}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="pran">
+          <th mat-header-cell *matHeaderCellDef class="br text-left t-17">PRAN</th>
+          <td mat-cell *matCellDef="let element" class="br text-left t-17"> {{element.pran}} </td>
+        </ng-container>
+        <ng-container matColumnDef="desc">
+          <th mat-header-cell *matHeaderCellDef class="br"> Description</th>
+          <td mat-cell *matCellDef="let element" class="br"> {{element.description}} </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
+          <td mat-cell *matCellDef="let element" class="br t-5 text-primary"> {{element.isActive}} </td>
+        </ng-container>
+        <ng-container matColumnDef="icons">
+          <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
+          <td mat-cell *matCellDef="let element" class="t-2">
+            <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+              more_vert
+            </i>
+            <mat-menu #menubank="matMenu">
+              <button mat-menu-item class="c-p" *ngIf="element.schemeChoice != undefined"
+                (click)="openRetirement('addSummaryPort','open',element)">Edit</button>
+              <button mat-menu-item class="c-p" *ngIf="element.schemeChoice == undefined"
+                (click)="openRetirement('addSchemeHoldings','open',element)">Edit</button>
+              <button mat-menu-item class="c-p">Detailed view</button>
+              <button mat-menu-item class="c-p">Activity</button>
+              <button mat-menu-item class="c-p">Delete</button>
+            </mat-menu>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns12; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns12;"></tr>
+      </table>
+    </div>
+  </div>
+  <div class="wrapper-8" *ngIf="showRequring == '3'">
+    <div class="row">
+      <div class="col-md-4 p-0">
+        <h4 class="m-0 text-black roboto pt-8">Gratuity</h4>
+      </div>
+      <div class="col-md-8 p-0 right text-right">
+        <img src="assets/images/svg/download-bordered.svg" class="c-p">
+        <img src="assets/images/svg/up-down.svg" class="">
+        <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
+        <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
+            class="material-icons">filter_list</i>FILTERS</button>
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openRetirement('addGratuity','open')"><i
+            class="material-icons">add</i>ADD NEW</button>
+      </div>
+    </div>
+    <div class="example-container mt-8 real-estate">
+      <table mat-table [dataSource]="dataGratuityList" id="table-low">
+        <ng-container matColumnDef="no">
+          <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
+          <td mat-cell *matCellDef="let element let i = index" class="br t-2"> {{i+1}} </td>
+        </ng-container>
+        <ng-container matColumnDef="owner">
+          <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
+          <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef class="br text-right t-24"> Name of the organization </th>
+          <td mat-cell *matCellDef="let element" class="br text-right t-24"> {{element.organizationName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="number">
+          <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Number of completed years </th>
+          <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.yearsCompleted}} </td>
+        </ng-container>
+        <ng-container matColumnDef="year">
+          <th mat-header-cell *matHeaderCellDef class="br text-right t-8"> Year of receipt </th>
+          <td mat-cell *matCellDef="let element" class="br text-right t-8"> {{element.yearReceipt}} </td>
+        </ng-container>
+        <ng-container matColumnDef="amt">
+          <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Amount recieved</th>
+          <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.amountReceived}} </td>
+        </ng-container>
+        <ng-container matColumnDef="reason">
+          <th mat-header-cell *matHeaderCellDef class="br text-left t-18"> Reason of receipt</th>
+          <td mat-cell *matCellDef="let element" class="br text-left t-18"> {{element.reasonOfReceipt}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="desc">
+          <th mat-header-cell *matHeaderCellDef class="br"> Description</th>
+          <td mat-cell *matCellDef="let element" class="br"> {{element.description}} </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
+          <td mat-cell *matCellDef="let element" class="br t-5 text-primary"> {{element.isActive}} </td>
+        </ng-container>
+        <ng-container matColumnDef="icons">
+          <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
+          <td mat-cell *matCellDef="let element" class="t-2">
+            <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+              more_vert
+            </i>
+            <mat-menu #menubank="matMenu">
+              <button mat-menu-item class="c-p" (click)="openRetirement('addGratuity','open', element)">Edit</button>
+              <button mat-menu-item class="c-p">Detailed view</button>
+              <button mat-menu-item class="c-p">Activity</button>
+              <button mat-menu-item class="c-p">Delete</button>
+            </mat-menu>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns13; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns13;"></tr>
+      </table>
+    </div>
+  </div>
+  <div class="wrapper-8" *ngIf="showRequring == '4'">
+    <div class="row">
+      <div class="col-md-4 p-0">
+        <h4 class="m-0 text-black roboto pt-8">Superannuation</h4>
+      </div>
+      <div class="col-md-8 p-0 right text-right">
+        <img src="assets/images/svg/download-bordered.svg" class="c-p">
+        <img src="assets/images/svg/up-down.svg" class="">
+        <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
+        <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
+            class="material-icons">filter_list</i>FILTERS</button>
+        <button mat-stroked-button class="btn-primary addon v-middle"
+          (click)="openRetirement('addSuperannuation','open')"><i class="material-icons">add</i>ADD NEW</button>
+      </div>
+    </div>
+    <div class="example-container mt-8 real-estate">
+      <table mat-table [dataSource]="dataSuperannuationList" id="table-low">
+        <ng-container matColumnDef="no">
+          <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
+          <td mat-cell *matCellDef="let element let i = index" class="br t-2"> {{i+1}} </td>
+        </ng-container>
+        <ng-container matColumnDef="owner">
+          <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
+          <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="aemp">
+          <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Annual employer... </th>
+          <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.annualEmployerContribution}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="aempe">
+          <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Annual employee... </th>
+          <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.annualEmployeeContribution}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="rate">
+          <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Assumed rate... </th>
+          <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.assumedRateOfReturn}} </td>
+        </ng-container>
+        <ng-container matColumnDef="grate">
+          <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Growth rate
+            employer...</th>
+          <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.growthRateEmployerContribution}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="grateemp">
+          <th mat-header-cell *matHeaderCellDef class="br text-left t-12"> Growth rate
+            employee...</th>
+          <td mat-cell *matCellDef="let element" class="br text-left t-12"> {{element.growthRateEmployeeContribution}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef class="br text-left t-10"> Date of first contribution</th>
+          <td mat-cell *matCellDef="let element" class="br text-left t-10">
+            {{element.firstContributionDate | date:'dd/MM/yyyy'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="desc">
+          <th mat-header-cell *matHeaderCellDef class="br t-18"> Description</th>
+          <td mat-cell *matCellDef="let element" class="br t-18"> {{element.description}} </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
+          <td mat-cell *matCellDef="let element" class="br t-5 text-primary"> {{element.isActive}} </td>
+        </ng-container>
+        <ng-container matColumnDef="icons">
+          <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
+          <td mat-cell *matCellDef="let element" class="t-2">
+            <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+              more_vert
+            </i>
+            <mat-menu #menubank="matMenu">
+              <button mat-menu-item class="c-p"
+                (click)="openRetirement('addSuperannuation','open',element)">Edit</button>
+              <button mat-menu-item class="c-p">Detailed view</button>
+              <button mat-menu-item class="c-p">Activity</button>
+              <button mat-menu-item class="c-p">Delete</button>
+            </mat-menu>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns14; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns14;"></tr>
+      </table>
+    </div>
+  </div>
+  <div class="wrapper-8" *ngIf="showRequring == '5'">
+    <div class="row">
+      <div class="col-md-4 p-0">
+        <h4 class="m-0 text-black roboto pt-8">EPS</h4>
+      </div>
+      <div class="col-md-8 p-0 right text-right">
+        <img src="assets/images/svg/download-bordered.svg" class="c-p">
+        <img src="assets/images/svg/up-down.svg" class="">
+        <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
+        <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
+            class="material-icons">filter_list</i>FILTERS</button>
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openRetirement('addEPS','open')"><i
+            class="material-icons">add</i>ADD NEW</button>
+      </div>
+    </div>
+    <div class="example-container mt-8 real-estate">
+      <table mat-table [dataSource]="EPSList" id="table-low">
+        <ng-container matColumnDef="no">
+          <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
+          <td mat-cell *matCellDef="let element let i = index" class="br t-2"> {{i+1}} </td>
+        </ng-container>
+        <ng-container matColumnDef="owner">
+          <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
+          <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="nvalue">
+          <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Notional value </th>
+          <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.notionalValue}} </td>
+        </ng-container>
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef class="br text-left t-12"> Commencement date </th>
+          <td mat-cell *matCellDef="let element" class="br text-left t-12">
+            {{element.commencementDate | date:'dd/MM/yyyy'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="amt">
+          <th mat-header-cell *matHeaderCellDef class="br text-right t-18"> Pension amount </th>
+          <td mat-cell *matCellDef="let element" class="br text-right t-18"> {{element.pensionAmount}} </td>
+        </ng-container>
+        <ng-container matColumnDef="pay">
+          <th mat-header-cell *matHeaderCellDef class="br t-16"> Pension payout frequency</th>
+          <td mat-cell *matCellDef="let element" class="br t-16"> {{element.pensionPayoutFrequencyId}} </td>
+        </ng-container>
+        <ng-container matColumnDef="desc">
+          <th mat-header-cell *matHeaderCellDef class="br t-18"> Description</th>
+          <td mat-cell *matCellDef="let element" class="br t-18"> {{element.description}} </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
+          <td mat-cell *matCellDef="let element" class="br t-5 text-primary"> {{element.active}} </td>
+        </ng-container>
+        <ng-container matColumnDef="icons">
+          <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
+          <td mat-cell *matCellDef="let element" class="t-2">
+            <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+              more_vert
+            </i>
+            <mat-menu #menubank="matMenu">
+              <button mat-menu-item class="c-p" (click)="openRetirement('addEPS','open',element)">Edit</button>
+              <button mat-menu-item class="c-p">Detailed view</button>
+              <button mat-menu-item class="c-p">Activity</button>
+              <button mat-menu-item class="c-p">Delete</button>
+            </mat-menu>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns15; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns15;"></tr>
+      </table>
+    </div>
+  </div>
 </div>

@@ -21,7 +21,6 @@ import {CreateSubscriptionComponent} from './subscription/common-subscription-co
 import {PlanRightsliderComponent} from './subscription/common-subscription-component/plan-rightslider/plan-rightslider.component';
 import {BillerProfileAdvisorComponent} from './subscription/common-subscription-component/biller-profile-advisor/biller-profile-advisor.component';
 import {TermsAgreementComponent} from './subscription/common-subscription-component/terms-agreement/terms-agreement.component';
-import {ModifyFeeStructureComponent} from './subscription/common-subscription-component/modify-fee-structure/modify-fee-structure.component';
 import {SubscriptionCompletenessComponent} from './subscription/dashboard-subscription/subscription-completeness/subscription-completeness.component';
 import {AddStructureComponent} from './subscription/common-subscription-component/add-structure/add-structure.component';
 import {ModulesComponent} from './subscription/common-subscription-component/modules/modules.component';
@@ -69,6 +68,7 @@ import {CommonComponentModule} from '../../common-component/common-component.mod
 import {CustomDirectiveModule} from '../../../../common/directives/common-directive.module';
 import {CommonModule} from '@angular/common';
 import {SubscriptionRoutingModule} from "./subscription-routing.module";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 export const componentList = [SubscriptionComponent,
   InvoicePdfDocumentComponent,
@@ -99,7 +99,6 @@ export const componentList = [SubscriptionComponent,
   ModulesComponent,
   AddStructureComponent,
   SubscriptionCompletenessComponent,
-  ModifyFeeStructureComponent,
   TermsAgreementComponent,
   InvoiceHistoryComponent,
   BillerProfileAdvisorComponent,
@@ -130,6 +129,7 @@ export const componentList = [SubscriptionComponent,
 @NgModule({
   declarations: componentList,
   imports: [
+    BrowserAnimationsModule,
     MaterialModule,
     CommonModule,
     // BrowserModule,
