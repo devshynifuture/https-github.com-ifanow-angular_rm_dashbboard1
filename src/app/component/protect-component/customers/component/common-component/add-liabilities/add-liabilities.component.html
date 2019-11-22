@@ -2,8 +2,8 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20" *ngIf="_inputData=='Add'">ADD LIABILITIES</h4>
-            <h4 class="mb-0 wrapper-20" *ngIf="_inputData!='Add'">EDIT LIABILITIES</h4>
+            <h4 class="mb-0 wrapper-20" *ngIf="_inputData.id==undefined">ADD LIABILITIES</h4>
+            <h4 class="mb-0 wrapper-20" *ngIf="_inputData.id!=undefined">EDIT LIABILITIES</h4>
 
         </div>
         <div class="col-md-4 text-right">
@@ -297,7 +297,6 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <!-- <label class="f-16">Option</label> -->
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select formControlName="option" class="form-control br-0">
@@ -307,7 +306,6 @@
                                 <mat-error class="f-12 pt-4">
                                     is required
                                 </mat-error>
-                                <!-- <mat-hint align="end" class="f-12">{{option.value.length}}/20</mat-hint> -->
                             </mat-form-field>
 
                         </div>

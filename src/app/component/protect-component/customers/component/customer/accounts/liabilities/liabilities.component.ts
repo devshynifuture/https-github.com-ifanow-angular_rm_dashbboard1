@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 // import {UtilService} from '../../../../../../../services/util.service';
-import {EventService} from '../../../../../../../Data-service/event.service';
-import {SubscriptionInject} from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {CustomerService} from '../../customer.service';
-import {AuthService} from 'src/app/auth-service/authService';
+import { EventService } from '../../../../../../../Data-service/event.service';
+import { SubscriptionInject } from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { CustomerService } from '../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-liabilities',
@@ -30,19 +31,20 @@ export class LiabilitiesComponent implements OnInit {
   OtherData: any;
   OtherPayableData: any;
   clientId: any;
+  showLoader: boolean;
+  noData: string;
+  totalLoanAmt: any;
+  outStandingAmt: any;
+  filterData: any;
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
-              public customerService: CustomerService, public util: UtilService) {
+    public customerService: CustomerService, public util: UtilService) {
   }
-
-
   viewMode;
-
   ngOnInit() {
-
     this.viewMode = 'tab1';
     this.showFilter = 'tab1';
-    // this.showFilter='tab7';
+    this.showLoader = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getPayables();
@@ -80,7 +82,19 @@ export class LiabilitiesComponent implements OnInit {
           filterData.push(element);
         }
       });
-      this.dataSource = filterData;
+      if(filterData.length==0){
+        this.noData = "No Scheme Found";
+        this.dataSource = undefined;
+      }else{
+        this.totalLoanAmt= _.sumBy(filterData, function (o) {
+          return o.loanAmount;
+        });
+        this.outStandingAmt = _.sumBy(filterData, function (o) {
+          return o.outstandingAmount;
+        });
+        this.dataSource = filterData;
+
+      }
     }
   }
 
@@ -141,8 +155,6 @@ export class LiabilitiesComponent implements OnInit {
       }
     );
   }
-
-
   getLiability(data) {
     this.dataToShow = data.data;
     const obj = {
@@ -155,6 +167,12 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   getLiabiltyRes(data) {
+    this.showLoader = false;
+    if(data.loans==undefined){
+      this.noData = "No Scheme Found";
+    }else{
+    this.totalLoanAmt=data.totalLoanAmount;  
+    this.outStandingAmt=data.totalCapitalOutstanding;
     this.dataStore = [];
     this.dataSource = [];
     this.home = [];
@@ -164,7 +182,6 @@ export class LiabilitiesComponent implements OnInit {
     this.personal = [];
     this.mortgage = [];
     this.dataStore = data.loans;
-    console.log(data);
     this.dataSource = data.loans;
     this.storeData = data.loans.length;
     this.dataStore.forEach(element => {
@@ -181,16 +198,12 @@ export class LiabilitiesComponent implements OnInit {
       } else if (element.loanTypeId == 6) {
         this.mortgage.push(element);
       }
-
     });
-
     this.sortTable(this.dataToShow);
-
   }
-
+  }
   clickHandling() {
     console.log('something was clicked');
-    // this.openFragment('', 'plan');
     this.open('openHelp', 'liabilityright');
   }
 
@@ -199,7 +212,6 @@ export class LiabilitiesComponent implements OnInit {
   }
 
 }
-
 export interface PeriodicElement {
   no: string;
   name: string;
@@ -214,45 +226,3 @@ export interface PeriodicElement {
   status: string;
 
 }
-
-// const ELEMENT_DATA: PeriodicElement[] = [
-//   {
-//     no: '1',
-//     name: 'Rahul Jain',
-//     type: 'Home loan',
-//     loan: '60,000',
-//     ldate: '18/09/2021',
-//     today: '1,00,000',
-//     ten: '5y 9m',
-//     rate: '8.40%',
-//     emi: '60,000',
-//     fin: 'ICICI FD',
-//     status: 'MATURED'
-//   },
-//   {
-//     no: '2',
-//     name: 'Shilpa Jain',
-//     type: 'Home loan',
-//     loan: '60,000',
-//     ldate: '18/09/2021',
-//     today: '1,00,000',
-//     ten: '5y 9m',
-//     rate: '8.40%',
-//     emi: '60,000',
-//     fin: 'ICICI FD',
-//     status: 'MATURED'
-//   },
-//   {
-//     no: '',
-//     name: 'Total',
-//     type: '',
-//     loan: '1,20,000',
-//     ldate: '',
-//     today: '1,50,000',
-//     ten: '',
-//     rate: '',
-//     emi: '',
-//     fin: '',
-//     status: ''
-//   },
-// ];

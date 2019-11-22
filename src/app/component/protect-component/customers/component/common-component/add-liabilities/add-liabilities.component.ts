@@ -82,8 +82,13 @@ export class AddLiabilitiesComponent implements OnInit {
     }
   }
   close(){
-   let data=this._inputData.loanTypeId;
-    this.subInjectService.changeNewRightSliderState({ state: 'close',data });
+    if(this._inputData.loanTypeId==undefined){
+      let data=this._inputData
+      this.subInjectService.changeNewRightSliderState({ state: 'close',data });
+    }else{
+      let data=this._inputData.loanTypeId;
+      this.subInjectService.changeNewRightSliderState({ state: 'close',data });
+    }
   }
   select(data){
     this.showSelect=data.checked;
@@ -213,7 +218,7 @@ export class AddLiabilitiesComponent implements OnInit {
             }
            });
 
-           if(this._inputData=='Add'){
+           if(this._inputData.id==undefined){
             let objToSend={
               "advisorId": this.advisorId,
               "clientId": this.clientId,
@@ -266,7 +271,6 @@ export class AddLiabilitiesComponent implements OnInit {
         this.eventService.openSnackBar('Liabilities added successfully', 'OK');   
       }else{
         this.eventService.openSnackBar('Error', 'dismiss');   
-
       }
       
       }
