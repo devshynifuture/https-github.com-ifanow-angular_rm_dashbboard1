@@ -17,6 +17,14 @@ export class FixedIncomeComponent implements OnInit {
   dataSourceRecurring: any;
   dataSourceBond: any;
   clientId: any;
+  sumAmountInvested: any;
+  sumCurrentValue: any;
+  sumMaturityValue: any;
+  totalCurrentValue: any;
+  totalMarketValue: any;
+  sumAmountInvestedB: any;
+  sumCouponAmount: any;
+  sumCurrentValueB: any;
  
 
   constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService,public util:UtilService) { }
@@ -61,6 +69,10 @@ export class FixedIncomeComponent implements OnInit {
   getFixedDepositRes(data){
     console.log('getFixedDepositRes ********** ',data)
     this.dataSourceFixed = data.fixedDepositList
+    this.sumAmountInvested = data.sumAmountInvested
+    this.sumCurrentValue = data.sumCurrentValue
+    this.sumMaturityValue = data.sumMaturityValue
+
   }
   getRecurringDepositList(){
     
@@ -75,6 +87,8 @@ export class FixedIncomeComponent implements OnInit {
   getRecurringDepositRes(data){
     console.log('getRecuringDepositRes ******** ',data)
     this.dataSourceRecurring = data.recurringDeposits
+    this.totalCurrentValue = data.totalCurrentValue
+    this.totalMarketValue = data.totalMarketValue
   }
   getBondsList(){
     
@@ -89,6 +103,9 @@ export class FixedIncomeComponent implements OnInit {
   getBondsRes(data){
     console.log('getBondsRes ******** ',data)
     this.dataSourceBond = data.bondList
+    this.sumAmountInvestedB = data.sumAmountInvested
+    this.sumCouponAmount = data.sumCouponAmount 
+    this.sumCurrentValueB = data.sumCurrentValue
   }
   openPortfolioSummary(value,state,data)
   {

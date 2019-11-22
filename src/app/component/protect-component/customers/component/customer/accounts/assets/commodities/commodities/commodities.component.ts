@@ -21,6 +21,10 @@ export class CommoditiesComponent implements OnInit {
   goldList: any;
   otherCommodityList: any;
   clientId: any;
+  sumOfMarketValue: any;
+  sumOfPurchaseValue: any;
+  sumOfMarketValueOther: any;
+  sumOfPurchaseValueOther: any;
   constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService,public utils:UtilService) { }
   ngOnInit() {
     this.showRequring = '1'
@@ -51,6 +55,8 @@ export class CommoditiesComponent implements OnInit {
   getGoldRes(data){
     console.log('getGoldList @@@@',data)
     this.goldList = data.goldList
+    this.sumOfMarketValue = data.sumOfMarketValue
+    this.sumOfPurchaseValue = data.sumOfPurchaseValue
   }
   getOtherList(){
     let obj = {
@@ -64,6 +70,8 @@ export class CommoditiesComponent implements OnInit {
   getOthersRes(data){
     console.log('getOthersRes @@@@',data)
     this.otherCommodityList = data.otherCommodityList
+    this.sumOfMarketValueOther = data.sumOfMarketValue
+    this.sumOfPurchaseValueOther = data.sumOfPurchaseValue
   }
   openCommodities(value,state,data)
   {
