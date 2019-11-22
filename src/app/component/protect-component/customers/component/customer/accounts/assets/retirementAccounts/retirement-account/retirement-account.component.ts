@@ -4,7 +4,8 @@ import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
-import { MatSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-retirement-account',
@@ -12,35 +13,35 @@ import { MatSort } from '@angular/material';
   styleUrls: ['./retirement-account.component.scss']
 })
 export class RetirementAccountComponent implements OnInit {
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   showRequring = '1';
   getObject: {};
   advisorId: any;
   dataGratuityList: any;
   dataSuperannuationList: any;
-  dataEPSList: any;
   EPSList: any;
   dataNPSList: any;
   clientId: any;
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService) { }
   displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'empc', 'rate', 'bal', 'bacla', 'year', 'desc', 'status', 'icons'];
-  datasource11 = ELEMENT_DATA11;
+  datasource11;
 
   displayedColumns12 = ['no', 'owner', 'cvalue', 'total', 'scheme', 'pran', 'desc', 'status', 'icons'];
-  datasource12 = ELEMENT_DATA12;
+  datasource12;
 
   displayedColumns13 = ['no', 'owner', 'name', 'number', 'year', 'amt', 'reason', 'desc', 'status', 'icons'];
-  datasource13 = ELEMENT_DATA13;
+  datasource13;
 
   displayedColumns14 = ['no', 'owner', 'aemp', 'aempe', 'rate', 'grate', 'grateemp', 'date', 'desc', 'status', 'icons'];
-  datasource14 = ELEMENT_DATA14;
+  datasource14;
 
   displayedColumns15 = ['no', 'owner', 'nvalue', 'date', 'amt', 'pay', 'desc', 'status', 'icons'];
-  datasource15 = ELEMENT_DATA15;
+  datasource15;
 
   displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
-  datasource16 = ELEMENT_DATA16;
-
+  datasource16;
+  dataEPSList = new MatTableDataSource(this.datasource11);
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -54,7 +55,7 @@ export class RetirementAccountComponent implements OnInit {
   }
   getfixedIncomeData(value) {
     this.showRequring = value;
-    (value == '2')?this.getListNPS():(value == '3')?this.getListGratuity():(value == '4')?this.getListSuperannuation():(value == '5')?this.getListEPS():this.getListEPF()
+    (value == '2') ? this.getListNPS() : (value == '3') ? this.getListGratuity() : (value == '4') ? this.getListSuperannuation() : (value == '5') ? this.getListEPS() : this.getListEPF()
   }
   openRetirement(value, state, data) {
     const fragmentData = {
@@ -65,15 +66,15 @@ export class RetirementAccountComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        if(value == 'added'){
+        if (value == 'added') {
           this.getListEPF()
-        }else if(value =='addedGratuity'){
-          this.getListGratuity()  
-        }else if(value == 'addedEps'){
+        } else if (value == 'addedGratuity') {
+          this.getListGratuity()
+        } else if (value == 'addedEps') {
           this.getListEPS()
-        }else if(value == 'addedSuperannuation'){
+        } else if (value == 'addedSuperannuation') {
           this.getListSuperannuation()
-        }else{
+        } else {
           this.getListNPS()
         }
         console.log('this is sidebardata in subs subs : ', sideBarData);
@@ -150,24 +151,6 @@ export interface PeriodicElement11 {
   status: string;
 }
 
-const ELEMENT_DATA11: PeriodicElement11[] = [
-
-  {
-    no: '1.', owner: 'Rahul Jain'
-    , cvalue: "94,925", emp: "94,925", empc: "94,925", rate: "8.40%", bal: "60,000", bacla: "18/09/2021", year: "2021", desc: "ICICI FD", status: "MATURED"
-  },
-  {
-    no: '2.', owner: 'Shilpa Jain'
-    , cvalue: "94,925", emp: "94,925", empc: "94,925", rate: "8.40%", bal: "60,000", bacla: "18/09/2021", year: "2021", desc: "ICICI FD", status: "LIVE"
-  },
-  {
-    no: '', owner: 'Total'
-    , cvalue: "1,28,925", emp: "1,28,925", empc: "1,28,925", rate: "", bal: "1,20,000", bacla: "", year: "", desc: "", status: ""
-  },
-];
-
-
-
 
 export interface PeriodicElement12 {
   no: string;
@@ -179,24 +162,6 @@ export interface PeriodicElement12 {
   desc: string;
   status: string;
 }
-
-const ELEMENT_DATA12: PeriodicElement12[] = [
-
-  {
-    no: '1.', owner: 'Rahul Jain'
-    , cvalue: "94,925", total: "94,925",  scheme: "Cumulative", pran: "8.40%", desc: "ICICI FD", status: "MATURED"
-  },
-  {
-    no: '2.', owner: 'Shilpa Jain'
-    , cvalue: "94,925", total: "94,925",  scheme: "Cumulative", pran: "8.40%", desc: "ICICI FD", status: "LIVE"
-  },
-  {
-    no: '', owner: 'Total'
-    , cvalue: "94,925", total: "1,28,925",  scheme: "", pran: "", desc: "", status: ""
-  },
-
-];
-
 
 export interface PeriodicElement13 {
   no: string;
@@ -210,22 +175,6 @@ export interface PeriodicElement13 {
   status: string;
 }
 
-const ELEMENT_DATA13: PeriodicElement13[] = [
-
-  {
-    no: '1.', owner: 'Rahul Jain'
-    , name: "Futurewise Technologies", number: "5", year: "5", amt: "1,00,000", reason: "Worked for more than 10 years", desc: "ICICI FD", status: "MATURED"
-  },
-  {
-    no: '2.', owner: 'Shilpa Jain'
-    , name: "Futurewise Technologies", number: "5", year: "5", amt: "1,00,000", reason: "Worked for more than 10 years", desc: "Axis bank FD", status: "LIVE"
-  },
-  {
-    no: '', owner: 'Total'
-    , name: "", number: "", year: "", amt: "1,50,000", reason: "", desc: "", status: ""
-  },
-];
-
 export interface PeriodicElement15 {
   no: string;
   owner: string;
@@ -236,22 +185,6 @@ export interface PeriodicElement15 {
   desc: string;
   status: string;
 }
-
-const ELEMENT_DATA15: PeriodicElement15[] = [
-
-  {
-    no: '1.', owner: 'Rahul Jain'
-    , nvalue: "94,925", date: "12/11/2022", amt: "60,000", pay: "Monthly", desc: "ICICI FD", status: "MATURED"
-  },
-  {
-    no: '2.', owner: 'Rahul Jain'
-    , nvalue: "94,925", date: "12/11/2022", amt: "60,000", pay: "Monthly", desc: "ICICI FD", status: "MATURED"
-  },
-  {
-    no: '', owner: 'Total'
-    , nvalue: "1,50,000", date: "", amt: "1,50,000", pay: "", desc: "", status: ""
-  },
-];
 
 export interface PeriodicElement16 {
   no: string;
@@ -264,24 +197,6 @@ export interface PeriodicElement16 {
   desc: string;
   status: string;
 }
-
-const ELEMENT_DATA16: PeriodicElement16[] = [
-
-  {
-    no: '1.', owner: 'Rahul Jain'
-    , cvalue: "94,925", rate: "8.40%", amt: "60,000", number: "76635874357424", mdate: "18/09/2021", desc: "ICICI FD", status: "MATURED"
-  },
-  {
-    no: '2.', owner: 'Rahul Jain'
-    , cvalue: "94,925", rate: "8.40%", amt: "60,000", number: "76635874357424", mdate: "18/09/2021", desc: "ICICI FD", status: "MATURED"
-  },
-  {
-    no: '', owner: 'Total'
-    , cvalue: "1,28,925", rate: "", amt: "1,20,000", number: "", mdate: "", desc: "", status: ""
-  },
-];
-
-
 
 export interface PeriodicElement14 {
   no: string;
@@ -296,16 +211,3 @@ export interface PeriodicElement14 {
   status: string;
 }
 
-const ELEMENT_DATA14: PeriodicElement14[] = [
-
-  {
-    no: '1.', owner: 'Rahul Jain'
-    , aemp: "Futurewise Technologies", aempe: "bdjvjf", rate: "5", grate: "5", grateemp: "1,00,000", date: "Worked for more than 10 years", desc: "ICICI FD", status: "MATURED"
-  },
-  {
-    no: '2.', owner: 'Rahul Jain'
-    , aemp: "Futurewise Technologies", aempe: "bdjvjf", rate: "5", grate: "5", grateemp: "1,00,000", date: "Worked for more than 10 years", desc: "ICICI FD", status: "MATURED"
-  },
-
-
-];

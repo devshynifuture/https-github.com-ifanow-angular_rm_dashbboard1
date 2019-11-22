@@ -56,53 +56,64 @@
       </div>
     </div>
     <div class="example-container mt-8 real-estate">
-      <table mat-table [dataSource]="dataEPSList" id="table-low">
+      <table mat-table [dataSource]="dataEPSList" matSort id="table-low">
 
         <ng-container matColumnDef="no">
-          <th mat-header-cell *matHeaderCellDef class="br"> No </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> No </th>
           <td mat-cell *matCellDef="let element let i = index" class="br"> {{i+1}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="owner">
           <th mat-header-cell *matHeaderCellDef class="br t-18"> Owner </th>
           <td mat-cell *matCellDef="let element" class="br t-18"> {{element.ownerName}} </td>
+          <td mat-footer-cell *matFooterCellDef>Total </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
           <th mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Current value </th>
           <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{element.currentValue}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="emp">
           <th mat-header-cell *matHeaderCellDef class="br text-right"> Employee’s contribution </th>
           <td mat-cell *matCellDef="let element" class="br text-right"> {{element.employeesMonthlyContribution}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="empc">
           <th mat-header-cell *matHeaderCellDef class="br text-right"> Employer’s contribution </th>
           <td mat-cell *matCellDef="let element" class="br text-right"> {{element.employersMonthlyContribution}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="rate">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-7"> Rate of return </th>
           <td mat-cell *matCellDef="let element" class="br text-right t-7"> {{element.rateOfReturns}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="bal">
           <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Balance mentioned </th>
           <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.currentEpfBalance}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="bacla">
           <th mat-header-cell *matHeaderCellDef class="br t-5 text-left">Balance
             as on </th>
           <td mat-cell *matCellDef="let element" class="br t-5 text-left">
             {{element.balanceAsOnDate | date:'dd/MM/yyyy'}} </td>
+            <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="year">
           <th mat-header-cell *matHeaderCellDef class="br text-right">Maturity year </th>
           <td mat-cell *matCellDef="let element" class="br text-right"> {{element.maturityYear}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="desc">
           <th mat-header-cell *matHeaderCellDef class="br t-10"> Description </th>
           <td mat-cell *matCellDef="let element" class="br t-10"> {{element.description}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
           <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.status}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="icons">
           <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
@@ -117,9 +128,11 @@
               <button mat-menu-item class="c-p">Delete</button>
             </mat-menu>
           </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns11; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns11;"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns11;sticky: true"></tr>
       </table>
     </div>
   </div>
@@ -171,36 +184,44 @@
         <ng-container matColumnDef="no">
           <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
           <td mat-cell *matCellDef="let element; let i = index;" class="br t-2"> {{i+1}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="owner">
           <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
           <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
+          <td mat-footer-cell *matFooterCellDef>Total </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-17"> Current value </th>
           <td mat-cell *matCellDef="let element" class="br text-right t-17"> {{element.currentValuation}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="total">
           <th mat-header-cell *matHeaderCellDef class="br text-right"> Total contribution </th>
           <td mat-cell *matCellDef="let element" class="br text-right"> {{element.contributionAmount}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="scheme">
           <th mat-header-cell *matHeaderCellDef class="br"> Scheme choice</th>
           <td mat-cell *matCellDef="let element" class="br">
             {{(element.schemeChoice == '1')?'Active-choice investment':(element.schemeChoice == '2')?'Auto-choice investment':'-'}}
           </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="pran">
           <th mat-header-cell *matHeaderCellDef class="br text-left t-17">PRAN</th>
           <td mat-cell *matCellDef="let element" class="br text-left t-17"> {{element.pran}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="desc">
           <th mat-header-cell *matHeaderCellDef class="br"> Description</th>
           <td mat-cell *matCellDef="let element" class="br"> {{element.description}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
           <td mat-cell *matCellDef="let element" class="br t-5 text-primary"> {{element.isActive}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="icons">
           <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
@@ -218,9 +239,11 @@
               <button mat-menu-item class="c-p">Delete</button>
             </mat-menu>
           </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns12; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns12;"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns12;sticky: true"></tr>
       </table>
     </div>
   </div>
@@ -244,39 +267,48 @@
         <ng-container matColumnDef="no">
           <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
           <td mat-cell *matCellDef="let element let i = index" class="br t-2"> {{i+1}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="owner">
           <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
           <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
+          <td mat-footer-cell *matFooterCellDef>Total </td>
         </ng-container>
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-24"> Name of the organization </th>
           <td mat-cell *matCellDef="let element" class="br text-right t-24"> {{element.organizationName}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="number">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Number of completed years </th>
           <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.yearsCompleted}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="year">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-8"> Year of receipt </th>
           <td mat-cell *matCellDef="let element" class="br text-right t-8"> {{element.yearReceipt}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="amt">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Amount recieved</th>
           <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.amountReceived}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="reason">
           <th mat-header-cell *matHeaderCellDef class="br text-left t-18"> Reason of receipt</th>
           <td mat-cell *matCellDef="let element" class="br text-left t-18"> {{element.reasonOfReceipt}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
 
         <ng-container matColumnDef="desc">
           <th mat-header-cell *matHeaderCellDef class="br"> Description</th>
           <td mat-cell *matCellDef="let element" class="br"> {{element.description}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
           <td mat-cell *matCellDef="let element" class="br t-5 text-primary"> {{element.isActive}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="icons">
           <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
@@ -291,9 +323,11 @@
               <button mat-menu-item class="c-p">Delete</button>
             </mat-menu>
           </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns13; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns13;"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns13;sticky: true"></tr>
       </table>
     </div>
   </div>
@@ -317,49 +351,59 @@
         <ng-container matColumnDef="no">
           <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
           <td mat-cell *matCellDef="let element let i = index" class="br t-2"> {{i+1}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="owner">
           <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
           <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
+          <td mat-footer-cell *matFooterCellDef> Total</td>
         </ng-container>
         <ng-container matColumnDef="aemp">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Annual employer... </th>
           <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.annualEmployerContribution}}
           </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="aempe">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Annual employee... </th>
           <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.annualEmployeeContribution}}
           </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="rate">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Assumed rate... </th>
           <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.assumedRateOfReturn}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="grate">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Growth rate
             employer...</th>
           <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.growthRateEmployerContribution}}
           </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="grateemp">
           <th mat-header-cell *matHeaderCellDef class="br text-left t-12"> Growth rate
             employee...</th>
           <td mat-cell *matCellDef="let element" class="br text-left t-12"> {{element.growthRateEmployeeContribution}}
           </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef class="br text-left t-10"> Date of first contribution</th>
           <td mat-cell *matCellDef="let element" class="br text-left t-10">
             {{element.firstContributionDate | date:'dd/MM/yyyy'}} </td>
+            <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="desc">
           <th mat-header-cell *matHeaderCellDef class="br t-18"> Description</th>
           <td mat-cell *matCellDef="let element" class="br t-18"> {{element.description}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
           <td mat-cell *matCellDef="let element" class="br t-5 text-primary"> {{element.isActive}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="icons">
           <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
@@ -375,9 +419,11 @@
               <button mat-menu-item class="c-p">Delete</button>
             </mat-menu>
           </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns14; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns14;"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns14;sticky: true"></tr>
       </table>
     </div>
   </div>
@@ -401,35 +447,43 @@
         <ng-container matColumnDef="no">
           <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
           <td mat-cell *matCellDef="let element let i = index" class="br t-2"> {{i+1}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="owner">
           <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
           <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
+          <td mat-footer-cell *matFooterCellDef>Total </td>
         </ng-container>
         <ng-container matColumnDef="nvalue">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Notional value </th>
           <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.notionalValue}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef class="br text-left t-12"> Commencement date </th>
           <td mat-cell *matCellDef="let element" class="br text-left t-12">
             {{element.commencementDate | date:'dd/MM/yyyy'}} </td>
+            <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="amt">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-18"> Pension amount </th>
           <td mat-cell *matCellDef="let element" class="br text-right t-18"> {{element.pensionAmount}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="pay">
           <th mat-header-cell *matHeaderCellDef class="br t-16"> Pension payout frequency</th>
           <td mat-cell *matCellDef="let element" class="br t-16"> {{element.pensionPayoutFrequencyId}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="desc">
           <th mat-header-cell *matHeaderCellDef class="br t-18"> Description</th>
           <td mat-cell *matCellDef="let element" class="br t-18"> {{element.description}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
           <td mat-cell *matCellDef="let element" class="br t-5 text-primary"> {{element.active}} </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="icons">
           <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
@@ -444,9 +498,11 @@
               <button mat-menu-item class="c-p">Delete</button>
             </mat-menu>
           </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns15; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns15;"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns15;sticky: true"></tr>
       </table>
     </div>
   </div>
