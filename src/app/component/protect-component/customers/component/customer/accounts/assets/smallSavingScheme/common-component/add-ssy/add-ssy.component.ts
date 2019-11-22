@@ -51,20 +51,20 @@ export class AddSsyComponent implements OnInit {
       this.editApi = data
     }
     this.ssySchemeForm = this.fb.group({
-      ownerName: [, [Validators.required]],
-      guardian: [, [Validators.required]],
-      accBalance: [, [Validators.required]],
-      balanceAsOn: [, [Validators.required]],
-      commDate: [, [Validators.required]],
-      futureAppx: [, [Validators.required]],
-      frquency: [, [Validators.required]]
+      ownerName: [data.ownerName, [Validators.required]],
+      guardian: [data.guardianName, [Validators.required]],
+      accBalance: [data.accountBalance, [Validators.required]],
+      balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
+      commDate: [new Date(data.commencementDate), [Validators.required]],
+      futureAppx: [data.futureApproxContribution, [Validators.required]],
+      frquency: [String(data.frequency), [Validators.required]]
     })
     this.ssySchemeOptionalForm = this.fb.group({
-      description: [],
-      linkedAcc: [],
-      bankName: [],
-      nominee: [],
-      agentName: []
+      description: [data.description],
+      linkedAcc: [data.linkedBankAccount],
+      bankName: [data.bankName],
+      nominee: [data.nomineeName],
+      agentName: [data.agentName]
     })
     this.ownerData = this.ssySchemeForm.controls;
 
@@ -81,6 +81,7 @@ export class AddSsyComponent implements OnInit {
     console.log(data)
     this.transactionData = data.controls
   }
+  
   addSSYScheme() {
     let finalTransctList = []
     this.transactionData.forEach(element => {

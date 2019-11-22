@@ -43,7 +43,8 @@ export class AddRealEstateComponent implements OnInit {
   familyList: any;
   nexNomineePer: any;
   showError = false;
-
+  isOwnerPercent: boolean;
+  showErrorCoOwner = false;
   constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService) { }
   @Input()
   set inputData(inputData) {
@@ -143,7 +144,6 @@ export class AddRealEstateComponent implements OnInit {
     this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
       return o.ownershipPer;
     });
-
     if (this.nexNomineePer > 100) {
       this.showError = true
       console.log('show error Percent cannot be more than 100%')
@@ -152,19 +152,17 @@ export class AddRealEstateComponent implements OnInit {
     }
     if (this.showError == false) {
       this.getNominee.push(this.fb.group({
-        name: null, ownershipPerc: null,
+        name: null, ownershipPer: null,
       }));
     }
   }
   removeNominee(item) {
-
     if (this.getNominee.value.length > 1) {
       this.getNominee.removeAt(item);
     }
     this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
       return o.ownershipPer;
     });
-
     if (this.nexNomineePer > 100) {
       this.showError = true
       console.log('show error Percent cannot be more than 100%')
@@ -177,37 +175,45 @@ export class AddRealEstateComponent implements OnInit {
     return this.addrealEstateForm.get('getCoOwnerName') as FormArray;
   }
   addNewCoOwner(data) {
-
     if (this.addOwner == data) {
+      if (this.showError == false) {
+        this.getCoOwner.push(this.fb.group({
+          ownerName: null, coOwnerPerc: null,
+        }));
+      }
+    } else {
+      if (this.showError == false) {
+        this.addOwner = data;
+      }
+    }
+  }
+  removeCoOwner(item) {
+    this.getCoOwner.removeAt(item);
+  }
+  onChange(data) {
+    if (data == 'owner') {
       this.nexNomineePer = _.sumBy(this.getCoOwner.value, function (o) {
         return o.coOwnerPerc;
       });
-  
+      this.nexNomineePer = this.addrealEstateForm.controls.ownerPercent.value + this.nexNomineePer
+      if (this.nexNomineePer > 100) {
+        this.showError = true;
+        console.log('show error Percent cannot be more than 100%')
+      } else {
+        this.showError = false
+        this.showErrorCoOwner = false;
+      }
+    } else {
+      this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
+        return o.ownershipPer;
+      });
       if (this.nexNomineePer > 100) {
         this.showError = true
         console.log('show error Percent cannot be more than 100%')
       } else {
         this.showError = false
       }
-      if (this.showError == false) {
-        this.getCoOwner.push(this.fb.group({
-          ownerName: null, coOwnerPerc: null,
-        }));
-      }
-      // this.getCoOwner.push(this.fb.group({
-      //   ownerName: null,
-      //   ownershipPerc: null,
-      // }));
-    } else {
-      this.addOwner = data;
     }
-
-
-  }
-  removeCoOwner(item) {
-    // this.showNominee=false
-    this.getCoOwner.removeAt(item);
-
   }
   getRealEstate(data) {
     if (data == undefined) {
@@ -219,8 +225,7 @@ export class AddRealEstateComponent implements OnInit {
         ownerName: null,
         coOwnerPerc: null,
       })]),
-      // ownerPercent: [data.ownerPercent , [Validators.required]],
-      // coOwnerPercent: [(data.coOwnerPercent)+"", [Validators.required]],
+      ownerPercent: [data.ownerPerc, [Validators.required]],
       type: [(data.typeId) + "", [Validators.required]],
       marketValue: [data.marketValue, [Validators.required]],
       year: [data.year],
@@ -240,13 +245,6 @@ export class AddRealEstateComponent implements OnInit {
         ownershipPer: null,
       })])
     });
-    // if(data.realEstateNominees!=undefined){
-    //   data.realEstateNominees.forEach(element => {
-    //     this.addrealEstateForm.controls.getNomineeName=this.fb.array([this.fb.group({
-    //       name: [element.name,[Validators.required]],
-    //       ownershipPer:[ (element.ownershipPer),Validators.required]})])
-    //   })
-    // }
     if (data.realEstateNominees != undefined) {
       data.realEstateNominees.forEach(element => {
         this.addrealEstateForm.controls.getNomineeName.push(this.fb.group({
@@ -265,13 +263,6 @@ export class AddRealEstateComponent implements OnInit {
         }))
       })
     }
-    // if(data.realEstateOwners!=undefined){
-    //   data.realEstateOwners.forEach(element => {
-    //     this.addrealEstateForm.controls.getCoOwnerName=this.fb.array([this.fb.group({
-    //       ownerName: [(element.ownerName),[Validators.required]],
-    //       ownershipPerc: [element.ownershipPerc,Validators.required]})])
-    //   })
-    // }
     this.ownerData = this.addrealEstateForm.controls;
 
   }
@@ -283,9 +274,13 @@ export class AddRealEstateComponent implements OnInit {
       return;
     } else if (this.addrealEstateForm.controls.marketValue.invalid) {
       this.isMvValid = true;
+    } if (this.addrealEstateForm.controls.ownerPercent.invalid) {
+      this.isOwnerPercent = true;
+      return;
     } else {
       const obj = {
         ownerName: this.ownerName,
+        ownerPercent: this.addrealEstateForm.controls.ownerPercent.value,
         clientId: this.clientId,
         advisorId: this.advisorId,
         id: this._inputData.id,
