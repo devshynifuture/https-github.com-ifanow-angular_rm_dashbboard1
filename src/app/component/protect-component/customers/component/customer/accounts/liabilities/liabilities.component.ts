@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 // import {UtilService} from '../../../../../../../services/util.service';
-import { EventService } from '../../../../../../../Data-service/event.service';
-import { SubscriptionInject } from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { CustomerService } from '../../customer.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {EventService} from '../../../../../../../Data-service/event.service';
+import {SubscriptionInject} from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {CustomerService} from '../../customer.service';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-liabilities',
@@ -20,67 +20,74 @@ export class LiabilitiesComponent implements OnInit {
   storeData: any;
   dataStore: any;
   showFilter: any;
-  home=[];
-  vehicle=[];
-  education=[];
-  creditCard=[];
-  personal=[];
-  mortgage=[];
+  home = [];
+  vehicle = [];
+  education = [];
+  creditCard = [];
+  personal = [];
+  mortgage = [];
   dataToShow: any;
   OtherData: any;
   OtherPayableData: any;
   clientId: any;
-  constructor(private eventService: EventService, private subInjectService: SubscriptionInject,public custmService:CustomerService,public util:UtilService) {
+
+  constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
+              public customerService: CustomerService, public util: UtilService) {
   }
 
 
   viewMode;
 
   ngOnInit() {
+
     this.viewMode = 'tab1';
-    this.showFilter='tab1';
+    this.showFilter = 'tab1';
     // this.showFilter='tab7';
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getPayables();
     this.getLiability('');
   }
-  getPayables(){
-    let obj={
-      'advisorId':this.advisorId,
-      'clientId':this.clientId
-    }
-    this.custmService.getOtherPayables(obj).subscribe(
+
+  getPayables() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.customerService.getOtherPayables(obj).subscribe(
       data => this.getOtherPayablesRes(data)
     );
   }
-  getOtherPayablesRes(data){
+
+  getOtherPayablesRes(data) {
     console.log(data);
-    this.OtherPayableData=data;
-    this.OtherData=data.length;
+    this.OtherPayableData = data;
+    this.OtherData = data.length;
   }
-  sortTable(data){
-    if(data=="" || data==undefined){
-      this.showFilter='tab1';
-      data='tab1';
+
+  sortTable(data) {
+    if (data == '' || data == undefined) {
+      this.showFilter = 'tab1';
+      data = 'tab1';
     }
-    this.showFilter=data;
-    let filterData=[];
-    if(data=='tab1'){
-      this.dataSource=this.dataStore;
-    }else{
-    this.dataStore.forEach(element => {
-      if(element.loanTypeId==data){
-        filterData.push(element);
-      }
-    });
-    this.dataSource=filterData
+    this.showFilter = data;
+    const filterData = [];
+    if (data == 'tab1') {
+      this.dataSource = this.dataStore;
+    } else {
+      this.dataStore.forEach(element => {
+        if (element.loanTypeId == data) {
+          filterData.push(element);
+        }
+      });
+      this.dataSource = filterData;
+    }
   }
-  }
+
   open(flagValue, data) {
     const fragmentData = {
       Flag: flagValue,
-      data :data,
+      data,
       id: 1,
       state: 'open'
     };
@@ -116,9 +123,8 @@ export class LiabilitiesComponent implements OnInit {
     );
   }
 
- 
-  
-  addLiabilitiesDetail(flagValue){
+
+  addLiabilitiesDetail(flagValue) {
     const fragmentData = {
       Flag: flagValue,
       id: 1,
@@ -130,64 +136,65 @@ export class LiabilitiesComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-    
+
         }
       }
     );
   }
 
 
-
-
-  getLiability(data){
-    this.dataToShow=data.data;
-    let obj={
-      'advisorId':this.advisorId,
-      'clientId':this.clientId
-    }
-    this.custmService.getLiabilty(obj).subscribe(
+  getLiability(data) {
+    this.dataToShow = data.data;
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.customerService.getLiabilty(obj).subscribe(
       data => this.getLiabiltyRes(data)
     );
   }
-  getLiabiltyRes(data){
-    this.dataStore=[];
-    this.dataSource=[];
-    this.home=[];
-    this.vehicle=[];
-    this.education=[];
-    this.creditCard=[];
-    this.personal=[];
-    this.mortgage=[];
-    this.dataStore=data.loans;
+
+  getLiabiltyRes(data) {
+    this.dataStore = [];
+    this.dataSource = [];
+    this.home = [];
+    this.vehicle = [];
+    this.education = [];
+    this.creditCard = [];
+    this.personal = [];
+    this.mortgage = [];
+    this.dataStore = data.loans;
     console.log(data);
-    this.dataSource=data.loans;
-    this.storeData=data.loans.length;
-      this.dataStore.forEach(element => {
-        if(element.loanTypeId==1){
-          this.home.push(element)
-        }else if(element.loanTypeId==2){  
-          this.vehicle.push(element);
-        }else if(element.loanTypeId==3){
-          this.education.push(element);
-        }else if(element.loanTypeId==4){
-          this.creditCard.push(element);
-        }else if(element.loanTypeId==5){
-          this.personal.push(element);
-        }else if(element.loanTypeId==6){
-          this.mortgage.push(element);
-        }
-  
-      });
-     
+    this.dataSource = data.loans;
+    this.storeData = data.loans.length;
+    this.dataStore.forEach(element => {
+      if (element.loanTypeId == 1) {
+        this.home.push(element);
+      } else if (element.loanTypeId == 2) {
+        this.vehicle.push(element);
+      } else if (element.loanTypeId == 3) {
+        this.education.push(element);
+      } else if (element.loanTypeId == 4) {
+        this.creditCard.push(element);
+      } else if (element.loanTypeId == 5) {
+        this.personal.push(element);
+      } else if (element.loanTypeId == 6) {
+        this.mortgage.push(element);
+      }
+
+    });
+
     this.sortTable(this.dataToShow);
 
   }
+
   clickHandling() {
     console.log('something was clicked');
     // this.openFragment('', 'plan');
     this.open('openHelp', 'liabilityright');
   }
-  display(data){
+
+  display(data) {
     this.getPayables();
   }
 
