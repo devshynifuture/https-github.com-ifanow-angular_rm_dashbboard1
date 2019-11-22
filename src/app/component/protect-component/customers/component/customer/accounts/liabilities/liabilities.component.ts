@@ -5,6 +5,7 @@ import { SubscriptionInject } from '../../../../../AdviserComponent/Subscription
 import { UtilService } from 'src/app/services/util.service';
 import { CustomerService } from '../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-liabilities',
@@ -32,6 +33,9 @@ export class LiabilitiesComponent implements OnInit {
   clientId: any;
   showLoader: boolean;
   noData: string;
+  totalLoanAmt: any;
+  outStandingAmt: any;
+  filterData: any;
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
     public customerService: CustomerService, public util: UtilService) {
@@ -82,6 +86,14 @@ export class LiabilitiesComponent implements OnInit {
         this.noData = "No Scheme Found";
         this.dataSource = undefined;
       }else{
+        filterData.totalLoanAmount = _.sumBy(filterData, function (o) {
+          return o.loanAmount;
+        });
+        filterData.totalCapitalOutstanding = _.sumBy(filterData, function (o) {
+          return o.outstandingAmount;
+        });
+        this.totalLoanAmt=filterData.totalLoanAmount;  
+        this.outStandingAmt=data.totalCapitalOutstanding;
         this.dataSource = filterData;
 
       }
@@ -161,6 +173,8 @@ export class LiabilitiesComponent implements OnInit {
     if(data.loans==undefined){
       this.noData = "No Scheme Found";
     }else{
+    this.totalLoanAmt=data.totalLoanAmount;  
+    this.outStandingAmt=data.totalCapitalOutstanding;
     this.dataStore = [];
     this.dataSource = [];
     this.home = [];
