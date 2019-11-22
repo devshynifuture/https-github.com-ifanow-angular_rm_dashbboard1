@@ -35,6 +35,7 @@ export class InsuranceComponent implements OnInit {
   dataSource1 = ELEMENT_DATA1;
   advisorId: any;
   insuranceSubTypeId: any;
+  clientId: any;
   constructor(private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   viewMode;
   lifeInsuranceList = [{ name: "Term", id: 1 }, { name: "Traditional", id: 2 }, { name: "ULIP", id: 3 }]
@@ -43,7 +44,8 @@ export class InsuranceComponent implements OnInit {
   ngOnInit() {
     this.viewMode = "tab1"
     this.advisorId = AuthService.getAdvisorId();
-    this.getInsuranceData(this.advisorId, 2978, 1, 2);
+    this.clientId=AuthService.getClientId();
+    this.getInsuranceData(this.advisorId, 2978, 1, 1);
     this.getGlobalDataInsurance();
     this.insuranceTypeId = 1
     this.insuranceSubTypeId = 1
@@ -110,6 +112,7 @@ export class InsuranceComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getInsuranceData(this.advisorId,this.clientId,this.insuranceTypeId,this.insuranceSubTypeId)
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 
