@@ -8,8 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class PlanComponent implements OnInit {
 
   constructor() { }
-
+  selected;
   ngOnInit() {
+    this.selected=1
   }
 
 }
