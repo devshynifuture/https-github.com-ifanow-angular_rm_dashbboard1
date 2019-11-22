@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { MatSort, MatTableModule, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-income',
@@ -8,11 +9,14 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
   styleUrls: ['./income.component.scss']
 })
 export class IncomeComponent implements OnInit {
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
   displayedColumns = ['no', 'owner', 'type', 'amt','income','till','rate','status','icons'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
   constructor( private subInjectService: SubscriptionInject) { }
   viewMode;
   ngOnInit() {
+    this.dataSource.sort = this.sort;
     this.viewMode="tab1"
   }
   addIncome(flagValue){
