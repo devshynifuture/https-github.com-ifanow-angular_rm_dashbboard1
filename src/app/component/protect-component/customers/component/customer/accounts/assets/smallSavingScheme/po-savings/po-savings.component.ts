@@ -16,34 +16,35 @@ export class PoSavingsComponent implements OnInit {
   advisorId: any;
   clientId: number;
   noData: string;
+  isLoading: boolean = true;
 
-  constructor(public dialog: MatDialog,private eventService: EventService,private cusService:CustomerService,private subInjectService:SubscriptionInject) { }
+  constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns20 = ['no', 'owner', 'cvalue', 'rate', 'balanceM', 'balAs', 'desc', 'status', 'icons'];
   datasource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId=2978;
+    this.clientId = 2978;
     this.getPoSavingSchemedata()
   }
   getPoSavingSchemedata() {
-    const obj={
-      advisorId:this.advisorId,
-      clientId:this.clientId
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
     }
     this.cusService.getSmallSavingSchemePOSAVINGData(obj).subscribe(
-      data=>this.getPoSavingSchemedataResponse(data)
+      data => this.getPoSavingSchemedataResponse(data)
     )
   }
-  getPoSavingSchemedataResponse(data)
-  {
-    console.log(data)
-    if(data.postOfficeSavingList.length!=0){
-      this.datasource=data.postOfficeSavingList
-    }else{
-      this.noData="No Scheme Found";
+  getPoSavingSchemedataResponse(data) {
+    console.log(data);
+    this.isLoading = false;
+    if (data.postOfficeSavingList.length != 0) {
+      this.datasource = data.postOfficeSavingList
+    } else {
+      this.noData = "No Scheme Found";
     }
   }
-  deleteModal(value,data) {
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -53,12 +54,12 @@ export class PoSavingsComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         this.cusService.deletePOSAVING(data.id).subscribe(
-          data=>{
-            this.eventService.openSnackBar("POSAVING is deleted","dismiss")
+          data => {
+            this.eventService.openSnackBar("POSAVING is deleted", "dismiss")
             dialogRef.close();
             this.getPoSavingSchemedata();
           },
-          err=>this.eventService.openSnackBar(err)
+          err => this.eventService.openSnackBar(err)
         )
       },
       negativeMethod: () => {
@@ -78,10 +79,9 @@ export class PoSavingsComponent implements OnInit {
 
     });
   }
-  addPOSAVING(value,data)
-  {
+  addPOSAVING(value, data) {
     const fragmentData = {
-      Flag:value,
+      Flag: value,
       data,
       id: 1,
       state: 'open'

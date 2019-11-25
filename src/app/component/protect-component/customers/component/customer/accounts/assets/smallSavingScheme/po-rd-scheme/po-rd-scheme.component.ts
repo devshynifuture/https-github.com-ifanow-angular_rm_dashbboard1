@@ -15,30 +15,31 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 export class PoRdSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
+  noData: string;
+  isLoading: boolean = true;
 
-  constructor(public dialog: MatDialog,private eventService: EventService,private cusService:CustomerService,private subInjectService:SubscriptionInject) { }
+  constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns21 = ['no', 'owner', 'cvalue', 'rate', 'deposit', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
   datasource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId=2978;
+    this.clientId = 2978;
     this.getPoRdSchemedata();
   }
   getPoRdSchemedata() {
-    const obj={
-      advisorId:this.advisorId,
-      clientId:this.clientId,
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
     }
     this.cusService.getSmallSavingSchemePORDData(obj).subscribe(
-      data=>this.getPoRdSchemedataResponse(data)
+      data => this.getPoRdSchemedataResponse(data)
     )
   }
-  getPoRdSchemedataResponse(data)
-  {
-    this.datasource=data.postOfficeRDList
+  getPoRdSchemedataResponse(data) {
+    this.datasource = data.postOfficeRDList
     console.log(data)
   }
-  deleteModal(value,data) {
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -48,12 +49,12 @@ export class PoRdSchemeComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         this.cusService.deletePORD(data.id).subscribe(
-          data=>{
-            this.eventService.openSnackBar("PORD is deleted","dismiss")
+          data => {
+            this.eventService.openSnackBar("PORD is deleted", "dismiss")
             dialogRef.close();
             this.getPoRdSchemedata();
           },
-          err=>this.eventService.openSnackBar(err)
+          err => this.eventService.openSnackBar(err)
         )
       },
       negativeMethod: () => {
@@ -73,10 +74,9 @@ export class PoRdSchemeComponent implements OnInit {
 
     });
   }
-  addPORD(value,data)
-  {
+  addPORD(value, data) {
     const fragmentData = {
-      Flag:value,
+      Flag: value,
       data,
       id: 1,
       state: 'open'
