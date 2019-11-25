@@ -2,14 +2,14 @@
     <div class="row h-100vh">
         <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
             <ul class=" d-block">
-                <li class="b-ua c-p">
+                <li class="b-ua pb-12 c-p">
                     <div (click)="toggle('lifeInsurance');getInsuranceTypeData(1,1)" class="row">
                         <div class="col-md-11 p-0 f-700">LIFE INSURANCE</div>
                         <div class="col-md-1 p-0 text-custom">20</div>
                     </div>
                 </li>
                 <li (click)="getInsuranceTypeData(1,item.id)" *ngFor="let item of lifeInsuranceList"
-                    [ngClass]="{'bg-grey lt':item.id==insuranceSubTypeId}" class="c-p">
+                    [ngClass]="{'bg-grey lt':item.id==insuranceSubTypeId}" class="c-p pb-12">
                     <div>
                         <div class="row">
                             <div class="col-md-11 p-0">{{item.name}}</div>
@@ -19,14 +19,14 @@
                 </li>
             </ul>
             <ul class=" d-block">
-                <li class=" c-p">
+                <li class="pb-12 c-p">
                     <div (click)="toggle('generalInsurance');getInsuranceTypeData(2,4)" class="row">
                         <div class="col-md-11 p-0 f-700">GENERAL INSURANCE</div>
                         <div class="col-md-1 p-0 text-custom">1</div>
                     </div>
                 </li>
                 <li (click)="getInsuranceTypeData(2,item1.id)" *ngFor="let item1 of generalLifeInsuranceList"
-                    [ngClass]="{'bg-grey lt':item1.id==insuranceSubTypeId}" class=" c-p">
+                    [ngClass]="{'bg-grey lt':item1.id==insuranceSubTypeId}" class="pb-12 c-p">
                     <div class="row">
                         <div class="col-md-11 p-0">{{item1.name}}</div>
                         <div class="col-md-1 p-0 text-custom">{{item1.id}}</div>
@@ -34,9 +34,9 @@
                 </li>
             </ul>
         </div>
-        <div *ngIf="dataSource==undefined ">
+        <!-- <div *ngIf="dataSource==undefined ">
             <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-        </div>
+        </div> -->
         <div class="col-md-10 b-a p-0 min-height">
             <div *ngIf="insuranceTypeId==1">
                 <div class="wrapper-8">
@@ -73,7 +73,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="liabilities wrapper-8">
+                <div *ngIf="dataSource" class="liabilities wrapper-8">
                     <table mat-table [dataSource]="dataSource" id="table-low">
                         <ng-container matColumnDef="no">
                             <th mat-header-cell *matHeaderCellDef class="br"> No. </th>
@@ -133,7 +133,7 @@
                                     <button (click)="open('addInsurance',element)" mat-menu-item>Edit</button>
                                     <button (click)="open('detailedView',element)" mat-menu-item>Deatiled View</button>
                                     <button mat-menu-item>Activity</button>
-                                    <button mat-menu-item>Delete</button>
+                                    <button mat-menu-item (click)="deleteModal('INSURANCE',element)">Delete</button>
                                 </mat-menu>
                             </td>
                         </ng-container>
@@ -141,6 +141,9 @@
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
                 </div>
+            </div>
+            <div *ngIf="datasource==undefined">
+                <h4 class="text-center pt-72">{{noData}}</h4>
             </div>
             <!-- <div *ngIf="insuranceTypeId==2">
                 <div class="wrapper-8">
