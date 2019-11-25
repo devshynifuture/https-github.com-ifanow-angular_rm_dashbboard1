@@ -16,38 +16,38 @@ export class SsySchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
   noData: string;
+  isLoading: boolean = true;
 
-  constructor(public dialog: MatDialog,private cusService:CustomerService,private subInjectService:SubscriptionInject,private eventService:EventService) { }
-  displayedColumns16 = ['no', 'owner','cvalue','rate','amt','number','mdate','desc','status','icons'];
+  constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private eventService: EventService) { }
+  displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
   datasource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId=AuthService.getClientId();;
+    this.clientId = AuthService.getClientId();;
     this.getSsySchemedata()
   }
-  getSsySchemedata()
-  {
-    const obj={
-      advisorId:this.advisorId,
-      clientId:this.clientId
+  getSsySchemedata() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
     }
     this.cusService.getSmallSavingSchemeSSYData(obj).subscribe(
-      data=>this.getSsySchemedataResponse(data),
-      err=>this.eventService.openSnackBar(err)
+      data => this.getSsySchemedataResponse(data),
+      err => this.eventService.openSnackBar(err)
     )
   }
-  getSsySchemedataResponse(data)
-  {
-    console.log(data)
-    if(data.SSYList.length!=0){
-      this.datasource=data.SSYList
-    }else{
-      this.noData="No Scheme Found";
+  getSsySchemedataResponse(data) {
+    console.log(data);
+    this.isLoading = false;
+    if (data.SSYList.length != 0) {
+      this.datasource = data.SSYList
+    } else {
+      this.noData = "No Scheme Found";
 
     }
 
   }
-  deleteModal(value,data) {
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -57,12 +57,12 @@ export class SsySchemeComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         this.cusService.deleteSSY(data.id).subscribe(
-          data=>{
-            this.eventService.openSnackBar("SSY is deleted","dismiss")
+          data => {
+            this.eventService.openSnackBar("SSY is deleted", "dismiss")
             dialogRef.close();
             this.getSsySchemedata();
           },
-          err=>this.eventService.openSnackBar(err)
+          err => this.eventService.openSnackBar(err)
         )
       },
       negativeMethod: () => {
@@ -82,10 +82,9 @@ export class SsySchemeComponent implements OnInit {
 
     });
   }
-  addOpenSSY(value,data)
-  {
+  addOpenSSY(value, data) {
     const fragmentData = {
-      Flag:value,
+      Flag: value,
       data,
       id: 1,
       state: 'open'
