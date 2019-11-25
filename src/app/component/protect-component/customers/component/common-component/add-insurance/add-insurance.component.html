@@ -6,7 +6,8 @@
         </div>
         <div class="col-md-5 text-right">
             <div class="wrapper-12">
-                <button matTooltip="Have lots of policies?You can bulk upload these policies using excel import option" mat-button class="btn-dark-black addon mr-8 ">
+                <button matTooltip="Have lots of policies?You can bulk upload these policies using excel import option"
+                    mat-button class="btn-dark-black addon mr-8 ">
                     <img src="assets/images/svg/insurance-download-icon.svg" class="c-p mr-8"> Import policies
                 </button>
                 <i class="material-icons c-p v-middle" (click)="close()"> clear</i>
@@ -24,12 +25,25 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput maxlength="40" formControlName="lifeAssured" #lifeassured autocomplete="off" class="form-control br-0">
-                        <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(islifeAssured && lifeInsuranceForm.get('lifeAssured').invalid || (lifeInsuranceForm.get('lifeAssured').touched && lifeInsuranceForm.get('lifeAssured').invalid))}">This field is required
+                    <!-- <mat-form-field>
+                        <input matInput maxlength="40" formControlName="lifeAssured" #lifeassured autocomplete="off"
+                            class="form-control br-0">
+                        <mat-error class="f-12 pt-4"
+                            [ngClass]="{'v-h':!(islifeAssured && lifeInsuranceForm.get('lifeAssured').invalid || (lifeInsuranceForm.get('lifeAssured').touched && lifeInsuranceForm.get('lifeAssured').invalid))}">
+                            This field is required
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{lifeassured.value.length}}/40</mat-hint>
-                    </mat-form-field>
+                    </mat-form-field> -->
+                    <!-- <mat-form-field>
+                        <mat-select (click)="getFamilyMember(option)" formControlName="lifeAssured" #lifeAssured autocomplete="true"
+                            class="form-control br-0">
+                            <mat-option *ngFor="let option of FamilyMember" [value]="option.userName">{{option.userName}}</mat-option>
+                        </mat-select>
+                        <mat-error
+                            [ngClass]="{'v-h':!(ispremiumDetailsFrequency && lifeInsuranceForm.get('premiumDetailsFrequency').invalid || (lifeInsuranceForm.get('premiumDetailsFrequency').touched && lifeInsuranceForm.get('premiumDetailsFrequency').invalid))}"
+                            class="f-12 pt-4">This field is required
+                        </mat-error>
+                    </mat-form-field> -->
                 </div>
             </div>
         </div>
@@ -42,8 +56,11 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="proposer" #proposer autocomplete="off" class="form-control br-0">
-                        <mat-error [ngClass]="{'v-h':!(isproposer && lifeInsuranceForm.get('proposer').invalid || (lifeInsuranceForm.get('proposer').touched && lifeInsuranceForm.get('proposer').invalid))}" class="f-12 pt-4">This field is required
+                        <input matInput formControlName="proposer" #proposer autocomplete="off"
+                            class="form-control br-0">
+                        <mat-error
+                            [ngClass]="{'v-h':!(isproposer && lifeInsuranceForm.get('proposer').invalid || (lifeInsuranceForm.get('proposer').touched && lifeInsuranceForm.get('proposer').invalid))}"
+                            class="f-12 pt-4">This field is required
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{proposer.value.length}}/40</mat-hint>
                     </mat-form-field>
@@ -58,12 +75,25 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput formControlName="policyName" #policyname autocomplete="true" class="form-control br-0">
-                        <mat-error [ngClass]="{'v-h':!(ispolicyName && lifeInsuranceForm.get('policyName').invalid || (lifeInsuranceForm.get('policyName').touched && lifeInsuranceForm.get('policyName').invalid))}" class="f-12 pt-4">This field is required
+                    <mat-form-field class="example-full-width">
+                        <input class="form-control br-0" type="text" (keyup)="findPolicyName($event)"
+                            formControlName="policyName" aria-label="Number" matInput [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option (click)="selectPolicy(option)" *ngFor="let option of options"
+                                [value]="option.policyName">
+                                {{option.policyName}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    <!-- <mat-form-field>
+                        <input matInput (keyup)="findPolicyName($event)" formControlName="policyName" #policyname
+                            autocomplete="true" class="form-control br-0">
+                        <mat-error
+                            [ngClass]="{'v-h':!(ispolicyName && lifeInsuranceForm.get('policyName').invalid || (lifeInsuranceForm.get('policyName').touched && lifeInsuranceForm.get('policyName').invalid))}"
+                            class="f-12 pt-4">This field is required
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{policyname.value.length}}/40</mat-hint>
-                    </mat-form-field>
+                    </mat-form-field> -->
                 </div>
             </div>
         </div>
@@ -75,8 +105,11 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="policyNum" #policynumber autocomplete="off" class="form-control br-0">
-                        <mat-error [ngClass]="{'v-h':!(ispolicyNum && lifeInsuranceForm.get('policyNum').invalid || (lifeInsuranceForm.get('policyNum').touched && lifeInsuranceForm.get('policyNum').invalid))}" class="f-12 pt-4">This field is required
+                        <input matInput type="number" formControlName="policyNum" #policynumber autocomplete="off"
+                            class="form-control br-0">
+                        <mat-error
+                            [ngClass]="{'v-h':!(ispolicyNum && lifeInsuranceForm.get('policyNum').invalid || (lifeInsuranceForm.get('policyNum').touched && lifeInsuranceForm.get('policyNum').invalid))}"
+                            class="f-12 pt-4">This field is required
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{policynumber.value.length}}/40</mat-hint>
                     </mat-form-field>
@@ -91,10 +124,13 @@
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="commencementDate" class="form-control br-0" [matDatepicker]="CommencementPicker">
+                        <input matInput formControlName="commencementDate" class="form-control br-0"
+                            [matDatepicker]="CommencementPicker">
                         <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
                         <mat-datepicker #CommencementPicker></mat-datepicker>
-                        <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(iscommencementDate && lifeInsuranceForm.get('commencementDate').invalid || (lifeInsuranceForm.get('commencementDate').touched && lifeInsuranceForm.get('commencementDate').invalid))}">This field is required
+                        <mat-error class="f-12 pt-4"
+                            [ngClass]="{'v-h':!(iscommencementDate && lifeInsuranceForm.get('commencementDate').invalid || (lifeInsuranceForm.get('commencementDate').touched && lifeInsuranceForm.get('commencementDate').invalid))}">
+                            This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -108,8 +144,11 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput type="number" formControlName="sumAssured" #sumassured autocomplete="true" class="form-control br-0">
-                        <mat-error [ngClass]="{'v-h':!(issumAssured && lifeInsuranceForm.get('sumAssured').invalid || (lifeInsuranceForm.get('sumAssured').touched && lifeInsuranceForm.get('sumAssured').invalid))}" class="f-12 pt-4">This field is required
+                        <input matInput type="number" formControlName="sumAssured" #sumassured autocomplete="true"
+                            class="form-control br-0">
+                        <mat-error
+                            [ngClass]="{'v-h':!(issumAssured && lifeInsuranceForm.get('sumAssured').invalid || (lifeInsuranceForm.get('sumAssured').touched && lifeInsuranceForm.get('sumAssured').invalid))}"
+                            class="f-12 pt-4">This field is required
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{sumassured.value.length}}/40</mat-hint>
                     </mat-form-field>
@@ -125,8 +164,11 @@
                 <div class="form-group mb-0">
                     <label class="f-16 roboto">Amount</label>
                     <mat-form-field>
-                        <input matInput type="number" formControlName="premiumDetailsAmount" #premiumdetails autocomplete="true" class="form-control br-0">
-                        <mat-error [ngClass]="{'v-h':!(ispremiumDetailsAmount && lifeInsuranceForm.get('premiumDetailsAmount').invalid || (lifeInsuranceForm.get('premiumDetailsAmount').touched && lifeInsuranceForm.get('premiumDetailsAmount').invalid))}" class="f-12 pt-4">This field is required
+                        <input matInput type="number" formControlName="premiumDetailsAmount" #premiumdetails
+                            autocomplete="true" class="form-control br-0">
+                        <mat-error
+                            [ngClass]="{'v-h':!(ispremiumDetailsAmount && lifeInsuranceForm.get('premiumDetailsAmount').invalid || (lifeInsuranceForm.get('premiumDetailsAmount').touched && lifeInsuranceForm.get('premiumDetailsAmount').invalid))}"
+                            class="f-12 pt-4">This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -135,13 +177,16 @@
                 <div class="form-group mb-0">
                     <label class="f-16 roboto">Frequency</label>
                     <mat-form-field>
-                        <mat-select formControlName="premiumDetailsFrequency" #frequency autocomplete="true" class="form-control br-0">
+                        <mat-select formControlName="premiumDetailsFrequency" #frequency autocomplete="true"
+                            class="form-control br-0">
                             <mat-option value='1'>Monthly</mat-option>
                             <mat-option value='2'>Quarterly</mat-option>
                             <mat-option value='3'>Semi annually</mat-option>
                             <mat-option value='4'>Annually</mat-option>
                         </mat-select>
-                        <mat-error [ngClass]="{'v-h':!(ispremiumDetailsFrequency && lifeInsuranceForm.get('premiumDetailsFrequency').invalid || (lifeInsuranceForm.get('premiumDetailsFrequency').touched && lifeInsuranceForm.get('premiumDetailsFrequency').invalid))}" class="f-12 pt-4">This field is required
+                        <mat-error
+                            [ngClass]="{'v-h':!(ispremiumDetailsFrequency && lifeInsuranceForm.get('premiumDetailsFrequency').invalid || (lifeInsuranceForm.get('premiumDetailsFrequency').touched && lifeInsuranceForm.get('premiumDetailsFrequency').invalid))}"
+                            class="f-12 pt-4">This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -157,8 +202,11 @@
                 <div class="form-group mb-0">
                     <label class="f-16 roboto">Policy tenure</label>
                     <mat-form-field>
-                        <input matInput type="number" formControlName="tenureDetailsPolicy" #tenuredetails autocomplete="true" class="form-control br-0">
-                        <mat-error [ngClass]="{'v-h':!(istenureDetailsPolicy && lifeInsuranceForm.get('tenureDetailsPolicy').invalid || (lifeInsuranceForm.get('tenureDetailsPolicy').touched && lifeInsuranceForm.get('tenureDetailsPolicy').invalid))}" class="f-12 pt-4">This field is required
+                        <input matInput type="number" formControlName="tenureDetailsPolicy" #tenuredetails
+                            autocomplete="true" class="form-control br-0">
+                        <mat-error
+                            [ngClass]="{'v-h':!(istenureDetailsPolicy && lifeInsuranceForm.get('tenureDetailsPolicy').invalid || (lifeInsuranceForm.get('tenureDetailsPolicy').touched && lifeInsuranceForm.get('tenureDetailsPolicy').invalid))}"
+                            class="f-12 pt-4">This field is required
                         </mat-error>
                     </mat-form-field>
 
@@ -168,8 +216,11 @@
                 <div class="form-group mb-0">
                     <label class="f-16 roboto">Premium paying term</label>
                     <mat-form-field>
-                        <input matInput type="number" formControlName="premiumPayingTerm" #premiumterm autocomplete="true" class="form-control br-0">
-                        <mat-error [ngClass]="{'v-h':!(ispremiumPayingTerm && lifeInsuranceForm.get('premiumPayingTerm').invalid || (lifeInsuranceForm.get('premiumPayingTerm').touched && lifeInsuranceForm.get('premiumPayingTerm').invalid))}" class="f-12 pt-4">This field is required
+                        <input matInput type="number" formControlName="premiumPayingTerm" #premiumterm
+                            autocomplete="true" class="form-control br-0">
+                        <mat-error
+                            [ngClass]="{'v-h':!(ispremiumPayingTerm && lifeInsuranceForm.get('premiumPayingTerm').invalid || (lifeInsuranceForm.get('premiumPayingTerm').touched && lifeInsuranceForm.get('premiumPayingTerm').invalid))}"
+                            class="f-12 pt-4">This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -184,13 +235,16 @@
                 <div class="form-group mb-0">
                     <label class="f-16 roboto"> </label>
                     <mat-form-field>
-                        <mat-select formControlName="policyStatus" #frequency autocomplete="true" class="form-control mt-28 br-0">
+                        <mat-select formControlName="policyStatus" #frequency autocomplete="true"
+                            class="form-control mt-28 br-0">
                             <mat-option value="1">In force</mat-option>
                             <mat-option value="2">Lapsed</mat-option>
                             <mat-option value="3">Paid up</mat-option>
                             <mat-option value="4">Fully paid up</mat-option>
                         </mat-select>
-                        <mat-error [ngClass]="{'v-h':!(ispolicyStatus && lifeInsuranceForm.get('policyStatus').invalid || (lifeInsuranceForm.get('policyStatus').touched && lifeInsuranceForm.get('policyStatus').invalid))}" class="f-12 pt-4">This field is required
+                        <mat-error
+                            [ngClass]="{'v-h':!(ispolicyStatus && lifeInsuranceForm.get('policyStatus').invalid || (lifeInsuranceForm.get('policyStatus').touched && lifeInsuranceForm.get('policyStatus').invalid))}"
+                            class="f-12 pt-4">This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -199,8 +253,11 @@
                 <div class="form-group form-group_two mb-0">
                     <label class="f-16 roboto">Last unpaid premium</label>
                     <mat-form-field>
-                        <input matInput type="number" formControlName="policyStatusLastUnpaid" #lastunpaid autocomplete="true" class="form-control br-0">
-                        <mat-error [ngClass]="{'v-h':!(ispolicyStatusLastUnpaid && lifeInsuranceForm.get('policyStatusLastUnpaid').invalid || (lifeInsuranceForm.get('policyStatusLastUnpaid').touched && lifeInsuranceForm.get('policyStatusLastUnpaid').invalid))}" class="f-12 pt-4">This field is required
+                        <input matInput type="number" formControlName="policyStatusLastUnpaid" #lastunpaid
+                            autocomplete="true" class="form-control br-0">
+                        <mat-error
+                            [ngClass]="{'v-h':!(ispolicyStatusLastUnpaid && lifeInsuranceForm.get('policyStatusLastUnpaid').invalid || (lifeInsuranceForm.get('policyStatusLastUnpaid').touched && lifeInsuranceForm.get('policyStatusLastUnpaid').invalid))}"
+                            class="f-12 pt-4">This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -234,7 +291,8 @@
                             <div class="col-md-3">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input type="number" formControlName="riskCover" matInput class="rupess form-control br-0">
+                                        <input type="number" formControlName="riskCover" matInput
+                                            class="rupess form-control br-0">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -246,7 +304,8 @@
                             <div class="col-md-3">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input type="number" formControlName="surrenderName" matInput class="form-control rupess br-0">
+                                        <input type="number" formControlName="surrenderName" matInput
+                                            class="form-control rupess br-0">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -271,7 +330,8 @@
                             <div class="col-md-3">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input type="number" formControlName="vestedBonus" matInput class="form-control rupess br-0">
+                                        <input type="number" formControlName="vestedBonus" matInput
+                                            class="form-control rupess br-0">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -284,7 +344,8 @@
                             <div class="col-md-3">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input type="number" formControlName="assumedRate" matInput class="form-control br-0">
+                                        <input type="number" formControlName="assumedRate" matInput
+                                            class="form-control br-0">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -294,49 +355,54 @@
                 <mat-tab label="Cash Flows">
                     <!-- add btn required -->
                     <div class="row pt-40" [formGroup]="cashFlowForm">
-                            <div class="col-md-3 pr-12">
-                                    <h5 class="m-0 pb-8">Cash Flow Type</h5>
-                                </div>
-                                <div class="col-md-3 pr-12">
-                                    <h5 class="m-0 pb-8">Year</h5>
-                                </div>
-                                <div class="col-md-4 pr-12">
-                                    <h5 class="m-0 pb-8">Approx amount</h5>
-                                </div>
-                               <div formArrayName="cashFlow">
-                                   <div      class="row pt-28" *ngFor="let obj of cashFlowEntries.controls; let pointIndex=index"
-                                   [formGroupName]="pointIndex">
-                            <div class="col-md-3">
+                        <div class="col-md-3 pr-12">
+                            <h5 class="m-0 pb-8">Cash Flow Type</h5>
+                        </div>
+                        <div class="col-md-3 pr-12">
+                            <h5 class="m-0 pb-8">Year</h5>
+                        </div>
+                        <div class="col-md-4 pr-12">
+                            <h5 class="m-0 pb-8">Approx amount</h5>
+                        </div>
+                        <div formArrayName="cashFlow">
+                            <div class="row pt-28" *ngFor="let obj of cashFlowEntries.controls; let pointIndex=index"
+                                [formGroupName]="pointIndex">
+                                <div class="col-md-3">
                                     <div class="form-group mb-0">
                                         <!-- <label class="f-16 roboto">Cash Flow Type</label> -->
                                         <mat-form-field>
-                                                <input type="number" formControlName="cashFlowType" matInput class="form-control br-0">
-                                            </mat-form-field>
+                                            <input type="number" formControlName="cashFlowType" matInput
+                                                class="form-control br-0">
+                                        </mat-form-field>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                        <div class="form-group mb-0">
-                                            <!-- <label class="f-16 roboto">Year</label> -->
-                                            <mat-form-field>
-                                                    <input type="number" formControlName="year" matInput class="form-control br-0">
-                                                </mat-form-field>
-                                        </div>
+                                    <div class="form-group mb-0">
+                                        <!-- <label class="f-16 roboto">Year</label> -->
+                                        <mat-form-field>
+                                            <input type="number" formControlName="year" matInput
+                                                class="form-control br-0">
+                                        </mat-form-field>
                                     </div>
-                                    <div class="col-md-3">
-                                            <div class="form-group mb-0">
-                                                <!-- <label class="f-16 roboto">Approx amount</label> -->
-                                                <mat-form-field>
-                                                        <input type="number" formControlName="approxAmt" matInput class="form-control br-0 rupess">
-                                                    </mat-form-field>
-                                            </div>
-                                        </div>
-                                             
-                        <div class="col-md-2 p-0">
-                                <i class="material-icons text-primitive c-p float-left" (click)="addTransaction()">add</i>
-                                <i class="material-icons text-primitive c-p float-right" (click)="removeTransaction(pointIndex)">remove</i>                       
-                         </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group mb-0">
+                                        <!-- <label class="f-16 roboto">Approx amount</label> -->
+                                        <mat-form-field>
+                                            <input type="number" formControlName="approxAmt" matInput
+                                                class="form-control br-0 rupess">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 p-0">
+                                    <i class="material-icons text-primitive c-p float-left"
+                                        (click)="addTransaction()">add</i>
+                                    <i class="material-icons text-primitive c-p float-right"
+                                        (click)="removeTransaction(pointIndex)">remove</i>
+                                </div>
+                            </div>
                         </div>
-                    </div>
                     </div>
 
                 </mat-tab>
@@ -348,7 +414,8 @@
                                 <div class="form-group mb-0">
                                     <label class="f-16 roboto">Accidental benefit</label>
                                     <mat-form-field>
-                                        <input type="number" formControlName="accidentalBenefit" matInput class="form-control br-0">
+                                        <input type="number" formControlName="accidentalBenefit" matInput
+                                            class="form-control br-0">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -356,7 +423,8 @@
                                 <div class="form-group mb-0">
                                     <label class="f-16 roboto">Double Accidental</label>
                                     <mat-form-field>
-                                        <input type="number" formControlName="doubleAccidental" matInput class="form-control br-0">
+                                        <input type="number" formControlName="doubleAccidental" matInput
+                                            class="form-control br-0">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -364,7 +432,8 @@
                                 <div class="form-group mb-0">
                                     <label class="f-16 roboto">Term waiver</label>
                                     <mat-form-field>
-                                        <input type="number" formControlName="termWaiver" matInput class="form-control br-0">
+                                        <input type="number" formControlName="termWaiver" matInput
+                                            class="form-control br-0">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -376,7 +445,8 @@
                                 <div class="form-group mb-0">
                                     <label class="f-16 roboto">Critical illeness</label>
                                     <mat-form-field>
-                                        <input type="number" formControlName="criticalIlleness" matInput class="form-control br-0">
+                                        <input type="number" formControlName="criticalIlleness" matInput
+                                            class="form-control br-0">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -384,7 +454,8 @@
                                 <div class="form-group mb-0">
                                     <label class="f-16 roboto">Premium waiver</label>
                                     <mat-form-field>
-                                        <input type="number" formControlName="premiumWaiver" matInput class="form-control br-0">
+                                        <input type="number" formControlName="premiumWaiver" matInput
+                                            class="form-control br-0">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -392,7 +463,8 @@
                                 <div class="form-group mb-0">
                                     <label class="f-16 roboto">Female critical illeness</label>
                                     <mat-form-field>
-                                        <input type="number" formControlName="femaleCriticalIlleness" matInput class="form-control br-0">
+                                        <input type="number" formControlName="femaleCriticalIlleness" matInput
+                                            class="form-control br-0">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -405,7 +477,8 @@
                             <div class="form-group mb-0">
                                 <label class="f-16 roboto">loan availble</label>
                                 <mat-form-field>
-                                    <input type="number" formControlName="loanAvailable" matInput class="form-control br-0">
+                                    <input type="number" formControlName="loanAvailable" matInput
+                                        class="form-control br-0">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -421,7 +494,8 @@
                             <div class="form-group mb-0">
                                 <label class="f-16 roboto">Loan taken on</label>
                                 <mat-form-field>
-                                    <input formControlName="loanTakenOn" [matDatepicker]="loanTakenOn" matInput class="form-control br-0">
+                                    <input formControlName="loanTakenOn" [matDatepicker]="loanTakenOn" matInput
+                                        class="form-control br-0">
                                     <mat-datepicker-toggle matSuffix [for]="loanTakenOn"></mat-datepicker-toggle>
                                     <mat-datepicker #loanTakenOn></mat-datepicker>
                                 </mat-form-field>
@@ -436,9 +510,22 @@
                                 <h5 class="m-0 pt-8"> Permium payment mode </h5>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group mb-0">
+                                <div class="form-group ">
+                                    <!-- <mat-form-field>
+                                        <input formControlName="" matInput class="form-control br-0">
+                                    </mat-form-field> -->
                                     <mat-form-field>
-                                        <input formControlName="permiumPaymentMode" matInput class="form-control br-0">
+                                        <mat-select formControlName="permiumPaymentMode" #frequency autocomplete="true"
+                                            class="form-control mt-28 br-0">
+                                            <mat-option value="1">In force</mat-option>
+                                            <mat-option value="2">Lapsed</mat-option>
+                                            <mat-option value="3">Paid up</mat-option>
+                                            <mat-option value="4">Fully paid up</mat-option>
+                                        </mat-select>
+                                        <mat-error
+                                            [ngClass]="{'v-h':!(ispolicyStatus && lifeInsuranceForm.get('policyStatus').invalid || (lifeInsuranceForm.get('policyStatus').touched && lifeInsuranceForm.get('policyStatus').invalid))}"
+                                            class="f-12 pt-4">This field is required
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                             </div>

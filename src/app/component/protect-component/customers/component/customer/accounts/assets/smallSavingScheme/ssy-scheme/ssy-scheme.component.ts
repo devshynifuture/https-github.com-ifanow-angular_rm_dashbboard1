@@ -4,6 +4,8 @@ import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-ssy-scheme',
@@ -15,7 +17,7 @@ export class SsySchemeComponent implements OnInit {
   clientId: number;
   noData: string;
 
-  constructor(private cusService:CustomerService,private subInjectService:SubscriptionInject,private eventService:EventService) { }
+  constructor(public dialog: MatDialog,private cusService:CustomerService,private subInjectService:SubscriptionInject,private eventService:EventService) { }
   displayedColumns16 = ['no', 'owner','cvalue','rate','amt','number','mdate','desc','status','icons'];
   datasource;
   ngOnInit() {
@@ -45,10 +47,46 @@ export class SsySchemeComponent implements OnInit {
     }
 
   }
-  addOpenSSY(value)
+  deleteModal(value,data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.cusService.deleteSSY(data.id).subscribe(
+          data=>{
+            this.eventService.openSnackBar("SSY is deleted","dismiss")
+            dialogRef.close();
+            this.getSsySchemedata();
+          },
+          err=>this.eventService.openSnackBar(err)
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+  addOpenSSY(value,data)
   {
     const fragmentData = {
       Flag:value,
+      data,
       id: 1,
       state: 'open'
     };

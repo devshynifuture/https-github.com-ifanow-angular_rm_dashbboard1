@@ -85,7 +85,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="text" (keypress)="keyPress($event)" class="form-control br-0 percentage" formControlName="purchaseYear">
+                    <input matInput type="text" (utils.keypress)="utils.keyPress($event)" class="form-control br-0 percentage" formControlName="purchaseYear">
                     <!-- <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isPurchaseYear && getFormControl().purchaseYear.invalid || getFormControl().purchaseYear.touched && getFormControl().purchaseYear.invalid)}">
                         This field is required
                     </mat-error> -->
@@ -126,11 +126,6 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <!-- <input matInput type="text" (keypress)="keyPress($event)" class="form-control br-0 percentage" formControlName="purchaseYear">
-                                <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isPurchaseYear && getFormControl().purchaseYear.invalid || getFormControl().purchaseYear.touched && getFormControl().purchaseYear.invalid)}">
-                                    This field is required
-                                </mat-error> -->
-
                 </div>
             </div>
         </div>

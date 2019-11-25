@@ -16,8 +16,10 @@ export class CashAndBankComponent implements OnInit {
   bankAccountList: any;
   cashInHandList: any;
   clientId: any;
+  totalAccountBalance: any;
+  sumOfCashValue: any;
 
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService) { }
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService) { }
   displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc', 'status', 'icons'];
   datasource7 = ELEMENT_DATA7;
   displayedColumns8 = ['no', 'owner', 'cash', 'bal', 'desc', 'status', 'icons'];
@@ -50,6 +52,7 @@ export class CashAndBankComponent implements OnInit {
   getBankAccountsRes(data) {
     console.log('getBankAccountsRes ####', data)
     this.bankAccountList = data.cashInBankAccounts
+    this.totalAccountBalance = data.totalAccountBalance
   }
   getCashInHandList() {
     let obj = {
@@ -63,6 +66,7 @@ export class CashAndBankComponent implements OnInit {
   getCashInHandRes(data) {
     console.log('getCashInHandRes ###', data)
     this.cashInHandList = data.cashInHands
+    this.sumOfCashValue = data.sumOfCashValue
   }
   openCashAndBank(value, state, data) {
     const fragmentData = {
