@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {DatePipe} from "@angular/common";
+import { Injectable } from '@angular/core';
+import { DatePipe } from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class UtilService {
   static convertObjectToCustomArray(inputObject: object, keyNameForOutput: string, keyValueForOutput: string): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
-      const object = {selected: false};
+      const object = { selected: false };
       object[keyNameForOutput] = inputObject[key];
       object[keyValueForOutput] = key;
 
@@ -48,12 +48,24 @@ export class UtilService {
   }
 
   static getEndOfDay(date: Date) {
-    date.setHours(23)
+    date.setHours(23);
     date.setMinutes(59);
     date.setSeconds(59);
     date.setMilliseconds(999);
     return date;
 
+  }
+
+  commaSeparatedDigits(data) {
+    let res = data + '';
+    let resArray = res.split('');
+    let count = 1;
+
+    while (count != resArray.length) {
+      if (count === 3) {
+        return res;
+      }
+    }
   }
 
   formatter(data) {
