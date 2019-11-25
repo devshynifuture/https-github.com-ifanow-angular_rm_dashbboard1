@@ -24,7 +24,7 @@ export class DocumentsComponent implements OnInit {
   allFiles: any;
   AllDocs: any;
   commonFileFolders: any;
-
+  tabValue;
   constructor(private _bottomSheet: MatBottomSheet, private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
   viewMode
   ngOnInit() {
