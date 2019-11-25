@@ -18,6 +18,8 @@ export class CashAndBankComponent implements OnInit {
   clientId: any;
   totalAccountBalance: any;
   sumOfCashValue: any;
+  isLoading: boolean = true;
+  noData: string;
 
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService) { }
   displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc', 'status', 'icons'];
@@ -28,14 +30,14 @@ export class CashAndBankComponent implements OnInit {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getBankAccountList()
+    this.getBankAccountList();
   }
   getfixedIncomeData(value) {
     console.log('value++++++', value)
     this.showRequring = value
-    if(value == '2'){
+    if (value == '2') {
       this.getCashInHandList()
-    }else{
+    } else {
       this.getBankAccountList()
     }
   }
@@ -50,11 +52,13 @@ export class CashAndBankComponent implements OnInit {
   }
 
   getBankAccountsRes(data) {
-    console.log('getBankAccountsRes ####', data)
+    console.log('getBankAccountsRes ####', data);
+    this.isLoading = false;
     this.bankAccountList = data.cashInBankAccounts
     this.totalAccountBalance = data.totalAccountBalance
   }
   getCashInHandList() {
+    this.isLoading = true;
     let obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
@@ -64,7 +68,8 @@ export class CashAndBankComponent implements OnInit {
     );
   }
   getCashInHandRes(data) {
-    console.log('getCashInHandRes ###', data)
+    console.log('getCashInHandRes ###', data);
+    this.isLoading = false;
     this.cashInHandList = data.cashInHands
     this.sumOfCashValue = data.sumOfCashValue
   }
@@ -77,16 +82,15 @@ export class CashAndBankComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        if(value == 'addedbankAc'){
+        if (value == 'addedbankAc') {
           this.getCashInHandList()
-        }else{
-        this.getBankAccountList();
+        } else {
+          this.getBankAccountList();
         };
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-
         }
       }
     );;

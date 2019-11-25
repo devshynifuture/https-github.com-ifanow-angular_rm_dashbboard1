@@ -306,4 +306,7 @@ export class CustomerService {
   deleteLiabilities(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_LIABILITIES, data)
   }
+  getAllFiles(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ALL_FILES, data)
+  }
 }

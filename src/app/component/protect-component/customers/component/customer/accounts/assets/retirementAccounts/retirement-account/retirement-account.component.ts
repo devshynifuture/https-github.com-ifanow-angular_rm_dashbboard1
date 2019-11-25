@@ -13,7 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./retirement-account.component.scss']
 })
 export class RetirementAccountComponent implements OnInit {
-  
+
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   showRequring = '1';
   getObject: {};
@@ -52,6 +52,8 @@ export class RetirementAccountComponent implements OnInit {
 
   displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
   datasource16;
+  isLoading: boolean = true;
+
   dataEPSList = new MatTableDataSource(this.datasource11);
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -104,7 +106,8 @@ export class RetirementAccountComponent implements OnInit {
     );
   }
   getEPFRes(data) {
-    console.log('getEPFRes =', data)
+    console.log('getEPFRes =', data);
+    this.isLoading = false;
     this.dataEPSList = data.listOfEpf
     this.sumOfcurrentEpfBalance = data.sumOfcurrentEpfBalance
     this.sumOfcurrentValue = data.sumOfcurrentValue;
@@ -112,51 +115,59 @@ export class RetirementAccountComponent implements OnInit {
     this.sumOfemployersMonthlyContribution = data.sumOfemployersMonthlyContribution
   }
   getListGratuity() {
+    this.isLoading = true;
     let obj = this.getObject
     this.custumService.getGrauity(obj).subscribe(
       data => this.getGrauityRes(data)
     );
   }
   getGrauityRes(data) {
-    console.log('getGrauityRes =', data)
+    console.log('getGrauityRes =', data);
+    this.isLoading = false;
     this.dataGratuityList = data.gratuityList
     this.sumOfAmountReceived = data.sumOfAmountReceived
   }
   getListNPS() {
+    this.isLoading = true;
     let obj = this.getObject
     this.custumService.getNPS(obj).subscribe(
       data => this.getNPSRes(data)
     );
   }
   getNPSRes(data) {
-    console.log('getNPSRes =', data)
+    console.log('getNPSRes =', data);
+    this.isLoading = false;
     this.dataNPSList = data.npsList
     this.totalContribution = data.totalContribution
     this.totalCurrentValue = data.totalCurrentValue
   }
   getListSuperannuation() {
+    this.isLoading = true;
     let obj = this.getObject
     this.custumService.getSuperannuation(obj).subscribe(
       data => this.getSuperannuationRes(data)
     );
   }
   getSuperannuationRes(data) {
-    console.log('getSuperannuationRes =', data)
+    console.log('getSuperannuationRes =', data);
+    this.isLoading = false;
     this.dataSuperannuationList = data.superannuationList
     this.sumOfAnnualEmployeeContribution = data.sumOfAnnualEmployeeContribution
     this.sumOfAnnualEmployerContribution = data.sumOfAnnualEmployerContribution
   }
   getListEPS() {
+    this.isLoading = true;
     let obj = this.getObject
     this.custumService.getEPS(obj).subscribe(
       data => this.getEPSRes(data)
     );
   }
   getEPSRes(data) {
-    console.log('getEPSRes =', data)
+    console.log('getEPSRes =', data);
+    this.isLoading = false;
     this.EPSList = data.epsList
     this.totalNotionalValue = data.totalNotionalValue
-    this.totalPensionAmount = data.totalPensionAmount 
+    this.totalPensionAmount = data.totalPensionAmount
   }
 }
 export interface PeriodicElement11 {

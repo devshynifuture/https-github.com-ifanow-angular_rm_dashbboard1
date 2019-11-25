@@ -33,16 +33,16 @@
             </div>
             <div class="col-md-10 b-a p-0" [ngSwitch]="viewMode">
                 <div *ngSwitchCase="'tab1'">
-                    <!-- <div class="d-flex justify-content-center mt-150">
+                    <div class="d-flex justify-content-center mt-150">
                   <div class="row">
                     <div class="col-md-12 text-center">
                         <h3 class="f-22 m-0">Hi Rahul, welcome!</h3>
                         <h5 class="m-0 pt-28 pb-28">Please help us know about your family.</h5>
-                        <button mat-stroked-button class="btn-primary br-0">Add members</button>
+                        <button  (click)="open('addprofilePlan')" mat-stroked-button class="btn-primary br-0">Add members</button>
                     </div>
                   </div>
-                    </div> -->
-                <div class="pt-28 pb-28">
+                    </div>
+                <!-- <div class="pt-28 pb-28">
                   <div class="row">
                       <div class="col-md-10">
                           <h3 class="m-0">Rahul Jain’s family details</h3>
@@ -247,8 +247,7 @@
                                     </div>
                              </div>-->
                 </div> 
-                </div>
-                </div>
+               
                 <div *ngSwitchCase="'tab2'">
                         <!-- <div class="d-flex justify-content-center mt-150">
                       <div class="row">

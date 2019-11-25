@@ -2,21 +2,20 @@
   <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div>
 <div class="wrapper-8">
-    <div class="row">
-      <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
-        <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-2">
-          Overview Report
-          <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>Overview Report</button>
-          <button mat-menu-item>Summary</button>
-          <button mat-menu-item>All Transactions</button>
-          <button mat-menu-item>Unrealized Transactions</button>
-          <button mat-menu-item>Capital Gains</button>
-          <button mat-menu-item>Goal Linkage</button>
-        </mat-menu>
-      </div>
+  <div class="row">
+    <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
+      <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-2">
+        Overview Report
+        <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Overview Report</button>
+        <button mat-menu-item>Summary</button>
+        <button mat-menu-item>All Transactions</button>
+        <button mat-menu-item>Unrealized Transactions</button>
+        <button mat-menu-item>Capital Gains</button>
+        <button mat-menu-item>Goal Linkage</button>
+      </mat-menu>
     </div>
     <div class="row">
       <div class="col-md-3 p-0">
@@ -89,9 +88,13 @@ more_vert
           </td>
           <td mat-footer-cell *matFooterCellDef  class="br text-right t-10"> </td>
       </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns3; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
-        <tr mat-footer-row *matFooterRowDef="displayedColumns3;sticky: true"></tr>
-      </table>
-    </div>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns3; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns3;sticky: true"></tr>
+    </table>
   </div>
+</div>
+
+<div *ngIf="isLoading">
+  <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+</div>

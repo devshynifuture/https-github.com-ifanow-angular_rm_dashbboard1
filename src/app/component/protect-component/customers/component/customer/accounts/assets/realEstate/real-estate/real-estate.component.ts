@@ -30,13 +30,13 @@ export class RealEstateComponent implements OnInit {
     this.showLoader=true;
     this.getRealEstate();
   }
-  displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status','icons'];
+  displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status', 'icons'];
   // datasource3 = ELEMENT_DATA3;
 
-  getRealEstate(){
-    let obj={
-      'advisorId':this.advisorId,
-      'clientId':this.clientId
+  getRealEstate() {
+    let obj = {
+      'advisorId': this.advisorId,
+      'clientId': this.clientId
     }
     this.custmService.getRealEstate(obj).subscribe(
       data => this.getRealEstateRes(data)
@@ -100,8 +100,7 @@ export class RealEstateComponent implements OnInit {
 
     });
   }
-  open(value,data)
-  {
+  open(value, data) {
     const fragmentData = {
       Flag: value,
       data: data,
@@ -115,26 +114,23 @@ export class RealEstateComponent implements OnInit {
           this.getRealEstate();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-    
         }
       }
-    );  
+    );
   }
 }
 export interface PeriodicElement3 {
   no: string;
   owner: string;
-  type:string;
-  value:string;
-  pvalue:string;
-  desc:string;
-  status:string;
+  type: string;
+  value: string;
+  pvalue: string;
+  desc: string;
+  status: string;
 }
 
 const ELEMENT_DATA3: PeriodicElement3[] = [
-  {no: '1.', owner: 'Rahul Jain',type:'Type',value:'60,000',pvalue:'60,000',desc:'ICICI FD',status:'ICICI FD'},
-  {no: '1.', owner: 'Rahul Jain',type:'Type',value:'60,000',pvalue:'60,000',desc:'ICICI FD',status:'ICICI FD'},
-  {no: ' ', owner: 'Total',type:'',value:'1,28,925',pvalue:'1,28,925',desc:'',status:' '},
- 
-
+  { no: '1.', owner: 'Rahul Jain', type: 'Type', value: '60,000', pvalue: '60,000', desc: 'ICICI FD', status: 'ICICI FD' },
+  { no: '1.', owner: 'Rahul Jain', type: 'Type', value: '60,000', pvalue: '60,000', desc: 'ICICI FD', status: 'ICICI FD' },
+  { no: ' ', owner: 'Total', type: '', value: '1,28,925', pvalue: '1,28,925', desc: '', status: ' ' },
 ];
