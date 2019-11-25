@@ -12,14 +12,16 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
   selector: 'app-po-td-scheme',
   templateUrl: './po-td-scheme.component.html',
   styleUrls: ['./po-td-scheme.component.scss'],
-  
+
 })
 export class PoTdSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
   noData: string;
 
-  constructor(public dialog: MatDialog,private eventService: EventService,private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
+  isLoading: boolean = true;
+
+  constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns22 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'tenure', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
   datasource;
   ngOnInit() {
@@ -37,14 +39,15 @@ export class PoTdSchemeComponent implements OnInit {
     )
   }
   getPoTdSchemedataResponse(data) {
-    console.log(data)
-    if(data.postOfficeTdList.length!=0){
-      this.datasource=data.postOfficeTdList
-    }else{
-      this.noData="No Scheme Found";
+    console.log(data);
+    this.isLoading = false;
+    if (data.postOfficeTdList.length != 0) {
+      this.datasource = data.postOfficeTdList
+    } else {
+      this.noData = "No Scheme Found";
     }
   }
-  deleteModal(value,data) {
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -54,12 +57,12 @@ export class PoTdSchemeComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         this.cusService.deletePOTD(data.id).subscribe(
-          data=>{
-            this.eventService.openSnackBar("POSAVING is deleted","dismiss")
+          data => {
+            this.eventService.openSnackBar("POSAVING is deleted", "dismiss")
             dialogRef.close();
             this.getPoTdSchemedata();
           },
-          err=>this.eventService.openSnackBar(err)
+          err => this.eventService.openSnackBar(err)
         )
       },
       negativeMethod: () => {
@@ -79,7 +82,7 @@ export class PoTdSchemeComponent implements OnInit {
 
     });
   }
-  addPOTD(value,data) {
+  addPOTD(value, data) {
     const fragmentData = {
       Flag: value,
       data,

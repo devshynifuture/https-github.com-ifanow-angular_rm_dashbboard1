@@ -36,8 +36,15 @@ export class PoRdSchemeComponent implements OnInit {
     )
   }
   getPoRdSchemedataResponse(data) {
-    this.datasource = data.postOfficeRDList
-    console.log(data)
+
+    console.log(data);
+    this.isLoading = false;
+    if (data.postOfficeRDList.length != 0) {
+      this.datasource = data.postOfficeRDList;
+    } else {
+      this.noData = 'No Scheme Found';
+    }
+
   }
   deleteModal(value, data) {
     const dialogData = {
