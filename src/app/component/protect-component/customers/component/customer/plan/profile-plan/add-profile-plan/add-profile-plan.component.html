@@ -197,18 +197,21 @@
            </div>
            <div class="col-md-2 pr-0">
                 <div class="form-group mb-0">
-                        <mat-form-field class="example-full-width">
-                                <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
-                                <mat-autocomplete #auto="matAutocomplete">
-                                  <mat-option  [value]="option">
-                                    option
-                                  </mat-option>
-                                </mat-autocomplete>
+                        <mat-form-field class=" w-100">
+                                <mat-select class="b-a p-12">
+                                  <mat-option value='1'>Select age </mat-option>
+                                </mat-select>
                               </mat-form-field>
                     </div>
            </div>
-           <div class="col-md-3">
-                <mat-form-field class="b-a"> <input type="text" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto"> <mat-autocomplete #auto="matAutocomplete"> <mat-option [value]="option"> 123 </mat-option> <mat-option [value]="option"> 123 </mat-option> <mat-option [value]="option"> 123 </mat-option> </mat-autocomplete> </mat-form-field>
+           <div class="col-md-3 pl-0">
+                <div class="form-group mb-0">
+                        <mat-form-field class=" w-100">
+                                <mat-select class="b-a p-12">
+                                  <mat-option value='1'>37 Years </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                    </div>
            </div>
               
             </div>
