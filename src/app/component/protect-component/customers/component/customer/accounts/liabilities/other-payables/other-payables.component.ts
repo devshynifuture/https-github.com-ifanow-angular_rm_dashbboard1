@@ -3,6 +3,9 @@ import { CustomerService } from '../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-other-payables',
@@ -16,7 +19,7 @@ export class OtherPayablesComponent implements OnInit {
   dataSource: any;
   @Input() payableData;
   @Output() OtherDataChange = new EventEmitter();
-  constructor(public custmService:CustomerService,public util:UtilService,public subInjectService:SubscriptionInject) { }
+  constructor(public custmService:CustomerService,public util:UtilService,public subInjectService:SubscriptionInject,public eventService:EventService,public dialog:MatDialog) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -36,6 +39,41 @@ export class OtherPayablesComponent implements OnInit {
     this.dataSource=data;
     this.OtherDataChange.emit(this.dataSource);
 
+  }
+  deleteModal(value,data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.custmService.deleteOtherPayables(data.id).subscribe(
+          data=>{
+            this.eventService.openSnackBar("Other payables is deleted","dismiss")
+            dialogRef.close();
+            this.getPayables();
+          },
+          err=>this.eventService.openSnackBar(err)
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
   open(flagValue, data) {
     const fragmentData = {

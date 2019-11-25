@@ -131,7 +131,7 @@
                 </div>
 
                 <div class="liabilities wrapper-8">
-                    <table mat-table [dataSource]="dataSource" id="table-low">
+                    <table mat-table [dataSource]="dataSource" id="table-low" *ngIf="dataSource!=undefined && showLoader==false">
                         <ng-container matColumnDef="no">
                             <th mat-header-cell *matHeaderCellDef class="br"> No.</th>
                             <td mat-cell *matCellDef="let element; let i = index;" class="br"> {{i+1}} </td>
@@ -210,7 +210,7 @@
                                     <button mat-menu-item
                                         (click)="addLiabilitiesDetail('addLiabilitiesDetail')">Deatiled View</button>
                                     <button mat-menu-item>Activity</button>
-                                    <button mat-menu-item>Delete</button>
+                                    <button mat-menu-item (click)="deleteModal('LIABILITIES',element)">Delete</button>
                                 </mat-menu>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
