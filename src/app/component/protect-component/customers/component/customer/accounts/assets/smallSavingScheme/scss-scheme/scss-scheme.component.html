@@ -1,18 +1,20 @@
 <div class="row">
-        <div class="col-md-4 p-0">
-            <h4 class="m-0 text-black roboto pt-8">Senior citizen savings scheme (SCSS)</h4>
-        </div>
-        <div class="col-md-8 p-0 right text-right">
-            <img src="assets/images/svg/download-bordered.svg" class="c-p">
-            <img src="assets/images/svg/up-down.svg" class="">
-            <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
-        
-            <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i class="material-icons">filter_list</i>FILTERS</button>
-            <button mat-stroked-button class="btn-primary addon v-middle" (click)="addOpenSCSS('addSCSS','')"><i class="material-icons">add</i>ADD NEW</button>
-        </div>
-        </div>
+    <div class="col-md-4 p-0">
+        <h4 class="m-0 text-black roboto pt-8">Senior citizen savings scheme (SCSS)</h4>
+    </div>
+    <div class="col-md-8 p-0 right text-right">
+        <img src="assets/images/svg/download-bordered.svg" class="c-p">
+        <img src="assets/images/svg/up-down.svg" class="">
+        <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
+
+        <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
+                class="material-icons">filter_list</i>FILTERS</button>
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="addOpenSCSS('addSCSS','')"><i
+                class="material-icons">add</i>ADD NEW</button>
+    </div>
+</div>
 <div class="example-container mt-8 real-estate">
-    <table mat-table [dataSource]="datasource" id="table-low">
+    <table *ngIf="datasource" mat-table [dataSource]="datasource" id="table-low">
 
         <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -87,4 +89,8 @@
     <div *ngIf="datasource==undefined">
         <h4 class="text-center pt-72">{{noData}}</h4>
     </div>
+</div>
+
+<div *ngIf="isLoading">
+    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div>

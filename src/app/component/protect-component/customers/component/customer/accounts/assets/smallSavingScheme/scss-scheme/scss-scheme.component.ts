@@ -20,26 +20,27 @@ export class ScssSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
   noData: string;
+  isLoading: boolean = true;
 
-  constructor(public dialog: MatDialog,private eventService: EventService,private cusService:CustomerService,private subInjectService:SubscriptionInject) { }
+  constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns19 = ['no', 'owner', 'payout', 'rate', 'tamt', 'amt', 'mdate', 'desc', 'status', 'icons'];
   datasource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId=AuthService.getClientId();
+    this.clientId = AuthService.getClientId();
     this.getScssSchemedata()
   }
   getScssSchemedata() {
-    const obj={
-      advisorId:this.advisorId,
-      clientId:this.clientId,
-      requiredDate:''
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      requiredDate: ''
     }
     this.cusService.getSmallSavingSchemeSCSSData(obj).subscribe(
-      data=>this.getKvpSchemedataResponse(data)
+      data => this.getKvpSchemedataResponse(data)
     )
   }
-  deleteModal(value,data) {
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -49,12 +50,12 @@ export class ScssSchemeComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         this.cusService.deleteSCSS(data.id).subscribe(
-          data=>{
-            this.eventService.openSnackBar("SCSS is deleted","dismiss")
+          data => {
+            this.eventService.openSnackBar("SCSS is deleted", "dismiss")
             dialogRef.close();
             this.getScssSchemedata();
           },
-          err=>this.eventService.openSnackBar(err)
+          err => this.eventService.openSnackBar(err)
         )
       },
       negativeMethod: () => {
@@ -75,17 +76,17 @@ export class ScssSchemeComponent implements OnInit {
     });
   }
   getKvpSchemedataResponse(data: any) {
-    console.log(data)
-    if(data.scssList.length!=0){
-      this.datasource=data.scssList
-    }else{
-      this.noData="No Scheme Found";
+    console.log(data);
+    this.isLoading = false;
+    if (data.scssList.length != 0) {
+      this.datasource = data.scssList
+    } else {
+      this.noData = "No Scheme Found";
     }
   }
-  addOpenSCSS(value,data)
-  {
+  addOpenSCSS(value, data) {
     const fragmentData = {
-      Flag:value,
+      Flag: value,
       data,
       id: 1,
       state: 'open'
