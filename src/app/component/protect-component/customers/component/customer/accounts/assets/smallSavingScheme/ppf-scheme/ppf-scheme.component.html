@@ -14,7 +14,7 @@
     </div>
 </div>
 <div class="example-container mt-8 real-estate">
-    <table mat-table [dataSource]="datasource" id="table-low">
+    <table *ngIf="datasource" mat-table [dataSource]="datasource" id="table-low">
 
         <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -83,7 +83,11 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
     </table>
-    <div *ngIf="datasource==undefined">
-        <h4 class="text-center pt-72">{{noData}}</h4>
+    <div *ngIf="dataSource==undefined">
+        <h4 class="text-center pt-72">{{noData }}</h4>
     </div>
+</div>
+
+<div *ngIf="isLoading">
+    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div>

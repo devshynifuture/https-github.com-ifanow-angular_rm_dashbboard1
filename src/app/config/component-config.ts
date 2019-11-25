@@ -119,6 +119,7 @@ export const appConfig = {
   DELETE_POMIS_SCHEME:'account/asset/saving-scheme/pomis/delete',
   GET_POLICY_NAME:'account/insurance/policy-list/get',
   DELETE_INSURANCE:'account/insurance/life-insurance/delete',
+  GET_ALL_FILES:'/document/account/document/all-file/get',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE:'account/asset/real-estate/get',
   GET_EPF:'account/asset/retirement/epf/list/get',

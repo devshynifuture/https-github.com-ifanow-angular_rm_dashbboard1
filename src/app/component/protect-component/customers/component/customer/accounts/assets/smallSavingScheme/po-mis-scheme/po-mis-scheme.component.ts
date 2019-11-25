@@ -15,31 +15,36 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 export class PoMisSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
+  isLoading: boolean = true;
+  noData: string;
 
-  constructor(public dialog: MatDialog,private eventService: EventService,private cusService:CustomerService,private subInjectService:SubscriptionInject,public util:UtilService) { }
-  displayedColumns = ['no', 'owner','cvalue','mpayout','rate','amt','mvalue','mdate','desc','status','icons'];
+  constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject, public util: UtilService) { }
+  displayedColumns = ['no', 'owner', 'cvalue', 'mpayout', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
   datasource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId=2978;
+    this.clientId = 2978;
     this.getPoMisSchemedata()
   }
-  getPoMisSchemedata()
-  {
-    const obj={
-      advisorId:this.advisorId,
-      clientId:this.clientId
+  getPoMisSchemedata() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
     }
     this.cusService.getSmallSavingSchemePOMISData(obj).subscribe(
-      data=>this.getPoMisSchemedataResponse(data)
+      data => this.getPoMisSchemedataResponse(data)
     )
   }
-  getPoMisSchemedataResponse(data)
-  {
-    console.log(data)
-    this.datasource=data.poMisList;
+  getPoMisSchemedataResponse(data) {
+    console.log(data);
+    this.isLoading = false;
+    if (data.poMisList.length != 0) {
+      this.datasource = data.poMisList;
+    } else {
+      this.noData = "No Scheme Found";
+    }
   }
-  deleteModal(value,data) {
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -49,12 +54,12 @@ export class PoMisSchemeComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         this.cusService.deletePOMIS(data.id).subscribe(
-          data=>{
-            this.eventService.openSnackBar("POMIS is deleted","dismiss")
+          data => {
+            this.eventService.openSnackBar("POMIS is deleted", "dismiss")
             dialogRef.close();
             this.getPoMisSchemedata();
           },
-          err=>this.eventService.openSnackBar(err)
+          err => this.eventService.openSnackBar(err)
         )
       },
       negativeMethod: () => {
@@ -74,11 +79,10 @@ export class PoMisSchemeComponent implements OnInit {
 
     });
   }
-  addPOMIS(value,data)
-  {
+  addPOMIS(value, data) {
     const fragmentData = {
-      Flag:value,
-      data:data,
+      Flag: value,
+      data: data,
       id: 1,
       state: 'open'
     };

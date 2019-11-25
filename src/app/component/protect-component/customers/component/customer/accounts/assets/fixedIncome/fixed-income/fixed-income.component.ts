@@ -11,6 +11,8 @@ import { CustomerService } from '../../../../customer.service';
   styleUrls: ['./fixed-income.component.scss']
 })
 export class FixedIncomeComponent implements OnInit {
+  isLoading: boolean = true;
+
   showRequring: any;
   advisorId: any;
   dataSourceFixed: any;
@@ -25,15 +27,15 @@ export class FixedIncomeComponent implements OnInit {
   sumAmountInvestedB: any;
   sumCouponAmount: any;
   sumCurrentValueB: any;
- 
 
-  constructor(private subInjectService:SubscriptionInject, private custumService : CustomerService,private eventService:EventService,public util:UtilService) { }
+
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService) { }
   viewMode
-  displayedColumns4 = ['no', 'owner', 'type', 'cvalue', 'rate', 'amt','mdate','mvalue','number','desc','status','icons'];
+  displayedColumns4 = ['no', 'owner', 'type', 'cvalue', 'rate', 'amt', 'mdate', 'mvalue', 'number', 'desc', 'status', 'icons'];
   datasource4 = ELEMENT_DATA4;
-  displayedColumns5 = ['no', 'owner', 'cvalue', 'rate', 'amt','mdate','number','desc','status','icons'];
+  displayedColumns5 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mdate', 'number', 'desc', 'status', 'icons'];
   datasource5 = ELEMENT_DATA5;
-  displayedColumns6 = ['no', 'owner', 'cvalue', 'camt', 'amt','cdate','rate','mvalue','tenure','type','desc','status','icons'];
+  displayedColumns6 = ['no', 'owner', 'cvalue', 'camt', 'amt', 'cdate', 'rate', 'mvalue', 'tenure', 'type', 'desc', 'status', 'icons'];
   datasource6 = ELEMENT_DATA6;
 
   ngOnInit() {
@@ -42,73 +44,75 @@ export class FixedIncomeComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getFixedDepositList()
   }
-  Close(){
+  Close() {
 
   }
-  getfixedIncomeData(value){
-    console.log('value++++++',value)
+  getfixedIncomeData(value) {
+    console.log('value++++++', value)
     this.showRequring = value
-    if(value == '2'){
+    if (value == '2') {
       this.getRecurringDepositList()
-    }else if(value == '3'){
+    } else if (value == '3') {
       this.getBondsList()
-    }else{
+    } else {
       this.getFixedDepositList()
     }
-  
+
   }
-  getFixedDepositList(){
+  getFixedDepositList() {
     let obj = {
-      clientId:this.clientId,
+      clientId: this.clientId,
       advisorId: this.advisorId
     }
     this.custumService.getFixedDeposit(obj).subscribe(
       data => this.getFixedDepositRes(data)
     );
   }
-  getFixedDepositRes(data){
-    console.log('getFixedDepositRes ********** ',data)
+  getFixedDepositRes(data) {
+    console.log('getFixedDepositRes ********** ', data);
+    this.isLoading = false;
     this.dataSourceFixed = data.fixedDepositList
     this.sumAmountInvested = data.sumAmountInvested
     this.sumCurrentValue = data.sumCurrentValue
     this.sumMaturityValue = data.sumMaturityValue
 
   }
-  getRecurringDepositList(){
-    
+  getRecurringDepositList() {
+    this.isLoading = true;
     let obj = {
-      clientId:this.clientId,
+      clientId: this.clientId,
       advisorId: this.advisorId
     }
     this.custumService.getRecurringDeposit(obj).subscribe(
       data => this.getRecurringDepositRes(data)
     );
   }
-  getRecurringDepositRes(data){
-    console.log('getRecuringDepositRes ******** ',data)
+  getRecurringDepositRes(data) {
+    console.log('getRecuringDepositRes ******** ', data);
+    this.isLoading = false;
     this.dataSourceRecurring = data.recurringDeposits
     this.totalCurrentValue = data.totalCurrentValue
     this.totalMarketValue = data.totalMarketValue
   }
-  getBondsList(){
-    
+  getBondsList() {
+    this.isLoading = true;
     let obj = {
-      clientId:this.clientId,
+      clientId: this.clientId,
       advisorId: this.advisorId
     }
     this.custumService.getBonds(obj).subscribe(
       data => this.getBondsRes(data)
     );
   }
-  getBondsRes(data){
-    console.log('getBondsRes ******** ',data)
+  getBondsRes(data) {
+    console.log('getBondsRes ******** ', data);
+    this.isLoading = false;
     this.dataSourceBond = data.bondList
     this.sumAmountInvestedB = data.sumAmountInvested
-    this.sumCouponAmount = data.sumCouponAmount 
+    this.sumCouponAmount = data.sumCouponAmount
     this.sumCurrentValueB = data.sumCurrentValue
   }
-  openPortfolioSummary(value,state,data)
-  {
+  openPortfolioSummary(value, state, data) {
     const fragmentData = {
       Flag: value,
       data: data,
@@ -124,7 +128,7 @@ export class FixedIncomeComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-    
+
         }
       }
     );
@@ -134,86 +138,108 @@ export class FixedIncomeComponent implements OnInit {
 export interface PeriodicElement4 {
   no: string;
   owner: string;
-  type:string;
-  cdate:string;
-  rate:string;
-  amt:string;
-  mdate:string;
-  mvalue:string;
-  number:string;
-  desc:string;
-  status:string;
+  type: string;
+  cdate: string;
+  rate: string;
+  amt: string;
+  mdate: string;
+  mvalue: string;
+  number: string;
+  desc: string;
+  status: string;
 }
 
 const ELEMENT_DATA4: PeriodicElement4[] = [
-  {no: '1.', owner: 'Ronak Hasmukh Hindocha',type:'Bank FD',
-  cdate:'60,000',rate:'8.40%',amt:'1,00,000',mdate:"18/09/2019",mvalue:"1,00,000",
-  number:"980787870909",desc:"ICICI FD",status:"LIVE"},
-  {no: '2.', owner: 'Rupa Ronak Hindocha',type:'Bank FD',
-  cdate:'60,000',rate:'8.40%',amt:'1,00,000',mdate:"18/09/2019",mvalue:"1,00,000",
-  number:"980787870909",desc:"ICICI FD",status:"LIVE"},
-  {no: '3.', owner: 'Ronak Hasmukh Hindocha',type:'Bank FD',
-  cdate:'60,000',rate:'8.40%',amt:'1,00,000',mdate:"18/09/2019",mvalue:"1,00,000",
-  number:"980787870909",desc:"ICICI FD",status:"LIVE"},
-  {no: '', owner: 'Total',type:'',
-  cdate:'1,28,925',rate:'8.40%',amt:'1,50,000',mdate:"",mvalue:"1,50,000",
-  number:"",desc:"",status:""},
- 
+  {
+    no: '1.', owner: 'Ronak Hasmukh Hindocha', type: 'Bank FD',
+    cdate: '60,000', rate: '8.40%', amt: '1,00,000', mdate: "18/09/2019", mvalue: "1,00,000",
+    number: "980787870909", desc: "ICICI FD", status: "LIVE"
+  },
+  {
+    no: '2.', owner: 'Rupa Ronak Hindocha', type: 'Bank FD',
+    cdate: '60,000', rate: '8.40%', amt: '1,00,000', mdate: "18/09/2019", mvalue: "1,00,000",
+    number: "980787870909", desc: "ICICI FD", status: "LIVE"
+  },
+  {
+    no: '3.', owner: 'Ronak Hasmukh Hindocha', type: 'Bank FD',
+    cdate: '60,000', rate: '8.40%', amt: '1,00,000', mdate: "18/09/2019", mvalue: "1,00,000",
+    number: "980787870909", desc: "ICICI FD", status: "LIVE"
+  },
+  {
+    no: '', owner: 'Total', type: '',
+    cdate: '1,28,925', rate: '8.40%', amt: '1,50,000', mdate: "", mvalue: "1,50,000",
+    number: "", desc: "", status: ""
+  },
+
 
 ];
 export interface PeriodicElement5 {
   no: string;
   owner: string;
-  cvalue:string;
-  rate:string;
-  amt:string;
-  mdate:string;
-  number:string;
-  desc:string;
-  status:string;
+  cvalue: string;
+  rate: string;
+  amt: string;
+  mdate: string;
+  number: string;
+  desc: string;
+  status: string;
 }
 
 const ELEMENT_DATA5: PeriodicElement5[] = [
-  {no: '1.', owner: 'Ronak Hasmukh Hindocha',
-  cvalue:'60,000',rate:'8.40%',amt:'1,00,000',mdate:"18/09/2019",
-  number:"980787870909",desc:"ICICI FD",status:"LIVE"},
-  {no: '2.', owner: 'Rupa Ronak Hindocha',
-  cvalue:'60,000',rate:'8.40%',amt:'1,00,000',mdate:"18/09/2019",
-  number:"980787870909",desc:"ICICI FD",status:"LIVE"},
-  {no: '3.', owner: 'Ronak Hasmukh Hindocha',
-  cvalue:'60,000',rate:'8.40%',amt:'1,00,000',mdate:"18/09/2019",
-  number:"980787870909",desc:"ICICI FD",status:"LIVE"},
-  {no: '', owner: 'Total',
-  cvalue:'1,28,925',rate:'8.40%',amt:'1,50,000',mdate:"",
-  number:"",desc:"",status:""},
- 
+  {
+    no: '1.', owner: 'Ronak Hasmukh Hindocha',
+    cvalue: '60,000', rate: '8.40%', amt: '1,00,000', mdate: "18/09/2019",
+    number: "980787870909", desc: "ICICI FD", status: "LIVE"
+  },
+  {
+    no: '2.', owner: 'Rupa Ronak Hindocha',
+    cvalue: '60,000', rate: '8.40%', amt: '1,00,000', mdate: "18/09/2019",
+    number: "980787870909", desc: "ICICI FD", status: "LIVE"
+  },
+  {
+    no: '3.', owner: 'Ronak Hasmukh Hindocha',
+    cvalue: '60,000', rate: '8.40%', amt: '1,00,000', mdate: "18/09/2019",
+    number: "980787870909", desc: "ICICI FD", status: "LIVE"
+  },
+  {
+    no: '', owner: 'Total',
+    cvalue: '1,28,925', rate: '8.40%', amt: '1,50,000', mdate: "",
+    number: "", desc: "", status: ""
+  },
+
 
 ];
 export interface PeriodicElement6 {
   no: string;
   owner: string;
-  cvalue:string;
-  camt:string;
-  amt:string;
-  cdate:string;
-  rate:string;
-  mvalue:string;
-  tenure:string;
-  type:string;
-  desc:string;
-  status:string;
+  cvalue: string;
+  camt: string;
+  amt: string;
+  cdate: string;
+  rate: string;
+  mvalue: string;
+  tenure: string;
+  type: string;
+  desc: string;
+  status: string;
 }
 
 const ELEMENT_DATA6: PeriodicElement6[] = [
-  {no: '1.', owner: 'Ronak Hasmukh Hindocha',
-  cvalue:'60,000',camt:"1,00,000",amt:'1,00,000',cdate:"18/09/2019",rate:'8.40%',mvalue:"18/09/2019",tenure:"12",type:"Tax free",
- desc:"ICICI FD",status:"LIVE"},
- {no: '2.', owner: 'Rupa Ronak Hindocha',
- cvalue:'60,000',camt:"1,00,000",amt:'1,00,000',cdate:"18/09/2019",rate:'8.40%',mvalue:"18/09/2019",tenure:"12",type:"Tax free",
-desc:"ICICI FD",status:"LIVE"},
-  {no: '', owner: 'Total',
-  cvalue:'1,28,925',camt:"1,50,000",amt:'1,50,000',cdate:"",rate:'',mvalue:"",tenure:"",type:"",
-  desc:"",status:""},
- 
+  {
+    no: '1.', owner: 'Ronak Hasmukh Hindocha',
+    cvalue: '60,000', camt: "1,00,000", amt: '1,00,000', cdate: "18/09/2019", rate: '8.40%', mvalue: "18/09/2019", tenure: "12", type: "Tax free",
+    desc: "ICICI FD", status: "LIVE"
+  },
+  {
+    no: '2.', owner: 'Rupa Ronak Hindocha',
+    cvalue: '60,000', camt: "1,00,000", amt: '1,00,000', cdate: "18/09/2019", rate: '8.40%', mvalue: "18/09/2019", tenure: "12", type: "Tax free",
+    desc: "ICICI FD", status: "LIVE"
+  },
+  {
+    no: '', owner: 'Total',
+    cvalue: '1,28,925', camt: "1,50,000", amt: '1,50,000', cdate: "", rate: '', mvalue: "", tenure: "", type: "",
+    desc: "", status: ""
+  },
+
 
 ];
