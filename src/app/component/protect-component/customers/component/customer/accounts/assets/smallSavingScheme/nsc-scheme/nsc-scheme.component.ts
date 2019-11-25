@@ -16,35 +16,36 @@ export class NscSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
   noData: string;
+  isLoading: boolean = true;
 
-  constructor(public dialog: MatDialog,private eventService: EventService,private cusService:CustomerService,private subInjectService:SubscriptionInject) { }
-  displayedColumns17 = ['no', 'owner','cvalue','rate','mvalue','mdate','number','desc','status','icons'];
+  constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
+  displayedColumns17 = ['no', 'owner', 'cvalue', 'rate', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
   datasource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId=2978;
-    this.datasource=[];
+    this.clientId = 2978;
+    this.datasource = [];
     this.getNscSchemedata();
   }
   getNscSchemedata() {
-    const obj={
-      advisorId:this.advisorId,
-      clientId:this.clientId
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
     }
     this.cusService.getSmallSavingSchemeNSCData(obj).subscribe(
-      data=>this.getNscSchemedataResponse(data)
+      data => this.getNscSchemedataResponse(data)
     )
   }
-  getNscSchemedataResponse(data)
-  {
-   console.log(data,"NSC")
-   if(data.NationalSavingCertificate.length!=0){
-    this.datasource=data.NationalSavingCertificate;
-  }else{
-    this.noData="No Scheme there"
+  getNscSchemedataResponse(data) {
+    console.log(data, "NSC");
+    this.isLoading = false;
+    if (data.NationalSavingCertificate.length != 0) {
+      this.datasource = data.NationalSavingCertificate;
+    } else {
+      this.noData = "No Scheme there"
+    }
   }
-  }
-  deleteModal(value,data) {
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -54,12 +55,12 @@ export class NscSchemeComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         this.cusService.deleteNSC(data.id).subscribe(
-          data=>{
-            this.eventService.openSnackBar("NSC is deleted","dismiss")
+          data => {
+            this.eventService.openSnackBar("NSC is deleted", "dismiss")
             dialogRef.close();
             this.getNscSchemedata();
           },
-          err=>this.eventService.openSnackBar(err)
+          err => this.eventService.openSnackBar(err)
         )
       },
       negativeMethod: () => {
@@ -79,10 +80,9 @@ export class NscSchemeComponent implements OnInit {
 
     });
   }
-  openAddNSC(value,data)
-  {
+  openAddNSC(value, data) {
     const fragmentData = {
-      Flag:value,
+      Flag: value,
       data,
       id: 1,
       state: 'open'

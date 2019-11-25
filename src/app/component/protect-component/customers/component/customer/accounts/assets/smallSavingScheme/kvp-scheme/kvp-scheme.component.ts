@@ -16,36 +16,36 @@ export class KvpSchemeComponent implements OnInit {
   clientId: number;
   advisorId: any;
   noData: string;
+  isLoading: boolean = true;
 
-  constructor(public dialog: MatDialog,private eventService: EventService,private cusService:CustomerService,private subInjectService:SubscriptionInject) { }
+  constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns18 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
   datasource;
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId=AuthService.getClientId();
+    this.clientId = AuthService.getClientId();
     this.getKvpSchemedata()
   }
-  getKvpSchemedata()
-  {
-    const obj={
-      advisorId:this.advisorId,
-      clientId:this.clientId
+  getKvpSchemedata() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
     }
     this.cusService.getSmallSavingSchemeKVPData(obj).subscribe(
-      data=>this.getKvpSchemedataResponse(data)
+      data => this.getKvpSchemedataResponse(data)
     )
   }
-  getKvpSchemedataResponse(data)
-  {
-    console.log(data)
-    if(data.KVPList.length!=0){
-      this.datasource=data.KVPList
-    }else{
-      this.noData="No Scheme Found";
+  getKvpSchemedataResponse(data) {
+    console.log(data);
+    this.isLoading = false;
+    if (data.KVPList.length != 0) {
+      this.datasource = data.KVPList
+    } else {
+      this.noData = "No Scheme Found";
     }
   }
-  deleteModal(value,data) {
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -55,12 +55,12 @@ export class KvpSchemeComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         this.cusService.deleteKVP(data.id).subscribe(
-          data=>{
-            this.eventService.openSnackBar("KVP is deleted","dismiss")
+          data => {
+            this.eventService.openSnackBar("KVP is deleted", "dismiss")
             dialogRef.close();
             this.getKvpSchemedata()
           },
-          err=>this.eventService.openSnackBar(err)
+          err => this.eventService.openSnackBar(err)
         )
       },
       negativeMethod: () => {
@@ -80,9 +80,9 @@ export class KvpSchemeComponent implements OnInit {
 
     });
   }
-  addKVP(value,data) {
+  addKVP(value, data) {
     const fragmentData = {
-      Flag:value,
+      Flag: value,
       data,
       id: 1,
       state: 'open'

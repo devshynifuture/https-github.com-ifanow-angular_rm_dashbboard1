@@ -70,18 +70,24 @@
         </ng-container>
         <ng-container matColumnDef="cvalue">
           <th mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Current value </th>
-          <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{utils.formatter(element.currentValue)}} </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">{{utils.formatter(sumOfcurrentValue) || '-'}} </td>
+          <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{utils.formatter(element.currentValue)}}
+          </td>
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">{{utils.formatter(sumOfcurrentValue) || '-'}}
+          </td>
         </ng-container>
         <ng-container matColumnDef="emp">
           <th mat-header-cell *matHeaderCellDef class="br text-right"> Employee’s contribution </th>
-          <td mat-cell *matCellDef="let element" class="br text-right"> {{utils.formatter(element.employeesMonthlyContribution)}} </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> {{utils.formatter(sumOfemployeesMonthlyContribution) || '-'}}</td>
+          <td mat-cell *matCellDef="let element" class="br text-right">
+            {{utils.formatter(element.employeesMonthlyContribution)}} </td>
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">
+            {{utils.formatter(sumOfemployeesMonthlyContribution) || '-'}}</td>
         </ng-container>
         <ng-container matColumnDef="empc">
           <th mat-header-cell *matHeaderCellDef class="br text-right"> Employer’s contribution </th>
-          <td mat-cell *matCellDef="let element" class="br text-right"> {{utils.formatter(element.employersMonthlyContribution)}} </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> {{utils.formatter(sumOfemployersMonthlyContribution) || '-'}}</td>
+          <td mat-cell *matCellDef="let element" class="br text-right">
+            {{utils.formatter(element.employersMonthlyContribution)}} </td>
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">
+            {{utils.formatter(sumOfemployersMonthlyContribution) || '-'}}</td>
         </ng-container>
         <ng-container matColumnDef="rate">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-7"> Rate of return </th>
@@ -90,15 +96,17 @@
         </ng-container>
         <ng-container matColumnDef="bal">
           <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Balance mentioned </th>
-          <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{utils.formatter(element.currentEpfBalance)}} </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> {{utils.formatter(sumOfcurrentEpfBalance) || '-'}}</td>
+          <td mat-cell *matCellDef="let element" class="br t-8 text-right">
+            {{utils.formatter(element.currentEpfBalance)}} </td>
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">
+            {{utils.formatter(sumOfcurrentEpfBalance) || '-'}}</td>
         </ng-container>
         <ng-container matColumnDef="bacla">
           <th mat-header-cell *matHeaderCellDef class="br t-5 text-left">Balance
             as on </th>
           <td mat-cell *matCellDef="let element" class="br t-5 text-left">
             {{element.balanceAsOnDate | date:'dd/MM/yyyy'}} </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="year">
           <th mat-header-cell *matHeaderCellDef class="br text-right">Maturity year </th>
@@ -132,7 +140,7 @@
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns11; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns11;"></tr>
-          <tr mat-footer-row *matFooterRowDef="displayedColumns11;sticky: true"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns11;sticky: true"></tr>
       </table>
     </div>
   </div>
@@ -193,7 +201,8 @@
         </ng-container>
         <ng-container matColumnDef="cvalue">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-17"> Current value </th>
-          <td mat-cell *matCellDef="let element" class="br text-right t-17"> {{utils.formatter(element.currentValuation) || '-'}} </td>
+          <td mat-cell *matCellDef="let element" class="br text-right t-17">
+            {{utils.formatter(element.currentValuation) || '-'}} </td>
           <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> {{utils.formatter(totalCurrentValue)}}</td>
         </ng-container>
         <ng-container matColumnDef="total">
@@ -243,7 +252,7 @@
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns12; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns12;"></tr>
-          <tr mat-footer-row *matFooterRowDef="displayedColumns12;sticky: true"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns12;sticky: true"></tr>
       </table>
     </div>
   </div>
@@ -291,8 +300,10 @@
         </ng-container>
         <ng-container matColumnDef="amt">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Amount recieved</th>
-          <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{utils.formatter(element.amountReceived)}} </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> {{utils.formatter(sumOfAmountReceived) || '-'}}</td>
+          <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{utils.formatter(element.amountReceived)}}
+          </td>
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">
+            {{utils.formatter(sumOfAmountReceived) || '-'}}</td>
         </ng-container>
         <ng-container matColumnDef="reason">
           <th mat-header-cell *matHeaderCellDef class="br text-left t-18"> Reason of receipt</th>
@@ -327,7 +338,7 @@
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns13; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns13;"></tr>
-          <tr mat-footer-row *matFooterRowDef="displayedColumns13;sticky: true"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns13;sticky: true"></tr>
       </table>
     </div>
   </div>
@@ -360,15 +371,19 @@
         </ng-container>
         <ng-container matColumnDef="aemp">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Annual employer... </th>
-          <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{utils.formatter(element.annualEmployerContribution)}}
+          <td mat-cell *matCellDef="let element" class="br text-right t-12">
+            {{utils.formatter(element.annualEmployerContribution)}}
           </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> {{utils.formatter(sumOfAnnualEmployerContribution) || '-'}}</td>
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">
+            {{utils.formatter(sumOfAnnualEmployerContribution) || '-'}}</td>
         </ng-container>
         <ng-container matColumnDef="aempe">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Annual employee... </th>
-          <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{utils.formatter(element.annualEmployeeContribution)}}
+          <td mat-cell *matCellDef="let element" class="br text-right t-12">
+            {{utils.formatter(element.annualEmployeeContribution)}}
           </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> {{utils.formatter(sumOfAnnualEmployeeContribution) || '-'}}</td>
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">
+            {{utils.formatter(sumOfAnnualEmployeeContribution) || '-'}}</td>
         </ng-container>
         <ng-container matColumnDef="rate">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Assumed rate... </th>
@@ -393,7 +408,7 @@
           <th mat-header-cell *matHeaderCellDef class="br text-left t-10"> Date of first contribution</th>
           <td mat-cell *matCellDef="let element" class="br text-left t-10">
             {{element.firstContributionDate | date:'dd/MM/yyyy'}} </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+          <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="desc">
           <th mat-header-cell *matHeaderCellDef class="br t-18"> Description</th>
@@ -423,7 +438,7 @@
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns14; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns14;"></tr>
-          <tr mat-footer-row *matFooterRowDef="displayedColumns14;sticky: true"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns14;sticky: true"></tr>
       </table>
     </div>
   </div>
@@ -456,23 +471,27 @@
         </ng-container>
         <ng-container matColumnDef="nvalue">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Notional value </th>
-          <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{utils.formatter(element.notionalValue) || '-'}} </td>
+          <td mat-cell *matCellDef="let element" class="br text-right t-12">
+            {{utils.formatter(element.notionalValue) || '-'}} </td>
           <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> {{utils.formatter(totalNotionalValue)}}</td>
         </ng-container>
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef class="br text-left t-12"> Commencement date </th>
           <td mat-cell *matCellDef="let element" class="br text-left t-12">
             {{element.commencementDate | date:'dd/MM/yyyy'}} </td>
-            <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
         </ng-container>
         <ng-container matColumnDef="amt">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-18"> Pension amount </th>
-          <td mat-cell *matCellDef="let element" class="br text-right t-18"> {{utils.formatter(element.pensionAmount) || '-'}} </td>
+          <td mat-cell *matCellDef="let element" class="br text-right t-18">
+            {{utils.formatter(element.pensionAmount) || '-'}} </td>
           <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">{{utils.formatter(totalPensionAmount)}} </td>
         </ng-container>
-        <ng-container matColumnDef="pay">      
+        <ng-container matColumnDef="pay">
           <th mat-header-cell *matHeaderCellDef class="br t-16"> Pension payout frequency</th>
-          <td mat-cell *matCellDef="let element" class="br t-16"> {{(element.pensionPayoutFrequencyId == '1')?'Daily':(element.pensionPayoutFrequencyId == '2')?'Monthly':(element.pensionPayoutFrequencyId == '3')?'Quarterly':(element.pensionPayoutFrequencyId == '4')?'Semi annually':'Annually'}} </td>
+          <td mat-cell *matCellDef="let element" class="br t-16">
+            {{(element.pensionPayoutFrequencyId == '1')?'Daily':(element.pensionPayoutFrequencyId == '2')?'Monthly':(element.pensionPayoutFrequencyId == '3')?'Quarterly':(element.pensionPayoutFrequencyId == '4')?'Semi annually':'Annually'}}
+          </td>
           <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="desc">
@@ -502,9 +521,13 @@
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns15; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns15;"></tr>
-          <tr mat-footer-row *matFooterRowDef="displayedColumns15;sticky: true"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns15;sticky: true"></tr>
       </table>
     </div>
   </div>
-  
+
+</div>
+
+<div *ngIf="isLoading">
+  <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div>
