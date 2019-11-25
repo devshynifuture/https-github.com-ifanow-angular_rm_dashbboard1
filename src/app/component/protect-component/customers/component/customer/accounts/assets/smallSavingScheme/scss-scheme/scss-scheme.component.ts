@@ -21,6 +21,7 @@ export class ScssSchemeComponent implements OnInit {
   clientId: number;
   noData: string;
   isLoading: boolean = true;
+  scssData: any;
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns19 = ['no', 'owner', 'payout', 'rate', 'tamt', 'amt', 'mdate', 'desc', 'status', 'icons'];
@@ -80,6 +81,7 @@ export class ScssSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data.scssList.length != 0) {
       this.datasource = data.scssList
+      this.scssData=data;
     } else {
       this.noData = "No Scheme Found";
     }

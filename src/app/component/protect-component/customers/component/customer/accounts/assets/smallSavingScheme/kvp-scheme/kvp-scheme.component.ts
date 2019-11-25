@@ -17,6 +17,7 @@ export class KvpSchemeComponent implements OnInit {
   advisorId: any;
   noData: string;
   isLoading: boolean = true;
+  kvpData: any;
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns18 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
@@ -41,6 +42,7 @@ export class KvpSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data.KVPList.length != 0) {
       this.datasource = data.KVPList
+      this.kvpData=data;
     } else {
       this.noData = "No Scheme Found";
     }

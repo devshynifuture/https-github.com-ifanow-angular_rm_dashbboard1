@@ -17,6 +17,7 @@ export class PoRdSchemeComponent implements OnInit {
   clientId: number;
   noData: string;
   isLoading: boolean = true;
+  pordData: any;
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns21 = ['no', 'owner', 'cvalue', 'rate', 'deposit', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
@@ -41,6 +42,7 @@ export class PoRdSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data.postOfficeRDList.length != 0) {
       this.datasource = data.postOfficeRDList;
+      this.pordData=data
     } else {
       this.noData = 'No Scheme Found';
     }
