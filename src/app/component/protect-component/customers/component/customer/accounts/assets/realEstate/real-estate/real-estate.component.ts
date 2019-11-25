@@ -3,6 +3,10 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService } from 'src/app/services/util.service';
 import { CustomerService } from '../../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import * as _ from 'lodash';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-real-estate',
@@ -13,12 +17,17 @@ export class RealEstateComponent implements OnInit {
   advisorId: any;
   datasource3: any;
   clientId: any;
+  ownerName: any;
+  sumOfMarketValue: any;
+  sumOfpurchasedValue: any;
+  showLoader: boolean;
 
-  constructor(public subInjectService:SubscriptionInject,public utilService:UtilService,public custmService:CustomerService) { }
+  constructor(public subInjectService:SubscriptionInject,publicutilService:UtilService,public custmService:CustomerService,public cusService:CustomerService,public eventService:EventService,public dialog: MatDialog) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.showLoader=true;
     this.getRealEstate();
   }
   displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status','icons'];
@@ -35,7 +44,61 @@ export class RealEstateComponent implements OnInit {
   }
   getRealEstateRes(data){
     console.log(data)
+    if(data){
+      this.showLoader=false
+    }
+    data.realEstateList.forEach(element => {
+      if (element.realEstateOwners.length!=0) {
+        var array=element.realEstateOwners;
+        var ownerName = _.filter(array, function (n) {
+          return n.owner == true;
+        });
+        if(ownerName.length!=0){
+          this.ownerName=ownerName[0].ownerName;
+          element.ownerName=this.ownerName
+        }
+      }
+    });
+  
+
     this.datasource3=data.realEstateList;
+    this.sumOfMarketValue=data.sumOfMarketValue;
+    this.sumOfpurchasedValue=data.sumOfpurchasedValue;
+  }
+  deleteModal(value,data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.cusService.deleteRealEstate(data.id).subscribe(
+          data=>{
+            this.eventService.openSnackBar("Real estate is deleted","dismiss")
+            dialogRef.close();
+            this.getRealEstate();
+          },
+          err=>this.eventService.openSnackBar(err)
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
   open(value,data)
   {
