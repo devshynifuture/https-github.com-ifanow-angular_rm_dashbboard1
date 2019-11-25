@@ -15,6 +15,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AddScenariosComponent } from './scenarios-plan/add-scenarios/add-scenarios.component';
 import { AddInvestmentPlanComponent } from './investments-plan/add-investment-plan/add-investment-plan.component';
 import { AddProfilePlanComponent } from './profile-plan/add-profile-plan/add-profile-plan.component';
+import { HistoryRiskProfileComponent } from './profile-plan/history-risk-profile/history-risk-profile.component';
 // import {BrowserModule} from '@angular/platform-browser';
 
 
@@ -37,6 +38,7 @@ import { AddProfilePlanComponent } from './profile-plan/add-profile-plan/add-pro
     AddScenariosComponent,
     AddInvestmentPlanComponent,
     AddProfilePlanComponent,
+    HistoryRiskProfileComponent,
   ],
   imports: [
     CommonModule,
@@ -45,7 +47,7 @@ import { AddProfilePlanComponent } from './profile-plan/add-profile-plan/add-pro
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [PlanComponent,AddScenariosComponent,AddInvestmentPlanComponent,AddProfilePlanComponent],
+  exports: [PlanComponent,AddScenariosComponent,AddInvestmentPlanComponent,AddProfilePlanComponent,HistoryRiskProfileComponent],
   entryComponents: []
 })
 export class PlanModule {
