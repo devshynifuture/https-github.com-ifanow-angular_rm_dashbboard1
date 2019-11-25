@@ -1,81 +1,221 @@
 <div class="popup-header-fix-60">
-    <div class="row bb-1">
-        <div class="col-md-8 p-0">
+        <div class="row bb-1">
+          <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20">Add members</h4>
-                    </div>
-        <div class="col-md-4 text-right">
+          </div>
+          <div class="col-md-4 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+              <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="pt-100 pl-32">
+        <div class="row">
+            <div class="col-md-12 p-0">
+                <h3 class="m-0 f-500">Rahul, first tell us a bit about you...</h3>
             </div>
         </div>
-    </div>
-</div>
-<!-- <div class="pt-100 pl-32">
-<div class="row">
-    <div class="col-md-12 p-0">
-        <h3 class="m-0 f-500">Rahul, first tell us a bit about you...</h3>
-    </div>
-</div>
-    <div class="row pt-60">
-        <div class="col-md-2 pl-0">
-            <h5 class="m-0 text-black pt-8">I am a</h5>
-        </div>
-        <div class="col-md-5">
-            <mat-radio-group class="d-flex" aria-label="Select an option" id="custom-radio">
-                <mat-radio-button value="1" class="b-a-custom text-primary" checked="checked">Option 1</mat-radio-button>
-                <mat-radio-button value="2" class="b-a">Option 2</mat-radio-button>
-              </mat-radio-group>
-        </div>
-    </div>
-    <div class="row pt-60">
-        <div class="col-md-2 pl-0">
-            <h5 class="m-0 text-black pt-8">I am</h5>
-        </div>
-        <div class="col-md-5">
-            <mat-form-field>
-                <mat-select #frequency autocomplete="true" class="form-control br-0">
-                    <mat-option value='1'>Married</mat-option>
-                    <mat-option value='2'>Singel</mat-option>
-                </mat-select>
-                </mat-form-field>
-        </div>
-    </div>
-</div> -->
+            <div class="row pt-60">
+                <div class="col-md-2 pl-0">
+                    <h5 class="m-0 text-black pt-8">I am a</h5>
+                </div>
+                <div class="col-md-5">
+                    <mat-radio-group class="d-flex" aria-label="Select an option" id="custom-radio">
+                        <mat-radio-button value="1" class="b-a-custom text-primary" checked="checked">Option 1</mat-radio-button>
+                        <mat-radio-button value="2" class="b-a">Option 2</mat-radio-button>
+                      </mat-radio-group>
+                </div>
+            </div>
+            <div class="row pt-60">
+                <div class="col-md-2 pl-0">
+                    <h5 class="m-0 text-black pt-8">I am</h5>
+                </div>
+                <div class="col-md-5">
+                    <mat-form-field>
+                        <mat-select #frequency autocomplete="true" class="form-control br-0">
+                            <mat-option value='1'>Married</mat-option>
+                            <mat-option value='2'>Singel</mat-option>
+                        </mat-select>
+                        </mat-form-field>
+                </div>
+            </div>
+        </div> -->
 
-
-<div class="pt-100 pl-32">
-    <div class="row">
-        <div class="col-md-12 p-0">
+        <!-- second-popup-right-side -->
+      <!-- <div class="pt-100 pl-32 pb-44 mb-44">
+        <div class="row">
+          <div class="col-md-12 p-0">
             <h3 class="m-0 f-500">Great! Who’s in your family, Rahul?</h3>
-        </div>
-    </div>
-        <div class="row pt-60">
-            <div class="col-md-2 pl-0">
-                <h5 class="m-0 text-black pt-8">I am a</h5>
-            </div>
-            <div class="col-md-5">
-                <mat-radio-group class="d-flex" aria-label="Select an option" id="custom-radio">
-                    <mat-radio-button value="1" class="b-a-custom text-primary" checked="checked">Option 1</mat-radio-button>
-                    <mat-radio-button value="2" class="b-a">Option 2</mat-radio-button>
-                  </mat-radio-group>
-            </div>
+          </div>
         </div>
         <div class="row pt-60">
-            <div class="col-md-2 pl-0">
-                <h5 class="m-0 text-black pt-8">I am</h5>
+          <div class="col-md-6 pl-0 right">
+            <div class="row">
+              <div class="col-md-12">
+                <mat-card class="card-selected right">
+                  <mat-checkbox checked="false"></mat-checkbox>
+                  <img mat-card-image src="/assets/images/svg/womenIcon.svg">
+                </mat-card>
+              
+              </div>
+             <div class="col-md-12">
+                    <p class="m-0 text-right pr-40 pt-10">You</p>
+             </div>
             </div>
-            <div class="col-md-5">
-                <mat-form-field>
-                    <mat-select #frequency autocomplete="true" class="form-control br-0">
-                        <mat-option value='1'>Married</mat-option>
-                        <mat-option value='2'>Singel</mat-option>
-                    </mat-select>
-                    </mat-form-field>
-            </div>
+          
+          </div>
+          <div class="col-md-6">
+                <div class="row">
+                        <div class="col-md-12">
+                          <mat-card class="card-selected left">
+                            <mat-checkbox checked="false"></mat-checkbox>
+                            <img mat-card-image src="/assets/images/svg/familyMember2.svg">
+                          </mat-card>
+                        
+                        </div>
+                       <div class="col-md-12">
+                              <p class="m-0 text-left pl-40 pt-10">Wife</p>
+                       </div>
+                      </div>
+          </div>
         </div>
-    </div>
+        <div class="row pt-60">
+                <div class="col-md-6 pl-0 right">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <mat-card class="card-unselected right">
+                       
+                        <img mat-card-image src="/assets/images/svg/womenIcon.svg">
+                      </mat-card>
+                    
+                    </div>
+                   <div class="col-md-12">
+                          <p class="m-0 text-right pr-32 pt-10">Father</p>
+                   </div>
+                  </div>
+                
+                </div>
+                <div class="col-md-6">
+                      <div class="row">
+                              <div class="col-md-12">
+                                <mat-card class="card-selected left">
+                                  <mat-checkbox checked="false"></mat-checkbox>
+                                  <img mat-card-image src="/assets/images/svg/familyMember2.svg">
+                                </mat-card>
+                              
+                              </div>
+                             <div class="col-md-12">
+                                    <p class="m-0 text-left pl-32 pt-10">Mother</p>
+                             </div>
+                            </div>
+                </div>
+              </div>
+              <div class="row pt-60">
+                    <div class="col-md-4 pl-0 right">
+                      <div class="row">
+                        <div class="col-md-12 p-0">
+                          <mat-card class="card-unselected right">
+                         
+                            <img mat-card-image src="/assets/images/svg/womenIcon.svg">
+                          </mat-card>
+                        
+                        </div>
+                       <div class="col-md-12">
+                              <p class="m-0 text-right pr-28 pt-10">Son</p>
+                       </div>
+                      </div>
+                    
+                    </div>
+                    <div class="col-md-4">
+                          <div class="row">
+                                  <div class="col-md-12 p-0">
+                                    <mat-card class="card-selected center-block">
+                                      <mat-checkbox checked="false"></mat-checkbox>
+                                      <img mat-card-image src="/assets/images/svg/familyMember2.svg">
+                                    </mat-card>
+                                  
+                                  </div>
+                                 <div class="col-md-12">
+                                        <p class="m-0 text-center pl-8 pt-10">Daughter</p>
+                                        <div class="d-flex justify-content-center mt-16">
+                                        <button mat-stroked-button class="custom-actions mr-12 f-16"><i class="material-icons f-16">
+                                                remove
+                                                </i></button>
+                                        <h5 class="m-0">2</h5>
+                                        <button mat-stroked-button class="custom-actions ml-12 f-16"><i class="material-icons f-16">
+                                                add
+                                                </i></button>
+                                        </div>
+                                 </div>
+                                </div>
+                    </div>
+                    <div class="col-md-4">
+                            <div class="row">
+                                    <div class="col-md-12 p-0">
+                                      <mat-card class="card-selected center-block">
+                                        <mat-checkbox checked="false"></mat-checkbox>
+                                        <img mat-card-image src="/assets/images/svg/familyMember2.svg">
+                                      </mat-card>
+                                    
+                                    </div>
+                                   <div class="col-md-12">
+                                          <p class="m-0 text-center pl-8 pt-10">Daughter</p>
+                                          <div class="d-flex justify-content-center mt-16">
+                                          <button mat-stroked-button class="custom-actions mr-12 f-16"><i class="material-icons f-16">
+                                                  remove
+                                                  </i></button>
+                                          <h5 class="m-0">1</h5>
+                                          <button mat-stroked-button class="custom-actions ml-12 f-16"><i class="material-icons f-16">
+                                                  add
+                                                  </i></button>
+                                          </div>
+                                   </div>
+                                  </div>
+                      </div>
+                  </div>
+      </div> -->
 
-    <div class="bottom-fixed wrapper-12">
+
+      <!-- third sidebar-right popup -->
+      <div class="pt-100 pl-32 pb-44 mb-44">
+            <div class="row">
+              <div class="col-md-12 p-0">
+                <h3 class="m-0 f-500">Thanks, just a bit more info and we’re done.</h3>
+              </div>
+            </div>
+            <div class="row pt-60">
+           <div class="col-md-2">
+               <h5 class="m-0">You</h5>
+           </div>
+           <div class="col-md-5">
+                <mat-form-field class="w-100">
+                        <input matInput #message class="form-control br-0">
+                        <mat-hint class="text-danger" align="start">{{message.value.length}}</mat-hint>
+                        <mat-hint align="end">{{message.value.length}}/40</mat-hint>
+                    </mat-form-field>
+           </div>
+           <div class="col-md-2 pr-0">
+                <div class="form-group mb-0">
+                        <mat-form-field class="example-full-width">
+                                <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                  <mat-option  [value]="option">
+                                    option
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field>
+                    </div>
+           </div>
+           <div class="col-md-3">
+                <mat-form-field class="b-a"> <input type="text" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto"> <mat-autocomplete #auto="matAutocomplete"> <mat-option [value]="option"> 123 </mat-option> <mat-option [value]="option"> 123 </mat-option> <mat-option [value]="option"> 123 </mat-option> </mat-autocomplete> </mat-form-field>
+           </div>
+              
+            </div>
+            
+                  
+          </div>
+      <div class="bottom-fixed wrapper-12">
         <div class="row">
           <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>
