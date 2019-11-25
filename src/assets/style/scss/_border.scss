@@ -77,9 +77,11 @@
 .b-a-custom {
     border: 1px solid #008FFF !important;
 }
-.ba-2xb{
+
+.ba-2xb {
     border: 2px solid #008FFF !important;
 }
+
 .ba-t {
     border: 1px solid transparent !important;
 }
@@ -97,7 +99,7 @@
 }
 
 .br-grey {
-    border-right: 1px solid $grey;
+    border-right: 1px solid $grey !important;
 }
 
 .bl-grey {
@@ -143,12 +145,15 @@
 .bb-primitive {
     border-bottom: 1px solid #83959D;
 }
-.bl-primitive{
-    border-left:1px solid #83959D;
+
+.bl-primitive {
+    border-left: 1px solid #83959D;
 }
-.ba-3x{
+
+.ba-3x {
     border: 3px solid #1F1F1F !important;
 }
+
 .bl-primitive {
     border-left: 1px solid #83959D;
 }
