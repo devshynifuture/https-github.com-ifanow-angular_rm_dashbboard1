@@ -55,83 +55,87 @@ export class AddInsuranceComponent implements OnInit {
   insuranceSubId: any;
   insuranceTypeId: any;
   insuranceSubTypeId: any;
+  clientId: any;
+  options: void;
+  policyData: any;
+  FamilyMember: any;
+  familyMemberData: any;
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) { }
   addMoreFlag;
   insuranceFormFilledData: any;
   @ViewChild('chnageScrollPosition', { static: false }) eleRef: ElementRef
   @Input() set insuranceData(data) {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.setInsuranceDataFormField(data)
+    this.getFamilyMemberList()
     console.log(data)
   }
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
     this.addMoreFlag = false
     this.setValidations(false)
   }
 
   lifeInsuranceForm = this.fb.group({
-    lifeAssured: ['', [Validators.required]],
-    proposer: ['', [Validators.required]],
-    policyName: ['', [Validators.required]],
-    policyNum: ['', [Validators.required]],
-    commencementDate: ['', [Validators.required]],
-    sumAssured: ['', [Validators.required]],
-    premiumDetailsAmount: ['', [Validators.required]],
-    premiumDetailsFrequency: ['', [Validators.required]],
-    tenureDetailsPolicy: ['', [Validators.required]],
-    premiumPayingTerm: ['', [Validators.required]],
-    policyStatus: ['', [Validators.required]],
-    policyStatusLastUnpaid: ['', [Validators.required]]
+    lifeAssured: [, [Validators.required]],
+    proposer: [, [Validators.required]],
+    policyName: [, [Validators.required]],
+    policyNum: [, [Validators.required]],
+    commencementDate: [, [Validators.required]],
+    sumAssured: [, [Validators.required]],
+    premiumDetailsAmount: [, [Validators.required]],
+    premiumDetailsFrequency: [, [Validators.required]],
+    tenureDetailsPolicy: [, [Validators.required]],
+    premiumPayingTerm: [, [Validators.required]],
+    policyStatus: [, [Validators.required]],
+    policyStatusLastUnpaid: [, [Validators.required]]
   })
   keyDetailsForm = this.fb.group({
-    riskCover: ['', [Validators.required]],
-    surrenderName: ['', [Validators.required]],
-    nomineeName: ['', [Validators.required]],
-    vestedBonus: ['', [Validators.required]],
-    assumedRate: ['', [Validators.required]]
+    riskCover: [, [Validators.required]],
+    surrenderName: [, [Validators.required]],
+    nomineeName: [, [Validators.required]],
+    vestedBonus: [, [Validators.required]],
+    assumedRate: [, [Validators.required]]
   })
   cashFlowForm = this.fb.group({
-    cashFlow: this.fb.array([this.fb.group({cashFlowType:null,
+    cashFlow: this.fb.array([this.fb.group({
+      cashFlowType: null,
       year: null,
-      approxAmt: null})])
-    // cashFlowType: ['', [Validators.required]],
-    // year: ['', [Validators.required]],
-    // approxAmt: ['', [Validators.required]],
+      approxAmt: null
+    })])
   })
   ridersForm = this.fb.group({
-    accidentalBenefit: ['', [Validators.required]],
-    doubleAccidental: ['', [Validators.required]],
-    termWaiver: ['', [Validators.required]],
-    criticalIlleness: ['', [Validators.required]],
-    premiumWaiver: ['', [Validators.required]],
-    femaleCriticalIlleness: ['', [Validators.required]]
+    accidentalBenefit: [, [Validators.required]],
+    doubleAccidental: [, [Validators.required]],
+    termWaiver: [, [Validators.required]],
+    criticalIlleness: [, [Validators.required]],
+    premiumWaiver: [, [Validators.required]],
+    femaleCriticalIlleness: [, [Validators.required]]
   })
   loanDetailsForm = this.fb.group({
-    loanAvailable: ['', [Validators.required]],
-    loanTaken: ['', [Validators.required]],
-    loanTakenOn: ['', [Validators.required]]
+    loanAvailable: [, [Validators.required]],
+    loanTaken: [, [Validators.required]],
+    loanTakenOn: [, [Validators.required]]
   })
   Miscellaneous = this.fb.group({
-    permiumPaymentMode: ['', [Validators.required]],
-    advisorName: ['', [Validators.required]],
-    serviceBranch: ['', [Validators.required]]
+    permiumPaymentMode: [, [Validators.required]],
+    advisorName: [, [Validators.required]],
+    serviceBranch: [, [Validators.required]]
   })
-  getLifeInsuranceFormFields(controlName) {
-    return this.lifeInsuranceForm.get(controlName).value
-  }
+
   get cashFlowEntries() {
     return this.cashFlowForm.get('cashFlow') as FormArray;
   }
-    addTransaction(){
-      this.cashFlowEntries.push(this.fb.group({ 
-        cashFlowType: null,
-        year: null,
-        approxAmt: null
-      }));
-    }
-    removeTransaction(item){
-      this.cashFlowEntries.removeAt(item);
-    }
+  addTransaction() {
+    this.cashFlowEntries.push(this.fb.group({
+      cashFlowType: null,
+      year: null,
+      approxAmt: null
+    }));
+  }
+  removeTransaction(item) {
+    this.cashFlowEntries.removeAt(item);
+  }
   setInsuranceDataFormField(data) {
     console.log(data.data)
     this.editInsuranceData = data.data
@@ -145,10 +149,10 @@ export class AddInsuranceComponent implements OnInit {
       // requiredFields
       this.insuranceId = this.editInsuranceData.id
       this.lifeInsuranceForm.controls.lifeAssured.setValue(this.editInsuranceData.lifeAssuredName)
-      this.lifeInsuranceForm.controls.proposer.setValue('')
+      this.lifeInsuranceForm.controls.proposer.setValue(this.editInsuranceData.familyMemberName)
       this.lifeInsuranceForm.controls.policyName.setValue(this.editInsuranceData.policyName)
       this.lifeInsuranceForm.controls.policyNum.setValue(this.editInsuranceData.policyNumber)
-      this.lifeInsuranceForm.controls.commencementDate.setValue(this.editInsuranceData.commencementDate)
+      this.lifeInsuranceForm.controls.commencementDate.setValue(new Date(this.editInsuranceData.commencementDate))
       this.lifeInsuranceForm.controls.sumAssured.setValue(this.editInsuranceData.sumAssured)
       this.lifeInsuranceForm.controls.premiumDetailsAmount.setValue(this.editInsuranceData.premiumAmount)
       this.lifeInsuranceForm.controls.premiumDetailsFrequency.setValue(String(this.editInsuranceData.frequency))
@@ -188,12 +192,44 @@ export class AddInsuranceComponent implements OnInit {
 
       this.loanDetailsForm.controls.loanAvailable.setValue(data.loanAvailable)
       this.loanDetailsForm.controls.loanTaken.setValue(data.loanTaken)
-      this.loanDetailsForm.controls.loanTakenOn.setValue(data.loanTakenOn)
+      this.loanDetailsForm.controls.loanTakenOn.setValue(new Date(data.loanTakenOn))
 
       this.Miscellaneous.controls.permiumPaymentMode.setValue(data.premiumPaymentMode)
       this.Miscellaneous.controls.advisorName.setValue(data.advisorName)
       this.Miscellaneous.controls.serviceBranch.setValue(data.serviceBranch)
     }
+    this.getFamilyMemberList();
+  }
+  getFamilyMemberList() {
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+    }
+    this.customerService.getListOfFamilyByClient(obj).subscribe(
+      data=>this.getFamilyMemberListRes(data)
+    )
+  }
+  getFamilyMemberListRes(data)
+  { 
+    console.log(data)
+    this.FamilyMember=data.familyMembersList
+  }
+  getFamilyMember(data)
+  {
+   this.familyMemberData=data
+  }
+  findPolicyName(data) {
+    let inpValue = this.lifeInsuranceForm.get("policyName").value
+    let obj =
+    {
+      policyName: inpValue
+    }
+    this.customerService.getPolicyName(obj).subscribe(
+      data => this.options = data.policyDetails
+    )
+  }
+  selectPolicy(policy) {
+    this.policyData = policy
   }
   setValidations(flag) {
     this.islifeAssured = flag
@@ -216,77 +252,64 @@ export class AddInsuranceComponent implements OnInit {
   }
   saveAddInsurance() {
     if (this.lifeInsuranceForm.get('lifeAssured').invalid) {
-      this.islifeAssured = true
       return
     }
     else if (this.lifeInsuranceForm.get('proposer').invalid) {
-      this.isproposer = true
       return
     }
     else if (this.lifeInsuranceForm.get('policyName').invalid) {
-      this.ispolicyName = true
       return
     }
     else if (this.lifeInsuranceForm.get('policyNum').invalid) {
-      this.ispolicyNum = true
       return
     }
     else if (this.lifeInsuranceForm.get('commencementDate').invalid) {
-      this.iscommencementDate = true
       return
     }
     else if (this.lifeInsuranceForm.get('sumAssured').invalid) {
-      this.issumAssured = true
       return
     }
     else if (this.lifeInsuranceForm.get('premiumDetailsAmount').invalid) {
-      this.ispremiumDetailsAmount = true
       return
     }
     else if (this.lifeInsuranceForm.get('premiumDetailsFrequency').invalid) {
-      this.ispremiumDetailsFrequency = true
       return
     }
     else if (this.lifeInsuranceForm.get('tenureDetailsPolicy').invalid) {
-      this.istenureDetailsPolicy = true
       return
     }
     else if (this.lifeInsuranceForm.get('premiumPayingTerm').invalid) {
-      this.ispremiumPayingTerm = true
       return
     }
     else if (this.lifeInsuranceForm.get('policyStatus').invalid) {
-      this.ispolicyStatus = true
       return
     }
     else if (this.lifeInsuranceForm.get('policyStatusLastUnpaid').invalid) {
-      this.ispolicyStatusLastUnpaid = true
       return
     }
     else {
       this.insuranceFormFilledData = {
         "familyMemberIdLifeAssured": 112233,
-        "familyMemberIdProposer": 112233,
-        "clientId": 2978,
+        "familyMemberIdProposer": this.familyMemberData.id,
+        "clientId": this.clientId,
         "advisorId": this.advisorId,
         "ownerName": "swapnil",
         "commencementDate": this.lifeInsuranceForm.get('commencementDate').value._d,
         "maturityDate": "2025-12-12",
-        "sumAssured": this.getLifeInsuranceFormFields('sumAssured'),
-        "policyStatusId": 1,
-        "lastUnpaidPremium": this.getLifeInsuranceFormFields('policyStatusLastUnpaid'),
-        "premiumAmount": this.getLifeInsuranceFormFields('premiumDetailsAmount'),
+        "sumAssured": this.lifeInsuranceForm.get('sumAssured').value,
+        "lastUnpaidPremium": this.lifeInsuranceForm.get('policyStatusLastUnpaid').value,
+        "premiumAmount": this.lifeInsuranceForm.get('premiumDetailsAmount').value,
         "frequency": 1,
-        "policyTenure": this.getLifeInsuranceFormFields('tenureDetailsPolicy'),
-        "premiumPayingTerm": this.getLifeInsuranceFormFields('premiumPayingTerm'),
+        "policyTenure": this.lifeInsuranceForm.get('tenureDetailsPolicy').value,
+        "premiumPayingTerm": this.lifeInsuranceForm.get('premiumPayingTerm').value,
         "riskCover": this.keyDetailsForm.get('riskCover').value,
         "surrenderValue": this.keyDetailsForm.get('surrenderName').value,
         "nominee": this.keyDetailsForm.get('nomineeName').value,
         "vestedBonus": this.keyDetailsForm.get('vestedBonus').value,
         "assumedRate": 1000,
-        "cashflowType": this.cashFlowForm.get('cashFlowType').value,
-        "cashflowYear": this.cashFlowForm.get('year').value,
-        "cashFlowApproxAmount": this.cashFlowForm.get('approxAmt').value,
+        // "cashflowType": this.cashFlowForm.get('cashFlowType').value,
+        // "cashflowYear": this.cashFlowForm.get('year').value,
+        // "cashFlowApproxAmount": this.cashFlowForm.get('approxAmt').value,
         "ridersAccidentalBenifits": this.ridersForm.get('accidentalBenefit').value,
         "ridersDoubleAccidentalBenefit": this.ridersForm.get('doubleAccidental').value,
         "ridersTermWaiver": this.ridersForm.get('termWaiver').value,
@@ -299,36 +322,33 @@ export class AddInsuranceComponent implements OnInit {
         "premiumPaymentMode": this.Miscellaneous.get('permiumPaymentMode').value,
         "advisorName": this.Miscellaneous.get('advisorName').value,
         "serviceBranch": this.Miscellaneous.get('serviceBranch').value,
-        "policyName": this.getLifeInsuranceFormFields('policyName'),
-        "policyTypeId": 1,
+        "policyName": this.lifeInsuranceForm.get('policyName').value,
+        "policyTypeId": this.policyData.policyTypeId,
+        "policyId": this.policyData.id,
         "insuranceTypeId": this.insuranceTypeId,
         "insuranceSubTypeId": this.insuranceSubTypeId,
-        "policyNumber": this.getLifeInsuranceFormFields('policyNum')
-        // "id":''
+        "policyNumber": this.lifeInsuranceForm.get('policyNum').value
       }
       console.log(this.insuranceFormFilledData)
       if (this.editInsuranceData) {
         this.insuranceFormFilledData.id = this.insuranceId;
         this.customerService.editLifeInsuranceData(this.insuranceFormFilledData).subscribe(
-          data => console.log(data)
+          data => {
+            console.log(data)
+            this.close();
+          }
         )
       }
       else {
         this.customerService.addLifeInsurance(this.insuranceFormFilledData).subscribe(
-          data => console.log(data)
+          data => {
+            console.log(data)
+            this.close()
+          }
         )
       }
     }
   }
-  addLifeInsuranceResponse(data) {
-    console.log("add life insurance data", data)
-    this.close();
-  }
-  editLifeInsuranceDataResponse(data) {
-    console.log("edit life insurance data", data)
-    this.close();
-  }
-
   close() {
     this.addMoreFlag = false
     this.subInjectService.changeNewRightSliderState({ state: 'close' });

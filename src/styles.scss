@@ -771,10 +771,10 @@ mat-tab-group[vertical] {
     th {
         padding: 10px 6px !important;
     }
-    .mat-row:last-child {
-        font-weight: bold !important;
-        text-align: right !important;
-    }
+    //.mat-row:last-child {
+    //    font-weight: bold !important;
+    //    text-align: right !important;
+    //}
 }
 
 .custom-email {
@@ -871,12 +871,6 @@ mat-tab-group[vertical] {
     background: #D9DEE1;
 }
 
-// .width80 {
-//     width: 80%;
-// }
-// .width90 {
-//     width: 90%;
-// }
-// .mat-select {
-//     height: 40px;
-// }
+.width80 {
+    width: 80%;
+}
