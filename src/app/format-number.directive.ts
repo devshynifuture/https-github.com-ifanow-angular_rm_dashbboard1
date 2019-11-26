@@ -7,11 +7,11 @@ export class FormatNumberDirective implements AfterViewInit {
   @Input('formatNumber') locale;
   @Input('shouldRoundOff') shouldRoundOff = true;
 
-  @Input() set value(isLoading) {
+  @Input() set value(value) {
 
     // console.log('FormatNumberDirective ', this.locale, this.shouldRoundOff);
     // console.log('this.el.nativeElement.innerText ', this.el.nativeElement.innerText)
-    this.el.nativeElement.innerText = this.formatAndRoundOffNumber(isLoading);
+    this.el.nativeElement.innerText = this.formatAndRoundOffNumber(value);
   }
 
   constructor(private el: ElementRef) {
