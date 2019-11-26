@@ -10,6 +10,8 @@ export class InsurancePlanComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   displayedColumns1 = ['name', 'sum', 'annual', 'ret','advice'];
   dataSource1 = ELEMENT_DATA1;
+  displayedColumns2 = ['name', 'annual', 'amt','icons'];
+  dataSource2 = ELEMENT_DATA2;
   constructor() { }
 
   ngOnInit() {
@@ -37,3 +39,22 @@ export interface PeriodicElement1 {
 const ELEMENT_DATA1: PeriodicElement1[] = [
   {name: "LIC Jeevan Saral", sum: '20,00,000', annual: "27,000", ret: '4.78%',advice:'Stop paying premiums'},
 ];
+export interface PeriodicElement2 {
+ 
+  name: string;
+  annual: string;
+  amt: string;
+  
+}
+
+const ELEMENT_DATA2: PeriodicElement2[] = [
+  {name: "LIC Jeevan Saral", annual: "-",amt:'12,000,00' },
+  {name: "LIC Jeevan Saral", annual: "-",amt:'12,000,00' },
+  {name: "LIC Jeevan Saral", annual: "-",amt:'12,000,00' },
+  {name: "LIC Jeevan Saral", annual: "-",amt:'12,000,00' },
+  {name: "LIC Jeevan Saral", annual: "-",amt:'12,000,00' },
+  {name: "LIC Jeevan Saral", annual: "-",amt:'12,000,00' },
+  {name: "LIC Jeevan Saral", annual: "-",amt:'12,000,00' },
+  {name: "LIC Jeevan Saral", annual: "-",amt:'12,000,00' },
+
+];  
