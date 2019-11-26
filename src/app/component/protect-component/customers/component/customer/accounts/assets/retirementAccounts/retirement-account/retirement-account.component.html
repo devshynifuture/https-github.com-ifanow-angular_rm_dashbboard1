@@ -70,23 +70,25 @@
         </ng-container>
         <ng-container matColumnDef="cvalue">
           <th mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Current value </th>
-          <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{utils.formatter(element.currentValue)}}
+          <td mat-cell *matCellDef="let element" class="br t-10 text-right" [formatNumber]="'en-IN'">
+            {{utils.formatter(element.currentValue)}}
           </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">{{utils.formatter(sumOfcurrentValue) || '-'}}
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" [formatNumber]="'en-IN'">
+            {{ utils.formatter(sumOfcurrentValue)  || '-'}}
           </td>
         </ng-container>
         <ng-container matColumnDef="emp">
           <th mat-header-cell *matHeaderCellDef class="br text-right"> Employee’s contribution </th>
-          <td mat-cell *matCellDef="let element" class="br text-right">
-            {{utils.formatter(element.employeesMonthlyContribution)}} </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">
+          <td mat-cell *matCellDef="let element" class="br text-right" [formatNumber]="'en-IN'">
+            {{ utils.formatter(element.employeesMonthlyContribution) }} </td>
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" [formatNumber]="'en-IN'">
             {{utils.formatter(sumOfemployeesMonthlyContribution) || '-'}}</td>
         </ng-container>
         <ng-container matColumnDef="empc">
           <th mat-header-cell *matHeaderCellDef class="br text-right"> Employer’s contribution </th>
-          <td mat-cell *matCellDef="let element" class="br text-right">
+          <td mat-cell *matCellDef="let element" class="br text-right" [formatNumber]="'en-IN'">
             {{utils.formatter(element.employersMonthlyContribution)}} </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" [formatNumber]="'en-IN'">
             {{utils.formatter(sumOfemployersMonthlyContribution) || '-'}}</td>
         </ng-container>
         <ng-container matColumnDef="rate">
@@ -96,9 +98,9 @@
         </ng-container>
         <ng-container matColumnDef="bal">
           <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Balance mentioned </th>
-          <td mat-cell *matCellDef="let element" class="br t-8 text-right">
+          <td mat-cell *matCellDef="let element" class="br t-8 text-right" [formatNumber]="'en-IN'">
             {{utils.formatter(element.currentEpfBalance)}} </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" [formatNumber]="'en-IN'">
             {{utils.formatter(sumOfcurrentEpfBalance) || '-'}}</td>
         </ng-container>
         <ng-container matColumnDef="bacla">
@@ -201,14 +203,17 @@
         </ng-container>
         <ng-container matColumnDef="cvalue">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-17"> Current value </th>
-          <td mat-cell *matCellDef="let element" class="br text-right t-17">
+          <td mat-cell *matCellDef="let element" class="br text-right t-17" [formatNumber]="'en-IN'">
             {{utils.formatter(element.currentValuation) || '-'}} </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> {{utils.formatter(totalCurrentValue)}}</td>
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" [formatNumber]="'en-IN'">
+            {{utils.formatter(totalCurrentValue)}}</td>
         </ng-container>
         <ng-container matColumnDef="total">
           <th mat-header-cell *matHeaderCellDef class="br text-right"> Total contribution </th>
-          <td mat-cell *matCellDef="let element" class="br text-right"> {{element.contributionAmount}} </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> {{utils.formatter(totalContribution)}}</td>
+          <td mat-cell *matCellDef="let element" class="br text-right" [formatNumber]="'en-IN'">
+            {{element.contributionAmount}} </td>
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" [formatNumber]="'en-IN'">
+            {{utils.formatter(totalContribution)}}</td>
         </ng-container>
         <ng-container matColumnDef="scheme">
           <th mat-header-cell *matHeaderCellDef class="br"> Scheme choice</th>
@@ -300,7 +305,8 @@
         </ng-container>
         <ng-container matColumnDef="amt">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Amount recieved</th>
-          <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{utils.formatter(element.amountReceived)}}
+          <td mat-cell *matCellDef="let element" class="br text-right t-12" [formatNumber]="'en-IN'">
+            {{utils.formatter(element.amountReceived)}}
           </td>
           <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">
             {{utils.formatter(sumOfAmountReceived) || '-'}}</td>
@@ -371,18 +377,18 @@
         </ng-container>
         <ng-container matColumnDef="aemp">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Annual employer... </th>
-          <td mat-cell *matCellDef="let element" class="br text-right t-12">
+          <td mat-cell *matCellDef="let element" class="br text-right t-12" [formatNumber]="'en-IN'">
             {{utils.formatter(element.annualEmployerContribution)}}
           </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" [formatNumber]="'en-IN'">
             {{utils.formatter(sumOfAnnualEmployerContribution) || '-'}}</td>
         </ng-container>
         <ng-container matColumnDef="aempe">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Annual employee... </th>
-          <td mat-cell *matCellDef="let element" class="br text-right t-12">
+          <td mat-cell *matCellDef="let element" class="br text-right t-12" [formatNumber]="'en-IN'">
             {{utils.formatter(element.annualEmployeeContribution)}}
           </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" [formatNumber]="'en-IN'">
             {{utils.formatter(sumOfAnnualEmployeeContribution) || '-'}}</td>
         </ng-container>
         <ng-container matColumnDef="rate">
@@ -471,9 +477,10 @@
         </ng-container>
         <ng-container matColumnDef="nvalue">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Notional value </th>
-          <td mat-cell *matCellDef="let element" class="br text-right t-12">
+          <td mat-cell *matCellDef="let element" class="br text-right t-12" [formatNumber]="'en-IN'">
             {{utils.formatter(element.notionalValue) || '-'}} </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> {{utils.formatter(totalNotionalValue)}}</td>
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" [formatNumber]="'en-IN'">
+            {{utils.formatter(totalNotionalValue)}}</td>
         </ng-container>
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef class="br text-left t-12"> Commencement date </th>
@@ -483,9 +490,10 @@
         </ng-container>
         <ng-container matColumnDef="amt">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-18"> Pension amount </th>
-          <td mat-cell *matCellDef="let element" class="br text-right t-18">
+          <td mat-cell *matCellDef="let element" class="br text-right t-18" [formatNumber]="'en-IN'">
             {{utils.formatter(element.pensionAmount) || '-'}} </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">{{utils.formatter(totalPensionAmount)}} </td>
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" [formatNumber]="'en-IN'">
+            {{utils.formatter(totalPensionAmount)}} </td>
         </ng-container>
         <ng-container matColumnDef="pay">
           <th mat-header-cell *matHeaderCellDef class="br t-16"> Pension payout frequency</th>

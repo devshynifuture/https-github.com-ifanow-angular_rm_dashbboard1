@@ -4,7 +4,7 @@
       <button mat-button (click)="getfixedIncomeData('1')"
         [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}"
         class="br-0 text-custom">
-        Fixed deposits</button>
+        Fixed deposits </button>
       <button mat-button (click)="getfixedIncomeData('2')"
         [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}"
         class="br-0 text-custom">
@@ -60,7 +60,7 @@
       </div>
     </div>
     <div class="example-container mt-8 mb-44 fixed-deposite">
-      <table mat-table [dataSource]="dataSourceFixed" id="table-low">
+      <table mat-table [dataSource]="dataSourceFixed" id="table-low" [appSkeletonLoading]="isLoading">
         <ng-container matColumnDef="no">
           <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
           <td mat-cell *matCellDef="let element let i = index;" class="br t-2"> {{i+1}} </td>
@@ -79,10 +79,13 @@
         </ng-container>
         <ng-container matColumnDef="cvalue">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-10"> Current value </th>
-          <td mat-cell *matCellDef="let element" class="br text-right t-10">
-            {{util.formatter(element.currentValue)}}
+          <td mat-cell *matCellDef="let element" class="br text-right t-10" [formatNumber]="'en-IN'"
+            [shouldRoundOff]="'true'">
+            {{ element.currentValue }}
           </td>
-          <td mat-footer-cell *matFooterCellDef class="br text-right t-10">{{util.formatter(sumCurrentValue) || '-'}}
+          <td mat-footer-cell *matFooterCellDef class="br text-right t-10" [formatNumber]="'en-IN'"
+            [shouldRoundOff]="'true'">
+            {{ sumCurrentValue || '-' }}
           </td>
         </ng-container>
         <ng-container matColumnDef="rate">
@@ -92,9 +95,13 @@
         </ng-container>
         <ng-container matColumnDef="amt">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-10"> Amount invested </th>
-          <td mat-cell *matCellDef="let element" class="br text-right t-10"> {{util.formatter(element.amountInvested)}}
+          <td mat-cell *matCellDef="let element" class="br text-right t-10" [formatNumber]="'en-IN'"
+            [shouldRoundOff]="'true'">
+            {{ element.amountInvested}}
           </td>
-          <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> {{util.formatter(sumAmountInvested) || '-'}}
+          <td mat-footer-cell *matFooterCellDef class="br text-right t-10" [formatNumber]="'en-IN'"
+            [shouldRoundOff]="'true'">
+            {{ sumAmountInvested || '-'}}
           </td>
         </ng-container>
         <ng-container matColumnDef="mdate">
@@ -105,9 +112,13 @@
         </ng-container>
         <ng-container matColumnDef="mvalue">
           <th mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Maturity value </th>
-          <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{util.formatter(element.maturityValue)}}
+          <td mat-cell *matCellDef="let element" class="br t-10 text-right" [formatNumber]="'en-IN'"
+            [shouldRoundOff]="'true'">
+            {{ element.maturityValue}}
           </td>
-          <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> {{util.formatter(sumMaturityValue) || '-'}}
+          <td mat-footer-cell *matFooterCellDef class="br text-right t-10" [formatNumber]="'en-IN'"
+            [shouldRoundOff]="'true'">
+            {{ sumMaturityValue || '-'}}
           </td>
         </ng-container>
         <ng-container matColumnDef="number">
@@ -142,7 +153,7 @@
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns4; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
-        <tr mat-footer-row *matFooterRowDef="displayedColumns4;sticky: true"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns4;sticky: true" [hidden]="isLoading"></tr>
       </table>
     </div>
   </div>
@@ -195,9 +206,13 @@
 
         <ng-container matColumnDef="cvalue">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-10"> Current value </th>
-          <td mat-cell *matCellDef="let element" class="br text-right t-10"> {{util.formatter(element.currentValue)}}
+          <td mat-cell *matCellDef="let element" class="br text-right t-10" [formatNumber]="'en-IN'"
+            [shouldRoundOff]="'true'">
+            {{ element.currentValue }}
           </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> {{util.formatter(totalCurrentValue) || '-'}}
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" [formatNumber]="'en-IN'"
+            [shouldRoundOff]="'true'">
+            {{ totalCurrentValue || '-'}}
           </td>
         </ng-container>
         <ng-container matColumnDef="rate">
@@ -208,8 +223,11 @@
 
         <ng-container matColumnDef="amt">
           <th mat-header-cell *matHeaderCellDef class="br t-20 text-right"> Monthly contribution </th>
-          <td mat-cell *matCellDef="let element" class="br t-20 text-right"> {{element.monthlyContribution}} </td>
-          <td mat-footer-cell *matFooterCellDef> {{util.formatter(totalMarketValue) || '-'}}</td>
+          <td mat-cell *matCellDef="let element" class="br t-20 text-right" [formatNumber]="'en-IN'">
+            {{element.monthlyContribution}} </td>
+          <td mat-footer-cell *matFooterCellDef [formatNumber]="'en-IN'" [shouldRoundOff]="'true'">
+            {{ totalMarketValue || '-'}}
+          </td>
         </ng-container>
         <ng-container matColumnDef="mdate">
           <th mat-header-cell *matHeaderCellDef class="br t-10 text-left"> Maturity date </th>
@@ -301,21 +319,33 @@
         </ng-container>
         <ng-container matColumnDef="cvalue">
           <th mat-header-cell *matHeaderCellDef class="br text-right t-17"> Current value </th>
-          <td mat-cell *matCellDef="let element" class="br text-right t-17"> {{util.formatter(element.currentValue)}}
+          <td mat-cell *matCellDef="let element" class="br text-right t-17" [formatNumber]="'en-IN'"
+            [shouldRoundOff]="'true'">
+            {{ element.currentValue }}
           </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> {{util.formatter(sumCurrentValueB) || '-'}}
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" [formatNumber]="'en-IN'"
+            [shouldRoundOff]="'true'">
+            {{ sumCurrentValueB || '-'}}
           </td>
         </ng-container>
         <ng-container matColumnDef="camt">
           <th mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Coupon amount </th>
-          <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{element.couponAmount}} </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> {{util.formatter(sumCouponAmount)}}</td>
+          <td mat-cell *matCellDef="let element" class="br t-10 text-right" [formatNumber]="'en-IN'"
+            [shouldRoundOff]="'true'">
+            {{ element.couponAmount }} </td>
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" [formatNumber]="'en-IN'"
+            [shouldRoundOff]="'true'">
+            {{ sumCouponAmount }}</td>
         </ng-container>
         <ng-container matColumnDef="amt">
           <th mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Amount invested </th>
-          <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{util.formatter(element.amountInvested)}}
+          <td mat-cell *matCellDef="let element" class="br t-10 text-right" [formatNumber]="'en-IN'"
+            [shouldRoundOff]="'true'">
+            {{ element.amountInvested }}
           </td>
-          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">{{util.formatter(sumAmountInvestedB) || '-'}}
+          <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" [formatNumber]="'en-IN'"
+            [shouldRoundOff]="'true'">
+            {{ sumAmountInvestedB  || '-'}}
           </td>
         </ng-container>
         <ng-container matColumnDef="cdate">
@@ -331,7 +361,9 @@
         </ng-container>
         <ng-container matColumnDef="mvalue">
           <th mat-header-cell *matHeaderCellDef class="br t-16 text-right"> Maturity value </th>
-          <td mat-cell *matCellDef="let element" class="br t-16 text-right"> {{util.formatter(element.maturityValue)}}
+          <td mat-cell *matCellDef="let element" class="br t-16 text-right" [formatNumber]="'en-IN'"
+            [shouldRoundOff]="'true'">
+            {{ element.maturityValue }}
           </td>
           <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
         </ng-container>
@@ -375,7 +407,7 @@
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns6; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns6;"></tr>
-        <tr mat-footer-row *matFooterRowDef="displayedColumns6;sticky: true"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns6;sticky: true" [hidden]="isLoading"></tr>
       </table>
     </div>
   </div>

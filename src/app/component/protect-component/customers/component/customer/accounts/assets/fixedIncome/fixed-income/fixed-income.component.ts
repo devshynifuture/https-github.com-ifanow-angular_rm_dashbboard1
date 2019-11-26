@@ -15,7 +15,7 @@ export class FixedIncomeComponent implements OnInit {
 
   showRequring: any;
   advisorId: any;
-  dataSourceFixed: any;
+  dataSourceFixed: any = [{}, {}, {}, {}];
   dataSourceRecurring: any;
   dataSourceBond: any;
   clientId: any;

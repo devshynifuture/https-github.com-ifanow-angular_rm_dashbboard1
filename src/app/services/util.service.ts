@@ -56,21 +56,12 @@ export class UtilService {
 
   }
 
-  commaSeparatedDigits(data) {
-    let res = data + '';
-    let resArray = res.split('');
-    let count = 1;
-
-    while (count != resArray.length) {
-      if (count === 3) {
-        return res;
-      }
-    }
+  formatNumbers(data) {
+    return (parseInt(data)).toLocaleString('en-IN');
   }
 
   formatter(data) {
-    data = Math.round(data);
-    return data;
+    return Math.round(data);
   }
 
   keyPress(event: any) {
