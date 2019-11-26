@@ -133,10 +133,12 @@ export class AddLiabilitiesComponent implements OnInit {
     });
     if(data.loanPartPayments!=undefined){
       data.loanPartPayments.forEach(element => {
-        this.addLiabilityForm.controls.transact.push([this.fb.group({
+        this.addLiabilityForm.controls.transact.push(this.fb.group({
           partPaymentDate: [new Date(element.partPaymentDate),[Validators.required]],
           partPayment: [element.partPayment,Validators.required],
-          option:[ (element.option+""),Validators.required]})])
+          option:[ (element.option+""),Validators.required],
+          id:[ (element.id+""),Validators.required],
+        }))
       })
       this.transactEntries.removeAt(0);
 
@@ -214,12 +216,22 @@ export class AddLiabilitiesComponent implements OnInit {
              let obj1={
               'partPaymentDate': element.partPaymentDate.toISOString().slice(0, 10),
               'partPayment':parseInt(element.partPayment),
-              'option':parseInt(element.option)
+              'option':parseInt(element.option),
+              'id':element.id,
+              'delete':true
              }
+             if(this._inputData.id!=undefined){
+             if(this._inputData.loanPartPayments.length==this.addLiabilityForm.value.transact.length){
+              delete obj1.delete;
+             }
+            }
+             if(this._inputData=='tab1'){
+              delete obj1.id;
+              delete obj1.delete;
+            }
             obj.transactData.push(obj1)
             }
            });
-
            if(this._inputData.id==undefined){
             let objToSend={
               "advisorId": this.advisorId,

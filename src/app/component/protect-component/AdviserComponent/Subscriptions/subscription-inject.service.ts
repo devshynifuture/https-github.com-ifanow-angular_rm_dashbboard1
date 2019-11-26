@@ -14,7 +14,7 @@ export class SubscriptionInject {
   // right slider part
   private openCloseRightSlider = new BehaviorSubject<any>('close');
   rightSideBarData = this.openCloseRightSlider.asObservable();
-
+  
   // upper slider part
   private openCloseupperSlider = new BehaviorSubject('');
   rightslider = this.openCloseupperSlider.asObservable();
@@ -34,6 +34,9 @@ export class SubscriptionInject {
 
   private upper = new BehaviorSubject('');
   upperData = this.upper.asObservable();
+  
+  private specialEvent= new BehaviorSubject<any>('');
+  event=this.specialEvent.asObservable();
 
   rightSideData(msg) {
     console.log('dialog-container rightSideData: ', msg);
@@ -73,5 +76,9 @@ export class SubscriptionInject {
   changeUpperRightSliderState(sliderState: object) {
     this.upperRightSliderData.next(sliderState);
     return this.upperRightSliderDataObs;
+  }
+  addEvent(data:object)
+  {
+    this.specialEvent.next(data)
   }
 }
