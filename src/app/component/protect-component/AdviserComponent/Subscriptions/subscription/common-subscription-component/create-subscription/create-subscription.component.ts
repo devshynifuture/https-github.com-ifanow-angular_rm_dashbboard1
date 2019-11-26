@@ -24,6 +24,8 @@ import {UtilService} from "../../../../../../../services/util.service";
 export class CreateSubscriptionComponent implements OnInit {
   @Input() subFeeMode;
   feeModeData: any;
+  isFlagPayyee: boolean;
+  payeeSettingData: any=null;
 
   constructor(private enumService: EnumServiceService, public subInjectService: SubscriptionInject,
               private eventService: EventService, private fb: FormBuilder,
@@ -31,6 +33,16 @@ export class CreateSubscriptionComponent implements OnInit {
     this.eventService.sidebarSubscribeData.subscribe(
       data => this.subFeeMode = data
     );
+    this.subInjectService.event.subscribe(
+      data=>
+      {
+        this.isFlagPayyee=data.flag;
+        setTimeout(
+          this.payeesData=data.data,500
+        )
+        
+      }
+    )
   }
 
   inputData;
@@ -83,10 +95,16 @@ export class CreateSubscriptionComponent implements OnInit {
   ngOnInit() {
 
     // this.stepper.selectedIndex = 0;
+    this.isFlagPayyee=true;
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     console.log(this.feeCollectionMode);
   }
-
+  getPayeeFlagData(data)
+  {
+    console.log(data)
+    this.isFlagPayyee=data.flag
+    this.payeeSettingData=data
+  }
   goForward(/*stepper: MatStepper*/) {
     if (this.stepper) {
       this.stepper.next();
@@ -103,7 +121,10 @@ export class CreateSubscriptionComponent implements OnInit {
     this.clientData = data;
     this.goForward();
   }
-
+  getTotalPayeeData(data)
+  {
+   this.isFlagPayyee=data
+  }
   getSubStartDetails(data) {
     // this.clientData = data.data;
     this.feeModeData = data;
