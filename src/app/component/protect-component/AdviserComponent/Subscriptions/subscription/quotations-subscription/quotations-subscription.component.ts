@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from 'saturn-datepicker';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { AddQuotationComponent } from '../common-subscription-component/add-quotation/add-quotation.component';
 export interface PeriodicElement {
   name: string;
   docname: string;
@@ -157,7 +158,20 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     this.selectedDateRange = {begin: beginDate, end: endDate};
   }
+  openPopup(data) {
+    const Fragmentdata = {
+      Flag: data,
+    };
+    const dialogRef = this.dialog.open(AddQuotationComponent, {
+      width: '50%',
+      data: Fragmentdata,
+      autoFocus: false,
 
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
   removeDate(item) {
     this.filterDate.splice(item, 1);
     this.getQuotationsData()

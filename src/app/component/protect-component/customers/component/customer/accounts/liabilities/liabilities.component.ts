@@ -50,7 +50,17 @@ export class LiabilitiesComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getPayables();
+    this.getGlobalLiabilities();
     this.getLiability('');
+  }
+  getGlobalLiabilities() {
+    const obj = {};
+    this.customerService.getGlobalLiabilities(obj).subscribe(
+      data => this.getGlobalLiabilitiesRes(data)
+    );
+  }
+  getGlobalLiabilitiesRes(data){
+    console.log(data);
   }
 
   getPayables() {

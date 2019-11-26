@@ -350,7 +350,37 @@ export class CustomerService {
   deleteOther(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHERS, data)
   }
+  getGlobalLiabilities(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GLOBAL_LIABILITIES, data)
+  }
   getAllFiles(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ALL_FILES, data)
+  }
+  downloadFile(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.DOWNLOAD_FILE, data)
+  }
+  deleteFile(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_FILE, data)
+  }
+  moveFiles(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.MOVE_FILES, data)
+  }
+  copyFiles(data){
+   return this.http.put(apiConfig.MAIN_URL + appConfig.COPY_FILES, data)
+  }
+  renameFiles(data){
+   return this.http.put(apiConfig.MAIN_URL + appConfig.RENAME_FILE, data)
+  }
+  renameFolder(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.RENAME_FOLDER, data)
+  }
+  deleteFolder(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_FOLDER, data)
+  }
+  starFile(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.STAR_FILE, data)
+  }
+  viewActivity(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.VIEW_ACTIVITY, data)
   }
 }
