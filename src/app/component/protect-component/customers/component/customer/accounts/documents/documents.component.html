@@ -34,14 +34,14 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item c-p" (click)="reset()">
                                     <span>{{tabValue || 'Documents'}}</span></li>
-                                <li class="breadcrumb-item c-p" *ngIf="showDots == true">
+                                <!-- <li class="breadcrumb-item c-p" *ngIf="showDots == true">
                                     <mat-icon class="c-p" [matMenuTriggerFor]="menu"> more_horiz</mat-icon>
                                     <mat-menu #menu="matMenu">
                                         <button mat-menu-item (click)="getFolders(folder)"
-                                            *ngFor="let folder of openFolderName | slice:2:openFolderName.length - 1">
+                                            *ngFor="let folder of openFolderName | slice:1:openFolderName.length - 1">
                                             {{folder.openFolderNm}}</button>
                                     </mat-menu>
-                                </li>
+                                </li> -->
                                 <li class="breadcrumb-item active c-p" (click)="getFolders(folder)"
                                     *ngFor="let folder of openFolderName">{{folder.openFolderNm}}</li>
                             </ol>
@@ -103,7 +103,8 @@
                                 <ng-container matColumnDef="name">
                                     <th mat-header-cell *matHeaderCellDef> Name </th>
                                     <td mat-cell class="c-p" *matCellDef="let element" (click)="openFolder(element)">
-                                        <img class="mr-12" src="/assets/images/svg/folder-icon.svg">
+                                        <img class="mr-12" src="/assets/images/svg/folder-icon.svg" >
+                                        <img  *ngIf="element.isStarred == 0" class="mr-12" src="/assets/images/svg/yellow-star.svg" >
                                         {{element.folderName || element.fileName}} </td>
                                 </ng-container>
 
@@ -137,11 +138,11 @@
                                                 Share</button>
                                             <button mat-menu-item><img src="assets/images/svg/shareable.svg"
                                                     class="mr-4"> Get shareable link</button>
-                                            <button mat-menu-item><img src="assets/images/svg/star-border-icon.svg"
-                                                    class="mr-4">Add to starred</button>
+                                            <button mat-menu-item (click)="starFiles(element)"><img src="assets/images/svg/star-border-icon.svg"
+                                                    class="mr-4" >Add to starred</button>
                                             <button mat-menu-item><img src="assets/images/svg/edit-name.svg"
                                                     class="mr-4">Rename</button>
-                                            <button mat-menu-item><img src="assets/images/svg/info-icon.svg"
+                                            <button mat-menu-item (click)="viewActivities(element)"><img src="assets/images/svg/info-icon.svg"
                                                     class="mr-4">View activity</button>
                                             <button mat-menu-item><img src="assets/images/svg/move-to-icon.svg"
                                                     class="mr-4">Move to</button>
@@ -150,8 +151,8 @@
                                             <button mat-menu-item (click)="downlodFiles(element)"><img
                                                     src="assets/images/svg/download-icon.svg"
                                                     class="mr-4">Download</button>
-                                            <button mat-menu-item><img src="assets/images/svg/delete-icon.svg"
-                                                    class="mr-4">Delete</button>
+                                            <button mat-menu-item (click)="deleteFile(element)"><img
+                                                    src="assets/images/svg/delete-icon.svg" class="mr-4">Delete</button>
                                         </mat-menu>
                                     </td>
                                 </ng-container>
