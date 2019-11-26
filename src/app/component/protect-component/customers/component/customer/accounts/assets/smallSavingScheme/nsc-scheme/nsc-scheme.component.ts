@@ -77,8 +77,7 @@ export class NscSchemeComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
-      autoFocus: false,
-
+      autoFocus: false
     });
 
     dialogRef.afterClosed().subscribe(result => {
