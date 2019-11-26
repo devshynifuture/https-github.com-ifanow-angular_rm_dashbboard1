@@ -105,7 +105,7 @@
                                 (click)="openCashAndBank('addBankAccounts','open',element)">Edit</button>
                             <button mat-menu-item>Detailed view</button>
                             <button mat-menu-item>Activity</button>
-                            <button mat-menu-item>Delete</button>
+                            <button mat-menu-item (click)="deleteModal('BANK ACCOUNT',element)">Delete</button>
                         </mat-menu>
                     </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
@@ -181,7 +181,7 @@
                                     (click)="openCashAndBank('addCashInHand','open',element)">Edit</button>
                                 <button mat-menu-item>Detailed view</button>
                                 <button mat-menu-item>Activity</button>
-                                <button mat-menu-item>Delete</button>
+                                <button mat-menu-item (click)="deleteModal('CASH IN HAND',element)">Delete</button>
                             </mat-menu>
                         </td>
                         <td mat-footer-cell *matFooterCellDef> </td>

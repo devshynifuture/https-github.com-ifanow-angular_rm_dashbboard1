@@ -4,6 +4,8 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-commodities',
@@ -26,7 +28,7 @@ export class CommoditiesComponent implements OnInit {
   sumOfPurchaseValue: any;
   sumOfMarketValueOther: any;
   sumOfPurchaseValueOther: any;
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService) { }
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService,public dialog:MatDialog) { }
   ngOnInit() {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
@@ -42,7 +44,52 @@ export class CommoditiesComponent implements OnInit {
     } else {
       this.getOtherList()
     }
+  }
+  deleteModal(value,data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        if (value == 'GOLD') {
+          this.custumService.deleteGold(data.id).subscribe(
+            data=>{
+              this.eventService.openSnackBar("Gold is deleted","dismiss")
+              dialogRef.close();
+              this.getGoldList()
+            },
+            err=>this.eventService.openSnackBar(err)
+          )
+        } else {
+          this.custumService.deleteOther(data.id).subscribe(
+            data=>{
+              this.eventService.openSnackBar("Others is deleted","dismiss")
+              dialogRef.close();
+              this.getOtherList()
+            },
+            err=>this.eventService.openSnackBar(err)
+          )
+        }
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
 
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
   getGoldList() {
     let obj = {

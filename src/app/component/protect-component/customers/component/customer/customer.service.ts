@@ -306,6 +306,42 @@ export class CustomerService {
   deleteLiabilities(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_LIABILITIES, data)
   }
+  deleteFixedDeposite(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_FIXED_DEPOSITE, data)
+  }
+  deleteRecurringDeposite(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_RECURRING_DEPOSITE, data)
+  }
+  deleteBond(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_BOND, data)
+  }
+  deleteEPF(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_EPF, data)
+  }
+  deleteNPS(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_NPS, data)
+  }
+  deleteGratuity(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_GRATUITY, data)
+  }
+  deleteSuperAnnuation(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SUPERANNUATION, data)
+  }
+  deleteEPS(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_EPS, data)
+  }
+  deleteBankAccount(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_BANKACCOUNT, data)
+  }
+  deleteCashInHand(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_CASHINHAND, data)
+  }
+  deleteGold(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_GOLD, data)
+  }
+  deleteOther(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHERS, data)
+  }
   getAllFiles(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ALL_FILES, data)
   }

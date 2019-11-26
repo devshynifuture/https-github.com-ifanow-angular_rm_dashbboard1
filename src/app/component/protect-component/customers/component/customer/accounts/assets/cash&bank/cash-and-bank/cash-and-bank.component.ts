@@ -4,6 +4,8 @@ import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-cash-and-bank',
@@ -21,7 +23,7 @@ export class CashAndBankComponent implements OnInit {
   isLoading: boolean = true;
   noData: string;
 
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService) { }
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService,public dialog:MatDialog) { }
   displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc', 'status', 'icons'];
   datasource7 = ELEMENT_DATA7;
   displayedColumns8 = ['no', 'owner', 'cash', 'bal', 'desc', 'status', 'icons'];
@@ -40,6 +42,54 @@ export class CashAndBankComponent implements OnInit {
     } else {
       this.getBankAccountList()
     }
+  }
+  deleteModal(value,data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        if (value == 'BANK ACCOUNT') {
+          this.custumService.deleteBankAccount(data.id).subscribe(
+            data=>{
+              this.eventService.openSnackBar("Bank account is deleted","dismiss")
+              dialogRef.close();
+              this.getBankAccountList()
+            },
+            err=>this.eventService.openSnackBar(err)
+          )
+        } else {
+          this.custumService.deleteCashInHand(data.id).subscribe(
+            data=>{
+              this.eventService.openSnackBar("Cash In Hand is deleted","dismiss")
+              dialogRef.close();
+              this.getCashInHandList()
+            },
+            err=>this.eventService.openSnackBar(err)
+          )
+        }
+
+       
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
   getBankAccountList() {
     let obj = {
