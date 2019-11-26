@@ -18,6 +18,9 @@ export class PoRdSchemeComponent implements OnInit {
   noData: string;
   isLoading: boolean = true;
   pordData: any;
+  sumOfCurrentValue: number;
+  sumOfMonthlyDeposit: number;
+  sumOfMaturityValue: number;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -45,7 +48,10 @@ export class PoRdSchemeComponent implements OnInit {
     if (data.postOfficeRDList.length != 0) {
       this.datasource = new MatTableDataSource(data.postOfficeRDList)
       this.datasource.sort = this.sort;
-      this.pordData = data
+      this.sumOfCurrentValue = data.sumOfCurrentValue;
+      this.sumOfMonthlyDeposit = data.sumOfMonthlyDeposit;
+      this.sumOfMaturityValue = data.sumOfMaturityValue;
+      this.pordData = data;
     } else {
       this.noData = 'No Scheme Found';
     }

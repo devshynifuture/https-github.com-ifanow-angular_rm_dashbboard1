@@ -18,6 +18,9 @@ export class SsySchemeComponent implements OnInit {
   noData: string;
   isLoading: boolean = true;
   ssyData: any;
+  sumOfCurrentValue: number;
+  sumOfAmountInvested: number;
+
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private eventService: EventService) { }
@@ -45,7 +48,8 @@ export class SsySchemeComponent implements OnInit {
     if (data.SSYList.length != 0) {
       this.datasource = new MatTableDataSource(data.SSYList);
       this.datasource.sort = this.sort;
-      // this.datasource = data.SSYList;
+      this.sumOfCurrentValue = data.SumOfCurrentValue;
+      this.sumOfAmountInvested = data.SumOfAmountInvested;
       this.ssyData = data;
     } else {
       this.noData = "No Scheme Found";

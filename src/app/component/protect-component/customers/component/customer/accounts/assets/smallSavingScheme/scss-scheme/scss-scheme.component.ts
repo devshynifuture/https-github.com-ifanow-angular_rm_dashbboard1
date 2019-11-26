@@ -22,6 +22,9 @@ export class ScssSchemeComponent implements OnInit {
   noData: string;
   isLoading: boolean = true;
   scssData: any;
+  sumOfQuarterlyPayout: number;
+  sumOfTotalAmountReceived: number;
+  sumOfAmountInvested: number;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -84,6 +87,9 @@ export class ScssSchemeComponent implements OnInit {
     if (data.scssList.length != 0) {
       this.datasource = new MatTableDataSource(data.scssList);
       this.datasource.sort = this.sort;
+      this.sumOfAmountInvested = data.sumOfAmountInvested;
+      this.sumOfTotalAmountReceived = data.sumOfTotalAmountReceived;
+      this.sumOfQuarterlyPayout = data.sumOfQuarterlyPayout;
       this.scssData = data;
     } else {
       this.noData = "No Scheme Found";

@@ -18,6 +18,10 @@ export class PoMisSchemeComponent implements OnInit {
   isLoading: boolean = true;
   noData: string;
   pomisData: any;
+  sumOfCurrentValue: number;
+  sumOfMonthlyPayout: number;
+  sumOfAmountInvested: number;
+  sumOfMaturityValue: number;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -44,6 +48,11 @@ export class PoMisSchemeComponent implements OnInit {
     if (data.poMisList.length != 0) {
       this.datasource = new MatTableDataSource(data.poMisList)
       this.datasource.sort = this.sort;
+      this.sumOfMaturityValue = data.sumOfMaturityValue;
+      this.sumOfCurrentValue = data.sumOfCurrentValue;
+      this.sumOfMonthlyPayout = data.sumOfMonthlyPayout;
+      this.sumOfAmountInvested = data.sumOfAmountInvested;
+
       this.pomisData = data;
     } else {
       this.noData = "No Scheme Found";

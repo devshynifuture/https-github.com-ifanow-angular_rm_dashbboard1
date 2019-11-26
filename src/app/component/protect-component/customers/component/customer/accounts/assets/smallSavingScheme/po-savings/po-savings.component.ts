@@ -18,6 +18,8 @@ export class PoSavingsComponent implements OnInit {
   noData: string;
   isLoading: boolean = true;
   posavingdata: any;
+  currentValueSum: number;
+  balanceMentionedSum: number;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -45,6 +47,8 @@ export class PoSavingsComponent implements OnInit {
     if (data.postOfficeSavingList.length != 0) {
       this.datasource = new MatTableDataSource(data.postOfficeSavingList);
       this.datasource.sort = this.sort;
+      this.currentValueSum = data.currentValueSum;
+      this.balanceMentionedSum = data.balanceMentionedSum;
       this.posavingdata = data;
     } else {
       this.noData = "No Scheme Found";

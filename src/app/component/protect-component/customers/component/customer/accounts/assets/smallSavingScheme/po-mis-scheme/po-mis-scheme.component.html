@@ -29,37 +29,45 @@
         <ng-container matColumnDef="cvalue">
             <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Current
                 value </th>
-            <td mat-cell *matCellDef="let element" class="br t-14 text-right"> {{util.formatter(element.currentValue)}}
+            <td mat-cell *matCellDef="let element" class="br t-14 text-right" appFormatNumber>
+                {{ element.currentValue }}
             </td>
-            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef>{{pomisData.sumOfCurrentValue}}</td>
+            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef appFormatNumber [value]="sumOfCurrentValue">
+                {{ sumOfCurrentValue }}</td>
         </ng-container>
 
 
         <ng-container matColumnDef="mpayout">
             <th mat-sort-header="monthlyPayout" mat-header-cell *matHeaderCellDef class="br text-right t-14">Monthly
                 payout</th>
-            <td mat-cell *matCellDef="let element" class="br text-right t-14"> {{util.formatter(element.monthlyPayout)}}
+            <td mat-cell *matCellDef="let element" class="br text-right t-14" appFormatNumber>
+                {{ element.monthlyPayout}}
             </td>
-            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef>{{pomisData.sumOfMonthlyPayout}} </td>
+            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef appFormatNumber [value]="sumOfMonthlyPayout">
+                {{sumOfMonthlyPayout}} </td>
         </ng-container>
         <ng-container matColumnDef="rate">
             <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br text-right"> Rate </th>
             <td mat-cell *matCellDef="let element" class="br text-right"> {{element.rate}} </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+            <td mat-footer-cell *matFooterCellDef class="br"> </td>
         </ng-container>
         <ng-container matColumnDef="amt">
             <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br text-right t-10">Amount
                 invested</th>
-            <td mat-cell *matCellDef="let element" class="br text-right t-10">
-                {{util.formatter(element.amountInvested)}} </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+            <td mat-cell *matCellDef="let element" class="br text-right t-10" appFormatNumber>
+                {{ element.amountInvested}} </td>
+            <td mat-footer-cell *matFooterCellDef appFormatNumber [value]="sumOfAmountInvested" class="br">
+                {{ sumOfAmountInvested }}</td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
             <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br text-right t-12">Maturity
                 value </th>
-            <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{util.formatter(element.maturityValue)}}
+            <td mat-cell *matCellDef="let element" class="br text-right t-12" appFormatNumber>
+                {{ element.maturityValue }}
             </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+            <td mat-footer-cell *matFooterCellDef appFormatNumber [value]="sumOfMaturityValue" class="br">
+                {{ sumOfMaturityValue }}
+            </td>
         </ng-container>
         <ng-container matColumnDef="mdate">
             <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br text-left t-8">Maturity date

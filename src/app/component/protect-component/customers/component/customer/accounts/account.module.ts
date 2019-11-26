@@ -162,8 +162,6 @@ import { FormatNumberDirective } from 'src/app/format-number.directive';
     AddTransactionComponent,
     SkeletonLoadingDirective,
     FormatNumberDirective
-
-
   ],
   imports: [
     // BrowserModule,

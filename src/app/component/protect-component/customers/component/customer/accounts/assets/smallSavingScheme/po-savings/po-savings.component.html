@@ -29,8 +29,10 @@
         <ng-container matColumnDef="cvalue">
             <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Current
                 value </th>
-            <td mat-cell *matCellDef="let element" class="br t-14 text-right"> {{element.currentValue}} </td>
-            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef>{{posavingdata.currentValueSum}} </td>
+            <td mat-cell *matCellDef="let element" class="br t-14 text-right" appFormatNumber> {{element.currentValue}}
+            </td>
+            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef appFormatNumber [value]="currentValueSum">
+                {{currentValueSum}} </td>
         </ng-container>
 
         <ng-container matColumnDef="rate">
@@ -41,8 +43,9 @@
         <ng-container matColumnDef="balanceM">
             <th mat-sort-header="balance" mat-header-cell *matHeaderCellDef class="br text-right">Balance mentioned
             </th>
-            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.balance}} </td>
-            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef>{{posavingdata.balanceMentionedSum}}</td>
+            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber> {{element.balance}} </td>
+            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef appFormatNumber
+                [value]="balanceMentionedSum">{{balanceMentionedSum}}</td>
         </ng-container>
         <ng-container matColumnDef="balAs">
             <th mat-sort-header="balanceAsOn" mat-header-cell *matHeaderCellDef class="br text-right">Balance as on</th>

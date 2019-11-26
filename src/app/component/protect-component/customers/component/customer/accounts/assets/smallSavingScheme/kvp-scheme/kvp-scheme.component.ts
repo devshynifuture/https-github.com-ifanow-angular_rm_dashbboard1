@@ -18,6 +18,8 @@ export class KvpSchemeComponent implements OnInit {
   noData: string;
   isLoading: boolean = true;
   kvpData: any;
+  sumOfCurrentValue: number;
+  sumOfAmountInvested: number;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -45,6 +47,8 @@ export class KvpSchemeComponent implements OnInit {
     if (data.KVPList.length != 0) {
       this.datasource = new MatTableDataSource(data.KVPList);
       this.datasource.sort = this.sort;
+      this.sumOfCurrentValue = data.SumOfCurrentValue;
+      this.sumOfAmountInvested = data.SumOfAmountInvested;
       this.kvpData = data;
     } else {
       this.noData = "No Scheme Found";

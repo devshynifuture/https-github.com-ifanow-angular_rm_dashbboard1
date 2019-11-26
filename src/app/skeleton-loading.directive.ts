@@ -6,7 +6,9 @@ import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 export class SkeletonLoadingDirective {
 
   isLoading: boolean = false;
-  constructor(private elementRef: ElementRef, private renderer: Renderer2) { }
+
+  constructor(private elementRef: ElementRef, private renderer: Renderer2) {
+  }
 
   @Input('appSkeletonLoading') set appSkeletonLoading(isLoading) {
     this.isLoading = isLoading;

@@ -19,6 +19,9 @@ export class NscSchemeComponent implements OnInit {
   isLoading: boolean = true;
   nscData: any;
   sortedData: any;
+  sumOfCurrentValue: number;
+  sumOfMaturityValue: number;
+
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
@@ -44,6 +47,8 @@ export class NscSchemeComponent implements OnInit {
     if (data.NationalSavingCertificate.length != 0) {
       this.datasource = new MatTableDataSource(data.NationalSavingCertificate);
       this.datasource.sort = this.sort;
+      this.sumOfMaturityValue = data.SumOfMaturityValue;
+      this.sumOfCurrentValue = data.SumOfCurrentValue;
       this.nscData = data
     } else {
       this.noData = "No Scheme there"
