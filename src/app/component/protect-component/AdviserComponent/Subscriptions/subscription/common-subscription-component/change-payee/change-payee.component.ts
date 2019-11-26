@@ -5,6 +5,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {MatSliderChange} from '@angular/material';
 import {HAMMER_GESTURE_CONFIG} from "@angular/platform-browser";
 import {GestureConfig} from "@angular/material/core";
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-change-payee',
@@ -90,6 +91,22 @@ export class ChangePayeeComponent implements OnInit {
 
   }
 
+  openAddPayee(value) {
+    const fragmentData = {
+      Flag: value,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
   onInputChange(event: MatSliderChange, singlePlan) {
     console.log('This is emitted as the thumb slides');
     console.log(event.value);

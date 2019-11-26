@@ -67,10 +67,6 @@ export class SettingsComponent implements OnInit {
   }
 
   openPayeeSettings(profileData, value, state) {
-    // this.eventService.sliderData(value);
-    // this.subInjectService.rightSliderData(state);
-    // this.subInjectService.rightSideData(profileData);
-    // console.log('profileData*********', profileData);
     const fragmentData = {
       Flag: value,
       data: profileData,

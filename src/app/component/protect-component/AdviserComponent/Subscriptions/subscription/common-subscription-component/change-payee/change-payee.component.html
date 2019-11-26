@@ -18,9 +18,8 @@
   </div>
   <div class="row">
     <div class="col-md-6 mt-20 hover c-p" *ngFor="let singlePlan of payeeData;  let i = index">
-      <mat-card class="p-0 b-ua"
-                [ngClass]="{'ba-blue': singlePlan.selected == 1,'b-ua':singlePlan.selected == 0}"
-                (click)="selectedPayee(singlePlan.selected,singlePlan)">
+      <mat-card class="p-0 b-ua" [ngClass]="{'ba-blue': singlePlan.selected == 1,'b-ua':singlePlan.selected == 0}"
+        (click)="selectedPayee(singlePlan.selected,singlePlan)">
         <div class="row bg-grey lter">
           <div class="col-md-12 p-0">
             <mat-checkbox class="custom-checkbox" [(ngModel)]="singlePlan.selected"></mat-checkbox>
@@ -44,19 +43,26 @@
               <div class="row" (click)="matSliderOnChange(0,singlePlan,0)">
                 <div class="col-md-8">
                   <mat-slider class="ml-24" [disabled]="singlePlan.selected==0||singlePlan.selected !=1" [max]='100'
-                              [(ngModel)]="singlePlan.share" (change)="matSliderOnChange(0,singlePlan,$event.value)"
-                             ></mat-slider>
+                    [(ngModel)]="singlePlan.share" (change)="matSliderOnChange(0,singlePlan,$event.value)"></mat-slider>
                 </div>
                 <div class="col-md-4 pr-0 pt-8">
                   <input [(ngModel)]="singlePlan.share" type="number" (change)="matSliderOnChange(0,singlePlan,0)"
-                         min="0"
-                         max="100" class="m-0 f-13 text-black b-a wrapper-8"/>
+                    min="0" max="100" class="m-0 f-13 text-black b-a wrapper-8" />
                 </div>
               </div>
             </div>
           </div>
         </div>
       </mat-card>
+    </div>
+    <div class="col-md-6 mt-20 hover c-p">
+        <mat-card (click)="openAddPayee('payeeSettings')" class="example-card b-a height-470 bg-grey lter bd-1">
+            <mat-card-content>
+                <p class="text-center">
+                    <i class="material-icons icon-center">add </i>
+                </p>
+            </mat-card-content>
+        </mat-card>
     </div>
     <div *ngIf="!payeeData|| payeeData.length==0">
       <h2>{{noDataMessage}}</h2>
@@ -70,7 +76,7 @@
     </div>
     <div class="col-md-8 right text-right">
       <button mat-button class="btn-bottom br-0 text-inherit" [disabled]="totalValue!=100"
-              (click)="saveChangePayeeSetting()">Save
+        (click)="saveChangePayeeSetting()">Save
       </button>
 
 
