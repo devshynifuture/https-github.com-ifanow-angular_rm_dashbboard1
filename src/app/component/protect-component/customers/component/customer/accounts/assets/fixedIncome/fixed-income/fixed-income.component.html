@@ -134,7 +134,7 @@
               <button mat-menu-item (click)="openPortfolioSummary('addFixedDeposit','open',element)">Edit</button>
               <button mat-menu-item>Deatiled View</button>
               <button mat-menu-item>Activity</button>
-              <button mat-menu-item>Delete</button>
+              <button mat-menu-item (click)="deleteModal('FIXED DEPOSITE',element)">Delete</button>
             </mat-menu>
           </td>
           <td mat-footer-cell *matFooterCellDef> </td>
@@ -243,7 +243,7 @@
               <button mat-menu-item (click)="openPortfolioSummary('addRecuringDeposit','open',element)">Edit</button>
               <button mat-menu-item>Deatiled View</button>
               <button mat-menu-item>Activity</button>
-              <button mat-menu-item>Delete</button>
+              <button mat-menu-item (click)="deleteModal('RECURRING DEPOSITE',element)">Delete</button>
             </mat-menu>
           </td>
           <td mat-footer-cell *matFooterCellDef> </td>
@@ -367,7 +367,7 @@
               <button mat-menu-item (click)="openPortfolioSummary('addBonds','open',element)">Edit</button>
               <button mat-menu-item>Deatiled View</button>
               <button mat-menu-item>Activity</button>
-              <button mat-menu-item>Delete</button>
+              <button mat-menu-item (click)="deleteModal('BOND',element)">Delete</button>
             </mat-menu>
           </td>
           <td mat-footer-cell *matFooterCellDef> </td>
