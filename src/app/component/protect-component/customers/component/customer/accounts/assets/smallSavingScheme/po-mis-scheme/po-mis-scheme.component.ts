@@ -17,6 +17,7 @@ export class PoMisSchemeComponent implements OnInit {
   clientId: number;
   isLoading: boolean = true;
   noData: string;
+  pomisData: any;
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject, public util: UtilService) { }
   displayedColumns = ['no', 'owner', 'cvalue', 'mpayout', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
@@ -40,6 +41,7 @@ export class PoMisSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data.poMisList.length != 0) {
       this.datasource = data.poMisList;
+      this.pomisData=data;
     } else {
       this.noData = "No Scheme Found";
     }

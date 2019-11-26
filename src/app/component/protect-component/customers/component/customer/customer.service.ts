@@ -297,6 +297,14 @@ export class CustomerService {
     let httpParams=new HttpParams().set('policyName',data.policyName)
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_POLICY_NAME,httpParams)
   }
+  deleteInsurance(data)
+  {
+   return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INSURANCE,data)
+  }
+  getInsuranceData(data){
+    let httpParams=new HttpParams().set("advisorId",data.advisorId).set("clientId",data.clientId).set("insuranceTypeId",data.insuranceTypeId)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAL_INSURANCE,data)
+  }
   deleteRealEstate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_REAL_ESTATE, data)
   }

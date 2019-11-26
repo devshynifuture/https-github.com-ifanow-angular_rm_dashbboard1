@@ -19,33 +19,33 @@
         <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef class="br"> No </th>
             <td mat-cell *matCellDef="let element;index as i" class="br"> {{i+1}} </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="owner">
             <th mat-header-cell *matHeaderCellDef class="br t-20"> Owner </th>
             <td mat-cell *matCellDef="let element" class="br t-20"> {{element.ownerName}} </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef>Total</td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
             <th mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Current value </th>
             <td mat-cell *matCellDef="let element" class="br t-14 text-right"> {{element.currentValue}} </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef>{{pordData.sumOfCurrentValue}}</td>
         </ng-container>
 
         <ng-container matColumnDef="rate">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Rate </th>
             <td mat-cell *matCellDef="let element" class="br text-right"> {{element.rate}} </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="deposit">
             <th mat-header-cell *matHeaderCellDef class="br text-right t-18">Monthly deposit </th>
             <td mat-cell *matCellDef="let element" class="br text-right t-18"> {{element.deposit}} </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef>{{pordData.sumOfMonthlyDeposit}}</td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
             <th mat-header-cell *matHeaderCellDef class="br text-right t-15">Maturity value </th>
             <td mat-cell *matCellDef="let element" class="br text-right t-15"> {{element.maturityValue}} </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef>{{pordData.sumOfMaturityValue}}</td>
         </ng-container>
         <ng-container matColumnDef="mdate">
             <th mat-header-cell *matHeaderCellDef class="br text-right t-15">Maturity date </th>

@@ -17,6 +17,7 @@ export class PoSavingsComponent implements OnInit {
   clientId: number;
   noData: string;
   isLoading: boolean = true;
+  posavingdata: any;
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns20 = ['no', 'owner', 'cvalue', 'rate', 'balanceM', 'balAs', 'desc', 'status', 'icons'];
@@ -40,6 +41,7 @@ export class PoSavingsComponent implements OnInit {
     this.isLoading = false;
     if (data.postOfficeSavingList.length != 0) {
       this.datasource = data.postOfficeSavingList
+      this.posavingdata=data
     } else {
       this.noData = "No Scheme Found";
     }
