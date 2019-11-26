@@ -317,4 +317,7 @@ export class CustomerService {
   getAllFiles(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ALL_FILES, data)
   }
+  downloadFile(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.DOWNLOAD_FILE, data)
+  }
 }

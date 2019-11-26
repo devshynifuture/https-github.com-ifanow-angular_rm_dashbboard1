@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { MatBottomSheet } from '@angular/material';
 import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -27,11 +27,27 @@ export class DocumentsComponent implements OnInit {
   commonFileFolders: any;
   openFolderName: any;
   backUpfiles: any;
-  i = 1;
+  i = 0;
   resetData: any;
   tabValue: any;
   valueTab: any;
   valueFirst: any;
+  fileType = [
+   {id : 1, name : 'PDF'} ,
+   {id : 2, name : 'DOC'} ,
+   {id : 3, name : 'XLSX'} ,
+   {id : 4, name : 'MP3'} ,
+   {id : 5, name : 'MP4'} ,
+   {id : 6, name : 'WAV'} ,
+   {id : 7, name : 'ZIP'} ,
+   {id : 8, name : 'BIN'} ,
+   {id : 9, name : 'ISO'} ,
+   {id : 10, name : 'JPEG'} ,
+   {id : 11, name : 'JPG'} ,
+   {id : 12, name : 'TXT'} ,
+   {id : 13, name : 'HTML'} ,
+  ]
+  showDots = false;
 
   constructor(private _bottomSheet: MatBottomSheet, private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
   viewMode
@@ -45,8 +61,18 @@ export class DocumentsComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getAllFileList(tabValue)
   }
-
-
+  fileSizeConversion(){
+    this.commonFileFolders.forEach(element => {
+      var data = parseInt(element.size)
+      if( data >= 1024){
+        element.size = data/1024;
+        element.size =(this.utils.formatter(element.size)+""+'Kb');
+      }else if( data>= 1000000){
+        element.size =data/1000000;
+        element.size =(this.utils.formatter(element.size)+""+'Mb');
+      }
+    });
+  }
   openBottomSheet(): void {
     this._bottomSheet.open(BottomSheetComponent);
   }
@@ -70,6 +96,21 @@ export class DocumentsComponent implements OnInit {
     this.commonFileFolders = data.folders;
     this.commonFileFolders.push.apply(this.commonFileFolders, this.allFiles)
     console.log('commonFileFolders', this.commonFileFolders)
+
+    if(this.commonFileFolders.openFolderId == undefined || this.openFolderName.length == 0){
+      Object.assign(this.commonFileFolders, { 'openFolderNm': value.folderName });
+      Object.assign(this.commonFileFolders, { 'openFolderId': value.id });
+      this.openFolderName.push(this.commonFileFolders)
+      this.valueFirst = this.openFolderName[0]
+      if (this.commonFileFolders.length > 0) {
+        this.backUpfiles.push(this.commonFileFolders);
+      }
+      console.log('this.backUpfiles', this.backUpfiles)
+    }
+    if( this.openFolderName.length > 2){
+      this.showDots = true
+    }
+    this.fileSizeConversion()
   }
   getFolders(data) {
     this.openFolderName = _.reject(this.openFolderName, function (n) {
@@ -79,12 +120,15 @@ export class DocumentsComponent implements OnInit {
     this.openFolderName = _.reject(this.openFolderName, function (n) {
       return n.openFolderId > data.openFolderId;
     });
+    this.commonFileFolders = data;
     this.valueFirst = this.openFolderName[0];
   }
   reset(){
-    this.commonFileFolders = this.valueFirst;
+    if(this.openFolderName.length > 0){
+      this.commonFileFolders = this.backUpfiles[0];
+    }
+    this.commonFileFolders =  this.backUpfiles[0];
     this.openFolderName = [];
-    this.backUpfiles = [];
   }
   openFolder(value) {
     let obj = {
@@ -93,18 +137,25 @@ export class DocumentsComponent implements OnInit {
       docGetFlag:  this.valueTab,
       folderParentId: (value.id == undefined) ? 0 : value.id,
     }
-    if(this.commonFileFolders.openFolderId == undefined || this.commonFileFolders.openFolderId == null || this.openFolderName.length == 0){
-      Object.assign(this.commonFileFolders, { 'openFolderNm': value.folderName });
-      Object.assign(this.commonFileFolders, { 'openFolderId': this.i++ });
-      this.openFolderName.push(this.commonFileFolders)
-      if (this.commonFileFolders.length > 0) {
-        this.backUpfiles.push(this.commonFileFolders);
-      }
-      console.log('this.backUpfiles', this.backUpfiles)
-    }
+    console.log('backUpfiles',this.backUpfiles)
     this.custumService.getAllFiles(obj).subscribe(
       data => this.getAllFilesRes(data, value)
     );
+  }
+  downlodFiles(element){
+    let obj ={
+      clientId:this.clientId,
+      advisorId:this.advisorId,
+      folderId:element.parentFolderId,
+      fileName:element.fileName
+    }
+    this.custumService.downloadFile(obj).subscribe(
+      data => this.downloadFileRes(data)
+    );
+  }
+  downloadFileRes(data){
+    console.log(data)
+    window.open(data);
   }
 }
 

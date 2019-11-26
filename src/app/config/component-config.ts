@@ -122,7 +122,8 @@ export const appConfig = {
   DELETE_REAL_ESTATE:'account/asset/real-estate/delete',
   DELETE_OTHER_PAYABLES:'account/liability/otherpayables/delete',
   DELETE_LIABILITIES:'/account/liability/loan/delete',
-  GET_ALL_FILES:'/document/account/document/all-file/get',
+  GET_ALL_FILES:'document/account/document/all-file/get',
+  DOWNLOAD_FILE:'document/account/document/all-file/file/get',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE:'account/asset/real-estate/get',
   GET_EPF:'account/asset/retirement/epf/list/get',
