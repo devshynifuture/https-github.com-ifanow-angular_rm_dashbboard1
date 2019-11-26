@@ -55,8 +55,8 @@
         </div>
       </mat-card>
     </div>
-    <div class="col-md-6 mt-20 hover c-p">
-        <mat-card (click)="openAddPayee('payeeSettings')" class="example-card b-a height-470 bg-grey lter bd-1">
+    <div *ngIf="payeeData.length==0" class="col-md-6 mt-20 hover c-p">
+        <mat-card (click)="openAddPayee()" class="example-card b-a height-470 bg-grey lter bd-1">
             <mat-card-content>
                 <p class="text-center">
                     <i class="material-icons icon-center">add </i>

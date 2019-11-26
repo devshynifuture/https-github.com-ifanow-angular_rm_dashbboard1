@@ -44,7 +44,7 @@ export class ChangePayeeComponent implements OnInit {
   _payeeData: any;
 
   @Output() outputData = new EventEmitter<Object>();
-
+  @Output() payeeFlag =new EventEmitter<Object>();
   dataSub: any;
   dataObj;
   getRowData: any;
@@ -58,7 +58,7 @@ export class ChangePayeeComponent implements OnInit {
   ngOnInit() {
     console.log('change payee upperData', this.upperData);
   }
-
+  
   Close(state) {
     this.subInjectService.rightSideData(state);
     this.subInjectService.rightSliderData(state);
@@ -91,21 +91,13 @@ export class ChangePayeeComponent implements OnInit {
 
   }
 
-  openAddPayee(value) {
-    const fragmentData = {
-      Flag: value,
-      id: 1,
-      state: 'open'
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
-        }
-      }
-    );
+  openAddPayee() {
+    let obj=
+    {
+      data:'Add',
+      flag:false
+    }
+   this.payeeFlag.emit(obj)
   }
   onInputChange(event: MatSliderChange, singlePlan) {
     console.log('This is emitted as the thumb slides');
