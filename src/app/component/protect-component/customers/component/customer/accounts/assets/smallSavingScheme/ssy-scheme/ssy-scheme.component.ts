@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-ssy-scheme',
@@ -18,6 +18,7 @@ export class SsySchemeComponent implements OnInit {
   noData: string;
   isLoading: boolean = true;
   ssyData: any;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private eventService: EventService) { }
   displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
@@ -39,13 +40,15 @@ export class SsySchemeComponent implements OnInit {
   }
   getSsySchemedataResponse(data) {
     console.log(data);
+
     this.isLoading = false;
     if (data.SSYList.length != 0) {
-      this.datasource = data.SSYList
-      this.ssyData=data
+      this.datasource = new MatTableDataSource(data.SSYList);
+      this.datasource.sort = this.sort;
+      // this.datasource = data.SSYList;
+      this.ssyData = data;
     } else {
       this.noData = "No Scheme Found";
-
     }
 
   }

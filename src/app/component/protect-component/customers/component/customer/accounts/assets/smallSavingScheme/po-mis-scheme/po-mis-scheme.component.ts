@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
@@ -18,6 +18,8 @@ export class PoMisSchemeComponent implements OnInit {
   isLoading: boolean = true;
   noData: string;
   pomisData: any;
+
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject, public util: UtilService) { }
   displayedColumns = ['no', 'owner', 'cvalue', 'mpayout', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
@@ -40,8 +42,9 @@ export class PoMisSchemeComponent implements OnInit {
     console.log(data);
     this.isLoading = false;
     if (data.poMisList.length != 0) {
-      this.datasource = data.poMisList;
-      this.pomisData=data;
+      this.datasource = new MatTableDataSource(data.poMisList)
+      this.datasource.sort = this.sort;
+      this.pomisData = data;
     } else {
       this.noData = "No Scheme Found";
     }

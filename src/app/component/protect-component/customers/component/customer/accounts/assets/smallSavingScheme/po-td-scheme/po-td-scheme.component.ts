@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MAT_DATE_FORMATS, MatDialog } from '@angular/material';
+import { MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
@@ -20,6 +20,8 @@ export class PoTdSchemeComponent implements OnInit {
   noData: string;
 
   isLoading: boolean = true;
+
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns22 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'tenure', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
@@ -42,7 +44,8 @@ export class PoTdSchemeComponent implements OnInit {
     console.log(data);
     this.isLoading = false;
     if (data.postOfficeTdList.length != 0) {
-      this.datasource = data.postOfficeTdList
+      this.datasource = new MatTableDataSource(data.postOfficeTdList);
+      this.datasource.sort = this.sort;
     } else {
       this.noData = "No Scheme Found";
     }

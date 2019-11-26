@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
@@ -18,6 +18,9 @@ export class PoSavingsComponent implements OnInit {
   noData: string;
   isLoading: boolean = true;
   posavingdata: any;
+
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns20 = ['no', 'owner', 'cvalue', 'rate', 'balanceM', 'balAs', 'desc', 'status', 'icons'];
@@ -40,8 +43,9 @@ export class PoSavingsComponent implements OnInit {
     console.log(data);
     this.isLoading = false;
     if (data.postOfficeSavingList.length != 0) {
-      this.datasource = data.postOfficeSavingList
-      this.posavingdata=data
+      this.datasource = new MatTableDataSource(data.postOfficeSavingList);
+      this.datasource.sort = this.sort;
+      this.posavingdata = data;
     } else {
       this.noData = "No Scheme Found";
     }
