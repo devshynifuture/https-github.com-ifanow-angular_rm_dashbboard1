@@ -17,6 +17,7 @@ export class NscSchemeComponent implements OnInit {
   clientId: number;
   noData: string;
   isLoading: boolean = true;
+  nscData: any;
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns17 = ['no', 'owner', 'cvalue', 'rate', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
@@ -41,6 +42,7 @@ export class NscSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data.NationalSavingCertificate.length != 0) {
       this.datasource = data.NationalSavingCertificate;
+      this.nscData=data
     } else {
       this.noData = "No Scheme there"
     }

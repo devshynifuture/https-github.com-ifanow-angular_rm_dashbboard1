@@ -6,6 +6,8 @@ import { UtilService } from 'src/app/services/util.service';
 import { CustomerService } from '../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import * as _ from 'lodash';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-liabilities',
@@ -38,7 +40,7 @@ export class LiabilitiesComponent implements OnInit {
   filterData: any;
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
-    public customerService: CustomerService, public util: UtilService) {
+    public customerService: CustomerService, public util: UtilService,public dialog:MatDialog) {
   }
   viewMode;
   ngOnInit() {
@@ -83,7 +85,7 @@ export class LiabilitiesComponent implements OnInit {
         }
       });
       if(filterData.length==0){
-        this.noData = "No Scheme Found";
+        this.noData = "No Data Found";
         this.dataSource = undefined;
       }else{
         this.totalLoanAmt= _.sumBy(filterData, function (o) {
@@ -97,8 +99,46 @@ export class LiabilitiesComponent implements OnInit {
       }
     }
   }
+  deleteModal(value,data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.customerService.deleteLiabilities(data.id).subscribe(
+          data=>{
+            this.eventService.openSnackBar("Liabilities is deleted","dismiss")
+            dialogRef.close();
+            this.getLiability('');
+          },
+          err=>this.eventService.openSnackBar(err)
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
 
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
   open(flagValue, data) {
+    if(data != this.showFilter){
+      data.showFilter=this.showFilter;
+
+    }
     const fragmentData = {
       Flag: flagValue,
       data,
@@ -169,7 +209,7 @@ export class LiabilitiesComponent implements OnInit {
   getLiabiltyRes(data) {
     this.showLoader = false;
     if(data.loans==undefined){
-      this.noData = "No Scheme Found";
+      this.noData = "No Data Found";
     }else{
     this.totalLoanAmt=data.totalLoanAmount;  
     this.outStandingAmt=data.totalCapitalOutstanding;

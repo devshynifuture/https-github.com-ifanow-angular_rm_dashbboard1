@@ -86,7 +86,7 @@ export class AddLiabilitiesComponent implements OnInit {
       let data=this._inputData
       this.subInjectService.changeNewRightSliderState({ state: 'close',data });
     }else{
-      let data=this._inputData.loanTypeId;
+      let data=this._inputData.showFilter;
       this.subInjectService.changeNewRightSliderState({ state: 'close',data });
     }
   }
@@ -133,11 +133,13 @@ export class AddLiabilitiesComponent implements OnInit {
     });
     if(data.loanPartPayments!=undefined){
       data.loanPartPayments.forEach(element => {
-        this.addLiabilityForm.controls.transact=this.fb.array([this.fb.group({
+        this.addLiabilityForm.controls.transact.push([this.fb.group({
           partPaymentDate: [new Date(element.partPaymentDate),[Validators.required]],
           partPayment: [element.partPayment,Validators.required],
           option:[ (element.option+""),Validators.required]})])
       })
+      this.transactEntries.removeAt(0);
+
     }
     this.getFormControl().loanAmount.maxLength = 20;
     this.getFormControl().loanTenure.maxLength = 20;
@@ -222,7 +224,7 @@ export class AddLiabilitiesComponent implements OnInit {
             let objToSend={
               "advisorId": this.advisorId,
               "clientId": this.clientId,
-              "familyMemberId": this.selectedFamilyData.id,
+              "familyMemberId": this._inputData.familyMemberId,
               "ownerName": obj.ownerName,
               "loanTypeId": obj.loanType,
               "loanAmount": obj.loanAmount,
@@ -242,7 +244,7 @@ export class AddLiabilitiesComponent implements OnInit {
             );
            }else{
             let editObj={
-              "familyMemberId":160023,
+              "familyMemberId": this._inputData.familyMemberId,
               "ownerName":obj.ownerName,
               "loanTypeId":obj.loanType,
               "id":this._inputData.id,
@@ -254,7 +256,8 @@ export class AddLiabilitiesComponent implements OnInit {
               "frequencyOfPayments":obj.emiFrequency,
               "annualInterestRate":obj.interest,
               "emi":obj.emi,
-              "financialInstitution":obj.finInstitution
+              "financialInstitution":obj.finInstitution,
+              "loanPartPayments": obj.transactData
               }
               this.custumService.editLiability(editObj).subscribe(
                 data => this.editLiabilityRes(data)

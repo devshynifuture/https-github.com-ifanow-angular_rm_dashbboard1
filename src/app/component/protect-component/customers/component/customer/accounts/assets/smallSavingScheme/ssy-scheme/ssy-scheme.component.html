@@ -19,28 +19,28 @@
         <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef class="br"> No </th>
             <td mat-cell *matCellDef="let element;index as i" class="br"> {{i+1}} </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="owner">
             <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
             <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef>Total</td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
             <th mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Current value </th>
             <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{element.currentValue}} </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef>{{ssyData.SumOfCurrentValue}} </td>
         </ng-container>
         <ng-container matColumnDef="rate">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Rate </th>
             <td mat-cell *matCellDef="let element" class="br text-right"> {{element.rate}} </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="amt">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Total amount
                 invested </th>
             <td mat-cell *matCellDef="let element" class="br text-right"> {{element.amountInvested}} </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
+            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef>{{ssyData.SumOfAmountInvested}}</td>
         </ng-container>
         <ng-container matColumnDef="number">
             <th mat-header-cell *matHeaderCellDef class="br text-right t-7"> Account number </th>

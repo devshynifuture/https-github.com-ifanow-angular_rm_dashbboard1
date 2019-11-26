@@ -17,6 +17,7 @@ export class SsySchemeComponent implements OnInit {
   clientId: number;
   noData: string;
   isLoading: boolean = true;
+  ssyData: any;
 
   constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private eventService: EventService) { }
   displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
@@ -41,6 +42,7 @@ export class SsySchemeComponent implements OnInit {
     this.isLoading = false;
     if (data.SSYList.length != 0) {
       this.datasource = data.SSYList
+      this.ssyData=data
     } else {
       this.noData = "No Scheme Found";
 

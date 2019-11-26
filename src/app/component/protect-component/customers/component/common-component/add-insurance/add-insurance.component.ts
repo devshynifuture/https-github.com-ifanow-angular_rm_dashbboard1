@@ -6,7 +6,8 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer/customer.service';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { MAT_DATE_FORMATS } from '@angular/material';
-
+import * as _ from 'lodash';
+import { element } from 'protractor';
 @Component({
   selector: 'app-add-insurance',
   templateUrl: './add-insurance.component.html',
@@ -59,7 +60,10 @@ export class AddInsuranceComponent implements OnInit {
   options: void;
   policyData: any;
   FamilyMember: any;
-  familyMemberData: any;
+  familyMemberLifeData: any;
+  familyMemberProposerData: any;
+  ProposerData: any;
+  selectedProposerData: any;
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) { }
   addMoreFlag;
   insuranceFormFilledData: any;
@@ -73,7 +77,6 @@ export class AddInsuranceComponent implements OnInit {
   }
   ngOnInit() {
     this.addMoreFlag = false
-    this.setValidations(false)
   }
 
   lifeInsuranceForm = this.fb.group({
@@ -95,7 +98,8 @@ export class AddInsuranceComponent implements OnInit {
     surrenderName: [, [Validators.required]],
     nomineeName: [, [Validators.required]],
     vestedBonus: [, [Validators.required]],
-    assumedRate: [, [Validators.required]]
+    assumedRate: [, [Validators.required]],
+    fundValue: []
   })
   cashFlowForm = this.fb.group({
     cashFlow: this.fb.array([this.fb.group({
@@ -156,7 +160,7 @@ export class AddInsuranceComponent implements OnInit {
       this.lifeInsuranceForm.controls.sumAssured.setValue(this.editInsuranceData.sumAssured)
       this.lifeInsuranceForm.controls.premiumDetailsAmount.setValue(this.editInsuranceData.premiumAmount)
       this.lifeInsuranceForm.controls.premiumDetailsFrequency.setValue(String(this.editInsuranceData.frequency))
-      this.lifeInsuranceForm.controls.tenureDetailsPolicy.setValue(this.editInsuranceData.policyTenure)
+      this.lifeInsuranceForm.controls.tenureDetailsPolicy.setValue(String(this.editInsuranceData.policyTenure))
       this.lifeInsuranceForm.controls.premiumPayingTerm.setValue(this.editInsuranceData.premiumPayingTerm)
       this.lifeInsuranceForm.controls.policyStatus.setValue(String(this.editInsuranceData.policyStatusId))
       this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue('')
@@ -206,17 +210,21 @@ export class AddInsuranceComponent implements OnInit {
       clientId: this.clientId,
     }
     this.customerService.getListOfFamilyByClient(obj).subscribe(
-      data=>this.getFamilyMemberListRes(data)
+      data => this.getFamilyMemberListRes(data)
     )
   }
-  getFamilyMemberListRes(data)
-  { 
+  getFamilyMemberListRes(data) {
     console.log(data)
-    this.FamilyMember=data.familyMembersList
+    this.FamilyMember = data.familyMembersList
+    this.ProposerData = Object.assign([], data.familyMembersList);
+    console.log("Proposer data", this.ProposerData)
   }
-  getFamilyMember(data)
-  {
-   this.familyMemberData=data
+  getFamilyMember(data, index) {
+    this.familyMemberLifeData = data;
+    console.log("family Member", this.FamilyMember)
+  }
+  getProposerData(data, index) {
+    this.selectedProposerData = data
   }
   findPolicyName(data) {
     let inpValue = this.lifeInsuranceForm.get("policyName").value
@@ -225,26 +233,18 @@ export class AddInsuranceComponent implements OnInit {
       policyName: inpValue
     }
     this.customerService.getPolicyName(obj).subscribe(
-      data => this.options = data.policyDetails
+      data => {
+        console.log(data.policyDetails)
+        this.options = data.policyDetails
+      }
     )
   }
   selectPolicy(policy) {
-    this.policyData = policy
+    this.policyData = policy;
+    this.insuranceTypeId=policy.insuranceTypeId
+    this.insuranceSubTypeId=policy.insuranceSubTypeId
   }
-  setValidations(flag) {
-    this.islifeAssured = flag
-    this.isproposer = flag
-    this.ispolicyName = flag
-    this.ispolicyNum = flag
-    this.iscommencementDate = flag
-    this.issumAssured = flag
-    this.ispremiumDetailsAmount = flag
-    this.ispremiumDetailsFrequency = flag
-    this.istenureDetailsPolicy = flag
-    this.ispremiumPayingTerm = flag
-    this.ispolicyStatus = flag
-    this.ispolicyStatusLastUnpaid = flag
-  }
+  
   openOptionField() {
     (this.addMoreFlag) ? this.addMoreFlag = false : this.addMoreFlag = true;
     this.eleRef.nativeElement.scrollTop = 200
@@ -289,8 +289,8 @@ export class AddInsuranceComponent implements OnInit {
     }
     else {
       this.insuranceFormFilledData = {
-        "familyMemberIdLifeAssured": 112233,
-        "familyMemberIdProposer": this.familyMemberData.id,
+        "familyMemberIdLifeAssured": this.familyMemberLifeData.id,
+        "familyMemberIdProposer": this.selectedProposerData.id,
         "clientId": this.clientId,
         "advisorId": this.advisorId,
         "ownerName": "swapnil",
@@ -325,8 +325,8 @@ export class AddInsuranceComponent implements OnInit {
         "policyName": this.lifeInsuranceForm.get('policyName').value,
         "policyTypeId": this.policyData.policyTypeId,
         "policyId": this.policyData.id,
-        "insuranceTypeId": this.insuranceTypeId,
-        "insuranceSubTypeId": this.insuranceSubTypeId,
+        "insuranceTypeId": this.policyData.insuranceTypeId,
+        "insuranceSubTypeId": this.policyData.insuranceSubTypeId,
         "policyNumber": this.lifeInsuranceForm.get('policyNum').value
       }
       console.log(this.insuranceFormFilledData)
