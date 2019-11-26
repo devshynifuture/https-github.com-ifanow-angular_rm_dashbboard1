@@ -104,7 +104,7 @@
                             <button mat-menu-item (click)="openCommodities('addGold','open',element)">Edit</button>
                             <button mat-menu-item>Detailed view</button>
                             <button mat-menu-item>Activity</button>
-                            <button mat-menu-item>Delete</button>
+                            <button mat-menu-item (click)="deleteModal('GOLD',element)">Delete</button>
                         </mat-menu>
                     </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
@@ -196,7 +196,7 @@
                             <button mat-menu-item (click)="openCommodities('addOthers','open',element)">Edit</button>
                             <button mat-menu-item>Detailed view</button>
                             <button mat-menu-item>Activity</button>
-                            <button mat-menu-item>Delete</button>
+                            <button mat-menu-item (click)="deleteModal('OTHERS',element)">Delete</button>
                         </mat-menu>
                     </td>
                     <td mat-footer-cell *matFooterCellDef> </td>

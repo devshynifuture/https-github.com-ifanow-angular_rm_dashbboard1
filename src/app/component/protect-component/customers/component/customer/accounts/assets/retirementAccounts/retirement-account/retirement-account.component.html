@@ -135,7 +135,7 @@
               <button mat-menu-item class="c-p" (click)="openRetirement('addEPF','open',element)">Edit</button>
               <button mat-menu-item class="c-p">Detailed view</button>
               <button mat-menu-item class="c-p">Activity</button>
-              <button mat-menu-item class="c-p">Delete</button>
+              <button mat-menu-item class="c-p" (click)="deleteModal('EPF',element)">Delete</button>
             </mat-menu>
           </td>
           <td mat-footer-cell *matFooterCellDef> </td>
@@ -250,7 +250,7 @@
                 (click)="openRetirement('addSchemeHoldings','open',element)">Edit</button>
               <button mat-menu-item class="c-p">Detailed view</button>
               <button mat-menu-item class="c-p">Activity</button>
-              <button mat-menu-item class="c-p">Delete</button>
+              <button mat-menu-item class="c-p" (click)="deleteModal('NPS',element)">Delete</button>
             </mat-menu>
           </td>
           <td mat-footer-cell *matFooterCellDef> </td>
@@ -337,7 +337,7 @@
               <button mat-menu-item class="c-p" (click)="openRetirement('addGratuity','open', element)">Edit</button>
               <button mat-menu-item class="c-p">Detailed view</button>
               <button mat-menu-item class="c-p">Activity</button>
-              <button mat-menu-item class="c-p">Delete</button>
+              <button mat-menu-item class="c-p" (click)="deleteModal('GRATUITY',element)">Delete</button>
             </mat-menu>
           </td>
           <td mat-footer-cell *matFooterCellDef> </td>
@@ -437,7 +437,7 @@
                 (click)="openRetirement('addSuperannuation','open',element)">Edit</button>
               <button mat-menu-item class="c-p">Detailed view</button>
               <button mat-menu-item class="c-p">Activity</button>
-              <button mat-menu-item class="c-p">Delete</button>
+              <button mat-menu-item class="c-p" (click)="deleteModal('SUPERANNUATION',element)">Delete</button>
             </mat-menu>
           </td>
           <td mat-footer-cell *matFooterCellDef> </td>
@@ -522,7 +522,7 @@
               <button mat-menu-item class="c-p" (click)="openRetirement('addEPS','open',element)">Edit</button>
               <button mat-menu-item class="c-p">Detailed view</button>
               <button mat-menu-item class="c-p">Activity</button>
-              <button mat-menu-item class="c-p">Delete</button>
+              <button mat-menu-item class="c-p" (click)="deleteModal('EPS',element)">Delete</button>
             </mat-menu>
           </td>
           <td mat-footer-cell *matFooterCellDef> </td>
