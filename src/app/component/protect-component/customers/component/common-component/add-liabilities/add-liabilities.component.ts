@@ -220,11 +220,14 @@ export class AddLiabilitiesComponent implements OnInit {
               'id':element.id,
               'delete':true
              }
+             if(this._inputData.id!=undefined){
              if(this._inputData.loanPartPayments.length==this.addLiabilityForm.value.transact.length){
               delete obj1.delete;
              }
-             if(this._inputData.id==undefined){
+            }
+             if(this._inputData=='tab1'){
               delete obj1.id;
+              delete obj1.delete;
             }
             obj.transactData.push(obj1)
             }
