@@ -90,20 +90,20 @@
       </button>
       <div *ngIf="changeFooter!='emailQuotation' || changeEmailOnly!=undefined || screenType!=undefined">
         <button mat-button class="btn-bottom br-0 text-inherit mr-20" *ngIf="changeEmailOnly=='openEmailQuot'">Email
-          only <i
-            class="material-icons">
+          only <i class="material-icons">
             arrow_drop_up
           </i></button>
-        <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="changeFooter=='viewQuotation' "
+        <!-- <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="changeFooter=='viewQuotation' "
                 (click)="Open('eSignRequest','open',element)">Email with eSign Request <i
           class="material-icons">
           arrow_drop_up
-        </i></button>
+        </i></button> -->
+        <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="changeFooter=='viewQuotation' "
+        (click)="save()">SAVE</button>
         <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="changeFooter!='viewQuotation'"
-                (click)="Open('eSignRequestDocuments','open',element)">Email with eSign Request <i
-          class="material-icons">
-          arrow_drop_up
-        </i></button>
+          (click)="Open('eSignRequestDocuments','open',element)">Email with eSign Request <i class="material-icons">
+            arrow_drop_up
+          </i></button>
 
       </div>
     </div>

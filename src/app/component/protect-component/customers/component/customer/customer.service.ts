@@ -350,6 +350,9 @@ export class CustomerService {
   deleteOther(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHERS, data)
   }
+  getGlobalLiabilities(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GLOBAL_LIABILITIES, data)
+  }
   getAllFiles(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ALL_FILES, data)
   }

@@ -134,6 +134,7 @@ export const appConfig = {
   DELETE_CASHINHAND:'account/asset/cash-in-hand/delete',
   DELETE_GOLD:'account/asset/commodity/gold/delete',
   DELETE_OTHERS:'account/asset/commodity/other/delete',
+  GLOBAL_LIABILITIES:'account/liability/global/get',
   GET_ALL_FILES:'/document/account/document/all-file/get',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE:'account/asset/real-estate/get',
