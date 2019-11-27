@@ -20,6 +20,7 @@ import { PlanModule } from './component/customer/plan/plan.module';
 import { CustomerComponent } from "./component/customer/customer.component";
 
 
+
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
 // import { FactShitComponent } from './component/common-component/fact-shit/fact-shit.component';
 // import { TransactionsComponent } from './component/common-component/transactions/transactions.component';
@@ -43,3 +44,4 @@ import { CustomerComponent } from "./component/customer/customer.component";
 })
 export class CustomersModule {
 }
+ 

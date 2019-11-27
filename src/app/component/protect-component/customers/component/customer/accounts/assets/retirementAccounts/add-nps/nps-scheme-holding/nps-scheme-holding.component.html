@@ -1,4 +1,4 @@
-<div class="popup-header-fix-60">
+<div class="popup-header-fix-70">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20">ADD SCHEME LEVEL HOLDINGS</h4>
@@ -11,12 +11,13 @@
     </div>
 </div>
 
-<div [formGroup]="schemeHoldingsNPS">
-    <div class="row pt-100 pl-20">
-        <div class="col-md-3 pr-0">
+<div class="mb-48" [formGroup]="schemeHoldingsNPS">
+
+    <div class="row pt-100 pl-28">
+        <div class="col-md-3 p-0">
             <app-owner-column [data]='ownerData' (valueChange)='display($event)'></app-owner-column>
         </div>
-        
+
         <div class="col-md-3">
             <h5 class="m-0 pb-8">PRAN</h5>
             <div class="form-group mb-0">
@@ -39,36 +40,36 @@
             </div>
         </div>
     </div>
-    <div class="row pl-20">
-        <div class="col-md-12 mt-65">
+    <div class="row pl-28">
+        <div class="col-md-12 pl-0 mt-65">
             <h4 class="mb-20 text-black">HOLDINGS</h4>
         </div>
     </div>
-    <div class="row pl-20">
-        <div class="col-md-4">
-            <label> Scheme name</label>
+    <div class="row pl-28">
+        <div class="col-md-4 pl-0">
+            <label class="f-16"> Scheme name</label>
         </div>
 
         <div class="col-md-2 pl-0">
-            <label class="pb-8">  Total Units </label>
+            <label class="pb-8 f-16">  Total Units </label>
         </div>
 
-        <div class="col-md-3 ">
-            <label class="pb-8">  Holdings as on  </label>
+        <div class="col-md-3">
+            <label class="pb-8 f-16">  Holdings as on  </label>
         </div>
         <div class="col-md-3 pl-0">
-            <label class="pb-8">  Total Net Contribution  </label>
+            <label class="pb-8 f-16">  Total Net Contribution  </label>
         </div>
     </div>
 
     <div formArrayName="holdingList">
-        <div class="row pl-20" *ngFor="let creds of holdings.controls; let i = index; let last = last" [formGroupName]="i">
-            <div class="col-md-4">
+        <div class="row pb-36 pl-28" *ngFor="let creds of holdings.controls; let i = index; let last = last" [formGroupName]="i">
+            <div class="col-md-4 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput placeholder="Search scheme" aria-label="State" [matAutocomplete]="auto" class="form-control br-0 pl-8" formControlName="schemeName">
+                        <input matInput aria-label="State" [matAutocomplete]="auto" class="form-control br-0 pl-8" formControlName="schemeName">
                         <mat-autocomplete #auto="matAutocomplete">
-                                <mat-option *ngFor="let s of schemeList"  [value]="s.id">{{ s.name }}
+                            <mat-option *ngFor="let s of schemeList" [value]="s.id">{{ s.name }}
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
@@ -78,6 +79,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input matInput #totalUnits type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="totalUnits">
+                        <mat-hint align="start" class="m-0 f-11 text-custom pt-4">As in statement</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -95,7 +97,7 @@
                     <mat-form-field>
                         <input matInput #totalNetContribution type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="totalNetContribution">
                     </mat-form-field>
-                    <mat-hint align="end" class="m-0 f-11 text-custom pt-4">As in statement</mat-hint>
+
                 </div>
 
             </div>
@@ -113,8 +115,9 @@
 
 
     </div>
-    <hr class="w-90">
-    <div class="row pl-20 pt-24">
+    <hr class="ml-16 mr-16">
+
+    <div class="row pl-28 pt-24">
         <div class="col-md-3 pt-36 text-right">
             <h5 class="m-0">Future contribution</h5>
         </div>
@@ -132,7 +135,7 @@
 
             </div>
             <div formArrayName="futureContributionList">
-                <div class="row" *ngFor="let creds of futureContry.controls; let i = index" [formGroupName]="i">
+                <div class="row pb-12" *ngFor="let creds of futureContry.controls; let i = index" [formGroupName]="i">
                     <div class="col-md-3 p-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
@@ -185,7 +188,7 @@
             <div class="col-md-5 text-right pr-0">
                 <h5 class="m-0 pt-8">Nominee{{i+1}}</h5>
             </div>
-            <div class="col-md-7 pr-0">
+            <div class="col-md-7 pb-20 pr-0">
                 <div class="form-group mb-0">
                     <div class="row">
                         <div class="col-md-4 p-0">
@@ -204,10 +207,10 @@
                             </mat-form-field>
                         </div>
                         <div class="col-md-5" *ngIf="i==0">
-                            <p class="m-0 text-custom pt-12" (click)="addNominee()">+ Add nominee</p>
+                            <p class="m-0 c-p text-custom pt-12" (click)="addNominee()">+ Add nominee</p>
                         </div>
                         <div class="col-md-3" *ngIf="i > 0">
-                            <p class="m-0 text-custom pt-12" (click)="removeNominee(i)">Remove</p>
+                            <p class="m-0 c-p text-custom pt-12" (click)="removeNominee(i)">Remove</p>
                         </div>
                     </div>
                 </div>
@@ -220,11 +223,10 @@
 
         </div>
     </div>
-    <div class="col-md-8 right text-right">
-        <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveSchemeHolding()">Save</button>
-    </div>
+
 </div>
-<!-- <div class="bottom-fixed wrapper-12 pt-16">
+
+<div class="bottom-fixed-70 wrapper-12 pt-16">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
@@ -233,4 +235,4 @@
             <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveSchemeHolding()">Save</button>
         </div>
     </div>
-</div> -->
+</div>

@@ -33,9 +33,9 @@ import { EventService } from 'src/app/Data-service/event.service';
 
 export class InsuranceComponent implements OnInit {
   displayedColumns = ['no', 'life', 'name', 'number', 'sum', 'cvalue', 'premium', 'term', 'pterm', 'desc', 'status', 'icons'];
-  dataSource = ELEMENT_DATA;
+  dataSource = [{},{}];
   displayedColumns1 = ['no', 'owner', 'cvalue', 'amt', 'mvalue', 'rate', 'mdate', 'type', 'ppf', 'desc', 'status', 'icons'];
-  dataSource1 = ELEMENT_DATA1;
+  dataSource1 = [{},{}];
   advisorId: any;
   insuranceSubTypeId: any;
   clientId: any;

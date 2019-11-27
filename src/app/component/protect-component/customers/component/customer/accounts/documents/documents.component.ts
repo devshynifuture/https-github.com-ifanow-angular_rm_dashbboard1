@@ -1,5 +1,5 @@
 import { Component, OnInit, ɵConsole } from '@angular/core';
-import { MatBottomSheet } from '@angular/material';
+import { MatBottomSheet, MatDialog } from '@angular/material';
 import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { CustomerService } from '../../customer.service';
 import * as _ from 'lodash';
 import { AuthService } from 'src/app/auth-service/authService';
 import { HttpEventType, HttpResponse, HttpClient } from '@angular/common/http';
+import { DocumentNewFolderComponent } from '../../../common-component/document-new-folder/document-new-folder.component';
 
 @Component({
   selector: 'app-documents',
@@ -37,6 +38,8 @@ export class DocumentsComponent implements OnInit {
   tabValue: any;
   valueTab: any;
   valueFirst: any;
+  animal: string;
+  name: string;
   fileType = [
     { id: 1, name: 'PDF' },
     { id: 2, name: 'DOC' },
@@ -56,7 +59,8 @@ export class DocumentsComponent implements OnInit {
   parentId: any;
   filenm: string;
 
-  constructor( private http: HttpClient,private _bottomSheet: MatBottomSheet, private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
+  
+  constructor( private http: HttpClient,private _bottomSheet: MatBottomSheet, private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public dialog: MatDialog) { }
   viewMode
   ngOnInit() {
     let tabValue = 'Documents'
@@ -68,6 +72,19 @@ export class DocumentsComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getAllFileList(tabValue)
   }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DocumentNewFolderComponent, {
+      width: '30%',
+      data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
+  }
+
   fileSizeConversion() {
     this.commonFileFolders.forEach(element => {
       var data = parseInt(element.size)

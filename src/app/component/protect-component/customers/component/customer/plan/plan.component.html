@@ -6,8 +6,8 @@
 <mat-tab-group [selectedIndex]="selected" mat-align-tabs="center" id="ui-account-second-head" animationDuration="0ms">
     <mat-tab label="SUMMARY">
         <ng-template matTabContent>
-           <!-- <app-summary-plan></app-summary-plan> -->
-          <app-goals-plan></app-goals-plan>
+            <!-- <app-summary-plan></app-summary-plan> -->
+            <app-goals-plan></app-goals-plan>
         </ng-template>
     </mat-tab>
     <mat-tab label="profile">
@@ -17,7 +17,7 @@
     </mat-tab>
     <mat-tab label="INSURANCE">
         <ng-template matTabContent>
-         <app-insurance-plan></app-insurance-plan>
+            <app-insurance-plan></app-insurance-plan>
         </ng-template>
     </mat-tab>
     <mat-tab label="GOALS">
@@ -31,9 +31,10 @@
         </ng-template>
     </mat-tab>
     <mat-tab label="CASH FLOWS">
-        <ng-template matTabContent>
+        <app-cashflows-plan></app-cashflows-plan>
+        <!-- <ng-template matTabContent>
 
-        </ng-template>
+        </ng-template> -->
     </mat-tab>
     <mat-tab label="investmentS">
         <app-investments-plan></app-investments-plan>

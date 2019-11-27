@@ -87,6 +87,7 @@ import { OwnerColumnComponent } from './owner-component/owner-column/owner-colum
 import { AddTransactionComponent } from './assets/smallSavingScheme/common-component/add-transaction/add-transaction.component';
 import { SkeletonLoadingDirective } from 'src/app/skeleton-loading.directive';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { DocumentNewFolderComponent } from '../../common-component/document-new-folder/document-new-folder.component';
 
 @NgModule({
   declarations: [
@@ -161,7 +162,8 @@ import { FormatNumberDirective } from 'src/app/format-number.directive';
     OwnerColumnComponent,
     AddTransactionComponent,
     SkeletonLoadingDirective,
-    FormatNumberDirective
+    FormatNumberDirective,
+    DocumentNewFolderComponent
   ],
   imports: [
     // BrowserModule,
@@ -172,7 +174,7 @@ import { FormatNumberDirective } from 'src/app/format-number.directive';
     ReactiveFormsModule
   ],
   exports: [AccountsComponent, AddLiabilitiesComponent, AddInsuranceComponent, AddOtherPayablesComponent, OthersComponent, CashAndBankComponent, BankAccountsComponent, CashInHandComponent, CommoditiesComponent, GoldComponent, NpsSchemeHoldingComponent, NpsSummaryPortfolioComponent, LibilitiesRightComponent, FixedDepositComponent, AddSuperannuationComponent, AddEPSComponent, AddGratuityComponent, AddNPSComponent, AddEPFComponent, OwnerComponentComponent, RecuringDepositComponent, BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent, ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent, RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent, AddRealEstateComponent, RealEstateComponent, AddPpfComponent, AddNscComponent, AddSsyComponent, AddKvpComponent, AddScssComponent, AddPoSavingComponent, AddPoMisComponent, AddPoTdComponent, AddPoRdComponent, AddExpensesComponent, OtherPayablesComponent, OwnerColumnComponent,],
-  entryComponents: [BottomSheetComponent]
+  entryComponents: [BottomSheetComponent, DocumentNewFolderComponent]
 })
 export class AccountModule {
 }

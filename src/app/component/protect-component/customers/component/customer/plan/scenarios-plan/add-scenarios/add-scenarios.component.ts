@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-add-scenarios',
@@ -6,14 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-scenarios.component.scss']
 })
 export class AddScenariosComponent implements OnInit {
+  _inputData: any;   
   displayedColumns: string[] = ['name', 'scenario', 'conflicting'];
   dataSource = ELEMENT_DATA;
-  constructor() { }
+  constructor(private subInjectService:SubscriptionInject) { }
 
   ngOnInit() {
   }
 
- 
+  close(){
+    let data=this._inputData;
+     this.subInjectService.changeNewRightSliderState({ state: 'close',data });
+   }
 
 }                                                                                                     
 
