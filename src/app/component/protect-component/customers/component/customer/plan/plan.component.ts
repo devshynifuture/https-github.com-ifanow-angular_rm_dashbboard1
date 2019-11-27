@@ -10,7 +10,7 @@ export class PlanComponent implements OnInit {
   constructor() { }
   selected;
   ngOnInit() {
-    this.selected=1
+    this.selected=0
   }
 
 }
