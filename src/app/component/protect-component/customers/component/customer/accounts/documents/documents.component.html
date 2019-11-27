@@ -1,26 +1,26 @@
-<div id="ui-document">
+<div id="ui-document" class="account_side-menu">
     <div class="row h-100vh">
         <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
             <ul class="vertical-menu">
-                <li (click)="viewMode ='tab1'" [ngClass]="{'b-ua':viewMode =='tab1'}" class="b-ua c-p">
+                <li (click)="viewMode ='tab1'" [ngClass]="{'activeColor':viewMode =='tab1'}" class="activeColor c-p">
                     <div class="row" (click)="tabValue = 'Documents';getAllFileList(tabValue)">
-                        <div class="col-md-12 p-0">All files</div>
+                        <div class="col-md-12 p-0"> <img class="mr-8" src="assets/images/svg/document-file-icon.svg"> All files</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab2'" [ngClass]="{'b-ua':viewMode =='tab2'}" class="c-p">
+                <li (click)="viewMode ='tab2'" [ngClass]="{'activeColor':viewMode =='tab2'}" class="c-p">
                     <div class="row" (click)="tabValue = 'Recents';getAllFileList(tabValue)">
-                        <div class="col-md-12 p-0">Recents</div>
+                        <div class="col-md-12 p-0"><img class="mr-8" src="assets/images/svg/recent-document.svg"> Recents</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab3'" [ngClass]="{'b-ua':viewMode =='tab3'}" class="c-p">
+                <li (click)="viewMode ='tab3'" [ngClass]="{'activeColor':viewMode =='tab3'}" class="c-p">
                     <div class="row" (click)="tabValue = 'Starred';getAllFileList(tabValue)">
-                        <div class="col-md-11 p-0">Starred</div>
+                        <div class="col-md-11 p-0"> <img class="mr-8" src="assets/images/svg/star-menu-documents.svg"> Starred</div>
                         <div class="col-md-1 p-0 text-custom">1</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab4'" [ngClass]="{'b-ua':viewMode =='tab4'}" class=" c-p">
+                <li (click)="viewMode ='tab4'" [ngClass]="{'activeColor':viewMode =='tab4'}" class=" c-p">
                     <div class="row" (click)="tabValue = 'Deleted files';getAllFileList(tabValue)">
-                        <div class="col-md-11 p-0">Deleted files</div>
+                        <div class="col-md-11 p-0"> <img class="mr-8" src="assets/images/svg/remove-documents.svg"> Deleted files</div>
                         <div class="col-md-1 p-0 text-custom">2</div>
                     </div>
                 </li>
@@ -92,8 +92,8 @@
 
 
                     <div class="row">
-                        <div class="col-md-9 p-0 " *ngSwitchCase="viewMode">
-                            <table mat-table [dataSource]="commonFileFolders" class="documentsTable" id="table-low">
+                        <div class="col-md-9 p-0 documentsTable" *ngSwitchCase="viewMode">
+                            <table mat-table [dataSource]="commonFileFolders" class="" id="table-low">
                                 <ng-container matColumnDef="emptySpace">
                                     <th mat-header-cell *matHeaderCellDef> </th>
                                     <td mat-cell *matCellDef="let element"> </td>

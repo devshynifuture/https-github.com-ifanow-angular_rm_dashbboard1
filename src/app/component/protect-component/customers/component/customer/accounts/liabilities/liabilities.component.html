@@ -1,71 +1,63 @@
 <div *ngIf="showLoader==true">
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div>
-<div id="ui-liabilities">
+<div class="account_side-menu" id="ui-liabilities">
     <div class="row h-100vh">
         <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
             <ul class="vertical-menu">
-                <li (click)="viewMode ='tab1'" (click)="sortTable('tab1')" [ngClass]="{'b-ua':showFilter =='tab1'}"
-                    class="c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('tab1')" [ngClass]="{'activeColor':showFilter =='tab1'}" class="c-p">
                     <div class="row">
-                        <div class="col-md-11 p-0 f-700">LIABILITIES</div>
-                        <div class="col-md-1 p-0 text-custom">{{this.storeData}}</div>
+                        <div class="col-md-10 p-0 f-700">LIABILITIES</div>
+                        <div class="col-md-2 p-0 text-custom">{{this.storeData}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('1')" [ngClass]="{'b-ua':showFilter =='1'}"
-                    class="c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('1')" [ngClass]="{'activeColor':showFilter =='1'}" class="c-p">
                     <div class="row">
-                        <div class="col-md-11 p-0">Home</div>
-                        <div class="col-md-1 p-0 text-custom">{{this.home.length}}</div>
+                        <div class="col-md-10 p-0">Home</div>
+                        <div class="col-md-2 p-0 text-custom">{{this.home.length}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('2')" [ngClass]="{'b-ua':showFilter =='2'}"
-                    class="c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('2')" [ngClass]="{'activeColor':showFilter =='2'}" class="c-p">
                     <div class="row">
-                        <div class="col-md-11 p-0">Vehicle</div>
-                        <div class="col-md-1 p-0 text-custom">{{this.vehicle.length}}</div>
+                        <div class="col-md-10 p-0">Vehicle</div>
+                        <div class="col-md-2 p-0 text-custom">{{this.vehicle.length}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('3')" [ngClass]="{'b-ua':showFilter  =='3'}"
-                    class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('3')" [ngClass]="{'activeColor':showFilter  =='3'}" class=" c-p">
                     <div class="row">
-                        <div class="col-md-11 p-0">Education</div>
-                        <div class="col-md-1 p-0 text-custom">{{this.education.length}}</div>
+                        <div class="col-md-10 p-0">Education</div>
+                        <div class="col-md-2 p-0 text-custom">{{this.education.length}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('5')" [ngClass]="{'b-ua':showFilter =='5'}"
-                    class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('5')" [ngClass]="{'activeColor':showFilter =='5'}" class=" c-p">
                     <div class="row">
-                        <div class="col-md-11 p-0">Personal</div>
-                        <div class="col-md-1 p-0 text-custom">{{this.personal.length}}</div>
+                        <div class="col-md-10 p-0">Personal</div>
+                        <div class="col-md-2 p-0 text-custom">{{this.personal.length}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('7')" [ngClass]="{'b-ua':showFilter =='tab7'}"
-                    class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('7')" [ngClass]="{'activeColor':showFilter =='tab7'}" class=" c-p">
                     <div class="row">
-                        <div class="col-md-11 p-0">Durables</div>
-                        <div class="col-md-1 p-0 text-custom">{{0}}</div>
+                        <div class="col-md-10 p-0">Durables</div>
+                        <div class="col-md-2 p-0 text-custom">{{0}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('4')" [ngClass]="{'b-ua':showFilter =='4'}"
-                    class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('4')" [ngClass]="{'activeColor':showFilter =='4'}" class=" c-p">
                     <div class="row">
-                        <div class="col-md-11 p-0">Credit card</div>
-                        <div class="col-md-1 p-0 text-custom">{{this.creditCard.length}}</div>
+                        <div class="col-md-10 p-0">Credit card</div>
+                        <div class="col-md-2 p-0 text-custom">{{this.creditCard.length}}</div>
 
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('6')" [ngClass]="{'b-ua':showFilter =='6'}"
-                    class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('6')" [ngClass]="{'activeColor':showFilter =='6'}" class=" c-p">
                     <div class="row">
-                        <div class="col-md-11 p-0">Mortgage</div>
-                        <div class="col-md-1 p-0 text-custom">{{this.mortgage.length}}</div>
+                        <div class="col-md-10 p-0">Mortgage</div>
+                        <div class="col-md-2 p-0 text-custom">{{this.mortgage.length}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab2'" [ngClass]="{'b-ua':viewMode =='tab2'}" class=" c-p">
+                <li (click)="viewMode ='tab2'" [ngClass]="{'activeColor':viewMode =='tab2'}" class=" c-p">
                     <div class="row">
-                        <div class="col-md-11 p-0 f-700">OTHERS</div>
-                        <div class="col-md-1 p-0 text-custom">{{OtherData}}</div>
+                        <div class="col-md-10 p-0 f-700">OTHERS</div>
+                        <div class="col-md-2 p-0 text-custom">{{OtherData}}</div>
                     </div>
                 </li>
             </ul>
@@ -113,18 +105,15 @@
                                 <button mat-menu-item>XLS</button>
                             </mat-menu>
                             <img src="assets/images/svg/up-down.svg" class="c-p">
-                            <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu"
-                                class="c-p mr-12">
+                            <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu" class="c-p mr-12">
                             <mat-menu #menu="matMenu">
                                 <button mat-menu-item>Email report</button>
                                 <button mat-menu-item>Option 1</button>
                                 <button mat-menu-item>Option 2</button>
                             </mat-menu>
-                            <button mat-stroked-button class="btn-default addon mr-12 v-middle"
-                                (click)="clickHandling()"><i class="material-icons">filter_list</i>FILTERS
+                            <button mat-stroked-button class="btn-default addon mr-12 v-middle" (click)="clickHandling()"><i class="material-icons">filter_list</i>FILTERS
                             </button>
-                            <button (click)="open('addLiabilities',showFilter)" mat-stroked-button
-                                class="btn-primary addon v-middle"><i class="material-icons">add</i>ADD NEW
+                            <button (click)="open('addLiabilities',showFilter)" mat-stroked-button class="btn-primary addon v-middle"><i class="material-icons">add</i>ADD NEW
                             </button>
                         </div>
                     </div>
@@ -140,8 +129,7 @@
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef class="br t-18"> Owner</th>
                             <td mat-cell *matCellDef="let element" class="br t-18"> {{element.ownerName}} </td>
-                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700"
-                                [hidden]="dataSource==undefined && showLoader==false"> Total </td>
+                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700" [hidden]="dataSource==undefined && showLoader==false"> Total </td>
                         </ng-container>
                         <ng-container matColumnDef="type">
                             <th mat-header-cell *matHeaderCellDef class="br t-12"> Type</th>
@@ -151,11 +139,10 @@
                             <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
                         </ng-container>
                         <ng-container matColumnDef="loan">
-                            <th mat-header-cell *matHeaderCellDef class="br t-18"> Loan amount</th>
-                            <td mat-cell *matCellDef="let element" class="br t-18">
+                            <th mat-header-cell *matHeaderCellDef class="br text-right t-18"> Loan amount</th>
+                            <td mat-cell *matCellDef="let element" class="br text-right t-18">
                                 {{util.formatter(element.loanAmount)}} </td>
-                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700"
-                                [hidden]="dataSource==undefined && showLoader==false">
+                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700" [hidden]="dataSource==undefined && showLoader==false">
                                 {{util.formatter(totalLoanAmt) || '-'}} </td>
                         </ng-container>
                         <ng-container matColumnDef="ldate">
@@ -165,27 +152,26 @@
                             <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
                         </ng-container>
                         <ng-container matColumnDef="today">
-                            <th mat-header-cell *matHeaderCellDef class="br t-14"> Outstanding as on today
+                            <th mat-header-cell *matHeaderCellDef class="br text-right t-14"> Outstanding as on today
                             </th>
-                            <td mat-cell *matCellDef="let element" class="br t-14">
+                            <td mat-cell *matCellDef="let element" class="br text-right t-14">
                                 {{util.formatter(element.outstandingAmount)}} </td>
-                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700"
-                                [hidden]="dataSource==undefined && showLoader==false">
+                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700" [hidden]="dataSource==undefined && showLoader==false">
                                 {{util.formatter(outStandingAmt) || '-'}}</td>
                         </ng-container>
                         <ng-container matColumnDef="ten">
-                            <th mat-header-cell *matHeaderCellDef class="br"> Tenure remaining</th>
-                            <td mat-cell *matCellDef="let element" class="br"> {{element.loanTenure}} </td>
+                            <th mat-header-cell *matHeaderCellDef class="br text-right"> Tenure remaining</th>
+                            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.loanTenure}} </td>
                             <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
                         </ng-container>
                         <ng-container matColumnDef="rate">
-                            <th mat-header-cell *matHeaderCellDef class="br t-14"> Annual interest rate</th>
-                            <td mat-cell *matCellDef="let element" class="br t-14"> {{element.annualInterestRate}} </td>
+                            <th mat-header-cell *matHeaderCellDef class="br text-right t-14"> Annual interest rate</th>
+                            <td mat-cell *matCellDef="let element" class="br text-right t-14"> {{element.annualInterestRate}} </td>
                             <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
                         </ng-container>
                         <ng-container matColumnDef="emi">
-                            <th mat-header-cell *matHeaderCellDef class="br"> EMI</th>
-                            <td mat-cell *matCellDef="let element" class="br"> {{util.formatter(element.emi)}} </td>
+                            <th mat-header-cell *matHeaderCellDef class="br text-right"> EMI</th>
+                            <td mat-cell *matCellDef="let element" class="br text-right"> {{util.formatter(element.emi)}} </td>
                             <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
                         </ng-container>
                         <ng-container matColumnDef="fin">
@@ -207,8 +193,7 @@
                                 </i>
                                 <mat-menu #menu4="matMenu">
                                     <button mat-menu-item (click)="open('addLiabilities',element)">Edit</button>
-                                    <button mat-menu-item
-                                        (click)="addLiabilitiesDetail('addLiabilitiesDetail')">Deatiled View</button>
+                                    <button mat-menu-item (click)="addLiabilitiesDetail('addLiabilitiesDetail')">Deatiled View</button>
                                     <button mat-menu-item>Activity</button>
                                     <button mat-menu-item (click)="deleteModal('LIABILITIES',element)">Delete</button>
                                 </mat-menu>
@@ -223,8 +208,7 @@
                     <div *ngIf="dataSource==undefined && showLoader==false">
                         <h4 class="text-center pt-72">{{noData}}</h4>
                         <div class="text-center pt-16">
-                            <button (click)="open('addLiabilities',showFilter)" mat-stroked-button
-                                class="btn-primary addon v-middle "><i class="material-icons">add</i>ADD NEW
+                            <button (click)="open('addLiabilities',showFilter)" mat-stroked-button class="btn-primary addon v-middle "><i class="material-icons">add</i>ADD NEW
                             </button>
                         </div>
                     </div>
