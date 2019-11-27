@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {HttpService} from 'src/app/http-service/http-service';
-import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpService } from 'src/app/http-service/http-service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config';
 
 // import {THIS_EXPR} from '@angular/compiler/src/output/output_ast';
 
@@ -123,6 +123,10 @@ export class SubscriptionService {
   deleteSubscriptionData(data) {
     // const httpParams = new HttpParams().set('advisorId',data.advisorId).set('subscriptionId',data.subscriptionId);
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SUBSCRIPTION, data);
+  }
+
+  deleteClientProfileSubscriptionSetting(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_CLIENT_PROFILE_FROM_SUBSCRIPTION_SETTING, data);
   }
 
   saveBillerProfileSettings(data) {
@@ -284,13 +288,12 @@ export class SubscriptionService {
   }
 
   getDocumentData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('flag', data.flag).set('limit',data.limit).set('offset',data.offset).set('dateType',data.dateType).set('fromDate',data.fromDate).set('toDate',data.toDate).set('statusIdList',data.statusIdList);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('flag', data.flag).set('limit', data.limit).set('offset', data.offset).set('dateType', data.dateType).set('fromDate', data.fromDate).set('toDate', data.toDate).set('statusIdList', data.statusIdList);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_GET, httpParams);
   }
-  getClientDocumentData(data)
-  {
-    const httpParams = new HttpParams().set('advisorId',data.advisorId).set('clientId',data.clientId).set('flag',data.flag)
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_GET,httpParams)
+  getClientDocumentData(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('flag', data.flag)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_GET, httpParams)
   }
   updateDocumentData(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_UPDATE, data);
@@ -348,21 +351,20 @@ export class SubscriptionService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_TEMPLATE_FILTER, httpParams);
 
   }
-  plansMapped(data){
+  plansMapped(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('docRepoId', data.docRepoId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_MAPPED_PLAN, httpParams);
   }
-  servicesMapped(data){
+  servicesMapped(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('docRepoId', data.docRepoId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_MAPPED_SERVICE, httpParams); 
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_MAPPED_SERVICE, httpParams);
   }
-  deleteSubSettingBillerProfile(data)
-  {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SUB_SETTING_BILLER_PROFILE,data)
+  deleteSubSettingBillerProfile(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SUB_SETTING_BILLER_PROFILE, data)
   }
-  getTotalRecived(data){
+  getTotalRecived(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('period', data.period);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TOTAL_SALE_RECIVED, httpParams); 
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TOTAL_SALE_RECIVED, httpParams);
   }
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);

@@ -56,6 +56,8 @@ export class DocumentsComponent implements OnInit {
     { id: 13, name: 'HTML' },
   ]
   showDots = false;
+  parentId: any;
+  filenm: string;
 
   
   constructor( private http: HttpClient,private _bottomSheet: MatBottomSheet, private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public dialog: MatDialog) { }
@@ -159,6 +161,7 @@ export class DocumentsComponent implements OnInit {
       docGetFlag: this.valueTab,
       folderParentId: (value.id == undefined) ? 0 : value.id,
     }
+    this.parentId = value.parentFolderId
     console.log('backUpfiles', this.backUpfiles)
     this.custumService.getAllFiles(obj).subscribe(
       data => this.getAllFilesRes(data, value)
@@ -294,6 +297,10 @@ export class DocumentsComponent implements OnInit {
     for (var i = 0; i < e.target.files.length; i++) { 
       this.myFiles.push(e.target.files[i]);
     }
+    this.myFiles.forEach(fileName => {
+      this.filenm = fileName
+      this.uploadFile(this.parentId,this.filenm)
+    });
     console.log(this.myFiles)
     const bottomSheetRef =this._bottomSheet.open(BottomSheetComponent, {
       data: this.myFiles,
@@ -305,6 +312,21 @@ export class DocumentsComponent implements OnInit {
     for (var i = 0; i < this.myFiles.length; i++) { 
       frmData.append("fileUpload", this.myFiles[i]);
     }
+  }
+  uploadFile(element,fileName) {
+    let obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      folderId: element.parentFolderId,
+      fileName: element.fileName
+    }
+    this.custumService.downloadFile(obj).subscribe(
+      data => this.uploadFileRes(data)
+    );
+  }
+  uploadFileRes(data) {
+    console.log(data)
+
   }
 }
 
