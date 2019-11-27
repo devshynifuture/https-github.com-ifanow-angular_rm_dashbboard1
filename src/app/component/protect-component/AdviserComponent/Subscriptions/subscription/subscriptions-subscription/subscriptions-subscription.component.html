@@ -106,7 +106,7 @@
       <!-- Name Column -->
       <ng-container matColumnDef="sub">
         <th *matHeaderCellDef class="f-18 t-10" mat-header-cell> Subs #</th>
-        <td *matCellDef="let element" class="t-10 c-p" mat-cell> {{element.subscriptionNumber}} </td>
+        <td *matCellDef="let element" (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" class="t-10 c-p" mat-cell> {{element.subscriptionNumber}} </td>
       </ng-container>
       <!-- Weight Column -->
       <ng-container matColumnDef="status">

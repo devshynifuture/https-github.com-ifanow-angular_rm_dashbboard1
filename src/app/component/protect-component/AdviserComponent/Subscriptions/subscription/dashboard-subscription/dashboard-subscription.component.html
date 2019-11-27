@@ -251,4 +251,4 @@
     </div>
   </div>
 </div>
-<app-subscription-completeness *ngIf="showSubStep"></app-subscription-completeness>
+<app-subscription-completeness (subscriptionIndex)="getIndex($event)" *ngIf="showSubStep"></app-subscription-completeness>
