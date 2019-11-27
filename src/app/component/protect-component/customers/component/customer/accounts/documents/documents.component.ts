@@ -10,6 +10,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { CustomerService } from '../../customer.service';
 import * as _ from 'lodash';
 import { AuthService } from 'src/app/auth-service/authService';
+import { HttpEventType, HttpResponse, HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-documents',
@@ -19,6 +20,10 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class DocumentsComponent implements OnInit {
   displayedColumns: string[] = ['emptySpace', 'name', 'lastModi', 'type', 'size', 'icons'];
   dataSource = ELEMENT_DATA;
+  percentDone: number;
+  uploadSuccess: boolean;
+  myFiles:string [] = [];
+  sMsg:string = '';
   setTab: string;
   advisorId: any;
   clientId: any;
@@ -49,7 +54,7 @@ export class DocumentsComponent implements OnInit {
   ]
   showDots = false;
 
-  constructor(private _bottomSheet: MatBottomSheet, private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
+  constructor( private http: HttpClient,private _bottomSheet: MatBottomSheet, private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
   viewMode
   ngOnInit() {
     let tabValue = 'Documents'
@@ -267,6 +272,22 @@ export class DocumentsComponent implements OnInit {
   }
   viewActivityRes(data){
     console.log(data)
+  }
+  getFileDetails (e) {
+    for (var i = 0; i < e.target.files.length; i++) { 
+      this.myFiles.push(e.target.files[i]);
+    }
+    console.log(this.myFiles)
+    const bottomSheetRef =this._bottomSheet.open(BottomSheetComponent, {
+      data: this.myFiles,
+    });
+  }
+
+  uploadFiles () {
+    const frmData = new FormData();
+    for (var i = 0; i < this.myFiles.length; i++) { 
+      frmData.append("fileUpload", this.myFiles[i]);
+    }
   }
 }
 

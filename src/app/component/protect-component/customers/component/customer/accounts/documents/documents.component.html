@@ -103,8 +103,9 @@
                                 <ng-container matColumnDef="name">
                                     <th mat-header-cell *matHeaderCellDef> Name </th>
                                     <td mat-cell class="c-p" *matCellDef="let element" (click)="openFolder(element)">
-                                        <img class="mr-12" src="/assets/images/svg/folder-icon.svg" >
-                                        <img  *ngIf="element.isStarred == 0" class="mr-12" src="/assets/images/svg/yellow-star.svg" >
+                                        <img class="mr-12" src="/assets/images/svg/folder-icon.svg">
+                                        <img *ngIf="element.isStarred == 0" class="mr-12"
+                                            src="/assets/images/svg/yellow-star.svg">
                                         {{element.folderName || element.fileName}} </td>
                                 </ng-container>
 
@@ -138,12 +139,14 @@
                                                 Share</button>
                                             <button mat-menu-item><img src="assets/images/svg/shareable.svg"
                                                     class="mr-4"> Get shareable link</button>
-                                            <button mat-menu-item (click)="starFiles(element)"><img src="assets/images/svg/star-border-icon.svg"
-                                                    class="mr-4" >Add to starred</button>
+                                            <button mat-menu-item (click)="starFiles(element)"><img
+                                                    src="assets/images/svg/star-border-icon.svg" class="mr-4">Add to
+                                                starred</button>
                                             <button mat-menu-item><img src="assets/images/svg/edit-name.svg"
                                                     class="mr-4">Rename</button>
-                                            <button mat-menu-item (click)="viewActivities(element)"><img src="assets/images/svg/info-icon.svg"
-                                                    class="mr-4">View activity</button>
+                                            <button mat-menu-item (click)="viewActivities(element)"><img
+                                                    src="assets/images/svg/info-icon.svg" class="mr-4">View
+                                                activity</button>
                                             <button mat-menu-item><img src="assets/images/svg/move-to-icon.svg"
                                                     class="mr-4">Move to</button>
                                             <button mat-menu-item><img src="assets/images/svg/file-copy.svg"
@@ -173,7 +176,12 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div>
+                                <ng-container>
+                                    <input type="file" id="file" multiple 
+                                        (change)="getFileDetails($event)">
+                                </ng-container>
+                            </div>
                             <div class="row">
                                 <div class="col">
                                     <p mat-raised-button (click)="openBottomSheet()"
