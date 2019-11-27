@@ -145,6 +145,7 @@ export const appConfig = {
   DELETE_GOLD:'account/asset/commodity/gold/delete',
   DELETE_OTHERS:'account/asset/commodity/other/delete',
   GLOBAL_LIABILITIES:'account/liability/global/get',
+  UPLOAD_FILE:'document/account/document/all-file/file/put',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE:'account/asset/real-estate/get',
   GET_EPF:'account/asset/retirement/epf/list/get',

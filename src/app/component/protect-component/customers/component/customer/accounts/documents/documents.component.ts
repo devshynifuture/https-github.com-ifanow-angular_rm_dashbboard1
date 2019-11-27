@@ -161,7 +161,7 @@ export class DocumentsComponent implements OnInit {
       docGetFlag: this.valueTab,
       folderParentId: (value.id == undefined) ? 0 : value.id,
     }
-    this.parentId = value.parentFolderId
+    this.parentId = value.folderParentId
     console.log('backUpfiles', this.backUpfiles)
     this.custumService.getAllFiles(obj).subscribe(
       data => this.getAllFilesRes(data, value)
@@ -298,7 +298,8 @@ export class DocumentsComponent implements OnInit {
       this.myFiles.push(e.target.files[i]);
     }
     this.myFiles.forEach(fileName => {
-      this.filenm = fileName
+      this.filenm = fileName;
+      this.parentId= (this.parentId == undefined)? 0:this.parentId
       this.uploadFile(this.parentId,this.filenm)
     });
     console.log(this.myFiles)
@@ -317,16 +318,16 @@ export class DocumentsComponent implements OnInit {
     let obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
-      folderId: element.parentFolderId,
-      fileName: element.fileName
+      folderId: element,
+      fileName: fileName.name
     }
-    this.custumService.downloadFile(obj).subscribe(
+    this.custumService.uploadFile(obj).subscribe(
       data => this.uploadFileRes(data)
     );
   }
   uploadFileRes(data) {
     console.log(data)
-
+    window.open(data)
   }
 }
 
