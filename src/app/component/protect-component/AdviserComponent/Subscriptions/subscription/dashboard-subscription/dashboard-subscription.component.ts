@@ -51,7 +51,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   subSummaryData;
   dataSource;
   showSubStep = false;
-  displayedColumns: string[] = ['name', 'service', 'amt', 'billing'];
+  displayedColumns: string[] = ['name', 'service', 'amt', 'billing','icons'];
   chart: Chart;
   subscriptionSummaryStatusFilter = '1';
   showLetsBegin = false;

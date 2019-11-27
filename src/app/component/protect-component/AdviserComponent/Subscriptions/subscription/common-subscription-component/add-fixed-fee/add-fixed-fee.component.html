@@ -19,18 +19,18 @@
     <div class="col-md-5 pr-0">
       <div class="form-group mb-0">
         <input type="text" maxlength="{{getFormControl().serviceName.maxLength}}" formControlName="serviceName"
-               class="form-control br-0">
+          class="form-control br-0">
       </div>
       <div class="row">
         <div class="col-md-8">
           <mat-error class="f-12 pt-4"
-                     [ngClass]="{'v-h':!(isServiceValid && getFormControl().serviceName.invalid || (getFormControl().serviceName.touched && getFormControl().serviceName.invalid))}">
+            [ngClass]="{'v-h':!(isServiceValid && getFormControl().serviceName.invalid || (getFormControl().serviceName.touched && getFormControl().serviceName.invalid))}">
             Service name is required
           </mat-error>
         </div>
         <div class="col-md-4">
-          <p
-            class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().serviceName.value?.length ? getFormControl().serviceName.value.length : 0}}
+          <p class="mb-0 f-12 text-custom text-right pt-4">
+            {{getFormControl().serviceName.value?.length ? getFormControl().serviceName.value.length : 0}}
             /{{getFormControl().serviceName.maxLength}}</p>
         </div>
       </div>
@@ -45,19 +45,19 @@
         <div class="col-md-5 p-0">
           <div class="form-group mb-0">
             <input type="text" maxlength="{{getFormControl().code.maxLength}}" formControlName="code"
-                   class="form-control br-0">
+              class="form-control br-0">
           </div>
 
           <div class="row">
             <div class="col-md-8 pr-0">
               <mat-error class="f-12 pt-4"
-                         [ngClass]="{'v-h':!(isCodeValid && getFormControl().code.invalid || getFormControl().code.touched && getFormControl().code.invalid)}">
+                [ngClass]="{'v-h':!(isCodeValid && getFormControl().code.invalid || getFormControl().code.touched && getFormControl().code.invalid)}">
                 Code is required
               </mat-error>
             </div>
             <div class="col-md-4 pl-0">
-              <p
-                class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().code.value?.length ? getFormControl().code.value.length : 0}}
+              <p class="mb-0 f-12 text-custom text-right pt-4">
+                {{getFormControl().code.value?.length ? getFormControl().code.value.length : 0}}
                 /{{getFormControl().code.maxLength}}</p>
             </div>
           </div>
@@ -73,15 +73,15 @@
 
       <div class="form-group mb-0">
         <textarea class="form-control br-0" maxlength="{{getFormControl().description.maxLength}}"
-                  formControlName="description" rows="3"></textarea>
+          formControlName="description" rows="3"></textarea>
       </div>
       <div class="row">
         <div class="col-md-8">
           <p class="mb-0 f-12 text-custom">optional</p>
         </div>
         <div class="col-md-4">
-          <p
-            class="mb-0 f-12 text-custom text-right">{{getFormControl().description.value?.length ? getFormControl().description.value.length : 0}}
+          <p class="mb-0 f-12 text-custom text-right">
+            {{getFormControl().description.value?.length ? getFormControl().description.value.length : 0}}
             /{{getFormControl().description.maxLength}}</p>
         </div>
 
@@ -100,13 +100,13 @@
       <div class="row">
         <div class="col-md-8">
           <mat-error class="f-12 pt-4"
-                     [ngClass]="{'v-h':!(isFeesValid && getFormControl().fees.invalid || getFormControl().fees.touched && getFormControl().fees.invalid)}">
+            [ngClass]="{'v-h':!(isFeesValid && getFormControl().fees.invalid || getFormControl().fees.touched && getFormControl().fees.invalid)}">
             Fees is Required
           </mat-error>
         </div>
         <div class="col-md-4">
-          <p
-            class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().fees.value?.length ? getFormControl().fees.value.length : 0}}
+          <p class="mb-0 f-12 text-custom text-right pt-4">
+            {{getFormControl().fees.value?.length ? getFormControl().fees.value.length : 0}}
             /{{getFormControl().fees.maxLength}}</p>
         </div>
       </div>
@@ -119,13 +119,14 @@
     <div class="col-md-6">
       <mat-radio-group formControlName="billingNature">
         <!--        [(ngModel)]="fixedFeeData.get('billingNature').value"-->
-        <mat-radio-button value="1" [appRadioGroupDirective]="fixedFeeData.get('billingNature').value==1"
-                          class="b-a text-custom wrapper-8">Recurring
+        <mat-radio-button value="1" [checked]="true"
+          [appRadioGroupDirective]="fixedFeeData.get('billingNature').value==1" class="b-a text-custom wrapper-8">
+          Recurring
         </mat-radio-button>
         <!--        [ngClass]="{'b-a-custom':fixedFeeData.get('billingNature').value==1,'text-primary':fixedFeeData.get('billingNature').value==1,'b-a':fixedFeeData.get('billingNature').value==2}"-->
 
         <mat-radio-button value="2" [appRadioGroupDirective]="fixedFeeData.get('billingNature').value==2"
-                          class="b-a text-custom wrapper-8">Once
+          class="b-a text-custom wrapper-8">Once
         </mat-radio-button>
         <!--        [ngClass]="{'b-a-custom':fixedFeeData.get('billingNature').value==2,'text-primary':fixedFeeData.get('billingNature').value==2,'b-a':fixedFeeData.get('billingNature').value==1}"-->
 
@@ -141,7 +142,7 @@
         <div class="col-md-5 p-0">
           <div class="form-group mb-0">
             <input type="number" pattern="\d*" onKeyPress="if(this.value.length==2) return false;"
-                   formControlName="billEvery" class="form-control br-0">
+              formControlName="billEvery" class="form-control br-0">
           </div>
         </div>
 
@@ -154,7 +155,7 @@
           </div>
         </div>
         <mat-error class="f-12 pt-4"
-                   [ngClass]="{'v-h':!(isbillEvery && getFormControl().billEvery.invalid || getFormControl().billEvery.touched && getFormControl().billEvery.invalid)}">
+          [ngClass]="{'v-h':!(isbillEvery && getFormControl().billEvery.invalid || getFormControl().billEvery.touched && getFormControl().billEvery.invalid)}">
           Field is Required
         </mat-error>
       </div>
@@ -168,12 +169,12 @@
     <div class="col-md-7">
       <mat-radio-group formControlName="billingMode">
         <mat-radio-button value="1"
-                          [ngClass]="{'b-a-custom text-primary':fixedFeeData.get('billingMode').value==1,'b-a':fixedFeeData.get('billingMode').value==2}"
-                          class="text-custom wrapper-8" checked="true">Start of period
+          [ngClass]="{'b-a-custom text-primary':fixedFeeData.get('billingMode').value==1,'b-a':fixedFeeData.get('billingMode').value==2}"
+          class="text-custom wrapper-8" checked="true">Start of period
         </mat-radio-button>
         <mat-radio-button value="2"
-                          [ngClass]="{'b-a-custom text-primary':fixedFeeData.get('billingMode').value==2,'b-a':fixedFeeData.get('billingMode').value==1}"
-                          class="text-custom wrapper-8">End of period
+          [ngClass]="{'b-a-custom text-primary':fixedFeeData.get('billingMode').value==2,'b-a':fixedFeeData.get('billingMode').value==1}"
+          class="text-custom wrapper-8">End of period
         </mat-radio-button>
       </mat-radio-group>
     </div>
