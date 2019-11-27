@@ -180,20 +180,19 @@ export class QuotationsComponent implements OnInit {
       templateType: 2, // 2 is for quotation
       documentList: []
     };
-    this.dataSource.forEach(singleElement => {
-      if (singleElement.selected) {
-        data.documentList.push(singleElement);
-      }
-    });
+    if(this.dataSource.length==1){
+          data.documentList=this.dataSource;
+    }else{
+      this.dataSource.forEach(singleElement => {
+        if (singleElement.selected) {
+          data.documentList.push(singleElement);
+        }
+      });
+    }
     this.open(data, 'emailOnly');
   }
 
   open(data, value) {
-
-    // this.eventService.sliderData(value);
-    // this.subInjectService.rightSliderData(state);
-    // this.subInjectService.addSingleProfile(data);
-
     const fragmentData = {
       Flag: value,
       data,
