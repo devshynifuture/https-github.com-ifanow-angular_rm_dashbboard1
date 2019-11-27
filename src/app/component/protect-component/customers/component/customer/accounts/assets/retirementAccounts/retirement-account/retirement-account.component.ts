@@ -77,7 +77,7 @@ export class RetirementAccountComponent implements OnInit {
       Flag: value,
       data: data,
       id: 1,
-      state: 'open'
+      state:state
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

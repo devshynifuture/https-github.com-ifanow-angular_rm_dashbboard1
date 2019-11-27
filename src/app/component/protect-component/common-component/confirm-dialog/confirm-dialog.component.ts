@@ -36,7 +36,7 @@ export class ConfirmDialogComponent implements OnInit {
     this.btn1NoData = this.dialogData.btnNo;
     this.btn2YesData = this.dialogData.btnYes;
     this.data = this.dialogData.data;
-     this.advisorId= AuthService.getAdvisorId();
+    this.advisorId = AuthService.getAdvisorId();
 
   }
 
@@ -54,7 +54,7 @@ export class ConfirmDialogComponent implements OnInit {
   }
 
   deleteSubscription() {
-    
+
     if (this.dialogData.positiveMethod) {
       this.dialogData.positiveMethod();
     } else {
@@ -66,8 +66,8 @@ export class ConfirmDialogComponent implements OnInit {
   deletedData(data) {
     if (data == true) {
       this.dialogRef.close();
-      this.eventService.changeUpperSliderState({state: 'close'});
-      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');  
+      this.eventService.changeUpperSliderState({ state: 'close' });
+      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
     }
   }
 }
