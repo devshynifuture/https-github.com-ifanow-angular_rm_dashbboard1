@@ -1,11 +1,11 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionService} from '../../../subscription.service';
-import {FormBuilder} from '@angular/forms';
-import {MatDialog} from '@angular/material';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {UtilService} from 'src/app/services/util.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionService } from '../../../subscription.service';
+import { FormBuilder } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-settings',
@@ -15,7 +15,7 @@ import {UtilService} from 'src/app/services/util.service';
 export class SettingsComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, public subInjectService: SubscriptionInject,
-              private eventService: EventService, private subService: SubscriptionService) {
+    private eventService: EventService, private subService: SubscriptionService) {
   }
   SettingProfileData: any;
   noData: string;
@@ -78,7 +78,7 @@ export class SettingsComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         this.getSettingProfileData();
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', );
+          console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }
       }
@@ -92,7 +92,19 @@ export class SettingsComponent implements OnInit {
       body: 'Are you sure you want to delete the document?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
-      btnNo: 'DELETE'
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+
+        this.subService.deleteClientProfileSubscriptionSetting(value.id).subscribe(
+          data => {
+            this.deletedData(data);
+            dialogRef.close();
+          }
+        )
+      },
+      negativeMethod: () => {
+        console.log("negative method called");
+      }
     };
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -106,6 +118,12 @@ export class SettingsComponent implements OnInit {
 
     });
 
+  }
+
+  deletedData(data) {
+    if (data == true) {
+      this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
+    }
   }
 
   dataTosendSetting(value) {
