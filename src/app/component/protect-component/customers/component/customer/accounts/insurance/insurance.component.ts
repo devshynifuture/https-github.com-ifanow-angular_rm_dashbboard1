@@ -4,6 +4,9 @@ import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
 import { trigger, transition, query, stagger, animate, style } from '@angular/animations';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-insurance',
@@ -36,21 +39,19 @@ export class InsuranceComponent implements OnInit {
   advisorId: any;
   insuranceSubTypeId: any;
   clientId: any;
-  constructor(private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  noData: string;
+  constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   viewMode;
   lifeInsuranceList = [{ name: "Term", id: 1 }, { name: "Traditional", id: 2 }, { name: "ULIP", id: 3 }]
   generalLifeInsuranceList = [/*"Health", "Car/2 Wheeler", "Travel", "Personal accident", "Critical illness", "Cancer", "Home", "Others"*/]
   insuranceTypeId;
   ngOnInit() {
-    this.viewMode = "tab1"
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId=AuthService.getClientId();
-    // this.getInsuranceData(this.advisorId, 2978, 1, 1);
-    // this.getGlobalDataInsurance();
-    this.insuranceTypeId = 1
-    this.insuranceSubTypeId = 1
+    this.clientId = AuthService.getClientId();
+    this.getGlobalDataInsurance();
+    this.getInsuranceData(1)
   }
-  getInsuranceData(advisorId, clientId, insuranceId, insuranceSubTypeId) {
+  getInsuranceSubTypeData(advisorId, clientId, insuranceId, insuranceSubTypeId) {
     let obj = {
       'advisorId': advisorId,
       'clientId': clientId,
@@ -63,10 +64,25 @@ export class InsuranceComponent implements OnInit {
   }
   getInsuranceDataResponse(data) {
 
-    (this.insuranceTypeId == 1) ? this.dataSource = data.insuranceList : console.log("general insurance")
-    console.log("Insurance Data", data)
+    if (data) {
+      this.dataSource = data.insuranceList;
+    }
+    else {
+      this.dataSource = undefined
+      this.noData = "No Insurance Data"
+    }
   }
-
+  getInsuranceData(typeId) {
+    let obj =
+    {
+      "advisorId": this.advisorId,
+      "clientId": this.clientId,
+      "insuranceTypeId": typeId
+    }
+    this.cusService.getInsuranceData(obj).subscribe(
+      data => console.log(data)
+    )
+  }
   getGlobalDataInsurance() {
     let obj = {
 
@@ -78,7 +94,42 @@ export class InsuranceComponent implements OnInit {
   getInsuranceTypeData(typeId, typeSubId) {
     this.insuranceTypeId = typeId
     this.insuranceSubTypeId = typeSubId
-    this.getInsuranceData(this.advisorId, 2978, typeId, typeSubId)
+    this.getInsuranceSubTypeData(this.advisorId, 2978, typeId, typeSubId)
+  }
+  deleteModal(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.cusService.deleteInsurance(data.id).subscribe(
+          data => {
+            this.eventService.openSnackBar("Insurance is deleted", "dismiss")
+            dialogRef.close();
+            this.getInsuranceSubTypeData(this.advisorId, this.clientId, this.insuranceTypeId, this.insuranceSubTypeId)
+          },
+          err => this.eventService.openSnackBar(err)
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
   toggle(value) {
     if (value === "lifeInsurance") {
@@ -112,7 +163,7 @@ export class InsuranceComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getInsuranceData(this.advisorId,this.clientId,this.insuranceTypeId,this.insuranceSubTypeId)
+          this.getInsuranceSubTypeData(this.advisorId, this.clientId, this.insuranceTypeId, this.insuranceSubTypeId)
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 

@@ -69,6 +69,7 @@ import {CustomDirectiveModule} from '../../../../common/directives/common-direct
 import {CommonModule} from '@angular/common';
 import {SubscriptionRoutingModule} from "./subscription-routing.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { AddQuotationComponent } from './subscription/common-subscription-component/add-quotation/add-quotation.component';
 
 export const componentList = [SubscriptionComponent,
   InvoicePdfDocumentComponent,
@@ -124,7 +125,9 @@ export const componentList = [SubscriptionComponent,
   FixedFeeComponent,
   VariableFeeComponent,
   ChangePayeeComponent,
-  HowItWorksComponent];
+  HowItWorksComponent,
+  AddQuotationComponent
+];
 
 @NgModule({
   declarations: componentList,
@@ -159,7 +162,7 @@ export const componentList = [SubscriptionComponent,
     SubscriptionPopupComponent,
     DeleteSubscriptionComponent, HowToUseDialogComponent,
     AddDocumentComponent, PreferenceEmailInvoiceComponent,
-    ModifyFeeDialogComponent, ConsentTandCComponent, HowItWorksComponent]
+    ModifyFeeDialogComponent, ConsentTandCComponent, HowItWorksComponent ,AddDocumentComponent,AddQuotationComponent]
 })
 export class SubscriptionModule {
 }

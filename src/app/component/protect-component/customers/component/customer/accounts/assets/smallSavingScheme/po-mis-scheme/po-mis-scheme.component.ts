@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
@@ -15,31 +15,50 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 export class PoMisSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
+  isLoading: boolean = true;
+  noData: string;
+  pomisData: any;
+  sumOfCurrentValue: number;
+  sumOfMonthlyPayout: number;
+  sumOfAmountInvested: number;
+  sumOfMaturityValue: number;
 
-  constructor(public dialog: MatDialog,private eventService: EventService,private cusService:CustomerService,private subInjectService:SubscriptionInject,public util:UtilService) { }
-  displayedColumns = ['no', 'owner','cvalue','mpayout','rate','amt','mvalue','mdate','desc','status','icons'];
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
+  constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject, public util: UtilService) { }
+  displayedColumns = ['no', 'owner', 'cvalue', 'mpayout', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
   datasource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId=2978;
+    this.clientId = 2978;
     this.getPoMisSchemedata()
   }
-  getPoMisSchemedata()
-  {
-    const obj={
-      advisorId:this.advisorId,
-      clientId:this.clientId
+  getPoMisSchemedata() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
     }
     this.cusService.getSmallSavingSchemePOMISData(obj).subscribe(
-      data=>this.getPoMisSchemedataResponse(data)
+      data => this.getPoMisSchemedataResponse(data)
     )
   }
-  getPoMisSchemedataResponse(data)
-  {
-    console.log(data)
-    this.datasource=data.poMisList;
+  getPoMisSchemedataResponse(data) {
+    console.log(data);
+    this.isLoading = false;
+    if (data.poMisList.length != 0) {
+      this.datasource = new MatTableDataSource(data.poMisList)
+      this.datasource.sort = this.sort;
+      this.sumOfMaturityValue = data.sumOfMaturityValue;
+      this.sumOfCurrentValue = data.sumOfCurrentValue;
+      this.sumOfMonthlyPayout = data.sumOfMonthlyPayout;
+      this.sumOfAmountInvested = data.sumOfAmountInvested;
+
+      this.pomisData = data;
+    } else {
+      this.noData = "No Scheme Found";
+    }
   }
-  deleteModal(value,data) {
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -49,12 +68,12 @@ export class PoMisSchemeComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         this.cusService.deletePOMIS(data.id).subscribe(
-          data=>{
-            this.eventService.openSnackBar("POMIS is deleted","dismiss")
+          data => {
+            this.eventService.openSnackBar("POMIS is deleted", "dismiss")
             dialogRef.close();
             this.getPoMisSchemedata();
           },
-          err=>this.eventService.openSnackBar(err)
+          err => this.eventService.openSnackBar(err)
         )
       },
       negativeMethod: () => {
@@ -74,11 +93,10 @@ export class PoMisSchemeComponent implements OnInit {
 
     });
   }
-  addPOMIS(value,data)
-  {
+  addPOMIS(value, data) {
     const fragmentData = {
-      Flag:value,
-      data:data,
+      Flag: value,
+      data: data,
       id: 1,
       state: 'open'
     };

@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { EventService } from 'src/app/Data-service/event.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-kvp-scheme',
@@ -17,6 +17,11 @@ export class KvpSchemeComponent implements OnInit {
   advisorId: any;
   noData: string;
   isLoading: boolean = true;
+  kvpData: any;
+  sumOfCurrentValue: number;
+  sumOfAmountInvested: number;
+
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns18 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
@@ -40,7 +45,11 @@ export class KvpSchemeComponent implements OnInit {
     console.log(data);
     this.isLoading = false;
     if (data.KVPList.length != 0) {
-      this.datasource = data.KVPList
+      this.datasource = new MatTableDataSource(data.KVPList);
+      this.datasource.sort = this.sort;
+      this.sumOfCurrentValue = data.SumOfCurrentValue;
+      this.sumOfAmountInvested = data.SumOfAmountInvested;
+      this.kvpData = data;
     } else {
       this.noData = "No Scheme Found";
     }

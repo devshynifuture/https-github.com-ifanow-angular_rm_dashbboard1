@@ -4,6 +4,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-fixed-income',
@@ -15,7 +17,7 @@ export class FixedIncomeComponent implements OnInit {
 
   showRequring: any;
   advisorId: any;
-  dataSourceFixed: any;
+  dataSourceFixed: any = [{}, {}, {}, {}];
   dataSourceRecurring: any;
   dataSourceBond: any;
   clientId: any;
@@ -29,7 +31,7 @@ export class FixedIncomeComponent implements OnInit {
   sumCurrentValueB: any;
 
 
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService) { }
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService,public dialog:MatDialog) { }
   viewMode
   displayedColumns4 = ['no', 'owner', 'type', 'cvalue', 'rate', 'amt', 'mdate', 'mvalue', 'number', 'desc', 'status', 'icons'];
   datasource4 = ELEMENT_DATA4;
@@ -111,6 +113,61 @@ export class FixedIncomeComponent implements OnInit {
     this.sumAmountInvestedB = data.sumAmountInvested
     this.sumCouponAmount = data.sumCouponAmount
     this.sumCurrentValueB = data.sumCurrentValue
+  }
+  deleteModal(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        if (value == 'FIXED DEPOSITE') {
+          this.custumService.deleteFixedDeposite(data.id).subscribe(
+            data => {
+              this.eventService.openSnackBar("Fixed deposite is deleted", "dismiss")
+              dialogRef.close();
+              this.getFixedDepositList();
+            },
+            err => this.eventService.openSnackBar(err)
+          )
+        } else if (value == 'RECURRING DEPOSITE') {
+          this.custumService.deleteRecurringDeposite(data.id).subscribe(
+            data => {
+              this.eventService.openSnackBar("Recurring deposite is deleted", "dismiss")
+              dialogRef.close();
+              this.getRecurringDepositList();
+            },
+            err => this.eventService.openSnackBar(err)
+          )
+        } else {
+          this.custumService.deleteBond(data.id).subscribe(
+            data => {
+              this.eventService.openSnackBar("Bond is deleted", "dismiss")
+              dialogRef.close();
+              this.getBondsList();
+            },
+            err => this.eventService.openSnackBar(err)
+          )
+        }
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
   openPortfolioSummary(value, state, data) {
     const fragmentData = {

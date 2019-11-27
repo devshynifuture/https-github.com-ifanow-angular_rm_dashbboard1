@@ -112,7 +112,7 @@ export class AddStructureComponent implements OnInit {
     // obj.id = (this.editApiCall == '') ? data : data.id
     // console.log(obj);
     this.planOuputData.emit(data);
-    (this.editApiCall == '') ? this.eventService.openSnackBar('Plan is created', 'OK') : this.eventService.openSnackBar('Plan is edited', 'OK');
+    (this.editApiCall == undefined) ? this.eventService.openSnackBar('Plan is created', 'OK') : this.eventService.openSnackBar('Plan is edited', 'OK');
     this.subinject.changeUpperRightSliderState({ state: 'close' });
 
   }

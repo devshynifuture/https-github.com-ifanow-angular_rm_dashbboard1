@@ -3,10 +3,69 @@
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20">ADD REAL ESTATE</h4>
         </div>
-        <div class="col-md-4 text-right">
-            <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+        <div class="col-md-3">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput placeholder="Add co-owner" aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto" list="userName" class="form-control br-0 pl-8" formControlName="ownerName">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let item of familyList" [value]="item.userName">
+                            <span>{{item.userName}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
             </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput class="b-a" type="number" formControlName="ownershipPerc" (keyup)="onChange('owner')">
+
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-2 p-0">
+            <h5 class="m-0 text-primitive pt-8 c-p" (click)="removeCoOwner(pointIndex)">Remove</h5>
+        </div>
+    </div>
+</div>
+<mat-hint class="f-12 pt-4 text-danger" align="end" *ngIf="showError== true">
+    Percent cannot be more than 100%
+</mat-hint>
+<div class="row pt-44">
+    <div class="col-md-5 text-right">
+        <h5 class="m-0 pt-8">Type</h5>
+    </div>
+    <div class="form-group mb-0">
+        <mat-form-field>
+            <mat-select class="form-control br-0" formControlName="type">
+                <mat-option value="0">Land</mat-option>
+                <mat-option value="1">Residential</mat-option>
+                <mat-option value="2">Secondary</mat-option>
+                <mat-option value="3">Commercial</mat-option>
+            </mat-select>
+            <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isTypeValid && getFormControl().type.invalid || getFormControl().type.touched && getFormControl().type.invalid)}">
+                Type is required
+            </mat-error>
+        </mat-form-field>
+
+    </div>
+</div>
+<div class="row pt-44">
+    <div class="col-md-5 text-right">
+        <h5 class="m-0 pt-8">Market value</h5>
+        <p class="m-0 f-12 text-custom">Market value has to be<br> updated manually
+        </p>
+    </div>
+    <div class="col-md-3 p-0">
+        <div class="form-group mb-0">
+            <mat-form-field>
+                <input matInput #marketValue class="form-control rupess br-0" formControlName="marketValue" maxlength="{{getFormControl().marketValue.maxLength}}">
+                <mat-error class="f-12 pt-4">
+                    Market value is required
+                    <!-- [ngClass]="{'v-h':!(isLoanAmount && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}" -->
+                </mat-error>
+                <mat-hint align="end" class="f-12">{{marketValue.value.length}}/20</mat-hint>
+            </mat-form-field>
         </div>
     </div>
 </div>
@@ -210,24 +269,11 @@
                     </div>
                 </div>
             </div>
-            <div class="bottom-fixed wrapper-12 pt-16">
-                <div class="row">
-                    <div class="col-md-4">
-                        <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
-                    </div>
-                    <div class="col-md-8 right text-right">
-                        <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFormData()">Save</button>
-                    </div>
-                </div>
-                <div class="bottom-fixed wrapper-12 pt-16">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
-                        </div>
-                        <div class="col-md-8 right text-right">
-                            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFormData()">Save</button>
-                        </div>
-                    </div>
-                </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput type="number" class="b-a" formControlName="ownershipPer" (keyup)="onChange('nominee')">
+                </mat-form-field>
             </div>
         </div>

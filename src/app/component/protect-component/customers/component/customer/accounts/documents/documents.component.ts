@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { MatBottomSheet } from '@angular/material';
 import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -8,6 +8,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { DatePipe } from '@angular/common';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../customer.service';
+import * as _ from 'lodash';
 import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
@@ -24,47 +25,248 @@ export class DocumentsComponent implements OnInit {
   allFiles: any;
   AllDocs: any;
   commonFileFolders: any;
-  tabValue;
+  openFolderName: any;
+  backUpfiles: any;
+  i = 0;
+  resetData: any;
+  tabValue: any;
+  valueTab: any;
+  valueFirst: any;
+  fileType = [
+    { id: 1, name: 'PDF' },
+    { id: 2, name: 'DOC' },
+    { id: 3, name: 'XLSX' },
+    { id: 4, name: 'MP3' },
+    { id: 5, name: 'MP4' },
+    { id: 6, name: 'WAV' },
+    { id: 7, name: 'ZIP' },
+    { id: 8, name: 'BIN' },
+    { id: 9, name: 'ISO' },
+    { id: 10, name: 'JPEG' },
+    { id: 11, name: 'JPG' },
+    { id: 12, name: 'TXT' },
+    { id: 13, name: 'HTML' },
+  ]
+  showDots = false;
+
   constructor(private _bottomSheet: MatBottomSheet, private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
   viewMode
   ngOnInit() {
+    let tabValue = 'Documents'
     this.viewMode = "tab1"
+    this.commonFileFolders = [];
+    this.backUpfiles = [];
+    this.openFolderName = [];
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getAllFileList()
+    this.getAllFileList(tabValue)
   }
-
-
+  fileSizeConversion() {
+    this.commonFileFolders.forEach(element => {
+      var data = parseInt(element.size)
+      if (data >= 1024) {
+        element.size = data / 1024;
+        element.size = (this.utils.formatter(element.size) + "" + 'Kb');
+      } else if (data >= 1000000) {
+        element.size = data / 1000000;
+        element.size = (this.utils.formatter(element.size) + "" + 'Mb');
+      }
+    });
+  }
   openBottomSheet(): void {
     this._bottomSheet.open(BottomSheetComponent);
   }
-  getAllFileList() {
+  getAllFileList(tabValue) {
+    tabValue = (tabValue == 'Documents') ? 1 : (tabValue == 'Recents') ? 2 : (tabValue == 'Starred') ? 3 : 4;
+    this.valueTab = tabValue
     let obj = {
       advisorId: this.advisorId,
-      clientId:this.clientId,
-      docGetFlag:1,
-      folderParentId:0,
+      clientId: this.clientId,
+      docGetFlag: tabValue,
+      folderParentId: 0,
     }
     this.custumService.getAllFiles(obj).subscribe(
-      data => this.getAllFilesRes(data)
+      data => this.getAllFilesRes(data, 'value')
     );
   }
-  getAllFilesRes(data) {
-    this.commonFileFolders = [];
+  getAllFilesRes(data, value) {
     console.log(data)
     this.allFiles = data.files
     this.AllDocs = data.folders;
     this.commonFileFolders = data.folders;
-    this.commonFileFolders.push.apply( this.commonFileFolders, this.allFiles)
-    console.log('commonFileFolders',this.commonFileFolders)
+    this.commonFileFolders.push.apply(this.commonFileFolders, this.allFiles)
+    console.log('commonFileFolders', this.commonFileFolders)
+
+    if (this.commonFileFolders.openFolderId == undefined || this.openFolderName.length == 0) {
+      Object.assign(this.commonFileFolders, { 'openFolderNm': value.folderName });
+      Object.assign(this.commonFileFolders, { 'openFolderId': value.id });
+      this.openFolderName.push(this.commonFileFolders)
+      this.valueFirst = this.openFolderName[0]
+      if (this.commonFileFolders.length > 0) {
+        this.backUpfiles.push(this.commonFileFolders);
+      }
+      console.log('this.backUpfiles', this.backUpfiles)
+    }
+    if (this.openFolderName.length > 2) {
+      this.showDots = true
+    }
+    this.fileSizeConversion()
   }
-  openFolder(value){
+  getFolders(data) {
+    this.openFolderName = _.reject(this.openFolderName, function (n) {
+      return n.openFolderId > data.openFolderId + 1;
+    });
+    this.commonFileFolders = this.openFolderName[this.openFolderName.length - 1]
+    this.openFolderName = _.reject(this.openFolderName, function (n) {
+      return n.openFolderId > data.openFolderId;
+    });
+    this.commonFileFolders = data;
+    this.valueFirst = this.openFolderName[0];
+  }
+  reset() {
+    if (this.openFolderName.length > 0) {
+      this.commonFileFolders = this.backUpfiles[0];
+    }
+    this.commonFileFolders = this.backUpfiles[0];
+    this.openFolderName = [];
+  }
+  openFolder(value) {
     let obj = {
       advisorId: this.advisorId,
-      clientId:this.clientId,
-      docGetFlag:1,
-      folderParentId:value.folderParentId,
+      clientId: this.clientId,
+      docGetFlag: this.valueTab,
+      folderParentId: (value.id == undefined) ? 0 : value.id,
     }
+    console.log('backUpfiles', this.backUpfiles)
+    this.custumService.getAllFiles(obj).subscribe(
+      data => this.getAllFilesRes(data, value)
+    );
+  }
+  downlodFiles(element) {
+    let obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      folderId: element.parentFolderId,
+      fileName: element.fileName
+    }
+    this.custumService.downloadFile(obj).subscribe(
+      data => this.downloadFileRes(data)
+    );
+  }
+  downloadFileRes(data) {
+    console.log(data)
+    window.open(data);
+  }
+  deleteFile(element) {
+    let obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      parentFolderId: element.parentFolderId,
+      id: element.id
+    }
+    this.custumService.deleteFile(obj).subscribe(
+      data => this.deleteFileRes(data)
+    );
+  }
+  deleteFileRes(data) {
+    console.log(data)
+  }
+  moveFile(element) {
+    let obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      parentFolderId: element.parentFolderId,
+      id: element.id
+    }
+    this.custumService.moveFiles(obj).subscribe(
+      data => this.moveFilesRes(data)
+    );
+  }
+  moveFilesRes(data) {
+    console.log(data)
+  }
+  copyFile(element) {
+    let obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      parentFolderId: element.parentFolderId,
+      id: element.id
+    }
+    this.custumService.copyFiles(obj).subscribe(
+      data => this.copyFilesRes(data)
+    );
+  }
+  copyFilesRes(data) {
+    console.log(data)
+  }
+  renameFile(element) {
+    let obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      folderId: element.id,
+      fileName: element.fileName
+    }
+    this.custumService.renameFiles(obj).subscribe(
+      data => this.renameFilesRes(data)
+    );
+  }
+  renameFilesRes(data) {
+    console.log(data)
+  }
+  renameFolders(element) {
+    let obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      folderId: element.id,
+      fileName: element.folderName
+    }
+    this.custumService.renameFolder(obj).subscribe(
+      data => this.renameFolderRes(data)
+    );
+  }
+  renameFolderRes(data) {
+    console.log(data)
+  }
+  trashFolder(element) {
+    let obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      id: element.id
+    }
+    this.custumService.deleteFolder(obj).subscribe(
+      data => this.deleteFolderRes(data)
+    );
+  }
+  deleteFolderRes(data) {
+    console.log(data)
+  }
+
+  starFiles(element){
+    let obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      id: element.id,
+      flag: (element.folderName == undefined)?2:1
+    }
+    this.custumService.starFile(obj).subscribe(
+      data => this.starFileRes(data)
+    );
+  }
+  starFileRes(data){
+    console.log(data)
+  }
+  viewActivities(element){
+    let obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      id: element.id,
+    }
+    this.custumService.viewActivity(obj).subscribe(
+      data => this.viewActivityRes(data)
+    );
+  }
+  viewActivityRes(data){
+    console.log(data)
   }
 }
 

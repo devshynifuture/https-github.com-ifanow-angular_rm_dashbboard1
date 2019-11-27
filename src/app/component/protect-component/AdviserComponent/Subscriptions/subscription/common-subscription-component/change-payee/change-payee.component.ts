@@ -5,6 +5,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {MatSliderChange} from '@angular/material';
 import {HAMMER_GESTURE_CONFIG} from "@angular/platform-browser";
 import {GestureConfig} from "@angular/material/core";
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-change-payee',
@@ -43,7 +44,7 @@ export class ChangePayeeComponent implements OnInit {
   _payeeData: any;
 
   @Output() outputData = new EventEmitter<Object>();
-
+  @Output() payeeFlag =new EventEmitter<Object>();
   dataSub: any;
   dataObj;
   getRowData: any;
@@ -57,7 +58,7 @@ export class ChangePayeeComponent implements OnInit {
   ngOnInit() {
     console.log('change payee upperData', this.upperData);
   }
-
+  
   Close(state) {
     this.subInjectService.rightSideData(state);
     this.subInjectService.rightSliderData(state);
@@ -90,6 +91,14 @@ export class ChangePayeeComponent implements OnInit {
 
   }
 
+  openAddPayee() {
+    let obj=
+    {
+      data:'Add',
+      flag:false
+    }
+   this.payeeFlag.emit(obj)
+  }
   onInputChange(event: MatSliderChange, singlePlan) {
     console.log('This is emitted as the thumb slides');
     console.log(event.value);

@@ -150,10 +150,10 @@
                 <mat-form-field>
                     <mat-select formControlName="emiFrequency" class="form-control br-0">
                         <!-- |<mat-option *ngFor="let emi of this.emiFrequency" value={{emi.name}}>{{emi.name}}</mat-option> -->
-                        <mat-option value="1">Monthly</mat-option>
-                        <mat-option value="3">Quaterly</mat-option>
-                        <mat-option value="6">Semi annually</mat-option>
-                        <mat-option value="12">Annually</mat-option>
+                        <mat-option value="1">Annually</mat-option>
+                        <mat-option value="2">Semi annually</mat-option>
+                        <mat-option value="4">Quaterly</mat-option>
+                        <mat-option value="12">Monthly</mat-option>
                     </mat-select>
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isEmiFrequency && getFormControl().emiFrequency.invalid || getFormControl().emiFrequency.touched && getFormControl().emiFrequency.invalid)}">

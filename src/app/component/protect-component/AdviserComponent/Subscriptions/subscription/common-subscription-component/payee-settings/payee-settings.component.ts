@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-payee-settings',
@@ -10,16 +11,18 @@ import {SubscriptionService} from '../../../subscription.service';
   styleUrls: ['./payee-settings.component.scss']
 })
 export class PayeeSettingsComponent implements OnInit {
+  clientId: any;
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService,
-              private subService: SubscriptionService, private fb: FormBuilder) {
+    private subService: SubscriptionService, private fb: FormBuilder) {
   }
 
   @Input() upperData;
-
+  @Output() totalPayeeData = new EventEmitter<Object>();
   @Input()
   set data(data) {
     this.inputData = data;
+    this.clientId = AuthService.getClientId()
     this.getClientPayeeSettings(data);
   }
 
@@ -85,7 +88,6 @@ export class PayeeSettingsComponent implements OnInit {
   ];
 
   OnInit() {
-
   }
 
   getFormControl() {
@@ -153,10 +155,11 @@ export class PayeeSettingsComponent implements OnInit {
   Close(data) {
     // this.subInjectService.rightSliderData(state)
     // this.subInjectService.rightSideData(state);
-    this.subInjectService.changeUpperRightSliderState({state: 'close', data});
+    this.subInjectService.changeUpperRightSliderState({ state: 'close', data });
   }
 
   savePayeeSettings() {
+    this.inputData
     if (this.payeeSettingsForm.controls.customerName.invalid) {
       this.isCustomerName = true;
       return;
@@ -229,7 +232,7 @@ export class PayeeSettingsComponent implements OnInit {
           pan: this.getFormControl().pan.value,
           country: this.getFormControl().country.value,
           zipCode: this.getFormControl().pincode.value,
-          clientId: this.upperData.id,
+          clientId: this.clientId,
 
         };
         this.subService.addClientBillerProfile(obj).subscribe(
@@ -242,10 +245,21 @@ export class PayeeSettingsComponent implements OnInit {
   }
 
   addClientBillerProfileRes(data) {
-    console.log('addClientBillerProfileRes', data);
-    this.updatedData = data;
-    this.closeTab(data);
-    this.eventService.openSnackBar('Client profile added Successfully', 'OK');
+    if (this.inputData.data == "Add") {
+      // this.totalPayeeData.emit(true)obj=
+      let obj = {
+        data: data,
+        flag: true
+      }
+      this.subInjectService.addEvent(obj)
+      this.eventService.openSnackBar('Client profile added Successfully', 'OK');
+    }
+    else {
+      console.log('addClientBillerProfileRes', data);
+      this.updatedData = data;
+      this.closeTab(data);
+      this.eventService.openSnackBar('Client profile added Successfully', 'OK');
+    }
   }
 
   editSettingResData(data) {
