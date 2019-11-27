@@ -10,8 +10,10 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { CustomerService } from '../../customer.service';
 import * as _ from 'lodash';
 import { AuthService } from 'src/app/auth-service/authService';
-import { HttpEventType, HttpResponse, HttpClient } from '@angular/common/http';
+import { HttpEventType, HttpResponse, HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { DocumentNewFolderComponent } from '../../../common-component/document-new-folder/document-new-folder.component';
+import { send } from 'q';
+import { HttpService } from 'src/app/http-service/http-service';
 
 @Component({
   selector: 'app-documents',
@@ -23,8 +25,8 @@ export class DocumentsComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   percentDone: number;
   uploadSuccess: boolean;
-  myFiles:string [] = [];
-  sMsg:string = '';
+  myFiles: string[] = [];
+  sMsg: string = '';
   setTab: string;
   advisorId: any;
   clientId: any;
@@ -59,8 +61,8 @@ export class DocumentsComponent implements OnInit {
   parentId: any;
   filenm: string;
 
-  
-  constructor( private http: HttpClient,private _bottomSheet: MatBottomSheet, private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public dialog: MatDialog) { }
+
+  constructor(private http: HttpService, private _bottomSheet: MatBottomSheet, private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public dialog: MatDialog) { }
   viewMode
   ngOnInit() {
     let tabValue = 'Documents'
@@ -76,7 +78,7 @@ export class DocumentsComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(DocumentNewFolderComponent, {
       width: '30%',
-      data: {name: this.name, animal: this.animal}
+      data: { name: this.name, animal: this.animal }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -266,21 +268,21 @@ export class DocumentsComponent implements OnInit {
     console.log(data)
   }
 
-  starFiles(element){
+  starFiles(element) {
     let obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
       id: element.id,
-      flag: (element.folderName == undefined)?2:1
+      flag: (element.folderName == undefined) ? 2 : 1
     }
     this.custumService.starFile(obj).subscribe(
       data => this.starFileRes(data)
     );
   }
-  starFileRes(data){
+  starFileRes(data) {
     console.log(data)
   }
-  viewActivities(element){
+  viewActivities(element) {
     let obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -290,31 +292,31 @@ export class DocumentsComponent implements OnInit {
       data => this.viewActivityRes(data)
     );
   }
-  viewActivityRes(data){
+  viewActivityRes(data) {
     console.log(data)
   }
-  getFileDetails (e) {
-    for (var i = 0; i < e.target.files.length; i++) { 
+  getFileDetails(e) {
+    for (var i = 0; i < e.target.files.length; i++) {
       this.myFiles.push(e.target.files[i]);
     }
     this.myFiles.forEach(fileName => {
       this.filenm = fileName;
-      this.parentId= (this.parentId == undefined)? 0:this.parentId
-      this.uploadFile(this.parentId,this.filenm)
+      this.parentId = (this.parentId == undefined) ? 0 : this.parentId
+      this.uploadFile(this.parentId, this.filenm)
     });
     console.log(this.myFiles)
-    const bottomSheetRef =this._bottomSheet.open(BottomSheetComponent, {
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
       data: this.myFiles,
     });
   }
 
-  uploadFiles () {
+  uploadFiles() {
     const frmData = new FormData();
-    for (var i = 0; i < this.myFiles.length; i++) { 
+    for (var i = 0; i < this.myFiles.length; i++) {
       frmData.append("fileUpload", this.myFiles[i]);
     }
   }
-  uploadFile(element,fileName) {
+  uploadFile(element, fileName) {
     let obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -322,12 +324,18 @@ export class DocumentsComponent implements OnInit {
       fileName: fileName.name
     }
     this.custumService.uploadFile(obj).subscribe(
-      data => this.uploadFileRes(data)
+      data => this.uploadFileRes(data, fileName)
     );
   }
-  uploadFileRes(data) {
+  uploadFileRes(data, fileName) {
     console.log(data)
-    window.open(data)
+    
+    var fileuploadurl = data
+    let httpOptions = {
+      headers: new HttpHeaders()
+        .set('Content-Type', 'application/pdf')
+    };
+    this.http.put(fileuploadurl, fileName, httpOptions)
   }
 }
 
