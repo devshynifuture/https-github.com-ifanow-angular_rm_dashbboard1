@@ -27,11 +27,14 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
 
 
   // percentageClose = '40%';
+  tempState
 
   @Input()
   set currentState(currentState: string) {
+    this.tempState = currentState;
     // this.addDynamicComponentService(this.componentName);
-    this.handleChangeOfState(currentState);
+    if (this.viewContainerRef)
+      this.handleChangeOfState(currentState);
   }
 
   @Input()
@@ -39,7 +42,7 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
     this._data = inputData;
     if (inputData.componentName) {
       this._componentName = inputData.componentName;
-      console.log('DynamicComponentComponent: ', inputData);
+      console.log('DynamicComponentComponent INPUT: data ', inputData);
       this.addDynamicComponentService(inputData.componentName);
     }
   }
@@ -60,16 +63,23 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
 
   @ViewChild('dynamic', {
     read: ViewContainerRef,
-    static: false
+    static: true
   }) viewContainerRef: ViewContainerRef;
 
   ngOnInit() {
-    this.addDynamicComponentService(this.componentName);
+    console.log('DynamicComponentComponent: ngOnInit data ', this.data);
+    console.log('DynamicComponentComponent: ngOnInit this.viewContainerRef ', this.viewContainerRef);
+    if (this.componentName) {
+      this.addDynamicComponentService(this.componentName);
+    }
   }
+
 
   addDynamicComponentService(component) {
     if (this.viewContainerRef) {
       this.dynamicComponentService.addDynamicComponent(this.viewContainerRef, component, this.data.data);
+      this.handleChangeOfState(this.tempState);
+
     }
   }
 

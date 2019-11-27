@@ -1,10 +1,11 @@
 <!--<div [@dialogContainer]="dialogState" *ngIf="isOverlayVisible" class="custom-overlay">-->
 <!--</div>-->
-<app-custom-dialog-container [currentState]="currentState">
+<!--<div *ngIf="fragmentData&&!fragmentData.componentName">-->
+  <app-custom-dialog-container *ngIf="fragmentData&&!fragmentData.componentName" [currentState]="currentState">
     <app-common-froala *ngIf="subscriptionTab=='viewDocuments'||subscriptionTab=='viewDoc'" [data]="inputData"
-      [changeFooter]='subscriptionTab' [screenType]="subscriptionTab"></app-common-froala>
+                       [changeFooter]='subscriptionTab' [screenType]="subscriptionTab"></app-common-froala>
     <app-common-froala *ngIf="subscriptionTab=='viewDoc'" [data]="inputData" [changeFooter]='subscriptionTab'
-      [screenType]="subscriptionTab"></app-common-froala>&ndash;&gt;
+                       [screenType]="subscriptionTab"></app-common-froala>&ndash;&gt;
     <app-common-froala *ngIf="subscriptionTab=='openEmailQuot'" [changeEmailOnly]='subscriptionTab'></app-common-froala>
     <app-common-froala *ngIf="subscriptionTab=='emailQuotation'" [changeFooter]='subscriptionTab' [data]="inputData">
     </app-common-froala>
@@ -14,14 +15,14 @@
     <app-email-quotation *ngIf="subscriptionTab=='eSignRequestDocuments'" [headerDataDocuments]="headerDataDocuments">
     </app-email-quotation>
     <app-invoice-history [subData]="fragmentData.data" *ngIf="subscriptionTab=='SUBSCRIPTIONS'"
-      [invoiceHistoryData]='invoiceHisData'></app-invoice-history>
+                         [invoiceHistoryData]='invoiceHisData'></app-invoice-history>
     <app-invoice-history *ngIf="subscriptionTab=='subscriptionFees'" [invoiceHistoryData]='invoiceHisData'>
     </app-invoice-history>
     <app-clients-dashboard *ngIf="subscriptionTab=='dashboardSubscription'"></app-clients-dashboard>
     <app-fixed-fee [data]="fragmentData" *ngIf="subscriptionTab=='fixedModifyFees'"></app-fixed-fee>
     <app-variable-fee [data]="fragmentData" *ngIf="subscriptionTab=='variableModifyFees'"></app-variable-fee>
     <app-biller-profile-advisor *ngIf="subscriptionTab=='billerProfile'" [data]="inputData"
-      [Selected]="selectedSubscriptionTab"></app-biller-profile-advisor>
+                                [Selected]="selectedSubscriptionTab"></app-biller-profile-advisor>
     <app-help *ngIf="subscriptionTab=='clientHelp'"></app-help>
     <app-biller-settings [clientData]=fragmentData.data *ngIf="subscriptionTab=='billerSettings'"></app-biller-settings>
     <app-payee-settings *ngIf="subscriptionTab=='payeeSettings'"></app-payee-settings> &ndash;&gt;
@@ -30,7 +31,8 @@
     <app-invoice [data]="inputData" *ngIf="subscriptionTab=='invoiceUpperSlider'"></app-invoice> &ndash;&gt;
     <app-change-payee [upperData]=fragmentData.data *ngIf="subscriptionTab=='changePayee'"></app-change-payee>
     <app-create-subscription [data]="fragmentData"
-      *ngIf="subscriptionTab=='createSubFixed' || subscriptionTab=='createSubVariable'" [subFeeMode]="subscriptionTab">
+                             *ngIf="subscriptionTab=='createSubFixed' || subscriptionTab=='createSubVariable'"
+                             [subFeeMode]="subscriptionTab">
     </app-create-subscription>
     <app-email-only [inputData]="inputData" *ngIf="subscriptionTab=='emailOnly'"></app-email-only>
     <app-email-only [inputData]="inputData" *ngIf="subscriptionTab=='emailQuotationFroala'"></app-email-only>
@@ -84,8 +86,12 @@
     <app-nps-summary-portfolio [data]="inputData" *ngIf="subscriptionTab=='addSummaryPort'"></app-nps-summary-portfolio>
     &ndash;&gt;
     <app-nps-scheme-holding *ngIf="subscriptionTab=='addSchemeHoldings'"></app-nps-scheme-holding> &ndash;&gt; -->
-</app-custom-dialog-container>
-<app-dynamic-component [currentState]="currentState" [data]="fragmentData"></app-dynamic-component>
+  </app-custom-dialog-container>
+<!--</div>-->
+<!--<div *ngIf="fragmentData&&fragmentData.componentName">-->
+
+  <app-dynamic-component *ngIf="fragmentData&&fragmentData.componentName" [currentState]="currentState" [data]="fragmentData"></app-dynamic-component>
+<!--</div>-->
 <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
   <app-subscription-upper-slider *ngIf="upperSliderData.flag=='app-subscription-upper-slider'">
   </app-subscription-upper-slider>
