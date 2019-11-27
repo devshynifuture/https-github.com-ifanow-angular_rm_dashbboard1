@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-bottom-sheet',
@@ -9,9 +10,14 @@ export class BottomSheetComponent implements OnInit {
   color = 'primary';
   mode = 'determinate';
   value = 90;
-  constructor() { }
+  fileData: any;
+  noOfFiles: any;
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any) { }
 
   ngOnInit() {
+    console.log(this.data)
+    this.fileData = this.data
+    this.noOfFiles = this.data.length;
   }
 
 }

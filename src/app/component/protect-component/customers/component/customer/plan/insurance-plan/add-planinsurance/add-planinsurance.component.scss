@@ -1,0 +1,79 @@
+::ng-deep .mat-expansion-panel-header-description {
+    display: flex;
+    justify-content: flex-end;
+    color: #000000 !important;
+}
+
+::ng-deep .mat-expansion-panel-header {
+    height: 39px !important;
+    background-color: transparent !important;
+    border-bottom: 1px solid #DADCE0;
+}
+
+::ng-deep .mat-tab-body {
+    border-left: 1px solid #DADCE0;
+    border-right: 1px solid #DADCE0;
+}
+
+::ng-deep .mat-expansion-indicator::after {
+    color: #000000 !important
+}
+
+::ng-deep .mat-expansion-panel-spacing {
+    margin: 0px !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+    padding: 0px !important;
+    border-bottom: 1px solid #DADCE0;
+}
+
+.insurancePlanTable {
+    #table-low {
+        th {
+            padding: 11px 8px !important;
+        }
+        tbody td {
+            padding: 6px 8px !important;
+        }
+        tr.mat-row {
+            height: 30px !important;
+        }
+    }
+}
+
+::ng-deep tr.mat-header-row {
+    height: 40px !important;
+}
+
+::ng-deep #table-low tbody td {
+    padding: 11px 8px !important;
+}
+
+::ng-deep .tabView .mat-tab-label-active {
+    border: 1px solid rgba(25, 25, 25, 0.32) !important;
+    border-bottom: transparent !important;
+}
+
+::ng-deep .mat-tab-body-content {
+    transform: none !important;
+}
+
+::ng-deep .tabView .mat-tab-label {
+    border-bottom: 1px solid rgba(25, 25, 25, 0.32);
+    height: 48px !important;
+    width: 170px;
+}
+
+::ng-deep .mat-tab-header {
+    border-bottom: transparent !important;
+    margin-bottom: 20px;
+}
+
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
+    background-color: transparent !important;
+}
+
+.borderTop {
+    border-top: 1px solid #DADCE0;
+}

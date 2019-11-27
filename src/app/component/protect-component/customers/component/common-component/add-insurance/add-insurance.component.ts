@@ -64,6 +64,7 @@ export class AddInsuranceComponent implements OnInit {
   familyMemberProposerData: any;
   ProposerData: any;
   selectedProposerData: any;
+  finalCashFlowData: any[];
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) { }
   addMoreFlag;
   insuranceFormFilledData: any;
@@ -167,40 +168,50 @@ export class AddInsuranceComponent implements OnInit {
 
       // OptionalFields
 
-      this.keyDetailsForm.controls.riskCover.setValue(data.riskCover)
-      this.keyDetailsForm.controls.surrenderName.setValue(data.surrenderValue)
-      this.keyDetailsForm.controls.nomineeName.setValue(data.nominee)
-      this.keyDetailsForm.controls.vestedBonus.setValue(data.vestedBonus)
-      // this.keyDetailsForm.controls.assumedRate.setValue(data)
+      this.keyDetailsForm.controls.riskCover.setValue(this.editInsuranceData.riskCover)
+      this.keyDetailsForm.controls.surrenderName.setValue(this.editInsuranceData.surrenderValue)
+      this.keyDetailsForm.controls.nomineeName.setValue(this.editInsuranceData.nominee)
+      this.keyDetailsForm.controls.vestedBonus.setValue(this.editInsuranceData.vestedBonus)
+      this.keyDetailsForm.controls.assumedRate.setValue(this.editInsuranceData.assumedRate)
 
-      // this.cashFlowForm.controls.cashFlowType.setValue(data.cashFlowType)
-      // this.cashFlowForm.controls.year.setValue(data.year)
-      // this.cashFlowForm.controls.approxAmt.setValue(data.approxAmt)
+      // this.cashFlowForm.controls.cashFlowType.setValue(this.editInsuranceData.cashFlowType)
+      // this.cashFlowForm.controls.year.setValue(this.editInsuranceData.year)
+      // this.cashFlowForm.controls.approxAmt.setValue(this.editInsuranceData.approxAmt)
+      this.finalCashFlowData=[];
+      if (this.editInsuranceData.insuranceCashflowList != undefined) {
+        this.editInsuranceData.insuranceCashflowList.forEach(element => {
+          (<FormArray>this.cashFlowForm.controls['cashFlow']).push(this.fb.group({
+            cashFlowType: [element.cashFlowType, [Validators.required]],
+            year: [element.cashFlowYear, Validators.required],
+            approxAmt: [(element.cashFlowApproxAmount + ""), Validators.required]
+          }))
+          let obj=
+          {
+            cashFlowType:element.cashFlowType,
+            cashFlowYear:element.cashFlowYear,
+            cashFlowApproxAmount:element.cashFlowApproxAmount
+          }
+          this.finalCashFlowData.push(obj)
+        })
+        this.cashFlowEntries.removeAt(0);
+      }
 
-      // if (data.cashFlows != undefined) {
-      //   data.cashFlows.forEach(element => {
-      //     this.cashFlowForm.controls.cashFlow.push(this.fb.group({
-      //       name: [(element.name) + "", [Validators.required]],
-      //       ownershipPer: [(element.ownershipPer + ""), Validators.required]
-      //     }))
-      //   })
-      //   this.cashFlowEntries.removeAt(0);
-      // }
+      console.log(this.cashFlowForm)
 
-      this.ridersForm.controls.accidentalBenefit.setValue(data.ridersAccidentalBenifits)
-      this.ridersForm.controls.doubleAccidental.setValue(data.ridersDoubleAccidentalBenefit)
-      this.ridersForm.controls.termWaiver.setValue(data.ridersTermWaiver)
-      this.ridersForm.controls.criticalIlleness.setValue(data.ridersCriticalIllness)
-      this.ridersForm.controls.premiumWaiver.setValue(data.ridersPremiumWaiver)
-      this.ridersForm.controls.femaleCriticalIlleness.setValue(data.ridersFemaleCriticalIllness)
+      this.ridersForm.controls.accidentalBenefit.setValue(this.editInsuranceData.ridersAccidentalBenifits)
+      this.ridersForm.controls.doubleAccidental.setValue(this.editInsuranceData.ridersDoubleAccidentalBenefit)
+      this.ridersForm.controls.termWaiver.setValue(this.editInsuranceData.ridersTermWaiver)
+      this.ridersForm.controls.criticalIlleness.setValue(this.editInsuranceData.ridersCriticalIllness)
+      this.ridersForm.controls.premiumWaiver.setValue(this.editInsuranceData.ridersPremiumWaiver)
+      this.ridersForm.controls.femaleCriticalIlleness.setValue(this.editInsuranceData.ridersFemaleCriticalIllness)
 
-      this.loanDetailsForm.controls.loanAvailable.setValue(data.loanAvailable)
-      this.loanDetailsForm.controls.loanTaken.setValue(data.loanTaken)
-      this.loanDetailsForm.controls.loanTakenOn.setValue(new Date(data.loanTakenOn))
+      this.loanDetailsForm.controls.loanAvailable.setValue(this.editInsuranceData.loanAvailable)
+      this.loanDetailsForm.controls.loanTaken.setValue(this.editInsuranceData.loanTaken)
+      this.loanDetailsForm.controls.loanTakenOn.setValue(new Date(this.editInsuranceData.loanTakenOn))
 
-      this.Miscellaneous.controls.permiumPaymentMode.setValue(data.premiumPaymentMode)
-      this.Miscellaneous.controls.advisorName.setValue(data.advisorName)
-      this.Miscellaneous.controls.serviceBranch.setValue(data.serviceBranch)
+      this.Miscellaneous.controls.permiumPaymentMode.setValue(this.editInsuranceData.premiumPaymentMode)
+      this.Miscellaneous.controls.advisorName.setValue(this.editInsuranceData.advisorName)
+      this.Miscellaneous.controls.serviceBranch.setValue(this.editInsuranceData.serviceBranch)
     }
     this.getFamilyMemberList();
   }
@@ -241,14 +252,18 @@ export class AddInsuranceComponent implements OnInit {
   }
   selectPolicy(policy) {
     this.policyData = policy;
-    this.insuranceTypeId=policy.insuranceTypeId
-    this.insuranceSubTypeId=policy.insuranceSubTypeId
+    this.insuranceTypeId = policy.insuranceTypeId
+    this.insuranceSubTypeId = policy.insuranceSubTypeId
   }
-  
+
   openOptionField() {
     (this.addMoreFlag) ? this.addMoreFlag = false : this.addMoreFlag = true;
     this.eleRef.nativeElement.scrollTop = 200
     console.log(this.eleRef.nativeElement.scrollTop)
+  }
+  getCashFlowData()
+  {
+
   }
   saveAddInsurance() {
     if (this.lifeInsuranceForm.get('lifeAssured').invalid) {
@@ -288,6 +303,7 @@ export class AddInsuranceComponent implements OnInit {
       return
     }
     else {
+    
       this.insuranceFormFilledData = {
         "familyMemberIdLifeAssured": this.familyMemberLifeData.id,
         "familyMemberIdProposer": this.selectedProposerData.id,
@@ -295,21 +311,17 @@ export class AddInsuranceComponent implements OnInit {
         "advisorId": this.advisorId,
         "ownerName": "swapnil",
         "commencementDate": this.lifeInsuranceForm.get('commencementDate').value._d,
-        "maturityDate": "2025-12-12",
         "sumAssured": this.lifeInsuranceForm.get('sumAssured').value,
         "lastUnpaidPremium": this.lifeInsuranceForm.get('policyStatusLastUnpaid').value,
         "premiumAmount": this.lifeInsuranceForm.get('premiumDetailsAmount').value,
-        "frequency": 1,
+        "frequency": this.lifeInsuranceForm.get('premiumDetailsFrequency').value,
         "policyTenure": this.lifeInsuranceForm.get('tenureDetailsPolicy').value,
         "premiumPayingTerm": this.lifeInsuranceForm.get('premiumPayingTerm').value,
         "riskCover": this.keyDetailsForm.get('riskCover').value,
         "surrenderValue": this.keyDetailsForm.get('surrenderName').value,
         "nominee": this.keyDetailsForm.get('nomineeName').value,
         "vestedBonus": this.keyDetailsForm.get('vestedBonus').value,
-        "assumedRate": 1000,
-        // "cashflowType": this.cashFlowForm.get('cashFlowType').value,
-        // "cashflowYear": this.cashFlowForm.get('year').value,
-        // "cashFlowApproxAmount": this.cashFlowForm.get('approxAmt').value,
+        "assumedRate": this.keyDetailsForm.get('assumedRate').value,
         "ridersAccidentalBenifits": this.ridersForm.get('accidentalBenefit').value,
         "ridersDoubleAccidentalBenefit": this.ridersForm.get('doubleAccidental').value,
         "ridersTermWaiver": this.ridersForm.get('termWaiver').value,
@@ -327,7 +339,9 @@ export class AddInsuranceComponent implements OnInit {
         "policyId": this.policyData.id,
         "insuranceTypeId": this.policyData.insuranceTypeId,
         "insuranceSubTypeId": this.policyData.insuranceSubTypeId,
-        "policyNumber": this.lifeInsuranceForm.get('policyNum').value
+        "policyNumber": this.lifeInsuranceForm.get('policyNum').value,
+        "policyStatusId": this.lifeInsuranceForm.get('policyStatus').value,
+        "insuranceCashflowList":this.finalCashFlowData
       }
       console.log(this.insuranceFormFilledData)
       if (this.editInsuranceData) {
