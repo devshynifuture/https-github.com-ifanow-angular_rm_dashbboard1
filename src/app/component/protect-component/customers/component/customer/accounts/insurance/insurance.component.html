@@ -8,8 +8,7 @@
                         <div class="col-md-1 p-0 text-custom">20</div>
                     </div>
                 </li>
-                <li (click)="getInsuranceTypeData(1,item.id)" *ngFor="let item of lifeInsuranceList"
-                    [ngClass]="{'bg-grey lt':item.id==insuranceSubTypeId}" class="c-p">
+                <li (click)="getInsuranceTypeData(1,item.id)" *ngFor="let item of lifeInsuranceList" [ngClass]="{'bg-grey lt':item.id==insuranceSubTypeId}" class="c-p">
                     <div>
                         <div class="row">
                             <div class="col-md-11 p-0">{{item.name}}</div>
@@ -25,8 +24,7 @@
                         <div class="col-md-1 p-0 text-custom">1</div>
                     </div>
                 </li>
-                <li (click)="getInsuranceTypeData(2,item1.id)" *ngFor="let item1 of generalLifeInsuranceList"
-                    [ngClass]="{'bg-grey lt':item1.id==insuranceSubTypeId}" class=" c-p">
+                <li (click)="getInsuranceTypeData(2,item1.id)" *ngFor="let item1 of generalLifeInsuranceList" [ngClass]="{'bg-grey lt':item1.id==insuranceSubTypeId}" class=" c-p">
                     <div class="row">
                         <div class="col-md-11 p-0">{{item1.name}}</div>
                         <div class="col-md-1 p-0 text-custom">{{item1.id}}</div>
@@ -67,14 +65,13 @@
                             <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
                             <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                                     class="material-icons">filter_list</i>FILTERS</button>
-                            <button mat-stroked-button class="btn-primary addon v-middle"
-                                (click)="open('addInsurance',null)"><i class="material-icons">add</i>ADD NEW</button>
+                            <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('addInsurance',null)"><i class="material-icons">add</i>ADD NEW</button>
 
                         </div>
                     </div>
                 </div>
                 <div class="liabilities wrapper-8">
-                    <table mat-table [dataSource]="dataSource" id="table-low">
+                    <table mat-table [dataSource]="dataSource" class="skeleton" id="table-low">
                         <ng-container matColumnDef="no">
                             <th mat-header-cell *matHeaderCellDef class="br"> No. </th>
                             <td mat-cell *matCellDef="let element; let i = index" class="br"> {{i+1}} </td>

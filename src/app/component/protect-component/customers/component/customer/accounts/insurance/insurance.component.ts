@@ -30,9 +30,9 @@ import { trigger, transition, query, stagger, animate, style } from '@angular/an
 
 export class InsuranceComponent implements OnInit {
   displayedColumns = ['no', 'life', 'name', 'number', 'sum', 'cvalue', 'premium', 'term', 'pterm', 'desc', 'status', 'icons'];
-  dataSource = ELEMENT_DATA;
+  dataSource = [{},{}];
   displayedColumns1 = ['no', 'owner', 'cvalue', 'amt', 'mvalue', 'rate', 'mdate', 'type', 'ppf', 'desc', 'status', 'icons'];
-  dataSource1 = ELEMENT_DATA1;
+  dataSource1 = [{},{}];
   advisorId: any;
   insuranceSubTypeId: any;
   clientId: any;
@@ -45,8 +45,8 @@ export class InsuranceComponent implements OnInit {
     this.viewMode = "tab1"
     this.advisorId = AuthService.getAdvisorId();
     this.clientId=AuthService.getClientId();
-    this.getInsuranceData(this.advisorId, 2978, 1, 1);
-    this.getGlobalDataInsurance();
+    // this.getInsuranceData(this.advisorId, 2978, 1, 1);
+    // this.getGlobalDataInsurance();
     this.insuranceTypeId = 1
     this.insuranceSubTypeId = 1
   }

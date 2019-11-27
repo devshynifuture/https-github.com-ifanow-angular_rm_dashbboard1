@@ -866,11 +866,14 @@ mat-tab-group[vertical] {
         height: 44px !important;
     }
 }
-.insurance-table #table-low{
-    tr.mat-header-row, tr.mat-row{
+
+.insurance-table #table-low {
+    tr.mat-header-row,
+    tr.mat-row {
         height: 40px !important;
     }
 }
+
 .activeColor {
     background: #D9DEE1;
 }
