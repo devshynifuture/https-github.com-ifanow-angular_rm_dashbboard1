@@ -4,6 +4,8 @@ import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-cash-and-bank',
@@ -18,8 +20,10 @@ export class CashAndBankComponent implements OnInit {
   clientId: any;
   totalAccountBalance: any;
   sumOfCashValue: any;
+  isLoading: boolean = true;
+  noData: string;
 
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService) { }
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService,public dialog:MatDialog) { }
   displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc', 'status', 'icons'];
   datasource7 = ELEMENT_DATA7;
   displayedColumns8 = ['no', 'owner', 'cash', 'bal', 'desc', 'status', 'icons'];
@@ -28,16 +32,64 @@ export class CashAndBankComponent implements OnInit {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getBankAccountList()
+    this.getBankAccountList();
   }
   getfixedIncomeData(value) {
     console.log('value++++++', value)
     this.showRequring = value
-    if(value == '2'){
+    if (value == '2') {
       this.getCashInHandList()
-    }else{
+    } else {
       this.getBankAccountList()
     }
+  }
+  deleteModal(value,data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        if (value == 'BANK ACCOUNT') {
+          this.custumService.deleteBankAccount(data.id).subscribe(
+            data=>{
+              this.eventService.openSnackBar("Bank account is deleted","dismiss")
+              dialogRef.close();
+              this.getBankAccountList()
+            },
+            err=>this.eventService.openSnackBar(err)
+          )
+        } else {
+          this.custumService.deleteCashInHand(data.id).subscribe(
+            data=>{
+              this.eventService.openSnackBar("Cash In Hand is deleted","dismiss")
+              dialogRef.close();
+              this.getCashInHandList()
+            },
+            err=>this.eventService.openSnackBar(err)
+          )
+        }
+
+       
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
   getBankAccountList() {
     let obj = {
@@ -50,11 +102,13 @@ export class CashAndBankComponent implements OnInit {
   }
 
   getBankAccountsRes(data) {
-    console.log('getBankAccountsRes ####', data)
+    console.log('getBankAccountsRes ####', data);
+    this.isLoading = false;
     this.bankAccountList = data.cashInBankAccounts
     this.totalAccountBalance = data.totalAccountBalance
   }
   getCashInHandList() {
+    this.isLoading = true;
     let obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
@@ -64,7 +118,8 @@ export class CashAndBankComponent implements OnInit {
     );
   }
   getCashInHandRes(data) {
-    console.log('getCashInHandRes ###', data)
+    console.log('getCashInHandRes ###', data);
+    this.isLoading = false;
     this.cashInHandList = data.cashInHands
     this.sumOfCashValue = data.sumOfCashValue
   }
@@ -77,16 +132,15 @@ export class CashAndBankComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        if(value == 'addedbankAc'){
+        if (value == 'addedbankAc') {
           this.getCashInHandList()
-        }else{
-        this.getBankAccountList();
+        } else {
+          this.getBankAccountList();
         };
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-
         }
       }
     );;

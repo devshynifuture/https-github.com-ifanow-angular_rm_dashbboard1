@@ -297,7 +297,90 @@ export class CustomerService {
     let httpParams=new HttpParams().set('policyName',data.policyName)
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_POLICY_NAME,httpParams)
   }
+  deleteInsurance(data)
+  {
+   return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INSURANCE,data)
+  }
+  getInsuranceData(data){
+    let httpParams=new HttpParams().set("advisorId",data.advisorId).set("clientId",data.clientId).set("insuranceTypeId",data.insuranceTypeId)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAL_INSURANCE,data)
+  }
+  deleteRealEstate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_REAL_ESTATE, data)
+  }
+  deleteOtherPayables(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_PAYABLES, data)
+  }
+  deleteLiabilities(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_LIABILITIES, data)
+  }
+  deleteFixedDeposite(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_FIXED_DEPOSITE, data)
+  }
+  deleteRecurringDeposite(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_RECURRING_DEPOSITE, data)
+  }
+  deleteBond(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_BOND, data)
+  }
+  deleteEPF(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_EPF, data)
+  }
+  deleteNPS(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_NPS, data)
+  }
+  deleteGratuity(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_GRATUITY, data)
+  }
+  deleteSuperAnnuation(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SUPERANNUATION, data)
+  }
+  deleteEPS(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_EPS, data)
+  }
+  deleteBankAccount(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_BANKACCOUNT, data)
+  }
+  deleteCashInHand(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_CASHINHAND, data)
+  }
+  deleteGold(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_GOLD, data)
+  }
+  deleteOther(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHERS, data)
+  }
+  getGlobalLiabilities(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GLOBAL_LIABILITIES, data)
+  }
   getAllFiles(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ALL_FILES, data)
+  }
+  downloadFile(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.DOWNLOAD_FILE, data)
+  }
+  deleteFile(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_FILE, data)
+  }
+  moveFiles(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.MOVE_FILES, data)
+  }
+  copyFiles(data){
+   return this.http.put(apiConfig.MAIN_URL + appConfig.COPY_FILES, data)
+  }
+  renameFiles(data){
+   return this.http.put(apiConfig.MAIN_URL + appConfig.RENAME_FILE, data)
+  }
+  renameFolder(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.RENAME_FOLDER, data)
+  }
+  deleteFolder(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_FOLDER, data)
+  }
+  starFile(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.STAR_FILE, data)
+  }
+  viewActivity(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.VIEW_ACTIVITY, data)
   }
 }

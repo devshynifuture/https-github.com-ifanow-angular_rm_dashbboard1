@@ -896,3 +896,21 @@ mat-tab-group[vertical] {
 .width80 {
     width: 80%;
 }
+
+.skeleton {
+    td {
+        animation: loading 1.7s infinite linear;
+        background: #F6F7F8;
+        background-image: -webkit-linear-gradient(right, #F6F7F8 0%, #EDEEF1 20%, #F6F7F8 40%, #F6F7F8 100%);
+        background-image: linear-gradient(right, #F6F7F8 0%, #EDEEF1 20%, #F6F7F8 40%, #F6F7F8 100%);
+        background-repeat: no-repeat;
+    }
+}
+@keyframes loading {
+    0% {
+        background-position: -100px;
+    }
+    100% {
+        background-position: 200px;
+    }
+}

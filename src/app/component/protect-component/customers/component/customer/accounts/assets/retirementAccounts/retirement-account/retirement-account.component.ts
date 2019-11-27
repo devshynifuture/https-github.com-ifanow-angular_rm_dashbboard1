@@ -6,6 +6,8 @@ import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-retirement-account',
@@ -34,7 +36,7 @@ export class RetirementAccountComponent implements OnInit {
   totalPensionAmount: any;
   totalContribution: any;
   totalCurrentValue: any;
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService) { }
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService,public dialog:MatDialog) { }
   displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'empc', 'rate', 'bal', 'bacla', 'year', 'desc', 'status', 'icons'];
   datasource11;
 
@@ -98,6 +100,80 @@ export class RetirementAccountComponent implements OnInit {
         }
       }
     );
+  }
+  deleteModal(value,data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        if (value == 'EPF') {
+          this.custumService.deleteEPF(data.id).subscribe(
+            data=>{
+              this.eventService.openSnackBar("EPF is deleted","dismiss")
+              dialogRef.close();
+              this.getListEPF()
+            },
+            err=>this.eventService.openSnackBar(err)
+          )
+        } else if (value == 'NPS') {
+          this.custumService.deleteNPS(data.id).subscribe(
+            data=>{
+              this.eventService.openSnackBar("NPS is deleted","dismiss")
+              dialogRef.close();
+              this.getListNPS()
+            },
+            err=>this.eventService.openSnackBar(err)
+          )
+        } else if (value == 'GRATUITY') {
+          this.custumService.deleteGratuity(data.id).subscribe(
+            data=>{
+              this.eventService.openSnackBar("Grautity is deleted","dismiss")
+              dialogRef.close();
+              this.getListGratuity()
+            },
+            err=>this.eventService.openSnackBar(err)
+          )
+        } else if (value == 'SUPERANNUATION') {
+          this.custumService.deleteSuperAnnuation(data.id).subscribe(
+            data=>{
+              this.eventService.openSnackBar("SuperAnnuation is deleted","dismiss")
+              dialogRef.close();
+              this.getListSuperannuation()
+            },
+            err=>this.eventService.openSnackBar(err)
+          )
+        } else {
+          this.custumService.deleteEPS(data.id).subscribe(
+            data=>{
+              this.eventService.openSnackBar("EPS is deleted","dismiss")
+              dialogRef.close();
+              this.getListEPS()
+            },
+            err=>this.eventService.openSnackBar(err)
+          )
+        }
+        
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
   getListEPF() {
     let obj = this.getObject
