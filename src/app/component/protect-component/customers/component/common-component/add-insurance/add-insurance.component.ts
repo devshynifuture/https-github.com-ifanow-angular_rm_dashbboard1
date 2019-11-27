@@ -1,13 +1,15 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, Optional } from '@angular/core';
-import { SubjectSubscriber } from 'rxjs/internal/Subject';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../customer/customer.service';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { MAT_DATE_FORMATS } from '@angular/material';
+import {Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, Optional} from '@angular/core';
+import {SubjectSubscriber} from 'rxjs/internal/Subject';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {FormBuilder, Validators, FormArray} from '@angular/forms';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../customer/customer.service';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {MAT_DATE_FORMATS} from '@angular/material';
 import * as _ from 'lodash';
-import { element } from 'protractor';
+import {element} from 'protractor';
+import {DataComponent} from '../../../../../../interfaces/data.component';
+
 @Component({
   selector: 'app-add-insurance',
   templateUrl: './add-insurance.component.html',
@@ -23,10 +25,33 @@ import { element } from 'protractor';
     // },
     // { provide: MAT_DATE_LOCALE, useValue: 'en' },
     // [DatePipe],
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 })
-export class AddInsuranceComponent implements OnInit {
+export class AddInsuranceComponent implements OnInit, DataComponent {
+  /*_data;
+  @Input()
+  set data(inputData) {
+    this._data = inputData;
+  }
+
+  get data() {
+    return this._data;
+  }*/
+  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) {
+  }
+
+  @Input() set data(data) {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.setInsuranceDataFormField(data);
+    this.getFamilyMemberList();
+    console.log(data);
+  }
+
+  get cashFlowEntries() {
+    return this.cashFlowForm.get('cashFlow') as FormArray;
+  }
   // displayedColumns: string[] = [  'name', 'amountTable'];
   // dataSource = ELEMENT_DATA;
 
@@ -65,20 +90,10 @@ export class AddInsuranceComponent implements OnInit {
   ProposerData: any;
   selectedProposerData: any;
   finalCashFlowData: any[];
-  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) { }
+
   addMoreFlag;
   insuranceFormFilledData: any;
-  @ViewChild('chnageScrollPosition', { static: false }) eleRef: ElementRef
-  @Input() set insuranceData(data) {
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
-    this.setInsuranceDataFormField(data)
-    this.getFamilyMemberList()
-    console.log(data)
-  }
-  ngOnInit() {
-    this.addMoreFlag = false
-  }
+  @ViewChild('chnageScrollPosition', {static: false}) eleRef: ElementRef;
 
   lifeInsuranceForm = this.fb.group({
     lifeAssured: [, [Validators.required]],
@@ -93,7 +108,7 @@ export class AddInsuranceComponent implements OnInit {
     premiumPayingTerm: [, [Validators.required]],
     policyStatus: [, [Validators.required]],
     policyStatusLastUnpaid: [, [Validators.required]]
-  })
+  });
   keyDetailsForm = this.fb.group({
     riskCover: [, [Validators.required]],
     surrenderName: [, [Validators.required]],
@@ -101,14 +116,14 @@ export class AddInsuranceComponent implements OnInit {
     vestedBonus: [, [Validators.required]],
     assumedRate: [, [Validators.required]],
     fundValue: []
-  })
+  });
   cashFlowForm = this.fb.group({
     cashFlow: this.fb.array([this.fb.group({
       cashFlowType: null,
       year: null,
       approxAmt: null
     })])
-  })
+  });
   ridersForm = this.fb.group({
     accidentalBenefit: [, [Validators.required]],
     doubleAccidental: [, [Validators.required]],
@@ -116,21 +131,22 @@ export class AddInsuranceComponent implements OnInit {
     criticalIlleness: [, [Validators.required]],
     premiumWaiver: [, [Validators.required]],
     femaleCriticalIlleness: [, [Validators.required]]
-  })
+  });
   loanDetailsForm = this.fb.group({
     loanAvailable: [, [Validators.required]],
     loanTaken: [, [Validators.required]],
     loanTakenOn: [, [Validators.required]]
-  })
+  });
   Miscellaneous = this.fb.group({
     permiumPaymentMode: [, [Validators.required]],
     advisorName: [, [Validators.required]],
     serviceBranch: [, [Validators.required]]
-  })
+  });
 
-  get cashFlowEntries() {
-    return this.cashFlowForm.get('cashFlow') as FormArray;
+  ngOnInit() {
+    this.addMoreFlag = false;
   }
+
   addTransaction() {
     this.cashFlowEntries.push(this.fb.group({
       cashFlowType: null,
@@ -138,234 +154,228 @@ export class AddInsuranceComponent implements OnInit {
       approxAmt: null
     }));
   }
+
   removeTransaction(item) {
     this.cashFlowEntries.removeAt(item);
   }
+
   setInsuranceDataFormField(data) {
-    console.log(data.data)
-    this.editInsuranceData = data.data
+    console.log(data.data);
+    this.editInsuranceData = data.data;
     if (this.editInsuranceData == undefined) {
-      this.insuranceTypeId = data.insuranceTypeId
-      this.insuranceSubTypeId = data.insuranceSubTypeId
-      console.log(this.insuranceTypeId, " ", this.insuranceSubTypeId)
+      this.insuranceTypeId = data.insuranceTypeId;
+      this.insuranceSubTypeId = data.insuranceSubTypeId;
+      console.log(this.insuranceTypeId, ' ', this.insuranceSubTypeId);
       return;
-    }
-    else {
+    } else {
       // requiredFields
-      this.insuranceId = this.editInsuranceData.id
-      this.lifeInsuranceForm.controls.lifeAssured.setValue(this.editInsuranceData.lifeAssuredName)
-      this.lifeInsuranceForm.controls.proposer.setValue(this.editInsuranceData.familyMemberName)
-      this.lifeInsuranceForm.controls.policyName.setValue(this.editInsuranceData.policyName)
-      this.lifeInsuranceForm.controls.policyNum.setValue(this.editInsuranceData.policyNumber)
-      this.lifeInsuranceForm.controls.commencementDate.setValue(new Date(this.editInsuranceData.commencementDate))
-      this.lifeInsuranceForm.controls.sumAssured.setValue(this.editInsuranceData.sumAssured)
-      this.lifeInsuranceForm.controls.premiumDetailsAmount.setValue(this.editInsuranceData.premiumAmount)
-      this.lifeInsuranceForm.controls.premiumDetailsFrequency.setValue(String(this.editInsuranceData.frequency))
-      this.lifeInsuranceForm.controls.tenureDetailsPolicy.setValue(String(this.editInsuranceData.policyTenure))
-      this.lifeInsuranceForm.controls.premiumPayingTerm.setValue(this.editInsuranceData.premiumPayingTerm)
-      this.lifeInsuranceForm.controls.policyStatus.setValue(String(this.editInsuranceData.policyStatusId))
-      this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue('')
+      this.insuranceId = this.editInsuranceData.id;
+      this.lifeInsuranceForm.controls.lifeAssured.setValue(this.editInsuranceData.lifeAssuredName);
+      this.lifeInsuranceForm.controls.proposer.setValue(this.editInsuranceData.familyMemberName);
+      this.lifeInsuranceForm.controls.policyName.setValue(this.editInsuranceData.policyName);
+      this.lifeInsuranceForm.controls.policyNum.setValue(this.editInsuranceData.policyNumber);
+      this.lifeInsuranceForm.controls.commencementDate.setValue(new Date(this.editInsuranceData.commencementDate));
+      this.lifeInsuranceForm.controls.sumAssured.setValue(this.editInsuranceData.sumAssured);
+      this.lifeInsuranceForm.controls.premiumDetailsAmount.setValue(this.editInsuranceData.premiumAmount);
+      this.lifeInsuranceForm.controls.premiumDetailsFrequency.setValue(String(this.editInsuranceData.frequency));
+      this.lifeInsuranceForm.controls.tenureDetailsPolicy.setValue(String(this.editInsuranceData.policyTenure));
+      this.lifeInsuranceForm.controls.premiumPayingTerm.setValue(this.editInsuranceData.premiumPayingTerm);
+      this.lifeInsuranceForm.controls.policyStatus.setValue(String(this.editInsuranceData.policyStatusId));
+      this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue('');
 
       // OptionalFields
 
-      this.keyDetailsForm.controls.riskCover.setValue(this.editInsuranceData.riskCover)
-      this.keyDetailsForm.controls.surrenderName.setValue(this.editInsuranceData.surrenderValue)
-      this.keyDetailsForm.controls.nomineeName.setValue(this.editInsuranceData.nominee)
-      this.keyDetailsForm.controls.vestedBonus.setValue(this.editInsuranceData.vestedBonus)
-      this.keyDetailsForm.controls.assumedRate.setValue(this.editInsuranceData.assumedRate)
+      this.keyDetailsForm.controls.riskCover.setValue(this.editInsuranceData.riskCover);
+      this.keyDetailsForm.controls.surrenderName.setValue(this.editInsuranceData.surrenderValue);
+      this.keyDetailsForm.controls.nomineeName.setValue(this.editInsuranceData.nominee);
+      this.keyDetailsForm.controls.vestedBonus.setValue(this.editInsuranceData.vestedBonus);
+      this.keyDetailsForm.controls.assumedRate.setValue(this.editInsuranceData.assumedRate);
 
       // this.cashFlowForm.controls.cashFlowType.setValue(this.editInsuranceData.cashFlowType)
       // this.cashFlowForm.controls.year.setValue(this.editInsuranceData.year)
       // this.cashFlowForm.controls.approxAmt.setValue(this.editInsuranceData.approxAmt)
-      this.finalCashFlowData=[];
+      this.finalCashFlowData = [];
       if (this.editInsuranceData.insuranceCashflowList != undefined) {
         this.editInsuranceData.insuranceCashflowList.forEach(element => {
-          (<FormArray>this.cashFlowForm.controls['cashFlow']).push(this.fb.group({
+          (this.cashFlowForm.controls.cashFlow as FormArray).push(this.fb.group({
             cashFlowType: [element.cashFlowType, [Validators.required]],
             year: [element.cashFlowYear, Validators.required],
-            approxAmt: [(element.cashFlowApproxAmount + ""), Validators.required]
-          }))
-          let obj=
-          {
-            cashFlowType:element.cashFlowType,
-            cashFlowYear:element.cashFlowYear,
-            cashFlowApproxAmount:element.cashFlowApproxAmount
-          }
-          this.finalCashFlowData.push(obj)
-        })
+            approxAmt: [(element.cashFlowApproxAmount + ''), Validators.required]
+          }));
+          const obj = {
+              cashFlowType: element.cashFlowType,
+              cashFlowYear: element.cashFlowYear,
+              cashFlowApproxAmount: element.cashFlowApproxAmount
+            };
+          this.finalCashFlowData.push(obj);
+        });
         this.cashFlowEntries.removeAt(0);
       }
 
-      console.log(this.cashFlowForm)
+      console.log(this.cashFlowForm);
 
-      this.ridersForm.controls.accidentalBenefit.setValue(this.editInsuranceData.ridersAccidentalBenifits)
-      this.ridersForm.controls.doubleAccidental.setValue(this.editInsuranceData.ridersDoubleAccidentalBenefit)
-      this.ridersForm.controls.termWaiver.setValue(this.editInsuranceData.ridersTermWaiver)
-      this.ridersForm.controls.criticalIlleness.setValue(this.editInsuranceData.ridersCriticalIllness)
-      this.ridersForm.controls.premiumWaiver.setValue(this.editInsuranceData.ridersPremiumWaiver)
-      this.ridersForm.controls.femaleCriticalIlleness.setValue(this.editInsuranceData.ridersFemaleCriticalIllness)
+      this.ridersForm.controls.accidentalBenefit.setValue(this.editInsuranceData.ridersAccidentalBenifits);
+      this.ridersForm.controls.doubleAccidental.setValue(this.editInsuranceData.ridersDoubleAccidentalBenefit);
+      this.ridersForm.controls.termWaiver.setValue(this.editInsuranceData.ridersTermWaiver);
+      this.ridersForm.controls.criticalIlleness.setValue(this.editInsuranceData.ridersCriticalIllness);
+      this.ridersForm.controls.premiumWaiver.setValue(this.editInsuranceData.ridersPremiumWaiver);
+      this.ridersForm.controls.femaleCriticalIlleness.setValue(this.editInsuranceData.ridersFemaleCriticalIllness);
 
-      this.loanDetailsForm.controls.loanAvailable.setValue(this.editInsuranceData.loanAvailable)
-      this.loanDetailsForm.controls.loanTaken.setValue(this.editInsuranceData.loanTaken)
-      this.loanDetailsForm.controls.loanTakenOn.setValue(new Date(this.editInsuranceData.loanTakenOn))
+      this.loanDetailsForm.controls.loanAvailable.setValue(this.editInsuranceData.loanAvailable);
+      this.loanDetailsForm.controls.loanTaken.setValue(this.editInsuranceData.loanTaken);
+      this.loanDetailsForm.controls.loanTakenOn.setValue(new Date(this.editInsuranceData.loanTakenOn));
 
-      this.Miscellaneous.controls.permiumPaymentMode.setValue(this.editInsuranceData.premiumPaymentMode)
-      this.Miscellaneous.controls.advisorName.setValue(this.editInsuranceData.advisorName)
-      this.Miscellaneous.controls.serviceBranch.setValue(this.editInsuranceData.serviceBranch)
+      this.Miscellaneous.controls.permiumPaymentMode.setValue(this.editInsuranceData.premiumPaymentMode);
+      this.Miscellaneous.controls.advisorName.setValue(this.editInsuranceData.advisorName);
+      this.Miscellaneous.controls.serviceBranch.setValue(this.editInsuranceData.serviceBranch);
     }
     this.getFamilyMemberList();
   }
+
   getFamilyMemberList() {
-    let obj = {
+    const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-    }
+    };
     this.customerService.getListOfFamilyByClient(obj).subscribe(
       data => this.getFamilyMemberListRes(data)
-    )
+    );
   }
+
   getFamilyMemberListRes(data) {
-    console.log(data)
-    this.FamilyMember = data.familyMembersList
+    console.log(data);
+    this.FamilyMember = data.familyMembersList;
     this.ProposerData = Object.assign([], data.familyMembersList);
-    console.log("Proposer data", this.ProposerData)
+    console.log('Proposer data', this.ProposerData);
   }
+
   getFamilyMember(data, index) {
     this.familyMemberLifeData = data;
-    console.log("family Member", this.FamilyMember)
+    console.log('family Member', this.FamilyMember);
   }
+
   getProposerData(data, index) {
-    this.selectedProposerData = data
+    this.selectedProposerData = data;
   }
+
   findPolicyName(data) {
-    let inpValue = this.lifeInsuranceForm.get("policyName").value
-    let obj =
-    {
-      policyName: inpValue
-    }
+    const inpValue = this.lifeInsuranceForm.get('policyName').value;
+    const obj = {
+        policyName: inpValue
+      };
     this.customerService.getPolicyName(obj).subscribe(
       data => {
-        console.log(data.policyDetails)
-        this.options = data.policyDetails
+        console.log(data.policyDetails);
+        this.options = data.policyDetails;
       }
-    )
+    );
   }
+
   selectPolicy(policy) {
     this.policyData = policy;
-    this.insuranceTypeId = policy.insuranceTypeId
-    this.insuranceSubTypeId = policy.insuranceSubTypeId
+    this.insuranceTypeId = policy.insuranceTypeId;
+    this.insuranceSubTypeId = policy.insuranceSubTypeId;
   }
 
   openOptionField() {
     (this.addMoreFlag) ? this.addMoreFlag = false : this.addMoreFlag = true;
-    this.eleRef.nativeElement.scrollTop = 200
-    console.log(this.eleRef.nativeElement.scrollTop)
+    this.eleRef.nativeElement.scrollTop = 200;
+    console.log(this.eleRef.nativeElement.scrollTop);
   }
-  getCashFlowData()
-  {
+
+  getCashFlowData() {
 
   }
+
   saveAddInsurance() {
     if (this.lifeInsuranceForm.get('lifeAssured').invalid) {
-      return
-    }
-    else if (this.lifeInsuranceForm.get('proposer').invalid) {
-      return
-    }
-    else if (this.lifeInsuranceForm.get('policyName').invalid) {
-      return
-    }
-    else if (this.lifeInsuranceForm.get('policyNum').invalid) {
-      return
-    }
-    else if (this.lifeInsuranceForm.get('commencementDate').invalid) {
-      return
-    }
-    else if (this.lifeInsuranceForm.get('sumAssured').invalid) {
-      return
-    }
-    else if (this.lifeInsuranceForm.get('premiumDetailsAmount').invalid) {
-      return
-    }
-    else if (this.lifeInsuranceForm.get('premiumDetailsFrequency').invalid) {
-      return
-    }
-    else if (this.lifeInsuranceForm.get('tenureDetailsPolicy').invalid) {
-      return
-    }
-    else if (this.lifeInsuranceForm.get('premiumPayingTerm').invalid) {
-      return
-    }
-    else if (this.lifeInsuranceForm.get('policyStatus').invalid) {
-      return
-    }
-    else if (this.lifeInsuranceForm.get('policyStatusLastUnpaid').invalid) {
-      return
-    }
-    else {
-    
+      return;
+    } else if (this.lifeInsuranceForm.get('proposer').invalid) {
+      return;
+    } else if (this.lifeInsuranceForm.get('policyName').invalid) {
+      return;
+    } else if (this.lifeInsuranceForm.get('policyNum').invalid) {
+      return;
+    } else if (this.lifeInsuranceForm.get('commencementDate').invalid) {
+      return;
+    } else if (this.lifeInsuranceForm.get('sumAssured').invalid) {
+      return;
+    } else if (this.lifeInsuranceForm.get('premiumDetailsAmount').invalid) {
+      return;
+    } else if (this.lifeInsuranceForm.get('premiumDetailsFrequency').invalid) {
+      return;
+    } else if (this.lifeInsuranceForm.get('tenureDetailsPolicy').invalid) {
+      return;
+    } else if (this.lifeInsuranceForm.get('premiumPayingTerm').invalid) {
+      return;
+    } else if (this.lifeInsuranceForm.get('policyStatus').invalid) {
+      return;
+    } else if (this.lifeInsuranceForm.get('policyStatusLastUnpaid').invalid) {
+      return;
+    } else {
+
       this.insuranceFormFilledData = {
-        "familyMemberIdLifeAssured": this.familyMemberLifeData.id,
-        "familyMemberIdProposer": this.selectedProposerData.id,
-        "clientId": this.clientId,
-        "advisorId": this.advisorId,
-        "ownerName": "swapnil",
-        "commencementDate": this.lifeInsuranceForm.get('commencementDate').value._d,
-        "sumAssured": this.lifeInsuranceForm.get('sumAssured').value,
-        "lastUnpaidPremium": this.lifeInsuranceForm.get('policyStatusLastUnpaid').value,
-        "premiumAmount": this.lifeInsuranceForm.get('premiumDetailsAmount').value,
-        "frequency": this.lifeInsuranceForm.get('premiumDetailsFrequency').value,
-        "policyTenure": this.lifeInsuranceForm.get('tenureDetailsPolicy').value,
-        "premiumPayingTerm": this.lifeInsuranceForm.get('premiumPayingTerm').value,
-        "riskCover": this.keyDetailsForm.get('riskCover').value,
-        "surrenderValue": this.keyDetailsForm.get('surrenderName').value,
-        "nominee": this.keyDetailsForm.get('nomineeName').value,
-        "vestedBonus": this.keyDetailsForm.get('vestedBonus').value,
-        "assumedRate": this.keyDetailsForm.get('assumedRate').value,
-        "ridersAccidentalBenifits": this.ridersForm.get('accidentalBenefit').value,
-        "ridersDoubleAccidentalBenefit": this.ridersForm.get('doubleAccidental').value,
-        "ridersTermWaiver": this.ridersForm.get('termWaiver').value,
-        "ridersCriticalIllness": this.ridersForm.get('criticalIlleness').value,
-        "ridersPremiumWaiver": this.ridersForm.get('premiumWaiver').value,
-        "ridersFemaleCriticalIllness": this.ridersForm.get('femaleCriticalIlleness').value,
-        "loanAvailable": this.loanDetailsForm.get('loanAvailable').value,
-        "loanTaken": this.loanDetailsForm.get('loanTaken').value,
-        "loanTakenOn": this.loanDetailsForm.get('loanTakenOn').value,
-        "premiumPaymentMode": this.Miscellaneous.get('permiumPaymentMode').value,
-        "advisorName": this.Miscellaneous.get('advisorName').value,
-        "serviceBranch": this.Miscellaneous.get('serviceBranch').value,
-        "policyName": this.lifeInsuranceForm.get('policyName').value,
-        "policyTypeId": this.policyData.policyTypeId,
-        "policyId": this.policyData.id,
-        "insuranceTypeId": this.policyData.insuranceTypeId,
-        "insuranceSubTypeId": this.policyData.insuranceSubTypeId,
-        "policyNumber": this.lifeInsuranceForm.get('policyNum').value,
-        "policyStatusId": this.lifeInsuranceForm.get('policyStatus').value,
-        "insuranceCashflowList":this.finalCashFlowData
-      }
-      console.log(this.insuranceFormFilledData)
+        familyMemberIdLifeAssured: this.familyMemberLifeData.id,
+        familyMemberIdProposer: this.selectedProposerData.id,
+        clientId: this.clientId,
+        advisorId: this.advisorId,
+        ownerName: 'swapnil',
+        commencementDate: this.lifeInsuranceForm.get('commencementDate').value._d,
+        sumAssured: this.lifeInsuranceForm.get('sumAssured').value,
+        lastUnpaidPremium: this.lifeInsuranceForm.get('policyStatusLastUnpaid').value,
+        premiumAmount: this.lifeInsuranceForm.get('premiumDetailsAmount').value,
+        frequency: this.lifeInsuranceForm.get('premiumDetailsFrequency').value,
+        policyTenure: this.lifeInsuranceForm.get('tenureDetailsPolicy').value,
+        premiumPayingTerm: this.lifeInsuranceForm.get('premiumPayingTerm').value,
+        riskCover: this.keyDetailsForm.get('riskCover').value,
+        surrenderValue: this.keyDetailsForm.get('surrenderName').value,
+        nominee: this.keyDetailsForm.get('nomineeName').value,
+        vestedBonus: this.keyDetailsForm.get('vestedBonus').value,
+        assumedRate: this.keyDetailsForm.get('assumedRate').value,
+        ridersAccidentalBenifits: this.ridersForm.get('accidentalBenefit').value,
+        ridersDoubleAccidentalBenefit: this.ridersForm.get('doubleAccidental').value,
+        ridersTermWaiver: this.ridersForm.get('termWaiver').value,
+        ridersCriticalIllness: this.ridersForm.get('criticalIlleness').value,
+        ridersPremiumWaiver: this.ridersForm.get('premiumWaiver').value,
+        ridersFemaleCriticalIllness: this.ridersForm.get('femaleCriticalIlleness').value,
+        loanAvailable: this.loanDetailsForm.get('loanAvailable').value,
+        loanTaken: this.loanDetailsForm.get('loanTaken').value,
+        loanTakenOn: this.loanDetailsForm.get('loanTakenOn').value,
+        premiumPaymentMode: this.Miscellaneous.get('permiumPaymentMode').value,
+        advisorName: this.Miscellaneous.get('advisorName').value,
+        serviceBranch: this.Miscellaneous.get('serviceBranch').value,
+        policyName: this.lifeInsuranceForm.get('policyName').value,
+        policyTypeId: this.policyData.policyTypeId,
+        policyId: this.policyData.id,
+        insuranceTypeId: this.policyData.insuranceTypeId,
+        insuranceSubTypeId: this.policyData.insuranceSubTypeId,
+        policyNumber: this.lifeInsuranceForm.get('policyNum').value,
+        policyStatusId: this.lifeInsuranceForm.get('policyStatus').value,
+        insuranceCashflowList: this.finalCashFlowData
+      };
+      console.log(this.insuranceFormFilledData);
       if (this.editInsuranceData) {
         this.insuranceFormFilledData.id = this.insuranceId;
         this.customerService.editLifeInsuranceData(this.insuranceFormFilledData).subscribe(
           data => {
-            console.log(data)
+            console.log(data);
             this.close();
           }
-        )
-      }
-      else {
+        );
+      } else {
         this.customerService.addLifeInsurance(this.insuranceFormFilledData).subscribe(
           data => {
-            console.log(data)
-            this.close()
+            console.log(data);
+            this.close();
           }
-        )
+        );
       }
     }
   }
+
   close() {
-    this.addMoreFlag = false
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.addMoreFlag = false;
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
 }

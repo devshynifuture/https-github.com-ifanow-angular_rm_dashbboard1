@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-liabilities-detail',
@@ -10,13 +10,14 @@ export class LiabilitiesDetailComponent implements OnInit {
   displayedColumns: string[] = ['name', 'position'];
   dataSourceDetail = ELEMENT_DATA;
 
-  constructor(private subInjectService:SubscriptionInject,) { }
+  constructor(private subInjectService: SubscriptionInject) {
+  }
 
   ngOnInit() {
   }
 
-  close(){
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  close() {
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
 }
@@ -24,7 +25,7 @@ export class LiabilitiesDetailComponent implements OnInit {
 export interface PeriodicElement {
   name: string;
   position: string;
-  
+
 }
 
 
@@ -42,5 +43,5 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {name: 'Original loan tenure', position: '20 years'},
   {name: 'Total interest paid till date', position: '46,546'},
   {name: 'Total principal paid till date', position: '54,654'},
-  
+
 ];
