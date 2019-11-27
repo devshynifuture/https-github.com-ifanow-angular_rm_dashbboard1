@@ -74,7 +74,7 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
   }
 
   handleChangeOfState(value) {
-    console.log('CustomDialogContainerComponent handleChangeOfState: ', value);
+    console.log('DynamicComponentComponent handleChangeOfState: ', value);
     if (value === 'close') {
       this._currentState = value;
       setTimeout(() => {

@@ -1,3 +1,4 @@
+import { RecuringDepositComponent } from './../recuring-deposit/recuring-deposit.component';
 import { Component, OnInit } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -6,7 +7,6 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
-import { FixedDepositComponent } from '../fixed-deposit/fixed-deposit.component';
 
 @Component({
   selector: 'app-fixed-income',
@@ -32,7 +32,7 @@ export class FixedIncomeComponent implements OnInit {
   sumCurrentValueB: any;
 
 
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService,public dialog:MatDialog) { }
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService, public dialog: MatDialog) { }
   viewMode
   displayedColumns4 = ['no', 'owner', 'type', 'cvalue', 'rate', 'amt', 'mdate', 'mvalue', 'number', 'desc', 'status', 'icons'];
   datasource4 = ELEMENT_DATA4;
@@ -173,10 +173,33 @@ export class FixedIncomeComponent implements OnInit {
   openPortfolioSummary(value, state, data) {
     const fragmentData = {
       Flag: value,
-      data,
+      data: data,
       id: 1,
       state: 'open',
-      componentName: FixedDepositComponent,
+      componentName: RecuringDepositComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        this.getFixedDepositList();
+        this.getRecurringDepositList()
+        this.getBondsList()
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+
+  openAddRecurringDeposit(data) {
+    const fragmentData = {
+      Flag: 'addRecuringDeposit',
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: RecuringDepositComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

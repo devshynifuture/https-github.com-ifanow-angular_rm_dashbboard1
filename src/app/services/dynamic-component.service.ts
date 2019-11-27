@@ -17,9 +17,9 @@ export class DynamicComponentService {
     const componentRef = viewContainerRef.createComponent(componentFactory);
     (componentRef.instance).data = data;
     // component.data = data;
-    console.log('componentRef: ', componentRef);
-    console.log('data: ', data);
-    console.log('component: ', component);
+    // console.log('componentRef: ', componentRef);
+    // console.log('data: ', data);
+    // console.log('component: ', component);
 
     return componentRef;
   }
