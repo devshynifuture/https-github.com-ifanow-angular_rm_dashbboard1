@@ -1,7 +1,6 @@
 <!--<div [@dialogContainer]="dialogState" *ngIf="isOverlayVisible" class="custom-overlay">-->
 <!--</div>-->
 <app-custom-dialog-container [currentState]="currentState">
-  <div [@openClose]="currentState" class="right_sidenav">
     <app-common-froala *ngIf="subscriptionTab=='viewDocuments'||subscriptionTab=='viewDoc'" [data]="inputData"
                        [changeFooter]='subscriptionTab' [screenType]="subscriptionTab"></app-common-froala>
     <app-common-froala *ngIf="subscriptionTab=='viewDoc'" [data]="inputData" [changeFooter]='subscriptionTab'
@@ -85,7 +84,6 @@
     <app-nps-summary-portfolio [data]="inputData" *ngIf="subscriptionTab=='addSummaryPort'"></app-nps-summary-portfolio>
     &ndash;&gt;
     <app-nps-scheme-holding *ngIf="subscriptionTab=='addSchemeHoldings'"></app-nps-scheme-holding> &ndash;&gt; -->
-</div>
   </app-custom-dialog-container>
 <app-dynamic-component [currentState]="currentState" [data]="fragmentData"></app-dynamic-component>
 <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">

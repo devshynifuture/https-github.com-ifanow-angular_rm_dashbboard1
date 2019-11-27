@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CustomerService } from '../../customer.service';
-import { Validators, FormBuilder } from '@angular/forms';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {CustomerService} from '../../customer.service';
+import {Validators, FormBuilder} from '@angular/forms';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-owner-component',
@@ -19,26 +19,32 @@ export class OwnerComponentComponent implements OnInit {
   clientId: any;
   sendData: any;
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService) { }
+  constructor(private fb: FormBuilder, private custumService: CustomerService) {
+  }
+
   @Output() valueChange = new EventEmitter();
   @Output() valueChange1 = new EventEmitter();
+
   @Input()
   set data(data) {
     this.ownerData = data;
-    this.getListFamilyMem(data);
+    // this.getListFamilyMem(data);
+
   }
 
   get data() {
     return this.ownerData;
   }
+
   ngOnInit() {
-    console.log('ownerData', this.ownerData)
+    console.log('OwnerComponentComponent ngOnInit ownerData', this.ownerData)
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getListFamilyMem('');
+    this.getListFamilyMem(this.ownerData);
     this.getdataForm()
     this.family = this.s;
   }
+
   getListFamilyMem(data) {
     let obj = {
       advisorId: this.advisorId,
@@ -48,17 +54,20 @@ export class OwnerComponentComponent implements OnInit {
       data => this.getListOfFamilyByClientRes(data)
     );
   }
+
   getOwnerName(value) {
     console.log('selected', value)
     value.familyList = this.family
     this.valueChange.emit(value);
   }
+
   getListOfFamilyByClientRes(data) {
     console.log('family Memebers', data)
     this.sendData = data
     this.family = data.familyMembersList
     this.valueChange1.emit(this.sendData);
   }
+
   getdataForm() {
     this.owner = this.fb.group({
       ownerName: [(this.ownerData.ownerName.value == null) ? '' : this.ownerData.ownerName.value, [Validators.required]],
@@ -67,6 +76,7 @@ export class OwnerComponentComponent implements OnInit {
       this.getFormControl().ownerName.setValue(this.ownerData.ownerName.value);
     }
   }
+
   getFormControl(): any {
     return (this.owner.controls);
   }

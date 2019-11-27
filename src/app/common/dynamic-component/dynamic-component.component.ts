@@ -69,7 +69,7 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
 
   addDynamicComponentService(component) {
     if (this.viewContainerRef) {
-      this.dynamicComponentService.addDynamicComponent(this.viewContainerRef, component, this.data);
+      this.dynamicComponentService.addDynamicComponent(this.viewContainerRef, component, this.data.data);
     }
   }
 
