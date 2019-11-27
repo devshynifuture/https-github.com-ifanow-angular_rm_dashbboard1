@@ -33,13 +33,15 @@ import { EventService } from 'src/app/Data-service/event.service';
 
 export class InsuranceComponent implements OnInit {
   displayedColumns = ['no', 'life', 'name', 'number', 'sum', 'cvalue', 'premium', 'term', 'pterm', 'desc', 'status', 'icons'];
-  dataSource = ELEMENT_DATA;
+  dataSource;
   displayedColumns1 = ['no', 'owner', 'cvalue', 'amt', 'mvalue', 'rate', 'mdate', 'type', 'ppf', 'desc', 'status', 'icons'];
-  dataSource1 = ELEMENT_DATA1;
+  dataSource1
   advisorId: any;
   insuranceSubTypeId: any;
   clientId: any;
   noData: string;
+  lifeInsuranceFlag:boolean;
+  generalInsuranceFlag: boolean;
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   viewMode;
   lifeInsuranceList = [{ name: "Term", id: 1 }, { name: "Traditional", id: 2 }, { name: "ULIP", id: 3 }]
@@ -50,6 +52,8 @@ export class InsuranceComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getGlobalDataInsurance();
     this.getInsuranceData(1)
+    this.lifeInsuranceFlag=true;
+    this.generalInsuranceFlag=false;
   }
   getInsuranceSubTypeData(advisorId, clientId, insuranceId, insuranceSubTypeId) {
     let obj = {
@@ -80,18 +84,28 @@ export class InsuranceComponent implements OnInit {
       "insuranceTypeId": typeId
     }
     this.cusService.getInsuranceData(obj).subscribe(
-      data => console.log(data)
+      data =>this.getInsuranceDataRes(data)
     )
+  }
+  getInsuranceDataRes(data)
+  {
+    if (data) {
+      this.dataSource = data.insuranceList;
+    }
+    else {
+      this.dataSource = undefined
+      this.noData = "No Insurance Data"
+    }
   }
   getGlobalDataInsurance() {
     let obj = {
-
     }
     this.cusService.getInsuranceGlobalData(obj).subscribe(
       data => console.log(data)
     )
   }
   getInsuranceTypeData(typeId, typeSubId) {
+    this.lifeInsuranceFlag=false
     this.insuranceTypeId = typeId
     this.insuranceSubTypeId = typeSubId
     this.getInsuranceSubTypeData(this.advisorId, 2978, typeId, typeSubId)
@@ -133,6 +147,9 @@ export class InsuranceComponent implements OnInit {
   }
   toggle(value) {
     if (value === "lifeInsurance") {
+      this.lifeInsuranceFlag=true;
+      this.generalInsuranceFlag=false;
+      this.insuranceSubTypeId=0
       this.generalLifeInsuranceList = [];
       this.lifeInsuranceList = [];
       [{ name: "Term", id: 1 }, { name: "Traditional", id: 2 }, { name: "ULIP", id: 3 }].map((i) => {
@@ -141,6 +158,8 @@ export class InsuranceComponent implements OnInit {
     }
     else {
       this.lifeInsuranceList = [];
+      this.lifeInsuranceFlag=false;
+      this.generalInsuranceFlag=true;
       this.generalLifeInsuranceList = [];
       [{ name: "Health", id: 4 }, { name: "Car/2 Wheeler", id: 5 }, { name: "Travel", id: 6 }, { name: "Personal accident", id: 7 }, { name: "Critical illness", id: 8 }, { name: "Cancer", id: 9 }, { name: "Home", id: 10 }, { name: "Others", id: 11 }].map((i) => {
         this.generalLifeInsuranceList.push(i)
@@ -219,18 +238,3 @@ export interface PeriodicElement1 {
   status: string;
 
 }
-
-const ELEMENT_DATA1: PeriodicElement1[] = [
-  {
-    no: "1", owner: "Rahul Jain", cvalue: "94,925", amt: "60,000", mvalue: "1,00,000", rate: "8.40%",
-    mdate: "18/09/2021", type: "Cumulative", ppf: "980787870909", desc: "ICICI FD", status: "MATURED"
-  },
-  {
-    no: "2", owner: "Shilpa Jain", cvalue: "94,925", amt: "60,000", mvalue: "1,00,000", rate: "8.40%",
-    mdate: "18/09/2021", type: "Cumulative", ppf: "980787870909", desc: "ICICI FD", status: "MATURED"
-  },
-  {
-    no: "", owner: "Total", cvalue: "1,28,925", amt: "1,28,925", mvalue: "1,28,925", rate: "",
-    mdate: "", type: "", ppf: "", desc: "", status: ""
-  },
-];

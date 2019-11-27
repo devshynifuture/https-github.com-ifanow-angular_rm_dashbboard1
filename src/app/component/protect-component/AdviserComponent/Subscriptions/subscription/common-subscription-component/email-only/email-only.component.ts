@@ -6,8 +6,8 @@ import {SubscriptionService} from '../../../subscription.service';
 
 @Component({
   selector: 'app-email-only',
-  // templateUrl: './email-only.component.html',
-  templateUrl: './invoice-pdf.html',
+  templateUrl: './email-only.component.html',
+  // templateUrl: './invoice-pdf.html',
 
   styleUrls: ['./email-only.component.scss'],
   providers: [
