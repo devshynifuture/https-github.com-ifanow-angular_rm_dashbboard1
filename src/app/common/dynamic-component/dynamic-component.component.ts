@@ -1,11 +1,12 @@
-import {Component, Input, OnInit, ViewContainerRef, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../animation/animation';
-import {DynamicComponentService} from "../../services/dynamic-component.service";
+import {DynamicComponentService} from '../../services/dynamic-component.service';
+import {DataComponent} from "../../interfaces/data.component";
 
 @Component({
-  selector: 'app-custom-dialog-container',
-  templateUrl: './custom-dialog-container.component.html',
-  styleUrls: ['./custom-dialog-container.component.scss'],
+  selector: 'app-dynamic-component',
+  templateUrl: './dynamic-component.component.html',
+  styleUrls: ['./dynamic-component.component.scss'],
   animations: [
     dialogContainerOpacity,
     rightSliderAnimation,
@@ -13,26 +14,40 @@ import {DynamicComponentService} from "../../services/dynamic-component.service"
     upperSliderAnimation
   ]
 })
-export class CustomDialogContainerComponent implements OnInit {
-
+export class DynamicComponentComponent implements OnInit, DataComponent {
+  _data: any;
   isOverlayVisible;
   dialogState;
+
+  _currentState;
+  _componentName;
 
   constructor(private dynamicComponentService: DynamicComponentService) {
   }
 
-  _currentState;
 
   // percentageClose = '40%';
 
   @Input()
   set currentState(currentState: string) {
-    this.handleChangeOfState(currentState);
     // this.addDynamicComponentService(this.componentName);
-
+    this.handleChangeOfState(currentState);
   }
 
-  _componentName;
+  @Input()
+  set data(inputData) {
+    this._data = inputData;
+    if (inputData.componentName) {
+      this._componentName = inputData.componentName;
+      console.log('DynamicComponentComponent: ', inputData);
+      this.addDynamicComponentService(inputData.componentName);
+    }
+  }
+
+  get data() {
+    return this._data;
+  }
+
   @Input()
   set componentName(componentName) {
     this._componentName = componentName;
@@ -46,7 +61,7 @@ export class CustomDialogContainerComponent implements OnInit {
   @ViewChild('dynamic', {
     read: ViewContainerRef,
     static: false
-  }) viewContainerRef: ViewContainerRef
+  }) viewContainerRef: ViewContainerRef;
 
   ngOnInit() {
     this.addDynamicComponentService(this.componentName);
@@ -54,7 +69,7 @@ export class CustomDialogContainerComponent implements OnInit {
 
   addDynamicComponentService(component) {
     if (this.viewContainerRef) {
-      // this.dynamicComponentService.addDynamicComponent(this.viewContainerRef, component);
+      this.dynamicComponentService.addDynamicComponent(this.viewContainerRef, component, this.data);
     }
   }
 
@@ -76,5 +91,6 @@ export class CustomDialogContainerComponent implements OnInit {
     }
 
   }
+
 
 }
