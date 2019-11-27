@@ -41,7 +41,15 @@
 .bb {
     border-bottom: 1px solid #DADCE0;
 }
-
+.bt {
+    border-top: 1px solid #DADCE0;
+}
+.br {
+    border-right: 1px solid #DADCE0;
+}
+.bl {
+    border-left: 1px solid #DADCE0;
+}
 .bt-1 {
     border-top: 1px solid rgba(0, 0, 0, 0.12) !important;
 }

@@ -551,7 +551,8 @@ mat-tab-group[vertical] {
 #ui-document,
 #ui-mutualfunds-capital,
 #ui-profile-plan,
-#ui-planinsurance {
+#ui-planinsurance,
+#ui-goal {
     padding-top: 129px !important;
 }
 
@@ -749,7 +750,7 @@ mat-tab-group[vertical] {
     }
 }
 
-.cashflow #table-low {
+.cashflow #table-low{
     .mat-row:last-child {
         font-weight: normal !important;
         text-align: left !important;
@@ -764,6 +765,23 @@ mat-tab-group[vertical] {
     tr.mat-header-row {
         height: 40px !important;
         display: none;
+    }
+}
+.current-policies #table-low,.goal-allocations#table-low{
+    .mat-row:last-child {
+        font-weight: normal !important;
+        text-align: left !important;
+    }
+    tr.mat-row {
+        height: 30px !important;
+        padding: 6px 3px !important;
+    }
+    tbody td {
+        padding: 6px 4px !important;
+    }
+    tr.mat-header-row {
+        height: 40px !important;
+       
     }
 }
 

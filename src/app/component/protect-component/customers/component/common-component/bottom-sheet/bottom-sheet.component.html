@@ -1,7 +1,7 @@
 <mat-nav-list>
     <div class="row bg-dark p-12">
         <div class="col-md-9">
-            <h4 class="l-26 f-500 mb-0 t-white f-20">Uploading 3 items</h4>
+            <h4 class="l-26 f-500 mb-0 t-white f-20">Uploading {{noOfFiles}} items</h4>
         </div>
         <div class="col-md-3 p-0 text-right">
             <i class="t-white material-icons mr-16"> expand_more </i>
@@ -11,7 +11,7 @@
 
     <div class="row p-8 mb-8">
         <div class="col-md-9 f-14">
-            30 seconds left...
+            0 seconds left...
         </div>
         <div class="col-md-3 f-14 text-right text-primary c-p">
             CANCEL
@@ -19,26 +19,13 @@
     </div>
 
     <div class="row p-8 mb-8">
-        <div class="col-md-10">
-            <img class="mr-8" src="/assets/images/svg/xlsx-icon.svg"> Policy comparision table.xlsx
+        <div class="col-md-10" *ngFor="let item of fileData">
+            <img class="mr-8" src="/assets/images/svg/xlsx-icon.svg">{{item.name}}
         </div>
         <div class="col-md-2 text-right">
             <mat-progress-spinner class="example-margin " [color]="color" [mode]="mode" [value]="value">
             </mat-progress-spinner>
         </div>
     </div>
-
-    <div class="row p-8 mb-8">
-        <div class="col-md-10">
-            <img class="mr-8" src="/assets/images/svg/xlsx-icon.svg"> Policy comparision table.xlsx
-        </div>
-        <div class="col-md-2 text-right">
-            <img src="/assets/images/svg/right-green.svg">
-        </div>
-    </div>
-
-
-
-
 
 </mat-nav-list>

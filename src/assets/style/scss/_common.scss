@@ -130,7 +130,9 @@ li {
 .left {
     float: left !important;
 }
-
+.none{
+    display: $none !important;
+}
 .mat-drawer-inner-container {
     overflow: hidden !important;
 }

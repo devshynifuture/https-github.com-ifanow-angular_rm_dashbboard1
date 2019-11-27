@@ -136,12 +136,14 @@
                                                 Share</button>
                                             <button mat-menu-item><img src="assets/images/svg/shareable.svg"
                                                     class="mr-4"> Get shareable link</button>
-                                            <button mat-menu-item (click)="starFiles(element)"><img src="assets/images/svg/star-border-icon.svg"
-                                                    class="mr-4" >Add to starred</button>
+                                            <button mat-menu-item (click)="starFiles(element)"><img
+                                                    src="assets/images/svg/star-border-icon.svg" class="mr-4">Add to
+                                                starred</button>
                                             <button mat-menu-item><img src="assets/images/svg/edit-name.svg"
                                                     class="mr-4">Rename</button>
-                                            <button mat-menu-item (click)="viewActivities(element)"><img src="assets/images/svg/info-icon.svg"
-                                                    class="mr-4">View activity</button>
+                                            <button mat-menu-item (click)="viewActivities(element)"><img
+                                                    src="assets/images/svg/info-icon.svg" class="mr-4">View
+                                                activity</button>
                                             <button mat-menu-item><img src="assets/images/svg/move-to-icon.svg"
                                                     class="mr-4">Move to</button>
                                             <button mat-menu-item><img src="assets/images/svg/file-copy.svg"
@@ -171,7 +173,11 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div>
+                                <ng-container>
+                                    <input type="file" id="file" multiple (change)="getFileDetails($event)">
+                                </ng-container>
+                            </div>
                             <div class="row">
                                 <div class="col">
                                     <p mat-raised-button (click)="openBottomSheet()" class="text-primary f-14 c-p mb-12 "><img src="/assets/images/svg/upload-document-icon.svg" class="mr-8"> Upload file
