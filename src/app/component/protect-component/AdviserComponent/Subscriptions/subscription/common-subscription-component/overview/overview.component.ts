@@ -53,22 +53,22 @@ export class OverviewComponent implements OnInit {
     this.overviewDesign = 'false';
   }
 
-  openForm(data,value) {
-    const fragmentData = {
-      Flag: value,
-      data,
-      id: 1,
-      state: 'open'
-    };
-    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        // console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          // console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
+  openForm(data) {
+      const fragmentData = {
+        Flag: 'addEditDocument',
+        data: this._upperData,
+        id: 1,
+        state: 'open'
+      };
+      const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+        sideBarData => {
+          // console.log('this is sidebardata in subs subs : ', sideBarData);
+          if (UtilService.isDialogClose(sideBarData)) {
+            // console.log('this is sidebardata in subs subs 2: ', sideBarData);
+            rightSideDataSub.unsubscribe();
+          }
         }
-      }
-    );
+      );
   }
 
   deleteModal(singlePlan, value) {
