@@ -1,7 +1,7 @@
 <!--<div [@dialogContainer]="dialogState" *ngIf="isOverlayVisible" class="custom-overlay">-->
 <!--</div>-->
 <app-custom-dialog-container [currentState]="currentState">
-  <div [@openClose]="currentState" class="right_sidenav">&ndash;&gt;
+  <div [@openClose]="currentState" class="right_sidenav">
     <app-common-froala *ngIf="subscriptionTab=='viewDocuments'||subscriptionTab=='viewDoc'" [data]="inputData"
                        [changeFooter]='subscriptionTab' [screenType]="subscriptionTab"></app-common-froala>
     <app-common-froala *ngIf="subscriptionTab=='viewDoc'" [data]="inputData" [changeFooter]='subscriptionTab'
@@ -36,12 +36,12 @@
     <app-email-only [inputData]="inputData" *ngIf="subscriptionTab=='emailOnly'"></app-email-only>
     <app-email-only [inputData]="inputData" *ngIf="subscriptionTab=='emailQuotationFroala'"></app-email-only>
     <app-email-only [inputData]="inputData" *ngIf="subscriptionTab=='emailInvoiceFroala'"></app-email-only>
-    <app-add-liabilities *ngIf="subscriptionTab=='addLib'"></app-add-liabilities>
+    <!-- <app-add-liabilities *ngIf="subscriptionTab=='addLib'"></app-add-liabilities> -->
 
-    <app-liabilities-detail *ngIf="subscriptionTab=='addLiabilitiesDetail'"></app-liabilities-detail>
+    <!-- <app-liabilities-detail *ngIf="subscriptionTab=='addLiabilitiesDetail'"></app-liabilities-detail> -->
     <!--    <app-add-liabilities [data]="inputData" *ngIf="subscriptionTab=='addLiabilities'"></app-add-liabilities>-->
     <!--    <app-add-insurance [insuranceData]="fragmentData" *ngIf="subscriptionTab=='addInsurance'"></app-add-insurance>-->
-    <app-libilities-right *ngIf="subscriptionTab=='portfolioSummary'"></app-libilities-right>
+    <!-- <app-libilities-right *ngIf="subscriptionTab=='portfolioSummary'"></app-libilities-right>
     <app-fixed-deposit [data]="inputData" *ngIf="subscriptionTab=='addFixedDeposit'"></app-fixed-deposit>
     <app-add-other-payables [inputData]="inputData"
                             *ngIf="subscriptionTab=='addOtherPayables'"></app-add-other-payables>
@@ -84,8 +84,9 @@
     <app-add-gratuity *ngIf="subscriptionTab=='addGratuity'"></app-add-gratuity> &ndash;&gt;
     <app-nps-summary-portfolio [data]="inputData" *ngIf="subscriptionTab=='addSummaryPort'"></app-nps-summary-portfolio>
     &ndash;&gt;
-    <app-nps-scheme-holding *ngIf="subscriptionTab=='addSchemeHoldings'"></app-nps-scheme-holding> &ndash;&gt;
-</app-custom-dialog-container>
+    <app-nps-scheme-holding *ngIf="subscriptionTab=='addSchemeHoldings'"></app-nps-scheme-holding> &ndash;&gt; -->
+</div>
+  </app-custom-dialog-container>
 <app-dynamic-component [currentState]="currentState" [data]="fragmentData"></app-dynamic-component>
 <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
   <app-subscription-upper-slider

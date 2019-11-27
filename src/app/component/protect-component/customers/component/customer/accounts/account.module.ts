@@ -11,7 +11,7 @@ import {MaterialModule} from '../../../../../../material/material';
 import {AccountsComponent} from './accounts.component';
 import {AssetsComponent} from './assets/assets.component';
 import {SchemeLevelTransactionComponent} from '../../common-component/scheme-level-transaction/scheme-level-transaction.component';
-import {FixedDepositComponent} from './assets/fixedIncome/fixed-deposit/fixed-deposit.component';
+// import {FixedDepositComponent} from './assets/fixedIncome/fixed-deposit/fixed-deposit.component';
 import {ExpensesComponent} from './expenses/expenses.component';
 import {SummaryComponent} from './summary/summary.component';
 import {BottomSheetComponent} from '../../common-component/bottom-sheet/bottom-sheet.component';
@@ -47,7 +47,7 @@ import {PoTdSchemeComponent} from './assets/smallSavingScheme/po-td-scheme/po-td
 import {PoMisSchemeComponent} from './assets/smallSavingScheme/po-mis-scheme/po-mis-scheme.component';
 import {SmallSavingSchemeComponent} from './assets/smallSavingScheme/small-saving-scheme/small-saving-scheme.component';
 import {RealEstateComponent} from './assets/realEstate/real-estate/real-estate.component';
-import {AddRealEstateComponent} from './assets/realEstate/add-real-estate/add-real-estate.component';
+// import {AddRealEstateComponent} from './assets/realEstate/add-real-estate/add-real-estate.component';
 import {NpsSummaryPortfolioComponent} from './assets/retirementAccounts/add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
 import {NpsSchemeHoldingComponent} from './assets/retirementAccounts/add-nps/nps-scheme-holding/nps-scheme-holding.component';
 import {AddPpfComponent} from './assets/smallSavingScheme/common-component/add-ppf/add-ppf.component';
@@ -75,10 +75,10 @@ import {AddOtherPayablesComponent} from './liabilities/add-other-payables/add-ot
 
 import {CashAndBankComponent} from './assets/cash&bank/cash-and-bank/cash-and-bank.component';
 import {CommoditiesComponent} from './assets/commodities/commodities/commodities.component';
-import {GoldComponent} from './assets/commodities/gold/gold.component';
-import {OthersComponent} from './assets/commodities/others/others.component';
-import {BankAccountsComponent} from './assets/cash&bank/bank-accounts/bank-accounts.component';
-import {CashInHandComponent} from './assets/cash&bank/cash-in-hand/cash-in-hand.component';
+// import {GoldComponent} from './assets/commodities/gold/gold.component';
+// import {OthersComponent} from './assets/commodities/others/others.component';
+// import {BankAccountsComponent} from './assets/cash&bank/bank-accounts/bank-accounts.component';
+// import {CashInHandComponent} from './assets/cash&bank/cash-in-hand/cash-in-hand.component';
 import {OwnerColumnComponent} from './owner-component/owner-column/owner-column.component';
 import {AddTransactionComponent} from './assets/smallSavingScheme/common-component/add-transaction/add-transaction.component';
 import {SkeletonLoadingDirective} from 'src/app/skeleton-loading.directive';
@@ -105,7 +105,7 @@ import {OwnerComponentModule} from "./owner-component/owner-component.module";
     // AddLiabilitiesComponent,
     // AddInsuranceComponent,
     LibilitiesRightComponent,
-    FixedDepositComponent,
+    // FixedDepositComponent,
     FactShitComponent,
     TransactionsComponent,
     UpperCustomerComponent,
@@ -134,7 +134,7 @@ import {OwnerComponentModule} from "./owner-component/owner-component.module";
     PoMisSchemeComponent,
     SmallSavingSchemeComponent,
     RealEstateComponent,
-    AddRealEstateComponent,
+    // AddRealEstateComponent,
     NpsSummaryPortfolioComponent,
     NpsSchemeHoldingComponent,
     AddPpfComponent,
@@ -151,10 +151,10 @@ import {OwnerComponentModule} from "./owner-component/owner-component.module";
     AddOtherPayablesComponent,
     CashAndBankComponent,
     CommoditiesComponent,
-    GoldComponent,
-    OthersComponent,
-    BankAccountsComponent,
-    CashInHandComponent,
+    // GoldComponent,
+    // OthersComponent,
+    // BankAccountsComponent,
+    // CashInHandComponent,
     OwnerColumnComponent,
     AddTransactionComponent,
     SkeletonLoadingDirective,
@@ -170,14 +170,14 @@ import {OwnerComponentModule} from "./owner-component/owner-component.module";
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [AccountsComponent, AddOtherPayablesComponent, OthersComponent,
-    CashAndBankComponent, BankAccountsComponent, CashInHandComponent, CommoditiesComponent,
-    GoldComponent, NpsSchemeHoldingComponent, NpsSummaryPortfolioComponent, LibilitiesRightComponent,
-    FixedDepositComponent, AddSuperannuationComponent, AddEPSComponent, AddGratuityComponent,
+  exports: [AccountsComponent, AddOtherPayablesComponent,
+    CashAndBankComponent, CommoditiesComponent
+    , NpsSchemeHoldingComponent, NpsSummaryPortfolioComponent, LibilitiesRightComponent,
+     AddSuperannuationComponent, AddEPSComponent, AddGratuityComponent,
     AddNPSComponent, AddEPFComponent, RecuringDepositComponent,
     BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent,
     ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent,
-    RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent, AddRealEstateComponent,
+    RightFilterComponent, DetailedViewComponent, LiabilitiesDetailComponent,
     RealEstateComponent, AddPpfComponent, AddNscComponent, AddSsyComponent, AddKvpComponent, AddScssComponent,
     AddPoSavingComponent, AddPoMisComponent, AddPoTdComponent, AddPoRdComponent, AddExpensesComponent,
     OtherPayablesComponent, OwnerColumnComponent],

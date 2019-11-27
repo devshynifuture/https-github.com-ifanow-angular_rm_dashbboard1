@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { FixedDepositComponent } from '../fixed-deposit/fixed-deposit.component';
 
 @Component({
   selector: 'app-fixed-income',
@@ -172,9 +173,10 @@ export class FixedIncomeComponent implements OnInit {
   openPortfolioSummary(value, state, data) {
     const fragmentData = {
       Flag: value,
-      data: data,
+      data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: FixedDepositComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

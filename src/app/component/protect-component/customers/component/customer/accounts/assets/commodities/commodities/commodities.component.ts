@@ -6,6 +6,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { GoldComponent } from '../gold/gold.component';
+import { OthersComponent } from '../others/others.component';
 
 @Component({
   selector: 'app-commodities',
@@ -129,7 +131,34 @@ export class CommoditiesComponent implements OnInit {
       Flag: value,
       data: data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: GoldComponent,
+
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (value == 'addedGold') {
+          this.getGoldList()
+        } else {
+          this.getOtherList()
+        }
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+  openOthers(value, state, data) {
+    const fragmentData = {
+      Flag: value,
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: OthersComponent,
+
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
