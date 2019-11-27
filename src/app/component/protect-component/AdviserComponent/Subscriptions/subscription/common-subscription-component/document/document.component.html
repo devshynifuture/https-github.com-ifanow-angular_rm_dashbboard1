@@ -333,8 +333,10 @@
                 more_vert
               </i>
                 <mat-menu #menu="matMenu">
-                  <a mat-menu-item (click)="changeDisplay('documentUpper',element)">View & Modify
-                    document</a>
+                  <!-- <a mat-menu-item (click)="changeDisplay('documentUpper',element)">View & Modify
+                    document</a> -->
+                    <a mat-menu-item (click)="open('viewDocuments',element)">View & Modify
+                      document</a>
                   <a mat-menu-item class="bt-1" (click)="deleteModal('DOCUMENT')">Delete
                     document</a>
                 </mat-menu>
