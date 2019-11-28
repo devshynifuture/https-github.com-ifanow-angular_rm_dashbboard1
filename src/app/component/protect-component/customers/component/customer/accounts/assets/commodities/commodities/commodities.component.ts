@@ -8,6 +8,8 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { MatDialog } from '@angular/material';
 import { GoldComponent } from '../gold/gold.component';
 import { OthersComponent } from '../others/others.component';
+import { DetailedViewGoldComponent } from '../gold/detailed-view-gold/detailed-view-gold.component';
+import { DetailedViewOthersComponent } from '../others/detailed-view-others/detailed-view-others.component';
 
 @Component({
   selector: 'app-commodities',
@@ -167,6 +169,44 @@ export class CommoditiesComponent implements OnInit {
         } else {
           this.getOtherList()
         }
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+  detailedViewGold(flagValue,data,state) {
+    const fragmentData = {
+      Flag: flagValue,
+      id: 1,
+      data:data,
+      state: state,
+      componentName : DetailedViewGoldComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+  detailedViewOthers(flagValue,data,state) {
+    const fragmentData = {
+      Flag: flagValue,
+      id: 1,
+      data:data,
+      state: state,
+      componentName : DetailedViewOthersComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);

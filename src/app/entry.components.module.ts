@@ -16,10 +16,14 @@ import {RecuringDepositComponent} from './component/protect-component/customers/
 import {AddEPFComponent} from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-epf/add-epf.component';
 import {AddNPSComponent} from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/add-nps.component';
 import { LiabilitiesDetailComponent } from './component/protect-component/customers/component/common-component/liabilities-detail/liabilities-detail.component';
+import { DetailedViewGoldComponent } from './component/protect-component/customers/component/customer/accounts/assets/commodities/gold/detailed-view-gold/detailed-view-gold.component';
+import { DetailedViewOthersComponent } from './component/protect-component/customers/component/customer/accounts/assets/commodities/others/detailed-view-others/detailed-view-others.component';
+import { DetailedViewBankAccountComponent } from './component/protect-component/customers/component/customer/accounts/assets/cash&bank/bank-accounts/detailed-view-bank-account/detailed-view-bank-account.component';
+import { DetailedViewCashInHandComponent } from './component/protect-component/customers/component/customer/accounts/assets/cash&bank/cash-in-hand/detailed-view-cash-in-hand/detailed-view-cash-in-hand.component';
 
 export const componentList = [AddLiabilitiesComponent, AddInsuranceComponent, FixedDepositComponent,
   AddRealEstateComponent, GoldComponent, AddNPSComponent, RecuringDepositComponent, AddEPFComponent,
-  OthersComponent, CashInHandComponent, BankAccountsComponent,LiabilitiesDetailComponent];
+  OthersComponent, CashInHandComponent, BankAccountsComponent,LiabilitiesDetailComponent,DetailedViewGoldComponent,DetailedViewOthersComponent,DetailedViewBankAccountComponent,DetailedViewCashInHandComponent];
 
 @NgModule({
   declarations: componentList,

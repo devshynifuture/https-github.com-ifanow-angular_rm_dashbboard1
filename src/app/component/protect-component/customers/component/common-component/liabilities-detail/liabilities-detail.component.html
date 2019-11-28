@@ -110,7 +110,7 @@
                         Total interest paid till date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{xyz}}
+                        {{(libility.principalOutstandingAsOn)?(libility.principalOutstandingAsOn | date:'dd/MM/yyyy'):'-'}}
                     </div>
                 </div>
 
@@ -119,7 +119,7 @@
                         Total principal paid till date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        xyz
+                        {{libility.principalOutStandingAmount}}
                     </div>
                 </div>
 
