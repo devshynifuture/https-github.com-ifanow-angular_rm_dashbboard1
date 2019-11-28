@@ -60,6 +60,11 @@ import { SkeletonLoadingDirective } from 'src/app/skeleton-loading.directive';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { DocumentNewFolderComponent } from '../../common-component/document-new-folder/document-new-folder.component';
 import { OwnerComponentModule } from './owner-component/owner-component.module';
+import { DetailedPpfComponent } from './assets/smallSavingScheme/ppf-scheme/detailed-ppf/detailed-ppf.component';
+import { DetailedNscComponent } from './assets/smallSavingScheme/nsc-scheme/detailed-nsc/detailed-nsc.component';
+import { DetailedSsyComponent } from './assets/smallSavingScheme/ssy-scheme/detailed-ssy/detailed-ssy.component';
+import { DetailedKvpComponent } from './assets/smallSavingScheme/kvp-scheme/detailed-kvp/detailed-kvp.component';
+import { DetailedScssComponent } from './assets/smallSavingScheme/scss-scheme/detailed-scss/detailed-scss.component';
 
 @NgModule({
   declarations: [
@@ -132,6 +137,10 @@ import { OwnerComponentModule } from './owner-component/owner-component.module';
     SkeletonLoadingDirective,
     FormatNumberDirective,
     DocumentNewFolderComponent,
+    DetailedPpfComponent,
+    DetailedSsyComponent,
+    DetailedKvpComponent,
+    DetailedScssComponent,
   ],
   imports: [
     // BrowserModule,
