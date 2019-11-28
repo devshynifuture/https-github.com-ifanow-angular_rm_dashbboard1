@@ -40,11 +40,6 @@ import { PoTdSchemeComponent } from './assets/smallSavingScheme/po-td-scheme/po-
 import { PoMisSchemeComponent } from './assets/smallSavingScheme/po-mis-scheme/po-mis-scheme.component';
 import { SmallSavingSchemeComponent } from './assets/smallSavingScheme/small-saving-scheme/small-saving-scheme.component';
 import { RealEstateComponent } from './assets/realEstate/real-estate/real-estate.component';
-import { AddKvpComponent } from './assets/smallSavingScheme/common-component/add-kvp/add-kvp.component';
-import { AddScssComponent } from './assets/smallSavingScheme/common-component/add-scss/add-scss.component';
-import { AddPoSavingComponent } from './assets/smallSavingScheme/common-component/add-po-saving/add-po-saving.component';
-import { AddPoMisComponent } from './assets/smallSavingScheme/common-component/add-po-mis/add-po-mis.component';
-import { AddPoRdComponent } from './assets/smallSavingScheme/common-component/add-po-rd/add-po-rd.component';
 import { AddExpensesComponent } from '../../common-component/add-expenses/add-expenses.component';
 import { OtherPayablesComponent } from './liabilities/other-payables/other-payables.component';
 // import {PlanComponent} from '../plan/plan.component';
@@ -118,12 +113,12 @@ import { OwnerComponentModule } from './owner-component/owner-component.module';
     // AddPpfComponent,
     // AddNscComponent,
     // AddSsyComponent,
-    AddKvpComponent,
-    AddScssComponent,
-    AddPoSavingComponent,
+    // AddKvpComponent,
+    // AddScssComponent,
+    // AddPoSavingComponent,
     // AddPoTdComponent,
-    AddPoMisComponent,
-    AddPoRdComponent,
+    // AddPoMisComponent,
+    // AddPoRdComponent,
     AddExpensesComponent,
     OtherPayablesComponent,
     AddOtherPayablesComponent,
@@ -166,17 +161,17 @@ import { OwnerComponentModule } from './owner-component/owner-component.module';
     UpperCustomerComponent,
     RightFilterComponent,
     DetailedViewComponent,
-   // LiabilitiesDetailComponent,
+    // LiabilitiesDetailComponent,
     RealEstateComponent,
     // AddPpfComponent,
     // AddNscComponent,
     // AddSsyComponent,
-    AddKvpComponent,
-    AddScssComponent,
-    AddPoSavingComponent,
-    AddPoMisComponent,
+    // AddKvpComponent,
+    // AddScssComponent,
+    // AddPoSavingComponent,
+    // AddPoMisComponent,
     // AddPoTdComponent,
-    AddPoRdComponent,
+    // AddPoRdComponent,
     AddExpensesComponent,
     OtherPayablesComponent
   ],

@@ -1,3 +1,4 @@
+import { AddKvpComponent } from './../common-component/add-kvp/add-kvp.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
@@ -89,12 +90,13 @@ export class KvpSchemeComponent implements OnInit {
 
     });
   }
-  addKVP(value, data) {
+  openAddKVP(data) {
     const fragmentData = {
-      Flag: value,
+      flag: 'addKVP',
       data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: AddKvpComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
