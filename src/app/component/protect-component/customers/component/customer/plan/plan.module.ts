@@ -16,6 +16,7 @@ import { AddScenariosComponent } from './scenarios-plan/add-scenarios/add-scenar
 import { AddInvestmentPlanComponent } from './investments-plan/add-investment-plan/add-investment-plan.component';
 import { AddProfilePlanComponent } from './profile-plan/add-profile-plan/add-profile-plan.component';
 import { HistoryRiskProfileComponent } from './profile-plan/history-risk-profile/history-risk-profile.component';
+import { MfAllocationsComponent } from './goals-plan/mf-allocations/mf-allocations.component';
 // import {BrowserModule} from '@angular/platform-browser';
 
 
@@ -39,6 +40,7 @@ import { HistoryRiskProfileComponent } from './profile-plan/history-risk-profile
     AddInvestmentPlanComponent,
     AddProfilePlanComponent,
     HistoryRiskProfileComponent,
+    MfAllocationsComponent,
   ],
   imports: [
     CommonModule,

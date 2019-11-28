@@ -343,10 +343,10 @@
                                   </table>
                                   <div class="row pt-28">
                                       <div class="col-md-12 p-0">
-                                          <h5 class="m-0 f-500 text-black">Cost of delay</h5>
+                                          <h5 class="m-0 f-500 text-black pb-8">Cost of delay</h5>
                                       </div>
                                   </div>
-                                  <div class="row pt-8 b-a">
+                                  <div class="row b-a">
                                       <div class="col-md-12 p-0">
                                         <img src="/assets/images/svg/progressbar.svg" class="w-100">
                                         </div>
@@ -371,8 +371,20 @@
                                         </div>
                                   </div>
                                   <div class="row pt-24">
-                                        <div class="col-md-12 p-0">
+                                        <div class="col-md-11 p-0">
                                           <h5 class="m-0 f-500 pb-8">Loan deatils</h5>
+                                        </div>
+                                        <div class="col-md-1 pr-0">
+                                            <mat-icon [matMenuTriggerFor]="menu" class="c-p right">more_vert</mat-icon>
+                                            <mat-menu #menu="matMenu">
+                                            <button mat-menu-item>Edit note</button>
+                                            <button mat-menu-item>Hide from client</button>
+                                            <button mat-menu-item>Delete note</button>
+                                            <button mat-menu-item>View from client</button>
+                                            <button mat-menu-item>Add new note</button>
+                                            </mat-menu>
+                                        </div>
+                                    </div>
                                           <div class="row b-a">
                                              <div class="col-md-10">
                                                  <div class="row pt-16">
@@ -409,8 +421,7 @@
                                                         </div>
                                                     </div>
                                              </div>
-                                          </div>
-                                        </div>
+                                        
                                     </div>
                                   
                         </div>
