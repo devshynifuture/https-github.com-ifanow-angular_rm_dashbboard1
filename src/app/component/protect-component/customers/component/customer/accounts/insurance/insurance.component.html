@@ -65,7 +65,7 @@
                             <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
                             <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                                     class="material-icons">filter_list</i>FILTERS</button>
-                            <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('addInsurance',null)"><i class="material-icons">add</i>ADD NEW</button>
+                            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)"><i class="material-icons">add</i>ADD NEW</button>
 
                         </div>
                     </div>
@@ -127,8 +127,8 @@
                                     more_vert
                                 </i>
                                 <mat-menu #menu4="matMenu">
-                                    <button (click)="open('addInsurance',element)" mat-menu-item>Edit</button>
-                                    <button (click)="open('detailedView',element)" mat-menu-item>Deatiled View</button>
+                                    <button (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
+                                    <button (click)="open(element)" mat-menu-item>Deatiled View</button>
                                     <button mat-menu-item>Activity</button>
                                     <button mat-menu-item (click)="deleteModal('INSURANCE',element)">Delete</button>
                                 </mat-menu>

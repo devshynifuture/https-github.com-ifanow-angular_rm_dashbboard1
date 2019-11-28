@@ -1,23 +1,23 @@
-import { NgModule } from '@angular/core';
-import { ScenariosPlanComponent } from './scenarios-plan/scenarios-plan.component';
-import { CashflowsPlanComponent } from './cashflows-plan/cashflows-plan.component';
-import { ProfilePlanComponent } from './profile-plan/profile-plan.component';
-import { InvestmentsPlanComponent } from './investments-plan/investments-plan.component';
-import { GoalsPlanComponent } from './goals-plan/goals-plan.component';
-import { SummaryPlanComponent } from './summary-plan/summary-plan.component';
-import { InsurancePlanComponent } from './insurance-plan/insurance-plan.component';
-import { PlanComponent } from './plan.component';
-import { TexesPlanComponent } from './texes-plan/texes-plan.component';
-import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../../../../../../material/material';
-import { ChartModule } from 'angular-highcharts';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AddScenariosComponent } from './scenarios-plan/add-scenarios/add-scenarios.component';
-import { AddInvestmentPlanComponent } from './investments-plan/add-investment-plan/add-investment-plan.component';
-import { AddProfilePlanComponent } from './profile-plan/add-profile-plan/add-profile-plan.component';
-import { HistoryRiskProfileComponent } from './profile-plan/history-risk-profile/history-risk-profile.component';
+import {NgModule} from '@angular/core';
+import {ScenariosPlanComponent} from './scenarios-plan/scenarios-plan.component';
+import {CashflowsPlanComponent} from './cashflows-plan/cashflows-plan.component';
+import {ProfilePlanComponent} from './profile-plan/profile-plan.component';
+import {InvestmentsPlanComponent} from './investments-plan/investments-plan.component';
+import {GoalsPlanComponent} from './goals-plan/goals-plan.component';
+import {SummaryPlanComponent} from './summary-plan/summary-plan.component';
+import {InsurancePlanComponent} from './insurance-plan/insurance-plan.component';
+import {PlanComponent} from './plan.component';
+import {TexesPlanComponent} from './texes-plan/texes-plan.component';
+import {CommonModule} from '@angular/common';
+import {MaterialModule} from '../../../../../../material/material';
+import {ChartModule} from 'angular-highcharts';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AddScenariosComponent} from './scenarios-plan/add-scenarios/add-scenarios.component';
+import {AddInvestmentPlanComponent} from './investments-plan/add-investment-plan/add-investment-plan.component';
+import {AddProfilePlanComponent} from './profile-plan/add-profile-plan/add-profile-plan.component';
+import {HistoryRiskProfileComponent} from './profile-plan/history-risk-profile/history-risk-profile.component';
 // import {BrowserModule} from '@angular/platform-browser';
-import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
+import {AddPlaninsuranceComponent} from './insurance-plan/add-planinsurance/add-planinsurance.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -40,7 +40,8 @@ import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/ad
     AddInvestmentPlanComponent,
     AddProfilePlanComponent,
     HistoryRiskProfileComponent,
-    AddPlaninsuranceComponent
+    
+    AddPlaninsuranceComponent,
   ],
   imports: [
     CommonModule,
@@ -49,7 +50,8 @@ import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/ad
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [PlanComponent,AddScenariosComponent,AddInvestmentPlanComponent,AddProfilePlanComponent,HistoryRiskProfileComponent,AddPlaninsuranceComponent],
+  exports: [PlanComponent, AddScenariosComponent, AddInvestmentPlanComponent,
+    AddProfilePlanComponent, HistoryRiskProfileComponent, AddPlaninsuranceComponent],
   entryComponents: []
 })
 export class PlanModule {

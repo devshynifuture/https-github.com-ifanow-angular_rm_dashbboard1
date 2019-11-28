@@ -20,7 +20,7 @@ import { EventService } from 'src/app/Data-service/event.service';
   ],
 })
 export class AddEPFComponent implements OnInit {
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   isBalanceAsOn = false;
   isAnnualSalGrowth = false;
   isCurrentEPFBal = false;
@@ -35,7 +35,7 @@ export class AddEPFComponent implements OnInit {
   advisorId: any;
   clientId: any;
 
-  constructor(private event: EventService,private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService) { }
+  constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -108,7 +108,7 @@ export class AddEPFComponent implements OnInit {
         advisorId: this.advisorId,
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
-        ownerName: (this.ownerName == undefined)?this.epf.controls.ownerName.value:this.ownerName,
+        ownerName: (this.ownerName == undefined) ? this.epf.controls.ownerName.value : this.ownerName,
         employeesMonthlyContribution: this.epf.controls.employeeContry.value,
         employersMonthlyContribution: this.epf.controls.employerContry.value,
         annualSalaryGrowth: this.epf.controls.currentEPFBal.value,
@@ -129,16 +129,16 @@ export class AddEPFComponent implements OnInit {
         this.custumService.editEPF(obj).subscribe(
           data => this.editEPFRes(data)
         );
-      }   
+      }
     }
   }
-  addEPFRes(data){
+  addEPFRes(data) {
     console.log('addrecuringDepositRes', data)
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({flag:'added', state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data })
   }
-  editEPFRes(data){
+  editEPFRes(data) {
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({flag:'added', state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data })
   }
 }

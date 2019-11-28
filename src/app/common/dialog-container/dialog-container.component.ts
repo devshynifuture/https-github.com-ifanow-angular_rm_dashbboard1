@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {EventService} from '../../Data-service/event.service';
 import {SubscriptionInject} from '../../component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CreateSubscriptionComponent} from '../../component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/create-subscription/create-subscription.component';
 
 @Component({
   selector: 'app-dialog-container',
@@ -89,6 +90,7 @@ export class DialogContainerComponent implements OnInit {
 
   getFileResponseDataAum(data) {
     this.subscriptionTab = data;
+    // this.subscriptionTab = CreateSubscriptionComponent;
   }
 
   getSubscriptionTabChangeData(data) {

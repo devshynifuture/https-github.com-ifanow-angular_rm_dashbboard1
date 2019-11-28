@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewContainerRef, ViewChild} from '@angular/core';
 import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../animation/animation';
+import {DynamicComponentService} from "../../services/dynamic-component.service";
 
 @Component({
   selector: 'app-custom-dialog-container',
@@ -17,7 +18,7 @@ export class CustomDialogContainerComponent implements OnInit {
   isOverlayVisible;
   dialogState;
 
-  constructor() {
+  constructor(private dynamicComponentService: DynamicComponentService) {
   }
 
   _currentState;
@@ -27,9 +28,34 @@ export class CustomDialogContainerComponent implements OnInit {
   @Input()
   set currentState(currentState: string) {
     this.handleChangeOfState(currentState);
+    // this.addDynamicComponentService(this.componentName);
+
   }
 
+  _componentName;
+  @Input()
+  set componentName(componentName) {
+    this._componentName = componentName;
+    this.addDynamicComponentService(componentName);
+  }
+
+  get componentName() {
+    return this._componentName;
+  }
+
+  @ViewChild('dynamic', {
+    read: ViewContainerRef,
+    static: false
+  }) viewContainerRef: ViewContainerRef
+
   ngOnInit() {
+    this.addDynamicComponentService(this.componentName);
+  }
+
+  addDynamicComponentService(component) {
+    if (this.viewContainerRef) {
+      // this.dynamicComponentService.addDynamicComponent(this.viewContainerRef, component);
+    }
   }
 
   handleChangeOfState(value) {
@@ -41,7 +67,7 @@ export class CustomDialogContainerComponent implements OnInit {
         this.isOverlayVisible = false;
       }, 300);
       // this.eventService.changeOverlayVisible(false);
-    }  else {
+    } else {
       this._currentState = value;
       setTimeout(() => {
         this.dialogState = 'open';

@@ -1,3 +1,4 @@
+import { RecuringDepositComponent } from './../recuring-deposit/recuring-deposit.component';
 import { Component, OnInit } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -31,7 +32,7 @@ export class FixedIncomeComponent implements OnInit {
   sumCurrentValueB: any;
 
 
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService,public dialog:MatDialog) { }
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService, public dialog: MatDialog) { }
   viewMode
   displayedColumns4 = ['no', 'owner', 'type', 'cvalue', 'rate', 'amt', 'mdate', 'mvalue', 'number', 'desc', 'status', 'icons'];
   datasource4 = ELEMENT_DATA4;
@@ -174,7 +175,31 @@ export class FixedIncomeComponent implements OnInit {
       Flag: value,
       data: data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: RecuringDepositComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        this.getFixedDepositList();
+        this.getRecurringDepositList()
+        this.getBondsList()
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+
+  openAddRecurringDeposit(data) {
+    const fragmentData = {
+      Flag: 'addRecuringDeposit',
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: RecuringDepositComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

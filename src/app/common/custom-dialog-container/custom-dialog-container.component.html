@@ -1,5 +1,7 @@
 <div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay">
 </div>
 <div [@openClose]="_currentState" class="right_sidenav">
-    <ng-content></ng-content>
+    <ng-content #dynamic></ng-content>
+<!--  <ng-template #dynamic></ng-template>-->
+
 </div>

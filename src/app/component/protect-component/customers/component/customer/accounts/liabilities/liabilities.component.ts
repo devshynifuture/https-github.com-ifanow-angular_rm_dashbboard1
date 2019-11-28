@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 // import {UtilService} from '../../../../../../../services/util.service';
-import { EventService } from '../../../../../../../Data-service/event.service';
-import { SubscriptionInject } from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { CustomerService } from '../../customer.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {EventService} from '../../../../../../../Data-service/event.service';
+import {SubscriptionInject} from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {CustomerService} from '../../customer.service';
+import {AuthService} from 'src/app/auth-service/authService';
 import * as _ from 'lodash';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {AddLiabilitiesComponent} from "../../../common-component/add-liabilities/add-liabilities.component";
+import { LiabilitiesDetailComponent } from '../../../common-component/liabilities-detail/liabilities-detail.component';
+import {AddGoalComponent} from "../../plan/goals-plan/add-goal/add-goal.component";
 
 @Component({
   selector: 'app-liabilities',
@@ -40,9 +43,11 @@ export class LiabilitiesComponent implements OnInit {
   filterData: any;
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
-    public customerService: CustomerService, public util: UtilService,public dialog:MatDialog) {
+              public customerService: CustomerService, public util: UtilService, public dialog: MatDialog) {
   }
+
   viewMode;
+
   ngOnInit() {
     this.viewMode = 'tab1';
     this.showFilter = 'tab1';
@@ -53,13 +58,15 @@ export class LiabilitiesComponent implements OnInit {
     this.getGlobalLiabilities();
     this.getLiability('');
   }
+
   getGlobalLiabilities() {
     const obj = {};
     this.customerService.getGlobalLiabilities(obj).subscribe(
       data => this.getGlobalLiabilitiesRes(data)
     );
   }
-  getGlobalLiabilitiesRes(data){
+
+  getGlobalLiabilitiesRes(data) {
     console.log(data);
   }
 
@@ -94,11 +101,11 @@ export class LiabilitiesComponent implements OnInit {
           filterData.push(element);
         }
       });
-      if(filterData.length==0){
+      if (filterData.length == 0) {
         this.noData = "No Data Found";
         this.dataSource = undefined;
-      }else{
-        this.totalLoanAmt= _.sumBy(filterData, function (o) {
+      } else {
+        this.totalLoanAmt = _.sumBy(filterData, function (o) {
           return o.loanAmount;
         });
         this.outStandingAmt = _.sumBy(filterData, function (o) {
@@ -109,7 +116,8 @@ export class LiabilitiesComponent implements OnInit {
       }
     }
   }
-  deleteModal(value,data) {
+
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -119,12 +127,12 @@ export class LiabilitiesComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         this.customerService.deleteLiabilities(data.id).subscribe(
-          data=>{
-            this.eventService.openSnackBar("Liabilities is deleted","dismiss")
+          data => {
+            this.eventService.openSnackBar("Liabilities is deleted", "dismiss")
             dialogRef.close();
             this.getLiability('');
           },
-          err=>this.eventService.openSnackBar(err)
+          err => this.eventService.openSnackBar(err)
         )
       },
       negativeMethod: () => {
@@ -144,13 +152,15 @@ export class LiabilitiesComponent implements OnInit {
 
     });
   }
+
   open(flagValue, data) {
-    if(data != this.showFilter){
-      data.showFilter=this.showFilter;
+    if (data != this.showFilter) {
+      data.showFilter = this.showFilter;
 
     }
     const fragmentData = {
       Flag: flagValue,
+      componentName: AddLiabilitiesComponent,
       data,
       id: 1,
       state: 'open'
@@ -167,6 +177,8 @@ export class LiabilitiesComponent implements OnInit {
       }
     );
   }
+
+
 
   openThirtyPercent(flagValue, data) {
     const fragmentData = {
@@ -188,11 +200,13 @@ export class LiabilitiesComponent implements OnInit {
   }
 
 
-  addLiabilitiesDetail(flagValue) {
+  addLiabilitiesDetail(flagValue,data,state) {
     const fragmentData = {
       Flag: flagValue,
       id: 1,
-      state: 'openHelp'
+      data:data,
+      state: state,
+      componentName : LiabilitiesDetailComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -205,6 +219,7 @@ export class LiabilitiesComponent implements OnInit {
       }
     );
   }
+
   getLiability(data) {
     this.dataToShow = data.data;
     const obj = {
@@ -218,40 +233,41 @@ export class LiabilitiesComponent implements OnInit {
 
   getLiabiltyRes(data) {
     this.showLoader = false;
-    if(data.loans==undefined){
+    if (data.loans == undefined) {
       this.noData = "No Data Found";
-    }else{
-    this.totalLoanAmt=data.totalLoanAmount;  
-    this.outStandingAmt=data.totalCapitalOutstanding;
-    this.dataStore = [];
-    this.dataSource = [];
-    this.home = [];
-    this.vehicle = [];
-    this.education = [];
-    this.creditCard = [];
-    this.personal = [];
-    this.mortgage = [];
-    this.dataStore = data.loans;
-    this.dataSource = data.loans;
-    this.storeData = data.loans.length;
-    this.dataStore.forEach(element => {
-      if (element.loanTypeId == 1) {
-        this.home.push(element);
-      } else if (element.loanTypeId == 2) {
-        this.vehicle.push(element);
-      } else if (element.loanTypeId == 3) {
-        this.education.push(element);
-      } else if (element.loanTypeId == 4) {
-        this.creditCard.push(element);
-      } else if (element.loanTypeId == 5) {
-        this.personal.push(element);
-      } else if (element.loanTypeId == 6) {
-        this.mortgage.push(element);
-      }
-    });
-    this.sortTable(this.dataToShow);
+    } else {
+      this.totalLoanAmt = data.totalLoanAmount;
+      this.outStandingAmt = data.totalCapitalOutstanding;
+      this.dataStore = [];
+      this.dataSource = [];
+      this.home = [];
+      this.vehicle = [];
+      this.education = [];
+      this.creditCard = [];
+      this.personal = [];
+      this.mortgage = [];
+      this.dataStore = data.loans;
+      this.dataSource = data.loans;
+      this.storeData = data.loans.length;
+      this.dataStore.forEach(element => {
+        if (element.loanTypeId == 1) {
+          this.home.push(element);
+        } else if (element.loanTypeId == 2) {
+          this.vehicle.push(element);
+        } else if (element.loanTypeId == 3) {
+          this.education.push(element);
+        } else if (element.loanTypeId == 4) {
+          this.creditCard.push(element);
+        } else if (element.loanTypeId == 5) {
+          this.personal.push(element);
+        } else if (element.loanTypeId == 6) {
+          this.mortgage.push(element);
+        }
+      });
+      this.sortTable(this.dataToShow);
+    }
   }
-  }
+
   clickHandling() {
     console.log('something was clicked');
     this.open('openHelp', 'liabilityright');
@@ -262,6 +278,7 @@ export class LiabilitiesComponent implements OnInit {
   }
 
 }
+
 export interface PeriodicElement {
   no: string;
   name: string;
