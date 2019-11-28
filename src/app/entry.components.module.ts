@@ -18,10 +18,14 @@ import {AddNPSComponent} from './component/protect-component/customers/component
 import {AddGoalComponent} from './component/protect-component/customers/component/customer/plan/goals-plan/add-goal/add-goal.component';
 import {NpsSchemeHoldingComponent} from "./component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/nps-scheme-holding/nps-scheme-holding.component";
 import { LiabilitiesDetailComponent } from './component/protect-component/customers/component/common-component/liabilities-detail/liabilities-detail.component';
+import { MfAllocationsComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/mf-allocations/mf-allocations.component';
 
-export const componentList = [AddLiabilitiesComponent, AddInsuranceComponent, FixedDepositComponent,
+export const componentList = [
+  AddLiabilitiesComponent, AddInsuranceComponent, FixedDepositComponent,
   AddRealEstateComponent, GoldComponent, AddNPSComponent, RecuringDepositComponent, AddEPFComponent,
-  OthersComponent, CashInHandComponent, BankAccountsComponent, AddGoalComponent, NpsSchemeHoldingComponent,LiabilitiesDetailComponent
+  OthersComponent, CashInHandComponent, BankAccountsComponent, AddGoalComponent, NpsSchemeHoldingComponent,
+  LiabilitiesDetailComponent,
+  MfAllocationsComponent
 ];
 
 @NgModule({

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AddGoalComponent} from "./add-goal/add-goal.component";
 import {UtilService} from "../../../../../../../services/util.service";
 import {SubscriptionInject} from "../../../../../AdviserComponent/Subscriptions/subscription-inject.service";
+import { MfAllocationsComponent } from './mf-allocations/mf-allocations.component';
 
 export interface PeriodicElement {
   position: string;
@@ -30,35 +31,27 @@ export class GoalsPlanComponent implements OnInit {
 
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'icons'];
   dataSource = ELEMENT_DATA;
-
-  openAddGoal(data) {
+  
+  openMfAllocation(data) {
+    console.log('hello mf button clicked');
     const fragmentData = {
-      flag: 'addGoal',
-      componentName: AddGoalComponent,
+      flag: 'openMfAllocation',
       data,
+      componentName: MfAllocationsComponent, 
       id: 1,
-      state: 'open'
+      state: 'open70'
     };
-    this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        /*   console.log('this is sidebardata in subs subs : ', sideBarData);
-           if (UtilService.isDialogClose(sideBarData)) {
-             console.log('this is sidebardata in subs subs 2: ', sideBarData);
-             rightSideDataSub.unsubscribe();
+          console.log('this is sidebardata in subs subs : ', sideBarData);
+          if (UtilService.isDialogClose(sideBarData)) {
+            console.log('this is sidebardata in subs subs 2: ', sideBarData);
+            rightSideDataSub.unsubscribe();
 
-           }*/
+          }
       }
     );
   }
 
-  getComponentJson(flag, data, componentName) {
-    const fragmentData = {
-      flag,
-      componentName,
-      data,
-      id: 1,
-      state: 'open'
-    };
-    return fragmentData;
-  }
 }
+
