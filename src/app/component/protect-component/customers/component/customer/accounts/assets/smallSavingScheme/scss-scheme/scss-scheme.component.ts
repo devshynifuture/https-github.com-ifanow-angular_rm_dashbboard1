@@ -1,3 +1,4 @@
+import { AddScssComponent } from './../common-component/add-scss/add-scss.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
@@ -95,12 +96,13 @@ export class ScssSchemeComponent implements OnInit {
       this.noData = "No Scheme Found";
     }
   }
-  addOpenSCSS(value, data) {
+  openAddSCSS(data) {
     const fragmentData = {
-      Flag: value,
+      flag: 'addSCSS',
       data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: AddScssComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

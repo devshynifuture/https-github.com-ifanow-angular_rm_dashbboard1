@@ -32,7 +32,7 @@ export class AddPpfComponent implements OnInit {
   editApi: any;
   clientId: number;
   nexNomineePer: any;
-  showError=false;
+  showError = false;
   nomineesListFM: any;
   dataFM: any;
   familyList: any;
@@ -103,7 +103,7 @@ export class AddPpfComponent implements OnInit {
     })
     this.ownerData = this.ppfSchemeForm.controls;
     if (data.npsNomineesList != undefined) {
-     
+
       data.npsNomineesList.forEach(element => {
         this.optionalppfSchemeForm.controls.npsNomineesList.push(this.fb.group({
           nomineeName: [(element.nomineeName), [Validators.required]],
@@ -133,7 +133,7 @@ export class AddPpfComponent implements OnInit {
         nomineeName: null, nomineePercentageShare: null,
       }));
     }
-   
+
 
   }
   removeNominee(item) {
@@ -200,7 +200,7 @@ export class AddPpfComponent implements OnInit {
         "publicprovidendfundtransactionlist": finalTransctList,
       }
       if (this.editApi) {
-         obj['id']=this.editApi.id
+        obj['id'] = this.editApi.id
         this.cusService.editPPF(obj).subscribe(
           data => this.addPPFResponse(data),
           err => this.eventService.openSnackBar(err)
@@ -215,7 +215,7 @@ export class AddPpfComponent implements OnInit {
     }
   }
   addPPFResponse(data) {
-    (this.editApi)?this.eventService.openSnackBar("PPF is edited","dismiss"):this.eventService.openSnackBar("PPF is added","dismiss")
+    (this.editApi) ? this.eventService.openSnackBar("PPF is edited", "dismiss") : this.eventService.openSnackBar("PPF is added", "dismiss")
     console.log(data)
     this.close();
   }

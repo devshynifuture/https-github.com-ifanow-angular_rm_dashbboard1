@@ -72,6 +72,10 @@ export class HttpService {
     if (options != undefined) {
       httpOptions = options;
     }
+    // console.log('HttpService put request httpOptions... ', httpOptions);
+    // console.log('HttpService put request body... ', body);
+    // console.log('HttpService put request url... ', url);
+
     return this._http
       .put(this.baseUrl + url, body, httpOptions).pipe(
         catchError(err => {

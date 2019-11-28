@@ -1,3 +1,4 @@
+import { AddPoSavingComponent } from './../common-component/add-po-saving/add-po-saving.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
@@ -89,12 +90,13 @@ export class PoSavingsComponent implements OnInit {
 
     });
   }
-  addPOSAVING(value, data) {
+  openAddPOSAVING(data) {
     const fragmentData = {
-      Flag: value,
+      flag: 'addPOSAVING',
       data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: AddPoSavingComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
