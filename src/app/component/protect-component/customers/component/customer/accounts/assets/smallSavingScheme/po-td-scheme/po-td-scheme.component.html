@@ -9,7 +9,7 @@
 
         <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS</button>
-        <button mat-stroked-button class="btn-primary addon v-middle" (click)="addPOTD('addPOTD','')"><i
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOTD(null)"><i
                 class="material-icons">add</i>ADD NEW</button>
         <mat-menu #menu1="matMenu" class="add-new">
             <button mat-menu-item class="b-b">
@@ -125,7 +125,7 @@
                     more_vert
                 </i>
                 <mat-menu #menubank="matMenu">
-                    <button mat-menu-item (click)="addPOTD('addPOTD',element)">Edit</button>
+                    <button mat-menu-item (click)="openAddPOTD(element)">Edit</button>
                     <button mat-menu-item>Detailed view</button>
                     <button mat-menu-item>Activity</button>
                     <button mat-menu-item (click)="deleteModal('SUBSCRIPTION',element)">Delete</button>
