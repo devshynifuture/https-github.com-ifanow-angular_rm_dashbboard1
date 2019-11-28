@@ -7,6 +7,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { DetailedKvpComponent } from './detailed-kvp/detailed-kvp.component';
 
 @Component({
   selector: 'app-kvp-scheme',
@@ -90,13 +91,13 @@ export class KvpSchemeComponent implements OnInit {
 
     });
   }
-  openAddKVP(data) {
+  openAddKVP(data,flag) {
     const fragmentData = {
       flag: 'addKVP',
       data,
       id: 1,
       state: 'open',
-      componentName: AddKvpComponent
+      componentName:(flag=="detailedKvp")?DetailedKvpComponent:AddKvpComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

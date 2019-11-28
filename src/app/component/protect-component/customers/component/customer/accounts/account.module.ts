@@ -128,11 +128,7 @@ import {OwnerComponentModule} from "./owner-component/owner-component.module";
     // AddTransactionComponent,
     SkeletonLoadingDirective,
     FormatNumberDirective,
-    DocumentNewFolderComponent,
-    DetailedPpfComponent,
-    DetailedSsyComponent,
-    DetailedKvpComponent,
-    DetailedScssComponent,
+    DocumentNewFolderComponent
   ],
   imports: [
     // BrowserModule,

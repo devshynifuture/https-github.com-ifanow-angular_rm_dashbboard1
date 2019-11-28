@@ -42,6 +42,10 @@ import { DetailedViewGoldComponent } from './component/protect-component/custome
 import { DetailedViewOthersComponent } from './component/protect-component/customers/component/customer/accounts/assets/commodities/others/detailed-view-others/detailed-view-others.component';
 import { DetailedViewBankAccountComponent } from './component/protect-component/customers/component/customer/accounts/assets/cash&bank/bank-accounts/detailed-view-bank-account/detailed-view-bank-account.component';
 import { DetailedViewCashInHandComponent } from './component/protect-component/customers/component/customer/accounts/assets/cash&bank/cash-in-hand/detailed-view-cash-in-hand/detailed-view-cash-in-hand.component';
+import { DetailedSsyComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/ssy-scheme/detailed-ssy/detailed-ssy.component';
+import { DetailedKvpComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/kvp-scheme/detailed-kvp/detailed-kvp.component';
+import { DetailedScssComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/scss-scheme/detailed-scss/detailed-scss.component';
+import { DetailedPpfComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/ppf-scheme/detailed-ppf/detailed-ppf.component';
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -72,7 +76,11 @@ export const componentList = [
   AddPoSavingComponent,
   AddPoMisComponent,
   AddPoRdComponent,
+  DetailedPpfComponent,
   DetailedNscComponent,
+  DetailedSsyComponent,
+  DetailedKvpComponent,
+  DetailedScssComponent,
   DetailedViewEPFComponent, AddScssComponent, AddKvpComponent, AddPoSavingComponent, AddPoMisComponent, AddSsyComponent, AddNscComponent, AddTransactionComponent, AddPpfComponent, AddEPSComponent, AddSuperannuationComponent, AddGratuityComponent, NpsSummaryPortfolioComponent, AddPoTdComponent, AddPoRdComponent, BondsComponent, AddLiabilitiesComponent, AddInsuranceComponent, FixedDepositComponent,
   AddRealEstateComponent, GoldComponent, AddNPSComponent, RecuringDepositComponent, AddEPFComponent,
   OthersComponent, CashInHandComponent, BankAccountsComponent, AddGoalComponent, NpsSchemeHoldingComponent, LiabilitiesDetailComponent, DetailedViewFixedDepositComponent, DetailedViewRecuringDepositComponent, DetailedViewBondsComponent, DetailedViewGoldComponent, DetailedViewOthersComponent, DetailedViewBankAccountComponent, DetailedViewCashInHandComponent

@@ -91,13 +91,13 @@ export class NscSchemeComponent implements OnInit {
 
     });
   }
-  openAddNSC(data) {
+  openAddNSC(data,flag) {
     const fragmentData = {
       flag: 'addNsc',
       data,
       id: 1,
       state: 'open',
-      componentName: DetailedNscComponent
+      componentName:(flag=="detailedNsc")?DetailedNscComponent:AddNscComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
