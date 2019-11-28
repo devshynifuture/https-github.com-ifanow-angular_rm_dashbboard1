@@ -30,17 +30,18 @@ export class AddPoMisComponent implements OnInit {
 
   constructor(private fb: FormBuilder, public subInjectService: SubscriptionInject, public custumService: CustomerService, public eventService: EventService) { }
   @Input()
-  set inputData(inputData) {
+  set data(inputData) {
     this._inputData = inputData;
-    this.getPomisData(inputData);
   }
 
-  get inputData() {
+  get data() {
     return this._inputData;
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.show = false;
+    this.getPomisData(this.data);
+
   }
   close() {
     // let data=this._inputData.loanTypeId;

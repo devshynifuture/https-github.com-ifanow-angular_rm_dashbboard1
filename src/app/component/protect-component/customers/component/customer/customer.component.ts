@@ -17,7 +17,7 @@ export class CustomerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selected =0;
+    this.selected = 1;
     const passedParameter = history.state;
     this.clientId = passedParameter ? passedParameter.id : undefined;
     console.log('passedParameter: ', passedParameter);

@@ -1,3 +1,8 @@
+import { AddPoRdComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-po-rd/add-po-rd.component';
+import { AddPoMisComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-po-mis/add-po-mis.component';
+import { AddPoSavingComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-po-saving/add-po-saving.component';
+import { AddScssComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-scss/add-scss.component';
+import { AddKvpComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-kvp/add-kvp.component';
 import { LiabilitiesDetailComponent } from './component/protect-component/customers/component/common-component/liabilities-detail/liabilities-detail.component';
 import { AddPoTdComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-po-td/add-po-td.component';
 import { AddSsyComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-ssy/add-ssy.component';
@@ -51,7 +56,12 @@ export const componentList = [
   AddTransactionComponent,
   AddSsyComponent,
   AddPoTdComponent,
-  LiabilitiesDetailComponent
+  LiabilitiesDetailComponent,
+  AddKvpComponent,
+  AddScssComponent,
+  AddPoSavingComponent,
+  AddPoMisComponent,
+  AddPoRdComponent
 ];
 
 @NgModule({
@@ -64,7 +74,9 @@ export const componentList = [
     ReactiveFormsModule,
     OwnerComponentModule
   ],
-  exports: [],
+  exports: [
+    FormsModule,
+    ReactiveFormsModule],
   entryComponents: [componentList]
 })
 

@@ -1,3 +1,4 @@
+import { AddPoMisComponent } from './../common-component/add-po-mis/add-po-mis.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
@@ -93,12 +94,13 @@ export class PoMisSchemeComponent implements OnInit {
 
     });
   }
-  addPOMIS(value, data) {
+  openAddPOMIS(data) {
     const fragmentData = {
-      Flag: value,
+      flag: 'addPOMIS',
       data: data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: AddPoMisComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
