@@ -233,22 +233,12 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <label class="f-16 roboto">Premium paying term</label>
-                    <!-- <mat-form-field>
+                    <mat-form-field>
                         <input matInput type="number" formControlName="premiumPayingTerm" #premiumterm
                             autocomplete="off" class="form-control br-0">
                         <mat-error
                             [ngClass]="{'v-h':!(ispremiumPayingTerm && lifeInsuranceForm.get('premiumPayingTerm').invalid || (lifeInsuranceForm.get('premiumPayingTerm').touched && lifeInsuranceForm.get('premiumPayingTerm').invalid))}"
                             class="f-12 pt-4">This field is required
-                        </mat-error>
-                    </mat-form-field> -->
-                    <mat-form-field>
-                        <input matInput formControlName="premiumPayingTerm" class="form-control br-0"
-                            [matDatepicker]="premiumPayingTerm">
-                        <mat-datepicker-toggle matSuffix [for]="premiumPayingTerm"></mat-datepicker-toggle>
-                        <mat-datepicker #premiumPayingTerm></mat-datepicker>
-                        <mat-error class="f-12 pt-4"
-                            [ngClass]="{'v-h':!(iscommencementDate && lifeInsuranceForm.get('commencementDate').invalid || (lifeInsuranceForm.get('commencementDate').touched && lifeInsuranceForm.get('commencementDate').invalid))}">
-                            This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>

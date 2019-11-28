@@ -194,7 +194,7 @@ export class AddPpfComponent implements OnInit {
         "description": this.optionalppfSchemeForm.get('description').value,
         "bankName": this.optionalppfSchemeForm.get('bankName').value,
         "linkedBankAccount": this.optionalppfSchemeForm.get('linkedBankAccount').value,
-        "nomineeName": this.optionalppfSchemeForm.get('nominee').value,
+        "nomineeName": /*this.optionalppfSchemeForm.get('nominee').value*/"dfsdas",
         "frequency": this.ppfSchemeForm.get('frquency').value,
         "futureApproxcontribution": this.ppfSchemeForm.get('futureContribution').value,
         "publicprovidendfundtransactionlist": finalTransctList,

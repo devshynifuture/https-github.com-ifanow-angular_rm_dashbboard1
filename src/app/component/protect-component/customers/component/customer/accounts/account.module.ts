@@ -50,7 +50,11 @@ import { OtherPayablesComponent } from './liabilities/other-payables/other-payab
 // import {InvestmentsPlanComponent} from '../plan/investments-plan/investments-plan.component';
 // import {ScenariosPlanComponent} from '../plan/scenarios-plan/scenarios-plan.component';
 import { AddOtherPayablesComponent } from './liabilities/add-other-payables/add-other-payables.component';
-
+import { DetailedPpfComponent } from './assets/smallSavingScheme/ppf-scheme/detailed-ppf/detailed-ppf.component';
+import { DetailedNscComponent } from './assets/smallSavingScheme/nsc-scheme/detailed-nsc/detailed-nsc.component';
+import { DetailedSsyComponent } from './assets/smallSavingScheme/ssy-scheme/detailed-ssy/detailed-ssy.component';
+import { DetailedKvpComponent } from './assets/smallSavingScheme/kvp-scheme/detailed-kvp/detailed-kvp.component';
+import { DetailedScssComponent } from './assets/smallSavingScheme/scss-scheme/detailed-scss/detailed-scss.component';
 
 import { CashAndBankComponent } from './assets/cash&bank/cash-and-bank/cash-and-bank.component';
 import { CommoditiesComponent } from './assets/commodities/commodities/commodities.component';
@@ -125,6 +129,10 @@ import { OwnerComponentModule } from "./owner-component/owner-component.module";
     SkeletonLoadingDirective,
     FormatNumberDirective,
     DocumentNewFolderComponent,
+    DetailedPpfComponent,
+    DetailedSsyComponent,
+    DetailedKvpComponent,
+    DetailedScssComponent,
   ],
   imports: [
     // BrowserModule,
