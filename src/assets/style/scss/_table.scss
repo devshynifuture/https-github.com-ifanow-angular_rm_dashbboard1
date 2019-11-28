@@ -73,14 +73,8 @@ table {
         }
     }
 }
-
-.cashflowTable {
-    #table-low {
-        tbody td {
-            padding: 6px 8px !important;
-        }
-        tr.mat-row {
-            height: 30px !important;
-        }
+.mat-sort-header-container{
+    button:active {
+        box-shadow: none !important;
     }
 }

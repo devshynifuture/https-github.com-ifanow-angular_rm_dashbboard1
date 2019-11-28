@@ -1,14 +1,19 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from '../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {NpsSchemeHoldingComponent} from "../add-nps/nps-scheme-holding/nps-scheme-holding.component";
+import { AddEPSComponent } from './../add-eps/add-eps.component';
+import { AddSuperannuationComponent } from './../add-superannuation/add-superannuation.component';
+import { AddGratuityComponent } from './../add-gratuity/add-gratuity.component';
+import { NpsSummaryPortfolioComponent } from './../add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
+import { AddEPFComponent } from './../add-epf/add-epf.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { NpsSchemeHoldingComponent } from "../add-nps/nps-scheme-holding/nps-scheme-holding.component";
 
 @Component({
   selector: 'app-retirement-account',
@@ -17,7 +22,7 @@ import {NpsSchemeHoldingComponent} from "../add-nps/nps-scheme-holding/nps-schem
 })
 export class RetirementAccountComponent implements OnInit {
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   showRequring = '1';
   getObject: {};
   advisorId: any;
@@ -104,6 +109,114 @@ export class RetirementAccountComponent implements OnInit {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 
+        }
+      }
+    );
+  }
+
+  openAddEPS(data) {
+    const fragmentData = {
+      flag: 'addEPS',
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: AddEPSComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+
+  openAddSuperannuation(data) {
+    const fragmentData = {
+      flag: 'addSuperannuation',
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: AddSuperannuationComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+
+  openAddGratuity(data) {
+    const fragmentData = {
+      flag: 'addGratuity',
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: AddGratuityComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+
+  openAddSummaryPort(data) {
+    const fragmentData = {
+      flag: 'addSummaryPort',
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: NpsSummaryPortfolioComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+
+  openAddEPF(data) {
+    const fragmentData = {
+      flag: 'addEPF',
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: AddEPFComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        // if (value == 'added') {
+        //   this.getListEPF()
+        // } else if (value == 'addedGratuity') {
+        //   this.getListGratuity()
+        // } else if (value == 'addedEps') {
+        //   this.getListEPS()
+        // } else if (value == 'addedSuperannuation') {
+        //   this.getListSuperannuation()
+        // } else {
+        //   this.getListNPS()
+        // }
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
         }
       }
     );

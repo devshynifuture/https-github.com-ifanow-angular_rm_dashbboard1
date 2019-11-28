@@ -1,3 +1,4 @@
+import { AddPoRdComponent } from './../common-component/add-po-rd/add-po-rd.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
@@ -42,10 +43,9 @@ export class PoRdSchemeComponent implements OnInit {
     )
   }
   getPoRdSchemedataResponse(data) {
-
     console.log(data);
     this.isLoading = false;
-    if (data.postOfficeRDList.length != 0) {
+    if (data) {
       this.datasource = new MatTableDataSource(data.postOfficeRDList)
       this.datasource.sort = this.sort;
       this.sumOfCurrentValue = data.sumOfCurrentValue;
@@ -92,12 +92,13 @@ export class PoRdSchemeComponent implements OnInit {
 
     });
   }
-  addPORD(value, data) {
+  openAddPORD(data) {
     const fragmentData = {
-      Flag: value,
+      flag: 'addPORD',
       data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: AddPoRdComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
