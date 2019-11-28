@@ -49,14 +49,16 @@ import { OtherPayablesComponent } from './liabilities/other-payables/other-payab
 // import {CashflowsPlanComponent} from '../plan/cashflows-plan/cashflows-plan.component';
 // import {InvestmentsPlanComponent} from '../plan/investments-plan/investments-plan.component';
 // import {ScenariosPlanComponent} from '../plan/scenarios-plan/scenarios-plan.component';
-import { AddOtherPayablesComponent } from './liabilities/add-other-payables/add-other-payables.component';
-import { CashAndBankComponent } from './assets/cash&bank/cash-and-bank/cash-and-bank.component';
-import { CommoditiesComponent } from './assets/commodities/commodities/commodities.component';
-import { SkeletonLoadingDirective } from 'src/app/skeleton-loading.directive';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { DocumentNewFolderComponent } from '../../common-component/document-new-folder/document-new-folder.component';
-import { OwnerComponentModule } from './owner-component/owner-component.module';
+import {AddOtherPayablesComponent} from './liabilities/add-other-payables/add-other-payables.component';
 
+
+import {CashAndBankComponent} from './assets/cash&bank/cash-and-bank/cash-and-bank.component';
+import {CommoditiesComponent} from './assets/commodities/commodities/commodities.component';
+import {AddTransactionComponent} from './assets/smallSavingScheme/common-component/add-transaction/add-transaction.component';
+import {SkeletonLoadingDirective} from 'src/app/skeleton-loading.directive';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {DocumentNewFolderComponent} from '../../common-component/document-new-folder/document-new-folder.component';
+import {OwnerComponentModule} from "./owner-component/owner-component.module";
 @NgModule({
   declarations: [
     SchemeLevelTransactionComponent,

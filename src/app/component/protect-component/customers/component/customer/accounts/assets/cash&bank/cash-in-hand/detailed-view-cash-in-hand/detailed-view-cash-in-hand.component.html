@@ -1,0 +1,62 @@
+<div class="popup-header-fix-35">
+    <div class="row bb-1">
+        <div class="col-md-10 p-0">
+            <h4 class="mb-0 wrapper-20">CASH IN HAND - DETAILED VIEW</h4>
+        </div>
+        <div class="col-md-2 text-left">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="pl-20 pr-20 pb-48 pt-40">
+    <div class="row pt-40">
+        <div class="col-md-12 p-0">
+            <div class="insurance-ui bt">
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Owner Name
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{cashInHand.ownerName}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                            Cash balance
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{cashInHand.cashValue}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                        <div class="col-md-8 text-left f-14 roboto">
+                        Balance as on
+                        </div>
+                        <div class="col-md-4 text-right f-14 roboto">
+                            {{cashInHand.balanceAsOn | date:'dd/MM/yyyy'}}
+                        </div>
+                    </div>
+                    <div class="row bb p-4 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto">
+                                    Bank account number
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto">
+                                {{cashInHand.bankAccountNumber}}
+                            </div>
+                        </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Description
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{cashInHand.description}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

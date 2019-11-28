@@ -8,6 +8,8 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { MatDialog } from '@angular/material';
 import { BankAccountsComponent } from '../bank-accounts/bank-accounts.component';
 import { CashInHandComponent } from '../cash-in-hand/cash-in-hand.component';
+import { DetailedViewCashInHandComponent } from '../cash-in-hand/detailed-view-cash-in-hand/detailed-view-cash-in-hand.component';
+import { DetailedViewBankAccountComponent } from '../bank-accounts/detailed-view-bank-account/detailed-view-bank-account.component';
 
 @Component({
   selector: 'app-cash-and-bank',
@@ -171,6 +173,44 @@ export class CashAndBankComponent implements OnInit {
         }
       }
     );;
+  }
+  detailedViewbankAccount(flagValue,data,state) {
+    const fragmentData = {
+      Flag: flagValue,
+      id: 1,
+      data:data,
+      state: state,
+      componentName : DetailedViewBankAccountComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+  detailedViewCashInHand(flagValue,data,state) {
+    const fragmentData = {
+      Flag: flagValue,
+      id: 1,
+      data:data,
+      state: state,
+      componentName : DetailedViewCashInHandComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
   }
 }
 export interface PeriodicElement7 {

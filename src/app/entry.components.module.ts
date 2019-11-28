@@ -37,11 +37,14 @@ import { AddNPSComponent } from './component/protect-component/customers/compone
 import { AddGoalComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/add-goal/add-goal.component';
 import { NpsSchemeHoldingComponent } from "./component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/nps-scheme-holding/nps-scheme-holding.component";
 import { DetailedViewEPFComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-epf/detailed-view-epf/detailed-view-epf.component';
+import { DetailedViewGoldComponent } from './component/protect-component/customers/component/customer/accounts/assets/commodities/gold/detailed-view-gold/detailed-view-gold.component';
+import { DetailedViewOthersComponent } from './component/protect-component/customers/component/customer/accounts/assets/commodities/others/detailed-view-others/detailed-view-others.component';
+import { DetailedViewBankAccountComponent } from './component/protect-component/customers/component/customer/accounts/assets/cash&bank/bank-accounts/detailed-view-bank-account/detailed-view-bank-account.component';
+import { DetailedViewCashInHandComponent } from './component/protect-component/customers/component/customer/accounts/assets/cash&bank/cash-in-hand/detailed-view-cash-in-hand/detailed-view-cash-in-hand.component';
 
 export const componentList = [DetailedViewEPFComponent,AddScssComponent,AddKvpComponent,AddPoSavingComponent,AddPoMisComponent,AddSsyComponent,AddNscComponent,AddTransactionComponent,AddPpfComponent,AddEPSComponent,AddSuperannuationComponent,AddGratuityComponent,NpsSummaryPortfolioComponent,AddPoTdComponent,AddPoRdComponent,BondsComponent,AddLiabilitiesComponent, AddInsuranceComponent, FixedDepositComponent,
   AddRealEstateComponent, GoldComponent, AddNPSComponent, RecuringDepositComponent, AddEPFComponent,
-  OthersComponent, CashInHandComponent, BankAccountsComponent, AddGoalComponent, NpsSchemeHoldingComponent,LiabilitiesDetailComponent,DetailedViewFixedDepositComponent,DetailedViewRecuringDepositComponent,DetailedViewBondsComponent,
-];
+  OthersComponent, CashInHandComponent, BankAccountsComponent, AddGoalComponent, NpsSchemeHoldingComponent,LiabilitiesDetailComponent,DetailedViewFixedDepositComponent,DetailedViewRecuringDepositComponent,DetailedViewBondsComponent,DetailedViewGoldComponent,DetailedViewOthersComponent,DetailedViewBankAccountComponent,DetailedViewCashInHandComponent];
 
 @NgModule({
   declarations: componentList,
