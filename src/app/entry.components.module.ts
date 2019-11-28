@@ -16,12 +16,12 @@ import {RecuringDepositComponent} from './component/protect-component/customers/
 import {AddEPFComponent} from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-epf/add-epf.component';
 import {AddNPSComponent} from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/add-nps.component';
 
-export const componentList = [AddLiabilitiesComponent, AddInsuranceComponent, FixedDepositComponent,
+export const componentList = [AddPpfComponentAddLiabilitiesComponent, AddInsuranceComponent, FixedDepositComponent,
   AddRealEstateComponent, GoldComponent, AddNPSComponent, RecuringDepositComponent, AddEPFComponent,
   OthersComponent, CashInHandComponent, BankAccountsComponent];
 
 @NgModule({
-  declarations: componentList,
+  declarations: componentList,,
   imports: [CommonModule,
     MaterialModule,
     ChartModule,
