@@ -5,9 +5,12 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ChartModule} from 'angular-highcharts';
 import {OwnerComponentComponent} from './owner-component.component';
 import {MaterialModule} from '../../../../../../../material/material';
+import {OwnerColumnComponent} from "./owner-column/owner-column.component";
+
 @NgModule({
   declarations: [
-    OwnerComponentComponent
+    OwnerComponentComponent,
+    OwnerColumnComponent
   ],
   imports: [
     // BrowserModule,
@@ -17,7 +20,7 @@ import {MaterialModule} from '../../../../../../../material/material';
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [OwnerComponentComponent],
+  exports: [OwnerComponentComponent, OwnerColumnComponent],
 })
 export class OwnerComponentModule {
 }

@@ -10,6 +10,7 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
 import {MatDialog} from '@angular/material';
 import {AddLiabilitiesComponent} from "../../../common-component/add-liabilities/add-liabilities.component";
 import { LiabilitiesDetailComponent } from '../../../common-component/liabilities-detail/liabilities-detail.component';
+import {AddGoalComponent} from "../../plan/goals-plan/add-goal/add-goal.component";
 
 @Component({
   selector: 'app-liabilities',
@@ -57,13 +58,15 @@ export class LiabilitiesComponent implements OnInit {
     this.getGlobalLiabilities();
     this.getLiability('');
   }
+
   getGlobalLiabilities() {
     const obj = {};
     this.customerService.getGlobalLiabilities(obj).subscribe(
       data => this.getGlobalLiabilitiesRes(data)
     );
   }
-  getGlobalLiabilitiesRes(data){
+
+  getGlobalLiabilitiesRes(data) {
     console.log(data);
   }
 
@@ -174,6 +177,8 @@ export class LiabilitiesComponent implements OnInit {
       }
     );
   }
+
+
 
   openThirtyPercent(flagValue, data) {
     const fragmentData = {
