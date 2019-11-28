@@ -95,7 +95,7 @@ import { OwnerComponentModule } from "./owner-component/owner-component.module";
     AddIncomeComponent,
     IncomeDetailComponent,
     DetailedViewComponent,
-    LiabilitiesDetailComponent,
+    //LiabilitiesDetailComponent,
     RetirementAccountComponent,
     // AddEPFComponent,
     // AddSuperannuationComponent,

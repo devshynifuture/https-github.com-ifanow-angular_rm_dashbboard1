@@ -1,0 +1,11 @@
+::ng-deep .in-btn{
+    font-size: 12px !important;
+    color: #008FFF;
+    border-radius: 2px;
+  
+    height: 40px;
+    width: 138px;
+}
+.mat-stroked-button:not([disabled]){
+    border-color:#008FFF;
+}

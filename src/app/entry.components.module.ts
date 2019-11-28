@@ -1,3 +1,4 @@
+import { LiabilitiesDetailComponent } from './component/protect-component/customers/component/common-component/liabilities-detail/liabilities-detail.component';
 import { AddPoTdComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-po-td/add-po-td.component';
 import { AddSsyComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-ssy/add-ssy.component';
 import { AddNscComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-nsc/add-nsc.component';
@@ -50,6 +51,7 @@ export const componentList = [
   AddTransactionComponent,
   AddSsyComponent,
   AddPoTdComponent,
+  LiabilitiesDetailComponent
 ];
 
 @NgModule({

@@ -40,6 +40,7 @@ import {AddPlaninsuranceComponent} from './insurance-plan/add-planinsurance/add-
     AddInvestmentPlanComponent,
     AddProfilePlanComponent,
     HistoryRiskProfileComponent,
+    
     AddPlaninsuranceComponent,
   ],
   imports: [
