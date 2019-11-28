@@ -4,16 +4,6 @@ import { AddPoSavingComponent } from './component/protect-component/customers/co
 import { AddScssComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-scss/add-scss.component';
 import { AddKvpComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-kvp/add-kvp.component';
 import { LiabilitiesDetailComponent } from './component/protect-component/customers/component/common-component/liabilities-detail/liabilities-detail.component';
-<<<<<<< HEAD
-import { MfAllocationsComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/mf-allocations/mf-allocations.component';
-
-export const componentList = [
-  AddLiabilitiesComponent, AddInsuranceComponent, FixedDepositComponent,
-  AddRealEstateComponent, GoldComponent, AddNPSComponent, RecuringDepositComponent, AddEPFComponent,
-  OthersComponent, CashInHandComponent, BankAccountsComponent, AddGoalComponent, NpsSchemeHoldingComponent,
-  LiabilitiesDetailComponent,
-  MfAllocationsComponent
-=======
 import { DetailedViewFixedDepositComponent } from './component/protect-component/customers/component/customer/accounts/assets/fixedIncome/fixed-deposit/detailed-view-fixed-deposit/detailed-view-fixed-deposit.component';
 import { DetailedViewRecuringDepositComponent } from './component/protect-component/customers/component/customer/accounts/assets/fixedIncome/recuring-deposit/detailed-view-recuring-deposit/detailed-view-recuring-deposit.component';
 import { DetailedViewBondsComponent } from './component/protect-component/customers/component/customer/accounts/assets/fixedIncome/bonds/detailed-view-bonds/detailed-view-bonds.component';
@@ -86,7 +76,6 @@ export const componentList = [
   DetailedViewEPFComponent, AddScssComponent, AddKvpComponent, AddPoSavingComponent, AddPoMisComponent, AddSsyComponent, AddNscComponent, AddTransactionComponent, AddPpfComponent, AddEPSComponent, AddSuperannuationComponent, AddGratuityComponent, NpsSummaryPortfolioComponent, AddPoTdComponent, AddPoRdComponent, BondsComponent, AddLiabilitiesComponent, AddInsuranceComponent, FixedDepositComponent,
   AddRealEstateComponent, GoldComponent, AddNPSComponent, RecuringDepositComponent, AddEPFComponent,
   OthersComponent, CashInHandComponent, BankAccountsComponent, AddGoalComponent, NpsSchemeHoldingComponent, LiabilitiesDetailComponent, DetailedViewFixedDepositComponent, DetailedViewRecuringDepositComponent, DetailedViewBondsComponent, DetailedViewGoldComponent, DetailedViewOthersComponent, DetailedViewBankAccountComponent, DetailedViewCashInHandComponent
->>>>>>> 5f949e4ea083d113dfa402a2c20a2ee0f8b0ae8c
 ];
 
 @NgModule({
