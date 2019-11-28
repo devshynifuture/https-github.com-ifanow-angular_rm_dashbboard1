@@ -1,3 +1,4 @@
+import { AddPpfComponent } from './../common-component/add-ppf/add-ppf.component';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
@@ -81,12 +82,13 @@ export class PPFSchemeComponent implements OnInit {
 
     });
   }
-  opnAddPPF(value, data) {
+  openAddPPF(data) {
     const fragmentData = {
-      Flag: value,
+      flag: 'addPpf',
       data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: AddPpfComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
