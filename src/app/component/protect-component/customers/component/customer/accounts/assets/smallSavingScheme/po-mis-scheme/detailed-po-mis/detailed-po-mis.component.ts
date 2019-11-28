@@ -1,3 +1,4 @@
+import { SubscriptionInject } from './../../../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailedPoMisComponent implements OnInit {
 
-  constructor() { }
+  constructor(private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
   }
+
+  close() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
+
 
 }

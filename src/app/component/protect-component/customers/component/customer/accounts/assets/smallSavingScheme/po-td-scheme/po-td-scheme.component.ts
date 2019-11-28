@@ -89,6 +89,8 @@ export class PoTdSchemeComponent implements OnInit {
   }
 
   openDetailPOTD(data) {
+
+    console.log('this is detailed potd data', data);
     const fragmentData = {
       flag: 'detailPoTd',
       data,

@@ -11,7 +11,6 @@ export class DetailedPoTdComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
-
   }
 
   close() {

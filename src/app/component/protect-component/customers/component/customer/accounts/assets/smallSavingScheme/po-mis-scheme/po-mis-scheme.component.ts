@@ -7,6 +7,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { DetailedPoMisComponent } from './detailed-po-mis/detailed-po-mis.component';
 
 @Component({
   selector: 'app-po-mis-scheme',
@@ -93,6 +94,27 @@ export class PoMisSchemeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+
+  openDetailPOMIS(data) {
+    const fragmentData = {
+      flag: 'detailedPOMIS',
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: DetailedPoMisComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          this.getPoMisSchemedata();
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
   }
   openAddPOMIS(data) {
     const fragmentData = {

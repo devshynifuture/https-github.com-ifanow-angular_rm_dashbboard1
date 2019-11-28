@@ -11,7 +11,6 @@ export class DetailedPoSavingsComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject) { }
   data: Object;
   ngOnInit() {
-    console.log('hello this is po saving data', this.data);
   }
 
 

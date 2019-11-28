@@ -1,3 +1,4 @@
+import { SubscriptionInject } from './../../../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./detailed-po-rd.component.scss']
 })
 export class DetailedPoRdComponent implements OnInit {
-
-  constructor() { }
+  data: Object;
+  constructor(private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
   }
+
+  close() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
+
 
 }
