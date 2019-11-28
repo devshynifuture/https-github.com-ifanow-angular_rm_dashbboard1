@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomerDocumentsComponent } from './customer-documents/customer-documents.component';
@@ -64,7 +65,7 @@ import { CommoditiesComponent } from './assets/commodities/commodities/commoditi
 import { SkeletonLoadingDirective } from 'src/app/skeleton-loading.directive';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { DocumentNewFolderComponent } from '../../common-component/document-new-folder/document-new-folder.component';
-import { OwnerComponentModule } from "./owner-component/owner-component.module";
+import { OwnerComponentModule } from './owner-component/owner-component.module';
 
 @NgModule({
   declarations: [

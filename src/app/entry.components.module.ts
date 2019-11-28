@@ -56,12 +56,14 @@ export const componentList = [
 
 @NgModule({
   declarations: componentList,
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     MaterialModule,
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
-    OwnerComponentModule],
+    OwnerComponentModule
+  ],
   exports: [],
   entryComponents: [componentList]
 })
