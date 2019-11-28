@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-detailed-view-fixed-deposit',
@@ -6,10 +7,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./detailed-view-fixed-deposit.component.scss']
 })
 export class DetailedViewFixedDepositComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
+  inputData: any;
+  isViewInitCalled = false;
+  fixedDeposit: any;
+  constructor(private subInjectService: SubscriptionInject) { }
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    console.log('This is Input data of FixedDepositComponent')
   }
 
+  get data() {
+    return this.inputData;
+  }
+  close() {
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
+  }
+  ngOnInit() {
+    console.log('inputData',this.inputData)
+    this.fixedDeposit = this.inputData
+  }
 }

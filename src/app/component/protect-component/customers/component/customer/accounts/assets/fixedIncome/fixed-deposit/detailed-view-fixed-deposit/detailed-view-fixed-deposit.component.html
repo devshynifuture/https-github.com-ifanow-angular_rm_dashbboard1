@@ -1,1 +1,185 @@
-<p>detailed-view-fixed-deposit works!</p>
+<div class="popup-header-fix-35">
+    <div class="row bb-1">
+        <div class="col-md-10 p-0">
+            <h4 class="mb-0 wrapper-20">FIXED DEPOSIT - DETAILED VIEW</h4>
+        </div>
+        <div class="col-md-2 text-left">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Owner ownerName: "Aman"
+Type of FD fdType: 2
+Amount invested amountInvested: 10000
+Commencement date commencementDate: 1576108800000
+Interest rate interestRate: 0.15
+Interest compounding interestCompoundingId: 1
+Tenure tenure: 0
+Maturity Date maturityDate: 1576108800000
+Interest payout option interestPayoutOption: 1
+Frequency of payout per year frequencyOfPayoutPerYear: 2
+Ownership type ownershipType: 1
+Current value currentValue: 3202347.9330817764
+Payout amount Rate payoutAmount: 0
+Maturity value maturityValue: 10000
+FD number fdNumber: "newFd123"
+Bank account number
+Institution name institutionName: "futurewise Tech"
+Description description: "this is futurewise Tech" -->
+<div class="pl-20 pr-20 pb-48 pt-40">
+    <div class="row pt-40">
+        <div class="col-md-12 p-0">
+            <div class="insurance-ui bt">
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Owner Name
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{fixedDeposit.ownerName}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Type of FD
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{(fixedDeposit.fdType == 1)?'Bank FD':'Corporate FD'}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Amount invested
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{fixedDeposit.amountInvested}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Commencement date
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{fixedDeposit.commencementDate  | date:'dd/MM/yyyy'}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Interest rate
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{fixedDeposit.interestRate}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Interest compounding
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{(fixedDeposit.interestCompoundingId == 1)?'Daily':(fixedDeposit.interestCompoundingId == 1)?'Monthly':(fixedDeposit.interestCompoundingId == 1)?'Quarterly':(fixedDeposit.interestCompoundingId == 1)?'Semi annually':'Annually'}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Tenure
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{fixedDeposit.tenure}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Maturity Date
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{fixedDeposit.maturityDate  | date:'dd/MM/yyyy'}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Interest payout option
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{(fixedDeposit.interestPayoutOption == 1)?'Cumulative payout':'Interest payout'}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Frequency of payout per year
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{fixedDeposit.frequencyOfPayoutPerYear}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Ownership type
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{(fixedDeposit.ownershipType == 1)?'Joint':'Single'}}
+                    </div>
+                </div>
+
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Current value
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{fixedDeposit.currentValue}}
+                    </div>
+                </div>
+
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Payout amount Rate
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{fixedDeposit.payoutAmount}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Maturity value
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{fixedDeposit.maturityValue}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        FD number
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{fixedDeposit.fdNumber}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Bank account number
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{fixedDeposit.bankAcountNumber}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Institution name
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{fixedDeposit.institutionName}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Description
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{fixedDeposit.description}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
