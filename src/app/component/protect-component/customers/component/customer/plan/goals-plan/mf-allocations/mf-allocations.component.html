@@ -1,1 +1,57 @@
-<p>mf-allocations works!</p>
+<div class="bg-white">
+    <div class="row bb-1 popup-header-fix-65">
+        <div class="col-md-10 p-0">
+            <h4 class="f-16 mb-0 pb-20 wrapper-20">MF ALLOCATIONS</h4>
+        </div>
+        <div class="col-md-2">
+            <i class="material-icons right pt-16 pb-12 c-p" (click)="close()">
+                close
+            </i>
+        </div>
+    </div>
+    <div class="row pt-72">
+        <div class="col-md-4 br-grey">
+            <p class="roboto">Additional savings required</p>
+            <div class="mt-8">
+                    <table mat-table [dataSource]="dataSource" id="table-low">
+                  
+                      <!-- Position Column -->
+                      <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef>  </th>
+                        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                      </ng-container>
+                  
+                      <!-- Name Column -->
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Equity </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                      </ng-container>
+                  
+                      <!-- Weight Column -->
+                      <ng-container matColumnDef="weight">
+                        <th mat-header-cell *matHeaderCellDef> Debt </th>
+                        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                      </ng-container>
+                  
+                  
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                  </div>
+        </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-10 p-0">
+                        <p class="m-0 roboto">Allocate mutual funds to goals from here</p>
+                    </div>
+                    <div class="col-md-1">
+                        
+                    </div>
+                    <div class="col-md-1">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
