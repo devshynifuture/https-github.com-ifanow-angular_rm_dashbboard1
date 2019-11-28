@@ -1,3 +1,4 @@
+import { AddSsyComponent } from './../common-component/add-ssy/add-ssy.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
@@ -91,12 +92,13 @@ export class SsySchemeComponent implements OnInit {
 
     });
   }
-  addOpenSSY(value, data) {
+  addOpenSSY(data) {
     const fragmentData = {
-      Flag: value,
+      flag: 'addSyss',
       data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: AddSsyComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
