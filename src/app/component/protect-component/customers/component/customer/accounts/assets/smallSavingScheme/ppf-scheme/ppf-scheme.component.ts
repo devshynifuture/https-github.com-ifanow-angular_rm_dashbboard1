@@ -20,7 +20,7 @@ export class PPFSchemeComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   displayedColumns = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
-  datasource;
+  dataSource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = 2978;
@@ -41,7 +41,7 @@ export class PPFSchemeComponent implements OnInit {
     console.log(data);
     this.isLoading = false;
     if (data.PPFList.length != 0) {
-      this.datasource = data.PPFList;
+      this.dataSource = data.PPFList;
     } else {
       this.noData = "No Scheme Found";
     }

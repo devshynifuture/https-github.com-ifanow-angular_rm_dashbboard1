@@ -42,8 +42,7 @@
                                             {{folder.openFolderNm}}</button>
                                     </mat-menu>
                                 </li> -->
-                                <li class="breadcrumb-item active c-p" (click)="getFolders(folder)"
-                                    *ngFor="let folder of openFolderName">{{folder.openFolderNm}}</li>
+                                <li class="breadcrumb-item active c-p" (click)="getFolders(folder)" *ngFor="let folder of openFolderName">{{folder.openFolderNm}}</li>
                             </ol>
                         </div>
                         <div class="col-md-6 p-0 d-flex justify-content-end">
@@ -103,15 +102,13 @@
                                 <ng-container matColumnDef="name">
                                     <th mat-header-cell *matHeaderCellDef> Name </th>
                                     <td mat-cell class="c-p" *matCellDef="let element" (click)="openFolder(element)">
-                                        <img class="mr-12" src="/assets/images/svg/folder-icon.svg" >
-                                        <img  *ngIf="element.isStarred == 0" class="mr-12" src="/assets/images/svg/yellow-star.svg" >
-                                        {{element.folderName || element.fileName}} </td>
+                                        <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> {{element.folderName || element.fileName}} <img *ngIf="element.isStarred == 1" class="mr-12" src="/assets/images/svg/document-star.svg"> </td>
                                 </ng-container>
 
                                 <!-- Weight Column -->
                                 <ng-container matColumnDef="lastModi">
                                     <th mat-header-cell *matHeaderCellDef> Last modified </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.createdDate |  date:'dd/MM/yyyy'}}
+                                    <td mat-cell *matCellDef="let element"> {{element.createdDate | date:'dd/MM/yyyy'}}
                                     </td>
                                 </ng-container>
 
@@ -138,12 +135,14 @@
                                                 Share</button>
                                             <button mat-menu-item><img src="assets/images/svg/shareable.svg"
                                                     class="mr-4"> Get shareable link</button>
-                                            <button mat-menu-item (click)="starFiles(element)"><img src="assets/images/svg/star-border-icon.svg"
-                                                    class="mr-4" >Add to starred</button>
+                                            <button mat-menu-item (click)="starFiles(element)"><img
+                                                    src="assets/images/svg/star-border-icon.svg" class="mr-4">Add to
+                                                starred</button>
                                             <button mat-menu-item><img src="assets/images/svg/edit-name.svg"
                                                     class="mr-4">Rename</button>
-                                            <button mat-menu-item (click)="viewActivities(element)"><img src="assets/images/svg/info-icon.svg"
-                                                    class="mr-4">View activity</button>
+                                            <button mat-menu-item (click)="viewActivities(element)"><img
+                                                    src="assets/images/svg/info-icon.svg" class="mr-4">View
+                                                activity</button>
                                             <button mat-menu-item><img src="assets/images/svg/move-to-icon.svg"
                                                     class="mr-4">Move to</button>
                                             <button mat-menu-item><img src="assets/images/svg/file-copy.svg"
@@ -173,18 +172,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <div>
+                                <ng-container>
 
+                                </ng-container>
+                            </div>
                             <div class="row">
                                 <div class="col">
-                                    <p mat-raised-button (click)="openBottomSheet()"
-                                        class="text-primary f-14 c-p mb-12 "><img
-                                            src="/assets/images/svg/upload-document-icon.svg" class="mr-8"> Upload file
-                                    </p>
-                                    <p class="text-primary f-14 c-p mb-12 "><img
-                                            src="/assets/images/svg/upload-folder-document-icon.svg" class="mr-8">
-                                        Upload folder</p>
-                                    <p class="text-primary f-14 c-p mb-12 "><img
-                                            src="/assets/images/svg/new-folder-document.svg" class="mr-8">New folder</p>
+
+                                    <input type="file" class="inputfile inputfile-3" id="file-3" multiple (change)="getFileDetails($event)">
+                                    <label class="uploadLabel c-p text-primary f-14 c-p mb-12" for="file-3">
+                                            <img src="/assets/images/svg/upload-document-icon.svg" class="mr-8"> 
+                                            <span>Upload file</span></label>
+
+                                    <!-- <p mat-raised-button (click)="openBottomSheet()" class="text-primary f-14 c-p mb-12 ">
+                                        Upload file
+                                    </p> -->
+                                    <p class="text-primary f-14 c-p mb-12 "><img src="/assets/images/svg/upload-folder-document-icon.svg" class="mr-8"> Upload folder</p>
+                                    <p (click)="openDialog()" class="text-primary f-14 c-p mb-12 "><img src="/assets/images/svg/new-folder-document.svg" class="mr-8">New folder</p>
                                 </div>
                             </div>
                         </div>

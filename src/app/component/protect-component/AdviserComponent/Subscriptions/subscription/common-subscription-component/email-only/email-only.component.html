@@ -1,99 +1,97 @@
-<!--<div>-->
-<!--        <div class="wrapper-100 justify-content-center">-->
-<!--          <div class="row">-->
-<!--            <div class="col-md-4 p-0">-->
-<!--           <h3 class="mb-8 mt-20">{{storeData.documentName}}</h3>-->
-<!--            </div>-->
-<!--          <div class="col-md-8 pt-4 pr-0 pb-12 text-right">-->
-<!--            <img src="assets/images/svg/pencil.svg" class="c-p"> -->
-<!--            <img src="assets/images/svg/mail-light.svg" class="b-a c-p">-->
-<!--            <img src="assets/images/svg/pdf-icons.svg" class="b-a">-->
-<!--            <img src="assets/images/svg/printer.svg" class="b-a">-->
-<!--            <img src="assets/images/svg/attech-light.svg" class="b-a wrapper-9">-->
-<!--            <img src="assets/images/svg/delete.svg" class="b-a wrapper-9 ml-8">-->
-<!--          </div>-->
-<!--        -->
-<!--            -->
-<!--      -->
-<!--              &lt;!&ndash; <div id="ui-froala">-->
-<!--                      <div [froalaEditor] formControlName="mail_body">Hello, Froala!</div>-->
-<!--                <button type="submit" (click)="onSubmit()" [disabled]="!mailForm.valid" mat-stroked-button-->
-<!--                        class="mt-16 btn-primary br-0">Submit-->
-<!--                </button>-->
-<!--              </div> &ndash;&gt;-->
-<!--            </div>-->
-<!--            <div class="col-md-12 p-0">-->
-<!--                    &lt;!&ndash; <textarea [froalaEditor]="config" (froalaModelChange)="onChange($event)" [(froalaModel)]="model"></textarea> &ndash;&gt;-->
-<!--            -->
-<!--                  <app-froala [(model)]="storeData.documentText" modelChange="saveData($event)"></app-froala>-->
-<!--                  </div>-->
-<!--          </div>-->
-<!--       -->
-<!--      </div>-->
-<!--      <div class="bottom-fixed wrapper-12">-->
-<!--        <div class="row">-->
-<!--          <div class="col-md-4">-->
-<!--            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>-->
-<!--          </div>-->
-<!--          <div class="col-md-8 right text-right">-->
-<!--      -->
-<!--            <button mat-button class="btn-bottom br-0 text-inherit" [matMenuTriggerFor]="menu">Email with eSign Request <i-->
-<!--              class="material-icons">-->
-<!--              arrow_drop_up-->
-<!--            </i></button>-->
-<!--            <mat-menu #menu="matMenu">-->
-<!--              <button mat-menu-item>Item 1</button>-->
-<!--              <button mat-menu-item>Item 2</button>-->
-<!--            </mat-menu>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      -->
-<!--       <div class="bottom-fixed wrapper-12 w-100" *ngIf="emailDocument!='documentUpper'">-->
-<!--                    <div class="row">-->
-<!--                      <div class="col-md-6">-->
-<!--                        <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>-->
-<!--                      </div>-->
-<!--                      <div class="col-md-2 p-0">-->
-<!--                            <h5 class="m-0 pt-8 text-white c-p ">Help</h5>-->
-<!--                      </div>-->
-<!--                      <div class="col-md-4  right text-right" *ngIf="emailDocumentSend!=undefined || emailDocument!=undefined">-->
-<!--                            <div>-->
-<!--                                <button mat-button class="btn-bottom br-0 text-inherit mr-20" *ngIf="emailDocument=='readyToSend'">Email only <i-->
-<!--                                  class="material-icons">-->
-<!--                                  arrow_drop_up-->
-<!--                                </i></button>                              -->
-<!--                            <button mat-button class="btn-bottom br-0 text-inherit" (click)="openEmailQuot('eSignDocument','open')">Email with eSign Request <i-->
-<!--                                class="material-icons">-->
-<!--                                arrow_drop_up-->
-<!--                              </i></button>-->
-<!--                              </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-4  right text-right" *ngIf="emailSendfooter!=undefined || emailSend!=undefined">-->
-<!--                        <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="emailSendfooter!='footerChange'" (click)="save()">SAVE</button>-->
-<!--                        <div *ngIf="emailSendfooter=='footerChange'">-->
-<!--                            <button mat-button class="btn-bottom br-0 text-inherit mr-20">Email only <i-->
-<!--                              class="material-icons">-->
-<!--                              arrow_drop_up-->
-<!--                            </i></button>-->
-<!--                        <button mat-button class="btn-bottom br-0 text-inherit" (click)="openEmailQuot('emailQuot','open')">Email with eSign Request <i-->
-<!--                            class="material-icons">-->
-<!--                            arrow_drop_up-->
-<!--                          </i></button>-->
-<!--                          </div>-->
-<!--                </div>-->
-<!--             </div>-->
-<!--        </div>-->
-<!--        <div class="bottom-fixed wrapper-12 w-100" *ngIf="emailDocument=='documentUpper'">-->
-<!--            <div class="row">-->
-<!--              <div class="col-md-6">-->
-<!--                <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>-->
-<!--              </div>-->
-<!--              <div class="col-md-2 p-0">-->
-<!--                    <h5 class="m-0 pt-8 text-white c-p ">Help</h5>-->
-<!--              </div>-->
-<!--            <div class="col-md-4  right text-right">-->
-<!--                <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()">SAVE</button>-->
-<!--        </div>-->
-<!--     </div>-->
-<!--      </div>-->
+<div class="custom-email">
+    <div class="bg-dark wrapper-8 pt-12">
+      <div class="row">
+        <div class="col-md-11">
+          <p class="m-0 text-white pt-4">New email</p>
+        </div>
+        <div class="col-md-1 p-0">
+          <!--        <i class="material-icons text-white pr-4 c-p">-->
+          <!--          remove-->
+          <!--        </i>-->
+          <i class="material-icons text-white c-p" (click)="close()">
+            clear
+          </i>
+        </div>
+      </div>
+    </div>
+    <div class="wrapper-8 pt-12">
+      <div class="row">
+        <div class="col-md-1">
+          <p class="m-0 text-custom">From</p>
+        </div>
+        <div class="col-md-9">
+          <p class="m-0 text-black">{{
+              this.emailData ? this.emailData.fromEmail : 'support@futurewise.co.in'}}</p>
+        </div>
+        <div class="col-md-2 pr-0">
+          <ul class="text-custom right f-14 pr-8 f-500">
+            <li class="pr-4">CC</li>
+            <li> BCC</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="wrapper-8 pb-16">
+      <div class="row">
+        <div class="col-md-1">
+          <p class="m-0 text-custom">To</p>
+        </div>
+        <div class="col-md-11">
+          <!-- <p class="m-0 text-black">{{this._inputData.clientData.userEmailId}}</p> -->
+          <input type="text" [(ngModel)]="this._inputData.clientData.userEmailId"/>
+        </div>
+      </div>
+    </div>
+    <div class="wrapper-16 pt-0 pb-0">
+      <div class="btl-1 bb-1">
+        <div class="row">
+  
+          <p class="m-0 text-custom pt-8 pb-8 pl-8">Subject</p>
+          <input type="text" [(ngModel)]="subject"
+                 class="form-control br-0">
+        </div>
+      </div>
+      <div class="form-group mb-0 mt-8">
+        <app-froala [(model)]="emailBody" modelChange="saveData($event)"></app-froala>
+  
+      </div>
+    </div>
+    <div class="row btl-1 pt-16">
+      <div class="col-md-9">
+            <mat-chip-list #chipList aria-label="docName selection">
+                <mat-chip *ngFor="let doc of docObj ; let i = index"
+                        (removed)="remove(i)">
+                  {{doc.documentName}}
+                  <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+                <!-- <input matInput
+                       [matChipInputFor]="chipList"
+                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                       [matChipInputAddOnBlur]="addOnBlur"
+                       (matChipInputTokenEnd)="add($event)"> -->
+              </mat-chip-list>
+        <div class="row">
+          <div class="col-md-2">
+            <button mat-stroked-button class="btn-primary br-0" (click)="sendEmail()">Send</button>
+          </div>
+  <!--        <div class="col-md-1">-->
+  <!--          <h3 class="m-0 pt-8 f-700 text-custom c-p">A</h3>-->
+  <!--        </div>-->
+  <!--        <div class="col-md-1">-->
+  <!--          <img src="/assets/images/svg/delete.svg" class="pt-8 c-p">-->
+  <!--        </div>-->
+        </div>
+      </div>
+  <!--    <div class="col-md-3">-->
+  <!--      <div class="row">-->
+  <!--        <div class="col-md-8 pl-0">-->
+  <!--          <p class="m-0 text-custom pt-8 c-p"> Use template</p>-->
+  <!--        </div>-->
+  <!--        <div class="col-md-1">-->
+  <!--          <img src="/assets/images/svg/delete.svg" class="c-p pt-8">-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--    </div>-->
+    </div>
+  </div>
+  

@@ -234,7 +234,7 @@ export class DocumentComponent implements OnInit {
         data.documentList.push(singleElement);
       }
     });
-    this.open(data, 'emailOnlyDoc');
+    this.open('emailOnlyDoc',data);
   }
 
   open(value, data) {
@@ -249,6 +249,8 @@ export class DocumentComponent implements OnInit {
       id: 1,
       state: 'open'
     };
+    fragmentData.data.clientName=this._clientData.name;
+    fragmentData.data.isDocument=true;
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {

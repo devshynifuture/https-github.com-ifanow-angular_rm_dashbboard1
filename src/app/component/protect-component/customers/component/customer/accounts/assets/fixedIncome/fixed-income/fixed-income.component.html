@@ -183,8 +183,8 @@
             <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS
             </button>
-            <button mat-stroked-button class="btn-primary addon v-middle"
-              (click)="openPortfolioSummary('addRecuringDeposit','open',null)"><i class="material-icons">add</i>ADD
+            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddRecurringDeposit(null)"><i
+                class="material-icons">add</i>ADD
               NEW
             </button>
 
@@ -260,7 +260,7 @@
               more_vert
             </i>
             <mat-menu #menu4="matMenu">
-              <button mat-menu-item (click)="openPortfolioSummary('addRecuringDeposit','open',element)">Edit</button>
+              <button mat-menu-item (click)="openAddRecurringDeposit(element)">Edit</button>
               <button mat-menu-item>Deatiled View</button>
               <button mat-menu-item>Activity</button>
               <button mat-menu-item (click)="deleteModal('RECURRING DEPOSITE',element)">Delete</button>
@@ -299,8 +299,8 @@
             <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS
             </button>
-            <button mat-stroked-button class="btn-primary addon v-middle"
-              (click)="openPortfolioSummary('addBonds','open',null)"><i class="material-icons">add</i>ADD NEW
+            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddRecurringDeposit(null)"><i
+                class="material-icons">add</i>ADD NEW
             </button>
 
           </div>
