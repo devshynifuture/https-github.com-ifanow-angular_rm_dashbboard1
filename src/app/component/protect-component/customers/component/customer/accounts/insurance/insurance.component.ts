@@ -50,6 +50,8 @@ export class InsuranceComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.insuranceTypeId=1;
+    this.insuranceSubTypeId=0;
     this.getGlobalDataInsurance();
     this.getInsuranceData(1)
     this.lifeInsuranceFlag=true;
@@ -72,7 +74,7 @@ export class InsuranceComponent implements OnInit {
       this.dataSource = data.insuranceList;
     }
     else {
-      this.dataSource = undefined
+      this.dataSource = data
       this.noData = "No Insurance Data"
     }
   }
@@ -123,7 +125,7 @@ export class InsuranceComponent implements OnInit {
           data => {
             this.eventService.openSnackBar("Insurance is deleted", "dismiss")
             dialogRef.close();
-            this.getInsuranceSubTypeData(this.advisorId, this.clientId, this.insuranceTypeId, this.insuranceSubTypeId)
+            this.getInsuranceData(this.insuranceTypeId)
           },
           err => this.eventService.openSnackBar(err)
         )
@@ -182,7 +184,7 @@ export class InsuranceComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getInsuranceSubTypeData(this.advisorId, this.clientId, this.insuranceTypeId, this.insuranceSubTypeId)
+          this.getInsuranceData(this.insuranceTypeId)
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 

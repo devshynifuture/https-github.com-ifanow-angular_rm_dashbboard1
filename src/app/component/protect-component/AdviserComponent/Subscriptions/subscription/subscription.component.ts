@@ -58,6 +58,10 @@ export class SubscriptionComponent implements OnInit {
 
   tabClick(event) {
     this.eventService.sidebarData(event.tab.textLabel);
+    if(event.index!=6)
+    {
+      this.settingIndex=0
+    }
   }
   help() {
 
