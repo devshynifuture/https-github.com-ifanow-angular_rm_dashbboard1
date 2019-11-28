@@ -48,7 +48,6 @@ export class AddRealEstateComponent implements OnInit {
   familyMemId: any;
   _data: any;
   constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService) { }
-  @Input()
   // set inputData(inputData) {
   //   this._inputData = inputData;
   //   this.getRealEstate(inputData);
