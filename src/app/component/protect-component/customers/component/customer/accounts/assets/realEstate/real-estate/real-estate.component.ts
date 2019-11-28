@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { AddRealEstateComponent } from '../add-real-estate/add-real-estate.component';
 
 @Component({
   selector: 'app-real-estate',
@@ -105,7 +106,8 @@ export class RealEstateComponent implements OnInit {
       Flag: value,
       data: data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName:AddRealEstateComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomerDocumentsComponent } from './customer-documents/customer-documents.component';
@@ -24,7 +23,6 @@ import { TransactionsComponent } from '../../common-component/transactions/trans
 import { UpperCustomerComponent } from '../../common-component/upper-customer/upper-customer.component';
 import { RightFilterComponent } from '../../common-component/right-filter/right-filter.component';
 import { FixedIncomeComponent } from './assets/fixedIncome/fixed-income/fixed-income.component';
-import { BondsComponent } from './assets/fixedIncome/bonds/bonds.component';
 import { AddIncomeComponent } from '../../common-component/add-income/add-income.component';
 import { IncomeDetailComponent } from '../../common-component/income-detail/income-detail.component';
 import { DetailedViewComponent } from '../../common-component/detailed-view/detailed-view.component';
@@ -56,10 +54,11 @@ import { AddOtherPayablesComponent } from './liabilities/add-other-payables/add-
 
 import { CashAndBankComponent } from './assets/cash&bank/cash-and-bank/cash-and-bank.component';
 import { CommoditiesComponent } from './assets/commodities/commodities/commodities.component';
+import { AddTransactionComponent } from './assets/smallSavingScheme/common-component/add-transaction/add-transaction.component';
 import { SkeletonLoadingDirective } from 'src/app/skeleton-loading.directive';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { DocumentNewFolderComponent } from '../../common-component/document-new-folder/document-new-folder.component';
-import { OwnerComponentModule } from './owner-component/owner-component.module';
+import { OwnerComponentModule } from "./owner-component/owner-component.module";
 @NgModule({
   declarations: [
     SchemeLevelTransactionComponent,
@@ -85,17 +84,12 @@ import { OwnerComponentModule } from './owner-component/owner-component.module';
     UpperCustomerComponent,
     RightFilterComponent,
     FixedIncomeComponent,
-    BondsComponent,
+    //BondsComponent,
     AddIncomeComponent,
     IncomeDetailComponent,
     DetailedViewComponent,
     //LiabilitiesDetailComponent,
     RetirementAccountComponent,
-    // AddEPFComponent,
-    // AddSuperannuationComponent,
-    // AddEPSComponent,
-    // AddGratuityComponent,
-    // AddNPSComponent,
     PPFSchemeComponent,
     NscSchemeComponent,
     SsySchemeComponent,
@@ -150,7 +144,6 @@ import { OwnerComponentModule } from './owner-component/owner-component.module';
     // AddSuperannuationComponent,
     // AddEPSComponent,
     // AddGratuityComponent,
-    BondsComponent,
     ReactiveFormsModule,
     AddIncomeComponent,
     IncomeDetailComponent,

@@ -51,7 +51,7 @@
 
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                         class="material-icons c-p">filter_list</i>FILTERS</button>
-                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddEPF(null)"><i
+                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddEPF(element)"><i
                         class="material-icons c-p">add</i>ADD NEW</button>
             </div>
         </div>
@@ -136,8 +136,8 @@
                         </i>
                         <mat-menu #menubank="matMenu">
                             <button mat-menu-item class="c-p"
-                                (click)="openRetirement('addEPF','open',element)">Edit</button>
-                            <button mat-menu-item class="c-p">Detailed view</button>
+                                (click)="openAddEPF(element)">Edit</button>
+                            <button mat-menu-item class="c-p" (click)="openDetailedViewEPF(element)">Detailed view</button>
                             <button mat-menu-item class="c-p">Activity</button>
                             <button mat-menu-item class="c-p" (click)="deleteModal('EPF',element)">Delete</button>
                         </mat-menu>
@@ -178,7 +178,7 @@
                                 <button mat-stroked-button class="btn-primary addon v-middle"
                                     [matMenuTriggerFor]="menu1"><i class="material-icons">add</i>ADD NEW</button>
                                 <mat-menu #menu1="matMenu" class="add-new">
-                                    <button mat-menu-item class="b-b" (click)="openAddSummaryPort(null)">
+                                    <button mat-menu-item class="b-b" (click)="openAddSummaryPort(element)">
                                         <div class="row">
                                             <div class="col-md-2 pr-8 text-right">
                                                 <img src="assets/images/svg/dark-three-dot.svg">
@@ -191,7 +191,7 @@
                                             </div>
                                         </div>
                                     </button>
-                                    <button mat-menu-item class="b-b" (click)="openAddSchemeHolding(null)">
+                                    <button mat-menu-item class="b-b" (click)="openAddSchemeHolding(element)">
                                         <div class="row">
                                             <div class="col-md-2 pr-8 text-right">
                                                 <img src="assets/images/svg/scheme-icon.svg">
@@ -275,7 +275,7 @@
                                 (click)="openAddSchemeHolding(element)">Edit</button>
                             <button mat-menu-item class="c-p">Detailed view</button>
                             <button mat-menu-item class="c-p">Activity</button>
-                            <button mat-menu-item class="c-p" (click)="deleteModal('NPS',element)">Delete</button>
+                            <button mat-menu-item class="c-p" (click)="deleteModal(element)">Delete</button>
                         </mat-menu>
                     </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
@@ -297,7 +297,7 @@
                 <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                         class="material-icons">filter_list</i>FILTERS</button>
-                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddGratuity(null)"><i
+                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddGratuity(element)"><i
                         class="material-icons">add</i>ADD NEW</button>
             </div>
         </div>
@@ -364,7 +364,7 @@
                             <button mat-menu-item class="c-p" (click)="openAddGratuity(element)">Edit</button>
                             <button mat-menu-item class="c-p">Detailed view</button>
                             <button mat-menu-item class="c-p">Activity</button>
-                            <button mat-menu-item class="c-p" (click)="deleteModal('GRATUITY',element)">Delete</button>
+                            <button mat-menu-item class="c-p" (click)="deleteModal(element)">Delete</button>
                         </mat-menu>
                     </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
@@ -492,7 +492,7 @@
                 <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                         class="material-icons">filter_list</i>FILTERS</button>
-                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddEPS(nul)"><i
+                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddEPS(element)"><i
                         class="material-icons">add</i>ADD NEW</button>
             </div>
         </div>
@@ -557,7 +557,7 @@
                             <button mat-menu-item class="c-p" (click)="openAddEPS(element)">Edit</button>
                             <button mat-menu-item class="c-p">Detailed view</button>
                             <button mat-menu-item class="c-p">Activity</button>
-                            <button mat-menu-item class="c-p" (click)="deleteModal('EPS',element)">Delete</button>
+                            <button mat-menu-item class="c-p" (click)="deleteModal(element)">Delete</button>
                         </mat-menu>
                     </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
