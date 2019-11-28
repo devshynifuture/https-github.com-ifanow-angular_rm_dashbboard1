@@ -137,7 +137,7 @@
                         <mat-menu #menubank="matMenu">
                             <button mat-menu-item class="c-p"
                                 (click)="openAddEPF(element)">Edit</button>
-                            <button mat-menu-item class="c-p">Detailed view</button>
+                            <button mat-menu-item class="c-p" (click)="openDetailedViewEPF(element)">Detailed view</button>
                             <button mat-menu-item class="c-p">Activity</button>
                             <button mat-menu-item class="c-p" (click)="deleteModal('EPF',element)">Delete</button>
                         </mat-menu>

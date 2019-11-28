@@ -14,6 +14,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
 import { NpsSchemeHoldingComponent } from "../add-nps/nps-scheme-holding/nps-scheme-holding.component";
+import { DetailedViewEPFComponent } from '../add-epf/detailed-view-epf/detailed-view-epf.component';
 
 @Component({
   selector: 'app-retirement-account',
@@ -202,17 +203,6 @@ export class RetirementAccountComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        // if (value == 'added') {
-        //   this.getListEPF()
-        // } else if (value == 'addedGratuity') {
-        //   this.getListGratuity()
-        // } else if (value == 'addedEps') {
-        //   this.getListEPS()
-        // } else if (value == 'addedSuperannuation') {
-        //   this.getListSuperannuation()
-        // } else {
-        //   this.getListNPS()
-        // }
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -221,7 +211,24 @@ export class RetirementAccountComponent implements OnInit {
       }
     );
   }
-
+  openDetailedViewEPF(data) {
+    const fragmentData = {
+      flag: 'addEPF',
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: DetailedViewEPFComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
   openAddSchemeHolding(data) {
     const fragmentData = {
       flag: 'addSchemeHolding',
