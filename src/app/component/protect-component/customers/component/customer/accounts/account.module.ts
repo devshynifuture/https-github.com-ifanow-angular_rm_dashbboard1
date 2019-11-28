@@ -28,7 +28,6 @@ import { BondsComponent } from './assets/fixedIncome/bonds/bonds.component';
 import { AddIncomeComponent } from '../../common-component/add-income/add-income.component';
 import { IncomeDetailComponent } from '../../common-component/income-detail/income-detail.component';
 import { DetailedViewComponent } from '../../common-component/detailed-view/detailed-view.component';
-import { LiabilitiesDetailComponent } from '../../common-component/liabilities-detail/liabilities-detail.component';
 import { RetirementAccountComponent } from './assets/retirementAccounts/retirement-account/retirement-account.component';
 import { PPFSchemeComponent } from './assets/smallSavingScheme/ppf-scheme/ppf-scheme.component';
 import { NscSchemeComponent } from './assets/smallSavingScheme/nsc-scheme/nsc-scheme.component';
@@ -137,7 +136,7 @@ import { OwnerComponentModule } from './owner-component/owner-component.module';
     // AddTransactionComponent,
     SkeletonLoadingDirective,
     FormatNumberDirective,
-    DocumentNewFolderComponent
+    DocumentNewFolderComponent,
   ],
   imports: [
     // BrowserModule,
@@ -167,7 +166,7 @@ import { OwnerComponentModule } from './owner-component/owner-component.module';
     UpperCustomerComponent,
     RightFilterComponent,
     DetailedViewComponent,
-    LiabilitiesDetailComponent,
+   // LiabilitiesDetailComponent,
     RealEstateComponent,
     // AddPpfComponent,
     // AddNscComponent,

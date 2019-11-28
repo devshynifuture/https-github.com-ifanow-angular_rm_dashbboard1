@@ -60,6 +60,7 @@ export class DocumentsComponent implements OnInit {
   showDots = false;
   parentId: any;
   filenm: string;
+  showLoader: boolean;
 
 
   constructor(private http: HttpService, private _bottomSheet: MatBottomSheet, private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public dialog: MatDialog) { }
@@ -73,6 +74,7 @@ export class DocumentsComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getAllFileList(tabValue)
+    this.showLoader = true;
   }
 
   openDialog(): void {
@@ -133,6 +135,7 @@ export class DocumentsComponent implements OnInit {
       }
       console.log('this.backUpfiles', this.backUpfiles)
     }
+    this.showLoader = false;
     if (this.openFolderName.length > 2) {
       this.showDots = true
     }

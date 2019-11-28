@@ -1,4 +1,7 @@
-<div id="ui-document" class="account_side-menu">
+<div *ngIf="showLoader==true">
+        <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+    </div>
+<div id="ui-document">
     <div class="row h-100vh">
         <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
             <ul class="vertical-menu">
@@ -89,7 +92,9 @@
                             </mat-menu>
                         </div>
                     </div>
-
+                    <div *ngIf="showLoader==true">
+                            <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+                        </div>
 
                     <div class="row">
                         <div class="col-md-9 p-0 documentsTable" *ngSwitchCase="viewMode">
