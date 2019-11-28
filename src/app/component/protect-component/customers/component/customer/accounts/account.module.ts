@@ -23,7 +23,6 @@ import {TransactionsComponent} from '../../common-component/transactions/transac
 import {UpperCustomerComponent} from '../../common-component/upper-customer/upper-customer.component';
 import {RightFilterComponent} from '../../common-component/right-filter/right-filter.component';
 import {FixedIncomeComponent} from './assets/fixedIncome/fixed-income/fixed-income.component';
-import {BondsComponent} from './assets/fixedIncome/bonds/bonds.component';
 import {AddIncomeComponent} from '../../common-component/add-income/add-income.component';
 import {IncomeDetailComponent} from '../../common-component/income-detail/income-detail.component';
 import {DetailedViewComponent} from '../../common-component/detailed-view/detailed-view.component';
@@ -98,7 +97,7 @@ import {OwnerComponentModule} from "./owner-component/owner-component.module";
     UpperCustomerComponent,
     RightFilterComponent,
     FixedIncomeComponent,
-    BondsComponent,
+    //BondsComponent,
     AddIncomeComponent,
     IncomeDetailComponent,
     DetailedViewComponent,
@@ -156,8 +155,7 @@ import {OwnerComponentModule} from "./owner-component/owner-component.module";
   ],
   exports: [AccountsComponent, AddOtherPayablesComponent, CashAndBankComponent, CommoditiesComponent,
      NpsSummaryPortfolioComponent, LibilitiesRightComponent,
-    AddSuperannuationComponent, AddEPSComponent, AddGratuityComponent,
-    BondsComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent,
+    AddSuperannuationComponent, AddEPSComponent, AddGratuityComponent, ReactiveFormsModule, AddIncomeComponent, IncomeDetailComponent,
     ReactiveFormsModule, FactShitComponent, TransactionsComponent, UpperCustomerComponent,
     RightFilterComponent, DetailedViewComponent,
     RealEstateComponent, AddPpfComponent, AddNscComponent, AddSsyComponent, AddKvpComponent, AddScssComponent,

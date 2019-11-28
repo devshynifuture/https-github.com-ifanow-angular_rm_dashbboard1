@@ -10,6 +10,8 @@ import { MatDialog } from '@angular/material';
 import { DetailedViewFixedDepositComponent } from '../fixed-deposit/detailed-view-fixed-deposit/detailed-view-fixed-deposit.component';
 import { FixedDepositComponent } from '../fixed-deposit/fixed-deposit.component';
 import { DetailedViewRecuringDepositComponent } from '../recuring-deposit/detailed-view-recuring-deposit/detailed-view-recuring-deposit.component';
+import { DetailedViewBondsComponent } from '../bonds/detailed-view-bonds/detailed-view-bonds.component';
+import { BondsComponent } from '../bonds/bonds.component';
 
 @Component({
   selector: 'app-fixed-income',
@@ -246,6 +248,50 @@ export class FixedIncomeComponent implements OnInit {
       id: 1,
       state: 'open',
       componentName: RecuringDepositComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        this.getFixedDepositList();
+        this.getRecurringDepositList()
+        this.getBondsList()
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+  openBonds(value,state,data) {
+    const fragmentData = {
+      Flag:value,
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: BondsComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        this.getFixedDepositList();
+        this.getRecurringDepositList()
+        this.getBondsList()
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+  detailedViewBonds(value,state,data,) {
+    const fragmentData = {
+      Flag: value,
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: DetailedViewBondsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
