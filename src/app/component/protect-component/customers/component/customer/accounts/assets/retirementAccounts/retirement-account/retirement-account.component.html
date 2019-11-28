@@ -175,7 +175,7 @@
                 </div>
               </div>
             </button>
-                        <button mat-menu-item class="b-b" (click)="openRetirement('addSchemeHoldings','open')">
+                        <button mat-menu-item class="b-b" (click)="openAddSchemeHolding(null)">
               <div class="row">
                 <div class="col-md-2 pr-8 text-right">
                   <img src="assets/images/svg/scheme-icon.svg">
@@ -252,7 +252,7 @@
             </i>
                 <mat-menu #menubank="matMenu">
                     <button mat-menu-item class="c-p" *ngIf="element.schemeChoice != undefined" (click)="openRetirement('addSummaryPort','open',element)">Edit</button>
-                    <button mat-menu-item class="c-p" *ngIf="element.schemeChoice == undefined" (click)="openRetirement('addSchemeHoldings','open',element)">Edit</button>
+                    <button mat-menu-item class="c-p" *ngIf="element.schemeChoice == undefined" (click)="openAddSchemeHolding(element)">Edit</button>
                     <button mat-menu-item class="c-p">Detailed view</button>
                     <button mat-menu-item class="c-p">Activity</button>
                     <button mat-menu-item class="c-p" (click)="deleteModal('NPS',element)">Delete</button>
