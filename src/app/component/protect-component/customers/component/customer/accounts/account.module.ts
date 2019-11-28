@@ -60,7 +60,6 @@ import { SkeletonLoadingDirective } from 'src/app/skeleton-loading.directive';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { DocumentNewFolderComponent } from '../../common-component/document-new-folder/document-new-folder.component';
 import { OwnerComponentModule } from './owner-component/owner-component.module';
-
 @NgModule({
   declarations: [
     SchemeLevelTransactionComponent,

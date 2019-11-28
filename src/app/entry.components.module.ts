@@ -32,6 +32,8 @@ import { AddEPFComponent } from './component/protect-component/customers/compone
 import { AddNPSComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/add-nps.component';
 import { AddGoalComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/add-goal/add-goal.component';
 import { NpsSchemeHoldingComponent } from "./component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/nps-scheme-holding/nps-scheme-holding.component";
+import { DetailedPoTdComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-td-scheme/detailed-po-td/detailed-po-td.component';
+import { DetailedPoSavingsComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-savings/detailed-po-savings/detailed-po-savings.component';
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -61,7 +63,9 @@ export const componentList = [
   AddScssComponent,
   AddPoSavingComponent,
   AddPoMisComponent,
-  AddPoRdComponent
+  AddPoRdComponent,
+  DetailedPoTdComponent,
+  DetailedPoSavingsComponent
 ];
 
 @NgModule({
