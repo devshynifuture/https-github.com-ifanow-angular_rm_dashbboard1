@@ -96,7 +96,7 @@ export class FixedIncomeComponent implements OnInit {
     );
   }
   getRecurringDepositRes(data) {
-    console.log('getRecuringDepositRes ******** ', data);
+    console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
     this.isLoading = false;
     this.dataSourceRecurring = data.recurringDeposits
     this.totalCurrentValue = data.totalCurrentValue
@@ -263,9 +263,9 @@ export class FixedIncomeComponent implements OnInit {
       }
     );
   }
-  openBonds(value,state,data) {
+  openBonds(data) {
     const fragmentData = {
-      Flag:value,
+      Flag:'BondsComponent',
       data: data,
       id: 1,
       state: 'open',
@@ -285,9 +285,9 @@ export class FixedIncomeComponent implements OnInit {
       }
     );
   }
-  detailedViewBonds(value,state,data,) {
+  detailedViewBonds(data) {
     const fragmentData = {
-      Flag: value,
+      Flag: 'DetailedViewBondsComponent',
       data: data,
       id: 1,
       state: 'open',

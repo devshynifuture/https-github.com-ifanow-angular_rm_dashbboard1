@@ -50,8 +50,6 @@ import { OtherPayablesComponent } from './liabilities/other-payables/other-payab
 // import {InvestmentsPlanComponent} from '../plan/investments-plan/investments-plan.component';
 // import {ScenariosPlanComponent} from '../plan/scenarios-plan/scenarios-plan.component';
 import { AddOtherPayablesComponent } from './liabilities/add-other-payables/add-other-payables.component';
-
-
 import { CashAndBankComponent } from './assets/cash&bank/cash-and-bank/cash-and-bank.component';
 import { CommoditiesComponent } from './assets/commodities/commodities/commodities.component';
 import { SkeletonLoadingDirective } from 'src/app/skeleton-loading.directive';
@@ -90,11 +88,6 @@ import { OwnerComponentModule } from './owner-component/owner-component.module';
     DetailedViewComponent,
     //LiabilitiesDetailComponent,
     RetirementAccountComponent,
-    // AddEPFComponent,
-    // AddSuperannuationComponent,
-    // AddEPSComponent,
-    // AddGratuityComponent,
-    // AddNPSComponent,
     PPFSchemeComponent,
     NscSchemeComponent,
     SsySchemeComponent,

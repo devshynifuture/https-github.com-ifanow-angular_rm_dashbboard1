@@ -392,8 +392,8 @@
               more_vert
             </i>
             <mat-menu #menu4="matMenu">
-              <button mat-menu-item (click)="openBonds('addBonds','open',element)">Edit</button>
-              <button mat-menu-item (click)="detailedViewBonds('addBonds','open',element)">Deatiled View</button>
+              <button mat-menu-item (click)="openBonds(element)">Edit</button>
+              <button mat-menu-item (click)="detailedViewBonds(element)">Deatiled View</button>
               <button mat-menu-item>Activity</button>
               <button mat-menu-item (click)="deleteModal('BOND',element)">Delete</button>
             </mat-menu>
