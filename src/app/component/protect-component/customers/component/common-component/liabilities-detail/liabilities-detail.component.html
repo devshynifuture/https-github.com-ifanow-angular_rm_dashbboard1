@@ -16,8 +16,123 @@
     <div class="row pt-40">
         <div class="col-md-12 p-0">
             <div class="insurance-ui">
+                <div class="row b-l">
+                    <div class="col-md-8 text-left f-14">
+                        owner Name
+                    </div>
+                    <div class="col-md-4 text-right f-14">
+                        {{libility.ownerName}}
+                    </div>
+                </div>
+                <div class="row b-l">
+                    <div class="col-md-8 text-left f-14">
+                        Loan type
+                    </div>
+                    <div class="col-md-4 text-right f-14">
+                        {{libility.loanTypeId}}
+                    </div>
+                </div>
+                <div class="row b-l">
+                    <div class="col-md-8 text-left f-14">
+                        Loan amount
+                    </div>
+                    <div class="col-md-4 text-right f-14">
+                        {{libility.loanAmount}}
+                    </div>
+                </div>
+                <div class="row b-l">
+                    <div class="col-md-8 text-left f-14">
+                        Loan outstanding
+                    </div>
+                    <div class="col-md-4 text-right f-14">
+                        {{libility.principalOutStandingAmount}}
+                    </div>
+                </div>
+                <div class="row b-l">
+                    <div class="col-md-8 text-left f-14">
+                        Tenure remaining
+                    </div>
+                    <div class="col-md-4 text-right f-14">
+                        {{libility.remainingMonths}}
+                    </div>
+                </div>
+                <div class="row b-l">
+                    <div class="col-md-8 text-left f-14">
+                        Annual interest rate
+                    </div>
+                    <div class="col-md-4 text-right f-14">
+                        {{libility.annualInterestRate}}
+                    </div>
+                </div>
+                <div class="row b-l">
+                    <div class="col-md-8 text-left f-14">
+                        EMI
+                    </div>
+                    <div class="col-md-4 text-right f-14">
+                        {{libility.emi}}
+                    </div>
+                </div>
+                <div class="row b-l">
+                    <div class="col-md-8 text-left f-14">
+                        Financial institution
+                    </div>
+                    <div class="col-md-4 text-right f-14">
+                        {{libility.financialInstitution}}
+                    </div>
+                </div>
+                <div class="row b-l">
+                    <div class="col-md-8 text-left f-14">
+                        Termination date
+                    </div>
+                    <div class="col-md-4 text-right f-14">
+                        {{libility.maturityDate}}
+                    </div>
+                </div>
+                <div class="row b-l">
+                    <div class="col-md-8 text-left f-14">
+                        Original loan amount
+                    </div>
+                    <div class="col-md-4 text-right f-14">
+                        {{libility.loanAmount}}
+                    </div>
+                </div>
+                <div class="row b-l">
+                    <div class="col-md-8 text-left f-14">
+                        Original loan tenure
+                    </div>
+                    <div class="col-md-4 text-right f-14">
+                        {{libility.loanTenure}}
+                    </div>
+                </div>
 
-                <table mat-table [dataSource]="dataSourceDetail" class="documentsTable" id="table-low">
+                <div class="row b-l">
+                    <div class="col-md-8 text-left f-14">
+                        Total interest paid till date
+                    </div>
+                    <div class="col-md-4 text-right f-14">
+                        Vaibhav
+                    </div>
+                </div>
+
+                <div class="row b-l">
+                    <div class="col-md-8 text-left f-14">
+                        Total principal paid till date
+                    </div>
+                    <div class="col-md-4 text-right f-14">
+                        Vaibhav
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+                <!-- <table mat-table [dataSource]="dataSourceDetail" class="documentsTable" id="table-low">
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef> </th>
                         <td class="text-left f-normal roboto f-14" mat-cell *matCellDef="let element"> {{element.name}} </td>
@@ -30,12 +145,12 @@
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-                <div class="col-md-12 text-right mt-4 p-0">
+                </table> -->
+                <!-- <div class="col-md-12 text-right mt-4 p-0">
                     <p class="f-12 text-primitive m-0">
                         Updated: 04/09/2019
                     </p>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

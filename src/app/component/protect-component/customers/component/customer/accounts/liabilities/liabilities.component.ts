@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material';
 import {AddLiabilitiesComponent} from "../../../common-component/add-liabilities/add-liabilities.component";
+import { LiabilitiesDetailComponent } from '../../../common-component/liabilities-detail/liabilities-detail.component';
 
 @Component({
   selector: 'app-liabilities',
@@ -194,11 +195,13 @@ export class LiabilitiesComponent implements OnInit {
   }
 
 
-  addLiabilitiesDetail(flagValue) {
+  addLiabilitiesDetail(flagValue,data) {
     const fragmentData = {
       Flag: flagValue,
       id: 1,
-      state: 'openHelp'
+      data:data,
+      state: 'open',
+      componentName : LiabilitiesDetailComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
