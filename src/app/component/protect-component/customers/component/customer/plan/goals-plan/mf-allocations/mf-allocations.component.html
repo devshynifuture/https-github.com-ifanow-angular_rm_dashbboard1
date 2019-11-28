@@ -32,7 +32,10 @@
                         <th mat-header-cell *matHeaderCellDef> Debt </th>
                         <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
                       </ng-container>
-                  
+                      <i [matMenuTriggerFor]="menu"
+                      class="material-icons c-p iconscolors">
+                      more_vert
+                   </i>
                   
                       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -45,12 +48,88 @@
                         <p class="m-0 roboto">Allocate mutual funds to goals from here</p>
                     </div>
                     <div class="col-md-1">
-                        
+                      <img src="/assets/images/svg/people.svg" class="c-p" [matMenuTriggerFor]="menu">
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item>All family</button>
+                        <button mat-menu-item>Rahul jain </button>
+                        <button mat-menu-item>Shilpa jain </button>
+                        <button mat-menu-item>Shreya jain </button>
+                        <button mat-menu-item>Aryan jain </button>
+                      </mat-menu>
                     </div>
-                    <div class="col-md-1">
-
+                    <div class="col-md-1 filters">
+                        <img src="/assets/images/svg/lines-3.svg" class="c-p" [matMenuTriggerFor]="menu1">
+                        <mat-menu #menu1="matMenu">
+                                <p class="text-primitive m-0 pl-24 pt-8">Categories</p>
+                                <button mat-menu-item class="p-0">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                            <i class="material-icons pt-12">
+                                                    done
+                                                    </i>
+                                    </div>
+                                    <div class="col-md-10">
+                                           All
+                                    </div>
+                                </div>
+                            </button>
+                            <button mat-menu-item>Equity</button>
+                            <button mat-menu-item>Debt</button>
+                            <p class="text-primitive m-0 pl-24 pt-8">Folios</p>
+                            <button mat-menu-item>All</button>
+                            <button mat-menu-item>Zero folios</button>
+                            <button mat-menu-item>Non zero folios   </button>
+                            <p class="text-primitive m-0 pl-24 pt-8">Schemes</p>
+                            <button mat-menu-item>All schemes</button>
+                            <button mat-menu-item>Unallocated schemes</button>
+                            <button mat-menu-item>Allocated schemes</button>
+                          </mat-menu>
                     </div>
                 </div>
+                <div class="mt-8">
+                    <table mat-table [dataSource]="dataSource1" id="table-low">
+                  
+                      <!-- Position Column -->
+                      <ng-container matColumnDef="scheme">
+                        <th mat-header-cell *matHeaderCellDef> Scheme </th>
+                        <td mat-cell *matCellDef="let element"> {{element.scheme}} </td>
+                      </ng-container>
+                  
+                      <!-- Name Column -->
+                      <ng-container matColumnDef="value">
+                        <th mat-header-cell *matHeaderCellDef> Value | Units </th>
+                        <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+                      </ng-container>
+                  
+                      <!-- Weight Column -->
+                      <ng-container matColumnDef="goal">
+                        <th mat-header-cell *matHeaderCellDef> Goal </th>
+                        <td mat-cell *matCellDef="let element"> {{element.goal}} </td>
+                      </ng-container>
+                  
+                      <!-- Symbol Column -->
+                      <ng-container matColumnDef="allocation">
+                        <th mat-header-cell *matHeaderCellDef> Allocations </th>
+                        <td mat-cell *matCellDef="let element"> {{element.allocation}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="icons">
+                        <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
+                        <td mat-cell *matCellDef="let element" class="t-2">
+                            <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">
+      more_vert
+      </i>
+                            <mat-menu #menu4="matMenu">
+                                <button mat-menu-item>Edit</button>
+                                <button mat-menu-item>Deatiled View</button>
+                                <button mat-menu-item>Activity</button>
+                                <button mat-menu-item>Delete</button>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                    </table>
+                  </div>
             </div>
         </div>
     </div>
