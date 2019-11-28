@@ -1,7 +1,7 @@
 <div class="popup-header-fix-35">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20">LIABILITIES - DETAILED VIEW</h4>
+            <h4 class="mb-0 wrapper-20">RECURING DEPOSIT - DETAILED VIEW</h4>
         </div>
         <div class="col-md-2 text-left">
             <div class="wrapper-12">
@@ -10,8 +10,6 @@
         </div>
     </div>
 </div>
-
-
 <div class="pl-20 pr-20 pb-48 pt-40">
     <div class="row pt-40">
         <div class="col-md-12 p-0">
@@ -21,136 +19,106 @@
                         Owner Name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.ownerName}}
+                        {{recuringDeposit.ownerName}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Loan type
+                        Monthly contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                            {{(libility.loanTypeId == 1)?'Home Loan':(libility.loanTypeId == 2)?'Vehicle':(libility.loanTypeId == 3)?'Education':(libility.loanTypeId == 4)?'Credit Card':(libility.loanTypeId == 5)?'Personal':'Mortgage'}}
+                        {{recuringDeposit.monthlyContribution}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Loan amount
+                        Interest rate
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.loanAmount}}
+                        {{recuringDeposit.interestRate}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Loan outstanding
+                        Interest compounding
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.outstandingAmount}}
+                        {{recuringDeposit.interestCompounding}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Tenure remaining
+                        Commencement date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.remainingMonths}}
+                        {{recuringDeposit.commencementDate   | date:'dd/MM/yyyy'}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Annual interest rate
+                        Tenure
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.annualInterestRate}}
+                        {{recuringDeposit.tenure}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        EMI
+                        Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.emi}}
+                        {{recuringDeposit.currentValue}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Financial institution
+                        Maturity value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.financialInstitution}}
+                        {{recuringDeposit.maturityValue}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Termination date
+                        Maturity Date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.maturityDate | date:'dd/MM/yyyy'}}
+                        {{recuringDeposit.maturityDate   | date:'dd/MM/yyyy'}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Original loan amount
+                        RD no.
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.loanAmount}}
-                    </div>
-                </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
-                        Original loan tenure
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.loanTenure}}
+                        {{recuringDeposit.rdNumber}}
                     </div>
                 </div>
 
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Total interest paid till date
+                        Bank Name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{(libility.principalOutstandingAsOn)?(libility.principalOutstandingAsOn | date:'dd/MM/yyyy'):'-'}}
+                        {{recuringDeposit.bankName}}
                     </div>
                 </div>
-
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Total principal paid till date
+                        Linked bank account
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.principalOutStandingAmount}}
+                        {{recuringDeposit.bankAcountNumber}}
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-
-
-                <!-- <table mat-table [dataSource]="dataSourceDetail" class="documentsTable" id="table-low">
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td class="text-left f-normal roboto f-14" mat-cell *matCellDef="let element"> {{element.name}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="position">
-                        <th mat-header-cell *matHeaderCellDef></th>
-                        <td class="text-right f-normal roboto f-14" mat-cell *matCellDef="let element"> {{element.position}} </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table> -->
-                <!-- <div class="col-md-12 text-right mt-4 p-0">
-                    <p class="f-12 text-primitive m-0">
-                        Updated: 04/09/2019
-                    </p>
-                </div> -->
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Description
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{recuringDeposit.description}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
