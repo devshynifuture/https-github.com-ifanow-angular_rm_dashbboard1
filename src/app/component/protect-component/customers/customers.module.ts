@@ -19,6 +19,7 @@ import {ScenariosPlanComponent} from './component/customer/plan/scenarios-plan/s
 import {PlanModule} from './component/customer/plan/plan.module';
 import {CustomerComponent} from "./component/customer/customer.component";
 import {AddLiabilitiesComponent} from "./component/common-component/add-liabilities/add-liabilities.component";
+import { CopyDocumentsComponent } from './component/common-component/copy-documents/copy-documents.component';
 
 
 
@@ -28,7 +29,7 @@ import {AddLiabilitiesComponent} from "./component/common-component/add-liabilit
 
 
 @NgModule({
-  declarations: [CustomerComponent],
+  declarations: [CustomerComponent, CopyDocumentsComponent],
   imports: [
     // BrowserModule,
     CommonModule,
