@@ -233,9 +233,9 @@ export class AddRealEstateComponent implements OnInit {
     }
   }
   getRealEstate(data) {
-    if (data == undefined) {
-      data ={};
-    }
+    // if (data == undefined) {
+    //   data ={};
+    // }
     this.addOwner = false;
     this.addrealEstateForm = this.fb.group({
       ownerName: this.ownerName,

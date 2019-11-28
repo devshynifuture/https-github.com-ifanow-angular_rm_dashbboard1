@@ -15,16 +15,13 @@ import {BankAccountsComponent} from './component/protect-component/customers/com
 import {RecuringDepositComponent} from './component/protect-component/customers/component/customer/accounts/assets/fixedIncome/recuring-deposit/recuring-deposit.component';
 import {AddEPFComponent} from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-epf/add-epf.component';
 import {AddNPSComponent} from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/add-nps.component';
-import {AddGoalComponent} from './component/protect-component/customers/component/customer/plan/goals-plan/add-goal/add-goal.component';
-import {NpsSchemeHoldingComponent} from "./component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/nps-scheme-holding/nps-scheme-holding.component";
 
-export const componentList = [AddPpfComponentAddLiabilitiesComponent, AddInsuranceComponent, FixedDepositComponent,
+export const componentList = [AddLiabilitiesComponent, AddInsuranceComponent, FixedDepositComponent,
   AddRealEstateComponent, GoldComponent, AddNPSComponent, RecuringDepositComponent, AddEPFComponent,
-  OthersComponent, CashInHandComponent, BankAccountsComponent, AddGoalComponent, NpsSchemeHoldingComponent
-];
+  OthersComponent, CashInHandComponent, BankAccountsComponent];
 
 @NgModule({
-  declarations: componentList,,
+  declarations: componentList,
   imports: [CommonModule,
     MaterialModule,
     ChartModule,
