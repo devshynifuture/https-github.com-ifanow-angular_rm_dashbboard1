@@ -46,6 +46,8 @@ export class BankAccountsComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.getdataForm(this.inputData);
+
   }
   display(value) {
     console.log('value selected', value)

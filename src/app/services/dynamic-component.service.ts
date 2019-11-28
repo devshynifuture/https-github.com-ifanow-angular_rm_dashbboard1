@@ -2,6 +2,7 @@ import {
   ComponentFactoryResolver,
   Injectable,
 } from '@angular/core';
+import {DataComponent} from '../interfaces/data.component';
 
 @Injectable()
 export class DynamicComponentService {
@@ -14,7 +15,12 @@ export class DynamicComponentService {
 
     viewContainerRef.clear();
     const componentRef = viewContainerRef.createComponent(componentFactory);
-    componentRef.data = data;
+    (componentRef.instance).data = data;
+    // component.data = data;
+    // console.log('componentRef: ', componentRef);
+    // console.log('data: ', data);
+    // console.log('component: ', component);
+
     return componentRef;
   }
 }

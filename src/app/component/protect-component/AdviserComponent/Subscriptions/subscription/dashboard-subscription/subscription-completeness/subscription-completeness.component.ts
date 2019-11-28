@@ -1,10 +1,11 @@
-import {Component, OnInit ,Input} from '@angular/core';
+import {Component, OnInit ,Input, Output} from '@angular/core';
 import {SubscriptionService} from '../../../subscription.service';
 import {SubscriptionComponent} from '../../subscription.component';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatDialog} from '@angular/material';
 import {SubscriptionPopupComponent} from '../../common-subscription-component/subscription-popup/subscription-popup.component';
 import {AuthService} from "../../../../../../../auth-service/authService";
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-subscription-completeness',
@@ -15,7 +16,7 @@ export class SubscriptionCompletenessComponent implements OnInit {
   button: any;
   completed: string;
   showLoader: boolean;
-
+  @Output() subscriptionIndex= new EventEmitter();
   constructor(public dialog: MatDialog, private subscription: SubscriptionService, public sub: SubscriptionComponent,
               public eventService: EventService) {
   }
@@ -71,6 +72,7 @@ export class SubscriptionCompletenessComponent implements OnInit {
       if (data.length >= 6) {
         data[0].selectedTab = 6;
         data[1].selectedTab = 6;
+        data[1].selectedSettingTab=3
         data[2].selectedTab = 1;
         data[3].selectedTab = 3;
         data[4].selectedTab = 5;
@@ -92,9 +94,7 @@ export class SubscriptionCompletenessComponent implements OnInit {
   }
 
   currentTabs(value) {
-    console.log(value.selectedTab);
-    this.eventService.tabData(value.selectedTab);
-    // value.completed = true;
+    this.eventService.tabData(value.selectedTab)
   }
 
   openPopup(data) {

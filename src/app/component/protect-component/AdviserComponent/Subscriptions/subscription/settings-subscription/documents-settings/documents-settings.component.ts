@@ -180,44 +180,44 @@ export class DocumentsSettingsComponent implements OnInit {
       id: 1,
       state: 'open'
     };
-
-    if (singleDocument.flag == 'documents') {
-      const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-        upperSliderData => {
-          if (UtilService.isDialogClose(upperSliderData)) {
-            this.getDocumentsSetting();
-            subscription.unsubscribe();
-          }
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          this.getDocumentsSetting();
+          subscription.unsubscribe();
         }
-      );
-      // this.eventService.changeUpperSliderState(fragmentData);
+      }
+    );
+    // if (singleDocument.flag == 'documents') {
+     
+    //   // this.eventService.changeUpperSliderState(fragmentData);
 
 
-    } else {
-      const dialogRef = this.dialog.open(ModifyFeeDialogComponent, {
-        width: '1400px',
-        data: fragmentData,
-        autoFocus: false,
-        panelClass: 'dialogBox',
-        //  position: {
-        //    top: `30px`,
-        //    right: `40px`
-        //   },
-        // openFrom:'{
-        //   top: -50,
-        //   width: 30,
-        //   height: 80
-        // }',
-        // closeTo({
-        //   left: 1500
-        // })
-        // hasBackdrop: false,
-      });
+    // } else {
+    //   const dialogRef = this.dialog.open(ModifyFeeDialogComponent, {
+    //     width: '1400px',
+    //     data: fragmentData,
+    //     autoFocus: false,
+    //     panelClass: 'dialogBox',
+    //     //  position: {
+    //     //    top: `30px`,
+    //     //    right: `40px`
+    //     //   },
+    //     // openFrom:'{
+    //     //   top: -50,
+    //     //   width: 30,
+    //     //   height: 80
+    //     // }',
+    //     // closeTo({
+    //     //   left: 1500
+    //     // })
+    //     // hasBackdrop: false,
+    //   });
 
-      dialogRef.afterClosed().subscribe(result => {
+    //   dialogRef.afterClosed().subscribe(result => {
 
-      });
-    }
+    //   });
+    // }
 
   }
 }

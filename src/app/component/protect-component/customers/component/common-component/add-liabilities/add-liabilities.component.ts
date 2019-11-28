@@ -50,7 +50,8 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   clientId: any;
 
 
-  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, public custumService: CustomerService, public eventService: EventService) {
+  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
+              public custumService: CustomerService, public eventService: EventService) {
   }
 
 // data;
@@ -58,7 +59,8 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   @Input()
   set data(inputData) {
     this._data = inputData;
-    this.getLiability(inputData);
+    console.log('AddLiabilitiesComponent Input data : ', this._data);
+
   }
 
   get data() {
@@ -66,12 +68,14 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   }
 
   ngOnInit() {
-    console.log('AddLiabilitiesComponent : ', this._data);
+    console.log('AddLiabilitiesComponent ngOnInit : ', this._data);
     this.show = false;
     this.showTransact = false;
     this.showSelect = false;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.getLiability(this.data);
+
   }
 
   showMore() {
@@ -94,12 +98,17 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   }
 
   close() {
-    if (this._data.loanTypeId == undefined) {
-      let data = this._data
-      this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    if (this.data) {
+      if (this._data.loanTypeId == undefined) {
+        let data = this._data
+        this.subInjectService.changeNewRightSliderState({state: 'close', data});
+      } else {
+        let data = this._data.showFilter;
+        this.subInjectService.changeNewRightSliderState({state: 'close', data});
+      }
     } else {
-      let data = this._data.showFilter;
-      this.subInjectService.changeNewRightSliderState({state: 'close', data});
+      this.subInjectService.changeNewRightSliderState({state: 'close'});
+
     }
   }
 

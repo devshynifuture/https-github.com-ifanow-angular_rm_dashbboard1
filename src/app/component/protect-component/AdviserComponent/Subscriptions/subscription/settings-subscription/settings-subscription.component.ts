@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { MatTabGroup } from '@angular/material';
 
 @Component({
   selector: 'app-settings-subscription',
@@ -6,20 +7,25 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./settings-subscription.component.scss']
 })
 export class SettingsSubscriptionComponent implements OnInit {
+  selected: any;
 
   constructor() {
-  }
 
-  selected = 0;
+  }
+  @ViewChild(MatTabGroup, { static: true }) tabGroup: MatTabGroup;
+
+  @Input() set sIndex(data) {
+    this.tabGroup.selectedIndex = data
+    this.selected=data
+  };
   selectedTab;
 
   ngOnInit() {
     this.selectedTab = 'PLANS';
-    // this.selectedTab = 'SERVICES';
-    // this.selected = 2;
+    // this.tabGroup.selectedIndex = 0;
   }
 
-  tabClick(value) {
-    this.selectedTab = value.tab.textLabel;
-  }
+  // tabClick(value) {
+  //   this.selectedTab = value.tab.textLabel;
+  // }
 }
