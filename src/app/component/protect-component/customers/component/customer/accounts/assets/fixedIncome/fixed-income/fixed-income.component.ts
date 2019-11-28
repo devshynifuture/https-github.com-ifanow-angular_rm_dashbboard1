@@ -7,6 +7,8 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { DetailedViewFixedDepositComponent } from '../fixed-deposit/detailed-view-fixed-deposit/detailed-view-fixed-deposit.component';
+import { FixedDepositComponent } from '../fixed-deposit/fixed-deposit.component';
 
 @Component({
   selector: 'app-fixed-income',
@@ -170,13 +172,35 @@ export class FixedIncomeComponent implements OnInit {
 
     });
   }
-  openPortfolioSummary(value, state, data) {
+  openPortfolioSummary(value, state, data,component) {
     const fragmentData = {
       Flag: value,
       data: data,
       id: 1,
       state: 'open',
-      componentName: RecuringDepositComponent
+      componentName: FixedDepositComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        this.getFixedDepositList();
+        this.getRecurringDepositList()
+        this.getBondsList()
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+  openDetailedFixedDeposit(value, state, data,component) {
+    const fragmentData = {
+      Flag: value,
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: DetailedViewFixedDepositComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

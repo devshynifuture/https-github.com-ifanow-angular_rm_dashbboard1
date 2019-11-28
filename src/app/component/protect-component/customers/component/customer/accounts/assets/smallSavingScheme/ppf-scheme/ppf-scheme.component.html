@@ -9,7 +9,7 @@
 
         <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS</button>
-        <button mat-stroked-button class="btn-primary addon v-middle" (click)="opnAddPPF('addPPF','')"><i
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPPF(null)"><i
                 class="material-icons">add</i>ADD NEW</button>
     </div>
 </div>
@@ -71,7 +71,7 @@
                     more_vert
                 </i>
                 <mat-menu #menubank="matMenu">
-                    <button mat-menu-item (click)="opnAddPPF('addPPF',element)">Edit</button>
+                    <button mat-menu-item (click)="openAddPPF(element)">Edit</button>
                     <button mat-menu-item>Detailed view</button>
                     <button mat-menu-item>Activity</button>
                     <button mat-menu-item (click)="deleteModal('SUBSCRIPTION',element)">Delete</button>

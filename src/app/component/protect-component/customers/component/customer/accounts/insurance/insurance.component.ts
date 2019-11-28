@@ -13,24 +13,7 @@ import {DetailedViewComponent} from "../../../common-component/detailed-view/det
 @Component({
   selector: 'app-insurance',
   templateUrl: './insurance.component.html',
-  styleUrls: ['./insurance.component.scss'],
-  // animations: [
-  //   trigger('listAnimation', [
-  //     transition('* => *', [ // each time the binding value changes
-  //       query(':leave', [
-  //         stagger(0.1, [
-  //           animate('0.1s', style({ opacity: 0 }))
-  //         ])
-  //       ], { optional: true }),
-  //       query(':enter', [
-  //         style({ opacity: 0 }),
-  //         stagger(100, [
-  //           animate('0.1s', style({ opacity: 0 }))
-  //         ])
-  //       ], { optional: true })
-  //     ])
-  //   ])
-  // ]
+  styleUrls: ['./insurance.component.scss']
 })
 
 export class InsuranceComponent implements OnInit {
@@ -226,6 +209,8 @@ export class InsuranceComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.lifeInsuranceFlag=true
+          this.insuranceSubTypeId=0;
           this.getInsuranceData(this.insuranceTypeId)
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();

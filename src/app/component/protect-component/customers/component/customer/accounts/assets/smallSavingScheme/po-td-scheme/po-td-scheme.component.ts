@@ -1,3 +1,4 @@
+import { AddPoTdComponent } from './../common-component/add-po-td/add-po-td.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
@@ -85,12 +86,13 @@ export class PoTdSchemeComponent implements OnInit {
 
     });
   }
-  addPOTD(value, data) {
+  openAddPOTD(data) {
     const fragmentData = {
-      Flag: value,
+      flag: 'addPoTd',
       data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: AddPoTdComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

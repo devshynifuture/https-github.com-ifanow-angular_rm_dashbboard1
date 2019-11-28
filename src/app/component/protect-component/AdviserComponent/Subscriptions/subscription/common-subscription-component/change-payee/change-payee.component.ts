@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {SubscriptionService} from '../../../subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatSliderChange} from '@angular/material';
-import {HAMMER_GESTURE_CONFIG} from "@angular/platform-browser";
-import {GestureConfig} from "@angular/material/core";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { SubscriptionService } from '../../../subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatSliderChange } from '@angular/material';
+import { HAMMER_GESTURE_CONFIG } from "@angular/platform-browser";
+import { GestureConfig } from "@angular/material/core";
 import { UtilService } from 'src/app/services/util.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { UtilService } from 'src/app/services/util.service';
   templateUrl: './change-payee.component.html',
   styleUrls: ['./change-payee.component.scss'],
   providers: [
-    {provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig},
+    { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig },
   ]
 })
 export class ChangePayeeComponent implements OnInit {
@@ -44,7 +44,7 @@ export class ChangePayeeComponent implements OnInit {
   _payeeData: any;
 
   @Output() outputData = new EventEmitter<Object>();
-  @Output() payeeFlag =new EventEmitter<Object>();
+  @Output() payeeFlag = new EventEmitter<Object>();
   dataSub: any;
   dataObj;
   getRowData: any;
@@ -58,7 +58,7 @@ export class ChangePayeeComponent implements OnInit {
   ngOnInit() {
     console.log('change payee upperData', this.upperData);
   }
-  
+
   Close(state) {
     this.subInjectService.rightSideData(state);
     this.subInjectService.rightSliderData(state);
@@ -92,12 +92,12 @@ export class ChangePayeeComponent implements OnInit {
   }
 
   openAddPayee() {
-    let obj=
+    let obj =
     {
-      data:'Add',
-      flag:false
+      data: 'Add',
+      flag: false
     }
-   this.payeeFlag.emit(obj)
+    this.payeeFlag.emit(obj)
   }
   onInputChange(event: MatSliderChange, singlePlan) {
     console.log('This is emitted as the thumb slides');
