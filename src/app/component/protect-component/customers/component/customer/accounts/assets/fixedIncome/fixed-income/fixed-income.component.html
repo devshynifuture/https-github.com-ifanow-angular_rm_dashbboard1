@@ -145,7 +145,7 @@
             </i>
             <mat-menu #menu4="matMenu">
               <button mat-menu-item (click)="openPortfolioSummary('addFixedDeposit','open',element)">Edit</button>
-              <button mat-menu-item>Deatiled View</button>
+              <button mat-menu-item (click)="openDetailedFixedDeposit('addFixedDeposit','open',element)">Deatiled View</button>
               <button mat-menu-item>Activity</button>
               <button mat-menu-item (click)="deleteModal('FIXED DEPOSITE',element)">Delete</button>
             </mat-menu>
