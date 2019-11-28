@@ -2,8 +2,8 @@
     <div class="row h-100vh">
         <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
             <ul class=" d-block">
-                <li class="b-ua pb-12 c-p">
-                    <div (click)="toggle('lifeInsurance');getInsuranceTypeData(1,1)" class="row">
+                <li class="b-ua pb-12 c-p" [ngClass]="{'bg-grey lt':lifeInsuranceFlag}" >
+                    <div (click)="toggle('lifeInsurance');getInsuranceData(1)" class="row">
                         <div class="col-md-11 p-0 f-700">LIFE INSURANCE</div>
                         <div class="col-md-1 p-0 text-custom">20</div>
                     </div>
@@ -18,8 +18,8 @@
                 </li>
             </ul>
             <ul class=" d-block">
-                <li class="pb-12 c-p">
-                    <div (click)="toggle('generalInsurance');getInsuranceTypeData(2,4)" class="row">
+                <li class="pb-12 c-p" [ngClass]="{'bg-grey lt':generalInsuranceFlag}">
+                    <div (click)="toggle('generalInsurance')" class="row">
                         <div class="col-md-11 p-0 f-700">GENERAL INSURANCE</div>
                         <div class="col-md-1 p-0 text-custom">1</div>
                     </div>
@@ -36,7 +36,7 @@
             <mat-spinner class="loader" [diameter]="30"></mat-spinner>
         </div> -->
         <div class="col-md-10 b-a p-0 min-height">
-            <div *ngIf="insuranceTypeId==1">
+            <div >
                 <div class="wrapper-8">
                     <div class="row">
                         <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
@@ -65,7 +65,7 @@
                             <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
                             <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                                     class="material-icons">filter_list</i>FILTERS</button>
-                            <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('addInsurance',null)"><i class="material-icons">add</i>ADD NEW</button>
+                            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)"><i class="material-icons">add</i>ADD NEW</button>
 
                         </div>
                     </div>
@@ -127,8 +127,8 @@
                                     more_vert
                                 </i>
                                 <mat-menu #menu4="matMenu">
-                                    <button (click)="open('addInsurance',element)" mat-menu-item>Edit</button>
-                                    <button (click)="open('detailedView',element)" mat-menu-item>Deatiled View</button>
+                                    <button (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
+                                    <button (click)="open(element)" mat-menu-item>Deatiled View</button>
                                     <button mat-menu-item>Activity</button>
                                     <button mat-menu-item (click)="deleteModal('INSURANCE',element)">Delete</button>
                                 </mat-menu>
@@ -139,7 +139,7 @@
                     </table>
                 </div>
             </div>
-            <div *ngIf="datasource==undefined">
+            <div *ngIf="dataSource==undefined">
                 <h4 class="text-center pt-72">{{noData}}</h4>
             </div>
             <!-- <div *ngIf="insuranceTypeId==2">

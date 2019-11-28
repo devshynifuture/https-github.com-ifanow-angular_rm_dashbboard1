@@ -102,7 +102,7 @@
                                 <ng-container matColumnDef="name">
                                     <th mat-header-cell *matHeaderCellDef> Name </th>
                                     <td mat-cell class="c-p" *matCellDef="let element" (click)="openFolder(element)">
-                                        <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> {{element.folderName || element.fileName}} <img *ngIf="element.isStarred == 0" class="mr-12" src="/assets/images/svg/document-star.svg"> </td>
+                                        <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> {{element.folderName || element.fileName}} <img *ngIf="element.isStarred == 1" class="mr-12" src="/assets/images/svg/document-star.svg"> </td>
                                 </ng-container>
 
                                 <!-- Weight Column -->

@@ -6,6 +6,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AccountModule} from '../component/protect-component/customers/component/customer/accounts/account.module';
 import {PlanModule} from '../component/protect-component/customers/component/customer/plan/plan.module';
+import { DynamicComponentComponent } from './dynamic-component/dynamic-component.component';
 
 // import {AppModule} from "../app.module";
 
@@ -13,12 +14,13 @@ import {PlanModule} from '../component/protect-component/customers/component/cus
 @NgModule({
   declarations: [
     // ConfirmDialogComponent,
-    DialogContainerComponent
+    DialogContainerComponent,
+    DynamicComponentComponent
   ],
   imports: [
     MaterialModule,
     SubscriptionModule,
-    AccountModule,
+    // AccountModule,
     PlanModule,
     BrowserModule,
     FormsModule,

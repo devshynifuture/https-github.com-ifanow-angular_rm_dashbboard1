@@ -39,6 +39,8 @@ export class OthersComponent implements OnInit {
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
+    this.getdataForm(this.inputData);
+
   }
   display(value) {
     console.log('value selected', value)

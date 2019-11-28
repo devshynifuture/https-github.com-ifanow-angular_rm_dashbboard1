@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
-import {SubscriptionService} from '../../../subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {AuthService} from "../../../../../../../auth-service/authService";
-import {UtilService} from "../../../../../../../services/util.service";
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { SubscriptionService } from '../../../subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { AuthService } from "../../../../../../../auth-service/authService";
+import { UtilService } from "../../../../../../../services/util.service";
 
 @Component({
   selector: 'app-plans-settings',
@@ -14,7 +14,7 @@ import {UtilService} from "../../../../../../../services/util.service";
 export class PlansSettingsComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private subService: SubscriptionService,
-              private dataService: EventService, private eventService: EventService, private subinject: SubscriptionInject) {
+    private dataService: EventService, private eventService: EventService, private subinject: SubscriptionInject) {
   }
 
   button: any;
@@ -56,7 +56,7 @@ export class PlansSettingsComponent implements OnInit {
   openFragment(singlePlan, data) {
     this.subinject.pushUpperData(singlePlan);
     // singlePlan.flag = data;
-    (singlePlan=='')?singlePlan=data:singlePlan.flag=data
+    (singlePlan == '') ? singlePlan = data : singlePlan.flag = data
     const fragmentData = {
       flag: 'app-subscription-upper-slider',
       data: singlePlan,

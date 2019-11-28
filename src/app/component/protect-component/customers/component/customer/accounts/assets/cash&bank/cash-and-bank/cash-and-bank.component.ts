@@ -6,6 +6,8 @@ import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { BankAccountsComponent } from '../bank-accounts/bank-accounts.component';
+import { CashInHandComponent } from '../cash-in-hand/cash-in-hand.component';
 
 @Component({
   selector: 'app-cash-and-bank',
@@ -128,7 +130,32 @@ export class CashAndBankComponent implements OnInit {
       Flag: value,
       data: data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName:BankAccountsComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (value == 'addedbankAc') {
+          this.getCashInHandList()
+        } else {
+          this.getBankAccountList();
+        };
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );;
+  }
+  openCashInHand(value, state, data) {
+    const fragmentData = {
+      Flag: value,
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName:CashInHandComponent
+
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

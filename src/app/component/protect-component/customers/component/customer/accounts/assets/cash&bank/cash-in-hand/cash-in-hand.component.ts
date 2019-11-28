@@ -40,6 +40,8 @@ export class CashInHandComponent implements OnInit {
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.getdataForm(this.inputData);
+
   }
   display(value) {
     console.log('value selected', value)

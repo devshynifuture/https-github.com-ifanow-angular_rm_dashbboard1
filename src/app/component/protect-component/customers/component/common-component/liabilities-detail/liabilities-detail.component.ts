@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {Component, OnInit, Input} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-liabilities-detail',
@@ -8,15 +8,31 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 })
 export class LiabilitiesDetailComponent implements OnInit {
   displayedColumns: string[] = ['name', 'position'];
+  _data: any;
   dataSourceDetail = ELEMENT_DATA;
+  ownerName: any;
+  libility: any;
 
-  constructor(private subInjectService:SubscriptionInject,) { }
-
-  ngOnInit() {
+  constructor(private subInjectService: SubscriptionInject) {
   }
 
-  close(){
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  @Input()
+  set data(inputData) {
+    this._data = inputData;
+    console.log('AddLiabilitiesComponent Input data : ', this._data);
+    this.libility = this._data
+
+  }
+
+  get data() {
+    return this._data;
+  }
+  ngOnInit() {
+    console.log('AddLiabilitiesComponent ngOnInit : ', this._data);
+  }
+
+  close() {
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
 }
@@ -24,9 +40,32 @@ export class LiabilitiesDetailComponent implements OnInit {
 export interface PeriodicElement {
   name: string;
   position: string;
-  
-}
 
+}
+// advisorId: 0
+// annualInterestRate: 0
+// clientId: 0
+// commencementDate: 1546214400000
+// emi: 19244
+// familyMemberId: 160023
+// financialInstitution: "BCCB"
+// frequencyOfPayments: 12
+// id: 2
+// loanAmorts: []
+// loanAmount: 2300000
+// loanPartPayments: [{…}]
+// loanTenure: 120
+// loanTypeId: 2
+// maturityDate: 1574899200000
+// outstandingAmount: "NaN"
+// ownerName: "Manan"
+// principalOutStandingAmount: 0
+// principalOutstanding: false
+// principalOutstandingAsOn: 0
+// realEstateId: 0
+// remainingMonths: 0
+// totalCapitalPaid: "NaN"
+// totalInterestPaid: "NaN"
 
 const ELEMENT_DATA: PeriodicElement[] = [
   {name: 'Owner', position: 'Rahul Jain'},
@@ -42,5 +81,5 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {name: 'Original loan tenure', position: '20 years'},
   {name: 'Total interest paid till date', position: '46,546'},
   {name: 'Total principal paid till date', position: '54,654'},
-  
+
 ];

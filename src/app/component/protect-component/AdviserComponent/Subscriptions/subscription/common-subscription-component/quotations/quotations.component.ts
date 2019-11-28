@@ -1,15 +1,15 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
-import {SubscriptionService} from '../../../subscription.service';
-import {ConsentTandCComponent} from '../consent-tand-c/consent-tand-c.component';
-import {UtilService} from '../../../../../../../services/util.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
+import { SubscriptionService } from '../../../subscription.service';
+import { ConsentTandCComponent } from '../consent-tand-c/consent-tand-c.component';
+import { UtilService } from '../../../../../../../services/util.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
 
 export interface PeriodicElement {
   document: string;
@@ -30,7 +30,7 @@ export class QuotationsComponent implements OnInit {
   noData: string;
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog,
-              private subAService: SubscriptionService) {
+    private subAService: SubscriptionService) {
     this.subInjectService.closeRightSlider.subscribe(
       data => this.getQuotationDesignData(data)
     );
@@ -41,7 +41,7 @@ export class QuotationsComponent implements OnInit {
   dataCount;
   _clientData;
   displayedColumns: string[] = ['checkbox', 'document', 'plan', 'date', 'sdate', 'cdate', 'status', 'send', 'icons'];
-  dataSource=[];
+  dataSource = [];
   changeEmail = 'footerChange';
   advisorId;
 
@@ -74,7 +74,7 @@ export class QuotationsComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ',);
+          console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }
       }
@@ -110,7 +110,7 @@ export class QuotationsComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
-      this.selectAll({checked: false}) : this.selectAll({checked: true});
+      this.selectAll({ checked: false }) : this.selectAll({ checked: true });
   }
 
   getQuotationsListResponse(data) {
@@ -180,20 +180,19 @@ export class QuotationsComponent implements OnInit {
       templateType: 2, // 2 is for quotation
       documentList: []
     };
-    this.dataSource.forEach(singleElement => {
-      if (singleElement.selected) {
-        data.documentList.push(singleElement);
-      }
-    });
+    if(this.dataSource.length==1){
+          data.documentList=this.dataSource;
+    }else{
+      this.dataSource.forEach(singleElement => {
+        if (singleElement.selected) {
+          data.documentList.push(singleElement);
+        }
+      });
+    }
     this.open(data, 'emailOnly');
   }
 
   open(data, value) {
-
-    // this.eventService.sliderData(value);
-    // this.subInjectService.rightSliderData(state);
-    // this.subInjectService.addSingleProfile(data);
-
     const fragmentData = {
       Flag: value,
       data,
@@ -204,7 +203,7 @@ export class QuotationsComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ',);
+          console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }
       }
@@ -265,7 +264,7 @@ export class QuotationsComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ',);
+          console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }
       }

@@ -32,14 +32,14 @@ export class CommonFroalaComponent implements OnInit {
   }
 }
 */
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {SubscriptionService} from '../../../subscription.service';
-import {UtilService} from 'src/app/services/util.service';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { SubscriptionService } from '../../../subscription.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-common-froala',
@@ -60,7 +60,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
   templateType: number;
 
   constructor(public subscription: SubscriptionService, public subInjectService: SubscriptionInject,
-              public eventService: EventService, public dialog: MatDialog) {
+    public eventService: EventService, public dialog: MatDialog) {
     // this.dataSub = this.subInjectService.singleProfileData.subscribe(
     //   data=>this.getcommanFroalaData(data)
     // );
@@ -106,8 +106,8 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
     // } else {
     //   this.subInjectService.rightSideData(value);
     // }
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
-    this.subInjectService.changeUpperRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    this.subInjectService.changeUpperRightSliderState({ state: 'close', data });
 
     // this.subInjectService.changeUpperRightSliderState({value:'close'})
     // this.subInjectService.changeUpperRightSliderState({value:'close'})
@@ -153,7 +153,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
 
   save() {
     console.log('here is saved data', this.storeData);
-    if (this.changeFooter == 'emailQuotation') {
+    if (this.changeFooter == 'viewQuotation' || 'emailQuotation') {
       this.updateDataQuot(this.storeData);
     } else {
       this.updateData(this.storeData);
@@ -216,12 +216,30 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
     });
 
   }
-
-  openSendEmail() {
+  openSendEmailQuotation() {
     if (this.storeData.quotation) {
       this.templateType = 2;
     } else {
       this.templateType = 4;
+    }
+    const data = {
+      advisorId: 2828,
+      clientData: this.storeData,
+      templateType: this.templateType, // 2 is for quotation
+      documentList: [this.storeData]
+    };
+    // this.dataSource.forEach(singleElement => {
+    //   if (singleElement.selected) {
+    //     data.documentList.push(singleElement);
+    //   }
+    // });
+    this.OpenEmail(data, 'emailQuotationFroala');
+  }
+  openSendEmail() {
+    if (this.storeData.isDocument==true) {
+      this.templateType = 4;
+    } else {
+      this.templateType = 2;
     }
     const data = {
       advisorId: 2828,
@@ -248,6 +266,15 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+    const rightSideDataSub2 = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ');
+          rightSideDataSub2.unsubscribe();
         }
       }
     );

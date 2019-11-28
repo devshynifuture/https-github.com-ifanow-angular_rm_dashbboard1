@@ -101,7 +101,7 @@ export class AddEditDocumentComponent implements OnInit {
     this.subService.addSettingDocument(obj).subscribe(
       data => {
         console.log(data);
-        this.subInjectService.changeUpperRightSliderState({state: 'close'});
+        this.subInjectService.changeUpperRightSliderState({state: 'close',data});
         this.sendDataToParentUpperFrag(data);
       }
     );

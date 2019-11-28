@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {SubscriptionInject} from '../../subscription-inject.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatDialog} from '@angular/material';
@@ -10,6 +10,7 @@ import {UtilService} from '../../../../../../services/util.service';
 import {AuthService} from '../../../../../../auth-service/authService';
 import {Chart} from 'angular-highcharts';
 import {EnumDataService} from '../../../../../../services/enum-data.service';
+import { EventEmitter } from '@angular/core';
 
 export interface PeriodicElement {
   name: string;
@@ -35,7 +36,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   invoiceHisData: any;
   showLetsBeginData: any;
   totalSaleReceived: any;
-
+  @Output() subIndex=new EventEmitter()
   constructor(private enumService: EnumServiceService,
               public subInjectService: SubscriptionInject, public eventService: EventService,
               public dialog: MatDialog, private subService: SubscriptionService) {
@@ -50,7 +51,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   subSummaryData;
   dataSource;
   showSubStep = false;
-  displayedColumns: string[] = ['name', 'service', 'amt', 'billing'];
+  displayedColumns: string[] = ['name', 'service', 'amt', 'billing','icons'];
   chart: Chart;
   subscriptionSummaryStatusFilter = '1';
   showLetsBegin = false;
@@ -66,7 +67,12 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.getSummaryDataDashboard(null);
     this.getTotalRecivedByDash();
   }
-
+  getIndex(index)
+  {
+    console.log(index)
+    this.subIndex.emit(index)
+    // this.selected=index
+  }
   getDashboardResponse() {
 
     this.subService.getDashboardSubscriptionResponse(this.advisorId).subscribe(

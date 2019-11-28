@@ -383,4 +383,8 @@ export class CustomerService {
   viewActivity(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.VIEW_ACTIVITY, data)
   }
+  uploadFile(data){
+    // let httpParams=new HttpParams().set("advisorId",data.advisorId).set("clientId",data.clientId).set('folderId',data.folderId).set('fileName',data.fileName)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.UPLOAD_FILE, data)
+  }
 }

@@ -13,7 +13,7 @@
       <img src="assets/images/svg/pdf-icons.svg" class="b-a">
       <img src="assets/images/svg/printer.svg" class="b-a">
       <img src="assets/images/svg/attech-light.svg" class="wrapper-9 b-a">
-      <img src="assets/images/svg/delete.svg" class="b-a wrapper-9 ml-8">
+      <img src="assets/images/svg/delete.svg" (click)="deleteModal('DOCUMENT')" class="b-a wrapper-9 ml-8">
     </div>
     <div class="col-md-4 pt-4 pb-12">
       <p class="m-0 text-black text-right c-p pr-16 pt-8" (click)="openFroala()">Activity log</p>
@@ -109,7 +109,7 @@
     </div>
   </div>
 </div>
-<div class="bottom-fixed wrapper-12" *ngIf="changeFooter=='viewDoc'">
+<div class="bottom-fixed wrapper-12">
   <div class="row">
     <div class="col-md-4">
       <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>
