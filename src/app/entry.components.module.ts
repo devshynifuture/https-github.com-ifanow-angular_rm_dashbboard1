@@ -1,22 +1,8 @@
-import {NgModule} from '@angular/core';
-import {AddLiabilitiesComponent} from './component/protect-component/customers/component/common-component/add-liabilities/add-liabilities.component';
-import {CommonModule} from '@angular/common';
-import {MaterialModule} from './material/material';
-import {ChartModule} from 'angular-highcharts';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {OwnerComponentModule} from './component/protect-component/customers/component/customer/accounts/owner-component/owner-component.module';
-import {AddInsuranceComponent} from './component/protect-component/customers/component/common-component/add-insurance/add-insurance.component';
-import {FixedDepositComponent} from './component/protect-component/customers/component/customer/accounts/assets/fixedIncome/fixed-deposit/fixed-deposit.component';
-import {AddRealEstateComponent} from './component/protect-component/customers/component/customer/accounts/assets/realEstate/add-real-estate/add-real-estate.component';
-import {GoldComponent} from './component/protect-component/customers/component/customer/accounts/assets/commodities/gold/gold.component';
-import {OthersComponent} from './component/protect-component/customers/component/customer/accounts/assets/commodities/others/others.component';
-import {CashInHandComponent} from './component/protect-component/customers/component/customer/accounts/assets/cash&bank/cash-in-hand/cash-in-hand.component';
-import {BankAccountsComponent} from './component/protect-component/customers/component/customer/accounts/assets/cash&bank/bank-accounts/bank-accounts.component';
-import {RecuringDepositComponent} from './component/protect-component/customers/component/customer/accounts/assets/fixedIncome/recuring-deposit/recuring-deposit.component';
-import {AddEPFComponent} from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-epf/add-epf.component';
-import {AddNPSComponent} from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/add-nps.component';
-import {AddGoalComponent} from './component/protect-component/customers/component/customer/plan/goals-plan/add-goal/add-goal.component';
-import {NpsSchemeHoldingComponent} from "./component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/nps-scheme-holding/nps-scheme-holding.component";
+import { AddPoRdComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-po-rd/add-po-rd.component';
+import { AddPoMisComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-po-mis/add-po-mis.component';
+import { AddPoSavingComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-po-saving/add-po-saving.component';
+import { AddScssComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-scss/add-scss.component';
+import { AddKvpComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-kvp/add-kvp.component';
 import { LiabilitiesDetailComponent } from './component/protect-component/customers/component/common-component/liabilities-detail/liabilities-detail.component';
 import { MfAllocationsComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/mf-allocations/mf-allocations.component';
 
@@ -30,13 +16,17 @@ export const componentList = [
 
 @NgModule({
   declarations: componentList,
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     MaterialModule,
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
-    OwnerComponentModule],
-  exports: [],
+    OwnerComponentModule
+  ],
+  exports: [
+    FormsModule,
+    ReactiveFormsModule],
   entryComponents: [componentList]
 })
 

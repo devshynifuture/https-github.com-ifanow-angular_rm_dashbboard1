@@ -1,0 +1,94 @@
+<div class="popup-header-fix-35">
+    <div class="row bb-1">
+        <div class="col-md-10 p-0">
+            <h4 class="mb-0 wrapper-20">BANK ACCOUNT - DETAILED VIEW</h4>
+        </div>
+        <div class="col-md-2 text-left">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="pl-20 pr-20 pb-48 pt-40">
+    <div class="row pt-40">
+        <div class="col-md-12 p-0">
+            <div class="insurance-ui bt">
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Owner Name
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{bankAccount.ownerName}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                            Account type
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{(bankAccount.accountType==1)?'Current':'Savings'}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                            Account balance
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{bankAccount.accountBalance}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                            Balance as on
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{bankAccount.balanceAsOn}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                            Interest rate
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{bankAccount.interestRate}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                            Interest compounding
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{(bankAccount.interestCompounding==1)?'Daily':(bankAccount.interestCompounding==2)?'Monthly':(bankAccount.interestCompounding==3)?'Quarterly':(bankAccount.interestCompounding==4)?'Semi annually':'Annually'}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                            Account No.
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{bankAccount.accountNo}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                            Bank Name
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{bankAccount.description}}
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                        <div class="col-md-8 text-left f-14 roboto">
+                                Description
+                        </div>
+                        <div class="col-md-4 text-right f-14 roboto">
+                            {{bankAccount.description}}
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,3 +1,4 @@
+import { AddNscComponent } from './../common-component/add-nsc/add-nsc.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
@@ -89,12 +90,13 @@ export class NscSchemeComponent implements OnInit {
 
     });
   }
-  openAddNSC(value, data) {
+  openAddNSC(data) {
     const fragmentData = {
-      Flag: value,
+      flag: 'addNsc',
       data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: AddNscComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

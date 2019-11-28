@@ -112,43 +112,6 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Purchase year</h5>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select formControlName="tenure" class="form-control br-0 br-none">
-                            <mat-option [value]="">Years</mat-option>
-                            <mat-option *ngFor="let Y of fdYears" [value]="Y">
-                                <span>{{Y}}</span>
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-        <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Carats</h5>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select formControlName="carats" class="form-control br-0">
-                            <mat-option value="">Select option</mat-option>
-                            <mat-option value="1">18</mat-option>
-                            <mat-option value="2">22</mat-option>
-                            <mat-option value="3">24</mat-option>
-                        </mat-select>
-                        <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isCarats && getFormControl().carats.invalid || getFormControl().carats.touched && getFormControl().carats.invalid)}">
-                            This field is required
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
 
         <div class="row pt-24">
             <div class="col-md-5 text-right" *ngIf="showHide == true">
