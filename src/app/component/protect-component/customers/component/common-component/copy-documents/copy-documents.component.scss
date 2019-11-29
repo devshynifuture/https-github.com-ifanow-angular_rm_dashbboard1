@@ -1,3 +1,23 @@
 .colorDark {
     color: #6202EE;
 }
+
+.breadCrumbClass {
+    .breadcrumb {
+        padding: 8px 1rem;
+        margin-bottom: 0px;
+        border-radius: 0px;
+    }
+}
+
+.copyDocumentcomp {
+    #table-low {
+        tr.mat-header-row {
+            display: none;
+        }
+    }
+}
+
+.copyDocumentcomp #table-low tbody td {
+    padding-left: 16px !important;
+}

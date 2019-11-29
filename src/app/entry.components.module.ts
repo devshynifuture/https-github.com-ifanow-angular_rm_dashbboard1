@@ -52,6 +52,8 @@ import {DetailedViewGratuityComponent} from './component/protect-component/custo
 import {DetailedScssComponent} from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/scss-scheme/detailed-scss/detailed-scss.component';
 import {AccountEntryModule} from "./component/protect-component/customers/component/customer/accounts/account.entry.module";
 import {AccountCommonModule} from "./component/protect-component/customers/component/customer/accounts/account.common.module";
+import { DetaildedViewSuperannuationComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-superannuation/detailded-view-superannuation/detailded-view-superannuation.component';
+import { CopyDocumentsComponent } from './component/protect-component/customers/component/common-component/copy-documents/copy-documents.component';
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -168,6 +170,8 @@ export const componentList = [
   DetailedPoSavingsComponent,
   DetailedPoTdComponent,
   DetailedPoMisComponent,
+  DetaildedViewSuperannuationComponent,
+  CopyDocumentsComponent,
 ];
 
 @NgModule({
