@@ -175,7 +175,7 @@ export class FixedIncomeComponent implements OnInit {
 
     });
   }
-  openPortfolioSummary(value, state, data,component) {
+  openPortfolioSummary(value, data) {
     const fragmentData = {
       Flag: value,
       data: data,

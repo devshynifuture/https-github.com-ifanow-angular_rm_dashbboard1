@@ -58,7 +58,7 @@ export class AddKvpComponent implements OnInit {
     }
     this.KVPFormScheme = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
-      amtInvested: [data.amountInvested, [Validators.required]],
+      amtInvested: [data.amountInvested, [Validators.required,Validators.min(1000)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       ownerType: [String(data.ownershipTypeId), [Validators.required]],
     })

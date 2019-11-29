@@ -65,7 +65,7 @@
             <div class="row bb-1 pt-16" *ngIf="showRecord==false && feeCalc==false">
                <div class="col-md-8 text-custom">
                   <img src="assets/images/svg/pencil.svg" class="c-p" (click)="editInvoice()">
-                  <img src="assets/images/svg/mail-light.svg" class="b-a" (click)="openSendEmail()">
+                  <img src="assets/images/svg/mail-light.svg" class="b-a" (click)="openSendEmail(null)">
                   <img src="assets/images/svg/pdf-icons.svg" class="b-a ">
                   <img src="assets/images/svg/printer.svg" class="b-a " (click)="printPage()">
                   <img src="assets/images/svg/delete.svg" class="b-a wrapper-9 ml-8"
@@ -232,7 +232,7 @@
                               more_vert
                            </i>
                            <mat-menu #menu="matMenu">
-                              <a mat-menu-item (click)="editForm(element,storeData.id)">Edit</a>
+                              <a mat-menu-item (click)="editForm(element)">Edit</a>
                            </mat-menu>
                         </td>
                      </ng-container>
@@ -416,7 +416,7 @@
                         <h5 class="mat-stroked-button br-0 text-light mr-20" (click)="cancel()">CANCEL</h5>
 
                         <button mat-button class="btn-bottom br-0 text-inherit"
-                           (click)="saveFormData('close')">SAVE</button>
+                           (click)="saveFormData()">SAVE</button>
                      </div>
                   </div>
                </div>
@@ -779,7 +779,7 @@
                      more_vert
                   </i>
                   <mat-menu #menu="matMenu">
-                     <a mat-menu-item (click)="editForm(element,storeData.id)">Edit</a>
+                     <a mat-menu-item (click)="editForm(element)">Edit</a>
                   </mat-menu>
                </td>
             </ng-container>
@@ -956,7 +956,7 @@
             <div class="col-md-12 right text-right pb-44">
                <h5 class="mat-stroked-button br-0 text-light mr-20" (click)="cancel()">CANCEL</h5>
 
-               <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFormData('close')">SAVE</button>
+               <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFormData()">SAVE</button>
             </div>
          </div>
       </div>

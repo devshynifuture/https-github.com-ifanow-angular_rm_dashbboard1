@@ -52,11 +52,16 @@ import {DetailedViewGratuityComponent} from './component/protect-component/custo
 import {DetailedScssComponent} from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/scss-scheme/detailed-scss/detailed-scss.component';
 import {AccountEntryModule} from "./component/protect-component/customers/component/customer/accounts/account.entry.module";
 import {AccountCommonModule} from "./component/protect-component/customers/component/customer/accounts/account.common.module";
+import { CopyDocumentsComponent } from './component/protect-component/customers/component/common-component/copy-documents/copy-documents.component';
 import { DetailedViewRealEstateComponent } from './component/protect-component/customers/component/customer/accounts/assets/realEstate/detailed-view-real-estate/detailed-view-real-estate.component';
 import { DetaildedViewSuperannuationComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-superannuation/detailded-view-superannuation/detailded-view-superannuation.component';
-import { CopyDocumentsComponent } from './component/protect-component/customers/component/common-component/copy-documents/copy-documents.component';
 import { DetailedViewOtherPayablesComponent } from './component/protect-component/customers/component/customer/accounts/liabilities/detailed-view-other-payables/detailed-view-other-payables.component';
 import { AddOtherPayablesComponent } from './component/protect-component/customers/component/customer/accounts/liabilities/add-other-payables/add-other-payables.component';
+import { MfAllocationsComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/mf-allocations/mf-allocations.component';
+import { DetailedPoRdComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-rd-scheme/detailed-po-rd/detailed-po-rd.component';
+import { DetailedViewSchemeHoldingComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/nps-scheme-holding/detailed-view-scheme-holding/detailed-view-scheme-holding.component';
+import { ViewActivityComponent } from './component/protect-component/customers/component/customer/accounts/documents/view-activity/view-activity.component';
+import { MfAlllocationComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/mf-alllocation/mf-alllocation.component';
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -177,7 +182,12 @@ export const componentList = [
   DetaildedViewSuperannuationComponent,
   CopyDocumentsComponent,
   DetailedViewOtherPayablesComponent,
-  AddOtherPayablesComponent
+  AddOtherPayablesComponent,
+  MfAllocationsComponent,
+  DetailedPoRdComponent,
+  DetailedViewSchemeHoldingComponent,
+  ViewActivityComponent,
+  MfAlllocationComponent
 ];
 
 @NgModule({

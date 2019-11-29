@@ -88,7 +88,7 @@ import {PlanEntryModule} from "./component/protect-component/customers/component
     // AddInsuranceComponent
   ],
   imports: [
-    SubscriptionModule,
+    // SubscriptionModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,

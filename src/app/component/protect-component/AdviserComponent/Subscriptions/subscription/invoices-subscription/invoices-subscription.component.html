@@ -28,9 +28,9 @@
         <i class="material-icons mr-12 icon-light v-sub c-p">
           search
         </i>
-        <button mat-stroked-button class="btn-default addon mr-12" (click)="showFilters(showFilter = true)"><i
+        <!-- <button mat-stroked-button class="btn-default addon mr-12" (click)="showFilters(showFilter = true)"><i
           class="material-icons">filter_list</i>FILTERS
-        </button>
+        </button> -->
         <button mat-stroked-button class="btn-primary addon" (click)="addInvoice('EditInInvoice')"><i
           class="material-icons">add</i>ADD NEW
         </button>
@@ -61,7 +61,7 @@
           </mat-chip-list>
         </mat-chip-list>
       </div>
-      <div class="col-md-4 right text-right p-0">
+      <!-- <div class="col-md-4 right text-right p-0">
         <div class="row">
           <div class="col-md-6">
             <select class="form-control br-0" id="sel11" [(ngModel)]='selectedStatusFilter'
@@ -80,7 +80,7 @@
         </div>
 
 
-      </div>
+      </div> -->
     </div>
     <table mat-table [dataSource]="dataSource" id="table-low" class="mt-8">
       <ng-container matColumnDef="checkbox">
