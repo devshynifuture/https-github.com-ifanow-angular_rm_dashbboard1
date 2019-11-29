@@ -86,7 +86,6 @@ import {EntryComponentsModule} from "./entry.components.module";
     // AddInsuranceComponent
   ],
   imports: [
-    CustomCommonModule,
     SubscriptionModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -102,6 +101,8 @@ import {EntryComponentsModule} from "./entry.components.module";
     SlimLoadingBarModule.forRoot(),
 
     MDBBootstrapModule.forRoot(), DragDropModule,
+    CustomCommonModule,
+
     EntryComponentsModule
   ],
   providers: [AuthService, HttpService, DatePipe, DynamicComponentService],

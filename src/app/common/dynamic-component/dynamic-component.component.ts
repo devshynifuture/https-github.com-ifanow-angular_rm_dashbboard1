@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../animation/animation';
 import {DynamicComponentService} from '../../services/dynamic-component.service';
-import {DataComponent} from "../../interfaces/data.component";
+import {DataComponent} from '../../interfaces/data.component';
 
 @Component({
   selector: 'app-dynamic-component',
@@ -21,20 +21,22 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
 
   _currentState;
   _componentName;
+  _upperSliderCase;
 
   constructor(private dynamicComponentService: DynamicComponentService) {
   }
 
 
   // percentageClose = '40%';
-  tempState
+  tempState;
 
   @Input()
   set currentState(currentState: string) {
     this.tempState = currentState;
     // this.addDynamicComponentService(this.componentName);
-    if (this.viewContainerRef)
+    if (this.viewContainerRef) {
       this.handleChangeOfState(currentState);
+    }
   }
 
   @Input()
@@ -43,7 +45,14 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
     if (inputData.componentName) {
       this._componentName = inputData.componentName;
       console.log('DynamicComponentComponent INPUT: data ', inputData);
-      this.addDynamicComponentService(inputData.componentName);
+      if (inputData.direction) {
+        if (inputData.direction == 'top') {
+          this.addDynamicComponentService(this.viewContainerRefUpper, inputData.componentName);
+        }
+      } else {
+        this.addDynamicComponentService(this.viewContainerRef, inputData.componentName);
+      }
+
     }
   }
 
@@ -54,7 +63,7 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
   @Input()
   set componentName(componentName) {
     this._componentName = componentName;
-    this.addDynamicComponentService(componentName);
+    // this.addDynamicComponentService(componentName);
   }
 
   get componentName() {
@@ -66,20 +75,24 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
     static: true
   }) viewContainerRef: ViewContainerRef;
 
+  @ViewChild('dynamicUpper', {
+    read: ViewContainerRef,
+    static: true
+  }) viewContainerRefUpper: ViewContainerRef;
+
   ngOnInit() {
     console.log('DynamicComponentComponent: ngOnInit data ', this.data);
     console.log('DynamicComponentComponent: ngOnInit this.viewContainerRef ', this.viewContainerRef);
     if (this.componentName) {
-      this.addDynamicComponentService(this.componentName);
+      this.addDynamicComponentService(this.viewContainerRef, this.componentName);
     }
   }
 
 
-  addDynamicComponentService(component) {
-    if (this.viewContainerRef) {
-      this.dynamicComponentService.addDynamicComponent(this.viewContainerRef, component, this.data.data);
+  addDynamicComponentService(viewContainerRef, component) {
+    if (viewContainerRef) {
+      this.dynamicComponentService.addDynamicComponent(viewContainerRef, component, this.data.data);
       this.handleChangeOfState(this.tempState);
-
     }
   }
 

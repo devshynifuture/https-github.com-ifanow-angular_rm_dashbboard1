@@ -13,7 +13,6 @@ import {OwnerColumnComponent} from "./owner-column/owner-column.component";
     OwnerColumnComponent
   ],
   imports: [
-    // BrowserModule,
     CommonModule,
     MaterialModule,
     ChartModule,
