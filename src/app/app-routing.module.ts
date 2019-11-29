@@ -5,6 +5,7 @@ import { LeftsidebarComponent } from './component/left-sidebar/leftsidebar/lefts
 import { SubscriptionComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/subscription.component';
 import { MisComponent } from './component/protect-component/AdviserComponent/backOffice/MIS/mis/mis.component';
 import { LoginComponent } from './component/no-protected/login/login.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
       {
         path: 'subscription',
         loadChildren: () => import('./component/protect-component/AdviserComponent/Subscriptions/subscription.module')
-          .then(m => m.SubscriptionModule)
+          .then(m => m.SubscriptionModule),
+          canActivate:[AuthGuard]
       }
     ]
   },
