@@ -128,6 +128,7 @@ export class RetirementAccountComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+        this.getListEPS()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -148,6 +149,7 @@ export class RetirementAccountComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+        this.getListSuperannuation()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -168,6 +170,7 @@ export class RetirementAccountComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+        this.getListGratuity()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -187,6 +190,7 @@ export class RetirementAccountComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+        this.getListNPS()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -206,6 +210,7 @@ export class RetirementAccountComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+        this.getListEPF()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -297,6 +302,7 @@ export class RetirementAccountComponent implements OnInit {
 
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
+        this.getListNPS()
         if (UtilService.isDialogClose(sideBarData)) {
           this.getListNPS();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);

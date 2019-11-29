@@ -9,7 +9,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 // import {BrowserModule} from '@angular/platform-browser';
 import {CustomerComponent} from './component/customer/customer.component';
 import {AddLiabilitiesComponent} from './component/common-component/add-liabilities/add-liabilities.component';
-import { CopyDocumentsComponent } from './component/common-component/copy-documents/copy-documents.component';
 
 import {CustomCommonModule} from '../../../common/custom.common.module';
 import {EntryComponentsModule} from '../../../entry.components.module';
@@ -23,7 +22,7 @@ import {PlanModule} from './component/customer/plan/plan.module';
 
 
 @NgModule({
-  declarations: [CustomerComponent, CopyDocumentsComponent],
+  declarations: [CustomerComponent],
   imports: [
     // BrowserModule,
     CommonModule,
