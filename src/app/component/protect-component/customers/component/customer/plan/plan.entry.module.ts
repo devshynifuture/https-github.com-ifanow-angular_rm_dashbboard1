@@ -20,6 +20,7 @@ export const componentList = [MfAllocationsComponent,
     FormsModule,
     ReactiveFormsModule,
     
+    
   ],
   exports: [
     FormsModule,
