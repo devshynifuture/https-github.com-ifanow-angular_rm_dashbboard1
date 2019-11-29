@@ -1,6 +1,6 @@
 <div *ngIf="clientId">
-  <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" class="img-top">
-  <!--<mat-tab-group [selectedIndex]="selected" animationDuration="0ms" mat-align-tabs="center" id="ui-customer">
+    <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" class="img-top">
+    <!--<mat-tab-group [selectedIndex]="selected" animationDuration="0ms" mat-align-tabs="center" id="ui-customer">
 
     <mat-tab label="OVERVIEW">
       &lt;!&ndash;      <app-plan></app-plan>&ndash;&gt;
@@ -15,14 +15,14 @@
     <mat-tab label="TRANSACT">Content 3</mat-tab>
 
   </mat-tab-group>-->
-   <nav mat-tab-nav-bar id="ui-customer">
-     <a mat-tab-link [routerLink]="'/customer-detail/account'">OVERVIEW</a>
-     <a mat-tab-link [routerLink]="'/customer-detail/account'">ACCOUNTS</a>
-     <a mat-tab-link [routerLink]="'/customer-detail/plan'">PLAN</a>
-     <a mat-tab-link [routerLink]="'/customer-detail/plan'">ACTIVITY</a>
-     <a mat-tab-link [routerLink]="'/customer-detail/plan'">TRANSACT</a>
-   </nav>
-  <router-outlet></router-outlet>
+    <nav class="headerClassNav" mat-tab-nav-bar id="ui-customer">
+        <a mat-tab-link [routerLink]="'/customer-detail/account'">OVERVIEW</a>
+        <a mat-tab-link [routerLink]="'/customer-detail/account'">ACCOUNTS</a>
+        <a mat-tab-link [routerLink]="'/customer-detail/plan'">PLAN</a>
+        <a mat-tab-link [routerLink]="'/customer-detail/plan'">ACTIVITY</a>
+        <a mat-tab-link [routerLink]="'/customer-detail/plan'">TRANSACT</a>
+    </nav>
+    <router-outlet></router-outlet>
 </div>
 <h1 *ngIf="!clientId">Please select client</h1>
 <app-dialog-container [parentComponentName]="'customer'"></app-dialog-container>
