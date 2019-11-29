@@ -18,7 +18,7 @@ export class AddPlaninsuranceComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  panelOpenState;
   close(){
     if(this._inputData){
       let data=this._inputData

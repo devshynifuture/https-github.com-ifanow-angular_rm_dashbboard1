@@ -88,7 +88,7 @@ export class PreferencesSettingsComponent implements OnInit {
     );
   }
 
-  savePrefix(data) {
+  savePrefix() {
     const obj = {
       // advisorId: 2735,
       advisorId: this.advisorId,

@@ -18,7 +18,7 @@ export class FeeStructureComponent implements OnInit {
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject, private eventService: EventService,private subService:SubscriptionService) {
   }
 
-  _upperData = '';
+  _upperData;
   selectedFee;
   singleService;
   ngOnInit() {
@@ -43,7 +43,7 @@ export class FeeStructureComponent implements OnInit {
     this.selectedFee = feeType;
   }
 
-  openPlanSliderFee(data, value, state) {
+  openPlanSliderFee(data, value) {
     const fragmentData = {
       Flag: value,
       data,
