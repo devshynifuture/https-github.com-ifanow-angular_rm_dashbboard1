@@ -896,7 +896,7 @@ mat-tab-group[vertical] {
     }
 }
 
-.transactions#table-low {
+.transactions#table-low,.additional-saving #table-low {
     tr.mat-header-row {
         height: 44px !important;
     }
@@ -929,5 +929,11 @@ mat-tab-group[vertical] {
     }
     100% {
         background-position: 200px;
+    }
+}
+#filters{
+    button.mat-menu-item{
+        height: 40px !important;
+        line-height: 40px !important;
     }
 }
