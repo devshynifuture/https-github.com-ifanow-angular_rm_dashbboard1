@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
-import { UpperCustomerComponent } from '../../../common-component/upper-customer/upper-customer.component';
-import { MatDialog } from '@angular/material';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../customer.service';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {UtilService} from 'src/app/services/util.service';
+import {MatDialog} from '@angular/material';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../customer.service';
+import {UpperCustomerComponent} from '../../../common-component/upper-customer/upper-customer.component';
 
 @Component({
   selector: 'app-assets',
@@ -15,10 +15,12 @@ import { CustomerService } from '../../customer.service';
 export class AssetsComponent implements OnInit {
   advisorId: any;
   clientId: any;
-  assetSideBarData: {}[];
+  assetSideBarData: [];
 
-  constructor(private subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private cusService: CustomerService) {
+  constructor(private subInjectService: SubscriptionInject, private eventService: EventService,
+              public dialog: MatDialog, private cusService: CustomerService) {
   }
+
   private loadComponent = false;
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   dataSource = ELEMENT_DATA;
@@ -83,39 +85,39 @@ export class AssetsComponent implements OnInit {
   datasource22 = ELEMENT_DATA22;
 
 
-
   displayedColumns24 = ['name', 'amt', 'cvalue', 'profile', 'abt', 'xirr', 'pay', 'withdraw', 'bal', 'date', 'sip'];
   dataSource24 = ELEMENT_DATA24;
   displayedColumns25 = ['scrip', 'owner', 'bal', 'price', 'mprice', 'amt', 'cvalue', 'gain', 'ret', 'xirr', 'dividend', 'icons'];
   dataSource25 = ELEMENT_DATA25;
 
   viewMode;
+
   ngOnInit() {
-    this.viewMode = "tab1"
+    this.viewMode = 'tab1';
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getAssetCountGLobalData();
 
     this.assetSideBarData = [
-      { name: 'Mutual funds', viewmode: 'tab1', count: '0' },
-      { name: 'Stocks', viewmode: 'tab2', count: '0' },
-      { name: 'Fixed income', viewmode: 'tab3', count: '0' },
-      { name: 'Real estate', viewmode: 'tab4', count: '0' },
-      { name: 'Retirement accounts', viewmode: 'tab5', count: '0' },
-      { name: 'Small saving scheme', viewmode: 'tab6', count: '0' },
-      { name: 'Cash & Bank', viewmode: 'tab7', count: '0' },
-      { name: 'Commodities', viewmode: 'tab8', count: '0' }
-    ]
+      {name: 'Mutual funds', viewmode: 'tab1', count: '0'},
+      {name: 'Stocks', viewmode: 'tab2', count: '0'},
+      {name: 'Fixed income', viewmode: 'tab3', count: '0'},
+      {name: 'Real estate', viewmode: 'tab4', count: '0'},
+      {name: 'Retirement accounts', viewmode: 'tab5', count: '0'},
+      {name: 'Small saving scheme', viewmode: 'tab6', count: '0'},
+      {name: 'Cash & Bank', viewmode: 'tab7', count: '0'},
+      {name: 'Commodities', viewmode: 'tab8', count: '0'}
+    ];
   }
+
   getAssetCountGLobalData() {
-    let obj =
-    {
+    const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
-    }
+    };
     this.cusService.getAssetCountGlobalData(obj).subscribe(
       data => this.getAssetCountGLobalDataRes(data)
-    )
+    );
   }
 
   getAssetCountGLobalDataRes(data) {
@@ -127,11 +129,11 @@ export class AssetsComponent implements OnInit {
       smallSavingSchemes
     } = data;
 
-    this.assetSideBarData[2]["count"] = fixedIncome;
-    this.assetSideBarData[3]["count"] = real_estate;
-    this.assetSideBarData[4]["count"] = retirementAccounts;
-    this.assetSideBarData[5]["count"] = smallSavingSchemes;
-    this.assetSideBarData[6]["count"] = cashAndBank;
+    this.assetSideBarData[2].count = fixedIncome;
+    this.assetSideBarData[3].count = real_estate;
+    this.assetSideBarData[4].count = retirementAccounts;
+    this.assetSideBarData[5].count = smallSavingSchemes;
+    this.assetSideBarData[6].count = cashAndBank;
   }
 
   openFragment(value) {
@@ -151,6 +153,7 @@ export class AssetsComponent implements OnInit {
       }
     );
   }
+
   openUpperFragment(data) {
     /* const fragmentData = {
        Flag: 'emailOnly',
@@ -171,6 +174,8 @@ export class AssetsComponent implements OnInit {
       flag: 'app-upper-customer',
       id: 1,
       data,
+      direction: 'top',
+      componentName: UpperCustomerComponent,
       state: 'open'
     };
 
@@ -187,6 +192,7 @@ export class AssetsComponent implements OnInit {
   getPrefixData(type) {
 
   }
+
   openPortfolioSummary(value, state) {
     const fragmentData = {
       Flag: value,
@@ -225,8 +231,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     xirr: 8.32,
     alloc: 20.32
   },
-  { name: 'ICICI Equity Fund Growth	', amt: '2,28,580', value: '2,28,580', abs: 26.99, xirr: 8.32, alloc: 20.32 },
-  { name: 'HDFC Top 200', amt: '2,28,580', value: '2,28,580', abs: 26.99, xirr: 8.32, alloc: 20.32 },
+  {name: 'ICICI Equity Fund Growth	', amt: '2,28,580', value: '2,28,580', abs: 26.99, xirr: 8.32, alloc: 20.32},
+  {name: 'HDFC Top 200', amt: '2,28,580', value: '2,28,580', abs: 26.99, xirr: 8.32, alloc: 20.32},
   {
     name: 'Aditya Birla Sun Life Frontline Equity Fund-Growth',
     amt: '2,28,580',
@@ -235,7 +241,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     xirr: 8.32,
     alloc: 20.32
   },
-  { name: 'Total', amt: '2,28,580', value: '2,28,580', abs: 26.99, xirr: 8.32, alloc: 20.32 },
+  {name: 'Total', amt: '2,28,580', value: '2,28,580', abs: 26.99, xirr: 8.32, alloc: 20.32},
 ];
 
 export interface PeriodicElement2 {
@@ -342,17 +348,18 @@ export interface PeriodicElement1 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { data: 'a. Investment', amts: '15,70,000' },
-  { data: 'b. Switch In', amts: '2,28,580' },
-  { data: 'c. Switch Out', amts: '2,28,580' },
-  { data: 'd. Redemption', amts: '0' },
-  { data: 'e. Dividend Payout', amts: '0' },
-  { data: 'f. Net Investment (a+b-c-d-e)', amts: '2,28,580' },
-  { data: 'g. Market Value', amts: '2,28,580' },
-  { data: 'h. Net Gain (g-f)', amts: '2,28,580' },
-  { data: 'i. Realized XIRR (All Transactions)', amts: '2.81 %' },
+  {data: 'a. Investment', amts: '15,70,000'},
+  {data: 'b. Switch In', amts: '2,28,580'},
+  {data: 'c. Switch Out', amts: '2,28,580'},
+  {data: 'd. Redemption', amts: '0'},
+  {data: 'e. Dividend Payout', amts: '0'},
+  {data: 'f. Net Investment (a+b-c-d-e)', amts: '2,28,580'},
+  {data: 'g. Market Value', amts: '2,28,580'},
+  {data: 'h. Net Gain (g-f)', amts: '2,28,580'},
+  {data: 'i. Realized XIRR (All Transactions)', amts: '2.81 %'},
 
 ];
+
 export interface PeriodicElement3 {
   no: string;
   owner: string;
@@ -364,12 +371,29 @@ export interface PeriodicElement3 {
 }
 
 const ELEMENT_DATA3: PeriodicElement3[] = [
-  { no: '1.', owner: 'Rahul Jain', type: 'Type', value: '60,000', pvalue: '60,000', desc: 'ICICI FD', status: 'ICICI FD' },
-  { no: '1.', owner: 'Rahul Jain', type: 'Type', value: '60,000', pvalue: '60,000', desc: 'ICICI FD', status: 'ICICI FD' },
-  { no: ' ', owner: 'Total', type: '', value: '1,28,925', pvalue: '1,28,925', desc: '', status: ' ' },
+  {
+    no: '1.',
+    owner: 'Rahul Jain',
+    type: 'Type',
+    value: '60,000',
+    pvalue: '60,000',
+    desc: 'ICICI FD',
+    status: 'ICICI FD'
+  },
+  {
+    no: '1.',
+    owner: 'Rahul Jain',
+    type: 'Type',
+    value: '60,000',
+    pvalue: '60,000',
+    desc: 'ICICI FD',
+    status: 'ICICI FD'
+  },
+  {no: ' ', owner: 'Total', type: '', value: '1,28,925', pvalue: '1,28,925', desc: '', status: ' '},
 
 
 ];
+
 export interface PeriodicElement4 {
   no: string;
   owner: string;
@@ -388,27 +412,28 @@ export interface PeriodicElement4 {
 const ELEMENT_DATA4: PeriodicElement4[] = [
   {
     no: '1.', owner: 'Ronak Hasmukh Hindocha', type: 'Bank FD',
-    cdate: '60,000', rate: '8.40%', amt: '1,00,000', mdate: "18/09/2019", mvalue: "1,00,000",
-    number: "980787870909", desc: "ICICI FD", status: "LIVE"
+    cdate: '60,000', rate: '8.40%', amt: '1,00,000', mdate: '18/09/2019', mvalue: '1,00,000',
+    number: '980787870909', desc: 'ICICI FD', status: 'LIVE'
   },
   {
     no: '2.', owner: 'Rupa Ronak Hindocha', type: 'Bank FD',
-    cdate: '60,000', rate: '8.40%', amt: '1,00,000', mdate: "18/09/2019", mvalue: "1,00,000",
-    number: "980787870909", desc: "ICICI FD", status: "LIVE"
+    cdate: '60,000', rate: '8.40%', amt: '1,00,000', mdate: '18/09/2019', mvalue: '1,00,000',
+    number: '980787870909', desc: 'ICICI FD', status: 'LIVE'
   },
   {
     no: '3.', owner: 'Ronak Hasmukh Hindocha', type: 'Bank FD',
-    cdate: '60,000', rate: '8.40%', amt: '1,00,000', mdate: "18/09/2019", mvalue: "1,00,000",
-    number: "980787870909", desc: "ICICI FD", status: "LIVE"
+    cdate: '60,000', rate: '8.40%', amt: '1,00,000', mdate: '18/09/2019', mvalue: '1,00,000',
+    number: '980787870909', desc: 'ICICI FD', status: 'LIVE'
   },
   {
     no: '', owner: 'Total', type: '',
-    cdate: '1,28,925', rate: '8.40%', amt: '1,50,000', mdate: "", mvalue: "1,50,000",
-    number: "", desc: "", status: ""
+    cdate: '1,28,925', rate: '8.40%', amt: '1,50,000', mdate: '', mvalue: '1,50,000',
+    number: '', desc: '', status: ''
   },
 
 
 ];
+
 export interface PeriodicElement5 {
   no: string;
   owner: string;
@@ -424,27 +449,28 @@ export interface PeriodicElement5 {
 const ELEMENT_DATA5: PeriodicElement5[] = [
   {
     no: '1.', owner: 'Ronak Hasmukh Hindocha',
-    cvalue: '60,000', rate: '8.40%', amt: '1,00,000', mdate: "18/09/2019",
-    number: "980787870909", desc: "ICICI FD", status: "LIVE"
+    cvalue: '60,000', rate: '8.40%', amt: '1,00,000', mdate: '18/09/2019',
+    number: '980787870909', desc: 'ICICI FD', status: 'LIVE'
   },
   {
     no: '2.', owner: 'Rupa Ronak Hindocha',
-    cvalue: '60,000', rate: '8.40%', amt: '1,00,000', mdate: "18/09/2019",
-    number: "980787870909", desc: "ICICI FD", status: "LIVE"
+    cvalue: '60,000', rate: '8.40%', amt: '1,00,000', mdate: '18/09/2019',
+    number: '980787870909', desc: 'ICICI FD', status: 'LIVE'
   },
   {
     no: '3.', owner: 'Ronak Hasmukh Hindocha',
-    cvalue: '60,000', rate: '8.40%', amt: '1,00,000', mdate: "18/09/2019",
-    number: "980787870909", desc: "ICICI FD", status: "LIVE"
+    cvalue: '60,000', rate: '8.40%', amt: '1,00,000', mdate: '18/09/2019',
+    number: '980787870909', desc: 'ICICI FD', status: 'LIVE'
   },
   {
     no: '', owner: 'Total',
-    cvalue: '1,28,925', rate: '8.40%', amt: '1,50,000', mdate: "",
-    number: "", desc: "", status: ""
+    cvalue: '1,28,925', rate: '8.40%', amt: '1,50,000', mdate: '',
+    number: '', desc: '', status: ''
   },
 
 
 ];
+
 export interface PeriodicElement6 {
   no: string;
   owner: string;
@@ -462,23 +488,42 @@ export interface PeriodicElement6 {
 
 const ELEMENT_DATA6: PeriodicElement6[] = [
   {
-    no: '1.', owner: 'Ronak Hasmukh Hindocha',
-    cvalue: '60,000', camt: "1,00,000", amt: '1,00,000', cdate: "18/09/2019", rate: '8.40%', mvalue: "18/09/2019", tenure: "12", type: "Tax free",
-    desc: "ICICI FD", status: "LIVE"
+    no: '1.',
+    owner: 'Ronak Hasmukh Hindocha',
+    cvalue: '60,000',
+    camt: '1,00,000',
+    amt: '1,00,000',
+    cdate: '18/09/2019',
+    rate: '8.40%',
+    mvalue: '18/09/2019',
+    tenure: '12',
+    type: 'Tax free',
+    desc: 'ICICI FD',
+    status: 'LIVE'
   },
   {
-    no: '2.', owner: 'Rupa Ronak Hindocha',
-    cvalue: '60,000', camt: "1,00,000", amt: '1,00,000', cdate: "18/09/2019", rate: '8.40%', mvalue: "18/09/2019", tenure: "12", type: "Tax free",
-    desc: "ICICI FD", status: "LIVE"
+    no: '2.',
+    owner: 'Rupa Ronak Hindocha',
+    cvalue: '60,000',
+    camt: '1,00,000',
+    amt: '1,00,000',
+    cdate: '18/09/2019',
+    rate: '8.40%',
+    mvalue: '18/09/2019',
+    tenure: '12',
+    type: 'Tax free',
+    desc: 'ICICI FD',
+    status: 'LIVE'
   },
   {
     no: '', owner: 'Total',
-    cvalue: '1,28,925', camt: "1,50,000", amt: '1,50,000', cdate: "", rate: '', mvalue: "", tenure: "", type: "",
-    desc: "", status: ""
+    cvalue: '1,28,925', camt: '1,50,000', amt: '1,50,000', cdate: '', rate: '', mvalue: '', tenure: '', type: '',
+    desc: '', status: ''
   },
 
 
 ];
+
 export interface PeriodicElement7 {
   no: string;
   owner: string;
@@ -495,22 +540,23 @@ export interface PeriodicElement7 {
 const ELEMENT_DATA7: PeriodicElement7[] = [
   {
     no: '1.', owner: 'Rahul Jain',
-    type: 'Savings', amt: "08/02/2019", rate: '8.40%', bal: "1,00,000", account: "980787870909", bank: "ICICI",
-    desc: "ICICI FD", status: "MATURED"
+    type: 'Savings', amt: '08/02/2019', rate: '8.40%', bal: '1,00,000', account: '980787870909', bank: 'ICICI',
+    desc: 'ICICI FD', status: 'MATURED'
   },
   {
     no: '2.', owner: 'Shilpa Jain',
-    type: 'Current', amt: "08/02/2019", rate: '8.60%', bal: "50,000", account: "77676767622", bank: "Axis",
-    desc: "Axis bank FD", status: "LIVE"
+    type: 'Current', amt: '08/02/2019', rate: '8.60%', bal: '50,000', account: '77676767622', bank: 'Axis',
+    desc: 'Axis bank FD', status: 'LIVE'
   },
   {
     no: '', owner: 'Total',
-    type: '', amt: "", rate: '', bal: "1,50,000", account: "", bank: "",
-    desc: "", status: ""
+    type: '', amt: '', rate: '', bal: '1,50,000', account: '', bank: '',
+    desc: '', status: ''
   },
 
 
 ];
+
 export interface PeriodicElement8 {
   no: string;
   owner: string;
@@ -523,18 +569,18 @@ export interface PeriodicElement8 {
 const ELEMENT_DATA8: PeriodicElement8[] = [
   {
     no: '1.', owner: 'Rahul Jain'
-    , cash: "94,925", bal: "09/02/2019",
-    desc: "ICICI FD", status: "MATURED"
+    , cash: '94,925', bal: '09/02/2019',
+    desc: 'ICICI FD', status: 'MATURED'
   },
   {
     no: '2.', owner: 'Shilpa Jain'
-    , cash: "94,925", bal: "09/02/2019",
-    desc: "Axis bank FD", status: "LIVE"
+    , cash: '94,925', bal: '09/02/2019',
+    desc: 'Axis bank FD', status: 'LIVE'
   },
   {
     no: '', owner: 'Total'
-    , cash: "1,28,925", bal: "",
-    desc: "", status: ""
+    , cash: '1,28,925', bal: '',
+    desc: '', status: ''
   },
 
 
@@ -555,21 +601,22 @@ export interface PeriodicElement9 {
 const ELEMENT_DATA9: PeriodicElement9[] = [
   {
     no: '1.', owner: 'Rahul Jain'
-    , grams: "50 tolas", car: "24", price: "32,000(as on 20/08/2019)",
-    mvalue: "60,000", pvalue: "60,000", desc: "ICICI FD", status: "MATURED"
+    , grams: '50 tolas', car: '24', price: '32,000(as on 20/08/2019)',
+    mvalue: '60,000', pvalue: '60,000', desc: 'ICICI FD', status: 'MATURED'
   },
   {
     no: '2.', owner: 'Rahul Jain'
-    , grams: "25 tolas", car: "24", price: "32,000(as on 20/08/2019)",
-    mvalue: "60,000", pvalue: "60,000", desc: "ICICI FD", status: "LIVE"
+    , grams: '25 tolas', car: '24', price: '32,000(as on 20/08/2019)',
+    mvalue: '60,000', pvalue: '60,000', desc: 'ICICI FD', status: 'LIVE'
   },
   {
     no: '', owner: 'Total'
-    , grams: "", car: "", price: "",
-    mvalue: "1,28,925", pvalue: "1,20,000", desc: "", status: ""
+    , grams: '', car: '', price: '',
+    mvalue: '1,28,925', pvalue: '1,20,000', desc: '', status: ''
   },
 
 ];
+
 export interface PeriodicElement10 {
   no: string;
   owner: string;
@@ -585,17 +632,33 @@ export interface PeriodicElement10 {
 const ELEMENT_DATA10: PeriodicElement10[] = [
 
   {
-    no: '1.', owner: 'Rahul Jain'
-    , type: "Cumulative", mvalue: "60,000", pvalue: "1,00,000", pur: "18/09/2021", rate: "8.40%", desc: "ICICI FD", status: "MATURED"
+    no: '1.',
+    owner: 'Rahul Jain'
+    ,
+    type: 'Cumulative',
+    mvalue: '60,000',
+    pvalue: '1,00,000',
+    pur: '18/09/2021',
+    rate: '8.40%',
+    desc: 'ICICI FD',
+    status: 'MATURED'
   },
 
   {
-    no: '2.', owner: 'Shilpa Jain'
-    , type: "Cumulative", mvalue: "60,000", pvalue: "1,00,000", pur: "18/09/2021", rate: "8.40%", desc: "ICICI FD", status: "LIVE"
+    no: '2.',
+    owner: 'Shilpa Jain'
+    ,
+    type: 'Cumulative',
+    mvalue: '60,000',
+    pvalue: '1,00,000',
+    pur: '18/09/2021',
+    rate: '8.40%',
+    desc: 'ICICI FD',
+    status: 'LIVE'
   },
   {
     no: '', owner: 'Total'
-    , type: "", mvalue: "1,20,000", pvalue: "1,50,000", pur: "", rate: "", desc: "", status: ""
+    , type: '', mvalue: '1,20,000', pvalue: '1,50,000', pur: '', rate: '', desc: '', status: ''
   },
 
 ];
@@ -617,20 +680,48 @@ export interface PeriodicElement11 {
 const ELEMENT_DATA11: PeriodicElement11[] = [
 
   {
-    no: '1.', owner: 'Rahul Jain'
-    , cvalue: "94,925", emp: "94,925", empc: "94,925", rate: "8.40%", bal: "60,000", bacla: "18/09/2021", year: "2021", desc: "ICICI FD", status: "MATURED"
+    no: '1.',
+    owner: 'Rahul Jain'
+    ,
+    cvalue: '94,925',
+    emp: '94,925',
+    empc: '94,925',
+    rate: '8.40%',
+    bal: '60,000',
+    bacla: '18/09/2021',
+    year: '2021',
+    desc: 'ICICI FD',
+    status: 'MATURED'
   },
   {
-    no: '2.', owner: 'Shilpa Jain'
-    , cvalue: "94,925", emp: "94,925", empc: "94,925", rate: "8.40%", bal: "60,000", bacla: "18/09/2021", year: "2021", desc: "ICICI FD", status: "LIVE"
+    no: '2.',
+    owner: 'Shilpa Jain'
+    ,
+    cvalue: '94,925',
+    emp: '94,925',
+    empc: '94,925',
+    rate: '8.40%',
+    bal: '60,000',
+    bacla: '18/09/2021',
+    year: '2021',
+    desc: 'ICICI FD',
+    status: 'LIVE'
   },
   {
-    no: '', owner: 'Total'
-    , cvalue: "1,28,925", emp: "1,28,925", empc: "1,28,925", rate: "", bal: "1,20,000", bacla: "", year: "", desc: "", status: ""
+    no: '',
+    owner: 'Total'
+    ,
+    cvalue: '1,28,925',
+    emp: '1,28,925',
+    empc: '1,28,925',
+    rate: '',
+    bal: '1,20,000',
+    bacla: '',
+    year: '',
+    desc: '',
+    status: ''
   },
 ];
-
-
 
 
 export interface PeriodicElement12 {
@@ -650,16 +741,46 @@ export interface PeriodicElement12 {
 const ELEMENT_DATA12: PeriodicElement12[] = [
 
   {
-    no: '1.', owner: 'Rahul Jain'
-    , cvalue: "94,925", total: "94,925", account: "94,925", rate: "8.40%", mdate: "18/09/2021", scheme: "Cumulative", ppf: "980787870909", desc: "ICICI FD", status: "MATURED"
+    no: '1.',
+    owner: 'Rahul Jain'
+    ,
+    cvalue: '94,925',
+    total: '94,925',
+    account: '94,925',
+    rate: '8.40%',
+    mdate: '18/09/2021',
+    scheme: 'Cumulative',
+    ppf: '980787870909',
+    desc: 'ICICI FD',
+    status: 'MATURED'
   },
   {
-    no: '2.', owner: 'Shilpa Jain'
-    , cvalue: "94,925", total: "94,925", account: "94,925", rate: "8.40%", mdate: "18/09/2021", scheme: "Cumulative", ppf: "980787870909", desc: "ICICI FD", status: "LIVE"
+    no: '2.',
+    owner: 'Shilpa Jain'
+    ,
+    cvalue: '94,925',
+    total: '94,925',
+    account: '94,925',
+    rate: '8.40%',
+    mdate: '18/09/2021',
+    scheme: 'Cumulative',
+    ppf: '980787870909',
+    desc: 'ICICI FD',
+    status: 'LIVE'
   },
   {
-    no: '', owner: 'Total'
-    , cvalue: "94,925", total: "1,28,925", account: "1,28,925", rate: "", mdate: "", scheme: "", ppf: "", desc: "", status: ""
+    no: '',
+    owner: 'Total'
+    ,
+    cvalue: '94,925',
+    total: '1,28,925',
+    account: '1,28,925',
+    rate: '',
+    mdate: '',
+    scheme: '',
+    ppf: '',
+    desc: '',
+    status: ''
   },
 
 ];
@@ -680,19 +801,34 @@ export interface PeriodicElement13 {
 const ELEMENT_DATA13: PeriodicElement13[] = [
 
   {
-    no: '1.', owner: 'Rahul Jain'
-    , name: "Futurewise Technologies", number: "5", year: "5", amt: "1,00,000", reason: "Worked for more than 10 years", desc: "ICICI FD", status: "MATURED"
+    no: '1.',
+    owner: 'Rahul Jain'
+    ,
+    name: 'Futurewise Technologies',
+    number: '5',
+    year: '5',
+    amt: '1,00,000',
+    reason: 'Worked for more than 10 years',
+    desc: 'ICICI FD',
+    status: 'MATURED'
   },
   {
-    no: '2.', owner: 'Shilpa Jain'
-    , name: "Futurewise Technologies", number: "5", year: "5", amt: "1,00,000", reason: "Worked for more than 10 years", desc: "Axis bank FD", status: "LIVE"
+    no: '2.',
+    owner: 'Shilpa Jain'
+    ,
+    name: 'Futurewise Technologies',
+    number: '5',
+    year: '5',
+    amt: '1,00,000',
+    reason: 'Worked for more than 10 years',
+    desc: 'Axis bank FD',
+    status: 'LIVE'
   },
   {
     no: '', owner: 'Total'
-    , name: "", number: "", year: "", amt: "1,50,000", reason: "", desc: "", status: ""
+    , name: '', number: '', year: '', amt: '1,50,000', reason: '', desc: '', status: ''
   },
 ];
-
 
 
 export interface PeriodicElement14 {
@@ -710,18 +846,43 @@ export interface PeriodicElement14 {
 const ELEMENT_DATA14: PeriodicElement14[] = [
 
   {
-    no: '1.', owner: 'Rahul Jain'
-    , aemp: "Futurewise Technologies", rate: "5", grate: "5", grateemp: "1,00,000", date: "Worked for more than 10 years", desc: "ICICI FD", status: "MATURED"
+    no: '1.',
+    owner: 'Rahul Jain'
+    ,
+    aemp: 'Futurewise Technologies',
+    rate: '5',
+    grate: '5',
+    grateemp: '1,00,000',
+    date: 'Worked for more than 10 years',
+    desc: 'ICICI FD',
+    status: 'MATURED'
   },
   {
-    no: '1.', owner: 'Rahul Jain'
-    , aemp: "Futurewise Technologies", rate: "5", grate: "5", grateemp: "1,00,000", date: "Worked for more than 10 years", desc: "ICICI FD", status: "MATURED"
+    no: '1.',
+    owner: 'Rahul Jain'
+    ,
+    aemp: 'Futurewise Technologies',
+    rate: '5',
+    grate: '5',
+    grateemp: '1,00,000',
+    date: 'Worked for more than 10 years',
+    desc: 'ICICI FD',
+    status: 'MATURED'
   },
   {
-    no: '1.', owner: 'Rahul Jain'
-    , aemp: "Futurewise Technologies", rate: "5", grate: "5", grateemp: "1,00,000", date: "Worked for more than 10 years", desc: "ICICI FD", status: "MATURED"
+    no: '1.',
+    owner: 'Rahul Jain'
+    ,
+    aemp: 'Futurewise Technologies',
+    rate: '5',
+    grate: '5',
+    grateemp: '1,00,000',
+    date: 'Worked for more than 10 years',
+    desc: 'ICICI FD',
+    status: 'MATURED'
   },
 ];
+
 export interface PeriodicElement15 {
   no: string;
   owner: string;
@@ -737,15 +898,15 @@ const ELEMENT_DATA15: PeriodicElement15[] = [
 
   {
     no: '1.', owner: 'Rahul Jain'
-    , nvalue: "94,925", date: "12/11/2022", amt: "60,000", pay: "Monthly", desc: "ICICI FD", status: "MATURED"
+    , nvalue: '94,925', date: '12/11/2022', amt: '60,000', pay: 'Monthly', desc: 'ICICI FD', status: 'MATURED'
   },
   {
     no: '2.', owner: 'Rahul Jain'
-    , nvalue: "94,925", date: "12/11/2022", amt: "60,000", pay: "Monthly", desc: "ICICI FD", status: "MATURED"
+    , nvalue: '94,925', date: '12/11/2022', amt: '60,000', pay: 'Monthly', desc: 'ICICI FD', status: 'MATURED'
   },
   {
     no: '', owner: 'Total'
-    , nvalue: "1,50,000", date: "", amt: "1,50,000", pay: "", desc: "", status: ""
+    , nvalue: '1,50,000', date: '', amt: '1,50,000', pay: '', desc: '', status: ''
   },
 ];
 
@@ -764,19 +925,34 @@ export interface PeriodicElement16 {
 const ELEMENT_DATA16: PeriodicElement16[] = [
 
   {
-    no: '1.', owner: 'Rahul Jain'
-    , cvalue: "94,925", rate: "8.40%", amt: "60,000", number: "76635874357424", mdate: "18/09/2021", desc: "ICICI FD", status: "MATURED"
+    no: '1.',
+    owner: 'Rahul Jain'
+    ,
+    cvalue: '94,925',
+    rate: '8.40%',
+    amt: '60,000',
+    number: '76635874357424',
+    mdate: '18/09/2021',
+    desc: 'ICICI FD',
+    status: 'MATURED'
   },
   {
-    no: '2.', owner: 'Rahul Jain'
-    , cvalue: "94,925", rate: "8.40%", amt: "60,000", number: "76635874357424", mdate: "18/09/2021", desc: "ICICI FD", status: "MATURED"
+    no: '2.',
+    owner: 'Rahul Jain'
+    ,
+    cvalue: '94,925',
+    rate: '8.40%',
+    amt: '60,000',
+    number: '76635874357424',
+    mdate: '18/09/2021',
+    desc: 'ICICI FD',
+    status: 'MATURED'
   },
   {
     no: '', owner: 'Total'
-    , cvalue: "1,28,925", rate: "", amt: "1,20,000", number: "", mdate: "", desc: "", status: ""
+    , cvalue: '1,28,925', rate: '', amt: '1,20,000', number: '', mdate: '', desc: '', status: ''
   },
 ];
-
 
 
 export interface PeriodicElement17 {
@@ -794,16 +970,32 @@ export interface PeriodicElement17 {
 const ELEMENT_DATA17: PeriodicElement17[] = [
 
   {
-    no: '1.', owner: 'Rahul Jain'
-    , cvalue: "94,925", rate: "8.40%", mvalue: "60,000", mdate: "18/09/2021", number: "76635874357424", desc: "ICICI FD", status: "MATURED"
+    no: '1.',
+    owner: 'Rahul Jain'
+    ,
+    cvalue: '94,925',
+    rate: '8.40%',
+    mvalue: '60,000',
+    mdate: '18/09/2021',
+    number: '76635874357424',
+    desc: 'ICICI FD',
+    status: 'MATURED'
   },
   {
-    no: '2.', owner: 'Rahul Jain'
-    , cvalue: "94,925", rate: "8.40%", mvalue: "60,000", mdate: "18/09/2021", number: "76635874357424", desc: "ICICI FD", status: "LIVE"
+    no: '2.',
+    owner: 'Rahul Jain'
+    ,
+    cvalue: '94,925',
+    rate: '8.40%',
+    mvalue: '60,000',
+    mdate: '18/09/2021',
+    number: '76635874357424',
+    desc: 'ICICI FD',
+    status: 'LIVE'
   },
   {
     no: '', owner: 'Total'
-    , cvalue: "1,28,925", rate: "", mvalue: "1,28,925", mdate: "", number: "", desc: "", status: ""
+    , cvalue: '1,28,925', rate: '', mvalue: '1,28,925', mdate: '', number: '', desc: '', status: ''
   },
 ];
 
@@ -822,22 +1014,36 @@ export interface PeriodicElement18 {
 const ELEMENT_DATA18: PeriodicElement18[] = [
 
   {
-    no: '1.', owner: 'Rahul Jain'
-    , cvalue: "94,925", rate: "8.40%", amt: "60,000", mvalue: "60,000", mdate: "18/09/2021", desc: "ICICI FD", status: "MATURED"
+    no: '1.',
+    owner: 'Rahul Jain'
+    ,
+    cvalue: '94,925',
+    rate: '8.40%',
+    amt: '60,000',
+    mvalue: '60,000',
+    mdate: '18/09/2021',
+    desc: 'ICICI FD',
+    status: 'MATURED'
   },
 
   {
-    no: '2.', owner: 'Rahul Jain'
-    , cvalue: "94,925", rate: "8.40%", amt: "60,000", mvalue: "60,000", mdate: "18/09/2021", desc: "ICICI FD", status: "MATURED"
+    no: '2.',
+    owner: 'Rahul Jain'
+    ,
+    cvalue: '94,925',
+    rate: '8.40%',
+    amt: '60,000',
+    mvalue: '60,000',
+    mdate: '18/09/2021',
+    desc: 'ICICI FD',
+    status: 'MATURED'
   },
 
   {
     no: '', owner: 'Total'
-    , cvalue: "1,28,925", rate: "", amt: "1,20,000", mvalue: "60,000", mdate: "", desc: "", status: ""
+    , cvalue: '1,28,925', rate: '', amt: '1,20,000', mvalue: '60,000', mdate: '', desc: '', status: ''
   },
 ];
-
-
 
 
 export interface PeriodicElement19 {
@@ -856,18 +1062,37 @@ export interface PeriodicElement19 {
 const ELEMENT_DATA19: PeriodicElement19[] = [
 
   {
-    no: '1.', owner: 'Rahul Jain'
-    , payout: "94,925", pdate: "25/07/2019", rate: "8.40%", tamt: "60,000", amt: "60,000", mdate: "18/09/2021", desc: "ICICI FD", status: "MATURED"
+    no: '1.',
+    owner: 'Rahul Jain'
+    ,
+    payout: '94,925',
+    pdate: '25/07/2019',
+    rate: '8.40%',
+    tamt: '60,000',
+    amt: '60,000',
+    mdate: '18/09/2021',
+    desc: 'ICICI FD',
+    status: 'MATURED'
   },
   {
-    no: '1.', owner: 'Rahul Jain'
-    , payout: "94,925", pdate: "25/07/2019", rate: "8.40%", tamt: "60,000", amt: "60,000", mdate: "18/09/2021", desc: "ICICI FD", status: "LIVE"
+    no: '1.',
+    owner: 'Rahul Jain'
+    ,
+    payout: '94,925',
+    pdate: '25/07/2019',
+    rate: '8.40%',
+    tamt: '60,000',
+    amt: '60,000',
+    mdate: '18/09/2021',
+    desc: 'ICICI FD',
+    status: 'LIVE'
   },
   {
     no: '', owner: 'Total'
-    , payout: "1,28,925", pdate: "", rate: "", tamt: "1,28,925", amt: "1,28,925", mdate: "", desc: "", status: ""
+    , payout: '1,28,925', pdate: '', rate: '', tamt: '1,28,925', amt: '1,28,925', mdate: '', desc: '', status: ''
   },
 ];
+
 export interface PeriodicElement20 {
   no: string;
   owner: string;
@@ -883,18 +1108,17 @@ const ELEMENT_DATA20: PeriodicElement20[] = [
 
   {
     no: '1.', owner: 'Rahul Jain'
-    , cvalue: "94,925", rate: "8.40%", balance: "60,000", bdate: "18/09/2021", desc: "ICICI FD", status: "MATURED"
+    , cvalue: '94,925', rate: '8.40%', balance: '60,000', bdate: '18/09/2021', desc: 'ICICI FD', status: 'MATURED'
   },
   {
     no: '2.', owner: 'Rahul Jain'
-    , cvalue: "94,925", rate: "8.40%", balance: "60,000", bdate: "18/09/2021", desc: "ICICI FD", status: "MATURED"
+    , cvalue: '94,925', rate: '8.40%', balance: '60,000', bdate: '18/09/2021', desc: 'ICICI FD', status: 'MATURED'
   },
   {
     no: '', owner: 'Total'
-    , cvalue: "94,925", rate: "", balance: "60,000", bdate: "", desc: "", status: ""
+    , cvalue: '94,925', rate: '', balance: '60,000', bdate: '', desc: '', status: ''
   },
 ];
-
 
 
 export interface PeriodicElement22 {
@@ -914,21 +1138,48 @@ export interface PeriodicElement22 {
 const ELEMENT_DATA22: PeriodicElement22[] = [
 
   {
-    no: '1.', owner: 'Rahul Jain'
-    , cvalue: "94,925", rate: "8.40%", amt: "60,000", tenure: "5", mvalue: "65,765", mdate: "18/09/2021", number: "980787870909", desc: "ICICI FD", status: "MATURED"
+    no: '1.',
+    owner: 'Rahul Jain'
+    ,
+    cvalue: '94,925',
+    rate: '8.40%',
+    amt: '60,000',
+    tenure: '5',
+    mvalue: '65,765',
+    mdate: '18/09/2021',
+    number: '980787870909',
+    desc: 'ICICI FD',
+    status: 'MATURED'
   },
   {
-    no: '1.', owner: 'Rahul Jain'
-    , cvalue: "94,925", rate: "8.40%", amt: "60,000", tenure: "5", mvalue: "65,765", mdate: "18/09/2021", number: "980787870909", desc: "ICICI FD", status: "MATURED"
+    no: '1.',
+    owner: 'Rahul Jain'
+    ,
+    cvalue: '94,925',
+    rate: '8.40%',
+    amt: '60,000',
+    tenure: '5',
+    mvalue: '65,765',
+    mdate: '18/09/2021',
+    number: '980787870909',
+    desc: 'ICICI FD',
+    status: 'MATURED'
   },
   {
-    no: '', owner: 'Total'
-    , cvalue: "1,28,925", rate: "", amt: "1,50,000", tenure: "", mvalue: "1,50,000", mdate: "", number: "", desc: "", status: ""
+    no: '',
+    owner: 'Total'
+    ,
+    cvalue: '1,28,925',
+    rate: '',
+    amt: '1,50,000',
+    tenure: '',
+    mvalue: '1,50,000',
+    mdate: '',
+    number: '',
+    desc: '',
+    status: ''
   },
 ];
-
-
-
 
 
 export interface PeriodicElement24 {
@@ -950,43 +1201,42 @@ const ELEMENT_DATA24: PeriodicElement24[] = [
 
   {
     name: 'DSP Tax Saver Fund - Regular Plan - Growth| 5287365/24| Forum Mitesh Galani', amt: '90,327'
-    , cvalue: "94,925", profile: "4,597", abt: "26.99", xirr: "8.32", pay: "0"
-    , withdraw: "23,285", bal: "123.01", date: "24.87"
-    , sip: "12,000"
+    , cvalue: '94,925', profile: '4,597', abt: '26.99', xirr: '8.32', pay: '0'
+    , withdraw: '23,285', bal: '123.01', date: '24.87'
+    , sip: '12,000'
   },
   {
     name: 'DSP Tax Saver Fund - Regular Plan - Growth| 5287365/24| Forum Mitesh Galani', amt: '90,327'
-    , cvalue: "94,925", profile: "4,597", abt: "26.99", xirr: "8.32", pay: "0"
-    , withdraw: "23,285", bal: "123.01", date: "24.87"
-    , sip: "12,000"
+    , cvalue: '94,925', profile: '4,597', abt: '26.99', xirr: '8.32', pay: '0'
+    , withdraw: '23,285', bal: '123.01', date: '24.87'
+    , sip: '12,000'
   },
   {
     name: 'DSP Tax Saver Fund - Regular Plan - Growth| 5287365/24| Forum Mitesh Galani', amt: '90,327'
-    , cvalue: "94,925", profile: "4,597", abt: "26.99", xirr: "8.32", pay: "0"
-    , withdraw: "23,285", bal: "123.01", date: "24.87"
-    , sip: "12,000"
+    , cvalue: '94,925', profile: '4,597', abt: '26.99', xirr: '8.32', pay: '0'
+    , withdraw: '23,285', bal: '123.01', date: '24.87'
+    , sip: '12,000'
   },
   {
     name: 'DSP Tax Saver Fund - Regular Plan - Growth| 5287365/24| Forum Mitesh Galani', amt: '90,327'
-    , cvalue: "94,925", profile: "4,597", abt: "26.99", xirr: "8.32", pay: "0"
-    , withdraw: "23,285", bal: "123.01", date: "24.87"
-    , sip: "12,000"
+    , cvalue: '94,925', profile: '4,597', abt: '26.99', xirr: '8.32', pay: '0'
+    , withdraw: '23,285', bal: '123.01', date: '24.87'
+    , sip: '12,000'
   },
   {
     name: 'DSP Tax Saver Fund - Regular Plan - Growth| 5287365/24| Forum Mitesh Galani', amt: '90,327'
-    , cvalue: "94,925", profile: "4,597", abt: "26.99", xirr: "8.32", pay: "0"
-    , withdraw: "23,285", bal: "123.01", date: "24.87"
-    , sip: "12,000"
+    , cvalue: '94,925', profile: '4,597', abt: '26.99', xirr: '8.32', pay: '0'
+    , withdraw: '23,285', bal: '123.01', date: '24.87'
+    , sip: '12,000'
   },
   {
     name: 'Total', amt: '11,94,456.22'
-    , cvalue: "11,94,456.22", profile: "11,94,456.22", abt: "826.99", xirr: "8.32", pay: "0"
-    , withdraw: "11,94,456.22", bal: "123.01", date: ""
-    , sip: "112,000"
+    , cvalue: '11,94,456.22', profile: '11,94,456.22', abt: '826.99', xirr: '8.32', pay: '0'
+    , withdraw: '11,94,456.22', bal: '123.01', date: ''
+    , sip: '112,000'
   },
 
 ];
-
 
 
 export interface PeriodicElement25 {
@@ -1006,12 +1256,32 @@ export interface PeriodicElement25 {
 const ELEMENT_DATA25: PeriodicElement25[] = [
 
   {
-    scrip: 'Bharat Forge Ltd', owner: 'Rahul Jain'
-    , bal: "94,925", price: "29.20", mprice: "33.67", amt: "94,925", cvalue: "1,23,925", gain: "29,230", ret: "12.98%", xirr: "9.08%", dividend: "-"
+    scrip: 'Bharat Forge Ltd',
+    owner: 'Rahul Jain'
+    ,
+    bal: '94,925',
+    price: '29.20',
+    mprice: '33.67',
+    amt: '94,925',
+    cvalue: '1,23,925',
+    gain: '29,230',
+    ret: '12.98%',
+    xirr: '9.08%',
+    dividend: '-'
   },
   {
-    scrip: 'V-Guard Industries Ltd', owner: 'Rahul Jain'
-    , bal: "94,925", price: "29.20", mprice: "33.67", amt: "94,925", cvalue: "1,23,925", gain: "29,230", ret: "12.98%", xirr: "9.08%", dividend: "201"
+    scrip: 'V-Guard Industries Ltd',
+    owner: 'Rahul Jain'
+    ,
+    bal: '94,925',
+    price: '29.20',
+    mprice: '33.67',
+    amt: '94,925',
+    cvalue: '1,23,925',
+    gain: '29,230',
+    ret: '12.98%',
+    xirr: '9.08%',
+    dividend: '201'
   },
 
 ];

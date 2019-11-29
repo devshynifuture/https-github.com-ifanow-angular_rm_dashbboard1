@@ -1,7 +1,7 @@
 <div class="popup-header-fix-35">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20">BOND - DETAILED VIEW</h4>
+            <h4 class="mb-0 wrapper-20">EPF - DETAILED VIEW</h4>
         </div>
         <div class="col-md-2 text-left">
             <div class="wrapper-12">
@@ -19,7 +19,7 @@
                         Owner Name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{bonds.ownerName}}
+                        {{epf.ownerName}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
@@ -27,7 +27,7 @@
                             Employee's Monthly Contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{bonds.employeesMonthlyContribution}}
+                        {{epf.employeesMonthlyContribution}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
@@ -35,7 +35,7 @@
                             Employer's Monthly Contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{bonds.employersMonthlyContribution}}
+                        {{epf.employersMonthlyContribution}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
@@ -43,7 +43,7 @@
                             Current value 
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{bonds.currentValue}}
+                        {{epf.currentValue}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
@@ -51,7 +51,7 @@
                             Balance mentioned 
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{bonds.currentEpfBalance}}
+                        {{epf.currentEpfBalance}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
@@ -59,7 +59,7 @@
                             Balance as on
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{bonds.balanceAsOnDate}}
+                        {{epf.balanceAsOnDate  | date:'dd/MM/yyyy'}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
@@ -67,7 +67,7 @@
                             Maturity year
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{bonds.maturityYear}}
+                        {{epf.maturityYear}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
@@ -75,7 +75,7 @@
                             Annual Salary growth rate 
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{bonds.annualSalaryGrowth}}
+                        {{epf.annualSalaryGrowth}}
                     </div>
                 </div>
 
@@ -84,7 +84,7 @@
                             EPF No.
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{bonds.epfNo}}
+                        {{epf.epfNo}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
@@ -92,7 +92,7 @@
                             Bank account number 
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{bonds.bankAccountNumber}}
+                        {{epf.bankAccountNumber}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
@@ -100,7 +100,7 @@
                             Description
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{bonds.description}}
+                        {{epf.description}}
                     </div>
                 </div>
             </div>

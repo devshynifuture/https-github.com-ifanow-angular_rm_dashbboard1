@@ -8,6 +8,7 @@ import { MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource } from '@angul
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { DetailedPoTdComponent } from './detailed-po-td/detailed-po-td.component';
 
 @Component({
   selector: 'app-po-td-scheme',
@@ -86,6 +87,30 @@ export class PoTdSchemeComponent implements OnInit {
 
     });
   }
+
+  openDetailPOTD(data) {
+
+    console.log('this is detailed potd data', data);
+    const fragmentData = {
+      flag: 'detailPoTd',
+      data,
+      id: 1,
+      state: 'open',
+      componentName: DetailedPoTdComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          this.getPoTdSchemedata()
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+
   openAddPOTD(data) {
     const fragmentData = {
       flag: 'addPoTd',

@@ -1,18 +1,18 @@
 <div>
-   
-    <div id="mutualfund-main-popup" class="">
-        <div class="icons-rightside">
-            <i class="material-icons c-p pt-8 v-middle"> clear</i>
-        </div>
+
+  <div id="mutualfund-main-popup" class="">
+    <div class="icons-rightside">
+      <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+    </div>
     <mat-tab-group class="mt-48" animationDuration="0ms" mat-align-tabs="center">
       <mat-tab label="FACT SHEET">
-         <app-fact-shit></app-fact-shit> 
-        </mat-tab>
+        <app-fact-shit></app-fact-shit>
+      </mat-tab>
       <mat-tab label="TRANSACTIONS">
-         <app-transactions></app-transactions> 
-        </mat-tab>
-      <mat-tab label="INVEST"> Content 3 </mat-tab>
+        <app-transactions></app-transactions>
+      </mat-tab>
+      <mat-tab label="INVEST"> Content 3</mat-tab>
     </mat-tab-group>
   </div>
-  </div>
+</div>
 

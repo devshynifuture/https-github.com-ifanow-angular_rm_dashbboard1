@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {EventService} from '../../Data-service/event.service';
 import {SubscriptionInject} from '../../component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -25,6 +25,7 @@ import {CreateSubscriptionComponent} from '../../component/protect-component/Adv
 })
 //
 export class DialogContainerComponent implements OnInit {
+  @Input() parentComponentName;
   invoiceHisData: any;
   inputData;
   fragmentData;
@@ -58,6 +59,7 @@ export class DialogContainerComponent implements OnInit {
     this.eventService.upperSliderDataObs.subscribe(
       data => {
         this.upperSliderData = data;
+        // this.fragmentData = data;
       }
     );
     this.subinject.newRightSliderDataObs.subscribe((data) => {

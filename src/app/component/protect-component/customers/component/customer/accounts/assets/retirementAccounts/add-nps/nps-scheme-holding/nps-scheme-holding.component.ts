@@ -9,6 +9,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-nps-scheme-holding',
@@ -33,6 +34,11 @@ export class NpsSchemeHoldingComponent implements OnInit {
   idForscheme: any;
   idForscheme1: any[];
   clientId: any;
+  nomineesListFM: any;
+  dataFM: any;
+  familyList: any;
+  nexNomineePer: any;
+  showError = false;
 
   constructor(private event : EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService) { }
   @Input()
@@ -55,6 +61,34 @@ export class NpsSchemeHoldingComponent implements OnInit {
     console.log('value selected', value)
     this.ownerName = value.userName;
     this.familyMemberId = value.id
+  }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
+  nomineesList() {
+    this.dataFM = this.nomineesListFM
+    if (this.dataFM.length > 0) {
+      let name = this.ownerName
+      var evens = _.reject(this.dataFM, function (n) {
+        return n.userName == name;
+      });
+      this.familyList = evens
+    }
+
+    console.log('familyList', this.familyList)
+  }
+  onNomineeChange(value) {
+    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+      return o.nomineePercentageShare;
+    });
+
+    if (this.nexNomineePer > 100) {
+      this.showError = true
+      console.log('show error Percent cannot be more than 100%')
+    } else {
+      this.showError = false
+    }
   }
   getGlobalList(){
     this.custumService.getGlobal().subscribe(
@@ -159,13 +193,36 @@ export class NpsSchemeHoldingComponent implements OnInit {
     return this.schemeHoldingsNPS.get('npsNomineesList') as FormArray;
   }
   addNominee() {
-    this.nominee.push(this.fb.group({
-      nomineeName: null,nomineePercentageShare:null,
-    }));
+    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+      return o.nomineePercentageShare;
+    });
+
+    if (this.nexNomineePer > 100) {
+      this.showError = true
+      console.log('show error Percent cannot be more than 100%')
+    } else {
+      this.showError = false
+    }
+    if (this.showError == false) {
+      this.nominee.push(this.fb.group({
+        nomineeName: null, nomineePercentageShare: null,
+      }));
+    }
+   
   }
   removeNominee(item) {
     if (this.nominee.value.length > 1) {
       this.nominee.removeAt(item);
+    }
+    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+      return o.nomineePercentageShare;
+    });
+
+    if (this.nexNomineePer > 100) {
+      this.showError = true
+      console.log('show error Percent cannot be more than 100%')
+    } else {
+      this.showError = false
     }
   }
   getFormControl(): any {

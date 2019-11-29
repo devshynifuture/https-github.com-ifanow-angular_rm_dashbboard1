@@ -7,6 +7,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { DetailedPoSavingsComponent } from './detailed-po-savings/detailed-po-savings.component';
 
 @Component({
   selector: 'app-po-savings',
@@ -90,6 +91,28 @@ export class PoSavingsComponent implements OnInit {
 
     });
   }
+
+  openDetailPoSaving(data) {
+    const fragmentData = {
+      flag: 'detailPoSaving',
+      data,
+      id: 1,
+      state: 'open',
+      componentName: DetailedPoSavingsComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          this.getPoSavingSchemedata()
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+
   openAddPOSAVING(data) {
     const fragmentData = {
       flag: 'addPOSAVING',

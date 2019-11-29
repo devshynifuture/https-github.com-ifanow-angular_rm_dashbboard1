@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-detailed-kvp',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./detailed-kvp.component.scss']
 })
 export class DetailedKvpComponent implements OnInit {
-
-  constructor() { }
-
+   data;
+  constructor(private subInjectService: SubscriptionInject) { }
+   
   ngOnInit() {
+    console.log('DetailedKvpComponent ngOnInit data : ',this.data)
   }
-
+  close() {
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
+  }
 }

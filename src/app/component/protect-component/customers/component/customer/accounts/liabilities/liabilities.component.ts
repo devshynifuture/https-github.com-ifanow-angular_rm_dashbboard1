@@ -10,7 +10,7 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
 import {MatDialog} from '@angular/material';
 import {AddLiabilitiesComponent} from "../../../common-component/add-liabilities/add-liabilities.component";
 import { LiabilitiesDetailComponent } from '../../../common-component/liabilities-detail/liabilities-detail.component';
-import {AddGoalComponent} from "../../plan/goals-plan/add-goal/add-goal.component";
+
 
 @Component({
   selector: 'app-liabilities',
