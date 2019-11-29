@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {EventService} from "../../../../../../Data-service/event.service";
 
 @Component({
   selector: 'app-upper-customer',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpperCustomerComponent implements OnInit {
 
-  constructor() { }
+  constructor(private eventService: EventService) {
+  }
 
   ngOnInit() {
   }
 
+  close() {
+    const fragmentData = {
+      direction: 'top',
+      componentName: UpperCustomerComponent,
+      state: 'close'
+    };
+
+    this.eventService.changeUpperSliderState(fragmentData);
+  }
 }

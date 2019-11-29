@@ -24,7 +24,6 @@ import {CommonModule} from '@angular/common';
 import {MaterialModule} from './material/material';
 import {ChartModule} from 'angular-highcharts';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {OwnerComponentModule} from './component/protect-component/customers/component/customer/accounts/owner-component/owner-component.module';
 import {AddInsuranceComponent} from './component/protect-component/customers/component/common-component/add-insurance/add-insurance.component';
 import {FixedDepositComponent} from './component/protect-component/customers/component/customer/accounts/assets/fixedIncome/fixed-deposit/fixed-deposit.component';
 import {AddRealEstateComponent} from './component/protect-component/customers/component/customer/accounts/assets/realEstate/add-real-estate/add-real-estate.component';
@@ -46,11 +45,13 @@ import {DetailedViewCashInHandComponent} from './component/protect-component/cus
 import {DetailedPoSavingsComponent} from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-savings/detailed-po-savings/detailed-po-savings.component';
 import {DetailedPoMisComponent} from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-mis-scheme/detailed-po-mis/detailed-po-mis.component';
 import {DetailedPpfComponent} from "./component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/ppf-scheme/detailed-ppf/detailed-ppf.component";
-import { DetailedSsyComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/ssy-scheme/detailed-ssy/detailed-ssy.component';
-import { DetailedViewEPSComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-eps/detailed-view-eps/detailed-view-eps.component';
-import { DetailedKvpComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/kvp-scheme/detailed-kvp/detailed-kvp.component';
-import { DetailedViewGratuityComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
-import { DetailedScssComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/scss-scheme/detailed-scss/detailed-scss.component';
+import {DetailedSsyComponent} from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/ssy-scheme/detailed-ssy/detailed-ssy.component';
+import {DetailedViewEPSComponent} from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-eps/detailed-view-eps/detailed-view-eps.component';
+import {DetailedKvpComponent} from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/kvp-scheme/detailed-kvp/detailed-kvp.component';
+import {DetailedViewGratuityComponent} from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
+import {DetailedScssComponent} from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/scss-scheme/detailed-scss/detailed-scss.component';
+import {AccountEntryModule} from "./component/protect-component/customers/component/customer/accounts/account.entry.module";
+import {AccountCommonModule} from "./component/protect-component/customers/component/customer/accounts/account.common.module";
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -88,9 +89,45 @@ export const componentList = [
   DetailedKvpComponent,
   DetailedViewGratuityComponent,
   DetailedScssComponent,
-  DetailedViewEPFComponent, AddScssComponent, AddKvpComponent, AddPoSavingComponent, AddPoMisComponent, AddSsyComponent, AddNscComponent, AddTransactionComponent, AddPpfComponent, AddEPSComponent, AddSuperannuationComponent, AddGratuityComponent, NpsSummaryPortfolioComponent, AddPoTdComponent, AddPoRdComponent, BondsComponent, AddLiabilitiesComponent, AddInsuranceComponent, FixedDepositComponent,
-  AddRealEstateComponent, GoldComponent, AddNPSComponent, RecuringDepositComponent, AddEPFComponent,
-  OthersComponent, CashInHandComponent, BankAccountsComponent, AddGoalComponent, NpsSchemeHoldingComponent, LiabilitiesDetailComponent, DetailedViewFixedDepositComponent, DetailedViewRecuringDepositComponent, DetailedViewBondsComponent, DetailedViewGoldComponent, DetailedViewOthersComponent, DetailedViewBankAccountComponent, DetailedViewCashInHandComponent, DetailedPoSavingsComponent, DetailedPoTdComponent,
+  DetailedViewEPFComponent,
+  AddScssComponent,
+  AddKvpComponent,
+  AddPoSavingComponent,
+  AddPoMisComponent,
+  AddSsyComponent,
+  AddNscComponent,
+  AddTransactionComponent,
+  AddPpfComponent,
+  AddEPSComponent,
+  AddSuperannuationComponent,
+  AddGratuityComponent,
+  NpsSummaryPortfolioComponent,
+  AddPoTdComponent,
+  AddPoRdComponent,
+  BondsComponent,
+  AddLiabilitiesComponent,
+  AddInsuranceComponent,
+  FixedDepositComponent,
+  AddRealEstateComponent,
+  GoldComponent,
+  AddNPSComponent,
+  RecuringDepositComponent,
+  AddEPFComponent,
+  OthersComponent,
+  CashInHandComponent,
+  BankAccountsComponent,
+  AddGoalComponent,
+  NpsSchemeHoldingComponent,
+  LiabilitiesDetailComponent,
+  DetailedViewFixedDepositComponent,
+  DetailedViewRecuringDepositComponent,
+  DetailedViewBondsComponent,
+  DetailedViewGoldComponent,
+  DetailedViewOthersComponent,
+  DetailedViewBankAccountComponent,
+  DetailedViewCashInHandComponent,
+  DetailedPoSavingsComponent,
+  DetailedPoTdComponent,
   DetailedPoMisComponent,
   DetailedViewEPFComponent,
   AddScssComponent,
@@ -141,7 +178,10 @@ export const componentList = [
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
-    OwnerComponentModule
+    // OwnerComponentModule,
+    AccountEntryModule,
+    AccountCommonModule,
+
   ],
   exports: [
     FormsModule,
