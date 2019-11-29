@@ -95,7 +95,7 @@
 <!--</div>-->
 <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
   <!--  *ngIf="upperSliderData.flag=='app-subscription-upper-slider'"-->
-  <app-subscription-upper-slider>
+  <app-subscription-upper-slider *ngIf="upperSliderData.flag=='app-subscription-upper-slider'">
   </app-subscription-upper-slider>
   <!--    <app-upper-customer *ngIf="upperSliderData.flag=='app-upper-customer'"></app-upper-customer>-->
 </div>

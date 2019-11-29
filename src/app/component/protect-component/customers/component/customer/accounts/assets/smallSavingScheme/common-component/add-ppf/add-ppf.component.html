@@ -24,8 +24,8 @@
             <div class="col-md-3 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input type="number" formControlName="accountBalance" matInput #accountBalance
-                            class="form-control rupess br-0" maxlength="">
+                        <input type="number" (keypress)="check()" formControlName="accountBalance" matInput #accountBalance
+                            class="form-control rupess br-0" autocomplete="off">
                         <mat-error *ngIf="ppfSchemeForm.get('accountBalance').errors.required" class="f-12 pt-4">
                             Loan amount is required
                         </mat-error>

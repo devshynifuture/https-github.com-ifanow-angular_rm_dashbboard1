@@ -87,7 +87,7 @@ export class AddPpfComponent implements OnInit {
     }
     this.ppfSchemeForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
-      accountBalance: [data.accountBalance, [Validators.required,Validators.max(500)]],
+      accountBalance: [data.accountBalance, [Validators.required,Validators.min(500)]],
       balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       commencementDate: [new Date(data.commencementDate), [Validators.required]],
       futureContribution: [data.futureApproxcontribution, [Validators.required]],
@@ -116,6 +116,10 @@ export class AddPpfComponent implements OnInit {
   }
   get nominee() {
     return this.optionalppfSchemeForm.get('npsNomineesList') as FormArray;
+  }
+  check()
+  {
+    console.log(this.ppfSchemeForm)
   }
   addNominee() {
     this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
