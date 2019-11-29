@@ -2,13 +2,10 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ChartModule} from 'angular-highcharts';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {UpperCustomerComponent} from '../../common-component/upper-customer/upper-customer.component';
-import {AccountCommonModule} from './account.common.module';
-import {AccountUpperSliderModule} from './account-upper-slider.module';
 import {MaterialModule} from '../../../../../../material/material';
 
 export const componentList = [
-  UpperCustomerComponent
+  // UpperCustomerComponent
 ];
 
 @NgModule({
@@ -19,8 +16,6 @@ export const componentList = [
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
-    AccountCommonModule,
-    AccountUpperSliderModule
   ],
   exports: [
     FormsModule,
@@ -28,7 +23,7 @@ export const componentList = [
   entryComponents: [componentList]
 })
 
-export class AccountEntryModule {
+export class PlanEntryModule {
 
   static getComponentList() {
     return componentList;
