@@ -6,47 +6,51 @@
         <i class="material-icons c-p v-middle" (click)="close()"> clear</i>
     </div>
 </div>
-
-<div class="row pt-10 pb-10 bg-grey lter">
-    <div class="col-md-12 f-14">
-        Documents
-    </div>
+<div class="col-md-6 pl-0">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item c-p" (click)="reset()">
+            <span>{{tabValue || 'Documents'}}</span></li>
+        <!-- <li class="breadcrumb-item c-p" *ngIf="showDots == true">
+            <mat-icon class="c-p" [matMenuTriggerFor]="menu"> more_horiz</mat-icon>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="getFolders(folder)"
+                    *ngFor="let folder of openFolderName | slice:1:openFolderName.length - 1">
+                    {{folder.openFolderNm}}</button>
+            </mat-menu>
+        </li> -->
+        <li class="breadcrumb-item active c-p" (click)="getFolders(folder)" *ngFor="let folder of openFolderName">{{folder.openFolderNm}}</li>
+    </ol>
 </div>
 
-<div class="row pt-10 bb pb-10 c-p">
-    <div class="col-md-10">
-        <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> Identity & address proofs
-    </div>
-    <div class="col-md-2 text-right">
-        <i class="material-icons"> navigate_next</i>
-    </div>
-</div>
+<div class="col-md-9 p-0 documentsTable">
+    <table mat-table [dataSource]="commonFileFolders" class="" id="table-low">
+        <ng-container matColumnDef="emptySpace">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element"> </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell class="c-p" *matCellDef="let element" (click)="openFolder(element)">
+                <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> {{element.folderName || element.fileName}} <img *ngIf="element.isStarred == 1" class="mr-12" src="/assets/images/svg/document-star.svg"> </td>
+        </ng-container>
 
-<div class="row pt-10 bb pb-10 c-p">
-    <div class="col-md-10">
-        <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> Accounts
-    </div>
-    <div class="col-md-2 text-right">
-        <i class="material-icons"> navigate_next</i>
-    </div>
-</div>
+        <ng-container matColumnDef="lastModi">
+            <th mat-header-cell *matHeaderCellDef> Last modified </th>
+            <td mat-cell *matCellDef="let element"> {{element.createdDate | date:'dd/MM/yyyy'}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let element"> {{element.fileTypeId}} </td>
+        </ng-container>
 
-<div class="row pt-10 bb pb-10 c-p">
-    <div class="col-md-10">
-        <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> Planning
-    </div>
-    <div class="col-md-2 text-right">
-        <i class="material-icons"> navigate_next</i>
-    </div>
-</div>
-
-<div class="row pt-10 bb pb-10 c-p">
-    <div class="col-md-10">
-        <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> Transaction
-    </div>
-    <div class="col-md-2 text-right">
-        <i class="material-icons"> navigate_next</i>
-    </div>
+        <ng-container matColumnDef="size">
+            <th mat-header-cell *matHeaderCellDef> Size </th>
+            <td mat-cell *matCellDef="let element"> {{element.size}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
 </div>
 
 <div class="row pt-44">
