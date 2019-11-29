@@ -57,7 +57,7 @@ export class AddNscComponent implements OnInit {
     }
     this.nscFormField = this.fb.group({
       ownerName: [String(data.ownerName), [Validators.required]],
-      amountInvested: [data.amountInvested, [Validators.required]],
+      amountInvested: [data.amountInvested, [Validators.required,Validators.min(100)]],
       commDate: [this.commDate, [Validators.required]],
       Tenure: [String(data.tenure), [Validators.required]],
       ownershipType: [String(data.ownerTypeId), [Validators.required]]

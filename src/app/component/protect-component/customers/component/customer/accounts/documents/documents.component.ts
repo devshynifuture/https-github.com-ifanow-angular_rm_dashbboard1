@@ -105,6 +105,9 @@ export class DocumentsComponent implements OnInit {
       this.animal = result;
     });
   }
+  openBottomSheet(): void {
+    this._bottomSheet.open(BottomSheetComponent);
+  }
 
   fileSizeConversion() {
     this.commonFileFolders.forEach(element => {
@@ -119,9 +122,6 @@ export class DocumentsComponent implements OnInit {
     });
   }
 
-  openBottomSheet(): void {
-    this._bottomSheet.open(BottomSheetComponent);
-  }
 
   getAllFileList(tabValue) {
     tabValue = (tabValue == 'Documents') ? 1 : (tabValue == 'Recents') ? 2 : (tabValue == 'Starred') ? 3 : 4;
@@ -132,6 +132,7 @@ export class DocumentsComponent implements OnInit {
       docGetFlag: tabValue,
       folderParentId: 0,
     };
+    this.showLoader = true;
     this.custumService.getAllFiles(obj).subscribe(
       data => this.getAllFilesRes(data, 'value')
     );
@@ -190,6 +191,7 @@ export class DocumentsComponent implements OnInit {
       folderParentId: (value.id == undefined) ? 0 : value.id,
     };
     this.parentId = value.folderParentId;
+    console.log('this.parentId',this.parentId)
     console.log('backUpfiles', this.backUpfiles);
     this.custumService.getAllFiles(obj).subscribe(
       data => this.getAllFilesRes(data, value)
@@ -328,7 +330,7 @@ export class DocumentsComponent implements OnInit {
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
-      id: element.id,
+      fileId: element.id,
     };
     this.custumService.viewActivity(obj).subscribe(
       data => this.viewActivityRes(data)
@@ -365,7 +367,7 @@ export class DocumentsComponent implements OnInit {
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
-      folderId: element,
+      folderId: element+1,
       fileName: fileName.name
     };
     this.custumService.uploadFile(obj).subscribe(
@@ -374,8 +376,6 @@ export class DocumentsComponent implements OnInit {
   }
 
   uploadFileRes(data, fileName) {
-    // console.log('DocumentsComponent uploadFileRes', data);
-    // console.log('DocumentsComponent uploadFileRes fileName : ', fileName);
 
     const fileuploadurl = data;
     const httpOptions = {

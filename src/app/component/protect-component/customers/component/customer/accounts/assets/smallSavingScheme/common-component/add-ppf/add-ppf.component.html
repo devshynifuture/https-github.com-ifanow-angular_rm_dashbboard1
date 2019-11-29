@@ -24,15 +24,15 @@
             <div class="col-md-3 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input type="number" (keypress)="check()" formControlName="accountBalance" matInput #accountBalance
+                        <input type="number" (keypress)="check()" formControlName="accountBalance" matInput #accBal
                             class="form-control rupess br-0" autocomplete="off">
-                        <mat-error *ngIf="ppfSchemeForm.get('accountBalance').errors.required" class="f-12 pt-4">
-                            Loan amount is required
+                        <mat-error *ngIf="ppfSchemeForm.get('accountBalance').errors?.required && ppfSchemeForm.get('accountBalance').touched" class="f-12 pt-4">
+                            Account balance is required
                         </mat-error>
-                        <mat-error *ngIf="(ppfSchemeForm.get('accountBalance').errors.min)" class="f-12 pt-4">
+                        <mat-error *ngIf="(ppfSchemeForm.get('accountBalance').errors?.min)" class="f-12 pt-4">
                             Should be greater than 500
                         </mat-error>
-                        <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/20</mat-hint>
+                        <mat-hint align="end" class="f-12">{{accBal.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
             </div>

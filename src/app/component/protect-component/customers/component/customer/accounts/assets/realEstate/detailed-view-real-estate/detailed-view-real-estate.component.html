@@ -1,7 +1,7 @@
 <div class="popup-header-fix-35">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20">LIABILITIES - DETAILED VIEW</h4>
+            <h4 class="mb-0 wrapper-20">REAL ESTATE - DETAILED VIEW</h4>
         </div>
         <div class="col-md-2 text-left">
             <div class="wrapper-12">
@@ -16,142 +16,112 @@
     <div class="row pt-40">
         <div class="col-md-12 p-0">
             <div class="insurance-ui bt">
-                <div class="row bb p-4 b-l br">
+                <div class="row bb p-4 b-l br" *ngFor="let obj of realEstate.realEstateOwners">
                     <div class="col-md-8 text-left f-14 roboto">
                         Owner Name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.ownerName}}
+                        {{obj.ownerName}}
+                    </div>
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Percent
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{obj.ownershipPerc}}
+                    </div>
+                </div>
+                <!-- <div class="row bb p-4 b-l br">
+                    
+                </div> -->
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto">
+                        Percent
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto">
+                        {{realEstate.marketValue}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Loan type
+                        Type
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{(libility.loanTypeId == 1)?'Home Loan':(libility.loanTypeId == 2)?'Vehicle':(libility.loanTypeId == 3)?'Education':(libility.loanTypeId == 4)?'Credit Card':(libility.loanTypeId == 5)?'Personal':'Mortgage'}}
+                        {{(realEstate.typeId == 1)?'Residential':(realEstate.typeId == 2)?'Secondary':(realEstate.typeId == 3)?'Commercial':'Land'}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Loan amount
+                        Market value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.loanAmount}}
+                        {{realEstate.marketValue |  date:'dd/MM/yyyy'}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Loan outstanding
+                        Purchase period
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.outstandingAmount}}
+                        {{(realEstate.purchasePeriod)?'realEstate.purchasePeriod':'-'}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Tenure remaining
+                        Purchase value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.remainingMonths}}
+                        {{realEstate.purchaseValue}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Annual interest rate
+                        Stamp duty
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.annualInterestRate}}
+                        {{realEstate.stampDutyCharge}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        EMI
+                        Registration
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.emi}}
+                        {{realEstate.registrationCharge}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Financial institution
+                        GST
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.financialInstitution}}
+                        {{realEstate.gstCharge}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Termination date
+                        Location
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.maturityDate | date:'dd/MM/yyyy'}}
+                        {{(realEstate.location)?'realEstate.location':'-'}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Original loan amount
+                        Description
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.loanAmount}}
+                        {{realEstate.description}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                        Original loan tenure
+                        Add Nominee
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.loanTenure}}
-                    </div>
-                </div>
-
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
-                        Total in
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto">
-                        {{(libility.principalOutstandingAsOn)?(libility.principalOutstandingAsOn | date:'dd/MM/yyyy'):'-'}}
-                    </div>
-                </div>
-
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
-                        Total principal paid till date
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.principalOutStandingAmount}}
+                        {{realEstate.description}}
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-            <!-- <table mat-table [dataSource]="dataSourceDetail" class="documentsTable" id="table-low">
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td class="text-left f-normal roboto f-14" mat-cell *matCellDef="let element"> {{element.name}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="position">
-                        <th mat-header-cell *matHeaderCellDef></th>
-                        <td class="text-right f-normal roboto f-14" mat-cell *matCellDef="let element"> {{element.position}} </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table> -->
-            <!-- <div class="col-md-12 text-right mt-4 p-0">
-                    <p class="f-12 text-primitive m-0">
-                        Updated: 04/09/2019
-                    </p>
-                </div> -->
         </div>
     </div>
 </div>
