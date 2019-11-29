@@ -65,6 +65,7 @@ import {CommonComponentModule} from '../../common-component/common-component.mod
 import {CustomDirectiveModule} from '../../../../common/directives/common-directive.module';
 import {CommonModule} from '@angular/common';
 import {AddQuotationComponent} from './subscription/common-subscription-component/add-quotation/add-quotation.component';
+import { SubscriptionRoutingModule } from './subscription-routing.module';
 
 export const componentList = [SubscriptionComponent,
   InvoicePdfDocumentComponent,
@@ -147,7 +148,7 @@ export const componentList = [SubscriptionComponent,
     CustomHtmlModule,
     CommonComponentModule,
     CustomDirectiveModule,
-    // SubscriptionRoutingModule
+    SubscriptionRoutingModule
     // CustomCommonModule
     // AppModule
   ],

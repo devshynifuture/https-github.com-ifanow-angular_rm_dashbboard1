@@ -58,7 +58,7 @@ export class AddPoMisComponent implements OnInit {
     }
     this.pomisForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
-      amtInvested: [data.amountInvested, [Validators.required]],
+      amtInvested: [data.amountInvested, [Validators.required, Validators.min(500)]],
       commencementdate: [new Date(data.commencementDate), [Validators.required]],
       ownershipType: [(data.ownerTypeId) + "", [Validators.required]],
       poBranch: [data.postOfficeBranch],
