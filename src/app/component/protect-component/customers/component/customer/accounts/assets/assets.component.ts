@@ -5,7 +5,7 @@ import {UtilService} from 'src/app/services/util.service';
 import {MatDialog} from '@angular/material';
 import {AuthService} from 'src/app/auth-service/authService';
 import {CustomerService} from '../../customer.service';
-import {UpperCustomerComponent} from "../../../common-component/upper-customer/upper-customer.component";
+import {UpperCustomerComponent} from '../../../common-component/upper-customer/upper-customer.component';
 
 @Component({
   selector: 'app-assets',
@@ -17,7 +17,8 @@ export class AssetsComponent implements OnInit {
   clientId: any;
   assetSideBarData: [];
 
-  constructor(private subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private cusService: CustomerService) {
+  constructor(private subInjectService: SubscriptionInject, private eventService: EventService,
+              public dialog: MatDialog, private cusService: CustomerService) {
   }
 
   private loadComponent = false;

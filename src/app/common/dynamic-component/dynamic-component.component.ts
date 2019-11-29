@@ -52,6 +52,11 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
     }
   }
 
+  @Input() set upperSliderData(upperSliderData) {
+    this.data = upperSliderData;
+  }
+
+
   @Input()
   set data(inputData) {
     this._data = inputData;
@@ -60,7 +65,7 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
       console.log('DynamicComponentComponent INPUT: data ', inputData);
       if (inputData.direction) {
         if (inputData.direction == 'top') {
-          this.addDynamicComponentService(this.viewContainerRefUpper, inputData.componentName);
+          this.addUpperDynamicComponentService(this.viewContainerRefUpper, inputData.componentName);
         } else if (inputData.direction == 'right') {
           this.addDynamicComponentService(this.viewContainerRef, inputData.componentName);
         }
@@ -114,6 +119,8 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
   addUpperDynamicComponentService(viewContainerRef, component) {
     if (viewContainerRef) {
       this.dynamicComponentService.addDynamicComponent(viewContainerRef, component, this.data.data);
+      this._upperSliderCase = this.tempState;
+
       // this.handleChangeOfState(this.tempState);
     }
   }
