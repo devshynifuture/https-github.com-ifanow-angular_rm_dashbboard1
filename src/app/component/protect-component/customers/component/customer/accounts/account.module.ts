@@ -53,7 +53,6 @@ import {CommoditiesComponent} from './assets/commodities/commodities/commodities
 import {SkeletonLoadingDirective} from 'src/app/skeleton-loading.directive';
 import {FormatNumberDirective} from 'src/app/format-number.directive';
 import {DocumentNewFolderComponent} from '../../common-component/document-new-folder/document-new-folder.component';
-import {CopyDocumentsComponent} from '../../common-component/copy-documents/copy-documents.component';
 import {AccountRoutingModule} from "./account-routing.module";
 import {AccountCommonModule} from "./account.common.module";
 
@@ -168,7 +167,7 @@ import {AccountCommonModule} from "./account.common.module";
     OtherPayablesComponent,
     // EntryComponentsModule
   ],
-  entryComponents: [BottomSheetComponent, DocumentNewFolderComponent, CopyDocumentsComponent]
+  entryComponents: [BottomSheetComponent, DocumentNewFolderComponent]
 })
 export class AccountModule {
 }
