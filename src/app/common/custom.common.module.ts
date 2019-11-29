@@ -2,11 +2,11 @@ import {NgModule} from '@angular/core';
 import {DialogContainerComponent} from './dialog-container/dialog-container.component';
 import {MaterialModule} from '../material/material';
 import {SubscriptionModule} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.module';
-import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AccountModule} from '../component/protect-component/customers/component/customer/accounts/account.module';
-import {PlanModule} from '../component/protect-component/customers/component/customer/plan/plan.module';
-import { DynamicComponentComponent } from './dynamic-component/dynamic-component.component';
+import {DynamicComponentComponent} from './dynamic-component/dynamic-component.component';
+import {CommonModule} from '@angular/common';
+import {BottomSheetComponent} from "../component/protect-component/customers/component/common-component/bottom-sheet/bottom-sheet.component";
+import {EntryComponentsModule} from "../entry.components.module";
 
 // import {AppModule} from "../app.module";
 
@@ -21,13 +21,15 @@ import { DynamicComponentComponent } from './dynamic-component/dynamic-component
     MaterialModule,
     SubscriptionModule,
     // AccountModule,
-    PlanModule,
-    BrowserModule,
+    // PlanModule,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     // AppModule
+    // EntryComponentsModule
   ],
-  exports: [DialogContainerComponent]
+  exports: [DialogContainerComponent],
+  // entryComponents: [ EntryComponentsModule.getComponentList()]
 })
 export class CustomCommonModule {
 }

@@ -1,7 +1,10 @@
 <div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay">
 </div>
+<div [@upperSliderOpenClose]="_upperSliderCase" class="upper_slider">
+  <ng-template #dynamicUpper></ng-template>
+</div>
 <div [@openClose]="_currentState" class="right_sidenav">
-<!--  <ng-content #dynamic></ng-content>-->
-    <ng-template #dynamic></ng-template>
+  <!--  <ng-content #dynamic></ng-content>-->
+  <ng-template #dynamic></ng-template>
 
 </div>
