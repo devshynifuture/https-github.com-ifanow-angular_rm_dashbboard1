@@ -1,7 +1,7 @@
 <div class="popup-header-fix">
         <div class="row bb-1">
             <div class="col-md-10 p-0">
-                <h4 class="mb-0 wrapper-20">GOLD - DETAILED VIEW</h4>
+                <h4 class="mb-0 wrapper-20">OTHER PAYABLES - DETAILED VIEW</h4>
             </div>
             <div class="col-md-2 text-left">
                 <div class="wrapper-12">
@@ -21,63 +21,63 @@
                             Owner Name
                         </div>
                         <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{gold.ownerName}}
+                            {{otherpayables.ownerName}}
                         </div>
                     </div>
                     <div class="row bb p-8 b-l br">
                         <div class="col-md-8 text-left f-14 roboto p-0">
-                            Approx purchase value
+                                Date of receipt
                         </div>
                         <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{gold.approximatePurchaseValue}}
+                            {{otherpayables.marketValue}}
                         </div>
                     </div>
                     <div class="row bb p-8 b-l br">
                         <div class="col-md-8 text-left f-14 roboto p-0">
-                            Tolas/grams
+                                Creditor name   
                         </div>
                         <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{(gold.gramsOrTola==1)?'Entry in tolas':' Entry in grams'}}
+                            {{(otherpayables.typeId == 1)?'Residential':(otherpayables.typeId == 2)?'Secondary':(otherpayables.typeId == 3)?'Commercial':'Land'}}
                         </div>
                     </div>
                     <div class="row bb p-8 b-l br">
                         <div class="col-md-8 text-left f-14 roboto p-0">
-                            Number of tolas/grams purchased
+                                Amount borrowed
                         </div>
                         <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{gold.purchasedGramsOrTola}}
+                            {{otherpayables.marketValue |  date:'dd/MM/yyyy'}}
                         </div>
                     </div>
                     <div class="row bb p-8 b-l br">
                         <div class="col-md-8 text-left f-14 roboto p-0">
-                            Carats
+                                Interest
                         </div>
                         <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{gold.carat}}
+                            {{(otherpayables.purchasePeriod)?'otherpayables.purchasePeriod':'-'}}
                         </div>
                     </div>
                     <div class="row bb p-8 b-l br">
                         <div class="col-md-8 text-left f-14 roboto p-0">
-                                Purchase year
+                                Date of repayment
                         </div>
                         <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{gold.purchaseYear}}
+                            {{otherpayables.purchaseValue}}
                         </div>
                     </div>
                     <div class="row bb p-8 b-l br">
                         <div class="col-md-8 text-left f-14 roboto p-0">
-                                Market value
+                                Outstanding balance
                         </div>
                         <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{gold.marketValue}}
+                            {{otherpayables.stampDutyCharge}}
                         </div>
                     </div>
                     <div class="row bb p-8 b-l br">
                         <div class="col-md-8 text-left f-14 roboto p-0">
-                            Description
+                                Collateral
                         </div>
                         <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{gold.description}}
+                            {{otherpayables.registrationCharge}}
                         </div>
                     </div>
                 </div>

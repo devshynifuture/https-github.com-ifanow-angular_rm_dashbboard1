@@ -224,7 +224,7 @@ export class RetirementAccountComponent implements OnInit {
       flag: 'addEPF',
       data: data,
       id: 1,
-      state: 'open',
+      state: 'open35',
       componentName: DetailedViewEPFComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -242,7 +242,7 @@ export class RetirementAccountComponent implements OnInit {
       flag: 'addEPF',
       data: data,
       id: 1,
-      state: 'open',
+      state: 'open35',
       componentName: DetailedViewEPSComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -260,7 +260,7 @@ export class RetirementAccountComponent implements OnInit {
       flag: 'addEPF',
       data: data,
       id: 1,
-      state: 'open',
+      state: 'open35',
       componentName: DetailedViewGratuityComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -278,7 +278,7 @@ export class RetirementAccountComponent implements OnInit {
       flag: 'addEPF',
       data: data,
       id: 1,
-      state: 'open',
+      state: 'open35',
       componentName: DetaildedViewSuperannuationComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

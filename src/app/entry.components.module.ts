@@ -55,6 +55,8 @@ import {AccountCommonModule} from "./component/protect-component/customers/compo
 import { DetailedViewRealEstateComponent } from './component/protect-component/customers/component/customer/accounts/assets/realEstate/detailed-view-real-estate/detailed-view-real-estate.component';
 import { DetaildedViewSuperannuationComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-superannuation/detailded-view-superannuation/detailded-view-superannuation.component';
 import { CopyDocumentsComponent } from './component/protect-component/customers/component/common-component/copy-documents/copy-documents.component';
+import { DetailedViewOtherPayablesComponent } from './component/protect-component/customers/component/customer/accounts/liabilities/detailed-view-other-payables/detailed-view-other-payables.component';
+import { AddOtherPayablesComponent } from './component/protect-component/customers/component/customer/accounts/liabilities/add-other-payables/add-other-payables.component';
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -174,6 +176,8 @@ export const componentList = [
   DetailedViewRealEstateComponent,
   DetaildedViewSuperannuationComponent,
   CopyDocumentsComponent,
+  DetailedViewOtherPayablesComponent,
+  AddOtherPayablesComponent
 ];
 
 @NgModule({

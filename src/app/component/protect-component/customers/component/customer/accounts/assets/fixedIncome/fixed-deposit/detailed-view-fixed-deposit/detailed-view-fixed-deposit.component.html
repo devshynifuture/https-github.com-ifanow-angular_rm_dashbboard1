@@ -1,4 +1,4 @@
-<div class="popup-header-fix-35">
+<div class="popup-header-fix">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
             <h4 class="mb-0 wrapper-20">FIXED DEPOSIT - DETAILED VIEW</h4>
@@ -29,153 +29,153 @@ FD number fdNumber: "newFd123"
 Bank account number
 Institution name institutionName: "futurewise Tech"
 Description description: "this is futurewise Tech" -->
-<div class="pl-20 pr-20 pb-48 pt-40">
+<div class="pl-20 pr-20 pb-48">
     <div class="row pt-40">
         <div class="col-md-12 p-0">
             <div class="insurance-ui bt">
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Owner Name
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{fixedDeposit.ownerName}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Type of FD
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(fixedDeposit.fdType == 1)?'Bank FD':'Corporate FD'}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Amount invested
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{fixedDeposit.amountInvested}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Commencement date
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{fixedDeposit.commencementDate  | date:'dd/MM/yyyy'}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Interest rate
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{fixedDeposit.interestRate}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Interest compounding
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(fixedDeposit.interestCompoundingId == 1)?'Daily':(fixedDeposit.interestCompoundingId == 1)?'Monthly':(fixedDeposit.interestCompoundingId == 1)?'Quarterly':(fixedDeposit.interestCompoundingId == 1)?'Semi annually':'Annually'}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Tenure
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{fixedDeposit.tenure}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Maturity Date
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{fixedDeposit.maturityDate  | date:'dd/MM/yyyy'}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Interest payout option
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(fixedDeposit.interestPayoutOption == 1)?'Cumulative payout':'Interest payout'}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Frequency of payout per year
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{fixedDeposit.frequencyOfPayoutPerYear}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Ownership type
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(fixedDeposit.ownershipType == 1)?'Joint':'Single'}}
                     </div>
                 </div>
 
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Current value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{fixedDeposit.currentValue}}
                     </div>
                 </div>
 
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Payout amount Rate
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{fixedDeposit.payoutAmount}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Maturity value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{fixedDeposit.maturityValue}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         FD number
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{fixedDeposit.fdNumber}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Bank account number
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{fixedDeposit.bankAcountNumber}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Institution name
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{fixedDeposit.institutionName}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Description
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{fixedDeposit.description}}
                     </div>
                 </div>

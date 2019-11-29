@@ -103,7 +103,7 @@
                         <mat-menu #menubank="matMenu">
                             <button mat-menu-item
                                 (click)="openCashAndBank('addBankAccounts','open',element)">Edit</button>
-                            <button mat-menu-item (click)="detailedViewbankAccount('addbankAccount',element,'open')">Detailed view</button>
+                            <button mat-menu-item (click)="detailedViewbankAccount('addbankAccount',element)">Detailed view</button>
                             <button mat-menu-item>Activity</button>
                             <button mat-menu-item (click)="deleteModal('BANK ACCOUNT',element)">Delete</button>
                         </mat-menu>
@@ -179,7 +179,7 @@
                             <mat-menu #menubank="matMenu">
                                 <button mat-menu-item
                                     (click)="openCashInHand('addCashInHand','open',element)">Edit</button>
-                                <button mat-menu-item (click)="detailedViewCashInHand('addCashInHand',element,'open')">Detailed view</button>
+                                <button mat-menu-item (click)="detailedViewCashInHand('addCashInHand',element)">Detailed view</button>
                                 <button mat-menu-item>Activity</button>
                                 <button mat-menu-item (click)="deleteModal('CASH IN HAND',element)">Delete</button>
                             </mat-menu>

@@ -1,4 +1,4 @@
-<div class="popup-header-fix-35">
+<div class="popup-header-fix">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
             <h4 class="mb-0 wrapper-20">REAL ESTATE - DETAILED VIEW</h4>
@@ -12,112 +12,112 @@
 </div>
 
 
-<div class="pl-20 pr-20 pb-48 pt-40">
+<div class="pl-20 pr-20 pb-48">
     <div class="row pt-40">
         <div class="col-md-12 p-0">
             <div class="insurance-ui bt">
-                <div class="row bb p-4 b-l br" *ngFor="let obj of realEstate.realEstateOwners">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br" *ngFor="let obj of realEstate.realEstateOwners">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Owner Name
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{obj.ownerName}}
                     </div>
-                    <div class="col-md-8 text-left f-14 roboto">
+                    <!-- <div class="col-md-8 text-left f-14 roboto p-0">
                         Percent
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    </div> -->
+                    <!-- <div class="col-md-4 text-right f-14 roboto p-0">
                         {{obj.ownershipPerc}}
-                    </div>
+                    </div> -->
                 </div>
-                <!-- <div class="row bb p-4 b-l br">
+                <!-- <div class="row bb p-8 b-l br">
                     
                 </div> -->
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Percent
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{realEstate.marketValue}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Type
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(realEstate.typeId == 1)?'Residential':(realEstate.typeId == 2)?'Secondary':(realEstate.typeId == 3)?'Commercial':'Land'}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Market value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{realEstate.marketValue |  date:'dd/MM/yyyy'}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Purchase period
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(realEstate.purchasePeriod)?'realEstate.purchasePeriod':'-'}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Purchase value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{realEstate.purchaseValue}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Stamp duty
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{realEstate.stampDutyCharge}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Registration
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{realEstate.registrationCharge}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         GST
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{realEstate.gstCharge}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Location
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(realEstate.location)?'realEstate.location':'-'}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Description
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{realEstate.description}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Add Nominee
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{realEstate.description}}
                     </div>
                 </div>

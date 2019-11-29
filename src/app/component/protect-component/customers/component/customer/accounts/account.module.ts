@@ -46,7 +46,6 @@ import {OtherPayablesComponent} from './liabilities/other-payables/other-payable
 // import {CashflowsPlanComponent} from '../plan/cashflows-plan/cashflows-plan.component';
 // import {InvestmentsPlanComponent} from '../plan/investments-plan/investments-plan.component';
 // import {ScenariosPlanComponent} from '../plan/scenarios-plan/scenarios-plan.component';
-import {AddOtherPayablesComponent} from './liabilities/add-other-payables/add-other-payables.component';
 
 import {CashAndBankComponent} from './assets/cash&bank/cash-and-bank/cash-and-bank.component';
 import {CommoditiesComponent} from './assets/commodities/commodities/commodities.component';
@@ -111,7 +110,6 @@ import {AccountCommonModule} from "./account.common.module";
     // AddPoRdComponent,
     AddExpensesComponent,
     OtherPayablesComponent,
-    AddOtherPayablesComponent,
     CashAndBankComponent,
     CommoditiesComponent,
     // GoldComponent,
@@ -136,7 +134,6 @@ import {AccountCommonModule} from "./account.common.module";
   ],
   exports: [
     AccountsComponent,
-    AddOtherPayablesComponent,
     CashAndBankComponent,
     CommoditiesComponent,
     LibilitiesRightComponent,

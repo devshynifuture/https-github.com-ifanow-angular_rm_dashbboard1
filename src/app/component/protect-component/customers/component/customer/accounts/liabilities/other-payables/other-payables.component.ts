@@ -6,6 +6,8 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { DetailedViewOtherPayablesComponent } from '../detailed-view-other-payables/detailed-view-other-payables.component';
+import { AddOtherPayablesComponent } from '../add-other-payables/add-other-payables.component';
 
 @Component({
   selector: 'app-other-payables',
@@ -80,12 +82,33 @@ export class OtherPayablesComponent implements OnInit {
       Flag: flagValue,
       data :data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: AddOtherPayablesComponent
+
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         this.getPayables();
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+  openDetailedView(data) {
+    const fragmentData = {
+      flag: 'detailedPOMIS',
+      data: data,
+      id: 1,
+      state: 'open35',
+      componentName: DetailedViewOtherPayablesComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
