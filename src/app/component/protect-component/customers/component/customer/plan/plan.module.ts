@@ -17,7 +17,6 @@ import {AddInvestmentPlanComponent} from './investments-plan/add-investment-plan
 import {AddProfilePlanComponent} from './profile-plan/add-profile-plan/add-profile-plan.component';
 import {HistoryRiskProfileComponent} from './profile-plan/history-risk-profile/history-risk-profile.component';
 // import {BrowserModule} from '@angular/platform-browser';
-import {AddPlaninsuranceComponent} from './insurance-plan/add-planinsurance/add-planinsurance.component';
 import {PlanRoutingModule} from "./plan-routing.module";
 import {PlanEntryModule} from "./plan.entry.module";
 
@@ -43,8 +42,6 @@ import {PlanEntryModule} from "./plan.entry.module";
     AddInvestmentPlanComponent,
     AddProfilePlanComponent,
     HistoryRiskProfileComponent,
-
-    AddPlaninsuranceComponent,
 
   ],
   imports: [
