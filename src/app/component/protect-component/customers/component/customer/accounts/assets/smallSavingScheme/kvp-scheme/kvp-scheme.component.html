@@ -9,7 +9,7 @@
 
         <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS</button>
-        <button mat-stroked-button (click)="openAddKVP(null)" class="btn-primary addon v-middle"><i
+        <button mat-stroked-button (click)="openAddKVP(null,'addKvp')" class="btn-primary addon v-middle"><i
                 class="material-icons">add</i>ADD NEW</button>
     </div>
 </div>
@@ -80,8 +80,8 @@
                     more_vert
                 </i>
                 <mat-menu #menubank="matMenu">
-                    <button mat-menu-item (click)="openAddKVP(element)">Edit</button>
-                    <button mat-menu-item>Detailed view</button>
+                    <button mat-menu-item (click)="openAddKVP(element,'editKvp')">Edit</button>
+                    <button mat-menu-item (click)="openAddKVP(element,'detailedKvp')">Detailed view</button>
                     <button mat-menu-item>Activity</button>
                     <button mat-menu-item (click)="deleteModal('SUBSCRIPTION',element)">Delete</button>
                 </mat-menu>

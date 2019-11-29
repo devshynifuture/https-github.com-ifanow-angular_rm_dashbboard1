@@ -1,3 +1,4 @@
+import { DetailedPoRdComponent } from './detailed-po-rd/detailed-po-rd.component';
 import { AddPoRdComponent } from './../common-component/add-po-rd/add-po-rd.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -92,6 +93,28 @@ export class PoRdSchemeComponent implements OnInit {
 
     });
   }
+
+  openDetailedPoRd(data) {
+    const fragmentData = {
+      flag: 'detailPORD',
+      data,
+      id: 1,
+      state: 'open',
+      componentName: DetailedPoRdComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          this.getPoRdSchemedata()
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+
   openAddPORD(data) {
     const fragmentData = {
       flag: 'addPORD',

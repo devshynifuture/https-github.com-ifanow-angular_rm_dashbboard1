@@ -7,6 +7,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { DetailedSsyComponent } from './detailed-ssy/detailed-ssy.component';
 
 @Component({
   selector: 'app-ssy-scheme',
@@ -92,13 +93,13 @@ export class SsySchemeComponent implements OnInit {
 
     });
   }
-  addOpenSSY(data) {
+  addOpenSSY(data,flag) {
     const fragmentData = {
       flag: 'addSyss',
       data,
       id: 1,
       state: 'open',
-      componentName: AddSsyComponent
+      componentName:(flag=="detailedSsy")?DetailedSsyComponent:AddSsyComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

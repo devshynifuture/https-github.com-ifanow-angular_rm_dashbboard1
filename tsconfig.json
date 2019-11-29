@@ -17,12 +17,15 @@
     "lib": [
       "es2018",
       "dom"
-    ],"paths": {
-      "@angular/core/src/metadata/*": ["./node_modules/@angular/core"]
+    ],
+    "paths": {
+      "@angular/core/src/metadata/*": [
+        "./node_modules/@angular/core"
+      ]
     }
   },
   "angularCompilerOptions": {
-    "fullTemplateTypeCheck": false,
-    "strictInjectionParameters": false
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
   }
 }

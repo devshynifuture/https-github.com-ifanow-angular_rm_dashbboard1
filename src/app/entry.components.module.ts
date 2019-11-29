@@ -1,3 +1,4 @@
+import { DetailedPoTdComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-td-scheme/detailed-po-td/detailed-po-td.component';
 import { AddPoRdComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-po-rd/add-po-rd.component';
 import { AddPoMisComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-po-mis/add-po-mis.component';
 import { AddPoSavingComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-po-saving/add-po-saving.component';
@@ -36,15 +37,58 @@ import { AddEPFComponent } from './component/protect-component/customers/compone
 import { AddNPSComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/add-nps.component';
 import { AddGoalComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/add-goal/add-goal.component';
 import { NpsSchemeHoldingComponent } from "./component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/nps-scheme-holding/nps-scheme-holding.component";
+import { DetailedNscComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/nsc-scheme/detailed-nsc/detailed-nsc.component';
 import { DetailedViewEPFComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-epf/detailed-view-epf/detailed-view-epf.component';
 import { DetailedViewGoldComponent } from './component/protect-component/customers/component/customer/accounts/assets/commodities/gold/detailed-view-gold/detailed-view-gold.component';
 import { DetailedViewOthersComponent } from './component/protect-component/customers/component/customer/accounts/assets/commodities/others/detailed-view-others/detailed-view-others.component';
 import { DetailedViewBankAccountComponent } from './component/protect-component/customers/component/customer/accounts/assets/cash&bank/bank-accounts/detailed-view-bank-account/detailed-view-bank-account.component';
 import { DetailedViewCashInHandComponent } from './component/protect-component/customers/component/customer/accounts/assets/cash&bank/cash-in-hand/detailed-view-cash-in-hand/detailed-view-cash-in-hand.component';
+import { DetailedSsyComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/ssy-scheme/detailed-ssy/detailed-ssy.component';
+import { DetailedKvpComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/kvp-scheme/detailed-kvp/detailed-kvp.component';
+import { DetailedScssComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/scss-scheme/detailed-scss/detailed-scss.component';
+import { DetailedPpfComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/ppf-scheme/detailed-ppf/detailed-ppf.component';
+import { DetailedPoSavingsComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-savings/detailed-po-savings/detailed-po-savings.component';
+import { DetailedPoMisComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-mis-scheme/detailed-po-mis/detailed-po-mis.component';
 
-export const componentList = [DetailedViewEPFComponent,AddScssComponent,AddKvpComponent,AddPoSavingComponent,AddPoMisComponent,AddSsyComponent,AddNscComponent,AddTransactionComponent,AddPpfComponent,AddEPSComponent,AddSuperannuationComponent,AddGratuityComponent,NpsSummaryPortfolioComponent,AddPoTdComponent,AddPoRdComponent,BondsComponent,AddLiabilitiesComponent, AddInsuranceComponent, FixedDepositComponent,
+export const componentList = [
+  AddLiabilitiesComponent,
+  AddInsuranceComponent,
+  FixedDepositComponent,
+  AddRealEstateComponent,
+  GoldComponent,
+  AddNPSComponent,
+  RecuringDepositComponent,
+  AddEPFComponent,
+  OthersComponent,
+  CashInHandComponent,
+  BankAccountsComponent,
+  AddGoalComponent,
+  NpsSchemeHoldingComponent,
+  NpsSummaryPortfolioComponent,
+  AddGratuityComponent,
+  AddSuperannuationComponent,
+  AddEPSComponent,
+  AddPpfComponent,
+  AddNscComponent,
+  AddTransactionComponent,
+  AddSsyComponent,
+  AddPoTdComponent,
+  LiabilitiesDetailComponent,
+  AddKvpComponent,
+  AddScssComponent,
+  AddPoSavingComponent,
+  AddPoMisComponent,
+  AddPoRdComponent,
+  DetailedPpfComponent,
+  DetailedNscComponent,
+  DetailedSsyComponent,
+  DetailedKvpComponent,
+  DetailedScssComponent,
+  DetailedViewEPFComponent, AddScssComponent, AddKvpComponent, AddPoSavingComponent, AddPoMisComponent, AddSsyComponent, AddNscComponent, AddTransactionComponent, AddPpfComponent, AddEPSComponent, AddSuperannuationComponent, AddGratuityComponent, NpsSummaryPortfolioComponent, AddPoTdComponent, AddPoRdComponent, BondsComponent, AddLiabilitiesComponent, AddInsuranceComponent, FixedDepositComponent,
   AddRealEstateComponent, GoldComponent, AddNPSComponent, RecuringDepositComponent, AddEPFComponent,
-  OthersComponent, CashInHandComponent, BankAccountsComponent, AddGoalComponent, NpsSchemeHoldingComponent,LiabilitiesDetailComponent,DetailedViewFixedDepositComponent,DetailedViewRecuringDepositComponent,DetailedViewBondsComponent,DetailedViewGoldComponent,DetailedViewOthersComponent,DetailedViewBankAccountComponent,DetailedViewCashInHandComponent];
+  OthersComponent, CashInHandComponent, BankAccountsComponent, AddGoalComponent, NpsSchemeHoldingComponent, LiabilitiesDetailComponent, DetailedViewFixedDepositComponent, DetailedViewRecuringDepositComponent, DetailedViewBondsComponent, DetailedViewGoldComponent, DetailedViewOthersComponent, DetailedViewBankAccountComponent, DetailedViewCashInHandComponent, DetailedPoSavingsComponent, DetailedPoTdComponent,
+  DetailedPoMisComponent
+];
 
 @NgModule({
   declarations: componentList,

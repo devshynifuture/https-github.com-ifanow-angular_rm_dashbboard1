@@ -13,7 +13,7 @@ export class AccountsComponent implements OnInit {
   selected;
 
   ngOnInit() {
-    this.selected = 6;
+    this.selected = 1;
   }
 
 }
