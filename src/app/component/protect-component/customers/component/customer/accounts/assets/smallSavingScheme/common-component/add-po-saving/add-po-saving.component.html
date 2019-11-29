@@ -17,7 +17,7 @@
             </div>
             <div class="col-md-3 p-0">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input formControlName="accBal" type="number" matInput #accountBalance
+                    <mat-form-field> <input autocomplete="off" formControlName="accBal" type="number" matInput #accountBalance
                             class="form-control rupess br-0" maxlength="">
                         <mat-error
                             *ngIf="poSavingForm.get('accBal').errors?.required && poSavingForm.get('accBal').touched"
@@ -28,7 +28,7 @@
                             Should be greater than 50
                         </mat-error>
                         <mat-error *ngIf="(poSavingForm.get('accBal').errors?.max)" class="f-12 pt-4">
-                            Should be less than 1500000
+                            Should be less than {{accBalance}}
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/20</mat-hint>
                     </mat-form-field>
@@ -58,7 +58,7 @@
             </div>
             <div class="col-md-5">
                 <mat-form-field>
-                    <mat-select formControlName="ownershipType" class="form-control br-0">
+                    <mat-select (change)="changeAccountBalance($event)" formControlName="ownershipType" class="form-control br-0">
                         <mat-option value="1"> Joint </mat-option>
                         <mat-option value="2">Single </mat-option>
                     </mat-select>

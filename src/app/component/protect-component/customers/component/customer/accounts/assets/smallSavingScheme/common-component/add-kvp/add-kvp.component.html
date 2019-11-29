@@ -18,7 +18,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="amtInvested" #amountInvest type="text" maxlength="20"
+                        <input matInput autocomplete="off" formControlName="amtInvested" #amountInvest type="text" maxlength="20"
                             class="form-control br-0 rupess">
                         <mat-error
                             *ngIf="KVPFormScheme.get('amtInvested').errors?.required && KVPFormScheme.get('amtInvested').touched"
