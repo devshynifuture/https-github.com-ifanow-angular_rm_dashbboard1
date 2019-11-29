@@ -108,9 +108,6 @@
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
                         Total in
-                        <div class="col-md-4 text-right f-14 roboto">
-                            xyz
-                        </div>
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
                         {{(libility.principalOutstandingAsOn)?(libility.principalOutstandingAsOn | date:'dd/MM/yyyy'):'-'}}
@@ -122,11 +119,8 @@
                         Total principal paid till date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        xyz
+                        {{libility.principalOutStandingAmount}}
                     </div>
-                </div>
-                <div class="col-md-4 text-right f-14 roboto">
-                    {{libility.principalOutStandingAmount}}
                 </div>
             </div>
 
