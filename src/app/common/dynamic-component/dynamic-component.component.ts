@@ -26,6 +26,19 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
   constructor(private dynamicComponentService: DynamicComponentService) {
   }
 
+  @Input()
+  set upperSliderState(upperSliderState) {
+    this.tempState = upperSliderState;
+    if (this.viewContainerRef) {
+      this._upperSliderCase = upperSliderState;
+      // this.handleChangeOfState();
+    }
+    // this._upperSliderCase = upperSliderState;
+  }
+
+  get upperSliderState() {
+    return this._upperSliderCase;
+  }
 
   // percentageClose = '40%';
   tempState;
@@ -48,6 +61,8 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
       if (inputData.direction) {
         if (inputData.direction == 'top') {
           this.addDynamicComponentService(this.viewContainerRefUpper, inputData.componentName);
+        } else if (inputData.direction == 'right') {
+          this.addDynamicComponentService(this.viewContainerRef, inputData.componentName);
         }
       } else {
         this.addDynamicComponentService(this.viewContainerRef, inputData.componentName);
@@ -96,6 +111,13 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
     }
   }
 
+  addUpperDynamicComponentService(viewContainerRef, component) {
+    if (viewContainerRef) {
+      this.dynamicComponentService.addDynamicComponent(viewContainerRef, component, this.data.data);
+      // this.handleChangeOfState(this.tempState);
+    }
+  }
+
   handleChangeOfState(value) {
     console.log('DynamicComponentComponent handleChangeOfState: ', value);
     if (value === 'close') {
@@ -112,8 +134,23 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
         this.isOverlayVisible = true;
       }, 100);
     }
-
   }
 
-
+  /*handleChangeOfUpperSliderState(value) {
+    console.log('DynamicComponentComponent handleChangeOfState: ', value);
+    if (value === 'close') {
+      this._upperSliderCase = value;
+      setTimeout(() => {
+        this.dialogState = value;
+        this.isOverlayVisible = false;
+      }, 300);
+      // this.eventService.changeOverlayVisible(false);
+    } else {
+      this._upperSliderCase = value;
+      setTimeout(() => {
+        this.dialogState = 'open';
+        this.isOverlayVisible = true;
+      }, 100);
+    }
+  }*/
 }

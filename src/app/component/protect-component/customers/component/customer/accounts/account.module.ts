@@ -20,7 +20,6 @@ import {LiabilitiesComponent} from './liabilities/liabilities.component';
 import {ChartModule} from 'angular-highcharts';
 import {FactShitComponent} from '../../common-component/fact-shit/fact-shit.component';
 import {TransactionsComponent} from '../../common-component/transactions/transactions.component';
-import {UpperCustomerComponent} from '../../common-component/upper-customer/upper-customer.component';
 import {RightFilterComponent} from '../../common-component/right-filter/right-filter.component';
 import {FixedIncomeComponent} from './assets/fixedIncome/fixed-income/fixed-income.component';
 import {AddIncomeComponent} from '../../common-component/add-income/add-income.component';
@@ -59,6 +58,7 @@ import {DocumentNewFolderComponent} from '../../common-component/document-new-fo
 import {OwnerComponentModule} from "./owner-component/owner-component.module";
 import {CopyDocumentsComponent} from '../../common-component/copy-documents/copy-documents.component';
 import {AccountRoutingModule} from "./account-routing.module";
+import {AccountCommonModule} from "./account.common.module";
 
 @NgModule({
   declarations: [
@@ -82,7 +82,7 @@ import {AccountRoutingModule} from "./account-routing.module";
     // FixedDepositComponent,
     FactShitComponent,
     TransactionsComponent,
-    UpperCustomerComponent,
+    // UpperCustomerComponent,
     RightFilterComponent,
     FixedIncomeComponent,
     //BondsComponent,
@@ -129,8 +129,9 @@ import {AccountRoutingModule} from "./account-routing.module";
   ],
   imports: [
     AccountRoutingModule,
+    AccountCommonModule,
     // BrowserModule,
-    OwnerComponentModule,
+    // OwnerComponentModule,
     CommonModule,
     MaterialModule,
     ChartModule,
@@ -152,7 +153,7 @@ import {AccountRoutingModule} from "./account-routing.module";
     ReactiveFormsModule,
     FactShitComponent,
     TransactionsComponent,
-    UpperCustomerComponent,
+    // UpperCustomerComponent,
     RightFilterComponent,
     DetailedViewComponent,
     // LiabilitiesDetailComponent,
