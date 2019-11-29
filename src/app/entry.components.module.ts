@@ -46,6 +46,11 @@ import {DetailedViewCashInHandComponent} from './component/protect-component/cus
 import {DetailedPoSavingsComponent} from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-savings/detailed-po-savings/detailed-po-savings.component';
 import {DetailedPoMisComponent} from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-mis-scheme/detailed-po-mis/detailed-po-mis.component';
 import {DetailedPpfComponent} from "./component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/ppf-scheme/detailed-ppf/detailed-ppf.component";
+import { DetailedSsyComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/ssy-scheme/detailed-ssy/detailed-ssy.component';
+import { DetailedViewEPSComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-eps/detailed-view-eps/detailed-view-eps.component';
+import { DetailedKvpComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/kvp-scheme/detailed-kvp/detailed-kvp.component';
+import { DetailedViewGratuityComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
+import { DetailedScssComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/scss-scheme/detailed-scss/detailed-scss.component';
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -78,6 +83,15 @@ export const componentList = [
   AddPoRdComponent,
   DetailedPpfComponent,
   DetailedNscComponent,
+  DetailedSsyComponent,
+  DetailedViewEPSComponent,
+  DetailedKvpComponent,
+  DetailedViewGratuityComponent,
+  DetailedScssComponent,
+  DetailedViewEPFComponent, AddScssComponent, AddKvpComponent, AddPoSavingComponent, AddPoMisComponent, AddSsyComponent, AddNscComponent, AddTransactionComponent, AddPpfComponent, AddEPSComponent, AddSuperannuationComponent, AddGratuityComponent, NpsSummaryPortfolioComponent, AddPoTdComponent, AddPoRdComponent, BondsComponent, AddLiabilitiesComponent, AddInsuranceComponent, FixedDepositComponent,
+  AddRealEstateComponent, GoldComponent, AddNPSComponent, RecuringDepositComponent, AddEPFComponent,
+  OthersComponent, CashInHandComponent, BankAccountsComponent, AddGoalComponent, NpsSchemeHoldingComponent, LiabilitiesDetailComponent, DetailedViewFixedDepositComponent, DetailedViewRecuringDepositComponent, DetailedViewBondsComponent, DetailedViewGoldComponent, DetailedViewOthersComponent, DetailedViewBankAccountComponent, DetailedViewCashInHandComponent, DetailedPoSavingsComponent, DetailedPoTdComponent,
+  DetailedPoMisComponent,
   DetailedViewEPFComponent,
   AddScssComponent,
   AddKvpComponent,

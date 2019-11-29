@@ -125,7 +125,7 @@ import {AccountRoutingModule} from "./account-routing.module";
     // AddTransactionComponent,
     SkeletonLoadingDirective,
     FormatNumberDirective,
-    DocumentNewFolderComponent
+    DocumentNewFolderComponent,
   ],
   imports: [
     AccountRoutingModule,

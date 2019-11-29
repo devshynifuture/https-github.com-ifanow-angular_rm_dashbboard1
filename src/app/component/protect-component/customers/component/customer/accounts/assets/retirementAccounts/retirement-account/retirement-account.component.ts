@@ -15,6 +15,8 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { MatDialog } from '@angular/material';
 import { NpsSchemeHoldingComponent } from "../add-nps/nps-scheme-holding/nps-scheme-holding.component";
 import { DetailedViewEPFComponent } from '../add-epf/detailed-view-epf/detailed-view-epf.component';
+import { DetailedViewEPSComponent } from '../add-eps/detailed-view-eps/detailed-view-eps.component';
+import { DetailedViewGratuityComponent } from '../add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
 
 @Component({
   selector: 'app-retirement-account',
@@ -218,6 +220,42 @@ export class RetirementAccountComponent implements OnInit {
       id: 1,
       state: 'open',
       componentName: DetailedViewEPFComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+  detailedViewEPS(data) {
+    const fragmentData = {
+      flag: 'addEPF',
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: DetailedViewEPSComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+  detailedViewGratuity(data) {
+    const fragmentData = {
+      flag: 'addEPF',
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: DetailedViewGratuityComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
