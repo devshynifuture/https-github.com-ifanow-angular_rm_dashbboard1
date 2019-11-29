@@ -52,6 +52,7 @@ import {DetailedViewGratuityComponent} from './component/protect-component/custo
 import {DetailedScssComponent} from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/scss-scheme/detailed-scss/detailed-scss.component';
 import {AccountEntryModule} from "./component/protect-component/customers/component/customer/accounts/account.entry.module";
 import {AccountCommonModule} from "./component/protect-component/customers/component/customer/accounts/account.common.module";
+import { DetailedViewRealEstateComponent } from './component/protect-component/customers/component/customer/accounts/assets/realEstate/detailed-view-real-estate/detailed-view-real-estate.component';
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -168,6 +169,7 @@ export const componentList = [
   DetailedPoSavingsComponent,
   DetailedPoTdComponent,
   DetailedPoMisComponent,
+  DetailedViewRealEstateComponent,
 ];
 
 @NgModule({

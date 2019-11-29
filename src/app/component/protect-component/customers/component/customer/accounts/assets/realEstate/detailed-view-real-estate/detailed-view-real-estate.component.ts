@@ -2,15 +2,15 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
-  selector: 'app-detailed-view-others',
-  templateUrl: './detailed-view-others.component.html',
-  styleUrls: ['./detailed-view-others.component.scss']
+  selector: 'app-detailed-view-real-estate',
+  templateUrl: './detailed-view-real-estate.component.html',
+  styleUrls: ['./detailed-view-real-estate.component.scss']
 })
-export class DetailedViewOthersComponent implements OnInit {
+export class DetailedViewRealEstateComponent implements OnInit {
   displayedColumns: string[] = ['name', 'position'];
   _data: any;
   ownerName: any;
-  others: any;
+  realEstate: any;
 
   constructor(private subInjectService: SubscriptionInject) {
   }
@@ -19,7 +19,7 @@ export class DetailedViewOthersComponent implements OnInit {
   set data(inputData) {
     this._data = inputData;
     console.log('AddLiabilitiesComponent Input data : ', this._data);
-    this.others = this._data
+    this.realEstate = this._data
 
   }
 
