@@ -1,7 +1,7 @@
 <div *ngIf="showLoader==true">
-        <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-    </div>
-<div id="ui-document">
+    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+</div>
+<div id="ui-document" class="account_side-menu">
     <div class="row h-100vh">
         <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
             <ul class="vertical-menu">
@@ -93,8 +93,8 @@
                         </div>
                     </div>
                     <div *ngIf="showLoader==true">
-                            <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-                        </div>
+                        <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+                    </div>
 
                     <div class="row">
                         <div class="col-md-9 p-0 documentsTable" *ngSwitchCase="viewMode">
@@ -156,7 +156,7 @@
                                                 activity</button>
                                             <button class="f-14" mat-menu-item><img src="assets/images/svg/move-to-icon.svg"
                                                     class="mr-20">Move to</button>
-                                            <button class="f-14" mat-menu-item><img src="assets/images/svg/file-copy.svg"
+                                            <button (click)="openDialogCopy()" class="f-14" mat-menu-item><img src="assets/images/svg/file-copy.svg"
                                                     class="mr-20">Copy to</button>
                                             <button class="f-14" mat-menu-item (click)="downlodFiles(element)"><img
                                                     src="assets/images/svg/download-icon.svg"

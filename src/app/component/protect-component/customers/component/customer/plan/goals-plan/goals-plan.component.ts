@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AddGoalComponent} from "./add-goal/add-goal.component";
+
 import {UtilService} from "../../../../../../../services/util.service";
 import {SubscriptionInject} from "../../../../../AdviserComponent/Subscriptions/subscription-inject.service";
 import { MfAllocationsComponent } from './mf-allocations/mf-allocations.component';

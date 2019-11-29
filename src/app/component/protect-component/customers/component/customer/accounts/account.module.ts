@@ -63,6 +63,7 @@ import { SkeletonLoadingDirective } from 'src/app/skeleton-loading.directive';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { DocumentNewFolderComponent } from '../../common-component/document-new-folder/document-new-folder.component';
 import { OwnerComponentModule } from "./owner-component/owner-component.module";
+import { CopyDocumentsComponent } from '../../common-component/copy-documents/copy-documents.component';
 
 @NgModule({
   declarations: [
@@ -172,7 +173,7 @@ import { OwnerComponentModule } from "./owner-component/owner-component.module";
     AddExpensesComponent,
     OtherPayablesComponent
   ],
-  entryComponents: [BottomSheetComponent, DocumentNewFolderComponent]
+  entryComponents: [BottomSheetComponent, DocumentNewFolderComponent, CopyDocumentsComponent]
 })
 export class AccountModule {
 }
