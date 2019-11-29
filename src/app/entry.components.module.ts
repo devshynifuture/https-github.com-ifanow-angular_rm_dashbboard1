@@ -168,6 +168,7 @@ export const componentList = [
   DetailedPoSavingsComponent,
   DetailedPoTdComponent,
   DetailedPoMisComponent,
+  
 ];
 
 @NgModule({

@@ -937,3 +937,32 @@ mat-tab-group[vertical] {
         line-height: 40px !important;
     }
 }
+
+
+#goal-preferences {
+    .mat-tab-label{
+        padding: 0 15px;
+        min-width: 100px !important;
+        height: 40px !important;
+        
+        
+    }
+    .mat-tab-header{
+        border-bottom: 0px;
+    }
+    .mat-tab-label:focus:not(.mat-tab-disabled){
+        border-top: 1px solid #DADCE0;
+        // border-right: 1px solid #DADCE0;
+        // border-left: 1px solid #DADCE0;
+        outline:1px solid #DADCE0;
+    }
+    .mat-tab-group.mat-primary .mat-ink-bar{
+        display: none;
+    }
+    .mat-tab-label-active{
+         border-top: 1px solid #DADCE0;
+        // border-right: 1px solid #DADCE0;
+        // border-left: 1px solid #DADCE0;
+        outline:1px solid #DADCE0;
+    }
+}

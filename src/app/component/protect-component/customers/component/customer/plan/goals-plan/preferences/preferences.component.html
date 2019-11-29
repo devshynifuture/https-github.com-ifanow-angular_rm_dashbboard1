@@ -1,0 +1,149 @@
+  <div class="popup-header-fix">
+    <div class="row bb-1">
+        <div class="col-md-10 p-0">
+            <h4 class="mb-0 wrapper-20">PREFERENCES</h4>
+        </div>
+        <div class="col-md-2 text-left">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row pt-44" id="goal-preferences">
+    <div class="col-md-12 p-0">
+        <mat-tab-group animationDuration="0ms" mat-align-tabs="center">
+    <mat-tab label="Key parameters">
+        <div class="wrapper-28">
+       <div class="row">
+           <div class="col-md-4">
+               <p class="roboto mb-0 text-right pt-16">Goal amount</p>
+           </div>
+           <div class="col-md-8 p-0">
+                <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput #amountInvest type="text" class="form-control br-0 rupess">
+                            <!-- <mat-error class="f-12 pt-4">
+                                This field is required
+                            </mat-error> -->
+                        </mat-form-field>
+                    </div>
+           </div>
+       </div>
+       <div class="row pt-32 pb-16">
+            <div class="col-md-4">
+                <p class="roboto mb-0 text-right pt-16">Inflation rate</p>
+            </div>
+            <div class="col-md-6 pl-0">
+                <div id="custom-slider">
+                    <mat-slider></mat-slider>
+                    </div>
+            </div>
+            <div class="col-md-2 pl-8 pr-8">
+                    <div class="form-group mb-0">
+                            <mat-form-field class="w-100">
+                                <input matInput #amountInvest type="text" class="form-control br-0" value="7.6%">
+                                <!-- <mat-error class="f-12 pt-4">
+                                    This field is required
+                                </mat-error> -->
+                            </mat-form-field>
+                        </div>
+            </div>
+        </div>
+        <div class="row pt-16 btl-1">
+                <div class="col-md-4 pl-0">
+                    <p class="roboto mb-0 pt-16">Savings start date
+                        <img src="/assets/images/svg/info.svg" matTooltip="Info about the action"
+                        aria-label="Button that displays a tooltip when focused or hovered over">
+                 </p>
+                </div>
+                <div class="col-md-4 p-0">
+                        <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <mat-select class="form-control br-0 br-none">
+                                        <mat-option value="">Select option</mat-option>
+                                        <mat-option value="1">Bank FD</mat-option>
+                                        <mat-option value="2">Corporate FD</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                </div>
+                <div class="col-md-4 p-0">
+                        <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <mat-select class="form-control br-0">
+                                        <mat-option value="">Select option</mat-option>
+                                        <mat-option value="1">Bank FD</mat-option>
+                                        <mat-option value="2">Corporate FD</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                </div>
+            </div>
+            <div class="row pt-16">
+                    <div class="col-md-4 pl-0">
+                        <p class="roboto mb-0 pt-16">Savings end date
+                            <img src="/assets/images/svg/info.svg" matTooltip="Info about the action"
+                            aria-label="Button that displays a tooltip when focused or hovered over">
+                     </p>
+                    </div>
+                    <div class="col-md-4 p-0">
+                            <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <mat-select class="form-control br-0 br-none">
+                                            <mat-option value="">Select option</mat-option>
+                                            <mat-option value="1">Bank FD</mat-option>
+                                            <mat-option value="2">Corporate FD</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                    </div>
+                    <div class="col-md-4 p-0">
+                            <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <mat-select class="form-control br-0">
+                                            <mat-option value="">Select option</mat-option>
+                                            <mat-option value="1">Bank FD</mat-option>
+                                            <mat-option value="2">Corporate FD</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                    </div>
+                </div>
+                <div class="row pt-16 bt-grey">
+                        <div class="col-md-4 pl-0">
+                            <p class="roboto mb-0 pt-16">Savings end date
+                                <img src="/assets/images/svg/info.svg" matTooltip="Info about the action"
+                                aria-label="Button that displays a tooltip when focused or hovered over">
+                         </p>
+                        </div>
+                        <div class="col-md-4 p-0">
+                                <div class="form-group mb-0">
+                                        <mat-form-field>
+                                            <mat-select class="form-control br-0 br-none">
+                                                <mat-option value="">Select option</mat-option>
+                                                <mat-option value="1">Bank FD</mat-option>
+                                                <mat-option value="2">Corporate FD</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                        </div>
+                        <div class="col-md-4 p-0">
+                                <div class="form-group mb-0">
+                                        <mat-form-field>
+                                            <mat-select class="form-control br-0">
+                                                <mat-option value="">Select option</mat-option>
+                                                <mat-option value="1">Bank FD</mat-option>
+                                                <mat-option value="2">Corporate FD</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                        </div>
+                    </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Asset allocation">Asset allocation</mat-tab>
+    <mat-tab label="Returns & Inflation">Returns & Inflation</mat-tab>
+  </mat-tab-group>
+    </div>
+</div>

@@ -202,7 +202,7 @@ export class FixedIncomeComponent implements OnInit {
       Flag: value,
       data: data,
       id: 1,
-      state: 'open',
+      state: 'open35',
       componentName: DetailedViewFixedDepositComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

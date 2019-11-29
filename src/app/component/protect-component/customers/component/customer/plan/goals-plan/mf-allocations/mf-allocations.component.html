@@ -10,8 +10,8 @@
         </div>
     </div>
     <div class="row pt-36">
-        <div class="col-md-4 br-grey">
-            <p class="roboto">Additional savings required</p>
+        <div class="col-md-4">
+            <p class="roboto mb-0 pt-8">Additional savings required</p>
             <div class="mt-8 additional-saving">
                     <table mat-table [dataSource]="dataSource" id="table-low">
                   
@@ -42,10 +42,10 @@
                     </table>
                   </div>
         </div>
-            <div class="col-md-8">
+            <div class="col-md-8 bl-grey">
                 <div class="row">
                     <div class="col-md-10 p-0">
-                        <p class="m-0 roboto">Allocate mutual funds to goals from here</p>
+                        <p class="m-0 roboto pt-8">Allocate mutual funds to goals from here</p>
                     </div>
                     <div class="col-md-1">
                       <img src="/assets/images/svg/people.svg" class="c-p" [matMenuTriggerFor]="menu">
@@ -197,4 +197,10 @@
             </div>
         </div>
     </div>
-    
+    <div class="bottom-fixed w-100 wrapper-16">
+      <div class="row">
+        <div class="col-md-12 pl-8">
+          <h5 class="mb-0 pt-4 text-white c-p" (click)="Close('close')">Cancel</h5>
+        </div>
+      </div>
+    </div>
