@@ -25,12 +25,14 @@ export class AddPoSavingComponent implements OnInit {
   familyMemberId: any;
   poSavingOptionalForm: any;
   editApi: any;
+  accBalance: number;
 
   constructor(private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   @Input()
   set data(data) {
     this.inputData = data;
     this.getdataForm(data);
+    this.accBalance = 1500000
   }
 
   get data() {
@@ -41,20 +43,27 @@ export class AddPoSavingComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
+  changeAccountBalance(data) {
+    (this.poSavingForm.get('ownershipType').value == 1) ? (this.accBalance = 1500000,
+      this.poSavingForm.get('ownershipType').setValidators([Validators.max(1500000)])
+    ) : this.accBalance = 200000;
+  }
   ngOnInit() {
     this.isOptionalField = true
     this.advisorId = AuthService.getAdvisorId();
   }
   getdataForm(data) {
     if (data == undefined) {
-      data = {};
+      data = {
+        ownerTypeId: 1
+      };
     }
     else {
       this.editApi = data
     }
     this.poSavingForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
-      accBal: [data.accountBalance, [Validators.required]],
+      accBal: [data.accountBalance, [Validators.required, Validators.min(50), Validators.max(1500000)]],
       balAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       ownershipType: [String(data.ownerTypeId), [Validators.required]]
     })
