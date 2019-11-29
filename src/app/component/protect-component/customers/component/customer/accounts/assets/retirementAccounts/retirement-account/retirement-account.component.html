@@ -362,7 +362,7 @@
                         </i>
                         <mat-menu #menubank="matMenu">
                             <button mat-menu-item class="c-p" (click)="openAddGratuity(element)">Edit</button>
-                            <button mat-menu-item class="c-p">Detailed view</button>
+                            <button mat-menu-item class="c-p" (click)="detailedViewGratuity(element)">Detailed view</button>
                             <button mat-menu-item class="c-p">Activity</button>
                             <button mat-menu-item class="c-p" (click)="deleteModal(element)">Delete</button>
                         </mat-menu>
@@ -555,7 +555,7 @@
                         </i>
                         <mat-menu #menubank="matMenu">
                             <button mat-menu-item class="c-p" (click)="openAddEPS(element)">Edit</button>
-                            <button mat-menu-item class="c-p">Detailed view</button>
+                            <button mat-menu-item class="c-p" (click)="detailedViewEPS(element)">Detailed view</button>
                             <button mat-menu-item class="c-p">Activity</button>
                             <button mat-menu-item class="c-p" (click)="deleteModal(element)">Delete</button>
                         </mat-menu>

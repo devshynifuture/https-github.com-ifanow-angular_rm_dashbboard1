@@ -49,6 +49,8 @@ import { DetailedScssComponent } from './component/protect-component/customers/c
 import { DetailedPpfComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/ppf-scheme/detailed-ppf/detailed-ppf.component';
 import { DetailedPoSavingsComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-savings/detailed-po-savings/detailed-po-savings.component';
 import { DetailedPoMisComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-mis-scheme/detailed-po-mis/detailed-po-mis.component';
+import { DetailedViewEPSComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-eps/detailed-view-eps/detailed-view-eps.component';
+import { DetailedViewGratuityComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -82,7 +84,9 @@ export const componentList = [
   DetailedPpfComponent,
   DetailedNscComponent,
   DetailedSsyComponent,
+  DetailedViewEPSComponent,
   DetailedKvpComponent,
+  DetailedViewGratuityComponent,
   DetailedScssComponent,
   DetailedViewEPFComponent, AddScssComponent, AddKvpComponent, AddPoSavingComponent, AddPoMisComponent, AddSsyComponent, AddNscComponent, AddTransactionComponent, AddPpfComponent, AddEPSComponent, AddSuperannuationComponent, AddGratuityComponent, NpsSummaryPortfolioComponent, AddPoTdComponent, AddPoRdComponent, BondsComponent, AddLiabilitiesComponent, AddInsuranceComponent, FixedDepositComponent,
   AddRealEstateComponent, GoldComponent, AddNPSComponent, RecuringDepositComponent, AddEPFComponent,
