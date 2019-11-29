@@ -44,6 +44,7 @@ import {DatePipe} from '@angular/common';
 import {MatSortModule, MatTableModule} from '@angular/material';
 import {DynamicComponentService} from './services/dynamic-component.service';
 import {EntryComponentsModule} from "./entry.components.module";
+import {AccountEntryModule} from "./component/protect-component/customers/component/customer/accounts/account.entry.module";
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -86,7 +87,6 @@ import {EntryComponentsModule} from "./entry.components.module";
     // AddInsuranceComponent
   ],
   imports: [
-    CustomCommonModule,
     SubscriptionModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -102,11 +102,14 @@ import {EntryComponentsModule} from "./entry.components.module";
     SlimLoadingBarModule.forRoot(),
 
     MDBBootstrapModule.forRoot(), DragDropModule,
-    EntryComponentsModule
+    CustomCommonModule,
+
+    EntryComponentsModule,
+    AccountEntryModule
   ],
   providers: [AuthService, HttpService, DatePipe, DynamicComponentService],
   bootstrap: [AppComponent],
-  entryComponents: [EntryComponentsModule.getComponentList()]
+  entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList()]
 })
 export class AppModule {
 }

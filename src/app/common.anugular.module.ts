@@ -1,11 +1,8 @@
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {SubscriptionModule} from "./component/protect-component/AdviserComponent/Subscriptions/subscription.module";
 import {MaterialModule} from "./material/material";
-import {BrowserModule} from "@angular/platform-browser";
-
-
-
+import {CommonModule} from "@angular/common";
 
 
 @NgModule({
@@ -14,7 +11,7 @@ import {BrowserModule} from "@angular/platform-browser";
   imports: [
     MaterialModule,
     SubscriptionModule,
-    BrowserModule,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule
 
