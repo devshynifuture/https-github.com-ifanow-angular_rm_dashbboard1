@@ -285,12 +285,12 @@ export class FixedIncomeComponent implements OnInit {
       }
     );
   }
-  detailedViewBonds(data) {
+  detailedViewBonds(data,state) {
     const fragmentData = {
       Flag: 'DetailedViewBondsComponent',
       data: data,
       id: 1,
-      state: 'open',
+      state: state,
       componentName: DetailedViewBondsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

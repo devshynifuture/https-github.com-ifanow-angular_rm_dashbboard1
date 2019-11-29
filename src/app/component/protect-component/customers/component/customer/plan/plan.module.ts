@@ -17,7 +17,6 @@ import {AddInvestmentPlanComponent} from './investments-plan/add-investment-plan
 import {AddProfilePlanComponent} from './profile-plan/add-profile-plan/add-profile-plan.component';
 import {HistoryRiskProfileComponent} from './profile-plan/history-risk-profile/history-risk-profile.component';
 // import {BrowserModule} from '@angular/platform-browser';
-import {AddPlaninsuranceComponent} from './insurance-plan/add-planinsurance/add-planinsurance.component';
 
 
 
@@ -42,7 +41,7 @@ import {AddPlaninsuranceComponent} from './insurance-plan/add-planinsurance/add-
     AddProfilePlanComponent,
     HistoryRiskProfileComponent,
     
-    AddPlaninsuranceComponent,
+    
     
   ],
   imports: [
@@ -53,7 +52,7 @@ import {AddPlaninsuranceComponent} from './insurance-plan/add-planinsurance/add-
     ReactiveFormsModule
   ],
   exports: [PlanComponent, AddScenariosComponent, AddInvestmentPlanComponent,
-    AddProfilePlanComponent, HistoryRiskProfileComponent, AddPlaninsuranceComponent],
+    AddProfilePlanComponent, HistoryRiskProfileComponent,  ],
   entryComponents: []
 })
 export class PlanModule {

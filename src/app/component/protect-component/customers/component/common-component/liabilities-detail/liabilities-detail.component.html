@@ -17,147 +17,114 @@
         <div class="col-md-12 p-0">
             <div class="insurance-ui bt">
                 <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
-                        Owner Name
+                    <div class="col-md-8">
+                        <h3 class="text-left f-14 roboto m-0"> Owner Name </h3>
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.ownerName}}
-                    </div>
-                </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
-                        Loan type
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto">
-                        {{(libility.loanTypeId == 1)?'Home Loan':(libility.loanTypeId == 2)?'Vehicle':(libility.loanTypeId == 3)?'Education':(libility.loanTypeId == 4)?'Credit Card':(libility.loanTypeId == 5)?'Personal':'Mortgage'}}
+                    <div class="col-md-4">
+                        <h3 class="text-right f-14 roboto m-0"> {{libility.ownerName}} </h3>
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
-                        Loan amount
+                    <div class="col-md-8">
+                        <h3 class="text-left f-14 roboto m-0"> Loan type </h3>
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.loanAmount}}
-                    </div>
-                </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
-                        Loan outstanding
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.outstandingAmount}}
+                    <div class="col-md-4">
+                        <h3 class="text-right f-14 roboto m-0"> {{(libility.loanTypeId == 1)?'Home Loan':(libility.loanTypeId == 2)?'Vehicle':(libility.loanTypeId == 3)?'Education':(libility.loanTypeId == 4)?'Credit Card':(libility.loanTypeId == 5)?'Personal':'Mortgage'}} </h3>
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
-                        Tenure remaining
+                    <div class="col-md-8">
+                        <h3 class="text-left f-14 roboto m-0"> Loan amount </h3>
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.remainingMonths}}
-                    </div>
-                </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
-                        Annual interest rate
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.annualInterestRate}}
+                    <div class="col-md-4">
+                        <h3 class="text-right f-14 roboto m-0"> {{libility.loanAmount}} </h3>
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
-                        EMI
+                    <div class="col-md-8">
+                        <h3 class="text-left f-14 roboto m-0"> Loan outstanding </h3>
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.emi}}
-                    </div>
-                </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
-                        Financial institution
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.financialInstitution}}
+                    <div class="col-md-4">
+                        <h3 class="text-right f-14 roboto m-0"> {{libility.outstandingAmount}} </h3>
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
-                        Termination date
+                    <div class="col-md-8">
+                        <h3 class="text-left f-14 roboto m-0"> Tenure remaining </h3>
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.maturityDate | date:'dd/MM/yyyy'}}
-                    </div>
-                </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
-                        Original loan amount
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.loanAmount}}
+                    <div class="col-md-4">
+                        <h3 class="text-right f-14 roboto m-0"> {{libility.remainingMonths}} </h3>
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
-                        Original loan tenure
+                    <div class="col-md-8">
+                        <h3 class="text-left f-14 roboto m-0"> Annual interest rate </h3>
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
-                        {{libility.loanTenure}}
+                    <div class="col-md-4">
+                        <h3 class="text-right f-14 roboto m-0"> {{libility.annualInterestRate}} </h3>
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8">
+                        <h3 class="text-left f-14 roboto m-0"> EMI </h3>
+                    </div>
+                    <div class="col-md-4">
+                        <h3 class="text-right f-14 roboto m-0"> {{libility.emi}} </h3>
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8">
+                        <h3 class="text-left f-14 roboto m-0"> Financial institution </h3>
+                    </div>
+                    <div class="col-md-4">
+                        <h3 class="text-right f-14 roboto m-0"> {{libility.financialInstitution}} </h3>
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8">
+                        <h3 class="text-left f-14 roboto m-0"> Termination date </h3>
+                    </div>
+                    <div class="col-md-4">
+                        <h3 class="text-right f-14 roboto m-0"> {{libility.maturityDate | date:'dd/MM/yyyy'}} </h3>
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8">
+                        <h3 class="text-left f-14 roboto m-0"> Original loan amount </h3>
+                    </div>
+                    <div class="col-md-4">
+                        <h3 class="text-right f-14 roboto m-0"> {{libility.loanAmount}} </h3>
+                    </div>
+                </div>
+                <div class="row bb p-4 b-l br">
+                    <div class="col-md-8">
+                        <h3 class="text-left f-14 roboto m-0"> Original loan tenure </h3>
+                    </div>
+                    <div class="col-md-4">
+                        <h3 class="text-right f-14 roboto m-0"> {{libility.loanTenure}} </h3>
                     </div>
                 </div>
 
                 <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
-                        Total in
-                        <div class="col-md-4 text-right f-14 roboto">
-                            xyz
-                        </div>
+                    <div class="col-md-8">
+                        <h3 class="text-left f-14 roboto m-0"> Total in </h3>
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
-                        {{(libility.principalOutstandingAsOn)?(libility.principalOutstandingAsOn | date:'dd/MM/yyyy'):'-'}}
+                    <div class="col-md-4">
+                        <h3 class="text-right f-14 roboto m-0"> {{(libility.principalOutstandingAsOn)?(libility.principalOutstandingAsOn | date:'dd/MM/yyyy'):'-'}} </h3>
                     </div>
                 </div>
 
                 <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
-                        Total principal paid till date
+                    <div class="col-md-8">
+                        <h3 class="text-left f-14 roboto m-0"> Total principal paid till date </h3>
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
-                        xyz
+                    <div class="col-md-4">
+                        <h3 class="text-right f-14 roboto m-0"> {{libility.principalOutStandingAmount}} </h3>
                     </div>
                 </div>
-                <div class="col-md-4 text-right f-14 roboto">
-                    {{libility.principalOutStandingAmount}}
-                </div>
+
             </div>
 
-
-
-
-
-
-
-
-
-
-            <!-- <table mat-table [dataSource]="dataSourceDetail" class="documentsTable" id="table-low">
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td class="text-left f-normal roboto f-14" mat-cell *matCellDef="let element"> {{element.name}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="position">
-                        <th mat-header-cell *matHeaderCellDef></th>
-                        <td class="text-right f-normal roboto f-14" mat-cell *matCellDef="let element"> {{element.position}} </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table> -->
-            <!-- <div class="col-md-12 text-right mt-4 p-0">
-                    <p class="f-12 text-primitive m-0">
-                        Updated: 04/09/2019
-                    </p>
-                </div> -->
         </div>
     </div>
 </div>

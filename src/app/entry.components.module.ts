@@ -49,6 +49,7 @@ import { DetailedScssComponent } from './component/protect-component/customers/c
 import { DetailedPpfComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/ppf-scheme/detailed-ppf/detailed-ppf.component';
 import { DetailedPoSavingsComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-savings/detailed-po-savings/detailed-po-savings.component';
 import { DetailedPoMisComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-mis-scheme/detailed-po-mis/detailed-po-mis.component';
+import { AddPlaninsuranceComponent } from './component/protect-component/customers/component/customer/plan/insurance-plan/add-planinsurance/add-planinsurance.component';
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -87,7 +88,7 @@ export const componentList = [
   DetailedViewEPFComponent, AddScssComponent, AddKvpComponent, AddPoSavingComponent, AddPoMisComponent, AddSsyComponent, AddNscComponent, AddTransactionComponent, AddPpfComponent, AddEPSComponent, AddSuperannuationComponent, AddGratuityComponent, NpsSummaryPortfolioComponent, AddPoTdComponent, AddPoRdComponent, BondsComponent, AddLiabilitiesComponent, AddInsuranceComponent, FixedDepositComponent,
   AddRealEstateComponent, GoldComponent, AddNPSComponent, RecuringDepositComponent, AddEPFComponent,
   OthersComponent, CashInHandComponent, BankAccountsComponent, AddGoalComponent, NpsSchemeHoldingComponent, LiabilitiesDetailComponent, DetailedViewFixedDepositComponent, DetailedViewRecuringDepositComponent, DetailedViewBondsComponent, DetailedViewGoldComponent, DetailedViewOthersComponent, DetailedViewBankAccountComponent, DetailedViewCashInHandComponent, DetailedPoSavingsComponent, DetailedPoTdComponent,
-  DetailedPoMisComponent
+  DetailedPoMisComponent,AddPlaninsuranceComponent
 ];
 
 @NgModule({
