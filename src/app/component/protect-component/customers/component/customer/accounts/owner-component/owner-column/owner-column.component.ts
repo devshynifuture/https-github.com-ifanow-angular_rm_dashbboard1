@@ -17,9 +17,11 @@ export class OwnerColumnComponent implements OnInit {
   advisorId: any;
   ownerData: any;
   clientId: any;
+  sendData: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService) { }
   @Output() valueChange = new EventEmitter();
+  @Output() valueChange1 = new EventEmitter();
   @Input()
   set data(data) {
     this.ownerData = data;
@@ -53,7 +55,9 @@ export class OwnerColumnComponent implements OnInit {
   }
   getListOfFamilyByClientRes(data) {
     console.log('family Memebers', data)
+    this.sendData = data
     this.family = data.familyMembersList
+    this.valueChange1.emit(this.sendData);
   }
   getdataForm() {
     this.owner = this.fb.group({

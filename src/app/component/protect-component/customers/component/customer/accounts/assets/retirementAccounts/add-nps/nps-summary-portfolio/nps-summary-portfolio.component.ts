@@ -6,12 +6,9 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { removeEvent } from 'highcharts';
 import * as _ from 'lodash';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
 import { UtilService } from 'src/app/services/util.service';
 @Component({
   selector: 'app-nps-summary-portfolio',

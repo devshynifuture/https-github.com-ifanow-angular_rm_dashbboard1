@@ -59,6 +59,7 @@ export class DialogContainerComponent implements OnInit {
     this.eventService.upperSliderDataObs.subscribe(
       data => {
         this.upperSliderData = data;
+        // this.fragmentData = data;
       }
     );
     this.subinject.newRightSliderDataObs.subscribe((data) => {

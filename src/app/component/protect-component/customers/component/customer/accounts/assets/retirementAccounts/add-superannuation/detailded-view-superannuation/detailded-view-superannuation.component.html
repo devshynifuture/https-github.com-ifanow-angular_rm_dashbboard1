@@ -1,7 +1,7 @@
 <div class="popup-header-fix-35">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20">EPF - DETAILED VIEW</h4>
+            <h4 class="mb-0 wrapper-20">SUPERANNUATION - DETAILED VIEW</h4>
         </div>
         <div class="col-md-2 text-left">
             <div class="wrapper-12">
@@ -19,88 +19,79 @@
                         Owner Name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{epf.ownerName}}
+                        {{superannnuation.ownerName}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                            Employee's Monthly Contribution
+                        Annual employer contribution amount
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{epf.employeesMonthlyContribution}}
+                        {{superannnuation.annualEmployerContribution}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                            Employer's Monthly Contribution
+                        Annual employee contribution amount
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{epf.employersMonthlyContribution}}
+                        {{superannnuation.annualEmployeeContribution}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                            Current value 
+                        Current value 
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{epf.currentValue}}
+                        {{superannnuation.currentValue}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                            Balance mentioned 
+                        Assumed rate of return
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{epf.currentEpfBalance}}
+                        {{superannnuation.assumedRateOfReturn}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                            Balance as on
+                        Growth rate of employer contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{epf.balanceAsOnDate  | date:'dd/MM/yyyy'}}
+                        {{superannnuation.growthRateEmployerContribution}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                            Maturity year
+                        Growth rate of employee contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{epf.maturityYear}}
+                        {{superannnuation.growthRateEmployeeContribution}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                            Annual Salary growth rate 
+                        Date of 1st contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{epf.annualSalaryGrowth}}
-                    </div>
-                </div>
-
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
-                            EPF No.
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto">
-                        {{epf.epfNo}}
+                        {{superannnuation.firstContributionDate}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                            Bank account number 
+                        Bank account number
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{epf.bankAccountNumber}}
+                        {{superannnuation.bankAccountNumber}}
                     </div>
                 </div>
                 <div class="row bb p-4 b-l br">
                     <div class="col-md-8 text-left f-14 roboto">
-                            Description
+                        Description
                     </div>
                     <div class="col-md-4 text-right f-14 roboto">
-                        {{epf.description}}
+                        {{superannnuation.description}}
                     </div>
                 </div>
             </div>

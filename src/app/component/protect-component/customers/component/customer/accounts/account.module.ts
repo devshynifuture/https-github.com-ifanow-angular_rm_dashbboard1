@@ -18,9 +18,6 @@ import {LibilitiesRightComponent} from './liabilities/libilities-right/libilitie
 import {IncomeComponent} from './income/income.component';
 import {LiabilitiesComponent} from './liabilities/liabilities.component';
 import {ChartModule} from 'angular-highcharts';
-import {FactShitComponent} from '../../common-component/fact-shit/fact-shit.component';
-import {TransactionsComponent} from '../../common-component/transactions/transactions.component';
-import {UpperCustomerComponent} from '../../common-component/upper-customer/upper-customer.component';
 import {RightFilterComponent} from '../../common-component/right-filter/right-filter.component';
 import {FixedIncomeComponent} from './assets/fixedIncome/fixed-income/fixed-income.component';
 import {AddIncomeComponent} from '../../common-component/add-income/add-income.component';
@@ -56,9 +53,8 @@ import {CommoditiesComponent} from './assets/commodities/commodities/commodities
 import {SkeletonLoadingDirective} from 'src/app/skeleton-loading.directive';
 import {FormatNumberDirective} from 'src/app/format-number.directive';
 import {DocumentNewFolderComponent} from '../../common-component/document-new-folder/document-new-folder.component';
-import {OwnerComponentModule} from "./owner-component/owner-component.module";
-import {CopyDocumentsComponent} from '../../common-component/copy-documents/copy-documents.component';
 import {AccountRoutingModule} from "./account-routing.module";
+import {AccountCommonModule} from "./account.common.module";
 
 @NgModule({
   declarations: [
@@ -80,9 +76,9 @@ import {AccountRoutingModule} from "./account-routing.module";
     // AddInsuranceComponent,
     LibilitiesRightComponent,
     // FixedDepositComponent,
-    FactShitComponent,
-    TransactionsComponent,
-    UpperCustomerComponent,
+    // FactShitComponent,
+    // TransactionsComponent,
+    // UpperCustomerComponent ,
     RightFilterComponent,
     FixedIncomeComponent,
     //BondsComponent,
@@ -125,12 +121,13 @@ import {AccountRoutingModule} from "./account-routing.module";
     // AddTransactionComponent,
     SkeletonLoadingDirective,
     FormatNumberDirective,
-    DocumentNewFolderComponent
+    DocumentNewFolderComponent,
   ],
   imports: [
     AccountRoutingModule,
+    AccountCommonModule,
     // BrowserModule,
-    OwnerComponentModule,
+    // OwnerComponentModule,
     CommonModule,
     MaterialModule,
     ChartModule,
@@ -150,9 +147,9 @@ import {AccountRoutingModule} from "./account-routing.module";
     AddIncomeComponent,
     IncomeDetailComponent,
     ReactiveFormsModule,
-    FactShitComponent,
-    TransactionsComponent,
-    UpperCustomerComponent,
+    // FactShitComponent,
+    // TransactionsComponent,
+    // UpperCustomerComponent,
     RightFilterComponent,
     DetailedViewComponent,
     // LiabilitiesDetailComponent,
@@ -170,7 +167,7 @@ import {AccountRoutingModule} from "./account-routing.module";
     OtherPayablesComponent,
     // EntryComponentsModule
   ],
-  entryComponents: [BottomSheetComponent, DocumentNewFolderComponent, CopyDocumentsComponent]
+  entryComponents: [BottomSheetComponent, DocumentNewFolderComponent]
 })
 export class AccountModule {
 }
