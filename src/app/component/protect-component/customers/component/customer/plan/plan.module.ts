@@ -19,6 +19,7 @@ import {HistoryRiskProfileComponent} from './profile-plan/history-risk-profile/h
 // import {BrowserModule} from '@angular/platform-browser';
 import {AddPlaninsuranceComponent} from './insurance-plan/add-planinsurance/add-planinsurance.component';
 import {PlanRoutingModule} from "./plan-routing.module";
+import {PlanEntryModule} from "./plan.entry.module";
 
 
 
@@ -44,10 +45,11 @@ import {PlanRoutingModule} from "./plan-routing.module";
     HistoryRiskProfileComponent,
 
     AddPlaninsuranceComponent,
-    
+
   ],
   imports: [
     PlanRoutingModule,
+    // PlanEntryModule,
     CommonModule,
     MaterialModule,
     ChartModule,
