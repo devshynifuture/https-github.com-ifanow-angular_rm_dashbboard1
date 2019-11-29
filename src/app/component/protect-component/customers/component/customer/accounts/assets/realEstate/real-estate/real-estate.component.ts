@@ -8,6 +8,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
 import { AddRealEstateComponent } from '../add-real-estate/add-real-estate.component';
+import { DetailedViewRealEstateComponent } from '../detailed-view-real-estate/detailed-view-real-estate.component';
 
 @Component({
   selector: 'app-real-estate',
@@ -116,6 +117,25 @@ export class RealEstateComponent implements OnInit {
           this.getRealEstate();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+  detailedViewRealEstate(flagValue,data,state) {
+    const fragmentData = {
+      Flag: flagValue,
+      id: 1,
+      data:data,
+      state: state,
+      componentName : DetailedViewRealEstateComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
         }
       }
     );

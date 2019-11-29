@@ -186,8 +186,6 @@ export class FixedIncomeComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         this.getFixedDepositList();
-        this.getRecurringDepositList()
-        this.getBondsList()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -207,9 +205,6 @@ export class FixedIncomeComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getFixedDepositList();
-        this.getRecurringDepositList()
-        this.getBondsList()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -229,9 +224,6 @@ export class FixedIncomeComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getFixedDepositList();
-        this.getRecurringDepositList()
-        this.getBondsList()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -251,9 +243,7 @@ export class FixedIncomeComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getFixedDepositList();
         this.getRecurringDepositList()
-        this.getBondsList()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -273,8 +263,6 @@ export class FixedIncomeComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getFixedDepositList();
-        this.getRecurringDepositList()
         this.getBondsList()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
@@ -295,9 +283,6 @@ export class FixedIncomeComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getFixedDepositList();
-        this.getRecurringDepositList()
-        this.getBondsList()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);

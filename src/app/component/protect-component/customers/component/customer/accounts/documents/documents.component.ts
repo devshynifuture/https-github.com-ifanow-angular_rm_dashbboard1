@@ -105,6 +105,9 @@ export class DocumentsComponent implements OnInit {
       this.animal = result;
     });
   }
+  openBottomSheet(): void {
+    this._bottomSheet.open(BottomSheetComponent);
+  }
 
   fileSizeConversion() {
     this.commonFileFolders.forEach(element => {
@@ -119,9 +122,6 @@ export class DocumentsComponent implements OnInit {
     });
   }
 
-  openBottomSheet(): void {
-    this._bottomSheet.open(BottomSheetComponent);
-  }
 
   getAllFileList(tabValue) {
     tabValue = (tabValue == 'Documents') ? 1 : (tabValue == 'Recents') ? 2 : (tabValue == 'Starred') ? 3 : 4;

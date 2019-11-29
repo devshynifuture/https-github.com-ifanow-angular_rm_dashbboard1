@@ -52,6 +52,11 @@ import {DetailedViewGratuityComponent} from './component/protect-component/custo
 import {DetailedScssComponent} from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/scss-scheme/detailed-scss/detailed-scss.component';
 import {AccountEntryModule} from "./component/protect-component/customers/component/customer/accounts/account.entry.module";
 import {AccountCommonModule} from "./component/protect-component/customers/component/customer/accounts/account.common.module";
+import { CopyDocumentsComponent } from './component/protect-component/customers/component/common-component/copy-documents/copy-documents.component';
+import { DetailedViewRealEstateComponent } from './component/protect-component/customers/component/customer/accounts/assets/realEstate/detailed-view-real-estate/detailed-view-real-estate.component';
+import { DetaildedViewSuperannuationComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-superannuation/detailded-view-superannuation/detailded-view-superannuation.component';
+import { MfAllocationsComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/mf-allocations/mf-allocations.component';
+import { DetailedPoRdComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-rd-scheme/detailed-po-rd/detailed-po-rd.component';
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -168,7 +173,11 @@ export const componentList = [
   DetailedPoSavingsComponent,
   DetailedPoTdComponent,
   DetailedPoMisComponent,
-  
+  DetailedViewRealEstateComponent,
+  DetaildedViewSuperannuationComponent,
+  CopyDocumentsComponent,
+  MfAllocationsComponent,
+  DetailedPoRdComponent
 ];
 
 @NgModule({
