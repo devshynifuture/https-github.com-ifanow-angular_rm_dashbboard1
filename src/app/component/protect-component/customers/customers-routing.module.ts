@@ -6,7 +6,7 @@ import {CustomerComponent} from './component/customer/customer.component';
 const routes: Routes = [{
   path: '',
   component: CustomerComponent,
-  children: [
+  /*children: [
     {
       path: 'account',
       loadChildren: () => import('./component/customer/accounts/account.module')
@@ -18,7 +18,7 @@ const routes: Routes = [{
       loadChildren: () => import('./component/customer/plan/plan.module')
         .then(m => m.PlanModule)
     },
-  ]
+  ]*/
 }];
 
 @NgModule({
