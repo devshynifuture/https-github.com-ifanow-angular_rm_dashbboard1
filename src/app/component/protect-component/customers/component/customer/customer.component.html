@@ -3,7 +3,7 @@
   <mat-tab-group [selectedIndex]="selected" animationDuration="0ms" mat-align-tabs="center" id="ui-customer">
 
     <mat-tab label="OVERVIEW">
-<!--      <app-plan></app-plan>-->
+      <!--      <app-plan></app-plan>-->
     </mat-tab>
     <mat-tab label="ACCOUNTS">
       <app-accounts></app-accounts>
@@ -15,38 +15,18 @@
     <mat-tab label="TRANSACT">Content 3</mat-tab>
 
   </mat-tab-group>
-  <!--<nav mat-tab-nav-bar id="ui-customer">
-    <a mat-tab-link
-       [routerLink]="'/customer-detail/account'"
-    >
-      OVERVIEW
-    </a>
-    <a mat-tab-link
-       [routerLink]="'/customer-detail/account'"
-    >
-      ACCOUNTS
-    </a>
-    <a mat-tab-link
-       [routerLink]="'/customer-detail/plan'"
-    >
-      PLAN
-    </a>
-    <a mat-tab-link
-       [routerLink]="'/customer-detail/plan'"
-    >
-      ACTIVITY
-    </a>
-    <a mat-tab-link
-       [routerLink]="'/customer-detail/plan'"
-    >
-      TRANSACT
-    </a>
-  </nav>
-
-  <router-outlet></router-outlet>-->
+  <!-- <nav mat-tab-nav-bar id="ui-customer">
+     <a mat-tab-link [routerLink]="'/customer-detail/account'">OVERVIEW</a>
+     <a mat-tab-link [routerLink]="'/customer-detail/account'">ACCOUNTS</a>
+     <a mat-tab-link [routerLink]="'/customer-detail/plan'">PLAN</a>
+     <a mat-tab-link [routerLink]="'/customer-detail/plan'">ACTIVITY</a>
+     <a mat-tab-link [routerLink]="'/customer-detail/plan'">TRANSACT</a>
+   </nav>
+ -->
+  <router-outlet></router-outlet>
 </div>
 <h1 *ngIf="!clientId">Please select client</h1>
-<app-dialog-container  [parentComponentName]="'customer'"></app-dialog-container>
+<app-dialog-container [parentComponentName]="'customer'"></app-dialog-container>
 
 <!-- <div class="right-side">
   <img src="/src/assets/images/svg/bell.svg">

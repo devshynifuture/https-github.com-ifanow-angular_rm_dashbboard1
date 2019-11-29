@@ -15,7 +15,16 @@ import {UpperCustomerComponent} from '../../../common-component/upper-customer/u
 export class AssetsComponent implements OnInit {
   advisorId: any;
   clientId: any;
-  assetSideBarData: [];
+  assetSideBarData = [
+    {name: 'Mutual funds', viewmode: 'tab1', count: '0'},
+    {name: 'Stocks', viewmode: 'tab2', count: '0'},
+    {name: 'Fixed income', viewmode: 'tab3', count: '0'},
+    {name: 'Real estate', viewmode: 'tab4', count: '0'},
+    {name: 'Retirement accounts', viewmode: 'tab5', count: '0'},
+    {name: 'Small saving scheme', viewmode: 'tab6', count: '0'},
+    {name: 'Cash & Bank', viewmode: 'tab7', count: '0'},
+    {name: 'Commodities', viewmode: 'tab8', count: '0'}
+  ];
 
   constructor(private subInjectService: SubscriptionInject, private eventService: EventService,
               public dialog: MatDialog, private cusService: CustomerService) {
@@ -98,16 +107,7 @@ export class AssetsComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getAssetCountGLobalData();
 
-    this.assetSideBarData = [
-      {name: 'Mutual funds', viewmode: 'tab1', count: '0'},
-      {name: 'Stocks', viewmode: 'tab2', count: '0'},
-      {name: 'Fixed income', viewmode: 'tab3', count: '0'},
-      {name: 'Real estate', viewmode: 'tab4', count: '0'},
-      {name: 'Retirement accounts', viewmode: 'tab5', count: '0'},
-      {name: 'Small saving scheme', viewmode: 'tab6', count: '0'},
-      {name: 'Cash & Bank', viewmode: 'tab7', count: '0'},
-      {name: 'Commodities', viewmode: 'tab8', count: '0'}
-    ];
+
   }
 
   getAssetCountGLobalData() {
