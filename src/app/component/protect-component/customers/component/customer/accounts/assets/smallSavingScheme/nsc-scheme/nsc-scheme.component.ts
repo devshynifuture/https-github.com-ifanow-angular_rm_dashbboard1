@@ -7,6 +7,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog, MatTableDataSource, MatSort } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
+import { DetailedNscComponent } from './detailed-nsc/detailed-nsc.component';
 
 @Component({
   selector: 'app-nsc-scheme',
@@ -90,13 +91,13 @@ export class NscSchemeComponent implements OnInit {
 
     });
   }
-  openAddNSC(data) {
+  openAddNSC(data,flag) {
     const fragmentData = {
       flag: 'addNsc',
       data,
       id: 1,
       state: 'open',
-      componentName: AddNscComponent
+      componentName:(flag=="detailedNsc")?DetailedNscComponent:AddNscComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

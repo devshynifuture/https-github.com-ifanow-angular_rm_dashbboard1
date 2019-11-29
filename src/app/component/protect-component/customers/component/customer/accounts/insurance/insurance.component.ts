@@ -13,24 +13,7 @@ import {DetailedViewComponent} from "../../../common-component/detailed-view/det
 @Component({
   selector: 'app-insurance',
   templateUrl: './insurance.component.html',
-  styleUrls: ['./insurance.component.scss'],
-  // animations: [
-  //   trigger('listAnimation', [
-  //     transition('* => *', [ // each time the binding value changes
-  //       query(':leave', [
-  //         stagger(0.1, [
-  //           animate('0.1s', style({ opacity: 0 }))
-  //         ])
-  //       ], { optional: true }),
-  //       query(':enter', [
-  //         style({ opacity: 0 }),
-  //         stagger(100, [
-  //           animate('0.1s', style({ opacity: 0 }))
-  //         ])
-  //       ], { optional: true })
-  //     ])
-  //   ])
-  // ]
+  styleUrls: ['./insurance.component.scss']
 })
 
 export class InsuranceComponent implements OnInit {
@@ -56,6 +39,8 @@ export class InsuranceComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.insuranceTypeId=1;
+    this.insuranceSubTypeId=0;
     this.getGlobalDataInsurance();
     this.getInsuranceData(1);
     this.lifeInsuranceFlag = true;
@@ -78,9 +63,10 @@ export class InsuranceComponent implements OnInit {
 
     if (data) {
       this.dataSource = data.insuranceList;
-    } else {
-      this.dataSource = undefined;
-      this.noData = 'No Insurance Data';
+    }
+    else {
+      this.dataSource = data
+      this.noData = "No Insurance Data"
     }
   }
 
@@ -131,7 +117,7 @@ export class InsuranceComponent implements OnInit {
           data => {
             this.eventService.openSnackBar('Insurance is deleted', 'dismiss');
             dialogRef.close();
-            this.getInsuranceSubTypeData(this.advisorId, this.clientId, this.insuranceTypeId, this.insuranceSubTypeId);
+            this.getInsuranceData(this.insuranceTypeId)
           },
           err => this.eventService.openSnackBar(err)
         );
@@ -223,7 +209,9 @@ export class InsuranceComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getInsuranceSubTypeData(this.advisorId, this.clientId, this.insuranceTypeId, this.insuranceSubTypeId);
+          this.lifeInsuranceFlag=true
+          this.insuranceSubTypeId=0;
+          this.getInsuranceData(this.insuranceTypeId)
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 

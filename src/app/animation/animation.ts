@@ -96,19 +96,24 @@ export const upperSliderAnimation = trigger('upperSliderOpenClose', [
 
 export const rightSliderAnimation = trigger('openClose', [
   state('open', style({
-    left: '{{from}}%'
+    left: '{{from}}%',
+    width: '60%'
   }), {params: {from: (100 - 60)}}),
   state('open65', style({
-    left: '{{from}}%'
+    left: '{{from}}%',
+    width: '65%'
   }), {params: {from: (100 - 65)}}),
   state('open35', style({
-    left: '{{from}}%'
+    left: '{{from}}%',
+    width: '35%'
   }), {params: {from: (100 - 35)}}),
   state('open30', style({
-    left: '{{from}}%'
+    left: '{{from}}%',
+    width: '30%'
   }), {params: {from: (100 - 30)}}),
   state('openHelp', style({
-    left: '{{from}}%'
+    left: '{{from}}%',
+    width: '35%'
   }), {params: {from: (100 - 35)}}),
   state('open70', style({
     left: '{{from}}%',

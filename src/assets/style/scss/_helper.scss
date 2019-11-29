@@ -448,9 +448,11 @@ $lineheight:20px;
 .pt-150 {
     padding-top: 150px !important;
 }
+
 .pt-160 {
     padding-top: 160px !important;
 }
+
 .pt-170 {
     padding-top: 170px !important;
 }
@@ -529,6 +531,10 @@ $lineheight:20px;
 
 .pb-8 {
     padding-bottom: $p4*2 !important;
+}
+
+.pb-10 {
+    padding-bottom: 10px !important;
 }
 
 .pb-12 {
@@ -985,9 +991,11 @@ $lineheight:20px;
 .t-caption {
     display: $tcaption !important;
 }
-.proxima{
-    font-family: "Proxima Nova",sans-serif !important;
+
+.proxima {
+    font-family: "Proxima Nova", sans-serif !important;
 }
+
 .contents {
     display: $contents !important;
 }

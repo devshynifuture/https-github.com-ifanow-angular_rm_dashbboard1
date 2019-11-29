@@ -8,6 +8,7 @@ import { MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource } from '@angul
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { EventService } from 'src/app/Data-service/event.service';
+import { DetailedScssComponent } from './detailed-scss/detailed-scss.component';
 
 @Component({
   selector: 'app-scss-scheme',
@@ -96,13 +97,13 @@ export class ScssSchemeComponent implements OnInit {
       this.noData = "No Scheme Found";
     }
   }
-  openAddSCSS(data) {
+  openAddSCSS(data,flag) {
     const fragmentData = {
       flag: 'addSCSS',
       data,
       id: 1,
       state: 'open',
-      componentName: AddScssComponent
+      componentName:(flag=="detailedScss")?DetailedScssComponent:AddScssComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

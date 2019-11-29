@@ -50,15 +50,12 @@ import {PreferencesSettingsComponent} from './subscription/settings-subscription
 import {SubscriptionUpperSliderComponent} from './subscription/common-subscription-component/upper-slider/subscription-upper-slider.component';
 import {PlansSettingsComponent} from './subscription/settings-subscription/plans-settings/plans-settings.component';
 import {SettingsSubscriptionComponent} from './subscription/settings-subscription/settings-subscription.component';
-import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgCircleProgressModule} from 'ng-circle-progress';
 import {ChartModule} from 'angular-highcharts';
-import {DragDropModule} from '@angular/cdk/drag-drop';
 import {SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
 import {FroalaEditorModule, FroalaViewModule} from 'angular-froala-wysiwyg';
 import {SingleDocumentViewComponent} from './subscription/common-subscription-component/single-document-view/single-document-view.component';
-import {CustomCommonModule} from '../../../../common/custom.common.module';
 import {CustomDialogContainerComponent} from '../../../../common/custom-dialog-container/custom-dialog-container.component';
 import {FixedFeeComponent} from './subscription/common-subscription-component/fixed-fee/fixed-fee.component';
 import {VariableFeeComponent} from './subscription/common-subscription-component/variable-fee/variable-fee.component';
@@ -67,9 +64,7 @@ import {CustomHtmlModule} from '../../../../common/customhtml/customhtml/custom-
 import {CommonComponentModule} from '../../common-component/common-component.module';
 import {CustomDirectiveModule} from '../../../../common/directives/common-directive.module';
 import {CommonModule} from '@angular/common';
-import {SubscriptionRoutingModule} from "./subscription-routing.module";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { AddQuotationComponent } from './subscription/common-subscription-component/add-quotation/add-quotation.component';
+import {AddQuotationComponent} from './subscription/common-subscription-component/add-quotation/add-quotation.component';
 
 export const componentList = [SubscriptionComponent,
   InvoicePdfDocumentComponent,
@@ -132,7 +127,7 @@ export const componentList = [SubscriptionComponent,
 @NgModule({
   declarations: componentList,
   imports: [
-    BrowserAnimationsModule,
+    // BrowserAnimationsModule,
     MaterialModule,
     CommonModule,
     // BrowserModule,

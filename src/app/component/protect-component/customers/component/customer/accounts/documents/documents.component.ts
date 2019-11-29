@@ -12,6 +12,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {HttpHeaders} from '@angular/common/http';
 import {DocumentNewFolderComponent} from '../../../common-component/document-new-folder/document-new-folder.component';
 import {HttpService} from 'src/app/http-service/http-service';
+import { CopyDocumentsComponent } from '../../../common-component/copy-documents/copy-documents.component';
 
 @Component({
   selector: 'app-documents',
@@ -85,6 +86,18 @@ export class DocumentsComponent implements OnInit {
     const dialogRef = this.dialog.open(DocumentNewFolderComponent, {
       width: '30%',
       data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
+  }
+
+  openDialogCopy(): void {
+    const dialogRef = this.dialog.open(CopyDocumentsComponent, {
+      width: '40%',
+      data: { name: this.name, animal: this.animal }
     });
 
     dialogRef.afterClosed().subscribe(result => {
