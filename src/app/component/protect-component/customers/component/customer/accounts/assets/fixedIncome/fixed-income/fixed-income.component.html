@@ -142,7 +142,7 @@
               more_vert
             </i>
             <mat-menu #menu4="matMenu">
-              <button mat-menu-item (click)="openPortfolioSummary('addFixedDeposit','open',element)">Edit</button>
+              <button mat-menu-item (click)="openPortfolioSummary('addFixedDeposit',element)">Edit</button>
               <button mat-menu-item (click)="openDetailedFixedDeposit('addFixedDeposit','open',element)">Deatiled
                 View</button>
               <button mat-menu-item>Activity</button>
@@ -182,7 +182,7 @@
             <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS
             </button>
-            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddRecurringDeposit('addFixedDeposit','open')"><i
+            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddRecurringDeposit('addFixedDeposit')"><i
                 class="material-icons">add</i>ADD
               NEW
             </button>
@@ -298,7 +298,7 @@
             <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS
             </button>
-            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openBonds('addBonds','open',element)"><i
+            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openBonds(null)"><i
                 class="material-icons">add</i>ADD NEW
             </button>
 

@@ -57,6 +57,9 @@ import { DetailedViewRealEstateComponent } from './component/protect-component/c
 import { DetaildedViewSuperannuationComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-superannuation/detailded-view-superannuation/detailded-view-superannuation.component';
 import { MfAllocationsComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/mf-allocations/mf-allocations.component';
 import { DetailedPoRdComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-rd-scheme/detailed-po-rd/detailed-po-rd.component';
+import { DetailedViewSchemeHoldingComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/nps-scheme-holding/detailed-view-scheme-holding/detailed-view-scheme-holding.component';
+import { ViewActivityComponent } from './component/protect-component/customers/component/customer/accounts/documents/view-activity/view-activity.component';
+import { MfAlllocationComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/mf-alllocation/mf-alllocation.component';
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -177,7 +180,10 @@ export const componentList = [
   DetaildedViewSuperannuationComponent,
   CopyDocumentsComponent,
   MfAllocationsComponent,
-  DetailedPoRdComponent
+  DetailedPoRdComponent,
+  DetailedViewSchemeHoldingComponent,
+  ViewActivityComponent,
+  MfAlllocationComponent
 ];
 
 @NgModule({
