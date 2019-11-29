@@ -387,4 +387,7 @@ export class CustomerService {
     // let httpParams=new HttpParams().set("advisorId",data.advisorId).set("clientId",data.clientId).set('folderId',data.folderId).set('fileName',data.fileName)
     return this.http.get(apiConfig.MAIN_URL + appConfig.UPLOAD_FILE, data)
   }
+  newFolder(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.NEW_FOLDER, data)
+  }
 }
