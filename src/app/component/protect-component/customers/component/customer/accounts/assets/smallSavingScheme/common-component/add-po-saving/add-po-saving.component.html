@@ -19,7 +19,17 @@
                 <div class="form-group mb-0">
                     <mat-form-field> <input formControlName="accBal" type="number" matInput #accountBalance
                             class="form-control rupess br-0" maxlength="">
-                        <mat-error class="f-12 pt-4"> Loan amount is required </mat-error>
+                        <mat-error
+                            *ngIf="poSavingForm.get('accBal').errors?.required && poSavingForm.get('accBal').touched"
+                            class="f-12 pt-4">
+                            Amount invested is required
+                        </mat-error>
+                        <mat-error *ngIf="(poSavingForm.get('accBal').errors?.min)" class="f-12 pt-4">
+                            Should be greater than 50
+                        </mat-error>
+                        <mat-error *ngIf="(poSavingForm.get('accBal').errors?.max)" class="f-12 pt-4">
+                            Should be less than 1500000
+                        </mat-error>
                         <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
@@ -131,8 +141,9 @@
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
-        </div >
-        <div (click)="addPOSaving()" class="col-md-8 right text-right"> <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+        </div>
+        <div (click)="addPOSaving()" class="col-md-8 right text-right"> <button mat-button
+                class="btn-bottom br-0 text-inherit">Save</button>
         </div>
     </div>
 </div>

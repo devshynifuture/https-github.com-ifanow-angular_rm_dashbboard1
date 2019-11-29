@@ -54,7 +54,7 @@ export class AddPoSavingComponent implements OnInit {
     }
     this.poSavingForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
-      accBal: [data.accountBalance, [Validators.required]],
+      accBal: [data.accountBalance, [Validators.required,Validators.min(50)]],
       balAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       ownershipType: [String(data.ownerTypeId), [Validators.required]]
     })
