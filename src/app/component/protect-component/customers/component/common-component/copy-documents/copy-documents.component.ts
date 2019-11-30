@@ -12,7 +12,7 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./copy-documents.component.scss']
 })
 export class CopyDocumentsComponent implements OnInit {
-  displayedColumns: string[] = ['emptySpace', 'name', 'lastModi', 'type', 'size'];
+  displayedColumns: string[] = ['name', 'lastModi', 'type', 'size'];
   dataSource = ELEMENT_DATA;
   percentDone: number;
   uploadSuccess: boolean;
@@ -41,6 +41,9 @@ export class CopyDocumentsComponent implements OnInit {
     public dialogRef: MatDialogRef<CopyDocumentsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private custumService: CustomerService, public utils: UtilService,) {}
 
+
+ 
+
   ngOnInit() {
     const tabValue = 'Documents';
     this.viewMode = 'tab1';
@@ -52,6 +55,9 @@ export class CopyDocumentsComponent implements OnInit {
     this.getAllFileList(tabValue);
     this.showLoader = true;
   }
+
+
+   
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -146,7 +152,7 @@ export class CopyDocumentsComponent implements OnInit {
   }
 }
 export interface PeriodicElement {
-  emptySpace: string;
+  
   name: string;
   lastModi: string;
   type: string;
@@ -154,10 +160,10 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {emptySpace: '', name: 'Identity & address proofs', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
-  {emptySpace: '', name: 'Accounts', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
-  {emptySpace: '', name: 'Planning', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
-  {emptySpace: '', name: 'Transaction', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
-  {emptySpace: '', name: 'Agreements & invoices', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  {name: 'Identity & address proofs', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  {name: 'Accounts', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  {name: 'Planning', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  {name: 'Transaction', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  {name: 'Agreements & invoices', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
 
 ];

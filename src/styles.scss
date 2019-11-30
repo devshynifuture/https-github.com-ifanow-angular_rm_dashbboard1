@@ -696,7 +696,8 @@ mat-tab-group[vertical] {
     .mat-tab-label {
         color: #fff;
         padding: 0 !important;
-        min-width: 110px;
+        min-width: 110px !important;
+        text-transform: uppercase;
     }
     .mat-tab-label:focus:not(.mat-tab-disabled) {
         background-color: #ddd;
@@ -704,6 +705,19 @@ mat-tab-group[vertical] {
     }
     .mat-ink-bar {
         display: none;
+    }
+}
+
+.headerClassNav {
+    border-bottom: 0px !important;
+    position: fixed !important;
+    width: 100%;
+    top: 0px;
+    background: #ffffff;
+    z-index: 9;
+    .mat-tab-links {
+        justify-content: center;
+        height: 65px;
     }
 }
 

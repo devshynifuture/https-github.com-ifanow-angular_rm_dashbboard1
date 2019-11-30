@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class DetailedPoSavingsComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject) { }
-  data: Object;
+  data;
   ngOnInit() {
   }
 

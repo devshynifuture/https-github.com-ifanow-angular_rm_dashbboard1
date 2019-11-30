@@ -29,16 +29,18 @@ export class AddOtherPayablesComponent implements OnInit {
   isDateOfRepayment: boolean;
   isBalance: boolean;
   advisorId: any;
+  _data: any;
 
   constructor(private fb: FormBuilder,public subInjectService:SubscriptionInject,public custumService:CustomerService,public eventService:EventService) { }
   @Input()
-  set inputData(inputData) {
-    this._inputData = inputData;
+  set data(inputData) {
+    this._data = inputData;
     this.getOtherPayable(inputData);
+
   }
 
-  get inputData() {
-    return this._inputData;
+  get data() {
+    return this._data;
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();

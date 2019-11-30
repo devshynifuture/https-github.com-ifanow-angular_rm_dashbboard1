@@ -59,6 +59,14 @@ import { DetailedPoRdComponent } from './component/protect-component/customers/c
 import { DetailedViewSchemeHoldingComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/nps-scheme-holding/detailed-view-scheme-holding/detailed-view-scheme-holding.component';
 import { ViewActivityComponent } from './component/protect-component/customers/component/customer/accounts/documents/view-activity/view-activity.component';
 // import { MfAllocationsComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/mf-allocations/mf-allocations.component';
+import { DetailedViewOtherPayablesComponent } from './component/protect-component/customers/component/customer/accounts/liabilities/detailed-view-other-payables/detailed-view-other-payables.component';
+import { AddOtherPayablesComponent } from './component/protect-component/customers/component/customer/accounts/liabilities/add-other-payables/add-other-payables.component';
+import { MfAllocationsComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/mf-allocations/mf-allocations.component';
+
+import { AddIncomeComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/income/add-income/add-income.component';
+import { AddIncomeFamilyMemberComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/income/add-income-family-member/add-income-family-member.component';
+import { AddIncomeSourceComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/income/add-income-source/add-income-source.component';
+import { IndividualIncomeInfoComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/income/individual-income-info/individual-income-info.component';
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -184,6 +192,16 @@ export const componentList = [
   DetailedPoRdComponent,
   DetailedViewSchemeHoldingComponent,
   ViewActivityComponent,
+  DetailedViewOtherPayablesComponent,
+  AddOtherPayablesComponent,
+  MfAllocationsComponent,
+  DetailedPoRdComponent,
+  DetailedViewSchemeHoldingComponent,
+  ViewActivityComponent,
+  AddIncomeComponent,
+  AddIncomeFamilyMemberComponent,
+  AddIncomeSourceComponent,
+  IndividualIncomeInfoComponent
 ];
 
 @NgModule({

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {AddPlaninsuranceComponent} from './add-planinsurance/add-planinsurance.component';
 
 @Component({
   selector: 'app-insurance-plan',
@@ -8,23 +9,26 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
   styleUrls: ['./insurance-plan.component.scss']
 })
 export class InsurancePlanComponent implements OnInit {
-   displayedColumns = ['position', 'name', 'weight', 'symbol','icons'];
+  displayedColumns = ['position', 'name', 'weight', 'symbol', 'icons'];
   dataSource = ELEMENT_DATA;
-  displayedColumns1 = ['name', 'sum', 'annual', 'ret','advice'];
+  displayedColumns1 = ['name', 'sum', 'annual', 'ret', 'advice'];
   dataSource1 = ELEMENT_DATA1;
-  displayedColumns2 = ['name', 'annual', 'amt','icons'];
+  displayedColumns2 = ['name', 'annual', 'amt', 'icons'];
   dataSource2 = ELEMENT_DATA2;
-  constructor(private subInjectService: SubscriptionInject) { }
+
+  constructor(private subInjectService: SubscriptionInject) {
+  }
 
   ngOnInit() {
   }
 
-  open(flagValue, data) {
+  openAddPlanInsurance(data) {
     const fragmentData = {
-      Flag: flagValue,
+      flag: 'addPlanInsurance',
       data,
+      componentName: AddPlaninsuranceComponent,
       id: 1,
-      state: 'open'
+      state: 'open',
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -39,6 +43,7 @@ export class InsurancePlanComponent implements OnInit {
   }
 
 }
+
 export interface PeriodicElement {
   name: string;
   position: string;
@@ -49,33 +54,35 @@ export interface PeriodicElement {
 const ELEMENT_DATA: PeriodicElement[] = [
   {position: "HDFC Ergo My Health Suraksha", name: '7,00,000', weight: "19,201", symbol: 'Waiting for approval'},
 ];
+
 export interface PeriodicElement1 {
   name: string;
   sum: string;
   annual: string;
   ret: string;
-  advice:string;
+  advice: string;
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  {name: "LIC Jeevan Saral", sum: '20,00,000', annual: "27,000", ret: '4.78%',advice:'Stop paying premiums'},
+  {name: "LIC Jeevan Saral", sum: '20,00,000', annual: "27,000", ret: '4.78%', advice: 'Stop paying premiums'},
 ];
+
 export interface PeriodicElement2 {
- 
+
   name: string;
   annual: string;
   amt: string;
-  
+
 }
 
 const ELEMENT_DATA2: PeriodicElement2[] = [
-  {name: "LIC Jeevan Saral", annual: "-",amt:'12,000,00' },
-  {name: "LIC Jeevan Saral", annual: "-",amt:'12,000,00' },
-  {name: "LIC Jeevan Saral", annual: "-",amt:'12,000,00' },
-  {name: "LIC Jeevan Saral", annual: "-",amt:'12,000,00' },
-  {name: "LIC Jeevan Saral", annual: "-",amt:'12,000,00' },
-  {name: "LIC Jeevan Saral", annual: "-",amt:'12,000,00' },
-  {name: "LIC Jeevan Saral", annual: "-",amt:'12,000,00' },
-  {name: "LIC Jeevan Saral", annual: "-",amt:'12,000,00' },
+  {name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00'},
+  {name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00'},
+  {name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00'},
+  {name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00'},
+  {name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00'},
+  {name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00'},
+  {name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00'},
+  {name: "LIC Jeevan Saral", annual: "-", amt: '12,000,00'},
 
-];  
+];

@@ -99,7 +99,7 @@ export class PoRdSchemeComponent implements OnInit {
       flag: 'detailPORD',
       data,
       id: 1,
-      state: 'open',
+      state: 'open35',
       componentName: DetailedPoRdComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

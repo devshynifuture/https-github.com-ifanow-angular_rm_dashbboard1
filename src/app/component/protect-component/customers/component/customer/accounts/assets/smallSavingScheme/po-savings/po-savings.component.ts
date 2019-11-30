@@ -97,7 +97,7 @@ export class PoSavingsComponent implements OnInit {
       flag: 'detailPoSaving',
       data,
       id: 1,
-      state: 'open',
+      state: 'open35',
       componentName: DetailedPoSavingsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

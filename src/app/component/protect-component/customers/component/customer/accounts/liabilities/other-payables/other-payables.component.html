@@ -92,7 +92,7 @@
         </i>
         <mat-menu #menu4="matMenu">
           <button mat-menu-item (click)="open('addOtherPayables',element)">Edit</button>
-          <button mat-menu-item>Deatiled View</button>
+          <button mat-menu-item (click)="openDetailedView(element)">Deatiled View</button>
           <button mat-menu-item>Activity</button>
           <button mat-menu-item (click)="deleteModal('OTHER PAYABLES',element)">Delete</button>
         </mat-menu>
