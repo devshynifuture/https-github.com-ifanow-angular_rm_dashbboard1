@@ -7,6 +7,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./document-new-folder.component.scss']
 })
 export class DocumentNewFolderComponent implements OnInit {
+  nameFolder: any;
 
   constructor(
     public dialogRef: MatDialogRef<DocumentNewFolderComponent>,
@@ -15,6 +16,11 @@ export class DocumentNewFolderComponent implements OnInit {
   ngOnInit() {
   }
 
+  createNewFolder(value){
+    console.log('folderName',value)
+   console.log(this.nameFolder)
+   this.dialogRef.close(value)
+  }
 }
 
 export interface DialogData {
