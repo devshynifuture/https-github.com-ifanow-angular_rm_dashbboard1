@@ -185,12 +185,12 @@ export class CommoditiesComponent implements OnInit {
       }
     );
   }
-  detailedViewGold(flagValue, data, state) {
+  detailedViewGold(flagValue, data) {
     const fragmentData = {
       Flag: flagValue,
       id: 1,
       data: data,
-      state: state,
+      state: 'open35',
       componentName: DetailedViewGoldComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -204,12 +204,12 @@ export class CommoditiesComponent implements OnInit {
       }
     );
   }
-  detailedViewOthers(flagValue, data, state) {
+  detailedViewOthers(flagValue, data) {
     const fragmentData = {
       Flag: flagValue,
       id: 1,
       data: data,
-      state: state,
+      state: 'open35',
       componentName: DetailedViewOthersComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

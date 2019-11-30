@@ -200,12 +200,12 @@ export class LiabilitiesComponent implements OnInit {
   }
 
 
-  addLiabilitiesDetail(flagValue,data,state) {
+  addLiabilitiesDetail(flagValue,data) {
     const fragmentData = {
       Flag: flagValue,
       id: 1,
       data:data,
-      state: state,
+      state: 'open35',
       componentName : LiabilitiesDetailComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

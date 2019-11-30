@@ -1,4 +1,4 @@
-<div class="popup-header-fix-35">
+<div class="popup-header-fix">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
             <h4 class="mb-0 wrapper-20">LIABILITIES - DETAILED VIEW</h4>
@@ -12,113 +12,113 @@
 </div>
 
 
-<div class="pl-20 pr-20 pb-48 pt-40">
+<div class="pl-20 pr-20 pb-48">
     <div class="row pt-40">
         <div class="col-md-12 p-0">
             <div class="insurance-ui bt">
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8">
-                        <h3 class="text-left f-14 roboto m-0"> Owner Name </h3>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Owner Name
                     </div>
-                    <div class="col-md-4">
-                        <h3 class="text-right f-14 roboto m-0"> {{libility.ownerName}} </h3>
-                    </div>
-                </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8">
-                        <h3 class="text-left f-14 roboto m-0"> Loan type </h3>
-                    </div>
-                    <div class="col-md-4">
-                        <h3 class="text-right f-14 roboto m-0"> {{(libility.loanTypeId == 1)?'Home Loan':(libility.loanTypeId == 2)?'Vehicle':(libility.loanTypeId == 3)?'Education':(libility.loanTypeId == 4)?'Credit Card':(libility.loanTypeId == 5)?'Personal':'Mortgage'}} </h3>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{libility.ownerName}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8">
-                        <h3 class="text-left f-14 roboto m-0"> Loan amount </h3>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Loan type
                     </div>
-                    <div class="col-md-4">
-                        <h3 class="text-right f-14 roboto m-0"> {{libility.loanAmount}} </h3>
-                    </div>
-                </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8">
-                        <h3 class="text-left f-14 roboto m-0"> Loan outstanding </h3>
-                    </div>
-                    <div class="col-md-4">
-                        <h3 class="text-right f-14 roboto m-0"> {{libility.outstandingAmount}} </h3>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(libility.loanTypeId == 1)?'Home Loan':(libility.loanTypeId == 2)?'Vehicle':(libility.loanTypeId == 3)?'Education':(libility.loanTypeId == 4)?'Credit Card':(libility.loanTypeId == 5)?'Personal':'Mortgage'}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8">
-                        <h3 class="text-left f-14 roboto m-0"> Tenure remaining </h3>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Loan amount
                     </div>
-                    <div class="col-md-4">
-                        <h3 class="text-right f-14 roboto m-0"> {{libility.remainingMonths}} </h3>
-                    </div>
-                </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8">
-                        <h3 class="text-left f-14 roboto m-0"> Annual interest rate </h3>
-                    </div>
-                    <div class="col-md-4">
-                        <h3 class="text-right f-14 roboto m-0"> {{libility.annualInterestRate}} </h3>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{libility.loanAmount}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8">
-                        <h3 class="text-left f-14 roboto m-0"> EMI </h3>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Loan outstanding
                     </div>
-                    <div class="col-md-4">
-                        <h3 class="text-right f-14 roboto m-0"> {{libility.emi}} </h3>
-                    </div>
-                </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8">
-                        <h3 class="text-left f-14 roboto m-0"> Financial institution </h3>
-                    </div>
-                    <div class="col-md-4">
-                        <h3 class="text-right f-14 roboto m-0"> {{libility.financialInstitution}} </h3>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{libility.outstandingAmount}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8">
-                        <h3 class="text-left f-14 roboto m-0"> Termination date </h3>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Tenure remaining
                     </div>
-                    <div class="col-md-4">
-                        <h3 class="text-right f-14 roboto m-0"> {{libility.maturityDate | date:'dd/MM/yyyy'}} </h3>
-                    </div>
-                </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8">
-                        <h3 class="text-left f-14 roboto m-0"> Original loan amount </h3>
-                    </div>
-                    <div class="col-md-4">
-                        <h3 class="text-right f-14 roboto m-0"> {{libility.loanAmount}} </h3>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{libility.remainingMonths}}
                     </div>
                 </div>
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8">
-                        <h3 class="text-left f-14 roboto m-0"> Original loan tenure </h3>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Annual interest rate
                     </div>
-                    <div class="col-md-4">
-                        <h3 class="text-right f-14 roboto m-0"> {{libility.loanTenure}} </h3>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{libility.annualInterestRate}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        EMI
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{libility.emi}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Financial institution
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{libility.financialInstitution}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Termination date
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{libility.maturityDate | date:'dd/MM/yyyy'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Original loan amount
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{libility.loanAmount}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Original loan tenure
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{libility.loanTenure}}
                     </div>
                 </div>
 
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Total in
                     </div>
-                    <div class="col-md-4">
-                        <h3 class="text-right f-14 roboto m-0"> {{(libility.principalOutstandingAsOn)?(libility.principalOutstandingAsOn | date:'dd/MM/yyyy'):'-'}} </h3>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(libility.principalOutstandingAsOn)?(libility.principalOutstandingAsOn | date:'dd/MM/yyyy'):'-'}}
                     </div>
                 </div>
 
-                <div class="row bb p-4 b-l br">
-                    <div class="col-md-8">
-                        <h3 class="text-left f-14 roboto m-0"> Total principal paid till date </h3>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Total principal paid till date
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto">
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{libility.principalOutStandingAmount}}
                     </div>
                 </div>

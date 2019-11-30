@@ -98,7 +98,7 @@ export class SsySchemeComponent implements OnInit {
       flag: 'addSyss',
       data,
       id: 1,
-      state: 'open',
+      state:(flag=="detailedSsy")?'open35':'open',
       componentName:(flag=="detailedSsy")?DetailedSsyComponent:AddSsyComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

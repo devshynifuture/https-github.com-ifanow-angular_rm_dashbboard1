@@ -102,7 +102,7 @@ export class ScssSchemeComponent implements OnInit {
       flag: 'addSCSS',
       data,
       id: 1,
-      state: 'open',
+      state:(flag=="detailedScss")?'open35':'open',
       componentName:(flag=="detailedScss")?DetailedScssComponent:AddScssComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

@@ -95,7 +95,7 @@ export class PoTdSchemeComponent implements OnInit {
       flag: 'detailPoTd',
       data,
       id: 1,
-      state: 'open',
+      state: 'open35',
       componentName: DetailedPoTdComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

@@ -123,12 +123,12 @@ export class RealEstateComponent implements OnInit {
       }
     );
   }
-  detailedViewRealEstate(flagValue,data,state) {
+  detailedViewRealEstate(flagValue,data) {
     const fragmentData = {
       Flag: flagValue,
       id: 1,
       data:data,
-      state: state,
+      state: 'open35',
       componentName : DetailedViewRealEstateComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

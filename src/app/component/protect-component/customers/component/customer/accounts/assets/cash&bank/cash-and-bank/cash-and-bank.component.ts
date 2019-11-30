@@ -180,12 +180,12 @@ export class CashAndBankComponent implements OnInit {
       }
     );;
   }
-  detailedViewbankAccount(flagValue, data, state) {
+  detailedViewbankAccount(flagValue, data) {
     const fragmentData = {
       Flag: flagValue,
       id: 1,
       data: data,
-      state: state,
+      state: 'open35',
       componentName: DetailedViewBankAccountComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -199,12 +199,12 @@ export class CashAndBankComponent implements OnInit {
       }
     );
   }
-  detailedViewCashInHand(flagValue, data, state) {
+  detailedViewCashInHand(flagValue, data) {
     const fragmentData = {
       Flag: flagValue,
       id: 1,
       data: data,
-      state: state,
+      state: 'open35',
       componentName: DetailedViewCashInHandComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

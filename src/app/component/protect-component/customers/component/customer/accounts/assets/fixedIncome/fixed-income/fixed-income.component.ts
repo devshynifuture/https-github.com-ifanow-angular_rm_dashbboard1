@@ -201,12 +201,12 @@ export class FixedIncomeComponent implements OnInit {
       }
     );
   }
-  openDetailedFixedDeposit(value, state, data) {
+  openDetailedFixedDeposit(value, data) {
     const fragmentData = {
       Flag: value,
       data: data,
       id: 1,
-      state: 'open',
+      state: 'open35',
       componentName: DetailedViewFixedDepositComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -225,7 +225,7 @@ export class FixedIncomeComponent implements OnInit {
       Flag: value,
       data: data,
       id: 1,
-      state: 'open',
+      state: 'open35',
       componentName: DetailedViewRecuringDepositComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -279,12 +279,12 @@ export class FixedIncomeComponent implements OnInit {
       }
     );
   }
-  detailedViewBonds(data, state) {
+  detailedViewBonds(data) {
     const fragmentData = {
       Flag: 'DetailedViewBondsComponent',
       data: data,
       id: 1,
-      state: state,
+      state: 'open35',
       componentName: DetailedViewBondsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
