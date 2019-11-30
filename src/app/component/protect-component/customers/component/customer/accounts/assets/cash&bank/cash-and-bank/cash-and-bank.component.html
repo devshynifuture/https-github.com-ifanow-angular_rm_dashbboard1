@@ -36,9 +36,9 @@
                 <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                         class="material-icons">filter_list</i>FILTERS</button>
-                <!-- <button mat-stroked-button class="btn-primary addon v-middle"
-                    (click)="openCashAndBank('addBankAccounts','open')"><i class="material-icons">add</i>ADD
-                    NEW</button> -->
+                <button mat-stroked-button class="btn-primary addon v-middle"
+                    (click)="openCashAndBank('addBankAccounts')"><i class="material-icons">add</i>ADD
+                    NEW</button>
             </div>
         </div>
         <div class="example-container mt-8 real-estate">
@@ -102,10 +102,10 @@
                         </i>
                         <mat-menu #menubank="matMenu">
                             <button mat-menu-item
-                                (click)="openCashAndBank('addBankAccounts','open',element)">Edit</button>
-                            <button mat-menu-item (click)="detailedViewbankAccount('addbankAccount',element)">Detailed view</button>
+                                (click)="openCashAndBank(element)">Edit</button>
+                            <button mat-menu-item (click)="detailedViewbankAccount(element)">Detailed view</button>
                             <button mat-menu-item>Activity</button>
-                            <button mat-menu-item (click)="deleteModal('BANK ACCOUNT',element)">Delete</button>
+                            <button mat-menu-item (click)="deleteModal('BANK ',element)">Delete</button>
                         </mat-menu>
                     </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
@@ -178,7 +178,7 @@
                             </i>
                             <mat-menu #menubank="matMenu">
                                 <button mat-menu-item
-                                    (click)="openCashInHand('addedbankAc',element)">Edit</button>
+                                    (click)="openCashInHand(element)">Edit</button>
                                 <button mat-menu-item (click)="detailedViewCashInHand('addCashInHand',element)">Detailed view</button>
                                 <button mat-menu-item>Activity</button>
                                 <button mat-menu-item (click)="deleteModal('CASH IN HAND',element)">Delete</button>

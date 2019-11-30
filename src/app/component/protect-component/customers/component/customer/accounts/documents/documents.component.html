@@ -154,11 +154,11 @@
                                             <button class="f-14" mat-menu-item (click)="viewActivities(element)"><img
                                                     src="assets/images/svg/info-icon.svg" class="mr-20">View
                                                 activity</button>
-                                            <button class="f-14" mat-menu-item><img src="assets/images/svg/move-to-icon.svg"
+                                            <button (click)="openDialogCopy(element, 'Move')" class="f-14" mat-menu-item><img src="assets/images/svg/move-to-icon.svg"
                                                     class="mr-20">Move to</button>
-                                            <button (click)="openDialogCopy()" class="f-14" mat-menu-item><img src="assets/images/svg/file-copy.svg"
+                                            <button *ngIf="element.folderName == undefined"(click)="openDialogCopy(element, 'Copy')" class="f-14" mat-menu-item><img src="assets/images/svg/file-copy.svg"
                                                     class="mr-20">Copy to</button>
-                                            <button class="f-14" mat-menu-item (click)="downlodFiles(element)"><img
+                                            <button *ngIf="element.folderName == undefined"class="f-14" mat-menu-item (click)="downlodFiles(element)"><img
                                                     src="assets/images/svg/download-icon.svg"
                                                     class="mr-20">Download</button>
                                             <button class="f-14" mat-menu-item (click)="deleteFile(element)"><img
