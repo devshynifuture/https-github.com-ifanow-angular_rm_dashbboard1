@@ -393,7 +393,7 @@ export class DocumentsComponent implements OnInit {
       data: this.myFiles,
     });
   }
-  filesPicked(data) {
+  uploadDocumentFolder(data) {
     this.myFiles = [];
     var array = [];
     for (let i = 0; i < data.target.files.length; i++) {
