@@ -48,6 +48,9 @@ export class FixedIncomeComponent implements OnInit {
   datasource5 = ELEMENT_DATA5;
   displayedColumns6 = ['no', 'owner', 'cvalue', 'camt', 'amt', 'cdate', 'rate', 'mvalue', 'tenure', 'type', 'desc', 'status', 'icons'];
   datasource6 = ELEMENT_DATA6;
+  filterMode;
+  dataSourceFixedFiltered;
+  isFixedIncomeFiltered: boolean = false;
 
   ngOnInit() {
     this.showRequring = '1'
@@ -58,6 +61,36 @@ export class FixedIncomeComponent implements OnInit {
   Close() {
 
   }
+
+  filterFixedIncome(key: string, value: string) {
+    let obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId
+    }
+    this.custumService.getFixedDeposit(obj).subscribe(
+      data => {
+        data = data.fixedDepositList.filter(function (item) {
+          return item[`${key}`] === value;
+        });
+        console.log('this is filtered data ------------>', data);
+        this.isFixedIncomeFiltered = true;
+        this.dataSourceFixed = null;
+        this.dataSourceFixed = new MatTableDataSource(data);
+        this.dataSourceFixed.sort = this.fixedIncomeTableSort;
+      }
+    );
+  }
+
+  changeRecurringFilterMode(value) {
+    console.log('this is filter data', value);
+    this.dataSourceRecurring.filter = value.trim().toLowerCase();
+  }
+
+  changeFixedIncomeFilterMode(value) {
+    console.log('this is filter data', value)
+    this.dataSourceFixed.filter = value.trim().toLowerCase();
+  }
+
   getfixedIncomeData(value) {
     console.log('value++++++', value)
     this.showRequring = value

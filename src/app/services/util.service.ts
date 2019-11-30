@@ -22,6 +22,13 @@ export class UtilService {
     return outputArray;
   }
 
+  totalCalculator(data: number[]) {
+    return data.reduce((accumulator, currentValue) => {
+      accumulator = accumulator + currentValue;
+      return accumulator;
+    }, 0);
+  }
+
   static convertObjectToCustomArray(inputObject: object, keyNameForOutput: string, keyValueForOutput: string): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {

@@ -32,11 +32,13 @@ export class FormatNumberDirective implements AfterViewInit {
     // }
     // console.log('FormatNumberDirective ', this.locale, this.shouldRoundOff);
     if (text && text !== "") {
-      let numberValue: number = parseFloat(text);
-      if (this.shouldRoundOff) { // true
-        numberValue = Math.round(numberValue);
+      if (!isNaN(text)) {
+        let numberValue: number = parseFloat(text);
+        if (this.shouldRoundOff) { // true
+          numberValue = Math.round(numberValue);
+        }
+        text = numberValue.toLocaleString(this.locale);
       }
-      text = numberValue.toLocaleString(this.locale);
     } else {
       text = '';
     }

@@ -54,9 +54,28 @@
             </mat-menu>
           </div>
           <div class="col-md-4 text-right right p-0">
-            <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
-                class="material-icons">filter_list</i>FILTERS
+            <button mat-stroked-button [matMenuTriggerFor]="filterFixedIncomeTable"
+              class="btn-default addon mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
             </button>
+
+            <mat-menu #filterFixedIncomeTable>
+              <button mat-menu-item (click)="filterFixedIncome('ownerName', 'Vinayak Nerlekar')">
+                Vinayak Nerlekar
+              </button>
+              <button mat-menu-item (click)="filterFixedIncome('fdType', '1')">
+                BANK FD
+              </button>
+              <!-- <button mat-menu-item (click)="filterFixedIncome('fdType', '2')">
+                CORPORATE FD
+              </button> -->
+              <button mat-menu-item (click)="filterFixedIncome('isActive', 'live')">
+                STATUS - LIVE
+              </button>
+              <button mat-menu-item (click)="filterFixedIncome('isActive', 'pending')">
+                STATUS - PENDING
+              </button>
+            </mat-menu>
+
             <button mat-stroked-button class="btn-primary addon v-middle"
               (click)="openPortfolioSummary('addFixedDeposit','open')"><i class="material-icons">add</i>ADD NEW
             </button>
@@ -184,9 +203,24 @@
             </mat-menu>
           </div>
           <div class="col-md-4 text-right right p-0">
-            <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
-                class="material-icons">filter_list</i>FILTERS
+            <button mat-stroked-button [matMenuTriggerFor]="filterRecurring" class="btn-default addon mr-8 v-middle"><i
+                class="material-icons">filter_list</i>FILTER
             </button>
+            <mat-menu #filterRecurring>
+              <button mat-menu-item (click)="changeRecurringFilterMode('m')">
+                m
+              </button>
+              <button mat-menu-item (click)="changeRecurringFilterMode('c')">
+                C
+              </button>
+              <button mat-menu-item (click)="changeRecurringFilterMode('s')">
+                S
+              </button>
+              <button mat-menu-item (click)="changeRecurringFilterMode('status pending')">
+                STATUS - PENDING
+              </button>
+            </mat-menu>
+
             <button mat-stroked-button class="btn-primary addon v-middle"
               (click)="openAddRecurringDeposit('addFixedDeposit','open')"><i class="material-icons">add</i>ADD
               NEW
