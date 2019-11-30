@@ -127,21 +127,17 @@ export class CashAndBankComponent implements OnInit {
     this.cashInHandList = data.cashInHands
     this.sumOfCashValue = data.sumOfCashValue
   }
-  openCashAndBank(value, state, data) {
+  openCashAndBank(state) {
     const fragmentData = {
-      Flag: value,
-      data: data,
+      Flag: '',
+      data: '',
       id: 1,
       state: 'open',
       componentName:BankAccountsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        if (value == 'addedbankAc') {
-          this.getCashInHandList()
-        } else {
           this.getBankAccountList();
-        };
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -150,7 +146,7 @@ export class CashAndBankComponent implements OnInit {
       }
     );;
   }
-  openCashInHand(value, data) {
+  openCashInHand(data) {
     const fragmentData = {
       flag: 'addCashInHand',
       data: data,
@@ -161,11 +157,7 @@ export class CashAndBankComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        if (value == 'addedbankAc') {
           this.getCashInHandList()
-        } else {
-          this.getBankAccountList();
-        };
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);

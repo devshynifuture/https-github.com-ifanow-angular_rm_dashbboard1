@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-individual-income-info',
@@ -7,9 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndividualIncomeInfoComponent implements OnInit {
 
-  constructor() { }
+  constructor(private fb:FormBuilder) { }
 
   ngOnInit() {
   }
-
+  
 }
