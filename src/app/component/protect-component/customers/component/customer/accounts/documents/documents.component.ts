@@ -61,7 +61,7 @@ export class DocumentsComponent implements OnInit {
   parentId: any;
   filenm: string;
   showLoader: boolean;
-
+  viewFolder:string[] = [];
 
   constructor(private http: HttpService, private _bottomSheet: MatBottomSheet,
     private event: EventService, private router: Router, private fb: FormBuilder,
@@ -370,7 +370,28 @@ export class DocumentsComponent implements OnInit {
       data: this.myFiles,
     });
   }
+filesPicked(data) {
+  const uploadFolder = [];
+  this.myFiles=[];
+  var array=[];
+  for (let i = 0; i < data.target.files.length; i++) {
+    this.myFiles.push(data.target.files[i]);
+  }
+  // this.myFiles.forEach(fileName => {
+  //   this.filenm = fileName;
+  //   this.parentId = (this.parentId == undefined) ? 0 : this.parentId;
+  //   this.uploadFile(this.parentId, this.filenm);
+  // });
 
+  array.push(this.myFiles)
+  uploadFolder.data='uploadFolder',
+  this.viewFolder.push(array[0])
+  uploadFolder.files=this.viewFolder;
+  console.log(this.myFiles);
+  const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+    data: uploadFolder,
+  });
+}
   uploadFiles() {
     const frmData = new FormData();
     for (let i = 0; i < this.myFiles.length; i++) {
