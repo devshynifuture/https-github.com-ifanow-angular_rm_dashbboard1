@@ -20,7 +20,7 @@ import { CopyDocumentsComponent } from '../../../common-component/copy-documents
   styleUrls: ['./documents.component.scss']
 })
 export class DocumentsComponent implements OnInit {
- 
+
   displayedColumns: string[] = ['emptySpace', 'name', 'lastModi', 'type', 'size', 'icons'];
   dataSource = ELEMENT_DATA;
   percentDone: number;
@@ -82,19 +82,6 @@ export class DocumentsComponent implements OnInit {
     this.getAllFileList(tabValue);
     this.showLoader = true;
   }
-  
-  createFolder(element) {
-    console.log('hdsgfdhjgjhdfgkjdfgkj',element)
-     const obj = {
-       clientId: this.clientId,
-       advisorId: this.advisorId,
-       parentFolderId: element.parentFolderId,
-       folderName:element.folderName
-     };
-     this.custumService.newFolder(obj).subscribe(
-       data => this.newFolderRes(data)
-     );
-   }
   openDialog(): void {
     const dialogRef = this.dialog.open(DocumentNewFolderComponent, {
       width: '30%',
@@ -102,8 +89,9 @@ export class DocumentsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('The dialog was closed', result);
       this.animal = result;
+      this.createFolder(this.animal)
     });
   }
 
@@ -118,6 +106,18 @@ export class DocumentsComponent implements OnInit {
       this.animal = result;
     });
   }
+  createFolder(element) {
+    console.log('folder name', element)
+    const obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      parentFolderId: this.parentId,
+      folderName: element.folderName
+    };
+    this.custumService.newFolder(obj).subscribe(
+      data => this.newFolderRes(data)
+    );
+  }
   openBottomSheet(): void {
     this._bottomSheet.open(BottomSheetComponent);
   }
@@ -127,10 +127,10 @@ export class DocumentsComponent implements OnInit {
       const data = parseInt(element.size);
       if (data >= 1024) {
         element.size = data / 1024;
-        element.size = (this.utils.formatter(element.size) + '' + 'Kb');
+        element.size = (this.utils.formatter(element.size) + '' + 'KB');
       } else if (data >= 1000000) {
         element.size = data / 1000000;
-        element.size = (this.utils.formatter(element.size) + '' + 'Mb');
+        element.size = (this.utils.formatter(element.size) + '' + 'MB');
       }
     });
   }
@@ -243,8 +243,8 @@ export class DocumentsComponent implements OnInit {
   deleteFileRes(data) {
     console.log(data);
   }
-  newFolderRes(data){
-    console.log('newFolderRes',data)
+  newFolderRes(data) {
+    console.log('newFolderRes', data)
   }
   moveFile(element) {
     const obj = {

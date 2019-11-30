@@ -19,6 +19,7 @@ export class DocumentNewFolderComponent implements OnInit {
   createNewFolder(value){
     console.log('folderName',value)
    console.log(this.nameFolder)
+   this.dialogRef.close(value)
   }
 }
 
