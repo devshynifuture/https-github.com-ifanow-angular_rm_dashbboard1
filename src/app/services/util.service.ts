@@ -5,6 +5,7 @@ import { DatePipe } from "@angular/common";
   providedIn: 'root'
 })
 export class UtilService {
+   getFamilyMemberData: any;
 
   constructor() {
   }
@@ -62,6 +63,18 @@ export class UtilService {
 
   formatter(data) {
     return Math.round(data);
+  }
+
+   calculateAgeFromCurrentDate(data) {
+    data.forEach(element => {
+      const bdate = new Date(element.dateOfBirth);
+      const timeDiff = Math.abs(Date.now() - bdate.getTime());
+      let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
+      element['age'] =age   
+    });
+    this.getFamilyMemberData=data;
+    console.log("family Member with age",this.getFamilyMemberData)
+    return this.getFamilyMemberData;
   }
 
   keyPress(event: any) {
