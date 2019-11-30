@@ -2,7 +2,7 @@
   <app-common-froala *ngIf="subscriptionTab=='viewDocuments'||subscriptionTab=='viewDoc'" [data]="inputData"
                      [changeFooter]='subscriptionTab' [screenType]="subscriptionTab"></app-common-froala>
   <app-common-froala *ngIf="subscriptionTab=='viewDoc'" [data]="inputData" [changeFooter]='subscriptionTab'
-                     [screenType]="subscriptionTab"></app-common-froala>&ndash;&gt;
+                     [screenType]="subscriptionTab"></app-common-froala>
   <app-common-froala *ngIf="subscriptionTab=='openEmailQuot'" [changeEmailOnly]='subscriptionTab'></app-common-froala>
   <app-common-froala *ngIf="subscriptionTab=='emailQuotation'" [changeFooter]='subscriptionTab' [data]="inputData">
   </app-common-froala>
@@ -22,10 +22,10 @@
                               [Selected]="selectedSubscriptionTab"></app-biller-profile-advisor>
   <app-help *ngIf="subscriptionTab=='clientHelp'"></app-help>
   <app-biller-settings [clientData]=fragmentData.data *ngIf="subscriptionTab=='billerSettings'"></app-biller-settings>
-  <app-payee-settings *ngIf="subscriptionTab=='payeeSettings'"></app-payee-settings> &ndash;&gt;
+  <app-payee-settings *ngIf="subscriptionTab=='payeeSettings'"></app-payee-settings>
   <app-help *ngIf="subscriptionTab=='documentHelp'"></app-help>
   <app-invoice [data]="inputData" *ngIf="subscriptionTab=='invoiceUpperSlider'"></app-invoice>
-  <app-invoice [data]="inputData" *ngIf="subscriptionTab=='invoiceUpperSlider'"></app-invoice> &ndash;&gt;
+  <app-invoice [data]="inputData" *ngIf="subscriptionTab=='invoiceUpperSlider'"></app-invoice>
   <app-change-payee [upperData]=fragmentData.data *ngIf="subscriptionTab=='changePayee'"></app-change-payee>
   <app-create-subscription [data]="fragmentData"
                            *ngIf="subscriptionTab=='createSubFixed' || subscriptionTab=='createSubVariable'"
