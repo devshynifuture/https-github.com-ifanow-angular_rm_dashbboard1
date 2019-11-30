@@ -12,9 +12,9 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
 
   ngOnInit() {
   }
-  close(data) {
+  close() {
   
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    this.subInjectService.changeNewRightSliderState({ state: 'close'});
   }
 
 }
