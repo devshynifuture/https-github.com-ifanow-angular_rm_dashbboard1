@@ -18,7 +18,8 @@ import {AddProfilePlanComponent} from './profile-plan/add-profile-plan/add-profi
 import {HistoryRiskProfileComponent} from './profile-plan/history-risk-profile/history-risk-profile.component';
 // import {BrowserModule} from '@angular/platform-browser';
 import {PlanRoutingModule} from "./plan-routing.module";
-import {PlanEntryModule} from "./plan.entry.module";
+import { IncomeComponent } from './profile-plan/income/income.component';
+import { IndividualIncomeInfoComponent } from './profile-plan/income/individual-income-info/individual-income-info.component';
 
 
 
@@ -42,7 +43,7 @@ import {PlanEntryModule} from "./plan.entry.module";
     AddInvestmentPlanComponent,
     AddProfilePlanComponent,
     HistoryRiskProfileComponent,
-
+    IncomeComponent
   ],
   imports: [
     PlanRoutingModule,
@@ -54,7 +55,7 @@ import {PlanEntryModule} from "./plan.entry.module";
     ReactiveFormsModule
   ],
   exports: [PlanComponent, AddScenariosComponent, AddInvestmentPlanComponent,
-    AddProfilePlanComponent, HistoryRiskProfileComponent,  ],
+    AddProfilePlanComponent, HistoryRiskProfileComponent],
   entryComponents: []
 })
 export class PlanModule {
