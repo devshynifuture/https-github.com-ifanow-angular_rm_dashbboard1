@@ -100,7 +100,7 @@ export class OtherPayablesComponent implements OnInit {
   }
   openDetailedView(data) {
     const fragmentData = {
-      flag: 'detailedPOMIS',
+      flag: 'openOtherPayables',
       data: data,
       id: 1,
       state: 'open35',
