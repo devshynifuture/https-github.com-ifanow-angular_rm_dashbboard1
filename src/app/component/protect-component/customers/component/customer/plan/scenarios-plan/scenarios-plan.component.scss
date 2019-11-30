@@ -61,11 +61,3 @@
 .shadow {
     box-shadow: none !important;
 }
-
-::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-    border-color: #02B875 !important;
-}
-
-::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
-    background-color: #02B875;
-}

@@ -60,7 +60,7 @@ export class GoalsPlanComponent implements OnInit {
       data,
       componentName: PreferencesComponent, 
       id: 1,
-      state: 'open35'
+      state: 'open40'
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

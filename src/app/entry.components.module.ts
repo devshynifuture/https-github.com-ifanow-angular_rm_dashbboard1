@@ -58,7 +58,7 @@ import { DetaildedViewSuperannuationComponent } from './component/protect-compon
 import { DetailedPoRdComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-rd-scheme/detailed-po-rd/detailed-po-rd.component';
 import { DetailedViewSchemeHoldingComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/nps-scheme-holding/detailed-view-scheme-holding/detailed-view-scheme-holding.component';
 import { ViewActivityComponent } from './component/protect-component/customers/component/customer/accounts/documents/view-activity/view-activity.component';
-import { MfAllocationsComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/mf-allocations/mf-allocations.component';
+// import { MfAllocationsComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/mf-allocations/mf-allocations.component';
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -180,7 +180,7 @@ export const componentList = [
   CopyDocumentsComponent,
   
   DetailedPoRdComponent,
-  MfAllocationsComponent,
+  
   DetailedPoRdComponent,
   DetailedViewSchemeHoldingComponent,
   ViewActivityComponent,

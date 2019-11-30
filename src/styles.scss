@@ -940,10 +940,13 @@ mat-tab-group[vertical] {
 
 
 #goal-preferences {
+    padding-top: 90px;
+    padding-bottom: 50px;
     .mat-tab-label{
         padding: 0 15px;
-        min-width: 100px !important;
+        min-width: 120px !important;
         height: 40px !important;
+        font-weight: 400;
         
         
     }
@@ -964,5 +967,16 @@ mat-tab-group[vertical] {
         // border-right: 1px solid #DADCE0;
         // border-left: 1px solid #DADCE0;
         outline:1px solid #DADCE0;
+    }
+}
+.Return-Inflation-table{
+    #table-low{
+        tr.mat-header-row,tr.mat-row{
+            height: 40px;
+        }
+        th{
+            padding: 10px 8px;
+        }
+        
     }
 }
