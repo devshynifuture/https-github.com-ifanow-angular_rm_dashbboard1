@@ -3,7 +3,7 @@
 
     <div class="form-group">
         <mat-form-field>
-            <input type="number" matInput class="form-control  br-0" maxlength="">
+            <input type="text" matInput class="form-control  br-0" [(ngModel)]="nameFolder" maxlength="">
         </mat-form-field>
     </div>
 
@@ -13,7 +13,7 @@
             <button class="text-custom f-500 c-p" mat-button>             
                     CANCEL  
             </button>
-            <button class="text-danger f-500 c-p" mat-button> DELETE </button>
+            <button class="text-danger f-500 c-p" mat-button (click)="createNewFolder(nameFolder)"> CREATE </button>
         </div>
     </div>
 

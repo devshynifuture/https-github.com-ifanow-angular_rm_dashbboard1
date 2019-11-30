@@ -3,8 +3,11 @@ import {CommonModule} from '@angular/common';
 import {ChartModule} from 'angular-highcharts';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from '../../../../../../material/material';
+import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 
 export const componentList = [
+  AddPlaninsuranceComponent
+
   // UpperCustomerComponent
 ];
 

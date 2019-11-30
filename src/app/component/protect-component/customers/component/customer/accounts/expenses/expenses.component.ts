@@ -8,7 +8,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
   styleUrls: ['./expenses.component.scss']
 })
 export class ExpensesComponent implements OnInit {
-  [x: string]: any;
+  
 
   displayedColumns = ['no', 'expense', 'date', 'desc','mode','amt','icons'];
   dataSource = ELEMENT_DATA;
