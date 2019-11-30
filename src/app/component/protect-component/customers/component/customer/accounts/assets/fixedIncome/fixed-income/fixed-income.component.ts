@@ -175,7 +175,7 @@ export class FixedIncomeComponent implements OnInit {
 
     });
   }
-  openPortfolioSummary(value, state, data,component) {
+  openPortfolioSummary(value, data) {
     const fragmentData = {
       Flag: value,
       data: data,
@@ -195,7 +195,7 @@ export class FixedIncomeComponent implements OnInit {
       }
     );
   }
-  openDetailedFixedDeposit(value, state, data,component) {
+  openDetailedFixedDeposit(value, state, data) {
     const fragmentData = {
       Flag: value,
       data: data,
@@ -214,7 +214,7 @@ export class FixedIncomeComponent implements OnInit {
       }
     );
   }
-  detailedViewRecurringDeposit(value, data,state) {
+  detailedViewRecurringDeposit(value, data) {
     const fragmentData = {
       Flag: value,
       data: data,

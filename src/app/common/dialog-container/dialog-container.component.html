@@ -1,6 +1,3 @@
-<!--<div [@dialogContainer]="dialogState" *ngIf="isOverlayVisible" class="custom-overlay">-->
-<!--</div>-->
-<!--<div *ngIf="fragmentData&&!fragmentData.componentName">-->
 <app-custom-dialog-container *ngIf="parentComponentName=='leftSideBar'" [currentState]="currentState">
   <app-common-froala *ngIf="subscriptionTab=='viewDocuments'||subscriptionTab=='viewDoc'" [data]="inputData"
                      [changeFooter]='subscriptionTab' [screenType]="subscriptionTab"></app-common-froala>
@@ -37,65 +34,13 @@
   <app-email-only [inputData]="inputData" *ngIf="subscriptionTab=='emailOnly'"></app-email-only>
   <app-email-only [inputData]="inputData" *ngIf="subscriptionTab=='emailQuotationFroala'"></app-email-only>
   <app-email-only [inputData]="inputData" *ngIf="subscriptionTab=='emailInvoiceFroala'"></app-email-only>
-  <!-- <app-add-liabilities *ngIf="subscriptionTab=='addLib'"></app-add-liabilities>
 
-    <app-liabilities-detail *ngIf="subscriptionTab=='addLiabilitiesDetail'"></app-liabilities-detail> -->
-  <!--    <app-add-liabilities [data]="inputData" *ngIf="subscriptionTab=='addLiabilities'"></app-add-liabilities>-->
-  <!--    <app-add-insurance [insuranceData]="fragmentData" *ngIf="subscriptionTab=='addInsurance'"></app-add-insurance>-->
-  <!-- <app-libilities-right *ngIf="subscriptionTab=='portfolioSummary'"></app-libilities-right> -->
-  <!-- <app-fixed-deposit [data]="inputData" *ngIf="subscriptionTab=='addFixedDeposit'"></app-fixed-deposit> -->
-  <!-- <app-add-other-payables [inputData]="inputData" *ngIf="subscriptionTab=='addOtherPayables'">
-    </app-add-other-payables>
-    <app-recuring-deposit [data]="inputData" *ngIf="subscriptionTab=='addRecuringDeposit'"></app-recuring-deposit>
-    <app-bonds [data]="inputData" *ngIf="subscriptionTab=='addBonds'"></app-bonds>
-    <app-add-income *ngIf="subscriptionTab=='addIncome'"></app-add-income>
-    <app-income-detail *ngIf="subscriptionTab=='addIncomeDetail'"></app-income-detail>
-    <app-right-filter *ngIf="subscriptionTab=='rightFilter'"></app-right-filter>
-    <app-detailed-view *ngIf="subscriptionTab=='detailedView'"></app-detailed-view>
-    <app-add-epf [data]="inputData" *ngIf="subscriptionTab=='addEPF'"></app-add-epf>
-    <app-add-eps [data]="inputData" *ngIf="subscriptionTab=='addEPS'"></app-add-eps>
-    <app-add-gratuity [data]="inputData" *ngIf="subscriptionTab=='addGratuity'"></app-add-gratuity>
-    <app-add-nps *ngIf="subscriptionTab=='addNPS'"></app-add-nps> &ndash;&gt;
-    <app-nps-summary-portfolio [data]="inputData" *ngIf="subscriptionTab=='addSummaryPort'"></app-nps-summary-portfolio>
-    <app-nps-scheme-holding [data]="inputData" *ngIf="subscriptionTab=='addSchemeHoldings'"></app-nps-scheme-holding>
-    <app-add-superannuation [data]="inputData" *ngIf="subscriptionTab=='addSuperannuation'"></app-add-superannuation>
-    <app-bank-accounts [data]="inputData" *ngIf="subscriptionTab=='addBankAccounts'"></app-bank-accounts>
-    <app-cash-in-hand [data]="inputData" *ngIf="subscriptionTab=='addCashInHand'"></app-cash-in-hand>
-    <app-gold [data]="inputData" *ngIf="subscriptionTab=='addGold'"></app-gold>
-    <app-others [data]="inputData" *ngIf="subscriptionTab=='addOthers'"></app-others>
-    <app-add-real-estate [inputData]="inputData" *ngIf="subscriptionTab=='realEstate'"></app-add-real-estate>
-    <app-add-ppf [data]="inputData" *ngIf="subscriptionTab=='addPPF'"></app-add-ppf>
-    <app-add-nsc [data]="inputData" *ngIf="subscriptionTab=='addNSC'"></app-add-nsc>
-    <app-add-ssy [data]="inputData" *ngIf="subscriptionTab=='addSSY'"></app-add-ssy>
-    <app-add-kvp [data]="inputData" *ngIf="subscriptionTab=='addKVP'"></app-add-kvp>
-    <app-add-scss [data]="inputData" *ngIf="subscriptionTab=='addSCSS'"></app-add-scss>
-    <app-add-po-saving [data]="inputData" *ngIf="subscriptionTab=='addPOSAVING'"></app-add-po-saving>
-    <app-add-po-mis [inputData]="inputData" *ngIf="subscriptionTab=='addPOMIS'"></app-add-po-mis>
-    <app-add-po-rd [data]="inputData" *ngIf="subscriptionTab=='addPORD'"></app-add-po-rd>
-    <app-add-po-td [data]="inputData" *ngIf="subscriptionTab=='addPOTD'"></app-add-po-td>
-    <app-add-scenarios *ngIf="subscriptionTab=='addScenarios'"></app-add-scenarios>
-    <app-add-investment-plan *ngIf="subscriptionTab=='addInvestment'"></app-add-investment-plan>
-    <app-add-expenses *ngIf="subscriptionTab=='addExpenses'"></app-add-expenses>
-    <app-add-profile-plan *ngIf="subscriptionTab=='addprofilePlan'"></app-add-profile-plan>
-    <app-payee-settings *ngIf="subscriptionTab=='payeeSettings'"></app-payee-settings>
-    <app-add-profile-plan *ngIf="subscriptionTab=='addprofilePlan'"></app-add-profile-plan>
-    <app-add-planinsurance *ngIf="subscriptionTab=='addPlanInsurance'"></app-add-planinsurance>
-
-    <app-add-eps *ngIf="subscriptionTab=='addEPS'"></app-add-eps> &ndash;&gt;
-    <app-add-gratuity *ngIf="subscriptionTab=='addGratuity'"></app-add-gratuity> &ndash;&gt;
-    <app-nps-summary-portfolio [data]="inputData" *ngIf="subscriptionTab=='addSummaryPort'"></app-nps-summary-portfolio>
-    &ndash;&gt;
-    <app-nps-scheme-holding *ngIf="subscriptionTab=='addSchemeHoldings'"></app-nps-scheme-holding> &ndash;&gt; -->
 </app-custom-dialog-container>
-<!--</div>-->
-<!--<div *ngIf="fragmentData&&fragmentData.componentName">-->
-<!--*ngIf="fragmentData&&fragmentData.componentName"-->
 <app-dynamic-component *ngIf="parentComponentName=='customer'" [currentState]="currentState"
-                       [data]="fragmentData" [upperSliderData]="upperSliderData" [upperSliderState]="upperSliderData.state"></app-dynamic-component>
+                       [data]="fragmentData" [upperSliderData]="upperSliderData"
+                       [upperSliderState]="upperSliderData.state"></app-dynamic-component>
 <!--</div>-->
-<div *ngIf="parentComponentName=='leftSideBar'"  [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
-  <!--  *ngIf="upperSliderData.flag=='app-subscription-upper-slider'"-->
+<div *ngIf="parentComponentName=='leftSideBar'" [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
   <app-subscription-upper-slider *ngIf="upperSliderData.flag=='app-subscription-upper-slider'">
   </app-subscription-upper-slider>
-  <!--    <app-upper-customer *ngIf="upperSliderData.flag=='app-upper-customer'"></app-upper-customer>-->
 </div>

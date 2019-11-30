@@ -1,4 +1,4 @@
-<div class="wrapper-8">
+<!-- <div class="wrapper-8">
     <div class="row pt-28 pb-28">
         <div class="col-md-8 pl-0">
 
@@ -51,7 +51,7 @@
 
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                         class="material-icons c-p">filter_list</i>FILTERS</button>
-                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddEPF(element)"><i
+                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddEPF()"><i
                         class="material-icons c-p">add</i>ADD NEW</button>
             </div>
         </div>
@@ -275,7 +275,7 @@
                                 (click)="openAddSchemeHolding(element)">Edit</button>
                             <button mat-menu-item class="c-p">Detailed view</button>
                             <button mat-menu-item class="c-p">Activity</button>
-                            <button mat-menu-item class="c-p" (click)="deleteModal(element)">Delete</button>
+                            <button mat-menu-item class="c-p" (click)="deleteModal(element,element.id)">Delete</button>
                         </mat-menu>
                     </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
@@ -573,4 +573,4 @@
 
 <div *ngIf="isLoading">
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div>
+</div> -->
