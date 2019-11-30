@@ -1,62 +1,23 @@
-<div id="ui-income">
+<div>
     <div class="row h-100vh">
-        <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
-            <ul class="vertical-menu">
-                <li (click)="viewMode ='tab1'" [ngClass]="{'b-ua':viewMode =='tab1'}" class="b-ua c-p">
-                    <div class="row">
-                        <div class="col-md-12 p-0">Income</div>
-
-                    </div>
-                </li>
-                <li (click)="viewMode ='tab2'" [ngClass]="{'b-ua':viewMode =='tab2'}" class="c-p">
-                    <div class="row">
-                        <div class="col-md-12 p-0">Salaried</div>
-                    </div>
-                </li>
-                <li (click)="viewMode ='tab3'" [ngClass]="{'b-ua':viewMode =='tab3'}" class="c-p">
-                    <div class="row">
-                        <div class="col-md-11 p-0">Business</div>
-                        <div class="col-md-1 p-0 text-custom">1</div>
-                    </div>
-                </li>
-                <li (click)="viewMode ='tab4'" [ngClass]="{'b-ua':viewMode =='tab4'}" class=" c-p">
-                    <div class="row">
-                        <div class="col-md-11 p-0">Profession</div>
-                        <div class="col-md-1 p-0 text-custom">2</div>
-                    </div>
-                </li>
-                <li (click)="viewMode ='tab5'" [ngClass]="{'b-ua':viewMode =='tab5'}" class=" c-p">
-                    <div class="row">
-                        <div class="col-md-12 p-0">Rental</div>
-
-                    </div>
-                </li>
-                <li (click)="viewMode ='tab6'" [ngClass]="{'b-ua':viewMode =='tab6'}" class=" c-p">
-                    <div class="row">
-                        <div class="col-md-12 p-0">Others</div>
-
-                    </div>
-                </li>
-
-            </ul>
-        </div>
-        <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode">
+        <div class="col-md-12 b-a p-0 min-height" [ngSwitch]="viewMode">
             <div *ngSwitchCase="'tab1'">
                 <div class="wrapper-8">
                     <div class="row">
                         <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
-                            <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
-                  Overview Report
-                  <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
-                </button>
-                            <mat-menu #menu="matMenu">
+                            <!-- <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
+                                Overview Report
+                                <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
+                                </mat-icon>
+                            </button> -->
+                            <!-- <mat-menu #menu="matMenu">
                                 <button mat-menu-item>Overview Report</button>
                                 <button mat-menu-item>Summary</button>
                                 <button mat-menu-item>All Transactions</button>
                                 <button mat-menu-item>Unrealized Transactions</button>
                                 <button mat-menu-item>Capital Gains</button>
                                 <button mat-menu-item>Goal Linkage</button>
-                            </mat-menu>
+                            </mat-menu> -->
                         </div>
                     </div>
                     <div class="row">
@@ -67,8 +28,10 @@
                             <img src="assets/images/svg/download-bordered.svg" class="c-p">
                             <img src="assets/images/svg/up-down.svg" class="c-p">
                             <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
-                            <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i class="material-icons">filter_list</i>FILTERS</button>
-                            <button mat-stroked-button class="btn-primary addon v-middle" (click)="addIncome('addIncome')"><i class="material-icons">add</i>ADD NEW</button>
+                            <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
+                                    class="material-icons">filter_list</i>FILTERS</button>
+                            <button mat-stroked-button class="btn-primary addon v-middle"
+                                (click)="addIncome('addIncome',null)"><i class="material-icons">add</i>ADD NEW</button>
                         </div>
                     </div>
                 </div>
@@ -87,20 +50,24 @@
                             <td mat-cell *matCellDef="let element" class="br t-12"> {{element.type}} </td>
                         </ng-container>
                         <ng-container matColumnDef="amt">
-                            <th mat-header-cell *matHeaderCellDef class="br t-18 text-right" mat-sort-header> Monthly amount </th>
+                            <th mat-header-cell *matHeaderCellDef class="br t-18 text-right" mat-sort-header> Monthly
+                                amount </th>
                             <td mat-cell *matCellDef="let element" class="br t-18 text-right"> {{element.amt}} </td>
                         </ng-container>
                         <ng-container matColumnDef="income">
-                            <th mat-header-cell *matHeaderCellDef class="br t-14 text-right" mat-sort-header> Income style </th>
+                            <th mat-header-cell *matHeaderCellDef class="br t-14 text-right" mat-sort-header> Income
+                                style </th>
                             <td mat-cell *matCellDef="let element" class="br t-14 text-right"> {{element.income}} </td>
                         </ng-container>
                         <ng-container matColumnDef="till">
-                            <th mat-header-cell *matHeaderCellDef class="br t-14 text-right" mat-sort-header> Continues till
+                            <th mat-header-cell *matHeaderCellDef class="br t-14 text-right" mat-sort-header> Continues
+                                till
                             </th>
                             <td mat-cell *matCellDef="let element" class="br t-14 text-right"> {{element.till}} </td>
                         </ng-container>
                         <ng-container matColumnDef="rate">
-                            <th mat-header-cell *matHeaderCellDef class="br text-right" mat-sort-header> Growth rate </th>
+                            <th mat-header-cell *matHeaderCellDef class="br text-right" mat-sort-header> Growth rate
+                            </th>
                             <td mat-cell *matCellDef="let element" class="br text-right"> {{element.rate}} </td>
                         </ng-container>
 
@@ -112,11 +79,12 @@
                             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
                             <td mat-cell *matCellDef="let element" class="t-2">
                                 <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">
-                  more_vert
-                  </i>
+                                    more_vert
+                                </i>
                                 <mat-menu #menu4="matMenu">
                                     <button mat-menu-item>Edit</button>
-                                    <button mat-menu-item (click)="addIncomeDetail('addIncomeDetail')">Deatiled View</button>
+                                    <button mat-menu-item (click)="addIncomeDetail('addIncomeDetail')">Deatiled
+                                        View</button>
                                     <button mat-menu-item>Activity</button>
                                     <button mat-menu-item>Delete</button>
                                 </mat-menu>

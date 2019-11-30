@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_BOTTOM_SHEET_DATA } from '@angular/material';
+import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material';
 
 @Component({
   selector: 'app-bottom-sheet',
@@ -15,17 +15,18 @@ export class BottomSheetComponent implements OnInit {
   folderName: any;
   folderNameToDisplay: any;
   myFiles: string[] = [];
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any) { }
+  display: any;
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any,private _bottomSheetRef: MatBottomSheetRef<BottomSheetComponent>) { }
 
   ngOnInit() {
     console.log(this.data)
   
-//gayatri changes
     // var array=[];
     // array.push(this.data)
     // this.myFiles.push(array[])
-      if(this.data.data=='uploadFolder'){
-        this.data.files.forEach(element => {
+      if(this.data.flag=='uploadFolder'){
+        this.display=this.data.viewFolder;
+        this.display.forEach(element => {
           element.folderName=element[0].webkitRelativePath.split('/');
           element.folderNameToDisplay=element.folderName[0];
         });
@@ -39,5 +40,7 @@ export class BottomSheetComponent implements OnInit {
     // this.folderNameToDisplay=this.folderName[0];
     console.log('folderNameToDisplay',this.folderNameToDisplay)
   }
-
+close(){
+  this._bottomSheetRef.dismiss()
+}
 }

@@ -1,5 +1,5 @@
-import { SubscriptionInject } from './../../../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { Component, OnInit } from '@angular/core';
+import {SubscriptionInject} from './../../../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-detailed-po-mis',
@@ -8,13 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailedPoMisComponent implements OnInit {
 
-  constructor(private subInjectService: SubscriptionInject) { }
+  constructor(private subInjectService: SubscriptionInject) {
+  }
+
+  data;
 
   ngOnInit() {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
 

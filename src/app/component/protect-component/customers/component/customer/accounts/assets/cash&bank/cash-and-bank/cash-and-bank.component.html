@@ -105,7 +105,7 @@
                                 (click)="openCashAndBank('addBankAccounts','open',element)">Edit</button>
                             <button mat-menu-item (click)="detailedViewbankAccount('addbankAccount',element)">Detailed view</button>
                             <button mat-menu-item>Activity</button>
-                            <button mat-menu-item (click)="deleteModal('BANK ACCOUNT',element)">Delete</button>
+                            <button mat-menu-item (click)="deleteModal('BANK ',element)">Delete</button>
                         </mat-menu>
                     </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
@@ -130,7 +130,7 @@
                     <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                             class="material-icons">filter_list</i>FILTERS</button>
                     <button mat-stroked-button class="btn-primary addon v-middle"
-                        (click)="openCashInHand('addCashInHand','open')"><i class="material-icons">add</i>ADD
+                        (click)="openCashInHand('',null)"><i class="material-icons">add</i>ADD
                         NEW</button>
                 </div>
             </div>
@@ -178,7 +178,7 @@
                             </i>
                             <mat-menu #menubank="matMenu">
                                 <button mat-menu-item
-                                    (click)="openCashInHand('addCashInHand','open',element)">Edit</button>
+                                    (click)="openCashInHand('addedbankAc',element)">Edit</button>
                                 <button mat-menu-item (click)="detailedViewCashInHand('addCashInHand',element)">Detailed view</button>
                                 <button mat-menu-item>Activity</button>
                                 <button mat-menu-item (click)="deleteModal('CASH IN HAND',element)">Delete</button>

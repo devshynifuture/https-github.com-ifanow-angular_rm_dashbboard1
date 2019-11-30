@@ -76,7 +76,7 @@ export class CashAndBankComponent implements OnInit {
           )
         }
 
-       
+
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -152,7 +152,7 @@ export class CashAndBankComponent implements OnInit {
   }
   openCashInHand(value, data) {
     const fragmentData = {
-      Flag: value,
+      flag: 'addCashInHand',
       data: data,
       id: 1,
       state: 'open',

@@ -37,12 +37,15 @@ export class CopyDocumentsComponent implements OnInit {
   parentId: any;
   showLoader: boolean;
   showDots: boolean;
+  sendToCopy: any;
+  CopyOrMove: string;
   constructor(
     public dialogRef: MatDialogRef<CopyDocumentsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private custumService: CustomerService, public utils: UtilService,) {}
-
-
- 
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private custumService: CustomerService, public utils: UtilService, ) {
+    console.log('data', this.data);
+    this.sendToCopy = this.data.animal
+    this.CopyOrMove = this.data.name
+  }
 
   ngOnInit() {
     const tabValue = 'Documents';
@@ -55,9 +58,6 @@ export class CopyDocumentsComponent implements OnInit {
     this.getAllFileList(tabValue);
     this.showLoader = true;
   }
-
-
-   
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -77,8 +77,11 @@ export class CopyDocumentsComponent implements OnInit {
 
 
   getAllFileList(tabValue) {
-    tabValue = (tabValue == 'Documents') ? 1 : (tabValue == 'Recents') ? 2 : (tabValue == 'Starred') ? 3 : 4;
+    tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : 4;
     this.valueTab = tabValue;
+    this.backUpfiles = [];
+    this.commonFileFolders=[];
+    this.openFolderName = [];
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -100,8 +103,10 @@ export class CopyDocumentsComponent implements OnInit {
     console.log('commonFileFolders', this.commonFileFolders);
 
     if (this.commonFileFolders.openFolderId == undefined || this.openFolderName.length == 0) {
-      Object.assign(this.commonFileFolders, {openFolderNm: value.folderName});
-      Object.assign(this.commonFileFolders, {openFolderId: value.id});
+      Object.assign(this.commonFileFolders, { openFolderNm: value.folderName });
+      Object.assign(this.commonFileFolders, { openFolderId: value.id });
+      this.parentId = (value.id == undefined) ? 0 : value.id
+      console.log('parentId', this.parentId)
       this.openFolderName.push(this.commonFileFolders);
       this.valueFirst = this.openFolderName[0];
       if (this.commonFileFolders.length > 0) {
@@ -117,6 +122,8 @@ export class CopyDocumentsComponent implements OnInit {
   }
 
   getFolders(data) {
+    this.parentId = (data == undefined) ? 0 : data[0].folderParentId
+    console.log('parentId', this.parentId)
     this.openFolderName = _.reject(this.openFolderName, function (n) {
       return n.openFolderId > data.openFolderId + 1;
     });
@@ -128,6 +135,7 @@ export class CopyDocumentsComponent implements OnInit {
     this.valueFirst = this.openFolderName[0];
   }
 
+  
   reset() {
     if (this.openFolderName.length > 0) {
       this.commonFileFolders = this.backUpfiles[0];
@@ -144,15 +152,68 @@ export class CopyDocumentsComponent implements OnInit {
       folderParentId: (value.id == undefined) ? 0 : value.id,
     };
     this.parentId = value.folderParentId;
-    console.log('this.parentId',this.parentId)
+    console.log('this.parentId', this.parentId)
     console.log('backUpfiles', this.backUpfiles);
     this.custumService.getAllFiles(obj).subscribe(
       data => this.getAllFilesRes(data, value)
     );
   }
+  copyFile(element) {
+    var value = this.sendToCopy
+    if (element == 'Copy') {
+      const obj = {
+        clientId: this.clientId,
+        advisorId: this.advisorId,
+        parentFolderId: this.parentId,
+        id: value.id
+      };
+      this.custumService.copyFiles(obj).subscribe(
+        data => this.copyFilesRes(data)
+      );
+    } else {
+      if (value.folderName == undefined) {
+        const obj = {
+          clientId: this.clientId,
+          advisorId: this.advisorId,
+          parentFolderId: this.parentId,
+          id: value.id
+        };
+        this.custumService.moveFiles(obj).subscribe(
+          data => this.moveFilesRes(data)
+        );
+      } else {
+        const obj = {
+          clientId: this.clientId,
+          advisorId: this.advisorId,
+          parentFolderId: this.parentId,
+          id: value.id
+        };
+        this.custumService.moveFolder(obj).subscribe(
+          data => this.moveFolderRes(data)
+        );
+      }
+    }
+  }
+  moveFolderRes(data){
+    console.log(data)
+    this.reset()
+     this.dialogRef.close('Documents')
+  }
+  moveFilesRes(data) {
+    console.log(data);
+    this.reset()
+     this.dialogRef.close('Documents')
+  }
+  copyFilesRes(data) {
+    console.log(data);
+    this.reset()
+     this.dialogRef.close('Documents')
+  }
+
 }
+
 export interface PeriodicElement {
-  
+
   name: string;
   lastModi: string;
   type: string;
@@ -160,10 +221,10 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {name: 'Identity & address proofs', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
-  {name: 'Accounts', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
-  {name: 'Planning', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
-  {name: 'Transaction', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
-  {name: 'Agreements & invoices', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  { name: 'Identity & address proofs', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
+  { name: 'Accounts', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
+  { name: 'Planning', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
+  { name: 'Transaction', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
+  { name: 'Agreements & invoices', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
 
 ];

@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./detailed-po-rd.component.scss']
 })
 export class DetailedPoRdComponent implements OnInit {
-  data: Object;
+  data;
   constructor(private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {

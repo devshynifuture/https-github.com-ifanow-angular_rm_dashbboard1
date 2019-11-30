@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MatSort, MatTableModule, MatTableDataSource } from '@angular/material';
+import { AddIncomeComponent } from './add-income/add-income.component';
 
 @Component({
   selector: 'app-income',
@@ -19,11 +20,12 @@ export class IncomeComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.viewMode="tab1"
   }
-  addIncome(flagValue){
+  addIncome(flagValue,data){
     const fragmentData = {
       Flag: flagValue,
-      id: 1,
-      state: 'open'
+      data,
+      state:'open',
+      componentName:AddIncomeComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

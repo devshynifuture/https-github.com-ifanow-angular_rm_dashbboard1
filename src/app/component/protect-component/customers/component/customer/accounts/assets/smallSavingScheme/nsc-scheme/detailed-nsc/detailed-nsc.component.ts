@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-detailed-nsc',
@@ -8,11 +8,14 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 })
 export class DetailedNscComponent implements OnInit {
 
-  constructor(private subInjectService: SubscriptionInject) { }
-  data;
-  ngOnInit() {
-    console.log('DetailedNscComponent ngOnInit data : ',this.data)
+  constructor(private subInjectService: SubscriptionInject) {
   }
+
+  data;
+
+  ngOnInit() {
+  }
+
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
   }

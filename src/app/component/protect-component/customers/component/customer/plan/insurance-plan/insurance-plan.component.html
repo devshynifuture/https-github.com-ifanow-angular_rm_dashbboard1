@@ -8,7 +8,7 @@
             <button mat-stroked-button class="btn-primary br-0 right">Setup</button>
         </div>
         </div>
-    
+
     <div class="row pt-16">
         <div class="col-md-12 p-0">
             <h4 class="m-0 text-primary">Life insurance</h4>
@@ -214,22 +214,22 @@
                         <h5 class="m-0 f-500 pt-28">Suggested policies</h5>
                         <div class="mt-8 insurance-table">
                             <table mat-table [dataSource]="dataSource" id="table-low">
-                          
+
                               <ng-container matColumnDef="position">
                                 <th mat-header-cell *matHeaderCellDef> Policy name </th>
                                 <td mat-cell *matCellDef="let element"> {{element.position}} </td>
                               </ng-container>
-                          
+
                               <ng-container matColumnDef="name">
                                 <th mat-header-cell *matHeaderCellDef> Sum assured </th>
                                 <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                               </ng-container>
-                          
+
                               <ng-container matColumnDef="weight">
                                 <th mat-header-cell *matHeaderCellDef> Annual premium </th>
                                 <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
                               </ng-container>
-                          
+
                               <ng-container matColumnDef="symbol">
                                 <th mat-header-cell *matHeaderCellDef> Status </th>
                                 <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
@@ -242,7 +242,7 @@
                                 </i>
                                 </td>
                               </ng-container>
-                          
+
                               <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                             </table>
@@ -267,22 +267,22 @@
                         <h5 class="m-0 f-500 text-black">Recommendations on current policies</h5>
                         <div class="mt-8">
                                 <table mat-table [dataSource]="dataSource1" id="table-low">
-                          
+
                                   <ng-container matColumnDef="name">
                                     <th mat-header-cell *matHeaderCellDef> Policy name </th>
                                     <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                                   </ng-container>
-                             
+
                                   <ng-container matColumnDef="sum">
                                     <th mat-header-cell *matHeaderCellDef> Sum assured </th>
                                     <td mat-cell *matCellDef="let element"> {{element.sum}} </td>
                                   </ng-container>
-                              
+
                                   <ng-container matColumnDef="annual">
                                     <th mat-header-cell *matHeaderCellDef> Annual premium </th>
                                     <td mat-cell *matCellDef="let element"> {{element.annual}} </td>
                                   </ng-container>
-                              
+
                                   <ng-container matColumnDef="ret">
                                     <th mat-header-cell *matHeaderCellDef> Returns </th>
                                     <td mat-cell *matCellDef="let element"> {{element.ret}} </td>
@@ -303,22 +303,22 @@
                         <h5 class="m-0 f-500 text-black">Recommendations on current policies</h5>
                         <div class="mt-8 current-policies">
                                 <table mat-table [dataSource]="dataSource2" id="table-low">
-                                  
+
                                   <ng-container matColumnDef="name">
                                     <th mat-header-cell *matHeaderCellDef class="t-40"> Particular</th>
                                     <td mat-cell *matCellDef="let element" class="t-40"><span class="pr-12">1</span> {{element.name}} </td>
                                   </ng-container>
-                             
+
                                   <ng-container matColumnDef="annual">
                                     <th mat-header-cell *matHeaderCellDef class="t-20"> Annual amount </th>
                                     <td mat-cell *matCellDef="let element" class="t-20 text-center"> {{element.annual}} </td>
                                   </ng-container>
-                              
+
                                   <ng-container matColumnDef="amt">
                                     <th mat-header-cell *matHeaderCellDef class="t-20 text-right"> Total amount </th>
                                     <td mat-cell *matCellDef="let element" class="t-20 text-right"> {{element.amt}} </td>
                                   </ng-container>
-                              
+
                                   <ng-container matColumnDef="icons">
                                     <th mat-header-cell *matHeaderCellDef class="f-18 t-4 text-right"></th>
                                     <td mat-cell *matCellDef="let element" class="t-4 text-right"><i
@@ -486,7 +486,7 @@
                 <img src="/assets/images/svg/insurance-right1.svg" class="pt-20">
                 <div class="row pt-20">
                     <div class="col-md-6 pl-0">
-                        <button (click)="open('addPlanInsurance',null)" mat-stroked-button class="in-btn pl-8"><img
+                        <button (click)="openAddPlanInsurance(null)" mat-stroked-button class="in-btn pl-8"><img
                                 src="/assets/images/svg/btn-links.svg" class="pr-8">Needs analysis</button>
                         <button mat-stroked-button class="in-btn mt-20 pl-0"><img src="/assets/images/svg/btn-links.svg"
                                 class="pr-12 ">Add policies</button>
