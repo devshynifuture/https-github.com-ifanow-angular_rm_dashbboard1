@@ -2,6 +2,8 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    //    "baseUrl": "src",
+
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -21,6 +23,12 @@
     "paths": {
       "@angular/core/src/metadata/*": [
         "./node_modules/@angular/core"
+      ],
+      "@app/*": [
+        "app/*"
+      ],
+      "@env/*": [
+        "environments/*"
       ]
     }
   },
