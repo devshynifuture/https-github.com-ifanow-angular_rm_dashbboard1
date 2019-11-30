@@ -156,7 +156,7 @@ export class CashAndBankComponent implements OnInit {
       }
     );;
   }
-  openCashInHand(value, state, data) {
+  openCashInHand(value, data) {
     const fragmentData = {
       Flag: value,
       data: data,

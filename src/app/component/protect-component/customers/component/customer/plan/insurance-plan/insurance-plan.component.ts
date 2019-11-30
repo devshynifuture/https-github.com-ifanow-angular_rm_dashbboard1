@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AddPlaninsuranceComponent } from './add-planinsurance/add-planinsurance.component';
 
 @Component({
   selector: 'app-insurance-plan',
@@ -19,12 +20,13 @@ export class InsurancePlanComponent implements OnInit {
   ngOnInit() {
   }
 
-  open(flagValue, data) {
+  openAddPlanInsurance(data) {
     const fragmentData = {
-      Flag: flagValue,
+      flag: 'addPlanInsurance',
       data,
+      componentName: AddPlaninsuranceComponent, 
       id: 1,
-      state: 'open'
+      state: 'open',
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

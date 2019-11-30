@@ -26,7 +26,7 @@ export interface PeriodicElement {
 export class InvoicesComponent implements OnInit {
   clientList: any;
   dataTOget: object;
-  nodata: string;
+  noData: string;
   advisorId: any;
   _clientData: any;
 
@@ -63,7 +63,7 @@ export class InvoicesComponent implements OnInit {
   }
   getInvoiceResponseData(data) {
     if(data==undefined){
-      this.nodata="No Data Found";
+      this.noData="No Data Found";
     }else{
       const ELEMENT_DATA = data;
     // this.invoiceClientData = data;

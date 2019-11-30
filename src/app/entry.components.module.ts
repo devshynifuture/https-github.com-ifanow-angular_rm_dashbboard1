@@ -24,7 +24,6 @@ import {CommonModule} from '@angular/common';
 import {MaterialModule} from './material/material';
 import {ChartModule} from 'angular-highcharts';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {OwnerComponentModule} from './component/protect-component/customers/component/customer/accounts/owner-component/owner-component.module';
 import {AddInsuranceComponent} from './component/protect-component/customers/component/common-component/add-insurance/add-insurance.component';
 import {FixedDepositComponent} from './component/protect-component/customers/component/customer/accounts/assets/fixedIncome/fixed-deposit/fixed-deposit.component';
 import {AddRealEstateComponent} from './component/protect-component/customers/component/customer/accounts/assets/realEstate/add-real-estate/add-real-estate.component';
@@ -46,11 +45,21 @@ import {DetailedViewCashInHandComponent} from './component/protect-component/cus
 import {DetailedPoSavingsComponent} from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-savings/detailed-po-savings/detailed-po-savings.component';
 import {DetailedPoMisComponent} from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-mis-scheme/detailed-po-mis/detailed-po-mis.component';
 import {DetailedPpfComponent} from "./component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/ppf-scheme/detailed-ppf/detailed-ppf.component";
-import { DetailedSsyComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/ssy-scheme/detailed-ssy/detailed-ssy.component';
-import { DetailedViewEPSComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-eps/detailed-view-eps/detailed-view-eps.component';
-import { DetailedKvpComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/kvp-scheme/detailed-kvp/detailed-kvp.component';
-import { DetailedViewGratuityComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
-import { DetailedScssComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/scss-scheme/detailed-scss/detailed-scss.component';
+import {DetailedSsyComponent} from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/ssy-scheme/detailed-ssy/detailed-ssy.component';
+import {DetailedViewEPSComponent} from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-eps/detailed-view-eps/detailed-view-eps.component';
+import {DetailedKvpComponent} from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/kvp-scheme/detailed-kvp/detailed-kvp.component';
+import {DetailedViewGratuityComponent} from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
+import {DetailedScssComponent} from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/scss-scheme/detailed-scss/detailed-scss.component';
+import {AccountEntryModule} from "./component/protect-component/customers/component/customer/accounts/account.entry.module";
+import {AccountCommonModule} from "./component/protect-component/customers/component/customer/accounts/account.common.module";
+import { CopyDocumentsComponent } from './component/protect-component/customers/component/common-component/copy-documents/copy-documents.component';
+import { DetailedViewRealEstateComponent } from './component/protect-component/customers/component/customer/accounts/assets/realEstate/detailed-view-real-estate/detailed-view-real-estate.component';
+import { DetaildedViewSuperannuationComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-superannuation/detailded-view-superannuation/detailded-view-superannuation.component';
+import { MfAllocationsComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/mf-allocations/mf-allocations.component';
+import { DetailedPoRdComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-rd-scheme/detailed-po-rd/detailed-po-rd.component';
+import { DetailedViewSchemeHoldingComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/nps-scheme-holding/detailed-view-scheme-holding/detailed-view-scheme-holding.component';
+import { ViewActivityComponent } from './component/protect-component/customers/component/customer/accounts/documents/view-activity/view-activity.component';
+import { MfAlllocationComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/mf-alllocation/mf-alllocation.component';
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -88,9 +97,45 @@ export const componentList = [
   DetailedKvpComponent,
   DetailedViewGratuityComponent,
   DetailedScssComponent,
-  DetailedViewEPFComponent, AddScssComponent, AddKvpComponent, AddPoSavingComponent, AddPoMisComponent, AddSsyComponent, AddNscComponent, AddTransactionComponent, AddPpfComponent, AddEPSComponent, AddSuperannuationComponent, AddGratuityComponent, NpsSummaryPortfolioComponent, AddPoTdComponent, AddPoRdComponent, BondsComponent, AddLiabilitiesComponent, AddInsuranceComponent, FixedDepositComponent,
-  AddRealEstateComponent, GoldComponent, AddNPSComponent, RecuringDepositComponent, AddEPFComponent,
-  OthersComponent, CashInHandComponent, BankAccountsComponent, AddGoalComponent, NpsSchemeHoldingComponent, LiabilitiesDetailComponent, DetailedViewFixedDepositComponent, DetailedViewRecuringDepositComponent, DetailedViewBondsComponent, DetailedViewGoldComponent, DetailedViewOthersComponent, DetailedViewBankAccountComponent, DetailedViewCashInHandComponent, DetailedPoSavingsComponent, DetailedPoTdComponent,
+  DetailedViewEPFComponent,
+  AddScssComponent,
+  AddKvpComponent,
+  AddPoSavingComponent,
+  AddPoMisComponent,
+  AddSsyComponent,
+  AddNscComponent,
+  AddTransactionComponent,
+  AddPpfComponent,
+  AddEPSComponent,
+  AddSuperannuationComponent,
+  AddGratuityComponent,
+  NpsSummaryPortfolioComponent,
+  AddPoTdComponent,
+  AddPoRdComponent,
+  BondsComponent,
+  AddLiabilitiesComponent,
+  AddInsuranceComponent,
+  FixedDepositComponent,
+  AddRealEstateComponent,
+  GoldComponent,
+  AddNPSComponent,
+  RecuringDepositComponent,
+  AddEPFComponent,
+  OthersComponent,
+  CashInHandComponent,
+  BankAccountsComponent,
+  AddGoalComponent,
+  NpsSchemeHoldingComponent,
+  LiabilitiesDetailComponent,
+  DetailedViewFixedDepositComponent,
+  DetailedViewRecuringDepositComponent,
+  DetailedViewBondsComponent,
+  DetailedViewGoldComponent,
+  DetailedViewOthersComponent,
+  DetailedViewBankAccountComponent,
+  DetailedViewCashInHandComponent,
+  DetailedPoSavingsComponent,
+  DetailedPoTdComponent,
   DetailedPoMisComponent,
   DetailedViewEPFComponent,
   AddScssComponent,
@@ -131,6 +176,14 @@ export const componentList = [
   DetailedPoSavingsComponent,
   DetailedPoTdComponent,
   DetailedPoMisComponent,
+  DetailedViewRealEstateComponent,
+  DetaildedViewSuperannuationComponent,
+  CopyDocumentsComponent,
+  MfAllocationsComponent,
+  DetailedPoRdComponent,
+  DetailedViewSchemeHoldingComponent,
+  ViewActivityComponent,
+  MfAlllocationComponent
 ];
 
 @NgModule({
@@ -141,7 +194,10 @@ export const componentList = [
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
-    OwnerComponentModule
+    // OwnerComponentModule,
+    AccountEntryModule,
+    AccountCommonModule,
+
   ],
   exports: [
     FormsModule,

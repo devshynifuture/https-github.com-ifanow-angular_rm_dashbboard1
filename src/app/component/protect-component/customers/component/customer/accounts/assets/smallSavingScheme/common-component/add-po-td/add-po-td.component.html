@@ -1,7 +1,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20" >ADD POST OFFICE TIME DEPOSIT (PO-TD)</h4>
+            <h4 class="mb-0 wrapper-20">ADD POST OFFICE TIME DEPOSIT (PO-TD)</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12"> <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i> </div>
@@ -18,10 +18,15 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="amtInvested" #amountInvest type="text" maxlength="20"
+                        <input matInput type="number" autocomplete="off" formControlName="amtInvested" #amountInvest type="text" maxlength="20"
                             class="form-control br-0 rupess">
-                        <mat-error class="f-12 pt-4">
-                            Bond name is requiredbondName
+                        <mat-error
+                            *ngIf="POTDForm.get('amtInvested').errors?.required && POTDForm.get('amtInvested').touched"
+                            class="f-12 pt-4">
+                            Amount invested is required
+                        </mat-error>
+                        <mat-error *ngIf="(POTDForm.get('amtInvested').errors?.min)" class="f-12 pt-4">
+                            Should be greater than 200
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -168,7 +173,8 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right" (click)="addPOTD()"> <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+        <div class="col-md-8 right text-right" (click)="addPOTD()"> <button mat-button
+                class="btn-bottom br-0 text-inherit">Save</button>
         </div>
     </div>
 </div>

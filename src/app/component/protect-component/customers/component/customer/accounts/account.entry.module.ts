@@ -8,41 +8,7 @@ import {AccountUpperSliderModule} from './account-upper-slider.module';
 import {MaterialModule} from '../../../../../../material/material';
 
 export const componentList = [
-  UpperCustomerComponent,
-  /* AddScssComponent,
-   AddKvpComponent,
-   AddPoSavingComponent,
-   AddPoMisComponent,
-   AddSsyComponent,
-   AddNscComponent,
-   AddTransactionComponent,
-   AddPpfComponent,
-   AddEPSComponent,
-   AddSuperannuationComponent,
-   AddGratuityComponent,
-   NpsSummaryPortfolioComponent,
-   AddPoTdComponent,
-   AddPoRdComponent,
-   BondsComponent,
-   AddLiabilitiesComponent,
-   AddInsuranceComponent,
-   FixedDepositComponent,
-
-   AddRealEstateComponent,
-   GoldComponent,
-   AddNPSComponent,
-   RecuringDepositComponent,
-   AddEPFComponent,
-
-   OthersComponent,
-   CashInHandComponent,
-   BankAccountsComponent,
-   AddGoalComponent,
-   NpsSchemeHoldingComponent,
-   LiabilitiesDetailComponent,
-   DetailedViewFixedDepositComponent,
-   DetailedViewRecuringDepositComponent,
-   DetailedViewBondsComponent,*/
+  UpperCustomerComponent
 ];
 
 @NgModule({

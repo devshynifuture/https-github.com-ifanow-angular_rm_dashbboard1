@@ -7,14 +7,13 @@ import {BottomSheetComponent} from './component/common-component/bottom-sheet/bo
 import {ChartModule} from 'angular-highcharts';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 // import {BrowserModule} from '@angular/platform-browser';
-import {CustomerComponent} from "./component/customer/customer.component";
-import {AddLiabilitiesComponent} from "./component/common-component/add-liabilities/add-liabilities.component";
-import { CopyDocumentsComponent } from './component/common-component/copy-documents/copy-documents.component';
+import {CustomerComponent} from './component/customer/customer.component';
+import {AddLiabilitiesComponent} from './component/common-component/add-liabilities/add-liabilities.component';
 
-import {CustomCommonModule} from "../../../common/custom.common.module";
-import {EntryComponentsModule} from "../../../entry.components.module";
-import {AccountModule} from "./component/customer/accounts/account.module";
-import {PlanModule} from "./component/customer/plan/plan.module";
+import {CustomCommonModule} from '../../../common/custom.common.module';
+import {EntryComponentsModule} from '../../../entry.components.module';
+import {AccountModule} from './component/customer/accounts/account.module';
+import {PlanModule} from './component/customer/plan/plan.module';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -23,7 +22,7 @@ import {PlanModule} from "./component/customer/plan/plan.module";
 
 
 @NgModule({
-  declarations: [CustomerComponent, CopyDocumentsComponent],
+  declarations: [CustomerComponent],
   imports: [
     // BrowserModule,
     CommonModule,

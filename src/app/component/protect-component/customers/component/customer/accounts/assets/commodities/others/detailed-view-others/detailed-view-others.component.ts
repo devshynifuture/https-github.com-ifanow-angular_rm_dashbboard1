@@ -10,8 +10,6 @@ export class DetailedViewOthersComponent implements OnInit {
   displayedColumns: string[] = ['name', 'position'];
   _data: any;
   ownerName: any;
-  libility: any;
-  gold: any;
   others: any;
 
   constructor(private subInjectService: SubscriptionInject) {

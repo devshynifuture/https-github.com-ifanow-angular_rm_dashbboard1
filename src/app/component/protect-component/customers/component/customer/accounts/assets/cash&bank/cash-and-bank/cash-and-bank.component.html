@@ -36,9 +36,9 @@
                 <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                         class="material-icons">filter_list</i>FILTERS</button>
-                <button mat-stroked-button class="btn-primary addon v-middle"
+                <!-- <button mat-stroked-button class="btn-primary addon v-middle"
                     (click)="openCashAndBank('addBankAccounts','open')"><i class="material-icons">add</i>ADD
-                    NEW</button>
+                    NEW</button> -->
             </div>
         </div>
         <div class="example-container mt-8 real-estate">
@@ -107,8 +107,8 @@
                             more_vert
                         </i>
                         <mat-menu #menubank="matMenu">
-                            <button mat-menu-item
-                                (click)="openCashAndBank('addBankAccounts','open',element)">Edit</button>
+                            <!-- <button mat-menu-item
+                                (click)="openCashAndBank('addBankAccounts','open',element)">Edit</button> -->
                             <button mat-menu-item
                                 (click)="detailedViewbankAccount('addbankAccount',element,'open')">Detailed
                                 view</button>
@@ -192,8 +192,8 @@
                                 more_vert
                             </i>
                             <mat-menu #menubank="matMenu">
-                                <button mat-menu-item
-                                    (click)="openCashInHand('addCashInHand','open',element)">Edit</button>
+                                <!-- <button mat-menu-item
+                                    (click)="openCashInHand('addCashInHand','open',element)">Edit</button> -->
                                 <button mat-menu-item
                                     (click)="detailedViewCashInHand('addCashInHand',element,'open')">Detailed
                                     view</button>

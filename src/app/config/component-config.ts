@@ -131,7 +131,7 @@ export const appConfig = {
   RENAME_FOLDER:'document/account/document/all-file/folder/rename',
   DELETE_FOLDER:'document/account/document/all-file/folder/trash',
   STAR_FILE:'document/document/all-file/star',
-  VIEW_ACTIVITY:'document/account/document/all-file/file/view-activity',
+  VIEW_ACTIVITY:'document/account/document/all-file/file/view-activity/get',
   DELETE_FIXED_DEPOSITE:'account/asset/fixed-income/fixed-deposit/delete',
   DELETE_RECURRING_DEPOSITE:'account/asset/fixed-income/recurring-deposit/delete',
   DELETE_BOND:'account/asset/fixed-income/bond/delete',
@@ -146,6 +146,7 @@ export const appConfig = {
   DELETE_OTHERS:'account/asset/commodity/other/delete',
   GLOBAL_LIABILITIES:'account/liability/global/get',
   UPLOAD_FILE:'document/account/document/all-file/file/put',
+  NEW_FOLDER:'document/account/document/all-file/folder/post',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   GET_EPF: 'account/asset/retirement/epf/list/get',

@@ -181,7 +181,7 @@ export class FixedIncomeComponent implements OnInit {
 
     });
   }
-  openPortfolioSummary(value, state, data, component) {
+  openPortfolioSummary(value, data) {
     const fragmentData = {
       Flag: value,
       data: data,
@@ -192,8 +192,6 @@ export class FixedIncomeComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         this.getFixedDepositList();
-        this.getRecurringDepositList()
-        this.getBondsList()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -203,7 +201,7 @@ export class FixedIncomeComponent implements OnInit {
       }
     );
   }
-  openDetailedFixedDeposit(value, state, data, component) {
+  openDetailedFixedDeposit(value, state, data) {
     const fragmentData = {
       Flag: value,
       data: data,
@@ -213,9 +211,6 @@ export class FixedIncomeComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getFixedDepositList();
-        this.getRecurringDepositList()
-        this.getBondsList()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -225,7 +220,7 @@ export class FixedIncomeComponent implements OnInit {
       }
     );
   }
-  detailedViewRecurringDeposit(value, data, state) {
+  detailedViewRecurringDeposit(value, data) {
     const fragmentData = {
       Flag: value,
       data: data,
@@ -235,9 +230,6 @@ export class FixedIncomeComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getFixedDepositList();
-        this.getRecurringDepositList()
-        this.getBondsList()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -257,9 +249,7 @@ export class FixedIncomeComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getFixedDepositList();
         this.getRecurringDepositList()
-        this.getBondsList()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -279,8 +269,6 @@ export class FixedIncomeComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getFixedDepositList();
-        this.getRecurringDepositList()
         this.getBondsList()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
@@ -291,19 +279,16 @@ export class FixedIncomeComponent implements OnInit {
       }
     );
   }
-  detailedViewBonds(data) {
+  detailedViewBonds(data, state) {
     const fragmentData = {
       Flag: 'DetailedViewBondsComponent',
       data: data,
       id: 1,
-      state: 'open',
+      state: state,
       componentName: DetailedViewBondsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getFixedDepositList();
-        this.getRecurringDepositList()
-        this.getBondsList()
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
