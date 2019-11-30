@@ -56,20 +56,22 @@
             </div>
         </div>
         <div class="example-container mt-8 real-estate">
-            <table mat-table [dataSource]="dataEPSList" matSort id="table-low">
+            <table matSort #epfListTable="matSort" mat-table [dataSource]="dataEPFList" matSort id="table-low">
 
                 <ng-container matColumnDef="no">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="br"> No </th>
+                    <th mat-sort-header="no" mat-header-cell *matHeaderCellDef mat-sort-header class="br"> No </th>
                     <td mat-cell *matCellDef="let element let i = index" class="br"> {{i+1}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
-                    <th mat-header-cell *matHeaderCellDef class="br t-18"> Owner </th>
+                    <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-18"> Owner </th>
                     <td mat-cell *matCellDef="let element" class="br t-18"> {{element.ownerName}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">Total </td>
                 </ng-container>
                 <ng-container matColumnDef="cvalue">
-                    <th mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Current value </th>
+                    <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-10 text-right">
+                        Current value
+                    </th>
                     <td mat-cell *matCellDef="let element" class="br t-10 text-right" appFormatNumber>
                         {{ element.currentValue }}
                     </td>
@@ -79,7 +81,9 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="emp">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right"> Employee’s contribution </th>
+                    <th mat-sort-header="employeesMonthlyContribution" mat-header-cell *matHeaderCellDef
+                        class="br text-right"> Employee’s
+                        contribution </th>
                     <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
                         {{ element.employeesMonthlyContribution }} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" appFormatNumber
@@ -87,7 +91,9 @@
                         {{ sumOfemployeesMonthlyContribution || '-'}}</td>
                 </ng-container>
                 <ng-container matColumnDef="empc">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right"> Employer’s contribution </th>
+                    <th mat-sort-header="employersMonthlyContribution" mat-header-cell *matHeaderCellDef
+                        class="br text-right"> Employer’s
+                        contribution </th>
                     <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
                         {{ element.employersMonthlyContribution }} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" appFormatNumber
@@ -95,12 +101,16 @@
                         {{ sumOfemployersMonthlyContribution || '-'}}</td>
                 </ng-container>
                 <ng-container matColumnDef="rate">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right t-7"> Rate of return </th>
+                    <th mat-sort-header="rateOfReturns" mat-header-cell *matHeaderCellDef class="br text-right t-7">
+                        Rate of return
+                    </th>
                     <td mat-cell *matCellDef="let element" class="br text-right t-7"> {{element.rateOfReturns}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
                 </ng-container>
                 <ng-container matColumnDef="bal">
-                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Balance mentioned </th>
+                    <th mat-sort-header="currentEpfBalance" mat-header-cell *matHeaderCellDef class="br t-8 text-right">
+                        Balance
+                        mentioned </th>
                     <td mat-cell *matCellDef="let element" class="br t-8 text-right" appFormatNumber>
                         {{ element.currentEpfBalance }} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" appFormatNumber
@@ -108,23 +118,27 @@
                         {{ sumOfcurrentEpfBalance || '-'}}</td>
                 </ng-container>
                 <ng-container matColumnDef="bacla">
-                    <th mat-header-cell *matHeaderCellDef class="br t-5 text-left">Balance as on </th>
+                    <th mat-sort-header="balanceAsOnDate" mat-header-cell *matHeaderCellDef class="br t-5 text-left">
+                        Balance as on
+                    </th>
                     <td mat-cell *matCellDef="let element" class="br t-5 text-left">
                         {{element.balanceAsOnDate | date:'dd/MM/yyyy'}} </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
                 <ng-container matColumnDef="year">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right">Maturity year </th>
+                    <th mat-sort-header="maturityYear" mat-header-cell *matHeaderCellDef class="br text-right">Maturity
+                        year </th>
                     <td mat-cell *matCellDef="let element" class="br text-right"> {{element.maturityYear}} </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
                 <ng-container matColumnDef="desc">
-                    <th mat-header-cell *matHeaderCellDef class="br t-10"> Description </th>
+                    <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br t-10"> Description
+                    </th>
                     <td mat-cell *matCellDef="let element" class="br t-10"> {{element.description}} </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
                 <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
+                    <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br"> Status </th>
                     <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.status}} </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
@@ -135,9 +149,9 @@
                             more_vert
                         </i>
                         <mat-menu #menubank="matMenu">
-                            <button mat-menu-item class="c-p"
-                                (click)="openAddEPF(element)">Edit</button>
-                            <button mat-menu-item class="c-p" (click)="openDetailedViewEPF(element)">Detailed view</button>
+                            <button mat-menu-item class="c-p" (click)="openAddEPF(element)">Edit</button>
+                            <button mat-menu-item class="c-p" (click)="openDetailedViewEPF(element)">Detailed
+                                view</button>
                             <button mat-menu-item class="c-p">Activity</button>
                             <button mat-menu-item class="c-p" (click)="deleteModal('EPF',element)">Delete</button>
                         </mat-menu>
@@ -213,19 +227,20 @@
             </div>
         </div>
         <div class="example-container mt-8 real-estate">
-            <table mat-table [dataSource]="dataNPSList" id="table-low">
+            <table matSort #npsListTable="matSort" mat-table [dataSource]="dataNPSList" id="table-low">
                 <ng-container matColumnDef="no">
-                    <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
+                    <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
                     <td mat-cell *matCellDef="let element; let i = index;" class="br t-2"> {{i+1}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
-                    <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
+                    <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
                     <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">Total </td>
                 </ng-container>
                 <ng-container matColumnDef="cvalue">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right t-17"> Current value </th>
+                    <th mat-sort-header="currentValuation" mat-sort-header="no" mat-header-cell *matHeaderCellDef
+                        class="br text-right t-17"> Current value </th>
                     <td mat-cell *matCellDef="let element" class="br text-right t-17" appFormatNumber>
                         {{element.currentValuation || '-'}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" appFormatNumber
@@ -233,7 +248,9 @@
                         {{totalCurrentValue}}</td>
                 </ng-container>
                 <ng-container matColumnDef="total">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right"> Total contribution </th>
+                    <th mat-sort-header="contributionAmount" mat-header-cell *matHeaderCellDef class="br text-right">
+                        Total contribution
+                    </th>
                     <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
                         {{element.contributionAmount}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" appFormatNumber
@@ -241,24 +258,24 @@
                         {{totalContribution}}</td>
                 </ng-container>
                 <ng-container matColumnDef="scheme">
-                    <th mat-header-cell *matHeaderCellDef class="br"> Scheme choice</th>
+                    <th mat-sort-header="schemeChoice" mat-header-cell *matHeaderCellDef class="br"> Scheme choice</th>
                     <td mat-cell *matCellDef="let element" class="br">
                         {{(element.schemeChoice == '1')?'Active-choice investment':(element.schemeChoice == '2')?'Auto-choice investment':'-'}}
                     </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
                 <ng-container matColumnDef="pran">
-                    <th mat-header-cell *matHeaderCellDef class="br text-left t-17">PRAN</th>
+                    <th mat-sort-header="pran" mat-header-cell *matHeaderCellDef class="br text-left t-17">PRAN</th>
                     <td mat-cell *matCellDef="let element" class="br text-left t-17"> {{element.pran}} </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
                 <ng-container matColumnDef="desc">
-                    <th mat-header-cell *matHeaderCellDef class="br"> Description</th>
+                    <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br"> Description</th>
                     <td mat-cell *matCellDef="let element" class="br"> {{element.description}} </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
                 <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
+                    <th mat-sort-header="isActive" mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
                     <td mat-cell *matCellDef="let element" class="br t-5 text-primary"> {{element.isActive}} </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
@@ -302,35 +319,43 @@
             </div>
         </div>
         <div class="example-container mt-8 real-estate">
-            <table mat-table [dataSource]="dataGratuityList" id="table-low">
+            <table matSort #gratuityListTable="matSort" mat-table [dataSource]="dataGratuityList" id="table-low">
                 <ng-container matColumnDef="no">
-                    <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
+                    <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
                     <td mat-cell *matCellDef="let element let i = index" class="br t-2"> {{i+1}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
-                    <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
+                    <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
                     <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">Total </td>
                 </ng-container>
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right t-24"> Name of the organization </th>
+                    <th mat-sort-header="organizationName" mat-header-cell *matHeaderCellDef class="br text-right t-24">
+                        Name of the
+                        organization </th>
                     <td mat-cell *matCellDef="let element" class="br text-right t-24"> {{element.organizationName}}
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
                 </ng-container>
                 <ng-container matColumnDef="number">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Number of completed years </th>
+                    <th mat-sort-header="yearsCompleted" mat-header-cell *matHeaderCellDef class="br text-right t-12">
+                        Number of
+                        completed years </th>
                     <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.yearsCompleted}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
                 </ng-container>
                 <ng-container matColumnDef="year">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right t-8"> Year of receipt </th>
+                    <th mat-sort-header="yearReceipt" mat-header-cell *matHeaderCellDef class="br text-right t-8"> Year
+                        of
+                        receipt </th>
                     <td mat-cell *matCellDef="let element" class="br text-right t-8"> {{element.yearReceipt}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
                 </ng-container>
                 <ng-container matColumnDef="amt">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Amount recieved</th>
+                    <th mat-sort-header="amountReceived" mat-header-cell *matHeaderCellDef class="br text-right t-12">
+                        Amount
+                        recieved</th>
                     <td mat-cell *matCellDef="let element" class="br text-right t-12" appFormatNumber>
                         {{element.amountReceived}}
                     </td>
@@ -339,18 +364,20 @@
                         {{ sumOfAmountReceived || '-'}}</td>
                 </ng-container>
                 <ng-container matColumnDef="reason">
-                    <th mat-header-cell *matHeaderCellDef class="br text-left t-18"> Reason of receipt</th>
+                    <th mat-sort-header="reasonOfReceipt" mat-header-cell *matHeaderCellDef class="br text-left t-18">
+                        Reason of
+                        receipt</th>
                     <td mat-cell *matCellDef="let element" class="br text-left t-18"> {{element.reasonOfReceipt}} </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
 
                 <ng-container matColumnDef="desc">
-                    <th mat-header-cell *matHeaderCellDef class="br"> Description</th>
+                    <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br"> Description</th>
                     <td mat-cell *matCellDef="let element" class="br"> {{element.description}} </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
                 <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
+                    <th mat-sort-header="isActive" mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
                     <td mat-cell *matCellDef="let element" class="br t-5 text-primary"> {{element.isActive}} </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
@@ -362,7 +389,8 @@
                         </i>
                         <mat-menu #menubank="matMenu">
                             <button mat-menu-item class="c-p" (click)="openAddGratuity(element)">Edit</button>
-                            <button mat-menu-item class="c-p" (click)="detailedViewGratuity(element)">Detailed view</button>
+                            <button mat-menu-item class="c-p" (click)="detailedViewGratuity(element)">Detailed
+                                view</button>
                             <button mat-menu-item class="c-p">Activity</button>
                             <button mat-menu-item class="c-p" (click)="deleteModal(element)">Delete</button>
                         </mat-menu>
@@ -392,19 +420,22 @@
             </div>
         </div>
         <div class="example-container mt-8 real-estate">
-            <table mat-table [dataSource]="dataSuperannuationList" id="table-low">
+            <table matSort #superAnnuationListTable="matSort" mat-table [dataSource]="dataSuperannuationList"
+                id="table-low">
                 <ng-container matColumnDef="no">
-                    <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
+                    <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
                     <td mat-cell *matCellDef="let element let i = index" class="br t-2"> {{i+1}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
-                    <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
+                    <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
                     <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> Total</td>
                 </ng-container>
                 <ng-container matColumnDef="aemp">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Annual employer... </th>
+                    <th mat-sort-header="annualEmployerContribution" mat-header-cell *matHeaderCellDef
+                        class="br text-right t-12"> Annual
+                        employer... </th>
                     <td mat-cell *matCellDef="let element" class="br text-right t-12" appFormatNumber>
                         {{element.annualEmployerContribution}}
                     </td>
@@ -413,7 +444,9 @@
                         {{sumOfAnnualEmployerContribution || '-'}}</td>
                 </ng-container>
                 <ng-container matColumnDef="aempe">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Annual employee... </th>
+                    <th mat-sort-header="annualEmployeeContribution" mat-header-cell *matHeaderCellDef
+                        class="br text-right t-12"> Annual
+                        employee... </th>
                     <td mat-cell *matCellDef="let element" class="br text-right t-12" appFormatNumber>
                         {{element.annualEmployeeContribution}}
                     </td>
@@ -422,13 +455,17 @@
                         {{sumOfAnnualEmployeeContribution || '-'}}</td>
                 </ng-container>
                 <ng-container matColumnDef="rate">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Assumed rate... </th>
+                    <th mat-sort-header="assumedRateOfReturn" mat-header-cell *matHeaderCellDef
+                        class="br text-right t-12"> Assumed
+                        rate... </th>
                     <td mat-cell *matCellDef="let element" class="br text-right t-12"> {{element.assumedRateOfReturn}}
                     </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
                 <ng-container matColumnDef="grate">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Growth rate employer...
+                    <th mat-sort-header="growthRateEmployerContribution" mat-header-cell *matHeaderCellDef
+                        class="br text-right t-12"> Growth rate
+                        employer...
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right t-12" appFormatNumber>
                         {{element.growthRateEmployerContribution}}
@@ -436,7 +473,9 @@
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
                 <ng-container matColumnDef="grateemp">
-                    <th mat-header-cell *matHeaderCellDef class="br text-left t-12"> Growth rate employee...
+                    <th mat-sort-header="growthRateEmployeeContribution" mat-header-cell *matHeaderCellDef
+                        class="br text-left t-12"> Growth rate
+                        employee...
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-left t-12">
                         {{element.growthRateEmployeeContribution}}
@@ -444,18 +483,21 @@
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
                 <ng-container matColumnDef="date">
-                    <th mat-header-cell *matHeaderCellDef class="br text-left t-10"> Date of first contribution</th>
+                    <th mat-sort-header="firstContributionDate" mat-header-cell *matHeaderCellDef
+                        class="br text-left t-10"> Date of first
+                        contribution</th>
                     <td mat-cell *matCellDef="let element" class="br text-left t-10">
                         {{element.firstContributionDate | date:'dd/MM/yyyy'}} </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
                 <ng-container matColumnDef="desc">
-                    <th mat-header-cell *matHeaderCellDef class="br t-18"> Description</th>
+                    <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br t-18"> Description
+                    </th>
                     <td mat-cell *matCellDef="let element" class="br t-18"> {{element.description}} </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
                 <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
+                    <th mat-sort-header="isActive" mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
                     <td mat-cell *matCellDef="let element" class="br t-5 text-primary"> {{element.isActive}} </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
@@ -497,19 +539,21 @@
             </div>
         </div>
         <div class="example-container mt-8 real-estate">
-            <table mat-table [dataSource]="EPSList" id="table-low">
+            <table matSort #epsListTable="matSort" mat-table [dataSource]="EPSList" id="table-low">
                 <ng-container matColumnDef="no">
-                    <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
+                    <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
                     <td mat-cell *matCellDef="let element let i = index" class="br t-2"> {{i+1}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
-                    <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
+                    <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
                     <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">Total </td>
                 </ng-container>
                 <ng-container matColumnDef="nvalue">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right t-12"> Notional value </th>
+                    <th mat-sort-header="notionalValue" mat-header-cell *matHeaderCellDef class="br text-right t-12">
+                        Notional
+                        value </th>
                     <td mat-cell *matCellDef="let element" class="br text-right t-12" appFormatNumber>
                         {{element.notionalValue || '-'}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" appFormatNumber
@@ -517,13 +561,17 @@
                         {{totalNotionalValue}}</td>
                 </ng-container>
                 <ng-container matColumnDef="date">
-                    <th mat-header-cell *matHeaderCellDef class="br text-left t-12"> Commencement date </th>
+                    <th mat-sort-header="commencementDate" mat-header-cell *matHeaderCellDef class="br text-left t-12">
+                        Commencement
+                        date </th>
                     <td mat-cell *matCellDef="let element" class="br text-left t-12">
                         {{element.commencementDate | date:'dd/MM/yyyy'}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
                 </ng-container>
                 <ng-container matColumnDef="amt">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right t-18"> Pension amount </th>
+                    <th mat-sort-header="pensionAmount" mat-header-cell *matHeaderCellDef class="br text-right t-18">
+                        Pension
+                        amount </th>
                     <td mat-cell *matCellDef="let element" class="br text-right t-18" appFormatNumber>
                         {{element.pensionAmount || '-'}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" appFormatNumber
@@ -531,19 +579,22 @@
                         {{totalPensionAmount}} </td>
                 </ng-container>
                 <ng-container matColumnDef="pay">
-                    <th mat-header-cell *matHeaderCellDef class="br t-16"> Pension payout frequency</th>
+                    <th mat-sort-header="pensionPayoutFrequencyId" mat-header-cell *matHeaderCellDef class="br t-16">
+                        Pension payout frequency
+                    </th>
                     <td mat-cell *matCellDef="let element" class="br t-16">
                         {{(element.pensionPayoutFrequencyId == '1')?'Daily':(element.pensionPayoutFrequencyId == '2')?'Monthly':(element.pensionPayoutFrequencyId == '3')?'Quarterly':(element.pensionPayoutFrequencyId == '4')?'Semi annually':'Annually'}}
                     </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
                 <ng-container matColumnDef="desc">
-                    <th mat-header-cell *matHeaderCellDef class="br t-18"> Description</th>
+                    <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br t-18"> Description
+                    </th>
                     <td mat-cell *matCellDef="let element" class="br t-18"> {{element.description}} </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
                 <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
+                    <th mat-sort-header="active" mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
                     <td mat-cell *matCellDef="let element" class="br t-5 text-primary"> {{element.active}} </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>

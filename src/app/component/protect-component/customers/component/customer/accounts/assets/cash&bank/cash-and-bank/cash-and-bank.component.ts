@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort, MatTable, MatTableDataSource } from '@angular/material';
 import { BankAccountsComponent } from '../bank-accounts/bank-accounts.component';
 import { CashInHandComponent } from '../cash-in-hand/cash-in-hand.component';
 import { DetailedViewCashInHandComponent } from '../cash-in-hand/detailed-view-cash-in-hand/detailed-view-cash-in-hand.component';
@@ -27,11 +27,15 @@ export class CashAndBankComponent implements OnInit {
   isLoading: boolean = true;
   noData: string;
 
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService,public dialog:MatDialog) { }
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) { }
   displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc', 'status', 'icons'];
   datasource7 = ELEMENT_DATA7;
   displayedColumns8 = ['no', 'owner', 'cash', 'bal', 'desc', 'status', 'icons'];
   datasource8 = ELEMENT_DATA8;
+
+  @ViewChild('bankAccountListTable', { static: false }) bankAccountListTableSort: MatSort;
+  @ViewChild('cashInHandListTable', { static: false }) cashInHandListTableSort: MatSort;
+
   ngOnInit() {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
@@ -47,7 +51,7 @@ export class CashAndBankComponent implements OnInit {
       this.getBankAccountList()
     }
   }
-  deleteModal(value,data) {
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -58,25 +62,25 @@ export class CashAndBankComponent implements OnInit {
       positiveMethod: () => {
         if (value == 'BANK ACCOUNT') {
           this.custumService.deleteBankAccount(data.id).subscribe(
-            data=>{
-              this.eventService.openSnackBar("Bank account is deleted","dismiss")
+            data => {
+              this.eventService.openSnackBar("Bank account is deleted", "dismiss")
               dialogRef.close();
               this.getBankAccountList()
             },
-            err=>this.eventService.openSnackBar(err)
+            err => this.eventService.openSnackBar(err)
           )
         } else {
           this.custumService.deleteCashInHand(data.id).subscribe(
-            data=>{
-              this.eventService.openSnackBar("Cash In Hand is deleted","dismiss")
+            data => {
+              this.eventService.openSnackBar("Cash In Hand is deleted", "dismiss")
               dialogRef.close();
               this.getCashInHandList()
             },
-            err=>this.eventService.openSnackBar(err)
+            err => this.eventService.openSnackBar(err)
           )
         }
 
-       
+
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -108,7 +112,8 @@ export class CashAndBankComponent implements OnInit {
   getBankAccountsRes(data) {
     console.log('getBankAccountsRes ####', data);
     this.isLoading = false;
-    this.bankAccountList = data.cashInBankAccounts
+    this.bankAccountList = new MatTableDataSource(data.cashInBankAccounts);
+    this.bankAccountList.sort = this.bankAccountListTableSort;
     this.totalAccountBalance = data.totalAccountBalance
   }
   getCashInHandList() {
@@ -124,7 +129,8 @@ export class CashAndBankComponent implements OnInit {
   getCashInHandRes(data) {
     console.log('getCashInHandRes ###', data);
     this.isLoading = false;
-    this.cashInHandList = data.cashInHands
+    this.cashInHandList = new MatTableDataSource(data.cashInHands);
+    this.cashInHandList.sort = this.cashInHandListTableSort;
     this.sumOfCashValue = data.sumOfCashValue
   }
   openCashAndBank(value, state, data) {
@@ -133,7 +139,7 @@ export class CashAndBankComponent implements OnInit {
       data: data,
       id: 1,
       state: 'open',
-      componentName:BankAccountsComponent
+      componentName: BankAccountsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -156,7 +162,7 @@ export class CashAndBankComponent implements OnInit {
       data: data,
       id: 1,
       state: 'open',
-      componentName:CashInHandComponent
+      componentName: CashInHandComponent
 
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -174,13 +180,13 @@ export class CashAndBankComponent implements OnInit {
       }
     );;
   }
-  detailedViewbankAccount(flagValue,data,state) {
+  detailedViewbankAccount(flagValue, data, state) {
     const fragmentData = {
       Flag: flagValue,
       id: 1,
-      data:data,
+      data: data,
       state: state,
-      componentName : DetailedViewBankAccountComponent,
+      componentName: DetailedViewBankAccountComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -193,13 +199,13 @@ export class CashAndBankComponent implements OnInit {
       }
     );
   }
-  detailedViewCashInHand(flagValue,data,state) {
+  detailedViewCashInHand(flagValue, data, state) {
     const fragmentData = {
       Flag: flagValue,
       id: 1,
-      data:data,
+      data: data,
       state: state,
-      componentName : DetailedViewCashInHandComponent,
+      componentName: DetailedViewCashInHandComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

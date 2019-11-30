@@ -22,6 +22,11 @@ export class FormatNumberDirective implements AfterViewInit {
   }
 
   formatAndRoundOffNumber(text) {
+    if (typeof (text) === 'string') {
+      if (text.includes(',')) {
+        return text;
+      }
+    }
     // if (!this.locale) {
     //   this.locale = 'en-IN';
     // }
