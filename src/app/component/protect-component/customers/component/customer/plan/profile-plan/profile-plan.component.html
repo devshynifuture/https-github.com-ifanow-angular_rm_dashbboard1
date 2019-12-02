@@ -10,26 +10,31 @@
                 </li>
                 <li (click)="viewMode ='tab2'" [ngClass]="{'b-ua':viewMode =='tab2'}" class="b-ua c-p">
                     <div class="row">
+                        <div class="col-md-12 p-0">Expenses</div>
+                    </div>
+            </li>
+                <li (click)="viewMode ='tab3'" [ngClass]="{'b-ua':viewMode =='tab3'}" class="b-ua c-p">
+                    <div class="row">
                         <div class="col-md-12 p-0">Family details</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab3'" [ngClass]="{'b-ua':viewMode =='tab3'}" class="c-p">
+                <li (click)="viewMode ='tab4'" [ngClass]="{'b-ua':viewMode =='tab4'}" class="c-p">
                     <div class="row">
                         <div class="col-md-12 p-0">Risk profile</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab4'" [ngClass]="{'b-ua':viewMode =='tab4'}" class="c-p">
+                <li (click)="viewMode ='tab5'" [ngClass]="{'b-ua':viewMode =='tab5'}" class="c-p">
                     <div class="row">
                         <div class="col-md-12 p-0">Financial health</div>
 
                     </div>
                 </li>
-                <li (click)="viewMode ='tab5'" [ngClass]="{'b-ua':viewMode =='tab5'}" class=" c-p">
+                <li (click)="viewMode ='tab7'" [ngClass]="{'b-ua':viewMode =='tab6'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-12 p-0">Financial plans</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab6'" [ngClass]="{'b-ua':viewMode =='tab6'}" class=" c-p">
+                <li (click)="viewMode ='tab6'" [ngClass]="{'b-ua':viewMode =='tab7'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-12 p-0">Preferences</div>
                     </div>
@@ -41,6 +46,9 @@
               <app-income></app-income>
             </div>
             <div *ngSwitchCase="'tab2'">
+                <app-expenses></app-expenses>
+            </div>
+            <div *ngSwitchCase="'tab3'">
                 <div class="d-flex justify-content-center mt-150">
                     <div class="row">
                         <div class="col-md-12 text-center">

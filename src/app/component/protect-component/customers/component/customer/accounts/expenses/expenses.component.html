@@ -1,6 +1,6 @@
 <div id="ui-expenses" class="account_side-menu">
     <div class="row h-100vh">
-        <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
+        <!-- <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
             <ul class="vertical-menu">
                 <li (click)="viewMode ='tab1'" [ngClass]="{'activeColor':viewMode =='tab1'}" class="activeColor c-p">
                     <div class="row">
@@ -30,7 +30,7 @@
                     </div>
                 </li>
             </ul>
-        </div>
+        </div> -->
         <div class="col-md-10 b-a p-0" [ngSwitch]="viewMode">
             <div *ngSwitchCase="'tab1'">
                 <div class="wrapper-8">
@@ -203,7 +203,7 @@
                                 <i class="material-icons">filter_list</i>
                                 FILTERS
                             </button>
-                            <button mat-stroked-button class="btn-primary addon v-middle"> 
+                            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openExpenses('addBudget')"> 
                                 <i class="material-icons">add</i>
                                 ADD NEW
                             </button>

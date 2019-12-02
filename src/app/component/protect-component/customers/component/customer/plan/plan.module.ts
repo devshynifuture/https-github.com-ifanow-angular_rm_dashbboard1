@@ -20,6 +20,7 @@ import {HistoryRiskProfileComponent} from './profile-plan/history-risk-profile/h
 import {PlanRoutingModule} from "./plan-routing.module";
 import { IncomeComponent } from './profile-plan/income/income.component';
 import { IndividualIncomeInfoComponent } from './profile-plan/income/individual-income-info/individual-income-info.component';
+import { ExpensesComponent } from '../accounts/expenses/expenses.component';
 
 
 
@@ -43,7 +44,8 @@ import { IndividualIncomeInfoComponent } from './profile-plan/income/individual-
     AddInvestmentPlanComponent,
     AddProfilePlanComponent,
     HistoryRiskProfileComponent,
-    IncomeComponent
+    IncomeComponent,
+    ExpensesComponent
   ],
   imports: [
     PlanRoutingModule,
