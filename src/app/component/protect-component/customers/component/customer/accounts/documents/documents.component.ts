@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatBottomSheet, MatDialog } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatBottomSheet, MatDialog, MatTableDataSource, MatSort } from '@angular/material';
 import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { Router } from '@angular/router';
@@ -61,7 +61,7 @@ export class DocumentsComponent implements OnInit {
     { id: 12, name: 'TXT' },
     { id: 13, name: 'HTML' },
   ];
-
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   showDots = false;
   parentId: any;
   filenm: string;
@@ -71,6 +71,7 @@ export class DocumentsComponent implements OnInit {
   sendObj: { clientId: any; advisorId: any; parentFolderId: any; folderName: any; };
   detailed: { clientId: any; advisorId: any; folderParentId: any; folderName: any; };
   uploadFolder: string[] = [];
+  getSort: any;
 
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
@@ -214,13 +215,12 @@ export class DocumentsComponent implements OnInit {
 
   getAllFilesRes(data, value) {
     console.log(data);
-    this.showLoader = true;
     this.allFiles = data.files;
     this.AllDocs = data.folders;
     this.commonFileFolders = data.folders;
+    this.getSort = this.commonFileFolders
     this.commonFileFolders.push.apply(this.commonFileFolders, this.allFiles);
     console.log('commonFileFolders', this.commonFileFolders);
-
     if (this.commonFileFolders.openFolderId == undefined || this.openFolderName.length == 0) {
       Object.assign(this.commonFileFolders, { openFolderNm: value.folderName });
       Object.assign(this.commonFileFolders, { openFolderId: value.id });
@@ -228,8 +228,8 @@ export class DocumentsComponent implements OnInit {
       console.log('parentId', this.parentId)
       this.openFolderName.push(this.commonFileFolders);
       this.valueFirst = this.openFolderName[0];
-      this.fileTypeGet()
       if (this.commonFileFolders.length > 0) {
+        this.fileTypeGet()
         this.backUpfiles.push(this.commonFileFolders);
       }
       console.log('this.backUpfiles', this.backUpfiles);
@@ -239,11 +239,12 @@ export class DocumentsComponent implements OnInit {
       this.showDots = true;
     }
     this.fileSizeConversion();
+    this.showLoader = false;
   }
-  fileTypeGet(){
+  fileTypeGet() {
     this.commonFileFolders.forEach(p => {
       this.fileType.forEach(n => {
-        if(n.id == p.fileTypeId){
+        if (n.id == p.fileTypeId) {
           p.fileTypeId = n.name
         }
       });
@@ -359,7 +360,7 @@ export class DocumentsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
     });
   }
-  OpenEmail(data){
+  OpenEmail(data) {
     const fragmentData = {
       flag: 'addSchemeHolding',
       data: data,
