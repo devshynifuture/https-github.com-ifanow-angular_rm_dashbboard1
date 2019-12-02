@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatBottomSheet, MatDialog } from '@angular/material';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { MatBottomSheet, MatDialog, MatTableDataSource, MatSort } from '@angular/material';
 import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { Router } from '@angular/router';
@@ -23,8 +23,14 @@ import { EmailQuotationComponent } from 'src/app/component/protect-component/Adv
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.scss']
 })
-export class DocumentsComponent implements OnInit {
 
+export class DocumentsComponent implements AfterViewInit {
+  ngAfterViewInit(): void {
+    this.commonFileFolders = new MatTableDataSource(this.getSort);
+    this.commonFileFolders.sort = this.sort;
+    console.log('sorted', this.commonFileFolders);
+  }
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   displayedColumns: string[] = ['emptySpace', 'name', 'lastModi', 'type', 'size', 'icons'];
   dataSource = ELEMENT_DATA;
   percentDone: number;
@@ -61,7 +67,6 @@ export class DocumentsComponent implements OnInit {
     { id: 12, name: 'TXT' },
     { id: 13, name: 'HTML' },
   ];
-
   showDots = false;
   parentId: any;
   filenm: string;
@@ -74,6 +79,7 @@ export class DocumentsComponent implements OnInit {
   folderNameToDisplay: any;
 
 
+  getSort: any;
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private event: EventService, private router: Router, private fb: FormBuilder,
     private custumService: CustomerService, public subInjectService: SubscriptionInject,
@@ -215,13 +221,11 @@ export class DocumentsComponent implements OnInit {
 
   getAllFilesRes(data, value) {
     console.log(data);
-    this.showLoader = true;
     this.allFiles = data.files;
     this.AllDocs = data.folders;
     this.commonFileFolders = data.folders;
+    this.getSort = this.commonFileFolders
     this.commonFileFolders.push.apply(this.commonFileFolders, this.allFiles);
-    console.log('commonFileFolders', this.commonFileFolders);
-
     if (this.commonFileFolders.openFolderId == undefined || this.openFolderName.length == 0) {
       Object.assign(this.commonFileFolders, { openFolderNm: value.folderName });
       Object.assign(this.commonFileFolders, { openFolderId: value.id });
@@ -230,6 +234,7 @@ export class DocumentsComponent implements OnInit {
       this.openFolderName.push(this.commonFileFolders);
       this.valueFirst = this.openFolderName[0];
       if (this.commonFileFolders.length > 0) {
+        this.fileTypeGet()
         this.backUpfiles.push(this.commonFileFolders);
       }
       console.log('this.backUpfiles', this.backUpfiles);
@@ -239,8 +244,20 @@ export class DocumentsComponent implements OnInit {
       this.showDots = true;
     }
     this.fileSizeConversion();
+    this.showLoader = false;
+    this.commonFileFolders = new MatTableDataSource(this.getSort);
+    this.commonFileFolders.sort = this.sort;
+    console.log('sorted', this.commonFileFolders);
   }
-
+  fileTypeGet() {
+    this.commonFileFolders.forEach(p => {
+      this.fileType.forEach(n => {
+        if (n.id == p.fileTypeId) {
+          p.fileTypeId = n.name
+        }
+      });
+    });
+  }
   getFolders(data) {
     this.parentId = (data == undefined) ? 0 : data[0].folderParentId
     console.log('parentId', this.parentId)
@@ -252,6 +269,7 @@ export class DocumentsComponent implements OnInit {
       return n.openFolderId > data.openFolderId;
     });
     this.commonFileFolders = data;
+    this.fileTypeGet()
     this.valueFirst = this.openFolderName[0];
   }
 
@@ -350,7 +368,7 @@ export class DocumentsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
     });
   }
-  OpenEmail(data){
+  OpenEmail(data) {
     const fragmentData = {
       flag: 'addSchemeHolding',
       data: data,

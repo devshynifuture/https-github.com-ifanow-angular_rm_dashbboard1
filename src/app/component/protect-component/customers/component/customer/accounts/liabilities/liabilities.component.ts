@@ -19,6 +19,8 @@ import { LiabilitiesDetailComponent } from '../../../common-component/liabilitie
 })
 
 export class LiabilitiesComponent implements OnInit {
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
   displayedColumns = ['no', 'name', 'type', 'loan', 'ldate', 'today', 'ten', 'rate', 'emi', 'fin', 'status', 'icons'];
   // dataSource = ELEMENT_DATA;
   advisorId: any;
@@ -42,7 +44,6 @@ export class LiabilitiesComponent implements OnInit {
   outStandingAmt: any;
   filterData: any;
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
               public customerService: CustomerService, public util: UtilService, public dialog: MatDialog) {
