@@ -211,15 +211,9 @@
                         </i>
                         <mat-menu #menubank="matMenu">
                             <button mat-menu-item (click)="openOthers('addOthers','open',element)">Edit</button>
-                            <<<<<<< HEAD <button mat-menu-item (click)="detailedViewOthers('addOthers',element,'open')">
-                                Detailed
-                                view</button>
-                                =======
-                                <button mat-menu-item (click)="detailedViewOthers('addOthers',element)">Detailed
-                                    view</button>
-                                >>>>>>> 36931bbfca6b8e77aad86f205eb2bdebe39eb99b
-                                <button mat-menu-item>Activity</button>
-                                <button mat-menu-item (click)="deleteModal('OTHERS',element)">Delete</button>
+                          <!--                            <button mat-menu-item (click)="detailedViewOthers('addOthers',element)">Detailed view</button>-->
+                          <button mat-menu-item>Activity</button>
+                          <button (click)="deleteModal('OTHERS',element)" mat-menu-item>Delete</button>
                         </mat-menu>
                     </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
