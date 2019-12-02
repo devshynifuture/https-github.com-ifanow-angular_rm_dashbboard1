@@ -26,13 +26,18 @@ const routes: Routes = [
   },
   {
     path: 'customer-detail',
-    loadChildren: () => import('./component/protect-component/customers/customers.module')
-      .then(m => m.CustomersModule)
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./component/protect-component/customers/customers.module')
+          .then(m => m.CustomersModule)
+      },
+      {
+        path: 'overview',
+        component: OverviewComponent
+      }
+    ]
   },
-  // {
-  //   path: 'overview',
-  //   loadChildren: () => import('./')
-  // },
   {
     path: '',
     redirectTo: '/login',
