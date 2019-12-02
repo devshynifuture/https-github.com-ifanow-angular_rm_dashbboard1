@@ -16,6 +16,7 @@ import { CopyDocumentsComponent } from '../../../common-component/copy-documents
 import { ViewActivityComponent } from './view-activity/view-activity.component';
 import { rename } from 'fs';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { EmailQuotationComponent } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-quotation/email-quotation.component';
 
 @Component({
   selector: 'app-documents',
@@ -334,10 +335,9 @@ export class DocumentsComponent implements OnInit {
         }
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
+    console.log(dialogData + 'dialogData');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
@@ -347,8 +347,25 @@ export class DocumentsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
     });
+  }
+  OpenEmail(data){
+    const fragmentData = {
+      flag: 'addSchemeHolding',
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: EmailQuotationComponent
+    };
+
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
   starFiles(element) {
     const obj = {
