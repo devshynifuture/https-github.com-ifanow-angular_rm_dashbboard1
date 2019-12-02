@@ -69,6 +69,7 @@ export class DocumentsComponent implements OnInit {
   sendObj: { clientId: any; advisorId: any; parentFolderId: any; folderName: any; };
   detailed: { clientId: any; advisorId: any; folderParentId: any; folderName: any; };
   uploadFolder: string[] = [];
+  folderNameToDisplay: any;
 
 
   constructor(private http: HttpService, private _bottomSheet: MatBottomSheet,
@@ -90,7 +91,7 @@ export class DocumentsComponent implements OnInit {
     this.getAllFileList(tabValue);
     this.showLoader = true;
   }
-  openDialog(element,value): void {
+  openDialog(element, value): void {
     const dialogRef = this.dialog.open(DocumentNewFolderComponent, {
       width: '30%',
       data: { name: value, animal: element }
@@ -99,16 +100,16 @@ export class DocumentsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
       this.animal = result;
-      if(this.animal.rename == undefined){
+      if (this.animal.rename == undefined) {
         this.createFolder(this.animal)
       }
-      if(this.animal.rename.flag == 'fileName'){
+      if (this.animal.rename.flag == 'fileName') {
         this.renameFile(this.animal)
-      }else{
+      } else {
         this.renameFolders(this.animal)
       }
     });
-  
+
   }
 
   openDialogCopy(element, value): void {
@@ -405,9 +406,20 @@ export class DocumentsComponent implements OnInit {
   uploadDocumentFolder(data) {
     this.myFiles = [];
     var array = [];
+
+    let folderName = data.target.files[0].webkitRelativePath.split('/');
+    this.folderNameToDisplay = {
+      newFolder: folderName[0]
+    }
+    this.createFolder(this.folderNameToDisplay)
     for (let i = 0; i < data.target.files.length; i++) {
       this.myFiles.push(data.target.files[i]);
     }
+    this.myFiles.forEach(fileName => {
+      this.filenm = fileName;
+      this.parentId = (this.parentId == undefined) ? 0 : this.parentId;
+      this.uploadFile(this.parentId, this.filenm);
+    });
     console.log(data);
     array.push(this.myFiles);
     this.viewFolder.push(array[0]);
@@ -428,7 +440,6 @@ export class DocumentsComponent implements OnInit {
       frmData.append('fileUpload', this.myFiles[i]);
     }
   }
-
   uploadFile(element, fileName) {
     const obj = {
       clientId: this.clientId,
@@ -440,7 +451,6 @@ export class DocumentsComponent implements OnInit {
       data => this.uploadFileRes(data, fileName)
     );
   }
-
   uploadFileRes(data, fileName) {
 
     const fileuploadurl = data;
