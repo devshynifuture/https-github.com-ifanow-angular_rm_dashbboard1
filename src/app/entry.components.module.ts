@@ -34,7 +34,7 @@ import {BankAccountsComponent} from './component/protect-component/customers/com
 import {RecuringDepositComponent} from './component/protect-component/customers/component/customer/accounts/assets/fixedIncome/recuring-deposit/recuring-deposit.component';
 import {AddEPFComponent} from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-epf/add-epf.component';
 import {AddNPSComponent} from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/add-nps.component';
-import {AddGoalComponent} from './component/protect-component/customers/component/customer/plan/goals-plan/add-goal/add-goal.component';
+// import {AddGoalComponent} from './component/protect-component/customers/component/customer/plan/goals-plan/add-goal/add-goal.component';
 import {NpsSchemeHoldingComponent} from "./component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/nps-scheme-holding/nps-scheme-holding.component";
 import {DetailedNscComponent} from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/nsc-scheme/detailed-nsc/detailed-nsc.component';
 import {DetailedViewEPFComponent} from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-epf/detailed-view-epf/detailed-view-epf.component';
@@ -80,7 +80,7 @@ export const componentList = [
   OthersComponent,
   CashInHandComponent,
   BankAccountsComponent,
-  AddGoalComponent,
+  
   NpsSchemeHoldingComponent,
   NpsSummaryPortfolioComponent,
   AddGratuityComponent,
@@ -131,7 +131,7 @@ export const componentList = [
   OthersComponent,
   CashInHandComponent,
   BankAccountsComponent,
-  AddGoalComponent,
+  
   NpsSchemeHoldingComponent,
   LiabilitiesDetailComponent,
   DetailedViewFixedDepositComponent,
@@ -170,7 +170,7 @@ export const componentList = [
   OthersComponent,
   CashInHandComponent,
   BankAccountsComponent,
-  AddGoalComponent,
+  
   NpsSchemeHoldingComponent,
   LiabilitiesDetailComponent,
   DetailedViewFixedDepositComponent,

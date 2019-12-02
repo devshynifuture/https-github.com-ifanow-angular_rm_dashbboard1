@@ -4,9 +4,10 @@ import {ChartModule} from 'angular-highcharts';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from '../../../../../../material/material';
 import { PreferencesComponent } from './goals-plan/preferences/preferences.component';
+import { AddGoalComponent } from './goals-plan/add-goal/add-goal.component';
 
 export const componentList = [
-  PreferencesComponent]
+  PreferencesComponent,AddGoalComponent]
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 
 // export const componentList = [

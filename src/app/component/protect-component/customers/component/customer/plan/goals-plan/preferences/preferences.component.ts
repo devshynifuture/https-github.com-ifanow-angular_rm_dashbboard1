@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-preferences',
@@ -8,12 +9,15 @@ import { Component, OnInit } from '@angular/core';
 export class PreferencesComponent implements OnInit {
   displayedColumns = ['position', 'name', 'weight'];
   dataSource = ELEMENT_DATA;
-  constructor() { }
+  constructor(private subInjectService: SubscriptionInject) { }
   selected;
   ngOnInit() {
     this.selected = 0;
   }
-
+  close(data) {
+    // this.addMoreFlag = false;
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+  }
 }
 export interface PeriodicElement {
   name: string;

@@ -4,6 +4,7 @@ import {UtilService} from "../../../../../../../services/util.service";
 import {SubscriptionInject} from "../../../../../AdviserComponent/Subscriptions/subscription-inject.service";
 import { MfAllocationsComponent } from './mf-allocations/mf-allocations.component';
 import { PreferencesComponent } from './preferences/preferences.component';
+import { AddGoalComponent } from './add-goal/add-goal.component';
 
 export interface PeriodicElement {
   position: string;
@@ -61,6 +62,26 @@ export class GoalsPlanComponent implements OnInit {
       componentName: PreferencesComponent, 
       id: 1,
       state: 'open40'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+          console.log('this is sidebardata in subs subs : ', sideBarData);
+          if (UtilService.isDialogClose(sideBarData)) {
+            console.log('this is sidebardata in subs subs 2: ', sideBarData);
+            rightSideDataSub.unsubscribe();
+
+          }
+      }
+    );
+  }
+  openallocations(data) {
+    console.log('hello mf button clicked');
+    const fragmentData = {
+      flag: 'openallocations',
+      data,
+      componentName: AddGoalComponent, 
+      id: 1,
+      state: 'open25'
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
