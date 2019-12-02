@@ -10,10 +10,10 @@ import {AuthService} from "../../../../../auth-service/authService";
 export class CustomerComponent implements OnInit {
   selected: number;
   clientId;
-  value=1;
+  value = 1;
   overview = false;
   plans = false;
-  activity =false;
+  activity = false;
   accounts = false;
   transact = false;
 
@@ -23,7 +23,7 @@ export class CustomerComponent implements OnInit {
   }
 
   status: boolean = false;
- 
+
 
   ngOnInit() {
     this.selected = 1;
@@ -34,8 +34,8 @@ export class CustomerComponent implements OnInit {
     this.clientId = AuthService.getClientId();
   }
 
-  clickEvent(value){
-   this.value = value;
-}
+  clickEvent(value) {
+    this.value = value;
+  }
 
 }

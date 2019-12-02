@@ -23,13 +23,14 @@
                     <span *ngIf="showTabs" class="title" mat-line>Dashboard</span>
                 </a>
                 <a mat-list-item class="sidenav-link">
-                    <img src="assets/images/svg/people.svg" routerLink="/customer-detail">
+                    <img src="assets/images/svg/people.svg" routerLink="/customer-detail/overview">
                     <span *ngIf="showTabs" class="title" mat-line>People</span>
                 </a>
                 <a mat-list-item class="sidenav-link">
                     <img src="assets/images/svg/file-lines.svg">
                     <span *ngIf="showTabs" class="title" mat-line>Activities</span>
-                    <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">keyboard_arrow_right
+                    <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
+                        keyboard_arrow_right
                     </mat-icon>
                 </a>
                 <a mat-list-item class="sidenav-link">
@@ -65,17 +66,19 @@
     </mat-sidenav>
     <mat-sidenav-content id="left">
         <mat-toolbar class="bg-white bl-1" class="fix-top pl-0">
-            <button *ngIf="showTabs==false" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="showMainNavWrapper()">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-            <button *ngIf="showTabs" class="btn_nav" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="showsmallNavWrapper()">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
+            <button *ngIf="showTabs==false" type="button" aria-label="Toggle sidenav" mat-icon-button
+                (click)="showMainNavWrapper()">
+                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
+            <button *ngIf="showTabs" class="btn_nav" type="button" aria-label="Toggle sidenav" mat-icon-button
+                (click)="showsmallNavWrapper()">
+                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
 
             <div class="search-container mr-32">
                 <i class="material-icons icon">
-          search
-        </i>
+                    search
+                </i>
                 <input class="search-field" type="text" placeholder="SEARCH" name="email">
             </div>
             <div class="hide-on-800 flex right-fixed tablate-none">
@@ -90,15 +93,15 @@
                 </a>
             </div>
             <i (click)="openSettings()" class="material-icons tabs-right desktop-none">
-        more_vert
-      </i>
+                more_vert
+            </i>
         </mat-toolbar>
         <div id="showSettings" *ngIf="showSettings" class="desktop-none tabs-mt-70">
             <div class="bg-success">
                 <div class="search-container tabs-block">
                     <i class="material-icons icon">
-            search
-          </i>
+                        search
+                    </i>
                     <input class="search-field" type="text" placeholder="SEARCH" name="email">
                 </div>
                 <div class="pl-48 flex tabs-right">

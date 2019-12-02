@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from '../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {BankAccountsComponent} from '../bank-accounts/bank-accounts.component';
-import {CashInHandComponent} from '../cash-in-hand/cash-in-hand.component';
-import {DetailedViewCashInHandComponent} from '../cash-in-hand/detailed-view-cash-in-hand/detailed-view-cash-in-hand.component';
-import {DetailedViewBankAccountComponent} from '../bank-accounts/detailed-view-bank-account/detailed-view-bank-account.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTable, MatTableDataSource } from '@angular/material';
+import { BankAccountsComponent } from '../bank-accounts/bank-accounts.component';
+import { CashInHandComponent } from '../cash-in-hand/cash-in-hand.component';
+import { DetailedViewCashInHandComponent } from '../cash-in-hand/detailed-view-cash-in-hand/detailed-view-cash-in-hand.component';
+import { DetailedViewBankAccountComponent } from '../bank-accounts/detailed-view-bank-account/detailed-view-bank-account.component';
 
 @Component({
   selector: 'app-cash-and-bank',
@@ -27,12 +27,15 @@ export class CashAndBankComponent implements OnInit {
   isLoading = true;
   noData: string;
 
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
-  }
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) { }
   displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc', 'status', 'icons'];
   datasource7 = ELEMENT_DATA7;
   displayedColumns8 = ['no', 'owner', 'cash', 'bal', 'desc', 'status', 'icons'];
   datasource8 = ELEMENT_DATA8;
+
+  @ViewChild('bankAccountListTable', { static: false }) bankAccountListTableSort: MatSort;
+  @ViewChild('cashInHandListTable', { static: false }) cashInHandListTableSort: MatSort;
+
   ngOnInit() {
     this.showRequring = '1';
     this.advisorId = AuthService.getAdvisorId();
@@ -48,7 +51,6 @@ export class CashAndBankComponent implements OnInit {
       this.getBankAccountList();
     }
   }
-
   deleteModal(value, data) {
     const dialogData = {
       data: value,
@@ -61,16 +63,16 @@ export class CashAndBankComponent implements OnInit {
         if (value == 'BANK ACCOUNT') {
           this.custumService.deleteBankAccount(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Bank account is deleted', 'dismiss');
+              this.eventService.openSnackBar("Bank account is deleted", "dismiss")
               dialogRef.close();
               this.getBankAccountList();
             },
             err => this.eventService.openSnackBar(err)
-          );
+          )
         } else {
           this.custumService.deleteCashInHand(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar('Cash In Hand is deleted', 'dismiss');
+              this.eventService.openSnackBar("Cash In Hand is deleted", "dismiss")
               dialogRef.close();
               this.getCashInHandList();
             },
@@ -110,8 +112,9 @@ export class CashAndBankComponent implements OnInit {
   getBankAccountsRes(data) {
     console.log('getBankAccountsRes ####', data);
     this.isLoading = false;
-    this.bankAccountList = data.cashInBankAccounts;
-    this.totalAccountBalance = data.totalAccountBalance;
+    this.bankAccountList = new MatTableDataSource(data.cashInBankAccounts);
+    this.bankAccountList.sort = this.bankAccountListTableSort;
+    this.totalAccountBalance = data.totalAccountBalance
   }
   getCashInHandList() {
     this.isLoading = true;
@@ -126,8 +129,9 @@ export class CashAndBankComponent implements OnInit {
   getCashInHandRes(data) {
     console.log('getCashInHandRes ###', data);
     this.isLoading = false;
-    this.cashInHandList = data.cashInHands;
-    this.sumOfCashValue = data.sumOfCashValue;
+    this.cashInHandList = new MatTableDataSource(data.cashInHands);
+    this.cashInHandList.sort = this.cashInHandListTableSort;
+    this.sumOfCashValue = data.sumOfCashValue
   }
   openCashAndBank(state) {
     const fragmentData = {
@@ -139,7 +143,7 @@ export class CashAndBankComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-          this.getBankAccountList();
+        this.getBankAccountList();
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -175,7 +179,7 @@ export class CashAndBankComponent implements OnInit {
       id: 1,
       data,
       state: 'open35',
-      componentName : DetailedViewBankAccountComponent,
+      componentName: DetailedViewBankAccountComponent,
     };
     this.subInjectService.changeNewRightSliderState(fragmentData);
   }
@@ -186,7 +190,7 @@ export class CashAndBankComponent implements OnInit {
       id: 1,
       data,
       state: 'open35',
-      componentName : DetailedViewCashInHandComponent,
+      componentName: DetailedViewCashInHandComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
