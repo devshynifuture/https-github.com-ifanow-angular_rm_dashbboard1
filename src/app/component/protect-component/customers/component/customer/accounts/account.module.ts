@@ -15,12 +15,10 @@ import {ExpensesComponent} from './expenses/expenses.component';
 import {SummaryComponent} from './summary/summary.component';
 import {BottomSheetComponent} from '../../common-component/bottom-sheet/bottom-sheet.component';
 import {LibilitiesRightComponent} from './liabilities/libilities-right/libilities-right.component';
-import {IncomeComponent} from './income/income.component';
 import {LiabilitiesComponent} from './liabilities/liabilities.component';
 import {ChartModule} from 'angular-highcharts';
 import {RightFilterComponent} from '../../common-component/right-filter/right-filter.component';
 import {FixedIncomeComponent} from './assets/fixedIncome/fixed-income/fixed-income.component';
-import {AddIncomeComponent} from '../../common-component/add-income/add-income.component';
 import {IncomeDetailComponent} from '../../common-component/income-detail/income-detail.component';
 import {DetailedViewComponent} from '../../common-component/detailed-view/detailed-view.component';
 import {RetirementAccountComponent} from './assets/retirementAccounts/retirement-account/retirement-account.component';
@@ -46,7 +44,6 @@ import {OtherPayablesComponent} from './liabilities/other-payables/other-payable
 // import {CashflowsPlanComponent} from '../plan/cashflows-plan/cashflows-plan.component';
 // import {InvestmentsPlanComponent} from '../plan/investments-plan/investments-plan.component';
 // import {ScenariosPlanComponent} from '../plan/scenarios-plan/scenarios-plan.component';
-import {AddOtherPayablesComponent} from './liabilities/add-other-payables/add-other-payables.component';
 
 import {CashAndBankComponent} from './assets/cash&bank/cash-and-bank/cash-and-bank.component';
 import {CommoditiesComponent} from './assets/commodities/commodities/commodities.component';
@@ -59,7 +56,6 @@ import {AccountCommonModule} from "./account.common.module";
 @NgModule({
   declarations: [
     SchemeLevelTransactionComponent,
-    IncomeComponent,
     CustomerDocumentsComponent,
     AccountsComponent,
     SummaryComponent,
@@ -68,7 +64,6 @@ import {AccountCommonModule} from "./account.common.module";
     InsuranceComponent,
     ExpensesComponent,
     AddProfileSummaryComponent,
-    IncomeComponent,
     DocumentsComponent,
     MutualFundsCapitalComponent,
     BottomSheetComponent,
@@ -82,7 +77,6 @@ import {AccountCommonModule} from "./account.common.module";
     RightFilterComponent,
     FixedIncomeComponent,
     //BondsComponent,
-    AddIncomeComponent,
     IncomeDetailComponent,
     DetailedViewComponent,
     //LiabilitiesDetailComponent,
@@ -111,7 +105,6 @@ import {AccountCommonModule} from "./account.common.module";
     // AddPoRdComponent,
     AddExpensesComponent,
     OtherPayablesComponent,
-    AddOtherPayablesComponent,
     CashAndBankComponent,
     CommoditiesComponent,
     // GoldComponent,
@@ -136,7 +129,6 @@ import {AccountCommonModule} from "./account.common.module";
   ],
   exports: [
     AccountsComponent,
-    AddOtherPayablesComponent,
     CashAndBankComponent,
     CommoditiesComponent,
     LibilitiesRightComponent,
@@ -144,7 +136,6 @@ import {AccountCommonModule} from "./account.common.module";
     // AddEPSComponent,
     // AddGratuityComponent,
     ReactiveFormsModule,
-    AddIncomeComponent,
     IncomeDetailComponent,
     ReactiveFormsModule,
     // FactShitComponent,

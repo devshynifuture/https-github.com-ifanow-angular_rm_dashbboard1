@@ -96,7 +96,7 @@ export class KvpSchemeComponent implements OnInit {
       flag: 'addKVP',
       data,
       id: 1,
-      state: 'open',
+      state:(flag=="detailedKvp")?'open35':'open',
       componentName:(flag=="detailedKvp")?DetailedKvpComponent:AddKvpComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

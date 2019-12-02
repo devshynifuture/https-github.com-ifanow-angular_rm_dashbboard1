@@ -76,7 +76,7 @@ export class CashAndBankComponent implements OnInit {
           )
         }
 
-       
+
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -127,21 +127,17 @@ export class CashAndBankComponent implements OnInit {
     this.cashInHandList = data.cashInHands
     this.sumOfCashValue = data.sumOfCashValue
   }
-  openCashAndBank(value, state, data) {
+  openCashAndBank(state) {
     const fragmentData = {
-      Flag: value,
-      data: data,
+      Flag: '',
+      data: '',
       id: 1,
       state: 'open',
       componentName:BankAccountsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        if (value == 'addedbankAc') {
-          this.getCashInHandList()
-        } else {
           this.getBankAccountList();
-        };
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -150,9 +146,9 @@ export class CashAndBankComponent implements OnInit {
       }
     );;
   }
-  openCashInHand(value, state, data) {
+  openCashInHand(data) {
     const fragmentData = {
-      Flag: value,
+      flag: 'addCashInHand',
       data: data,
       id: 1,
       state: 'open',
@@ -161,11 +157,7 @@ export class CashAndBankComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        if (value == 'addedbankAc') {
           this.getCashInHandList()
-        } else {
-          this.getBankAccountList();
-        };
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -174,12 +166,12 @@ export class CashAndBankComponent implements OnInit {
       }
     );;
   }
-  detailedViewbankAccount(flagValue,data,state) {
+  detailedViewbankAccount(flagValue,data) {
     const fragmentData = {
       Flag: flagValue,
       id: 1,
       data:data,
-      state: state,
+      state: 'open35',
       componentName : DetailedViewBankAccountComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -193,12 +185,12 @@ export class CashAndBankComponent implements OnInit {
       }
     );
   }
-  detailedViewCashInHand(flagValue,data,state) {
+  detailedViewCashInHand(flagValue,data) {
     const fragmentData = {
       Flag: flagValue,
       id: 1,
       data:data,
-      state: state,
+      state: 'open35',
       componentName : DetailedViewCashInHandComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

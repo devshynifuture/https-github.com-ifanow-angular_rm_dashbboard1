@@ -1,11 +1,14 @@
 <mat-nav-list>
     <div class="row bg-dark p-12">
-        <div class="col-md-9">
+        <div class="col-md-9" *ngIf="data.flag!='uploadFolder'">
             <h4 class="l-26 f-500 mb-0 t-white f-20">Uploading {{noOfFiles}} items</h4>
+        </div>
+        <div class="col-md-9"  *ngIf="data.flag=='uploadFolder'">
+            <h4 class="l-26 f-500 mb-0 t-white f-20">Uploading {{display.length}} items</h4>
         </div>
         <div class="col-md-3 p-0 text-right">
             <i class="t-white material-icons mr-16"> expand_more </i>
-            <i class="material-icons t-white c-p"> close </i>
+            <i class="material-icons t-white c-p" (click)="close()"> close </i>
         </div>
     </div>
 
@@ -18,9 +21,18 @@
         </div>
     </div>
 
-    <div class="row p-8 mb-8">
+    <div class="row p-8 mb-8"  *ngIf="data.flag!='uploadFolder'">
         <div class="col-md-10" *ngFor="let item of fileData">
             <img class="mr-8" src="/assets/images/svg/xlsx-icon.svg">{{item.name}}
+        </div>
+        <div class="col-md-2 text-right">
+            <mat-progress-spinner class="example-margin " [color]="color" [mode]="mode" [value]="value">
+            </mat-progress-spinner>
+        </div>
+    </div>
+    <div class="row p-8 mb-8"  *ngIf="data.flag=='uploadFolder'">
+        <div class="col-md-10" *ngFor="let item of display">
+            <img class="mr-8"src="/assets/images/svg/folder-icon.svg">{{item.folderNameToDisplay}}{{item.length}}of{{item.length}}
         </div>
         <div class="col-md-2 text-right">
             <mat-progress-spinner class="example-margin " [color]="color" [mode]="mode" [value]="value">

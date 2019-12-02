@@ -365,8 +365,11 @@ export class CustomerService {
   moveFiles(data){
     return this.http.put(apiConfig.MAIN_URL + appConfig.MOVE_FILES, data)
   }
+  moveFolder(data){
+     return this.http.put(apiConfig.MAIN_URL + appConfig.MOVE_FOLDER, data)
+  }
   copyFiles(data){
-   return this.http.put(apiConfig.MAIN_URL + appConfig.COPY_FILES, data)
+   return this.http.post(apiConfig.MAIN_URL + appConfig.COPY_FILES, data)
   }
   renameFiles(data){
    return this.http.put(apiConfig.MAIN_URL + appConfig.RENAME_FILE, data)
@@ -380,11 +383,17 @@ export class CustomerService {
   starFile(data){
     return this.http.post(apiConfig.MAIN_URL + appConfig.STAR_FILE, data)
   }
-  viewActivity(data){
-    return this.http.get(apiConfig.MAIN_URL + appConfig.VIEW_ACTIVITY, data)
+  viewActivityFile(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.VIEW_ACTIVITY_FILE, data)
+  }
+  viewActivityFolder(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.VIEW_ACTIVITY_FOLDER, data)
   }
   uploadFile(data){
     // let httpParams=new HttpParams().set("advisorId",data.advisorId).set("clientId",data.clientId).set('folderId',data.folderId).set('fileName',data.fileName)
     return this.http.get(apiConfig.MAIN_URL + appConfig.UPLOAD_FILE, data)
+  }
+  newFolder(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.NEW_FOLDER, data)
   }
 }

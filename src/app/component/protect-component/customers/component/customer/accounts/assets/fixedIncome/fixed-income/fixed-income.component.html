@@ -135,8 +135,8 @@
               more_vert
             </i>
                         <mat-menu #menu4="matMenu">
-                            <button mat-menu-item (click)="openPortfolioSummary('addFixedDeposit','open',element)">Edit</button>
-                            <button mat-menu-item (click)="openDetailedFixedDeposit('addFixedDeposit','open',element)">Deatiled
+                            <button mat-menu-item (click)="openPortfolioSummary('addFixedDeposit',element)">Edit</button>
+                            <button mat-menu-item (click)="openDetailedFixedDeposit('addFixedDeposit',element)">Deatiled
                 View</button>
                             <button mat-menu-item>Activity</button>
                             <button mat-menu-item (click)="deleteModal('FIXED DEPOSITE',element)">Delete</button>
@@ -175,7 +175,7 @@
                         <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS
             </button>
-                        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddRecurringDeposit('addFixedDeposit','open')"><i
+                        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddRecurringDeposit('addFixedDeposit')"><i
                 class="material-icons">add</i>ADD
               NEW
             </button>
@@ -252,7 +252,7 @@
             </i>
                         <mat-menu #menu4="matMenu">
                             <button mat-menu-item (click)="openAddRecurringDeposit(element)">Edit</button>
-                            <button mat-menu-item (click)="detailedViewRecurringDeposit('RECURRING DEPOSITE',element,'open35')">Deatiled View</button>
+                            <button mat-menu-item (click)="detailedViewRecurringDeposit(element)">Deatiled View</button>
                             <button mat-menu-item>Activity</button>
                             <button mat-menu-item (click)="deleteModal('RECURRING DEPOSITE',element)">Delete</button>
                         </mat-menu>
@@ -290,7 +290,7 @@
                         <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS
             </button>
-                        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openBonds('addBonds','open',element)"><i
+                        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openBonds(null)"><i
                 class="material-icons">add</i>ADD NEW
             </button>
 
@@ -384,7 +384,7 @@
             </i>
                         <mat-menu #menu4="matMenu">
                             <button mat-menu-item (click)="openBonds(element)">Edit</button>
-                            <button mat-menu-item (click)="detailedViewBonds(element,'open35')">Deatiled View</button>
+                            <button mat-menu-item (click)="detailedViewBonds(element)">Deatiled View</button>
                             <button mat-menu-item>Activity</button>
                             <button mat-menu-item (click)="deleteModal('BOND',element)">Delete</button>
                         </mat-menu>

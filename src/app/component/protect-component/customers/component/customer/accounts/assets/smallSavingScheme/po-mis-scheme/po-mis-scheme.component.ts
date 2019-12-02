@@ -101,7 +101,7 @@ export class PoMisSchemeComponent implements OnInit {
       flag: 'detailedPOMIS',
       data: data,
       id: 1,
-      state: 'open',
+      state: 'open35',
       componentName: DetailedPoMisComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

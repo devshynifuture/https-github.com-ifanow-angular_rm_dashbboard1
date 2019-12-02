@@ -1,17 +1,17 @@
-import { RecuringDepositComponent } from './../recuring-deposit/recuring-deposit.component';
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../../customer.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { DetailedViewFixedDepositComponent } from '../fixed-deposit/detailed-view-fixed-deposit/detailed-view-fixed-deposit.component';
-import { FixedDepositComponent } from '../fixed-deposit/fixed-deposit.component';
-import { DetailedViewRecuringDepositComponent } from '../recuring-deposit/detailed-view-recuring-deposit/detailed-view-recuring-deposit.component';
-import { DetailedViewBondsComponent } from '../bonds/detailed-view-bonds/detailed-view-bonds.component';
-import { BondsComponent } from '../bonds/bonds.component';
+import {RecuringDepositComponent} from './../recuring-deposit/recuring-deposit.component';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {UtilService} from 'src/app/services/util.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../../customer.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {DetailedViewFixedDepositComponent} from '../fixed-deposit/detailed-view-fixed-deposit/detailed-view-fixed-deposit.component';
+import {FixedDepositComponent} from '../fixed-deposit/fixed-deposit.component';
+import {DetailedViewRecuringDepositComponent} from '../recuring-deposit/detailed-view-recuring-deposit/detailed-view-recuring-deposit.component';
+import {DetailedViewBondsComponent} from '../bonds/detailed-view-bonds/detailed-view-bonds.component';
+import {BondsComponent} from '../bonds/bonds.component';
 
 @Component({
   selector: 'app-fixed-income',
@@ -37,7 +37,9 @@ export class FixedIncomeComponent implements OnInit {
   sumCurrentValueB: any;
 
 
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService, public dialog: MatDialog) { }
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService, public dialog: MatDialog) {
+  }
+
   viewMode
   displayedColumns4 = ['no', 'owner', 'type', 'cvalue', 'rate', 'amt', 'mdate', 'mvalue', 'number', 'desc', 'status', 'icons'];
   datasource4 = ELEMENT_DATA4;
@@ -52,9 +54,11 @@ export class FixedIncomeComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getFixedDepositList()
   }
+
   Close() {
 
   }
+
   getfixedIncomeData(value) {
     console.log('value++++++', value)
     this.showRequring = value
@@ -67,6 +71,7 @@ export class FixedIncomeComponent implements OnInit {
     }
 
   }
+
   getFixedDepositList() {
     let obj = {
       clientId: this.clientId,
@@ -76,6 +81,7 @@ export class FixedIncomeComponent implements OnInit {
       data => this.getFixedDepositRes(data)
     );
   }
+
   getFixedDepositRes(data) {
     console.log('getFixedDepositRes ********** ', data);
     this.isLoading = false;
@@ -85,6 +91,7 @@ export class FixedIncomeComponent implements OnInit {
     this.sumMaturityValue = data.sumMaturityValue
 
   }
+
   getRecurringDepositList() {
     this.isLoading = true;
     let obj = {
@@ -95,6 +102,7 @@ export class FixedIncomeComponent implements OnInit {
       data => this.getRecurringDepositRes(data)
     );
   }
+
   getRecurringDepositRes(data) {
     console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
     this.isLoading = false;
@@ -102,6 +110,7 @@ export class FixedIncomeComponent implements OnInit {
     this.totalCurrentValue = data.totalCurrentValue
     this.totalMarketValue = data.totalMarketValue
   }
+
   getBondsList() {
     this.isLoading = true;
     let obj = {
@@ -112,6 +121,7 @@ export class FixedIncomeComponent implements OnInit {
       data => this.getBondsRes(data)
     );
   }
+
   getBondsRes(data) {
     console.log('getBondsRes ******** ', data);
     this.isLoading = false;
@@ -120,6 +130,7 @@ export class FixedIncomeComponent implements OnInit {
     this.sumCouponAmount = data.sumCouponAmount
     this.sumCurrentValueB = data.sumCurrentValue
   }
+
   deleteModal(value, data) {
     const dialogData = {
       data: value,
@@ -175,7 +186,8 @@ export class FixedIncomeComponent implements OnInit {
 
     });
   }
-  openPortfolioSummary(value, state, data,component) {
+
+  openPortfolioSummary(value, data) {
     const fragmentData = {
       Flag: value,
       data: data,
@@ -195,12 +207,13 @@ export class FixedIncomeComponent implements OnInit {
       }
     );
   }
-  openDetailedFixedDeposit(value, state, data,component) {
+
+  openDetailedFixedDeposit(value, data) {
     const fragmentData = {
       Flag: value,
       data: data,
       id: 1,
-      state: 'open',
+      state: 'open35',
       componentName: DetailedViewFixedDepositComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -214,25 +227,18 @@ export class FixedIncomeComponent implements OnInit {
       }
     );
   }
-  detailedViewRecurringDeposit(value, data,state) {
+
+  detailedViewRecurringDeposit(data) {
     const fragmentData = {
-      Flag: value,
-      data: data,
+      flag: 'RECURRING_DEPOSITE',
+      data,
       id: 1,
-      state: 'open',
+      state: 'open35',
       componentName: DetailedViewRecuringDepositComponent
     };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
-
-        }
-      }
-    );
+    this.subInjectService.changeNewRightSliderState(fragmentData);
   }
+
   openAddRecurringDeposit(data) {
     const fragmentData = {
       Flag: 'addRecuringDeposit',
@@ -253,9 +259,10 @@ export class FixedIncomeComponent implements OnInit {
       }
     );
   }
+
   openBonds(data) {
     const fragmentData = {
-      Flag:'BondsComponent',
+      Flag: 'BondsComponent',
       data: data,
       id: 1,
       state: 'open',
@@ -273,12 +280,13 @@ export class FixedIncomeComponent implements OnInit {
       }
     );
   }
-  detailedViewBonds(data,state) {
+
+  detailedViewBonds(data) {
     const fragmentData = {
       Flag: 'DetailedViewBondsComponent',
       data: data,
       id: 1,
-      state: state,
+      state: 'open35',
       componentName: DetailedViewBondsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -332,6 +340,7 @@ const ELEMENT_DATA4: PeriodicElement4[] = [
 
 
 ];
+
 export interface PeriodicElement5 {
   no: string;
   owner: string;
@@ -368,6 +377,7 @@ const ELEMENT_DATA5: PeriodicElement5[] = [
 
 
 ];
+
 export interface PeriodicElement6 {
   no: string;
   owner: string;
@@ -385,14 +395,32 @@ export interface PeriodicElement6 {
 
 const ELEMENT_DATA6: PeriodicElement6[] = [
   {
-    no: '1.', owner: 'Ronak Hasmukh Hindocha',
-    cvalue: '60,000', camt: "1,00,000", amt: '1,00,000', cdate: "18/09/2019", rate: '8.40%', mvalue: "18/09/2019", tenure: "12", type: "Tax free",
-    desc: "ICICI FD", status: "LIVE"
+    no: '1.',
+    owner: 'Ronak Hasmukh Hindocha',
+    cvalue: '60,000',
+    camt: "1,00,000",
+    amt: '1,00,000',
+    cdate: "18/09/2019",
+    rate: '8.40%',
+    mvalue: "18/09/2019",
+    tenure: "12",
+    type: "Tax free",
+    desc: "ICICI FD",
+    status: "LIVE"
   },
   {
-    no: '2.', owner: 'Rupa Ronak Hindocha',
-    cvalue: '60,000', camt: "1,00,000", amt: '1,00,000', cdate: "18/09/2019", rate: '8.40%', mvalue: "18/09/2019", tenure: "12", type: "Tax free",
-    desc: "ICICI FD", status: "LIVE"
+    no: '2.',
+    owner: 'Rupa Ronak Hindocha',
+    cvalue: '60,000',
+    camt: "1,00,000",
+    amt: '1,00,000',
+    cdate: "18/09/2019",
+    rate: '8.40%',
+    mvalue: "18/09/2019",
+    tenure: "12",
+    type: "Tax free",
+    desc: "ICICI FD",
+    status: "LIVE"
   },
   {
     no: '', owner: 'Total',

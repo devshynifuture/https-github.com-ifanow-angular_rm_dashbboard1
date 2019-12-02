@@ -37,7 +37,7 @@
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                         class="material-icons">filter_list</i>FILTERS</button>
                 <button mat-stroked-button class="btn-primary addon v-middle"
-                    (click)="openCommodities('addGold','open')"><i class="material-icons">add</i>ADD NEW</button>
+                    (click)="openCommodities('addGold','open',null)"><i class="material-icons">add</i>ADD NEW</button>
             </div>
         </div>
         <div class="example-container mt-8 real-estate">
@@ -102,7 +102,7 @@
                         </i>
                         <mat-menu #menubank="matMenu">
                             <button mat-menu-item (click)="openCommodities('addGold','open',element)">Edit</button>
-                            <button mat-menu-item (click)="detailedViewGold('addGold',element,'open')">Detailed view</button>
+                            <button mat-menu-item (click)="detailedViewGold('addGold',element)">Detailed view</button>
                             <button mat-menu-item>Activity</button>
                             <button mat-menu-item (click)="deleteModal('GOLD',element)">Delete</button>
                         </mat-menu>
@@ -128,7 +128,7 @@
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                         class="material-icons">filter_list</i>FILTERS</button>
                 <button mat-stroked-button class="btn-primary addon v-middle"
-                    (click)="openOthers('addOthers','open')"><i class="material-icons">add</i>ADD
+                    (click)="openOthers('addOthers','open',null)"><i class="material-icons">add</i>ADD
                     NEW</button>
             </div>
         </div>
@@ -194,7 +194,7 @@
                         </i>
                         <mat-menu #menubank="matMenu">
                             <button mat-menu-item (click)="openOthers('addOthers','open',element)">Edit</button>
-                            <button mat-menu-item (click)="detailedViewOthers('addOthers',element,'open')">Detailed view</button>
+                            <button mat-menu-item (click)="detailedViewOthers('addOthers',element)">Detailed view</button>
                             <button mat-menu-item>Activity</button>
                             <button mat-menu-item (click)="deleteModal('OTHERS',element)">Delete</button>
                         </mat-menu>
