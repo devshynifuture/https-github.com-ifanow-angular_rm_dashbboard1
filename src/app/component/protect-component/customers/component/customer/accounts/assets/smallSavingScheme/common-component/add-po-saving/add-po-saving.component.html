@@ -8,21 +8,18 @@
         </div>
     </div>
 </div>
-<div class="pt-72 pl-24 pr-24 pb-48 mb-48">
+<div class="pt-100 pl-24 pr-24 pb-48 mb-48">
     <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
     <div [formGroup]="poSavingForm">
         <div class="row pt-40">
-            <div class="col-md-5 text-right">
+            <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Account balance</h5>
             </div>
-            <div class="col-md-3 p-0">
+            <div class="col-md-3">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input autocomplete="off" formControlName="accBal" type="number" matInput #accountBalance
-                            class="form-control rupess br-0" maxlength="">
-                        <mat-error
-                            *ngIf="poSavingForm.get('accBal').errors?.required && poSavingForm.get('accBal').touched"
-                            class="f-12 pt-4">
-                            Amount invested is required
+                    <mat-form-field> <input autocomplete="off" formControlName="accBal" type="number" matInput #accountBalance class="form-control rupess br-0" maxlength="">
+                        <mat-error *ngIf="poSavingForm.get('accBal').errors?.required && poSavingForm.get('accBal').touched" class="f-12 pt-4">
+                            This field is required
                         </mat-error>
                         <mat-error *ngIf="(poSavingForm.get('accBal').errors?.min)" class="f-12 pt-4">
                             Should be greater than 50
@@ -43,17 +40,16 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
-                    <mat-form-field> <input formControlName="balAsOn" matInput class="form-control br-0"
-                            [matDatepicker]="balanceAsOn">
+                    <mat-form-field> <input formControlName="balAsOn" matInput class="form-control br-0" [matDatepicker]="balanceAsOn">
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
-                        <mat-error class="f-12 pt-4">This field is required </mat-error>
+                        <mat-error class="f-12 pt-4"> This field is required </mat-error>
                     </mat-form-field>
                 </div>
             </div>
         </div>
         <div class="row pt-40">
-            <div class="col-md-5 text-right">
+            <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Ownership type</h5>
             </div>
             <div class="col-md-5">
@@ -86,8 +82,7 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput formControlName="poBranch" #fdNo type="text" maxlength="10"
-                            class="form-control br-0">
+                    <mat-form-field> <input matInput formControlName="poBranch" #fdNo type="text" maxlength="10" class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -99,8 +94,7 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput formControlName="nominee" #bankACNo type="text" maxlength="15"
-                            class="form-control br-0">
+                    <mat-form-field> <input matInput formControlName="nominee" #bankACNo type="text" maxlength="15" class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -112,8 +106,7 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput formControlName="bankAccNo" #institution maxlength="30"
-                            class="form-control br-0">
+                    <mat-form-field> <input matInput formControlName="bankAccNo" #institution maxlength="30" class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -125,8 +118,7 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput formControlName="description" #description maxlength="60"
-                            class="form-control br-0">
+                    <mat-form-field> <input matInput formControlName="description" #description maxlength="60" class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -142,8 +134,7 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
-        <div (click)="addPOSaving()" class="col-md-8 right text-right"> <button mat-button
-                class="btn-bottom br-0 text-inherit">Save</button>
+        <div (click)="addPOSaving()" class="col-md-8 right text-right"> <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
         </div>
     </div>
 </div>
