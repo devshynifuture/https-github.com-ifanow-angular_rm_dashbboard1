@@ -21,7 +21,7 @@
             </div>
            <div *ngFor="let singleIncome of selectedFamilyIncome">
             <div class="incomeSourcesBox d-flex">
-                <div (click)="called(singleIncome)" class="ml-12">
+                <div  class="ml-12">
                     <div  class="memberBorderBox" [ngClass]="{'activeMemberBox': true}">
                         <mat-checkbox class="checkPosition" *ngIf="true" checked="true"></mat-checkbox>
                         <img src="assets/images/svg/rupessIcon.svg">
