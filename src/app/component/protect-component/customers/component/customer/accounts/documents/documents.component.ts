@@ -14,6 +14,7 @@ import { DocumentNewFolderComponent } from '../../../common-component/document-n
 import { HttpService } from 'src/app/http-service/http-service';
 import { CopyDocumentsComponent } from '../../../common-component/copy-documents/copy-documents.component';
 import { ViewActivityComponent } from './view-activity/view-activity.component';
+import { rename } from 'fs';
 
 @Component({
   selector: 'app-documents',
@@ -41,7 +42,7 @@ export class DocumentsComponent implements OnInit {
   tabValue: any;
   valueTab: any;
   valueFirst: any;
-  animal: string;
+  animal: any;
   name: string;
   fileType = [
     { id: 1, name: 'PDF' },
@@ -89,17 +90,25 @@ export class DocumentsComponent implements OnInit {
     this.getAllFileList(tabValue);
     this.showLoader = true;
   }
-  openDialog(): void {
+  openDialog(element,value): void {
     const dialogRef = this.dialog.open(DocumentNewFolderComponent, {
       width: '30%',
-      data: { name: this.name, animal: this.animal }
+      data: { name: value, animal: element }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
       this.animal = result;
-      this.createFolder(this.animal)
+      if(this.animal.rename == undefined){
+        this.createFolder(this.animal)
+      }
+      if(this.animal.rename.flag == 'fileName'){
+        this.renameFile(this.animal)
+      }else{
+        this.renameFolders(this.animal)
+      }
     });
+  
   }
 
   openDialogCopy(element, value): void {
@@ -113,6 +122,39 @@ export class DocumentsComponent implements OnInit {
       this.animal = result;
       this.getAllFileList(this.animal)
     });
+  }
+  renameFile(element) {
+    const obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      id: element.rename.value.id,
+      fileName: element.newFolder
+    };
+    this.custumService.renameFiles(obj).subscribe(
+      data => this.renameFilesRes(data)
+    );
+  }
+
+  renameFilesRes(data) {
+    console.log(data);
+    this.getAllFileList(this.valueTab);
+  }
+
+  renameFolders(element) {
+    const obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      id: element.rename.value.id,
+      fileName: element.newFolder
+    };
+    this.custumService.renameFolder(obj).subscribe(
+      data => this.renameFolderRes(data)
+    );
+  }
+
+  renameFolderRes(data) {
+    console.log(data);
+    this.getAllFileList(this.valueTab);
   }
   createFolder(element) {
     console.log('folder name', element)
@@ -264,40 +306,6 @@ export class DocumentsComponent implements OnInit {
   deleteFileRes(data) {
     console.log(data);
   }
-  renameFile(element) {
-    const obj = {
-      clientId: this.clientId,
-      advisorId: this.advisorId,
-      folderId: element.id,
-      fileName: element.fileName
-    };
-    this.custumService.renameFiles(obj).subscribe(
-      data => this.renameFilesRes(data)
-    );
-  }
-
-  renameFilesRes(data) {
-    console.log(data);
-    this.getAllFileList(this.valueTab);
-  }
-
-  renameFolders(element) {
-    const obj = {
-      clientId: this.clientId,
-      advisorId: this.advisorId,
-      folderId: element.id,
-      fileName: element.folderName
-    };
-    this.custumService.renameFolder(obj).subscribe(
-      data => this.renameFolderRes(data)
-    );
-  }
-
-  renameFolderRes(data) {
-    console.log(data);
-    this.getAllFileList(this.valueTab);
-  }
-
   trashFolder(element) {
     const obj = {
       clientId: this.clientId,
@@ -327,6 +335,7 @@ export class DocumentsComponent implements OnInit {
 
   starFileRes(data) {
     console.log(data);
+    this.getAllFileList(this.valueTab);
   }
 
   viewActivities(element) {

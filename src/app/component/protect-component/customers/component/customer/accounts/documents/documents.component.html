@@ -149,7 +149,7 @@
                                             <button class="f-14" mat-menu-item (click)="starFiles(element)"><img
                                                     src="assets/images/svg/star-border-icon.svg" class="mr-20">Add to
                                                 starred</button>
-                                            <button class="f-14" mat-menu-item><img src="assets/images/svg/edit-name.svg"
+                                            <button (click)="openDialog('RENAME',element)" class="f-14" mat-menu-item><img src="assets/images/svg/edit-name.svg"
                                                     class="mr-20">Rename</button>
                                             <button class="f-14" mat-menu-item (click)="viewActivities(element)"><img
                                                     src="assets/images/svg/info-icon.svg" class="mr-20">View
@@ -197,7 +197,7 @@
                                             <span>Upload file</span></label>
                                    <input type="file" class="inputfile inputfile-4 "  id="file-4" webkitdirectory directory multiple (change)="uploadDocumentFolder($event)">
                                     <label class="uploadLabel text-primary f-14 c-p mb-12 pl-4 " for="file-4"><img src="/assets/images/svg/upload-folder-document-icon.svg" class="mr-8"><span> Upload folder</span></label>
-                                    <p (click)="openDialog()" class="text-primary f-14 c-p mb-12 "><img src="/assets/images/svg/new-folder-document.svg" class="mr-8">New folder</p>
+                                    <p (click)="openDialog('CREATE',element)" class="text-primary f-14 c-p mb-12 "><img src="/assets/images/svg/new-folder-document.svg" class="mr-8">New folder</p>
                                 </div>
                             </div>
                         </div>

@@ -1,5 +1,5 @@
 <div class="newFolderBox p-24">
-    <h4 class="f-20 roboto f-500 mb-12">NEW FOLDER</h4>
+    <h4 class="f-20 roboto f-500 mb-12">{{folderUpload}} FOLDER</h4>
 
     <div class="form-group">
         <mat-form-field>
@@ -13,7 +13,7 @@
             <button class="text-custom f-500 c-p" mat-button mat-dialog-close>              
                     CANCEL  
             </button>
-            <button class="text-danger f-500 c-p" mat-button (click)="createNewFolder(nameFolder)"> CREATE </button>
+            <button class="text-danger f-500 c-p" mat-button (click)="createNewFolder(nameFolder)"> {{folderUpload}} </button>
         </div>
     </div>
 
