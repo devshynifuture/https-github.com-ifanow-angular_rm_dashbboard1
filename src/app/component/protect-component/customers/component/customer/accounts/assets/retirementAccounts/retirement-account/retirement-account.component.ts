@@ -12,7 +12,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {MatTableDataSource} from '@angular/material/table';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog, MatSort} from '@angular/material';
-import {NpsSchemeHoldingComponent} from "../add-nps/nps-scheme-holding/nps-scheme-holding.component";
+import {NpsSchemeHoldingComponent} from '../add-nps/nps-scheme-holding/nps-scheme-holding.component';
 import {DetailedViewEPFComponent} from '../add-epf/detailed-view-epf/detailed-view-epf.component';
 import {DetailedViewEPSComponent} from '../add-eps/detailed-view-eps/detailed-view-eps.component';
 import {DetailedViewGratuityComponent} from '../add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
@@ -72,46 +72,46 @@ export class RetirementAccountComponent implements OnInit {
 
   displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
   datasource16;
-  isLoading: boolean = true;
+  isLoading = true;
 
   dataEPSList = new MatTableDataSource(this.datasource11);
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.showRecurring = '1'
+    this.showRecurring = '1';
     this.getObject = {
       clientId: this.clientId,
       advisorId: this.advisorId
-    }
-    this.getListEPF()
+    };
+    this.getListEPF();
     this.dataEPSList.sort = this.epsListTableSort;
   }
 
   getfixedIncomeData(value) {
     this.showRecurring = value;
-    (value == '2') ? this.getListNPS() : (value == '3') ? this.getListGratuity() : (value == '4') ? this.getListSuperannuation() : (value == '5') ? this.getListEPS() : this.getListEPF()
+    (value == '2') ? this.getListNPS() : (value == '3') ? this.getListGratuity() : (value == '4') ? this.getListSuperannuation() : (value == '5') ? this.getListEPS() : this.getListEPF();
   }
 
   openRetirement(value, state, data) {
     const fragmentData = {
       Flag: value,
-      data: data,
+      data,
       id: 1,
-      state: state
+      state
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (value == 'added') {
-          this.getListEPF()
+          this.getListEPF();
         } else if (value == 'addedGratuity') {
-          this.getListGratuity()
+          this.getListGratuity();
         } else if (value == 'addedEps') {
-          this.getListEPS()
+          this.getListEPS();
         } else if (value == 'addedSuperannuation') {
-          this.getListSuperannuation()
+          this.getListSuperannuation();
         } else {
-          this.getListNPS()
+          this.getListNPS();
         }
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
@@ -126,14 +126,14 @@ export class RetirementAccountComponent implements OnInit {
   openAddEPS(data) {
     const fragmentData = {
       flag: 'addEPS',
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: AddEPSComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getListEPS()
+        this.getListEPS();
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -147,14 +147,14 @@ export class RetirementAccountComponent implements OnInit {
   openAddSuperannuation(data) {
     const fragmentData = {
       flag: 'addSuperannuation',
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: AddSuperannuationComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getListSuperannuation()
+        this.getListSuperannuation();
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -168,14 +168,14 @@ export class RetirementAccountComponent implements OnInit {
   openAddGratuity(data) {
     const fragmentData = {
       flag: 'addGratuity',
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: AddGratuityComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getListGratuity()
+        this.getListGratuity();
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -188,14 +188,14 @@ export class RetirementAccountComponent implements OnInit {
   openAddSummaryPort(data) {
     const fragmentData = {
       flag: 'addSummaryPort',
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: NpsSummaryPortfolioComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getListNPS()
+        this.getListNPS();
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -208,14 +208,14 @@ export class RetirementAccountComponent implements OnInit {
   openAddEPF(data) {
     const fragmentData = {
       flag: 'addEPF',
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: AddEPFComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getListEPF()
+        this.getListEPF();
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -227,7 +227,7 @@ export class RetirementAccountComponent implements OnInit {
   openDetailedViewEPF(data) {
     const fragmentData = {
       flag: 'addEPF',
-      data: data,
+      data,
       id: 1,
       state: 'open35',
       componentName: DetailedViewEPFComponent
@@ -245,7 +245,7 @@ export class RetirementAccountComponent implements OnInit {
   detailedViewEPS(data) {
     const fragmentData = {
       flag: 'addEPF',
-      data: data,
+      data,
       id: 1,
       state: 'open35',
       componentName: DetailedViewEPSComponent
@@ -263,7 +263,7 @@ export class RetirementAccountComponent implements OnInit {
   detailedViewGratuity(data) {
     const fragmentData = {
       flag: 'addEPF',
-      data: data,
+      data,
       id: 1,
       state: 'open35',
       componentName: DetailedViewGratuityComponent
@@ -281,7 +281,7 @@ export class RetirementAccountComponent implements OnInit {
   detailedViewSuperannuation(data) {
     const fragmentData = {
       flag: 'addEPF',
-      data: data,
+      data,
       id: 1,
       state: 'open35',
       componentName: DetaildedViewSuperannuationComponent
@@ -307,7 +307,7 @@ export class RetirementAccountComponent implements OnInit {
 
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getListNPS()
+        this.getListNPS();
         if (UtilService.isDialogClose(sideBarData)) {
           this.getListNPS();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -329,48 +329,48 @@ export class RetirementAccountComponent implements OnInit {
         if (value == 'EPF') {
           this.custumService.deleteEPF(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("EPF is deleted", "dismiss")
+              this.eventService.openSnackBar('EPF is deleted', 'dismiss');
               dialogRef.close();
-              this.getListEPF()
+              this.getListEPF();
             },
             err => this.eventService.openSnackBar(err)
-          )
+          );
         } else if (value == 'NPS') {
           this.custumService.deleteNPS(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("NPS is deleted", "dismiss")
+              this.eventService.openSnackBar('NPS is deleted', 'dismiss');
               dialogRef.close();
-              this.getListNPS()
+              this.getListNPS();
             },
             err => this.eventService.openSnackBar(err)
-          )
+          );
         } else if (value == 'GRATUITY') {
           this.custumService.deleteGratuity(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("Grautity is deleted", "dismiss")
+              this.eventService.openSnackBar('Grautity is deleted', 'dismiss');
               dialogRef.close();
-              this.getListGratuity()
+              this.getListGratuity();
             },
             err => this.eventService.openSnackBar(err)
-          )
+          );
         } else if (value == 'SUPERANNUATION') {
           this.custumService.deleteSuperAnnuation(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("SuperAnnuation is deleted", "dismiss")
+              this.eventService.openSnackBar('SuperAnnuation is deleted', 'dismiss');
               dialogRef.close();
-              this.getListSuperannuation()
+              this.getListSuperannuation();
             },
             err => this.eventService.openSnackBar(err)
-          )
+          );
         } else {
           this.custumService.deleteEPS(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("EPS is deleted", "dismiss")
+              this.eventService.openSnackBar('EPS is deleted', 'dismiss');
               dialogRef.close();
-              this.getListEPS()
+              this.getListEPS();
             },
             err => this.eventService.openSnackBar(err)
-          )
+          );
         }
 
       },
@@ -393,7 +393,7 @@ export class RetirementAccountComponent implements OnInit {
   }
 
   getListEPF() {
-    let obj = this.getObject
+    const obj = this.getObject;
     this.custumService.getEPF(obj).subscribe(
       data => this.getEPFRes(data)
     );
@@ -404,15 +404,15 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = false;
     this.dataEPFList = new MatTableDataSource(data.listOfEpf);
     this.dataEPFList.sort = this.epfListTableSort;
-    this.sumOfcurrentEpfBalance = data.sumOfcurrentEpfBalance
+    this.sumOfcurrentEpfBalance = data.sumOfcurrentEpfBalance;
     this.sumOfcurrentValue = data.sumOfcurrentValue;
     this.sumOfemployeesMonthlyContribution = data.sumOfemployeesMonthlyContribution;
-    this.sumOfemployersMonthlyContribution = data.sumOfemployersMonthlyContribution
+    this.sumOfemployersMonthlyContribution = data.sumOfemployersMonthlyContribution;
   }
 
   getListGratuity() {
     this.isLoading = true;
-    let obj = this.getObject
+    const obj = this.getObject;
     this.custumService.getGrauity(obj).subscribe(
       data => this.getGrauityRes(data)
     );
@@ -423,12 +423,12 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = false;
     this.dataGratuityList = new MatTableDataSource(data.gratuityList);
     this.dataGratuityList.sort = this.gratuityListTableSort;
-    this.sumOfAmountReceived = data.sumOfAmountReceived
+    this.sumOfAmountReceived = data.sumOfAmountReceived;
   }
 
   getListNPS() {
     this.isLoading = true;
-    let obj = this.getObject
+    const obj = this.getObject;
     this.custumService.getNPS(obj).subscribe(
       data => this.getNPSRes(data)
     );
@@ -439,13 +439,13 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = false;
     this.dataNPSList = new MatTableDataSource(data.npsList);
     this.dataNPSList.sort = this.npsListTableSort;
-    this.totalContribution = data.totalContribution
-    this.totalCurrentValue = data.totalCurrentValue
+    this.totalContribution = data.totalContribution;
+    this.totalCurrentValue = data.totalCurrentValue;
   }
 
   getListSuperannuation() {
     this.isLoading = true;
-    let obj = this.getObject
+    const obj = this.getObject;
     this.custumService.getSuperannuation(obj).subscribe(
       data => this.getSuperannuationRes(data)
     );
@@ -456,13 +456,13 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = false;
     this.dataSuperannuationList = new MatTableDataSource(data.superannuationList);
     this.dataSuperannuationList.sort = this.superAnnuationListTableSort;
-    this.sumOfAnnualEmployeeContribution = data.sumOfAnnualEmployeeContribution
-    this.sumOfAnnualEmployerContribution = data.sumOfAnnualEmployerContribution
+    this.sumOfAnnualEmployeeContribution = data.sumOfAnnualEmployeeContribution;
+    this.sumOfAnnualEmployerContribution = data.sumOfAnnualEmployerContribution;
   }
 
   getListEPS() {
     this.isLoading = true;
-    let obj = this.getObject
+    const obj = this.getObject;
     this.custumService.getEPS(obj).subscribe(
       data => this.getEPSRes(data)
     );
@@ -473,8 +473,8 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = false;
     this.EPSList = new MatTableDataSource(data.epsList);
     this.EPSList.sort = this.epsListTableSort;
-    this.totalNotionalValue = data.totalNotionalValue
-    this.totalPensionAmount = data.totalPensionAmount
+    this.totalNotionalValue = data.totalNotionalValue;
+    this.totalPensionAmount = data.totalPensionAmount;
   }
 }
 

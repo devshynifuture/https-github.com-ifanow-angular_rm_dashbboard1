@@ -220,7 +220,7 @@
 
               <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                   class="material-icons">filter_list</i>FILTERS</button>
-              <button mat-stroked-button class="btn-primary addon v-middle" (click)="openCashInHand('',null)"><i
+              <button (click)="openCashInHand(null)" class="btn-primary addon v-middle" mat-stroked-button><i
                   class="material-icons">add</i>ADD
                 NEW</button>
             </div>
@@ -276,7 +276,7 @@
                   </i>
                   <mat-menu #menubank="matMenu">
                     <button mat-menu-item (click)="openCashInHand(element)">Edit</button>
-                    <button mat-menu-item (click)="detailedViewCashInHand('addCashInHand',element)">Detailed
+                    <button (click)="detailedViewCashInHand(element)" mat-menu-item>Detailed
                       view</button>
                     <button mat-menu-item>Activity</button>
                     <button mat-menu-item (click)="deleteModal('CASH IN HAND',element)">Delete</button>
