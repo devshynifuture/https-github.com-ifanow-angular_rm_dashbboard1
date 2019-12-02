@@ -110,7 +110,7 @@
                                 </ng-container>
                                 <!-- Name Column -->
                                 <ng-container matColumnDef="name">
-                                    <th mat-sort-header="folderName || fileName" mat-header-cell *matHeaderCellDef> Name </th>
+                                    <th mat-sort-header="folderName" mat-header-cell *matHeaderCellDef> Name </th>
                                     <td mat-cell class="c-p" *matCellDef="let element" (click)="openFolder(element)">
                                         <img class="mr-12" src="/assets/images/svg/folder-icon.svg">
                                         {{element.folderName || element.fileName}} <img *ngIf="element.isStarred == 1"
