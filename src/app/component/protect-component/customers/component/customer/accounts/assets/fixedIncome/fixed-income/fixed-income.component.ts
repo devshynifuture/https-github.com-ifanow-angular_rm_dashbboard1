@@ -78,6 +78,7 @@ export class FixedIncomeComponent implements OnInit {
         this.dataSourceFixed = null;
         this.dataSourceFixed = new MatTableDataSource(data);
         this.dataSourceFixed.sort = this.fixedIncomeTableSort;
+        console.log('sorted ------------>', this.dataSourceFixed);
       }
     );
   }
@@ -110,6 +111,7 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = false;
     this.dataSourceFixed = new MatTableDataSource(data.fixedDepositList);
     this.dataSourceFixed.sort = this.fixedIncomeTableSort;
+    console.log('soted &&&&&&&&&',this.dataSourceFixed)
     this.sumAmountInvested = data.sumAmountInvested
     this.sumCurrentValue = data.sumCurrentValue
     this.sumMaturityValue = data.sumMaturityValue

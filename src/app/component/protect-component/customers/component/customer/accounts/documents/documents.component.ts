@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatBottomSheet, MatDialog, MatTableDataSource, MatSort } from '@angular/material';
 import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -23,8 +23,14 @@ import { EmailQuotationComponent } from 'src/app/component/protect-component/Adv
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.scss']
 })
-export class DocumentsComponent implements OnInit {
 
+export class DocumentsComponent implements AfterViewInit {
+  ngAfterViewInit(): void {
+    this.commonFileFolders = new MatTableDataSource(this.getSort);
+    this.commonFileFolders.sort = this.sort;
+    console.log('sorted', this.commonFileFolders);
+  }
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   displayedColumns: string[] = ['emptySpace', 'name', 'lastModi', 'type', 'size', 'icons'];
   dataSource = ELEMENT_DATA;
   percentDone: number;
@@ -61,7 +67,6 @@ export class DocumentsComponent implements OnInit {
     { id: 12, name: 'TXT' },
     { id: 13, name: 'HTML' },
   ];
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
   showDots = false;
   parentId: any;
   filenm: string;
@@ -72,8 +77,6 @@ export class DocumentsComponent implements OnInit {
   detailed: { clientId: any; advisorId: any; folderParentId: any; folderName: any; };
   uploadFolder: string[] = [];
   getSort: any;
-
-
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private event: EventService, private router: Router, private fb: FormBuilder,
     private custumService: CustomerService, public subInjectService: SubscriptionInject,
@@ -220,7 +223,6 @@ export class DocumentsComponent implements OnInit {
     this.commonFileFolders = data.folders;
     this.getSort = this.commonFileFolders
     this.commonFileFolders.push.apply(this.commonFileFolders, this.allFiles);
-    console.log('commonFileFolders', this.commonFileFolders);
     if (this.commonFileFolders.openFolderId == undefined || this.openFolderName.length == 0) {
       Object.assign(this.commonFileFolders, { openFolderNm: value.folderName });
       Object.assign(this.commonFileFolders, { openFolderId: value.id });
@@ -240,6 +242,9 @@ export class DocumentsComponent implements OnInit {
     }
     this.fileSizeConversion();
     this.showLoader = false;
+    this.commonFileFolders = new MatTableDataSource(this.getSort);
+    this.commonFileFolders.sort = this.sort;
+    console.log('sorted', this.commonFileFolders);
   }
   fileTypeGet() {
     this.commonFileFolders.forEach(p => {
