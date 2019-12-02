@@ -1,199 +1,211 @@
 <div class="wrapper-8">
-    <div class="row pt-28 pb-28">
-        <div class="col-md-8 pl-0" id="custom-toggle">
-            <button mat-button (click)="getfixedIncomeData('1')"
-                [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}"
-                class="br-0 text-custom">
-                Bank accounts</button>
-            <button mat-button (click)="getfixedIncomeData('2')"
-                [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}"
-                class="br-0 text-custom">
-                Cash in hand </button>
-        </div>
-        <div class="col-md-4 right text-right  pr-0">
-            <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
-                Overview Report
-                <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item>Overview Report</button>
-                <button mat-menu-item>Summary</button>
-                <button mat-menu-item>All Transactions</button>
-                <button mat-menu-item>Unrealized Transactions</button>
-                <button mat-menu-item>Capital Gains</button>
-                <button mat-menu-item>Goal Linkage</button>
+  <div class="row pt-28 pb-28">
+    <div class="col-md-8 pl-0" id="custom-toggle">
+      <button (click)="getfixedIncomeData('1')"
+              [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}"
+              class="br-0 text-custom"
+              mat-button>
+        Bank accounts
+      </button>
+      <button (click)="getfixedIncomeData('2')"
+              [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}"
+              class="br-0 text-custom"
+              mat-button>
+        Cash in hand
+      </button>
+    </div>
+    <div class="col-md-4 right text-right  pr-0">
+      <button [matMenuTriggerFor]="menu" class="ba-black br-0" mat-stroked-button>
+        Overview Report
+        <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Overview Report</button>
+        <button mat-menu-item>Summary</button>
+        <button mat-menu-item>All Transactions</button>
+        <button mat-menu-item>Unrealized Transactions</button>
+        <button mat-menu-item>Capital Gains</button>
+        <button mat-menu-item>Goal Linkage</button>
+      </mat-menu>
+    </div>
+  </div>
+  <div *ngIf="showRequring == '1'">
+    <div class="row">
+      <div class="col-md-4 p-0">
+        <h4 class="m-0 text-black roboto pt-8">Bank accounts</h4>
+      </div>
+      <div class="col-md-8 p-0 right text-right">
+        <img class="c-p" src="assets/images/svg/download-bordered.svg">
+        <img class="" src="assets/images/svg/up-down.svg">
+        <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
+        <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
+          class="material-icons">filter_list</i>FILTERS
+        </button>
+        <button (click)="openCashAndBank('addBankAccounts')" class="btn-primary addon v-middle"
+                mat-stroked-button><i class="material-icons">add</i>ADD
+          NEW
+        </button>
+      </div>
+    </div>
+    <div class="example-container mt-8 real-estate">
+      <table [dataSource]="bankAccountList" id="table-low" mat-table>
+        <ng-container matColumnDef="no">
+          <th *matHeaderCellDef class="br" mat-header-cell> No</th>
+          <td *matCellDef="let element let i = index" class="br" mat-cell> {{i + 1}} </td>
+          <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
+        </ng-container>
+        <ng-container matColumnDef="owner">
+          <th *matHeaderCellDef class="br t-18" mat-header-cell> Owner</th>
+          <td *matCellDef="let element" class="br t-18" mat-cell> {{element.ownerName}} </td>
+          <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell>Total</td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th *matHeaderCellDef class="br" mat-header-cell> Account type</th>
+          <td *matCellDef="let element" class="br"
+              mat-cell> {{(element.accountType == 1) ? 'Current' : 'Savings'}} </td>
+          <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
+        </ng-container>
+        <ng-container matColumnDef="amt">
+          <th *matHeaderCellDef class="br text-left" mat-header-cell> Balance as on</th>
+          <td *matCellDef="let element" class="br text-left" mat-cell> {{element.balanceAsOn}} </td>
+          <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
+        </ng-container>
+        <ng-container matColumnDef="rate">
+          <th *matHeaderCellDef class="br text-right" mat-header-cell> Rate</th>
+          <td *matCellDef="let element" class="br text-right" mat-cell> {{element.interestRate}} </td>
+          <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
+        </ng-container>
+        <ng-container matColumnDef="bal">
+          <th *matHeaderCellDef class="br text-right t-5" mat-header-cell> Balance mentioned</th>
+          <td *matCellDef="let element" class="br text-right t-5" mat-cell> {{element.accountBalance}} </td>
+          <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell>
+            {{utils.formatter(totalAccountBalance) || '-'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="account">
+          <th *matHeaderCellDef class="br" mat-header-cell> Account number</th>
+          <td *matCellDef="let element" class="br" mat-cell> {{element.account}} </td>
+          <td *matFooterCellDef mat-footer-cell></td>
+        </ng-container>
+        <ng-container matColumnDef="bank">
+          <th *matHeaderCellDef class="br" mat-header-cell> Bank name</th>
+          <td *matCellDef="let element" class="br" mat-cell> {{element.bankName}} </td>
+          <td *matFooterCellDef mat-footer-cell></td>
+        </ng-container>
+        <ng-container matColumnDef="desc">
+          <th *matHeaderCellDef class="br" mat-header-cell> Description</th>
+          <td *matCellDef="let element" class="br" mat-cell> {{element.description}} </td>
+          <td *matFooterCellDef mat-footer-cell></td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th *matHeaderCellDef class="br" mat-header-cell> Status</th>
+          <td *matCellDef="let element" class="br text-primary" mat-cell> {{element.isActive}} </td>
+          <td *matFooterCellDef mat-footer-cell></td>
+        </ng-container>
+        <ng-container matColumnDef="icons">
+          <th *matHeaderCellDef class="t-2" mat-header-cell></th>
+          <td *matCellDef="let element" class="t-2" mat-cell>
+            <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
+              more_vert
+            </i>
+            <mat-menu #menubank="matMenu">
+              <button (click)="openCashAndBank(element)"
+                      mat-menu-item>Edit
+              </button>
+              <button (click)="detailedViewbankAccount(element)" mat-menu-item>Detailed view</button>
+              <button mat-menu-item>Activity</button>
+              <button (click)="deleteModal('BANK ',element)" mat-menu-item>Delete</button>
             </mat-menu>
-        </div>
+          </td>
+          <td *matFooterCellDef mat-footer-cell></td>
+        </ng-container>
+        <tr *matHeaderRowDef="displayedColumns7; sticky: true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns7;" mat-row></tr>
+        <tr *matFooterRowDef="displayedColumns7;sticky: true" mat-footer-row></tr>
+      </table>
     </div>
-    <div *ngIf="showRequring == '1'">
-        <div class="row">
-            <div class="col-md-4 p-0">
-                <h4 class="m-0 text-black roboto pt-8">Bank accounts</h4>
-            </div>
-            <div class="col-md-8 p-0 right text-right">
-                <img src="assets/images/svg/download-bordered.svg" class="c-p">
-                <img src="assets/images/svg/up-down.svg" class="">
-                <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
-                <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
-                        class="material-icons">filter_list</i>FILTERS</button>
-                <button mat-stroked-button class="btn-primary addon v-middle"
-                    (click)="openCashAndBank('addBankAccounts')"><i class="material-icons">add</i>ADD
-                    NEW</button>
-            </div>
+  </div>
+  <div class="wrapper-8">
+    <div *ngIf="showRequring == '2'">
+      <div class="row">
+        <div class="col-md-4 p-0">
+          <h4 class="m-0 text-black roboto pt-8">Cash in hand</h4>
         </div>
-        <div class="example-container mt-8 real-estate">
-            <table mat-table [dataSource]="bankAccountList" id="table-low">
-                <ng-container matColumnDef="no">
-                    <th mat-header-cell *matHeaderCellDef class="br"> No </th>
-                    <td mat-cell *matCellDef="let element let i = index" class="br"> {{i+1}} </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
-                </ng-container>
-                <ng-container matColumnDef="owner">
-                    <th mat-header-cell *matHeaderCellDef class="br t-18"> Owner </th>
-                    <td mat-cell *matCellDef="let element" class="br t-18"> {{element.ownerName}} </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">Total </td>
-                </ng-container>
-                <ng-container matColumnDef="type">
-                    <th mat-header-cell *matHeaderCellDef class="br"> Account type </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{(element.accountType==1)?'Current':'Savings'}} </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
-                </ng-container>
-                <ng-container matColumnDef="amt">
-                    <th mat-header-cell *matHeaderCellDef class="br text-left"> Balance as on </th>
-                    <td mat-cell *matCellDef="let element" class="br text-left"> {{element.balanceAsOn}} </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
-                </ng-container>
-                <ng-container matColumnDef="rate">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right"> Rate </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right"> {{element.interestRate}} </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
-                </ng-container>
-                <ng-container matColumnDef="bal">
-                    <th mat-header-cell *matHeaderCellDef class="br text-right t-5"> Balance mentioned </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right t-5"> {{element.accountBalance}} </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">
-                        {{utils.formatter(totalAccountBalance) || '-'}} </td>
-                </ng-container>
-                <ng-container matColumnDef="account">
-                    <th mat-header-cell *matHeaderCellDef class="br"> Account number </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.account}} </td>
-                    <td mat-footer-cell *matFooterCellDef> </td>
-                </ng-container>
-                <ng-container matColumnDef="bank">
-                    <th mat-header-cell *matHeaderCellDef class="br"> Bank name </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.bankName}} </td>
-                    <td mat-footer-cell *matFooterCellDef> </td>
-                </ng-container>
-                <ng-container matColumnDef="desc">
-                    <th mat-header-cell *matHeaderCellDef class="br"> Description </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.description}} </td>
-                    <td mat-footer-cell *matFooterCellDef> </td>
-                </ng-container>
-                <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
-                    <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.isActive}} </td>
-                    <td mat-footer-cell *matFooterCellDef> </td>
-                </ng-container>
-                <ng-container matColumnDef="icons">
-                    <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                    <td mat-cell *matCellDef="let element" class="t-2">
-                        <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
-                            more_vert
-                        </i>
-                        <mat-menu #menubank="matMenu">
-                            <button mat-menu-item
-                                (click)="openCashAndBank(element)">Edit</button>
-                            <button mat-menu-item (click)="detailedViewbankAccount(element)">Detailed view</button>
-                            <button mat-menu-item>Activity</button>
-                            <button mat-menu-item (click)="deleteModal('BANK ',element)">Delete</button>
-                        </mat-menu>
-                    </td>
-                    <td mat-footer-cell *matFooterCellDef> </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns7; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns7;"></tr>
-                <tr mat-footer-row *matFooterRowDef="displayedColumns7;sticky: true"></tr>
-            </table>
+        <div class="col-md-8 p-0 right text-right">
+          <img class="c-p" src="assets/images/svg/download-bordered.svg">
+          <img class="" src="assets/images/svg/up-down.svg">
+          <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
+
+          <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
+            class="material-icons">filter_list</i>FILTERS
+          </button>
+          <button (click)="openCashInHand(null)" class="btn-primary addon v-middle"
+                  mat-stroked-button><i class="material-icons">add</i>ADD
+            NEW
+          </button>
         </div>
+      </div>
+
+      <div class="example-container mt-8 real-estate">
+        <table [dataSource]="cashInHandList" id="table-low" mat-table>
+
+          <ng-container matColumnDef="no">
+            <th *matHeaderCellDef class="br t-2" mat-header-cell> No</th>
+            <td *matCellDef="let element let i = index" class="br t-2" mat-cell> {{i + 1}} </td>
+            <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
+          </ng-container>
+          <ng-container matColumnDef="owner">
+            <th *matHeaderCellDef class="br t-25" mat-header-cell> Owner</th>
+            <td *matCellDef="let element" class="br t-25" mat-cell> {{element.ownerName}} </td>
+            <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell>Total</td>
+          </ng-container>
+          <ng-container matColumnDef="cash">
+            <th *matHeaderCellDef class="br text-right" mat-header-cell> Cash balance</th>
+            <td *matCellDef="let element" class="br text-right" mat-cell> {{element.cashValue}} </td>
+            <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell>
+              {{utils.formatter(sumOfCashValue) || '-'}}</td>
+          </ng-container>
+          <ng-container matColumnDef="bal">
+            <th *matHeaderCellDef class="br text-left" mat-header-cell> Balance as on</th>
+            <td *matCellDef="let element" class="br text-left"
+                mat-cell> {{element.balanceAsOn | date:'dd/MM/yyyy'}} </td>
+            <td *matFooterCellDef mat-footer-cell></td>
+          </ng-container>
+
+          <ng-container matColumnDef="desc">
+            <th *matHeaderCellDef class="br" mat-header-cell> Description</th>
+            <td *matCellDef="let element" class="br" mat-cell> {{element.description}} </td>
+            <td *matFooterCellDef mat-footer-cell></td>
+          </ng-container>
+          <ng-container matColumnDef="status">
+            <th *matHeaderCellDef class="br t-5" mat-header-cell> Status</th>
+            <td *matCellDef="let element" class="br t-5 text-primary" mat-cell> {{element.isActive}} </td>
+            <td *matFooterCellDef mat-footer-cell></td>
+          </ng-container>
+          <ng-container matColumnDef="icons">
+            <th *matHeaderCellDef class="t-2" mat-header-cell></th>
+            <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menubank"
+                                                                  class="material-icons c-p text-black">
+              more_vert
+            </i>
+              <mat-menu #menubank="matMenu">
+                <button (click)="openCashInHand(element)"
+                        mat-menu-item>Edit
+                </button>
+                <button (click)="detailedViewCashInHand(element)" mat-menu-item>Detailed view</button>
+                <button mat-menu-item>Activity</button>
+                <button (click)="deleteModal('CASH IN HAND',element)" mat-menu-item>Delete</button>
+              </mat-menu>
+            </td>
+            <td *matFooterCellDef mat-footer-cell></td>
+          </ng-container>
+          <tr *matHeaderRowDef="displayedColumns8; sticky: true" mat-header-row></tr>
+          <tr *matRowDef="let row; columns: displayedColumns8;" mat-row></tr>
+          <tr *matFooterRowDef="displayedColumns8;sticky: true" mat-footer-row></tr>
+        </table>
+      </div>
     </div>
-    <div class="wrapper-8">
-        <div *ngIf="showRequring == '2'">
-            <div class="row">
-                <div class="col-md-4 p-0">
-                    <h4 class="m-0 text-black roboto pt-8">Cash in hand</h4>
-                </div>
-                <div class="col-md-8 p-0 right text-right">
-                    <img src="assets/images/svg/download-bordered.svg" class="c-p">
-                    <img src="assets/images/svg/up-down.svg" class="">
-                    <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
-
-                    <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
-                            class="material-icons">filter_list</i>FILTERS</button>
-                    <button mat-stroked-button class="btn-primary addon v-middle"
-                        (click)="openCashInHand('',null)"><i class="material-icons">add</i>ADD
-                        NEW</button>
-                </div>
-            </div>
-
-            <div class="example-container mt-8 real-estate">
-                <table mat-table [dataSource]="cashInHandList" id="table-low">
-
-                    <ng-container matColumnDef="no">
-                        <th mat-header-cell *matHeaderCellDef class="br t-2"> No </th>
-                        <td mat-cell *matCellDef="let element let i = index" class="br t-2"> {{i+1}} </td>
-                        <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
-                    </ng-container>
-                    <ng-container matColumnDef="owner">
-                        <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
-                        <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
-                        <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">Total </td>
-                    </ng-container>
-                    <ng-container matColumnDef="cash">
-                        <th mat-header-cell *matHeaderCellDef class="br text-right"> Cash balance </th>
-                        <td mat-cell *matCellDef="let element" class="br text-right"> {{element.cashValue}} </td>
-                        <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">
-                            {{utils.formatter(sumOfCashValue) || '-'}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="bal">
-                        <th mat-header-cell *matHeaderCellDef class="br text-left"> Balance as on </th>
-                        <td mat-cell *matCellDef="let element" class="br text-left"> {{element.balanceAsOn | date:'dd/MM/yyyy'}} </td>
-                        <td mat-footer-cell *matFooterCellDef> </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="desc">
-                        <th mat-header-cell *matHeaderCellDef class="br"> Description </th>
-                        <td mat-cell *matCellDef="let element" class="br"> {{element.description}} </td>
-                        <td mat-footer-cell *matFooterCellDef> </td>
-                    </ng-container>
-                    <ng-container matColumnDef="status">
-                        <th mat-header-cell *matHeaderCellDef class="br t-5"> Status </th>
-                        <td mat-cell *matCellDef="let element" class="br t-5 text-primary"> {{element.isActive}} </td>
-                        <td mat-footer-cell *matFooterCellDef> </td>
-                    </ng-container>
-                    <ng-container matColumnDef="icons">
-                        <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                        <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black"
-                                [matMenuTriggerFor]="menubank">
-                                more_vert
-                            </i>
-                            <mat-menu #menubank="matMenu">
-                                <button mat-menu-item
-                                    (click)="openCashInHand(element)">Edit</button>
-                                <button mat-menu-item (click)="detailedViewCashInHand('addCashInHand',element)">Detailed view</button>
-                                <button mat-menu-item>Activity</button>
-                                <button mat-menu-item (click)="deleteModal('CASH IN HAND',element)">Delete</button>
-                            </mat-menu>
-                        </td>
-                        <td mat-footer-cell *matFooterCellDef> </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns8; sticky: true"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns8;"></tr>
-                    <tr mat-footer-row *matFooterRowDef="displayedColumns8;sticky: true"></tr>
-                </table>
-            </div>
-        </div>
-    </div>
+  </div>
 </div>
 <div *ngIf="isLoading">
-    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+  <mat-spinner [diameter]="30" class="loader"></mat-spinner>
 </div>

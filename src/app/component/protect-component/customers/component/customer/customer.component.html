@@ -16,11 +16,11 @@
 
   </mat-tab-group>-->
     <nav class="headerClassNav" mat-tab-nav-bar id="ui-customer">
-        <a mat-tab-link [routerLink]="'/customer-detail/account'">OVERVIEW</a>
-        <a mat-tab-link [routerLink]="'/customer-detail/account'">ACCOUNTS</a>
-        <a mat-tab-link [routerLink]="'/customer-detail/plan'">PLAN</a>
-        <a mat-tab-link [routerLink]="'/customer-detail/plan'">ACTIVITY</a>
-        <a mat-tab-link [routerLink]="'/customer-detail/plan'">TRANSACT</a>
+        <a (click)="clickEvent('1')" [ngClass]="value == '1' ?'successBorder': 'danger'" mat-tab-link [routerLink]="'/customer-detail/account'">OVERVIEW</a>
+        <a (click)="clickEvent('2')" [ngClass]="value == '2' ?'successBorder': 'danger'" mat-tab-link [routerLink]="'/customer-detail/account'">ACCOUNTS</a>
+        <a (click)="clickEvent('3')" [ngClass]="value == '3' ?'successBorder': 'danger'" mat-tab-link [routerLink]="'/customer-detail/plan'">PLAN</a>
+        <a (click)="clickEvent('4')" [ngClass]="value == '4' ?'successBorder': 'danger'" mat-tab-link [routerLink]="'/customer-detail/plan'">ACTIVITY</a>
+        <a (click)="clickEvent('5')" [ngClass]="value == '5' ?'successBorder': 'danger'" mat-tab-link [routerLink]="'/customer-detail/plan'">TRANSACT</a>
     </nav>
     <router-outlet></router-outlet>
 </div>
