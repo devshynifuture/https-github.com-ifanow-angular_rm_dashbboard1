@@ -39,13 +39,9 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {BaseComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/base/base.component';
 import {MomentDateModule} from '@angular/material-moment-adapter';
 import {CustomCommonModule} from './common/custom.common.module';
-import {SubscriptionModule} from './component/protect-component/AdviserComponent/Subscriptions/subscription.module';
 import {DatePipe} from '@angular/common';
 import {MatSortModule, MatTableModule} from '@angular/material';
 import {DynamicComponentService} from './services/dynamic-component.service';
-import {EntryComponentsModule} from "./entry.components.module";
-import {AccountEntryModule} from "./component/protect-component/customers/component/customer/accounts/account.entry.module";
-import {PlanEntryModule} from "./component/protect-component/customers/component/customer/plan/plan.entry.module";
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -105,13 +101,13 @@ import {PlanEntryModule} from "./component/protect-component/customers/component
     MDBBootstrapModule.forRoot(), DragDropModule,
     CustomCommonModule,
 
-    EntryComponentsModule,
-    AccountEntryModule,
-    PlanEntryModule,
+    // EntryComponentsModule,
+    // AccountEntryModule,
+    // PlanEntryModule,
   ],
   providers: [AuthService, HttpService, DatePipe, DynamicComponentService],
   bootstrap: [AppComponent],
-  entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
+  // entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
 })
 export class AppModule {
 }
