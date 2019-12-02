@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 // import {UtilService} from '../../../../../../../services/util.service';
 import {EventService} from '../../../../../../../Data-service/event.service';
 import {SubscriptionInject} from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
@@ -7,7 +7,7 @@ import {CustomerService} from '../../customer.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import * as _ from 'lodash';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
 import {AddLiabilitiesComponent} from "../../../common-component/add-liabilities/add-liabilities.component";
 import { LiabilitiesDetailComponent } from '../../../common-component/liabilities-detail/liabilities-detail.component';
 
@@ -19,6 +19,8 @@ import { LiabilitiesDetailComponent } from '../../../common-component/liabilitie
 })
 
 export class LiabilitiesComponent implements OnInit {
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
   displayedColumns = ['no', 'name', 'type', 'loan', 'ldate', 'today', 'ten', 'rate', 'emi', 'fin', 'status', 'icons'];
   // dataSource = ELEMENT_DATA;
   advisorId: any;
@@ -41,6 +43,7 @@ export class LiabilitiesComponent implements OnInit {
   totalLoanAmt: any;
   outStandingAmt: any;
   filterData: any;
+
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
               public customerService: CustomerService, public util: UtilService, public dialog: MatDialog) {
@@ -248,6 +251,8 @@ export class LiabilitiesComponent implements OnInit {
       this.mortgage = [];
       this.dataStore = data.loans;
       this.dataSource = data.loans;
+      this.dataSource = new MatTableDataSource(data.loans);
+      this.dataSource.sort = this.sort;
       this.storeData = data.loans.length;
       this.dataStore.forEach(element => {
         if (element.loanTypeId == 1) {

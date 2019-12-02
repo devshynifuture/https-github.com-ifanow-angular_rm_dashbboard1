@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AddExpensesComponent } from '../../../common-component/add-expenses/add-expenses.component';
 
 @Component({
   selector: 'app-expenses',
@@ -27,7 +28,8 @@ export class ExpensesComponent implements OnInit {
       const fragmentData = {
         Flag:value,
         id: 1,
-        state: 'open35'
+        state: 'open35',
+        componentName:AddExpensesComponent
       };
       const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
         sideBarData => {
