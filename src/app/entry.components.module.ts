@@ -201,7 +201,7 @@ export const componentList = [
   AddIncomeComponent,
   AddIncomeFamilyMemberComponent,
   AddIncomeSourceComponent,
-  IndividualIncomeInfoComponent
+  IndividualIncomeInfoComponent,
 ];
 
 @NgModule({

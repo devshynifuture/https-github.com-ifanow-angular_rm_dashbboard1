@@ -105,7 +105,7 @@ export class CopyDocumentsComponent implements OnInit {
     if (this.commonFileFolders.openFolderId == undefined || this.openFolderName.length == 0) {
       Object.assign(this.commonFileFolders, { openFolderNm: value.folderName });
       Object.assign(this.commonFileFolders, { openFolderId: value.id });
-      this.parentId = (value.id == undefined) ? 0 : value.id
+      this.parentId = (value.folderParentId == undefined) ? 0 : value.id
       console.log('parentId', this.parentId)
       this.openFolderName.push(this.commonFileFolders);
       this.valueFirst = this.openFolderName[0];
@@ -175,7 +175,7 @@ export class CopyDocumentsComponent implements OnInit {
         const obj = {
           clientId: this.clientId,
           advisorId: this.advisorId,
-          parentFolderId: value.folderParentId,
+          parentFolderId: value.parentId,
           id: value.id
         };
         this.custumService.moveFiles(obj).subscribe(
@@ -185,7 +185,7 @@ export class CopyDocumentsComponent implements OnInit {
         const obj = {
           clientId: this.clientId,
           advisorId: this.advisorId,
-          parentFolderId: this.parentId,
+          folderParentId: this.parentId,
           id: value.id
         };
         this.custumService.moveFolder(obj).subscribe(
