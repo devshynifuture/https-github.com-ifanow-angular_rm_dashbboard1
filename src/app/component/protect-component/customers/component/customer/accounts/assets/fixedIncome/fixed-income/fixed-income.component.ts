@@ -1,12 +1,12 @@
 import {RecuringDepositComponent} from './../recuring-deposit/recuring-deposit.component';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {UtilService} from 'src/app/services/util.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {CustomerService} from '../../../../customer.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
 import {DetailedViewFixedDepositComponent} from '../fixed-deposit/detailed-view-fixed-deposit/detailed-view-fixed-deposit.component';
 import {FixedDepositComponent} from '../fixed-deposit/fixed-deposit.component';
 import {DetailedViewRecuringDepositComponent} from '../recuring-deposit/detailed-view-recuring-deposit/detailed-view-recuring-deposit.component';
@@ -23,7 +23,7 @@ export class FixedIncomeComponent implements OnInit {
 
   showRequring: any;
   advisorId: any;
-  dataSourceFixed: any = [{}, {}, {}, {}];
+  dataSourceFixed: any;
   dataSourceRecurring: any;
   dataSourceBond: any;
   clientId: any;
@@ -36,17 +36,21 @@ export class FixedIncomeComponent implements OnInit {
   sumCouponAmount: any;
   sumCurrentValueB: any;
 
+  @ViewChild('fixedIncomeTableSort', { static: false }) fixedIncomeTableSort: MatSort;
+  @ViewChild('recurringDepositTable', { static: false }) recurringDepositTableSort: MatSort;
+  @ViewChild('bondListTable', { static: false }) bondListTableSort: MatSort;
 
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService, public dialog: MatDialog) {
-  }
-
-  viewMode
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService, public dialog: MatDialog) { }
+  viewMode;
   displayedColumns4 = ['no', 'owner', 'type', 'cvalue', 'rate', 'amt', 'mdate', 'mvalue', 'number', 'desc', 'status', 'icons'];
   datasource4 = ELEMENT_DATA4;
   displayedColumns5 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mdate', 'number', 'desc', 'status', 'icons'];
   datasource5 = ELEMENT_DATA5;
   displayedColumns6 = ['no', 'owner', 'cvalue', 'camt', 'amt', 'cdate', 'rate', 'mvalue', 'tenure', 'type', 'desc', 'status', 'icons'];
   datasource6 = ELEMENT_DATA6;
+  filterMode;
+  dataSourceFixedFiltered;
+  isFixedIncomeFiltered: boolean = false;
 
   ngOnInit() {
     this.showRequring = '1'
@@ -57,6 +61,35 @@ export class FixedIncomeComponent implements OnInit {
 
   Close() {
 
+  }
+
+  filterFixedIncome(key: string, value: string) {
+    let obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId
+    }
+    this.custumService.getFixedDeposit(obj).subscribe(
+      data => {
+        data = data.fixedDepositList.filter(function (item) {
+          return item[`${key}`] === value;
+        });
+        console.log('this is filtered data ------------>', data);
+        this.isFixedIncomeFiltered = true;
+        this.dataSourceFixed = null;
+        this.dataSourceFixed = new MatTableDataSource(data);
+        this.dataSourceFixed.sort = this.fixedIncomeTableSort;
+      }
+    );
+  }
+
+  changeRecurringFilterMode(value) {
+    console.log('this is filter data', value);
+    this.dataSourceRecurring.filter = value.trim().toLowerCase();
+  }
+
+  changeFixedIncomeFilterMode(value) {
+    console.log('this is filter data', value)
+    this.dataSourceFixed.filter = value.trim().toLowerCase();
   }
 
   getfixedIncomeData(value) {
@@ -85,7 +118,8 @@ export class FixedIncomeComponent implements OnInit {
   getFixedDepositRes(data) {
     console.log('getFixedDepositRes ********** ', data);
     this.isLoading = false;
-    this.dataSourceFixed = data.fixedDepositList
+    this.dataSourceFixed = new MatTableDataSource(data.fixedDepositList);
+    this.dataSourceFixed.sort = this.fixedIncomeTableSort;
     this.sumAmountInvested = data.sumAmountInvested
     this.sumCurrentValue = data.sumCurrentValue
     this.sumMaturityValue = data.sumMaturityValue
@@ -106,7 +140,8 @@ export class FixedIncomeComponent implements OnInit {
   getRecurringDepositRes(data) {
     console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
     this.isLoading = false;
-    this.dataSourceRecurring = data.recurringDeposits
+    this.dataSourceRecurring = new MatTableDataSource(data.recurringDeposits);
+    this.dataSourceRecurring.sort = this.recurringDepositTableSort;
     this.totalCurrentValue = data.totalCurrentValue
     this.totalMarketValue = data.totalMarketValue
   }
@@ -125,7 +160,8 @@ export class FixedIncomeComponent implements OnInit {
   getBondsRes(data) {
     console.log('getBondsRes ******** ', data);
     this.isLoading = false;
-    this.dataSourceBond = data.bondList
+    this.dataSourceBond = new MatTableDataSource(data.bondList);
+    this.dataSourceBond.sort = this.bondListTableSort;
     this.sumAmountInvestedB = data.sumAmountInvested
     this.sumCouponAmount = data.sumCouponAmount
     this.sumCurrentValueB = data.sumCurrentValue

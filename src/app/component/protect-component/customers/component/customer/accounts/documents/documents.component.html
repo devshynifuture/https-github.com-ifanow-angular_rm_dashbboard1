@@ -145,7 +145,7 @@
                                                 <img src="assets/images/svg/preview.svg" class="mr-20">
                                                 Preview
                                             </button>
-                                            <button class="f-14" mat-menu-item>
+                                            <button (click)="OpenEmail(element)" class="f-14" mat-menu-item>
                                                 <img src="assets/images/svg/share.svg" class="mr-20">
                                                 Share
                                             </button>
@@ -215,7 +215,7 @@
                                     <label class="uploadLabel text-primary f-14 c-p mb-12 pl-4 " for="file-4"><img
                                             src="/assets/images/svg/upload-folder-document-icon.svg" class="mr-8"><span>
                                             Upload folder</span></label>
-                                    <p (click)="openDialog('CREATE',element)" class="text-primary f-14 c-p mb-12 "><img
+                                    <p (click)="openDialog('CREATE','')" class="text-primary f-14 c-p mb-12 "><img
                                             src="/assets/images/svg/new-folder-document.svg" class="mr-8">New folder</p>
                                 </div>
                             </div>
