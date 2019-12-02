@@ -1,5 +1,4 @@
 import { DocumentsComponent } from './documents/documents.component';
-import { ExpensesComponent } from './expenses/expenses.component';
 import { InsuranceComponent } from './insurance/insurance.component';
 import { LiabilitiesComponent } from './liabilities/liabilities.component';
 import { AssetsComponent } from './assets/assets.component';
@@ -29,10 +28,6 @@ const routes: Routes = [{
     {
       path: 'insurance',
       component: InsuranceComponent
-    },
-    {
-      path: 'expenses',
-      component: ExpensesComponent
     },
     {
       path: 'documents',

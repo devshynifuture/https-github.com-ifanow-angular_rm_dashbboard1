@@ -1,11 +1,11 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import { CustomerService } from '../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { DetailedViewOtherPayablesComponent } from '../detailed-view-other-payables/detailed-view-other-payables.component';
 import { AddOtherPayablesComponent } from '../add-other-payables/add-other-payables.component';
 
@@ -15,6 +15,9 @@ import { AddOtherPayablesComponent } from '../add-other-payables/add-other-payab
   styleUrls: ['./other-payables.component.scss']
 })
 export class OtherPayablesComponent implements OnInit {
+
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
   displayedColumns = ['no', 'name', 'dateOfReceived', 'creditorName', 'amountBorrowed', 'interest', 'dateOfRepayment', 'outstandingBalance', 'description','status', 'icons'];
   // dataSource = ELEMENT_DATA;
   advisorId: any;
@@ -38,7 +41,8 @@ export class OtherPayablesComponent implements OnInit {
   }
   getOtherPayablesRes(data){
     console.log(data);
-    this.dataSource=data;
+    this.dataSource = new MatTableDataSource(data);
+    this.dataSource.sort = this.sort;
     this.OtherDataChange.emit(this.dataSource);
 
   }
