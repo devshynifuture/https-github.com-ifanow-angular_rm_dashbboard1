@@ -1,16 +1,3 @@
-<div class="popup-header-fix-60">
-    <div class="row bb-1">
-        <div class="col-md-7 p-0">
-            <h4 class="mb-0 wrapper-20"> ADD INCOME</h4>
-        </div>
-        <div class="col-md-5 text-right">
-            <div class="wrapper-12">
-                <i class="material-icons c-p v-middle" (click)="close()"> clear</i>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="pl-24 pt-72 pr-24 pb-24">
     <div class="row pt-24">
         <div class="col-md-12 mb-28">
@@ -22,9 +9,9 @@
 
 <div class="familyMemberBox">
     <div class="row">
-        <div *ngFor="let familyMember of familyMemberList" class="col-md-6 text-center mb-20">
-            <div class="memberBorderBox  activeMemberBox">
-                <mat-checkbox class="checkPosition"></mat-checkbox>
+        <div *ngFor="let familyMember of familyMemberList" (click)="select(familyMember)" class="col-md-6 text-center mb-20">
+            <div class="memberBorderBox" [ngClass]="{'activeMemberBox': familyMember.selected}">
+                <mat-checkbox class="checkPosition" *ngIf="familyMember.selected" checked="true"></mat-checkbox>
                 <img src="assets/images/svg/income-man.svg">
                 <!-- <img src="assets/images/svg/womenIcon.svg">
                 <img src="assets/images/svg/familyMember1.svg">
@@ -34,51 +21,15 @@
             </div>
             <p class="f-14 roboto">{{familyMember.userName}}</p>
         </div>
-        <!-- <div class="col-md-6 text-center mb-20">
-            <div class="memberBorderBox">
-                <img src="assets/images/svg/womenIcon.svg">
-            </div>
-            <p class="f-12"> Rupa <br> Hindocha</p>
-        </div> -->
     </div>
-
-    <!-- <div class="row">
-        <div class="col-md-6 text-center mb-20">
-            <div class="memberBorderBox">
-                <img src="assets/images/svg/familyMember1.svg">
-            </div>
-            <p class="f-12"> Hasmukh<br> Hindocha</p>
-        </div>
-        <div class="col-md-6 text-center mb-20">
-            <div class="memberBorderBox">
-                <img src="assets/images/svg/familyMember2.svg">
-            </div>
-            <p class="f-12"> Chetna<br> Hindocha</p>
-        </div>
-    </div> -->
-
-    <!-- <div class="row">
-        <div class="col-md-6 text-center mb-20">
-            <div class="memberBorderBox">
-                <img src="assets/images/svg/familyMember3.svg">
-            </div>
-            <p class="f-12"> Dhyaan<br> Hindocha</p>
-        </div>
-        <div class="col-md-6 text-center mb-20">
-            <div class="memberBorderBox">
-                <img src="assets/images/svg/familyMember4.svg">
-            </div>
-            <p class="f-12"> Rhea<br> Hindocha</p>
-        </div>
-    </div> -->
 </div>
 <div class="bottom-fixed wrapper-16 pb-12">
     <div class="row">
         <div class="col-md-4 p-0">
-            <h5 class="mb-0 pt-8 text-white c-p text-left">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="close()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit">SAVE</button>
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="nextStep()">NEXT</button>
 
         </div>
     </div>
