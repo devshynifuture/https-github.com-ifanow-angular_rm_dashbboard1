@@ -1,6 +1,6 @@
 <div *ngIf="clientId">
-    <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" class="img-top">
-    <!--<mat-tab-group [selectedIndex]="selected" animationDuration="0ms" mat-align-tabs="center" id="ui-customer">
+  <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" class="img-top">
+  <!--<mat-tab-group [selectedIndex]="selected" animationDuration="0ms" mat-align-tabs="center" id="ui-customer">
 
     <mat-tab label="OVERVIEW">
       &lt;!&ndash;      <app-plan></app-plan>&ndash;&gt;
@@ -15,15 +15,16 @@
     <mat-tab label="TRANSACT">Content 3</mat-tab>
 
   </mat-tab-group>-->
-    <nav class="headerClassNav" mat-tab-nav-bar id="ui-customer">
-        <a (click)="clickEvent('1')" [ngClass]="value == '1' ?'successBorder': 'danger'" mat-tab-link [routerLink]="'/customer-detail/account'">OVERVIEW</a>
-        <a (click)="clickEvent('2')" [ngClass]="value == '2' ?'successBorder': 'danger'" mat-tab-link [routerLink]="'/customer-detail/account'">ACCOUNTS</a>
-        <a (click)="clickEvent('3')" [ngClass]="value == '3' ?'successBorder': 'danger'" mat-tab-link [routerLink]="'/customer-detail/plan'">PLAN</a>
-        <a (click)="clickEvent('4')" [ngClass]="value == '4' ?'successBorder': 'danger'" mat-tab-link [routerLink]="'/customer-detail/plan'">ACTIVITY</a>
-        <a (click)="clickEvent('5')" [ngClass]="value == '5' ?'successBorder': 'danger'" mat-tab-link [routerLink]="'/customer-detail/plan'">TRANSACT</a>
-    </nav>
-    <router-outlet></router-outlet>
+  <nav class="headerClassNav" mat-tab-nav-bar id="ui-customer">
+    <a mat-tab-link [routerLink]="'/customer-detail/overview'">OVERVIEW</a>
+    <a mat-tab-link [routerLink]="'/customer-detail/account/summary'">ACCOUNTS</a>
+    <a mat-tab-link [routerLink]="'/customer-detail/plan/summary'">PLAN</a>
+    <a mat-tab-link [routerLink]="'/customer-detail/activity'">ACTIVITY</a>
+    <a mat-tab-link [routerLink]="'/customer-detail/transact'">TRANSACT</a>
+  </nav>
 </div>
+<router-outlet></router-outlet>
+
 <h1 *ngIf="!clientId">Please select client</h1>
 <app-dialog-container [parentComponentName]="'customer'"></app-dialog-container>
 

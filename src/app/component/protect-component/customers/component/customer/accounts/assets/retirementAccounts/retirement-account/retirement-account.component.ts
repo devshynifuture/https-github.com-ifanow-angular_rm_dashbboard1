@@ -9,10 +9,9 @@ import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort } from '@angular/material';
 import { NpsSchemeHoldingComponent } from "../add-nps/nps-scheme-holding/nps-scheme-holding.component";
 import { DetailedViewEPFComponent } from '../add-epf/detailed-view-epf/detailed-view-epf.component';
 import { DetailedViewEPSComponent } from '../add-eps/detailed-view-eps/detailed-view-eps.component';
@@ -25,8 +24,6 @@ import { DetaildedViewSuperannuationComponent } from '../add-superannuation/deta
   styleUrls: ['./retirement-account.component.scss']
 })
 export class RetirementAccountComponent implements OnInit {
-
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
   showRequring = '1';
   getObject: {};
   advisorId: any;
@@ -46,6 +43,14 @@ export class RetirementAccountComponent implements OnInit {
   totalPensionAmount: any;
   totalContribution: any;
   totalCurrentValue: any;
+  dataEPFList: any;
+
+  @ViewChild('epfListTable', { static: false }) epfListTableSort: MatSort;
+  @ViewChild('npsListTable', { static: false }) npsListTableSort: MatSort;
+  @ViewChild('gratuityListTable', { static: false }) gratuityListTableSort: MatSort;
+  @ViewChild('superAnnuationListTable', { static: false }) superAnnuationListTableSort: MatSort;
+  @ViewChild('epsListTable', { static: false }) epsListTableSort: MatSort;
+
 
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
   }
@@ -80,7 +85,7 @@ export class RetirementAccountComponent implements OnInit {
       advisorId: this.advisorId
     }
     this.getListEPF()
-    this.dataEPSList.sort = this.sort;
+    this.dataEPSList.sort = this.epsListTableSort;
   }
 
   getfixedIncomeData(value) {
@@ -397,7 +402,8 @@ export class RetirementAccountComponent implements OnInit {
   getEPFRes(data) {
     console.log('getEPFRes =', data);
     this.isLoading = false;
-    this.dataEPSList = data.listOfEpf
+    this.dataEPFList = new MatTableDataSource(data.listOfEpf);
+    this.dataEPFList.sort = this.epfListTableSort;
     this.sumOfcurrentEpfBalance = data.sumOfcurrentEpfBalance
     this.sumOfcurrentValue = data.sumOfcurrentValue;
     this.sumOfemployeesMonthlyContribution = data.sumOfemployeesMonthlyContribution;
@@ -415,7 +421,8 @@ export class RetirementAccountComponent implements OnInit {
   getGrauityRes(data) {
     console.log('getGrauityRes =', data);
     this.isLoading = false;
-    this.dataGratuityList = data.gratuityList
+    this.dataGratuityList = new MatTableDataSource(data.gratuityList);
+    this.dataGratuityList.sort = this.gratuityListTableSort;
     this.sumOfAmountReceived = data.sumOfAmountReceived
   }
 
@@ -430,7 +437,8 @@ export class RetirementAccountComponent implements OnInit {
   getNPSRes(data) {
     console.log('getNPSRes =', data);
     this.isLoading = false;
-    this.dataNPSList = data.npsList
+    this.dataNPSList = new MatTableDataSource(data.npsList);
+    this.dataNPSList.sort = this.npsListTableSort;
     this.totalContribution = data.totalContribution
     this.totalCurrentValue = data.totalCurrentValue
   }
@@ -446,7 +454,8 @@ export class RetirementAccountComponent implements OnInit {
   getSuperannuationRes(data) {
     console.log('getSuperannuationRes =', data);
     this.isLoading = false;
-    this.dataSuperannuationList = data.superannuationList
+    this.dataSuperannuationList = new MatTableDataSource(data.superannuationList);
+    this.dataSuperannuationList.sort = this.superAnnuationListTableSort;
     this.sumOfAnnualEmployeeContribution = data.sumOfAnnualEmployeeContribution
     this.sumOfAnnualEmployerContribution = data.sumOfAnnualEmployerContribution
   }
@@ -462,7 +471,8 @@ export class RetirementAccountComponent implements OnInit {
   getEPSRes(data) {
     console.log('getEPSRes =', data);
     this.isLoading = false;
-    this.EPSList = data.epsList
+    this.EPSList = new MatTableDataSource(data.epsList);
+    this.EPSList.sort = this.epsListTableSort;
     this.totalNotionalValue = data.totalNotionalValue
     this.totalPensionAmount = data.totalPensionAmount
   }
