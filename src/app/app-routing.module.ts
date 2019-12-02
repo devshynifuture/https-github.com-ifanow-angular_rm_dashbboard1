@@ -1,3 +1,4 @@
+import { OverviewComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/overview/overview.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './component/protect-component/AdviserComponent/dashboard/dashboard.component';
@@ -19,14 +20,23 @@ const routes: Routes = [
         path: 'subscription',
         loadChildren: () => import('./component/protect-component/AdviserComponent/Subscriptions/subscription.module')
           .then(m => m.SubscriptionModule),
-          canActivate:[AuthGuard]
+        canActivate: [AuthGuard]
       }
     ]
   },
   {
     path: 'customer-detail',
-    loadChildren: () => import('./component/protect-component/customers/customers.module')
-      .then(m => m.CustomersModule)
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./component/protect-component/customers/customers.module')
+          .then(m => m.CustomersModule)
+      },
+      {
+        path: 'overview',
+        component: OverviewComponent
+      }
+    ]
   },
   {
     path: '',

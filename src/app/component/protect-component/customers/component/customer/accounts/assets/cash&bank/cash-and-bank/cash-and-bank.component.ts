@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort, MatTable, MatTableDataSource } from '@angular/material';
 import { BankAccountsComponent } from '../bank-accounts/bank-accounts.component';
 import { CashInHandComponent } from '../cash-in-hand/cash-in-hand.component';
 import { DetailedViewCashInHandComponent } from '../cash-in-hand/detailed-view-cash-in-hand/detailed-view-cash-in-hand.component';
@@ -24,30 +24,34 @@ export class CashAndBankComponent implements OnInit {
   clientId: any;
   totalAccountBalance: any;
   sumOfCashValue: any;
-  isLoading: boolean = true;
+  isLoading = true;
   noData: string;
 
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService,public dialog:MatDialog) { }
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) { }
   displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc', 'status', 'icons'];
   datasource7 = ELEMENT_DATA7;
   displayedColumns8 = ['no', 'owner', 'cash', 'bal', 'desc', 'status', 'icons'];
   datasource8 = ELEMENT_DATA8;
+
+  @ViewChild('bankAccountListTable', { static: false }) bankAccountListTableSort: MatSort;
+  @ViewChild('cashInHandListTable', { static: false }) cashInHandListTableSort: MatSort;
+
   ngOnInit() {
-    this.showRequring = '1'
+    this.showRequring = '1';
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getBankAccountList();
   }
   getfixedIncomeData(value) {
-    console.log('value++++++', value)
-    this.showRequring = value
+    console.log('value++++++', value);
+    this.showRequring = value;
     if (value == '2') {
-      this.getCashInHandList()
+      this.getCashInHandList();
     } else {
-      this.getBankAccountList()
+      this.getBankAccountList();
     }
   }
-  deleteModal(value,data) {
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -58,22 +62,22 @@ export class CashAndBankComponent implements OnInit {
       positiveMethod: () => {
         if (value == 'BANK ACCOUNT') {
           this.custumService.deleteBankAccount(data.id).subscribe(
-            data=>{
-              this.eventService.openSnackBar("Bank account is deleted","dismiss")
+            data => {
+              this.eventService.openSnackBar("Bank account is deleted", "dismiss")
               dialogRef.close();
-              this.getBankAccountList()
+              this.getBankAccountList();
             },
-            err=>this.eventService.openSnackBar(err)
+            err => this.eventService.openSnackBar(err)
           )
         } else {
           this.custumService.deleteCashInHand(data.id).subscribe(
-            data=>{
-              this.eventService.openSnackBar("Cash In Hand is deleted","dismiss")
+            data => {
+              this.eventService.openSnackBar("Cash In Hand is deleted", "dismiss")
               dialogRef.close();
-              this.getCashInHandList()
+              this.getCashInHandList();
             },
-            err=>this.eventService.openSnackBar(err)
-          )
+            err => this.eventService.openSnackBar(err)
+          );
         }
 
 
@@ -96,10 +100,10 @@ export class CashAndBankComponent implements OnInit {
     });
   }
   getBankAccountList() {
-    let obj = {
+    const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
-    }
+    };
     this.custumService.getBankAccounts(obj).subscribe(
       data => this.getBankAccountsRes(data)
     );
@@ -108,15 +112,16 @@ export class CashAndBankComponent implements OnInit {
   getBankAccountsRes(data) {
     console.log('getBankAccountsRes ####', data);
     this.isLoading = false;
-    this.bankAccountList = data.cashInBankAccounts
+    this.bankAccountList = new MatTableDataSource(data.cashInBankAccounts);
+    this.bankAccountList.sort = this.bankAccountListTableSort;
     this.totalAccountBalance = data.totalAccountBalance
   }
   getCashInHandList() {
     this.isLoading = true;
-    let obj = {
+    const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
-    }
+    };
     this.custumService.getCashInHand(obj).subscribe(
       data => this.getCashInHandRes(data)
     );
@@ -124,82 +129,68 @@ export class CashAndBankComponent implements OnInit {
   getCashInHandRes(data) {
     console.log('getCashInHandRes ###', data);
     this.isLoading = false;
-    this.cashInHandList = data.cashInHands
+    this.cashInHandList = new MatTableDataSource(data.cashInHands);
+    this.cashInHandList.sort = this.cashInHandListTableSort;
     this.sumOfCashValue = data.sumOfCashValue
   }
-  openCashAndBank(value, state, data) {
+  openCashAndBank(state) {
     const fragmentData = {
-      Flag: value,
-      data: data,
+      Flag: '',
+      data: '',
       id: 1,
       state: 'open',
-      componentName:BankAccountsComponent
+      componentName: BankAccountsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        if (value == 'addedbankAc') {
-          this.getCashInHandList()
-        } else {
-          this.getBankAccountList();
-        };
+        this.getBankAccountList();
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-        }
-      }
-    );;
-  }
-  openCashInHand(value, data) {
-    const fragmentData = {
-      flag: 'addCashInHand',
-      data: data,
-      id: 1,
-      state: 'open',
-      componentName:CashInHandComponent
-
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        if (value == 'addedbankAc') {
-          this.getCashInHandList()
-        } else {
-          this.getBankAccountList();
-        };
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
-        }
-      }
-    );;
-  }
-  detailedViewbankAccount(flagValue,data) {
-    const fragmentData = {
-      Flag: flagValue,
-      id: 1,
-      data:data,
-      state: 'open35',
-      componentName : DetailedViewBankAccountComponent,
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
-
         }
       }
     );
   }
-  detailedViewCashInHand(flagValue,data) {
+  openCashInHand(data) {
     const fragmentData = {
-      Flag: flagValue,
+      flag: 'addCashInHand',
+      data,
       id: 1,
-      data:data,
+      state: 'open',
+      componentName: CashInHandComponent
+
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        this.getCashInHandList();
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+
+  detailedViewbankAccount(data) {
+    const fragmentData = {
+      flag: 'detailedViewbankAccount',
+      id: 1,
+      data,
       state: 'open35',
-      componentName : DetailedViewCashInHandComponent,
+      componentName: DetailedViewBankAccountComponent,
+    };
+    this.subInjectService.changeNewRightSliderState(fragmentData);
+  }
+
+  detailedViewCashInHand(data) {
+    const fragmentData = {
+      flag: 'detailedViewCashInHand',
+      id: 1,
+      data,
+      state: 'open35',
+      componentName: DetailedViewCashInHandComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -229,18 +220,18 @@ export interface PeriodicElement7 {
 const ELEMENT_DATA7: PeriodicElement7[] = [
   {
     no: '1.', owner: 'Rahul Jain',
-    type: 'Savings', amt: "08/02/2019", rate: '8.40%', bal: "1,00,000", account: "980787870909", bank: "ICICI",
-    desc: "ICICI FD", status: "MATURED"
+    type: 'Savings', amt: '08/02/2019', rate: '8.40%', bal: '1,00,000', account: '980787870909', bank: 'ICICI',
+    desc: 'ICICI FD', status: 'MATURED'
   },
   {
     no: '2.', owner: 'Shilpa Jain',
-    type: 'Current', amt: "08/02/2019", rate: '8.60%', bal: "50,000", account: "77676767622", bank: "Axis",
-    desc: "Axis bank FD", status: "LIVE"
+    type: 'Current', amt: '08/02/2019', rate: '8.60%', bal: '50,000', account: '77676767622', bank: 'Axis',
+    desc: 'Axis bank FD', status: 'LIVE'
   },
   {
     no: '', owner: 'Total',
-    type: '', amt: "", rate: '', bal: "1,50,000", account: "", bank: "",
-    desc: "", status: ""
+    type: '', amt: '', rate: '', bal: '1,50,000', account: '', bank: '',
+    desc: '', status: ''
   },
 
 
@@ -257,18 +248,18 @@ export interface PeriodicElement8 {
 const ELEMENT_DATA8: PeriodicElement8[] = [
   {
     no: '1.', owner: 'Rahul Jain'
-    , cash: "94,925", bal: "09/02/2019",
-    desc: "ICICI FD", status: "MATURED"
+    , cash: '94,925', bal: '09/02/2019',
+    desc: 'ICICI FD', status: 'MATURED'
   },
   {
     no: '2.', owner: 'Shilpa Jain'
-    , cash: "94,925", bal: "09/02/2019",
-    desc: "Axis bank FD", status: "LIVE"
+    , cash: '94,925', bal: '09/02/2019',
+    desc: 'Axis bank FD', status: 'LIVE'
   },
   {
     no: '', owner: 'Total'
-    , cash: "1,28,925", bal: "",
-    desc: "", status: ""
+    , cash: '1,28,925', bal: '',
+    desc: '', status: ''
   },
 
 

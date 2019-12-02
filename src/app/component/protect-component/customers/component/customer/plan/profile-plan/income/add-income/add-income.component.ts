@@ -12,13 +12,17 @@ export class AddIncomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  showLess(value){
-    if(value == true){
-      this.showHide = false;
-    }
-    else{
-      this.showHide = true;
-    }
+  // showLess(value){
+  //   if(value == true){
+  //     this.showHide = false;
+  //   }
+  //   else{
+  //     this.showHide = true;
+  //   }
+
+  // }
+  saveFamilyMembers()
+  {
 
   }
 

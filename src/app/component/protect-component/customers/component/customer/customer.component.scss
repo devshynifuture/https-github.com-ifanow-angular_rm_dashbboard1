@@ -1,15 +1,28 @@
-.img-top{
+.img-top {
     position: fixed;
     z-index: 99;
     width: 18%!important;
     padding-top: 5px;
 }
-.right-side img{
+
+.right-side img {
     right: 0;
     position: fixed;
     z-index: 9999;
-
 }
+
+::ng-deep .headerClassNav .mat-tab-link {
+    height: 65px;
+    min-width: auto;
+    border-bottom: 5px solid #fff;
+}
+
+
 .mat-tab-link{
     height: auto !important;
+}
+.successBorder {
+    border-bottom: 5px solid #008FFF;
+    color: #008FFF !important;
+    opacity: 1;
 }

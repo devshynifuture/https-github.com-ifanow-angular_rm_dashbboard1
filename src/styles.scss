@@ -721,6 +721,18 @@ mat-tab-group[vertical] {
     }
 }
 
+.secondHeaderClassNav {
+    border-bottom: 0px !important;
+    position: fixed !important;
+    width: 100%;
+    top: 65px;
+    background: #ffffff;
+    z-index: 9;
+    .mat-tab-links {
+        justify-content: center;
+        height: 65px;
+    }
+}
 #advisor-home,
 #plan-home {
     position: fixed;
