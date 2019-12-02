@@ -29,10 +29,10 @@ const routes: Routes = [
     loadChildren: () => import('./component/protect-component/customers/customers.module')
       .then(m => m.CustomersModule)
   },
-  {
-    path: 'overview',
-    component: OverviewComponent
-  },
+  // {
+  //   path: 'overview',
+  //   loadChildren: () => import('./')
+  // },
   {
     path: '',
     redirectTo: '/login',
