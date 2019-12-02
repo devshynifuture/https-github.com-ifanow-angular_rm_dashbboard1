@@ -12,6 +12,7 @@ import { CustomerService } from '../../../../customer.service';
 export class AddIncomeFamilyMemberComponent implements OnInit {
   advisorId: any;
   clientId: any;
+  familyMemberList: any;
   
   constructor(private subInjectService: SubscriptionInject,private custumService: CustomerService,private utils:UtilService) { }
 
@@ -31,7 +32,7 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
     );
   }
   getListOfFamilyByClientRes(data){
-    this.utils.calculateAgeFromCurrentDate(data.familyMembersList)
+    this.familyMemberList=this.utils.calculateAgeFromCurrentDate(data.familyMembersList)
   } 
   close() {
   
