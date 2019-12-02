@@ -3,13 +3,18 @@ import {CommonModule} from '@angular/common';
 import {ChartModule} from 'angular-highcharts';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from '../../../../../../material/material';
+import { PreferencesComponent } from './goals-plan/preferences/preferences.component';
+import { AddGoalComponent } from './goals-plan/add-goal/add-goal.component';
 import {AddPlaninsuranceComponent} from './insurance-plan/add-planinsurance/add-planinsurance.component';
 
 export const componentList = [
-  AddPlaninsuranceComponent
+  PreferencesComponent,AddGoalComponent]
+// import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 
-  // UpperCustomerComponent
-];
+// export const componentList = [
+//   AddPlaninsuranceComponent
+
+// ];
 
 @NgModule({
   declarations: componentList,
@@ -19,6 +24,8 @@ export const componentList = [
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
+    
+    
   ],
   exports: [
     FormsModule,

@@ -15,13 +15,19 @@
     <mat-tab label="TRANSACT">Content 3</mat-tab>
 
   </mat-tab-group>-->
-  <nav class="headerClassNav" mat-tab-nav-bar id="ui-customer">
-    <a mat-tab-link [routerLink]="'/customer-detail/overview'">OVERVIEW</a>
-    <a mat-tab-link [routerLink]="'/customer-detail/account/summary'">ACCOUNTS</a>
-    <a mat-tab-link [routerLink]="'/customer-detail/plan/summary'">PLAN</a>
-    <a mat-tab-link [routerLink]="'/customer-detail/activity'">ACTIVITY</a>
-    <a mat-tab-link [routerLink]="'/customer-detail/transact'">TRANSACT</a>
+  <nav class="headerClassNav" id="ui-customer" mat-tab-nav-bar>
+    <a (click)="clickEvent(1)" [ngClass]="value == 1 ?'successBorder': 'danger'"
+       [routerLink]="'/customer-detail/overview'" mat-tab-link>OVERVIEW</a>
+    <a (click)="clickEvent(2)" [ngClass]="value == 2  ?'successBorder': 'danger'"
+       [routerLink]="'/customer-detail/account/summary'" mat-tab-link>ACCOUNTS</a>
+    <a (click)="clickEvent(3)" [ngClass]="value == 3?'successBorder': 'danger'"
+       [routerLink]="'/customer-detail/plan/summary'" mat-tab-link>PLAN</a>
+    <a (click)="clickEvent(4)" [ngClass]="value == 4  ?'successBorder': 'danger'"
+       [routerLink]="'/customer-detail/activity'" mat-tab-link>ACTIVITY</a>
+    <a (click)="clickEvent(5)" [ngClass]="value == 5 ?'successBorder': 'danger'"
+       [routerLink]="'/customer-detail/transact'" mat-tab-link>TRANSACT</a>
   </nav>
+  <router-outlet></router-outlet>
 </div>
 <router-outlet></router-outlet>
 
