@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<div class="pl-24 pr-24 pb-24">
+<div class="pl-24 pt-72 pr-24 pb-24">
     <div class="row pt-24">
         <div class="col-md-12 mb-28">
             <p class="f-14 roboto f-normal">Great! Tell us, who are the earning members?</p>
@@ -23,8 +23,8 @@
 <div class="familyMemberBox">
     <div class="row">
         <div *ngFor="let familyMember of familyMemberList" class="col-md-6 text-center mb-20">
-            <div class="memberBorderBox">
-                <mat-checkbox></mat-checkbox>
+            <div class="memberBorderBox  activeMemberBox">
+                <mat-checkbox class="checkPosition"></mat-checkbox>
                 <img src="assets/images/svg/income-man.svg">
                 <!-- <img src="assets/images/svg/womenIcon.svg">
                 <img src="assets/images/svg/familyMember1.svg">
@@ -32,7 +32,7 @@
                 <img src="assets/images/svg/familyMember3.svg">
                 <img src="assets/images/svg/familyMember4.svg"> -->
             </div>
-            <p class="f-12">{{familyMember.userName}}</p>
+            <p class="f-14 roboto">{{familyMember.userName}}</p>
         </div>
         <!-- <div class="col-md-6 text-center mb-20">
             <div class="memberBorderBox">
@@ -75,7 +75,7 @@
 <div class="bottom-fixed wrapper-16 pb-12">
     <div class="row">
         <div class="col-md-4 p-0">
-            <h5 class="mb-0 pt-8 text-white c-p text-left" >Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p text-left">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit">SAVE</button>
