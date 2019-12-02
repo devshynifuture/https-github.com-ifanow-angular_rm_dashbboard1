@@ -275,7 +275,6 @@ export class DocumentsComponent implements OnInit {
       data => this.getAllFilesRes(data, value)
     );
   }
-
   downlodFiles(element) {
     const obj = {
       clientId: this.clientId,
@@ -287,7 +286,6 @@ export class DocumentsComponent implements OnInit {
       data => this.downloadFileRes(data)
     );
   }
-
   downloadFileRes(data) {
     console.log(data);
     window.open(data);
@@ -301,13 +299,13 @@ export class DocumentsComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        if(flag == 'FOLDER'){
+        if (flag == 'FOLDER') {
           var obj = {
             clientId: this.clientId,
             advisorId: this.advisorId,
             id: data.id
           };
-        }else{
+        } else {
           var obj1 = {
             clientId: this.clientId,
             advisorId: this.advisorId,
