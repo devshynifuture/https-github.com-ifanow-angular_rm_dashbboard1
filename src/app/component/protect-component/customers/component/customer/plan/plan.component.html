@@ -3,15 +3,15 @@
             keyboard_backspace
         </i>ADVISOR HOME</button>
 </div>
-<nav class="secondHeaderClassNav" mat-tab-nav-bar id="ui-customer">
-    <a mat-tab-link [routerLink]="'summary'">SUMMARY</a>
-    <a mat-tab-link [routerLink]="'profile'">PROFILE</a>
-    <a mat-tab-link [routerLink]="'insurance'">INSURANCE</a>
-    <a mat-tab-link [routerLink]="'goals'">GOALS</a>
-    <a mat-tab-link [routerLink]="'taxes'">TAXES</a>
-    <a mat-tab-link [routerLink]="'cash-flow'">CASH FLOWS</a>
-    <a mat-tab-link [routerLink]="'investments'">INVESTMENTS</a>
-    <a mat-tab-link [routerLink]="'scenarios'">SCENARIOS</a>
+<nav mat-tab-nav-bar id="ui-customer-secondhead">
+    <a mat-tab-link routerLinkActive="active" [routerLink]="'summary'">SUMMARY</a>
+    <a mat-tab-link routerLinkActive="active" [routerLink]="'profile'">PROFILE</a>
+    <a mat-tab-link routerLinkActive="active" [routerLink]="'insurance'">INSURANCE</a>
+    <a mat-tab-link routerLinkActive="active" [routerLink]="'goals'">GOALS</a>
+    <a mat-tab-link routerLinkActive="active" [routerLink]="'taxes'">TAXES</a>
+    <a mat-tab-link routerLinkActive="active" [routerLink]="'cash-flow'">CASH FLOWS</a>
+    <a mat-tab-link routerLinkActive="active" [routerLink]="'investments'">INVESTMENTS</a>
+    <a mat-tab-link routerLinkActive="active" [routerLink]="'scenarios'">SCENARIOS</a>
 </nav>
 <!-- <mat-tab-group [selectedIndex]="selected" mat-align-tabs="center" id="ui-account-second-head" animationDuration="0ms">
     <mat-tab label="SUMMARY">

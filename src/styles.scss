@@ -427,7 +427,7 @@
 .right_sidenav {
     height: 100%;
     position: fixed;
-    z-index: 222;
+    z-index: 999;
     top: 0;
     width: 60%;
     // right: 0;
@@ -442,7 +442,7 @@
 .right_sidenav-35 {
     height: 100%;
     position: fixed;
-    z-index: 222;
+    z-index: 999;
     top: 0;
     width: 35%;
     // right: 0;
@@ -457,7 +457,7 @@
 .right_sidenav-70 {
     height: 100%;
     position: fixed;
-    z-index: 222;
+    z-index: 999;
     top: 0;
     width: 70%;
     // right: 0;
@@ -653,14 +653,13 @@ mat-tab-group[vertical] {
 }
 
 #ui-customer {
-    .mat-tab-header {
-        border-bottom: 0px !important;
-        position: fixed;
-        width: 100%;
-        top: 0;
-        background: #fff;
-        z-index: 9;
-    }
+    border-bottom: 0px !important;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background:#fff;
+    z-index: 999;
+  
     .left-icons {
         position: fixed;
         z-index: 1111;
@@ -673,12 +672,18 @@ mat-tab-group[vertical] {
         letter-spacing: 0.2px;
         margin: 0;
     }
-    .mat-tab-label {
-        min-width: 110px !important;
+    .mat-tab-links{
+        justify-content: center;
+        
     }
-    .mat-ink-bar {
-        height: 6px !important;
+    .mat-tab-link {
+        min-width: 120px !important;
+        height: 58px !important;
+        padding: 0 !important;
     }
+    // .mat-ink-bar {
+    //     height: 6px !important;
+    // }
 }
 
 #ui-account-second-head {
@@ -708,45 +713,62 @@ mat-tab-group[vertical] {
     }
 }
 
-.headerClassNav {
-    border-bottom: 0px !important;
-    position: fixed !important;
-    width: 100%;
-    top: 0px;
-    background: #ffffff;
-    z-index: 9;
-    .mat-tab-links {
-        justify-content: center;
-        height: 65px;
-    }
-}
+// .headerClassNav {
+//     border-bottom: 0px !important;
+//     position: fixed !important;
+//     width: 100%;
+//     top: 0px;
+//     background: #ffffff;
+//     z-index: 9;
+//     .mat-tab-links {
+//         justify-content: center;
+//         height: 65px;
+//     }
+// }
 
-.secondHeaderClassNav {
+#ui-customer-secondhead {
     border-bottom: 0px !important;
     position: fixed !important;
     width: 100%;
-    top: 65px;
-    background: #ffffff;
-    z-index: 9;
+   margin-top: 58px;
+    background: #000;
+    z-index: 999;
     .mat-tab-links {
         justify-content: center;
         height: 65px;
+        color: #fff;
     }
+    .mat-tab-link:focus:not(.mat-tab-disabled) {
+        background-color: #E2E2E2 !important;
+        color: #008FFF !important;
+        
+    }
+    .mat-tab-link{
+        height: auto;
+        color: #fff !important;
+        padding: 0;
+        min-width: 110px !important;
+        // &.active{
+        //     background-color: #E2E2E2 !important;
+        //     color: #008FFF !important;
+        // }
+    }
+
 }
 #advisor-home,
 #plan-home {
     position: fixed;
     z-index: 1111;
-    margin-top: 78px;
+    margin-top: 72px;
     border: 1px solid #FFC100;
     color: #FFC100;
     margin-left: 20px;
 }
 
-#plan-home .mat-stroked-button {
-    padding-left: 5px !important;
-    padding-right: 10px !important;
-}
+// #plan-home .mat-stroked-button {
+//     padding-left: 5px !important;
+//     padding-right: 10px !important;
+// }
 
 #ui-customer .mat-tab-label {
     text-transform: uppercase;

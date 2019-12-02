@@ -2,7 +2,7 @@
     position: fixed;
     z-index: 99;
     width: 18%!important;
-    padding-top: 5px;
+   
 }
 
 .right-side img {
@@ -18,11 +18,10 @@
 }
 
 
-.mat-tab-link{
-    height: auto !important;
-}
 .successBorder {
-    border-bottom: 5px solid #008FFF;
+    // border-bottom: 1px solid #008FFF;
     color: #008FFF !important;
     opacity: 1;
+    border-bottom: 5px solid;
+    margin-bottom: -5px;
 }
