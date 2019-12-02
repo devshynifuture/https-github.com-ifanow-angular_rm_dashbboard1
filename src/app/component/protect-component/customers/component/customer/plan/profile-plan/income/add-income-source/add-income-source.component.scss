@@ -44,6 +44,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .incomeSourcesBox {
@@ -54,4 +55,16 @@
 
 ::ng-deep .mat-form-field {
     width: 100%;
+}
+
+.incomeSourcesBox {
+    .activeMemberBox {
+        border: 2px solid #008FFF;
+    }
+}
+
+.checkPosition {
+    position: absolute;
+    top: -6px;
+    right: 0px;
 }

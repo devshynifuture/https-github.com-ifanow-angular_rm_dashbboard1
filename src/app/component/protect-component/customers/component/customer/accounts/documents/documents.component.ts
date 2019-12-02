@@ -14,6 +14,9 @@ import { DocumentNewFolderComponent } from '../../../common-component/document-n
 import { HttpService } from 'src/app/http-service/http-service';
 import { CopyDocumentsComponent } from '../../../common-component/copy-documents/copy-documents.component';
 import { ViewActivityComponent } from './view-activity/view-activity.component';
+import { rename } from 'fs';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { EmailQuotationComponent } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-quotation/email-quotation.component';
 
 @Component({
   selector: 'app-documents',
@@ -41,7 +44,7 @@ export class DocumentsComponent implements OnInit {
   tabValue: any;
   valueTab: any;
   valueFirst: any;
-  animal: string;
+  animal: any;
   name: string;
   fileType = [
     { id: 1, name: 'PDF' },
@@ -70,7 +73,7 @@ export class DocumentsComponent implements OnInit {
   uploadFolder: string[] = [];
 
 
-  constructor(private http: HttpService, private _bottomSheet: MatBottomSheet,
+  constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private event: EventService, private router: Router, private fb: FormBuilder,
     private custumService: CustomerService, public subInjectService: SubscriptionInject,
     public utils: UtilService, public dialog: MatDialog) {
@@ -89,17 +92,25 @@ export class DocumentsComponent implements OnInit {
     this.getAllFileList(tabValue);
     this.showLoader = true;
   }
-  openDialog(): void {
+  openDialog(element, value): void {
     const dialogRef = this.dialog.open(DocumentNewFolderComponent, {
       width: '30%',
-      data: { name: this.name, animal: this.animal }
+      data: { name: value, animal: element }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
       this.animal = result;
-      this.createFolder(this.animal)
+      if (this.animal.rename == undefined) {
+        this.createFolder(this.animal)
+      }
+      if (this.animal.rename.flag == 'fileName') {
+        this.renameFile(this.animal)
+      } else {
+        this.renameFolders(this.animal)
+      }
     });
+
   }
 
   openDialogCopy(element, value): void {
@@ -114,6 +125,39 @@ export class DocumentsComponent implements OnInit {
       this.getAllFileList(this.animal)
     });
   }
+  renameFile(element) {
+    const obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      id: element.rename.value.id,
+      fileName: element.newFolder
+    };
+    this.custumService.renameFiles(obj).subscribe(
+      data => this.renameFilesRes(data)
+    );
+  }
+
+  renameFilesRes(data) {
+    console.log(data);
+    this.getAllFileList(this.valueTab);
+  }
+
+  renameFolders(element) {
+    const obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      id: element.rename.value.id,
+      fileName: element.newFolder
+    };
+    this.custumService.renameFolder(obj).subscribe(
+      data => this.renameFolderRes(data)
+    );
+  }
+
+  renameFolderRes(data) {
+    console.log(data);
+    this.getAllFileList(this.valueTab);
+  }
   createFolder(element) {
     console.log('folder name', element)
     this.createdFolderName = element
@@ -121,7 +165,7 @@ export class DocumentsComponent implements OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId,
       folderParentId: (this.parentId == undefined) ? 0 : this.parentId,
-      folderName: element
+      folderName: element.newFolder
     };
     this.detailed = obj
     this.custumService.newFolder(obj).subscribe(
@@ -170,6 +214,7 @@ export class DocumentsComponent implements OnInit {
 
   getAllFilesRes(data, value) {
     console.log(data);
+    this.showLoader = true;
     this.allFiles = data.files;
     this.AllDocs = data.folders;
     this.commonFileFolders = data.folders;
@@ -231,7 +276,6 @@ export class DocumentsComponent implements OnInit {
       data => this.getAllFilesRes(data, value)
     );
   }
-
   downlodFiles(element) {
     const obj = {
       clientId: this.clientId,
@@ -243,76 +287,86 @@ export class DocumentsComponent implements OnInit {
       data => this.downloadFileRes(data)
     );
   }
-
   downloadFileRes(data) {
     console.log(data);
     window.open(data);
   }
-
-  deleteFile(element) {
-    const obj = {
-      clientId: this.clientId,
-      advisorId: this.advisorId,
-      parentFolderId: element.parentFolderId,
-      id: element.id
+  deleteModal(flag, data) {
+    const dialogData = {
+      data: data,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        if (flag == 'FOLDER') {
+          var obj = {
+            clientId: this.clientId,
+            advisorId: this.advisorId,
+            id: data.id
+          };
+        } else {
+          var obj1 = {
+            clientId: this.clientId,
+            advisorId: this.advisorId,
+            parentFolderId: data.parentFolderId,
+            id: data.id
+          };
+        }
+        if (flag == 'FOLDER') {
+          this.custumService.deleteFolder(obj).subscribe(
+            data => {
+              this.eventService.openSnackBar("Deleted", "dismiss")
+              dialogRef.close();
+              this.getAllFileList(this.valueTab);
+            },
+            err => this.eventService.openSnackBar(err)
+          )
+        } else {
+          this.custumService.deleteFile(obj1).subscribe(
+            data => {
+              this.eventService.openSnackBar("Deleted", "dismiss")
+              dialogRef.close();
+              this.getAllFileList(this.valueTab);
+            },
+            err => this.eventService.openSnackBar(err)
+          )
+        }
+      },
+      negativeMethod: () => {
+      }
     };
-    this.custumService.deleteFile(obj).subscribe(
-      data => this.deleteFileRes(data)
+    console.log(dialogData + 'dialogData');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+  OpenEmail(data){
+    const fragmentData = {
+      flag: 'addSchemeHolding',
+      data: data,
+      id: 1,
+      state: 'open',
+      componentName: EmailQuotationComponent
+    };
+
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
     );
   }
-
-  deleteFileRes(data) {
-    console.log(data);
-  }
-  renameFile(element) {
-    const obj = {
-      clientId: this.clientId,
-      advisorId: this.advisorId,
-      folderId: element.id,
-      fileName: element.fileName
-    };
-    this.custumService.renameFiles(obj).subscribe(
-      data => this.renameFilesRes(data)
-    );
-  }
-
-  renameFilesRes(data) {
-    console.log(data);
-    this.getAllFileList(this.valueTab);
-  }
-
-  renameFolders(element) {
-    const obj = {
-      clientId: this.clientId,
-      advisorId: this.advisorId,
-      folderId: element.id,
-      fileName: element.folderName
-    };
-    this.custumService.renameFolder(obj).subscribe(
-      data => this.renameFolderRes(data)
-    );
-  }
-
-  renameFolderRes(data) {
-    console.log(data);
-    this.getAllFileList(this.valueTab);
-  }
-
-  trashFolder(element) {
-    const obj = {
-      clientId: this.clientId,
-      advisorId: this.advisorId,
-      id: element.id
-    };
-    this.custumService.deleteFolder(obj).subscribe(
-      data => this.deleteFolderRes(data)
-    );
-  }
-
-  deleteFolderRes(data) {
-    console.log(data);
-  }
-
   starFiles(element) {
     const obj = {
       clientId: this.clientId,
@@ -327,6 +381,7 @@ export class DocumentsComponent implements OnInit {
 
   starFileRes(data) {
     console.log(data);
+    this.getAllFileList(this.valueTab);
   }
 
   viewActivities(element) {

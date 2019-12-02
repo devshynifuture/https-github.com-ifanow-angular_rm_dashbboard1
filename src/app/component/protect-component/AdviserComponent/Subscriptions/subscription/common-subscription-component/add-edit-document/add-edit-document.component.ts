@@ -2,9 +2,9 @@ import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from "../../../../../../../auth-service/authService";
-import {UtilService} from "../../../../../../../services/util.service";
-import {EventService} from "../../../../../../../Data-service/event.service";
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {UtilService} from '../../../../../../../services/util.service';
+import {EventService} from '../../../../../../../Data-service/event.service';
 
 @Component({
   selector: 'app-add-edit-document',
@@ -101,7 +101,7 @@ export class AddEditDocumentComponent implements OnInit {
     this.subService.addSettingDocument(obj).subscribe(
       data => {
         console.log(data);
-        this.subInjectService.changeUpperRightSliderState({state: 'close',data});
+        this.subInjectService.changeUpperRightSliderState({state: 'close', data});
         this.sendDataToParentUpperFrag(data);
       }
     );
