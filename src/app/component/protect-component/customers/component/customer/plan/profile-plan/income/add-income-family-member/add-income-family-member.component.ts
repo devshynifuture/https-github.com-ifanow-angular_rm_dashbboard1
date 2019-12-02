@@ -53,7 +53,8 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
     const obj=
     {
       selectedFamilyMemmbers:this.familyMemberList,
-      stpeNo:2
+      stpeNo:2,
+      flag:'addIncome'
     }
     this.selectedFamilyMembersData.emit(obj)
   }

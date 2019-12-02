@@ -9,13 +9,23 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 })
 export class IndividualIncomeInfoComponent implements OnInit {
   individualIncomeData: any;
-  individualIncomeList = [];
+  finalIncomeAddList = [];
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject) { }
   @Output() previousStep = new EventEmitter();
   @Input() set FinalIncomeList(data) {
     console.log(data)
-    this.individualIncomeData = data;
+    data.forEach(element => {
+      if (element.selected) {
+        element.incomeTypeList.forEach(checkedData => {
+          if(checkedData.checked)
+          {
+            this.finalIncomeAddList.push(checkedData)
+          }
+        })
+      }
+    });
+    this.individualIncomeData=data
   }
   ngOnInit() {
   }
@@ -23,10 +33,10 @@ export class IndividualIncomeInfoComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
   cancel() {
-    const obj=
+    const obj =
     {
-      data:this.individualIncomeData,
-      stpeNo:2
+      data: this.individualIncomeData,
+      stpeNo: 2
     }
     this.previousStep.emit(obj)
   }
