@@ -76,6 +76,9 @@ export class DocumentsComponent implements AfterViewInit {
   sendObj: { clientId: any; advisorId: any; parentFolderId: any; folderName: any; };
   detailed: { clientId: any; advisorId: any; folderParentId: any; folderName: any; };
   uploadFolder: string[] = [];
+  folderNameToDisplay: any;
+
+
   getSort: any;
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private event: EventService, private router: Router, private fb: FormBuilder,
@@ -467,9 +470,20 @@ export class DocumentsComponent implements AfterViewInit {
   uploadDocumentFolder(data) {
     this.myFiles = [];
     var array = [];
+
+    let folderName = data.target.files[0].webkitRelativePath.split('/');
+    this.folderNameToDisplay = {
+      newFolder: folderName[0]
+    }
+    this.createFolder(this.folderNameToDisplay)
     for (let i = 0; i < data.target.files.length; i++) {
       this.myFiles.push(data.target.files[i]);
     }
+    this.myFiles.forEach(fileName => {
+      this.filenm = fileName;
+      this.parentId = (this.parentId == undefined) ? 0 : this.parentId;
+      this.uploadFile(this.parentId, this.filenm);
+    });
     console.log(data);
     array.push(this.myFiles);
     this.viewFolder.push(array[0]);
@@ -490,7 +504,6 @@ export class DocumentsComponent implements AfterViewInit {
       frmData.append('fileUpload', this.myFiles[i]);
     }
   }
-
   uploadFile(element, fileName) {
     const obj = {
       clientId: this.clientId,
@@ -502,7 +515,6 @@ export class DocumentsComponent implements AfterViewInit {
       data => this.uploadFileRes(data, fileName)
     );
   }
-
   uploadFileRes(data, fileName) {
 
     const fileuploadurl = data;

@@ -19,9 +19,8 @@
         <div class="col-md-1">
           <p class="m-0 text-custom">From</p>
         </div>
-        <div class="col-md-9">
-          <p class="m-0 text-black">{{
-              this.emailData ? this.emailData.fromEmail : 'support@futurewise.co.in'}}</p>
+        <div class="col-md-9" >
+          <p class="m-0 text-black" *ngIf="this.emailData">{{(this.emailData)?this.emailData.fromEmail:'support@futurewise.co.in'}}</p>
         </div>
         <div class="col-md-2 pr-0">
           <ul class="text-custom right f-14 pr-8 f-500">
