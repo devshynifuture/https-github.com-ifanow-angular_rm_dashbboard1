@@ -9,7 +9,7 @@
   <a mat-tab-link [routerLink]="'assets'">ASSETS</a>
   <a mat-tab-link [routerLink]="'liabilities'">LIABILITIES</a>
   <a mat-tab-link [routerLink]="'insurance'">INSURANCE</a>
-  <a mat-tab-link [routerLink]="'expenses'">EXPENSES</a>
+  <!-- <a mat-tab-link [routerLink]="'expenses'">EXPENSES</a> -->
   <a mat-tab-link [routerLink]="'documents'">DOCUMENTS</a>
 </nav>
 <router-outlet></router-outlet>
@@ -36,12 +36,12 @@
       <app-insurance></app-insurance>
     </ng-template>
   </mat-tab>
-  <mat-tab label="EXPENSES">
+ <mat-tab label="EXPENSES">
     <ng-template matTabContent>
       <app-expenses></app-expenses>
     </ng-template>
-  </mat-tab>
-  <mat-tab label="DOCUMENTS">
+  </mat-tab> -->
+  <!-- <mat-tab label="DOCUMENTS">
     <ng-template matTabContent>
       <app-documents></app-documents>
     </ng-template>
