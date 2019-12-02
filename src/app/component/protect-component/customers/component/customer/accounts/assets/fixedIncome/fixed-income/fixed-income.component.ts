@@ -1,17 +1,17 @@
-import { RecuringDepositComponent } from './../recuring-deposit/recuring-deposit.component';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../../customer.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { DetailedViewFixedDepositComponent } from '../fixed-deposit/detailed-view-fixed-deposit/detailed-view-fixed-deposit.component';
-import { FixedDepositComponent } from '../fixed-deposit/fixed-deposit.component';
-import { DetailedViewRecuringDepositComponent } from '../recuring-deposit/detailed-view-recuring-deposit/detailed-view-recuring-deposit.component';
-import { DetailedViewBondsComponent } from '../bonds/detailed-view-bonds/detailed-view-bonds.component';
-import { BondsComponent } from '../bonds/bonds.component';
+import {RecuringDepositComponent} from './../recuring-deposit/recuring-deposit.component';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {UtilService} from 'src/app/services/util.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../../customer.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {DetailedViewFixedDepositComponent} from '../fixed-deposit/detailed-view-fixed-deposit/detailed-view-fixed-deposit.component';
+import {FixedDepositComponent} from '../fixed-deposit/fixed-deposit.component';
+import {DetailedViewRecuringDepositComponent} from '../recuring-deposit/detailed-view-recuring-deposit/detailed-view-recuring-deposit.component';
+import {DetailedViewBondsComponent} from '../bonds/detailed-view-bonds/detailed-view-bonds.component';
+import {BondsComponent} from '../bonds/bonds.component';
 
 @Component({
   selector: 'app-fixed-income',
@@ -80,6 +80,16 @@ export class FixedIncomeComponent implements OnInit {
         this.dataSourceFixed.sort = this.fixedIncomeTableSort;
       }
     );
+  }
+
+  changeRecurringFilterMode(value) {
+    console.log('this is filter data', value);
+    this.dataSourceRecurring.filter = value.trim().toLowerCase();
+  }
+
+  changeFixedIncomeFilterMode(value) {
+    console.log('this is filter data', value)
+    this.dataSourceFixed.filter = value.trim().toLowerCase();
   }
 
   getfixedIncomeData(value) {
