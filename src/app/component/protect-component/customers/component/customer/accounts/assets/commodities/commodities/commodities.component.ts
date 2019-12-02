@@ -47,7 +47,7 @@ export class CommoditiesComponent implements OnInit {
   getfixedIncomeData(value) {
     console.log('value++++++', value)
     this.showRequring = value
-    if (value == '2') {
+    if (value == '1') {
       this.getGoldList()
     } else {
       this.getOtherList()

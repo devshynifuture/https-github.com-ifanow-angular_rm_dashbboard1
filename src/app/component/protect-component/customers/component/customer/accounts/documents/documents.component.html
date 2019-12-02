@@ -195,12 +195,13 @@
                                     <label class="uploadLabel c-p text-primary f-14 c-p mb-12" for="file-3">
                                             <img src="/assets/images/svg/upload-document-icon.svg" class="mr-8"> 
                                             <span>Upload file</span></label>
-                                    <p class="text-primary f-14 c-p mb-12 "><img src="/assets/images/svg/upload-folder-document-icon.svg" class="mr-8"> Upload folder</p>
+                                   <input type="file" class="inputfile inputfile-4 "  id="file-4" webkitdirectory directory multiple (change)="uploadDocumentFolder($event)">
+                                    <label class="uploadLabel text-primary f-14 c-p mb-12 pl-4 " for="file-4"><img src="/assets/images/svg/upload-folder-document-icon.svg" class="mr-8"><span> Upload folder</span></label>
                                     <p (click)="openDialog()" class="text-primary f-14 c-p mb-12 "><img src="/assets/images/svg/new-folder-document.svg" class="mr-8">New folder</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>`
                 </div>
             </div>
 

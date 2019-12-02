@@ -63,9 +63,11 @@ export class DocumentsComponent implements OnInit {
   parentId: any;
   filenm: string;
   showLoader: boolean;
+  viewFolder: string[] = [];
   createdFolderName: any;
   sendObj: { clientId: any; advisorId: any; parentFolderId: any; folderName: any; };
   detailed: { clientId: any; advisorId: any; folderParentId: any; folderName: any; };
+  uploadFolder: string[] = [];
 
 
   constructor(private http: HttpService, private _bottomSheet: MatBottomSheet,
@@ -100,10 +102,10 @@ export class DocumentsComponent implements OnInit {
     });
   }
 
-  openDialogCopy(element,value): void {
+  openDialogCopy(element, value): void {
     const dialogRef = this.dialog.open(CopyDocumentsComponent, {
       width: '40%',
-      data: { name: value, animal: element}
+      data: { name: value, animal: element }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -118,7 +120,7 @@ export class DocumentsComponent implements OnInit {
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
-      folderParentId : (this.parentId== undefined)?0:this.parentId,
+      folderParentId: (this.parentId == undefined) ? 0 : this.parentId,
       folderName: element
     };
     this.detailed = obj
@@ -152,7 +154,7 @@ export class DocumentsComponent implements OnInit {
     tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : 4;
     this.valueTab = tabValue;
     this.backUpfiles = [];
-    this.commonFileFolders=[];
+    this.commonFileFolders = [];
     this.openFolderName = [];
     const obj = {
       advisorId: this.advisorId,
@@ -177,8 +179,8 @@ export class DocumentsComponent implements OnInit {
     if (this.commonFileFolders.openFolderId == undefined || this.openFolderName.length == 0) {
       Object.assign(this.commonFileFolders, { openFolderNm: value.folderName });
       Object.assign(this.commonFileFolders, { openFolderId: value.id });
-      this.parentId = (value.id == undefined)?0:value.id
-      console.log('parentId',this.parentId)
+      this.parentId = (value.id == undefined) ? 0 : value.id
+      console.log('parentId', this.parentId)
       this.openFolderName.push(this.commonFileFolders);
       this.valueFirst = this.openFolderName[0];
       if (this.commonFileFolders.length > 0) {
@@ -194,8 +196,8 @@ export class DocumentsComponent implements OnInit {
   }
 
   getFolders(data) {
-    this.parentId = (data == undefined)?0:data[0].folderParentId
-    console.log('parentId',this.parentId)
+    this.parentId = (data == undefined) ? 0 : data[0].folderParentId
+    console.log('parentId', this.parentId)
     this.openFolderName = _.reject(this.openFolderName, function (n) {
       return n.openFolderId > data.openFolderId + 1;
     });
@@ -328,28 +330,28 @@ export class DocumentsComponent implements OnInit {
   }
 
   viewActivities(element) {
-    if(element.folderName == undefined){
+    if (element.folderName == undefined) {
       const obj = {
         clientId: this.clientId,
         advisorId: this.advisorId,
-        fileId: (element.folderName == undefined)?element.id:null,
+        fileId: (element.folderName == undefined) ? element.id : null,
       };
       this.custumService.viewActivityFile(obj).subscribe(
         data => this.viewActivityFileRes(data)
       );
-    }else{
+    } else {
       const obj = {
         clientId: this.clientId,
         advisorId: this.advisorId,
-        id: (element.fileName == undefined)?element.id:null,
+        id: (element.fileName == undefined) ? element.id : null,
       };
       this.custumService.viewActivityFolder(obj).subscribe(
         data => this.viewActivityFolderRes(data)
       );
     }
-   
+
   }
-  viewActivityFolderRes(data){
+  viewActivityFolderRes(data) {
     console.log(data)
     this.openActivity(data)
   }
@@ -361,7 +363,7 @@ export class DocumentsComponent implements OnInit {
   openActivity(data) {
     const fragmentData = {
       flag: 'addSchemeHolding',
-      data:data,
+      data: data,
       id: 1,
       state: 'open',
       componentName: ViewActivityComponent
@@ -391,7 +393,26 @@ export class DocumentsComponent implements OnInit {
       data: this.myFiles,
     });
   }
+  uploadDocumentFolder(data) {
+    this.myFiles = [];
+    var array = [];
+    for (let i = 0; i < data.target.files.length; i++) {
+      this.myFiles.push(data.target.files[i]);
+    }
+    console.log(data);
+    array.push(this.myFiles);
+    this.viewFolder.push(array[0]);
 
+    const fragData = {
+      uploadFolder: this.uploadFolder,
+      flag: 'uploadFolder',
+      viewFolder: this.viewFolder
+    };
+    console.log(this.myFiles);
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+      data: fragData
+    });
+  }
   uploadFiles() {
     const frmData = new FormData();
     for (let i = 0; i < this.myFiles.length; i++) {
