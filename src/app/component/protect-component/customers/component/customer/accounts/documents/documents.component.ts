@@ -163,7 +163,7 @@ export class DocumentsComponent implements OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId,
       folderParentId: (this.parentId == undefined) ? 0 : this.parentId,
-      folderName: element
+      folderName: element.newFolder
     };
     this.detailed = obj
     this.custumService.newFolder(obj).subscribe(
