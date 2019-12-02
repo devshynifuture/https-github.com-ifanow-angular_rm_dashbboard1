@@ -31,7 +31,12 @@
     z-index: 10;
     background: #fff !important;
 }
-
+.popup-header-fix {
+    position: fixed;
+    // width: 100%;
+    z-index: 10;
+    background: #fff !important;
+}
 .popup-header-fix-50 {
     position: fixed;
     width: 50%;
