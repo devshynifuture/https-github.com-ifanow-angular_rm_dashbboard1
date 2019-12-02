@@ -141,7 +141,7 @@
                                             more_vert
                                         </i>
                                         <mat-menu #menu4="matMenu">
-                                            <button class="f-14" mat-menu-item>
+                                            <button *ngIf="element.folderName == undefined" class="f-14" mat-menu-item>
                                                 <img src="assets/images/svg/preview.svg" class="mr-20">
                                                 Preview
                                             </button>

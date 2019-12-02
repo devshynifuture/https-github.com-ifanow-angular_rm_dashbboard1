@@ -228,6 +228,7 @@ export class DocumentsComponent implements OnInit {
       console.log('parentId', this.parentId)
       this.openFolderName.push(this.commonFileFolders);
       this.valueFirst = this.openFolderName[0];
+      this.fileTypeGet()
       if (this.commonFileFolders.length > 0) {
         this.backUpfiles.push(this.commonFileFolders);
       }
@@ -239,7 +240,15 @@ export class DocumentsComponent implements OnInit {
     }
     this.fileSizeConversion();
   }
-
+  fileTypeGet(){
+    this.commonFileFolders.forEach(p => {
+      this.fileType.forEach(n => {
+        if(n.id == p.fileTypeId){
+          p.fileTypeId = n.name
+        }
+      });
+    });
+  }
   getFolders(data) {
     this.parentId = (data == undefined) ? 0 : data[0].folderParentId
     console.log('parentId', this.parentId)
@@ -251,6 +260,7 @@ export class DocumentsComponent implements OnInit {
       return n.openFolderId > data.openFolderId;
     });
     this.commonFileFolders = data;
+    this.fileTypeGet()
     this.valueFirst = this.openFolderName[0];
   }
 
