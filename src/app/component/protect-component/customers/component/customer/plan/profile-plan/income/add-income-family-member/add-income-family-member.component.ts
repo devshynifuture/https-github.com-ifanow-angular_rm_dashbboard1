@@ -14,6 +14,7 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
   advisorId: any;
   clientId: any;
   familyMemberList: any;
+  setFlag="addIncome"
   @Output() selectedFamilyMembersData = new EventEmitter();
   selectedFamilyMembers = [];
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService) { }
@@ -29,8 +30,9 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
       this.getFamilyMemberList()
     }
     else
-    {
-      this.familyMemberList=data
+    { 
+      this.setFlag=data.flag
+      this.familyMemberList=data.data
     }
   }
   getFamilyMemberList() {
@@ -50,11 +52,12 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
     console.log(this.familyMemberList)
   }
   nextStep() {
+    
     const obj=
     {
-      selectedFamilyMemmbers:this.familyMemberList,
+      data:this.familyMemberList,
       stpeNo:2,
-      flag:'addIncome'
+      flag:this.setFlag
     }
     this.selectedFamilyMembersData.emit(obj)
   }
