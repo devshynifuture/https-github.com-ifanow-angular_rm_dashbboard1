@@ -12,7 +12,15 @@
 </div>
 
 <div [formGroup]="others" class="pb-44 mb-48 pt-100">
-    <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
+    <div class="row">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Owner</h5>
+            <p class="m-0 f-12 text-custom">In whose name is this asset</p>
+        </div>
+        <div class="col-md-5">
+            <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
+        </div>
+    </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Type of commodity</h5>
@@ -31,7 +39,8 @@
                         <mat-option value="7">Diamond</mat-option>
                         <mat-option value="7">Other</mat-option>
                     </mat-select>
-                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isTypeOfCommodity && getFormControl().typeOfCommodity.invalid || getFormControl().typeOfCommodity.touched && getFormControl().typeOfCommodity.invalid)}">
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isTypeOfCommodity && getFormControl().typeOfCommodity.invalid || getFormControl().typeOfCommodity.touched && getFormControl().typeOfCommodity.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -45,8 +54,10 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #marketValue type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0" formControlName="marketValue">
-                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isMarketValue && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}">
+                    <input matInput #marketValue type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20"
+                        class="form-control br-0" formControlName="marketValue">
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isMarketValue && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}">
                         this field is required
                     </mat-error>
                 </mat-form-field>
@@ -73,7 +84,8 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #purchaseValue type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0" formControlName="purchaseValue">
+                        <input matInput #purchaseValue type="number" (utils.keypress)="utils.keyPress($event)"
+                            maxlength="20" class="form-control br-0" formControlName="purchaseValue">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -100,7 +112,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #growthRate type="number" (utils.keypress)="utils.keyPress($event)" maxlength="30" class="form-control br-0" formControlName="growthRate">
+                        <input matInput #growthRate type="number" (utils.keypress)="utils.keyPress($event)"
+                            maxlength="30" class="form-control br-0" formControlName="growthRate">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -113,7 +126,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" class="form-control br-0" formControlName="description">
+                        <input matInput #description maxlength="60" class="form-control br-0"
+                            formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
