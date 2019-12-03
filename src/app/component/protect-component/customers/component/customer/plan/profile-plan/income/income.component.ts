@@ -4,6 +4,8 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { MatSort, MatTableModule, MatTableDataSource } from '@angular/material';
 import { AddIncomeComponent } from './add-income/add-income.component';
 import { AuthService } from 'src/app/auth-service/authService';
+import { PlanService } from '../../plan.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-income',
@@ -17,7 +19,7 @@ export class IncomeComponent implements OnInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   advisorId: any;
   clientId: any;
-  constructor( private subInjectService: SubscriptionInject) { }
+  constructor(private eventService:EventService,private subInjectService: SubscriptionInject,private planService:PlanService) { }
   viewMode;
   ngOnInit() {
     this.dataSource.sort = this.sort;
@@ -33,13 +35,17 @@ export class IncomeComponent implements OnInit {
       advisorId:this.advisorId,
       clientId:this.clientId
     }
+    this.planService.getIncomeData(obj).subscribe(
+      data=>this.getIncomeListRes(data),
+      err=>this.eventService.openSnackBar(err)
+    )
     
   }
-  addIncome(flagValue,data1){
-     const data=
-     {
-      data:data1
-     }
+  getIncomeListRes(data)
+  {
+    this.dataSource=data
+  }
+  addIncome(flagValue,data){
      const fragmentData = {
       Flag: flagValue,
       data,
@@ -52,7 +58,6 @@ export class IncomeComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-    
         }
       }
     );
