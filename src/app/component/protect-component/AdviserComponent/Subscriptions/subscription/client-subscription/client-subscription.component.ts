@@ -51,7 +51,7 @@ export class ClientSubscriptionComponent implements OnInit {
 
   Open(value, state) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       id: 1,
       state: state
     };
@@ -70,7 +70,7 @@ export class ClientSubscriptionComponent implements OnInit {
 
   openFragment(data, clientData) {
     /* const fragmentData = {
-       Flag: 'emailOnly',
+       flag: 'emailOnly',
        data: clientData,
        id: 1,
        state: 'open'

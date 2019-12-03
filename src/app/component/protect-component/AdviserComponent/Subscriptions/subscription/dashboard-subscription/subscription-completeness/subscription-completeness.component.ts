@@ -99,7 +99,7 @@ export class SubscriptionCompletenessComponent implements OnInit {
 
   openPopup(data) {
     const Fragmentdata = {
-      Flag: data,
+      flag: data,
     };
     const dialogRef = this.dialog.open(SubscriptionPopupComponent, {
       width: '70%',

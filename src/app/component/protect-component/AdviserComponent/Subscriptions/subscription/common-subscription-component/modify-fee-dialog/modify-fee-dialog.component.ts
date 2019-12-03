@@ -44,7 +44,7 @@ export class ModifyFeeDialogComponent implements OnInit {
 
   openDialog(data) {
     const Fragmentdata = {
-      Flag: data,
+      flag: data,
     };
     const dialogRef = this.dialog.open(HowToUseDialogComponent, {
       width: '30%',

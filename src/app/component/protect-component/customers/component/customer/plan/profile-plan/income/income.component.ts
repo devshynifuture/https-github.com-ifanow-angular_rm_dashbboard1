@@ -47,7 +47,7 @@ export class IncomeComponent implements OnInit {
   }
   addIncome(flagValue,data){
      const fragmentData = {
-      Flag: flagValue,
+      flag: flagValue,
       data,
       state:'open',
       componentName:AddIncomeComponent
@@ -65,7 +65,7 @@ export class IncomeComponent implements OnInit {
 
   addIncomeDetail(flagValue){
     const fragmentData = {
-      Flag: flagValue,
+      flag: flagValue,
       id: 1,
       state: 'openHelp'
     };

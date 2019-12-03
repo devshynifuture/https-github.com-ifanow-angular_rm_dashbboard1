@@ -24,7 +24,7 @@ export const componentList = [
   ],
   exports: [
     FormsModule,
-    ReactiveFormsModule],
+    ReactiveFormsModule, componentList],
   entryComponents: [componentList]
 })
 

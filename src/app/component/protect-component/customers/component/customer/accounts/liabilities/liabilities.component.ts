@@ -162,7 +162,7 @@ export class LiabilitiesComponent implements OnInit {
 
     }
     const fragmentData = {
-      Flag: flagValue,
+      flag: flagValue,
       componentName: AddLiabilitiesComponent,
       data,
       id: 1,
@@ -185,7 +185,7 @@ export class LiabilitiesComponent implements OnInit {
 
   openThirtyPercent(flagValue, data) {
     const fragmentData = {
-      Flag: flagValue,
+      flag: flagValue,
       data,
       id: 1,
       state: 'openHelp'
@@ -205,7 +205,7 @@ export class LiabilitiesComponent implements OnInit {
 
   addLiabilitiesDetail(flagValue,data) {
     const fragmentData = {
-      Flag: flagValue,
+      flag: flagValue,
       id: 1,
       data:data,
       state: 'open35',

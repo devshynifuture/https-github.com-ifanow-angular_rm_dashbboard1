@@ -124,8 +124,8 @@ export class VariableFeeComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeUpperRightSliderState({state: 'close', Flag: ''});
-    this.subInjectService.changeNewRightSliderState({state: 'close', Flag: ''});
+    this.subInjectService.changeUpperRightSliderState({state: 'close', flag: ''});
+    this.subInjectService.changeNewRightSliderState({state: 'close', flag: ''});
   }
 
   select(assetData) {

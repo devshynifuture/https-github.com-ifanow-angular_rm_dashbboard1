@@ -32,13 +32,13 @@
 <h1 *ngIf="!clientId">Please select client</h1>
 <div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay">
 </div>
-<!-- <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
+<div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
   <ng-template #dynamicUpper></ng-template>
 </div>
 <div [@openClose]="currentState" class="right_sidenav">
   <ng-template #dynamic></ng-template>
-</div> -->
-<app-dialog-container [parentComponentName]="'customer'"></app-dialog-container>
+</div>
+<!--<app-dialog-container [parentComponentName]="'customer'"></app-dialog-container>-->
 
 <!-- <div class="right-side">
   <img src="/src/assets/images/svg/bell.svg">

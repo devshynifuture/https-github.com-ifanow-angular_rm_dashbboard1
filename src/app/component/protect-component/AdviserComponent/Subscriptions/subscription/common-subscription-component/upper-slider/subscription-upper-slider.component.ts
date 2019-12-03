@@ -27,7 +27,7 @@ export class SubscriptionUpperSliderComponent implements OnInit {
     this.subinject.upperRightSliderDataObs.subscribe(data => {
       const rightSliderFragData = data;
       this.upperRightSideInputData = data
-      this.setRightSliderFlag(rightSliderFragData.Flag);
+      this.setRightSliderFlag(rightSliderFragData.flag);
       this.getStateData(data.state);
     });
     this.subinject.rightslider.subscribe(
@@ -59,7 +59,7 @@ export class SubscriptionUpperSliderComponent implements OnInit {
   rightSliderFlag;
   upperData;
 
-  Flag = 'planOverview';
+  flag = 'planOverview';
   plan = 'planServices';
   documents = 'plansDocuments';
   plans = 'servicesPlans';

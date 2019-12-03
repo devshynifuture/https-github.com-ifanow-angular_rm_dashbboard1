@@ -257,7 +257,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
 
   OpenEmail(data, value) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data,
       id: 1,
       state: 'open'

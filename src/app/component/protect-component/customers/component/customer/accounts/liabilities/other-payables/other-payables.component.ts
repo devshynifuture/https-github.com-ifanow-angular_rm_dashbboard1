@@ -93,7 +93,7 @@ export class OtherPayablesComponent implements OnInit {
   }
   open(flagValue, data) {
     const fragmentData = {
-      Flag: flagValue,
+      flag: flagValue,
       data :data,
       id: 1,
       state: 'open',

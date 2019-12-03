@@ -227,7 +227,7 @@ export class FixedIncomeComponent implements OnInit {
 
   openPortfolioSummary(value, data) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data: data,
       id: 1,
       state: 'open',
@@ -248,7 +248,7 @@ export class FixedIncomeComponent implements OnInit {
 
   openDetailedFixedDeposit(value, data) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data: data,
       id: 1,
       state: 'open35',
@@ -279,7 +279,7 @@ export class FixedIncomeComponent implements OnInit {
 
   openAddRecurringDeposit(data) {
     const fragmentData = {
-      Flag: 'addRecuringDeposit',
+      flag: 'addRecuringDeposit',
       data: data,
       id: 1,
       state: 'open',
@@ -300,7 +300,7 @@ export class FixedIncomeComponent implements OnInit {
 
   openBonds(data) {
     const fragmentData = {
-      Flag: 'BondsComponent',
+      flag: 'BondsComponent',
       data: data,
       id: 1,
       state: 'open',
@@ -321,7 +321,7 @@ export class FixedIncomeComponent implements OnInit {
 
   detailedViewBonds(data) {
     const fragmentData = {
-      Flag: 'DetailedViewBondsComponent',
+      flag: 'DetailedViewBondsComponent',
       data: data,
       id: 1,
       state: 'open35',
