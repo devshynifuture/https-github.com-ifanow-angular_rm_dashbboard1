@@ -37,7 +37,7 @@
       </mat-tab>
       <mat-tab #tab [disabled]='upperData=="plan"' label="SERVICES">
         <ng-template matTabContent>
-          <app-services [componentFlag]='services' [planData]="upperData"></app-services>
+          <app-services [componentFlag]='flag' [planData]="upperData"></app-services>
         </ng-template>
       </mat-tab>
       <mat-tab #tab [disabled]='upperData=="plan"' label="DOCUMENTS">
