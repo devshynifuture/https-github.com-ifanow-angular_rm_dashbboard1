@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-add-income-source',
@@ -14,9 +15,22 @@ export class AddIncomeSourceComponent implements OnInit {
   @Output() IncomeSourceDetailsData = new EventEmitter();
   @Output() previousStep = new EventEmitter();
   @Input() set selectedFamilyList(data) {
-    if(data.flag)
+    if(data.flag!="addIncome")
     {
-      this.stepOneData = data;
+      this.stepOneData = data.data;
+      this.stepOneData.forEach(element=>
+        {
+          if(element.selected)
+          {
+            element.incomeTypeList.forEach(checkedData=>
+              {
+                if(checkedData.checked)
+                {
+                  this.countIncomeType++;
+                }
+              })
+          }
+        })
       return;
     }
     else{
@@ -32,7 +46,7 @@ export class AddIncomeSourceComponent implements OnInit {
           element['incomeTypeList'] = obj
         }
       });
-      this.stepOneData = data
+      this.stepOneData = data.data
     }
   }
   ngOnInit() {
@@ -49,7 +63,8 @@ export class AddIncomeSourceComponent implements OnInit {
     const obj =
     {
       data: this.stepOneData,
-      stpeNo: 1
+      stpeNo: 1,
+      flag:'incomeSource'
     }
     this.previousStep.emit(obj);
   }
