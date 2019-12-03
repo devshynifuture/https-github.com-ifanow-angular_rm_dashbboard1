@@ -220,6 +220,7 @@
     .mat-tab-label {
         @include tab-label;
         padding: 0px 15px !important;
+        margin-right: 1px !important;
     }
     .actions {
         color: #757575;
