@@ -42,8 +42,8 @@ export class DialogContainerComponent implements OnInit {
   headerData = 'EMAIL QUOTATION';
   headerDataDocuments = 'EMAIL DOCS WITH E-SIGN REQUEST';
 
-  constructor(private eventService: EventService, private subinject: SubscriptionInject,
-              private dynamicComponentService: DynamicComponentService) {
+  constructor(protected eventService: EventService, protected subinject: SubscriptionInject,
+              protected dynamicComponentService: DynamicComponentService) {
     this.eventService.overlayVisibleData.subscribe(
       data => {
         this.isOverlayVisible = data;
