@@ -14,9 +14,9 @@ export class PreferencesComponent implements OnInit {
   ngOnInit() {
     this.selected = 0;
   }
-  close(data) {
+  close() {
     // this.addMoreFlag = false;
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 }
 export interface PeriodicElement {
