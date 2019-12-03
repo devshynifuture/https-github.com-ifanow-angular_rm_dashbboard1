@@ -11,7 +11,15 @@
     </div>
 </div>
 <div [formGroup]="gratuity" class="pb-44 mb-48 pt-100">
-    <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
+        <div class="row">
+                <div class="col-md-5 pr-0 text-right">
+                    <h5 class="m-0 pt-8">Owner</h5>
+                    <p class="m-0 f-12 text-custom">In whose name is this asset</p>
+                </div>
+                <div class="col-md-5">
+                <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
+                </div>
+            </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0  text-right">
             <h5 class="m-0 pt-8">Number of completed years</h5>
