@@ -1,4 +1,4 @@
-<div *ngIf="clientId">
+<div *ngIf="clientId && upperSliderData.state == 'close'">
   <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" class="img-top">
   <!--<mat-tab-group [selectedIndex]="selected" animationDuration="0ms" mat-align-tabs="center" id="ui-customer">
 
@@ -17,20 +17,28 @@
   </mat-tab-group>-->
   <nav id="ui-customer" mat-tab-nav-bar>
     <a (click)="clickEvent(1)" [ngClass]="value == 1 ?'successBorder': 'danger'"
-      [routerLink]="'/customer-detail/overview'" mat-tab-link>OVERVIEW</a>
+       [routerLink]="'/customer-detail/overview'" mat-tab-link>OVERVIEW</a>
     <a (click)="clickEvent(2)" [ngClass]="value == 2  ?'successBorder': 'danger'"
-      [routerLink]="'/customer-detail/account/summary'" mat-tab-link>ACCOUNTS</a>
+       [routerLink]="'/customer-detail/account/summary'" mat-tab-link>ACCOUNTS</a>
     <a (click)="clickEvent(3)" [ngClass]="value == 3?'successBorder': 'danger'"
-      [routerLink]="'/customer-detail/plan/summary'" mat-tab-link>PLAN</a>
+       [routerLink]="'/customer-detail/plan/summary'" mat-tab-link>PLAN</a>
     <a (click)="clickEvent(4)" [ngClass]="value == 4  ?'successBorder': 'danger'"
-      [routerLink]="'/customer-detail/activity'" mat-tab-link>ACTIVITY</a>
+       [routerLink]="'/customer-detail/activity'" mat-tab-link>ACTIVITY</a>
     <a (click)="clickEvent(5)" [ngClass]="value == 5 ?'successBorder': 'danger'"
-      [routerLink]="'/customer-detail/transact'" mat-tab-link>TRANSACT</a>
+       [routerLink]="'/customer-detail/transact'" mat-tab-link>TRANSACT</a>
   </nav>
-  <router-outlet></router-outlet>
+  <router-outlet id="ui-router-outlet"></router-outlet>
 </div>
 <h1 *ngIf="!clientId">Please select client</h1>
-<app-dialog-container [parentComponentName]="'customer'"></app-dialog-container>
+<div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay">
+</div>
+<div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
+  <ng-template #dynamicUpper></ng-template>
+</div>
+<div [@openClose]="currentState" class="right_sidenav">
+  <ng-template #dynamic></ng-template>
+</div>
+<!--<app-dialog-container [parentComponentName]="'customer'"></app-dialog-container>-->
 
 <!-- <div class="right-side">
   <img src="/src/assets/images/svg/bell.svg">

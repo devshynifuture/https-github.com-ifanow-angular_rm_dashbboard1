@@ -1,7 +1,6 @@
 
-    <h5 class="m-0 pb-8">Owner</h5>
     <div class="form-group mb-0"[formGroup]="owner">
-        <mat-form-field>
+        <mat-form-field class="w-100">
             <mat-select formControlName="ownerName" class="form-control br-0">
                 <mat-option value=''>Search family members</mat-option>
                 <mat-option *ngFor="let f of family" [value]="f.userName" (click)="getOwnerName(f)">
@@ -11,6 +10,5 @@
             <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isownerName && getFormControl().ownerName.invalid || getFormControl().ownerName.touched && getFormControl().ownerName.invalid)}">
                 This field is required
             </mat-error>
-            <mat-hint align="start" class="f-12">In whose name is this asset</mat-hint>
         </mat-form-field>
     </div>

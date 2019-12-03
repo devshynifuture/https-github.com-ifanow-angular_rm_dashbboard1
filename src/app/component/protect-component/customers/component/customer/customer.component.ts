@@ -1,13 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from "../../../../../auth-service/authService";
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {AuthService} from "../../../../../auth-service/authService";
+import {DialogContainerComponent} from "../../../../../common/dialog-container/dialog-container.component";
+import {EventService} from "../../../../../Data-service/event.service";
+import {SubscriptionInject} from "../../../AdviserComponent/Subscriptions/subscription-inject.service";
+import {DynamicComponentService} from "../../../../../services/dynamic-component.service";
+import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from "../../../../../animation/animation";
 
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
-  styleUrls: ['./customer.component.scss']
+  styleUrls: ['./customer.component.scss'],
+  animations: [
+    dialogContainerOpacity,
+    rightSliderAnimation,
+    // getRightSliderAnimation(40),
+    upperSliderAnimation
+  ]
 })
-export class CustomerComponent implements OnInit {
+export class CustomerComponent extends DialogContainerComponent implements OnInit {
   selected: number;
   clientId;
   value: number;
@@ -19,7 +30,9 @@ export class CustomerComponent implements OnInit {
   currentUrl: string;
 
 
-  constructor(private router: Router) {
+  constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
+              protected dynamicComponentService: DynamicComponentService) {
+    super(eventService, subinject, dynamicComponentService);
     console.log(router.getCurrentNavigation().extras.state);
 
   }
