@@ -44,45 +44,55 @@
 <div class="liabilities wrapper-8">
   <table matSort mat-table [dataSource]="dataSource" id="table-low">
     <ng-container matColumnDef="no">
-      <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No.</th>
+      <th  mat-header-cell *matHeaderCellDef class="br"> No.</th>
       <td mat-cell *matCellDef="let element; let i = index;" class="br"> {{i+1}} </td>
+      <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
     </ng-container>
     <ng-container matColumnDef="name">
-      <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br t-18"> Owner</th>
+      <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-18"> Owner</th>
       <td mat-cell *matCellDef="let element" class="br t-18"> {{element.ownerName}} </td>
+      <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700">TOTAL</td>
     </ng-container>
     <ng-container matColumnDef="dateOfReceived">
       <th mat-sort-header="dateOfReceived" mat-header-cell *matHeaderCellDef class="br t-12"> Date of receipt</th>
       <td mat-cell *matCellDef="let element" class="br t-12"> {{element.dateOfReceived | date:'dd/MM/yyyy'}} </td>
+      <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
     </ng-container>
     <ng-container matColumnDef="creditorName">
       <th mat-sort-header="creditorName" mat-header-cell *matHeaderCellDef class="br t-18"> Creditor name</th>
       <td mat-cell *matCellDef="let element" class="br t-18"> {{element.creditorName}} </td>
+      <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
     </ng-container>
     <ng-container matColumnDef="amountBorrowed">
       <th mat-sort-header="amountBorrowed" mat-header-cell *matHeaderCellDef class="br"> Amount borrowed</th>
-      <td mat-cell *matCellDef="let element" class="br"> {{util.formatter(element.amountBorrowed)}} </td>
+      <td mat-cell *matCellDef="let element" class="br text-right"> {{util.formatter(element.amountBorrowed)}} </td>
+      <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700 ">{{util.formatter(totalAmountBorrowed)}}</td>
     </ng-container>
     <ng-container matColumnDef="interest">
       <th mat-sort-header="interest" mat-header-cell *matHeaderCellDef class="br t-14">Interest
       </th>
-      <td mat-cell *matCellDef="let element" class="br t-14"> {{element.interest}} </td>
+      <td mat-cell *matCellDef="let element" class="br t-14 text-right"> {{element.interest}} </td>
+      <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
     </ng-container>
     <ng-container matColumnDef="dateOfRepayment">
       <th mat-sort-header="dateOfRepayment" mat-header-cell *matHeaderCellDef class="br">Date of repayment</th>
       <td mat-cell *matCellDef="let element" class="br"> {{element.dateOfRepayment | date:'dd/MM/yyyy'}} </td>
+      <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
     </ng-container>
     <ng-container matColumnDef="outstandingBalance">
       <th mat-sort-header="outstandingBalance"  mat-header-cell *matHeaderCellDef class="br t-14">Outstanding balance</th>
-      <td mat-cell *matCellDef="let element" class="br t-14"> {{util.formatter(element.outstandingBalance)}} </td>
+      <td mat-cell *matCellDef="let element" class="br t-14 text-right"> {{util.formatter(element.outstandingBalance)}} </td>
+      <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700"> {{util.formatter(totalAmountOutstandingBalance)}}</td>
     </ng-container>
     <ng-container matColumnDef="description">
       <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br"> Description</th>
       <td mat-cell *matCellDef="let element" class="br"> {{element.description}} </td>
+      <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
     </ng-container>
     <ng-container matColumnDef="status">
       <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br t-14"> Status</th>
       <td mat-cell *matCellDef="let element" class="br t-14"> {{element.status}} </td>
+      <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
     </ng-container>
     <ng-container matColumnDef="icons">
       <th mat-header-cell *matHeaderCellDef class="t-2"></th>
@@ -97,8 +107,10 @@
           <button mat-menu-item (click)="deleteModal('OTHER PAYABLES',element)">Delete</button>
         </mat-menu>
       </td>
+      <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
   </table>
 </div>
