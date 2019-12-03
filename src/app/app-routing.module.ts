@@ -17,16 +17,15 @@ const routes: Routes = [
     path: 'admin', component: LeftsidebarComponent,
     children: [
       {
+        path: 'subscription',
+        loadChildren: () => import('./component/protect-component/AdviserComponent/Subscriptions/subscription.module')
+          .then(m => m.SubscriptionModule)
+      },
+      {
         path: 'emails',
         loadChildren: () => import('./component/protect-component/AdviserComponent/Email/email.module')
           .then(m => m.EmailModule)
       },
-      {
-        path: 'subscription',
-        loadChildren: () => import('./component/protect-component/AdviserComponent/Subscriptions/subscription.module')
-          .then(m => m.SubscriptionModule)
-      }
-
     ]
   },
   {
