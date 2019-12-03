@@ -3,6 +3,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MatSort, MatTableModule, MatTableDataSource } from '@angular/material';
 import { AddIncomeComponent } from './add-income/add-income.component';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-income',
@@ -14,14 +15,32 @@ export class IncomeComponent implements OnInit {
 
   displayedColumns = ['no', 'owner', 'type', 'amt','income','till','rate','status','icons'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+  advisorId: any;
+  clientId: any;
   constructor( private subInjectService: SubscriptionInject) { }
   viewMode;
   ngOnInit() {
     this.dataSource.sort = this.sort;
     this.viewMode="tab1"
+    this.advisorId=AuthService.getAdvisorId();
+    this.clientId=AuthService.getClientId();
+    this.getIncomeList();
   }
-  addIncome(flagValue,data){
-    const fragmentData = {
+  getIncomeList()
+  {
+    const obj=
+    {
+      advisorId:this.advisorId,
+      clientId:this.clientId
+    }
+    
+  }
+  addIncome(flagValue,data1){
+     const data=
+     {
+      data:data1
+     }
+     const fragmentData = {
       Flag: flagValue,
       data,
       state:'open',

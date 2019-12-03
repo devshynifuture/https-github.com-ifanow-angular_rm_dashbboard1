@@ -7,8 +7,10 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
   styleUrls: ['./preferences.component.scss']
 })
 export class PreferencesComponent implements OnInit {
-  displayedColumns = ['position', 'name', 'weight'];
+  displayedColumns = ['position', 'name'];
   dataSource = ELEMENT_DATA;
+  displayedColumns1 = ['position', 'name'];
+  dataSource1 = ELEMENT_DATA1;
   constructor(private subInjectService: SubscriptionInject) { }
   selected;
   ngOnInit() {
@@ -22,16 +24,26 @@ export class PreferencesComponent implements OnInit {
 export interface PeriodicElement {
   name: string;
   position: string;
-  weight: string;
+
  
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 'Debt asset class', name: '7%', weight: '6%'},
-  {position: 'Equity asset class', name: '17%', weight: '6%'},
-  {position: 'Debt funds', name: '12%', weight: '16%'},
-  {position: 'Equity funds', name: '10%', weight: '6%'},
-  {position: 'Balanced funds', name: '7%', weight: '6%'},
-  {position: 'Stocks', name: '7%', weight: '6%'},
+  {position: 'Debt asset class', name: '7%'},
+  {position: 'Equity asset class', name: '17%'},
+  {position: 'Debt funds', name: '12%'},
+  {position: 'Equity funds', name: '10%'},
+  {position: 'Balanced funds', name: '7%'},
+  {position: 'Stocks', name: '7%'},
+ 
+];
+export interface PeriodicElement1 {
+  name: string;
+  position: string;
+ 
+}
+
+const ELEMENT_DATA1: PeriodicElement1[] = [
+  {position: 'Inflation rate', name: '6%'},
  
 ];

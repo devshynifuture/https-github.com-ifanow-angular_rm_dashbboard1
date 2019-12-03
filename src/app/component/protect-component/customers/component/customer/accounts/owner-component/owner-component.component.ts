@@ -1,6 +1,6 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {CustomerService} from '../../customer.service';
-import {Validators, FormBuilder} from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { CustomerService } from '../../customer.service';
+import { Validators, FormBuilder } from '@angular/forms';
 import * as _ from 'lodash';
 
 @Component({
@@ -43,10 +43,10 @@ export class OwnerComponentComponent implements OnInit {
 
   ngOnInit() {
     console.log('OwnerComponentComponent ngOnInit ownerData', this.ownerData)
-   // this.advisorId = AuthService.getAdvisorId();
-   // this.clientId = AuthService.getClientId();
+    // this.advisorId = AuthService.getAdvisorId();
+    // this.clientId = AuthService.getClientId();
     //this.getListFamilyMem(this.ownerData);
-  //  this.getdataForm()
+    //  this.getdataForm()
     this.family = this.s;
   }
 

@@ -4,6 +4,9 @@ import {MaterialModule} from '../material/material';
 import {SubscriptionModule} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
+import { AccountEntryModule } from '../component/protect-component/customers/component/customer/accounts/account.entry.module';
+import { PlanEntryModule } from '../component/protect-component/customers/component/customer/plan/plan.entry.module';
+import { EntryComponentsModule } from '../entry.components.module';
 
 // import {AppModule} from "../app.module";
 
@@ -23,13 +26,12 @@ import {CommonModule} from '@angular/common';
     FormsModule,
     ReactiveFormsModule,
     // DynamicComponentModule,
-
-    // AccountEntryModule,
-    // PlanEntryModule,
-    // EntryComponentsModule
+    AccountEntryModule,
+    PlanEntryModule,
+    EntryComponentsModule
   ],
   exports: [DialogContainerComponent],
-  // entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
+  entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
 })
 export class CustomCommonModule {
 }

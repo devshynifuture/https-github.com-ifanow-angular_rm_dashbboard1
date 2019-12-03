@@ -27,12 +27,19 @@ export class AddIncomeComponent implements OnInit {
   getSelectedFamilyMember(data)
   {
      console.log(data)
-     this.selectedFamilyList=data.selectedFamilyMemmbers;
+     this.selectedFamilyList=data;
      this.addIncomeSteps=data.stpeNo;
   }  
   previousStepData(data)
   {
-    this.familyData=data.data;
-    this.addIncomeSteps=data.stpeNo;
+    if(data.flag=="individualIncome")
+    {
+      this.selectedFamilyList=data
+      this.addIncomeSteps=data.stpeNo;
+    }
+    else{
+      this.familyData=data;
+      this.addIncomeSteps=data.stpeNo;
+    }
   }
 }
