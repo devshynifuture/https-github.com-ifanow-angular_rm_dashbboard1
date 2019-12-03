@@ -76,7 +76,7 @@ export class DialogContainerComponent implements OnInit {
       }
       this.fragmentData = data;
       console.log('fragmentData dialog container: ', this.fragmentData);
-      this.getFileResponseDataAum(this.fragmentData.Flag);
+      this.getFileResponseDataAum(this.fragmentData.flag);
       this.inputData = this.fragmentData.data;
       this.handleChangeOfState(this.fragmentData.state);
       // this.getRightSliderData(this.fragmentData.state);

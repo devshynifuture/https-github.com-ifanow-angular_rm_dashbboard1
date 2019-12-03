@@ -45,7 +45,7 @@ export class FeeStructureComponent implements OnInit {
 
   openPlanSliderFee(data, value) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data,
       id: 1,
       state: 'open'
@@ -100,6 +100,10 @@ export class FeeStructureComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+  Close() {
+    this.eventService.changeUpperSliderState({state: 'close'});
+
   }
   deletedData(data) {
     if (data == true) {

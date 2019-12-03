@@ -32,12 +32,12 @@
                    mat-align-tabs="center">
       <mat-tab #tab delay="500" label="OVERVIEW" placement="left" tooltip="tootip on left">
         <ng-template matTabContent>
-          <app-overview [componentFlag]='Flag' [upperData]="upperData"></app-overview>
+          <app-overview [componentFlag]='flag' [upperData]="upperData"></app-overview>
         </ng-template>
       </mat-tab>
       <mat-tab #tab [disabled]='upperData=="plan"' label="SERVICES">
         <ng-template matTabContent>
-          <!-- <app-services [componentFlag]='services' [planData]="upperData"></app-services> -->
+          <app-services [componentFlag]='services' [planData]="upperData"></app-services>
         </ng-template>
       </mat-tab>
       <mat-tab #tab [disabled]='upperData=="plan"' label="DOCUMENTS">
@@ -139,7 +139,7 @@
 
   <!--<div [@upperRightSlider]="State" class="right_sidenav">-->
   <app-add-structure (planOuputData)="upperData=$event" [planData]="upperRightSideInputData.data"
-                     *ngIf="rightSliderFlag=='addPlanDetails'"></app-add-structure>
+                     *ngIf="rightSliderFlag=='addPlan'"></app-add-structure>
   <app-plan-rightslider [clientData]="fragmentData.data" *ngIf="rightSliderFlag=='planRightSlider'">
   </app-plan-rightslider>
   <app-email-quotation [headerData]="headerData" *ngIf="rightSliderFlag=='eSignQuotations'"></app-email-quotation>
@@ -156,6 +156,7 @@
                      *ngIf="rightSliderFlag=='fixedFee'"></app-add-fixed-fee>
   <app-add-edit-document [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='addEditDocument'"
                          [fragmentData]="fragmentData"></app-add-edit-document>
+  
   <app-biller-settings [clientData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='billerSettings'">
   </app-biller-settings>
   <app-fixed-fee [data]="upperRightSideInputData" *ngIf="rightSliderFlag=='fixedModifyFees'"></app-fixed-fee>

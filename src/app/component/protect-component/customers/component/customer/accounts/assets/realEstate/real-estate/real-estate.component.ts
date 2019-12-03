@@ -113,7 +113,7 @@ export class RealEstateComponent implements OnInit {
 
   open(value, data) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data,
       id: 1,
       state: 'open',
@@ -133,7 +133,7 @@ export class RealEstateComponent implements OnInit {
 
   detailedViewRealEstate(flagValue, data) {
     const fragmentData = {
-      Flag: flagValue,
+      flag: flagValue,
       id: 1,
       data,
       state: 'open35',

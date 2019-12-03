@@ -22,7 +22,7 @@ export class ScenariosPlanComponent implements OnInit {
 
   open(flagValue){
     const fragmentData = {
-      Flag: flagValue,
+      flag: flagValue,
       id: 1,
       state: 'open'
     };

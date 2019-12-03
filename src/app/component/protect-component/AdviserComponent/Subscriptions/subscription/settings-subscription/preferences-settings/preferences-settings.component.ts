@@ -128,7 +128,7 @@ export class PreferencesSettingsComponent implements OnInit {
     this.selected = 0;
    
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data:singleProfile,
       id: 1,
       state: 'open'
@@ -182,7 +182,7 @@ export class PreferencesSettingsComponent implements OnInit {
 
   openEmailInvoice(data) {
     const Fragmentdata = {
-      Flag: data,
+      flag: data,
       id: 1
     };
 

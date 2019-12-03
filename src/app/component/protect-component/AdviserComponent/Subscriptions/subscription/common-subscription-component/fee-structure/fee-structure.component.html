@@ -1,4 +1,4 @@
-<!-- <div *ngIf="_upperData==''" class="wrapper-20 pt-150">
+<div *ngIf="_upperData==''" class="wrapper-20 pt-150">
   <div class="content-center">
     <div class="row">
       <div class="col-md-12">
@@ -8,7 +8,7 @@
     <div class="row pt-40">
       <div class="col-md-6 hover c-p" (click)="selectedFees('fixed')">
         <mat-card [ngClass]="{'ba-blue': selectedFee=='fixed','b-ua':selectedFee!='fixed'}" class="b-a p-0"
-          (click)="openPlanSliderFee('','fixedFee',)">
+          (click)="openPlanSliderFee('','fixedFee')">
           <div class="row bg-grey lter">
             <div class="col-md-12 p-0">
               <mat-checkbox class="right text-right" *ngIf="selectedFee=='fixed'" checked="false"></mat-checkbox>
@@ -169,8 +169,8 @@
 <div *ngIf="_upperData=='' || _upperData" class="bottom-fixed wrapper-16 w-100">
   <div class="row">
     <div class="col-md-12">
-      <h5 class="mb-0 pt-8 text-white c-p text-left">Cancel</h5>
+      <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="Close()">Cancel</h5>
     </div>
 
   </div>
-</div> -->
+</div>
