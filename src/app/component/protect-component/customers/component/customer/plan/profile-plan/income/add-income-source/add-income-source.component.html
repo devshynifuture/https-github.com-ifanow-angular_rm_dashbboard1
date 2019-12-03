@@ -5,115 +5,77 @@
         </div>
 
         <div class="col-md-4 pr-0 text-right">
-            <button mat-stroked-button class=" text-white bg-primary addon">3 added</button>
+            <button mat-stroked-button class=" text-white bg-primary addon">{{countIncomeType}} added</button>
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-12 pl-28 text-center mb-44 d-flex">
-        <div class="mr-28">
-            <div class="memberBorderBox">
-                <img src="assets/images/svg/income-man.svg">
-            </div>
-            <p class="f-14 m-0 f-bold"> Ronak<br> Hindocha</p>
-        </div>
-
-        <div class="incomeSourcesBox d-flex">
-            <div class="ml-12">
-                <div class="memberBorderBox activeMemberBox">
-                    <mat-checkbox class="checkPosition"></mat-checkbox>
-                    <img src="assets/images/svg/rupessIcon.svg">
-                </div>
-                <p class="f-14 m-0 text-primitive"> Salaried </p>
-            </div>
-
-            <div class="ml-12">
+    <div *ngFor="let singleIncomeSource of stepOneData">
+        <div *ngIf="singleIncomeSource.selected" class="col-md-12 pl-28 text-center mb-44 d-flex">
+            <div class="mr-28">
                 <div class="memberBorderBox">
-                    <img src="assets/images/svg/businessIcon.svg">
+                    <img src="assets/images/svg/income-man.svg">
                 </div>
-                <p class="f-14 m-0 text-primitive"> Business </p>
+                <p class="f-14 m-0 f-bold">{{singleIncomeSource.userName}}</p>
             </div>
-
-            <div class="ml-12">
-                <div class="memberBorderBox">
-                    <img src="assets/images/svg/professionIcon.svg">
+           <div *ngFor="let singleIncome of singleIncomeSource.incomeTypeList">
+            <div class="incomeSourcesBox d-flex">
+                <div class="ml-12">
+                    <div (click)="select(singleIncome)" class="memberBorderBox" [ngClass]="{'activeMemberBox': singleIncome.checked}">
+                        <mat-checkbox class="checkPosition" *ngIf="singleIncome.checked" checked="true"></mat-checkbox>
+                        <img src="assets/images/svg/rupessIcon.svg" *ngIf="singleIncome.name=='Salaried'">
+                        <img src="assets/images/svg/businessIcon.svg" *ngIf="singleIncome.name=='Business'">
+                        <img src="assets/images/svg/professionIcon.svg" *ngIf="singleIncome.name=='Profession'">
+                        <img src="assets/images/svg/rentalIcon.svg" *ngIf="singleIncome.name=='Rental'">
+                        <img src="assets/images/svg/pensionIcon.svg" *ngIf="singleIncome.name=='Others'">
+                    </div>
+                    <p class="f-14 m-0 text-primitive">{{singleIncome.name}}</p>
                 </div>
-                <p class="f-14 m-0 text-primitive"> Profession </p>
-            </div>
 
-            <div class="ml-12">
-                <div class="memberBorderBox">
-                    <img src="assets/images/svg/rentalIcon.svg">
+                <!-- <div class="ml-12">
+                    <div class="memberBorderBox" [ngClass]="{'activeMemberBox': true}">
+                        <mat-checkbox class="checkPosition" *ngIf="true" checked="true"></mat-checkbox>
+                        
+                    </div>
+                    <p class="f-14 m-0 text-primitive"> Business </p>
                 </div>
-                <p class="f-14 m-0 text-primitive"> Rental </p>
-            </div>
 
-            <div class="ml-12">
-                <div class="memberBorderBox">
-                    <img src="assets/images/svg/pensionIcon.svg">
+                <div class="ml-12">
+                    <div class="memberBorderBox" [ngClass]="{'activeMemberBox': true}">
+                        <mat-checkbox class="checkPosition" *ngIf="true" checked="true"></mat-checkbox>
+                        
+                    </div>
+                    <p class="f-14 m-0 text-primitive"> Profession </p>
                 </div>
-                <p class="f-14 m-0 text-primitive"> Pension </p>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-md-12 pl-28 text-center mb-44 d-flex">
-        <div class="mr-28">
-            <div class="memberBorderBox">
-                <img src="assets/images/svg/womenIcon.svg">
-            </div>
-            <p class="f-14 m-0 f-bold"> Rupa <br> Hindocha</p>
-        </div>
-
-        <div class="incomeSourcesBox d-flex">
-            <div class="ml-12">
-                <div class="memberBorderBox">
-                    <img src="assets/images/svg/rupessIcon.svg">
+                <div class="ml-12">
+                    <div class="memberBorderBox" [ngClass]="{'activeMemberBox': true}">
+                        <mat-checkbox class="checkPosition" *ngIf="true" checked="true"></mat-checkbox>
+                        
+                    </div>
+                    <p class="f-14 m-0 text-primitive"> Rental </p>
                 </div>
-                <p class="f-14 m-0 text-primitive"> Salaried </p>
-            </div>
 
-            <div class="ml-12">
-                <div class="memberBorderBox">
-                    <img src="assets/images/svg/businessIcon.svg">
-                </div>
-                <p class="f-14 m-0 text-primitive"> Business </p>
+                <div class="ml-12">
+                    <div class="memberBorderBox" [ngClass]="{'activeMemberBox': true}">
+                        <mat-checkbox class="checkPosition" *ngIf="true" checked="true"></mat-checkbox>
+                    </div>
+                    <p class="f-14 m-0 text-primitive"> Others </p>
+                </div> -->
             </div>
-
-            <div class="ml-12">
-                <div class="memberBorderBox">
-                    <img src="assets/images/svg/professionIcon.svg">
-                </div>
-                <p class="f-14 m-0 text-primitive"> Profession </p>
-            </div>
-
-            <div class="ml-12">
-                <div class="memberBorderBox">
-                    <img src="assets/images/svg/rentalIcon.svg">
-                </div>
-                <p class="f-14 m-0 text-primitive"> Rental </p>
-            </div>
-
-            <div class="ml-12">
-                <div class="memberBorderBox">
-                    <img src="assets/images/svg/pensionIcon.svg">
-                </div>
-                <p class="f-14 m-0 text-primitive"> Pension </p>
             </div>
         </div>
     </div>
 </div>
+
 <div class="bottom-fixed wrapper-16 pb-12">
     <div class="row">
         <div class="col-md-4 p-0">
-            <h5 class="mb-0 pt-8 text-white c-p text-left">Previous</h5>
+            <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="cancel()">Previous</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit">SAVE</button>
-
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="nextStep()">NEXT</button>
         </div>
     </div>
 </div>

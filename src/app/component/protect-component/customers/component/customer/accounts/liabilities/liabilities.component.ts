@@ -19,7 +19,6 @@ import { LiabilitiesDetailComponent } from '../../../common-component/liabilitie
 })
 
 export class LiabilitiesComponent implements OnInit {
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   displayedColumns = ['no', 'name', 'type', 'loan', 'ldate', 'today', 'ten', 'rate', 'emi', 'fin', 'status', 'icons'];
   // dataSource = ELEMENT_DATA;
@@ -43,6 +42,7 @@ export class LiabilitiesComponent implements OnInit {
   totalLoanAmt: any;
   outStandingAmt: any;
   filterData: any;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
@@ -57,9 +57,9 @@ export class LiabilitiesComponent implements OnInit {
     this.showLoader = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.getLiability('');
     this.getPayables();
     this.getGlobalLiabilities();
-    this.getLiability('');
   }
 
   getGlobalLiabilities() {
@@ -250,7 +250,7 @@ export class LiabilitiesComponent implements OnInit {
       this.personal = [];
       this.mortgage = [];
       this.dataStore = data.loans;
-      this.dataSource = data.loans;
+      // this.dataSource = data.loans;
       this.dataSource = new MatTableDataSource(data.loans);
       this.dataSource.sort = this.sort;
       this.storeData = data.loans.length;

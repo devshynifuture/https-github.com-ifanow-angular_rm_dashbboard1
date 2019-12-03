@@ -8,6 +8,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { DetailedViewOtherPayablesComponent } from '../detailed-view-other-payables/detailed-view-other-payables.component';
 import { AddOtherPayablesComponent } from '../add-other-payables/add-other-payables.component';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-other-payables',
@@ -24,11 +25,21 @@ export class OtherPayablesComponent implements OnInit {
   dataSource: any;
   @Input() payableData;
   @Output() OtherDataChange = new EventEmitter();
+  totalAmountBorrowed: any;
+  totalAmountOutstandingBalance: any;
   constructor(public custmService:CustomerService,public util:UtilService,public subInjectService:SubscriptionInject,public eventService:EventService,public dialog:MatDialog) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.dataSource=this.payableData;
+    this.dataSource = new MatTableDataSource(this.payableData);
+    this.dataSource.sort = this.sort;
+    this.totalAmountBorrowed = _.sumBy(this.payableData, function (o) {
+      return o.amountBorrowed;
+    });
+    this.totalAmountOutstandingBalance = _.sumBy(this.payableData, function (o) {
+      return o.outstandingBalance;
+    });
   }
   getPayables(){
     let obj={
@@ -41,8 +52,7 @@ export class OtherPayablesComponent implements OnInit {
   }
   getOtherPayablesRes(data){
     console.log(data);
-    this.dataSource = new MatTableDataSource(data);
-    this.dataSource.sort = this.sort;
+    this.dataSource = data;
     this.OtherDataChange.emit(this.dataSource);
 
   }

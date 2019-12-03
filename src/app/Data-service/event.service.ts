@@ -27,7 +27,12 @@ export class EventService {
   private overlayVisibleValue = new BehaviorSubject(false);
   overlayVisibleData = this.overlayVisibleValue.asObservable();
 
-  private upperSliderData = new BehaviorSubject<object>({state: 'close', fragmentData: {}, flag: ''});
+  private upperSliderData = new BehaviorSubject<object>({
+    state: 'close',
+    fragmentData: {},
+    flag: '',
+    componentName: ''
+  });
   upperSliderDataObs = this.upperSliderData.asObservable();
 
 

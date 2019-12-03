@@ -4,7 +4,7 @@
             <p class="f-14 roboto">Now entering Rupa Hindcha’s income</p>
         </div>
         <div class="col-md-4 text-right p-0">
-            <button mat-stroked-button class=" ba-black br-0 mat-menu-trigger addon"> Adding income 1 of 3 </button>
+            <button mat-stroked-button class=" ba-black br-0 mat-menu-trigger addon"> Adding income 1 of {{finalIncomeAddList.length}} </button>
         </div>
     </div>
 
@@ -144,10 +144,10 @@
 <div class="bottom-fixed wrapper-16 pb-12">
     <div class="row">
         <div class="col-md-4 p-0">
-            <h5 class="mb-0 pt-8 text-white c-p text-left">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="cancel()">Previous</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit">SAVE</button>
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="submitIncomeForm()">SAVE</button>
 
         </div>
     </div>

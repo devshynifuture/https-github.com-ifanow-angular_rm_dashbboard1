@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-add-income',
@@ -7,23 +8,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddIncomeComponent implements OnInit {
   showHide= false;
-  constructor() { }
-
+  selectedFamilyList: any;
+  FinalIncomeList: any;
+  constructor(private subInjectService: SubscriptionInject) { }
+  addIncomeSteps=1;
+  familyData=null;
   ngOnInit() {
   }
-
-  // showLess(value){
-  //   if(value == true){
-  //     this.showHide = false;
-  //   }
-  //   else{
-  //     this.showHide = true;
-  //   }
-
-  // }
-  saveFamilyMembers()
+  close()
   {
-
+    this.subInjectService.changeNewRightSliderState({ state: 'close'});
   }
-
+  getIncomeDetails(data)
+  {
+   this.addIncomeSteps=data.stpeNo;
+   this.FinalIncomeList=data.data
+  }
+  getSelectedFamilyMember(data)
+  {
+     console.log(data)
+     this.selectedFamilyList=data.selectedFamilyMemmbers;
+     this.addIncomeSteps=data.stpeNo;
+  }  
+  previousStepData(data)
+  {
+    this.familyData=data.data;
+    this.addIncomeSteps=data.stpeNo;
+  }
 }
