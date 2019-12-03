@@ -547,13 +547,12 @@ mat-tab-group[vertical] {
 #ui-liabilities,
 #ui-insurance,
 #ui-income,
-#ui-expenses,
 #ui-document,
 #ui-mutualfunds-capital,
 #ui-profile-plan,
 #ui-planinsurance,
 #ui-goal {
-    padding-top: 129px !important;
+    padding-top: 120px !important;
 }
 
 #ui-perferences,
@@ -1017,13 +1016,16 @@ mat-tab-group[vertical] {
         outline:1px solid #DADCE0;
     }
 }
-.Return-Inflation-table{
+.Return-Inflation-table,.perferences-inflation-rate{
     #table-low{
         tr.mat-header-row,tr.mat-row{
             height: 40px;
         }
         th{
             padding: 10px 8px;
+        }
+        th.mat-header-cell{
+            border-bottom-width: 0px;
         }
         
     }
