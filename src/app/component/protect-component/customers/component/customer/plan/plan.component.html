@@ -4,14 +4,15 @@
         </i>ADVISOR HOME</button>
 </div>
 <nav mat-tab-nav-bar id="ui-customer-secondhead">
-    <a mat-tab-link routerLinkActive="active" [routerLink]="'summary'">SUMMARY</a>
-    <a mat-tab-link routerLinkActive="active" [routerLink]="'profile'">PROFILE</a>
-    <a mat-tab-link routerLinkActive="active" [routerLink]="'insurance'">INSURANCE</a>
-    <a mat-tab-link routerLinkActive="active" [routerLink]="'goals'">GOALS</a>
-    <a mat-tab-link routerLinkActive="active" [routerLink]="'taxes'">TAXES</a>
-    <a mat-tab-link routerLinkActive="active" [routerLink]="'cash-flow'">CASH FLOWS</a>
-    <a mat-tab-link routerLinkActive="active" [routerLink]="'investments'">INVESTMENTS</a>
-    <a mat-tab-link routerLinkActive="active" [routerLink]="'scenarios'">SCENARIOS</a>
+    <a (click)="value=1" mat-tab-link [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'summary'">SUMMARY</a>
+    <a (click)="value=2" mat-tab-link [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'profile'">PROFILE</a>
+    <a (click)="value=3" mat-tab-link [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'insurance'">INSURANCE</a>
+    <a (click)="value=4" mat-tab-link [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'goals'">GOALS</a>
+    <a (click)="value=5" mat-tab-link [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'taxes'">TAXES</a>
+    <a (click)="value=6" mat-tab-link [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'cash-flow'">CASH FLOWS</a>
+    <a (click)="value=7" mat-tab-link [ngClass]="_value == 7 ? 'active': ''"
+        [routerLink]="'investments'">INVESTMENTS</a>
+    <a (click)="value=8" mat-tab-link [ngClass]="_value == 8 ? 'active': ''" [routerLink]="'scenarios'">SCENARIOS</a>
 </nav>
 <!-- <mat-tab-group [selectedIndex]="selected" mat-align-tabs="center" id="ui-account-second-head" animationDuration="0ms">
     <mat-tab label="SUMMARY">

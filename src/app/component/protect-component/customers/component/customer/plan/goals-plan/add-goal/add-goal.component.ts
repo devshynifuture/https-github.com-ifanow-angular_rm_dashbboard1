@@ -13,8 +13,8 @@ export class AddGoalComponent implements OnInit {
   ngOnInit() {
   }
 
-  close(data) {
+  close() {
     
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 }

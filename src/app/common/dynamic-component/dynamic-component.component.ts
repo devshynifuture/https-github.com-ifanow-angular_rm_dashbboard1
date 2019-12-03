@@ -62,7 +62,6 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
     this._data = inputData;
     if (inputData.componentName) {
       this._componentName = inputData.componentName;
-      console.log('DynamicComponentComponent INPUT: data ', inputData);
       if (inputData.direction) {
         if (inputData.direction == 'top') {
           this.addUpperDynamicComponentService(this.viewContainerRefUpper, inputData.componentName);
@@ -101,8 +100,6 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
   }) viewContainerRefUpper: ViewContainerRef;
 
   ngOnInit() {
-    console.log('DynamicComponentComponent: ngOnInit data ', this.data);
-    console.log('DynamicComponentComponent: ngOnInit this.viewContainerRef ', this.viewContainerRef);
     if (this.componentName) {
       this.addDynamicComponentService(this.viewContainerRef, this.componentName);
     }
@@ -120,8 +117,6 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
     if (viewContainerRef) {
       this.dynamicComponentService.addDynamicComponent(viewContainerRef, component, this.data.data);
       this._upperSliderCase = this.tempState;
-
-      // this.handleChangeOfState(this.tempState);
     }
   }
 
@@ -142,22 +137,4 @@ export class DynamicComponentComponent implements OnInit, DataComponent {
       }, 100);
     }
   }
-
-  /*handleChangeOfUpperSliderState(value) {
-    console.log('DynamicComponentComponent handleChangeOfState: ', value);
-    if (value === 'close') {
-      this._upperSliderCase = value;
-      setTimeout(() => {
-        this.dialogState = value;
-        this.isOverlayVisible = false;
-      }, 300);
-      // this.eventService.changeOverlayVisible(false);
-    } else {
-      this._upperSliderCase = value;
-      setTimeout(() => {
-        this.dialogState = 'open';
-        this.isOverlayVisible = true;
-      }, 100);
-    }
-  }*/
 }
