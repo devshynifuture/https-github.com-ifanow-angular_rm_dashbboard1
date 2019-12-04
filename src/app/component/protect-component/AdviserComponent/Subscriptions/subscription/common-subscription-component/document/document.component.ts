@@ -245,7 +245,7 @@ export class DocumentComponent implements OnInit {
 
     const fragmentData = {
       flag: value,
-      data: this._clientData,
+      data: data,
       id: 1,
       state: 'open',
       documentList:data
