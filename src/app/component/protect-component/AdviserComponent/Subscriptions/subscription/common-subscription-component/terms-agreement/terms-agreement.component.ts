@@ -121,7 +121,7 @@ export class TermsAgreementComponent implements OnInit {
   }
   updateData(data) {
     const obj = {
-      id: data.documentRepositoryId, // pass here advisor id for Invoice advisor
+      documentRepositoryId: data.documentRepositoryId, // pass here advisor id for Invoice advisor
       docText: data.docText
     };
     this.subService.updateDocumentData(obj).subscribe(
