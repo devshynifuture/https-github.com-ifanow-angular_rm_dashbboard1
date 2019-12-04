@@ -57,7 +57,7 @@
         <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
         <mat-menu #menu5="matMenu">
           <button mat-menu-item>PDF</button>
-          <button mat-menu-item (click)="exportAsXLSX('epf')">XLS</button>
+          <button mat-menu-item (click)="ExportTOExcel('epf')">XLS</button>
         </mat-menu>
         <img class="" src="assets/images/svg/up-down.svg">
         <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
@@ -75,7 +75,7 @@
         </button>
       </div>
     </div>
-    <div class="example-container mt-8 real-estate">
+    <div class="example-container mt-8 real-estate" #EPF #epf>
       <table matSort #epfListTable="matSort" mat-table [dataSource]="dataEPFList" matSort id="table-low">
 
         <ng-container matColumnDef="no">
@@ -214,7 +214,7 @@
                 <img class="c-p" src="assets/images/svg/download-bordered.svg">
                 <mat-menu #menu5="matMenu">
                   <button mat-menu-item>PDF</button>
-                  <button mat-menu-item (click)="exportAsXLSX('nps')">XLS</button>
+                  <button mat-menu-item (click)="ExportTOExcel('nps')">XLS</button>
                 </mat-menu>
                 <img class="" src="assets/images/svg/up-down.svg">
                 <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
@@ -262,7 +262,7 @@
         </button>
       </mat-menu>
     </div>
-    <div class="example-container mt-8 real-estate">
+    <div class="example-container mt-8 real-estate" #NPS #nps>
       <table matSort #npsListTable="matSort" mat-table [dataSource]="dataNPSList" id="table-low">
         <ng-container matColumnDef="no">
           <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
@@ -341,75 +341,6 @@
     </div>
   </div>
 
-  <div class="example-container mt-8 real-estate">
-    <table [dataSource]="EPSList" id="table-low" mat-table>
-      <ng-container matColumnDef="no">
-        <th *matHeaderCellDef class="br t-2" mat-header-cell> No</th>
-        <td *matCellDef="let element let i = index" class="br t-2" mat-cell> {{i + 1}} </td>
-        <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
-      </ng-container>
-      <ng-container matColumnDef="owner">
-        <th *matHeaderCellDef class="br t-25" mat-header-cell> Owner</th>
-        <td *matCellDef="let element" class="br t-25" mat-cell> {{element.ownerName}} </td>
-        <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell>Total</td>
-      </ng-container>
-      <ng-container matColumnDef="nvalue">
-        <th *matHeaderCellDef class="br text-right t-12" mat-header-cell> Notional value</th>
-        <td *matCellDef="let element" appFormatNumber class="br text-right t-12" mat-cell>
-          {{element.notionalValue || '-'}} </td>
-        <td *matFooterCellDef [value]="totalNotionalValue" appFormatNumber class="br t-20 text-right" mat-footer-cell>
-          {{totalNotionalValue}}</td>
-      </ng-container>
-      <ng-container matColumnDef="date">
-        <th *matHeaderCellDef class="br text-left t-12" mat-header-cell> Commencement date</th>
-        <td *matCellDef="let element" class="br text-left t-12" mat-cell>
-          {{element.commencementDate | date:'dd/MM/yyyy'}} </td>
-        <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
-      </ng-container>
-      <ng-container matColumnDef="amt">
-        <th *matHeaderCellDef class="br text-right t-18" mat-header-cell> Pension amount</th>
-        <td *matCellDef="let element" appFormatNumber class="br text-right t-18" mat-cell>
-          {{element.pensionAmount || '-'}} </td>
-        <td *matFooterCellDef [value]="totalPensionAmount" appFormatNumber class="br t-20 text-right" mat-footer-cell>
-          {{totalPensionAmount}} </td>
-      </ng-container>
-      <ng-container matColumnDef="pay">
-        <th *matHeaderCellDef class="br t-16" mat-header-cell> Pension payout frequency</th>
-        <td *matCellDef="let element" class="br t-16" mat-cell>
-          {{(element.pensionPayoutFrequencyId == '1') ? 'Daily' : (element.pensionPayoutFrequencyId == '2') ? 'Monthly' : (element.pensionPayoutFrequencyId == '3') ? 'Quarterly' : (element.pensionPayoutFrequencyId == '4') ? 'Semi annually' : 'Annually'}}
-        </td>
-        <td *matFooterCellDef mat-footer-cell></td>
-      </ng-container>
-      <ng-container matColumnDef="desc">
-        <th *matHeaderCellDef class="br t-18" mat-header-cell> Description</th>
-        <td *matCellDef="let element" class="br t-18" mat-cell> {{element.description}} </td>
-        <td *matFooterCellDef mat-footer-cell></td>
-      </ng-container>
-      <ng-container matColumnDef="status">
-        <th *matHeaderCellDef class="br t-5" mat-header-cell> Status</th>
-        <td *matCellDef="let element" class="br t-5 text-primary" mat-cell> {{element.active}} </td>
-        <td *matFooterCellDef mat-footer-cell></td>
-      </ng-container>
-      <ng-container matColumnDef="icons">
-        <th *matHeaderCellDef class="t-2" mat-header-cell></th>
-        <td *matCellDef="let element" class="t-2" mat-cell>
-          <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
-            more_vert
-          </i>
-          <mat-menu #menubank="matMenu">
-            <button (click)="openAddEPS(element)" class="c-p" mat-menu-item>Edit</button>
-            <button (click)="detailedViewEPS(element)" class="c-p" mat-menu-item>Detailed view</button>
-            <button class="c-p" mat-menu-item>Activity</button>
-            <button (click)="deleteModal('EPS',element)" class="c-p" mat-menu-item>Delete</button>
-          </mat-menu>
-        </td>
-        <td *matFooterCellDef mat-footer-cell></td>
-      </ng-container>
-      <tr *matHeaderRowDef="displayedColumns15; sticky: true" mat-header-row></tr>
-      <tr *matRowDef="let row; columns: displayedColumns15;" mat-row></tr>
-      <tr *matFooterRowDef="displayedColumns15;sticky: true" mat-footer-row></tr>
-    </table>
-  </div>
 </div>
 <div *ngIf="showRecurring === '3'" class="wrapper-8">
   <div class="row">
@@ -420,7 +351,7 @@
         <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
         <mat-menu #menu5="matMenu">
           <button mat-menu-item>PDF</button>
-          <button mat-menu-item (click)="exportAsXLSX('gratuity')">XLS</button>
+          <button mat-menu-item (click)="ExportTOExcel('Gratuity')">XLS</button>
         </mat-menu>
         <img class="" src="assets/images/svg/up-down.svg">
         <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
@@ -437,7 +368,7 @@
       </button>
     </div>
   </div>
-  <div class="example-container mt-8 real-estate">
+  <div class="example-container mt-8 real-estate" #GRATUITY #Gratuity>
     <table #gratuityListTable="matSort" [dataSource]="dataGratuityList" id="table-low" mat-table matSort>
       <ng-container matColumnDef="no">
         <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
@@ -536,7 +467,7 @@
         <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
         <mat-menu #menu5="matMenu">
           <button mat-menu-item>PDF</button>
-          <button mat-menu-item (click)="exportAsXLSX('superannuation')">XLS</button>
+          <button mat-menu-item (click)="ExportTOExcel('Superannuation')">XLS</button>
         </mat-menu>
         <img class="" src="assets/images/svg/up-down.svg">
         <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
@@ -554,7 +485,7 @@
       </button>
     </div>
   </div>
-  <div class="example-container mt-8 real-estate">
+  <div class="example-container mt-8 real-estate" #SUPERANNUATION #Superannuation>
     <table #superAnnuationListTable="matSort" [dataSource]="dataSuperannuationList" id="table-low" mat-table matSort>
       <ng-container matColumnDef="no">
         <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
@@ -669,7 +600,7 @@
         <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
         <mat-menu #menu5="matMenu">
           <button mat-menu-item>PDF</button>
-          <button mat-menu-item (click)="exportAsXLSX('eps')">XLS</button>
+          <button mat-menu-item  (click)="ExportTOExcel('eps')">XLS</button>
         </mat-menu>
         <img class="" src="assets/images/svg/up-down.svg">
         <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
@@ -686,7 +617,7 @@
       </button>
     </div>
   </div>
-  <div class="example-container mt-8 real-estate">
+  <div class="example-container mt-8 real-estate"  #EPS #eps>
     <table #epsListTable="matSort" [dataSource]="EPSList" id="table-low" mat-table matSort>
       <ng-container matColumnDef="no">
         <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>

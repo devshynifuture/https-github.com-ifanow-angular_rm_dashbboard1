@@ -3,7 +3,7 @@ import { AddSuperannuationComponent } from './../add-superannuation/add-superann
 import { AddGratuityComponent } from './../add-gratuity/add-gratuity.component';
 import { NpsSummaryPortfolioComponent } from './../add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
 import { AddEPFComponent } from './../add-epf/add-epf.component';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -18,6 +18,8 @@ import { DetailedViewEPSComponent } from '../add-eps/detailed-view-eps/detailed-
 import { DetailedViewGratuityComponent } from '../add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
 import { DetaildedViewSuperannuationComponent } from '../add-superannuation/detailded-view-superannuation/detailded-view-superannuation.component';
 import * as _ from 'lodash';
+import { utils } from 'protractor';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-retirement-account',
@@ -51,6 +53,21 @@ export class RetirementAccountComponent implements OnInit {
   @ViewChild('gratuityListTable', { static: false }) gratuityListTableSort: MatSort;
   @ViewChild('superAnnuationListTable', { static: false }) superAnnuationListTableSort: MatSort;
   @ViewChild('epsListTable', { static: false }) epsListTableSort: MatSort;
+  @ViewChild('EPF', { static: false }) EPF: ElementRef;
+  @ViewChild('NPS', { static: false }) NPS: ElementRef;
+  @ViewChild('Superannuation', { static: false }) Superannuation: ElementRef;
+  @ViewChild('Gratuity', { static: false }) Gratuity: ElementRef;
+  @ViewChild('EPS', { static: false }) EPS: ElementRef;
+  title = 'Excel';
+
+
+  ExportTOExcel(value) {
+    var excelElement = (value == 'eps') ? this.EPS : (value == 'Gratuity') ? this.Gratuity : (value == 'Superannuation') ? this.Superannuation : (value == 'epf') ? this.EPF : this.NPS
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(excelElement.nativeElement);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, value);
+    XLSX.writeFile(wb, value + '.xlsx');
+  }
   exldata: any;
   excelDataNPS = [];
   excelDataSuperannuation = [];
@@ -80,7 +97,7 @@ export class RetirementAccountComponent implements OnInit {
   datasource16;
   isLoading = true;
 
-  dataEPSList = new MatTableDataSource(this.datasource11);
+
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -91,77 +108,7 @@ export class RetirementAccountComponent implements OnInit {
       advisorId: this.advisorId
     };
     this.getListEPF();
-    this.dataEPSList.sort = this.epsListTableSort;
-  }
-  exportAsXLSX(value): void {
-    this.exldata = []
-    this.dataEPFList.filteredData.forEach(element => {
-      this.exldata.push({'Owner': element.ownerName,
-       'Current Value': element.currentValue,
-       'Employee Contribution': element.employeesMonthlyContribution,
-       'Employer Contribution': element.employersMonthlyContribution,
-       'Rate Of Return': element.rateOfReturns,
-       'Balance Mentioned': element.currentEpfBalance, 
-       'Balance As On': new Date(element.balanceAsOnDate), 
-       'Maturity Year': element.maturityYear, 
-       'Description': element.description,
-       'Status': element.status})
-    });
-    this.dataEPFList.filteredData.forEach(element => {
-      this.excelDataNPS.push({'Owner': element.ownerName,
-       'Current Value': element.currentValue,
-       'Total Contribution': element.totalContribution,
-       'Scheme Choice': element.schemeChoice,
-       'PRAN': element.pran,
-       'Description': element.description,
-       'Status': element.status})
-    });
-    this.dataEPFList.filteredData.forEach(element => {
-      this.excelGratuity.push({'Owner': element.ownerName,
-       'Current Value': element.currentValue,
-       'Name Of The Organization': element.organizationName,
-       'Number Of Completed Years': element.yearsCompleted,
-       'Year Of Receipt': element.yearReceipt,
-       'Amount Recieved': element.amountReceived, 
-       'Reason Of Receipt':(element.reasonOfReceipt), 
-       'Maturity Year': element.maturityYear, 
-       'Description': element.description,
-       'Status': element.status})
-    });
-    this.dataEPFList.filteredData.forEach(element => {
-      this.excelDataSuperannuation.push({'Owner': element.ownerName,
-       'Current Value': element.currentValue,
-       'Annual Employee Contribution ': element.annualEmployeeContribution,
-       'Annual Employer Contribution': element.annualEmployerContribution,
-       'Assumed Rate': element.assumedRateOfReturn,
-       'Growth Rate Employer Contribution': element.growthRateEmployeeContribution, 
-       'Growth Rate Employee Contribution':(element.growthRateEmployerContribution), 
-       'Date Of First Contribution': element.firstContributionDate, 
-       'Description': element.description,
-       'Status': element.status})
-    });
-    this.dataEPFList.filteredData.forEach(element => {
-      this.excelDataEPS.push({'Owner': element.ownerName,
-       'Notional Value': element.notionalValue,
-       'Commencement Date':new Date(element.commencementDate),
-       'Pension Amount': element.pensionAmount,
-       'Pension Payout Frequency': element.pensionPayoutFrequencyId,
-       'Description': element.description,
-       'Status': element.status})
-    });
 
-    console.log(this.exldata)
-    if (value == 'epf') {
-      UtilService.exportAsExcelFile(this.exldata, 'epf');
-    } else if (value == 'nps') {
-      UtilService.exportAsExcelFile(this.excelDataNPS, 'nps');
-    } else if (value == 'gratuity') {
-      UtilService.exportAsExcelFile(this.excelGratuity, 'gratuity');
-    } else if (value == 'superannuation') {
-      UtilService.exportAsExcelFile(this.dataSuperannuationList.filteredData, 'superannuation');
-    } else {
-      UtilService.exportAsExcelFile(this.excelDataEPS, 'eps');
-    }
   }
   getfixedIncomeData(value) {
     this.showRecurring = value;
