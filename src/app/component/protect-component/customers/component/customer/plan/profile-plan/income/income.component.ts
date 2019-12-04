@@ -3,6 +3,9 @@ import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MatSort, MatTableModule, MatTableDataSource } from '@angular/material';
 import { AddIncomeComponent } from './add-income/add-income.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PlanService } from '../../plan.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-income',
@@ -14,15 +17,37 @@ export class IncomeComponent implements OnInit {
 
   displayedColumns = ['no', 'owner', 'type', 'amt','income','till','rate','status','icons'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
-  constructor( private subInjectService: SubscriptionInject) { }
+  advisorId: any;
+  clientId: any;
+  constructor(private eventService:EventService,private subInjectService: SubscriptionInject,private planService:PlanService) { }
   viewMode;
   ngOnInit() {
     this.dataSource.sort = this.sort;
     this.viewMode="tab1"
+    this.advisorId=AuthService.getAdvisorId();
+    this.clientId=AuthService.getClientId();
+    this.getIncomeList();
+  }
+  getIncomeList()
+  {
+    const obj=
+    {
+      advisorId:this.advisorId,
+      clientId:this.clientId
+    }
+    this.planService.getIncomeData(obj).subscribe(
+      data=>this.getIncomeListRes(data),
+      err=>this.eventService.openSnackBar(err)
+    )
+    
+  }
+  getIncomeListRes(data)
+  {
+    this.dataSource=data
   }
   addIncome(flagValue,data){
-    const fragmentData = {
-      Flag: flagValue,
+     const fragmentData = {
+      flag: flagValue,
       data,
       state:'open',
       componentName:AddIncomeComponent
@@ -33,7 +58,6 @@ export class IncomeComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-    
         }
       }
     );
@@ -41,7 +65,7 @@ export class IncomeComponent implements OnInit {
 
   addIncomeDetail(flagValue){
     const fragmentData = {
-      Flag: flagValue,
+      flag: flagValue,
       id: 1,
       state: 'openHelp'
     };

@@ -131,7 +131,7 @@ export class DocumentComponent implements OnInit {
 
   openDocument(data) {
     const Fragmentdata = {
-      Flag: data,
+      flag: data,
     };
     const dialogRef = this.dialog.open(AddDocumentComponent, {
       width: '70%',
@@ -160,7 +160,7 @@ export class DocumentComponent implements OnInit {
 
   openPopup(data) {
     const Fragmentdata = {
-      Flag: data,
+      flag: data,
     };
     const dialogRef = this.dialog.open(SubscriptionPopupComponent, {
       width: '70%',
@@ -244,10 +244,11 @@ export class DocumentComponent implements OnInit {
     // this.subInjectService.addSingleProfile(data);
 
     const fragmentData = {
-      Flag: value,
-      data: data,
+      flag: value,
+      data: this._clientData,
       id: 1,
-      state: 'open'
+      state: 'open',
+      documentList:data
     };
     fragmentData.data.clientName=this._clientData.name;
     fragmentData.data.isDocument=true;

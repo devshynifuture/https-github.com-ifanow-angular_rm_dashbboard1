@@ -13,8 +13,15 @@
 </div>
 <div class="pb-44 mb-48 pt-100" [formGroup]="summaryNPS">
     <div class="width90">
-        <app-owner-component [data]='ownerData' (valueChange)='display($event)' (valueChange1)='lisNominee($event)'>
-        </app-owner-component>
+        <div class="row">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Owner</h5>
+                <p class="m-0 f-12 text-custom">In whose name is this asset</p>
+            </div>
+            <div class="col-md-5">
+                <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
+            </div>
+        </div>
 
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
@@ -24,8 +31,10 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #currentValue type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="currentValue">
-                        <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isCurrentValue && getFormControl().currentValue.invalid || getFormControl().currentValue.touched && getFormControl().currentValue.invalid)}">
+                        <input matInput #currentValue type="number" (utils.keypress)="utils.keyPress($event)"
+                            maxlength="20" class="form-control br-0 rupess" formControlName="currentValue">
+                        <mat-error class="f-12 pt-4"
+                            [ngClass]="{'v-h':!(isCurrentValue && getFormControl().currentValue.invalid || getFormControl().currentValue.touched && getFormControl().currentValue.invalid)}">
                             This field is required
                         </mat-error>
                     </mat-form-field>
@@ -41,7 +50,8 @@
                     <input matInput formControlName="valueAsOn" class="form-control br-0" [matDatepicker]="picker">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
-                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isValueAsOn && getFormControl().valueAsOn.invalid || getFormControl().valueAsOn.touched && getFormControl().valueAsOn.invalid)}">
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isValueAsOn && getFormControl().valueAsOn.invalid || getFormControl().valueAsOn.touched && getFormControl().valueAsOn.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -55,8 +65,10 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #totalContry type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="totalContry">
-                        <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isTotalContry && getFormControl().totalContry.invalid || getFormControl().totalContry.touched && getFormControl().totalContry.invalid)}">
+                        <input matInput #totalContry type="number" (utils.keypress)="utils.keyPress($event)"
+                            maxlength="20" class="form-control br-0 rupess" formControlName="totalContry">
+                        <mat-error class="f-12 pt-4"
+                            [ngClass]="{'v-h':!(isTotalContry && getFormControl().totalContry.invalid || getFormControl().totalContry.touched && getFormControl().totalContry.invalid)}">
                             This field is required
                         </mat-error>
                     </mat-form-field>
@@ -82,7 +94,8 @@
                 </div>
 
                 <div formArrayName="futureContributionList">
-                    <div class="row pb-16" *ngFor="let creds of futureContry.controls; let i = index" [formGroupName]="i">
+                    <div class="row pb-16" *ngFor="let creds of futureContry.controls; let i = index"
+                        [formGroupName]="i">
                         <div class="col-md-3 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field>
@@ -112,7 +125,9 @@
                         <div class="col-md-3 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input matInput #currentValue type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="approxContribution">
+                                    <input matInput #currentValue type="number"
+                                        (utils.keypress)="utils.keyPress($event)" maxlength="20"
+                                        class="form-control br-0 rupess" formControlName="approxContribution">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -183,7 +198,9 @@
                             <div class="row">
                                 <div class="col-md-4 p-0">
                                     <mat-form-field>
-                                        <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto" list="userName" class="form-control br-0 pl-8" formControlName="nomineeName">
+                                        <input matInput aria-label="State" (click)="nomineesList()"
+                                            [matAutocomplete]="auto" list="userName" class="form-control br-0 pl-8"
+                                            formControlName="nomineeName">
                                         <mat-autocomplete #auto="matAutocomplete">
                                             <mat-option *ngFor="let item of familyList" [value]="item.userName">
                                                 <span>{{item.userName}}</span>
@@ -193,7 +210,10 @@
                                 </div>
                                 <div class="col-md-3">
                                     <mat-form-field>
-                                        <input matInput #nomineePercentageShare type="number" (utils.keypress)="utils.keyPress($event)" class="form-control br-0 percentage" formControlName="nomineePercentageShare">
+                                        <input matInput #nomineePercentageShare type="number"
+                                            (utils.keypress)="utils.keyPress($event)"
+                                            class="form-control br-0 percentage"
+                                            formControlName="nomineePercentageShare">
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-5" *ngIf="i==0">
@@ -228,7 +248,8 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput #description maxlength="30" class="form-control br-0" formControlName="description">
+                            <input matInput #description maxlength="30" class="form-control br-0"
+                                formControlName="description">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                         </mat-form-field>
                     </div>
@@ -236,14 +257,13 @@
             </div>
         </div>
     </div>
-</div>
-<div class="bottom-fixed wrapper-12 pt-16">
-    <div class="row">
-        <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
-        </div>
-        <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="summaryNPSSave()">Save</button>
+    <div class="bottom-fixed wrapper-12 pt-16">
+        <div class="row">
+            <div class="col-md-4">
+                <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
+            </div>
+            <div class="col-md-8 right text-right">
+                <button mat-button class="btn-bottom br-0 text-inherit" (click)="summaryNPSSave()">Save</button>
+            </div>
         </div>
     </div>
-</div>

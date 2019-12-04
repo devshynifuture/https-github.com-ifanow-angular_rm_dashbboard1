@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../customer.service';
-import {trigger, transition, query, stagger, animate, style} from '@angular/animations';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AddInsuranceComponent} from '../../../common-component/add-insurance/add-insurance.component';
-import {DetailedViewComponent} from "../../../common-component/detailed-view/detailed-view.component";
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../customer.service';
+import { trigger, transition, query, stagger, animate, style } from '@angular/animations';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AddInsuranceComponent } from '../../../common-component/add-insurance/add-insurance.component';
+import { DetailedViewComponent } from "../../../common-component/detailed-view/detailed-view.component";
 
 @Component({
   selector: 'app-insurance',
@@ -32,15 +32,15 @@ export class InsuranceComponent implements OnInit {
   }
 
   viewMode;
-  lifeInsuranceList = [{name: 'Term', id: 1}, {name: 'Traditional', id: 2}, {name: 'ULIP', id: 3}];
+  lifeInsuranceList = [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }];
   generalLifeInsuranceList = [/*"Health", "Car/2 Wheeler", "Travel", "Personal accident", "Critical illness", "Cancer", "Home", "Others"*/];
   insuranceTypeId;
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.insuranceTypeId=1;
-    this.insuranceSubTypeId=0;
+    this.insuranceTypeId = 1;
+    this.insuranceSubTypeId = 0;
     this.getGlobalDataInsurance();
     this.getInsuranceData(1);
     this.lifeInsuranceFlag = true;
@@ -147,7 +147,7 @@ export class InsuranceComponent implements OnInit {
       this.insuranceSubTypeId = 0;
       this.generalLifeInsuranceList = [];
       this.lifeInsuranceList = [];
-      [{name: 'Term', id: 1}, {name: 'Traditional', id: 2}, {name: 'ULIP', id: 3}].map((i) => {
+      [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }].map((i) => {
         this.lifeInsuranceList.push(i);
       });
     } else {
@@ -155,10 +155,10 @@ export class InsuranceComponent implements OnInit {
       this.lifeInsuranceFlag = false;
       this.generalInsuranceFlag = true;
       this.generalLifeInsuranceList = [];
-      [{name: 'Health', id: 4}, {name: 'Car/2 Wheeler', id: 5}, {name: 'Travel', id: 6}, {
+      [{ name: 'Health', id: 4 }, { name: 'Car/2 Wheeler', id: 5 }, { name: 'Travel', id: 6 }, {
         name: 'Personal accident',
         id: 7
-      }, {name: 'Critical illness', id: 8}, {name: 'Cancer', id: 9}, {name: 'Home', id: 10}, {
+      }, { name: 'Critical illness', id: 8 }, { name: 'Cancer', id: 9 }, { name: 'Home', id: 10 }, {
         name: 'Others',
         id: 11
       }].map((i) => {
@@ -173,7 +173,7 @@ export class InsuranceComponent implements OnInit {
 
   open(data) {
     const fragmentData = {
-      Flag: 'detailedView',
+      flag: 'detailedView',
       data,
       componentName: DetailedViewComponent,
       insuranceTypeId: this.insuranceTypeId,
@@ -200,7 +200,7 @@ export class InsuranceComponent implements OnInit {
       insuranceSubTypeId: this.insuranceSubTypeId,
     };
     const fragmentData = {
-      Flag: 'addInsurance',
+      flag: 'addInsurance',
       data: inputData,
       componentName: AddInsuranceComponent,
       state: 'open'
@@ -209,8 +209,8 @@ export class InsuranceComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.lifeInsuranceFlag=true
-          this.insuranceSubTypeId=0;
+          this.lifeInsuranceFlag = true
+          this.insuranceSubTypeId = 0;
           this.getInsuranceData(this.insuranceTypeId)
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();

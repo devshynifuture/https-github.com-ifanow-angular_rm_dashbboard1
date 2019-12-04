@@ -118,7 +118,7 @@ export class DashboardSubscriptionComponent implements OnInit {
     data.isCreateSub = true;
     (data.subscriptionPricing.feeTypeId == 1) ? feeMode = 'fixedModifyFees' : feeMode = 'variableModifyFees';
     const fragmentData = {
-      Flag: feeMode,
+      flag: feeMode,
       data,
       id: 1,
       state: 'open'
@@ -140,7 +140,7 @@ export class DashboardSubscriptionComponent implements OnInit {
       value = 'createSubFixed' : value = 'createSubVariable';
     data.isCreateSub = false;
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data,
       id: 1,
       state: 'open'
@@ -182,7 +182,7 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   delete(data) {
     const Fragmentdata = {
-      Flag: data,
+      flag: data,
     };
     if (data === 'cancelSubscription') {
       const dialogRef = this.dialog.open(DeleteSubscriptionComponent, {

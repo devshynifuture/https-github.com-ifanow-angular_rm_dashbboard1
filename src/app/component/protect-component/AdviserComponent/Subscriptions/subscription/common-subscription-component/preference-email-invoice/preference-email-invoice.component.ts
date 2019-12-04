@@ -25,8 +25,8 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
 
   constructor(private eventService: EventService, public subService: SubscriptionService, public dialogRef: MatDialogRef<PreferenceEmailInvoiceComponent>, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public fragmentData: any) {
     console.log('ModifyFeeDialogComponent constructor: ', this.fragmentData);
-    this.heading = (this.fragmentData.Flag.id == 1) ? 'Invoice' : (this.fragmentData.Flag.id == 2) ? 'Quotations' : (this.fragmentData.Flag.id == 3) ? ' Documents with eSign request' : ' Documents without eSign request';
-    this.storeData = this.fragmentData.Flag;
+    this.heading = (this.fragmentData.flag.id == 1) ? 'Invoice' : (this.fragmentData.flag.id == 2) ? 'Quotations' : (this.fragmentData.flag.id == 3) ? ' Documents with eSign request' : ' Documents without eSign request';
+    this.storeData = this.fragmentData.flag;
   }
 
   ngOnInit() {
@@ -88,7 +88,7 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
 
   openDialog(data) {
     const Fragmentdata = {
-      Flag: data,
+      flag: data,
     };
     const dialogRef = this.dialog.open(HowToUseDialogComponent, {
       width: '30%',

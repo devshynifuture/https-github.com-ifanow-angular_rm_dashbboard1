@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { GoldComponent } from '../gold/gold.component';
 import { OthersComponent } from '../others/others.component';
 import { DetailedViewGoldComponent } from '../gold/detailed-view-gold/detailed-view-gold.component';
@@ -32,7 +32,11 @@ export class CommoditiesComponent implements OnInit {
   sumOfPurchaseValue: any;
   sumOfMarketValueOther: any;
   sumOfPurchaseValueOther: any;
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService,public dialog:MatDialog) { }
+
+  @ViewChild('goldListTable', { static: false }) goldListTableSort: MatSort;
+  @ViewChild('otherCommodityListTable', { static: false }) otherCommodityListTableSort: MatSort;
+
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) { }
   ngOnInit() {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
@@ -49,7 +53,7 @@ export class CommoditiesComponent implements OnInit {
       this.getOtherList()
     }
   }
-  deleteModal(value,data) {
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -60,21 +64,21 @@ export class CommoditiesComponent implements OnInit {
       positiveMethod: () => {
         if (value == 'GOLD') {
           this.custumService.deleteGold(data.id).subscribe(
-            data=>{
-              this.eventService.openSnackBar("Gold is deleted","dismiss")
+            data => {
+              this.eventService.openSnackBar("Gold is deleted", "dismiss")
               dialogRef.close();
               this.getGoldList()
             },
-            err=>this.eventService.openSnackBar(err)
+            err => this.eventService.openSnackBar(err)
           )
         } else {
           this.custumService.deleteOther(data.id).subscribe(
-            data=>{
-              this.eventService.openSnackBar("Others is deleted","dismiss")
+            data => {
+              this.eventService.openSnackBar("Others is deleted", "dismiss")
               dialogRef.close();
               this.getOtherList()
             },
-            err=>this.eventService.openSnackBar(err)
+            err => this.eventService.openSnackBar(err)
           )
         }
       },
@@ -107,7 +111,8 @@ export class CommoditiesComponent implements OnInit {
   getGoldRes(data) {
     console.log('getGoldList @@@@', data);
     this.isLoading = false;
-    this.goldList = data.goldList
+    this.goldList = new MatTableDataSource(data.goldList);
+    this.goldList.sort = this.goldListTableSort;
     this.sumOfMarketValue = data.sumOfMarketValue
     this.sumOfPurchaseValue = data.sumOfPurchaseValue
   }
@@ -124,13 +129,15 @@ export class CommoditiesComponent implements OnInit {
   getOthersRes(data) {
     console.log('getOthersRes @@@@', data);
     this.isLoading = false;
-    this.otherCommodityList = data.otherCommodityList
+
+    this.otherCommodityList = new MatTableDataSource(data.otherCommodityList);
+    this.otherCommodityList.sort = this.otherCommodityListTableSort;
     this.sumOfMarketValueOther = data.sumOfMarketValue
     this.sumOfPurchaseValueOther = data.sumOfPurchaseValue
   }
   openCommodities(value, state, data) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data: data,
       id: 1,
       state: 'open',
@@ -155,7 +162,7 @@ export class CommoditiesComponent implements OnInit {
   }
   openOthers(value, state, data) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data: data,
       id: 1,
       state: 'open',
@@ -178,13 +185,13 @@ export class CommoditiesComponent implements OnInit {
       }
     );
   }
-  detailedViewGold(flagValue,data) {
+  detailedViewGold(flagValue, data) {
     const fragmentData = {
-      Flag: flagValue,
+      flag: flagValue,
       id: 1,
-      data:data,
+      data: data,
       state: 'open35',
-      componentName : DetailedViewGoldComponent,
+      componentName: DetailedViewGoldComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -197,13 +204,13 @@ export class CommoditiesComponent implements OnInit {
       }
     );
   }
-  detailedViewOthers(flagValue,data) {
+  detailedViewOthers(flagValue, data) {
     const fragmentData = {
-      Flag: flagValue,
+      flag: flagValue,
       id: 1,
-      data:data,
+      data: data,
       state: 'open35',
-      componentName : DetailedViewOthersComponent,
+      componentName: DetailedViewOthersComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

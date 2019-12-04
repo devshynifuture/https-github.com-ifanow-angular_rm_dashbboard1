@@ -62,7 +62,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   }
   Open(value, state, data) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data: data,
       id: 1,
       state: state

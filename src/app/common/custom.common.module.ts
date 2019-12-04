@@ -3,10 +3,7 @@ import {DialogContainerComponent} from './dialog-container/dialog-container.comp
 import {MaterialModule} from '../material/material';
 import {SubscriptionModule} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {DynamicComponentComponent} from './dynamic-component/dynamic-component.component';
 import {CommonModule} from '@angular/common';
-import {BottomSheetComponent} from "../component/protect-component/customers/component/common-component/bottom-sheet/bottom-sheet.component";
-import {EntryComponentsModule} from "../entry.components.module";
 
 // import {AppModule} from "../app.module";
 
@@ -15,7 +12,7 @@ import {EntryComponentsModule} from "../entry.components.module";
   declarations: [
     // ConfirmDialogComponent,
     DialogContainerComponent,
-    DynamicComponentComponent
+    // DynamicComponentComponent
   ],
   imports: [
     MaterialModule,
@@ -25,11 +22,13 @@ import {EntryComponentsModule} from "../entry.components.module";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    // AppModule
+    // DynamicComponentModule,
+    // AccountEntryModule,
+    // PlanEntryModule,
     // EntryComponentsModule
   ],
   exports: [DialogContainerComponent],
-  // entryComponents: [ EntryComponentsModule.getComponentList()]
+  // entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
 })
 export class CustomCommonModule {
 }

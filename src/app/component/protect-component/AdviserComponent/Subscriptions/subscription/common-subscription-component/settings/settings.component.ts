@@ -68,7 +68,7 @@ export class SettingsComponent implements OnInit {
 
   openPayeeSettings(profileData, value, state) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data: profileData,
       id: 1,
       state: 'open'

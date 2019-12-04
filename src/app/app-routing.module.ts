@@ -1,11 +1,9 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './component/protect-component/AdviserComponent/dashboard/dashboard.component';
-import { LeftsidebarComponent } from './component/left-sidebar/leftsidebar/leftsidebar.component';
-import { SubscriptionComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/subscription.component';
-import { MisComponent } from './component/protect-component/AdviserComponent/backOffice/MIS/mis/mis.component';
-import { LoginComponent } from './component/no-protected/login/login.component';
-import { AuthGuard } from './guards/auth.guard';
+import {OverviewComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/overview/overview.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {LeftsidebarComponent} from './component/left-sidebar/leftsidebar/leftsidebar.component';
+import {LoginComponent} from './component/no-protected/login/login.component';
+import {AuthGuard} from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -19,19 +17,32 @@ const routes: Routes = [
         path: 'subscription',
         loadChildren: () => import('./component/protect-component/AdviserComponent/Subscriptions/subscription.module')
           .then(m => m.SubscriptionModule),
-          canActivate:[AuthGuard]
+        canActivate: [AuthGuard]
       }
     ]
   },
   {
     path: 'customer-detail',
-    loadChildren: () => import('./component/protect-component/customers/customers.module')
-      .then(m => m.CustomersModule)
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./component/protect-component/customers/customers.module')
+          .then(m => m.CustomersModule)
+      },
+      {
+        path: 'overview',
+        component: OverviewComponent
+      }
+    ]
   },
   {
     path: '',
     redirectTo: '/login',
     pathMatch: 'full',
+  },
+  {
+    path: 'redirect',
+    loadChildren: () => import('./component/gmail-redirect/gmail-redirect.module').then(m => m.GmailRedirectModule)
   }
 ];
 

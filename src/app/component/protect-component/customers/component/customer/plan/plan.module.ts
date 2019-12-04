@@ -18,9 +18,9 @@ import {AddProfilePlanComponent} from './profile-plan/add-profile-plan/add-profi
 import {HistoryRiskProfileComponent} from './profile-plan/history-risk-profile/history-risk-profile.component';
 // import {BrowserModule} from '@angular/platform-browser';
 import {PlanRoutingModule} from "./plan-routing.module";
-import { IncomeComponent } from './profile-plan/income/income.component';
-import { IndividualIncomeInfoComponent } from './profile-plan/income/individual-income-info/individual-income-info.component';
-
+import {IncomeComponent} from './profile-plan/income/income.component';
+import {ExpensesComponent} from '../accounts/expenses/expenses.component';
+import {AddPlaninsuranceComponent} from "./insurance-plan/add-planinsurance/add-planinsurance.component";
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -43,7 +43,9 @@ import { IndividualIncomeInfoComponent } from './profile-plan/income/individual-
     AddInvestmentPlanComponent,
     AddProfilePlanComponent,
     HistoryRiskProfileComponent,
-    IncomeComponent
+    IncomeComponent,
+    ExpensesComponent,
+    AddPlaninsuranceComponent
   ],
   imports: [
     PlanRoutingModule,

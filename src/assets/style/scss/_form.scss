@@ -89,8 +89,11 @@ input.mat-input-element:focus {
 
 .mat-form-field-infix {
     border-top: 0px !important;
+    width: 100% !important;
 }
-
+.mat-form-field{
+    width: 100%;
+}
 .mat-form-field-subscript-wrapper {
     padding-right: 8px !important;
     padding-left: 8px !important;
@@ -133,3 +136,15 @@ input.mat-input-element:focus {
       background-color: #FF6823 !important;
   }
   }
+#custom-slider{
+  .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label,
+   .mat-accent .mat-slider-track-fill,.mat-slider-track-background{
+      background-color: #008FFF;
+  }
+  .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb{
+      border-color:#008FFF;
+  }
+  .mat-slider-horizontal{
+      width: 100%;
+  }
+}

@@ -3,17 +3,16 @@ import {CommonModule} from '@angular/common';
 
 import {CustomersRoutingModule} from './customers-routing.module';
 import {MaterialModule} from '../../../material/material';
-import {BottomSheetComponent} from './component/common-component/bottom-sheet/bottom-sheet.component';
 import {ChartModule} from 'angular-highcharts';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 // import {BrowserModule} from '@angular/platform-browser';
 import {CustomerComponent} from './component/customer/customer.component';
-import {AddLiabilitiesComponent} from './component/common-component/add-liabilities/add-liabilities.component';
 
 import {CustomCommonModule} from '../../../common/custom.common.module';
 import {EntryComponentsModule} from '../../../entry.components.module';
-import {AccountModule} from './component/customer/accounts/account.module';
-import {PlanModule} from './component/customer/plan/plan.module';
+import {AccountEntryModule} from './component/customer/accounts/account.entry.module';
+import {PlanEntryModule} from './component/customer/plan/plan.entry.module';
+import {DynamicComponentService} from '../../../services/dynamic-component.service';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -34,12 +33,15 @@ import {PlanModule} from './component/customer/plan/plan.module';
     // AccountModule,
     // PlanModule,
     CustomCommonModule,
+    // DynamicComponentModule,
     EntryComponentsModule,
-    AccountModule,
-    PlanModule
+    AccountEntryModule,
+    PlanEntryModule,
+    // PlanModule
   ],
   exports: [],
-  entryComponents: [ EntryComponentsModule.getComponentList()]
+  providers: [DynamicComponentService],
+  entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
 })
 export class CustomersModule {
 }

@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { CustomerService } from '../../../../customer.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {CustomerService} from '../../../../customer.service';
+import {AuthService} from 'src/app/auth-service/authService';
 import * as _ from 'lodash';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { AddRealEstateComponent } from '../add-real-estate/add-real-estate.component';
-import { DetailedViewRealEstateComponent } from '../detailed-view-real-estate/detailed-view-real-estate.component';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {AddRealEstateComponent} from '../add-real-estate/add-real-estate.component';
+import {DetailedViewRealEstateComponent} from '../detailed-view-real-estate/detailed-view-real-estate.component';
 
 @Component({
   selector: 'app-real-estate',
@@ -16,58 +16,66 @@ import { DetailedViewRealEstateComponent } from '../detailed-view-real-estate/de
   styleUrls: ['./real-estate.component.scss']
 })
 export class RealEstateComponent implements OnInit {
+
+  isLoading: boolean;
   advisorId: any;
   datasource3: any;
   clientId: any;
   ownerName: any;
   sumOfMarketValue: any;
   sumOfpurchasedValue: any;
-  showLoader: boolean;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status', 'icons'];
 
-  constructor(public subInjectService:SubscriptionInject,publicutilService:UtilService,public custmService:CustomerService,public cusService:CustomerService,public eventService:EventService,public dialog: MatDialog) { }
+  constructor(public subInjectService: SubscriptionInject, publicutilService: UtilService,
+              public custmService: CustomerService, public cusService: CustomerService,
+              public eventService: EventService, public dialog: MatDialog) {
+  }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.showLoader=true;
+    this.isLoading = true;
     this.getRealEstate();
   }
-  displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status', 'icons'];
+
   // datasource3 = ELEMENT_DATA3;
 
   getRealEstate() {
-    let obj = {
-      'advisorId': this.advisorId,
-      'clientId': this.clientId
-    }
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
     this.custmService.getRealEstate(obj).subscribe(
       data => this.getRealEstateRes(data)
     );
   }
-  getRealEstateRes(data){
-    console.log(data)
-    if(data){
-      this.showLoader=false
+
+  getRealEstateRes(data) {
+    console.log(data);
+    if (data) {
+      this.isLoading = false;
     }
     data.realEstateList.forEach(element => {
-      if (element.realEstateOwners.length!=0) {
-        var array=element.realEstateOwners;
-        var ownerName = _.filter(array, function (n) {
+      if (element.realEstateOwners.length != 0) {
+        const array = element.realEstateOwners;
+        const ownerName = _.filter(array, function (n) {
           return n.owner == true;
         });
-        if(ownerName.length!=0){
-          this.ownerName=ownerName[0].ownerName;
-          element.ownerName=this.ownerName
+        if (ownerName.length != 0) {
+          this.ownerName = ownerName[0].ownerName;
+          element.ownerName = this.ownerName;
         }
       }
     });
-  
 
-    this.datasource3=data.realEstateList;
-    this.sumOfMarketValue=data.sumOfMarketValue;
-    this.sumOfpurchasedValue=data.sumOfpurchasedValue;
+    this.datasource3 = new MatTableDataSource(data.realEstateList);
+    this.datasource3.sort = this.sort;
+    this.sumOfMarketValue = data.sumOfMarketValue;
+    this.sumOfpurchasedValue = data.sumOfpurchasedValue;
   }
-  deleteModal(value,data) {
+
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -77,13 +85,13 @@ export class RealEstateComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         this.cusService.deleteRealEstate(data.id).subscribe(
-          data=>{
-            this.eventService.openSnackBar("Real estate is deleted","dismiss")
+          data => {
+            this.eventService.openSnackBar('Real estate is deleted', 'dismiss');
             dialogRef.close();
             this.getRealEstate();
           },
-          err=>this.eventService.openSnackBar(err)
-        )
+          err => this.eventService.openSnackBar(err)
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -102,13 +110,14 @@ export class RealEstateComponent implements OnInit {
 
     });
   }
+
   open(value, data) {
     const fragmentData = {
-      Flag: value,
-      data: data,
+      flag: value,
+      data,
       id: 1,
       state: 'open',
-      componentName:AddRealEstateComponent
+      componentName: AddRealEstateComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -121,13 +130,14 @@ export class RealEstateComponent implements OnInit {
       }
     );
   }
-  detailedViewRealEstate(flagValue,data) {
+
+  detailedViewRealEstate(flagValue, data) {
     const fragmentData = {
-      Flag: flagValue,
+      flag: flagValue,
       id: 1,
-      data:data,
+      data,
       state: 'open35',
-      componentName : DetailedViewRealEstateComponent,
+      componentName: DetailedViewRealEstateComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -141,6 +151,7 @@ export class RealEstateComponent implements OnInit {
     );
   }
 }
+
 export interface PeriodicElement3 {
   no: string;
   owner: string;
@@ -152,7 +163,23 @@ export interface PeriodicElement3 {
 }
 
 const ELEMENT_DATA3: PeriodicElement3[] = [
-  { no: '1.', owner: 'Rahul Jain', type: 'Type', value: '60,000', pvalue: '60,000', desc: 'ICICI FD', status: 'ICICI FD' },
-  { no: '1.', owner: 'Rahul Jain', type: 'Type', value: '60,000', pvalue: '60,000', desc: 'ICICI FD', status: 'ICICI FD' },
-  { no: ' ', owner: 'Total', type: '', value: '1,28,925', pvalue: '1,28,925', desc: '', status: ' ' },
+  {
+    no: '1.',
+    owner: 'Rahul Jain',
+    type: 'Type',
+    value: '60,000',
+    pvalue: '60,000',
+    desc: 'ICICI FD',
+    status: 'ICICI FD'
+  },
+  {
+    no: '1.',
+    owner: 'Rahul Jain',
+    type: 'Type',
+    value: '60,000',
+    pvalue: '60,000',
+    desc: 'ICICI FD',
+    status: 'ICICI FD'
+  },
+  {no: ' ', owner: 'Total', type: '', value: '1,28,925', pvalue: '1,28,925', desc: '', status: ' '},
 ];
