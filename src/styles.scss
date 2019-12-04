@@ -1046,12 +1046,13 @@ mat-tab-group[vertical] {
 
 // #ui-router-outlet {
 //   z-index: 10;
-// }
+// // }
 // .skeletonAnimation {
 //     td {
 //         height: 1em;
 //         position: relative;
 //         overflow: hidden;
+//         background-color: #E7E7E7;
 //         &::after {
 //             position: absolute;
 //             top: 0;
