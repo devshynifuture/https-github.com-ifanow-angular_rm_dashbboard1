@@ -1,5 +1,5 @@
 import { AddSsyComponent } from './../common-component/add-ssy/add-ssy.component';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -12,7 +12,8 @@ import { DetailedSsyComponent } from './detailed-ssy/detailed-ssy.component';
 @Component({
   selector: 'app-ssy-scheme',
   templateUrl: './ssy-scheme.component.html',
-  styleUrls: ['./ssy-scheme.component.scss']
+  styleUrls: ['./ssy-scheme.component.scss'],
+  encapsulation:ViewEncapsulation.None
 })
 export class SsySchemeComponent implements OnInit {
   advisorId: any;
