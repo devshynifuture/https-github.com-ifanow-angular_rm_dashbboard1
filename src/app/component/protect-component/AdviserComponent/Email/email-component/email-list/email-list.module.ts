@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { EmailListRoutingModule } from './email-list-routing.module';
 import { EmailListingComponent } from './email-listing/email-listing.component';
 import { EmailViewComponent } from './email-view/email-view.component';
-import { EmailAddTaskComponent } from './email-add-task/email-add-task.component';
+
 import { EmailReplyComponent } from './email-reply/email-reply.component';
 
 
@@ -13,7 +13,6 @@ import { EmailReplyComponent } from './email-reply/email-reply.component';
   declarations: [
     EmailListingComponent,
     EmailViewComponent,
-    EmailAddTaskComponent,
     EmailViewComponent,
     EmailReplyComponent
   ],
