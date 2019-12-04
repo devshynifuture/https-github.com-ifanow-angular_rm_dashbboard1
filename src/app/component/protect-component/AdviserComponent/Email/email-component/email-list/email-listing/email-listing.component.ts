@@ -1,3 +1,4 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { UtilService } from './../../../../../../../services/util.service';
 import { SubscriptionInject } from './../../../../Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
@@ -5,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { EmailAddTaskComponent } from '../email-add-task/email-add-task.component';
+import { EmailServiceService } from './../../../email-service.service';
 
 export interface PeriodicElement {
   name: string;
@@ -33,7 +35,10 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class EmailListingComponent implements OnInit {
 
-  constructor(private subInjectService: SubscriptionInject) { }
+  constructor(private subInjectService: SubscriptionInject,
+    private emailService: EmailServiceService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
   }
@@ -62,6 +67,11 @@ export class EmailListingComponent implements OnInit {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
+
+  gotoEmailView(dataObj: Object) {
+    this.emailService.sendNextData(dataObj);
+    this.router.navigate(['view'], { relativeTo: this.activatedRoute });
   }
 
   openEmailAddTask(data) {

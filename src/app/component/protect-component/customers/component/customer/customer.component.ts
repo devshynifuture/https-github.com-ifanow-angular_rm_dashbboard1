@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {AuthService} from "../../../../../auth-service/authService";
-import {DialogContainerComponent} from "../../../../../common/dialog-container/dialog-container.component";
-import {EventService} from "../../../../../Data-service/event.service";
-import {SubscriptionInject} from "../../../AdviserComponent/Subscriptions/subscription-inject.service";
-import {DynamicComponentService} from "../../../../../services/dynamic-component.service";
-import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from "../../../../../animation/animation";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from "../../../../../auth-service/authService";
+import { DialogContainerComponent } from "../../../../../common/dialog-container/dialog-container.component";
+import { EventService } from "../../../../../Data-service/event.service";
+import { SubscriptionInject } from "../../../AdviserComponent/Subscriptions/subscription-inject.service";
+import { DynamicComponentService } from "../../../../../services/dynamic-component.service";
+import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from "../../../../../animation/animation";
 
 @Component({
   selector: 'app-customer',
@@ -31,7 +31,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
 
 
   constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
-              protected dynamicComponentService: DynamicComponentService) {
+    protected dynamicComponentService: DynamicComponentService) {
     super(eventService, subinject, dynamicComponentService);
     console.log(router.getCurrentNavigation().extras.state);
 
