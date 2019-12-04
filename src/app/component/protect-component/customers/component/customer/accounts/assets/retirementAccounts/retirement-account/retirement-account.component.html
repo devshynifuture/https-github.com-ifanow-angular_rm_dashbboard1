@@ -3,28 +3,28 @@
     <div class="col-md-8 pl-0">
 
       <button (click)="getfixedIncomeData('1')"
-              [ngClass]="{'mat-stroked-button': showRecurring == '1','text-primary':showRecurring == '1'}"
-              class="br-0 text-custom" mat-button>
+        [ngClass]="{'mat-stroked-button': showRecurring == '1','text-primary':showRecurring == '1'}"
+        class="br-0 text-custom" mat-button>
         EPF
       </button>
       <button (click)="getfixedIncomeData('2')"
-              [ngClass]="{'mat-stroked-button': showRecurring == '2','text-primary':showRecurring == '2'}"
-              class="br-0 text-custom" mat-button>
+        [ngClass]="{'mat-stroked-button': showRecurring == '2','text-primary':showRecurring == '2'}"
+        class="br-0 text-custom" mat-button>
         NPS
       </button>
       <button (click)="getfixedIncomeData('3')"
-              [ngClass]="{'mat-stroked-button': showRecurring == '3','text-primary':showRecurring == '3'}"
-              class="br-0 text-custom" mat-button>
+        [ngClass]="{'mat-stroked-button': showRecurring == '3','text-primary':showRecurring == '3'}"
+        class="br-0 text-custom" mat-button>
         Gratuity
       </button>
       <button (click)="getfixedIncomeData('4')"
-              [ngClass]="{'mat-stroked-button': showRecurring == '4','text-primary':showRecurring == '4'}"
-              class="br-0 text-custom" mat-button>
+        [ngClass]="{'mat-stroked-button': showRecurring == '4','text-primary':showRecurring == '4'}"
+        class="br-0 text-custom" mat-button>
         Superannuation
       </button>
       <button (click)="getfixedIncomeData('5')"
-              [ngClass]="{'mat-stroked-button': showRecurring == '5','text-primary':showRecurring == '5'}"
-              class="br-0 text-custom" mat-button>
+        [ngClass]="{'mat-stroked-button': showRecurring == '5','text-primary':showRecurring == '5'}"
+        class="br-0 text-custom" mat-button>
         EPS
       </button>
 
@@ -50,15 +50,28 @@
         <h4 class="m-0 text-black roboto pt-8">Employees providend fund (EPF)</h4>
       </div>
       <div class="col-md-8 p-0 right text-right">
-        <img class="c-p" src="assets/images/svg/download-bordered.svg">
+        <div class="row">
+          <div class="col-md-8 text-right p-0">
+          </div>
+        </div>
+        <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
+        <mat-menu #menu5="matMenu">
+          <button mat-menu-item>PDF</button>
+          <button mat-menu-item (click)="exportAsXLSX('epf')">XLS</button>
+        </mat-menu>
         <img class="" src="assets/images/svg/up-down.svg">
-        <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
+        <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
+        <mat-menu #menu6="matMenu">
+          <button mat-menu-item>Email Report</button>
+          <button mat-menu-item>Option 2</button>
+          <button mat-menu-item>Option 3</button>
+        </mat-menu>
 
         <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
-          class="material-icons c-p">filter_list</i>FILTERS
+            class="material-icons c-p">filter_list</i>FILTERS
         </button>
         <button (click)="openAddEPF(null)" class="btn-primary addon v-middle" mat-stroked-button><i
-          class="material-icons c-p">add</i>ADD NEW
+            class="material-icons c-p">add</i>ADD NEW
         </button>
       </div>
     </div>
@@ -94,7 +107,7 @@
           <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
             {{ element.employeesMonthlyContribution }} </td>
           <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" appFormatNumber
-              [value]="sumOfemployeesMonthlyContribution">
+            [value]="sumOfemployeesMonthlyContribution">
             {{ sumOfemployeesMonthlyContribution || '-'}}</td>
         </ng-container>
         <ng-container matColumnDef="empc">
@@ -105,7 +118,7 @@
           <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
             {{ element.employersMonthlyContribution }} </td>
           <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" appFormatNumber
-              [value]="sumOfemployersMonthlyContribution">
+            [value]="sumOfemployersMonthlyContribution">
             {{ sumOfemployersMonthlyContribution || '-'}}</td>
         </ng-container>
         <ng-container matColumnDef="rate">
@@ -123,7 +136,7 @@
           <td mat-cell *matCellDef="let element" class="br t-8 text-right" appFormatNumber>
             {{ element.currentEpfBalance }} </td>
           <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" appFormatNumber
-              [value]="sumOfcurrentEpfBalance">
+            [value]="sumOfcurrentEpfBalance">
             {{ sumOfcurrentEpfBalance || '-'}}</td>
         </ng-container>
         <ng-container matColumnDef="bacla">
@@ -155,9 +168,9 @@
         <ng-container matColumnDef="icons">
           <th *matHeaderCellDef class="t-2" mat-header-cell></th>
           <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menubank"
-                                                                class="material-icons c-p text-black">
-            more_vert
-          </i>
+              class="material-icons c-p text-black">
+              more_vert
+            </i>
             <mat-menu #menubank="matMenu">
               <button mat-menu-item class="c-p" (click)="openAddEPF(element)">Edit</button>
               <button mat-menu-item class="c-p" (click)="openDetailedViewEPF(element)">Detailed
@@ -182,14 +195,14 @@
       <h4 class="m-0 text-black roboto pt-8">National pension system (NPS)</h4>
     </div>
     <div class="col-md-8 p-0 right text-right">
-      <img class="c-p" src="assets/images/svg/download-bordered.svg">
+      <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
       <img class="" src="assets/images/svg/up-down.svg">
-      <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
+      <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
       <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
-        class="material-icons">filter_list</i>FILTERS
+          class="material-icons">filter_list</i>FILTERS
       </button>
       <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button><i
-        class="material-icons">add</i>ADD NEW
+          class="material-icons">add</i>ADD NEW
       </button>
       <mat-menu #menu1="matMenu" class="add-new">
         <button (click)="openAddSummaryPort(null)" class="b-b" mat-menu-item>
@@ -198,14 +211,23 @@
               <h4 class="m-0 text-black roboto pt-8">National pension system (NPS)</h4>
             </div>
             <div class="col-md-8 p-0 right text-right">
-              <img class="c-p" src="assets/images/svg/download-bordered.svg">
-              <img class="" src="assets/images/svg/up-down.svg">
-              <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
+                <img class="c-p" src="assets/images/svg/download-bordered.svg">
+                <mat-menu #menu5="matMenu">
+                  <button mat-menu-item>PDF</button>
+                  <button mat-menu-item (click)="exportAsXLSX('nps')">XLS</button>
+                </mat-menu>
+                <img class="" src="assets/images/svg/up-down.svg">
+                <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
+                <mat-menu #menu6="matMenu">
+                  <button mat-menu-item>Email Report</button>
+                  <button mat-menu-item>Option 2</button>
+                  <button mat-menu-item>Option 3</button>
+                </mat-menu>
               <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
-                class="material-icons">filter_list</i>FILTERS
+                  class="material-icons">filter_list</i>FILTERS
               </button>
               <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button><i
-                class="material-icons">add</i>ADD NEW
+                  class="material-icons">add</i>ADD NEW
               </button>
               <mat-menu #menu1="matMenu" class="add-new">
                 <button (click)="openAddSummaryPort(null)" class="b-b" mat-menu-item>
@@ -254,7 +276,7 @@
         </ng-container>
         <ng-container matColumnDef="cvalue">
           <th mat-sort-header="currentValuation" mat-sort-header="no" mat-header-cell *matHeaderCellDef
-              class="br text-right t-17"> Current value
+            class="br text-right t-17"> Current value
           </th>
           <td mat-cell *matCellDef="let element" class="br text-right t-17" appFormatNumber>
             {{element.currentValuation || '-'}} </td>
@@ -300,10 +322,10 @@
             </i>
             <mat-menu #menubank="matMenu">
               <button mat-menu-item class="c-p" *ngIf="element.schemeChoice != undefined"
-                      (click)="openAddSummaryPort(element)">Edit
+                (click)="openAddSummaryPort(element)">Edit
               </button>
               <button mat-menu-item class="c-p" *ngIf="element.schemeChoice == undefined"
-                      (click)="openAddSchemeHolding(element)">Edit
+                (click)="openAddSchemeHolding(element)">Edit
               </button>
               <button mat-menu-item class="c-p">Detailed view</button>
               <button mat-menu-item class="c-p">Activity</button>
@@ -395,14 +417,23 @@
       <h4 class="m-0 text-black roboto pt-8">Gratuity</h4>
     </div>
     <div class="col-md-8 p-0 right text-right">
-      <img class="c-p" src="assets/images/svg/download-bordered.svg">
-      <img class="" src="assets/images/svg/up-down.svg">
-      <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
+        <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
+        <mat-menu #menu5="matMenu">
+          <button mat-menu-item>PDF</button>
+          <button mat-menu-item (click)="exportAsXLSX('gratuity')">XLS</button>
+        </mat-menu>
+        <img class="" src="assets/images/svg/up-down.svg">
+        <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
+        <mat-menu #menu6="matMenu">
+          <button mat-menu-item>Email Report</button>
+          <button mat-menu-item>Option 2</button>
+          <button mat-menu-item>Option 3</button>
+        </mat-menu>
       <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
-        class="material-icons">filter_list</i>FILTERS
+          class="material-icons">filter_list</i>FILTERS
       </button>
       <button (click)="openAddGratuity(null)" class="btn-primary addon v-middle" mat-stroked-button><i
-        class="material-icons">add</i>ADD NEW
+          class="material-icons">add</i>ADD NEW
       </button>
     </div>
   </div>
@@ -451,8 +482,7 @@
         <td *matCellDef="let element" appFormatNumber class="br text-right t-12" mat-cell>
           {{element.amountReceived}}
         </td>
-        <td *matFooterCellDef [value]="sumOfAmountReceived" appFormatNumber class="br t-20 text-right"
-            mat-footer-cell>
+        <td *matFooterCellDef [value]="sumOfAmountReceived" appFormatNumber class="br t-20 text-right" mat-footer-cell>
           {{ sumOfAmountReceived || '-'}}</td>
       </ng-container>
       <ng-container matColumnDef="reason">
@@ -503,14 +533,23 @@
       <h4 class="m-0 text-black roboto pt-8">Superannuation</h4>
     </div>
     <div class="col-md-8 p-0 right text-right">
-      <img class="c-p" src="assets/images/svg/download-bordered.svg">
-      <img class="" src="assets/images/svg/up-down.svg">
-      <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
+        <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
+        <mat-menu #menu5="matMenu">
+          <button mat-menu-item>PDF</button>
+          <button mat-menu-item (click)="exportAsXLSX('superannuation')">XLS</button>
+        </mat-menu>
+        <img class="" src="assets/images/svg/up-down.svg">
+        <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
+        <mat-menu #menu6="matMenu">
+          <button mat-menu-item>Email Report</button>
+          <button mat-menu-item>Option 2</button>
+          <button mat-menu-item>Option 3</button>
+        </mat-menu>
       <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
-        class="material-icons">filter_list</i>FILTERS
+          class="material-icons">filter_list</i>FILTERS
       </button>
       <button (click)="openAddSuperannuation(null)" class="btn-primary addon v-middle" mat-stroked-button><i
-        class="material-icons">add</i>ADD
+          class="material-icons">add</i>ADD
         NEW
       </button>
     </div>
@@ -536,7 +575,7 @@
           {{element.annualEmployerContribution}}
         </td>
         <td *matFooterCellDef [value]="sumOfAnnualEmployerContribution" appFormatNumber class="br t-20 text-right"
-            mat-footer-cell>
+          mat-footer-cell>
           {{sumOfAnnualEmployerContribution || '-'}}</td>
       </ng-container>
       <ng-container matColumnDef="aempe">
@@ -548,7 +587,7 @@
           {{element.annualEmployeeContribution}}
         </td>
         <td *matFooterCellDef [value]="sumOfAnnualEmployeeContribution" appFormatNumber class="br t-20 text-right"
-            mat-footer-cell>
+          mat-footer-cell>
           {{sumOfAnnualEmployeeContribution || '-'}}</td>
       </ng-container>
       <ng-container matColumnDef="rate">
@@ -562,7 +601,7 @@
       </ng-container>
       <ng-container matColumnDef="grate">
         <th *matHeaderCellDef class="br text-right t-12" mat-header-cell
-            mat-sort-header="growthRateEmployerContribution"> Growth rate
+          mat-sort-header="growthRateEmployerContribution"> Growth rate
           employer...
         </th>
         <td *matCellDef="let element" appFormatNumber class="br text-right t-12" mat-cell>
@@ -572,7 +611,7 @@
       </ng-container>
       <ng-container matColumnDef="grateemp">
         <th *matHeaderCellDef class="br text-left t-12" mat-header-cell
-            mat-sort-header="growthRateEmployeeContribution"> Growth rate
+          mat-sort-header="growthRateEmployeeContribution"> Growth rate
           employee...
         </th>
         <td *matCellDef="let element" class="br text-left t-12" mat-cell>
@@ -627,14 +666,23 @@
       <h4 class="m-0 text-black roboto pt-8">EPS</h4>
     </div>
     <div class="col-md-8 p-0 right text-right">
-      <img class="c-p" src="assets/images/svg/download-bordered.svg">
-      <img class="" src="assets/images/svg/up-down.svg">
-      <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
+        <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
+        <mat-menu #menu5="matMenu">
+          <button mat-menu-item>PDF</button>
+          <button mat-menu-item (click)="exportAsXLSX('eps')">XLS</button>
+        </mat-menu>
+        <img class="" src="assets/images/svg/up-down.svg">
+        <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
+        <mat-menu #menu6="matMenu">
+          <button mat-menu-item>Email Report</button>
+          <button mat-menu-item>Option 2</button>
+          <button mat-menu-item>Option 3</button>
+        </mat-menu>
       <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
-        class="material-icons">filter_list</i>FILTERS
+          class="material-icons">filter_list</i>FILTERS
       </button>
       <button (click)="openAddEPS(null)" class="btn-primary addon v-middle" mat-stroked-button><i
-        class="material-icons">add</i>ADD NEW
+          class="material-icons">add</i>ADD NEW
       </button>
     </div>
   </div>

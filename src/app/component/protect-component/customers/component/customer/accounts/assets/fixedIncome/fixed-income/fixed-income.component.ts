@@ -2,7 +2,6 @@ import {RecuringDepositComponent} from './../recuring-deposit/recuring-deposit.c
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {CustomerService} from '../../../../customer.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
@@ -12,6 +11,8 @@ import {FixedDepositComponent} from '../fixed-deposit/fixed-deposit.component';
 import {DetailedViewRecuringDepositComponent} from '../recuring-deposit/detailed-view-recuring-deposit/detailed-view-recuring-deposit.component';
 import {DetailedViewBondsComponent} from '../bonds/detailed-view-bonds/detailed-view-bonds.component';
 import {BondsComponent} from '../bonds/bonds.component';
+import { UtilService } from 'src/app/services/util.service';
+
 
 @Component({
   selector: 'app-fixed-income',
@@ -62,6 +63,15 @@ export class FixedIncomeComponent implements OnInit {
   Close() {
 
   }
+  exportAsXLSX(value):void {
+    if(value == 'fd'){
+      UtilService.exportAsExcelFile(this.dataSourceFixed.filteredData, 'fixedDeposit');
+    }else if(value == 'rd'){
+      UtilService.exportAsExcelFile(this.dataSourceFixed.filteredData, 'reccuringDeposit');
+    }else{
+      UtilService.exportAsExcelFile(this.dataSourceFixed.filteredData, 'bonds');
+    }
+ }
 
   filterFixedIncome(key: string, value: string) {
     let obj = {

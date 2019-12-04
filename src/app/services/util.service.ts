@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from "@angular/common";
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx'
+
+
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilService {
-   getFamilyMemberData: any;
+  getFamilyMemberData: any;
 
   constructor() {
   }
-
   static convertObjectToArray(inputObject: object): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
@@ -72,15 +78,15 @@ export class UtilService {
     return Math.round(data);
   }
 
-   calculateAgeFromCurrentDate(data) {
+  calculateAgeFromCurrentDate(data) {
     data.forEach(element => {
       const bdate = new Date(element.dateOfBirth);
       const timeDiff = Math.abs(Date.now() - bdate.getTime());
       let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
-      element['age'] =age   
+      element['age'] = age
     });
-    this.getFamilyMemberData=data;
-    console.log("family Member with age",this.getFamilyMemberData)
+    this.getFamilyMemberData = data;
+    console.log("family Member with age", this.getFamilyMemberData)
     return this.getFamilyMemberData;
   }
 
@@ -95,5 +101,15 @@ export class UtilService {
 
   static convertDateObjectToDateString(datePipe: DatePipe, date: Date) {
     return datePipe.transform(date, 'yyyy-MM-dd');
+  }
+  static exportAsExcelFile(json: any[], excelFileName: string): void {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    this.saveAsExcelFile(excelBuffer, excelFileName);
+  }
+   static saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
   }
 }
