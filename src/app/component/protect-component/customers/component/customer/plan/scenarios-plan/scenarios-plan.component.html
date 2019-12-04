@@ -152,14 +152,18 @@
                 <div class="col-md-6 pl-0">
                     <h3 class="f-16 mt-20 roboto f-normal">Financial goals</h3>
                     <div class="financialGoalsTable">
-                        <table mat-table [dataSource]="dataSource" class="skeleton" id="table-low">
+                        <table mat-table [dataSource]="dataSource" class="" id="table-low">
                             <!--- Note that these columns can be defined in any order.
                                   The actual rendered columns are set as a property on the row definition" -->
 
                             <!-- Position Column -->
                             <ng-container matColumnDef="description">
                                 <th class="border-right-1" mat-header-cell *matHeaderCellDef> Description </th>
-                                <td class="border-right-1" mat-cell *matCellDef="let element"> {{element.description}} </td>
+                                <td class="border-right-1 " mat-cell *matCellDef="let element">
+
+                                    {{element.description}}
+
+                                </td>
                             </ng-container>
 
                             <ng-container matColumnDef="year">
