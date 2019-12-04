@@ -13,9 +13,9 @@ export class SkeletonLoadingDirective {
   @Input('appSkeletonLoading') set appSkeletonLoading(isLoading) {
     this.isLoading = isLoading;
     if (this.isLoading) {
-      this.addClass('skeleton');
+      this.addClass('skeletonAnimation');
     } else {
-      this.removeClass('skeleton');
+      this.removeClass('skeletonAnimation');
     }
   }
 
