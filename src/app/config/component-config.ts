@@ -251,6 +251,7 @@ export const appConfig = {
    
   // Plan Module
   
-  GET_INCOME_LIST:'account/income/get'
-
+  GET_INCOME_LIST:'account/income/get',
+  ADD_INCOME_LIST:'account/income/add',
+  EDIT_INCOME_LIST:'account/income/edit'
 };

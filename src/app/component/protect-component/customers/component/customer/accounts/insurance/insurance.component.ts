@@ -173,7 +173,7 @@ export class InsuranceComponent implements OnInit {
 
   open(data) {
     const fragmentData = {
-      Flag: 'detailedView',
+      flag: 'detailedView',
       data,
       componentName: DetailedViewComponent,
       insuranceTypeId: this.insuranceTypeId,
@@ -200,7 +200,7 @@ export class InsuranceComponent implements OnInit {
       insuranceSubTypeId: this.insuranceSubTypeId,
     };
     const fragmentData = {
-      Flag: 'addInsurance',
+      flag: 'addInsurance',
       data: inputData,
       componentName: AddInsuranceComponent,
       state: 'open'

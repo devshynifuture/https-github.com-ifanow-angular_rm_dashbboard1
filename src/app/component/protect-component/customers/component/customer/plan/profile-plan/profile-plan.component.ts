@@ -20,7 +20,7 @@ export class ProfilePlanComponent implements OnInit {
 
   open(flagValue){
     const fragmentData = {
-      Flag: flagValue,
+      flag: flagValue,
       id: 1,
       state: 'open35'
     };

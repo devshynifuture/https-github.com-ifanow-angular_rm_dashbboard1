@@ -119,7 +119,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 // this.subInjectService.rightSideData(state);
     this.subInjectService.addSingleProfile(data);
     // const fragmentData = {
-    //   Flag: value,
+    //   flag: value,
     //   data:data,
     //   id: 1,
     //   state: 'open'

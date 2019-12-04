@@ -53,9 +53,9 @@ export class OverviewComponent implements OnInit {
     this.overviewDesign = 'false';
   }
 
-  openForm(data) {
+  openForm(data,value) {
       const fragmentData = {
-        Flag: 'addEditDocument',
+        flag: value,
         data: this._upperData,
         id: 1,
         state: 'open'

@@ -135,7 +135,7 @@ export class CashAndBankComponent implements OnInit {
   }
   openCashAndBank(state) {
     const fragmentData = {
-      Flag: '',
+      flag: '',
       data: '',
       id: 1,
       state: 'open',

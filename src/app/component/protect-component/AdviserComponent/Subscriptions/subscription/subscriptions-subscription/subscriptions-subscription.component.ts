@@ -150,7 +150,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     data.isCreateSub = false;
     data.isSaveBtn=false;
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data,
       id: 1,
       state: 'open'
@@ -173,7 +173,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     data.isCreateSub = true;
     (data.subscriptionPricing.feeTypeId == 1) ? feeMode = 'fixedModifyFees' : feeMode = 'variableModifyFees';
     const fragmentData = {
-      Flag: feeMode,
+      flag: feeMode,
       data,
       id: 1,
       state: 'open'
@@ -340,7 +340,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   delete(data, value) {
     const Fragmentdata = {
-      Flag: data,
+      flag: data,
       subData: value
     };
     if (data === 'cancelSubscription') {

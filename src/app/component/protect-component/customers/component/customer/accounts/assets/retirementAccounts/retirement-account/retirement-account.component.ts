@@ -95,7 +95,7 @@ export class RetirementAccountComponent implements OnInit {
 
   openRetirement(value, state, data) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data,
       id: 1,
       state
