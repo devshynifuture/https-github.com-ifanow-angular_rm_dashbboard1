@@ -2,18 +2,18 @@
   <div class="row pt-28 pb-28">
     <div class="col-md-8 pl-0">
       <button mat-button (click)="getfixedIncomeData('1')"
-        [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}"
-        class="br-0 text-custom">
+              [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}"
+              class="br-0 text-custom">
         Fixed deposits
       </button>
       <button mat-button (click)="getfixedIncomeData('2')"
-        [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}"
-        class="br-0 text-custom">
+              [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}"
+              class="br-0 text-custom">
         Recurring deposits
       </button>
       <button mat-button (click)="getfixedIncomeData('3')"
-        [ngClass]="{'mat-stroked-button': showRequring == '3','text-primary':showRequring == '3'}"
-        class="br-0 text-custom">
+              [ngClass]="{'mat-stroked-button': showRequring == '3','text-primary':showRequring == '3'}"
+              class="br-0 text-custom">
         Bonds
       </button>
     </div>
@@ -55,7 +55,7 @@
           </div>
           <div class="col-md-4 text-right right p-0">
             <button mat-stroked-button [matMenuTriggerFor]="filterFixedIncomeTable"
-              class="btn-default addon mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
+                    class="btn-default addon mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
             </button>
 
             <mat-menu #filterFixedIncomeTable>
@@ -77,7 +77,7 @@
             </mat-menu>
 
             <button mat-stroked-button class="btn-primary addon v-middle"
-              (click)="openPortfolioSummary('addFixedDeposit','open')"><i class="material-icons">add</i>ADD NEW
+                    (click)="openPortfolioSummary('addFixedDeposit','open')"><i class="material-icons">add</i>ADD NEW
             </button>
           </div>
         </div>
@@ -85,10 +85,10 @@
     </div>
     <div class="example-container mt-8 mb-44 fixed-deposite">
       <table matSort #fixedIncomeTableSort="matSort" mat-table [dataSource]="dataSourceFixed" id="table-low"
-        [appSkeletonLoading]="isLoading">
+             [appSkeletonLoading]="isLoading">
         <ng-container matColumnDef="no">
           <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br t-2"> No</th>
-          <td mat-cell *matCellDef="let element let i = index;" class="br t-2"> {{i + 1}} </td>
+          <td *matCellDef="let element let i = index;" class="br t-2" mat-cell> {{isLoading ? '' : i + 1 }} </td>
           <td mat-footer-cell *matFooterCellDef class="br text-right t-10"></td>
         </ng-container>
         <ng-container matColumnDef="owner">
@@ -119,7 +119,8 @@
         </ng-container>
         <ng-container matColumnDef="amt">
           <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br text-right t-10"> Amount
-            invested</th>
+            invested
+          </th>
           <td mat-cell *matCellDef="let element" class="br text-right t-10" appFormatNumber>
             {{ element.amountInvested}}
           </td>
@@ -136,12 +137,13 @@
         </ng-container>
         <ng-container matColumnDef="mvalue">
           <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Maturity
-            value</th>
+            value
+          </th>
           <td mat-cell *matCellDef="let element" class="br t-10 text-right" appFormatNumber>
             {{ element.maturityValue}}
           </td>
           <td mat-footer-cell *matFooterCellDef class="br text-right t-10" appFormatNumber [value]="sumMaturityValue">
-            {{ sumMaturityValue ||'-'}}
+            {{ sumMaturityValue || '-'}}
           </td>
         </ng-container>
         <ng-container matColumnDef="number">
@@ -162,16 +164,19 @@
         <ng-container matColumnDef="icons">
           <th mat-header-cell *matHeaderCellDef class="t-2"></th>
           <td mat-cell *matCellDef="let element" class="t-2">
-            <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">
-              more_vert
-            </i>
-            <mat-menu #menu4="matMenu">
-              <button mat-menu-item (click)="openPortfolioSummary('addFixedDeposit',element)">Edit</button>
-              <button mat-menu-item (click)="openDetailedFixedDeposit('addFixedDeposit',element)">Deatiled
-                View</button>
-              <button mat-menu-item>Activity</button>
-              <button mat-menu-item (click)="deleteModal('FIXED DEPOSITE',element)">Delete</button>
-            </mat-menu>
+            <div *ngIf="!isLoading">
+              <i [matMenuTriggerFor]="menu4" class="material-icons c-p text-black">
+                more_vert
+              </i>
+              <mat-menu #menu4="matMenu">
+                <button (click)="openPortfolioSummary('addFixedDeposit',element)" mat-menu-item>Edit</button>
+                <button (click)="openDetailedFixedDeposit('addFixedDeposit',element)" mat-menu-item>Deatiled
+                  View
+                </button>
+                <button mat-menu-item>Activity</button>
+                <button (click)="deleteModal('FIXED DEPOSITE',element)" mat-menu-item>Delete</button>
+              </mat-menu>
+            </div>
           </td>
           <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
@@ -204,7 +209,7 @@
           </div>
           <div class="col-md-4 text-right right p-0">
             <button mat-stroked-button [matMenuTriggerFor]="filterRecurring" class="btn-default addon mr-8 v-middle"><i
-                class="material-icons">filter_list</i>FILTER
+              class="material-icons">filter_list</i>FILTER
             </button>
             <mat-menu #filterRecurring>
               <button mat-menu-item (click)="changeRecurringFilterMode('m')">
@@ -264,7 +269,8 @@
         <ng-container matColumnDef="amt">
           <th mat-sort-header="monthlyContribution" mat-header-cell *matHeaderCellDef class="br t-20 text-right">
             Monthly
-            contribution</th>
+            contribution
+          </th>
           <td mat-cell *matCellDef="let element" class="br t-20 text-right" appFormatNumber>
             {{element.monthlyContribution}} </td>
           <td mat-footer-cell *matFooterCellDef class="br" appFormatNumber [value]="totalMarketValue">
@@ -292,16 +298,16 @@
 
         <ng-container matColumnDef="status">
           <th mat-sort-header="isActive" mat-header-cell *matHeaderCellDef class="br"> Status</th>
-          <td mat-cell *matCellDef="let element" class="br text-primary"> {{ element.isActive ? 'LIVE': 'DOWN' }}
+          <td *matCellDef="let element" class="br text-primary" mat-cell> {{ element.isActive ? 'LIVE' : 'DOWN' }}
           </td>
           <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"></td>
         </ng-container>
         <ng-container matColumnDef="icons">
           <th mat-header-cell *matHeaderCellDef class="t-2"></th>
           <td mat-cell *matCellDef="let element" class="t-2"><i class="material-icons c-p text-black"
-              [matMenuTriggerFor]="menu4">
-              more_vert
-            </i>
+                                                                [matMenuTriggerFor]="menu4">
+            more_vert
+          </i>
             <mat-menu #menu4="matMenu">
               <button mat-menu-item (click)="openAddRecurringDeposit(element)">Edit</button>
               <button mat-menu-item (click)="detailedViewRecurringDeposit(element)">Deatiled View</button>
@@ -341,7 +347,7 @@
           </div>
           <div class="col-md-4 text-right right p-0">
             <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
-                class="material-icons">filter_list</i>FILTERS
+              class="material-icons">filter_list</i>FILTERS
             </button>
             <button mat-stroked-button class="btn-primary addon v-middle"
                     (click)="openBonds(null)"><i class="material-icons">add</i>ADD NEW
@@ -384,7 +390,8 @@
         </ng-container>
         <ng-container matColumnDef="amt">
           <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Amount
-            invested</th>
+            invested
+          </th>
           <td mat-cell *matCellDef="let element" class="br t-10 text-right" appFormatNumber>
             {{ element.amountInvested }}
           </td>
@@ -394,7 +401,8 @@
         </ng-container>
         <ng-container matColumnDef="cdate">
           <th mat-sort-header="commencementDate" mat-header-cell *matHeaderCellDef class="br t-14 text-left">
-            Commencement date</th>
+            Commencement date
+          </th>
           <td mat-cell *matCellDef="let element" class="br t-14 text-left">
             {{element.commencementDate | date:'dd/MM/yyyy'}} </td>
           <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"></td>
@@ -406,7 +414,8 @@
         </ng-container>
         <ng-container matColumnDef="mvalue">
           <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br t-16 text-right"> Maturity
-            value</th>
+            value
+          </th>
           <td mat-cell *matCellDef="let element" class="br t-16 text-right" appFormatNumber>
             {{ element.maturityValue }}
           </td>
@@ -438,9 +447,9 @@
         <ng-container matColumnDef="icons">
           <th mat-header-cell *matHeaderCellDef class="t-2"></th>
           <td mat-cell *matCellDef="let element" class="t-2"><i class="material-icons c-p text-black"
-              [matMenuTriggerFor]="menu4">
-              more_vert
-            </i>
+                                                                [matMenuTriggerFor]="menu4">
+            more_vert
+          </i>
             <mat-menu #menu4="matMenu">
               <button mat-menu-item (click)="openBonds(element)">Edit</button>
               <button mat-menu-item (click)="detailedViewBonds(element)">Deatiled View</button>

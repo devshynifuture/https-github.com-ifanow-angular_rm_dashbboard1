@@ -66,11 +66,11 @@ export class QuotationsComponent implements OnInit {
   Open(value, state, data) {
     const fragmentData = {
       flag: value,
-      data:this._clientData,
+      data:data,
       id: 1,
       state,
-      documentList:data
     };
+    data.userEmailId=this._clientData.userEmailId
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
