@@ -63,10 +63,7 @@ export class RetirementAccountComponent implements OnInit {
 
   ExportTOExcel(value) {
     var excelElement = (value == 'eps') ? this.EPS : (value == 'Gratuity') ? this.Gratuity : (value == 'Superannuation') ? this.Superannuation : (value == 'epf') ? this.EPF : this.NPS
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(excelElement.nativeElement);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, value);
-    XLSX.writeFile(wb, value + '.xlsx');
+    UtilService.exportAsExcelFile(excelElement,value)
   }
   exldata: any;
   excelDataNPS = [];
