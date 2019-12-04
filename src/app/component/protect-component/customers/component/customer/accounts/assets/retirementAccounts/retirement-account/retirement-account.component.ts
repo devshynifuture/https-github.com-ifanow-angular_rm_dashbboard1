@@ -1,22 +1,25 @@
-import {AddEPSComponent} from './../add-eps/add-eps.component';
-import {AddSuperannuationComponent} from './../add-superannuation/add-superannuation.component';
-import {AddGratuityComponent} from './../add-gratuity/add-gratuity.component';
-import {NpsSummaryPortfolioComponent} from './../add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
-import {AddEPFComponent} from './../add-epf/add-epf.component';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from '../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {MatTableDataSource} from '@angular/material/table';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort} from '@angular/material';
-import {NpsSchemeHoldingComponent} from '../add-nps/nps-scheme-holding/nps-scheme-holding.component';
-import {DetailedViewEPFComponent} from '../add-epf/detailed-view-epf/detailed-view-epf.component';
-import {DetailedViewEPSComponent} from '../add-eps/detailed-view-eps/detailed-view-eps.component';
-import {DetailedViewGratuityComponent} from '../add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
-import {DetaildedViewSuperannuationComponent} from '../add-superannuation/detailded-view-superannuation/detailded-view-superannuation.component';
+import { AddEPSComponent } from './../add-eps/add-eps.component';
+import { AddSuperannuationComponent } from './../add-superannuation/add-superannuation.component';
+import { AddGratuityComponent } from './../add-gratuity/add-gratuity.component';
+import { NpsSummaryPortfolioComponent } from './../add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
+import { AddEPFComponent } from './../add-epf/add-epf.component';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatTableDataSource } from '@angular/material/table';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort } from '@angular/material';
+import { NpsSchemeHoldingComponent } from '../add-nps/nps-scheme-holding/nps-scheme-holding.component';
+import { DetailedViewEPFComponent } from '../add-epf/detailed-view-epf/detailed-view-epf.component';
+import { DetailedViewEPSComponent } from '../add-eps/detailed-view-eps/detailed-view-eps.component';
+import { DetailedViewGratuityComponent } from '../add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
+import { DetaildedViewSuperannuationComponent } from '../add-superannuation/detailded-view-superannuation/detailded-view-superannuation.component';
+import * as _ from 'lodash';
+import { utils } from 'protractor';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-retirement-account',
@@ -50,6 +53,23 @@ export class RetirementAccountComponent implements OnInit {
   @ViewChild('gratuityListTable', { static: false }) gratuityListTableSort: MatSort;
   @ViewChild('superAnnuationListTable', { static: false }) superAnnuationListTableSort: MatSort;
   @ViewChild('epsListTable', { static: false }) epsListTableSort: MatSort;
+  @ViewChild('EPF', { static: false }) EPF: ElementRef;
+  @ViewChild('NPS', { static: false }) NPS: ElementRef;
+  @ViewChild('Superannuation', { static: false }) Superannuation: ElementRef;
+  @ViewChild('Gratuity', { static: false }) Gratuity: ElementRef;
+  @ViewChild('EPS', { static: false }) EPS: ElementRef;
+  title = 'Excel';
+
+
+  ExportTOExcel(value) {
+    var excelElement = (value == 'eps') ? this.EPS : (value == 'Gratuity') ? this.Gratuity : (value == 'Superannuation') ? this.Superannuation : (value == 'epf') ? this.EPF : this.NPS
+    UtilService.exportAsExcelFile(excelElement,value)
+  }
+  exldata: any;
+  excelDataNPS = [];
+  excelDataSuperannuation = [];
+  excelGratuity = [];
+  excelDataEPS = [];
 
 
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
@@ -74,7 +94,7 @@ export class RetirementAccountComponent implements OnInit {
   datasource16;
   isLoading = true;
 
-  dataEPSList = new MatTableDataSource(this.datasource11);
+
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -85,9 +105,8 @@ export class RetirementAccountComponent implements OnInit {
       advisorId: this.advisorId
     };
     this.getListEPF();
-    this.dataEPSList.sort = this.epsListTableSort;
-  }
 
+  }
   getfixedIncomeData(value) {
     this.showRecurring = value;
     (value == '2') ? this.getListNPS() : (value == '3') ? this.getListGratuity() : (value == '4') ? this.getListSuperannuation() : (value == '5') ? this.getListEPS() : this.getListEPF();

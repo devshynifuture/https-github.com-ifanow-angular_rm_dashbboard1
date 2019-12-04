@@ -87,12 +87,13 @@ export class AddEditDocumentComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       name: this.blankDocumentProperties.controls.docName.value,
-      documentTypeId: parseInt(this.blankDocumentProperties.controls.docType.value),
+      // documentTypeId: parseInt(this.blankDocumentProperties.controls.docType.value),
+      documentTypeId:1,
       docText: 'docText',
       description: this.blankDocumentProperties.controls.docName.value,
-      public: 1,
-      quotation: this._inputData.docType == '3' ? 1 : 0,
-      mappedType: this.selectedOption ? this.selectedOption : 0,
+      public: true,
+      quotation: this._inputData.docType == '3' ? true : false,
+      availableAt: this.selectedOption ? parseInt(this.selectedOption) : 0,
       mappingId: this._inputData.docType == '3' ? 5 : 0
 
     };
@@ -111,10 +112,18 @@ export class AddEditDocumentComponent implements OnInit {
     if (!this.fragmentData.data) {
       this.fragmentData.data = {};
     }
-    this.fragmentData.data.documentData = data;
+    // this.fragmentData.data.documentData = data;
+
+    const fragmentData = {
+      flag: 'app-subscription-upper-slider',
+      data: {documentData: data, flag: 'documents'},
+      id: 1,
+      state: 'open'
+    };
+
     /*this.eventService.upperSliderDataObs.subscribe((upperData) => {
     });*/
-    const subscription = this.eventService.changeUpperSliderState(this.fragmentData).subscribe(
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           // this.getClientSubscriptionList();
