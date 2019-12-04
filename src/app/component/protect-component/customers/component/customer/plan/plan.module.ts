@@ -23,6 +23,7 @@ import {ExpensesComponent} from '../accounts/expenses/expenses.component';
 import {AddPlaninsuranceComponent} from "./insurance-plan/add-planinsurance/add-planinsurance.component";
 
 
+
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
 // import { FactShitComponent } from './component/common-component/fact-shit/fact-shit.component';
 // import { TransactionsComponent } from './component/common-component/transactions/transactions.component';
@@ -45,7 +46,8 @@ import {AddPlaninsuranceComponent} from "./insurance-plan/add-planinsurance/add-
     HistoryRiskProfileComponent,
     IncomeComponent,
     ExpensesComponent,
-    AddPlaninsuranceComponent
+    AddPlaninsuranceComponent,
+    
   ],
   imports: [
     PlanRoutingModule,

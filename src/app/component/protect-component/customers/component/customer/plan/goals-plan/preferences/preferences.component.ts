@@ -3,7 +3,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 
 @Component({
   selector: 'app-preferences',
-  templateUrl: './higer-eduction.html',
+  templateUrl: './preferences.component.html',
   styleUrls: ['./preferences.component.scss']
 })
 export class PreferencesComponent implements OnInit {

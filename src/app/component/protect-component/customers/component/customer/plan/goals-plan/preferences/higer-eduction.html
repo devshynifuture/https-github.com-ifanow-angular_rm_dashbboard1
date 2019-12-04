@@ -298,20 +298,53 @@
                             <p class="m-0 text-primitive pt-16">Last Freeze date: 23/09/2019</p>
                         </div>
                     </div>
-                    <div class="row pt-16 pb-16">
-                        <div class="col-md-12 p-0">
+                        <div class="row pt-16 pb-16">
+                            <div class="col-md-4"></div>
+                        <div class="col-md-8 p-0">
                         <p class="text-black m-0 f-700 roboto">Milestones</p>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-4"></div>
+                       
+                    </div>
+                    <div class="row pt-16">
                             <div class="col-md-4">
-                                    <i class="material-icons text-primitive">
+                                    <p class="m-0 text-primitive pt-16">Philanthrophy at retirement</p>
+                            </div>
+                            <div class="col-md-4 p-0">
+                                    <div class="form-group mb-0">
+                                            <mat-form-field>
+                                                <input matInput #amountInvest type="text" class="form-control br-0 rupess">
+                                            </mat-form-field>
+                                        </div>
+                            </div>
+                            <div class="col-md-4">
+                                    <i class="material-icons text-primitive pt-12 c-p">
                                             remove
                                             </i>
                             </div>
                         </div>
-                    </div>
+                        <div class="row pt-16">
+                                <div class="col-md-4">
+                                        <p class="m-0 text-primitive pt-16">Legacy amount on passing away</p>
+                                </div>
+                                <div class="col-md-4 p-0">
+                                        <div class="form-group mb-0">
+                                                <mat-form-field>
+                                                    <input matInput #amountInvest type="text" class="form-control br-0 rupess">
+                                                </mat-form-field>
+                                            </div>
+                                </div>
+                                <div class="col-md-4">
+                                        <i class="material-icons text-primitive pt-12 c-p">
+                                                remove
+                                                </i>
+                                </div>
+                            </div>
+                            <div class="row pt-16 pb-16">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <p class="m-0 roboto text-primitive">+ Add milestone</p>
+                                </div>
+                            </div>
                     <div class="row pt-16 pb-16 btl-1">
                         <div class="col-md-4 pl-0 pr-8 text-right">
                             <p class="roboto mb-0 pt-16">Goal description</p>
@@ -361,15 +394,6 @@
            </div>
         </div>
 
-        <!-- onclick Tactical -->
-        <!-- <div class="row pt-28">
-            <div class="col-md-12">
-                <p class="m-0 roboto text-black">The asset allocation in case of “Tactical” is decided based on current market dynamics. </p>
-                <p class="m-0 roboto text-black pt-16">The tactical asset allocation is fetched from the global asset allocation assumptions set by you and are updated only when you update the same. </p>
-                <p class="m-0 roboto text-black pt-16">You can move a goal portfolio from Tactical to Strategic and vice versa at any time.</p>
-            </div>
-        </div> -->
-        <!-- close -->
         <div class="row pt-32 pb-16">
              <div class="col-md-12 pl-8 pr-0">
                 <mat-radio-group aria-label="Select an option" id="custom-radio">
@@ -435,71 +459,6 @@
                     </div>  
                 </div>
             </div>
-
-            <!-- add more ui -->
-            <!-- <div class="row">
-                <div class="col-md-6">
-                   
-                    <div class="form-group mb-0">
-                        <mat-form-field>
-                            <mat-select class="form-control br-0">
-                                <mat-option value="">3 years before goal</mat-option>
-                                <mat-option value="1">Bank FD</mat-option>
-                                <mat-option value="2">Corporate FD</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-11 text-right">
-                        <p class="f-12 m-0 pt-4 roboto text-primitive">Apr 2031 - Apr 2034</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group mb-0">
-                        <mat-form-field class="w-100">
-                            <input matInput #amountInvest type="text" class="form-control br-0" value="50%">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group mb-0">
-                        <mat-form-field class="w-100">
-                            <input matInput #amountInvest type="text" class="form-control br-0" value="50%">
-                        </mat-form-field>
-                    </div>  
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                   
-                    <div class="form-group mb-0">
-                        <mat-form-field>
-                            <mat-select class="form-control br-0">
-                                <mat-option value="">1 year before goal</mat-option>
-                                <mat-option value="1">Bank FD</mat-option>
-                                <mat-option value="2">Corporate FD</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-11 text-right">
-                        <p class="f-12 m-0 pt-4 roboto text-primitive">Apr 2034 - Apr 2035</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group mb-0">
-                        <mat-form-field class="w-100">
-                            <input matInput #amountInvest type="text" class="form-control br-0" value="0%">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group mb-0">
-                        <mat-form-field class="w-100">
-                            <input matInput #amountInvest type="text" class="form-control br-0" value="100%">
-                        </mat-form-field>
-                    </div>  
-                </div>
-            </div> -->
-            <!-- close  -->
             <div class="row pt-32">
                 <div class="col-md-12">
                     <h5 class="m-0 text-primitive c-p">+ Add stage</h5>
@@ -547,6 +506,15 @@
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
               <tr mat-header-row *matHeaderRowDef="['static-header']" class="p-0 bt-0 bb-0"></tr>
             </table>
+          </div>
+          <div class="row pt-16">
+              <div class="col-md-12 p-0">
+                  <p class="m-0 roboto text-black f-700">Long term goal?</p>
+                  <p class="m-0 roboto pt-4">Add a differential period for more customized assumption.<img src="/assets/images/svg/info.svg" matTooltip="When “Group all years together” is selected, we assume that you are saving for all goal years together. When Save for individual years is selected, we assume that you will save individually for each year and focus will be for saving for goal which is nearest. E.g. for a goal which is between 2023 - 2035 we will first calculate savings requirement for 2023 year only. Come 2023, we will calculate savings requirement for the 2024 year’s goal amount only."
+                    aria-label="Button that displays a tooltip when focused or hovered over"></p>
+                    <p class="m-0 roboto pt-12 f-700 text-underline">Add differential period</p>
+              </div>
+
           </div>
     </div>
 </mat-tab>

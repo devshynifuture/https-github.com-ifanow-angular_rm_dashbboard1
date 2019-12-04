@@ -68,6 +68,7 @@ import { AddIncomeFamilyMemberComponent } from './component/protect-component/cu
 import { AddIncomeSourceComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/income/add-income-source/add-income-source.component';
 import { IndividualIncomeInfoComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/income/individual-income-info/individual-income-info.component';
 import { AddExpensesComponent } from './component/protect-component/customers/component/common-component/add-expenses/add-expenses.component';
+import { KeyInfoComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/key-info/key-info.component';
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -203,7 +204,8 @@ export const componentList = [
   AddIncomeFamilyMemberComponent,
   AddIncomeSourceComponent,
   IndividualIncomeInfoComponent,
-  AddExpensesComponent
+  AddExpensesComponent,
+  KeyInfoComponent
 ];
 
 @NgModule({
