@@ -245,7 +245,7 @@ export class DocumentComponent implements OnInit {
 
     const fragmentData = {
       flag: value,
-      data: this._clientData,
+      data: data,
       id: 1,
       state: 'open',
       documentList:data
@@ -264,119 +264,119 @@ export class DocumentComponent implements OnInit {
   getplanDocumentDataResponse(data) {
     data.forEach(singleData => {
       singleData.isChecked = false;
-      singleData.docText = '<h1>One morning, when Gregor Samsa woke from troubled \n' +
-        'dreams.</h1>\n' +
-        '\n' +
-        '\n' +
-        '<p>One morning, when Gregor Samsa woke from troubled \n' +
-        'dreams, he found himself transformed in his bed into \n' +
-        'a horrible vermin. He lay on his armour-like back, \n' +
-        'and if he lifted his head a little he could see his \n' +
-        'brown belly, slightly domed and divided by arches into \n' +
-        'stiff sections. The bedding was hardly able to cover \n' +
-        '<strong>strong</strong> it and seemed ready to slide \n' +
-        'off any moment. His many legs, pitifully thin \n' +
-        'compared with the size of the rest of him, \n' +
-        '<a class="external ext" href="#">link</a> waved about \n' +
-        'helplessly as he looked. "What\'s happened to me? " he \n' +
-        'thought. It wasn\'t a dream. His room, a proper human \n' +
-        'room although a little too small, lay peacefully \n' +
-        'between its four familiar walls.</p>\n' +
-        '\n' +
-        '\n' +
-        '<h1>One morning, when Gregor Samsa woke from troubled \n' +
-        'dreams.</h1>\n' +
-        '\n' +
-        '\n' +
-        '<h2>The bedding was hardly able to cover it.</h2>\n' +
-        '\n' +
-        '\n' +
-        '<p>It showed a lady fitted out with a fur hat and fur \n' +
-        'boa who sat upright, raising a heavy fur muff that \n' +
-        'covered the whole of her lower arm towards the \n' +
-        'viewer.</p>\n' +
-        '\n' +
-        '\n' +
-        '<h2>The bedding was hardly able to cover it.</h2>\n' +
-        '\n' +
-        '\n' +
-        '<p>It showed a lady fitted out with a fur hat and fur \n' +
-        'boa who sat upright, raising a heavy fur muff that \n' +
-        'covered the whole of her lower arm towards the \n' +
-        'viewer.</p>\n' +
-        '\n' +
-        '\n' +
-        '<ul>\n' +
-        '  <li>Lorem ipsum dolor sit amet consectetuer.</li>\n' +
-        '  <li>Aenean commodo ligula eget dolor.</li>\n' +
-        '  <li>Aenean massa cum sociis natoque penatibus.</li>\n' +
-        '</ul>\n' +
-        '\n' +
-        '\n' +
-        '<p>It showed a lady fitted out with a fur hat and fur \n' +
-        'boa who sat upright, raising a heavy fur muff that \n' +
-        'covered the whole of her lower arm towards the \n' +
-        'viewer.</p>\n' +
-        '\n' +
-        '\n' +
-        '<form action="#" method="post">\n' +
-        '  <fieldset>\n' +
-        '    <label for="name">Name:</label>\n' +
-        '    <input type="text" id="name" placeholder="Enter your \n' +
-        'full name" />\n' +
-        '\n' +
-        '    <label for="email">Email:</label>\n' +
-        '    <input type="email" id="email" placeholder="Enter \n' +
-        'your email address" />\n' +
-        '\n' +
-        '    <label for="message">Message:</label>\n' +
-        '    <textarea id="message" placeholder="What\'s on your \n' +
-        'mind?"></textarea>\n' +
-        '\n' +
-        '    <input type="submit" value="Send message" />\n' +
-        '\n' +
-        '  </fieldset>\n' +
-        '</form>\n' +
-        '\n' +
-        '\n' +
-        '<p>It showed a lady fitted out with a fur hat and fur \n' +
-        'boa who sat upright, raising a heavy fur muff that \n' +
-        'covered the whole of her lower arm towards the \n' +
-        'viewer.</p>\n' +
-        '\n' +
-        '\n' +
-        '<table class="data">\n' +
-        '  <tr>\n' +
-        '    <th>Entry Header 1</th>\n' +
-        '    <th>Entry Header 2</th>\n' +
-        '    <th>Entry Header 3</th>\n' +
-        '    <th>Entry Header 4</th>\n' +
-        '  </tr>\n' +
-        '  <tr>\n' +
-        '    <td>Entry First Line 1</td>\n' +
-        '    <td>Entry First Line 2</td>\n' +
-        '    <td>Entry First Line 3</td>\n' +
-        '    <td>Entry First Line 4</td>\n' +
-        '  </tr>\n' +
-        '  <tr>\n' +
-        '    <td>Entry Line 1</td>\n' +
-        '    <td>Entry Line 2</td>\n' +
-        '    <td>Entry Line 3</td>\n' +
-        '    <td>Entry Line 4</td>\n' +
-        '  </tr>\n' +
-        '  <tr>\n' +
-        '    <td>Entry Last Line 1</td>\n' +
-        '    <td>Entry Last Line 2</td>\n' +
-        '    <td>Entry Last Line 3</td>\n' +
-        '    <td>Entry Last Line 4</td>\n' +
-        '  </tr>\n' +
-        '</table>\n' +
-        '\n' +
-        '\n' +
-        '<p>It showed a lady fitted out with a fur hat and fur \n' +
-        'boa who sat upright, raising a heavy fur muff that \n' +
-        'covered the whole of her lower arm towards the \n' +
-        'viewer.</p>\n';
+      // singleData.docText = '<h1>One morning, when Gregor Samsa woke from troubled \n' +
+      //   'dreams.</h1>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<p>One morning, when Gregor Samsa woke from troubled \n' +
+      //   'dreams, he found himself transformed in his bed into \n' +
+      //   'a horrible vermin. He lay on his armour-like back, \n' +
+      //   'and if he lifted his head a little he could see his \n' +
+      //   'brown belly, slightly domed and divided by arches into \n' +
+      //   'stiff sections. The bedding was hardly able to cover \n' +
+      //   '<strong>strong</strong> it and seemed ready to slide \n' +
+      //   'off any moment. His many legs, pitifully thin \n' +
+      //   'compared with the size of the rest of him, \n' +
+      //   '<a class="external ext" href="#">link</a> waved about \n' +
+      //   'helplessly as he looked. "What\'s happened to me? " he \n' +
+      //   'thought. It wasn\'t a dream. His room, a proper human \n' +
+      //   'room although a little too small, lay peacefully \n' +
+      //   'between its four familiar walls.</p>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<h1>One morning, when Gregor Samsa woke from troubled \n' +
+      //   'dreams.</h1>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<h2>The bedding was hardly able to cover it.</h2>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
+      //   'boa who sat upright, raising a heavy fur muff that \n' +
+      //   'covered the whole of her lower arm towards the \n' +
+      //   'viewer.</p>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<h2>The bedding was hardly able to cover it.</h2>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
+      //   'boa who sat upright, raising a heavy fur muff that \n' +
+      //   'covered the whole of her lower arm towards the \n' +
+      //   'viewer.</p>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<ul>\n' +
+      //   '  <li>Lorem ipsum dolor sit amet consectetuer.</li>\n' +
+      //   '  <li>Aenean commodo ligula eget dolor.</li>\n' +
+      //   '  <li>Aenean massa cum sociis natoque penatibus.</li>\n' +
+      //   '</ul>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
+      //   'boa who sat upright, raising a heavy fur muff that \n' +
+      //   'covered the whole of her lower arm towards the \n' +
+      //   'viewer.</p>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<form action="#" method="post">\n' +
+      //   '  <fieldset>\n' +
+      //   '    <label for="name">Name:</label>\n' +
+      //   '    <input type="text" id="name" placeholder="Enter your \n' +
+      //   'full name" />\n' +
+      //   '\n' +
+      //   '    <label for="email">Email:</label>\n' +
+      //   '    <input type="email" id="email" placeholder="Enter \n' +
+      //   'your email address" />\n' +
+      //   '\n' +
+      //   '    <label for="message">Message:</label>\n' +
+      //   '    <textarea id="message" placeholder="What\'s on your \n' +
+      //   'mind?"></textarea>\n' +
+      //   '\n' +
+      //   '    <input type="submit" value="Send message" />\n' +
+      //   '\n' +
+      //   '  </fieldset>\n' +
+      //   '</form>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
+      //   'boa who sat upright, raising a heavy fur muff that \n' +
+      //   'covered the whole of her lower arm towards the \n' +
+      //   'viewer.</p>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<table class="data">\n' +
+      //   '  <tr>\n' +
+      //   '    <th>Entry Header 1</th>\n' +
+      //   '    <th>Entry Header 2</th>\n' +
+      //   '    <th>Entry Header 3</th>\n' +
+      //   '    <th>Entry Header 4</th>\n' +
+      //   '  </tr>\n' +
+      //   '  <tr>\n' +
+      //   '    <td>Entry First Line 1</td>\n' +
+      //   '    <td>Entry First Line 2</td>\n' +
+      //   '    <td>Entry First Line 3</td>\n' +
+      //   '    <td>Entry First Line 4</td>\n' +
+      //   '  </tr>\n' +
+      //   '  <tr>\n' +
+      //   '    <td>Entry Line 1</td>\n' +
+      //   '    <td>Entry Line 2</td>\n' +
+      //   '    <td>Entry Line 3</td>\n' +
+      //   '    <td>Entry Line 4</td>\n' +
+      //   '  </tr>\n' +
+      //   '  <tr>\n' +
+      //   '    <td>Entry Last Line 1</td>\n' +
+      //   '    <td>Entry Last Line 2</td>\n' +
+      //   '    <td>Entry Last Line 3</td>\n' +
+      //   '    <td>Entry Last Line 4</td>\n' +
+      //   '  </tr>\n' +
+      //   '</table>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
+      //   'boa who sat upright, raising a heavy fur muff that \n' +
+      //   'covered the whole of her lower arm towards the \n' +
+      //   'viewer.</p>\n';
     });
     console.log('document Data', data);
     this.planDocumentData = data;
@@ -405,119 +405,119 @@ export class DocumentComponent implements OnInit {
       if (element.selected) {
         this.mappedData.push(element);
       }
-      element.docText = '<h1>One morning, when Gregor Samsa woke from troubled \n' +
-        'dreams.</h1>\n' +
-        '\n' +
-        '\n' +
-        '<p>One morning, when Gregor Samsa woke from troubled \n' +
-        'dreams, he found himself transformed in his bed into \n' +
-        'a horrible vermin. He lay on his armour-like back, \n' +
-        'and if he lifted his head a little he could see his \n' +
-        'brown belly, slightly domed and divided by arches into \n' +
-        'stiff sections. The bedding was hardly able to cover \n' +
-        '<strong>strong</strong> it and seemed ready to slide \n' +
-        'off any moment. His many legs, pitifully thin \n' +
-        'compared with the size of the rest of him, \n' +
-        '<a class="external ext" href="#">link</a> waved about \n' +
-        'helplessly as he looked. "What\'s happened to me? " he \n' +
-        'thought. It wasn\'t a dream. His room, a proper human \n' +
-        'room although a little too small, lay peacefully \n' +
-        'between its four familiar walls.</p>\n' +
-        '\n' +
-        '\n' +
-        '<h1>One morning, when Gregor Samsa woke from troubled \n' +
-        'dreams.</h1>\n' +
-        '\n' +
-        '\n' +
-        '<h2>The bedding was hardly able to cover it.</h2>\n' +
-        '\n' +
-        '\n' +
-        '<p>It showed a lady fitted out with a fur hat and fur \n' +
-        'boa who sat upright, raising a heavy fur muff that \n' +
-        'covered the whole of her lower arm towards the \n' +
-        'viewer.</p>\n' +
-        '\n' +
-        '\n' +
-        '<h2>The bedding was hardly able to cover it.</h2>\n' +
-        '\n' +
-        '\n' +
-        '<p>It showed a lady fitted out with a fur hat and fur \n' +
-        'boa who sat upright, raising a heavy fur muff that \n' +
-        'covered the whole of her lower arm towards the \n' +
-        'viewer.</p>\n' +
-        '\n' +
-        '\n' +
-        '<ul>\n' +
-        '  <li>Lorem ipsum dolor sit amet consectetuer.</li>\n' +
-        '  <li>Aenean commodo ligula eget dolor.</li>\n' +
-        '  <li>Aenean massa cum sociis natoque penatibus.</li>\n' +
-        '</ul>\n' +
-        '\n' +
-        '\n' +
-        '<p>It showed a lady fitted out with a fur hat and fur \n' +
-        'boa who sat upright, raising a heavy fur muff that \n' +
-        'covered the whole of her lower arm towards the \n' +
-        'viewer.</p>\n' +
-        '\n' +
-        '\n' +
-        '<form action="#" method="post">\n' +
-        '  <fieldset>\n' +
-        '    <label for="name">Name:</label>\n' +
-        '    <input type="text" id="name" placeholder="Enter your \n' +
-        'full name" />\n' +
-        '\n' +
-        '    <label for="email">Email:</label>\n' +
-        '    <input type="email" id="email" placeholder="Enter \n' +
-        'your email address" />\n' +
-        '\n' +
-        '    <label for="message">Message:</label>\n' +
-        '    <textarea id="message" placeholder="What\'s on your \n' +
-        'mind?"></textarea>\n' +
-        '\n' +
-        '    <input type="submit" value="Send message" />\n' +
-        '\n' +
-        '  </fieldset>\n' +
-        '</form>\n' +
-        '\n' +
-        '\n' +
-        '<p>It showed a lady fitted out with a fur hat and fur \n' +
-        'boa who sat upright, raising a heavy fur muff that \n' +
-        'covered the whole of her lower arm towards the \n' +
-        'viewer.</p>\n' +
-        '\n' +
-        '\n' +
-        '<table class="data">\n' +
-        '  <tr>\n' +
-        '    <th>Entry Header 1</th>\n' +
-        '    <th>Entry Header 2</th>\n' +
-        '    <th>Entry Header 3</th>\n' +
-        '    <th>Entry Header 4</th>\n' +
-        '  </tr>\n' +
-        '  <tr>\n' +
-        '    <td>Entry First Line 1</td>\n' +
-        '    <td>Entry First Line 2</td>\n' +
-        '    <td>Entry First Line 3</td>\n' +
-        '    <td>Entry First Line 4</td>\n' +
-        '  </tr>\n' +
-        '  <tr>\n' +
-        '    <td>Entry Line 1</td>\n' +
-        '    <td>Entry Line 2</td>\n' +
-        '    <td>Entry Line 3</td>\n' +
-        '    <td>Entry Line 4</td>\n' +
-        '  </tr>\n' +
-        '  <tr>\n' +
-        '    <td>Entry Last Line 1</td>\n' +
-        '    <td>Entry Last Line 2</td>\n' +
-        '    <td>Entry Last Line 3</td>\n' +
-        '    <td>Entry Last Line 4</td>\n' +
-        '  </tr>\n' +
-        '</table>\n' +
-        '\n' +
-        '\n' +
-        '<p>It showed a lady fitted out with a fur hat and fur \n' +
-        'boa who sat upright, raising a heavy fur muff that \n' +
-        'covered the whole of her lower arm towards the \n' +
-        'viewer.</p>\n';
+      // element.docText = '<h1>One morning, when Gregor Samsa woke from troubled \n' +
+      //   'dreams.</h1>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<p>One morning, when Gregor Samsa woke from troubled \n' +
+      //   'dreams, he found himself transformed in his bed into \n' +
+      //   'a horrible vermin. He lay on his armour-like back, \n' +
+      //   'and if he lifted his head a little he could see his \n' +
+      //   'brown belly, slightly domed and divided by arches into \n' +
+      //   'stiff sections. The bedding was hardly able to cover \n' +
+      //   '<strong>strong</strong> it and seemed ready to slide \n' +
+      //   'off any moment. His many legs, pitifully thin \n' +
+      //   'compared with the size of the rest of him, \n' +
+      //   '<a class="external ext" href="#">link</a> waved about \n' +
+      //   'helplessly as he looked. "What\'s happened to me? " he \n' +
+      //   'thought. It wasn\'t a dream. His room, a proper human \n' +
+      //   'room although a little too small, lay peacefully \n' +
+      //   'between its four familiar walls.</p>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<h1>One morning, when Gregor Samsa woke from troubled \n' +
+      //   'dreams.</h1>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<h2>The bedding was hardly able to cover it.</h2>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
+      //   'boa who sat upright, raising a heavy fur muff that \n' +
+      //   'covered the whole of her lower arm towards the \n' +
+      //   'viewer.</p>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<h2>The bedding was hardly able to cover it.</h2>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
+      //   'boa who sat upright, raising a heavy fur muff that \n' +
+      //   'covered the whole of her lower arm towards the \n' +
+      //   'viewer.</p>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<ul>\n' +
+      //   '  <li>Lorem ipsum dolor sit amet consectetuer.</li>\n' +
+      //   '  <li>Aenean commodo ligula eget dolor.</li>\n' +
+      //   '  <li>Aenean massa cum sociis natoque penatibus.</li>\n' +
+      //   '</ul>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
+      //   'boa who sat upright, raising a heavy fur muff that \n' +
+      //   'covered the whole of her lower arm towards the \n' +
+      //   'viewer.</p>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<form action="#" method="post">\n' +
+      //   '  <fieldset>\n' +
+      //   '    <label for="name">Name:</label>\n' +
+      //   '    <input type="text" id="name" placeholder="Enter your \n' +
+      //   'full name" />\n' +
+      //   '\n' +
+      //   '    <label for="email">Email:</label>\n' +
+      //   '    <input type="email" id="email" placeholder="Enter \n' +
+      //   'your email address" />\n' +
+      //   '\n' +
+      //   '    <label for="message">Message:</label>\n' +
+      //   '    <textarea id="message" placeholder="What\'s on your \n' +
+      //   'mind?"></textarea>\n' +
+      //   '\n' +
+      //   '    <input type="submit" value="Send message" />\n' +
+      //   '\n' +
+      //   '  </fieldset>\n' +
+      //   '</form>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
+      //   'boa who sat upright, raising a heavy fur muff that \n' +
+      //   'covered the whole of her lower arm towards the \n' +
+      //   'viewer.</p>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<table class="data">\n' +
+      //   '  <tr>\n' +
+      //   '    <th>Entry Header 1</th>\n' +
+      //   '    <th>Entry Header 2</th>\n' +
+      //   '    <th>Entry Header 3</th>\n' +
+      //   '    <th>Entry Header 4</th>\n' +
+      //   '  </tr>\n' +
+      //   '  <tr>\n' +
+      //   '    <td>Entry First Line 1</td>\n' +
+      //   '    <td>Entry First Line 2</td>\n' +
+      //   '    <td>Entry First Line 3</td>\n' +
+      //   '    <td>Entry First Line 4</td>\n' +
+      //   '  </tr>\n' +
+      //   '  <tr>\n' +
+      //   '    <td>Entry Line 1</td>\n' +
+      //   '    <td>Entry Line 2</td>\n' +
+      //   '    <td>Entry Line 3</td>\n' +
+      //   '    <td>Entry Line 4</td>\n' +
+      //   '  </tr>\n' +
+      //   '  <tr>\n' +
+      //   '    <td>Entry Last Line 1</td>\n' +
+      //   '    <td>Entry Last Line 2</td>\n' +
+      //   '    <td>Entry Last Line 3</td>\n' +
+      //   '    <td>Entry Last Line 4</td>\n' +
+      //   '  </tr>\n' +
+      //   '</table>\n' +
+      //   '\n' +
+      //   '\n' +
+      //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
+      //   'boa who sat upright, raising a heavy fur muff that \n' +
+      //   'covered the whole of her lower arm towards the \n' +
+      //   'viewer.</p>\n';
     });
   }
 
