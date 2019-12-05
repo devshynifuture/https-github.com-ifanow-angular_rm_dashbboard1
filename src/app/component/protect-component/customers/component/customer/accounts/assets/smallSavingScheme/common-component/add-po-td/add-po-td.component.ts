@@ -55,7 +55,7 @@ export class AddPoTdComponent implements OnInit {
       amtInvested: [data.amountInvested, [Validators.required,Validators.min(200)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       tenure: [data.tenure, [Validators.required]],
-      ownershipType: [String(data.ownerTypeId), [Validators.required]]
+      ownershipType: [(data.ownerTypeId)?String(data.ownerTypeId):'1', [Validators.required]]
     })
     this.POTDOptionalForm = this.fb.group({
       poBranch: [],
@@ -92,19 +92,21 @@ export class AddPoTdComponent implements OnInit {
         finalTransctList.push(obj)
       });
     }
-    if (this.ownerName == undefined) {
-      return
-    }
+    
     else if (this.POTDForm.get('amtInvested').invalid) {
+      this.POTDForm.get('amtInvested').markAsTouched();
       return
     }
     else if (this.POTDForm.get('commDate').invalid) {
+      this.POTDForm.get('commDate').markAsTouched();
       return
     }
     else if (this.POTDForm.get('tenure').invalid) {
+      this.POTDForm.get('tenure').markAsTouched();
       return
     }
     else if (this.POTDForm.get('ownershipType').invalid) {
+      this.POTDForm.get('ownershipType').markAsTouched();
       return
     }
     else {
