@@ -23,7 +23,7 @@ export class FixedIncomeComponent implements OnInit {
 
   showRequring: any;
   advisorId: any;
-  dataSourceFixed = new MatTableDataSource([{}, {}, {}]);
+  dataSourceFixed = new MatTableDataSource();
   dataSourceRecurring: any;
   dataSourceBond: any;
   clientId: any;
@@ -56,7 +56,7 @@ export class FixedIncomeComponent implements OnInit {
     this.showRequring = '1';
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    // this.getFixedDepositList()
+      this.getFixedDepositList()
   }
 
   Close() {
