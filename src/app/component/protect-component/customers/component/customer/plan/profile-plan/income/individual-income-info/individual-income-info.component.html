@@ -147,7 +147,7 @@
                             <div class="col-md-6 pl-0 pr-4">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <mat-select formControlName="continousTill" class="form-control br-0">
+                                        <mat-select formControlName="continousTill" class="form-control  br-0">
                                             <mat-option value="1">Retirement</mat-option>
                                             <mat-option value="2">Life time</mat-option>
                                             <mat-option value="3">Number of years</mat-option>
@@ -172,10 +172,13 @@
                         <p class="m-0 f-12 text-custom">This is the long term growth rate rather than just the next year’s
                         </p>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-7 pr-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput autocomplete="off" formControlName="incomeGrowthRate" class="form-control br-0">
+                                <input matInput autocomplete="off" formControlName="incomeGrowthRate" class="form-control text-center width60 br-0">
+                                <input matInput class="form-control text-center width60 br-0">
+                                <input matInput class="form-control text-center width60 br-0">
+                                <input matInput class="form-control text-center ml-20 width60 br-0">
                             </mat-form-field>
                         </div>
                     </div>
@@ -183,7 +186,7 @@
                 <div class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Income period</h5>
-                        <p>Income start % end dates helps in planning cash flow better</p>
+                        <p class="m-0 f-12 text-custom">Income start % end dates helps in planning cash flow better</p>
                     </div>
                     <div class="col-md-7">
                         <div class="row">
