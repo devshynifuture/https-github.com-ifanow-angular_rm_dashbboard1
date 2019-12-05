@@ -66,9 +66,8 @@ export class GmailRedirectComponent implements OnInit {
   sendDataToServer(data) {
     console.log(data);
 
-    this.httpService.post('http://192.168.0.7:8080' + appConfig.ACCESS_TOKEN_SAVE, data).subscribe(
-      response => console.log(response),
-      error => console.log(error)
+    this.httpService.post(apiConfig.GMAIL_URL + appConfig.ACCESS_TOKEN_SAVE, data).subscribe(
+      response => console.log("this is gmail succeed response", response)
     );
   }
 }

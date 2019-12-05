@@ -258,5 +258,5 @@ export const appConfig = {
 
   // gmail
 
-  ACCESS_TOKEN_SAVE: '/user/access-token/gmail/save'
+  ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save'
 };

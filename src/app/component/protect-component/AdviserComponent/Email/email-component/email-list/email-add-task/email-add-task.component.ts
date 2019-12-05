@@ -12,7 +12,7 @@ export class EmailAddTaskComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
-
+    console.log('this works->>>>>>>>>>>>>>>');
   }
 
   Close(state) {

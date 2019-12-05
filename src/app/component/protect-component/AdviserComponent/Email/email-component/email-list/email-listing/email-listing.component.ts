@@ -74,25 +74,6 @@ export class EmailListingComponent implements OnInit {
     this.router.navigate(['view'], { relativeTo: this.activatedRoute });
   }
 
-  openEmailAddTask(data) {
-    const fragmentData = {
-      flag: 'addEmailTask',
-      data,
-      id: 1,
-      state: 'open35',
-      componentName: EmailAddTaskComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          // this.getNscSchemedata();
-          // get addTask Data ()
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
-        }
-      }
-    );
-  }
+
 
 }

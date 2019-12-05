@@ -21,6 +21,38 @@ export class EmailServiceService {
     return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
   }
 
+  getEmailDraftList(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
+  }
+
+  getEmailTrashList(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
+  }
+
+  getEmailSentList(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
+  }
+
+  getEmailArchiveList(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
+  }
+
+  // getLabelList(){
+  //   return this.http.get(apiConfig.MAIN_URL + appConfig);
+  // }
+
+  // getUserList(){
+  //   return this.http.get(apiConfig.MAIN_URL + appConfig);
+  // }
+
+  // saveUser(data){
+  //   return this.http.post(apiConfig.MAIN_URL + appConfig, data);
+  // }
+
   sendNextData(data: Object) {
     this.dataSourceOneMailView.next(data);
   }

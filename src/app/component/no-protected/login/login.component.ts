@@ -66,12 +66,13 @@ export class LoginComponent implements OnInit {
 
 
       const jsonData = {
-        advisorId: 2808,
+        advisorId: 2727,
         clientId: 2978,
+        emailId: 'gaurav@futurewise.co.in',
         authToken: 'data',
         imgUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'
-      }
-        ;
+      };
+
       this.authService.setToken('data');
 
       this.authService.setUserInfo(jsonData);
