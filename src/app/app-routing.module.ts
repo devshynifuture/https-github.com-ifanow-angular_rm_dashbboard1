@@ -40,6 +40,11 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'gmail-redirect',
+    loadChildren: () => import('./component/gmail-redirect/gmail-redirect.module')
+      .then(m => m.GmailRedirectModule)
+  },
+  {
     path: '',
     redirectTo: '/login',
     pathMatch: 'full',

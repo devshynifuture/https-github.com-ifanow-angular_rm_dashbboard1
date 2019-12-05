@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
-import {Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 // import 'rxjs/Rx';
-import {AuthService} from '../auth-service/authService';
+import { AuthService } from '../auth-service/authService';
 import 'rxjs-compat/add/observable/of';
 import 'rxjs-compat/add/operator/map';
-import {catchError} from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 const Buffer = require('buffer/').Buffer;
 declare var require: any;

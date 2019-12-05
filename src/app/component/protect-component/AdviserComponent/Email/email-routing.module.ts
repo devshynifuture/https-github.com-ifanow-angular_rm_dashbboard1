@@ -37,7 +37,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/inbox',
+        redirectTo: 'inbox',
         pathMatch: 'full'
       }
     ]

@@ -1,8 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import { appConfig } from './../../config/component-config';
+import { apiConfig } from './../../config/main-config';
+import { AuthService } from './../../auth-service/authService';
+import { SubscriptionInject } from './../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import 'rxjs-compat/add/operator/filter';
-import {HttpService} from '../../http-service/http-service';
-import {HttpHeaders} from '@angular/common/http';
+import { HttpService } from '../../http-service/http-service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-gmail-redirect',
@@ -15,13 +19,18 @@ export class GmailRedirectComponent implements OnInit {
   URL = 'https://www.googleapis.com/oauth2/v4/token';
   CLIENT_ID = '579886643607-h1m21go2dct12nva48pi5mr7meejv7nh.apps.googleusercontent.com';
   CLIENT_SECRET = 'Zpw9vHRljgbRbgAOe4UQArld';
+  RESPONSE_TYPE = 'code';
+  SCOPE = 'htpps://mail.google.com';
   GRANT_TYPE = 'authorization_code';
   REDIRECT_URI = 'http://localhost:8080/redirect';
-
-  constructor(private route: ActivatedRoute, private httpService: HttpService) {
+  advisorId;
+  constructor(private route: ActivatedRoute,
+    private httpService: HttpService,
+    private subInjectService: SubscriptionInject) {
   }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
 
     this.route.queryParams
       .subscribe(params => {
@@ -43,6 +52,8 @@ export class GmailRedirectComponent implements OnInit {
         console.log('GmailRedirectComponent ngOnInit bodyData: ', bodyData);
 
         this.httpService.postExternal(this.URL, bodyData, httpOptions).subscribe((responseData) => {
+          const serverRequestData = { ...responseData, userId: this.advisorId };
+          this.sendDataToServer(serverRequestData);
           console.log('GmailRedirectComponent ngOnInit postExternal responseData: ', responseData);
         }, (errorResponse) => {
           console.log('GmailRedirectComponent ngOnInit postExternal errorResponse: ', errorResponse);
@@ -52,4 +63,12 @@ export class GmailRedirectComponent implements OnInit {
       });
   }
 
+  sendDataToServer(data) {
+    console.log(data);
+
+    this.httpService.post('http://192.168.0.7:8080' + appConfig.ACCESS_TOKEN_SAVE, data).subscribe(
+      response => console.log(response),
+      error => console.log(error)
+    );
+  }
 }

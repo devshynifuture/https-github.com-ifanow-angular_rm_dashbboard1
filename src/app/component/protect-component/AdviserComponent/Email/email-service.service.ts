@@ -10,8 +10,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
   providedIn: 'root'
 })
 export class EmailServiceService {
-  private dataSource = new BehaviorSubject<Object>('');
-  data = this.dataSource.asObservable();
+  private dataSourceOneMailView = new BehaviorSubject<Object>('');
+  data = this.dataSourceOneMailView.asObservable();
+
 
   constructor(public https: HttpClient, public http: HttpService) { }
 
@@ -21,6 +22,6 @@ export class EmailServiceService {
   }
 
   sendNextData(data: Object) {
-    this.dataSource.next(data);
+    this.dataSourceOneMailView.next(data);
   }
 }
