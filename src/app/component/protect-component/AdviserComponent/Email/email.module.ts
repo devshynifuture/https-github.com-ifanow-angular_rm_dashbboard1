@@ -1,3 +1,4 @@
+import { EmailListModule } from './email-component/email-list/email-list.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -25,6 +26,7 @@ import { EmailTrashComponent } from './email-component/email-trash/email-trash.c
   imports: [
     CommonModule,
     MaterialModule,
+    EmailListModule,
     EmailRoutingModule
   ]
 })

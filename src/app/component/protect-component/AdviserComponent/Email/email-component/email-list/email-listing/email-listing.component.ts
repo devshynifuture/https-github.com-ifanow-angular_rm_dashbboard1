@@ -7,15 +7,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { EmailAddTaskComponent } from '../email-add-task/email-add-task.component';
 import { EmailServiceService } from './../../../email-service.service';
+import { EmailInterfaceI } from '../../email.interface';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
 
-const ELEMENT_DATA: PeriodicElement[] = [
+const ELEMENT_DATA: EmailInterfaceI[] = [
   { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
   { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
   { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
@@ -44,8 +39,8 @@ export class EmailListingComponent implements OnInit {
   }
 
   displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-  selection = new SelectionModel<PeriodicElement>(true, []);
+  dataSource = new MatTableDataSource<EmailInterfaceI>(ELEMENT_DATA);
+  selection = new SelectionModel<EmailInterfaceI>(true, []);
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -62,7 +57,7 @@ export class EmailListingComponent implements OnInit {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: PeriodicElement): string {
+  checkboxLabel(row?: EmailInterfaceI): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
@@ -73,7 +68,4 @@ export class EmailListingComponent implements OnInit {
     this.emailService.sendNextData(dataObj);
     this.router.navigate(['view'], { relativeTo: this.activatedRoute });
   }
-
-
-
 }

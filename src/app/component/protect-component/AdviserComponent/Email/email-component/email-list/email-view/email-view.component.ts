@@ -1,5 +1,5 @@
-import { SubscriptionInject } from './../../../../Subscriptions/subscription-inject.service';
-import { UtilService } from './../../../../../../../services/util.service';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { UtilService } from '../../../../../../../services/util.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { EmailServiceService } from '../../../email-service.service';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
@@ -38,19 +38,17 @@ export class EmailViewComponent implements OnInit, AfterViewInit {
       data,
       id: 1,
       state: 'open35',
-      componentName: EmailAddTaskComponent
+      componentName: EmailAddTaskComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          // this.getNscSchemedata();
-          // get addTask Data ()
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
+
         }
       }
     );
   }
-
 }
