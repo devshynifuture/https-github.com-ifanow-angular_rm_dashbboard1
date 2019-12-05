@@ -81,13 +81,16 @@ export class AddPoMisComponent implements OnInit {
   }
   saveFormData(state) {
     if (this.pomisForm.controls.amtInvested.invalid) {
-      this.isAmtValid = true;
+      this.pomisForm.get("amtInvested").markAsTouched();
+
       return;
     } else if (this.pomisForm.controls.commencementdate.invalid) {
-      this.isDateValid = true;
+      this.pomisForm.get("commencementdate").markAsTouched();
+
       return;
     } else if (this.pomisForm.controls.ownershipType.invalid) {
-      this.isTypeValid = true;
+      this.pomisForm.get("ownershipType").markAsTouched();
+
       return;
     } else {
       const obj = {

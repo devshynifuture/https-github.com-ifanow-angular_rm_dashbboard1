@@ -82,11 +82,11 @@
                                     more_vert
                                 </i>
                                 <mat-menu #menu4="matMenu">
-                                    <button mat-menu-item (click)="addIncome('addIncome',element)">Edit</button>
+                                    <button mat-menu-item (click)="addIncome('editIncome',element)">Edit</button>
                                     <button mat-menu-item (click)="addIncomeDetail('addIncomeDetail')">Deatiled
                                         View</button>
                                     <button mat-menu-item>Activity</button>
-                                    <button mat-menu-item>Delete</button>
+                                    <button mat-menu-item (click)="deleteModal('INCOME',element)">Delete</button>
                                 </mat-menu>
                             </td>
                         </ng-container>
