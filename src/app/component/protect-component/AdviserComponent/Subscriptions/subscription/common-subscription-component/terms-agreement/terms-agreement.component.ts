@@ -73,9 +73,11 @@ export class TermsAgreementComponent implements OnInit {
     console.log('quotationDesign', this._upperData);
   }
 
-  Close(value) {
-    this.subInjectService.rightSideData(value);
-    this.valueChange.emit(this.quotationDesignE);
+  Close() {
+    // this.subInjectService.rightSideData(value);
+    // this.valueChange.emit(this.quotationDesignE);
+    this.eventService.changeUpperSliderState({state: 'close'});
+
   }
   onSubmit() {
     // TODO: Use EventEmitter with form value
@@ -86,7 +88,7 @@ export class TermsAgreementComponent implements OnInit {
   }
   openDialog(data) {
     const Fragmentdata = {
-      Flag: data,
+      flag: data,
     };
     const dialogRef = this.dialog.open(HowToUseDialogComponent, {
       width: '30%',
@@ -102,7 +104,7 @@ export class TermsAgreementComponent implements OnInit {
   }
   OpenEdit(data){
     const fragmentData = {
-      Flag: 'addEditDocument',
+      flag: 'addEditDocument',
       data: this._upperData.documentData,
       id: 1,
       state: 'open'
@@ -119,6 +121,8 @@ export class TermsAgreementComponent implements OnInit {
   }
   updateData(data) {
     const obj = {
+      name:data.name,
+      description:data.description,
       documentRepositoryId: data.documentRepositoryId, // pass here advisor id for Invoice advisor
       docText: data.docText
     };

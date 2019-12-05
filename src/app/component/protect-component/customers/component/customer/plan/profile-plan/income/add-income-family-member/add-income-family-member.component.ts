@@ -31,6 +31,7 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
     }
     else
     { 
+      (data.setFlag=="addIncome")?data.flag=="editIncome":console.log("dsdas")
       this.setFlag=data.flag
       this.familyMemberList=data.data
     }
@@ -52,7 +53,6 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
     console.log(this.familyMemberList)
   }
   nextStep() {
-    
     const obj=
     {
       data:this.familyMemberList,

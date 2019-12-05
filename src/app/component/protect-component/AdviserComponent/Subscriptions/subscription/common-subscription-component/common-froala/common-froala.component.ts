@@ -153,7 +153,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
 
   save() {
     console.log('here is saved data', this.storeData);
-    if (this.changeFooter == 'viewQuotation' || 'emailQuotation') {
+    if (this.storeData.quotation == true) {
       this.updateDataQuot(this.storeData);
     } else {
       this.updateData(this.storeData);
@@ -257,7 +257,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
 
   OpenEmail(data, value) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data,
       id: 1,
       state: 'open'

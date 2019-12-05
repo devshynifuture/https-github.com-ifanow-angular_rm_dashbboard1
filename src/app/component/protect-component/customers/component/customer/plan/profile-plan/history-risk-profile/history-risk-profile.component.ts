@@ -15,7 +15,7 @@ export class HistoryRiskProfileComponent implements OnInit {
   }
   open(flagValue, data) {
     const fragmentData = {
-    Flag: flagValue,
+    flag: flagValue,
     data,
     id: 1,
     state: 'open30'

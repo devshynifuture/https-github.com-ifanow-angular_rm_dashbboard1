@@ -161,7 +161,7 @@ export class InvoicesComponent implements OnInit {
     // this.subInjectService.addSingleProfile(data);
 
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data: data,
       id: 1,
       state: 'open'
@@ -196,7 +196,7 @@ export class InvoicesComponent implements OnInit {
     // this.subInjectService.rightSliderData(state);
     // this.subInjectService.addSingleProfile(data);
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data:data,
       id: 1,
       state: 'open'

@@ -666,7 +666,7 @@ export class InvoiceComponent implements OnInit {
   }
   OpenEmail(data,value) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data:data,
       id: 1,
       state: 'open'
@@ -684,7 +684,7 @@ export class InvoiceComponent implements OnInit {
   }
   OpenEmailUpper(data,value) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data:data,
       id: 1,
       state: 'open'

@@ -4,8 +4,9 @@
             <p class="f-14 roboto">Now entering Rupa Hindcha’s income</p>
         </div>
         <div class="col-md-4 text-right p-0">
-            <button mat-stroked-button class=" ba-black br-0 mat-menu-trigger addon"> Adding income 1 of
-                {{finalIncomeAddList.length}} </button>
+            <button mat-stroked-button class=" ba-black br-0 mat-menu-trigger addon"> Adding income {{incomePosition}}
+                of
+                {{finalIncomeAddList.length +1}} </button>
         </div>
     </div>
 
@@ -15,34 +16,47 @@
                 <div class="memberBorderBox">
                     <img src="assets/images/svg/income-man.svg">
                 </div>
-                <p class="f-14 m-0 f-bold text-center"> Ronak<br> Hindocha</p>
+                <p class="f-14 m-0 f-bold text-center" *ngIf="singleIndividualIncome">
+                    {{singleIndividualIncome.userName}}</p>
             </div>
 
             <div class="incomeSourcesBox d-flex">
                 <div class="ml-12">
                     <div class="memberBorderBox">
-                        <img src="assets/images/svg/rupessIcon.svg">
+                        <img src="assets/images/svg/rupessIcon.svg"
+                            *ngIf="singleIndividualIncome.finalIncomeList.id==1">
+                        <img src="assets/images/svg/businessIcon.svg"
+                            *ngIf="singleIndividualIncome.finalIncomeList.id==2">
+                        <img src="assets/images/svg/professionIcon.svg"
+                            *ngIf="singleIndividualIncome.finalIncomeList.id==3">
+                        <img src="assets/images/svg/rentalIcon.svg"
+                            *ngIf="singleIndividualIncome.finalIncomeList.id==4">
+                        <img src="assets/images/svg/pensionIcon.svg"
+                            *ngIf="singleIndividualIncome.finalIncomeList.id==5">
                     </div>
-                    <p class="f-14 m-0 text-primitive"> Salaried </p>
+                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome">
+                        {{singleIndividualIncome.finalIncomeList.name}} </p>
                 </div>
             </div>
         </div>
         <div class="col-md-8">
-            <div>
-                <div class="row pt-40">
+            <div [formGroup]="incomeNetForm">
+                <div *ngIf="singleIndividualIncome.finalIncomeList.id==1" class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Income option</h5>
                     </div>
                     <div class="col-md-7 pr-0">
-                        <mat-radio-group class="d-flex" aria-label="Select an option">
+                        <mat-radio-group (change)="chngIncomeOption($event)" class="d-flex"
+                            aria-label="Select an option">
                             <mat-radio-button color="primary" class="b-ua p-8" value="1">With breakup</mat-radio-button>
-                            <mat-radio-button color="primary" class="b-ua p-8 ml-8" value="1">Net (In hand)
+                            <mat-radio-button color="primary" checked="true" class="b-ua p-8 ml-8" value="2">Net (In
+                                hand)
                             </mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
 
-                <div class="row pt-40">
+                <div *ngIf="incomeOption=='2'" class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Monthly amount</h5>
                         <p class="m-0 f-12 text-custom">Enter the net income you get in hand</p>
@@ -50,12 +64,73 @@
                     <div class="col-md-5">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput class="form-control br-0">
+                                <input matInput type="number" autocomplete="off" formControlName="monthlyAmount" class="form-control br-0">
                             </mat-form-field>
                         </div>
                     </div>
                 </div>
 
+                <div *ngIf="incomeOption=='1'" class="row pt-40">
+                    <div class="col-md-5 pr-0 text-right">
+                        <h5 class="m-0 pt-8">Basic Income</h5>
+                        <p class="m-0 f-12 text-custom">Enter the net income you get in hand</p>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <input matInput autocomplete="off" formControlName="basicIncome" class="form-control br-0">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="incomeOption=='1'" class="row pt-40">
+                    <div class="col-md-5 pr-0 text-right">
+                        <h5 class="m-0 pt-8">Standard deductions</h5>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <input matInput autocomplete="off" formControlName="standardDeduction" class="form-control br-0">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="incomeOption=='1'" class="row pt-40">
+                    <div class="col-md-5 pr-0 text-right">
+                        <h5 class="m-0 pt-8">Dearness allowance</h5>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <input matInput autocomplete="off" formControlName="dearnessAllowance" class="form-control br-0">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="incomeOption=='1'" class="row pt-40">
+                    <div class="col-md-5 pr-0 text-right">
+                        <h5 class="m-0 pt-8">HRA recieved</h5>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <input matInput autocomplete="off" formControlName="hraRecieved" class="form-control br-0">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="incomeOption=='1'" class="row pt-40">
+                    <div class="col-md-5 pr-0 text-right">
+                        <h5 class="m-0 pt-8">Total rent paid</h5>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <input matInput autocomplete="off" formControlName="totalRentPaid" class="form-control br-0">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
                 <div class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Income style</h5>
@@ -64,7 +139,7 @@
                     <div class="col-md-7">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput class="form-control br-0">
+                                <input matInput autocomplete="off" formControlName="incomeStyle" class="form-control br-0">
                             </mat-form-field>
                         </div>
                     </div>
@@ -79,7 +154,7 @@
                             <div class="col-md-6 pl-0 pr-4">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <mat-select class="form-control br-0">
+                                        <mat-select formControlName="continousTill" class="form-control br-0">
                                             <mat-option value="1">Retirement</mat-option>
                                             <mat-option value="2">Life time</mat-option>
                                             <mat-option value="3">Number of years</mat-option>
@@ -87,10 +162,10 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <div class="col-md-6 pl-4 pr-0">
+                            <div *ngIf="incomeNetForm.get('continousTill').value==3" class="col-md-6 pl-4 pr-0">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input matInput class="form-control br-0">
+                                        <input matInput type="number" autocomplete="off" formControlName="continousTillYear" class="form-control br-0">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -108,7 +183,7 @@
                     <div class="col-md-7">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput class="form-control br-0">
+                                <input matInput autocomplete="off" formControlName="incomeGrowthRate" class="form-control br-0">
                             </mat-form-field>
                         </div>
                     </div>
@@ -123,7 +198,7 @@
                             <div class="col-md-6 pl-0 pr-4">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input matInput class="form-control br-0" [matDatepicker]="incomeStartdate">
+                                        <input matInput autocomplete="off" formControlName="incomeStartDate" class="form-control br-0" [matDatepicker]="incomeStartdate">
                                         <mat-datepicker-toggle matSuffix [for]="incomeStartdate">
                                         </mat-datepicker-toggle>
                                         <mat-datepicker #incomeStartdate></mat-datepicker>
@@ -135,7 +210,7 @@
                             <div class="col-md-6 pl-4 pr-0">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input matInput class="form-control br-0" [matDatepicker]="incomeEndDate">
+                                        <input matInput autocomplete="off" formControlName="incomeEndDate" class="form-control br-0" [matDatepicker]="incomeEndDate">
                                         <mat-datepicker-toggle matSuffix [for]="incomeEndDate"></mat-datepicker-toggle>
                                         <mat-datepicker #incomeEndDate></mat-datepicker>
                                         <mat-error class="f-12 pt-4">This field is required
@@ -171,8 +246,11 @@
                         <div class="col-md-7">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input matInput class="form-control br-0">
-                                    <mat-hint align="start" class="f-12">Optional</mat-hint>
+                                    <input matInput autocomplete="off" formControlName="nextAppraisal" class="form-control br-0" [matDatepicker]="nextAppraisal">
+                                    <mat-datepicker-toggle matSuffix [for]="nextAppraisal"></mat-datepicker-toggle>
+                                    <mat-datepicker #nextAppraisal></mat-datepicker>
+                                    <mat-error class="f-12 pt-4">This field is required
+                                    </mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -186,14 +264,19 @@
                                 <div class="col-md-6 pl-0 pr-4">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input matInput class="form-control br-0">
+                                            <input matInput autocomplete="off" class="form-control br-0" [matDatepicker]="expectedBonus">
+                                            <mat-datepicker-toggle matSuffix [for]="expectedBonus">
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #expectedBonus></mat-datepicker>
+                                            <mat-error class="f-12 pt-4">This field is required
+                                            </mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
                                 <div class="col-md-6 pl-4 pr-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input matInput class="form-control br-0">
+                                            <input matInput autocomplete="off" formControlName="nextAppraisal" type="number" class="form-control br-0">
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -209,7 +292,7 @@
                         <div class="col-md-7">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input matInput class="form-control br-0">
+                                    <input matInput formControlName="description" autocomplete="off" class="form-control br-0">
                                     <mat-hint align="start" class="f-12">Optional</mat-hint>
                                 </mat-form-field>
                             </div>

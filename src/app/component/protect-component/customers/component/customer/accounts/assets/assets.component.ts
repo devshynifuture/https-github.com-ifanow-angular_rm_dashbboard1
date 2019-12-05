@@ -138,7 +138,7 @@ export class AssetsComponent implements OnInit {
 
   openFragment(value) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       id: 1,
       state: 'openHelp'
     };
@@ -156,7 +156,7 @@ export class AssetsComponent implements OnInit {
 
   openUpperFragment(data) {
     /* const fragmentData = {
-       Flag: 'emailOnly',
+       flag: 'emailOnly',
        data: clientData,
        id: 1,
        state: 'open'
@@ -195,7 +195,7 @@ export class AssetsComponent implements OnInit {
 
   openPortfolioSummary(value, state) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       // data,
       id: 1,
       state: 'open'

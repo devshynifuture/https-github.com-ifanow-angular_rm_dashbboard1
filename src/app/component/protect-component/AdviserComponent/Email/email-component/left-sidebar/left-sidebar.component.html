@@ -1,0 +1,26 @@
+<mat-action-list class="p-2">
+    <button mat-list-item class="btn-custom-compose" [ngClass]="">
+        <mat-icon matListIcon>create</mat-icon>
+        <p matLine>Compose</p>
+    </button>
+    <button mat-list-item [ngClass]="" routerLink="inbox">
+        <mat-icon matListIcon>inbox</mat-icon>
+        <p matLine>Inbox</p>
+    </button>
+    <button mat-list-item [ngClass]="" routerLink="sent">
+        <mat-icon matListIcon>send</mat-icon>
+        <p matLine>Sent</p>
+    </button>
+    <button mat-list-item [ngClass]="" routerLink="draft">
+        <mat-icon matListIcon> insert_drive_file</mat-icon>
+        <p matLine>Draft</p>
+    </button>
+    <button mat-list-item [ngClass]="" routerLink="archive">
+        <mat-icon matListIcon> all_inbox</mat-icon>
+        <p matLine>Archive</p>
+    </button>
+    <button mat-list-item [ngClass]="" routerLink="trash">
+        <mat-icon matListIcon> delete</mat-icon>
+        <p matLine>Trash</p>
+    </button>
+</mat-action-list>

@@ -137,7 +137,7 @@ export class CommoditiesComponent implements OnInit {
   }
   openCommodities(value, state, data) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data: data,
       id: 1,
       state: 'open',
@@ -162,7 +162,7 @@ export class CommoditiesComponent implements OnInit {
   }
   openOthers(value, state, data) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data: data,
       id: 1,
       state: 'open',
@@ -187,7 +187,7 @@ export class CommoditiesComponent implements OnInit {
   }
   detailedViewGold(flagValue, data) {
     const fragmentData = {
-      Flag: flagValue,
+      flag: flagValue,
       id: 1,
       data: data,
       state: 'open35',
@@ -206,7 +206,7 @@ export class CommoditiesComponent implements OnInit {
   }
   detailedViewOthers(flagValue, data) {
     const fragmentData = {
-      Flag: flagValue,
+      flag: flagValue,
       id: 1,
       data: data,
       state: 'open35',

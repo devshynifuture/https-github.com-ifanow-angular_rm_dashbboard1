@@ -62,7 +62,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     } else {
     }
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data,
       id: 1,
       state: 'open'
@@ -104,7 +104,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     data.isCreateSub = true;
     (data.subscriptionPricing.feeTypeId == 1) ? feeMode = 'fixedModifyFees' : feeMode = 'variableModifyFees';
     const fragmentData = {
-      Flag: feeMode,
+      flag: feeMode,
       data,
       id: 1,
       state: 'open'
@@ -168,7 +168,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
 
   delete(data, value) {
     const Fragmentdata = {
-      Flag: data,
+      flag: data,
       subData: value
     };
     if (data == 'cancelSubscription') {

@@ -42,7 +42,7 @@ export class EmailQuotationComponent implements OnInit {
 
   openModel(data) {
     let Fragmentdata = {
-      Flag: data,
+      flag: data,
     }
     const dialogRef = this.dialog.open(HowItWorksComponent, {
       width: '50%',

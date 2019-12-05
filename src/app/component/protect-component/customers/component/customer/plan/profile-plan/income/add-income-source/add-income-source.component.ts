@@ -15,25 +15,8 @@ export class AddIncomeSourceComponent implements OnInit {
   @Output() IncomeSourceDetailsData = new EventEmitter();
   @Output() previousStep = new EventEmitter();
   @Input() set selectedFamilyList(data) {
-    if(data.flag!="addIncome")
+    if(data.flag=="addIncome")
     {
-      this.stepOneData = data.data;
-      this.stepOneData.forEach(element=>
-        {
-          if(element.selected)
-          {
-            element.incomeTypeList.forEach(checkedData=>
-              {
-                if(checkedData.checked)
-                {
-                  this.countIncomeType++;
-                }
-              })
-          }
-        })
-      return;
-    }
-    else{
       data.data.forEach(element => {
         const obj = [
           { name: "Salaried", checked: false, id: 1 },
@@ -47,6 +30,33 @@ export class AddIncomeSourceComponent implements OnInit {
         }
       });
       this.stepOneData = data.data
+    }
+    else{
+      this.stepOneData = data.data;
+      this.stepOneData.forEach(element=>
+        {
+          if(element.selected)
+          {
+            if(element.incomeTypeList==undefined)
+            {
+              const obj = [
+                { name: "Salaried", checked: false, id: 1 },
+                { name: "Business", checked: false, id: 2 },
+                { name: 'Profession', checked: false, id: 3 },
+                { name: "Rental", checked: false, id: 5 },
+                { name: "Others", checked: false, id: 6 }
+              ]
+              element['incomeTypeList'] = obj
+            }
+            element.incomeTypeList.forEach(checkedData=>
+              {
+                if(checkedData.checked)
+                {
+                  this.countIncomeType++;
+                }
+              })
+          }
+        })
     }
   }
   ngOnInit() {

@@ -26,7 +26,7 @@ export class ExpensesComponent implements OnInit {
   
     openExpenses(value) {
       const fragmentData = {
-        Flag:value,
+        flag:value,
         id: 1,
         state: 'open35',
         componentName:AddExpensesComponent

@@ -2,7 +2,6 @@ import {RecuringDepositComponent} from './../recuring-deposit/recuring-deposit.c
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {CustomerService} from '../../../../customer.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
@@ -12,6 +11,8 @@ import {FixedDepositComponent} from '../fixed-deposit/fixed-deposit.component';
 import {DetailedViewRecuringDepositComponent} from '../recuring-deposit/detailed-view-recuring-deposit/detailed-view-recuring-deposit.component';
 import {DetailedViewBondsComponent} from '../bonds/detailed-view-bonds/detailed-view-bonds.component';
 import {BondsComponent} from '../bonds/bonds.component';
+import { UtilService } from 'src/app/services/util.service';
+
 
 @Component({
   selector: 'app-fixed-income',
@@ -19,11 +20,11 @@ import {BondsComponent} from '../bonds/bonds.component';
   styleUrls: ['./fixed-income.component.scss']
 })
 export class FixedIncomeComponent implements OnInit {
-  isLoading: boolean = true;
+  isLoading = true;
 
   showRequring: any;
   advisorId: any;
-  dataSourceFixed: any;
+  dataSourceFixed = new MatTableDataSource([{}, {}, {}]);
   dataSourceRecurring: any;
   dataSourceBond: any;
   clientId: any;
@@ -50,24 +51,33 @@ export class FixedIncomeComponent implements OnInit {
   datasource6 = ELEMENT_DATA6;
   filterMode;
   dataSourceFixedFiltered;
-  isFixedIncomeFiltered: boolean = false;
+  isFixedIncomeFiltered = false;
 
   ngOnInit() {
-    this.showRequring = '1'
+    this.showRequring = '1';
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getFixedDepositList()
+    // this.getFixedDepositList()
   }
 
   Close() {
 
   }
+  exportAsXLSX(value):void {
+    if(value == 'fd'){
+      UtilService.exportAsExcelFile(this.dataSourceFixed.filteredData, 'fixedDeposit');
+    }else if(value == 'rd'){
+      UtilService.exportAsExcelFile(this.dataSourceFixed.filteredData, 'reccuringDeposit');
+    }else{
+      UtilService.exportAsExcelFile(this.dataSourceFixed.filteredData, 'bonds');
+    }
+ }
 
   filterFixedIncome(key: string, value: string) {
-    let obj = {
+    const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
-    }
+    };
     this.custumService.getFixedDeposit(obj).subscribe(
       data => {
         data = data.fixedDepositList.filter(function (item) {
@@ -75,8 +85,8 @@ export class FixedIncomeComponent implements OnInit {
         });
         console.log('this is filtered data ------------>', data);
         this.isFixedIncomeFiltered = true;
-        this.dataSourceFixed = null;
-        this.dataSourceFixed = new MatTableDataSource(data);
+        this.dataSourceFixed.data = data;
+        // this.dataSourceFixed = new MatTableDataSource(data);
         this.dataSourceFixed.sort = this.fixedIncomeTableSort;
         console.log('sorted ------------>', this.dataSourceFixed);
       }
@@ -89,28 +99,28 @@ export class FixedIncomeComponent implements OnInit {
   }
 
   changeFixedIncomeFilterMode(value) {
-    console.log('this is filter data', value)
+    console.log('this is filter data', value);
     this.dataSourceFixed.filter = value.trim().toLowerCase();
   }
 
   getfixedIncomeData(value) {
-    console.log('value++++++', value)
-    this.showRequring = value
+    console.log('value++++++', value);
+    this.showRequring = value;
     if (value == '2') {
-      this.getRecurringDepositList()
+      this.getRecurringDepositList();
     } else if (value == '3') {
-      this.getBondsList()
+      this.getBondsList();
     } else {
-      this.getFixedDepositList()
+      this.getFixedDepositList();
     }
 
   }
 
   getFixedDepositList() {
-    let obj = {
+    const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
-    }
+    };
     this.custumService.getFixedDeposit(obj).subscribe(
       data => this.getFixedDepositRes(data)
     );
@@ -119,21 +129,21 @@ export class FixedIncomeComponent implements OnInit {
   getFixedDepositRes(data) {
     console.log('getFixedDepositRes ********** ', data);
     this.isLoading = false;
-    this.dataSourceFixed = new MatTableDataSource(data.fixedDepositList);
+    this.dataSourceFixed.data = data.fixedDepositList;
     this.dataSourceFixed.sort = this.fixedIncomeTableSort;
-    console.log('soted &&&&&&&&&',this.dataSourceFixed)
-    this.sumAmountInvested = data.sumAmountInvested
-    this.sumCurrentValue = data.sumCurrentValue
-    this.sumMaturityValue = data.sumMaturityValue
+    console.log('soted &&&&&&&&&', this.dataSourceFixed);
+    this.sumAmountInvested = data.sumAmountInvested;
+    this.sumCurrentValue = data.sumCurrentValue;
+    this.sumMaturityValue = data.sumMaturityValue;
 
   }
 
   getRecurringDepositList() {
     this.isLoading = true;
-    let obj = {
+    const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
-    }
+    };
     this.custumService.getRecurringDeposit(obj).subscribe(
       data => this.getRecurringDepositRes(data)
     );
@@ -144,16 +154,16 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = false;
     this.dataSourceRecurring = new MatTableDataSource(data.recurringDeposits);
     this.dataSourceRecurring.sort = this.recurringDepositTableSort;
-    this.totalCurrentValue = data.totalCurrentValue
-    this.totalMarketValue = data.totalMarketValue
+    this.totalCurrentValue = data.totalCurrentValue;
+    this.totalMarketValue = data.totalMarketValue;
   }
 
   getBondsList() {
     this.isLoading = true;
-    let obj = {
+    const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
-    }
+    };
     this.custumService.getBonds(obj).subscribe(
       data => this.getBondsRes(data)
     );
@@ -164,9 +174,9 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = false;
     this.dataSourceBond = new MatTableDataSource(data.bondList);
     this.dataSourceBond.sort = this.bondListTableSort;
-    this.sumAmountInvestedB = data.sumAmountInvested
-    this.sumCouponAmount = data.sumCouponAmount
-    this.sumCurrentValueB = data.sumCurrentValue
+    this.sumAmountInvestedB = data.sumAmountInvested;
+    this.sumCouponAmount = data.sumCouponAmount;
+    this.sumCurrentValueB = data.sumCurrentValue;
   }
 
   deleteModal(value, data) {
@@ -181,30 +191,30 @@ export class FixedIncomeComponent implements OnInit {
         if (value == 'FIXED DEPOSITE') {
           this.custumService.deleteFixedDeposite(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("Fixed deposite is deleted", "dismiss")
+              this.eventService.openSnackBar('Fixed deposite is deleted', 'dismiss');
               dialogRef.close();
               this.getFixedDepositList();
             },
             err => this.eventService.openSnackBar(err)
-          )
+          );
         } else if (value == 'RECURRING DEPOSITE') {
           this.custumService.deleteRecurringDeposite(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("Recurring deposite is deleted", "dismiss")
+              this.eventService.openSnackBar('Recurring deposite is deleted', 'dismiss');
               dialogRef.close();
               this.getRecurringDepositList();
             },
             err => this.eventService.openSnackBar(err)
-          )
+          );
         } else {
           this.custumService.deleteBond(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("Bond is deleted", "dismiss")
+              this.eventService.openSnackBar('Bond is deleted', 'dismiss');
               dialogRef.close();
               this.getBondsList();
             },
             err => this.eventService.openSnackBar(err)
-          )
+          );
         }
       },
       negativeMethod: () => {
@@ -227,8 +237,8 @@ export class FixedIncomeComponent implements OnInit {
 
   openPortfolioSummary(value, data) {
     const fragmentData = {
-      Flag: value,
-      data: data,
+      flag: value,
+      data,
       id: 1,
       state: 'open',
       componentName: FixedDepositComponent
@@ -248,8 +258,8 @@ export class FixedIncomeComponent implements OnInit {
 
   openDetailedFixedDeposit(value, data) {
     const fragmentData = {
-      Flag: value,
-      data: data,
+      flag: value,
+      data,
       id: 1,
       state: 'open35',
       componentName: DetailedViewFixedDepositComponent
@@ -279,15 +289,15 @@ export class FixedIncomeComponent implements OnInit {
 
   openAddRecurringDeposit(data) {
     const fragmentData = {
-      Flag: 'addRecuringDeposit',
-      data: data,
+      flag: 'addRecuringDeposit',
+      data,
       id: 1,
       state: 'open',
       componentName: RecuringDepositComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getRecurringDepositList()
+        this.getRecurringDepositList();
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -300,15 +310,15 @@ export class FixedIncomeComponent implements OnInit {
 
   openBonds(data) {
     const fragmentData = {
-      Flag: 'BondsComponent',
-      data: data,
+      flag: 'BondsComponent',
+      data,
       id: 1,
       state: 'open',
       componentName: BondsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getBondsList()
+        this.getBondsList();
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -321,8 +331,8 @@ export class FixedIncomeComponent implements OnInit {
 
   detailedViewBonds(data) {
     const fragmentData = {
-      Flag: 'DetailedViewBondsComponent',
-      data: data,
+      flag: 'DetailedViewBondsComponent',
+      data,
       id: 1,
       state: 'open35',
       componentName: DetailedViewBondsComponent
@@ -357,23 +367,23 @@ export interface PeriodicElement4 {
 const ELEMENT_DATA4: PeriodicElement4[] = [
   {
     no: '1.', owner: 'Ronak Hasmukh Hindocha', type: 'Bank FD',
-    cdate: '60,000', rate: '8.40%', amt: '1,00,000', mdate: "18/09/2019", mvalue: "1,00,000",
-    number: "980787870909", desc: "ICICI FD", status: "LIVE"
+    cdate: '60,000', rate: '8.40%', amt: '1,00,000', mdate: '18/09/2019', mvalue: '1,00,000',
+    number: '980787870909', desc: 'ICICI FD', status: 'LIVE'
   },
   {
     no: '2.', owner: 'Rupa Ronak Hindocha', type: 'Bank FD',
-    cdate: '60,000', rate: '8.40%', amt: '1,00,000', mdate: "18/09/2019", mvalue: "1,00,000",
-    number: "980787870909", desc: "ICICI FD", status: "LIVE"
+    cdate: '60,000', rate: '8.40%', amt: '1,00,000', mdate: '18/09/2019', mvalue: '1,00,000',
+    number: '980787870909', desc: 'ICICI FD', status: 'LIVE'
   },
   {
     no: '3.', owner: 'Ronak Hasmukh Hindocha', type: 'Bank FD',
-    cdate: '60,000', rate: '8.40%', amt: '1,00,000', mdate: "18/09/2019", mvalue: "1,00,000",
-    number: "980787870909", desc: "ICICI FD", status: "LIVE"
+    cdate: '60,000', rate: '8.40%', amt: '1,00,000', mdate: '18/09/2019', mvalue: '1,00,000',
+    number: '980787870909', desc: 'ICICI FD', status: 'LIVE'
   },
   {
     no: '', owner: 'Total', type: '',
-    cdate: '1,28,925', rate: '8.40%', amt: '1,50,000', mdate: "", mvalue: "1,50,000",
-    number: "", desc: "", status: ""
+    cdate: '1,28,925', rate: '8.40%', amt: '1,50,000', mdate: '', mvalue: '1,50,000',
+    number: '', desc: '', status: ''
   },
 
 
@@ -394,23 +404,23 @@ export interface PeriodicElement5 {
 const ELEMENT_DATA5: PeriodicElement5[] = [
   {
     no: '1.', owner: 'Ronak Hasmukh Hindocha',
-    cvalue: '60,000', rate: '8.40%', amt: '1,00,000', mdate: "18/09/2019",
-    number: "980787870909", desc: "ICICI FD", status: "LIVE"
+    cvalue: '60,000', rate: '8.40%', amt: '1,00,000', mdate: '18/09/2019',
+    number: '980787870909', desc: 'ICICI FD', status: 'LIVE'
   },
   {
     no: '2.', owner: 'Rupa Ronak Hindocha',
-    cvalue: '60,000', rate: '8.40%', amt: '1,00,000', mdate: "18/09/2019",
-    number: "980787870909", desc: "ICICI FD", status: "LIVE"
+    cvalue: '60,000', rate: '8.40%', amt: '1,00,000', mdate: '18/09/2019',
+    number: '980787870909', desc: 'ICICI FD', status: 'LIVE'
   },
   {
     no: '3.', owner: 'Ronak Hasmukh Hindocha',
-    cvalue: '60,000', rate: '8.40%', amt: '1,00,000', mdate: "18/09/2019",
-    number: "980787870909", desc: "ICICI FD", status: "LIVE"
+    cvalue: '60,000', rate: '8.40%', amt: '1,00,000', mdate: '18/09/2019',
+    number: '980787870909', desc: 'ICICI FD', status: 'LIVE'
   },
   {
     no: '', owner: 'Total',
-    cvalue: '1,28,925', rate: '8.40%', amt: '1,50,000', mdate: "",
-    number: "", desc: "", status: ""
+    cvalue: '1,28,925', rate: '8.40%', amt: '1,50,000', mdate: '',
+    number: '', desc: '', status: ''
   },
 
 
@@ -436,34 +446,34 @@ const ELEMENT_DATA6: PeriodicElement6[] = [
     no: '1.',
     owner: 'Ronak Hasmukh Hindocha',
     cvalue: '60,000',
-    camt: "1,00,000",
+    camt: '1,00,000',
     amt: '1,00,000',
-    cdate: "18/09/2019",
+    cdate: '18/09/2019',
     rate: '8.40%',
-    mvalue: "18/09/2019",
-    tenure: "12",
-    type: "Tax free",
-    desc: "ICICI FD",
-    status: "LIVE"
+    mvalue: '18/09/2019',
+    tenure: '12',
+    type: 'Tax free',
+    desc: 'ICICI FD',
+    status: 'LIVE'
   },
   {
     no: '2.',
     owner: 'Rupa Ronak Hindocha',
     cvalue: '60,000',
-    camt: "1,00,000",
+    camt: '1,00,000',
     amt: '1,00,000',
-    cdate: "18/09/2019",
+    cdate: '18/09/2019',
     rate: '8.40%',
-    mvalue: "18/09/2019",
-    tenure: "12",
-    type: "Tax free",
-    desc: "ICICI FD",
-    status: "LIVE"
+    mvalue: '18/09/2019',
+    tenure: '12',
+    type: 'Tax free',
+    desc: 'ICICI FD',
+    status: 'LIVE'
   },
   {
     no: '', owner: 'Total',
-    cvalue: '1,28,925', camt: "1,50,000", amt: '1,50,000', cdate: "", rate: '', mvalue: "", tenure: "", type: "",
-    desc: "", status: ""
+    cvalue: '1,28,925', camt: '1,50,000', amt: '1,50,000', cdate: '', rate: '', mvalue: '', tenure: '', type: '',
+    desc: '', status: ''
   },
 
 

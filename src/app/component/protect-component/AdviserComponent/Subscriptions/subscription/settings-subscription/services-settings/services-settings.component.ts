@@ -32,7 +32,7 @@ export class ServicesSettingsComponent implements OnInit {
     (singleService=='')?singleService='':singleService.flag=data
     const fragmentData = {
       flag: 'app-subscription-upper-slider',
-      // Flag: 'plan',
+      // flag: 'plan',
       // planData: '',
       data: singleService,
       state: 'open',
