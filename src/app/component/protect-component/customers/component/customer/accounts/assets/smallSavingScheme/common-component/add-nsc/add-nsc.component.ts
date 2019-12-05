@@ -59,8 +59,8 @@ export class AddNscComponent implements OnInit {
       ownerName: [String(data.ownerName), [Validators.required]],
       amountInvested: [data.amountInvested, [Validators.required,Validators.min(100)]],
       commDate: [this.commDate, [Validators.required]],
-      Tenure: [String(data.tenure), [Validators.required]],
-      ownershipType: [String(data.ownerTypeId), [Validators.required]]
+      Tenure: [(data.tenure)?String(data.tenure):'5', [Validators.required]],
+      ownershipType: [(data.ownerTypeId)?String(data.ownerTypeId):'1', [Validators.required]]
 
     })
     this.nscFormOptionalField = this.fb.group({
@@ -96,19 +96,23 @@ export class AddNscComponent implements OnInit {
       finalTransctList.push(obj)
     });
     }
-    if (this.ownerName == undefined) {
-      return
-    }
+    // if (this.ownerName == undefined) {
+    //   return
+    // }
     else if (this.nscFormField.get('amountInvested').invalid) {
+      this.nscFormField.get('amountInvested').markAsTouched();
       return
     }
     else if (this.nscFormField.get('commDate').invalid) {
+      this.nscFormField.get('commDate').markAsTouched();
       return
     }
     else if (this.nscFormField.get('Tenure').invalid) {
+      this.nscFormField.get('Tenure').markAsTouched();
       return
     }
     else if (this.nscFormField.get('ownershipType').invalid) {
+      this.nscFormField.get('ownershipType').markAsTouched();
       return
     }
     else {

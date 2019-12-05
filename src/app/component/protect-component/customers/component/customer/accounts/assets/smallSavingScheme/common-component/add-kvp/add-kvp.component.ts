@@ -60,7 +60,7 @@ export class AddKvpComponent implements OnInit {
       ownerName: [data.ownerName, [Validators.required]],
       amtInvested: [data.amountInvested, [Validators.required,Validators.min(1000)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
-      ownerType: [String(data.ownershipTypeId), [Validators.required]],
+      ownerType: [data.ownershipTypeId?String(data.ownershipTypeId):'1', [Validators.required]],
     })
     this.KVPOptionalFormScheme = this.fb.group({
       poBranch: [, [Validators.required]],
@@ -72,16 +72,17 @@ export class AddKvpComponent implements OnInit {
   }
 
   addKVP() {
-    if (this.ownerName == undefined) {
-      return
-    }
-    else if (this.KVPFormScheme.get('amtInvested').invalid) {
+     
+    if (this.KVPFormScheme.get('amtInvested').invalid) {
+      this.KVPFormScheme.get('amtInvested').markAsTouched();
       return
     }
     else if (this.KVPFormScheme.get('commDate').invalid) {
+      this.KVPFormScheme.get('commDate').markAsTouched();
       return
     }
     else if (this.KVPFormScheme.get('ownerType').invalid) {
+      this.KVPFormScheme.get('ownerType').invmarkAsTouched();
       return
     }
     else {

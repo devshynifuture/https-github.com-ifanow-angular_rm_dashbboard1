@@ -60,7 +60,7 @@ export class AddPoRdComponent implements OnInit {
       ownerName: [data.ownerName, [Validators.required]],
       monthlyContribution: [data.monthlyContribution, [Validators.required,Validators.min(10)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
-      ownership: [String(data.ownerTypeId), [Validators.required]]
+      ownership: [(data.ownerTypeId)?String(data.ownerTypeId):'1', [Validators.required]]
     })
     this.PORDFormoptionalForm = this.fb.group({
       rdNum: [data.rdNumber],
@@ -73,16 +73,16 @@ export class AddPoRdComponent implements OnInit {
 
   }
   addPORD() {
-    if (this.ownerName == undefined) {
-      return
-    }
-    else if (this.PORDForm.get('monthlyContribution').invalid) {
+    if (this.PORDForm.get('monthlyContribution').invalid) {
+      this.PORDForm.get('monthlyContribution').markAsTouched();
       return
     }
     else if (this.PORDForm.get('commDate').invalid) {
+      this.PORDForm.get('commDate').markAsTouched();
       return
     }
     else if (this.PORDForm.get('ownership').invalid) {
+      this.PORDForm.get('ownership').markAsTouched();
       return
     }
     else {

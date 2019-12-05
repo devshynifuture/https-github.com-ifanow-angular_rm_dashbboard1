@@ -54,7 +54,7 @@ export class AddScssComponent implements OnInit {
       ownerName: [data.ownerName, [Validators.required]],
       amtInvested: [data.amountInvested, [Validators.required,Validators.min(1500),Validators.max(1500000)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
-      ownershipType: [String(data.ownerTypeId), [Validators.required]]
+      ownershipType: [data.ownerTypeI?String(data.ownerTypeId):'1', [Validators.required]]
     })
     this.scssOptionalSchemeForm = this.fb.group({
       poBranch: [],
@@ -68,16 +68,17 @@ export class AddScssComponent implements OnInit {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
   }
   addScss() {
-    if (this.ownerName == undefined) {
-      return
-    }
-    else if (this.scssSchemeForm.get('amtInvested').invalid) {
+   
+     if (this.scssSchemeForm.get('amtInvested').invalid) {
+      this.scssSchemeForm.get('amtInvested').markAsTouched();
       return
     }
     else if (this.scssSchemeForm.get('commDate').invalid) {
+      this.scssSchemeForm.get('commDate').markAsTouched();
       return
     }
     else if (this.scssSchemeForm.get('ownershipType').invalid) {
+      this.scssSchemeForm.get('ownershipType').markAsTouched();
       return
     }
     else {
