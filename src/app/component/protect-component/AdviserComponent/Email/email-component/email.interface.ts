@@ -4,4 +4,5 @@ export interface EmailInterfaceI {
     position: number;
     weight: number;
     symbol: string;
+    isRead: boolean;
 }

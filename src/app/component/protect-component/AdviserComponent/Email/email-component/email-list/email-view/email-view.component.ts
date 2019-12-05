@@ -25,6 +25,7 @@ export class EmailViewComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.emailObj['isRead'] = true;
     this.emailSubscription.unsubscribe();
   }
 

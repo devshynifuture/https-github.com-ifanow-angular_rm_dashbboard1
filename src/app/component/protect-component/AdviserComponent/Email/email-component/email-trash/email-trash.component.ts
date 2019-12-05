@@ -7,16 +7,16 @@ import { Component, OnInit } from '@angular/core';
 import { EmailInterfaceI } from '../email.interface';
 
 const ELEMENT_DATA: EmailInterfaceI[] = [
-  { position: 1, name: 'trash Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'trash Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'trashLithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'trash Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'trash Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'trash Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'trash Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'trash Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'trash Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'trash Neon', weight: 20.1797, symbol: 'Ne' },
+  { position: 1, name: 'trash Hydrogen', weight: 1.0079, symbol: 'H', isRead: false },
+  { position: 2, name: 'trash Helium', weight: 4.0026, symbol: 'He', isRead: false },
+  { position: 3, name: 'trashLithium', weight: 6.941, symbol: 'Li', isRead: false },
+  { position: 4, name: 'trash Beryllium', weight: 9.0122, symbol: 'Be', isRead: false },
+  { position: 5, name: 'trash Boron', weight: 10.811, symbol: 'B', isRead: false },
+  { position: 6, name: 'trash Carbon', weight: 12.0107, symbol: 'C', isRead: false },
+  { position: 7, name: 'trash Nitrogen', weight: 14.0067, symbol: 'N', isRead: false },
+  { position: 8, name: 'trash Oxygen', weight: 15.9994, symbol: 'O', isRead: false },
+  { position: 9, name: 'trash Fluorine', weight: 18.9984, symbol: 'F', isRead: false },
+  { position: 10, name: 'trash Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
 ];
 
 
@@ -66,4 +66,7 @@ export class EmailTrashComponent implements OnInit {
     this.router.navigate(['admin', 'emails', 'inbox', 'view']);
   }
 
+  doRefresh() {
+    this.emailService.refreshList('trash');
+  }
 }

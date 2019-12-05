@@ -8,17 +8,18 @@ import { EmailInterfaceI } from '../email.interface';
 
 
 const ELEMENT_DATA: EmailInterfaceI[] = [
-  { position: 1, name: 'draft Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'draft Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'draftLithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'draft Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'draft Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'draft Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'draft Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'draft Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'draft Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'draft Neon', weight: 20.1797, symbol: 'Ne' },
+  { position: 1, name: 'draft Hydrogen', weight: 1.0079, symbol: 'H', isRead: false },
+  { position: 2, name: 'draft Helium', weight: 4.0026, symbol: 'He', isRead: false },
+  { position: 3, name: 'draftLithium', weight: 6.941, symbol: 'Li', isRead: false },
+  { position: 4, name: 'draft Beryllium', weight: 9.0122, symbol: 'Be', isRead: false },
+  { position: 5, name: 'draft Boron', weight: 10.811, symbol: 'B', isRead: false },
+  { position: 6, name: 'draft Carbon', weight: 12.0107, symbol: 'C', isRead: false },
+  { position: 7, name: 'draft Nitrogen', weight: 14.0067, symbol: 'N', isRead: false },
+  { position: 8, name: 'draft Oxygen', weight: 15.9994, symbol: 'O', isRead: false },
+  { position: 9, name: 'draft Fluorine', weight: 18.9984, symbol: 'F', isRead: false },
+  { position: 10, name: 'draft Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
 ];
+
 
 @Component({
   selector: 'app-email-draft',
@@ -63,6 +64,10 @@ export class EmailDraftComponent implements OnInit {
   gotoEmailView(dataObj: Object) {
     this.emailService.sendNextData(dataObj);
     this.router.navigate(['admin', 'emails', 'inbox', 'view']);
+  }
+
+  doRefresh() {
+    this.emailService.refreshList('draft');
   }
 
 }

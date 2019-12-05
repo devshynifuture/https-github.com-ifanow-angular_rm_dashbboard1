@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { apiConfig } from './../../../../config/main-config';
 import { appConfig } from './../../../../config/component-config';
 import { HttpService } from './../../../../http-service/http-service';
@@ -13,32 +13,58 @@ export class EmailServiceService {
   private dataSourceOneMailView = new BehaviorSubject<Object>('');
   data = this.dataSourceOneMailView.asObservable();
 
+  refreshList(data) {
+    switch (data) {
+      case 'archive': this.getEmailArchiveList(data);
+        break;
+      case 'draft': this.getEmailDraftList(data);
+        break;
+      case 'inbox': this.getEmailList(data);
+        break;
+      case 'trash': this.getEmailTrashList(data);
+        break;
+      case 'sent': this.getEmailSentList(data);
+        break;
+
+      default: throwError('Cannot Refresh');
+    }
+  }
 
   constructor(public https: HttpClient, public http: HttpService) { }
 
   getEmailList(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
+
+    alert('refreshed ' + data);
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
   }
 
   getEmailDraftList(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
+
+    alert('refreshed ' + data);
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
   }
 
   getEmailTrashList(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
+
+    alert('refreshed ' + data);
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
   }
 
   getEmailSentList(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
+
+    alert('refreshed ' + data);
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
   }
 
   getEmailArchiveList(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
+
+    alert('refreshed ' + data);
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
   }
 
   // getLabelList(){
