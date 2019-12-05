@@ -690,7 +690,7 @@ mat-tab-group[vertical] {
     width: 100%;
     top: 0;
     background:#fff;
-  z-index: 10;
+  z-index: 999;
 
     .left-icons {
         position: fixed;
@@ -1067,7 +1067,14 @@ mat-tab-group[vertical] {
 
     }
 }
-
+#ui-calculators{
+    .mat-tab-body-content{
+        overflow: hidden !important;
+    }
+    .mat-stroked-button .mat-button-wrapper>*{
+        vertical-align: text-top !important;
+    }
+}
 // #ui-router-outlet {
 //   z-index: 10;
 // }

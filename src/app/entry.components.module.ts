@@ -70,6 +70,7 @@ import { IndividualIncomeInfoComponent } from './component/protect-component/cus
 import { AddExpensesComponent } from './component/protect-component/customers/component/common-component/add-expenses/add-expenses.component';
 import { KeyInfoComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/key-info/key-info.component';
 import { EmailAddTaskComponent } from './component/protect-component/AdviserComponent/Email/email-component/email-list/email-add-task/email-add-task.component';
+import { CalculatorsComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/calculators/calculators.component';
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -207,7 +208,8 @@ export const componentList = [
   IndividualIncomeInfoComponent,
   AddExpensesComponent,
   KeyInfoComponent,
-  EmailAddTaskComponent
+  EmailAddTaskComponent,
+  CalculatorsComponent
 ];
 
 @NgModule({

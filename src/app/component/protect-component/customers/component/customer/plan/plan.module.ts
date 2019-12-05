@@ -24,6 +24,7 @@ import {AddPlaninsuranceComponent} from "./insurance-plan/add-planinsurance/add-
 
 
 
+
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
 // import { FactShitComponent } from './component/common-component/fact-shit/fact-shit.component';
 // import { TransactionsComponent } from './component/common-component/transactions/transactions.component';
@@ -47,6 +48,7 @@ import {AddPlaninsuranceComponent} from "./insurance-plan/add-planinsurance/add-
     IncomeComponent,
     ExpensesComponent,
     AddPlaninsuranceComponent,
+    
     
   ],
   imports: [

@@ -1,0 +1,68 @@
+<div class="bg-white">
+        <div class="row bb-1  popup-header-fix w-60">
+          <div class="col-md-10 p-0">
+            <h4 class="f-16 mb-0 pb-20 wrapper-20">CALCULATORS - NEW HOUSE</h4>
+          </div>
+          <div class="col-md-2">
+            <i class="material-icons right pt-16 pb-12 c-p" (click)="close('close')">
+            close
+            </i>
+          </div>
+        </div>
+        <div class="row pt-72">
+          <div class="col-md-12">
+            <mat-tab-group mat-align-tabs="center" animationDuration="0ms" id="ui-calculators">
+              <mat-tab label="Loan">
+                  <div class="row pt-28">
+                      <div class="col-md-6">
+                          <h5 class="m-0 f-500 pt-8 text-black">INPUT</h5>
+                     </div>
+                      <div class="col-md-3">
+                            <h5 class="m-0 pt-8 f-500 text-black">OUTPUT</h5>
+                      </div>
+                      <div class="col-md-3">
+                            <button mat-stroked-button class="br-0 btn-primary pl-8 pr-8"><img src="/assets/images/svg/plus.svg" class="pr-8">ADD TO GOAL</button>
+                      </div>
+                  </div>
+                     
+                          <div class="row">
+                              <div class="col-md-6">
+                                <div class="row pt-8">
+                              <div class="col-md-6">
+                                  <p class="m-0 roboto">Monthly income</p>
+                              </div>
+                              <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                            <mat-form-field class="w-100">
+                                                <input matInput #amountInvest type="text" class="form-control br-0" value="₹ 1,12,000">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="row pt-4">
+                                            <div class="col-md-11 p-0 text-right">
+                                                <p class="m-0 roboto text-primitive f-12">Reset</p>
+                                            </div>
+                                        </div>
+                              </div>
+                          </div>
+                              </div>
+                              <div class="col-md-6"></div>
+                          </div>
+              </mat-tab>
+              <mat-tab label="Rent vs buy">Content 2</mat-tab>
+              <mat-tab label="Tax impact">Content 2</mat-tab>
+              <mat-tab label="Step up">Content 3</mat-tab>
+              <mat-tab label="Cost of delay">Content 3</mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-fixed wrapper-12 w-60">
+        <div class="row">
+          <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="close('close')">Cancel</h5>
+          </div>
+          <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+          </div>
+        </div>
+      </div>

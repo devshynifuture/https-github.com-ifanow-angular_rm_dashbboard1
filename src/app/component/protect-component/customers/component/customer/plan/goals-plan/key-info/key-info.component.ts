@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-key-info',
@@ -8,11 +9,14 @@ import { Component, OnInit } from '@angular/core';
 export class KeyInfoComponent implements OnInit {
   displayedColumns = ['year', 'value', 'fvalue', 'equity','debt','equity1','debt1'];
   dataSource = ELEMENT_DATA;
-  constructor() { }
+  constructor(private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
   }
-
+  close() {
+    // this.addMoreFlag = false;
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
+  }
 }
 export interface PeriodicElement {
   year: string;
