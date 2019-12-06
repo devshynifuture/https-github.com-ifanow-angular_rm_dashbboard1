@@ -103,13 +103,28 @@ export class UtilService {
     return datePipe.transform(date, 'yyyy-MM-dd');
   }
   static exportAsExcelFile(value, excelFileName: string): void {
+
+    value.nativeElement.style.fontSize = "22";
+    value.nativeElement.style.color = "red";
+    value.nativeElement.style.widh = "22";
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(value.nativeElement);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    var wscols = [
+      { wch: 6 },
+      { wch: 7 },
+      { wch: 10 },
+      { wch: 20 }
+    ];
+    XLSX.utils.cell_set_number_format(ws['B1'], "0%");
+    var custfmt = '';
+    var custfmt1 = ''
+    ws['B2'].h = custfmt1;
+    ws['C2'].s = custfmt;
     XLSX.utils.book_append_sheet(wb, ws, excelFileName);
     XLSX.writeFile(wb, excelFileName + '.xlsx');
-    // this.saveAsExcelFile(excelBuffer, excelFileName);
+
   }
-   static saveAsExcelFile(buffer: any, fileName: string): void {
+  static saveAsExcelFile(buffer: any, fileName: string): void {
     const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
     FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
   }

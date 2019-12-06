@@ -18,8 +18,7 @@ import { DetailedViewEPSComponent } from '../add-eps/detailed-view-eps/detailed-
 import { DetailedViewGratuityComponent } from '../add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
 import { DetaildedViewSuperannuationComponent } from '../add-superannuation/detailded-view-superannuation/detailded-view-superannuation.component';
 import * as _ from 'lodash';
-import { utils } from 'protractor';
-import * as XLSX from 'xlsx';
+import * as excel from 'exceljs'
 
 @Component({
   selector: 'app-retirement-account',
@@ -48,7 +47,6 @@ export class RetirementAccountComponent implements OnInit {
   totalCurrentValue: any;
   dataEPFList: any;
 
-  
   @ViewChild('epfListTable', { static: false }) epfListTableSort: MatSort;
   @ViewChild('npsListTable', { static: false }) npsListTableSort: MatSort;
   @ViewChild('gratuityListTable', { static: false }) gratuityListTableSort: MatSort;
@@ -64,7 +62,23 @@ export class RetirementAccountComponent implements OnInit {
 
   ExportTOExcel(value) {
     var excelElement = (value == 'eps') ? this.EPS : (value == 'Gratuity') ? this.Gratuity : (value == 'Superannuation') ? this.Superannuation : (value == 'epf') ? this.EPF : this.NPS
-    UtilService.exportAsExcelFile(excelElement,value)
+    // UtilService.exportAsExcelFile(excelElement,value)
+    const workbook = new excel.Workbook();
+    const worksheet = workbook.addWorksheet(value.nativeElement);
+    worksheet.getRow(1).eachCell((cell) => {
+      cell.font = { bold: true };
+    });
+    const totalsRow = worksheet.addRow([
+      'Weekly Totals',
+      ]);
+    totalsRow.eachCell((cell) => {
+      cell.font = { bold: true };
+      cell.border = {
+        top: { style: 'thin' }, bottom: { style: 'double' },
+      };
+    });
+    
+
   }
   exldata: any;
   excelDataNPS = [];
