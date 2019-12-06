@@ -254,9 +254,7 @@ export const appConfig = {
   GET_INCOME_LIST: 'account/income/get',
   ADD_INCOME_LIST: 'account/income/add',
   EDIT_INCOME_LIST: 'account/income/edit',
-
-
-  // gmail
-
+  GET_GLOBAL_GROWTH_RATE: 'account/income/growth/rate/global/get',
+  DELETE_INCOME: 'account/income/delete?',
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save'
 };

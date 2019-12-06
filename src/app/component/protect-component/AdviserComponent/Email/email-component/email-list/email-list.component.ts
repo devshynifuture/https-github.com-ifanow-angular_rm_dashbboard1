@@ -1,5 +1,5 @@
+import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-
 
 @Component({
   selector: 'app-email-list',
@@ -12,5 +12,6 @@ export class EmailListComponent implements OnInit {
 
   ngOnInit() {
   }
+
 
 }

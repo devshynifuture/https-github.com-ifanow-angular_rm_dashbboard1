@@ -1,3 +1,4 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { UtilService } from '../../../../../../../services/util.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
@@ -15,9 +16,14 @@ export class EmailViewComponent implements OnInit, AfterViewInit {
   emailObj: Object;
   constructor(private emailService: EmailServiceService,
     private _bottomSheet: MatBottomSheet,
-    private subInjectService: SubscriptionInject) { }
+    private subInjectService: SubscriptionInject,
+    private route: Router) { }
   emailSubscription;
+
   ngOnInit() {
+    if (!(this.emailObj)) {
+      this.route.navigate(['admin', 'emails', 'inbox']);
+    }
     this.emailSubscription = this.emailService.data.subscribe(response => {
       this.emailObj = response;
       console.log(response);
