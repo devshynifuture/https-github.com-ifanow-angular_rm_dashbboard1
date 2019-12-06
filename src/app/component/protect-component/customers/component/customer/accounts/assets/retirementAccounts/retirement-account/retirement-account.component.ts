@@ -3,7 +3,7 @@ import { AddSuperannuationComponent } from './../add-superannuation/add-superann
 import { AddGratuityComponent } from './../add-gratuity/add-gratuity.component';
 import { NpsSummaryPortfolioComponent } from './../add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
 import { AddEPFComponent } from './../add-epf/add-epf.component';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewChildren } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -18,7 +18,10 @@ import { DetailedViewEPSComponent } from '../add-eps/detailed-view-eps/detailed-
 import { DetailedViewGratuityComponent } from '../add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
 import { DetaildedViewSuperannuationComponent } from '../add-superannuation/detailded-view-superannuation/detailded-view-superannuation.component';
 import * as _ from 'lodash';
-import * as excel from 'exceljs'
+import * as Excel from 'exceljs/dist/exceljs';
+import { saveAs } from 'file-saver'
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { format } from 'ssf/types';
 
 @Component({
   selector: 'app-retirement-account',
@@ -47,6 +50,7 @@ export class RetirementAccountComponent implements OnInit {
   totalCurrentValue: any;
   dataEPFList: any;
 
+
   @ViewChild('epfListTable', { static: false }) epfListTableSort: MatSort;
   @ViewChild('npsListTable', { static: false }) npsListTableSort: MatSort;
   @ViewChild('gratuityListTable', { static: false }) gratuityListTableSort: MatSort;
@@ -57,29 +61,86 @@ export class RetirementAccountComponent implements OnInit {
   @ViewChild('Superannuation', { static: false }) Superannuation: ElementRef;
   @ViewChild('Gratuity', { static: false }) Gratuity: ElementRef;
   @ViewChild('EPS', { static: false }) EPS: ElementRef;
+  @ViewChildren(FormatNumberDirective) formatNumber;
   title = 'Excel';
+  excelData: any;
+  footer = [];
 
 
-  ExportTOExcel(value) {
+   async ExportTOExcel(value) {
     var excelElement = (value == 'eps') ? this.EPS : (value == 'Gratuity') ? this.Gratuity : (value == 'Superannuation') ? this.Superannuation : (value == 'epf') ? this.EPF : this.NPS
-    // UtilService.exportAsExcelFile(excelElement,value)
-    const workbook = new excel.Workbook();
-    const worksheet = workbook.addWorksheet(value.nativeElement);
-    worksheet.getRow(1).eachCell((cell) => {
-      cell.font = { bold: true };
-    });
-    const totalsRow = worksheet.addRow([
-      'Weekly Totals',
-      ]);
-    totalsRow.eachCell((cell) => {
-      cell.font = { bold: true };
-      cell.border = {
-        top: { style: 'thin' }, bottom: { style: 'double' },
-      };
-    });
-    
+    const wb = new Excel.Workbook()
+    this.excelData = []
+    var data = []
 
+    //------------header----------//
+    var headerData = [
+      { width: 20, key: 'Owner' },
+      { width: 20, key: 'Current value' },
+      { width: 25, key: 'Employee’s contribution' },
+      { width: 25, key: 'Employer’s contribution' },
+      { width: 18, key: 'Rate of return' },
+      { width: 18, key: 'Balance mentioned' },
+      { width: 20, key: 'Balance as on' },
+      { width: 15, key: 'Maturity year' },
+      { width: 15, key: 'Description' },
+      { width: 10, key: 'Status' },
+    ];
+    //-----------data--------------//
+    this.dataEPFList.filteredData.forEach(element => {
+      data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue),
+      this.formatNumber.first.formatAndRoundOffNumber(element.employeesMonthlyContribution),
+      this.formatNumber.first.formatAndRoundOffNumber(element.employersMonthlyContribution),
+      (element.rateOfReturn == undefined) ? 0 : this.formatNumber.first.formatAndRoundOffNumber(element.rateOfReturn),
+      this.formatNumber.first.formatAndRoundOffNumber(element.currentEpfBalance),
+      new Date(element.balanceAsOnDate), element.maturityYear, element.description, element.status]
+      this.excelData.push(Object.assign(data))
+    });
+    //-------------footerData------------//
+
+    var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfcurrentValue),
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfemployersMonthlyContribution),
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfemployeesMonthlyContribution), '',
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfcurrentEpfBalance), '', '', '', '']
+    this.footer.push(Object.assign(footerData))
+
+    //----------logic work book---------//
+  //  UtilService.exportAs(headerData,this.excelData,this.footer)
+    const ws = wb.addWorksheet()
+    //ws.mergeCells('A1', 'M1');
+    const meta1 = ws.getCell('A1')
+    const meta2 = ws.getCell('A2')
+    const meta3 = ws.getCell('A3')
+    meta1.font = { bold: true }
+    meta2.font = { bold: true }
+    meta3.font = { bold: true }
+    ws.getCell('A1').value = 'Type of report - ' + value;
+    ws.getCell('A2').value = 'Client name - Rahul Jain';
+    ws.getCell('A3').value = 'Report as on - ' + new Date();
+    //ws.getCell('A1').alignment = { horizontal: 'center' };
+    const head = ws.getRow(5)
+    head.font = { bold: true }
+    head.fill = {
+      type: 'pattern',
+      pattern: 'darkVertical',
+      fgColor: {
+        argb: '#f5f7f7'
+      }
+    };
+    ws.getRow(5).values = headerData;
+    this.excelData.forEach(element => {
+      ws.addRow(element)
+    });
+    this.footer.forEach(element => {
+      const last = ws.addRow(element)
+      last.font = { bold: true }
+    });
+    const buf = await wb.xlsx.writeBuffer()
+
+   saveAs(new Blob([buf]), 'Rahul Jain-' + value + '-' + new Date() + '.xlsx')
   }
+
+
   exldata: any;
   excelDataNPS = [];
   excelDataSuperannuation = [];
