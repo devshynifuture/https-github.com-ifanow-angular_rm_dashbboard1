@@ -22,6 +22,14 @@ export class PlanService {
   }
   editIncomeData(data)
   {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.EDIT_INCOME_LIST,data)
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_INCOME_LIST,data)
+  }
+  getGlobalGrowthRateData(data)
+  {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAL_GROWTH_RATE,data)
+  }
+  deleteIncome(data)
+  {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INCOME,data)
   }
 }

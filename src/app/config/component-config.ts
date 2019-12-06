@@ -176,6 +176,7 @@ export const appConfig = {
   GET_PREFERENCE_BILLER_PROFILE: 'subscription/billerprofile/get',
   GET_PREFERENCE_INVOICE_QUOTATIONS_SUBSCRIPTION: 'subscription/setting/prefix/get',
   UPDATE_PREFERENCE_INVOICE_QUOTATIONS_SUBSCRIPTION: 'subscription/setting/prefix/update',
+  PREFERENCE_INVOICE_QUOTATIONS_SUBSCRIPTION_SAVE: 'subscription/setting/prefix/save',
   SAVE_PREFERENCE_INVOICE_QUOTATIONS_SUBSCRIPTION: 'subscription/setting/billerprofile/save',
   DASHBOARD_LETS_BEGIN_SUBSCRIPTION: 'subscription/dashboard/record/payment/add',
   GET_CLIENT_SUBSCRIPTION_LIST: 'subscription/client/get',
@@ -253,5 +254,7 @@ export const appConfig = {
   
   GET_INCOME_LIST:'account/income/get',
   ADD_INCOME_LIST:'account/income/add',
-  EDIT_INCOME_LIST:'account/income/edit'
+  EDIT_INCOME_LIST:'account/income/edit',
+  GET_GLOBAL_GROWTH_RATE:'account/income/growth/rate/global/get',
+  DELETE_INCOME:'account/income/delete?'
 };

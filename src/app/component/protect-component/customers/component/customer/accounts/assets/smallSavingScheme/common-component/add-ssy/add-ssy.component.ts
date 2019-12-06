@@ -57,7 +57,7 @@ export class AddSsyComponent implements OnInit {
       balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       futureAppx: [data.futureApproxContribution, [Validators.required]],
-      frquency: [String(data.frequency), [Validators.required]]
+      frquency: [data.frequency?String(data.frequency):'1', [Validators.required]]
     })
     this.ssySchemeOptionalForm = this.fb.group({
       description: [data.description],
@@ -84,33 +84,42 @@ export class AddSsyComponent implements OnInit {
   
   addSSYScheme() {
     let finalTransctList = []
-    this.transactionData.forEach(element => {
-      let obj = {
-        "date": element.controls.date.value._d,
-        "amount": element.controls.amount.value,
-        "paymentType": element.controls.transactionType.value
-      }
-      finalTransctList.push(obj)
-    });
-    if (this.ownerName == undefined) {
-      return
+    if(this.transactionData)
+    {
+      this.transactionData.forEach(element => {
+        let obj = {
+          "date": element.controls.date.value._d,
+          "amount": element.controls.amount.value,
+          "paymentType": element.controls.transactionType.value
+        }
+        finalTransctList.push(obj)
+      });
     }
+    // if (this.ownerName == undefined) {
+    //   return
+    // }
     else if (this.ssySchemeForm.get('guardian').invalid) {
+      this.ssySchemeForm.get('guardian').markAsTouched();
       return
     }
     else if (this.ssySchemeForm.get('accBalance').invalid) {
+      this.ssySchemeForm.get('accBalance').markAsTouched();
       return
     }
     else if (this.ssySchemeForm.get('balanceAsOn').invalid) {
+      this.ssySchemeForm.get('balanceAsOn').markAsTouched();
       return
     }
     else if (this.ssySchemeForm.get('commDate').invalid) {
+      this.ssySchemeForm.get('commDate').markAsTouched();
       return
     }
     else if (this.ssySchemeForm.get('futureAppx').invalid) {
+      this.ssySchemeForm.get('futureAppx').markAsTouched();
       return
     }
     else if (this.ssySchemeForm.get('frquency').invalid) {
+      this.ssySchemeForm.get('frquency').markAsTouched();
       return
     }
     else {

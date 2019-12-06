@@ -169,7 +169,7 @@
           </div>
       </div>
     </mat-tab>
-    <mat-tab [disabled]="profileDetailsForm.invalid" label="Logo" class="b-a">
+    <mat-tab [disabled]="profileDetailsForm.invalid" label="Logo" >
       <div class="wrapper-40" [formGroup]="logUrl">
         <div class="row pt-40">
           <div class="col-md-12">
@@ -195,7 +195,7 @@
         </div>
       </div>
     </mat-tab>
-    <mat-tab [disabled]="logUrl.invalid" label="Bank details">
+    <mat-tab [disabled]="profileDetailsForm.invalid" label="Bank details">
       <div [formGroup]="bankDetailsForm" class="row pt-40 pb-32">
           <div class="col-md-12">
             <div class="row pt-20">
@@ -370,7 +370,7 @@
           </div>
       </div>
     </mat-tab>
-    <mat-tab [disabled]="bankDetailsForm.invalid" label="Miscellaneous">
+    <mat-tab [disabled]="profileDetailsForm.invalid" label="Miscellaneous">
       <div [formGroup]="MiscellaneousData" class="row pt-40 pb-40">
         <div class="col-md-12">
           <div class="row pt-20">

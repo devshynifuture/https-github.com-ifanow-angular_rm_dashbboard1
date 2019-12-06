@@ -10,7 +10,15 @@
 </div>
 <div class="pt-72 pl-24 pr-24 pb-48 mb-48">
     <div [formGroup]="KVPFormScheme">
-        <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
+        <div class="row">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Owner</h5>
+                <p class="m-0 f-12 text-custom">In whose name is this asset</p>
+            </div>
+            <div class="col-md-5">
+                <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
+            </div>
+        </div>
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Amount invested</h5>
@@ -18,10 +26,10 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput autocomplete="off" formControlName="amtInvested" #amountInvest type="text" maxlength="20"
-                            class="form-control br-0 rupess">
+                        <input matInput autocomplete="off" formControlName="amtInvested" #amountInvest type="text"
+                            maxlength="20" class="form-control br-0 rupess">
                         <mat-error
-                            *ngIf="KVPFormScheme.get('amtInvested').errors?.required && KVPFormScheme.get('amtInvested').touched"
+                            *ngIf="KVPFormScheme.get('amtInvested').errors?.required"
                             class="f-12 pt-4">
                             Amount invested is required
                         </mat-error>

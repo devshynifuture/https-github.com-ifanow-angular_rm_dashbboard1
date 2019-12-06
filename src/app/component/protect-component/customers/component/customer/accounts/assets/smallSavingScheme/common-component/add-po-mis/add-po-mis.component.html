@@ -27,7 +27,15 @@
             </div>
         </div>
     </div> -->
-    <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
+    <div class="row">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Owner</h5>
+            <p class="m-0 f-12 text-custom">In whose name is this asset</p>
+        </div>
+        <div class="col-md-5">
+            <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
+        </div>
+    </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Amount invested</h5>
@@ -61,7 +69,7 @@
                     <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                     <mat-datepicker #KVPpicker></mat-datepicker>
                     <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isDateValid && getFormControl().commencementdate.invalid || getFormControl().commencementdate.touched && getFormControl().commencementdate.invalid)}">
+                    *ngIf="pomisForm.get('commencementdate').errors?.required">
                         Commencement date is required
                     </mat-error>
                 </mat-form-field>
@@ -80,7 +88,7 @@
                     <mat-option value="1">Single </mat-option>
                 </mat-select>
                 <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isTypeValid && getFormControl().ownershipType.invalid || getFormControl().ownershipType.touched && getFormControl().ownershipType.invalid)}">
+                *ngIf="pomisForm.get('ownershipType').errors?.required">
                     This field is required
                 </mat-error>
             </mat-form-field>
