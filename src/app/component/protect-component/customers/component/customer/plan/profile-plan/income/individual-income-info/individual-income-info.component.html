@@ -4,9 +4,9 @@
             <p class="f-14 roboto">Now entering Rupa Hindcha’s income</p>
         </div>
         <div class="col-md-4 text-right p-0">
-            <button mat-stroked-button class=" ba-black br-0 mat-menu-trigger addon"> Adding income {{incomePosition}}
+            <button mat-stroked-button class=" ba-black br-0 mat-menu-trigger addon"> Adding income {{incomePosition+1}}
                 of
-                {{finalIncomeAddList.length +1}} </button>
+                {{finalIncomeAddList.length}} </button>
         </div>
     </div>
 
@@ -23,11 +23,11 @@
             <div class="incomeSourcesBox d-flex">
                 <div class="ml-12">
                     <div class="memberBorderBox">
-                        <img src="assets/images/svg/rupessIcon.svg" *ngIf="singleIndividualIncome.finalIncomeList.id==1">
-                        <img src="assets/images/svg/businessIcon.svg" *ngIf="singleIndividualIncome.finalIncomeList.id==2">
-                        <img src="assets/images/svg/professionIcon.svg" *ngIf="singleIndividualIncome.finalIncomeList.id==3">
-                        <img src="assets/images/svg/rentalIcon.svg" *ngIf="singleIndividualIncome.finalIncomeList.id==4">
-                        <img src="assets/images/svg/pensionIcon.svg" *ngIf="singleIndividualIncome.finalIncomeList.id==5">
+                        <img src="assets/images/svg/rupessIcon.svg" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==1">
+                        <img src="assets/images/svg/businessIcon.svg" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==2">
+                        <img src="assets/images/svg/professionIcon.svg" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==3">
+                        <img src="assets/images/svg/rentalIcon.svg" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==4">
+                        <img src="assets/images/svg/pensionIcon.svg" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==5">
                     </div>
                     <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome">
                         {{singleIndividualIncome.finalIncomeList.name}} </p>
@@ -36,7 +36,7 @@
         </div>
         <div class="col-md-8">
             <div [formGroup]="incomeNetForm">
-                <div *ngIf="singleIndividualIncome.finalIncomeList.id==1" class="row pt-40">
+                <div *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==1" class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Income option</h5>
                     </div>
@@ -58,6 +58,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <input matInput type="number" autocomplete="off" formControlName="monthlyAmount" class="form-control br-0">
+                                <mat-error>This field is required</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -72,6 +73,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <input matInput autocomplete="off" formControlName="basicIncome" class="form-control br-0">
+                                <mat-error>This field is required</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -84,6 +86,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <input matInput autocomplete="off" formControlName="standardDeduction" class="form-control br-0">
+                                <mat-error>This field is required</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -95,7 +98,8 @@
                     <div class="col-md-5">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput autocomplete="off" formControlName="dearnessAllowance" class="form-control br-0">
+                                <input matInput autocomplete="off" formControlName="deamessAlowance" class="form-control br-0">
+                                <mat-error>This field is required</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -108,6 +112,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <input matInput autocomplete="off" formControlName="hraRecieved" class="form-control br-0">
+                                <mat-error>This field is required</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -120,6 +125,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <input matInput autocomplete="off" formControlName="totalRentPaid" class="form-control br-0">
+                                <mat-error>This field is required</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -133,6 +139,7 @@
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <input matInput autocomplete="off" formControlName="incomeStyle" class="form-control br-0">
+                                <mat-error>This field is required</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -152,6 +159,7 @@
                                             <mat-option value="2">Life time</mat-option>
                                             <mat-option value="3">Number of years</mat-option>
                                         </mat-select>
+                                        <mat-error>This field is required</mat-error>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -159,6 +167,7 @@
                                 <div class="form-group mb-0">
                                     <mat-form-field>
                                         <input matInput type="number" autocomplete="off" formControlName="continousTillYear" class="form-control br-0">
+                                        <mat-error>This field is required</mat-error>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -175,10 +184,8 @@
                     <div class="col-md-7 pr-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput autocomplete="off" formControlName="incomeGrowthRate" class="form-control text-center width60 br-0">
-                                <input matInput class="form-control text-center width60 br-0">
-                                <input matInput class="form-control text-center width60 br-0">
-                                <input matInput class="form-control text-center ml-20 width60 br-0">
+                                <input matInput autocomplete="off" formControlName="incomeGrowthRate" class="form-control br-0">
+                                <mat-error>This field is required</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -241,9 +248,9 @@
                         <div class="col-md-7">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input matInput autocomplete="off" formControlName="nextAppraisal" class="form-control br-0" [matDatepicker]="nextAppraisal">
-                                    <mat-datepicker-toggle matSuffix [for]="nextAppraisal"></mat-datepicker-toggle>
-                                    <mat-datepicker #nextAppraisal></mat-datepicker>
+                                    <input matInput autocomplete="off" formControlName="nextAppraisal" class="form-control br-0" [matDatepicker]="nextAppraisalIN">
+                                    <mat-datepicker-toggle matSuffix [for]="nextAppraisalIN"></mat-datepicker-toggle>
+                                    <mat-datepicker #nextAppraisalIN></mat-datepicker>
                                     <mat-error class="f-12 pt-4">This field is required
                                     </mat-error>
                                 </mat-form-field>
@@ -271,7 +278,8 @@
                                 <div class="col-md-6 pl-4 pr-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input matInput autocomplete="off" formControlName="nextAppraisal" type="number" class="form-control br-0">
+                                            <input matInput autocomplete="off" formControlName="expectingBonusValue" type="number" class="form-control br-0">
+                                            <mat-error>This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -289,6 +297,7 @@
                                 <mat-form-field>
                                     <input matInput formControlName="description" autocomplete="off" class="form-control br-0">
                                     <mat-hint align="start" class="f-12">Optional</mat-hint>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>

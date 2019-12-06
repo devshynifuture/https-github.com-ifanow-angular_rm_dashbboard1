@@ -19,11 +19,11 @@ export class AddIncomeSourceComponent implements OnInit {
     {
       data.data.forEach(element => {
         const obj = [
-          { name: "Salaried", checked: false, id: 1 },
-          { name: "Business", checked: false, id: 2 },
-          { name: 'Profession', checked: false, id: 3 },
-          { name: "Rental", checked: false, id: 5 },
-          { name: "Others", checked: false, id: 6 }
+          { name: "Salaried", checked: false, incomeTypeId: 1 },
+          { name: "Business", checked: false, incomeTypeId: 2 },
+          { name: 'Profession', checked: false, incomeTypeId: 3 },
+          { name: "Rental", checked: false, incomeTypeId: 5 },
+          { name: "Others", checked: false, incomeTypeId: 6 }
         ]
         if (element.selected) {
           element['incomeTypeList'] = obj

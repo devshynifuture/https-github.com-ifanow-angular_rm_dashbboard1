@@ -64,8 +64,8 @@
                     <input matInput [matDatepicker]="KVPpicker" class="form-control br-0" formControlName="commencementdate">
                     <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                     <mat-datepicker #KVPpicker></mat-datepicker>
-                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isDateValid && getFormControl().commencementdate.invalid || getFormControl().commencementdate.touched && getFormControl().commencementdate.invalid)}">
-                        This field is required
+                    <mat-error class="f-12 pt-4" *ngIf="pomisForm.get('commencementdate').errors?.required">
+                        Commencement date is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -82,7 +82,7 @@
                     <mat-option value="0"> Joint </mat-option>
                     <mat-option value="1">Single </mat-option>
                 </mat-select>
-                <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isTypeValid && getFormControl().ownershipType.invalid || getFormControl().ownershipType.touched && getFormControl().ownershipType.invalid)}">
+                <mat-error class="f-12 pt-4" *ngIf="pomisForm.get('ownershipType').errors?.required">
                     This field is required
                 </mat-error>
             </mat-form-field>

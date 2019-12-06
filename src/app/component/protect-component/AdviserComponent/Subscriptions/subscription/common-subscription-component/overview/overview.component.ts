@@ -56,7 +56,7 @@ export class OverviewComponent implements OnInit {
   openForm(data,value) {
       const fragmentData = {
         flag: value,
-        data: this._upperData,
+        data,
         id: 1,
         state: 'open'
       };
