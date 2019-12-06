@@ -27,12 +27,23 @@ const ELEMENT_DATA: EmailInterfaceI[] = [
   styleUrls: ['./email-draft.component.scss']
 })
 export class EmailDraftComponent implements OnInit {
+  emailDraftSubscription;
+  emailDraftList;
   constructor(private subInjectService: SubscriptionInject,
     private emailService: EmailServiceService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private emaiLService: EmailServiceService) { }
 
   ngOnInit() {
+    this.emailDraftSubscription = this.emailService.getEmailDraftList().subscribe(responseData => {
+      console.log(responseData);
+      this.emailDraftList = responseData;
+    })
+  }
+
+  ngOnDestroy() {
+    this.emailDraftSubscription.unsubscribe();
   }
 
   displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];

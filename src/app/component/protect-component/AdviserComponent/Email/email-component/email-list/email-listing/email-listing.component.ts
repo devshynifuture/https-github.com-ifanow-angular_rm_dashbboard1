@@ -2,7 +2,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable } from '@angular/material/table';
 
 import { SubscriptionInject } from './../../../../Subscriptions/subscription-inject.service';
 
@@ -54,6 +54,87 @@ const ELEMENT_DATA: EmailInterfaceI[] = [
 ];
 
 
+const PRIMARY_DATA: EmailInterfaceI[] = [
+  {
+    position: 1, name: 'primary data 1', symbol: 'PR', weight: 980.990, isRead: false
+  },
+  {
+    position: 2, name: 'primary data 2', symbol: 'PR', weight: 980.990, isRead: false
+  },
+  {
+    position: 3, name: 'primary data 3', symbol: 'PR', weight: 980.990, isRead: false
+  },
+  {
+    position: 4, name: 'primary data 4', symbol: 'PR', weight: 980.990, isRead: false
+  },
+  {
+    position: 5, name: 'primary data 5', symbol: 'PR', weight: 980.990, isRead: false
+  },
+  {
+    position: 6, name: 'primary data 6', symbol: 'PR', weight: 980.990, isRead: false
+  },
+  {
+    position: 7, name: 'primary data 7', symbol: 'PR', weight: 980.990, isRead: false
+  },
+  {
+    position: 8, name: 'primary data 8', symbol: 'PR', weight: 980.990, isRead: false
+  },
+  {
+    position: 9, name: 'primary data 9', symbol: 'PR', weight: 980.990, isRead: false
+  },
+  {
+    position: 10, name: 'primary data 10', symbol: 'PR', weight: 980.990, isRead: false
+  },
+  {
+    position: 11, name: 'primary data 11', symbol: 'PR', weight: 980.990, isRead: false
+  },
+  {
+    position: 12, name: 'primary data 12', symbol: 'PR', weight: 980.990, isRead: false
+  },
+  {
+    position: 13, name: 'primary data 13', symbol: 'PR', weight: 980.990, isRead: false
+  },
+  {
+    position: 14, name: 'primary data 14', symbol: 'PR', weight: 980.990, isRead: false
+  },
+
+];
+
+const PROMOTION_DATA: EmailInterfaceI[] = [
+  { position: 1, name: 'promotion data 1', symbol: 'PROMO', weight: 947.00, isRead: false },
+  { position: 2, name: 'promotion data 2', symbol: 'PROMO', weight: 947.00, isRead: false },
+  { position: 3, name: 'promotion data 3', symbol: 'PROMO', weight: 947.00, isRead: false },
+  { position: 4, name: 'promotion data 4', symbol: 'PROMO', weight: 947.00, isRead: false },
+  { position: 5, name: 'promotion data 5', symbol: 'PROMO', weight: 947.00, isRead: false },
+  { position: 6, name: 'promotion data 6', symbol: 'PROMO', weight: 947.00, isRead: false },
+  { position: 7, name: 'promotion data 7', symbol: 'PROMO', weight: 947.00, isRead: false },
+  { position: 8, name: 'promotion data 8', symbol: 'PROMO', weight: 947.00, isRead: false },
+  { position: 9, name: 'promotion data 9', symbol: 'PROMO', weight: 947.00, isRead: false },
+  { position: 10, name: 'promotion data 10', symbol: 'PROMO', weight: 947.00, isRead: false },
+  { position: 11, name: 'promotion data 11', symbol: 'PROMO', weight: 947.00, isRead: false },
+];
+
+const SOCIAL_DATA: EmailInterfaceI[] = [
+  { position: 1, name: 'social data 1', symbol: 'social', weight: 947.00, isRead: false },
+  { position: 2, name: 'social data 2', symbol: 'social', weight: 947.00, isRead: false },
+  { position: 3, name: 'social data 3', symbol: 'social', weight: 947.00, isRead: false },
+  { position: 4, name: 'social data 4', symbol: 'social', weight: 947.00, isRead: false },
+  { position: 5, name: 'social data 5', symbol: 'social', weight: 947.00, isRead: false },
+  { position: 6, name: 'social data 6', symbol: 'social', weight: 947.00, isRead: false },
+  { position: 7, name: 'social data 7', symbol: 'social', weight: 947.00, isRead: false },
+  { position: 8, name: 'social data 8', symbol: 'social', weight: 947.00, isRead: false },
+  { position: 9, name: 'social data 9', symbol: 'social', weight: 947.00, isRead: false },
+  { position: 10, name: 'social data 10', symbol: 'social', weight: 947.00, isRead: false },
+  { position: 11, name: 'social data 11', symbol: 'social', weight: 947.00, isRead: false },
+  { position: 12, name: 'social data 12', symbol: 'social', weight: 947.00, isRead: false },
+];
+
+const FORUM_DATA: EmailInterfaceI[] = [
+  { position: 1, name: 'forum data 1', symbol: 'forum', weight: 947.00, isRead: false },
+  { position: 2, name: 'forum data 2', symbol: 'forum', weight: 947.00, isRead: false },
+  { position: 3, name: 'forum data 3', symbol: 'forum', weight: 947.00, isRead: false },
+]
+
 @Component({
   selector: 'app-email-listing',
   templateUrl: './email-listing.component.html',
@@ -75,6 +156,22 @@ export class EmailListingComponent implements OnInit, OnDestroy {
       console.log('paginator response=>>>>', response);
       this.paginatorLength = response.threadsTotal;
     })
+  }
+
+  getPrimaryDataList() {
+    this.dataSource = new MatTableDataSource(PRIMARY_DATA);
+  }
+
+  getPromotionDataList() {
+    this.dataSource = new MatTableDataSource(PROMOTION_DATA)
+  }
+
+  getSocialDataList() {
+    this.dataSource = new MatTableDataSource(SOCIAL_DATA);
+  }
+
+  getForumDataList() {
+    this.dataSource = new MatTableDataSource(FORUM_DATA);
   }
 
   ngOnDestroy() {

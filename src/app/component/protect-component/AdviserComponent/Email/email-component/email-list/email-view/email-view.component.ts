@@ -6,6 +6,7 @@ import { EmailServiceService } from '../../../email-service.service';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { EmailReplyComponent } from '../email-reply/email-reply.component';
 import { EmailAddTaskComponent } from '../email-add-task/email-add-task.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-email-view',
@@ -17,7 +18,8 @@ export class EmailViewComponent implements OnInit, AfterViewInit {
   constructor(private emailService: EmailServiceService,
     private _bottomSheet: MatBottomSheet,
     private subInjectService: SubscriptionInject,
-    private route: Router) { }
+    private route: Router,
+    private location: Location) { }
   emailSubscription;
 
   ngOnInit() {
@@ -54,5 +56,9 @@ export class EmailViewComponent implements OnInit, AfterViewInit {
         }
       }
     );
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

@@ -24,11 +24,19 @@ export class EmailServiceService {
     });
   }
 
+  getRightSideNavList() {
+    const userInfo = AuthService.getUserInfo();
+    return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_RIGHT_SIDE_NAV, {
+      email: userInfo.emailId,
+      userId: userInfo.advisorId
+    });
+  }
+
   refreshList(data) {
     switch (data) {
       case 'archive': this.getEmailArchiveList(data);
         break;
-      case 'draft': this.getEmailDraftList(data);
+      case 'draft': this.getEmailDraftList();
         break;
       case 'inbox': this.getEmailList(data);
         break;
@@ -50,11 +58,13 @@ export class EmailServiceService {
     // return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
   }
 
-  getEmailDraftList(data) {
+  getEmailDraftList() {
 
-    alert('refreshed ' + data);
-    // const httpParams = new HttpParams().set('advisorId', data.advisorId);
-    // return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
+    const userInfo = AuthService.getUserInfo();
+    return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_DRAFT_LIST, {
+      email: userInfo.emailId,
+      userId: userInfo.advisorId
+    });
   }
 
   getEmailTrashList(data) {

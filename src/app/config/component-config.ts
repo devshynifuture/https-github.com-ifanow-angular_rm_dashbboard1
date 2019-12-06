@@ -260,5 +260,14 @@ export const appConfig = {
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
-  GET_PROFILE: 'gmail/users/getProfile'
+  GET_PROFILE: 'gmail/users/getProfile',
+  GET_RIGHT_SIDE_NAV: 'user/label/list/get',
+  DELETE_MESSAGES: 'gmail/messages/delete',
+  MODIFY_MESSAGES: 'gmail/messages/modify',
+  MOVE_MESSAGES_TO_TRASH: 'gmail/messages/thrash',
+  MOVE_MESSAGES_FROM_TRASH: 'gmail/messages/unthrash',
+  DELETE_MULTIPLE_THREADS: 'gmail/threads/delete',
+  MODIFY_MULTIPLE_THREADS: 'gmail/threads/modify',
+  MOVE_THREADS_TO_THRASH: 'gmail/threads/thrash',
+  GET_DRAFT_LIST: 'user/draft/list/get'
 };
