@@ -1,9 +1,9 @@
 <div class="pl-24 pt-72 pr-24 pb-44 mb-44">
     <div class="row pt-24">
         <div class="col-md-8 pl-0">
-            <p class="f-14 roboto">Now entering Rupa Hindcha’s income</p>
+            <p class="f-14 roboto">Now entering {{singleIndividualIncome.userName}} income</p>
         </div>
-        <div class="col-md-4 text-right p-0">
+        <div *ngIf="finalIncomeAddList.length>0" class="col-md-4 text-right p-0">
             <button mat-stroked-button class=" ba-black br-0 mat-menu-trigger addon"> Adding income {{incomePosition+1}}
                 of
                 {{finalIncomeAddList.length}} </button>
@@ -29,8 +29,16 @@
                         <img src="assets/images/svg/rentalIcon.svg" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==4">
                         <img src="assets/images/svg/pensionIcon.svg" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==5">
                     </div>
-                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome">
-                        {{singleIndividualIncome.finalIncomeList.name}} </p>
+                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==1">
+                        Salaried</p>
+                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==2">
+                        Buisness</p>
+                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==3">
+                        Profession</p>
+                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==4">
+                        Rental</p>
+                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==5">
+                        Others</p>
                 </div>
             </div>
         </div>
@@ -57,7 +65,8 @@
                     <div class="col-md-5">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput type="number" autocomplete="off" formControlName="monthlyAmount" class="form-control br-0">
+                                <input matInput type="number" autocomplete="off" formControlName="monthlyAmount"
+                                    class="form-control br-0">
                                 <mat-error>This field is required</mat-error>
                             </mat-form-field>
                         </div>
@@ -72,7 +81,8 @@
                     <div class="col-md-5">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput autocomplete="off" formControlName="basicIncome" class="form-control br-0">
+                                <input matInput autocomplete="off" formControlName="basicIncome"
+                                    class="form-control br-0">
                                 <mat-error>This field is required</mat-error>
                             </mat-form-field>
                         </div>
@@ -85,7 +95,8 @@
                     <div class="col-md-5">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput autocomplete="off" formControlName="standardDeduction" class="form-control br-0">
+                                <input matInput autocomplete="off" formControlName="standardDeduction"
+                                    class="form-control br-0">
                                 <mat-error>This field is required</mat-error>
                             </mat-form-field>
                         </div>
@@ -98,7 +109,8 @@
                     <div class="col-md-5">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput autocomplete="off" formControlName="deamessAlowance" class="form-control br-0">
+                                <input matInput autocomplete="off" formControlName="deamessAlowance"
+                                    class="form-control br-0">
                                 <mat-error>This field is required</mat-error>
                             </mat-form-field>
                         </div>
@@ -111,7 +123,8 @@
                     <div class="col-md-5">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput autocomplete="off" formControlName="hraRecieved" class="form-control br-0">
+                                <input matInput autocomplete="off" formControlName="hraRecieved"
+                                    class="form-control br-0">
                                 <mat-error>This field is required</mat-error>
                             </mat-form-field>
                         </div>
@@ -124,7 +137,8 @@
                     <div class="col-md-5">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput autocomplete="off" formControlName="totalRentPaid" class="form-control br-0">
+                                <input matInput autocomplete="off" formControlName="totalRentPaid"
+                                    class="form-control br-0">
                                 <mat-error>This field is required</mat-error>
                             </mat-form-field>
                         </div>
@@ -138,7 +152,8 @@
                     <div class="col-md-7">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput autocomplete="off" formControlName="incomeStyle" class="form-control br-0">
+                                <input matInput autocomplete="off" formControlName="incomeStyle"
+                                    class="form-control br-0">
                                 <mat-error>This field is required</mat-error>
                             </mat-form-field>
                         </div>
@@ -166,7 +181,8 @@
                             <div *ngIf="incomeNetForm.get('continousTill').value==3" class="col-md-6 pl-4 pr-0">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input matInput type="number" autocomplete="off" formControlName="continousTillYear" class="form-control br-0">
+                                        <input matInput type="number" autocomplete="off"
+                                            formControlName="continousTillYear" class="form-control br-0">
                                         <mat-error>This field is required</mat-error>
                                     </mat-form-field>
                                 </div>
@@ -184,7 +200,8 @@
                     <div class="col-md-7 pr-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput autocomplete="off" formControlName="incomeGrowthRate" class="form-control br-0">
+                                <input matInput type="number" autocomplete="off" formControlName="incomeGrowthRate"
+                                    class="form-control br-0">
                                 <mat-error>This field is required</mat-error>
                             </mat-form-field>
                         </div>
@@ -200,7 +217,8 @@
                             <div class="col-md-6 pl-0 pr-4">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input matInput autocomplete="off" formControlName="incomeStartDate" class="form-control br-0" [matDatepicker]="incomeStartdate">
+                                        <input matInput autocomplete="off" formControlName="incomeStartDate"
+                                            class="form-control br-0" [matDatepicker]="incomeStartdate">
                                         <mat-datepicker-toggle matSuffix [for]="incomeStartdate">
                                         </mat-datepicker-toggle>
                                         <mat-datepicker #incomeStartdate></mat-datepicker>
@@ -212,7 +230,8 @@
                             <div class="col-md-6 pl-4 pr-0">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input matInput autocomplete="off" formControlName="incomeEndDate" class="form-control br-0" [matDatepicker]="incomeEndDate">
+                                        <input matInput autocomplete="off" formControlName="incomeEndDate"
+                                            class="form-control br-0" [matDatepicker]="incomeEndDate">
                                         <mat-datepicker-toggle matSuffix [for]="incomeEndDate"></mat-datepicker-toggle>
                                         <mat-datepicker #incomeEndDate></mat-datepicker>
                                         <mat-error class="f-12 pt-4">This field is required
@@ -248,7 +267,8 @@
                         <div class="col-md-7">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input matInput autocomplete="off" formControlName="nextAppraisal" class="form-control br-0" [matDatepicker]="nextAppraisalIN">
+                                    <input matInput autocomplete="off" formControlName="nextAppraisal"
+                                        class="form-control br-0" [matDatepicker]="nextAppraisalIN">
                                     <mat-datepicker-toggle matSuffix [for]="nextAppraisalIN"></mat-datepicker-toggle>
                                     <mat-datepicker #nextAppraisalIN></mat-datepicker>
                                     <mat-error class="f-12 pt-4">This field is required
@@ -259,14 +279,17 @@
                     </div>
                     <div class="row pt-40">
                         <div class="col-md-5 pr-0 text-right">
-                            <h5 class="m-0 pt-8">I'm expecting a bonus/inflow</h5>
+                            <h5 class="m-0 pt-8">I'm expecting a bonus/inflow</h5><i class="material-icons"
+                                (click)="addExpectedBonus()">add</i>
                         </div>
-                        <div class="col-md-7">
-                            <div class="row">
+                        <div class="col-md-7" [formGroup]="expectedBonusForm">
+                            <div *ngFor="let singleBonusForm of getBonusList.controls;index as i"
+                                [formGroup]="singleBonusForm" class="row">
                                 <div class="col-md-6 pl-0 pr-4">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input matInput autocomplete="off" class="form-control br-0" [matDatepicker]="expectedBonus">
+                                            <input matInput formControlName="receivingDate" autocomplete="off"
+                                                class="form-control br-0" [matDatepicker]="expectedBonus">
                                             <mat-datepicker-toggle matSuffix [for]="expectedBonus">
                                             </mat-datepicker-toggle>
                                             <mat-datepicker #expectedBonus></mat-datepicker>
@@ -278,7 +301,8 @@
                                 <div class="col-md-6 pl-4 pr-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input matInput autocomplete="off" formControlName="expectingBonusValue" type="number" class="form-control br-0">
+                                            <input matInput formControlName="amount" autocomplete="off" type="number"
+                                                class="form-control br-0">
                                             <mat-error>This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
@@ -295,7 +319,8 @@
                         <div class="col-md-7">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input matInput formControlName="description" autocomplete="off" class="form-control br-0">
+                                    <input matInput formControlName="description" autocomplete="off"
+                                        class="form-control br-0">
                                     <mat-hint align="start" class="f-12">Optional</mat-hint>
                                     <mat-error>This field is required</mat-error>
                                 </mat-form-field>
@@ -309,8 +334,11 @@
 </div>
 <div class="bottom-fixed wrapper-16 pb-12">
     <div class="row">
-        <div class="col-md-4 p-0">
+        <div *ngIf="editApiData==undefined" class="col-md-4 p-0">
             <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="cancel()">Previous</h5>
+        </div>
+        <div *ngIf="editApiData" class="col-md-4 p-0">
+            <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="close()">Close</h5>
         </div>
         <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit" (click)="submitIncomeForm()">SAVE</button>

@@ -19,6 +19,7 @@ export class PreferencesSettingsComponent implements OnInit {
   advisorId;
   viewMode = 'tab1';
   dataTOget: object;
+  saveUpdateFlag: any;
 
   constructor(public subService: SubscriptionService, private fb: FormBuilder,
               public dialog: MatDialog, private subscription: SubscriptionService,
@@ -88,22 +89,25 @@ export class PreferencesSettingsComponent implements OnInit {
     );
   }
 
-  savePrefix() {
+  savePrefix(data) {
     const obj = {
       // advisorId: 2735,
       advisorId: this.advisorId,
       id: 0,
-      nextNumber: this.prefixData.nextNo,
-      prefix: this.prefixData.prefix,
-      type: 1
+      nextNumber:parseInt(this.prefixData.controls.nextNo.value),
+      prefix:this.prefixData.controls.prefix.value,
+      type: data
     };
+    if(this.saveUpdateFlag.prefix!=undefined && this.saveUpdateFlag.prefix!=undefined){
+      this.subscription.updatePreferenceInvoiceQuotationsSubscription(obj).subscribe(
+        data => this.savePrefixResponse(data)
+      );
+    }else{
+      this.subscription.savePreferenceInvoiceQuotationsSubscription(obj).subscribe(
+        data => this.savePrefixResponse(data)
+      );
+    }
 
-    this.subscription.updatePreferenceInvoiceQuotationsSubscription(obj).subscribe(
-      data => this.savePrefixResponse(data)
-    );
-    this.subscription.savePreferenceInvoiceQuotationsSubscription(obj).subscribe(
-      data => this.savePrefixResponse(data)
-    );
   }
 
   savePrefixResponse(data) {
@@ -117,6 +121,7 @@ export class PreferencesSettingsComponent implements OnInit {
 
   getInvoiceQuotationResponse(data, type) {
     this.showLoader = false;
+    this.saveUpdateFlag=data;
     this.prefixData = this.fb.group({
       prefix: [data.prefix],
       nextNo: [data.nextNumber]
