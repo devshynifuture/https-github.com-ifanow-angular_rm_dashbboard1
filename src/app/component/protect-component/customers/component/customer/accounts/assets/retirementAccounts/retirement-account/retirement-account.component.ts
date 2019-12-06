@@ -67,7 +67,7 @@ export class RetirementAccountComponent implements OnInit {
   footer = [];
 
 
-   async ExportTOExcel(value) {
+  async ExportTOExcel(value) {
     var excelElement = (value == 'eps') ? this.EPS : (value == 'Gratuity') ? this.Gratuity : (value == 'Superannuation') ? this.Superannuation : (value == 'epf') ? this.EPF : this.NPS
     const wb = new Excel.Workbook()
     this.excelData = []
@@ -105,7 +105,7 @@ export class RetirementAccountComponent implements OnInit {
     this.footer.push(Object.assign(footerData))
 
     //----------logic work book---------//
-  //  UtilService.exportAs(headerData,this.excelData,this.footer)
+    //  UtilService.exportAs(headerData,this.excelData,this.footer)
     const ws = wb.addWorksheet()
     //ws.mergeCells('A1', 'M1');
     const meta1 = ws.getCell('A1')
@@ -127,7 +127,16 @@ export class RetirementAccountComponent implements OnInit {
         argb: '#f5f7f7'
       }
     };
-    ws.getRow(5).values = headerData;
+    ws.getRow(5).values = ['Owner',
+      'Current value',
+      'Employee’s contribution',
+      'Employer’s contribution',
+      'Rate of return',
+      'Balance mentioned',
+      'Balance as on',
+      'Maturity year',
+      'Description',
+      'Status'];
     this.excelData.forEach(element => {
       ws.addRow(element)
     });
@@ -137,7 +146,7 @@ export class RetirementAccountComponent implements OnInit {
     });
     const buf = await wb.xlsx.writeBuffer()
 
-   saveAs(new Blob([buf]), 'Rahul Jain-' + value + '-' + new Date() + '.xlsx')
+    saveAs(new Blob([buf]), 'Rahul Jain-' + value + '-' + new Date() + '.xlsx')
   }
 
 
