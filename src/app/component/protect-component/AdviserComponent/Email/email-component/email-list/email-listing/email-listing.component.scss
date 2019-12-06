@@ -6,3 +6,15 @@
 table{
     background: #F5F7F7;
 }
+
+.mat-paginator-page-size.ng-star-inserted{
+    display: none !important;
+}
+
+mat-toolbar-row{
+    width: 100%;
+}
+
+mat-paginator{
+    width: 100%;
+}

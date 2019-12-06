@@ -1,11 +1,11 @@
 import { Router, ActivatedRoute } from '@angular/router';
-import { UtilService } from './../../../../../../../services/util.service';
-import { SubscriptionInject } from './../../../../Subscriptions/subscription-inject.service';
-import { Component, OnInit } from '@angular/core';
-
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
-import { EmailAddTaskComponent } from '../email-add-task/email-add-task.component';
+import { MatPaginator } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
+
+import { SubscriptionInject } from './../../../../Subscriptions/subscription-inject.service';
+
 import { EmailServiceService } from './../../../email-service.service';
 import { EmailInterfaceI } from '../../email.interface';
 
@@ -20,7 +20,37 @@ const ELEMENT_DATA: EmailInterfaceI[] = [
   { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N', isRead: false },
   { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O', isRead: false },
   { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F', isRead: false },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 11, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 12, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 13, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 14, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 15, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 16, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 17, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 18, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 19, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 20, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 21, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 22, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 23, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 24, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 25, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 26, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 27, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 28, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 29, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 30, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 31, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 32, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 33, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 34, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 35, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 36, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 37, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 38, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 39, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+  { position: 40, name: 'Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
+
 ];
 
 
@@ -29,19 +59,33 @@ const ELEMENT_DATA: EmailInterfaceI[] = [
   templateUrl: './email-listing.component.html',
   styleUrls: ['./email-listing.component.scss']
 })
-export class EmailListingComponent implements OnInit {
+export class EmailListingComponent implements OnInit, OnDestroy {
 
   constructor(private subInjectService: SubscriptionInject,
     private emailService: EmailServiceService,
     private router: Router,
     private activatedRoute: ActivatedRoute) { }
 
+  paginatorLength;
+  paginatorSubscription;
+
   ngOnInit() {
+    this.dataSource.paginator = this.paginator;
+    this.paginatorSubscription = this.emailService.getPaginatorLength().subscribe(response => {
+      console.log('paginator response=>>>>', response);
+      this.paginatorLength = response.threadsTotal;
+    })
+  }
+
+  ngOnDestroy() {
+    this.paginatorSubscription.unsubscribe();
   }
 
   displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource<EmailInterfaceI>(ELEMENT_DATA);
   selection = new SelectionModel<EmailInterfaceI>(true, []);
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {

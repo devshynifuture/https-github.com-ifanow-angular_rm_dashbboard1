@@ -12,6 +12,6 @@ export class EmailListComponent implements OnInit {
 
   ngOnInit() {
   }
-
-
+  tabs = ['Primary', 'Social', 'Promotions', 'Forums'];
+  selected = new FormControl(0);
 }

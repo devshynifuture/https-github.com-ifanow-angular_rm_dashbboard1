@@ -1,6 +1,7 @@
+import { appConfig } from 'src/app/config/component-config';
+import { AuthService } from './../../../../auth-service/authService';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { apiConfig } from './../../../../config/main-config';
-import { appConfig } from './../../../../config/component-config';
 import { HttpService } from './../../../../http-service/http-service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -12,6 +13,16 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 export class EmailServiceService {
   private dataSourceOneMailView = new BehaviorSubject<Object>('');
   data = this.dataSourceOneMailView.asObservable();
+  paginatorLength;
+  constructor(public https: HttpClient, public http: HttpService, private authService: AuthService) { }
+
+  getPaginatorLength() {
+    const userInfo = AuthService.getUserInfo();
+    return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_PROFILE, {
+      email: userInfo.emailId,
+      userId: userInfo.advisorId
+    });
+  }
 
   refreshList(data) {
     switch (data) {
@@ -30,7 +41,7 @@ export class EmailServiceService {
     }
   }
 
-  constructor(public https: HttpClient, public http: HttpService) { }
+
 
   getEmailList(data) {
 
