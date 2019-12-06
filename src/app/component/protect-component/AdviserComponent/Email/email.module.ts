@@ -17,7 +17,6 @@ import { EmailTrashComponent } from './email-component/email-trash/email-trash.c
   declarations: [
     EmailComponent,
     LeftSidebarComponent,
-    EmailListComponent,
     EmailSentComponent,
     EmailDraftComponent,
     EmailArchiveComponent,

@@ -13,7 +13,7 @@ import { EmailAddTaskComponent } from '../email-add-task/email-add-task.componen
   styleUrls: ['./email-view.component.scss']
 })
 export class EmailViewComponent implements OnInit, AfterViewInit {
-  emailObj: Object;
+  emailObj: Object = null;
   constructor(private emailService: EmailServiceService,
     private _bottomSheet: MatBottomSheet,
     private subInjectService: SubscriptionInject,
@@ -21,9 +21,6 @@ export class EmailViewComponent implements OnInit, AfterViewInit {
   emailSubscription;
 
   ngOnInit() {
-    if (!(this.emailObj)) {
-      this.route.navigate(['admin', 'emails', 'inbox']);
-    }
     this.emailSubscription = this.emailService.data.subscribe(response => {
       this.emailObj = response;
       console.log(response);

@@ -1,3 +1,4 @@
+import { EmailListComponent } from './email-list.component';
 import { EmailViewComponent } from './email-view/email-view.component';
 import { MaterialModule } from './../../../../../../material/material';
 import { NgModule } from '@angular/core';
@@ -11,6 +12,7 @@ import { EmailReplyComponent } from './email-reply/email-reply.component';
 
 @NgModule({
   declarations: [
+    EmailListComponent,
     EmailListingComponent,
     EmailReplyComponent,
     EmailViewComponent
