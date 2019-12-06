@@ -4,6 +4,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import * as _ from 'lodash';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-income-family-member',
@@ -14,26 +15,30 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
   advisorId: any;
   clientId: any;
   familyMemberList: any;
-  setFlag="addIncome"
+  setFlag = "addIncome"
   @Output() selectedFamilyMembersData = new EventEmitter();
   selectedFamilyMembers = [];
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService) { }
+  ownerCount=0;
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService,private eventService:EventService) { }
 
   ngOnInit() {
   }
-  @Input() set familyData(data)
-  {
-    if(data==null)
-    { 
+  @Input() set familyData(data) {
+    if (data == null) {
       this.advisorId = AuthService.getAdvisorId();
       this.clientId = AuthService.getClientId();
       this.getFamilyMemberList()
     }
-    else
-    { 
-      (data.setFlag=="addIncome")?data.flag=="editIncome":console.log("dsdas")
-      this.setFlag=data.flag
-      this.familyMemberList=data.data
+    else {
+      (data.setFlag == "addIncome") ? data.flag == "editIncome" : console.log("dsdas");
+      data.data.forEach(element => {
+        if(element.selected)
+        {
+          this.ownerCount++;
+        }
+      });
+      this.setFlag = data.flag
+      this.familyMemberList = data.data
     }
   }
   getFamilyMemberList() {
@@ -53,16 +58,28 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
     console.log(this.familyMemberList)
   }
   nextStep() {
-    const obj=
+    if(this.ownerCount==0)
     {
-      data:this.familyMemberList,
-      stpeNo:2,
-      flag:this.setFlag
+      this.eventService.openSnackBar("Please select earning member","dismiss");
+      return;
+    }
+    const obj =
+    {
+      data: this.familyMemberList,
+      stpeNo: 2,
+      flag: this.setFlag
     }
     this.selectedFamilyMembersData.emit(obj)
   }
   select(familyMember) {
-    (familyMember.selected) ? familyMember.selected=false : familyMember.selected=true;
+    if (familyMember.selected) {
+      familyMember.selected = false;
+      this.ownerCount--;
+    }
+    else {
+      familyMember.selected = true;
+      this.ownerCount++;
+    }
   }
   close() {
 

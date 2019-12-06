@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
@@ -26,6 +26,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
   advisorId: any;
   clientId: any;
   editApiData: any;
+  finalBonusList: any[];
+  bonusList: any;
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService) { }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -59,9 +61,10 @@ export class IndividualIncomeInfoComponent implements OnInit {
     data.forEach(element => {
       if (element.selected) {
         element.incomeTypeList.forEach(checkedData => {
+          let cloneElement = Object.assign({}, element)
           if (checkedData.checked) {
-            element['finalIncomeList'] = checkedData;
-            this.finalIncomeAddList.push(element)
+            cloneElement['finalIncomeList'] = checkedData;
+            this.finalIncomeAddList.push(cloneElement)
           }
         })
       }
@@ -86,16 +89,25 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeNetForm.controls.incomeStyle.setValue(data.incomeStyleId);
       this.incomeNetForm.controls.continousTill.setValue(String(data.continueTill));
       this.incomeNetForm.controls.incomeGrowthRate.setValue(data.growthRate);
-      this.incomeNetForm.controls.basicIncome.setValue(data.basicIncome);
-      this.incomeNetForm.controls.standardDeduction.setValue(data.standardDeduction);
-      this.incomeNetForm.controls.deamessAlowance.setValue(data.deamessAlowance);
-      this.incomeNetForm.controls.hraRecieved.setValue(data.hraRecieved);
-      this.incomeNetForm.controls.totalRentPaid.setValue(data.totalRentPaid);
+      this.incomeNetForm.controls.basicIncome.setValue((data.basicIncome == 0) ? '' : data.basicIncome);
+      this.incomeNetForm.controls.standardDeduction.setValue((data.standardDeduction == 0) ? '' : data.standardDeduction);
+      this.incomeNetForm.controls.deamessAlowance.setValue((data.deamessAlowance == 0) ? '' : data.deamessAlowance);
+      this.incomeNetForm.controls.hraRecieved.setValue((data.hraRecieved == 0) ? '' : data.hraRecieved);
+      this.incomeNetForm.controls.totalRentPaid.setValue((data.totalRentPaid == 0) ? '' : data.totalRentPaid);
       this.incomeNetForm.controls.incomeStartDate.setValue(new Date(data.incomeStartDate));
       this.incomeNetForm.controls.incomeEndDate.setValue(new Date(data.incomeEndDate));
       this.incomeNetForm.controls.nextAppraisal.setValue(new Date(data.nextAppraisalOrNextRenewal));
       this.incomeNetForm.controls.description.setValue(data.description);
+      data.bonusOrInflows.forEach(element => {
+        this.getBonusList.push(this.fb.group({
+          id: [element.id, [Validators.required]],
+          bonusOrInflow: [element.bonusOrInflow, [Validators.required]],
+          receivingDate: [new Date(element.receivingDate), [Validators.required]],
+          amount: [element.amount, [Validators.required]],
+        }))
+      });
     }
+    this.bonusList = data.bonusOrInflows;
   }
   cancel() {
     const obj =
@@ -108,12 +120,85 @@ export class IndividualIncomeInfoComponent implements OnInit {
   }
   showOptional() {
     (this.addMoreFlag) ? this.addMoreFlag = false : this.addMoreFlag = true;
+    if (this.bonusList) {
+      return;
+    }
+    this.getBonusList.push(this.fb.group({
+      receivingDate: [, [Validators.required]],
+      amount: [, [Validators.required]],
+    }))
   }
   chngIncomeOption(data) {
     this.incomeOption = data.value;
     this.addMoreFlag = false;
+    this.incomeNetForm.reset();
+    this.incomeNetForm.controls.continousTill.setValue('1');
   }
   submitIncomeForm() {
+    if (this.getBonusList) {
+      this.finalBonusList = []
+      this.getBonusList.controls.forEach(element => {
+        let obj =
+        {
+          // "id":0,
+          // "bonusOrInflow":0,
+          "amount": element.get('amount').value,
+          "receivingDate": element.get('receivingDate').value
+        }
+        this.finalBonusList.push(obj)
+      })
+
+    }
+    if (this.singleIndividualIncome.finalIncomeList.incomeTypeId == 1) {
+      if (this.incomeOption == '1') {
+        if (this.incomeNetForm.get('basicIncome').invalid) {
+          this.incomeNetForm.get('basicIncome').markAsTouched();
+          return;
+        }
+        else if (this.incomeNetForm.get('standardDeduction').invalid) {
+          this.incomeNetForm.get('standardDeduction').markAsTouched();
+
+          return;
+        }
+        else if (this.incomeNetForm.get('deamessAlowance').invalid) {
+          this.incomeNetForm.get('deamessAlowance').markAsTouched();
+          return;
+        }
+        else if (this.incomeNetForm.get('hraRecieved').invalid) {
+          this.incomeNetForm.get('hraRecieved').markAsTouched();
+          return;
+        }
+        else if (this.incomeNetForm.get('totalRentPaid').invalid) {
+          this.incomeNetForm.get('totalRentPaid').markAsTouched();
+          return;
+        }
+      }
+      else {
+        if (this.incomeNetForm.get('monthlyAmount').invalid) {
+          this.incomeNetForm.get('monthlyAmount').markAsTouched();
+          return;
+        }
+      }
+    }
+    if (this.singleIndividualIncome.finalIncomeList.incomeTypeId != 1) {
+      if (this.incomeNetForm.get('monthlyAmount').invalid) {
+        this.incomeNetForm.get('monthlyAmount').markAsTouched();
+        return;
+      }
+
+    }
+    if (this.incomeNetForm.get('incomeGrowthRate').invalid) {
+      this.incomeNetForm.get('incomeGrowthRate').markAsTouched();
+      return;
+    }
+    if (this.incomeNetForm.get('incomeStartDate').invalid) {
+      this.incomeNetForm.get('incomeStartDate').markAsTouched();
+      return;
+    }
+    if (this.incomeNetForm.get('incomeEndDate').invalid) {
+      this.incomeNetForm.get('incomeEndDate').markAsTouched();
+      return;
+    }
     let obj =
     {
       "clientId": this.clientId,
@@ -137,19 +222,11 @@ export class IndividualIncomeInfoComponent implements OnInit {
       "hraRecieved": (this.incomeNetForm.get('hraRecieved').value) ? this.incomeNetForm.get('hraRecieved').value : 0,
       "totalRentPaid": (this.incomeNetForm.get('totalRentPaid').value) ? this.incomeNetForm.get('totalRentPaid').value : 0,
       "description": this.incomeNetForm.get('description').value,
-      "bonusOrInflows": [
-        {
-          "id": 1,
-          "bonusOrInflow": 1,
-          "amount": 7000,
-          "receivingDate": "2000-07-07"
-
-        }
-      ]
+      "bonusOrInflows": this.finalBonusList
     }
     console.log(obj)
     if (this.editApiData) {
-      obj['id']=this.editApiData.id;
+      obj['id'] = this.editApiData.id;
       this.planService.editIncomeData(obj).subscribe(
         data => this.submitIncomeFormRes(data),
         err => this.eventService.openSnackBar(err, 'dismiss')
@@ -168,8 +245,32 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.singleIndividualIncome = this.finalIncomeAddList[this.incomePosition]
     }
     else {
+      (this.editApiData) ? this.eventService.openSnackBar("Income is edited") : this.eventService.openSnackBar("Income is added")
       this.subInjectService.changeNewRightSliderState({ state: 'close' });
     }
   }
+  //  expected bonus array logic
+  expectedBonusForm = this.fb.group({
+    bonusList: new FormArray([])
+  })
 
+  get getExpectedBonusForm() { return this.expectedBonusForm.controls };
+  get getBonusList() { return this.getExpectedBonusForm.bonusList as FormArray };
+
+  addExpectedBonus() {
+    this.getBonusList.push(this.fb.group({
+      id: [, [Validators.required]],
+      bonusOrInflow: [, [Validators.required]],
+      receivingDate: [, [Validators.required]],
+      amount: [, [Validators.required]],
+    }))
+    console.log(this.getBonusList)
+  }
+  removeExpectedBonus(index) {
+    // this.expectedBonusForm.controls.bonusList.remove
+  }
+  close()
+  {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
 }
