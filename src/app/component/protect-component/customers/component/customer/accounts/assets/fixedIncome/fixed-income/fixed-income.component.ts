@@ -64,13 +64,13 @@ export class FixedIncomeComponent implements OnInit {
 
   }
   exportAsXLSX(value):void {
-    if(value == 'fd'){
-      UtilService.exportAsExcelFile(this.dataSourceFixed.filteredData, 'fixedDeposit');
-    }else if(value == 'rd'){
-      UtilService.exportAsExcelFile(this.dataSourceFixed.filteredData, 'reccuringDeposit');
-    }else{
-      UtilService.exportAsExcelFile(this.dataSourceFixed.filteredData, 'bonds');
-    }
+    // if(value == 'fd'){
+    //   UtilService.exportAsExcelFile(this.dataSourceFixed.filteredData, 'fixedDeposit');
+    // }else if(value == 'rd'){
+    //   UtilService.exportAsExcelFile(this.dataSourceFixed.filteredData, 'reccuringDeposit');
+    // }else{
+    //   UtilService.exportAsExcelFile(this.dataSourceFixed.filteredData, 'bonds');
+    // }
  }
 
   filterFixedIncome(key: string, value: string) {
