@@ -26,18 +26,9 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-<<<<<<< HEAD
                         <input matInput autocomplete="off" formControlName="amtInvested" #amountInvest type="text" maxlength="20" class="form-control br-0 rupess">
-                        <mat-error *ngIf="KVPFormScheme.get('amtInvested').errors?.required && KVPFormScheme.get('amtInvested').touched" class="f-12 pt-4">
-                            This field is required
-=======
-                        <input matInput autocomplete="off" formControlName="amtInvested" #amountInvest type="text"
-                            maxlength="20" class="form-control br-0 rupess">
-                        <mat-error
-                            *ngIf="KVPFormScheme.get('amtInvested').errors?.required"
-                            class="f-12 pt-4">
+                        <mat-error *ngIf="KVPFormScheme.get('amtInvested').errors?.required" class="f-12 pt-4">
                             Amount invested is required
->>>>>>> 62f2a56d84e3f9ba45483619b25be1831eb4e5de
                         </mat-error>
                         <mat-error *ngIf="(KVPFormScheme.get('amtInvested').errors?.min)" class="f-12 pt-4">
                             Should be greater than 1000

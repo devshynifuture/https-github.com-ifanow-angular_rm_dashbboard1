@@ -58,7 +58,7 @@
                                 <div class="form-group mb-0">
                                     <mat-form-field>
                                         <mat-label>FILTERS ONE11</mat-label>
-                                        <mat-select class="form-control br-0" id="sel11" [(ngModel)]='selectedStatusFilter' (change)="addFilters(selectedStatusFilter)">
+                                        <mat-select class="form-control " id="sel11" [(ngModel)]='selectedStatusFilter' (change)="addFilters(selectedStatusFilter)">
                                             <mat-option *ngFor="let chip of chips" [value]="chip">
                                                 {{chip.name}}
                                             </mat-option>
