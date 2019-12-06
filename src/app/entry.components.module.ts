@@ -69,6 +69,7 @@ import { AddIncomeSourceComponent } from './component/protect-component/customer
 import { IndividualIncomeInfoComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/income/individual-income-info/individual-income-info.component';
 import { AddExpensesComponent } from './component/protect-component/customers/component/common-component/add-expenses/add-expenses.component';
 import { EmailAddTaskComponent } from './component/protect-component/AdviserComponent/Email/email-component/email-list/email-add-task/email-add-task.component';
+import { AddAssetStocksComponent } from './component/protect-component/customers/component/customer/accounts/assets/asset-stocks/add-asset-stocks/add-asset-stocks.component';
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -205,7 +206,8 @@ export const componentList = [
   AddIncomeSourceComponent,
   IndividualIncomeInfoComponent,
   AddExpensesComponent,
-  EmailAddTaskComponent
+  EmailAddTaskComponent,
+  AddAssetStocksComponent
 ];
 
 @NgModule({
