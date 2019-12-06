@@ -48,6 +48,7 @@ export class RetirementAccountComponent implements OnInit {
   totalCurrentValue: any;
   dataEPFList: any;
 
+  
   @ViewChild('epfListTable', { static: false }) epfListTableSort: MatSort;
   @ViewChild('npsListTable', { static: false }) npsListTableSort: MatSort;
   @ViewChild('gratuityListTable', { static: false }) gratuityListTableSort: MatSort;

@@ -12,8 +12,14 @@ import { DetailedSsyComponent } from './detailed-ssy/detailed-ssy.component';
 @Component({
   selector: 'app-ssy-scheme',
   templateUrl: './ssy-scheme.component.html',
-  styleUrls: ['./ssy-scheme.component.scss'],
-  encapsulation:ViewEncapsulation.None
+  styles: [`
+  kendo-pdf-export {
+    font-family: 'Material Icons';
+    font-size: 1px;
+  }
+`,
+  ],
+  encapsulation: ViewEncapsulation.None
 })
 export class SsySchemeComponent implements OnInit {
   advisorId: any;
@@ -94,13 +100,13 @@ export class SsySchemeComponent implements OnInit {
 
     });
   }
-  addOpenSSY(data,flag) {
+  addOpenSSY(data, flag) {
     const fragmentData = {
       flag: 'addSyss',
       data,
       id: 1,
-      state:(flag=="detailedSsy")?'open35':'open',
-      componentName:(flag=="detailedSsy")?DetailedSsyComponent:AddSsyComponent
+      state: (flag == "detailedSsy") ? 'open35' : 'open',
+      componentName: (flag == "detailedSsy") ? DetailedSsyComponent : AddSsyComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
