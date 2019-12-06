@@ -86,6 +86,7 @@ export class RetirementAccountComponent implements OnInit {
       { width: 15, key: 'Description' },
       { width: 10, key: 'Status' },
     ];
+    var header = ['Owner', 'Current value', 'Employee’s contribution', 'Employer’s contribution', 'Rate of return', 'Balance mentioned', 'Balance as on', 'Maturity year', 'Description', 'Status'];
     //-----------data--------------//
     this.dataEPFList.filteredData.forEach(element => {
       data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue),
@@ -105,7 +106,7 @@ export class RetirementAccountComponent implements OnInit {
     this.footer.push(Object.assign(footerData))
 
     //----------logic work book---------//
-    //  UtilService.exportAs(headerData,this.excelData,this.footer)
+
     const ws = wb.addWorksheet()
     //ws.mergeCells('A1', 'M1');
     const meta1 = ws.getCell('A1')
@@ -127,16 +128,9 @@ export class RetirementAccountComponent implements OnInit {
         argb: '#f5f7f7'
       }
     };
-    ws.getRow(5).values = ['Owner',
-      'Current value',
-      'Employee’s contribution',
-      'Employer’s contribution',
-      'Rate of return',
-      'Balance mentioned',
-      'Balance as on',
-      'Maturity year',
-      'Description',
-      'Status'];
+    ws.getRow(5).values = header;
+    ws.columns.alignment = { horizontal: 'left' };
+    ws.columns = headerData
     this.excelData.forEach(element => {
       ws.addRow(element)
     });
