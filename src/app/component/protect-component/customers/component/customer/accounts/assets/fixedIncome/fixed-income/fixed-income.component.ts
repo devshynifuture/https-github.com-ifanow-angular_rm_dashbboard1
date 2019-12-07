@@ -1,17 +1,20 @@
-import {RecuringDepositComponent} from './../recuring-deposit/recuring-deposit.component';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../../../customer.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {DetailedViewFixedDepositComponent} from '../fixed-deposit/detailed-view-fixed-deposit/detailed-view-fixed-deposit.component';
-import {FixedDepositComponent} from '../fixed-deposit/fixed-deposit.component';
-import {DetailedViewRecuringDepositComponent} from '../recuring-deposit/detailed-view-recuring-deposit/detailed-view-recuring-deposit.component';
-import {DetailedViewBondsComponent} from '../bonds/detailed-view-bonds/detailed-view-bonds.component';
-import {BondsComponent} from '../bonds/bonds.component';
+import { RecuringDepositComponent } from './../recuring-deposit/recuring-deposit.component';
+import { Component, OnInit, ViewChild, ViewChildren, ElementRef } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../customer.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { DetailedViewFixedDepositComponent } from '../fixed-deposit/detailed-view-fixed-deposit/detailed-view-fixed-deposit.component';
+import { FixedDepositComponent } from '../fixed-deposit/fixed-deposit.component';
+import { DetailedViewRecuringDepositComponent } from '../recuring-deposit/detailed-view-recuring-deposit/detailed-view-recuring-deposit.component';
+import { DetailedViewBondsComponent } from '../bonds/detailed-view-bonds/detailed-view-bonds.component';
+import { BondsComponent } from '../bonds/bonds.component';
 import { UtilService } from 'src/app/services/util.service';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import * as Excel from 'exceljs/dist/exceljs';
+import { saveAs } from 'file-saver'
 
 
 @Component({
@@ -40,7 +43,9 @@ export class FixedIncomeComponent implements OnInit {
   @ViewChild('fixedIncomeTableSort', { static: false }) fixedIncomeTableSort: MatSort;
   @ViewChild('recurringDepositTable', { static: false }) recurringDepositTableSort: MatSort;
   @ViewChild('bondListTable', { static: false }) bondListTableSort: MatSort;
-
+  @ViewChildren(FormatNumberDirective) formatNumber;
+  excelData: any[];
+  footer = [];
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService, public dialog: MatDialog) { }
   viewMode;
   displayedColumns4 = ['no', 'owner', 'type', 'cvalue', 'rate', 'amt', 'mdate', 'mvalue', 'number', 'desc', 'status', 'icons'];
@@ -63,16 +68,122 @@ export class FixedIncomeComponent implements OnInit {
   Close() {
 
   }
-  exportAsXLSX(value):void {
-    // if(value == 'fd'){
-    //   UtilService.exportAsExcelFile(this.dataSourceFixed.filteredData, 'fixedDeposit');
-    // }else if(value == 'rd'){
-    //   UtilService.exportAsExcelFile(this.dataSourceFixed.filteredData, 'reccuringDeposit');
-    // }else{
-    //   UtilService.exportAsExcelFile(this.dataSourceFixed.filteredData, 'bonds');
-    // }
- }
+  async ExportTOExcel(value) {
+    this.excelData = []
+    var data = []
+    if (value == 'fixedDeposit') {
+      var headerData = [{ width: 20, key: 'Owner' },
+      { width: 20, key: 'Type of FD' },
+      { width: 25, key: 'Current value' },
+      { width: 25, key: 'Rate' },
+      { width: 18, key: 'Amount invested' },
+      { width: 18, key: 'Maturity date' },
+      { width: 18, key: 'Maturity value' },
+      { width: 18, key: 'FD number' },
+      { width: 15, key: 'Description' },
+      { width: 10, key: 'Status' },]
+      var header = ['Owner', 'Type of FD', 'Current value', 'Rate', 'Amount invested',
+        'Maturity date', 'FD number', 'Description', 'Status'];
+      this.dataSourceFixed.filteredData.forEach(element => {
+        data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.fdType),
+        this.formatNumber.first.formatAndRoundOffNumber(element.currentValue),
+        this.formatNumber.first.formatAndRoundOffNumber(element.interestRate),
+        new Date(element.maturityDate), this.formatNumber.first.formatAndRoundOffNumber(element.maturityValue),
+        element.fdNumber, element.description, element.status]
+        this.excelData.push(Object.assign(data))
+      });
+      var footerData = ['Total',
+        this.formatNumber.first.formatAndRoundOffNumber(this.sumCurrentValue), '',
+        this.formatNumber.first.formatAndRoundOffNumber(this.sumAmountInvested), '',
+        this.formatNumber.first.formatAndRoundOffNumber(this.sumMaturityValue), '', '', '',]
+      this.footer.push(Object.assign(footerData))
+    } else if (value == 'fixedReccuring') {
+      var headerData = [
+        { width: 20, key: 'Owner' },
+        { width: 20, key: 'Current value' },
+        { width: 25, key: 'Rate' },
+        { width: 25, key: 'Monthly contribution' },
+        { width: 18, key: 'Maturity date' },
+        { width: 18, key: 'RD number' },
+        { width: 15, key: 'Description' },
+        { width: 10, key: 'Status' },
+      ];
+      var header = ['Owner', 'Current value', 'Rate', 'Monthly contribution',
+        'Maturity date', 'RD number', 'Description', 'Status'];
+      this.dataSourceRecurring.filteredData.forEach(element => {
+        data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue),
+        (element.interestRate),  this.formatNumber.first.formatAndRoundOffNumber(element.monthlyContribution),
+        new Date(element.maturityDate), (element.rdNumber), element.description, element.status]
+        this.excelData.push(Object.assign(data))
+      });
+      var footerData = ['Total',
+        this.formatNumber.first.formatAndRoundOffNumber(this.totalCurrentValue),'','',
+        this.formatNumber.first.formatAndRoundOffNumber(this.totalMarketValue),'', '', '']
+      this.footer.push(Object.assign(footerData))
+    } else {
+      var headerData = [{ width: 20, key: 'Owner' },
+      { width: 20, key: 'Current value' },
+      { width: 25, key: 'Coupon amount' },
+      { width: 18, key: 'Amount invested' },
+      { width: 18, key: 'Commencement date' },
+      { width: 18, key: 'Rate' },
+      { width: 18, key: 'Maturity value' },
+      { width: 18, key: 'Tenure' },
+      { width: 18, key: 'Type' },
+      { width: 15, key: 'Description' },
+      { width: 10, key: 'Status' },]
+      var header = ['Owner', 'Current value','Coupon amount', 'Amount invested','Commencement date',
+      'Rate','Maturity value','Tenure','Type','Description','Status'];
+      this.dataSourceBond.filteredData.forEach(element => {
+        data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue),
+        this.formatNumber.first.formatAndRoundOffNumber(element.couponAmount), (element.amountInvested), new Date(element.commencementDate),
+        (element.rate),(element.maturityValue),(element.tenure),((element.type==1)?'Tax free':'Non tax free'),element.description, element.status]
+        this.excelData.push(Object.assign(data))
+      });
+      var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.sumCurrentValueB),
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumCouponAmount),
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumAmountInvestedB), '', '', '', '','','','']
+      this.footer.push(Object.assign(footerData))
 
+    }
+    this.exportExcel(headerData, header, this.excelData, this.footer)
+  }
+  async exportExcel(headerData, header, data, footer) {
+    const wb = new Excel.Workbook()
+    const ws = wb.addWorksheet()
+    //ws.mergeCells('A1', 'M1');
+    const meta1 = ws.getCell('A1')
+    const meta2 = ws.getCell('A2')
+    const meta3 = ws.getCell('A3')
+    meta1.font = { bold: true }
+    meta2.font = { bold: true }
+    meta3.font = { bold: true }
+    ws.getCell('A1').value = 'Type of report - ' + 'value';
+    ws.getCell('A2').value = 'Client name - Rahul Jain';
+    ws.getCell('A3').value = 'Report as on - ' + new Date();
+    //ws.getCell('A1').alignment = { horizontal: 'center' };
+    const head = ws.getRow(5)
+    head.font = { bold: true }
+    head.fill = {
+      type: 'pattern',
+      pattern: 'darkVertical',
+      fgColor: {
+        argb: '#f5f7f7'
+      }
+    };
+    ws.getRow(5).values = header;
+    ws.columns.alignment = { horizontal: 'left' };
+    ws.columns = headerData
+    data.forEach(element => {
+      ws.addRow(element)
+    });
+    footer.forEach(element => {
+      const last = ws.addRow(element)
+      last.font = { bold: true }
+    });
+    const buf = await wb.xlsx.writeBuffer()
+    saveAs(new Blob([buf]), 'Rahul Jain-' + 'value' + '-' + new Date() + '.xlsx')
+  }
   filterFixedIncome(key: string, value: string) {
     const obj = {
       clientId: this.clientId,

@@ -75,7 +75,7 @@
         </button>
       </div>
     </div>
-    <div class="example-container mt-8 real-estate" id="epf"  #EPF #epf>
+    <div class="example-container mt-8 real-estate" id="epf" #EPF #epf>
       <table matSort #epfListTable="matSort" mat-table [dataSource]="dataEPFList" matSort id="table-low">
 
         <ng-container matColumnDef="no">
@@ -211,18 +211,18 @@
               <h4 class="m-0 text-black roboto pt-8">National pension system (NPS)</h4>
             </div>
             <div class="col-md-8 p-0 right text-right">
-                <img class="c-p" src="assets/images/svg/download-bordered.svg">
-                <mat-menu #menu5="matMenu">
-                  <button mat-menu-item>PDF</button>
-                  <button mat-menu-item (click)="ExportTOExcel('nps')">XLS</button>
-                </mat-menu>
-                <img class="" src="assets/images/svg/up-down.svg">
-                <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
-                <mat-menu #menu6="matMenu">
-                  <button mat-menu-item>Email Report</button>
-                  <button mat-menu-item>Option 2</button>
-                  <button mat-menu-item>Option 3</button>
-                </mat-menu>
+              <img class="c-p" src="assets/images/svg/download-bordered.svg">
+              <mat-menu #menu5="matMenu">
+                <button mat-menu-item>PDF</button>
+                <button mat-menu-item (click)="ExportTOExcel('nps')">XLS</button>
+              </mat-menu>
+              <img class="" src="assets/images/svg/up-down.svg">
+              <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
+              <mat-menu #menu6="matMenu">
+                <button mat-menu-item>Email Report</button>
+                <button mat-menu-item>Option 2</button>
+                <button mat-menu-item>Option 3</button>
+              </mat-menu>
               <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
                   class="material-icons">filter_list</i>FILTERS
               </button>
@@ -348,18 +348,18 @@
       <h4 class="m-0 text-black roboto pt-8">Gratuity</h4>
     </div>
     <div class="col-md-8 p-0 right text-right">
-        <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
-        <mat-menu #menu5="matMenu">
-          <button mat-menu-item>PDF</button>
-          <button mat-menu-item (click)="ExportTOExcel('Gratuity')">XLS</button>
-        </mat-menu>
-        <img class="" src="assets/images/svg/up-down.svg">
-        <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
-        <mat-menu #menu6="matMenu">
-          <button mat-menu-item>Email Report</button>
-          <button mat-menu-item>Option 2</button>
-          <button mat-menu-item>Option 3</button>
-        </mat-menu>
+      <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
+      <mat-menu #menu5="matMenu">
+        <button mat-menu-item>PDF</button>
+        <button mat-menu-item (click)="ExportTOExcel('Gratuity')">XLS</button>
+      </mat-menu>
+      <img class="" src="assets/images/svg/up-down.svg">
+      <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
+      <mat-menu #menu6="matMenu">
+        <button mat-menu-item>Email Report</button>
+        <button mat-menu-item>Option 2</button>
+        <button mat-menu-item>Option 3</button>
+      </mat-menu>
       <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
           class="material-icons">filter_list</i>FILTERS
       </button>
@@ -464,18 +464,18 @@
       <h4 class="m-0 text-black roboto pt-8">Superannuation</h4>
     </div>
     <div class="col-md-8 p-0 right text-right">
-        <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
-        <mat-menu #menu5="matMenu">
-          <button mat-menu-item>PDF</button>
-          <button mat-menu-item (click)="ExportTOExcel('Superannuation')">XLS</button>
-        </mat-menu>
-        <img class="" src="assets/images/svg/up-down.svg">
-        <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
-        <mat-menu #menu6="matMenu">
-          <button mat-menu-item>Email Report</button>
-          <button mat-menu-item>Option 2</button>
-          <button mat-menu-item>Option 3</button>
-        </mat-menu>
+      <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
+      <mat-menu #menu5="matMenu">
+        <button mat-menu-item>PDF</button>
+        <button mat-menu-item (click)="ExportTOExcel('Superannuation')">XLS</button>
+      </mat-menu>
+      <img class="" src="assets/images/svg/up-down.svg">
+      <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
+      <mat-menu #menu6="matMenu">
+        <button mat-menu-item>Email Report</button>
+        <button mat-menu-item>Option 2</button>
+        <button mat-menu-item>Option 3</button>
+      </mat-menu>
       <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
           class="material-icons">filter_list</i>FILTERS
       </button>
@@ -597,18 +597,18 @@
       <h4 class="m-0 text-black roboto pt-8">EPS</h4>
     </div>
     <div class="col-md-8 p-0 right text-right">
-        <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
-        <mat-menu #menu5="matMenu">
-          <button mat-menu-item>PDF</button>
-          <button mat-menu-item  (click)="ExportTOExcel('eps')">XLS</button>
-        </mat-menu>
-        <img class="" src="assets/images/svg/up-down.svg">
-        <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
-        <mat-menu #menu6="matMenu">
-          <button mat-menu-item>Email Report</button>
-          <button mat-menu-item>Option 2</button>
-          <button mat-menu-item>Option 3</button>
-        </mat-menu>
+      <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
+      <mat-menu #menu5="matMenu">
+        <button mat-menu-item>PDF</button>
+        <button mat-menu-item (click)="ExportTOExcel('eps')">XLS</button>
+      </mat-menu>
+      <img class="" src="assets/images/svg/up-down.svg">
+      <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
+      <mat-menu #menu6="matMenu">
+        <button mat-menu-item>Email Report</button>
+        <button mat-menu-item>Option 2</button>
+        <button mat-menu-item>Option 3</button>
+      </mat-menu>
       <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
           class="material-icons">filter_list</i>FILTERS
       </button>
@@ -617,7 +617,7 @@
       </button>
     </div>
   </div>
-  <div class="example-container mt-8 real-estate"  #EPS #eps>
+  <div class="example-container mt-8 real-estate" #EPS #eps>
     <table #epsListTable="matSort" [dataSource]="EPSList" id="table-low" mat-table matSort>
       <ng-container matColumnDef="no">
         <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
@@ -631,8 +631,7 @@
       </ng-container>
       <ng-container matColumnDef="nvalue">
         <th *matHeaderCellDef class="br text-right t-12" mat-header-cell mat-sort-header="notionalValue">
-          Notional
-          value
+          Notional value
         </th>
         <td *matCellDef="let element" appFormatNumber class="br text-right t-12" mat-cell>
           {{element.notionalValue || '-'}} </td>
