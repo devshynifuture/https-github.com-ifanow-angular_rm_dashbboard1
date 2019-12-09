@@ -27,12 +27,31 @@ export class AddAssetStocksComponent implements OnInit {
       portfolioName: [data, [Validators.required]]
     })
     this.ownerData = this.assetForm.controls;
+    console.log(this.assetForm)
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
-  submitStockData()
-  {
-    
+  submitStockData() {
+    switch (true) {
+      case (this.assetForm.get('ownerName').invalid):
+        this.assetForm.get('ownerName').markAsTouched();
+        break;
+      case (this.assetForm.get('currentMarketValues').invalid):
+        this.assetForm.get('currentMarketValues').markAsTouched();
+        break;
+      case (this.assetForm.get('valueAsOn').invalid):
+        this.assetForm.get('valueAsOn').markAsTouched();
+        break;
+      case (this.assetForm.get('amtInvested').invalid):
+        this.assetForm.get('amtInvested').markAsTouched();
+        break;
+      case (this.assetForm.get('portfolioName').invalid):
+        this.assetForm.get('portfolioName').markAsTouched();
+        break;
+      default:
+        console.log("call api")
+        break;
+    }
   }
 }
