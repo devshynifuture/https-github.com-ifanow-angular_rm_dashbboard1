@@ -1,0 +1,169 @@
+<!-- <div class="bg-white">
+    <div class="row bb-1  popup-header-fix w-50">
+        <div class="col-md-10 p-0">
+            <h4 class="f-16 mb-0 pb-20 wrapper-20">KEY INFO</h4>
+        </div>
+        <div class="col-md-2">
+            <i class="material-icons right pt-16 pb-12 c-p" (click)="close('close')">
+                close
+            </i>
+        </div>
+    </div>
+    <div class="row pt-72 pl-20 pr-20">
+        <div class="col-md-12 p-0">
+            <div class="row">
+                <div class="col-md-6"></div>
+                <div class="col-md-3 b-a bb-0 br-none p-0">
+                    <p class="m-0 roboto p-8 f-500">MONTHLY</p>
+                </div>
+                <div class="col-md-3 b-a bb-0 p-0">
+                    <p class="m-0 roboto p-8 f-500">LUMPSUM</p>
+                </div>
+            </div>
+            <div class="key-info">
+                <table mat-table [dataSource]="dataSource" id="table-low">
+              
+                  <ng-container matColumnDef="year">
+                    <th mat-header-cell *matHeaderCellDef class="br text-left w-14"> Goal year</th>
+                    <td mat-cell *matCellDef="let element" class="br text-left w-14"> {{element.year}} </td>
+                  </ng-container>
+              
+                  <ng-container matColumnDef="value">
+                    <th mat-header-cell *matHeaderCellDef class="br text-right w-18"> Present value </th>
+                    <td mat-cell *matCellDef="let element" class="br text-right w-18"> {{element.value}} </td>
+                  </ng-container>
+              
+                  <ng-container matColumnDef="fvalue">
+                    <th mat-header-cell *matHeaderCellDef class="br text-right w-18"> Future value </th>
+                    <td mat-cell *matCellDef="let element" class="br text-right w-18"> {{element.fvalue}} </td>
+                  </ng-container>
+              
+                  <ng-container matColumnDef="equity">
+                    <th mat-header-cell *matHeaderCellDef class="text-right"> Equity </th>
+                    <td mat-cell *matCellDef="let element" class="text-right"> {{element.equity}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="debt">
+                    <th mat-header-cell *matHeaderCellDef class="br text-right"> Debt </th>
+                    <td mat-cell *matCellDef="let element" class="br text-right"> {{element.debt}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="equity1">
+                    <th mat-header-cell *matHeaderCellDef class="text-right"> Equity </th>
+                    <td mat-cell *matCellDef="let element" class="text-right"> {{element.equity1}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="debt1">
+                    <th mat-header-cell *matHeaderCellDef class="br text-right"> Debt </th>
+                    <td mat-cell *matCellDef="let element" class="br text-right"> {{element.debt1}} </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+              </div>
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12 w-50">
+  <div class="row">
+    <div class="col-md-4">
+      <h5 class="mb-0 pt-8 text-white c-p" (click)="close('close')">Cancel</h5>
+    </div>
+    <div class="col-md-8 right text-right">
+      <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+    </div>
+  </div>
+</div> -->
+
+
+<!-- key-info for 25% in house right side popup -->
+<div class="bg-white pb-44">
+  <div class="row bb-1  popup-header-fix w-25">
+      <div class="col-md-10 p-0">
+          <h4 class="f-16 mb-0 pb-20 wrapper-20">KEY INFO</h4>
+      </div>
+      <div class="col-md-2">
+          <i class="material-icons right pt-16 pb-12 c-p" (click)="close('close')">
+              close
+          </i>
+      </div>
+  </div>
+    <div class="wrapper-20 pt-72">
+      <div class="ba-light">
+      <div class="row">
+        <div class="col-md-6 bg-grey lter p-8 bb br">
+          <p class="m-0 roboto f-500 text-black">Goal year</p>
+        </div>
+        <div class="col-md-6 p-8 bb">
+          <p class="m-0 roboto text-right">2012</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 bg-grey lter p-8 bb br">
+          <p class="m-0 roboto f-500 text-black">Present value</p>
+        </div>
+        <div class="col-md-6 p-8 bb">
+          <p class="m-0 roboto text-right">25,541</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 bg-grey lter p-8 br">
+          <p class="m-0 roboto f-500 text-black">Future value</p>
+        </div>
+        <div class="col-md-6 p-8">
+          <p class="m-0 roboto text-right">45,475</p>
+        </div>
+      </div>
+      </div>
+      <div class="pt-20">
+      <p class="m-0 roboto f-500 text-black pb-8">MONTHLY</p>
+      </div>
+      <div class="ba-light">
+          <div class="row">
+            <div class="col-md-6 bg-grey lter p-8 bb br">
+              <p class="m-0 roboto f-500 text-black">Equity</p>
+            </div>
+            <div class="col-md-6 p-8 bb">
+              <p class="m-0 roboto text-right">5,200</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 bg-grey lter p-8 bb br">
+              <p class="m-0 roboto f-500 text-black">Debt</p>
+            </div>
+            <div class="col-md-6 p-8 bb">
+              <p class="m-0 roboto text-right">2,555</p>
+            </div>
+          </div>
+        </div>
+        <div class="pt-20">
+            <p class="m-0 roboto f-500 text-black pb-8">LUMPSUM</p>
+          </div>
+          <div class="ba-light">
+              <div class="row">
+                <div class="col-md-6 bg-grey lter p-8 bb br">
+                  <p class="m-0 roboto f-500 text-black">Equity</p>
+                </div>
+                <div class="col-md-6 p-8 bb">
+                  <p class="m-0 roboto text-right">2,095</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 bg-grey lter p-8 bb br">
+                  <p class="m-0 roboto f-500 text-black">Debt</p>
+                </div>
+                <div class="col-md-6 p-8 bb">
+                  <p class="m-0 roboto text-right">6,031</p>
+                </div>
+              </div>
+            </div>
+    </div>
+  </div>
+
+  <div class="bottom-fixed wrapper-12 w-25">
+    <div class="row">
+      <div class="col-md-4">
+        <h5 class="mb-0 pt-8 text-white c-p" (click)="close('close')">Cancel</h5>
+      </div>
+      <div class="col-md-8 right text-right">
+        <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+      </div>
+    </div>
+  </div>
