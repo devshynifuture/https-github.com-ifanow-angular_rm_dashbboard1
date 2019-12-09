@@ -37,7 +37,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   nomineesListFM: any[];
 
   clientId: any;
-  nexNomineePer: number;
+  nexNomineePer=0;
   getPerAllocation: number;
   sumPer: any;
   showError = false;
@@ -96,10 +96,12 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     }
   }
   onNomineeChange(value) {
-    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
-      return o.nomineePercentageShare;
+    // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+    //   return o.nomineePercentageShare;
+    // });
+    this.nominee.value.forEach(element => {
+      this.nexNomineePer += element.nomineePercentageShare;
     });
-
     if (this.nexNomineePer > 100) {
       this.showError = true
       console.log('show error Percent cannot be more than 100%')
@@ -177,10 +179,12 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     return this.summaryNPS.get('npsNomineesList') as FormArray;
   }
   addNominee() {
-    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
-      return o.nomineePercentageShare;
+    // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+    //   return o.nomineePercentageShare;
+    // });
+    this.nominee.value.forEach(element => {
+      this.nexNomineePer += element.nomineePercentageShare;
     });
-
     if (this.nexNomineePer > 100) {
       this.showError = true
       console.log('show error Percent cannot be more than 100%')
@@ -199,10 +203,12 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     if (this.nominee.value.length > 1) {
       this.nominee.removeAt(item);
     }
-    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
-      return o.nomineePercentageShare;
+    // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+    //   return o.nomineePercentageShare;
+    // });
+    this.nominee.value.forEach(element => {
+      this.nexNomineePer += element.nomineePercentageShare;
     });
-
     if (this.nexNomineePer > 100) {
       this.showError = true
       console.log('show error Percent cannot be more than 100%')

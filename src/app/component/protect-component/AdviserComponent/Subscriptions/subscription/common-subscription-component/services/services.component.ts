@@ -108,7 +108,7 @@ export class ServicesComponent implements OnInit {
 
   unmapPlanToService(data) {
     data.selected = false;
-    _.remove(this.mappedData, delData => {
+    _.reject(this.mappedData, delData => {
       return delData.id == data.id;
     });
     console.log(this.mappedData.length);

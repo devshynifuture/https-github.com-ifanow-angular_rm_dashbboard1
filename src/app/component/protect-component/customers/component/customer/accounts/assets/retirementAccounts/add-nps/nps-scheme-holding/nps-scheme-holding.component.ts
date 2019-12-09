@@ -37,7 +37,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
   nomineesListFM: any;
   dataFM: any;
   familyList: any;
-  nexNomineePer: any;
+  nexNomineePer=0;
   showError = false;
 
   constructor(private event : EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService) { }
@@ -80,10 +80,12 @@ export class NpsSchemeHoldingComponent implements OnInit {
     console.log('familyList', this.familyList)
   }
   onNomineeChange(value) {
-    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
-      return o.nomineePercentageShare;
+    // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+    //   return o.nomineePercentageShare;
+    // });
+    this.nominee.value.forEach(element => {
+      this.nexNomineePer += element.nomineePercentageShare;
     });
-
     if (this.nexNomineePer > 100) {
       this.showError = true
       console.log('show error Percent cannot be more than 100%')
@@ -194,10 +196,12 @@ export class NpsSchemeHoldingComponent implements OnInit {
     return this.schemeHoldingsNPS.get('npsNomineesList') as FormArray;
   }
   addNominee() {
-    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
-      return o.nomineePercentageShare;
+    // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+    //   return o.nomineePercentageShare;
+    // });
+    this.nominee.value.forEach(element => {
+      this.nexNomineePer += element.nomineePercentageShare;
     });
-
     if (this.nexNomineePer > 100) {
       this.showError = true
       console.log('show error Percent cannot be more than 100%')
@@ -215,10 +219,12 @@ export class NpsSchemeHoldingComponent implements OnInit {
     if (this.nominee.value.length > 1) {
       this.nominee.removeAt(item);
     }
-    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
-      return o.nomineePercentageShare;
+    // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+    //   return o.nomineePercentageShare;
+    // });
+    this.nominee.value.forEach(element => {
+      this.nexNomineePer += element.nomineePercentageShare;
     });
-
     if (this.nexNomineePer > 100) {
       this.showError = true
       console.log('show error Percent cannot be more than 100%')

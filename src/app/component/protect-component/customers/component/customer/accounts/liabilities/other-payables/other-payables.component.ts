@@ -19,44 +19,44 @@ export class OtherPayablesComponent implements OnInit {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  displayedColumns = ['no', 'name', 'dateOfReceived', 'creditorName', 'amountBorrowed', 'interest', 'dateOfRepayment', 'outstandingBalance', 'description','status', 'icons'];
+  displayedColumns = ['no', 'name', 'dateOfReceived', 'creditorName', 'amountBorrowed', 'interest', 'dateOfRepayment', 'outstandingBalance', 'description', 'status', 'icons'];
   // dataSource = ELEMENT_DATA;
   advisorId: any;
   dataSource: any;
   @Input() payableData;
   @Output() OtherDataChange = new EventEmitter();
-  totalAmountBorrowed: any;
-  totalAmountOutstandingBalance: any;
-  constructor(public custmService:CustomerService,public util:UtilService,public subInjectService:SubscriptionInject,public eventService:EventService,public dialog:MatDialog) { }
+  totalAmountBorrowed = 0;
+  totalAmountOutstandingBalance = 0;
+  constructor(public custmService: CustomerService, public util: UtilService, public subInjectService: SubscriptionInject, public eventService: EventService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.dataSource=this.payableData;
+    this.dataSource = this.payableData;
     this.dataSource = new MatTableDataSource(this.payableData);
     this.dataSource.sort = this.sort;
-    this.totalAmountBorrowed = _.sumBy(this.payableData, function (o) {
-      return o.amountBorrowed;
+    this.payableData.forEach(element => {
+      this.totalAmountBorrowed += element.amountBorrowed;
     });
-    this.totalAmountOutstandingBalance = _.sumBy(this.payableData, function (o) {
-      return o.outstandingBalance;
+    this.payableData.forEach(element => {
+      this.totalAmountOutstandingBalance += element.outstandingBalance;
     });
   }
-  getPayables(){
-    let obj={
-      'advisorId':this.advisorId,
-      'clientId':2978
+  getPayables() {
+    let obj = {
+      'advisorId': this.advisorId,
+      'clientId': 2978
     }
     this.custmService.getOtherPayables(obj).subscribe(
       data => this.getOtherPayablesRes(data)
     );
   }
-  getOtherPayablesRes(data){
+  getOtherPayablesRes(data) {
     console.log(data);
     this.dataSource = data;
     this.OtherDataChange.emit(this.dataSource);
 
   }
-  deleteModal(value,data) {
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -66,12 +66,12 @@ export class OtherPayablesComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         this.custmService.deleteOtherPayables(data.id).subscribe(
-          data=>{
-            this.eventService.openSnackBar("Other payables is deleted","dismiss")
+          data => {
+            this.eventService.openSnackBar("Other payables is deleted", "dismiss")
             dialogRef.close();
             this.getPayables();
           },
-          err=>this.eventService.openSnackBar(err)
+          err => this.eventService.openSnackBar(err)
         )
       },
       negativeMethod: () => {
@@ -94,7 +94,7 @@ export class OtherPayablesComponent implements OnInit {
   open(flagValue, data) {
     const fragmentData = {
       flag: flagValue,
-      data :data,
+      data: data,
       id: 1,
       state: 'open',
       componentName: AddOtherPayablesComponent
