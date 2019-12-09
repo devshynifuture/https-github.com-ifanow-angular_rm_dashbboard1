@@ -28,27 +28,52 @@ const ELEMENT_DATA: EmailInterfaceI[] = [
 })
 export class EmailDraftComponent implements OnInit {
   emailDraftSubscription;
-  emailDraftList;
+  emailDraftList: Object[] = [];
+  dataSource;
+
   constructor(private subInjectService: SubscriptionInject,
     private emailService: EmailServiceService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private emaiLService: EmailServiceService) { }
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+
     this.emailDraftSubscription = this.emailService.getEmailDraftList().subscribe(responseData => {
-      console.log(responseData);
-      this.emailDraftList = responseData;
-    })
+
+      responseData.forEach(element => {
+        const { messages: { payload: { headers }, snippet } } = element;
+        const { messages } = element;
+        const { internalDate } = messages;
+        const { labelIds } = messages;
+        let [, , , subjectObj] = headers;
+        const subject = subjectObj['value'];
+        console.log('draft values ->>>>>>>>>>>>>>>>>')
+        console.log(headers);
+        console.log(snippet);
+        console.log(' internal Date->   ', internalDate);
+        console.log(labelIds);
+        const Obj = {
+          message: snippet,
+          labelId: labelIds[0],
+          date: internalDate,
+          headers,
+          subject
+        }
+        this.emailDraftList.push(Obj);
+
+      });
+      // console.log(responseData);
+      this.dataSource = new MatTableDataSource<Object>(this.emailDraftList);
+    });
   }
 
   ngOnDestroy() {
     this.emailDraftSubscription.unsubscribe();
   }
 
-  displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<EmailInterfaceI>(ELEMENT_DATA);
-  selection = new SelectionModel<EmailInterfaceI>(true, []);
+  displayedColumns: string[] = ['select', 'labelId', 'subject', 'message', 'date'];
+
+  selection = new SelectionModel<Object>(true, []);
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -65,7 +90,7 @@ export class EmailDraftComponent implements OnInit {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: EmailInterfaceI): string {
+  checkboxLabel(row?): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
@@ -74,7 +99,7 @@ export class EmailDraftComponent implements OnInit {
 
   gotoEmailView(dataObj: Object) {
     this.emailService.sendNextData(dataObj);
-    this.router.navigate(['admin', 'emails', 'inbox', 'view']);
+    this.emailService.openComposeEmail(dataObj);
   }
 
   doRefresh() {

@@ -1,8 +1,8 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {SubscriptionService} from '../../../subscription.service';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { SubscriptionService } from '../../../subscription.service';
 
 @Component({
   selector: 'app-email-only',
@@ -58,30 +58,30 @@ export class EmailOnlyComponent implements OnInit {
   // }
   @Input() set inputData(inputData) {
     let obj = []
-    this.doc=inputData.documentList;
-    if(inputData.isInv==true){
+    this.doc = inputData.documentList;
+    if (inputData.isInv == true) {
       this.doc.forEach(element => {
-        if(element){
-         let obj1={
-           id:element.id,
-           documentName:element.invoiceNumber
-         }
-         obj.push(obj1)
+        if (element) {
+          let obj1 = {
+            id: element.id,
+            documentName: element.invoiceNumber
+          }
+          obj.push(obj1)
         }
-       });
-    }else{
+      });
+    } else {
       this.doc.forEach(element => {
-        if(element){
-         let obj1={
-           id:element.id,
-           documentName:element.documentName
-         }
-         obj.push(obj1)
+        if (element) {
+          let obj1 = {
+            id: element.id,
+            documentName: element.documentName
+          }
+          obj.push(obj1)
         }
-       });
+      });
     }
-    
-    this.docObj=obj;
+
+    this.docObj = obj;
     this._inputData = inputData;
     this._inputData = {
       advisorId: 2808,
@@ -90,10 +90,10 @@ export class EmailOnlyComponent implements OnInit {
         userEmailId: inputData.clientData.userEmailId
       },
       // documentList: [{id: inputData.documentList.id, documentName: inputData.documentList.documentName}],
-      documentList:obj,
+      documentList: obj,
       templateType: inputData.templateType
     };
-    console.log("dsfgsdggggggggg",this.docObj)
+    console.log("dsfgsdggggggggg", this.docObj)
     console.log('EmailOnlyComponent inputData : ', inputData);
     this.getEmailTemplateFilterData();
   }
@@ -110,13 +110,13 @@ export class EmailOnlyComponent implements OnInit {
     // this.getEmailTemplate();
   }
 
-// Begin ControlValueAccesor methods.
+  // Begin ControlValueAccesor methods.
   onChange = (_) => {
   }
   onTouched = () => {
   }
 
-// Form model content changed.
+  // Form model content changed.
   writeValue(content: any): void {
     this.model = content;
   }
@@ -164,14 +164,14 @@ export class EmailOnlyComponent implements OnInit {
   //   });
   // }
   close() {
-    this.subInjectService.changeUpperRightSliderState({state: 'close'});
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
 
     // this.valueChange.emit(this.emailSend);
   }
   remove(item) {
     this.docObj.splice(item, 1);
-   // this.callFilter();
+    // this.callFilter();
 
   }
   getEmailTemplate() {
@@ -244,7 +244,7 @@ export class EmailOnlyComponent implements OnInit {
       body: this.emailBody,
       subject: this.subject,
       fromEmail: this.emailData.fromEmail,
-      toEmail: [{emailId: this._inputData.clientData.userEmailId, sendType: 'to'}],
+      toEmail: [{ emailId: this._inputData.clientData.userEmailId, sendType: 'to' }],
       documentList: this._inputData.documentList
     };
     console.log('send email complete JSON : ', JSON.stringify(emailRequestData));

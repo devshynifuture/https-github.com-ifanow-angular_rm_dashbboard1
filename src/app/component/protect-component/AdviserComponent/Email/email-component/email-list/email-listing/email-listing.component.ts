@@ -149,13 +149,19 @@ export class EmailListingComponent implements OnInit, OnDestroy {
 
   paginatorLength;
   paginatorSubscription;
+  gmailInboxListSubscription;
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.paginatorSubscription = this.emailService.getPaginatorLength().subscribe(response => {
       console.log('paginator response=>>>>', response);
       this.paginatorLength = response.threadsTotal;
-    })
+    });
+
+    this.gmailInboxListSubscription = this.emailService.getMailInboxList('INBOX')
+      .subscribe(responseData => {
+        console.log(responseData);
+      })
   }
 
   getPrimaryDataList() {

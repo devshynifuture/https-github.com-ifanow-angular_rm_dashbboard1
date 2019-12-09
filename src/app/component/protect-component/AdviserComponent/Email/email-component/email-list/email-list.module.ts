@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { EmailListComponent } from './email-list.component';
 import { EmailViewComponent } from './email-view/email-view.component';
 import { MaterialModule } from './../../../../../../material/material';
@@ -20,7 +21,7 @@ import { EmailReplyComponent } from './email-reply/email-reply.component';
   imports: [
     CommonModule,
     MaterialModule,
-    EmailListRoutingModule
+    EmailListRoutingModule,
   ]
 })
 export class EmailListModule { }

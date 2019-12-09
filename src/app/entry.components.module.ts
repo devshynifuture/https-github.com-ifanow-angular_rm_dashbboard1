@@ -205,7 +205,7 @@ export const componentList = [
   AddIncomeSourceComponent,
   IndividualIncomeInfoComponent,
   AddExpensesComponent,
-  EmailAddTaskComponent
+  // EmailAddTaskComponent
 ];
 
 @NgModule({

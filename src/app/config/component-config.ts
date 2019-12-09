@@ -269,5 +269,6 @@ export const appConfig = {
   DELETE_MULTIPLE_THREADS: 'gmail/threads/delete',
   MODIFY_MULTIPLE_THREADS: 'gmail/threads/modify',
   MOVE_THREADS_TO_THRASH: 'gmail/threads/thrash',
-  GET_DRAFT_LIST: 'user/draft/list/get'
+  GET_DRAFT_LIST: 'user/draft/list/get',
+  GET_GMAIL_INBOX_LIST: 'user/thread/list/get'
 };
