@@ -25,8 +25,8 @@ export class OtherPayablesComponent implements OnInit {
   dataSource: any;
   @Input() payableData;
   @Output() OtherDataChange = new EventEmitter();
-  totalAmountBorrowed: any;
-  totalAmountOutstandingBalance: any;
+  totalAmountBorrowed=0;
+  totalAmountOutstandingBalance=0;
   constructor(public custmService:CustomerService,public util:UtilService,public subInjectService:SubscriptionInject,public eventService:EventService,public dialog:MatDialog) { }
 
   ngOnInit() {
@@ -37,9 +37,15 @@ export class OtherPayablesComponent implements OnInit {
     // this.totalAmountBorrowed = _.sumBy(this.payableData, function (o) {
     //   return o.amountBorrowed;
     // });
+    this.payableData.forEach(element => {
+      this.totalAmountBorrowed+=element.amountBorrowed
+    });
     // this.totalAmountOutstandingBalance = _.sumBy(this.payableData, function (o) {
     //   return o.outstandingBalance;
     // });
+    this.payableData.forEach(element => {
+      this.totalAmountOutstandingBalance +=element.outstandingBalance
+    });
   }
   getPayables(){
     let obj={

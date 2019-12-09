@@ -99,9 +99,9 @@ export class CommoditiesComponent implements OnInit {
       this.footer.push(Object.assign(footerData))
 
     }
-    this.exportExcel(headerData, header, this.excelData, this.footer)
+    this.exportExcel(headerData, header, this.excelData, this.footer,value)
   }
-  async exportExcel(headerData, header, data, footer) {
+  async exportExcel(headerData, header, data, footer,value) {
     const wb = new Excel.Workbook()
     const ws = wb.addWorksheet()
     //ws.mergeCells('A1', 'M1');
@@ -111,7 +111,7 @@ export class CommoditiesComponent implements OnInit {
     meta1.font = { bold: true }
     meta2.font = { bold: true }
     meta3.font = { bold: true }
-    ws.getCell('A1').value = 'Type of report - ' + 'value';
+    ws.getCell('A1').value = 'Type of report - ' + value;
     ws.getCell('A2').value = 'Client name - Rahul Jain';
     ws.getCell('A3').value = 'Report as on - ' + new Date();
     const head = ws.getRow(5)
@@ -134,7 +134,7 @@ export class CommoditiesComponent implements OnInit {
       last.font = { bold: true }
     });
     const buf = await wb.xlsx.writeBuffer()
-    saveAs(new Blob([buf]), 'Rahul Jain-' + 'value' + '-' + new Date() + '.xlsx')
+    saveAs(new Blob([buf]), 'Rahul Jain-' + value + '-' + new Date() + '.xlsx')
   }
   getfixedIncomeData(value) {
     console.log('value++++++', value)

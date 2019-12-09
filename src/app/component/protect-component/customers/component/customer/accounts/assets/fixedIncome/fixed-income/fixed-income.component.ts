@@ -73,7 +73,7 @@ export class FixedIncomeComponent implements OnInit {
   async ExportTOExcel(value) {
     this.excelData = []
     var data = []
-    if (value == 'fixedDeposit') {
+    if (value == 'Fixed Deposit') {
       var headerData = [{ width: 20, key: 'Owner' },
       { width: 20, key: 'Type of FD' },
       { width: 25, key: 'Current value' },
@@ -99,7 +99,7 @@ export class FixedIncomeComponent implements OnInit {
         this.formatNumber.first.formatAndRoundOffNumber(this.sumAmountInvested), '',
         this.formatNumber.first.formatAndRoundOffNumber(this.sumMaturityValue), '', '', '',]
       this.footer.push(Object.assign(footerData))
-    } else if (value == 'fixedReccuring') {
+    } else if (value == 'Fixed Reccuring') {
       var headerData = [
         { width: 20, key: 'Owner' },
         { width: 20, key: 'Current value' },
@@ -148,9 +148,9 @@ export class FixedIncomeComponent implements OnInit {
       this.footer.push(Object.assign(footerData))
 
     }
-    this.exportExcel(headerData, header, this.excelData, this.footer)
+    this.exportExcel(headerData, header, this.excelData, this.footer,value)
   }
-  async exportExcel(headerData, header, data, footer) {
+  async exportExcel(headerData, header, data, footer,value) {
     const wb = new Excel.Workbook()
     const ws = wb.addWorksheet()
     //ws.mergeCells('A1', 'M1');
@@ -160,7 +160,7 @@ export class FixedIncomeComponent implements OnInit {
     meta1.font = { bold: true }
     meta2.font = { bold: true }
     meta3.font = { bold: true }
-    ws.getCell('A1').value = 'Type of report - ' + 'value';
+    ws.getCell('A1').value = 'Type of report - ' + value;
     ws.getCell('A2').value = 'Client name - Rahul Jain';
     ws.getCell('A3').value = 'Report as on - ' + new Date();
     //ws.getCell('A1').alignment = { horizontal: 'center' };
@@ -184,7 +184,7 @@ export class FixedIncomeComponent implements OnInit {
       last.font = { bold: true }
     });
     const buf = await wb.xlsx.writeBuffer()
-    saveAs(new Blob([buf]), 'Rahul Jain-' + 'value' + '-' + new Date() + '.xlsx')
+    saveAs(new Blob([buf]), 'Rahul Jain-' + value + '-' + new Date() + '.xlsx')
   }
   filterFixedIncome(key: string, value: string) {
     const obj = {
