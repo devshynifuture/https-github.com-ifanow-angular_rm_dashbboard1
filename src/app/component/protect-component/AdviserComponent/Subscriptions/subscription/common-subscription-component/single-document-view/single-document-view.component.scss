@@ -3,3 +3,10 @@
     height: 300px;
     width: 100%;
 }
+
+.width235 {
+    width: 235px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
