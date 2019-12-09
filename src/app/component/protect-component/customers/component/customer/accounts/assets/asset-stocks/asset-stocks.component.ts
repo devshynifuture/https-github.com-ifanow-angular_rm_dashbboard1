@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddAssetStocksComponent } from './add-asset-stocks/add-asset-stocks.component';
+import { StockScripLevelHoldingComponent } from './stock-scrip-level-holding/stock-scrip-level-holding.component';
 
 @Component({
   selector: 'app-asset-stocks',
@@ -12,20 +13,38 @@ export class AssetStocksComponent implements OnInit {
   displayedColumns25 = ['scrip', 'owner', 'bal', 'price', 'mprice', 'amt', 'cvalue', 'gain', 'ret', 'xirr', 'dividend', 'icons'];
   dataSource25 = ELEMENT_DATA25;
 
-  constructor( private subInjectService: SubscriptionInject) { }
+  constructor(private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
     this.dataSource25 = ELEMENT_DATA25;
     console.log(this.dataSource25)
   }
-  openAddStock(data)
-  {
+  openAddStock(data) {
     const fragmentData = {
-      flag: 'addPpf',
+      flag: 'addStock',
       data,
       id: 1,
       state: 'open',
-      componentName:AddAssetStocksComponent
+      componentName: AddAssetStocksComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+  openScriptLevelHolding(data) {
+    const fragmentData = {
+      flag: 'addScriptLevelHolding',
+      data,
+      id: 1,
+      state: 'open70',
+      componentName:StockScripLevelHoldingComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -39,6 +58,8 @@ export class AssetStocksComponent implements OnInit {
     );
   }
 }
+
+
 export interface PeriodicElement25 {
   scrip: string;
   owner: string;
