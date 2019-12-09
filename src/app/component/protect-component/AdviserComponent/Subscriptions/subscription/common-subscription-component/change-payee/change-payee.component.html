@@ -11,13 +11,13 @@
 <ng-template matStepLabel *ngIf="getRowData">Payee Settings</ng-template>
 
 <div class="wrapper-16 pb-44 mb-44">
-  <div class="row" *ngIf="payeeData">
+  <div class="row" *ngIf="payeeDataRes">
     <div class="col-md-12">
       <p class="m-0 text-right text-custom roboto">You can map more than one payee</p>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6 mt-20 hover c-p" *ngFor="let singlePlan of payeeData;  let i = index">
+    <div class="col-md-6 mt-20 hover c-p" *ngFor="let singlePlan of payeeDataRes;  let i = index">
       <mat-card class="p-0 b-ua" [ngClass]="{'ba-blue': singlePlan.selected == 1,'b-ua':singlePlan.selected == 0}"
         (click)="selectedPayee(singlePlan.selected,singlePlan)">
         <div class="row bg-grey lter">
@@ -56,13 +56,13 @@
       </mat-card>
     </div>
     <div *ngIf="payeeData.length==0" class="col-md-6 mt-20 hover c-p">
-        <mat-card (click)="openAddPayee()" class="example-card b-a height-470 bg-grey lter bd-1">
-            <mat-card-content>
-                <p class="text-center">
-                    <i class="material-icons icon-center">add </i>
-                </p>
-            </mat-card-content>
-        </mat-card>
+      <mat-card (click)="openAddPayee()" class="example-card b-a height-470 bg-grey lter bd-1">
+        <mat-card-content>
+          <p class="text-center">
+            <i class="material-icons icon-center">add </i>
+          </p>
+        </mat-card-content>
+      </mat-card>
     </div>
     <div *ngIf="!payeeData|| payeeData.length==0">
       <h2>{{noDataMessage}}</h2>

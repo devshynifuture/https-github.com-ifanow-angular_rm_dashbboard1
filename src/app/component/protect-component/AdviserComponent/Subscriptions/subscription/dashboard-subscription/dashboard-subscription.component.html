@@ -1,5 +1,5 @@
 <div class="full-lights pb-36 " *ngIf="showSubStep==false" id="ui-dashboard"
-     [ngClass]="showLetsBegin==true ? 'pt-130': 'pt-0'  ">
+  [ngClass]="showLetsBegin==true ? 'pt-130': 'pt-0'  ">
   <div class="wrapper-20">
     <div class="row bg-red mt-20 mb-36" *ngIf="showLetsBegin">
       <div class="col-md-5">
@@ -10,7 +10,7 @@
         <p class="mb-0 pt-12">We’re excited to see you here! The dashboard currently looks barren. </p>
         <p> Fret not. We’ll help you in this journey. We’re in this together. </p>
         <button (click)="showSubscriptionSteps()" mat-flat-button class="btn-red addon mb-28 mt-16">Let's begin <i
-          class="material-icons right text-right"> arrow_forward </i></button>
+            class="material-icons right text-right"> arrow_forward </i></button>
       </div>
     </div>
     <div class=" subscription-summary" [ngClass]="showLetsBegin==true ? 'pt-40': 'pt-100'  ">
@@ -21,22 +21,11 @@
             <div class="container">
               <div class="row">
                 <div class="col-md-12">
-                  <circle-progress class="progress"
-                                   [percent]="dataSourceClientWithSub.activeClientPer"
-                                   [radius]="100"
-                                   [outerStrokeWidth]="10"
-                                   [innerStrokeWidth]="10"
-                                   [space]="-10"
-                                   [outerStrokeColor]="'#008FFF'"
-                                   [innerStrokeColor]="'#e7e8ea'"
-                                   [titleFontSize]="35"
-                                   [unitsFontSize]="35"
-                                   [showSubtitle]="false"
-                                   [animation]="true"
-                                   [animationDuration]="1000"
-                                   [startFromZero]="false"
-                                   [responsive]="true"
-                  ></circle-progress>
+                  <circle-progress class="progress" [percent]="dataSourceClientWithSub.activeClientPer" [radius]="100"
+                    [outerStrokeWidth]="10" [innerStrokeWidth]="10" [space]="-10" [outerStrokeColor]="'#008FFF'"
+                    [innerStrokeColor]="'#e7e8ea'" [titleFontSize]="35" [unitsFontSize]="35" [showSubtitle]="false"
+                    [animation]="true" [animationDuration]="1000" [startFromZero]="false" [responsive]="true">
+                  </circle-progress>
                   <!--<div class="progress blue">
                                             <span class="progress-left">
                                                 <span class="progress-bar"></span>
@@ -81,15 +70,15 @@
                 <div class="col-md-6">
                   <div class="pl-20 pr-20 c-p">
                     <p class="f-300 f-18 mb-0">Total sales</p>
-                    <h2
-                      class="text-primary mb-0 pb-28 pt-8">{{totalSaleReceived ? totalSaleReceived.totalSales : '-'}}</h2>
+                    <h2 class="text-primary mb-0 pb-28 pt-8">{{totalSaleReceived ? totalSaleReceived.totalSales : '-'}}
+                    </h2>
                   </div>
                 </div>
                 <div class="col-md-6 p-0">
                   <div class="pr-20 pl-20 c-p">
                     <p class="f-300 f-18 mb-0">Fee received</p>
-                    <h2
-                      class="text-primary mb-0 pb-28 pt-8">{{totalSaleReceived ? totalSaleReceived.feeRecieved : '-'}}</h2>
+                    <h2 class="text-primary mb-0 pb-28 pt-8">{{totalSaleReceived ? totalSaleReceived.feeRecieved : '-'}}
+                    </h2>
 
                   </div>
                 </div>
@@ -186,8 +175,8 @@
                   <!--                    <mat-button-toggle value="accent">UPCOMING</mat-button-toggle>-->
                   <!--                  </mat-button-toggle-group>-->
                   <mat-button-toggle-group [(ngModel)]="subscriptionSummaryStatusFilter"
-                                           (change)="getSummaryDataDashboard($event.value)" multiple=false
-                                           class="subscription-summary" id="custom-toggle">
+                    (change)="getSummaryDataDashboard($event.value)" multiple=false class="subscription-summary"
+                    id="custom-toggle">
                     <mat-button-toggle value=1 class="f-14">NOT STARTED</mat-button-toggle>
                     <mat-button-toggle value=3 class="f-14">UPCOMING</mat-button-toggle>
                   </mat-button-toggle-group>
@@ -198,43 +187,43 @@
               <div class="sub-summary">
                 <table mat-table [dataSource]="dataSource" id="table-low" class="mt-8">
                   <tbody>
-                  <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef> Client name</th>
-                    <td mat-cell *matCellDef="let element" (click)="openPlanSlider('SUBSCRIPTIONS','open',element)"
+                    <ng-container matColumnDef="name">
+                      <th mat-header-cell *matHeaderCellDef> Client name</th>
+                      <td mat-cell *matCellDef="let element" (click)="openPlanSlider('SUBSCRIPTIONS','open',element)"
                         class="c-p"> {{element.clientName}} </td>
-                  </ng-container>
-                  <ng-container matColumnDef="service">
-                    <th mat-header-cell *matHeaderCellDef> Service name</th>
-                    <td mat-cell *matCellDef="let element" class="c-p"> {{element.serviceName}} </td>
-                  </ng-container>
-                  <ng-container matColumnDef="amt">
-                    <th mat-header-cell *matHeaderCellDef> Fee amount</th>
-                    <td mat-cell *matCellDef="let element" (click)="Open('open',element)"
+                    </ng-container>
+                    <ng-container matColumnDef="service">
+                      <th mat-header-cell *matHeaderCellDef> Service name</th>
+                      <td mat-cell *matCellDef="let element" class="c-p"> {{element.serviceName}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="amt">
+                      <th mat-header-cell *matHeaderCellDef> Fee amount</th>
+                      <td mat-cell *matCellDef="let element" (click)="Open(element)"
                         class="c-p text-primary text-underline"> View details
-                    </td>
-                  </ng-container>
-                  <ng-container matColumnDef="billing">
-                    <th mat-header-cell *matHeaderCellDef> Next billing...</th>
-                    <td mat-cell *matCellDef="let element"> {{element.nextBillingDate | date:'dd/MM/yyyy'}} </td>
-                  </ng-container>
-                  <ng-container matColumnDef="icons">
-                    <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"></th>
-                    <td mat-cell *matCellDef="let element" style="width: 2%;"><i class="material-icons c-p iconscolors"
-                                                                                 [matMenuTriggerFor]="menu">
-                      more_vert
-                    </i>
-                      <mat-menu #menu="matMenu">
-                        <a mat-menu-item (click)="Open('open',element)">View & Modify fee structure</a>
-                        <a mat-menu-item class="bt-1" (click)="openPlanSlider('billerSettings','open',element)">Change
-                          Biller</a>
-                        <a mat-menu-item (click)="openPlanSlider('changePayee','open',element)">Change Payee</a>
-                        <a mat-menu-item class="bt-1" (click)="delete('cancelSubscription')">Cancel subscription</a>
-                        <a mat-menu-item (click)="deleteModal('SUBSCRIPTION')">Delete subscription</a>
-                      </mat-menu>
-                    </td>
-                  </ng-container>
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="billing">
+                      <th mat-header-cell *matHeaderCellDef> Next billing...</th>
+                      <td mat-cell *matCellDef="let element"> {{element.nextBillingDate | date:'dd/MM/yyyy'}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="icons">
+                      <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"></th>
+                      <td mat-cell *matCellDef="let element" style="width: 2%;"><i
+                          class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu">
+                          more_vert
+                        </i>
+                        <mat-menu #menu="matMenu">
+                          <a mat-menu-item (click)="Open(element)">View & Modify fee structure</a>
+                          <a mat-menu-item class="bt-1" (click)="openPlanSlider('billerSettings','open',element)">Change
+                            Biller</a>
+                          <a mat-menu-item (click)="openPlanSlider('changePayee','open',element)">Change Payee</a>
+                          <a mat-menu-item class="bt-1" (click)="delete('cancelSubscription')">Cancel subscription</a>
+                          <a mat-menu-item (click)="deleteModal('SUBSCRIPTION')">Delete subscription</a>
+                        </mat-menu>
+                      </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                   </tbody>
                 </table>
               </div>
@@ -251,4 +240,5 @@
     </div>
   </div>
 </div>
-<app-subscription-completeness (subscriptionIndex)="getIndex($event)" *ngIf="showSubStep"></app-subscription-completeness>
+<app-subscription-completeness (subscriptionIndex)="getIndex($event)" *ngIf="showSubStep">
+</app-subscription-completeness>

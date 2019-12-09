@@ -1,69 +1,70 @@
 <div *ngIf="showSubscription">
-    <div class="row bb-1 popup-header-fix-60">
-      <div class="col-md-10 p-0">
-        <h3 class="mb-0 wrapper-20">SUB-0001</h3>
-      </div>
-      <div class="col-md-2 text-right">
-          <i class="material-icons pt-20 c-p pr-8" (click)="Close('close')"> clear</i>
-      </div>
+  <div class="row bb-1 popup-header-fix-60">
+    <div class="col-md-10 p-0">
+      <h3 class="mb-0 wrapper-20">SUB-0001</h3>
     </div>
-    <div class="row bb-1 wrapper-20">
-      <div class="col-md-10 p-0">
-        <h5 class="mb-0 pt-4">Invoice History</h5>
-      </div>
-      <div class="col-md-2 text-right">
-        <p class="pt-4 c-p mb-0"> Activity log</p>
-      </div>
+    <div class="col-md-2 text-right">
+      <i class="material-icons pt-20 c-p pr-8" (click)="Close('close')"> clear</i>
     </div>
-  
-    <div class="wrapper-40 invoice-history">
-      <table mat-table [dataSource]="dataSource" id="table-low">
-  
-        <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef> Date </th>
-          <td mat-cell *matCellDef="let element" (click)="showInvoice(element)"> {{element.invoiceDate | date:'dd/MM/yyyy'}} </td>
-        </ng-container>
-  
-        <ng-container matColumnDef="invoice">
-          <th mat-header-cell *matHeaderCellDef> Invoice Number </th>
-          <td mat-cell *matCellDef="let element"> {{element.invoiceNumber}} </td>
-        </ng-container>
-  
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef> Status </th>
-          <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-        </ng-container>
-  
-        <ng-container matColumnDef="ddate">
-          <th mat-header-cell *matHeaderCellDef> Due date </th>
-          <td mat-cell *matCellDef="let element"> {{element.dueDate}} </td>
-        </ng-container>
-        <ng-container matColumnDef="amount">
-          <th mat-header-cell *matHeaderCellDef> Amount </th>
-          <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
-        </ng-container>
-        <ng-container matColumnDef="balance">
-          <th mat-header-cell *matHeaderCellDef> Balance due </th>
-          <td mat-cell *matCellDef="let element"> {{element.balanceDue}} </td>
-        </ng-container>
-  
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-  
+  </div>
+  <div class="row bb-1 wrapper-20">
+    <div class="col-md-10 p-0">
+      <h5 class="mb-0 pt-4">Invoice History</h5>
     </div>
-    <div class="bottom-fixed wrapper-12">
-      <div class="row">
-        <div class="col-md-4">
-          <h5 class="mb-0 pt-8 text-white c-p "  (click)="Close('close')" >Cancel</h5>
-        </div>
+    <div class="col-md-2 text-right">
+      <p class="pt-4 c-p mb-0"> Activity log</p>
+    </div>
+  </div>
+
+  <div class="wrapper-40 invoice-history">
+    <table mat-table [dataSource]="dataSource" id="table-low">
+
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef> Date </th>
+        <td mat-cell *matCellDef="let element" (click)="showInvoice(element)">
+          {{element.invoiceDate | date:'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="invoice">
+        <th mat-header-cell *matHeaderCellDef> Invoice Number </th>
+        <td mat-cell *matCellDef="let element"> {{element.invoiceNumber}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ddate">
+        <th mat-header-cell *matHeaderCellDef> Due date </th>
+        <td mat-cell *matCellDef="let element"> {{element.dueDate}} </td>
+      </ng-container>
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef> Amount </th>
+        <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+      </ng-container>
+      <ng-container matColumnDef="balance">
+        <th mat-header-cell *matHeaderCellDef> Balance due </th>
+        <td mat-cell *matCellDef="let element"> {{element.balanceDue}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+  <div class="bottom-fixed wrapper-12">
+    <div class="row">
+      <div class="col-md-4">
+        <h5 class="mb-0 pt-8 text-white c-p " (click)="Close('close')">Cancel</h5>
       </div>
     </div>
   </div>
-  <div *ngIf="!showSubscription">
-  <app-invoice [invoiceData]=invoiceData></app-invoice>
-  </div>
-  <!-- <div class="row bb-1 popup-header-fix-60">
+</div>
+<div *ngIf="!showSubscription">
+  <!-- <app-invoice [invoiceData]=invoiceData></app-invoice> -->
+</div>
+<!-- <div class="row bb-1 popup-header-fix-60">
       <div class="col-md-10 p-0">
           <h3 class="mb-0 wrapper-20">SUB-0001</h3>
       </div>
