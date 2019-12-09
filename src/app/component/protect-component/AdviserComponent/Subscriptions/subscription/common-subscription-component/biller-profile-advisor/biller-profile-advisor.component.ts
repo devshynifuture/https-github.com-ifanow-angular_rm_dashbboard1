@@ -212,7 +212,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       const obj = {
         acNumber: this.bankDetailsForm.controls.acNo.value,
         advisorId: this.advisorId,
-        bankCity: this.bankDetailsForm.controls.address.value,
+        bankCity: this.bankDetailsForm.controls.city.value,
         bankCountry: this.bankDetailsForm.controls.country.value,
         bankName: this.bankDetailsForm.controls.bankName.value,
         bankState: this.bankDetailsForm.controls.state.value,

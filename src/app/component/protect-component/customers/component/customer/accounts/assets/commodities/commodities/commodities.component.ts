@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../customer.service';
@@ -10,6 +10,9 @@ import { GoldComponent } from '../gold/gold.component';
 import { OthersComponent } from '../others/others.component';
 import { DetailedViewGoldComponent } from '../gold/detailed-view-gold/detailed-view-gold.component';
 import { DetailedViewOthersComponent } from '../others/detailed-view-others/detailed-view-others.component';
+import * as Excel from 'exceljs/dist/exceljs';
+import { saveAs } from 'file-saver'
+import { FormatNumberDirective } from 'src/app/format-number.directive';
 
 @Component({
   selector: 'app-commodities',
@@ -32,9 +35,12 @@ export class CommoditiesComponent implements OnInit {
   sumOfPurchaseValue: any;
   sumOfMarketValueOther: any;
   sumOfPurchaseValueOther: any;
+  footer = [];
 
   @ViewChild('goldListTable', { static: false }) goldListTableSort: MatSort;
   @ViewChild('otherCommodityListTable', { static: false }) otherCommodityListTableSort: MatSort;
+  @ViewChildren(FormatNumberDirective) formatNumber;
+  excelData: any[];
 
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) { }
   ngOnInit() {
@@ -43,6 +49,92 @@ export class CommoditiesComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getGoldList()
 
+  }
+  async ExportTOExcel(value) {
+    this.excelData = []
+    var data = []
+    if (value == 'Gold') {
+      var headerData = [{ width: 20, key: 'Owner' },
+      { width: 20, key: 'Tolas/grams' },
+      { width: 25, key: 'Carats' },
+      { width: 25, key: 'Carat gold price' },
+      { width: 18, key: ' Market value' },
+      { width: 18, key: 'Purchase value' },
+      { width: 15, key: 'Description' },
+      { width: 10, key: 'Status' },]
+      var header = ['Owner', 'Tolas/grams', 'Carats', 'Carat gold price', 'Market value',
+        'Purchase value', 'Description', 'Status'];
+      this.goldList.filteredData.forEach(element => {
+        data = [element.ownerName, (element.gramsOrTola), (element.carat), (element.caratGoldPrice),
+        this.formatNumber.first.formatAndRoundOffNumber(element.marketValue),
+        this.formatNumber.first.formatAndRoundOffNumber(element.approximatePurchaseValue),
+        element.description, element.status]
+        this.excelData.push(Object.assign(data))
+      });
+      var footerData = ['Total',
+        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMarketValueOther), '',
+        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfPurchaseValueOther), '', , '', '',]
+      this.footer.push(Object.assign(footerData))
+    } else {
+      var headerData = [{ width: 20, key: 'Owner' },
+      { width: 20, key: 'Type of commodity' },
+      { width: 25, key: 'Coupon amount' },
+      { width: 18, key: 'Market value' },
+      { width: 18, key: 'Purchase value' },
+      { width: 18, key: 'Date of purchase' },
+      { width: 18, key: 'Growth rate' },
+      { width: 15, key: 'Description' },
+      { width: 10, key: 'Status' },]
+      var header = ['Owner', 'Type of commodity', 'Coupon amount', 'Market value', 'Purchase value',
+        'Date of purchase', 'Growth rate', 'Description', 'Status'];
+      this.otherCommodityList.filteredData.forEach(element => {
+        data = [element.ownerName, (element.commodityTypeId),
+        this.formatNumber.first.formatAndRoundOffNumber(element.marketValue),
+        (element.purchaseValue), new Date(element.dateOfPurchase),
+        (element.growthRate), element.description, element.status]
+        this.excelData.push(Object.assign(data))
+      });
+      var footerData = ['Total','','', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMarketValue),
+        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfPurchaseValue), '', '', '', '']
+      this.footer.push(Object.assign(footerData))
+
+    }
+    this.exportExcel(headerData, header, this.excelData, this.footer)
+  }
+  async exportExcel(headerData, header, data, footer) {
+    const wb = new Excel.Workbook()
+    const ws = wb.addWorksheet()
+    //ws.mergeCells('A1', 'M1');
+    const meta1 = ws.getCell('A1')
+    const meta2 = ws.getCell('A2')
+    const meta3 = ws.getCell('A3')
+    meta1.font = { bold: true }
+    meta2.font = { bold: true }
+    meta3.font = { bold: true }
+    ws.getCell('A1').value = 'Type of report - ' + 'value';
+    ws.getCell('A2').value = 'Client name - Rahul Jain';
+    ws.getCell('A3').value = 'Report as on - ' + new Date();
+    const head = ws.getRow(5)
+    head.font = { bold: true }
+    head.fill = {
+      type: 'pattern',
+      pattern: 'darkVertical',
+      fgColor: {
+        argb: '#f5f7f7'
+      }
+    };
+    ws.getRow(5).values = header;
+    ws.columns.alignment = { horizontal: 'left' };
+    ws.columns = headerData
+    data.forEach(element => {
+      ws.addRow(element)
+    });
+    footer.forEach(element => {
+      const last = ws.addRow(element)
+      last.font = { bold: true }
+    });
+    const buf = await wb.xlsx.writeBuffer()
+    saveAs(new Blob([buf]), 'Rahul Jain-' + 'value' + '-' + new Date() + '.xlsx')
   }
   getfixedIncomeData(value) {
     console.log('value++++++', value)
