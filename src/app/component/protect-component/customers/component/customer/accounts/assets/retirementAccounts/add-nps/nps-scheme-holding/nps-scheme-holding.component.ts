@@ -54,6 +54,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId();
     this.getGlobalList()
+    
   
   }
 

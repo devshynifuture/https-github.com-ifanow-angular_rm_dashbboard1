@@ -33,9 +33,18 @@
         <h4 class="m-0 text-black roboto pt-8">Bank accounts</h4>
       </div>
       <div class="col-md-8 p-0 right text-right">
-        <img class="c-p" src="assets/images/svg/download-bordered.svg">
-        <img class="" src="assets/images/svg/up-down.svg">
-        <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
+          <img src="assets/images/svg/download-bordered.svg"[matMenuTriggerFor]="menu5" class="c-p"> 
+          <mat-menu #menu5="matMenu">
+              <button mat-menu-item>PDF</button>
+              <button (click)="ExportTOExcel('BankAccount')" mat-menu-item>XLS</button>
+            </mat-menu>
+          <img src="assets/images/svg/up-down.svg" class="">
+          <img src="assets/images/svg/three-dot-bordered.svg"[matMenuTriggerFor]="menu6" class="c-p mr-12">
+          <mat-menu #menu6="matMenu">
+              <button mat-menu-item>Email Report</button>
+              <button mat-menu-item>Option 2</button>
+              <button mat-menu-item>Option 3</button>
+            </mat-menu>
         <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
             class="material-icons">filter_list</i>FILTERS
         </button>
@@ -129,10 +138,18 @@
         <h4 class="m-0 text-black roboto pt-8">Cash in hand</h4>
       </div>
       <div class="col-md-8 p-0 right text-right">
-        <img class="c-p" src="assets/images/svg/download-bordered.svg">
-        <img class="" src="assets/images/svg/up-down.svg">
-        <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
-
+          <img src="assets/images/svg/download-bordered.svg"[matMenuTriggerFor]="menu5" class="c-p"> 
+          <mat-menu #menu5="matMenu">
+              <button mat-menu-item>PDF</button>
+              <button (click)="ExportTOExcel('CashInHand')" mat-menu-item>XLS</button>
+            </mat-menu>
+          <img src="assets/images/svg/up-down.svg" class="">
+          <img src="assets/images/svg/three-dot-bordered.svg"[matMenuTriggerFor]="menu6" class="c-p mr-12">
+          <mat-menu #menu6="matMenu">
+              <button mat-menu-item>Email Report</button>
+              <button mat-menu-item>Option 2</button>
+              <button mat-menu-item>Option 3</button>
+            </mat-menu>
         <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
             class="material-icons">filter_list</i>FILTERS
         </button>
@@ -156,7 +173,7 @@
           <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell>Total</td>
         </ng-container>
         <ng-container matColumnDef="cash">
-          <th mat-sort-header="cashValue" *matHeaderCellDef class="br text-right" mat-header-cell> Cash balance</th>
+          <th mat-sort-header="cashValue" *matHeaderCellDef class="br text-right" mat-header-cell> Account type</th>
           <td *matCellDef="let element" class="br text-right" mat-cell appFormatNumber> {{element.cashValue}} </td>
           <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell appFormatNumber [value]="sumOfCashValue">
             {{ sumOfCashValue || '-'}}</td>

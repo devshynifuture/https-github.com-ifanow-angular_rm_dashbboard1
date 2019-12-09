@@ -33,7 +33,7 @@
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button mat-menu-item>PDF</button>
-                    <button (click)="exportAsXLSX('fd')" mat-menu-item>XLS</button>
+                    <button (click)="ExportTOExcel('fixedDeposit')" mat-menu-item>XLS</button>
                 </mat-menu>
                 <img src="assets/images/svg/up-down.svg">
                 <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p">
@@ -182,7 +182,7 @@
             <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
             <mat-menu #menu5="matMenu">
                 <button mat-menu-item>PDF</button>
-                <button (click)="exportAsXLSX('rd')" mat-menu-item>XLS</button>
+                <button (click)="ExportTOExcel('fixedReccuring')" mat-menu-item>XLS</button>
             </mat-menu>
             <img src="assets/images/svg/up-down.svg">
             <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p">
@@ -312,7 +312,7 @@
             <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
             <mat-menu #menu5="matMenu">
                 <button mat-menu-item>PDF</button>
-                <button mat-menu-item (click)="exportAsXLSX('bond')">XLS</button>
+                <button mat-menu-item (click)="ExportTOExcel('bond')">XLS</button>
             </mat-menu>
             <img src="assets/images/svg/up-down.svg">
             <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p">
@@ -401,8 +401,8 @@
             <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
         <ng-container matColumnDef="type">
-            <th mat-sort-header="type" mat-header-cell *matHeaderCellDef class="br t-8"> type</th>
-            <td mat-cell *matCellDef="let element" class="br t-8"> {{element.type}} </td>
+            <th mat-sort-header="type" mat-header-cell *matHeaderCellDef class="br t-8"> Type</th>
+            <td mat-cell *matCellDef="let element" class="br t-8"> {{(element.type==1)?'Tax free':'Non tax free'}} </td>
             <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
 
