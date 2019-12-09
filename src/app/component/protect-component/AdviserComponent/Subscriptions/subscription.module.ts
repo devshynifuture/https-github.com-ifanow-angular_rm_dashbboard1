@@ -27,7 +27,6 @@ import { ClientSubscriptionComponent } from './subscription/client-subscription/
 import { SubscriptionComponent } from './subscription/subscription.component';
 import { DocumentsSubscriptionsComponent } from './subscription/documents-subscriptions/documents-subscriptions.component';
 import { InvoiceComponent } from './subscription/common-subscription-component/invoice/invoice.component';
-import { HelpComponent } from './subscription/common-subscription-component/help/help.component';
 import { SettingsComponent } from './subscription/common-subscription-component/settings/settings.component';
 import { InvoicesComponent } from './subscription/common-subscription-component/invoices/invoices.component';
 import { QuotationsComponent } from './subscription/common-subscription-component/quotations/quotations.component';
@@ -66,7 +65,6 @@ export const componentList = [SubscriptionComponent,
   InvoicesComponent,
   SettingsComponent,
   ClientUpperSubscriptionComponent,
-  HelpComponent,
   InvoiceComponent,
   DocumentsSubscriptionsComponent,
   DashboardSubscriptionComponent,

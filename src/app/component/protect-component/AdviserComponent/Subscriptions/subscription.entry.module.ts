@@ -11,6 +11,7 @@ import { ChangePayeeComponent } from './subscription/common-subscription-compone
 import { InvoiceHistoryComponent } from './subscription/common-subscription-component/invoice-history/invoice-history.component';
 import { CommonFroalaComponent } from './subscription/common-subscription-component/common-froala/common-froala.component';
 import { BillerProfileAdvisorComponent } from './subscription/common-subscription-component/biller-profile-advisor/biller-profile-advisor.component';
+import { HelpComponent } from './subscription/common-subscription-component/help/help.component';
 
 export const componentList = [
     VariableFeeComponent,
@@ -20,7 +21,8 @@ export const componentList = [
     ChangePayeeComponent,
     InvoiceHistoryComponent,
     CommonFroalaComponent,
-    BillerProfileAdvisorComponent
+    BillerProfileAdvisorComponent,
+    HelpComponent
 ]
 @NgModule({
     declarations: componentList,
