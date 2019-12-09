@@ -21,8 +21,6 @@
                 class="material-icons">add</i>ADD NEW</button>
     </div>
 </div>
-
-<kendo-pdf-export #pdf paperSize="A2" margin="1cm">
     <div class="example-container mt-8 real-estate">
         <table matSort mat-table [dataSource]="datasource" id="table-low">
 
@@ -107,7 +105,6 @@
             <h4 class="text-center pt-72">{{noData}}</h4>
         </div>
     </div>
-</kendo-pdf-export>
 <div *ngIf="isLoading">
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div>

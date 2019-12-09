@@ -43,7 +43,7 @@ import { DatePipe } from '@angular/common';
 import { MatSortModule, MatTableModule } from '@angular/material';
 import { DynamicComponentService } from './services/dynamic-component.service';
 import { EmailModule } from './component/protect-component/AdviserComponent/Email/email.module';
-import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
+// import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -104,7 +104,7 @@ import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
     MDBBootstrapModule.forRoot(), DragDropModule,
     CustomCommonModule,
     EmailModule,
-    PDFExportModule,
+    // PDFExportModule,
 
     // EntryComponentsModule,
     // AccountEntryModule,
