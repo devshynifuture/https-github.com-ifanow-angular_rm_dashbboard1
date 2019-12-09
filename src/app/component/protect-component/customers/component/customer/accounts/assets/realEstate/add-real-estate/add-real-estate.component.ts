@@ -99,9 +99,9 @@ export class AddRealEstateComponent implements OnInit {
     // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
     //   return o.ownershipPer;
     // });
-    this.nexNomineePer=0;
+    this.nexNomineePer=0
     this.getNominee.value.forEach(element => {
-      this.nexNomineePer += element.ownershipPer;
+      this.nexNomineePer+=element.ownershipPer
     });
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -159,7 +159,7 @@ export class AddRealEstateComponent implements OnInit {
     // });
     this.nexNomineePer=0;
     this.getNominee.value.forEach(element => {
-      this.nexNomineePer += element.ownershipPer;
+      this.nexNomineePer+=element.ownershipPer
     });
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -180,9 +180,9 @@ export class AddRealEstateComponent implements OnInit {
     // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
     //   return o.ownershipPer;
     // });
-    this.nexNomineePer=0
+    this.nexNomineePer=0;
     this.getNominee.value.forEach(element => {
-      this.nexNomineePer += element.ownershipPer;
+      this.nexNomineePer+=element.ownershipPer
     });
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -222,8 +222,9 @@ export class AddRealEstateComponent implements OnInit {
       // this.nexNomineePer = _.sumBy(this.getCoOwner.value, function (o) {
       //   return o.ownershipPerc;
       // });
+      this.nexNomineePer=0;
       this.getCoOwner.value.forEach(element => {
-        this.nexNomineePer += element.ownershipPerc;
+        this.nexNomineePer+=element.ownershipPerc
       });
       this.nexNomineePer = this.addrealEstateForm.controls.ownerPercent.value + this.nexNomineePer
       if (this.nexNomineePer > 100) {
@@ -237,9 +238,8 @@ export class AddRealEstateComponent implements OnInit {
       // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
       //   return o.ownershipPer;
       // });
-      this.nexNomineePer=0;
       this.getNominee.value.forEach(element => {
-        this.nexNomineePer += element.ownershipPer;
+        this.nexNomineePer+=element.ownershipPer
       });
       if (this.nexNomineePer > 100) {
         this.showError = true

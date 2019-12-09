@@ -100,7 +100,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     //   return o.nomineePercentageShare;
     // });
     this.nominee.value.forEach(element => {
-      this.nexNomineePer += element.nomineePercentageShare;
+      this.nexNomineePer+=element.nomineePercentageShare
     });
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -183,7 +183,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     //   return o.nomineePercentageShare;
     // });
     this.nominee.value.forEach(element => {
-      this.nexNomineePer += element.nomineePercentageShare;
+      this.nexNomineePer+=element.nomineePercentageShare
     });
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -207,7 +207,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     //   return o.nomineePercentageShare;
     // });
     this.nominee.value.forEach(element => {
-      this.nexNomineePer += element.nomineePercentageShare;
+      this.nexNomineePer+=element.nomineePercentageShare
     });
     if (this.nexNomineePer > 100) {
       this.showError = true
