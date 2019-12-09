@@ -52,7 +52,6 @@ import {AccountRoutingModule} from "./account-routing.module";
 import {AccountCommonModule} from "./account.common.module";
 // import {PDFExportModule} from "@progress/kendo-angular-pdf-export";
 import { AssetStocksComponent } from './assets/asset-stocks/asset-stocks.component';
-import { AddAssetStocksComponent } from './assets/asset-stocks/add-asset-stocks/add-asset-stocks.component'
 @NgModule({
   declarations: [
     SchemeLevelTransactionComponent,
@@ -113,7 +112,7 @@ import { AddAssetStocksComponent } from './assets/asset-stocks/add-asset-stocks/
     SkeletonLoadingDirective,
     FormatNumberDirective,
     DocumentNewFolderComponent,
-    AssetStocksComponent  
+    AssetStocksComponent,
   ],
   imports: [
     AccountRoutingModule,

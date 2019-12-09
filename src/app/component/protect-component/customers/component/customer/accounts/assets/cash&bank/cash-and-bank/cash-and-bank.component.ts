@@ -214,10 +214,10 @@ export class CashAndBankComponent implements OnInit {
     this.cashInHandList.sort = this.cashInHandListTableSort;
     this.sumOfCashValue = data.sumOfCashValue
   }
-  openCashAndBank(state) {
+  openCashAndBank(data) {
     const fragmentData = {
       flag: '',
-      data: '',
+      data: data,
       id: 1,
       state: 'open',
       componentName: BankAccountsComponent
@@ -236,7 +236,7 @@ export class CashAndBankComponent implements OnInit {
   openCashInHand(data) {
     const fragmentData = {
       flag: 'addCashInHand',
-      data,
+      data:data,
       id: 1,
       state: 'open',
       componentName: CashInHandComponent

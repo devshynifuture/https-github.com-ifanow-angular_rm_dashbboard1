@@ -48,7 +48,7 @@
         <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
             class="material-icons">filter_list</i>FILTERS
         </button>
-        <button (click)="openCashAndBank('addBankAccounts')" class="btn-primary addon v-middle" mat-stroked-button><i
+        <button (click)="openCashAndBank(element)" class="btn-primary addon v-middle" mat-stroked-button><i
             class="material-icons">add</i>ADD
           NEW
         </button>
@@ -74,7 +74,7 @@
         </ng-container>
         <ng-container matColumnDef="amt">
           <th mat-sort-header="balanceAsOn" *matHeaderCellDef class="br text-left" mat-header-cell> Balance as on</th>
-          <td *matCellDef="let element" class="br text-left" mat-cell> {{element.balanceAsOn}} </td>
+          <td *matCellDef="let element" class="br text-left" mat-cell> {{element.balanceAsOn | date:'dd/MM/yyyy'}} </td>
           <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
         </ng-container>
         <ng-container matColumnDef="rate">

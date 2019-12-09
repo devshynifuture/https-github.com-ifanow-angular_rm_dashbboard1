@@ -17,7 +17,7 @@
             <p class="m-0 f-12 text-custom">In whose name is this asset</p>
         </div>
         <div class="col-md-5">
-            <app-owner-component [data]='ownerData' >
+            <app-owner-component [data]='ownerData'>
             </app-owner-component>
         </div>
     </div>
@@ -29,8 +29,9 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput autocomplete="off" formControlName="currentMarketValue" type="number" #institution maxlength="30"
-                        class="form-control ruppes br-0">
+                    <input matInput autocomplete="off" formControlName="currentMarketValue" type="number" #institution
+                        maxlength="30" class="form-control ruppes br-0">
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -42,10 +43,11 @@
         <div class="col-md-3">
             <div class="form-group form-group_one mb-0">
                 <mat-form-field>
-                    <input matInput autocomplete="off" formControlName="valueAsOn" class="form-control br-0" [matDatepicker]="balanceAsOn">
+                    <input matInput autocomplete="off" formControlName="valueAsOn" class="form-control br-0"
+                        [matDatepicker]="balanceAsOn">
                     <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                     <mat-datepicker #balanceAsOn></mat-datepicker>
-                    <mat-error class="f-12 pt-4">This field is required
+                    <mat-error>This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -58,8 +60,9 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput autocomplete="off" formControlName="amtInvested" type="number" #institution maxlength="30"
-                        class="form-control ruppes br-0">
+                    <input matInput autocomplete="off" formControlName="amtInvested" type="number" #institution
+                        maxlength="30" class="form-control ruppes br-0">
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -71,8 +74,9 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput autocomplete="off" type="text" formControlName="portfolioName" #institution maxlength="30"
-                        class="form-control ruppes br-0">
+                    <input matInput autocomplete="off" type="text" formControlName="portfolioName" #institution
+                        maxlength="30" class="form-control ruppes br-0">
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
