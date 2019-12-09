@@ -236,7 +236,7 @@ export class CashAndBankComponent implements OnInit {
   openCashInHand(data) {
     const fragmentData = {
       flag: 'addCashInHand',
-      data,
+      data:data,
       id: 1,
       state: 'open',
       componentName: CashInHandComponent
