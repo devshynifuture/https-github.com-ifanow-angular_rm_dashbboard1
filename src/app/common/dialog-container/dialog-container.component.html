@@ -1,5 +1,5 @@
 <app-custom-dialog-container *ngIf="parentComponentName=='leftSideBar'" [currentState]="currentState">
-  <app-common-froala *ngIf="subscriptionTab=='viewDocuments'||subscriptionTab=='viewDoc'" [data]="inputData"
+  <app-common-froala *ngIf="subscriptionTab=='viewDocuments'" [data]="inputData"
                      [changeFooter]='subscriptionTab' [screenType]="subscriptionTab"></app-common-froala>
   <app-common-froala *ngIf="subscriptionTab=='viewDoc'" [data]="inputData" [changeFooter]='subscriptionTab'
                      [screenType]="subscriptionTab"></app-common-froala>

@@ -157,9 +157,9 @@ export class PlansComponent implements OnInit {
     );
   }
   mapPlanToServiceRes(data){
+    this.dialogClose()
     console.log(data)
     this.eventService.openSnackBar('Service is mapped', 'OK');
-    this.dialogClose()
   }
   saveDocumentPlanMapping() {
     const obj = [];
