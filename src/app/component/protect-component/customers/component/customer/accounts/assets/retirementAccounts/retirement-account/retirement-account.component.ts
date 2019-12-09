@@ -21,7 +21,7 @@ import * as _ from 'lodash';
 import * as Excel from 'exceljs/dist/exceljs';
 import { saveAs } from 'file-saver'
 import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { format } from 'ssf/types';
+
 
 @Component({
   selector: 'app-retirement-account',
@@ -65,7 +65,6 @@ export class RetirementAccountComponent implements OnInit {
   title = 'Excel';
   excelData: any;
   footer = [];
-
 
   async ExportTOExcel(value) {
     this.excelData = []
@@ -140,7 +139,7 @@ export class RetirementAccountComponent implements OnInit {
       });
       var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAnnualEmployeeContribution),
         this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAnnualEmployerContribution), '', '', '', '', '', '']
-    } else if (value == 'epf') {
+    } else if (value == 'EPF') {
       var headerData = [
         { width: 20, key: 'Owner' },
         { width: 20, key: 'Current value' },

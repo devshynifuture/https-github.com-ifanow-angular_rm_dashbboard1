@@ -27,7 +27,7 @@ export class FixedIncomeComponent implements OnInit {
 
   showRequring: any;
   advisorId: any;
-  dataSourceFixed = new MatTableDataSource([{}, {}, {}]);
+ 
   dataSourceRecurring: any;
   dataSourceBond: any;
   clientId: any;
@@ -46,6 +46,7 @@ export class FixedIncomeComponent implements OnInit {
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   footer = [];
+  dataSourceFixed: any;
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService, public dialog: MatDialog) { }
   viewMode;
   displayedColumns4 = ['no', 'owner', 'type', 'cvalue', 'rate', 'amt', 'mdate', 'mvalue', 'number', 'desc', 'status', 'icons'];
@@ -62,7 +63,8 @@ export class FixedIncomeComponent implements OnInit {
     this.showRequring = '1';
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    // this.getFixedDepositList()
+    this.getFixedDepositList()
+    this.dataSourceFixed = new MatTableDataSource([{}, {}, {}]);
   }
 
   Close() {
