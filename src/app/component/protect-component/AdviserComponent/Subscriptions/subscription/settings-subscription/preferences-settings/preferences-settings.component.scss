@@ -74,11 +74,19 @@ h5 {
     &::before {
         content: '';
         width: 10px;
-        height: 33px;
+        height: 40px;
         z-index: 2;
         background: #fff;
         position: absolute;
         right: -5px;
         top: 0px;
+    }
+}
+
+.preferencesMenuList {
+    .vertical-menu {
+        li {
+            padding: 10px 12px !important;
+        }
     }
 }

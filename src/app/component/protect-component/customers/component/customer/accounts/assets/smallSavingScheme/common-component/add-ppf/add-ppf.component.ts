@@ -122,9 +122,9 @@ export class AddPpfComponent implements OnInit {
     console.log(this.ppfSchemeForm)
   }
   addNominee() {
-    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
-      return o.nomineePercentageShare;
-    });
+    // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+    //   return o.nomineePercentageShare;
+    // });
 
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -142,9 +142,9 @@ export class AddPpfComponent implements OnInit {
     if (this.nominee.value.length > 1) {
       this.nominee.removeAt(item);
     }
-    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
-      return o.nomineePercentageShare;
-    });
+    // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+    //   return o.nomineePercentageShare;
+    // });
 
     if (this.nexNomineePer > 100) {
       this.showError = true
