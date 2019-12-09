@@ -21,6 +21,7 @@ import {PlanRoutingModule} from "./plan-routing.module";
 import {IncomeComponent} from './profile-plan/income/income.component';
 import {ExpensesComponent} from '../accounts/expenses/expenses.component';
 import {AddPlaninsuranceComponent} from "./insurance-plan/add-planinsurance/add-planinsurance.component";
+// import { AddGoalsComponent } from './add-goals/add-goals.component';
 
 
 
@@ -48,6 +49,7 @@ import {AddPlaninsuranceComponent} from "./insurance-plan/add-planinsurance/add-
     IncomeComponent,
     ExpensesComponent,
     AddPlaninsuranceComponent,
+   
     
     
   ],

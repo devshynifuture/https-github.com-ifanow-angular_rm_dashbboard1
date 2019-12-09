@@ -7,6 +7,8 @@ import { PreferencesComponent } from './preferences/preferences.component';
 import { AddGoalComponent } from './add-goal/add-goal.component';
 import { KeyInfoComponent } from './key-info/key-info.component';
 import { CalculatorsComponent } from './calculators/calculators.component';
+import { AddGoalsComponent } from '../add-goals/add-goals.component';
+import { EventService } from 'src/app/Data-service/event.service';
 
 export interface PeriodicElement {
   position: string;
@@ -27,7 +29,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class GoalsPlanComponent implements OnInit {
 
-  constructor(private subInjectService: SubscriptionInject) {
+  constructor(private subInjectService: SubscriptionInject,private eventService: EventService,) {
   }
 
   ngOnInit() {
@@ -136,5 +138,27 @@ export class GoalsPlanComponent implements OnInit {
       }
     );
   }
-}
+  
+  openAddgoals(data) {
+    console.log('hello mf button clicked');
+    const fragmentData = {
+      flag: 'openAddgoals',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: AddGoalsComponent,
+      state: 'open'
+    };
+
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
+  }
+  }
+
 

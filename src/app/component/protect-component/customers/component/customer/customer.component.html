@@ -1,4 +1,4 @@
-<div *ngIf="clientId && upperSliderData.state == 'close'">
+<!-- <div *ngIf="clientId && upperSliderData.state == 'close'"> -->
   <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" class="img-top">
   <!--<mat-tab-group [selectedIndex]="selected" animationDuration="0ms" mat-align-tabs="center" id="ui-customer">
 
@@ -28,7 +28,7 @@
        [routerLink]="'/customer-detail/transact'" mat-tab-link>TRANSACT</a>
   </nav>
   <router-outlet id="ui-router-outlet"></router-outlet>
-</div>
+<!-- </div> -->
 <h1 *ngIf="!clientId">Please select client</h1>
 <div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay">
 </div>

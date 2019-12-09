@@ -71,6 +71,7 @@ import { AddExpensesComponent } from './component/protect-component/customers/co
 import { KeyInfoComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/key-info/key-info.component';
 import { EmailAddTaskComponent } from './component/protect-component/AdviserComponent/Email/email-component/email-list/email-add-task/email-add-task.component';
 import { CalculatorsComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/calculators/calculators.component';
+import { AddGoalsComponent } from './component/protect-component/customers/component/customer/plan/add-goals/add-goals.component';
 
 export const componentList = [
   AddLiabilitiesComponent,
@@ -209,7 +210,8 @@ export const componentList = [
   AddExpensesComponent,
   KeyInfoComponent,
   EmailAddTaskComponent,
-  CalculatorsComponent
+  CalculatorsComponent,
+  AddGoalsComponent
 ];
 
 @NgModule({
