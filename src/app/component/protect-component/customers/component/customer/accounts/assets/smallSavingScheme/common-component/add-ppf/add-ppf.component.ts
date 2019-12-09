@@ -31,7 +31,7 @@ export class AddPpfComponent implements OnInit {
   transactionData: any;
   editApi: any;
   clientId: number;
-  nexNomineePer: any;
+  nexNomineePer=0;
   showError = false;
   nomineesListFM: any;
   dataFM: any;
@@ -125,7 +125,9 @@ export class AddPpfComponent implements OnInit {
     // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
     //   return o.nomineePercentageShare;
     // });
-
+    this.nominee.value.forEach(element => {
+      this.nexNomineePer+=element.nomineePercentageShare
+    });
     if (this.nexNomineePer > 100) {
       this.showError = true
       console.log('show error Percent cannot be more than 100%')
@@ -145,7 +147,9 @@ export class AddPpfComponent implements OnInit {
     // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
     //   return o.nomineePercentageShare;
     // });
-
+    this.nominee.value.forEach(element => {
+      this.nexNomineePer+=element.nomineePercentageShare
+    });
     if (this.nexNomineePer > 100) {
       this.showError = true
       console.log('show error Percent cannot be more than 100%')
