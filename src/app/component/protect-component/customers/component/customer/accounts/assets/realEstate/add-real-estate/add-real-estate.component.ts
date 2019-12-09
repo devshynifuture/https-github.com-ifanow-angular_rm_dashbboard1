@@ -96,9 +96,9 @@ export class AddRealEstateComponent implements OnInit {
     console.log('familyList', this.familyList)
   }
   onNomineeChange(value) {
-    this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
-      return o.ownershipPer;
-    });
+    // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
+    //   return o.ownershipPer;
+    // });
 
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -151,9 +151,9 @@ export class AddRealEstateComponent implements OnInit {
     return this.addrealEstateForm.get('getNomineeName') as FormArray;
   }
   addNominee() {
-    this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
-      return o.ownershipPer;
-    });
+    // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
+    //   return o.ownershipPer;
+    // });
     if (this.nexNomineePer > 100) {
       this.showError = true
       console.log('show error Percent cannot be more than 100%')
@@ -170,9 +170,9 @@ export class AddRealEstateComponent implements OnInit {
     if (this.getNominee.value.length > 1) {
       this.getNominee.removeAt(item);
     }
-    this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
-      return o.ownershipPer;
-    });
+    // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
+    //   return o.ownershipPer;
+    // });
     if (this.nexNomineePer > 100) {
       this.showError = true
       console.log('show error Percent cannot be more than 100%')
@@ -207,9 +207,9 @@ export class AddRealEstateComponent implements OnInit {
   }
   onChange(data) {
     if (data == 'owner') {
-      this.nexNomineePer = _.sumBy(this.getCoOwner.value, function (o) {
-        return o.ownershipPerc;
-      });
+      // this.nexNomineePer = _.sumBy(this.getCoOwner.value, function (o) {
+      //   return o.ownershipPerc;
+      // });
       this.nexNomineePer = this.addrealEstateForm.controls.ownerPercent.value + this.nexNomineePer
       if (this.nexNomineePer > 100) {
         this.showError = true;
@@ -219,9 +219,9 @@ export class AddRealEstateComponent implements OnInit {
         this.showErrorCoOwner = false;
       }
     } else {
-      this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
-        return o.ownershipPer;
-      });
+      // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
+      //   return o.ownershipPer;
+      // });
       if (this.nexNomineePer > 100) {
         this.showError = true
         console.log('show error Percent cannot be more than 100%')
@@ -265,15 +265,15 @@ export class AddRealEstateComponent implements OnInit {
       data = {};
     } else {
       if (data.realEstateOwners.length != 0) {
-        var ownerName = _.remove(data.realEstateOwners, function (n) {
-          return n.owner == true;
-        });
-        if (ownerName.length != 0) {
-          this.addrealEstateForm.controls.ownerName.setValue(ownerName[0].ownerName);
-          this.ownerName = ownerName[0].ownerName;
-          this.addrealEstateForm.controls.ownerPercent.setValue(ownerName[0].ownershipPerc);
-          this.familyMemId = ownerName[0].familyMemberId
-        }
+        // var ownerName = _.remove(data.realEstateOwners, function (n) {
+        //   return n.owner == true;
+        // });
+        // if (ownerName.length != 0) {
+        //   this.addrealEstateForm.controls.ownerName.setValue(ownerName[0].ownerName);
+        //   this.ownerName = ownerName[0].ownerName;
+        //   this.addrealEstateForm.controls.ownerPercent.setValue(ownerName[0].ownershipPerc);
+        //   this.familyMemId = ownerName[0].familyMemberId
+        // }
       }
 
       if (data.realEstateNominees.length != 0) {

@@ -34,12 +34,12 @@ export class OtherPayablesComponent implements OnInit {
     this.dataSource=this.payableData;
     this.dataSource = new MatTableDataSource(this.payableData);
     this.dataSource.sort = this.sort;
-    this.totalAmountBorrowed = _.sumBy(this.payableData, function (o) {
-      return o.amountBorrowed;
-    });
-    this.totalAmountOutstandingBalance = _.sumBy(this.payableData, function (o) {
-      return o.outstandingBalance;
-    });
+    // this.totalAmountBorrowed = _.sumBy(this.payableData, function (o) {
+    //   return o.amountBorrowed;
+    // });
+    // this.totalAmountOutstandingBalance = _.sumBy(this.payableData, function (o) {
+    //   return o.outstandingBalance;
+    // });
   }
   getPayables(){
     let obj={
