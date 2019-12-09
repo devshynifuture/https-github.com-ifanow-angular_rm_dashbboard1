@@ -31,9 +31,18 @@
                 <h4 class="m-0 text-black roboto pt-8">Gold</h4>
             </div>
             <div class="col-md-8 p-0 right text-right">
-                <img src="assets/images/svg/download-bordered.svg" class="c-p">
+                <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5"class="c-p">
+                <mat-menu #menu5="matMenu">
+                    <button mat-menu-item>PDF</button>
+                    <button (click)="ExportTOExcel('Gold')" mat-menu-item>XLS</button>
+                  </mat-menu>
                 <img src="assets/images/svg/up-down.svg" class="">
-                <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
+                <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-12">
+                <mat-menu #menu6="matMenu">
+                    <button mat-menu-item>Email Report</button>
+                    <button mat-menu-item>Option 2</button>
+                    <button mat-menu-item>Option 3</button>
+                  </mat-menu>
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                         class="material-icons">filter_list</i>FILTERS</button>
                 <button mat-stroked-button class="btn-primary addon v-middle"
@@ -126,12 +135,21 @@
     <div *ngIf="showRequring == '2'">
         <div class="row">
             <div class="col-md-4 p-0">
-                <h4 class="m-0 text-black roboto pt-8">Others </h4>
+                <h4 class="m-0 text-black roboto pt-8">Others</h4>
             </div>
             <div class="col-md-8 p-0 right text-right">
-                <img src="assets/images/svg/download-bordered.svg" class="c-p">
+                <img src="assets/images/svg/download-bordered.svg"[matMenuTriggerFor]="menu5" class="c-p"> 
+                <mat-menu #menu5="matMenu">
+                    <button mat-menu-item>PDF</button>
+                    <button (click)="ExportTOExcel('Other')" mat-menu-item>XLS</button>
+                  </mat-menu>
                 <img src="assets/images/svg/up-down.svg" class="">
-                <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
+                <img src="assets/images/svg/three-dot-bordered.svg"[matMenuTriggerFor]="menu6" class="c-p mr-12">
+                <mat-menu #menu6="matMenu">
+                    <button mat-menu-item>Email Report</button>
+                    <button mat-menu-item>Option 2</button>
+                    <button mat-menu-item>Option 3</button>
+                  </mat-menu>
 
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                         class="material-icons">filter_list</i>FILTERS</button>

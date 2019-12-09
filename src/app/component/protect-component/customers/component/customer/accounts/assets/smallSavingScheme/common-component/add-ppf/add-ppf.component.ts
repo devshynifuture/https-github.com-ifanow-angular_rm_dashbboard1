@@ -36,6 +36,7 @@ export class AddPpfComponent implements OnInit {
   nomineesListFM: any;
   dataFM: any;
   familyList: any;
+  errorFieldName:string;
   constructor(private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   @Input()
@@ -121,9 +122,9 @@ export class AddPpfComponent implements OnInit {
     console.log(this.ppfSchemeForm)
   }
   addNominee() {
-    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
-      return o.nomineePercentageShare;
-    });
+    // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+    //   return o.nomineePercentageShare;
+    // });
 
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -141,9 +142,9 @@ export class AddPpfComponent implements OnInit {
     if (this.nominee.value.length > 1) {
       this.nominee.removeAt(item);
     }
-    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
-      return o.nomineePercentageShare;
-    });
+    // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+    //   return o.nomineePercentageShare;
+    // });
 
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -169,18 +170,23 @@ export class AddPpfComponent implements OnInit {
       });
     }
     if (this.ppfSchemeForm.get('accountBalance').invalid) {
+      this.ppfSchemeForm.get('accountBalance').markAsTouched();
       return;
     }
     else if (this.ppfSchemeForm.get('balanceAsOn').invalid) {
+      this.ppfSchemeForm.get('balanceAsOn').markAsTouched();
       return;
     }
     else if (this.ppfSchemeForm.get('commencementDate').invalid) {
+      this.ppfSchemeForm.get('commencementDate').markAsTouched();
       return;
     }
     else if (this.ppfSchemeForm.get('futureContribution').invalid) {
+      this.ppfSchemeForm.get('futureContribution').markAsTouched();
       return;
     }
     else if (this.ppfSchemeForm.get('frquency').invalid) {
+      this.ppfSchemeForm.get('frquency').markAsTouched();
       return;
     }
     else {

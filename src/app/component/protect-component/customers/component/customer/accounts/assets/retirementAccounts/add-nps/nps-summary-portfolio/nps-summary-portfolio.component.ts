@@ -96,9 +96,9 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     }
   }
   onNomineeChange(value) {
-    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
-      return o.nomineePercentageShare;
-    });
+    // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+    //   return o.nomineePercentageShare;
+    // });
 
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -177,9 +177,9 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     return this.summaryNPS.get('npsNomineesList') as FormArray;
   }
   addNominee() {
-    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
-      return o.nomineePercentageShare;
-    });
+    // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+    //   return o.nomineePercentageShare;
+    // });
 
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -199,9 +199,9 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     if (this.nominee.value.length > 1) {
       this.nominee.removeAt(item);
     }
-    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
-      return o.nomineePercentageShare;
-    });
+    // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+    //   return o.nomineePercentageShare;
+    // });
 
     if (this.nexNomineePer > 100) {
       this.showError = true

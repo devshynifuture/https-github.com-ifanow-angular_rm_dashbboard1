@@ -54,6 +54,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId();
     this.getGlobalList()
+    
   
   }
 
@@ -79,9 +80,9 @@ export class NpsSchemeHoldingComponent implements OnInit {
     console.log('familyList', this.familyList)
   }
   onNomineeChange(value) {
-    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
-      return o.nomineePercentageShare;
-    });
+    // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+    //   return o.nomineePercentageShare;
+    // });
 
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -193,9 +194,9 @@ export class NpsSchemeHoldingComponent implements OnInit {
     return this.schemeHoldingsNPS.get('npsNomineesList') as FormArray;
   }
   addNominee() {
-    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
-      return o.nomineePercentageShare;
-    });
+    // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+    //   return o.nomineePercentageShare;
+    // });
 
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -214,9 +215,9 @@ export class NpsSchemeHoldingComponent implements OnInit {
     if (this.nominee.value.length > 1) {
       this.nominee.removeAt(item);
     }
-    this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
-      return o.nomineePercentageShare;
-    });
+    // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
+    //   return o.nomineePercentageShare;
+    // });
 
     if (this.nexNomineePer > 100) {
       this.showError = true

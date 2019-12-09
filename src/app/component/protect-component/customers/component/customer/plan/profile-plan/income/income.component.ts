@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MatSort, MatTableModule, MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource, MatDialog } from '@angular/material';
 import { AddIncomeComponent } from './add-income/add-income.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PlanService } from '../../plan.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-income',
@@ -19,7 +20,7 @@ export class IncomeComponent implements OnInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   advisorId: any;
   clientId: any;
-  constructor(private eventService:EventService,private subInjectService: SubscriptionInject,private planService:PlanService) { }
+  constructor(public dialog: MatDialog,private eventService:EventService,private subInjectService: SubscriptionInject,private planService:PlanService) { }
   viewMode;
   ngOnInit() {
     this.dataSource.sort = this.sort;
@@ -56,13 +57,48 @@ export class IncomeComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getIncomeList();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
       }
     );
   }
+   
+  deleteModal(value, incomeData) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete the document GD?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.planService.deleteIncome(incomeData.id).subscribe(
+          data=>{
+            this.getIncomeList();
+            dialogRef.close();
+          },
+          err=>this.eventService.openSnackBar(err,"dismiss")
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
 
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
   addIncomeDetail(flagValue){
     const fragmentData = {
       flag: flagValue,

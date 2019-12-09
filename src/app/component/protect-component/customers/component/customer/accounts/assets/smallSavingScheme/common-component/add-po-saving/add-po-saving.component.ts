@@ -65,7 +65,7 @@ export class AddPoSavingComponent implements OnInit {
       ownerName: [data.ownerName, [Validators.required]],
       accBal: [data.accountBalance, [Validators.required, Validators.min(50), Validators.max(1500000)]],
       balAsOn: [new Date(data.balanceAsOn), [Validators.required]],
-      ownershipType: [String(data.ownerTypeId), [Validators.required]]
+      ownershipType: [(data.ownerTypeId)?String(data.ownerTypeId):'1', [Validators.required]]
     })
     this.poSavingOptionalForm = this.fb.group({
       poBranch: [data.postOfficeBranch],
@@ -80,16 +80,16 @@ export class AddPoSavingComponent implements OnInit {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
   }
   addPOSaving() {
-    if (this.ownerName == undefined) {
-      return
-    }
-    else if (this.poSavingForm.get('accBal').invalid) {
+     if (this.poSavingForm.get('accBal').invalid) {
+      this.poSavingForm.get('accBal').markAsTouched();
       return
     }
     else if (this.poSavingForm.get('balAsOn').invalid) {
+      this.poSavingForm.get('balAsOn').markAsTouched();
       return
     }
     else if (this.poSavingForm.get('ownershipType').invalid) {
+      this.poSavingForm.get('ownershipType').markAsTouched();
       return
     }
     else {
