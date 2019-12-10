@@ -1,1 +1,71 @@
-<p>email-sent works!</p>
+<table mat-table [dataSource]="dataSource" class="example-container">
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null" [ngClass]="isRead ? '': 'is-read'"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+            </mat-checkbox>
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>arrow_drop_down</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <span>Mark as Read</span>
+                </button>
+                <button mat-menu-item>
+                    <span>Move to Archive</span>
+                </button>
+            </mat-menu>
+            <button mat-icon-button (click)="doRefresh()">
+                <mat-icon>
+                    refresh
+                </mat-icon>
+            </button>
+        </th>
+        <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+            </mat-checkbox>
+        </td>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element" [ngClass]="element.isRead ? '': 'is-read'"> {{element.position}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element" (click)="gotoEmailView(element)"
+            [ngClass]="element.isRead ? '': 'is-read'">
+            {{element.name}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="weight">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element" [ngClass]="element.isRead ? '': 'is-read'"> {{element.weight}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="symbol">
+        <th mat-header-cell *matHeaderCellDef>
+            <span> 1-209 of 8748</span>
+            <button mat-icon-button>
+                <mat-icon> chevron_left</mat-icon>
+            </button>
+            <button mat-icon-button>
+                <mat-icon> chevron_right</mat-icon>
+            </button>
+        </th>
+        <td mat-cell *matCellDef="let element" [ngClass]="element.isRead ? '': 'is-read'"> {{element.symbol}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+    </tr>
+</table>

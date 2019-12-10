@@ -110,6 +110,7 @@ export class PoTdSchemeComponent implements OnInit {
     if (data.postOfficeTdList.length != 0) {
       this.datasource = new MatTableDataSource(data.postOfficeTdList);
       this.datasource.sort = this.sort;
+      UtilService.checkStatusId(this.datasource.filteredData)
     } else {
       this.noData = "No Scheme Found";
     }

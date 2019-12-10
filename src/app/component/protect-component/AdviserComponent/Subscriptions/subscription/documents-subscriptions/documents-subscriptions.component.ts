@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from 'saturn-datepicker';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
 export interface PeriodicElement {
   name: string;
   docname: string;
@@ -60,12 +61,13 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.getdocumentSubData();
   }
-  Open(value, state, data) {
+  Open(value, data) {
     const fragmentData = {
       flag: value,
-      data: data,
+      data,
       id: 1,
-      state: state
+      state: 'open',
+      componentName: CommonFroalaComponent
     };
     fragmentData.data.isDocument = true;
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

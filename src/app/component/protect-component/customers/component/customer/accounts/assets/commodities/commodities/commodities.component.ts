@@ -22,10 +22,10 @@ import { FormatNumberDirective } from 'src/app/format-number.directive';
 export class CommoditiesComponent implements OnInit {
   showRequring: string;
   isLoading: boolean = true;
-  displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue', 'pvalue', 'desc', 'status', 'icons'];
+  displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue', 'pvalue', 'desc', 'icons'];
   datasource9 = ELEMENT_DATA9;
 
-  displayedColumns10 = ['no', 'owner', 'type', 'mvalue', 'pvalue', 'pur', 'rate', 'desc', 'status', 'icons'];
+  displayedColumns10 = ['no', 'owner', 'type', 'mvalue', 'pvalue', 'pur', 'rate', 'desc', 'icons'];
   datasource10 = ELEMENT_DATA10;
   advisorId: any;
   goldList: any;
@@ -325,24 +325,23 @@ export interface PeriodicElement9 {
   mvalue: string;
   pvalue: string;
   desc: string;
-  status: string;
 }
 
 const ELEMENT_DATA9: PeriodicElement9[] = [
   {
     no: '1.', owner: 'Rahul Jain'
     , grams: "50 tolas", car: "24", price: "32,000(as on 20/08/2019)",
-    mvalue: "60,000", pvalue: "60,000", desc: "ICICI FD", status: "MATURED"
+    mvalue: "60,000", pvalue: "60,000", desc: "ICICI FD", 
   },
   {
     no: '2.', owner: 'Rahul Jain'
     , grams: "25 tolas", car: "24", price: "32,000(as on 20/08/2019)",
-    mvalue: "60,000", pvalue: "60,000", desc: "ICICI FD", status: "LIVE"
+    mvalue: "60,000", pvalue: "60,000", desc: "ICICI FD", 
   },
   {
     no: '', owner: 'Total'
     , grams: "", car: "", price: "",
-    mvalue: "1,28,925", pvalue: "1,20,000", desc: "", status: ""
+    mvalue: "1,28,925", pvalue: "1,20,000", desc: "", 
   },
 
 ];
@@ -355,23 +354,22 @@ export interface PeriodicElement10 {
   pur: string;
   rate: string;
   desc: string;
-  status: string;
 }
 
 const ELEMENT_DATA10: PeriodicElement10[] = [
 
   {
     no: '1.', owner: 'Rahul Jain'
-    , type: "Cumulative", mvalue: "60,000", pvalue: "1,00,000", pur: "18/09/2021", rate: "8.40%", desc: "ICICI FD", status: "MATURED"
+    , type: "Cumulative", mvalue: "60,000", pvalue: "1,00,000", pur: "18/09/2021", rate: "8.40%", desc: "ICICI FD",
   },
 
   {
     no: '2.', owner: 'Shilpa Jain'
-    , type: "Cumulative", mvalue: "60,000", pvalue: "1,00,000", pur: "18/09/2021", rate: "8.40%", desc: "ICICI FD", status: "LIVE"
+    , type: "Cumulative", mvalue: "60,000", pvalue: "1,00,000", pur: "18/09/2021", rate: "8.40%", desc: "ICICI FD", 
   },
   {
     no: '', owner: 'Total'
-    , type: "", mvalue: "1,20,000", pvalue: "1,50,000", pur: "", rate: "", desc: "", status: ""
+    , type: "", mvalue: "1,20,000", pvalue: "1,50,000", pur: "", rate: "", desc: "",
   },
 
 ];

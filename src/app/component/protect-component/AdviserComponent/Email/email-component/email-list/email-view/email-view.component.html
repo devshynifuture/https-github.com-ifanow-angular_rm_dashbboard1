@@ -1,3 +1,24 @@
+<button mat-icon-button (click)="goBack()">
+    <mat-icon>arrow_left</mat-icon>
+</button>
+
+<button mat-button (click)="openEmailAddTask(null)">Add Task</button>
+
+<button mat-button (click)="openComposeEmail(null)">Compose</button>
 <p>
     email view works
 </p>
+<p>
+    email Position: {{ emailObj.position }}
+</p>
+<p>
+    email Name: {{ emailObj.name }}
+</p>
+<p>
+    email Weight: {{ emailObj.weight }}
+</p>
+<p>
+    email symbol: {{ emailObj.symbol }}
+</p>
+
+<button mat-raised-button (click)="openBottomSheet()">Reply</button>

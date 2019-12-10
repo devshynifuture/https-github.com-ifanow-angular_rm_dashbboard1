@@ -1,3 +1,7 @@
+import { CommonComponentModule } from './../../common-component/common-component.module';
+import { FroalaComponent } from './../../common-component/froala/froala.component';
+import { FormsModule } from '@angular/forms';
+import { EmailListModule } from './email-component/email-list/email-list.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -10,22 +14,30 @@ import { EmailSentComponent } from './email-component/email-sent/email-sent.comp
 import { EmailDraftComponent } from './email-component/email-draft/email-draft.component';
 import { EmailArchiveComponent } from './email-component/email-archive/email-archive.component';
 import { EmailTrashComponent } from './email-component/email-trash/email-trash.component';
+import { EmailAddTaskComponent } from './email-component/email-list/email-add-task/email-add-task.component';
+import { ComposeEmailComponent } from './email-component/compose-email/compose-email.component';
+import { EmailEntryModule } from './email.entry.module';
 
 
 @NgModule({
   declarations: [
     EmailComponent,
     LeftSidebarComponent,
-    EmailListComponent,
     EmailSentComponent,
     EmailDraftComponent,
     EmailArchiveComponent,
-    EmailTrashComponent
+    EmailTrashComponent,
   ],
   imports: [
     CommonModule,
     MaterialModule,
-    EmailRoutingModule
+    CommonComponentModule,
+    EmailListModule,
+    EmailRoutingModule,
+    FormsModule,
+    EmailEntryModule
+  ],
+  exports: [
   ]
 })
 export class EmailModule { }

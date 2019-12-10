@@ -123,6 +123,7 @@ export class SsySchemeComponent implements OnInit {
     if (data.SSYList.length != 0) {
       this.datasource = new MatTableDataSource(data.SSYList);
       this.datasource.sort = this.sort;
+      UtilService.checkStatusId(this.datasource.filteredData)
       this.sumOfCurrentValue = data.SumOfCurrentValue;
       this.sumOfAmountInvested = data.SumOfAmountInvested;
       this.ssyData = data;

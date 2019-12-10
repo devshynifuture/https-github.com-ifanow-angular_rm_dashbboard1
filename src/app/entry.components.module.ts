@@ -1,3 +1,4 @@
+import { ComposeEmailComponent } from './component/protect-component/AdviserComponent/Email/email-component/compose-email/compose-email.component';
 import { DetailedPoTdComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-td-scheme/detailed-po-td/detailed-po-td.component';
 import { AddPoRdComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-po-rd/add-po-rd.component';
 import { AddPoMisComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-po-mis/add-po-mis.component';
@@ -210,9 +211,10 @@ export const componentList = [
   IndividualIncomeInfoComponent,
   AddExpensesComponent,
   KeyInfoComponent,
-  EmailAddTaskComponent,
+  // EmailAddTaskComponent,
   CalculatorsComponent,
-  AddGoalsComponent
+  AddGoalsComponent,
+  ComposeEmailComponent
 ];
 
 @NgModule({

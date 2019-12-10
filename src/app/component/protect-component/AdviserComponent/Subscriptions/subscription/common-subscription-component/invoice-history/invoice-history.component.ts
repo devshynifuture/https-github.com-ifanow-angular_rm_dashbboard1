@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {SubscriptionService} from '../../../subscription.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { SubscriptionService } from '../../../subscription.service';
 
 
 export interface PeriodicElement {
@@ -101,7 +101,8 @@ export class InvoiceHistoryComponent implements OnInit {
   }
 
   Close(state) {
-    this.subInjectService.rightSideData(state);
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
   }
 }
 
