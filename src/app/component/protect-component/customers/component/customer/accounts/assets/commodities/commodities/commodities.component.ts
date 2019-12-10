@@ -23,10 +23,10 @@ import { ExcelService } from '../../../../excel.service';
 export class CommoditiesComponent implements OnInit {
   showRequring: string;
   isLoading: boolean = true;
-  displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue', 'pvalue', 'desc', 'icons'];
+  displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue', 'pvalue', 'desc','status', 'icons'];
   datasource9 = ELEMENT_DATA9;
 
-  displayedColumns10 = ['no', 'owner', 'type', 'mvalue', 'pvalue', 'pur', 'rate', 'desc', 'icons'];
+  displayedColumns10 = ['no', 'owner', 'type', 'mvalue', 'pvalue', 'pur', 'rate', 'desc', 'status','icons'];
   datasource10 = ELEMENT_DATA10;
   advisorId: any;
   goldList: any;
@@ -292,23 +292,24 @@ export interface PeriodicElement9 {
   mvalue: string;
   pvalue: string;
   desc: string;
+  status:String
 }
 
 const ELEMENT_DATA9: PeriodicElement9[] = [
   {
     no: '1.', owner: 'Rahul Jain'
     , grams: "50 tolas", car: "24", price: "32,000(as on 20/08/2019)",
-    mvalue: "60,000", pvalue: "60,000", desc: "ICICI FD", 
+    mvalue: "60,000", pvalue: "60,000", desc: "ICICI FD", status:''
   },
   {
     no: '2.', owner: 'Rahul Jain'
     , grams: "25 tolas", car: "24", price: "32,000(as on 20/08/2019)",
-    mvalue: "60,000", pvalue: "60,000", desc: "ICICI FD", 
+    mvalue: "60,000", pvalue: "60,000", desc: "ICICI FD", status:''
   },
   {
     no: '', owner: 'Total'
     , grams: "", car: "", price: "",
-    mvalue: "1,28,925", pvalue: "1,20,000", desc: "", 
+    mvalue: "1,28,925", pvalue: "1,20,000", desc: "", status:''
   },
 
 ];

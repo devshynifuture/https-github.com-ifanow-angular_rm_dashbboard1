@@ -33,9 +33,9 @@ export class CashAndBankComponent implements OnInit {
   footer= [];
 
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) { }
-  displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc', 'icons'];
+  displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc','status', 'icons'];
   datasource7 = ELEMENT_DATA7;
-  displayedColumns8 = ['no', 'owner', 'cash', 'bal', 'desc', 'icons'];
+  displayedColumns8 = ['no', 'owner', 'cash', 'bal', 'desc', 'status','icons'];
   datasource8 = ELEMENT_DATA8;
 
   @ViewChild('bankAccountListTable', { static: false }) bankAccountListTableSort: MatSort;
@@ -261,23 +261,24 @@ export interface PeriodicElement7 {
   account: string;
   bank: string;
   desc: string;
+  status:string
 }
 
 const ELEMENT_DATA7: PeriodicElement7[] = [
   {
     no: '1.', owner: 'Rahul Jain',
     type: 'Savings', amt: '08/02/2019', rate: '8.40%', bal: '1,00,000', account: '980787870909', bank: 'ICICI',
-    desc: 'ICICI FD', 
+    desc: 'ICICI FD', status:''
   },
   {
     no: '2.', owner: 'Shilpa Jain',
     type: 'Current', amt: '08/02/2019', rate: '8.60%', bal: '50,000', account: '77676767622', bank: 'Axis',
-    desc: 'Axis bank FD', 
+    desc: 'Axis bank FD', status:''
   },
   {
     no: '', owner: 'Total',
     type: '', amt: '', rate: '', bal: '1,50,000', account: '', bank: '',
-    desc: '', 
+    desc: '', status:''
   },
 
 

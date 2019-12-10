@@ -10,7 +10,6 @@ export class ExcelService {
   static async exportExcel(headerData, header,excelData: any, footer: any[],metaData: any) {
    const wb = new Excel.Workbook()
     const ws = wb.addWorksheet()
-    //ws.mergeCells('A1', 'M1');
     const meta1 = ws.getCell('A1')
     const meta2 = ws.getCell('A2')
     const meta3 = ws.getCell('A3')
@@ -20,7 +19,6 @@ export class ExcelService {
     ws.getCell('A1').value = 'Type of report - ' + metaData;
     ws.getCell('A2').value = 'Client name - Rahul Jain';
     ws.getCell('A3').value = 'Report as on - ' + new Date();
-    //ws.getCell('A1').alignment = { horizontal: 'center' };
     const head = ws.getRow(5)
     head.font = { bold: true }
     head.fill = {
