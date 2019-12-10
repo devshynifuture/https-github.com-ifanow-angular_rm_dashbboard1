@@ -1,41 +1,43 @@
 <div *ngIf="showLoader">
-  <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div>
 <div *ngIf="showLoader==false" id="ui-document">
 
-  <div class="bg-white pb-36 mt-70">
+    <div class="bg-white pb-36 ">
 
-    <div class="wrapper-20 pr-0">
-      <div class="row">
-        <div class="col-md-8 p-0">
-          <h4 class="pt-20 pb-28 m-0">Documents</h4>
-        </div>
-        <div class="col-md-4 right text-right">
-          <button mat-stroked-button class="btn-default help-btn br-0"
-                  (click)="Open('documentHelp','openHelp')">HELP
+        <div class="wrapper-20 pr-0">
+            <div class="row">
+                <div class="col-md-8 p-0">
+                    <h4 class="pt-20 pb-28 m-0">Documents</h4>
+                </div>
+                <div class="col-md-4 right text-right">
+                    <button mat-stroked-button class="btn-default help-btn br-0" (click)="Open('documentHelp','openHelp')">HELP
           </button>
-        </div>
-      </div>
+                </div>
+            </div>
 
 
-      <div class="row ">
-        <div class="col-md-4 pr-20 pb-20 pl-0">
-          <mat-card class="example-card height-470 bg-grey lter">
+            <div class="row ">
+                <div class="col-md-4 pr-20 pb-20 pl-0">
+                    <mat-card class="example-card height-470 bg-grey lter">
 
-            <mat-card-content>
-              <p class="text-center">
-                <i class="material-icons icon-center" (click)="openFragment('documents',null)">
+                        <mat-card-content>
+                            <p class="text-center">
+                                <i class="material-icons icon-center" (click)="openFragment('documents',null)">
                   add
                 </i>
-              </p>
-            </mat-card-content>
+                            </p>
+                        </mat-card-content>
 
-          </mat-card>
+                    </mat-card>
+                </div>
+                <div class="col-md-4 pr-20 pb-20 pl-0" *ngFor="let singleDocument of documentSettingData">
+                    <app-single-document-view [singleDocument]="singleDocument"></app-single-document-view>
+                </div>
+            </div>
         </div>
         <div class="col-md-4 pr-20 pb-20 pl-0" *ngFor="let singleDocument of documentSettingData">
-          <app-single-document-view [singleDocument]="singleDocument"></app-single-document-view>
+            <app-single-document-view [singleDocument]="singleDocument" (valueChange)='display($event)'></app-single-document-view>
         </div>
-      </div>
     </div>
-  </div>
 </div>

@@ -11,7 +11,15 @@
 </div>
 <div class="pt-100 pl-24 pr-24 pb-48 mb-48">
     <div [formGroup]="nscFormField">
-        <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
+        <div class="row">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Owner</h5>
+                <p class="m-0 f-12 text-custom">In whose name is this asset</p>
+            </div>
+            <div class="col-md-5">
+                <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
+            </div>
+        </div>
         <div>
             <div class="row pt-40">
                 <div class="col-md-5 pr-0 text-right">
@@ -21,8 +29,8 @@
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <input matInput autocomplete="off" type="number" formControlName="amountInvested" #amountInvest type="text" maxlength="20" class="form-control br-0 rupess">
-                            <mat-error *ngIf="nscFormField.get('amountInvested').errors?.required && nscFormField.get('amountInvested').touched" class="f-12 pt-4">
-                                This field is required
+                            <mat-error *ngIf="nscFormField.get('amountInvested').errors?.required" class="f-12 pt-4">
+                                Amount balance is required
                             </mat-error>
                             <mat-error *ngIf="(nscFormField.get('amountInvested').errors?.min)" class="f-12 pt-4">
                                 Should be greater than 100
@@ -38,11 +46,11 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput formControlName="commDate" [(ngModel)]="commDate" [matDatepicker]="commpicker" class="form-control br-0">
+                            <input matInput formControlName="commDate" [matDatepicker]="commpicker" class="form-control br-0">
                             <mat-datepicker-toggle matSuffix [for]="commpicker"></mat-datepicker-toggle>
                             <mat-datepicker #commpicker></mat-datepicker>
-                            <mat-error class="f-12 pt-4">
-                                This field is required
+                            <mat-error *ngIf="nscFormField.get('commDate').errors?.required" class="f-12 pt-4">
+                                Commencement date is required
                             </mat-error>
                         </mat-form-field>
                     </div>

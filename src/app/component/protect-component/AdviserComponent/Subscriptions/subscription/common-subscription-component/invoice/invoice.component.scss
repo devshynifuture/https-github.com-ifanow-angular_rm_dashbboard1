@@ -1,53 +1,77 @@
-.form-control{
-    border-radius: 0px; 
+.form-control {
+    border-radius: 0px;
 }
-.minheight-900{
+
+.minheight-900 {
     min-height: 900px !important;
 }
+
 .bg-white.hover:hover {
-    background-color:  #F5F7F7 !important;
+    background-color: #F5F7F7 !important;
     cursor: pointer;
 }
-::ng-deep .mat-checkbox-checked .mat-checkbox-background, .mat-checkbox-indeterminate .mat-checkbox-background {
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background,
+.mat-checkbox-indeterminate .mat-checkbox-background {
     background-color: #008FFF !important;
-  }
-  
-  // overwrite the ripple overlay on hover and click
-  ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+}
+
+// overwrite the ripple overlay on hover and click
+ ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
     background-color: #008FFF !important;
-  }
-  // ::ng-deep .mat-checkbox{
-  //   margin-top: -3px;
-  //   position: relative;
-  // }
-  // ::ng-deep .mat-checkbox{
-  //     margin-top: -6px;
-  // }
-  .height-450{
+}
+
+// ::ng-deep .mat-checkbox{
+//   margin-top: -3px;
+//   position: relative;
+// }
+// ::ng-deep .mat-checkbox{
+//     margin-top: -6px;
+// }
+.height-450 {
     height: 450px;
     overflow: auto;
     padding-bottom: 20px !important;
-  }
-  .height-350{
+}
+
+.height-350 {
     height: 320px;
     overflow: auto;
-  }
-  .max-height-100{
+}
+
+.max-height-100 {
     max-height: calc(100vh - 9rem);
     overflow-y: auto;
-  }
-  .select2-container .select2-selection--single{
-    height:34px !important;
 }
-.select2-container--default .select2-selection--single{
-         border: 1px solid #ccc !important; 
-     border-radius: 0px !important; 
+
+.select2-container .select2-selection--single {
+    height: 34px !important;
 }
+
+.select2-container--default .select2-selection--single {
+    border: 1px solid #ccc !important;
+    border-radius: 0px !important;
+}
+
 .table-container {
-  height: 300px;
-  overflow: auto;
+    height: 300px;
+    overflow: auto;
 }
 
 table {
-  width: 100%;
+    width: 100%;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0px;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+    width: 1.5em !important;
+}
+
+::ng-deep .mat-datepicker-toggle {
+    position: absolute;
+    right: 8px !important;
+    top: -16px !important;
 }

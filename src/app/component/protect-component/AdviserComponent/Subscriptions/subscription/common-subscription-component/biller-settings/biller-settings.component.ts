@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {SubscriptionService} from '../../../subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from "../../../../../../../auth-service/authService";
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { SubscriptionService } from '../../../subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-biller-settings',
@@ -20,7 +20,7 @@ export class BillerSettingsComponent implements OnInit {
   getDataRow: any;
   advisorId;
 
-  @Input() set clientData(clientData) {
+  @Input() set data(clientData) {
     this.advisorId = AuthService.getAdvisorId();
     this.getBillerData(clientData);
   };
@@ -89,8 +89,8 @@ export class BillerSettingsComponent implements OnInit {
   }
 
   Close(state) {
-    this.subInjectService.rightSideData(state);
-    this.subInjectService.rightSliderData(state);
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   editProfileData(data) {

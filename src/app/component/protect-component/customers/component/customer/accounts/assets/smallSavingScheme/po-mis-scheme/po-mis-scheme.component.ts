@@ -1,5 +1,5 @@
 import { AddPoMisComponent } from './../common-component/add-po-mis/add-po-mis.component';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -8,7 +8,9 @@ import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { DetailedPoMisComponent } from './detailed-po-mis/detailed-po-mis.component';
-
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import * as Excel from 'exceljs/dist/exceljs';
+import { saveAs } from 'file-saver'
 @Component({
   selector: 'app-po-mis-scheme',
   templateUrl: './po-mis-scheme.component.html',
@@ -26,6 +28,9 @@ export class PoMisSchemeComponent implements OnInit {
   sumOfMaturityValue: number;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChildren(FormatNumberDirective) formatNumber;
+  excelData: any[];
+  footer =[];
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject, public util: UtilService) { }
   displayedColumns = ['no', 'owner', 'cvalue', 'mpayout', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
@@ -35,6 +40,67 @@ export class PoMisSchemeComponent implements OnInit {
     this.clientId = 2978;
     this.getPoMisSchemedata()
   }
+
+async ExportTOExcel(value) {
+  this.excelData = []
+  var data = []
+  var headerData = [{ width: 20, key: 'Owner' },
+  { width: 20, key: 'Current Value' },
+  { width: 10, key: 'Monthly Payout' },
+  { width: 10, key: 'Rate' },
+  { width: 20, key: 'Amount Invested' },
+  { width: 20, key: 'Maturity Value' },
+  { width: 20, key: 'Maturity Date' },
+  { width: 15, key: 'Description' },
+  { width: 15, key: 'Status' },]
+  var header = ['Owner', 'Current Value','Monthly Payout','Rate',
+    'Amount Invested', 'Maturity Value', 'Maturity Date','Description','Status'];
+  this.datasource.filteredData.forEach(element => {
+    data = [element.ownerName, (element.currentValue), this.formatNumber.first.formatAndRoundOffNumber(element.monthlyPayout),(element.rate), this.formatNumber.first.formatAndRoundOffNumber(element.maturityValue),
+      this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested),new Date(element.maturityDate), element.description, element.status]
+    this.excelData.push(Object.assign(data))
+  });
+  var footerData = ['Total',  this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue),
+  this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMonthlyPayout),
+  this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountInvested),'',
+  this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMaturityValue), '', '','',]
+  this.footer.push(Object.assign(footerData))
+  this.exportExcel(headerData, header, this.excelData, this.footer,value)
+}
+async exportExcel(headerData, header, data, footer,value) {
+  const wb = new Excel.Workbook()
+  const ws = wb.addWorksheet()
+  const meta1 = ws.getCell('A1')
+  const meta2 = ws.getCell('A2')
+  const meta3 = ws.getCell('A3')
+  meta1.font = { bold: true }
+  meta2.font = { bold: true }
+  meta3.font = { bold: true }
+  ws.getCell('A1').value = 'Type of report - ' + value;
+  ws.getCell('A2').value = 'Client name - Rahul Jain';
+  ws.getCell('A3').value = 'Report as on - ' + new Date();
+  const head = ws.getRow(5)
+  head.font = { bold: true }
+  head.fill = {
+    type: 'pattern',
+    pattern: 'darkVertical',
+    fgColor: {
+      argb: '#f5f7f7'
+    }
+  };
+  ws.getRow(5).values = header;
+  ws.columns.alignment = { horizontal: 'left' };
+  ws.columns = headerData
+  data.forEach(element => {
+    ws.addRow(element)
+  });
+  footer.forEach(element => {
+    const last = ws.addRow(element)
+    last.font = { bold: true }
+  });
+  const buf = await wb.xlsx.writeBuffer()
+  saveAs(new Blob([buf]), 'Rahul Jain-' + value + '-' + new Date() + '.xlsx')
+}
   getPoMisSchemedata() {
     const obj = {
       advisorId: this.advisorId,
@@ -50,6 +116,7 @@ export class PoMisSchemeComponent implements OnInit {
     if (data.poMisList.length != 0) {
       this.datasource = new MatTableDataSource(data.poMisList)
       this.datasource.sort = this.sort;
+      UtilService.checkStatusId(this.datasource.filteredData)
       this.sumOfMaturityValue = data.sumOfMaturityValue;
       this.sumOfCurrentValue = data.sumOfCurrentValue;
       this.sumOfMonthlyPayout = data.sumOfMonthlyPayout;

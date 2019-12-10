@@ -1,9 +1,9 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {SubscriptionService} from '../../../subscription.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { SubscriptionService } from '../../../subscription.service';
 import * as _ from 'lodash';
-import {UtilService} from 'src/app/services/util.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-variable-fee',
@@ -25,7 +25,7 @@ export class VariableFeeComponent implements OnInit {
   isLoading = false;
 
   constructor(private subService: SubscriptionService, private fb: FormBuilder,
-              public subInjectService: SubscriptionInject) {
+    public subInjectService: SubscriptionInject) {
   }
 
   @Input()
@@ -87,12 +87,12 @@ export class VariableFeeComponent implements OnInit {
 
   getSubscribeData(data) {
     console.log(data);
-    (data.data.isCreateSub) ? this.isSave = true : this.isSave = false;
+    (data.isCreateSub) ? this.isSave = true : this.isSave = false;
     if (data == undefined) {
       this.createVariableForm('');
       return;
     } else {
-      this.singleSubscriptionData = data.data;
+      this.singleSubscriptionData = data;
       console.log('getSubscribeData : ', this.singleSubscriptionData);
       this.getVariableFee().billingNature.setValue(this.singleSubscriptionData.subscriptionPricing.billingNature ? this.singleSubscriptionData.subscriptionPricing.billingNature + '' : '1');
       this.getVariableFee().billEvery.setValue(this.singleSubscriptionData.subscriptionPricing.billEvery);
@@ -112,7 +112,7 @@ export class VariableFeeComponent implements OnInit {
       this.getVariableFee().pricing.setValue(this.singleSubscriptionData.subscriptionPricing.pricing);
       this.getVariableFee().otherAssetClassFees.setValue(this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[0].subscriptionSubAssets);
       this.otherAssetData = [];
-      this.otherAssetData = this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[2].subscriptionSubAssets;
+      this.otherAssetData = this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[1].subscriptionSubAssets;
       (this.singleSubscriptionData.isCreateSub == false) ? this.variableFeeStructureForm.enable() : this.variableFeeStructureForm.disable();
 
     }
@@ -124,8 +124,8 @@ export class VariableFeeComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeUpperRightSliderState({state: 'close', Flag: ''});
-    this.subInjectService.changeNewRightSliderState({state: 'close', Flag: ''});
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   select(assetData) {

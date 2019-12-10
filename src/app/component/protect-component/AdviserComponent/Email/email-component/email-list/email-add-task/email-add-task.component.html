@@ -1,0 +1,94 @@
+<div class="custom-email">
+    <div class="bg-dark wrapper-8 pt-12">
+        <div class="row">
+            <div class="col-md-11">
+                <p class="m-0 text-white pt-4">New email</p>
+            </div>
+            <div class="col-md-1 p-0">
+                <!--        <i class="material-icons text-white pr-4 c-p">-->
+                <!--          remove-->
+                <!--        </i>-->
+                <i class="material-icons text-white c-p" (click)="close()">
+                    clear
+                </i>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper-8 pt-12">
+        <div class="row">
+            <div class="col-md-1">
+                <p class="m-0 text-custom">From</p>
+            </div>
+            <div class="col-md-9">
+                <p class="m-0 text-black">
+                    support@futurewise.co.in
+                </p>
+            </div>
+            <div class="col-md-2 pr-0">
+                <ul class="text-custom right f-14 pr-8 f-500">
+                    <li class="pr-4">CC</li>
+                    <li> BCC</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper-8 pb-16">
+        <div class="row">
+            <div class="col-md-1">
+                <p class="m-0 text-custom">To</p>
+            </div>
+            <div class="col-md-11">
+                <!-- <p class="m-0 text-black">{{this._inputData.clientData.userEmailId}}</p> -->
+                <input type="text" [(ngModel)]="receipentEmail" />
+            </div>
+        </div>
+    </div>
+    <div class="wrapper-16 pt-0 pb-0">
+        <div class="btl-1 bb-1">
+            <div class="row">
+
+                <p class="m-0 text-custom pt-8 pb-8 pl-8">Subject</p>
+                <input type="text" [(ngModel)]="subject" class="form-control br-0">
+            </div>
+        </div>
+        <div class="form-group mb-0 mt-8">
+            <!-- <app-froala [(model)]="emailBody" (modelChange)="saveData($event)"></app-froala> -->
+        </div>
+    </div>
+    <div class="row btl-1 pt-16">
+        <div class="col-md-9">
+            <mat-chip-list #chipList aria-labeal="docName selection">
+                <!-- <mat-chip *ngFor="let doc of docObj ; let i = index" >
+                    {{doc.documentName}}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip> -->
+                <!-- <input matInput
+                       [matChipInputFor]="chipList"
+                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                       [matChipInputAddOnBlur]="addOnBlur"
+                       (matChipInputTokenEnd)="add($event)"> -->
+            </mat-chip-list>
+            <div class="row">
+                <div class="col-md-2">
+                    <button mat-stroked-button class="btn-primary br-0">Send</button>
+                </div>
+                <!--        <div class="col-md-1">-->
+                <!--          <h3 class="m-0 pt-8 f-700 text-custom c-p">A</h3>-->
+                <!--        </div>-->
+                <!--        <div class="col-md-1">-->
+                <!--          <img src="/assets/images/svg/delete.svg" class="pt-8 c-p">-->
+                <!--        </div>-->
+            </div>
+        </div>
+        <!--    <div class="col-md-3">-->
+        <!--      <div class="row">-->
+        <!--        <div class="col-md-8 pl-0">-->
+        <!--          <p class="m-0 text-custom pt-8 c-p"> Use template</p>-->
+        <!--        </div>-->
+        <!--        <div class="col-md-1">-->
+        <!--          <img src="/assets/images/svg/delete.svg" class="c-p pt-8">-->
+        <!--        </div>-->
+        <!--      </div>-->
+        <!--    </div>-->
+    </div>
+</div>

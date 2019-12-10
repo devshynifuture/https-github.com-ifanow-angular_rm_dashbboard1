@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {SubscriptionService} from '../../subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from "../../../../../../auth-service/authService";
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { SubscriptionService } from '../../subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from "../../../../../../auth-service/authService";
 import { UtilService } from 'src/app/services/util.service';
 import * as _ from 'lodash';
 import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from 'saturn-datepicker';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AddQuotationComponent } from '../common-subscription-component/add-quotation/add-quotation.component';
+import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
 export interface PeriodicElement {
   name: string;
   docname: string;
@@ -37,7 +38,7 @@ export interface PeriodicElement {
     // },
     // { provide: MAT_DATE_LOCALE, useValue: 'en' },
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class QuotationsSubscriptionComponent implements OnInit {
@@ -50,43 +51,43 @@ export class QuotationsSubscriptionComponent implements OnInit {
   filterDate = [];
   statusIdList = [];
   chips = [
-    {name: 'LIVE', value: 1},
-    {name: 'PAID', value: 2},
-    {name: 'OVERDUE', value: 3}
+    { name: 'LIVE', value: 1 },
+    { name: 'PAID', value: 2 },
+    { name: 'OVERDUE', value: 3 }
   ];
   dateChips = [
-    {name: 'Created date', value: 1},
-    {name: 'Sent date', value: 2},
-    {name: 'Client consent', value: 3}
+    { name: 'Created date', value: 1 },
+    { name: 'Sent date', value: 2 },
+    { name: 'Client consent', value: 3 }
   ];
   selectedDateRange: { begin: Date; end: Date; };
   selectedDateFilter: any;
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-              public dialog: MatDialog, private subService: SubscriptionService,private datePipe: DatePipe) {
+    public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.getQuotationsData();
   }
-  orgValueChange(selectedDateRange){
+  orgValueChange(selectedDateRange) {
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     UtilService.getStartOfTheDay(beginDate);
 
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate)
-    this.selectedDateRange = {begin: selectedDateRange.begin, end: selectedDateRange.end};
+    this.selectedDateRange = { begin: selectedDateRange.begin, end: selectedDateRange.end };
     this.getQuotationsData()
   }
   getQuotationsData() {
     const obj = {
       // advisorId: 12345
       advisorId: this.advisorId,
-      quotaionFlag : (this.filterDate.length== 0)?1:2,
+      quotaionFlag: (this.filterDate.length == 0) ? 1 : 2,
       fromDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.begin, 'yyyy-MM-dd') : null,
       toDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.end, 'yyyy-MM-dd') : null,
-      dateType:  (this.filterDate.length== 0)?0:this.filterDate,
+      dateType: (this.filterDate.length == 0) ? 0 : this.filterDate,
     };
     this.subService.getSubscriptionQuotationData(obj).subscribe(
       data => this.getQuotationsDataResponse(data)
@@ -94,11 +95,12 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   getQuotationsDataResponse(data) {
-    if(data==undefined){
-      this.noData="No Data Found";
-      }else{console.log(data);
+    if (data == undefined) {
+      this.noData = "No Data Found";
+    } else {
+      console.log(data);
       this.dataSource = data;
-   }
+    }
   }
   deleteModal(value) {
     const dialogData = {
@@ -145,10 +147,10 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
   addFiltersDate(dateFilter) {
     console.log('addFilters', dateFilter);
-    if(this.filterDate.length >= 1){
+    if (this.filterDate.length >= 1) {
       this.filterDate = []
     }
-    this.filterDate.push((dateFilter=="1: Object")?1:(dateFilter=="2: Object")?2:3);
+    this.filterDate.push((dateFilter == "1: Object") ? 1 : (dateFilter == "2: Object") ? 2 : 3);
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     UtilService.getStartOfTheDay(beginDate);
@@ -156,11 +158,11 @@ export class QuotationsSubscriptionComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = {begin: beginDate, end: endDate};
+    this.selectedDateRange = { begin: beginDate, end: endDate };
   }
   openPopup(data) {
     const Fragmentdata = {
-      Flag: data,
+      flag: data,
     };
     const dialogRef = this.dialog.open(AddQuotationComponent, {
       width: '50%',
@@ -175,29 +177,30 @@ export class QuotationsSubscriptionComponent implements OnInit {
   removeDate(item) {
     this.filterDate.splice(item, 1);
     this.getQuotationsData()
- 
+
   }
 
   remove(item) {
     this.filterStatus.splice(item, 1);
   }
 
-  Open(value, state, data) {
+  Open(value, data) {
     const fragmentData = {
-      Flag: value,
-      data:data,
+      flag: value,
+      data: data,
       id: 1,
-      state: state
+      state: 'open',
+      componentName: CommonFroalaComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', );
+          console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }
       }
-      
+
     );
   }
 

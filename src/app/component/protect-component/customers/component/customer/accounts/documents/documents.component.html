@@ -12,12 +12,14 @@
                 </li>
                 <li (click)="viewMode ='tab2'" [ngClass]="{'activeColor':viewMode =='tab2'}" class="c-p">
                     <div class="row" (click)="tabValue = 'Recents';getAllFileList(tabValue)">
-                        <div class="col-md-12 p-0"><img class="mr-8" src="assets/images/svg/recent-document.svg"> Recents</div>
+                        <div class="col-md-12 p-0"><img class="mr-8" src="assets/images/svg/recent-document.svg"> Recents
+                        </div>
                     </div>
                 </li>
                 <li (click)="viewMode ='tab3'" [ngClass]="{'activeColor':viewMode =='tab3'}" class="c-p">
                     <div class="row" (click)="tabValue = 'Starred';getAllFileList(tabValue)">
-                        <div class="col-md-11 p-0"> <img class="mr-8" src="assets/images/svg/star-menu-documents.svg"> Starred</div>
+                        <div class="col-md-11 p-0"> <img class="mr-8" src="assets/images/svg/star-menu-documents.svg"> Starred
+                        </div>
                         <div class="col-md-1 p-0 text-custom">1</div>
                     </div>
                 </li>
@@ -98,33 +100,33 @@
 
                     <div class="row">
                         <div class="col-md-9 p-0 documentsTable" *ngSwitchCase="viewMode">
-                            <table mat-table [dataSource]="commonFileFolders" class="skeleton" id="table-low">
+                            <table mat-table matSort [dataSource]="commonFileFolders" class="" id="table-low">
                                 <ng-container matColumnDef="emptySpace">
                                     <th mat-header-cell *matHeaderCellDef> </th>
                                     <td mat-cell *matCellDef="let element"> </td>
                                 </ng-container>
                                 <!-- Name Column -->
                                 <ng-container matColumnDef="name">
-                                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                                    <th mat-sort-header="folderName" mat-header-cell *matHeaderCellDef> Name </th>
                                     <td mat-cell class="c-p" *matCellDef="let element" (click)="openFolder(element)">
                                         <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> {{element.folderName || element.fileName}} <img *ngIf="element.isStarred == 1" class="mr-12" src="/assets/images/svg/document-star.svg"> </td>
                                 </ng-container>
 
                                 <!-- Weight Column -->
                                 <ng-container matColumnDef="lastModi">
-                                    <th mat-header-cell *matHeaderCellDef> Last modified </th>
+                                    <th mat-sort-header="createdDate" mat-header-cell *matHeaderCellDef> Last modified </th>
                                     <td mat-cell *matCellDef="let element"> {{element.createdDate | date:'dd/MM/yyyy'}}
                                     </td>
                                 </ng-container>
 
                                 <!-- Symbol Column -->
                                 <ng-container matColumnDef="type">
-                                    <th mat-header-cell *matHeaderCellDef> Type </th>
+                                    <th mat-sort-header="fileTypeId" mat-header-cell *matHeaderCellDef> Type </th>
                                     <td mat-cell *matCellDef="let element"> {{element.fileTypeId}} </td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="size">
-                                    <th mat-header-cell *matHeaderCellDef> Size </th>
+                                    <th mat-sort-header="size" mat-header-cell *matHeaderCellDef> Size </th>
                                     <td mat-cell *matCellDef="let element"> {{element.size}} </td>
                                 </ng-container>
                                 <ng-container matColumnDef="icons">
@@ -134,22 +136,22 @@
                                             more_vert
                                         </i>
                                         <mat-menu #menu4="matMenu">
-                                            <button class="f-14" mat-menu-item>
-                                                <img src="assets/images/svg/preview.svg"class="mr-20">
+                                            <button *ngIf="element.folderName == undefined" class="f-14" mat-menu-item>
+                                                <img src="assets/images/svg/preview.svg" class="mr-20">
                                                 Preview
                                             </button>
-                                            <button class="f-14" mat-menu-item>
+                                            <button (click)="OpenEmail(element)" class="f-14" mat-menu-item>
                                                 <img src="assets/images/svg/share.svg" class="mr-20">
                                                 Share
                                             </button>
                                             <button class="f-14" mat-menu-item>
                                                 <img src="assets/images/svg/shareable.svg" class="mr-20">
-                                                 Get shareable link
-                                                </button>
+                                                Get shareable link
+                                            </button>
                                             <button class="f-14" mat-menu-item (click)="starFiles(element)"><img
                                                     src="assets/images/svg/star-border-icon.svg" class="mr-20">Add to
                                                 starred</button>
-                                            <button class="f-14" mat-menu-item><img src="assets/images/svg/edit-name.svg"
+                                            <button (click)="openDialog('RENAME',element)" class="f-14" mat-menu-item><img src="assets/images/svg/edit-name.svg"
                                                     class="mr-20">Rename</button>
                                             <button class="f-14" mat-menu-item (click)="viewActivities(element)"><img
                                                     src="assets/images/svg/info-icon.svg" class="mr-20">View
@@ -161,7 +163,9 @@
                                             <button *ngIf="element.folderName == undefined" class="f-14" mat-menu-item (click)="downlodFiles(element)"><img
                                                     src="assets/images/svg/download-icon.svg"
                                                     class="mr-20">Download</button>
-                                            <button class="f-14" mat-menu-item (click)="deleteFile(element)"><img
+                                            <button *ngIf="element.folderName == undefined" class="f-14" mat-menu-item (click)="deleteModal('FILE',element)"><img
+                                                    src="assets/images/svg/delete-icon.svg" class="mr-4">Delete</button>
+                                            <button *ngIf="element.fileName == undefined" class="f-14" mat-menu-item (click)="deleteModal('FOLDER',element)"><img
                                                     src="assets/images/svg/delete-icon.svg" class="mr-4">Delete</button>
                                         </mat-menu>
                                     </td>
@@ -193,11 +197,13 @@
 
                                     <input type="file" class="inputfile inputfile-3" id="file-3" multiple (change)="getFileDetails($event)">
                                     <label class="uploadLabel c-p text-primary f-14 c-p mb-12" for="file-3">
-                                            <img src="/assets/images/svg/upload-document-icon.svg" class="mr-8"> 
-                                            <span>Upload file</span></label>
+                                        <img src="/assets/images/svg/upload-document-icon.svg" class="mr-8">
+                                        <span>Upload file</span></label>
                                     <input type="file" class="inputfile inputfile-4 " id="file-4" webkitdirectory directory multiple (change)="uploadDocumentFolder($event)">
-                                    <label class="uploadLabel text-primary f-14 c-p mb-12 pl-4 " for="file-4"><img src="/assets/images/svg/upload-folder-document-icon.svg" class="mr-8"><span> Upload folder</span></label>
-                                    <p (click)="openDialog()" class="text-primary f-14 c-p mb-12 "><img src="/assets/images/svg/new-folder-document.svg" class="mr-8">New folder</p>
+                                    <label class="uploadLabel text-primary f-14 c-p mb-12 pl-4 " for="file-4"><img
+                                            src="/assets/images/svg/upload-folder-document-icon.svg" class="mr-8"><span>
+                                            Upload folder</span></label>
+                                    <p (click)="openDialog('CREATE','')" class="text-primary f-14 c-p mb-12 "><img src="/assets/images/svg/new-folder-document.svg" class="mr-8">New folder</p>
                                 </div>
                             </div>
                         </div>

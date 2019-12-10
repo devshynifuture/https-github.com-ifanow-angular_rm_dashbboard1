@@ -1,24 +1,31 @@
 .img-top {
-    position: fixed;
-    z-index: 99;
-    width: 18%!important;
-    padding-top: 5px;
+  position: fixed;
+  z-index: 99;
+  width: 18% !important;
+
 }
 
 .right-side img {
-    right: 0;
-    position: fixed;
-    z-index: 9999;
+  right: 0;
+  position: fixed;
+  z-index: 9999;
 }
 
 ::ng-deep .headerClassNav .mat-tab-link {
-    height: 65px;
-    min-width: auto;
-    border-bottom: 5px solid #fff;
+  height: 65px;
+  min-width: auto;
+  border-bottom: 5px solid #fff;
 }
 
+
 .successBorder {
-    border-bottom: 5px solid #008FFF;
-    color: #008FFF !important;
-    opacity: 1;
+  border-bottom: 1px solid #008FFF;
+  color: #008FFF !important;
+  opacity: 1;
+  border-bottom: 5px solid;
+  margin-bottom: -5px;
+}
+
+#ui-router-outlet {
+  z-index: 10;
 }

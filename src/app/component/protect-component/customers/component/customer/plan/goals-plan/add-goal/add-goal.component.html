@@ -1,1 +1,277 @@
-<p>add-goal works!</p>
+<div class="row bb-1 popup-header-fix w-25">
+    <div class="col-md-6 p-0">
+      <h4 class="mb-0 wrapper-20">ALLOCATIONS</h4>
+    </div>
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="/assets/images/svg/people.svg" class="pt-16 c-p" [matMenuTriggerFor]="menu">
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="/assets/images/svg/right.svg" class="c-p">
+                            </div>
+                            <div class="col-md-9">
+                                All family
+                            </div>
+                        </div>
+                    </button>
+                    <button mat-menu-item>
+                        <div class="row">
+                            <div class="col-md-3">
+                               
+                            </div>
+                            <div class="col-md-9">
+                               Rahul jain
+                            </div>
+                        </div>
+                    </button>
+                    <button mat-menu-item>
+                        <div class="row">
+                            <div class="col-md-3">
+                              
+                            </div>
+                            <div class="col-md-9">
+                                Shilpa jain
+                            </div>
+                        </div>
+                    </button>
+                    <button mat-menu-item>
+                        <div class="row">
+                            <div class="col-md-3">
+                               
+                            </div>
+                            <div class="col-md-9">
+                                Rahul jain
+                            </div>
+                        </div>
+                    </button>
+                    <button mat-menu-item>
+                        <div class="row">
+                            <div class="col-md-3">
+                               
+                            </div>
+                            <div class="col-md-9">
+                                All family
+                            </div>
+                        </div>
+                    </button>
+                  
+                  </mat-menu>
+            </div>
+            <div class="col-md-6">
+                <img src="/assets/images/svg/lines-3.svg" class="pt-16 c-p" [matMenuTriggerFor]="menu">
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="/assets/images/svg/right.svg" class="c-p">
+                            </div>
+                            <div class="col-md-9">
+                                All assets
+                            </div>
+                        </div>
+                    </button>
+                    <button mat-menu-item>
+                        <div class="row">
+                            <div class="col-md-3">
+                               
+                            </div>
+                            <div class="col-md-9">
+                                Unallocated
+                            </div>
+                        </div>
+                    </button>
+                    <button mat-menu-item>
+                        <div class="row">
+                            <div class="col-md-3">
+                              
+                            </div>
+                            <div class="col-md-9">
+                                Partically allocated
+                            </div>
+                        </div>
+                    </button>
+                    <button mat-menu-item>
+                        <div class="row">
+                            <div class="col-md-3">
+                               
+                            </div>
+                            <div class="col-md-9">
+                                Rahul jain
+                            </div>
+                        </div>
+                    </button>
+                    <button mat-menu-item>
+                        <div class="row">
+                            <div class="col-md-3">
+                               
+                            </div>
+                            <div class="col-md-9">
+                                Fully allocated
+                            </div>
+                        </div>
+                    </button>
+                  <p class="text-primitive roboto m-0">Sort</p>
+                  <button mat-menu-item>
+                    <div class="row">
+                        <div class="col-md-3">
+                           
+                        </div>
+                        <div class="col-md-9">
+                            Value - high to low
+                        </div>
+                    </div>
+                </button>
+                <button mat-menu-item>
+                    <div class="row">
+                        <div class="col-md-3">
+                           
+                        </div>
+                        <div class="col-md-9">
+                            Value - low to high
+                        </div>
+                    </div>
+                </button>
+                <button mat-menu-item>
+                    <div class="row">
+                        <div class="col-md-3">
+                           
+                        </div>
+                        <div class="col-md-9">
+                            Asset type wise
+                        </div>
+                    </div>
+                </button>
+                  </mat-menu>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2 pr-0">
+        <i class="material-icons right text-right pt-16 pr-16 c-p" (click)="close()">
+            clear
+          </i>
+    </div>
+  </div>
+  <div class="pt-72 pl-12 pr-12 pb-44">
+<div class="row">
+    <div class="col-md-12 p-0 mb-8">
+        <h5 class="m-0 f-14 text-primary">Drag items & drop in goals section to allocate!</h5>
+    </div>
+
+</div>
+<div class="mb-12">
+<div class="row goal-border">
+    <div class="col-md-12 pl-8 pt-8">
+        <p class="m-0 roboto text-black">Fixed Deposit - ICICI Bank FD 802321938</p>
+    </div>
+  <div class="row">
+    <div class="col-md-4">
+        <button mat-stroked-button class="btn-success br-0 mt-12">100%</button>
+        <button mat-stroked-button class="btn-default br-0 mt-12 mb-12">2023</button>
+    </div>
+    <div class="col-md-4 pt-12 pr-0">
+        <p class="m-0 f-12 roboto text-primitive">Owner</p>
+        <p class="m-0 roboto text-lighter">Rahul Jain</p>
+        <p class="m-0 f-12 roboto text-primitive pt-12">Current value</p>
+        <p class="m-0 roboto text-lighter">₹79,005</p>
+    </div>
+    <div class="col-md-4 pt-58 pr-0">
+        <p class="m-0 f-12 roboto text-primitive">Maturity value</p>
+        <p class="m-0 roboto text-lighter">₹1,20,000</p>
+    </div>
+</div>
+</div>
+</div>
+<div class="mb-12">
+    <div class="row goal-border">
+        <div class="col-md-12 pl-8 pt-8">
+            <p class="m-0 roboto text-black">LIC Jeevan Saral - 09099821</p>
+        </div>
+      <div class="row">
+        <div class="col-md-4">
+            <button mat-stroked-button class="btn-primary br-0 mt-12">100%</button>
+            <button mat-stroked-button class="btn-default br-0 mt-12 mb-12">2035</button>
+        </div>
+        <div class="col-md-4 pt-12 pr-0">
+            <p class="m-0 f-12 roboto text-primitive">Owner</p>
+            <p class="m-0 roboto text-lighter">Rahul Jain</p>
+            <p class="m-0 f-12 roboto text-primitive pt-12">Current value</p>
+            <p class="m-0 roboto text-lighter">₹39,902</p>
+        </div>
+        <div class="col-md-4 pt-58 pr-0">
+            <p class="m-0 f-12 roboto text-primitive">Maturity value</p>
+            <p class="m-0 roboto text-lighter">₹78,000</p>
+        </div>
+    </div>
+    </div>
+    </div>
+    <div class="mb-12">
+        <div class="row goal-border">
+            <div class="col-md-12 pl-8 pt-8">
+                <p class="m-0 roboto text-black">HDFC Endowment Plan</p>
+            </div>
+          <div class="row">
+            <div class="col-md-4">
+                <button mat-stroked-button class="btn-danger br-0 mt-12 text-white">0%</button>
+                <button mat-stroked-button class="btn-default br-0 mt-12 mb-12">2038</button>
+            </div>
+            <div class="col-md-4 pt-12 pr-0">
+                <p class="m-0 f-12 roboto text-primitive">Owner</p>
+                <p class="m-0 roboto text-lighter">Shilpa Jain</p>
+                <p class="m-0 f-12 roboto text-primitive pt-12">Current value</p>
+                <p class="m-0 roboto text-lighter">₹1,25,000</p>
+            </div>
+            <div class="col-md-4 pt-58 pr-0">
+                <p class="m-0 f-12 roboto text-primitive">Maturity value</p>
+                <p class="m-0 roboto text-lighter">₹1,80,000</p>
+            </div>
+        </div>
+        </div>
+        </div>
+        <div class="mb-12">
+            <div class="row goal-border">
+                <div class="col-md-12 pl-8 pt-8">
+                    <p class="m-0 roboto text-black">Bank Account - HDFC Bank</p>
+                </div>
+              <div class="row">
+                <div class="col-md-4">
+                    <button mat-stroked-button class="btn-success br-0 mt-12 text-white">100%</button>
+                    <button mat-stroked-button class="btn-default br-0 mt-12 mb-12">2038</button>
+                </div>
+                <div class="col-md-4 pt-12 pr-0">
+                    <p class="m-0 f-12 roboto text-primitive">Owner</p>
+                    <p class="m-0 roboto text-lighter">Shilpa Jain</p>
+                    <p class="m-0 f-12 roboto text-primitive pt-12">Current value</p>
+                    <p class="m-0 roboto text-lighter">₹1,25,000</p>
+                </div>
+                <div class="col-md-4 pt-58 pr-0">
+                    
+                </div>
+            </div>
+            </div>
+            </div>
+            <div class="mb-12">
+                <div class="row goal-border">
+                    <div class="col-md-12 pl-8 pt-8">
+                        <p class="m-0 roboto text-black">House at Thane</p>
+                    </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                        <button mat-stroked-button class="btn-success br-0 mt-12 text-white">100%</button>
+                        <button mat-stroked-button class="btn-default br-0 mt-12 mb-12">-</button>
+                    </div>
+                    <div class="col-md-4 pt-12 pr-0">
+                        <p class="m-0 f-12 roboto text-primitive">Owner</p>
+                        <p class="m-0 roboto text-lighter">Shilpa Jain</p>
+                        <p class="m-0 f-12 roboto text-primitive pt-12">Current value</p>
+                        <p class="m-0 roboto text-lighter">₹1,30,00,000</p>
+                    </div>
+                    <div class="col-md-4 pt-58 pr-0">
+                        
+                    </div>
+                </div>
+                </div>
+                </div>
+</div>

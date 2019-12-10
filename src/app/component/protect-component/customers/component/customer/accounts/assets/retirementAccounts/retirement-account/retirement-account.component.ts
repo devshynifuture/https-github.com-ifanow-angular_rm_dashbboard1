@@ -3,21 +3,25 @@ import { AddSuperannuationComponent } from './../add-superannuation/add-superann
 import { AddGratuityComponent } from './../add-gratuity/add-gratuity.component';
 import { NpsSummaryPortfolioComponent } from './../add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
 import { AddEPFComponent } from './../add-epf/add-epf.component';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewChildren } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { NpsSchemeHoldingComponent } from "../add-nps/nps-scheme-holding/nps-scheme-holding.component";
+import { MatDialog, MatSort } from '@angular/material';
+import { NpsSchemeHoldingComponent } from '../add-nps/nps-scheme-holding/nps-scheme-holding.component';
 import { DetailedViewEPFComponent } from '../add-epf/detailed-view-epf/detailed-view-epf.component';
 import { DetailedViewEPSComponent } from '../add-eps/detailed-view-eps/detailed-view-eps.component';
 import { DetailedViewGratuityComponent } from '../add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
 import { DetaildedViewSuperannuationComponent } from '../add-superannuation/detailded-view-superannuation/detailded-view-superannuation.component';
+import * as _ from 'lodash';
+import * as Excel from 'exceljs/dist/exceljs';
+import { saveAs } from 'file-saver'
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+
 
 @Component({
   selector: 'app-retirement-account',
@@ -25,9 +29,7 @@ import { DetaildedViewSuperannuationComponent } from '../add-superannuation/deta
   styleUrls: ['./retirement-account.component.scss']
 })
 export class RetirementAccountComponent implements OnInit {
-
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  showRequring = '1';
+  showRecurring = '1';
   getObject: {};
   advisorId: any;
   dataGratuityList: any;
@@ -46,89 +48,254 @@ export class RetirementAccountComponent implements OnInit {
   totalPensionAmount: any;
   totalContribution: any;
   totalCurrentValue: any;
+  dataEPFList: any;
 
+
+  @ViewChild('epfListTable', { static: false }) epfListTableSort: MatSort;
+  @ViewChild('npsListTable', { static: false }) npsListTableSort: MatSort;
+  @ViewChild('gratuityListTable', { static: false }) gratuityListTableSort: MatSort;
+  @ViewChild('superAnnuationListTable', { static: false }) superAnnuationListTableSort: MatSort;
+  @ViewChild('epsListTable', { static: false }) epsListTableSort: MatSort;
+  @ViewChild('EPF', { static: false }) EPF: ElementRef;
+  @ViewChild('NPS', { static: false }) NPS: ElementRef;
+  @ViewChild('Superannuation', { static: false }) Superannuation: ElementRef;
+  @ViewChild('Gratuity', { static: false }) Gratuity: ElementRef;
+  @ViewChild('EPS', { static: false }) EPS: ElementRef;
+  @ViewChildren(FormatNumberDirective) formatNumber;
+  title = 'Excel';
+  excelData: any;
+  footer = [];
+
+  async ExportTOExcel(value) {
+    this.excelData = []
+    var data = []
+    if (value == 'EPS') {
+      var headerData = [{ width: 20, key: 'Owner' },
+      { width: 20, key: 'Notional value' },
+      { width: 25, key: 'Commencement date' },
+      { width: 25, key: 'Pension amount' },
+      { width: 18, key: ' Pension payout frequency' },
+      { width: 15, key: 'Description' },
+      { width: 10, key: 'Status' },]
+      var header = ['Owner', 'Notional value', 'Commencement date', 'Pension amount', ' Pension payout frequency', 'Description', 'Status'];
+      this.EPSList.filteredData.forEach(element => {
+        data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.totalNotionalValue),
+        new Date(element.commencementDate),
+        this.formatNumber.first.formatAndRoundOffNumber(element.pensionAmount),
+        this.formatNumber.first.formatAndRoundOffNumber(element.pensionPayoutFrequencyId),
+        element.description, element.status]
+        this.excelData.push(Object.assign(data))
+      });
+      var footerData = ['Total',
+        this.formatNumber.first.formatAndRoundOffNumber(this.totalNotionalValue), '',
+        this.formatNumber.first.formatAndRoundOffNumber(this.totalPensionAmount), '', '', '',]
+      this.footer.push(Object.assign(footerData))
+    } else if (value == 'Gratuity') {
+      var headerData = [
+        { width: 20, key: 'Owner' },
+        { width: 20, key: 'Name of the organization' },
+        { width: 25, key: 'Number of completed years' },
+        { width: 25, key: 'Year of receipt' },
+        { width: 18, key: 'Amount recieved' },
+        { width: 18, key: 'Reason of receipt' },
+        { width: 15, key: 'Description' },
+        { width: 10, key: 'Status' },
+      ];
+      var header = ['Owner', 'Name of the organization', 'Number of completed years',
+        'Year of receipt', 'Amount recieved', 'Reason of receipt', 'Description', 'Status'];
+      this.dataGratuityList.filteredData.forEach(element => {
+        data = [element.ownerName, (element.organizationName),
+        (element.yearsCompleted), (element.yearReceipt),
+        this.formatNumber.first.formatAndRoundOffNumber(element.amountReceived),
+        (element.reasonOfReceipt), element.description, element.status]
+        this.excelData.push(Object.assign(data))
+      });
+      var footerData = ['Total', '', '', '',
+        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountReceived), '', '', '', '']
+      this.footer.push(Object.assign(footerData))
+    } else if (value == 'Superannuation') {
+      var headerData = [
+        { width: 20, key: 'Owner' },
+        { width: 20, key: 'Annual employer contribution' },
+        { width: 25, key: 'Annual employee contribution' },
+        { width: 25, key: 'Assumed rate' },
+        { width: 18, key: 'Growth rate employer contribution' },
+        { width: 18, key: 'Growth rate employee contribution' },
+        { width: 18, key: 'Date of first contribution' },
+        { width: 15, key: 'Description' },
+        { width: 10, key: 'Status' },
+      ];
+      var header = ['Owner', 'Annual employer contribution', 'Annual employee contribution', 'Assumed rate',
+        'Growth rate employer contribution', 'Growth rate employee contribution',
+        'Date of first contribution', 'Description', 'Status'];
+      this.dataSuperannuationList.filteredData.forEach(element => {
+        data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.annualEmployerContribution),
+        this.formatNumber.first.formatAndRoundOffNumber(element.annualEmployeeContribution),
+        this.formatNumber.first.formatAndRoundOffNumber(element.assumedRateOfReturn),
+        this.formatNumber.first.formatAndRoundOffNumber(element.growthRateEmployerContribution),
+        this.formatNumber.first.formatAndRoundOffNumber(element.growthRateEmployeeContribution),
+        new Date(element.firstContributionDate), element.maturityYear, element.description, element.status]
+        this.excelData.push(Object.assign(data))
+      });
+      var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAnnualEmployeeContribution),
+        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAnnualEmployerContribution), '', '', '', '', '', '']
+    } else if (value == 'EPF') {
+      var headerData = [
+        { width: 20, key: 'Owner' },
+        { width: 20, key: 'Current value' },
+        { width: 25, key: 'Employee’s contribution' },
+        { width: 25, key: 'Employer’s contribution' },
+        { width: 18, key: 'Rate of return' },
+        { width: 18, key: 'Balance mentioned' },
+        { width: 20, key: 'Balance as on' },
+        { width: 15, key: 'Maturity year' },
+        { width: 15, key: 'Description' },
+        { width: 10, key: 'Status' },
+      ];
+      var header = ['Owner', 'Current value', 'Employee’s contribution', 'Employer’s contribution',
+        'Rate of return', 'Balance mentioned', 'Balance as on', 'Maturity year', 'Description', 'Status'];
+      this.dataEPFList.filteredData.forEach(element => {
+        data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue),
+        this.formatNumber.first.formatAndRoundOffNumber(element.employeesMonthlyContribution),
+        this.formatNumber.first.formatAndRoundOffNumber(element.employersMonthlyContribution),
+        (element.rateOfReturn == undefined) ? 0 : this.formatNumber.first.formatAndRoundOffNumber(element.rateOfReturn),
+        this.formatNumber.first.formatAndRoundOffNumber(element.currentEpfBalance),
+        new Date(element.balanceAsOnDate), element.maturityYear, element.description, element.status]
+        this.excelData.push(Object.assign(data))
+      });
+      var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfcurrentValue),
+        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfemployersMonthlyContribution),
+        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfemployeesMonthlyContribution), '',
+        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfcurrentEpfBalance), '', '', '', '']
+      this.footer.push(Object.assign(footerData))
+
+    } else {
+      var headerData = [{ width: 20, key: 'Owner' },
+      { width: 20, key: 'Current value' },
+      { width: 25, key: 'Total contribution' },
+      { width: 18, key: 'Scheme choice' },
+      { width: 18, key: 'PRAN' },
+      { width: 15, key: 'Description' },
+      { width: 10, key: 'Status' },]
+      var header = ['Owner', 'Current value', 'Total contribution', 'Scheme choice', 'PRAN', 'Description', 'Status'];
+      this.dataNPSList.filteredData.forEach(element => {
+        data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValuation),
+        this.formatNumber.first.formatAndRoundOffNumber(element.contributionAmount), (element.schemeChoice), (element.pran),
+        element.description, element.status]
+        this.excelData.push(Object.assign(data))
+      });
+      var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.totalCurrentValue),
+        this.formatNumber.first.formatAndRoundOffNumber(this.totalContribution), '', '', '', '']
+      this.footer.push(Object.assign(footerData))
+
+    }
+    this.exportExcel(headerData, header, this.excelData, this.footer,value)
+  }
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
   }
 
   displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'empc', 'rate', 'bal', 'bacla', 'year', 'desc', 'status', 'icons'];
   datasource11;
-
-  displayedColumns12 = ['no', 'owner', 'cvalue', 'total', 'scheme', 'pran', 'desc', 'status', 'icons'];
+  displayedColumns12 = ['no', 'owner', 'cvalue', 'total', 'scheme', 'pran', 'desc', 'icons'];
   datasource12;
-
-  displayedColumns13 = ['no', 'owner', 'name', 'number', 'year', 'amt', 'reason', 'desc', 'status', 'icons'];
+  displayedColumns13 = ['no', 'owner', 'name', 'number', 'year', 'amt', 'reason', 'desc', 'icons'];
   datasource13;
-
-  displayedColumns14 = ['no', 'owner', 'aemp', 'aempe', 'rate', 'grate', 'grateemp', 'date', 'desc', 'status', 'icons'];
+  displayedColumns14 = ['no', 'owner', 'aemp', 'aempe', 'rate', 'grate', 'grateemp', 'date', 'desc', 'icons'];
   datasource14;
-
-  displayedColumns15 = ['no', 'owner', 'nvalue', 'date', 'amt', 'pay', 'desc', 'status', 'icons'];
+  displayedColumns15 = ['no', 'owner', 'nvalue', 'date', 'amt', 'pay', 'desc', 'icons'];
   datasource15;
-
-  displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
+  displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'icons'];
   datasource16;
-  isLoading: boolean = true;
-
-  dataEPSList = new MatTableDataSource(this.datasource11);
-
+  isLoading = true;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.showRequring = '1'
+    this.showRecurring = '1';
     this.getObject = {
       clientId: this.clientId,
       advisorId: this.advisorId
-    }
-    this.getListEPF()
-    this.dataEPSList.sort = this.sort;
+    };
+    this.getListEPF();
   }
-
+  async exportExcel(headerData, header, data, footer,value) {
+    const wb = new Excel.Workbook()
+    const ws = wb.addWorksheet()
+    //ws.mergeCells('A1', 'M1');
+    const meta1 = ws.getCell('A1')
+    const meta2 = ws.getCell('A2')
+    const meta3 = ws.getCell('A3')
+    meta1.font = { bold: true }
+    meta2.font = { bold: true }
+    meta3.font = { bold: true }
+    ws.getCell('A1').value = 'Type of report - ' + value;
+    ws.getCell('A2').value = 'Client name - Rahul Jain';
+    ws.getCell('A3').value = 'Report as on - ' + new Date();
+    //ws.getCell('A1').alignment = { horizontal: 'center' };
+    const head = ws.getRow(5)
+    head.font = { bold: true }
+    head.fill = {
+      type: 'pattern',
+      pattern: 'darkVertical',
+      fgColor: {
+        argb: '#f5f7f7'
+      }
+    };
+    ws.getRow(5).values = header;
+    ws.columns.alignment = { horizontal: 'left' };
+    ws.columns = headerData
+    data.forEach(element => {
+      ws.addRow(element)
+    });
+    footer.forEach(element => {
+      const last = ws.addRow(element)
+      last.font = { bold: true }
+    });
+    const buf = await wb.xlsx.writeBuffer()
+    saveAs(new Blob([buf]), 'Rahul Jain-' + value + '-' + new Date() + '.xlsx')
+  }
   getfixedIncomeData(value) {
-    this.showRequring = value;
-    (value == '2') ? this.getListNPS() : (value == '3') ? this.getListGratuity() : (value == '4') ? this.getListSuperannuation() : (value == '5') ? this.getListEPS() : this.getListEPF()
+    this.showRecurring = value;
+    (value == '2') ? this.getListNPS() : (value == '3') ? this.getListGratuity() : (value == '4') ? this.getListSuperannuation() : (value == '5') ? this.getListEPS() : this.getListEPF();
   }
-
   openRetirement(value, state, data) {
     const fragmentData = {
-      Flag: value,
-      data: data,
+      flag: value,
+      data,
       id: 1,
-      state: state
+      state
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (value == 'added') {
-          this.getListEPF()
+          this.getListEPF();
         } else if (value == 'addedGratuity') {
-          this.getListGratuity()
+          this.getListGratuity();
         } else if (value == 'addedEps') {
-          this.getListEPS()
+          this.getListEPS();
         } else if (value == 'addedSuperannuation') {
-          this.getListSuperannuation()
+          this.getListSuperannuation();
         } else {
-          this.getListNPS()
+          this.getListNPS();
         }
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-
         }
       }
     );
   }
-
   openAddEPS(data) {
     const fragmentData = {
       flag: 'addEPS',
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: AddEPSComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getListEPS()
+        this.getListEPS();
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -138,18 +305,17 @@ export class RetirementAccountComponent implements OnInit {
       }
     );
   }
-
   openAddSuperannuation(data) {
     const fragmentData = {
       flag: 'addSuperannuation',
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: AddSuperannuationComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getListSuperannuation()
+        this.getListSuperannuation();
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -159,18 +325,17 @@ export class RetirementAccountComponent implements OnInit {
       }
     );
   }
-
   openAddGratuity(data) {
     const fragmentData = {
       flag: 'addGratuity',
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: AddGratuityComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getListGratuity()
+        this.getListGratuity();
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -179,18 +344,17 @@ export class RetirementAccountComponent implements OnInit {
       }
     );
   }
-
   openAddSummaryPort(data) {
     const fragmentData = {
       flag: 'addSummaryPort',
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: NpsSummaryPortfolioComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getListNPS()
+        this.getListNPS();
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -199,18 +363,17 @@ export class RetirementAccountComponent implements OnInit {
       }
     );
   }
-
   openAddEPF(data) {
     const fragmentData = {
       flag: 'addEPF',
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: AddEPFComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getListEPF()
+        this.getListEPF();
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -222,7 +385,7 @@ export class RetirementAccountComponent implements OnInit {
   openDetailedViewEPF(data) {
     const fragmentData = {
       flag: 'addEPF',
-      data: data,
+      data,
       id: 1,
       state: 'open35',
       componentName: DetailedViewEPFComponent
@@ -240,7 +403,7 @@ export class RetirementAccountComponent implements OnInit {
   detailedViewEPS(data) {
     const fragmentData = {
       flag: 'addEPF',
-      data: data,
+      data,
       id: 1,
       state: 'open35',
       componentName: DetailedViewEPSComponent
@@ -258,7 +421,7 @@ export class RetirementAccountComponent implements OnInit {
   detailedViewGratuity(data) {
     const fragmentData = {
       flag: 'addEPF',
-      data: data,
+      data,
       id: 1,
       state: 'open35',
       componentName: DetailedViewGratuityComponent
@@ -276,7 +439,7 @@ export class RetirementAccountComponent implements OnInit {
   detailedViewSuperannuation(data) {
     const fragmentData = {
       flag: 'addEPF',
-      data: data,
+      data,
       id: 1,
       state: 'open35',
       componentName: DetaildedViewSuperannuationComponent
@@ -299,10 +462,9 @@ export class RetirementAccountComponent implements OnInit {
       state: state,
       componentName: NpsSchemeHoldingComponent
     };
-
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        this.getListNPS()
+        this.getListNPS();
         if (UtilService.isDialogClose(sideBarData)) {
           this.getListNPS();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -311,7 +473,6 @@ export class RetirementAccountComponent implements OnInit {
       }
     );
   }
-
   deleteModal(value, data) {
     const dialogData = {
       data: value,
@@ -324,150 +485,138 @@ export class RetirementAccountComponent implements OnInit {
         if (value == 'EPF') {
           this.custumService.deleteEPF(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("EPF is deleted", "dismiss")
+              this.eventService.openSnackBar('EPF is deleted', 'dismiss');
               dialogRef.close();
-              this.getListEPF()
+              this.getListEPF();
             },
             err => this.eventService.openSnackBar(err)
-          )
+          );
         } else if (value == 'NPS') {
           this.custumService.deleteNPS(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("NPS is deleted", "dismiss")
+              this.eventService.openSnackBar('NPS is deleted', 'dismiss');
               dialogRef.close();
-              this.getListNPS()
+              this.getListNPS();
             },
             err => this.eventService.openSnackBar(err)
-          )
+          );
         } else if (value == 'GRATUITY') {
           this.custumService.deleteGratuity(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("Grautity is deleted", "dismiss")
+              this.eventService.openSnackBar('Grautity is deleted', 'dismiss');
               dialogRef.close();
-              this.getListGratuity()
+              this.getListGratuity();
             },
             err => this.eventService.openSnackBar(err)
-          )
+          );
         } else if (value == 'SUPERANNUATION') {
           this.custumService.deleteSuperAnnuation(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("SuperAnnuation is deleted", "dismiss")
+              this.eventService.openSnackBar('SuperAnnuation is deleted', 'dismiss');
               dialogRef.close();
-              this.getListSuperannuation()
+              this.getListSuperannuation();
             },
             err => this.eventService.openSnackBar(err)
-          )
+          );
         } else {
           this.custumService.deleteEPS(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("EPS is deleted", "dismiss")
+              this.eventService.openSnackBar('EPS is deleted', 'dismiss');
               dialogRef.close();
-              this.getListEPS()
+              this.getListEPS();
             },
             err => this.eventService.openSnackBar(err)
-          )
+          );
         }
-
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
-
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
       autoFocus: false,
-
     });
-
     dialogRef.afterClosed().subscribe(result => {
 
     });
   }
-
   getListEPF() {
-    let obj = this.getObject
+    const obj = this.getObject;
     this.custumService.getEPF(obj).subscribe(
       data => this.getEPFRes(data)
     );
   }
-
   getEPFRes(data) {
     console.log('getEPFRes =', data);
     this.isLoading = false;
-    this.dataEPSList = data.listOfEpf
-    this.sumOfcurrentEpfBalance = data.sumOfcurrentEpfBalance
+    this.dataEPFList = new MatTableDataSource(data.listOfEpf);
+    this.dataEPFList.sort = this.epfListTableSort;
+    this.sumOfcurrentEpfBalance = data.sumOfcurrentEpfBalance;
     this.sumOfcurrentValue = data.sumOfcurrentValue;
     this.sumOfemployeesMonthlyContribution = data.sumOfemployeesMonthlyContribution;
-    this.sumOfemployersMonthlyContribution = data.sumOfemployersMonthlyContribution
+    this.sumOfemployersMonthlyContribution = data.sumOfemployersMonthlyContribution;
   }
-
   getListGratuity() {
     this.isLoading = true;
-    let obj = this.getObject
+    const obj = this.getObject;
     this.custumService.getGrauity(obj).subscribe(
       data => this.getGrauityRes(data)
     );
   }
-
   getGrauityRes(data) {
     console.log('getGrauityRes =', data);
     this.isLoading = false;
-    this.dataGratuityList = data.gratuityList
-    this.sumOfAmountReceived = data.sumOfAmountReceived
+    this.dataGratuityList = new MatTableDataSource(data.gratuityList);
+    this.dataGratuityList.sort = this.gratuityListTableSort;
+    this.sumOfAmountReceived = data.sumOfAmountReceived;
   }
-
   getListNPS() {
     this.isLoading = true;
-    let obj = this.getObject
+    const obj = this.getObject;
     this.custumService.getNPS(obj).subscribe(
       data => this.getNPSRes(data)
     );
   }
-
   getNPSRes(data) {
     console.log('getNPSRes =', data);
     this.isLoading = false;
-    this.dataNPSList = data.npsList
-    this.totalContribution = data.totalContribution
-    this.totalCurrentValue = data.totalCurrentValue
+    this.dataNPSList = new MatTableDataSource(data.npsList);
+    this.dataNPSList.sort = this.npsListTableSort;
+    this.totalContribution = data.totalContribution;
+    this.totalCurrentValue = data.totalCurrentValue;
   }
-
   getListSuperannuation() {
     this.isLoading = true;
-    let obj = this.getObject
+    const obj = this.getObject;
     this.custumService.getSuperannuation(obj).subscribe(
       data => this.getSuperannuationRes(data)
     );
   }
-
   getSuperannuationRes(data) {
     console.log('getSuperannuationRes =', data);
     this.isLoading = false;
-    this.dataSuperannuationList = data.superannuationList
-    this.sumOfAnnualEmployeeContribution = data.sumOfAnnualEmployeeContribution
-    this.sumOfAnnualEmployerContribution = data.sumOfAnnualEmployerContribution
+    this.dataSuperannuationList = new MatTableDataSource(data.superannuationList);
+    this.dataSuperannuationList.sort = this.superAnnuationListTableSort;
+    this.sumOfAnnualEmployeeContribution = data.sumOfAnnualEmployeeContribution;
+    this.sumOfAnnualEmployerContribution = data.sumOfAnnualEmployerContribution;
   }
-
   getListEPS() {
     this.isLoading = true;
-    let obj = this.getObject
+    const obj = this.getObject;
     this.custumService.getEPS(obj).subscribe(
       data => this.getEPSRes(data)
     );
   }
-
   getEPSRes(data) {
     console.log('getEPSRes =', data);
     this.isLoading = false;
-    this.EPSList = data.epsList
-    this.totalNotionalValue = data.totalNotionalValue
-    this.totalPensionAmount = data.totalPensionAmount
+    this.EPSList = new MatTableDataSource(data.epsList);
+    this.EPSList.sort = this.epsListTableSort;
+    this.totalNotionalValue = data.totalNotionalValue;
+    this.totalPensionAmount = data.totalPensionAmount;
   }
 }
-
 export interface PeriodicElement11 {
   no: string;
   owner: string;
@@ -481,8 +630,6 @@ export interface PeriodicElement11 {
   desc: string;
   status: string;
 }
-
-
 export interface PeriodicElement12 {
   no: string;
   owner: string;
@@ -491,9 +638,7 @@ export interface PeriodicElement12 {
   pran: string;
   scheme: string;
   desc: string;
-  status: string;
 }
-
 export interface PeriodicElement13 {
   no: string;
   owner: string;
@@ -505,7 +650,6 @@ export interface PeriodicElement13 {
   desc: string;
   status: string;
 }
-
 export interface PeriodicElement15 {
   no: string;
   owner: string;
@@ -514,9 +658,8 @@ export interface PeriodicElement15 {
   amt: string;
   pay: string;
   desc: string;
-  status: string;
+  
 }
-
 export interface PeriodicElement16 {
   no: string;
   owner: string;
@@ -526,9 +669,8 @@ export interface PeriodicElement16 {
   number: string;
   mdate: string;
   desc: string;
-  status: string;
+  
 }
-
 export interface PeriodicElement14 {
   no: string;
   owner: string;
@@ -539,6 +681,6 @@ export interface PeriodicElement14 {
   grateemp: string;
   date: string;
   desc: string;
-  status: string;
+  
 }
 

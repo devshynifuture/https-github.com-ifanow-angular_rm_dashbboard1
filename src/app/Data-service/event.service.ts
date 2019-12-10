@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {MatSnackBar} from '@angular/material';
-import {BehaviorSubject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,9 +27,13 @@ export class EventService {
   private overlayVisibleValue = new BehaviorSubject(false);
   overlayVisibleData = this.overlayVisibleValue.asObservable();
 
-  private upperSliderData = new BehaviorSubject<object>({state: 'close', fragmentData: {}, flag: ''});
+  private upperSliderData = new BehaviorSubject<object>({
+    state: 'close',
+    fragmentData: {},
+    flag: '',
+    componentName: ''
+  });
   upperSliderDataObs = this.upperSliderData.asObservable();
-
 
   changeUpperSliderState(sliderState: object) {
     this.upperSliderData.next(sliderState);

@@ -3,6 +3,12 @@ import {Component, OnInit} from '@angular/core';
 import {UtilService} from "../../../../../../../services/util.service";
 import {SubscriptionInject} from "../../../../../AdviserComponent/Subscriptions/subscription-inject.service";
 import { MfAllocationsComponent } from './mf-allocations/mf-allocations.component';
+import { PreferencesComponent } from './preferences/preferences.component';
+import { AddGoalComponent } from './add-goal/add-goal.component';
+import { KeyInfoComponent } from './key-info/key-info.component';
+import { CalculatorsComponent } from './calculators/calculators.component';
+import { AddGoalsComponent } from '../add-goals/add-goals.component';
+import { EventService } from 'src/app/Data-service/event.service';
 
 export interface PeriodicElement {
   position: string;
@@ -23,7 +29,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class GoalsPlanComponent implements OnInit {
 
-  constructor(private subInjectService: SubscriptionInject) {
+  constructor(private subInjectService: SubscriptionInject,private eventService: EventService,) {
   }
 
   ngOnInit() {
@@ -52,6 +58,107 @@ export class GoalsPlanComponent implements OnInit {
       }
     );
   }
+  openPreferences(data) {
+    console.log('hello mf button clicked');
+    const fragmentData = {
+      flag: 'openPreferences',
+      data,
+      componentName: PreferencesComponent, 
+      id: 1,
+      state: 'open40'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+          console.log('this is sidebardata in subs subs : ', sideBarData);
+          if (UtilService.isDialogClose(sideBarData)) {
+            console.log('this is sidebardata in subs subs 2: ', sideBarData);
+            rightSideDataSub.unsubscribe();
 
-}
+          }
+      }
+    );
+  }
+  openallocations(data) {
+    console.log('hello mf button clicked');
+    const fragmentData = {
+      flag: 'openallocations',
+      data,
+      componentName: AddGoalComponent, 
+      id: 1,
+      state: 'open25'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+          console.log('this is sidebardata in subs subs : ', sideBarData);
+          if (UtilService.isDialogClose(sideBarData)) {
+            console.log('this is sidebardata in subs subs 2: ', sideBarData);
+            rightSideDataSub.unsubscribe();
+
+          }
+      }
+    );
+  }
+  openKeyinfo(data) {
+    console.log('hello mf button clicked');
+    const fragmentData = {
+      flag: 'openKeyinfo',
+      data,
+      componentName: KeyInfoComponent, 
+      id: 1,
+      state: 'open25'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+          console.log('this is sidebardata in subs subs : ', sideBarData);
+          if (UtilService.isDialogClose(sideBarData)) {
+            console.log('this is sidebardata in subs subs 2: ', sideBarData);
+            rightSideDataSub.unsubscribe();
+
+          }
+      }
+    );
+  }
+  openCalculators(data) {
+    console.log('hello mf button clicked');
+    const fragmentData = {
+      flag: 'openCalculators',
+      data,
+      componentName: CalculatorsComponent, 
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+          console.log('this is sidebardata in subs subs : ', sideBarData);
+          if (UtilService.isDialogClose(sideBarData)) {
+            console.log('this is sidebardata in subs subs 2: ', sideBarData);
+            rightSideDataSub.unsubscribe();
+
+          }
+      }
+    );
+  }
+  
+  openAddgoals(data) {
+    console.log('hello mf button clicked');
+    const fragmentData = {
+      flag: 'openAddgoals',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: AddGoalsComponent,
+      state: 'open'
+    };
+
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
+  }
+  }
+
 

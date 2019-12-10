@@ -8,13 +8,13 @@ import { SubscriptionInject } from '../../../subscription-inject.service';
 })
 export class HelpComponent implements OnInit {
 
-  constructor(public subInjectService:SubscriptionInject) { }
+  constructor(public subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
   }
-  Close(value)
-  {
-    this.subInjectService.rightSideData(value)
+  Close(value) {
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
 }

@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from "@angular/common";
+import { Row, Workbook, Worksheet } from 'exceljs';
+import { saveAs } from 'file-saver';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilService {
-   getFamilyMemberData: any;
+  getFamilyMemberData: any;
 
   constructor() {
   }
-
   static convertObjectToArray(inputObject: object): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
@@ -21,6 +23,13 @@ export class UtilService {
     });
 
     return outputArray;
+  }
+
+  totalCalculator(data: number[]) {
+    return data.reduce((accumulator, currentValue) => {
+      accumulator = accumulator + currentValue;
+      return accumulator;
+    }, 0);
   }
 
   static convertObjectToCustomArray(inputObject: object, keyNameForOutput: string, keyValueForOutput: string): object[] {
@@ -65,15 +74,15 @@ export class UtilService {
     return Math.round(data);
   }
 
-   calculateAgeFromCurrentDate(data) {
+  calculateAgeFromCurrentDate(data) {
     data.forEach(element => {
       const bdate = new Date(element.dateOfBirth);
       const timeDiff = Math.abs(Date.now() - bdate.getTime());
       let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
-      element['age'] =age   
+      element['age'] = age
     });
-    this.getFamilyMemberData=data;
-    console.log("family Member with age",this.getFamilyMemberData)
+    this.getFamilyMemberData = data;
+    console.log("family Member with age", this.getFamilyMemberData)
     return this.getFamilyMemberData;
   }
 
@@ -89,4 +98,56 @@ export class UtilService {
   static convertDateObjectToDateString(datePipe: DatePipe, date: Date) {
     return datePipe.transform(date, 'yyyy-MM-dd');
   }
+
+  static checkStatusId(element) {
+    element.forEach(obj => {
+      if (obj.maturityDate < new Date()) {
+        obj.statusId = 'MATURED'
+      } else {
+        obj.statusId = 'LIVE'
+      }
+    });
+    console.log('Status >>>>>>', element)
+  }
+  static async exportAs(headerData, excelData: any, footer: any[]) {
+    //var wb = new Workbook()
+    // const ws = wb.addWorksheet()
+    // //---------MetaData----------//
+
+    // //ws.mergeCells('A1', 'M1');
+    // const meta1 = ws.getCell('A1')
+    // const meta2 = ws.getCell('A2')
+    // const meta3 = ws.getCell('A3')
+    // meta1.font = { bold: true }
+    // meta2.font = { bold: true }
+    // meta3.font = { bold: true }
+    // ws.getCell('A1').value = 'Type of report - ' + 'value';
+    // ws.getCell('A2').value = 'Client name - Rahul Jain';
+    // ws.getCell('A3').value = 'Report as on - ' + new Date();
+    // //ws.getCell('A1').alignment = { horizontal: 'center' };
+    // const head = ws.getRow(5)
+    // head.font = { bold: true }
+    // head.fill = {
+    //   type: 'pattern',
+    //   pattern: 'darkVertical',
+    //   fgColor: {
+    //     argb: '#f5f7f7'
+    //   }
+    // };
+    // //---------header----------//
+    // ws.getRow(5).values = headerData;
+    // //----------data---------//
+    // excelData.forEach(element => {
+    //   ws.addRow(element)
+    // });
+    // //-------footerData---------//
+    // footer.forEach(element => {
+    //   const last = ws.addRow(element)
+    //   last.font = { bold: true }
+    // });
+    // const buf = await wb.xlsx.writeBuffer()
+    // saveAs(new Blob([buf]), 'Rahul Jain-' + 'value' + '-' + new Date() + '.xlsx')
+
+  }
+
 }

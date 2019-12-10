@@ -65,11 +65,12 @@ export class QuotationsComponent implements OnInit {
 
   Open(value, state, data) {
     const fragmentData = {
-      Flag: value,
-      data,
+      flag: value,
+      data:data,
       id: 1,
-      state
+      state,
     };
+    data.userEmailId=this._clientData.userEmailId
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
@@ -194,7 +195,7 @@ export class QuotationsComponent implements OnInit {
 
   open(data, value) {
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data,
       id: 1,
       state: 'open'
@@ -212,7 +213,7 @@ export class QuotationsComponent implements OnInit {
 
   openPopup(data) {
     const Fragmentdata = {
-      Flag: data,
+      flag: data,
     };
     const dialogRef = this.dialog.open(SubscriptionPopupComponent, {
       width: '70%',
@@ -227,7 +228,7 @@ export class QuotationsComponent implements OnInit {
 
   OpenConsent(data) {
     const Fragmentdata = {
-      Flag: data,
+      flag: data,
     };
     const dialogRef = this.dialog.open(ConsentTandCComponent, {
       width: '50%',
@@ -255,7 +256,7 @@ export class QuotationsComponent implements OnInit {
     // console.log(data);
     // this.subInjectService.addSingleProfile(data);
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data,
       id: 1,
       state: 'open'

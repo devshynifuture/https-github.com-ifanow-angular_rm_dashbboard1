@@ -39,36 +39,48 @@
                     <table mat-table [dataSource]="dataSource" id="table-low" matSort>
                         <ng-container matColumnDef="no">
                             <th mat-header-cell *matHeaderCellDef class="br" mat-sort-header> No. </th>
-                            <td mat-cell *matCellDef="let element" class="br"> {{element.no}} </td>
+                            <td mat-cell *matCellDef="let element;index as i" class="br"> {{i+1}} </td>
                         </ng-container>
                         <ng-container matColumnDef="owner">
                             <th mat-header-cell *matHeaderCellDef class="br t-18" mat-sort-header> Owner </th>
-                            <td mat-cell *matCellDef="let element" class="br t-18"> {{element.owner}} </td>
+                            <td mat-cell *matCellDef="let element" class="br t-18"> {{element.ownerName}} </td>
                         </ng-container>
                         <ng-container matColumnDef="type">
                             <th mat-header-cell *matHeaderCellDef class="br t-12" mat-sort-header> Type </th>
-                            <td mat-cell *matCellDef="let element" class="br t-12"> {{element.type}} </td>
+                            <td mat-cell *matCellDef="let element" class="br t-12">
+                                <span>
+                                    <span *ngIf="element.incomeTypeId==1">Salaried</span>
+                                    <span *ngIf="element.incomeTypeId==2">Buisness</span>
+                                    <span *ngIf="element.incomeTypeId==3">Profession</span>
+                                    <span *ngIf="element.incomeTypeId==4">Rental</span>
+                                    <span *ngIf="element.incomeTypeId==5">Others</span>
+                                </span> </td>
                         </ng-container>
                         <ng-container matColumnDef="amt">
                             <th mat-header-cell *matHeaderCellDef class="br t-18 text-right" mat-sort-header> Monthly
                                 amount </th>
-                            <td mat-cell *matCellDef="let element" class="br t-18 text-right"> {{element.amt}} </td>
+                            <td mat-cell *matCellDef="let element" class="br t-18 text-right"> {{element.monthlyIncome}} </td>
                         </ng-container>
                         <ng-container matColumnDef="income">
                             <th mat-header-cell *matHeaderCellDef class="br t-14 text-right" mat-sort-header> Income
                                 style </th>
-                            <td mat-cell *matCellDef="let element" class="br t-14 text-right"> {{element.income}} </td>
+                            <td mat-cell *matCellDef="let element" class="br t-14 text-right"> {{element.incomeStyleId}} </td>
                         </ng-container>
                         <ng-container matColumnDef="till">
                             <th mat-header-cell *matHeaderCellDef class="br t-14 text-right" mat-sort-header> Continues
                                 till
                             </th>
-                            <td mat-cell *matCellDef="let element" class="br t-14 text-right"> {{element.till}} </td>
+                            <td mat-cell *matCellDef="let element" class="br t-14 text-right">
+                                <span>
+                                    <span *ngIf="element.continueTill==1">Retirement</span>
+                                    <span *ngIf="element.continueTill==2">Life time</span>
+                                    <span *ngIf="element.continueTill==3">{{element.numberOfYear}}Years</span>
+                                </span> </td>
                         </ng-container>
                         <ng-container matColumnDef="rate">
                             <th mat-header-cell *matHeaderCellDef class="br text-right" mat-sort-header> Growth rate
                             </th>
-                            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.rate}} </td>
+                            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.growthRate}} </td>
                         </ng-container>
 
                         <ng-container matColumnDef="status">
@@ -82,11 +94,11 @@
                                     more_vert
                                 </i>
                                 <mat-menu #menu4="matMenu">
-                                    <button mat-menu-item>Edit</button>
+                                    <button mat-menu-item (click)="addIncome('editIncome',element)">Edit</button>
                                     <button mat-menu-item (click)="addIncomeDetail('addIncomeDetail')">Deatiled
                                         View</button>
                                     <button mat-menu-item>Activity</button>
-                                    <button mat-menu-item>Delete</button>
+                                    <button mat-menu-item (click)="deleteModal('INCOME',element)">Delete</button>
                                 </mat-menu>
                             </td>
                         </ng-container>

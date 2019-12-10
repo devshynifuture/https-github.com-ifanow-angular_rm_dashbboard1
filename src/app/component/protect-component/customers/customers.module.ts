@@ -10,8 +10,9 @@ import {CustomerComponent} from './component/customer/customer.component';
 
 import {CustomCommonModule} from '../../../common/custom.common.module';
 import {EntryComponentsModule} from '../../../entry.components.module';
-import {AccountEntryModule} from "./component/customer/accounts/account.entry.module";
-import {PlanEntryModule} from "./component/customer/plan/plan.entry.module";
+import {AccountEntryModule} from './component/customer/accounts/account.entry.module';
+import {PlanEntryModule} from './component/customer/plan/plan.entry.module';
+import {DynamicComponentService} from '../../../services/dynamic-component.service';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -39,6 +40,7 @@ import {PlanEntryModule} from "./component/customer/plan/plan.entry.module";
     // PlanModule
   ],
   exports: [],
+  providers: [DynamicComponentService],
   entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
 })
 export class CustomersModule {

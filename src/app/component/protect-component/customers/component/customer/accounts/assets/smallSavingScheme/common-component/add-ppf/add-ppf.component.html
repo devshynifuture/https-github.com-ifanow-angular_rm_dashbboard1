@@ -13,8 +13,16 @@
 </div>
 <div class="pt-100 pl-24 pr-24 pb-48 mb-48">
     <div [formGroup]="ppfSchemeForm">
-        <app-owner-component [data]='ownerData' (valueChange)='display($event)' (valueChange1)='lisNominee($event)'>
-        </app-owner-component>
+        <div class="row">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Owner</h5>
+                <p class="m-0 f-12 text-custom">In whose name is this asset</p>
+            </div>
+            <div class="col-md-5">
+                <app-owner-component [data]='ownerData' (valueChange)='display($event)' (valueChange1)='lisNominee($event)'>
+                </app-owner-component>
+            </div>
+        </div>
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Account balance</h5>
@@ -25,8 +33,8 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input type="number" (keypress)="check()" formControlName="accountBalance" matInput #accBal class="form-control rupess br-0" autocomplete="off">
-                        <mat-error *ngIf="ppfSchemeForm.get('accountBalance').errors?.required && ppfSchemeForm.get('accountBalance').touched" class="f-12 pt-4">
-                            This field is required
+                        <mat-error *ngIf="ppfSchemeForm.get('accountBalance').errors?.required" class="f-12 pt-4">
+                            Account balance is required
                         </mat-error>
                         <mat-error *ngIf="(ppfSchemeForm.get('accountBalance').errors?.min)" class="f-12 pt-4">
                             Should be greater than 500

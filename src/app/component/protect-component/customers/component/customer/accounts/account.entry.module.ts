@@ -6,9 +6,12 @@ import {UpperCustomerComponent} from '../../common-component/upper-customer/uppe
 import {AccountCommonModule} from './account.common.module';
 import {AccountUpperSliderModule} from './account-upper-slider.module';
 import {MaterialModule} from '../../../../../../material/material';
-
+import { StockScripLevelHoldingComponent } from './assets/asset-stocks/stock-scrip-level-holding/stock-scrip-level-holding.component';
+import { AddAssetStocksComponent } from './assets/asset-stocks/add-asset-stocks/add-asset-stocks.component';
 export const componentList = [
-  UpperCustomerComponent
+  UpperCustomerComponent,
+  AddAssetStocksComponent,
+  StockScripLevelHoldingComponent
 ];
 
 @NgModule({
@@ -24,7 +27,7 @@ export const componentList = [
   ],
   exports: [
     FormsModule,
-    ReactiveFormsModule],
+    ReactiveFormsModule, componentList],
   entryComponents: [componentList]
 })
 

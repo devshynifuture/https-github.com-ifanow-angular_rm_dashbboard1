@@ -1,10 +1,10 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import $ from 'jquery';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from '../../../Data-service/event.service';
-import {transition} from '@angular/animations';
-import {SubscriptionInject} from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormControl} from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from '../../../Data-service/event.service';
+import { transition } from '@angular/animations';
+import { SubscriptionInject } from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-leftsidebar',
   templateUrl: './leftsidebar.component.html',
@@ -19,10 +19,10 @@ export class LeftsidebarComponent implements OnInit {
   userInfo: any;
   sideNavContainerClass;
   myControl = new FormControl();
-  
+
 
   constructor(private authService: AuthService, private _eref: ElementRef,
-              private eventService: EventService, private subinject: SubscriptionInject) {
+    private eventService: EventService, private subinject: SubscriptionInject) {
     // this.eventService.sideNavContainerClassData.subscribe(
     //   data => this.sideNavContainerClass = data
     // );
@@ -97,5 +97,4 @@ export class LeftsidebarComponent implements OnInit {
   // }
 
 }
- 
- 
+

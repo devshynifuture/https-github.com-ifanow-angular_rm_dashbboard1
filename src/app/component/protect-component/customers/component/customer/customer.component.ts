@@ -1,32 +1,60 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {AuthService} from "../../../../../auth-service/authService";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from "../../../../../auth-service/authService";
+import { DialogContainerComponent } from "../../../../../common/dialog-container/dialog-container.component";
+import { EventService } from "../../../../../Data-service/event.service";
+import { SubscriptionInject } from "../../../AdviserComponent/Subscriptions/subscription-inject.service";
+import { DynamicComponentService } from "../../../../../services/dynamic-component.service";
+import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from "../../../../../animation/animation";
 
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
-  styleUrls: ['./customer.component.scss']
+  styleUrls: ['./customer.component.scss'],
+  animations: [
+    dialogContainerOpacity,
+    rightSliderAnimation,
+    // getRightSliderAnimation(40),
+    upperSliderAnimation
+  ]
 })
-export class CustomerComponent implements OnInit {
+export class CustomerComponent extends DialogContainerComponent implements OnInit {
   selected: number;
   clientId;
-  value=1;
+  value: number;
   overview = false;
   plans = false;
-  activity =false;
+  activity = false;
   accounts = false;
   transact = false;
+  currentUrl: string;
 
-  constructor(private router: Router) {
+
+  constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
+    protected dynamicComponentService: DynamicComponentService) {
+    super(eventService, subinject, dynamicComponentService);
     console.log(router.getCurrentNavigation().extras.state);
 
   }
 
   status: boolean = false;
- 
+
 
   ngOnInit() {
-    this.selected = 1;
+
+    if (this.router.url.split('/')[2] === 'overview') {
+      this.value = 1;
+    } else if (this.router.url.split('/')[2] === 'account') {
+      this.value = 2;
+    } else if (this.router.url.split('/')[2] === 'plan') {
+      this.value = 3;
+    } else if (this.router.url.split('/')[2] === 'activity') {
+      this.value = 4;
+    } else if (this.router.url.split('/')[2] === 'transact') {
+      this.value = 5;
+    }
+
+    this.selected = 2;
     const passedParameter = history.state;
     this.clientId = passedParameter ? passedParameter.id : undefined;
     console.log('passedParameter: ', passedParameter);
@@ -34,8 +62,8 @@ export class CustomerComponent implements OnInit {
     this.clientId = AuthService.getClientId();
   }
 
-  clickEvent(value){
-   this.value = value;
-}
+  clickEvent(value) {
+    this.value = value;
+  }
 
 }

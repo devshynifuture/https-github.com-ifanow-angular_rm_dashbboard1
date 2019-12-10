@@ -1,0 +1,6 @@
+<mat-tab-group animationDuration="0ms" [selectedIndex]="selected.value"
+    (selectedIndexChange)="selected.setValue($event)" mat-align-tabs="center">
+    <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
+        <router-outlet></router-outlet>
+    </mat-tab>
+</mat-tab-group>

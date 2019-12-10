@@ -1,20 +1,20 @@
 <!-- ADD Income -->
-<!-- <div class="popup-header-fix-60">
+<div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-7 p-0">
             <h4 class="mb-0 wrapper-20"> ADD INCOME</h4>
         </div>
         <div class="col-md-5 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p v-middle"> clear</i>
+                <i class="material-icons c-p v-middle" (click)="close()"> clear</i>
             </div>
         </div>
     </div>
-</div> -->
+</div>
 
-<app-add-income-family-member></app-add-income-family-member>
-<app-add-income-source></app-add-income-source>
-<app-individual-income-info></app-individual-income-info>
+<app-add-income-family-member (previousStep)="previousStepData($event)"  (selectedFamilyMembersData)="getSelectedFamilyMember($event)" [familyData]="familyData" *ngIf="addIncomeSteps==1"></app-add-income-family-member>
+<app-add-income-source (previousStep)="previousStepData($event)" (IncomeSourceDetailsData)="getIncomeDetails($event)" [selectedFamilyList]="selectedFamilyList" *ngIf="addIncomeSteps==2"></app-add-income-source>
+<app-individual-income-info (previousStep)="previousStepData($event)" [FinalIncomeList]="FinalIncomeList" [editIncomeData]="editIncomeData" *ngIf="addIncomeSteps==3"></app-individual-income-info>
 <!-- <div class="pl-24 pt-72 pr-24 pb-24">
     <div class="row pt-24">
         <div class="col-md-12">

@@ -1,12 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {DeleteSubscriptionComponent} from '../delete-subscription/delete-subscription.component';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {UtilService} from 'src/app/services/util.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { DeleteSubscriptionComponent } from '../delete-subscription/delete-subscription.component';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
 
 export interface PeriodicElement {
   service: string;
@@ -52,17 +52,17 @@ export class ClientUpperSubscriptionComponent implements OnInit {
 
       } else if (data.subscriptionPricing.feeTypeId == 1) {
         value = 'createSubFixed';
+        data.subFlag = 'createSubFixed';
       } else {
         value = 'createSubVariable';
+        data.subFlag = 'createSubVariable';
       }
-
       data.clientId = this.upperData.id;
       data.isCreateSub = false;
       data.isSaveBtn = false;
-    } else {
     }
     const fragmentData = {
-      Flag: value,
+      flag: value,
       data,
       id: 1,
       state: 'open'
@@ -104,7 +104,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     data.isCreateSub = true;
     (data.subscriptionPricing.feeTypeId == 1) ? feeMode = 'fixedModifyFees' : feeMode = 'variableModifyFees';
     const fragmentData = {
-      Flag: feeMode,
+      flag: feeMode,
       data,
       id: 1,
       state: 'open'
@@ -168,7 +168,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
 
   delete(data, value) {
     const Fragmentdata = {
-      Flag: data,
+      flag: data,
       subData: value
     };
     if (data == 'cancelSubscription') {

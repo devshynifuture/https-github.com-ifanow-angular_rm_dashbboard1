@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {BackOfficeService} from '../../protect-component/AdviserComponent/backOffice/back-office.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { BackOfficeService } from '../../protect-component/AdviserComponent/backOffice/back-office.service';
 
 @Component({
   selector: 'app-login',
@@ -66,16 +66,18 @@ export class LoginComponent implements OnInit {
 
 
       const jsonData = {
-          advisorId: 2808,
-          clientId: 2978,
-          authToken: 'data',
-          imgUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'
-        }
-      ;
+        advisorId: 2727,
+        clientId: 2978,
+        emailId: 'gaurav@futurewise.co.in',
+        authToken: 'data',
+        imgUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'
+      };
+
       this.authService.setToken('data');
 
       this.authService.setUserInfo(jsonData);
-      this.authService.setClientData({id: 2978, name: 'Aryendra Kumar Saxena'
+      this.authService.setClientData({
+        id: 2978, name: 'Aryendra Kumar Saxena'
       });
       // this.authService.setToken(loginData.payLoad);
       this.eventService.openSnackBar('Login SuccessFully', 'dismiss');

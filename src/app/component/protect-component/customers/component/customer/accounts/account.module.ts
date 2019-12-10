@@ -11,7 +11,6 @@ import {MaterialModule} from '../../../../../../material/material';
 import {AccountsComponent} from './accounts.component';
 import {AssetsComponent} from './assets/assets.component';
 import {SchemeLevelTransactionComponent} from '../../common-component/scheme-level-transaction/scheme-level-transaction.component';
-import {ExpensesComponent} from './expenses/expenses.component';
 import {SummaryComponent} from './summary/summary.component';
 import {BottomSheetComponent} from '../../common-component/bottom-sheet/bottom-sheet.component';
 import {LibilitiesRightComponent} from './liabilities/libilities-right/libilities-right.component';
@@ -33,7 +32,6 @@ import {PoTdSchemeComponent} from './assets/smallSavingScheme/po-td-scheme/po-td
 import {PoMisSchemeComponent} from './assets/smallSavingScheme/po-mis-scheme/po-mis-scheme.component';
 import {SmallSavingSchemeComponent} from './assets/smallSavingScheme/small-saving-scheme/small-saving-scheme.component';
 import {RealEstateComponent} from './assets/realEstate/real-estate/real-estate.component';
-import {AddExpensesComponent} from '../../common-component/add-expenses/add-expenses.component';
 import {OtherPayablesComponent} from './liabilities/other-payables/other-payables.component';
 // import {PlanComponent} from '../plan/plan.component';
 // import {SummaryPlanComponent} from '../plan/summary-plan/summary-plan.component';
@@ -52,7 +50,8 @@ import {FormatNumberDirective} from 'src/app/format-number.directive';
 import {DocumentNewFolderComponent} from '../../common-component/document-new-folder/document-new-folder.component';
 import {AccountRoutingModule} from "./account-routing.module";
 import {AccountCommonModule} from "./account.common.module";
-
+// import {PDFExportModule} from "@progress/kendo-angular-pdf-export";
+import { AssetStocksComponent } from './assets/asset-stocks/asset-stocks.component';
 @NgModule({
   declarations: [
     SchemeLevelTransactionComponent,
@@ -62,7 +61,6 @@ import {AccountCommonModule} from "./account.common.module";
     AssetsComponent,
     LiabilitiesComponent,
     InsuranceComponent,
-    ExpensesComponent,
     AddProfileSummaryComponent,
     DocumentsComponent,
     MutualFundsCapitalComponent,
@@ -103,7 +101,6 @@ import {AccountCommonModule} from "./account.common.module";
     // AddPoTdComponent,
     // AddPoMisComponent,
     // AddPoRdComponent,
-    AddExpensesComponent,
     OtherPayablesComponent,
     CashAndBankComponent,
     CommoditiesComponent,
@@ -115,6 +112,7 @@ import {AccountCommonModule} from "./account.common.module";
     SkeletonLoadingDirective,
     FormatNumberDirective,
     DocumentNewFolderComponent,
+    AssetStocksComponent,
   ],
   imports: [
     AccountRoutingModule,
@@ -125,7 +123,9 @@ import {AccountCommonModule} from "./account.common.module";
     MaterialModule,
     ChartModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    // PDFExportModule,
+    MaterialModule
   ],
   exports: [
     AccountsComponent,
@@ -154,7 +154,6 @@ import {AccountCommonModule} from "./account.common.module";
     // AddPoMisComponent,
     // AddPoTdComponent,
     // AddPoRdComponent,
-    AddExpensesComponent,
     OtherPayablesComponent,
     // EntryComponentsModule
   ],
