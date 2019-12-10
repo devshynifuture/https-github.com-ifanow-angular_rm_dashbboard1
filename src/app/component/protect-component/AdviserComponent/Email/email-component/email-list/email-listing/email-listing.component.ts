@@ -8,6 +8,7 @@ import { SubscriptionInject } from './../../../../Subscriptions/subscription-inj
 
 import { EmailServiceService } from './../../../email-service.service';
 import { EmailInterfaceI } from '../../email.interface';
+import { EmailUtilService } from 'src/app/services/email-util.service';
 
 
 const ELEMENT_DATA: EmailInterfaceI[] = [
@@ -161,7 +162,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
     this.gmailInboxListSubscription = this.emailService.getMailInboxList('INBOX')
       .subscribe(responseData => {
         console.log('this is gmails inbox data ->');
-        console.log(responseData);
+        console.log(JSON.parse(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(responseData)));
       })
   }
 
