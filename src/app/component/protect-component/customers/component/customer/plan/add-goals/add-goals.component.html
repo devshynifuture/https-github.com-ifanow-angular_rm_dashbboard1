@@ -1,10 +1,10 @@
-<div class="bg-white" id="ui-add-goals">
-    <div class="row bb-1 popup-header-fix w-100">
+<div class="bg-grey lter" id="ui-add-goals">
+    <div class="row bg-white bb-1 popup-header-fix w-100">
       <div class="col-md-5 p-0">
-       <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" class="w-45">
+        <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" class="w-45">
       </div>
       <div class="col-md-5">
-        <h5 class="m-0 p-20">Rahul, tell us about your goals...</h5>
+        <h5 class="m-0 p-20 pl-50">Rahul, tell us about your goals...</h5>
       </div>
       <div class="col-md-2">
         <i class="material-icons pt-16 pb-12 c-p right pr-16" (click)="close('close')">
@@ -12,7 +12,7 @@
         </i>
       </div>
     </div>
-    <div class="row pt-100 pl-24 pr-24 pb-40">
+    <!-- <div class="row pt-100 pl-24 pr-24 pb-40">
       <div class="col-md-2 c-p">
         <img src="/assets/images/svg/wedding.svg">
         <h5 class="text-center m-0 pt-12 text-black">Retirement</h5>
@@ -55,15 +55,502 @@
         <h5 class="text-center m-0 pt-12 text-black">Others</h5>
       </div>
       </div>
-    </div>
+      </div> -->
+    <!-- Retirement goal -->
+    <!-- <div class="row bg-grey lter">
+      <div class="col-md-8 p-0">
+        <div class="wrapper-40 pt-72">
+          <div class="row">
+            <div class="col-md-8 p-0">
+              <div class="row">
+                <div class="col-md-8 p-0">
+                  <h5 class="m-0 text-black pl-0">Who are you planning this for?</h5>
+                  <div class="form-group mb-0 pt-8">
+                    <select class="form-control br-0" id="sel1">
+                      <option value="1">Rahul Jain</option>
+                      <option value="2">Rahul Jain</option>
+                    </select>
+                  </div>
+                  <div class="col-md-12 p-0">
+                    <p class="text-regular pt-4">Add spouse</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-20">
+                <div class="col-md-12 p-0">
+                  <h5 class="m-0 text-black">Age you want to retire? (present age - 39)</h5>
+                  <div class="row pt-8">
+                    <div class="col-md-4 p-0">
+                      <div class="form-group mb-0">
+                        <mat-form-field>
+                          <input matInput #message class="form-control br-0" value="55 Years">
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="col-md-8 pr-0">
+                      <div id="custom-slider">
+                        <mat-slider></mat-slider>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-20">
+                <div class="col-md-12 p-0">
+                  <h5 class="m-0 text-black">Your current monthly expenses?</h5>
+                  <div class="row pt-8">
+                    <div class="col-md-4 p-0">
+                      <div class="form-group mb-0">
+                        <mat-form-field>
+                          <input matInput #message class="form-control br-0 rupess">
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="col-md-8 pr-0">
+                      <div id="custom-slider">
+                        <mat-slider></mat-slider>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-20">
+                <div class="col-md-12 p-0">
+                  <h5 class="m-0 text-black">At retirement, by what % will the expenses change?</h5>
+                  <div class="row pt-8">
+                    <div class="col-md-4 p-0">
+                      <div class="form-group mb-0">
+                        <mat-form-field>
+                          <input matInput #message class="form-control br-0" value="-10%">
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="col-md-8 pr-0">
+                      <div id="custom-slider">
+                        <mat-slider></mat-slider>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-20">
+                <div class="col-md-12 p-0">
+                  <h5 class="m-0 text-black">Milestones you’d also like to plan for (optional)...</h5>
+                  <div class="row pt-8">
+                    <div class="col-md-4 p-0">
+                      <div class="form-group mb-0">
+                        <select class="form-control br-0 br-none" id="sel2">
+                          <option value="1">Select a milestone</option>
+                          <option value="2">Rahul Jain</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4 p-0">
+                      <div class="form-group mb-0">
+                        <select class="form-control br-0 br-none" id="sel2">
+                          <option value="1">Select a milestone</option>
+                          <option value="2">Rahul Jain</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4 p-0">
+                      <div class="form-group mb-0">
+                        <input matInput #message class="form-control br-0 rupess h-38">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-20">
+                  <div class="col-md-12 p-0">
+                    <h5 class="m-0 text-black">Give this goal a name</h5>
+                    <div class="row pt-8">
+                      <div class="col-md-8 p-0">
+                        <div class="form-group mb-0">
+                          <mat-form-field>
+                            <input matInput #message class="form-control br-0">
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-md-12 pt-4">
+                        <p class="f-12 m-0 text-primitive">Optional</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+              <img src="/assets/images/svg/retierment.svg">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4"></div>
+      </div>
+     
+    </div> -->
+     <!--close Retirement goal -->
+
+     <!-- Education goal -->
+     <div class="row bg-grey lter pt-72 pb-44">
+        <div class="col-md-8 p-0">
+          <div class="wrapper-40 pt-0">
+            <div class="row pt-16">
+              <div class="col-md-8 p-0">
+                <div class="row">
+                  <div class="col-md-8 p-0">
+                    <h5 class="m-0 text-black pl-0">Who are you planning this for?</h5>
+                    <div class="form-group mb-0 pt-8">
+                      <select class="form-control br-0" id="sel1">
+                        <option value="1">Aryan Jain</option>
+                        <option value="2">Rahul Jain</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row pt-20">
+                  <div class="col-md-12 p-0">
+                    <h5 class="m-0 text-black">Aryan Jain's age at the time of course (Present Age - 10)</h5>
+                    <div class="row pt-8">
+                      <div class="col-md-8 pr-0">
+                        <div id="custom-slider">
+                          <mat-slider></mat-slider>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row pt-20">
+                  <div class="col-md-12 p-0">
+                    <h5 class="m-0 text-black">Annual Course expenses in today's value.</h5>
+                    <div class="row pt-8">
+                      <div class="col-md-4 p-0">
+                        <div class="form-group mb-0">
+                          <mat-form-field>
+                            <input matInput #message class="form-control br-0 rupess">
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-md-8 pr-0">
+                        <div id="custom-slider">
+                          <mat-slider></mat-slider>
+                        </div>
+                      </div>
+                      <div class="col-md-12 p-0 pt-4">
+                        <p class="m-0 text-primitive roboto c-p">Want customized goal values for each year? Click here</p>
+                      </div>
+                    </div>
+                    <!-- on click text -->
+                    <!-- <div class="row pt-8">
+                      <div class="col-md-2 p-0">
+                        <p class="text-regular text-black pt-16">Age 20</p>
+                      </div>
+                      <div class="col-md-4 pl-0">
+                        <div class="form-group mb-0">
+                          <mat-form-field>
+                            <input matInput #message class="form-control br-0 rupess">
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div id="custom-slider">
+                          <mat-slider></mat-slider>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row pt-8">
+                      <div class="col-md-2 p-0">
+                        <p class="text-regular text-black pt-16">Age 21</p>
+                      </div>
+                      <div class="col-md-4 pl-0">
+                        <div class="form-group mb-0">
+                          <mat-form-field>
+                            <input matInput #message class="form-control br-0 rupess">
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div id="custom-slider">
+                          <mat-slider></mat-slider>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row pt-8">
+                      <div class="col-md-2 p-0">
+                        <p class="text-regular text-black pt-16">Age 22</p>
+                      </div>
+                      <div class="col-md-4 pl-0">
+                        <div class="form-group mb-0">
+                          <mat-form-field>
+                            <input matInput #message class="form-control br-0 rupess">
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div id="custom-slider">
+                          <mat-slider></mat-slider>
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+                
+                <div class="row pt-20">
+                    <div class="col-md-12 p-0">
+                      <h5 class="m-0 text-black">Give this goal a name</h5>
+                      <div class="row pt-8">
+                        <div class="col-md-8 p-0">
+                          <div class="form-group mb-0">
+                            <mat-form-field>
+                              <input matInput #message class="form-control br-0">
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-md-12 pt-4">
+                          <p class="f-12 roboto m-0 text-primitive">Optional</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row pt-20">
+                    <div class="col-md-12 p-0">
+                      <h5 class="m-0 text-black">Notes</h5>
+                      <div class="row pt-8">
+                        <div class="col-md-8 p-0">
+                          <div class="form-group mb-0">
+                            <mat-form-field>
+                              <textarea matInput class="form-control br-0" rows="5"></textarea>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-md-12 pt-44">
+                          <p class="f-12 m-0 text-primitive">Optional</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                <img src="/assets/images/svg/retierment.svg">
+              </div>
+            </div>
+          </div>
+        </div>
+          <div class="col-md-4 p-0">
+            <h5 class="m-0 text-black pt-16">Rahul, here’s how people with similar profile as yours are planning for their house goal.<img src="/assets/images/svg/info.svg"></h5>
+            <h5 class="m-0 f-500 text-black pt-20">Retirement age</h5>
+            <div class="row pt-12">
+              <div class="col-md-10 p-0">
+                <div class="addgoal-common">
+                    <mat-progress-bar mode="determinate" value="50">
+                     
+                    </mat-progress-bar>
+                </div>
+              </div>
+              <div class="col-md-2 p-0">
+                <h5 class="m-0 text-black">51%</h5>
+              </div>
+            </div>
+            <div class="row pt-12">
+                <div class="col-md-10 p-0">
+                  <div class="addgoal-common">
+                      <mat-progress-bar mode="determinate" value="25">
+                       
+                      </mat-progress-bar>
+                  </div>
+                </div>
+                <div class="col-md-2 p-0">
+                  <h5 class="m-0 text-black">23%</h5>
+                </div>
+              </div>
+              <div class="row pt-12">
+                  <div class="col-md-10 p-0">
+                    <div class="addgoal-common">
+                        <mat-progress-bar mode="determinate" value="20">
+                         
+                        </mat-progress-bar>
+                    </div>
+                  </div>
+                  <div class="col-md-2 p-0">
+                    <h5 class="m-0 text-black">18%</h5>
+                  </div>
+                </div>
+                <div class="row pt-12">
+                    <div class="col-md-10 p-0">
+                      <div class="addgoal-common">
+                          <mat-progress-bar mode="determinate" value="10">
+                           
+                          </mat-progress-bar>
+                      </div>
+                    </div>
+                    <div class="col-md-2 p-0">
+                      <h5 class="m-0 text-black">9%</h5>
+                    </div>
+                  </div>
+                  <div class="row pt-40">
+                    <div class="col-md-12 p-0">
+                      <h5 class="f-500 m-0 text-black">Monthly spend (today’s value)</h5>
+                    </div>
+                  </div>
+                  <div class="row pt-12">
+                    <div class="col-md-10 p-0">
+                      <div class="addgoal-common">
+                          <mat-progress-bar mode="determinate" value="50">
+                           
+                          </mat-progress-bar>
+                      </div>
+                    </div>
+                    <div class="col-md-2 p-0">
+                      <h5 class="m-0 text-black">51%</h5>
+                    </div>
+                  </div>
+                  <div class="row pt-12">
+                      <div class="col-md-10 p-0">
+                        <div class="addgoal-common">
+                            <mat-progress-bar mode="determinate" value="25">
+                             
+                            </mat-progress-bar>
+                        </div>
+                      </div>
+                      <div class="col-md-2 p-0">
+                        <h5 class="m-0 text-black">23%</h5>
+                      </div>
+                    </div>
+                    <div class="row pt-12">
+                        <div class="col-md-10 p-0">
+                          <div class="addgoal-common">
+                              <mat-progress-bar mode="determinate" value="20">
+                               
+                              </mat-progress-bar>
+                          </div>
+                        </div>
+                        <div class="col-md-2 p-0">
+                          <h5 class="m-0 text-black">18%</h5>
+                        </div>
+                      </div>
+                      <div class="row pt-12">
+                          <div class="col-md-10 p-0">
+                            <div class="addgoal-common">
+                                <mat-progress-bar mode="determinate" value="10">
+                                 
+                                </mat-progress-bar>
+                            </div>
+                          </div>
+                          <div class="col-md-2 p-0">
+                            <h5 class="m-0 text-black">9%</h5>
+                          </div>
+                        </div>
+          </div>
+        </div>
+      
+     <!-- close Education goal -->
+
+     <!-- House goal -->
+     <!-- <div class="row bg-grey lter">
+      <div class="col-md-8 p-0">
+        <div class="wrapper-40 pt-72">
+          <div class="row pt-28">
+            <div class="col-md-8 p-0">
+              <div class="row">
+                <div class="col-md-8 p-0">
+                  <h5 class="m-0 text-black pl-0">Who are you planning this for?</h5>
+                  <div class="form-group mb-0 pt-8">
+                    <select class="form-control br-0" id="sel1">
+                      <option value="1">Aryan Jain</option>
+                      <option value="2">Rahul Jain</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-20">
+                <div class="col-md-12 p-0">
+                  <h5 class="m-0 text-black">When do you want to buy the house? (present age - 39)</h5>
+                  <div class="row pt-8">
+                      <div class="col-md-4 p-0">
+                          <div class="form-group mb-0">
+                            <mat-form-field>
+                              <input matInput #message class="form-control br-0" value="55 Years">
+                            </mat-form-field>
+                          </div>
+                        </div>
+                    <div class="col-md-8 pr-0">
+                      <div id="custom-slider">
+                        <mat-slider></mat-slider>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-20">
+                  <div class="col-md-12 p-0">
+                    <h5 class="m-0 text-black">When do you want to buy the house? (present age - 39)</h5>
+                    <div class="row pt-8">
+                        <div class="col-md-4 p-0">
+                            <div class="form-group mb-0">
+                              <mat-form-field>
+                                <input matInput #message class="form-control br-0 rupess">
+                              </mat-form-field>
+                            </div>
+                          </div>
+                      <div class="col-md-8 pr-0">
+                        <div id="custom-slider">
+                          <mat-slider></mat-slider>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+              <div class="row pt-20">
+                  <div class="col-md-12 p-0">
+                    <h5 class="m-0 text-black">Give this goal a name</h5>
+                    <div class="row pt-8">
+                      <div class="col-md-8 p-0">
+                        <div class="form-group mb-0">
+                          <mat-form-field>
+                            <input matInput #message class="form-control br-0">
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-md-12 pt-4">
+                        <p class="f-12 m-0 text-primitive">Optional</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row pt-20">
+                  <div class="col-md-12 p-0">
+                    <h5 class="m-0 text-black">Notes</h5>
+                    <div class="row pt-8">
+                      <div class="col-md-8 p-0">
+                        <div class="form-group mb-0">
+                          <mat-form-field>
+                            <textarea matInput class="form-control br-0" rows="5"></textarea>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-md-12 pt-44">
+                        <p class="f-12 m-0 text-primitive">Optional</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+              <img src="/assets/images/svg/retierment.svg">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4"></div>
+      </div>
+    </div> -->
+     <!-- close House goal -->
     <div class="bottom-fixed wrapper-12 w-100">
-      <div class="row">
+        <div class="row">
           <div class="col-md-4">
-              <h4 class="mb-0 pt-8 text-white c-p f-16" (click)="close('close')">Cancel</h4>
+            <h4 class="mb-0 pt-8 text-white c-p f-16" (click)="close('close')">Cancel</h4>
           </div>
           <div class="col-md-8 right text-right">
-              <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+            <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
           </div>
+        </div>
       </div>
-  </div>
-    </div>
