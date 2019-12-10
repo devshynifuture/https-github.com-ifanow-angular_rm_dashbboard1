@@ -1,5 +1,5 @@
-import {Component, Input, Output, forwardRef, EventEmitter} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import { Component, Input, Output, forwardRef, EventEmitter } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-froala',
@@ -56,6 +56,11 @@ export class FroalaComponent implements ControlValueAccessor {
 
   save(data) {
     console.log(data)
+    this.modelChange.emit(data);
+  }
+
+  saveData(data) {
+    console.log(data);
     this.modelChange.emit(data);
   }
 }

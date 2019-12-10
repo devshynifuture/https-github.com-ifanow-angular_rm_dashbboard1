@@ -16,6 +16,7 @@ import { EmailArchiveComponent } from './email-component/email-archive/email-arc
 import { EmailTrashComponent } from './email-component/email-trash/email-trash.component';
 import { EmailAddTaskComponent } from './email-component/email-list/email-add-task/email-add-task.component';
 import { ComposeEmailComponent } from './email-component/compose-email/compose-email.component';
+import { EmailEntryModule } from './email.entry.module';
 
 
 @NgModule({
@@ -26,20 +27,17 @@ import { ComposeEmailComponent } from './email-component/compose-email/compose-e
     EmailDraftComponent,
     EmailArchiveComponent,
     EmailTrashComponent,
-    EmailAddTaskComponent,
-    ComposeEmailComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
+    CommonComponentModule,
     EmailListModule,
     EmailRoutingModule,
-    CommonComponentModule,
-    FormsModule
+    FormsModule,
+    EmailEntryModule
   ],
   exports: [
-    EmailAddTaskComponent,
-    ComposeEmailComponent
   ]
 })
 export class EmailModule { }

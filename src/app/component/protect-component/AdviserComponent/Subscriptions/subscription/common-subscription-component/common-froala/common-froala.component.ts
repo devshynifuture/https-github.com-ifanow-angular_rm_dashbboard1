@@ -236,7 +236,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
     this.OpenEmail(data, 'emailQuotationFroala');
   }
   openSendEmail() {
-    if (this.storeData.isDocument==true) {
+    if (this.storeData.isDocument == true) {
       this.templateType = 4;
     } else {
       this.templateType = 2;

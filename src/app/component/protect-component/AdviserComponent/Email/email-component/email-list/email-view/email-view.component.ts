@@ -38,6 +38,14 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     this._bottomSheet.open(EmailReplyComponent);
   }
 
+  openEmailAddTask(data) {
+    this.emailService.openEmailAddTask(data);
+  }
+
+  openComposeEmail(data) {
+    this.emailService.openComposeEmail(data);
+  }
+
   goBack() {
     this.location.back();
   }
