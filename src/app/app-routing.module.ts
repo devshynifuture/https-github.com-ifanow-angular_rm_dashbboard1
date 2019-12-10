@@ -1,9 +1,9 @@
-import {OverviewComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/overview/overview.component';
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {LeftsidebarComponent} from './component/left-sidebar/leftsidebar/leftsidebar.component';
-import {LoginComponent} from './component/no-protected/login/login.component';
-import {AuthGuard} from './guards/auth.guard';
+import { OverviewComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/overview/overview.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LeftsidebarComponent } from './component/left-sidebar/leftsidebar/leftsidebar.component';
+import { LoginComponent } from './component/no-protected/login/login.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -38,6 +38,11 @@ const routes: Routes = [
         component: OverviewComponent
       }
     ]
+  },
+  {
+    path: 'gmail-redirect',
+    loadChildren: () => import('./component/gmail-redirect/gmail-redirect.module')
+      .then(m => m.GmailRedirectModule)
   },
   {
     path: '',
