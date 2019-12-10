@@ -116,6 +116,7 @@ async exportExcel(headerData, header, data, footer,value) {
     if (data.poMisList.length != 0) {
       this.datasource = new MatTableDataSource(data.poMisList)
       this.datasource.sort = this.sort;
+      UtilService.checkStatusId(this.datasource.filteredData)
       this.sumOfMaturityValue = data.sumOfMaturityValue;
       this.sumOfCurrentValue = data.sumOfCurrentValue;
       this.sumOfMonthlyPayout = data.sumOfMonthlyPayout;

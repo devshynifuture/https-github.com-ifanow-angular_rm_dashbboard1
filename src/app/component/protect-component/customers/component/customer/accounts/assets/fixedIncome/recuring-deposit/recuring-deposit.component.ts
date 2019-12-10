@@ -14,16 +14,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 @Component({
   selector: 'app-recuring-deposit',
   templateUrl: './recuring-deposit.component.html',
-  styleUrls: ['./recuring-deposit.component.scss'], providers: [
-    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
-    // application's root module. We provide it at the component level here, due to limitations of
-    // our example generation script.
-    // {
-    //   provide: DateAdapter,
-    //   useClass: MomentDateAdapter,
-    //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    // },
-    // { provide: MAT_DATE_LOCALE, useValue: 'en' },
+  styleUrls: ['./recuring-deposit.component.scss'],
+  providers: [
     [DatePipe],
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],

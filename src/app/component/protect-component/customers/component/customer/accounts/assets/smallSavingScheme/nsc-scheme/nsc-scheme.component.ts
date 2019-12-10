@@ -115,6 +115,7 @@ export class NscSchemeComponent implements OnInit {
     if (data.NationalSavingCertificate.length != 0) {
       this.datasource = new MatTableDataSource(data.NationalSavingCertificate);
       this.datasource.sort = this.sort;
+      UtilService.checkStatusId(this.datasource.filteredData)
       this.sumOfMaturityValue = data.SumOfMaturityValue;
       this.sumOfCurrentValue = data.SumOfCurrentValue;
       this.nscData = data

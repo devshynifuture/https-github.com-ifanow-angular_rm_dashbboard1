@@ -152,6 +152,7 @@ async exportExcel(headerData, header, data, footer,value) {
     if (data.scssList.length != 0) {
       this.datasource = new MatTableDataSource(data.scssList);
       this.datasource.sort = this.sort;
+      UtilService.checkStatusId(this.datasource.filteredData)
       this.sumOfAmountInvested = data.sumOfAmountInvested;
       this.sumOfTotalAmountReceived = data.sumOfTotalAmountReceived;
       this.sumOfQuarterlyPayout = data.sumOfQuarterlyPayout;

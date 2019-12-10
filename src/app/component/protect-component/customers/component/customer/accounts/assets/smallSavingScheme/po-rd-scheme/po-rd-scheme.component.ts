@@ -115,6 +115,7 @@ export class PoRdSchemeComponent implements OnInit {
     if (data) {
       this.datasource = new MatTableDataSource(data.postOfficeRDList)
       this.datasource.sort = this.sort;
+      UtilService.checkStatusId(this.datasource.filteredData)
       this.sumOfCurrentValue = data.sumOfCurrentValue;
       this.sumOfMonthlyDeposit = data.sumOfMonthlyDeposit;
       this.sumOfMaturityValue = data.sumOfMaturityValue;
