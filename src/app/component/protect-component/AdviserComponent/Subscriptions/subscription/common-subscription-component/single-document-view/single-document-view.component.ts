@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {ModifyFeeDialogComponent} from '../modify-fee-dialog/modify-fee-dialog.component';
 import {MatDialog} from '@angular/material';
 import {UtilService} from "../../../../../../../services/util.service";
@@ -18,6 +18,7 @@ export class SingleDocumentViewComponent implements OnInit {
   }
 
   @Input() singleDocument;
+  @Output() valueChange = new EventEmitter();
 
   ngOnInit() {
   }
@@ -31,7 +32,7 @@ export class SingleDocumentViewComponent implements OnInit {
       state: 'open'
     };
     console.log('editDocument: ', fragmentData);
-    this.eventService.changeUpperSliderState(fragmentData);
+    // this.eventService.changeUpperSliderState(fragmentData);
     // this.overviewDesign = 'false';
     /*  const dialogRef = this.dialog.open(ModifyFeeDialogComponent, {
         width: '1400px',
@@ -43,6 +44,15 @@ export class SingleDocumentViewComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
 
       });*/
+      const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+        upperSliderData => {
+          if (UtilService.isDialogClose(upperSliderData)) {
+            // this.getDocumentsSetting();
+            this.valueChange.emit('close');
+            subscription.unsubscribe();
+          }
+        }
+      );
 
   }
   deleteModal(value, data) {
