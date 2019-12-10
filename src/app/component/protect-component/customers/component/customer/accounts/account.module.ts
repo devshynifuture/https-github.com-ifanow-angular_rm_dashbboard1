@@ -50,7 +50,8 @@ import {FormatNumberDirective} from 'src/app/format-number.directive';
 import {DocumentNewFolderComponent} from '../../common-component/document-new-folder/document-new-folder.component';
 import {AccountRoutingModule} from "./account-routing.module";
 import {AccountCommonModule} from "./account.common.module";
-import {PDFExportModule} from "@progress/kendo-angular-pdf-export"
+// import {PDFExportModule} from "@progress/kendo-angular-pdf-export";
+import { AssetStocksComponent } from './assets/asset-stocks/asset-stocks.component';
 @NgModule({
   declarations: [
     SchemeLevelTransactionComponent,
@@ -111,7 +112,7 @@ import {PDFExportModule} from "@progress/kendo-angular-pdf-export"
     SkeletonLoadingDirective,
     FormatNumberDirective,
     DocumentNewFolderComponent,
-    
+    AssetStocksComponent,
   ],
   imports: [
     AccountRoutingModule,
@@ -123,7 +124,7 @@ import {PDFExportModule} from "@progress/kendo-angular-pdf-export"
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
-    PDFExportModule,
+    // PDFExportModule,
     MaterialModule
   ],
   exports: [

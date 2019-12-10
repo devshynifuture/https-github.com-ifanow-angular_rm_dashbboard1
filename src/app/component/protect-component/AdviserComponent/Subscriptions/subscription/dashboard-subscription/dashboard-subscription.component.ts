@@ -1,16 +1,21 @@
-import {Component, OnInit, Output} from '@angular/core';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatDialog} from '@angular/material';
-import {DeleteSubscriptionComponent} from '../common-subscription-component/delete-subscription/delete-subscription.component';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {SubscriptionService} from '../../subscription.service';
-import {EnumServiceService} from '../../../../../../services/enum-service.service';
-import {UtilService} from '../../../../../../services/util.service';
-import {AuthService} from '../../../../../../auth-service/authService';
-import {Chart} from 'angular-highcharts';
-import {EnumDataService} from '../../../../../../services/enum-data.service';
+import { Component, OnInit, Output } from '@angular/core';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatDialog } from '@angular/material';
+import { DeleteSubscriptionComponent } from '../common-subscription-component/delete-subscription/delete-subscription.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { SubscriptionService } from '../../subscription.service';
+import { EnumServiceService } from '../../../../../../services/enum-service.service';
+import { UtilService } from '../../../../../../services/util.service';
+import { AuthService } from '../../../../../../auth-service/authService';
+import { Chart } from 'angular-highcharts';
 import { EventEmitter } from '@angular/core';
+import { AddVariableFeeComponent } from '../common-subscription-component/add-variable-fee/add-variable-fee.component';
+import { VariableFeeComponent } from '../common-subscription-component/variable-fee/variable-fee.component';
+import { FixedFeeComponent } from '../common-subscription-component/fixed-fee/fixed-fee.component';
+import { BillerSettingsComponent } from '../common-subscription-component/biller-settings/biller-settings.component';
+import { ChangePayeeComponent } from '../common-subscription-component/change-payee/change-payee.component';
+import { InvoiceHistoryComponent } from '../common-subscription-component/invoice-history/invoice-history.component';
 
 export interface PeriodicElement {
   name: string;
@@ -20,9 +25,9 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {name: 'Abhishek Mane', service: 'Financial Planning', amt: 'Rs.1,00,000/Q', billing: '25/08/2019'},
-  {name: 'Ronak Hasmuk Hindocha', service: 'Investment management', amt: 'View Details', billing: '-'},
-  {name: 'Aman Jain', service: 'AUM Linked fee', amt: 'View Details', billing: '-'},
+  { name: 'Abhishek Mane', service: 'Financial Planning', amt: 'Rs.1,00,000/Q', billing: '25/08/2019' },
+  { name: 'Ronak Hasmuk Hindocha', service: 'Investment management', amt: 'View Details', billing: '-' },
+  { name: 'Aman Jain', service: 'AUM Linked fee', amt: 'View Details', billing: '-' },
 
 ];
 
@@ -36,10 +41,10 @@ export class DashboardSubscriptionComponent implements OnInit {
   invoiceHisData: any;
   showLetsBeginData: any;
   totalSaleReceived: any;
-  @Output() subIndex=new EventEmitter()
+  @Output() subIndex = new EventEmitter()
   constructor(private enumService: EnumServiceService,
-              public subInjectService: SubscriptionInject, public eventService: EventService,
-              public dialog: MatDialog, private subService: SubscriptionService) {
+    public subInjectService: SubscriptionInject, public eventService: EventService,
+    public dialog: MatDialog, private subService: SubscriptionService) {
 
   }
 
@@ -51,7 +56,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   subSummaryData;
   dataSource;
   showSubStep = false;
-  displayedColumns: string[] = ['name', 'service', 'amt', 'billing','icons'];
+  displayedColumns: string[] = ['name', 'service', 'amt', 'billing', 'icons'];
   chart: Chart;
   subscriptionSummaryStatusFilter = '1';
   showLetsBegin = false;
@@ -67,8 +72,7 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.getSummaryDataDashboard(null);
     this.getTotalRecivedByDash();
   }
-  getIndex(index)
-  {
+  getIndex(index) {
     console.log(index)
     this.subIndex.emit(index)
     // this.selected=index
@@ -113,15 +117,16 @@ export class DashboardSubscriptionComponent implements OnInit {
     });
   }
 
-  Open(state, data) {
+  Open(data) {
     let feeMode;
     data.isCreateSub = true;
-    (data.subscriptionPricing.feeTypeId == 1) ? feeMode = 'fixedModifyFees' : feeMode = 'variableModifyFees';
+    (data.subscriptionPricing.feeTypeId == 1) ? feeMode = FixedFeeComponent : feeMode = VariableFeeComponent;
     const fragmentData = {
-      flag: feeMode,
+      // flag: feeMode,
       data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: feeMode
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -133,17 +138,19 @@ export class DashboardSubscriptionComponent implements OnInit {
       }
     );
   }
-
+  // || value == 'changePayee' || value == 'SUBSCRIPTIONS'
   openPlanSlider(value, state, data) {
-    (value == 'billerSettings' || value == 'changePayee' || value == 'SUBSCRIPTIONS') ?
-      value : (data.subscriptionPricing.feeTypeId == 1) ?
-      value = 'createSubFixed' : value = 'createSubVariable';
+    let componentName;
+    (value == 'billerSettings') ? componentName = BillerSettingsComponent : (value == 'changePayee') ? componentName = ChangePayeeComponent :
+      (value == "SUBSCRIPTIONS") ? componentName = InvoiceHistoryComponent : (data.subscriptionPricing.feeTypeId == 1) ?
+        value = 'createSubFixed' : value = 'createSubVariable';
     data.isCreateSub = false;
     const fragmentData = {
       flag: value,
       data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: componentName
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -196,7 +203,7 @@ export class DashboardSubscriptionComponent implements OnInit {
     }
   }
 
-// ******* Dashboard Subscription Summary *******
+  // ******* Dashboard Subscription Summary *******
   getSummaryDataDashboard(eventValue) {
     /* const obj = {
        // 'id':2735, //pass here advisor id for Invoice advisor
@@ -248,7 +255,7 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.dataSource = data;
   }
 
-// ******* Dashboard Sent And Signed Count *******
+  // ******* Dashboard Sent And Signed Count *******
 
   docSentSignedCountData() {
     const obj = {

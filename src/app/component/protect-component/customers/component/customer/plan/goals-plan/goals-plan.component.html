@@ -6,7 +6,7 @@
             <h3 class="m-0 text-black pt-8">Goals</h3>
           </div>
           <div class="col-md-5 p-0">
-            <button mat-stroked-button class="btn-primary br-0 addon">ADD GOAL</button>
+            <button mat-stroked-button class="btn-primary br-0 addon" (click)="openAddgoals(null)">ADD GOAL</button>
           </div>
           <div class="col-md-1 p-0">
             <i class="material-icons pt-8 c-p" [matMenuTriggerFor]="menu">
@@ -418,12 +418,12 @@
             <div class="row pt-20">
               <div class="col-md-6 pl-0">
                 <button mat-stroked-button class="in-btn pl-8" (click)="openallocations(null)"><img src="/assets/images/svg/btn-links.svg" class="pr-8">Allocations</button>
-                <button mat-stroked-button class="in-btn mt-20 pl-0"><img src="/assets/images/svg/filter-schemes.svg" class="pr-16 ">Key info</button>
+                <button mat-stroked-button class="in-btn mt-20 pl-0" (click)="openKeyinfo(null)"><img src="/assets/images/svg/filter-schemes.svg" class="pr-16 ">Key info</button>
                 <button mat-stroked-button class="in-btn mt-20 pl-0"><img src="/assets/images/svg/btn-links.svg" class="pr-8 ">Action plan</button>
               </div>
               <div class="col-md-6">
                 <button mat-stroked-button class="in-btn pl-8 " (click)="openMfAllocation(null)"><img src="/assets/images/svg/btn-links.svg" class="pr-8">MF allocations</button>
-                <button mat-stroked-button class="in-btn pl-0 mt-20"><img src="/assets/images/svg/cal-sm.svg" class="pr-12">Calculators</button>
+                <button mat-stroked-button class="in-btn pl-0 mt-20" (click)="openCalculators(null)"><img src="/assets/images/svg/cal-sm.svg" class="pr-12">Calculators</button>
                 <button mat-stroked-button class="in-btn pl-0 mt-20" (click)="openPreferences(null)"><img src="/assets/images/svg/3lines.svg" class="pr-8">Preferences</button>
               </div>
             </div>

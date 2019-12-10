@@ -41,7 +41,7 @@ export class AddRealEstateComponent implements OnInit {
   nomineesListFM: any;
   dataFM: any;
   familyList: any;
-  nexNomineePer: any;
+  nexNomineePer:any;
   showError = false;
   isOwnerPercent: boolean;
   showErrorCoOwner = false;
@@ -96,10 +96,13 @@ export class AddRealEstateComponent implements OnInit {
     console.log('familyList', this.familyList)
   }
   onNomineeChange(value) {
-    this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
-      return o.ownershipPer;
+    // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
+    //   return o.ownershipPer;
+    // });
+    this.nexNomineePer=0
+    this.getNominee.value.forEach(element => {
+      this.nexNomineePer+=element.ownershipPer
     });
-
     if (this.nexNomineePer > 100) {
       this.showError = true
       console.log('show error Percent cannot be more than 100%')
@@ -151,8 +154,12 @@ export class AddRealEstateComponent implements OnInit {
     return this.addrealEstateForm.get('getNomineeName') as FormArray;
   }
   addNominee() {
-    this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
-      return o.ownershipPer;
+    // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
+    //   return o.ownershipPer;
+    // });
+    this.nexNomineePer=0;
+    this.getNominee.value.forEach(element => {
+      this.nexNomineePer+=element.ownershipPer
     });
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -170,8 +177,12 @@ export class AddRealEstateComponent implements OnInit {
     if (this.getNominee.value.length > 1) {
       this.getNominee.removeAt(item);
     }
-    this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
-      return o.ownershipPer;
+    // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
+    //   return o.ownershipPer;
+    // });
+    this.nexNomineePer=0;
+    this.getNominee.value.forEach(element => {
+      this.nexNomineePer+=element.ownershipPer
     });
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -207,8 +218,13 @@ export class AddRealEstateComponent implements OnInit {
   }
   onChange(data) {
     if (data == 'owner') {
-      this.nexNomineePer = _.sumBy(this.getCoOwner.value, function (o) {
-        return o.ownershipPerc;
+      this.nexNomineePer=0;
+      // this.nexNomineePer = _.sumBy(this.getCoOwner.value, function (o) {
+      //   return o.ownershipPerc;
+      // });
+      this.nexNomineePer=0;
+      this.getCoOwner.value.forEach(element => {
+        this.nexNomineePer+=element.ownershipPerc
       });
       this.nexNomineePer = this.addrealEstateForm.controls.ownerPercent.value + this.nexNomineePer
       if (this.nexNomineePer > 100) {
@@ -219,8 +235,11 @@ export class AddRealEstateComponent implements OnInit {
         this.showErrorCoOwner = false;
       }
     } else {
-      this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
-        return o.ownershipPer;
+      // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
+      //   return o.ownershipPer;
+      // });
+      this.getNominee.value.forEach(element => {
+        this.nexNomineePer+=element.ownershipPer
       });
       if (this.nexNomineePer > 100) {
         this.showError = true
@@ -265,7 +284,7 @@ export class AddRealEstateComponent implements OnInit {
       data = {};
     } else {
       if (data.realEstateOwners.length != 0) {
-        var ownerName = _.remove(data.realEstateOwners, function (n) {
+        var ownerName = _.reject(data.realEstateOwners, function (n) {
           return n.owner == true;
         });
         if (ownerName.length != 0) {
@@ -387,7 +406,7 @@ export class AddRealEstateComponent implements OnInit {
     if (data) {
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close' })
-      this.eventService.openSnackBar('Liabilities added successfully', 'OK');
+      this.eventService.openSnackBar('Real Estate added successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
 
@@ -398,7 +417,7 @@ export class AddRealEstateComponent implements OnInit {
     if (data) {
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close' })
-      this.eventService.openSnackBar('Liabilities edited successfully', 'OK');
+      this.eventService.openSnackBar('Real edited successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
     }

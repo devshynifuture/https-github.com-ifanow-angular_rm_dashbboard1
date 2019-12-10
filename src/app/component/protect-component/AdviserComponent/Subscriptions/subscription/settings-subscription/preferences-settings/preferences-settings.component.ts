@@ -1,13 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionService} from '../../../subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {FormBuilder} from '@angular/forms';
-import {PreferenceEmailInvoiceComponent} from '../../common-subscription-component/preference-email-invoice/preference-email-invoice.component';
-import {AuthService} from '../../../../../../../auth-service/authService';
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionService } from '../../../subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { FormBuilder } from '@angular/forms';
+import { PreferenceEmailInvoiceComponent } from '../../common-subscription-component/preference-email-invoice/preference-email-invoice.component';
+import { AuthService } from '../../../../../../../auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
+import { BillerProfileAdvisorComponent } from '../../common-subscription-component/biller-profile-advisor/biller-profile-advisor.component';
 
 @Component({
   selector: 'app-preferences-settings',
@@ -19,10 +20,11 @@ export class PreferencesSettingsComponent implements OnInit {
   advisorId;
   viewMode = 'tab1';
   dataTOget: object;
+  saveUpdateFlag: any;
 
   constructor(public subService: SubscriptionService, private fb: FormBuilder,
-              public dialog: MatDialog, private subscription: SubscriptionService,
-              public subInjectService: SubscriptionInject, private eventService: EventService) {
+    public dialog: MatDialog, private subscription: SubscriptionService,
+    public subInjectService: SubscriptionInject, private eventService: EventService) {
   }
   prefixData;
   showLoader = false;
@@ -57,22 +59,22 @@ export class PreferencesSettingsComponent implements OnInit {
       data => this.getProfileBillerDataResponse(data)
     );
   }
-  getBillerPrimary(data){
+  getBillerPrimary(data) {
     let obj = {
-      advisorId:this.advisorId,
-      id : data.id
+      advisorId: this.advisorId,
+      id: data.id
     }
     this.subscription.setBillerPrimary(obj).subscribe(
       data => this.setBillerPrimaryRes(data)
     );
   }
-  setBillerPrimaryRes(data){
+  setBillerPrimaryRes(data) {
     console.log(data)
     this.billerProfileData.forEach(element => {
-      if(element.id == data){
+      if (element.id == data) {
         element.isPrimary = true
         this.eventService.openSnackBar('primary set successfully', 'OK');
-      }else{
+      } else {
         element.isPrimary = false
       }
     });
@@ -88,22 +90,25 @@ export class PreferencesSettingsComponent implements OnInit {
     );
   }
 
-  savePrefix() {
+  savePrefix(data) {
     const obj = {
       // advisorId: 2735,
       advisorId: this.advisorId,
       id: 0,
-      nextNumber: this.prefixData.nextNo,
-      prefix: this.prefixData.prefix,
-      type: 1
+      nextNumber: parseInt(this.prefixData.controls.nextNo.value),
+      prefix: this.prefixData.controls.prefix.value,
+      type: data
     };
+    if (this.saveUpdateFlag.prefix != undefined && this.saveUpdateFlag.prefix != undefined) {
+      this.subscription.updatePreferenceInvoiceQuotationsSubscription(obj).subscribe(
+        data => this.savePrefixResponse(data)
+      );
+    } else {
+      this.subscription.savePreferenceInvoiceQuotationsSubscription(obj).subscribe(
+        data => this.savePrefixResponse(data)
+      );
+    }
 
-    this.subscription.updatePreferenceInvoiceQuotationsSubscription(obj).subscribe(
-      data => this.savePrefixResponse(data)
-    );
-    this.subscription.savePreferenceInvoiceQuotationsSubscription(obj).subscribe(
-      data => this.savePrefixResponse(data)
-    );
   }
 
   savePrefixResponse(data) {
@@ -117,6 +122,7 @@ export class PreferencesSettingsComponent implements OnInit {
 
   getInvoiceQuotationResponse(data, type) {
     this.showLoader = false;
+    this.saveUpdateFlag = data;
     this.prefixData = this.fb.group({
       prefix: [data.prefix],
       nextNo: [data.nextNumber]
@@ -124,25 +130,26 @@ export class PreferencesSettingsComponent implements OnInit {
 
   }
 
-  Open(singleProfile, value, state) {
+  Open(singleProfile, value) {
     this.selected = 0;
-   
+
     const fragmentData = {
       flag: value,
-      data:singleProfile,
+      data: singleProfile,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: BillerProfileAdvisorComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         this.getProfileBillerData()
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', );
+          console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }
       }
-      
+
     );
     // this.billerProfileData = this.dataTOget.data
   }

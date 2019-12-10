@@ -1,5 +1,5 @@
 import { AddKvpComponent } from './../common-component/add-kvp/add-kvp.component';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -8,7 +8,9 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { DetailedKvpComponent } from './detailed-kvp/detailed-kvp.component';
-
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import * as Excel from 'exceljs/dist/exceljs';
+import { saveAs } from 'file-saver'
 @Component({
   selector: 'app-kvp-scheme',
   templateUrl: './kvp-scheme.component.html',
@@ -24,7 +26,9 @@ export class KvpSchemeComponent implements OnInit {
   sumOfAmountInvested: number;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
+  @ViewChildren(FormatNumberDirective) formatNumber;
+  excelData: any[];
+ footer = [];
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns18 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
   datasource;
@@ -34,6 +38,65 @@ export class KvpSchemeComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getKvpSchemedata()
   }
+async ExportTOExcel(value) {
+  this.excelData = []
+  var data = []
+  var headerData = [{ width: 20, key: 'Owner' },
+  { width: 20, key: 'Current Value' },
+  { width: 10, key: 'Rate' },
+  { width: 25, key: 'Amount Invested' },
+  { width: 20, key: 'Maturity Value' },
+  { width: 15, key: 'Maturity Date' },
+  { width: 15, key: 'Description' },
+  { width: 10, key: 'Status' },]
+  var header = ['Owner', 'Current Value', 'Rate', 'Amount Invested',
+    'Maturity Value', 'Maturity Date', 'Description', 'Status'];
+  this.datasource.filteredData.forEach(element => {
+    data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue), (element.rate),
+    this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested),(element.maturityValue), new Date(element.maturityDate),element.description, element.status]
+    this.excelData.push(Object.assign(data))
+  });
+  var footerData = ['Total',
+    this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue), '',
+    this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountInvested), '', '', '', '']
+  this.footer.push(Object.assign(footerData))
+  this.exportExcel(headerData, header, this.excelData, this.footer,value)
+}
+async exportExcel(headerData, header, data, footer,value) {
+  const wb = new Excel.Workbook()
+  const ws = wb.addWorksheet()
+  const meta1 = ws.getCell('A1')
+  const meta2 = ws.getCell('A2')
+  const meta3 = ws.getCell('A3')
+  meta1.font = { bold: true }
+  meta2.font = { bold: true }
+  meta3.font = { bold: true }
+  ws.getCell('A1').value = 'Type of report - ' + value;
+  ws.getCell('A2').value = 'Client name - Rahul Jain';
+  ws.getCell('A3').value = 'Report as on - ' + new Date();
+  const head = ws.getRow(5)
+  head.font = { bold: true }
+  head.fill = {
+    type: 'pattern',
+    pattern: 'darkVertical',
+    fgColor: {
+      argb: '#f5f7f7'
+    }
+  };
+  ws.getRow(5).values = header;
+  ws.columns.alignment = { horizontal: 'left' };
+  ws.columns = headerData
+  data.forEach(element => {
+    ws.addRow(element)
+  });
+  footer.forEach(element => {
+    const last = ws.addRow(element)
+    last.font = { bold: true }
+  });
+  const buf = await wb.xlsx.writeBuffer()
+  saveAs(new Blob([buf]), 'Rahul Jain-' + value + '-' + new Date() + '.xlsx')
+}
+
   getKvpSchemedata() {
     const obj = {
       advisorId: this.advisorId,

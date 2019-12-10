@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from 'saturn-datepicker';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AddQuotationComponent } from '../common-subscription-component/add-quotation/add-quotation.component';
+import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
 export interface PeriodicElement {
   name: string;
   docname: string;
@@ -183,12 +184,13 @@ export class QuotationsSubscriptionComponent implements OnInit {
     this.filterStatus.splice(item, 1);
   }
 
-  Open(value, state, data) {
+  Open(value, data) {
     const fragmentData = {
       flag: value,
-      data,
+      data: data,
       id: 1,
-      state: state
+      state: 'open',
+      componentName: CommonFroalaComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

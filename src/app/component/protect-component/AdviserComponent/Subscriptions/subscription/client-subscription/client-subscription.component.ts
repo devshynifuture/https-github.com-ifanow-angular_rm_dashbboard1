@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {SubscriptionService} from '../../subscription.service';
-import {UtilService} from "../../../../../../services/util.service";
-import {AuthService} from "../../../../../../auth-service/authService";
+import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { SubscriptionService } from '../../subscription.service';
+import { UtilService } from "../../../../../../services/util.service";
+import { AuthService } from "../../../../../../auth-service/authService";
+import { HelpComponent } from '../common-subscription-component/help/help.component';
 
 export interface PeriodicElement {
   name: string;
@@ -21,7 +22,7 @@ export interface PeriodicElement {
 export class ClientSubscriptionComponent implements OnInit {
 
   constructor(public dialog: MatDialog, public eventService: EventService, public subInjectService: SubscriptionInject,
-              private subService: SubscriptionService) {
+    private subService: SubscriptionService) {
   }
 
   @Input() upperData: any;
@@ -53,7 +54,8 @@ export class ClientSubscriptionComponent implements OnInit {
     const fragmentData = {
       flag: value,
       id: 1,
-      state: state
+      state: state,
+      componentName: HelpComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

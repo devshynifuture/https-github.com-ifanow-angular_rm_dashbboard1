@@ -1,0 +1,126 @@
+<div class="popup-header-fix-70">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20">ADD SCHEME LEVEL HOLDINGS</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="Close()"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mb-48">
+
+    <div class="row pt-100 pl-28">
+        <div class="col-md-3 p-0">
+            <h5 class="m-0 pb-8">Owner</h5>
+            <!-- <app-owner-component [data]='ownerData' (valueChange)='display($event)' (valueChange1)='lisNominee($event)'>
+            </app-owner-component> -->
+        </div>
+
+        <div class="col-md-3">
+            <h5 class="m-0 pb-8">Portfolio name</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #pran type="number" maxlength="20" class="form-control br-0 rupess">
+                    <mat-error>
+                        Pension amount is required
+                    </mat-error>
+                    <mat-hint align="start" class="f-12">If you have multiple portfolios,you can tag this scrip to one
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pl-28">
+        <div class="col-md-12 pl-0 mt-65">
+            <h4 class="mb-20 text-black">HOLDINGS</h4>
+        </div>
+    </div>
+    <div class="row pl-28">
+        <div class="col-md-4 pl-0">
+            <label class="f-16"> Scrip name</label>
+        </div>
+
+        <div class="col-md-2 pl-0">
+            <label class="pb-8 f-16"> Holdings </label>
+        </div>
+
+        <div class="col-md-3">
+            <label class="pb-8 f-16"> Holdings as on </label>
+        </div>
+        <div class="col-md-3 pl-0">
+            <label class="pb-8 f-16"> Amount invested</label>
+        </div>
+    </div>
+
+    <div [formGroup]="holdingListForm">
+        <div class="row pb-36 pl-28" *ngFor="let singleHolding of HoldingArray.controls; let i = index;"
+            [formGroup]="singleHolding">
+            <div class="col-md-4 pl-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput autocomplete="off" aria-label="State" formControlName="scripName"
+                            [matAutocomplete]="auto" class="form-control br-0 pl-8">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <!-- <mat-option *ngFor="let s of schemeList" [value]="s.id">{{ s.name }}
+                            </mat-option> -->
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-2 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput autocomplete="off" #totalUnits type="number" formControlName="holdings"
+                            maxlength="20" class="form-control br-0 rupess">
+                        <mat-hint align="start" class="m-0 f-11 text-custom pt-4">As in statement</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput autocomplete="off" formControlName="holdingAsOn" [matDatepicker]="picker"
+                            class="form-control br-0">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-2 pl-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput autocomplete="off" #totalNetContribution formControlName="investedAmt"
+                            type="number" maxlength="20" class="form-control br-0 rupess">
+                    </mat-form-field>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-1 d-flex pt-10 pl-0">
+                <i class="material-icons text-custom c-p" *ngIf="i==HoldingArray.length-1" (click)="addHoldings()">
+                    add
+                </i>
+                <i class="material-icons text-custom c-p pl-10" (click)="removeHoldings(i)">
+                    remove
+                </i>
+            </div>
+
+        </div>
+    </div>
+    <hr class="ml-16 mr-16">
+</div>
+<div class="bottom-fixed wrapper-12 pt-16 w-70">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveSchemeHolding()">Save</button>
+        </div>
+    </div>
+</div>

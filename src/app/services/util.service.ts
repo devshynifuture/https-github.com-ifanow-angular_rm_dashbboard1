@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from "@angular/common";
-import * as FileSaver from 'file-saver';
-import * as XLSX from 'xlsx'
-
-
-const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-const EXCEL_EXTENSION = '.xlsx';
+import {Row, Workbook, Worksheet} from 'exceljs';
+import { saveAs } from 'file-saver';
 
 
 @Injectable({
@@ -102,15 +98,45 @@ export class UtilService {
   static convertDateObjectToDateString(datePipe: DatePipe, date: Date) {
     return datePipe.transform(date, 'yyyy-MM-dd');
   }
-  static exportAsExcelFile(value, excelFileName: string): void {
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(value.nativeElement);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, excelFileName);
-    XLSX.writeFile(wb, excelFileName + '.xlsx');
-    // this.saveAsExcelFile(excelBuffer, excelFileName);
+  static async exportAs(headerData, excelData: any, footer: any[]) {
+    //var wb = new Workbook()
+    // const ws = wb.addWorksheet()
+    // //---------MetaData----------//
+
+    // //ws.mergeCells('A1', 'M1');
+    // const meta1 = ws.getCell('A1')
+    // const meta2 = ws.getCell('A2')
+    // const meta3 = ws.getCell('A3')
+    // meta1.font = { bold: true }
+    // meta2.font = { bold: true }
+    // meta3.font = { bold: true }
+    // ws.getCell('A1').value = 'Type of report - ' + 'value';
+    // ws.getCell('A2').value = 'Client name - Rahul Jain';
+    // ws.getCell('A3').value = 'Report as on - ' + new Date();
+    // //ws.getCell('A1').alignment = { horizontal: 'center' };
+    // const head = ws.getRow(5)
+    // head.font = { bold: true }
+    // head.fill = {
+    //   type: 'pattern',
+    //   pattern: 'darkVertical',
+    //   fgColor: {
+    //     argb: '#f5f7f7'
+    //   }
+    // };
+    // //---------header----------//
+    // ws.getRow(5).values = headerData;
+    // //----------data---------//
+    // excelData.forEach(element => {
+    //   ws.addRow(element)
+    // });
+    // //-------footerData---------//
+    // footer.forEach(element => {
+    //   const last = ws.addRow(element)
+    //   last.font = { bold: true }
+    // });
+    // const buf = await wb.xlsx.writeBuffer()
+    // saveAs(new Blob([buf]), 'Rahul Jain-' + 'value' + '-' + new Date() + '.xlsx')
+
   }
-   static saveAsExcelFile(buffer: any, fileName: string): void {
-    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
-    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
-  }
+
 }

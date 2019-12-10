@@ -43,7 +43,9 @@ import { DatePipe } from '@angular/common';
 import { MatSortModule, MatTableModule } from '@angular/material';
 import { DynamicComponentService } from './services/dynamic-component.service';
 import { EmailModule } from './component/protect-component/AdviserComponent/Email/email.module';
-import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
+import { SubscriptionModule } from './component/protect-component/AdviserComponent/Subscriptions/subscription.module';
+import { SubscriptionEntry } from './component/protect-component/AdviserComponent/Subscriptions/subscription.entry.module';
+// import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -87,7 +89,7 @@ import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
     // AddInsuranceComponent
   ],
   imports: [
-    // SubscriptionModule,
+    SubscriptionEntry,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -104,7 +106,7 @@ import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
     MDBBootstrapModule.forRoot(), DragDropModule,
     CustomCommonModule,
     EmailModule,
-    PDFExportModule,
+    // PDFExportModule,
 
     // EntryComponentsModule,
     // AccountEntryModule,
@@ -112,6 +114,7 @@ import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
   ],
   providers: [AuthService, HttpService, DatePipe, DynamicComponentService],
   bootstrap: [AppComponent],
+  entryComponents: [SubscriptionEntry.getComponentList()]
   // entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
 })
 export class AppModule {

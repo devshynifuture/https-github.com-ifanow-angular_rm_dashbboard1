@@ -1,4 +1,4 @@
-<app-custom-dialog-container *ngIf="parentComponentName=='leftSideBar'" [currentState]="currentState">
+<!-- <app-custom-dialog-container *ngIf="parentComponentName=='leftSideBar'" [currentState]="currentState">
   <app-common-froala *ngIf="subscriptionTab=='viewDocuments'||subscriptionTab=='viewDoc'" [data]="inputData"
     [changeFooter]='subscriptionTab' [screenType]="subscriptionTab"></app-common-froala>
   <app-common-froala *ngIf="subscriptionTab=='viewDoc'" [data]="inputData" [changeFooter]='subscriptionTab'
@@ -40,16 +40,16 @@
 <app-dynamic-component *ngIf="parentComponentName=='customer'" [currentState]="currentState"
                        [data]="fragmentData" [upperSliderData]="upperSliderData"
                        [upperSliderState]="upperSliderData.state"></app-dynamic-component>-->
-<div *ngIf="parentComponentName=='customer'">
-  <div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay">
-  </div>
-  <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
-    <ng-template #dynamicUpper></ng-template>
-  </div>
-  <div [@openClose]="currentState" class="right_sidenav">
-    <ng-template #dynamic></ng-template>
-  </div>
+<!-- <div *ngIf="parentComponentName=='customer'"> -->
+<div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay">
 </div>
+<div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
+  <ng-template #dynamicUpper></ng-template>
+</div>
+<div [@openClose]="currentState" class="right_sidenav">
+  <ng-template #dynamic></ng-template>
+</div>
+<!-- </div> -->
 <div *ngIf="parentComponentName=='leftSideBar'" [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
   <app-subscription-upper-slider *ngIf="upperSliderData.flag=='app-subscription-upper-slider'">
   </app-subscription-upper-slider>

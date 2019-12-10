@@ -1,0 +1,342 @@
+<div class="wrapper-8 pb-44">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <div class="row">
+        <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
+            <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
+                Overview Report
+                <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>Overview Report</button>
+                <button mat-menu-item>Summary</button>
+                <button mat-menu-item>All Transactions</button>
+                <button mat-menu-item>Unrealized Transactions</button>
+                <button mat-menu-item>Capital Gains</button>
+                <button mat-menu-item>Goal Linkage</button>
+            </mat-menu>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 p-0">
+            <h4 class="m-0 text-black roboto">Stocks overview</h4>
+        </div>
+        <div class="col-md-8 p-0 right text-right">
+            <img src="assets/images/svg/download-bordered.svg" class="c-p">
+            <img src="assets/images/svg/up-down.svg" class="c-p">
+            <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
+            <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
+                    class="material-icons">filter_list</i>FILTERS</button>
+            <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"><i
+                    class="material-icons">add</i>ADD NEW</button>
+            <mat-menu #menu1="matMenu" class="add-new">
+                <button (click)="openAddStock(null)" mat-menu-item class="b-b">
+                    <div class="row">
+                        <div class="col-md-2 pr-8 text-right">
+                            <img src="assets/images/svg/dark-three-dot.svg">
+                        </div>
+                        <div class="col-md-10">
+                            <p class="m-0 text-black">Portfolio summary</p>
+                            <p class="m-0 f-13 pt-4 text-custom">Add just the overall portfolio
+                                <br> summary. Time saver!
+                            </p>
+                        </div>
+                    </div>
+                </button>
+                <button (click)="openScriptLevelHolding(null)" mat-menu-item class="b-b">
+                    <div class="row">
+                        <div class="col-md-2 pr-8 text-right">
+                            <img src="assets/images/svg/scheme-icon.svg">
+                        </div>
+                        <div class="col-md-10">
+                            <p class="m-0 text-black">Scheme level transactions</p>
+                            <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
+                                <br> scheme level for better reporting
+                            </p>
+                        </div>
+                    </div>
+                </button>
+                <button mat-menu-item>
+                    <div class="row">
+                        <div class="col-md-2 pr-8 text-right">
+                            <img src="assets/images/svg/dark-download.svg">
+                        </div>
+                        <div class="col-md-10">
+                            <p class="m-0 text-black">Import data</p>
+                            <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
+                                <br> scheme level for better reporting
+                            </p>
+                        </div>
+                    </div>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+    <div class="row pt-12">
+        <div class="col-md-5 pl-0 pr-4">
+            <div class="row b-a">
+                <div class="col-md-12 bg-grey lter p-0">
+                    <h5 class="mb-0 wrapper-8 pt-12 pb-16 text-black b-b">Summary</h5>
+                </div>
+                <div class="col-md-12 p-0">
+                    <p class="m-0 text-custom pt-24 pl-8">Current value</p>
+                    <h2 class="m-0 f-300 text-black pt-4 pl-8 pb-24">₹28,37,842</h2>
+                </div>
+                <div class="col-md-12 p-0">
+                    <div class="row bg-light lter pt-20 pb-20 bt-1">
+                        <div class="col-md-4 pr-0 pl-12">
+                            <p class="text-custom m-0">Amount invested</p>
+                            <h5 class="m-0 text-black">₹19,24,908</h5>
+                        </div>
+                        <div class="col-md-4 pr-0 pl-12">
+                            <p class="text-custom m-0">Unrealized gain/loss</p>
+                            <h5 class="m-0 text-danger">₹-93,908</h5>
+                        </div>
+                        <div class="col-md-4 pr-0 pl-12">
+                            <p class="text-custom m-0">Returns</p>
+                            <h5 class="m-0 text-danger">5.23% <i class="material-icons text-danger v-sub f-18 f-700">
+                                    arrow_upward
+                                </i>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7 pl-4 pr-0">
+            <div class="row">
+                <div class="col-md-4 p-0 b-a">
+                    <img src="assets/images/svg/circle-chart.svg">
+                </div>
+                <div class="col-md-8 b-a bl-0 p-0">
+                    <div class="row b-b pt-12">
+                        <div class="col-md-1">
+                            <div class="hw-16 bg-primary"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="f-500 text-black">Banking</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="text-black">5,24,819</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="text-black">23.43%</p>
+                        </div>
+                    </div>
+                    <div class="row b-b pt-12">
+                        <div class="col-md-1">
+                            <div class="hw-16 bg-success"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="f-500 text-black">Information technology</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="text-black">5,24,819</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="text-black">23.43%</p>
+                        </div>
+                    </div>
+                    <div class="row b-b pt-12">
+                        <div class="col-md-1">
+                            <div class="hw-16 bg-warning"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="f-500 text-black">FMCG</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="text-black">5,24,819</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="text-black">23.43%</p>
+                        </div>
+                    </div>
+                    <div class="row b-b pt-12">
+                        <div class="col-md-1">
+                            <div class="hw-16 bg-danger"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="f-500 text-black">Auto ancillaries</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="text-black">5,24,819</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="text-black">23.43%</p>
+                        </div>
+                    </div>
+                    <div class="row pt-12">
+                        <div class="col-md-1">
+                            <div class="hw-16 bg-grey dker"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="f-500 text-black">Others</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="text-black">5,24,819</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="text-black">23.43%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-12">
+        <div class="col-md-12 p-0">
+            <div class="bg-white">
+                <h5 class="m-0 wrapper-8 b-a bb-0 text-primary">MOTILAL OSWAL PORTFOLIO | RAHUL JAIN</h5>
+            </div>
+        </div>
+        <div class="stock-overview" id="table-low">
+            <table mat-table [dataSource]="dataSource25">
+                <ng-container matColumnDef="static-header">
+                    <td mat-header-cell *matHeaderCellDef colspan="12" class=" text-center text-primary bg-white">
+                        Engineering
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="scrip">
+                    <th mat-header-cell *matHeaderCellDef class="br t-18"> Scrip </th>
+                    <td mat-cell *matCellDef="let element" class="br t-18"> {{element.scrip}} </td>
+                </ng-container>
+                <ng-container matColumnDef="owner">
+                    <th mat-header-cell *matHeaderCellDef class="br t-18"> Owner </th>
+                    <td mat-cell *matCellDef="let element" class="br t-18"> {{element.owner}} </td>
+                </ng-container>
+                <ng-container matColumnDef="bal">
+                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Balance shares </th>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.bal}} </td>
+                </ng-container>
+                <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Average price </th>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.price}} </td>
+                </ng-container>
+                <ng-container matColumnDef="mprice">
+                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Market price </th>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.mprice}} </td>
+                </ng-container>
+                <ng-container matColumnDef="amt">
+                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Amount invested </th>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.amt}} </td>
+                </ng-container>
+                <ng-container matColumnDef="cvalue">
+                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Current value </th>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.cvalue}} </td>
+                </ng-container>
+                <ng-container matColumnDef="gain">
+                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Unrealized gain/loss </th>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.gain}} </td>
+                </ng-container>
+                <ng-container matColumnDef="ret">
+                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Absolute returns % </th>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.ret}} </td>
+                </ng-container>
+                <ng-container matColumnDef="xirr">
+                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> XIRR % </th>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.xirr}} </td>
+                </ng-container>
+                <ng-container matColumnDef="dividend">
+                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Dividend </th>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.dividend}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="icons">
+                    <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
+                    <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black"
+                            [matMenuTriggerFor]="menu25">
+                            more_vert
+                        </i>
+                        <mat-menu #menu25="matMenu">
+                            <button mat-menu-item>Edit</button>
+                            <button mat-menu-item>Detailed view</button>
+                            <button mat-menu-item>Activity</button>
+                            <button mat-menu-item>Delete</button>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns25; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns25;"></tr>
+                <tr mat-header-row *matHeaderRowDef="['static-header']" class="p-0 bt-0 bb-0"></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row pt-12">
+        <div class="col-md-12 p-0">
+            <div class="bg-white">
+                <h5 class="m-0 wrapper-8 b-a bb-0 text-primary">SHAREKHAN PORTFOLIO | SHILPA JAIN</h5>
+            </div>
+        </div>
+        <div class="stock-overview" id="table-low">
+            <table mat-table [dataSource]="dataSource25">
+                <ng-container matColumnDef="static-header">
+                    <td mat-header-cell *matHeaderCellDef colspan="12" class=" text-center text-primary bg-white">
+                        Pharmaceuticals
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="scrip">
+                    <th mat-header-cell *matHeaderCellDef class="br t-18"> Scrip </th>
+                    <td mat-cell *matCellDef="let element" class="br t-18"> {{element.scrip}} </td>
+                </ng-container>
+                <ng-container matColumnDef="owner">
+                    <th mat-header-cell *matHeaderCellDef class="br t-18"> Owner </th>
+                    <td mat-cell *matCellDef="let element" class="br t-18"> {{element.owner}} </td>
+                </ng-container>
+                <ng-container matColumnDef="bal">
+                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Balance shares </th>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.bal}} </td>
+                </ng-container>
+                <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Average price </th>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.price}} </td>
+                </ng-container>
+                <ng-container matColumnDef="mprice">
+                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Market price </th>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.mprice}} </td>
+                </ng-container>
+                <ng-container matColumnDef="amt">
+                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Amount invested </th>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.amt}} </td>
+                </ng-container>
+                <ng-container matColumnDef="cvalue">
+                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Current value </th>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.cvalue}} </td>
+                </ng-container>
+                <ng-container matColumnDef="gain">
+                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Unrealized gain/loss </th>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.gain}} </td>
+                </ng-container>
+                <ng-container matColumnDef="ret">
+                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Absolute returns % </th>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.ret}} </td>
+                </ng-container>
+                <ng-container matColumnDef="xirr">
+                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> XIRR % </th>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.xirr}} </td>
+                </ng-container>
+                <ng-container matColumnDef="dividend">
+                    <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Dividend </th>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.dividend}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="icons">
+                    <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
+                    <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black"
+                            [matMenuTriggerFor]="menu25">
+                            more_vert
+                        </i>
+                        <mat-menu #menu25="matMenu">
+                            <button mat-menu-item>Edit</button>
+                            <button mat-menu-item>Detailed view</button>
+                            <button mat-menu-item>Activity</button>
+                            <button mat-menu-item>Delete</button>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns25; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns25;"></tr>
+                <tr mat-header-row *matHeaderRowDef="['static-header']" class="p-0 bt-0 bb-0"></tr>
+            </table>
+        </div>
+    </div>
+</div>

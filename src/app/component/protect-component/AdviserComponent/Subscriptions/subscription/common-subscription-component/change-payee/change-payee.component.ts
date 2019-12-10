@@ -16,19 +16,18 @@ import { UtilService } from 'src/app/services/util.service';
   ]
 })
 export class ChangePayeeComponent implements OnInit {
+  payeeDataRes: any;
 
   @Input() set upperData(data) {
     this.getPayeeData(data);
   }
 
   @Input()
-  set payeeData(payeeData) {
+  set data(payeeData) {
     this._payeeData = payeeData;
     console.log('input payeeData : ', payeeData);
-    if (payeeData == undefined || payeeData.length > 0) {
-    } else {
-      this.noDataMessage = 'No payee profile found.';
-    }
+    this.getPayeeData(payeeData)
+
   }
 
   get payeeData() {
@@ -60,8 +59,8 @@ export class ChangePayeeComponent implements OnInit {
   }
 
   Close(state) {
-    this.subInjectService.rightSideData(state);
-    this.subInjectService.rightSliderData(state);
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   getPayeeData(data) {
@@ -87,7 +86,7 @@ export class ChangePayeeComponent implements OnInit {
 
   getPayeeProfileRes(data) {
     console.log('getPayeeProfileRes data', data);
-    this.payeeData = data;
+    this.payeeDataRes = data;
 
   }
 
