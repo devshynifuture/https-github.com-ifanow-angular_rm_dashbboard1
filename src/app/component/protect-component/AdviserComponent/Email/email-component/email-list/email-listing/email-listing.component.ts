@@ -143,7 +143,8 @@ const FORUM_DATA: EmailInterfaceI[] = [
 })
 export class EmailListingComponent implements OnInit, OnDestroy {
 
-  constructor(private subInjectService: SubscriptionInject,
+  constructor(
+    private subInjectService: SubscriptionInject,
     private emailService: EmailServiceService,
     private router: Router,
     private activatedRoute: ActivatedRoute) { }
