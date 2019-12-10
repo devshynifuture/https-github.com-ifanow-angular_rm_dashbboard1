@@ -44,7 +44,9 @@ export class DocumentsSettingsComponent implements OnInit {
       data => this.getDocumentsSettingResponse(data)
     )
   }
-
+  display(data){
+    this.getDocumentsSetting();
+  }
   getDocumentsSettingResponse(data) {
     this.documentSettingData = data;
     this.showLoader = false;
