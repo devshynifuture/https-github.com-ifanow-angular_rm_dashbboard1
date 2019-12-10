@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from "@angular/common";
-import { Row, Workbook, Worksheet } from 'exceljs';
+import * as Excel from 'exceljs/dist/exceljs.min.js';
 import { saveAs } from 'file-saver';
 
 
