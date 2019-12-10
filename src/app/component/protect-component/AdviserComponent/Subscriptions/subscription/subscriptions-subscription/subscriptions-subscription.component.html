@@ -78,7 +78,7 @@
                   <mat-form-field>
                     <mat-label>FILTERS TWO</mat-label>
                     <mat-select class="form-control br-0" id="sel12" [(ngModel)]='selectedStatusFilter'
-                      (selectionChange)="addFiltersDate($event.target.value)">
+                      (selectionChange)="addFiltersDate(selectedStatusFilter)">
                       <mat-option *ngFor="let dateAdd of dateChips" [value]="dateAdd">
                         {{dateAdd.name}}
                       </mat-option>
@@ -92,8 +92,6 @@
                 </select> -->
               </div>
             </div>
-
-
           </div>
         </div>
 
