@@ -1,46 +1,45 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {MatStepper} from '@angular/material';
-import {EnumServiceService} from '../../../../../../../services/enum-service.service';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { MatStepper } from '@angular/material';
+import { EnumServiceService } from '../../../../../../../services/enum-service.service';
 import * as _ from 'lodash';
-import {AuthService} from '../../../../../../../auth-service/authService';
+import { AuthService } from '../../../../../../../auth-service/authService';
 // import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {DatePipe} from '@angular/common';
-import {UtilService} from "../../../../../../../services/util.service";
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { DatePipe } from '@angular/common';
+import { UtilService } from "../../../../../../../services/util.service";
 
 @Component({
   selector: 'app-create-subscription',
   templateUrl: './create-subscription.component.html',
   styleUrls: ['./create-subscription.component.scss'],
   providers: [
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class CreateSubscriptionComponent implements OnInit {
-  @Input() subFeeMode;
+
   feeModeData: any;
   isFlagPayyee: boolean;
-  payeeSettingData: any=null;
+  payeeSettingData: any = null;
 
   constructor(private enumService: EnumServiceService, public subInjectService: SubscriptionInject,
-              private eventService: EventService, private fb: FormBuilder,
-              private subService: SubscriptionService, public datepipe: DatePipe) {
-    this.eventService.sidebarSubscribeData.subscribe(
-      data => this.subFeeMode = data
-    );
+    private eventService: EventService, private fb: FormBuilder,
+    private subService: SubscriptionService, public datepipe: DatePipe) {
+    // this.eventService.sidebarSubscribeData.subscribe(
+    //   data => this.subFeeMode = data
+    // );
     this.subInjectService.event.subscribe(
-      data=>
-      {
-        this.isFlagPayyee=data.flag;
+      data => {
+        this.isFlagPayyee = data.flag;
         setTimeout(
-          this.payeesData=data.data,500
+          this.payeesData = data.data, 500
         )
-        
+
       }
     )
   }
@@ -56,7 +55,7 @@ export class CreateSubscriptionComponent implements OnInit {
     return this.inputData;
   }
 
-  @ViewChild('stepper', {static: false}) stepper: MatStepper;
+  @ViewChild('stepper', { static: false }) stepper: MatStepper;
   feeStructureData;
   clientData;
   feeMode;
@@ -93,17 +92,15 @@ export class CreateSubscriptionComponent implements OnInit {
   advisorId;
 
   ngOnInit() {
-
     // this.stepper.selectedIndex = 0;
-    this.isFlagPayyee=true;
+    this.isFlagPayyee = true;
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     console.log(this.feeCollectionMode);
   }
-  getPayeeFlagData(data)
-  {
+  getPayeeFlagData(data) {
     console.log(data)
-    this.isFlagPayyee=data.flag
-    this.payeeSettingData=data
+    this.isFlagPayyee = data.flag
+    this.payeeSettingData = data
   }
   goForward(/*stepper: MatStepper*/) {
     if (this.stepper) {
@@ -121,21 +118,20 @@ export class CreateSubscriptionComponent implements OnInit {
     this.clientData = data;
     this.goForward();
   }
-  getTotalPayeeData(data)
-  {
-   this.isFlagPayyee=data
+  getTotalPayeeData(data) {
+    this.isFlagPayyee = data
   }
   getSubStartDetails(data) {
     // this.clientData = data.data;
     this.feeModeData = data;
     console.log('client Data: ', this.clientData);
-    if (data.data.subscriptionPricing) {
+    if (data.subscriptionPricing) {
       this.advisorId = AuthService.getAdvisorId();
       const obj = {
         // advisorId: 2808,
         advisorId: this.advisorId,
-        clientId: data.data.clientId,
-        subId: data.data.id
+        clientId: data.clientId,
+        subId: data.id
       };
       this.subService.getSubscriptionStartData(obj).subscribe(
         subStartData => this.getSubStartDetailsResponse(subStartData, data)
@@ -192,8 +188,8 @@ export class CreateSubscriptionComponent implements OnInit {
   }
 
   Close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
-    this.subInjectService.changeUpperRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
     this.stepper.selectedIndex = 0;
     this.subscriptionDetails.reset();
   }

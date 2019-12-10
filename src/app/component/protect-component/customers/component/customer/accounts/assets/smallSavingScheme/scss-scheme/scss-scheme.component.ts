@@ -1,5 +1,5 @@
 import { AddScssComponent } from './../common-component/add-scss/add-scss.component';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -9,6 +9,10 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { DetailedScssComponent } from './detailed-scss/detailed-scss.component';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import * as Excel from 'exceljs/dist/exceljs';
+import { saveAs } from 'file-saver'
+import { ExcelService } from '../../../../excel.service';
 
 @Component({
   selector: 'app-scss-scheme',
@@ -27,9 +31,10 @@ export class ScssSchemeComponent implements OnInit {
   sumOfQuarterlyPayout: number;
   sumOfTotalAmountReceived: number;
   sumOfAmountInvested: number;
-
+  footer =[];
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
+  @ViewChildren(FormatNumberDirective) formatNumber;
+  excelData: any[];
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns19 = ['no', 'owner', 'payout', 'rate', 'tamt', 'amt', 'mdate', 'desc', 'status', 'icons'];
   datasource;
@@ -38,6 +43,32 @@ export class ScssSchemeComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getScssSchemedata()
   }
+
+async ExportTOExcel(value) {
+  this.excelData = []
+  var data = []
+  var headerData = [{ width: 20, key: 'Owner' },
+  { width: 20, key: 'Quarterly Payout' },
+  { width: 10, key: 'Rate'},
+  { width: 20, key: 'Total Amount Recieved' },
+  { width: 25, key: 'Amount Invested' },
+  { width: 15, key: 'Maturity Date' },
+  { width: 15, key: 'Description' },
+  { width: 10, key: 'Status' },]
+  var header = ['Owner', 'Quarterly Payout', 'Rate', 'Total Amount Recieved','Amount Invested',
+   'Maturity Date', 'Description', 'Status'];
+  this.datasource.filteredData.forEach(element => {
+    data = [element.ownerName,(element.quarterlyPayout), (element.rate),this.formatNumber.first.formatAndRoundOffNumber(element.totalAmountReceived),
+    this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested),(element.maturityValue), new Date(element.maturityDate),element.description, element.status]
+    this.excelData.push(Object.assign(data))
+  });
+  var footerData = ['Total','', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfQuarterlyPayout),
+    this.formatNumber.first.formatAndRoundOffNumber(this.sumOfTotalAmountReceived),
+    this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountInvested), '', '', '']
+  this.footer.push(Object.assign(footerData))
+  ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
+}
+
   getScssSchemedata() {
     const obj = {
       advisorId: this.advisorId,
@@ -89,6 +120,7 @@ export class ScssSchemeComponent implements OnInit {
     if (data.scssList.length != 0) {
       this.datasource = new MatTableDataSource(data.scssList);
       this.datasource.sort = this.sort;
+      UtilService.checkStatusId(this.datasource.filteredData)
       this.sumOfAmountInvested = data.sumOfAmountInvested;
       this.sumOfTotalAmountReceived = data.sumOfTotalAmountReceived;
       this.sumOfQuarterlyPayout = data.sumOfQuarterlyPayout;

@@ -1,3 +1,5 @@
+import { EntryComponentsModule } from './entry.components.module';
+import { FroalaComponent } from './component/protect-component/common-component/froala/froala.component';
 /* tslint:disable:max-line-length */
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -43,6 +45,9 @@ import { DatePipe } from '@angular/common';
 import { MatSortModule, MatTableModule } from '@angular/material';
 import { DynamicComponentService } from './services/dynamic-component.service';
 import { EmailModule } from './component/protect-component/AdviserComponent/Email/email.module';
+import { SubscriptionModule } from './component/protect-component/AdviserComponent/Subscriptions/subscription.module';
+import { SubscriptionEntry } from './component/protect-component/AdviserComponent/Subscriptions/subscription.entry.module';
+import { EmailEntryModule } from './component/protect-component/AdviserComponent/Email/email.entry.module';
 // import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
 
@@ -87,7 +92,7 @@ import { EmailModule } from './component/protect-component/AdviserComponent/Emai
     // AddInsuranceComponent
   ],
   imports: [
-    // SubscriptionModule,
+    SubscriptionEntry,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -109,9 +114,11 @@ import { EmailModule } from './component/protect-component/AdviserComponent/Emai
     // EntryComponentsModule,
     // AccountEntryModule,
     // PlanEntryModule,
+    EmailEntryModule
   ],
   providers: [AuthService, HttpService, DatePipe, DynamicComponentService],
   bootstrap: [AppComponent],
+  entryComponents: [SubscriptionEntry.getComponentList()]
   // entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
 })
 export class AppModule {

@@ -1,3 +1,4 @@
+import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -11,5 +12,9 @@ export class EmailComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  tabs = ['Primary', 'Social', 'Promotions', 'Forum'];
+  selected = new FormControl(0);
+
 
 }

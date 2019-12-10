@@ -15,6 +15,8 @@ import { UtilService } from 'src/app/services/util.service';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import * as Excel from 'exceljs/dist/exceljs';
 import { saveAs } from 'file-saver'
+import * as _ from 'lodash';
+import { ExcelService } from '../../../../excel.service';
 
 
 @Component({
@@ -73,7 +75,7 @@ export class FixedIncomeComponent implements OnInit {
   async ExportTOExcel(value) {
     this.excelData = []
     var data = []
-    if (value == 'fixedDeposit') {
+    if (value == 'Fixed Deposit') {
       var headerData = [{ width: 20, key: 'Owner' },
       { width: 20, key: 'Type of FD' },
       { width: 25, key: 'Current value' },
@@ -94,12 +96,12 @@ export class FixedIncomeComponent implements OnInit {
         element.fdNumber, element.description, element.status]
         this.excelData.push(Object.assign(data))
       });
-      var footerData = ['Total',
+      var footerData = ['Total','',
         this.formatNumber.first.formatAndRoundOffNumber(this.sumCurrentValue), '',
         this.formatNumber.first.formatAndRoundOffNumber(this.sumAmountInvested), '',
         this.formatNumber.first.formatAndRoundOffNumber(this.sumMaturityValue), '', '', '',]
       this.footer.push(Object.assign(footerData))
-    } else if (value == 'fixedReccuring') {
+    } else if (value == 'Fixed Reccuring') {
       var headerData = [
         { width: 20, key: 'Owner' },
         { width: 20, key: 'Current value' },
@@ -148,43 +150,7 @@ export class FixedIncomeComponent implements OnInit {
       this.footer.push(Object.assign(footerData))
 
     }
-    this.exportExcel(headerData, header, this.excelData, this.footer)
-  }
-  async exportExcel(headerData, header, data, footer) {
-    const wb = new Excel.Workbook()
-    const ws = wb.addWorksheet()
-    //ws.mergeCells('A1', 'M1');
-    const meta1 = ws.getCell('A1')
-    const meta2 = ws.getCell('A2')
-    const meta3 = ws.getCell('A3')
-    meta1.font = { bold: true }
-    meta2.font = { bold: true }
-    meta3.font = { bold: true }
-    ws.getCell('A1').value = 'Type of report - ' + 'value';
-    ws.getCell('A2').value = 'Client name - Rahul Jain';
-    ws.getCell('A3').value = 'Report as on - ' + new Date();
-    //ws.getCell('A1').alignment = { horizontal: 'center' };
-    const head = ws.getRow(5)
-    head.font = { bold: true }
-    head.fill = {
-      type: 'pattern',
-      pattern: 'darkVertical',
-      fgColor: {
-        argb: '#f5f7f7'
-      }
-    };
-    ws.getRow(5).values = header;
-    ws.columns.alignment = { horizontal: 'left' };
-    ws.columns = headerData
-    data.forEach(element => {
-      ws.addRow(element)
-    });
-    footer.forEach(element => {
-      const last = ws.addRow(element)
-      last.font = { bold: true }
-    });
-    const buf = await wb.xlsx.writeBuffer()
-    saveAs(new Blob([buf]), 'Rahul Jain-' + 'value' + '-' + new Date() + '.xlsx')
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
   }
   filterFixedIncome(key: string, value: string) {
     const obj = {
@@ -245,7 +211,12 @@ export class FixedIncomeComponent implements OnInit {
     this.dataSourceFixed.data = data.fixedDepositList;
     this.dataSourceFixed.sort = this.fixedIncomeTableSort;
     console.log('soted &&&&&&&&&', this.dataSourceFixed);
-    this.sumAmountInvested = data.sumAmountInvested;
+    UtilService.checkStatusId(this.dataSourceFixed.filteredData)
+   this.dataSourceFixed.filteredData, function(o) {
+      this.sumCurrentValue += o.nomineePercentageShare;  
+    };
+       console.log( '&&&&&&&&&',this.sumCurrentValue)
+  //  this.sumAmountInvested = data.sumAmountInvested;
     this.sumCurrentValue = data.sumCurrentValue;
     this.sumMaturityValue = data.sumMaturityValue;
 
@@ -267,6 +238,7 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = false;
     this.dataSourceRecurring = new MatTableDataSource(data.recurringDeposits);
     this.dataSourceRecurring.sort = this.recurringDepositTableSort;
+    UtilService.checkStatusId(this.dataSourceRecurring.filteredData)
     this.totalCurrentValue = data.totalCurrentValue;
     this.totalMarketValue = data.totalMarketValue;
   }
@@ -287,11 +259,11 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = false;
     this.dataSourceBond = new MatTableDataSource(data.bondList);
     this.dataSourceBond.sort = this.bondListTableSort;
+    UtilService.checkStatusId(this.dataSourceBond.filteredData)
     this.sumAmountInvestedB = data.sumAmountInvested;
     this.sumCouponAmount = data.sumCouponAmount;
     this.sumCurrentValueB = data.sumCurrentValue;
   }
-
   deleteModal(value, data) {
     const dialogData = {
       data: value,

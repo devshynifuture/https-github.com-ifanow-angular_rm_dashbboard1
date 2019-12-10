@@ -33,7 +33,7 @@
     <div class="col-md-5">
       <div class="form-group mb-0">
 
-        <input type="email" formControlName="docName" class="form-control br-0">
+        <input type="email"  #docName formControlName="docName" maxlength="40" class="form-control br-0">
       </div>
       <div class="row">
         <div
@@ -42,7 +42,7 @@
           <mat-error class="f-12 pt-4">Document name is required</mat-error>
         </div>
         <div class="col-md-4 text-right">
-          <p class="f-12 m-0 text-custom pt-4">0 / 60</p>
+          <p class="f-12 m-0 text-custom pt-4">{{docName.value.length}} / 40</p>
         </div>
       </div>
     </div>

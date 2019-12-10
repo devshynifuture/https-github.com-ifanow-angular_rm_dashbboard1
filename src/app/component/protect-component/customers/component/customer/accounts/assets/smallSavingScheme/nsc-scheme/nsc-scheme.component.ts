@@ -1,5 +1,5 @@
 import { AddNscComponent } from './../common-component/add-nsc/add-nsc.component';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -8,7 +8,10 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { MatDialog, MatTableDataSource, MatSort } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { DetailedNscComponent } from './detailed-nsc/detailed-nsc.component';
-
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import * as Excel from 'exceljs/dist/exceljs';
+import { saveAs } from 'file-saver'
+import { ExcelService } from '../../../../excel.service';
 @Component({
   selector: 'app-nsc-scheme',
   templateUrl: './nsc-scheme.component.html',
@@ -25,6 +28,10 @@ export class NscSchemeComponent implements OnInit {
   sumOfMaturityValue: number;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChildren(FormatNumberDirective) formatNumber;
+
+  excelData: any[];
+  footer
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns17 = ['no', 'owner', 'cvalue', 'rate', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
@@ -33,6 +40,31 @@ export class NscSchemeComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = 2978;
     this.getNscSchemedata();
+    this.footer  =[];
+  }
+  async ExportTOExcel(value) {
+    this.excelData = []
+    var data = []
+    var headerData = [{ width: 20, key: 'Owner' },
+    { width: 20, key: 'Current Value' },
+    { width: 10, key: 'Rate' },
+    { width: 15, key: ' Maturity Value' },
+    { width: 15, key: 'Maturity Date' },
+    { width: 25, key: 'Certificate Number' },
+    { width: 15, key: 'Description' },
+    { width: 10, key: 'Status' },]
+    var header = ['Owner', 'Current Value', 'Rate', ' Maturity Value',
+      'Maturity Date', 'Certificate Number', 'Description', 'Status'];
+    this.datasource.filteredData.forEach(element => {
+      data = [element.ownerName,  this.formatNumber.first.formatAndRoundOffNumber(element.currentValue), (element.rate),
+         this.formatNumber.first.formatAndRoundOffNumber(element.maturityValue),new Date(element.maturityDate),element.certificateNumber, element.description, element.status]
+      this.excelData.push(Object.assign(data))
+    });
+    var footerData = ['Total',
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue),'',
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMaturityValue), '', '', '' , '']
+    this.footer.push(Object.assign(footerData))
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
   }
   getNscSchemedata() {
     const obj = {
@@ -49,6 +81,7 @@ export class NscSchemeComponent implements OnInit {
     if (data.NationalSavingCertificate.length != 0) {
       this.datasource = new MatTableDataSource(data.NationalSavingCertificate);
       this.datasource.sort = this.sort;
+      UtilService.checkStatusId(this.datasource.filteredData)
       this.sumOfMaturityValue = data.SumOfMaturityValue;
       this.sumOfCurrentValue = data.SumOfCurrentValue;
       this.nscData = data

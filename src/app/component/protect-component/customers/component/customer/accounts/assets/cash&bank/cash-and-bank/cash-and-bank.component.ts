@@ -13,6 +13,7 @@ import { DetailedViewBankAccountComponent } from '../bank-accounts/detailed-view
 import * as Excel from 'exceljs/dist/exceljs';
 import { saveAs } from 'file-saver'
 import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../../excel.service';
 @Component({
   selector: 'app-cash-and-bank',
   templateUrl: './cash-and-bank.component.html',
@@ -32,9 +33,9 @@ export class CashAndBankComponent implements OnInit {
   footer= [];
 
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) { }
-  displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc', 'status', 'icons'];
+  displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc','status', 'icons'];
   datasource7 = ELEMENT_DATA7;
-  displayedColumns8 = ['no', 'owner', 'cash', 'bal', 'desc', 'status', 'icons'];
+  displayedColumns8 = ['no', 'owner', 'cash', 'bal', 'desc', 'status','icons'];
   datasource8 = ELEMENT_DATA8;
 
   @ViewChild('bankAccountListTable', { static: false }) bankAccountListTableSort: MatSort;
@@ -50,7 +51,7 @@ export class CashAndBankComponent implements OnInit {
   async ExportTOExcel(value) {
     this.excelData = []
     var data = []
-    if (value == 'CashInHand') {
+    if (value == 'Cash in hand') {
       var headerData = [{ width: 20, key: 'Owner' },
       { width: 20, key: 'Account type' },
       { width: 25, key: ' Balance as on' },
@@ -86,42 +87,7 @@ export class CashAndBankComponent implements OnInit {
       var footerData = ['Total', '', '', '', this.formatNumber.first.formatAndRoundOffNumber(this.totalAccountBalance), '', '', '', '']
       this.footer.push(Object.assign(footerData))
     }
-    this.exportExcel(headerData, header, this.excelData, this.footer)
-  }
-  async exportExcel(headerData, header, data, footer) {
-    const wb = new Excel.Workbook()
-    const ws = wb.addWorksheet()
-    //ws.mergeCells('A1', 'M1');
-    const meta1 = ws.getCell('A1')
-    const meta2 = ws.getCell('A2')
-    const meta3 = ws.getCell('A3')
-    meta1.font = { bold: true }
-    meta2.font = { bold: true }
-    meta3.font = { bold: true }
-    ws.getCell('A1').value = 'Type of report - ' + 'value';
-    ws.getCell('A2').value = 'Client name - Rahul Jain';
-    ws.getCell('A3').value = 'Report as on - ' + new Date();
-    const head = ws.getRow(5)
-    head.font = { bold: true }
-    head.fill = {
-      type: 'pattern',
-      pattern: 'darkVertical',
-      fgColor: {
-        argb: '#f5f7f7'
-      }
-    };
-    ws.getRow(5).values = header;
-    ws.columns.alignment = { horizontal: 'left' };
-    ws.columns = headerData
-    data.forEach(element => {
-      ws.addRow(element)
-    });
-    footer.forEach(element => {
-      const last = ws.addRow(element)
-      last.font = { bold: true }
-    });
-    const buf = await wb.xlsx.writeBuffer()
-    saveAs(new Blob([buf]), 'Rahul Jain-' + 'value' + '-' + new Date() + '.xlsx')
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
   }
   getfixedIncomeData(value) {
     console.log('value++++++', value);
@@ -214,10 +180,10 @@ export class CashAndBankComponent implements OnInit {
     this.cashInHandList.sort = this.cashInHandListTableSort;
     this.sumOfCashValue = data.sumOfCashValue
   }
-  openCashAndBank(state) {
+  openCashAndBank(data) {
     const fragmentData = {
       flag: '',
-      data: '',
+      data: data,
       id: 1,
       state: 'open',
       componentName: BankAccountsComponent
@@ -236,7 +202,7 @@ export class CashAndBankComponent implements OnInit {
   openCashInHand(data) {
     const fragmentData = {
       flag: 'addCashInHand',
-      data,
+      data:data,
       id: 1,
       state: 'open',
       componentName: CashInHandComponent
@@ -295,24 +261,24 @@ export interface PeriodicElement7 {
   account: string;
   bank: string;
   desc: string;
-  status: string;
+  status:string
 }
 
 const ELEMENT_DATA7: PeriodicElement7[] = [
   {
     no: '1.', owner: 'Rahul Jain',
     type: 'Savings', amt: '08/02/2019', rate: '8.40%', bal: '1,00,000', account: '980787870909', bank: 'ICICI',
-    desc: 'ICICI FD', status: 'MATURED'
+    desc: 'ICICI FD', status:''
   },
   {
     no: '2.', owner: 'Shilpa Jain',
     type: 'Current', amt: '08/02/2019', rate: '8.60%', bal: '50,000', account: '77676767622', bank: 'Axis',
-    desc: 'Axis bank FD', status: 'LIVE'
+    desc: 'Axis bank FD', status:''
   },
   {
     no: '', owner: 'Total',
     type: '', amt: '', rate: '', bal: '1,50,000', account: '', bank: '',
-    desc: '', status: ''
+    desc: '', status:''
   },
 
 
@@ -323,24 +289,23 @@ export interface PeriodicElement8 {
   cash: string;
   bal: string;
   desc: string;
-  status: string;
 }
 
 const ELEMENT_DATA8: PeriodicElement8[] = [
   {
     no: '1.', owner: 'Rahul Jain'
     , cash: '94,925', bal: '09/02/2019',
-    desc: 'ICICI FD', status: 'MATURED'
+    desc: 'ICICI FD',
   },
   {
     no: '2.', owner: 'Shilpa Jain'
     , cash: '94,925', bal: '09/02/2019',
-    desc: 'Axis bank FD', status: 'LIVE'
+    desc: 'Axis bank FD',
   },
   {
     no: '', owner: 'Total'
     , cash: '1,28,925', bal: '',
-    desc: '', status: ''
+    desc: '', 
   },
 
 

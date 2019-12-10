@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {UtilService} from 'src/app/services/util.service';
 import {CustomerService} from '../../../../customer.service';
@@ -9,6 +9,10 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
 import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
 import {AddRealEstateComponent} from '../add-real-estate/add-real-estate.component';
 import {DetailedViewRealEstateComponent} from '../detailed-view-real-estate/detailed-view-real-estate.component';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import * as Excel from 'exceljs/dist/exceljs';
+import { saveAs } from 'file-saver'
+import { ExcelService } from '../../../../excel.service';
 
 @Component({
   selector: 'app-real-estate',
@@ -24,8 +28,11 @@ export class RealEstateComponent implements OnInit {
   ownerName: any;
   sumOfMarketValue: any;
   sumOfpurchasedValue: any;
+  footer= [];
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status', 'icons'];
+  @ViewChildren(FormatNumberDirective) formatNumber;
+  displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc','status', 'icons'];
+  excelData: any[];
 
   constructor(public subInjectService: SubscriptionInject, publicutilService: UtilService,
               public custmService: CustomerService, public cusService: CustomerService,
@@ -38,7 +45,29 @@ export class RealEstateComponent implements OnInit {
     this.isLoading = true;
     this.getRealEstate();
   }
-
+  async ExportTOExcel(value) {
+    this.excelData = []
+    var data = []
+    var headerData = [{ width: 20, key: 'Owner' },
+    { width: 20, key: 'Type' },
+    { width: 10, key: 'Rate' },
+    { width: 20, key: 'Market Value' },
+    { width: 15, key: 'Purchase Value' },
+    { width: 15, key: 'Description' },
+    { width: 10, key: 'Status' },]
+    var header = ['Owner','Type','Rate','Market Value',
+   'Purchase Value', 'Description', 'Status'];
+    this.datasource3.filteredData.forEach(element => {
+      data = [element.ownerName,((element.typeId == 1)?'Residential':(element.typeId == 2)?'Secondary':(element.typeId == 3)?'Commercial':'Land'), (element.rate),
+      this.formatNumber.first.formatAndRoundOffNumber(element.marketValue),(element.purchaseValue),element.description, element.status]
+      this.excelData.push(Object.assign(data))
+    });
+    var footerData = ['Total','',
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMarketValue), '',
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfpurchasedValue), '', '']
+    this.footer.push(Object.assign(footerData))
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
+  }
   // datasource3 = ELEMENT_DATA3;
 
   getRealEstate() {
@@ -159,7 +188,7 @@ export interface PeriodicElement3 {
   value: string;
   pvalue: string;
   desc: string;
-  status: string;
+  status:string
 }
 
 const ELEMENT_DATA3: PeriodicElement3[] = [
@@ -170,7 +199,7 @@ const ELEMENT_DATA3: PeriodicElement3[] = [
     value: '60,000',
     pvalue: '60,000',
     desc: 'ICICI FD',
-    status: 'ICICI FD'
+    status:''
   },
   {
     no: '1.',
@@ -179,7 +208,7 @@ const ELEMENT_DATA3: PeriodicElement3[] = [
     value: '60,000',
     pvalue: '60,000',
     desc: 'ICICI FD',
-    status: 'ICICI FD'
+    status:''
   },
-  {no: ' ', owner: 'Total', type: '', value: '1,28,925', pvalue: '1,28,925', desc: '', status: ' '},
+  {no: ' ', owner: 'Total', type: '', value: '1,28,925', pvalue: '1,28,925', desc: '',status:''},
 ];

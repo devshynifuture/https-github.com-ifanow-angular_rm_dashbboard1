@@ -1,15 +1,17 @@
 import { AddPoTdComponent } from './../common-component/add-po-td/add-po-td.component';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { DetailedPoTdComponent } from './detailed-po-td/detailed-po-td.component';
-
+import * as Excel from 'exceljs/dist/exceljs';
+import { saveAs } from 'file-saver';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../../excel.service';
 @Component({
   selector: 'app-po-td-scheme',
   templateUrl: './po-td-scheme.component.html',
@@ -20,10 +22,12 @@ export class PoTdSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
   noData: string;
-
+  footer =[];
   isLoading: boolean = true;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChildren(FormatNumberDirective) formatNumber;
+  excelData: any[];
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns22 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'tenure', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
@@ -33,6 +37,32 @@ export class PoTdSchemeComponent implements OnInit {
     this.clientId = 2978;
     this.getPoTdSchemedata();
   }
+  async ExportTOExcel(value) {
+    this.excelData = []
+    var data = []
+    var headerData = [{ width: 20, key: 'Owner' },
+    { width: 20, key: 'Current Value' },
+    { width: 10, key: 'Rate' },
+    { width: 20, key: 'Amount Invested' },
+    { width: 20, key: 'Tenure' },
+    { width: 20, key: 'Maturity Value' },
+    { width: 20, key: 'Maturity Date' },
+    { width: 25, key: 'TD Number' },
+    { width: 15, key: 'Description' },
+    { width: 15, key: 'Status' },]
+    var header = ['Owner', 'Current Value', 'Rate', 'Amount Invested',
+      'Tenure', 'Maturity Value', 'Maturity Date', 'TD Number', 'Description','Status'];
+    this.datasource.filteredData.forEach(element => {
+      data = [element.ownerName, (element.currentValue), (element.rate), (element.balance),
+      new Date(element.balanceAsOn), element.description, element.status]
+      this.excelData.push(Object.assign(data))
+    });
+    var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(), '',
+      this.formatNumber.first.formatAndRoundOffNumber(), '', '','',]
+    this.footer.push(Object.assign(footerData))
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
+  }
+
   getPoTdSchemedata() {
     const obj = {
       advisorId: this.advisorId,
@@ -48,6 +78,7 @@ export class PoTdSchemeComponent implements OnInit {
     if (data.postOfficeTdList.length != 0) {
       this.datasource = new MatTableDataSource(data.postOfficeTdList);
       this.datasource.sort = this.sort;
+      UtilService.checkStatusId(this.datasource.filteredData)
     } else {
       this.noData = "No Scheme Found";
     }

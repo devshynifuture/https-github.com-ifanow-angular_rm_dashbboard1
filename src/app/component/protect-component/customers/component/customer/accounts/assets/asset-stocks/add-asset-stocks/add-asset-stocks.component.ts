@@ -20,11 +20,11 @@ export class AddAssetStocksComponent implements OnInit {
       data = {}
     }
     this.assetForm = this.fb.group({
-      ownerName: [data, [Validators.required]],
-      currentMarketValue: [data, [Validators.required]],
-      valueAsOn: [data, [Validators.required]],
-      amtInvested: [data, [Validators.required]],
-      portfolioName: [data, [Validators.required]]
+      ownerName: [, [Validators.required]],
+      currentMarketValue: [, [Validators.required]],
+      valueAsOn: [, [Validators.required]],
+      amtInvested: [, [Validators.required]],
+      portfolioName: [, [Validators.required]]
     })
     this.ownerData = this.assetForm.controls;
     console.log(this.assetForm)
@@ -34,11 +34,11 @@ export class AddAssetStocksComponent implements OnInit {
   }
   submitStockData() {
     switch (true) {
-      case (this.assetForm.get('ownerName').invalid):
-        this.assetForm.get('ownerName').markAsTouched();
-        break;
-      case (this.assetForm.get('currentMarketValues').invalid):
-        this.assetForm.get('currentMarketValues').markAsTouched();
+      // case (this.assetForm.get('ownerName').invalid):
+      //   this.assetForm.get('ownerName').markAsTouched();
+      //   break;
+      case (this.assetForm.get('currentMarketValue').invalid):
+        this.assetForm.get('currentMarketValue').markAsTouched();
         break;
       case (this.assetForm.get('valueAsOn').invalid):
         this.assetForm.get('valueAsOn').markAsTouched();

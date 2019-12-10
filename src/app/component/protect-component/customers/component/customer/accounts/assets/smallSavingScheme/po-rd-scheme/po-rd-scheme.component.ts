@@ -1,6 +1,6 @@
 import { DetailedPoRdComponent } from './detailed-po-rd/detailed-po-rd.component';
 import { AddPoRdComponent } from './../common-component/add-po-rd/add-po-rd.component';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -8,7 +8,10 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-
+import * as Excel from 'exceljs/dist/exceljs';
+import { saveAs } from 'file-saver';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../../excel.service';
 @Component({
   selector: 'app-po-rd-scheme',
   templateUrl: './po-rd-scheme.component.html',
@@ -23,8 +26,10 @@ export class PoRdSchemeComponent implements OnInit {
   sumOfCurrentValue: number;
   sumOfMonthlyDeposit: number;
   sumOfMaturityValue: number;
-
+  footer = [];
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChildren(FormatNumberDirective) formatNumber;
+  excelData: any[];
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns21 = ['no', 'owner', 'cvalue', 'rate', 'deposit', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
@@ -33,6 +38,34 @@ export class PoRdSchemeComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = 2978;
     this.getPoRdSchemedata();
+  }
+
+
+  async ExportTOExcel(value) {
+    this.excelData = []
+    var data = []
+    var headerData = [{ width: 20, key: 'Owner' },
+    { width: 20, key: 'Current Value' },
+    { width: 10, key: 'Rate' },
+    { width: 20, key: 'Monthly Deposit' },
+    { width: 20, key: 'Maturity Value' },
+    { width: 20, key: 'Maturity Date' },
+    { width: 20, key: 'RD Number' },
+    { width: 15, key: 'Description' },
+    { width: 10, key: 'Status' },]
+    var header = ['Owner', 'Current Value', 'Rate', 'Monthly Deposit',
+      'Maturity Value', 'Maturity Date', 'RD Number', 'Description', 'Status'];
+    this.datasource.filteredData.forEach(element => {
+      data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue),
+      (element.rate), (element.deposit), this.formatNumber.first.formatAndRoundOffNumber(element.maturityValue),
+      new Date(element.maturityDate), (element.rdNuumber), element.description, element.status]
+      this.excelData.push(Object.assign(data))
+    });
+    var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue), '',
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMonthlyDeposit),
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMaturityValue), '', '', '']
+    this.footer.push(Object.assign(footerData))
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
   }
   getPoRdSchemedata() {
     const obj = {
@@ -49,6 +82,7 @@ export class PoRdSchemeComponent implements OnInit {
     if (data) {
       this.datasource = new MatTableDataSource(data.postOfficeRDList)
       this.datasource.sort = this.sort;
+      UtilService.checkStatusId(this.datasource.filteredData)
       this.sumOfCurrentValue = data.sumOfCurrentValue;
       this.sumOfMonthlyDeposit = data.sumOfMonthlyDeposit;
       this.sumOfMaturityValue = data.sumOfMaturityValue;

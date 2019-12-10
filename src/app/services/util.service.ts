@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from "@angular/common";
-import {Row, Workbook, Worksheet} from 'exceljs';
+import * as Excel from 'exceljs/dist/exceljs.min.js';
 import { saveAs } from 'file-saver';
 
 
@@ -97,6 +97,17 @@ export class UtilService {
 
   static convertDateObjectToDateString(datePipe: DatePipe, date: Date) {
     return datePipe.transform(date, 'yyyy-MM-dd');
+  }
+
+  static checkStatusId(element) {
+    element.forEach(obj => {
+      if (obj.maturityDate < new Date()) {
+        obj.statusId = 'MATURED'
+      } else {
+        obj.statusId = 'LIVE'
+      }
+    });
+    console.log('Status >>>>>>', element)
   }
   static async exportAs(headerData, excelData: any, footer: any[]) {
     //var wb = new Workbook()

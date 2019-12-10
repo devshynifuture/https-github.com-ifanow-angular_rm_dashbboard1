@@ -34,6 +34,15 @@ const routes: Routes = [
       {
         path: 'trash',
         component: EmailTrashComponent
+      },
+      {
+        path: 'view',
+        component: EmailViewComponent
+      },
+      {
+        path: '',
+        redirectTo: 'inbox',
+        pathMatch: 'full'
       }
     ]
   }

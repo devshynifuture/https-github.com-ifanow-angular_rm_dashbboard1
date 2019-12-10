@@ -21,6 +21,7 @@ import * as _ from 'lodash';
 import * as Excel from 'exceljs/dist/exceljs';
 import { saveAs } from 'file-saver'
 import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../../excel.service';
 
 
 @Component({
@@ -69,7 +70,7 @@ export class RetirementAccountComponent implements OnInit {
   async ExportTOExcel(value) {
     this.excelData = []
     var data = []
-    if (value == 'eps') {
+    if (value == 'EPS') {
       var headerData = [{ width: 20, key: 'Owner' },
       { width: 20, key: 'Notional value' },
       { width: 25, key: 'Commencement date' },
@@ -155,9 +156,9 @@ export class RetirementAccountComponent implements OnInit {
       var header = ['Owner', 'Current value', 'Employee’s contribution', 'Employer’s contribution',
         'Rate of return', 'Balance mentioned', 'Balance as on', 'Maturity year', 'Description', 'Status'];
       this.dataEPFList.filteredData.forEach(element => {
-        data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue),
-        this.formatNumber.first.formatAndRoundOffNumber(element.employeesMonthlyContribution),
-        this.formatNumber.first.formatAndRoundOffNumber(element.employersMonthlyContribution),
+        data = [element.ownerName, (element.currentValue == undefined) ? 0 : this.formatNumber.first.formatAndRoundOffNumber(element.currentValue),
+        (element.employeesMonthlyContribution == undefined) ? 0 : this.formatNumber.first.formatAndRoundOffNumber(element.employeesMonthlyContribution),
+        (element.employersMonthlyContribution == undefined) ? 0 : this.formatNumber.first.formatAndRoundOffNumber(element.employersMonthlyContribution),
         (element.rateOfReturn == undefined) ? 0 : this.formatNumber.first.formatAndRoundOffNumber(element.rateOfReturn),
         this.formatNumber.first.formatAndRoundOffNumber(element.currentEpfBalance),
         new Date(element.balanceAsOnDate), element.maturityYear, element.description, element.status]
@@ -189,7 +190,7 @@ export class RetirementAccountComponent implements OnInit {
       this.footer.push(Object.assign(footerData))
 
     }
-    this.exportExcel(headerData, header, this.excelData, this.footer)
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   }
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
   }
@@ -217,46 +218,11 @@ export class RetirementAccountComponent implements OnInit {
     };
     this.getListEPF();
   }
-  async exportExcel(headerData, header, data, footer) {
-    const wb = new Excel.Workbook()
-    const ws = wb.addWorksheet()
-    //ws.mergeCells('A1', 'M1');
-    const meta1 = ws.getCell('A1')
-    const meta2 = ws.getCell('A2')
-    const meta3 = ws.getCell('A3')
-    meta1.font = { bold: true }
-    meta2.font = { bold: true }
-    meta3.font = { bold: true }
-    ws.getCell('A1').value = 'Type of report - ' + 'value';
-    ws.getCell('A2').value = 'Client name - Rahul Jain';
-    ws.getCell('A3').value = 'Report as on - ' + new Date();
-    //ws.getCell('A1').alignment = { horizontal: 'center' };
-    const head = ws.getRow(5)
-    head.font = { bold: true }
-    head.fill = {
-      type: 'pattern',
-      pattern: 'darkVertical',
-      fgColor: {
-        argb: '#f5f7f7'
-      }
-    };
-    ws.getRow(5).values = header;
-    ws.columns.alignment = { horizontal: 'left' };
-    ws.columns = headerData
-    data.forEach(element => {
-      ws.addRow(element)
-    });
-    footer.forEach(element => {
-      const last = ws.addRow(element)
-      last.font = { bold: true }
-    });
-    const buf = await wb.xlsx.writeBuffer()
-    saveAs(new Blob([buf]), 'Rahul Jain-' + 'value' + '-' + new Date() + '.xlsx')
-  }
   getfixedIncomeData(value) {
     this.showRecurring = value;
     (value == '2') ? this.getListNPS() : (value == '3') ? this.getListGratuity() : (value == '4') ? this.getListSuperannuation() : (value == '5') ? this.getListEPS() : this.getListEPF();
-  }
+    }
+    
   openRetirement(value, state, data) {
     const fragmentData = {
       flag: value,
@@ -660,6 +626,7 @@ export interface PeriodicElement15 {
   pay: string;
   desc: string;
   status: string;
+
 }
 export interface PeriodicElement16 {
   no: string;
@@ -671,6 +638,7 @@ export interface PeriodicElement16 {
   mdate: string;
   desc: string;
   status: string;
+
 }
 export interface PeriodicElement14 {
   no: string;
@@ -683,5 +651,6 @@ export interface PeriodicElement14 {
   date: string;
   desc: string;
   status: string;
+
 }
 

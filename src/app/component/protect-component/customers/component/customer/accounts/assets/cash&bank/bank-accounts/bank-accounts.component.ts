@@ -105,13 +105,13 @@ export class BankAccountsComponent implements OnInit {
       this.isAccountBalance = true;
       return;
     } else {
- 
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         ownerName: (this.ownerName == undefined) ? this.bankAccounts.controls.ownerName.value : this.ownerName,
         accountType: this.bankAccounts.controls.accountType.value,
+        balanceAsOn:this.datePipe.transform(this.bankAccounts.controls.balanceAsOn.value, 'yyyy-MM-dd'),
         bankName: this.bankAccounts.controls.bankName.value,
         interestCompounding: this.bankAccounts.controls.compound.value,
         interestRate: this.bankAccounts.controls.interestRate.value,
