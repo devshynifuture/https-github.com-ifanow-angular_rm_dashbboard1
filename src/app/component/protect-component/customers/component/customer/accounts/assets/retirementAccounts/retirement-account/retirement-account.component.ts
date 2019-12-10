@@ -69,7 +69,7 @@ export class RetirementAccountComponent implements OnInit {
   async ExportTOExcel(value) {
     this.excelData = []
     var data = []
-    if (value == 'eps') {
+    if (value == 'EPS') {
       var headerData = [{ width: 20, key: 'Owner' },
       { width: 20, key: 'Notional value' },
       { width: 25, key: 'Commencement date' },
@@ -189,7 +189,7 @@ export class RetirementAccountComponent implements OnInit {
       this.footer.push(Object.assign(footerData))
 
     }
-    this.exportExcel(headerData, header, this.excelData, this.footer)
+    this.exportExcel(headerData, header, this.excelData, this.footer,value)
   }
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
   }
@@ -217,7 +217,7 @@ export class RetirementAccountComponent implements OnInit {
     };
     this.getListEPF();
   }
-  async exportExcel(headerData, header, data, footer) {
+  async exportExcel(headerData, header, data, footer,value) {
     const wb = new Excel.Workbook()
     const ws = wb.addWorksheet()
     //ws.mergeCells('A1', 'M1');
@@ -227,7 +227,7 @@ export class RetirementAccountComponent implements OnInit {
     meta1.font = { bold: true }
     meta2.font = { bold: true }
     meta3.font = { bold: true }
-    ws.getCell('A1').value = 'Type of report - ' + 'value';
+    ws.getCell('A1').value = 'Type of report - ' + value;
     ws.getCell('A2').value = 'Client name - Rahul Jain';
     ws.getCell('A3').value = 'Report as on - ' + new Date();
     //ws.getCell('A1').alignment = { horizontal: 'center' };
@@ -251,7 +251,7 @@ export class RetirementAccountComponent implements OnInit {
       last.font = { bold: true }
     });
     const buf = await wb.xlsx.writeBuffer()
-    saveAs(new Blob([buf]), 'Rahul Jain-' + 'value' + '-' + new Date() + '.xlsx')
+    saveAs(new Blob([buf]), 'Rahul Jain-' + value + '-' + new Date() + '.xlsx')
   }
   getfixedIncomeData(value) {
     this.showRecurring = value;

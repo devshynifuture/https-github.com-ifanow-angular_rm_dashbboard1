@@ -50,7 +50,7 @@ export class CashAndBankComponent implements OnInit {
   async ExportTOExcel(value) {
     this.excelData = []
     var data = []
-    if (value == 'CashInHand') {
+    if (value == 'Cash in hand') {
       var headerData = [{ width: 20, key: 'Owner' },
       { width: 20, key: 'Account type' },
       { width: 25, key: ' Balance as on' },
@@ -86,9 +86,9 @@ export class CashAndBankComponent implements OnInit {
       var footerData = ['Total', '', '', '', this.formatNumber.first.formatAndRoundOffNumber(this.totalAccountBalance), '', '', '', '']
       this.footer.push(Object.assign(footerData))
     }
-    this.exportExcel(headerData, header, this.excelData, this.footer)
+    this.exportExcel(headerData, header, this.excelData, this.footer,value)
   }
-  async exportExcel(headerData, header, data, footer) {
+  async exportExcel(headerData, header, data, footer,value) {
     const wb = new Excel.Workbook()
     const ws = wb.addWorksheet()
     //ws.mergeCells('A1', 'M1');
@@ -98,7 +98,7 @@ export class CashAndBankComponent implements OnInit {
     meta1.font = { bold: true }
     meta2.font = { bold: true }
     meta3.font = { bold: true }
-    ws.getCell('A1').value = 'Type of report - ' + 'value';
+    ws.getCell('A1').value = 'Type of report - ' + value;
     ws.getCell('A2').value = 'Client name - Rahul Jain';
     ws.getCell('A3').value = 'Report as on - ' + new Date();
     const head = ws.getRow(5)
@@ -121,7 +121,7 @@ export class CashAndBankComponent implements OnInit {
       last.font = { bold: true }
     });
     const buf = await wb.xlsx.writeBuffer()
-    saveAs(new Blob([buf]), 'Rahul Jain-' + 'value' + '-' + new Date() + '.xlsx')
+    saveAs(new Blob([buf]), 'Rahul Jain-' + value + '-' + new Date() + '.xlsx')
   }
   getfixedIncomeData(value) {
     console.log('value++++++', value);
@@ -214,10 +214,10 @@ export class CashAndBankComponent implements OnInit {
     this.cashInHandList.sort = this.cashInHandListTableSort;
     this.sumOfCashValue = data.sumOfCashValue
   }
-  openCashAndBank(state) {
+  openCashAndBank(data) {
     const fragmentData = {
       flag: '',
-      data: '',
+      data: data,
       id: 1,
       state: 'open',
       componentName: BankAccountsComponent
@@ -236,7 +236,7 @@ export class CashAndBankComponent implements OnInit {
   openCashInHand(data) {
     const fragmentData = {
       flag: 'addCashInHand',
-      data,
+      data:data,
       id: 1,
       state: 'open',
       componentName: CashInHandComponent
