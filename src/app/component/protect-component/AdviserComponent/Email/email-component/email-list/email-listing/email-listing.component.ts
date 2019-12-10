@@ -160,6 +160,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
 
     this.gmailInboxListSubscription = this.emailService.getMailInboxList('INBOX')
       .subscribe(responseData => {
+        console.log('this is gmails inbox data ->');
         console.log(responseData);
       })
   }
@@ -182,6 +183,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.paginatorSubscription.unsubscribe();
+    this.gmailInboxListSubscription.unsubscribe();
   }
 
   displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];

@@ -17,8 +17,12 @@ export class ComposeEmailComponent implements OnInit {
   receipentEmail: string;
   subject: string;
   emailBody: string;
+  from;
+  to;
+  date;
   doc: [];
   docObj: [];
+  message;
   data;
 
   // @Input() set data(data) {
@@ -31,8 +35,20 @@ export class ComposeEmailComponent implements OnInit {
 
   ngOnInit() {
     console.log("this is data sent from draft list ->>>>  ", this.data);
-  }
+    if (this.data !== undefined && this.data !== null) {
+      const { subject, message, date, headers } = this.data;
+      const [, , , , fromObj, toObj] = headers;
+      const from = fromObj['value'];
+      const to = toObj['value'];
 
+      this.subject = subject;
+      this.message = message;
+      this.date = date;
+      this.from = from;
+      this.to = to.split('<')[1].split('>')[0];
+
+    }
+  }
 
   Close(state) {
     this.subInjectService.rightSliderData(state);
@@ -55,5 +71,6 @@ export class ComposeEmailComponent implements OnInit {
 
     // this.valueChange.emit(this.emailSend);
   }
+
 
 }

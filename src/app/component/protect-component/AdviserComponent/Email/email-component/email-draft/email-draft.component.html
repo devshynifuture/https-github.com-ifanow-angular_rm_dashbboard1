@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="dataSource" class="example-container">
+<table mat-table *ngIf="dataSource" [dataSource]="dataSource" class="example-container">
 
     <!-- Checkbox Column -->
     <ng-container matColumnDef="select">

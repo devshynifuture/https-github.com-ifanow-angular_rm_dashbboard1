@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -30,21 +30,15 @@ export class EmailUtilService {
     // let me = this;
     // let file = event.target.files[0];
     const reader = new FileReader();
-    // reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
     reader.onload = () => {
       // me.modelvalue = reader.result;
-      console.log('getBase64FromFile  reader.result : ', reader.result);
-      const base64String = EmailUtilService.arrayBufferToBase64(reader.result);
-      console.log('getBase64FromFile  base64String : ', base64String);
-
-      successCallback(base64String);
+      console.log(reader.result);
+      successCallback(reader.result);
     };
     reader.onerror = error => {
       console.log('Error: ', error);
       errorCallback(error);
     };
-
-    reader.readAsArrayBuffer(file);
-
   }
 }
