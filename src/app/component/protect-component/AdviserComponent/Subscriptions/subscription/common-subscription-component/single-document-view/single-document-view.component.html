@@ -23,7 +23,7 @@
             </i>
                 <mat-menu #menu="matMenu">
                     <a mat-menu-item (click)="editDocument()">Edit Document</a>
-                    <a mat-menu-item class="bt-1">Delete Document</a>
+                    <a mat-menu-item class="bt-1" (click)="deleteModal('DOCUMENT',element)">Delete Document</a>
                 </mat-menu>
             </div>
         </div>

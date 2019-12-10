@@ -1,16 +1,22 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {MatDialog, MAT_DATE_FORMATS} from '@angular/material';
-import {DeleteSubscriptionComponent} from '../common-subscription-component/delete-subscription/delete-subscription.component';
-import {SubscriptionService} from '../../subscription.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {AuthService} from '../../../../../../auth-service/authService';
+import { Component, Input, OnInit } from '@angular/core';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { MatDialog, MAT_DATE_FORMATS } from '@angular/material';
+import { DeleteSubscriptionComponent } from '../common-subscription-component/delete-subscription/delete-subscription.component';
+import { SubscriptionService } from '../../subscription.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { AuthService } from '../../../../../../auth-service/authService';
 import * as _ from 'lodash';
-import {EnumServiceService} from '../../../../../../services/enum-service.service';
-import {UtilService} from '../../../../../../services/util.service';
-import {DatePipe} from '@angular/common';
+import { EnumServiceService } from '../../../../../../services/enum-service.service';
+import { UtilService } from '../../../../../../services/util.service';
+import { DatePipe } from '@angular/common';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { FixedFeeComponent } from '../common-subscription-component/fixed-fee/fixed-fee.component';
+import { VariableFeeComponent } from '../common-subscription-component/variable-fee/variable-fee.component';
+import { CreateSubscriptionComponent } from '../common-subscription-component/create-subscription/create-subscription.component';
+import { BillerSettingsComponent } from '../common-subscription-component/biller-settings/biller-settings.component';
+import { InvoiceHistoryComponent } from '../common-subscription-component/invoice-history/invoice-history.component';
+import { ChangePayeeComponent } from '../common-subscription-component/change-payee/change-payee.component';
 
 // export const MY_FORMATS = {
 //   parse: {
@@ -65,7 +71,7 @@ export interface PeriodicElement {
     // },
     // { provide: MAT_DATE_LOCALE, useValue: 'en' },
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class SubscriptionsSubscriptionComponent implements OnInit {
@@ -79,15 +85,15 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   dataSource;
   DataToSend;
   chips = [
-    {name: 'LIVE', value: 2},
-    {name: 'FUTURE', value: 3},
-    {name: 'NOT STARTED', value: 1},
-    {name: 'CANCELLED', value: 4}
+    { name: 'LIVE', value: 2 },
+    { name: 'FUTURE', value: 3 },
+    { name: 'NOT STARTED', value: 1 },
+    { name: 'CANCELLED', value: 4 }
   ];
   dateChips = [
-    {name: 'Activation date', value: 1},
-    {name: 'Last billing date', value: 2},
-    {name: 'Next billing date', value: 3}
+    { name: 'Activation date', value: 1 },
+    { name: 'Last billing date', value: 2 },
+    { name: 'Next billing date', value: 3 }
   ];
   filterStatus = [];
   filterDate = [];
@@ -104,12 +110,12 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   feeCollectionMode: any;
   getDate: any;
   getDate2: string;
-  selectedDateRange = {begin: new Date(), end: new Date()};
+  selectedDateRange = { begin: new Date(), end: new Date() };
   noData: string;
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
-              private eventService: EventService, private subService: SubscriptionService,
-              public enumService: EnumServiceService, private datePipe: DatePipe) {
+    private eventService: EventService, private subService: SubscriptionService,
+    public enumService: EnumServiceService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -146,14 +152,19 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
   openPlanSlider(value, state, data) {
-    (value == 'billerSettings' || value == 'changePayee' || value == 'SUBSCRIPTIONS') ? value : (data.subscriptionPricing.feeTypeId == 1) ? value = 'createSubFixed' : value = 'createSubVariable';
+    let componentName;
+    (value == 'billerSettings') ? componentName = BillerSettingsComponent : (value == 'changePayee') ? componentName = ChangePayeeComponent :
+      (value == "SUBSCRIPTIONS") ? componentName = InvoiceHistoryComponent : (data.subscriptionPricing.feeTypeId == 1) ?
+        data.subFlag = 'createSubFixed' : data.subFlag = 'createSubVariable';
+    if (data.subFlag) { componentName = CreateSubscriptionComponent }
     data.isCreateSub = false;
-    data.isSaveBtn=false;
+    data.isSaveBtn = false;
     const fragmentData = {
       flag: value,
       data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: componentName
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -168,15 +179,16 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   }
 
-  openFeeEditor(state, data) {
+  openFeeEditor(data) {
     let feeMode;
     data.isCreateSub = true;
-    (data.subscriptionPricing.feeTypeId == 1) ? feeMode = 'fixedModifyFees' : feeMode = 'variableModifyFees';
+    (data.subscriptionPricing.feeTypeId == 1) ? feeMode = FixedFeeComponent : feeMode = VariableFeeComponent;
     const fragmentData = {
-      flag: feeMode,
+      // flag: feeMode,
       data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName: feeMode
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -264,10 +276,10 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   addFiltersDate(dateFilter) {
     this.filterDate = []
-    if(this.filterDate.length >= 1){
+    if (this.filterDate.length >= 1) {
       this.filterDate = []
     }
-    this.filterDate.push((dateFilter=="1: Object")?1:(dateFilter=="2: Object")?2:3);
+    this.filterDate.push((dateFilter == "1: Object") ? 1 : (dateFilter == "2: Object") ? 2 : 3);
     console.log('addFilters', dateFilter);
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
@@ -276,7 +288,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = {begin: beginDate, end: endDate};
+    this.selectedDateRange = { begin: beginDate, end: endDate };
     this.callFilter();
   }
 
@@ -291,14 +303,14 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   }
 
-  orgValueChange(selectedDateRange){
+  orgValueChange(selectedDateRange) {
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     UtilService.getStartOfTheDay(beginDate);
 
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate)
-    this.selectedDateRange = {begin: selectedDateRange.begin, end: selectedDateRange.end};
+    this.selectedDateRange = { begin: selectedDateRange.begin, end: selectedDateRange.end };
     this.callFilter()
   }
 
@@ -326,7 +338,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       fromDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.begin, 'yyyy-MM-dd') : null,
       toDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.end, 'yyyy-MM-dd') : null,
       statusIdList: this.statusIdList,
-      dateType:  (this.filterDate.length== 0)?0:this.filterDate,
+      dateType: (this.filterDate.length == 0) ? 0 : this.filterDate,
     };
     console.log('this.callFilter req obj : ', obj);
     if (obj.statusIdList.length == 0 && obj.fromDate == null) {
@@ -357,7 +369,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   deletedData(data) {
     if (data) {
-      this.eventService.changeUpperSliderState({state: 'close'});
+      this.eventService.changeUpperSliderState({ state: 'close' });
       this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
     }
   }

@@ -57,8 +57,8 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <mat-label>FILTERS ONE11</mat-label>
-                                        <mat-select class="form-control " id="sel11" [(ngModel)]='selectedStatusFilter' (change)="addFilters(selectedStatusFilter)">
+                                        <mat-label>FILTERS ONE</mat-label>
+                                        <mat-select class="form-control br-0" id="sel11" [(ngModel)]='selectedStatusFilter' (change)="addFilters(selectedStatusFilter)">
                                             <mat-option *ngFor="let chip of chips" [value]="chip">
                                                 {{chip.name}}
                                             </mat-option>
@@ -110,7 +110,7 @@
             <ng-container matColumnDef="amt">
                 <th *matHeaderCellDef class="f-18 t-10" mat-header-cell> Fee amount</th>
 
-                <td (click)="openFeeEditor('open',element)" *matCellDef="let element" class="c-p t-10 text-primary text-underline" mat-cell> View details
+                <td (click)="openFeeEditor(element)" *matCellDef="let element" class="c-p t-10 text-primary text-underline" mat-cell> View details
                 </td>
             </ng-container>
 
@@ -173,7 +173,7 @@
             more_vert
           </i>
                     <mat-menu #menu="matMenu">
-                        <a (click)="openFeeEditor('open',element)" mat-menu-item>View & edit fee structure</a>
+                        <a (click)="openFeeEditor(element)" mat-menu-item>View & edit fee structure</a>
                         <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change biller</a>
                         <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change payee</a>
                         <a *ngIf="element.status!=1" (click)="delete('cancelSubscription',element)" class="bt-1" mat-menu-item>Cancel

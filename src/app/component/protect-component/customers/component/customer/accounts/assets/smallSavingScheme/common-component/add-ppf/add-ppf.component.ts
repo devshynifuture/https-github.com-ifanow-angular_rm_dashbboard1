@@ -146,7 +146,7 @@ export class AddPpfComponent implements OnInit {
     }
     // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
     //   return o.nomineePercentageShare;
-    // });
+    // });`
     this.nominee.value.forEach(element => {
       this.nexNomineePer+=element.nomineePercentageShare
     });

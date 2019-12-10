@@ -1,8 +1,8 @@
-import {Component, Input, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-import {EventService} from '../../Data-service/event.service';
-import {SubscriptionInject} from '../../component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {DynamicComponentService} from '../../services/dynamic-component.service';
-import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../animation/animation';
+import { Component, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { EventService } from '../../Data-service/event.service';
+import { SubscriptionInject } from '../../component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { DynamicComponentService } from '../../services/dynamic-component.service';
+import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from '../../animation/animation';
 
 @Component({
   selector: 'app-dialog-container',
@@ -19,12 +19,12 @@ import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from
 export class DialogContainerComponent implements OnInit {
   @ViewChild('dynamic', {
     read: ViewContainerRef,
-    static: false
+    static: true
   }) viewContainerRef: ViewContainerRef;
 
   @ViewChild('dynamicUpper', {
     read: ViewContainerRef,
-    static: false
+    static: true
   }) viewContainerRefUpper: ViewContainerRef;
 
   @Input() parentComponentName;
@@ -43,7 +43,7 @@ export class DialogContainerComponent implements OnInit {
   headerDataDocuments = 'EMAIL DOCS WITH E-SIGN REQUEST';
 
   constructor(protected eventService: EventService, protected subinject: SubscriptionInject,
-              protected dynamicComponentService: DynamicComponentService) {
+    protected dynamicComponentService: DynamicComponentService) {
     this.eventService.overlayVisibleData.subscribe(
       data => {
         this.isOverlayVisible = data;

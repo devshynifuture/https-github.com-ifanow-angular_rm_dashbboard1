@@ -29,11 +29,11 @@
             <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode">
                 <div *ngSwitchCase="'tab1'">
                     <div class="wrapper-12 pb-0">
-                        <div class="row" (click)="Open('Add','billerProfile','open')">
+                        <div class="row" (click)="Open('Add','billerProfile')">
                             <div class="col-md-12 right text-right pr-4">
                                 <button mat-stroked-button class="btn-primary addon"><i
-                  class="material-icons">add</i>ADD NEW
-                </button>
+                                        class="material-icons">add</i>ADD NEW
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -55,10 +55,11 @@
                 </i>
                                 <mat-menu #menu="matMenu">
                                     <a mat-menu-item (click)="getBillerPrimary(singleBillerProfile)">Set as Primary</a>
-                                    <a mat-menu-item (click)="Open(singleBillerProfile,'billerProfile','open')">Edit
-                    Biller Profile</a>
-                                    <a mat-menu-item class="bt-1" (click)="deleteModal(singleBillerProfile)">Delete Biller
-                    Profile</a>
+                                    <a mat-menu-item (click)="Open(singleBillerProfile,'billerProfile')">Edit
+                                        Biller Profile</a>
+                                    <a mat-menu-item class="bt-1" (click)="deleteModal(singleBillerProfile)">Delete
+                                        Biller
+                                        Profile</a>
                                 </mat-menu>
                             </div>
                         </div>
@@ -150,7 +151,7 @@
                             </div>
                             <div class="col-md-12 pt-40">
                                 <button mat-stroked-button class="btn-primary br-0 mr-8" (click)="savePrefix(1)">SAVE
-                </button>
+                                </button>
                                 <button mat-stroked-button class="text-primary br-0">CANCEL</button>
                             </div>
                         </div>
@@ -178,7 +179,7 @@
                             </div>
                             <div class="col-md-12 pt-40">
                                 <button mat-stroked-button class="btn-primary br-0 mr-8" (click)="savePrefix(2)">SAVE
-                </button>
+                                </button>
                                 <button mat-stroked-button class="text-primary br-0">CANCEL</button>
                             </div>
                         </div>
@@ -205,7 +206,7 @@
                             </div>
                             <div class="col-md-12 pt-40">
                                 <button mat-stroked-button class="btn-primary br-0 mr-8" (click)="savePrefix(3)">SAVE
-                </button>
+                                </button>
                                 <button mat-stroked-button class="text-primary br-0">CANCEL</button>
                             </div>
                         </div>
@@ -272,7 +273,8 @@
                                         <div class="wrapper-20 pl-24">
                                             <div class="row">
                                                 <div class="col-md-12 p-0">
-                                                    <p>This template is used while sending quotations to your clients.</p>
+                                                    <p>This template is used while sending quotations to your clients.
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>

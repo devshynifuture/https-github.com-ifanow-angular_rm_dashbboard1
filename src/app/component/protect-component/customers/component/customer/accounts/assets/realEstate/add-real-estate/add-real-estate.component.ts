@@ -41,7 +41,7 @@ export class AddRealEstateComponent implements OnInit {
   nomineesListFM: any;
   dataFM: any;
   familyList: any;
-  nexNomineePer: any;
+  nexNomineePer:any;
   showError = false;
   isOwnerPercent: boolean;
   showErrorCoOwner = false;
@@ -218,6 +218,7 @@ export class AddRealEstateComponent implements OnInit {
   }
   onChange(data) {
     if (data == 'owner') {
+      this.nexNomineePer=0;
       // this.nexNomineePer = _.sumBy(this.getCoOwner.value, function (o) {
       //   return o.ownershipPerc;
       // });
@@ -405,7 +406,7 @@ export class AddRealEstateComponent implements OnInit {
     if (data) {
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close' })
-      this.eventService.openSnackBar('Liabilities added successfully', 'OK');
+      this.eventService.openSnackBar('Real Estate added successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
 
@@ -416,7 +417,7 @@ export class AddRealEstateComponent implements OnInit {
     if (data) {
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close' })
-      this.eventService.openSnackBar('Liabilities edited successfully', 'OK');
+      this.eventService.openSnackBar('Real edited successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
     }

@@ -13,9 +13,9 @@
     <!-- TODO   <mat-step  [stepControl]="firstFormGroup">-->
     <mat-step state="done" [stepControl]="feeStructureForm">
       <ng-template matStepLabel>Fee Structure</ng-template>
-      <app-fixed-fee *ngIf="subFeeMode=='createSubFixed'" (outputData)="nextStep($event)" [createFeeData]="feeModeData"
-        [createSubData]='feeStructureData'></app-fixed-fee>
-      <app-variable-fee *ngIf="subFeeMode=='createSubVariable'" (outputData)="nextStep($event)"
+      <app-fixed-fee *ngIf="feeModeData.subFlag=='createSubFixed'" (outputData)="nextStep($event)"
+        [createFeeData]="feeModeData" [createSubData]='feeStructureData'></app-fixed-fee>
+      <app-variable-fee *ngIf="feeModeData.subFlag=='createSubVariable'" (outputData)="nextStep($event)"
         [createFeeData]="feeModeData" [createSubData]='feeStructureData'></app-variable-fee>
     </mat-step>
 
@@ -168,7 +168,7 @@
           </div>
         </div>
       </div>
-      <div  class="bottom-fixed wrapper-12">
+      <div class="bottom-fixed wrapper-12">
         <div class="row">
           <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
@@ -187,8 +187,8 @@
 
     <mat-step state="done" [stepControl]="payeeSetting">
       <ng-template matStepLabel>Payee Settings</ng-template>
-      <app-change-payee (payeeFlag)="getPayeeFlagData($event)" *ngIf="isFlagPayyee" [payeeData]="payeesData"
-        (outputData)="selectPayee($event)"></app-change-payee>
+      <!-- <app-change-payee (payeeFlag)="getPayeeFlagData($event)" *ngIf="isFlagPayyee" [payeeData]="payeesData"
+        (outputData)="selectPayee($event)"></app-change-payee> -->
       <div class="bottom-fixed wrapper-12">
         <div class="row">
           <div class="col-md-4">
@@ -240,5 +240,5 @@
   </mat-horizontal-stepper>
 </div>
 <div *ngIf="isFlagPayyee==false">
-  <app-payee-settings [data]="payeeSettingData" (totalPayeeData)="getTotalPayeeData($event)"></app-payee-settings>
+  <!-- <app-payee-settings [data]="payeeSettingData" (totalPayeeData)="getTotalPayeeData($event)"></app-payee-settings> -->
 </div>

@@ -3,6 +3,7 @@ import {ModifyFeeDialogComponent} from '../modify-fee-dialog/modify-fee-dialog.c
 import {MatDialog} from '@angular/material';
 import {UtilService} from "../../../../../../../services/util.service";
 import {EventService} from "../../../../../../../Data-service/event.service";
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 
 @Component({
@@ -43,5 +44,32 @@ export class SingleDocumentViewComponent implements OnInit {
 
       });*/
 
+  }
+  deleteModal(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 }
