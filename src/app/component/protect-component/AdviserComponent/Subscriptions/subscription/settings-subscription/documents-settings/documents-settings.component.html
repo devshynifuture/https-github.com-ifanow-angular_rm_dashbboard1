@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-md-4 right text-right">
                     <button mat-stroked-button class="btn-default help-btn br-0" (click)="Open('documentHelp','openHelp')">HELP
-          </button>
+                    </button>
                 </div>
             </div>
 
@@ -24,8 +24,8 @@
                         <mat-card-content>
                             <p class="text-center">
                                 <i class="material-icons icon-center" (click)="openFragment('documents',null)">
-                  add
-                </i>
+                                    add
+                                </i>
                             </p>
                         </mat-card-content>
 
@@ -37,8 +37,8 @@
             </div>
         </div>
         <div class="col-md-4 pr-20 pb-20 pl-0" *ngFor="let singleDocument of documentSettingData">
-            <app-single-document-view [singleDocument]="singleDocument" (valueChange)='display($event)'></app-single-document-view>
+            <app-single-document-view [singleDocument]="singleDocument" (valueChange)='display($event)'>
+            </app-single-document-view>
         </div>
     </div>
-</div>
 </div>
