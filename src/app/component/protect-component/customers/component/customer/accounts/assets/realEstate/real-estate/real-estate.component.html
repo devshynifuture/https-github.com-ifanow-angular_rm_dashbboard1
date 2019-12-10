@@ -25,14 +25,14 @@
     <div class="col-md-9 p-0">
       <div class="row">
         <div class="col-md-8 text-right p-0">
-          <img src="assets/images/svg/download-bordered.svg"[matMenuTriggerFor]="menu5" class="c-p"> 
-        <mat-menu #menu5="matMenu">
+          <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
+          <mat-menu #menu5="matMenu">
             <button mat-menu-item>PDF</button>
             <button (click)="ExportTOExcel('Real estate')" mat-menu-item>XLS</button>
           </mat-menu>
-        <img src="assets/images/svg/up-down.svg" class="">
-        <img src="assets/images/svg/three-dot-bordered.svg"[matMenuTriggerFor]="menu6" class="c-p mr-12">
-        <mat-menu #menu6="matMenu">
+          <img src="assets/images/svg/up-down.svg" class="">
+          <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-12">
+          <mat-menu #menu6="matMenu">
             <button mat-menu-item>Email Report</button>
             <button mat-menu-item>Option 2</button>
             <button mat-menu-item>Option 3</button>
@@ -86,9 +86,9 @@
         <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
       </ng-container>
       <ng-container matColumnDef="status">
-        <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br"> Status </th>
-        <td mat-cell *matCellDef="let element" class="br"> LIVE </td>
-        <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
+        <th *matHeaderCellDef class="br t-5" mat-header-cell mat-sort-header="active"> Status</th>
+        <td *matCellDef="let element" class="br t-5 text-primary" mat-cell>LIVE </td>
+        <td *matFooterCellDef mat-footer-cell></td>
       </ng-container>
 
       <ng-container matColumnDef="icons">
