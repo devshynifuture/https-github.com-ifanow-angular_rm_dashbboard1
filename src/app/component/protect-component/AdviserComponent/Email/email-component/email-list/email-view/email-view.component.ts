@@ -34,7 +34,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     this.emailSubscription.unsubscribe();
   }
 
-  openBottomSheet(data) {
+  openBottomSheet() {
     this._bottomSheet.open(EmailReplyComponent);
   }
 
