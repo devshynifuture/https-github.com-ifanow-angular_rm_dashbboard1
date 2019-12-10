@@ -30,7 +30,7 @@ export class RealEstateComponent implements OnInit {
   footer= [];
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
-  displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status', 'icons'];
+  displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'icons'];
   excelData: any[];
 
   constructor(public subInjectService: SubscriptionInject, publicutilService: UtilService,
@@ -221,7 +221,6 @@ export interface PeriodicElement3 {
   value: string;
   pvalue: string;
   desc: string;
-  status: string;
 }
 
 const ELEMENT_DATA3: PeriodicElement3[] = [
@@ -232,7 +231,6 @@ const ELEMENT_DATA3: PeriodicElement3[] = [
     value: '60,000',
     pvalue: '60,000',
     desc: 'ICICI FD',
-    status: 'ICICI FD'
   },
   {
     no: '1.',
@@ -241,7 +239,6 @@ const ELEMENT_DATA3: PeriodicElement3[] = [
     value: '60,000',
     pvalue: '60,000',
     desc: 'ICICI FD',
-    status: 'ICICI FD'
   },
-  {no: ' ', owner: 'Total', type: '', value: '1,28,925', pvalue: '1,28,925', desc: '', status: ' '},
+  {no: ' ', owner: 'Total', type: '', value: '1,28,925', pvalue: '1,28,925', desc: ''},
 ];

@@ -1,17 +1,17 @@
-import {Injectable} from '@angular/core';
-import {DatePipe} from '@angular/common';
+import { Injectable } from '@angular/core';
+import { DatePipe } from "@angular/common";
+import { Row, Workbook, Worksheet } from 'exceljs';
+import { saveAs } from 'file-saver';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilService {
+  getFamilyMemberData: any;
 
   constructor() {
   }
-
-  getFamilyMemberData: any;
-
   static convertObjectToArray(inputObject: object): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
@@ -25,10 +25,17 @@ export class UtilService {
     return outputArray;
   }
 
+  totalCalculator(data: number[]) {
+    return data.reduce((accumulator, currentValue) => {
+      accumulator = accumulator + currentValue;
+      return accumulator;
+    }, 0);
+  }
+
   static convertObjectToCustomArray(inputObject: object, keyNameForOutput: string, keyValueForOutput: string): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
-      const object = {selected: false};
+      const object = { selected: false };
       object[keyNameForOutput] = inputObject[key];
       object[keyValueForOutput] = key;
 
@@ -43,7 +50,7 @@ export class UtilService {
   }
 
   static getStartOfTheDay(date: Date) {
-    date.setHours(0);
+    date.setHours(0)
     date.setMinutes(0);
     date.setSeconds(0);
     date.setMilliseconds(0);
@@ -59,12 +66,51 @@ export class UtilService {
 
   }
 
+  formatNumbers(data) {
+    return (parseInt(data)).toLocaleString('en-IN');
+  }
+
+  formatter(data) {
+    return Math.round(data);
+  }
+
+  calculateAgeFromCurrentDate(data) {
+    data.forEach(element => {
+      const bdate = new Date(element.dateOfBirth);
+      const timeDiff = Math.abs(Date.now() - bdate.getTime());
+      let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
+      element['age'] = age
+    });
+    this.getFamilyMemberData = data;
+    console.log("family Member with age", this.getFamilyMemberData)
+    return this.getFamilyMemberData;
+  }
+
+  keyPress(event: any) {
+    const pattern = /[0-9\+\-\. ]/;
+
+    const inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
   static convertDateObjectToDateString(datePipe: DatePipe, date: Date) {
     return datePipe.transform(date, 'yyyy-MM-dd');
   }
 
+  static checkStatusId(element) {
+    element.forEach(obj => {
+      if (obj.maturityDate < new Date()) {
+        obj.statusId = 'MATURED'
+      } else {
+        obj.statusId = 'LIVE'
+      }
+    });
+    console.log('Status >>>>>>', element)
+  }
   static async exportAs(headerData, excelData: any, footer: any[]) {
-    // var wb = new Workbook()
+    //var wb = new Workbook()
     // const ws = wb.addWorksheet()
     // //---------MetaData----------//
 
@@ -102,42 +148,6 @@ export class UtilService {
     // const buf = await wb.xlsx.writeBuffer()
     // saveAs(new Blob([buf]), 'Rahul Jain-' + 'value' + '-' + new Date() + '.xlsx')
 
-  }
-
-  totalCalculator(data: number[]) {
-    return data.reduce((accumulator, currentValue) => {
-      accumulator = accumulator + currentValue;
-      return accumulator;
-    }, 0);
-  }
-
-  formatNumbers(data) {
-    return (parseInt(data)).toLocaleString('en-IN');
-  }
-
-  formatter(data) {
-    return Math.round(data);
-  }
-
-  calculateAgeFromCurrentDate(data) {
-    data.forEach(element => {
-      const bdate = new Date(element.dateOfBirth);
-      const timeDiff = Math.abs(Date.now() - bdate.getTime());
-      const age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
-      element.age = age;
-    });
-    this.getFamilyMemberData = data;
-    console.log('family Member with age', this.getFamilyMemberData);
-    return this.getFamilyMemberData;
-  }
-
-  keyPress(event: any) {
-    const pattern = /[0-9\+\-\. ]/;
-
-    const inputChar = String.fromCharCode(event.charCode);
-    if (event.keyCode != 8 && !pattern.test(inputChar)) {
-      event.preventDefault();
-    }
   }
 
 }

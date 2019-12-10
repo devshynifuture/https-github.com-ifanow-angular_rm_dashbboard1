@@ -15,6 +15,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import * as Excel from 'exceljs/dist/exceljs';
 import { saveAs } from 'file-saver'
+import * as _ from 'lodash';
 
 
 @Component({
@@ -245,7 +246,12 @@ export class FixedIncomeComponent implements OnInit {
     this.dataSourceFixed.data = data.fixedDepositList;
     this.dataSourceFixed.sort = this.fixedIncomeTableSort;
     console.log('soted &&&&&&&&&', this.dataSourceFixed);
-    this.sumAmountInvested = data.sumAmountInvested;
+    UtilService.checkStatusId(this.dataSourceFixed.filteredData)
+   this.dataSourceFixed.filteredData, function(o) {
+      this.sumCurrentValue += o.nomineePercentageShare;  
+    };
+       console.log( '&&&&&&&&&',this.sumCurrentValue)
+  //  this.sumAmountInvested = data.sumAmountInvested;
     this.sumCurrentValue = data.sumCurrentValue;
     this.sumMaturityValue = data.sumMaturityValue;
 
@@ -267,6 +273,7 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = false;
     this.dataSourceRecurring = new MatTableDataSource(data.recurringDeposits);
     this.dataSourceRecurring.sort = this.recurringDepositTableSort;
+    UtilService.checkStatusId(this.dataSourceRecurring.filteredData)
     this.totalCurrentValue = data.totalCurrentValue;
     this.totalMarketValue = data.totalMarketValue;
   }
@@ -287,11 +294,11 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = false;
     this.dataSourceBond = new MatTableDataSource(data.bondList);
     this.dataSourceBond.sort = this.bondListTableSort;
+    UtilService.checkStatusId(this.dataSourceBond.filteredData)
     this.sumAmountInvestedB = data.sumAmountInvested;
     this.sumCouponAmount = data.sumCouponAmount;
     this.sumCurrentValueB = data.sumCurrentValue;
   }
-
   deleteModal(value, data) {
     const dialogData = {
       data: value,

@@ -32,6 +32,9 @@ export class StockScripLevelHoldingComponent implements OnInit {
   removeHoldings(index) {
     this.HoldingArray.removeAt(index)
   }
+  saveSchemeHolding(){
+    console.log('');
+  }
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
 

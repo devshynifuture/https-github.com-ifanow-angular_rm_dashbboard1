@@ -196,15 +196,15 @@ export class RetirementAccountComponent implements OnInit {
 
   displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'empc', 'rate', 'bal', 'bacla', 'year', 'desc', 'status', 'icons'];
   datasource11;
-  displayedColumns12 = ['no', 'owner', 'cvalue', 'total', 'scheme', 'pran', 'desc', 'status', 'icons'];
+  displayedColumns12 = ['no', 'owner', 'cvalue', 'total', 'scheme', 'pran', 'desc', 'icons'];
   datasource12;
-  displayedColumns13 = ['no', 'owner', 'name', 'number', 'year', 'amt', 'reason', 'desc', 'status', 'icons'];
+  displayedColumns13 = ['no', 'owner', 'name', 'number', 'year', 'amt', 'reason', 'desc', 'icons'];
   datasource13;
-  displayedColumns14 = ['no', 'owner', 'aemp', 'aempe', 'rate', 'grate', 'grateemp', 'date', 'desc', 'status', 'icons'];
+  displayedColumns14 = ['no', 'owner', 'aemp', 'aempe', 'rate', 'grate', 'grateemp', 'date', 'desc', 'icons'];
   datasource14;
-  displayedColumns15 = ['no', 'owner', 'nvalue', 'date', 'amt', 'pay', 'desc', 'status', 'icons'];
+  displayedColumns15 = ['no', 'owner', 'nvalue', 'date', 'amt', 'pay', 'desc', 'icons'];
   datasource15;
-  displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
+  displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'icons'];
   datasource16;
   isLoading = true;
   ngOnInit() {
@@ -638,7 +638,6 @@ export interface PeriodicElement12 {
   pran: string;
   scheme: string;
   desc: string;
-  status: string;
 }
 export interface PeriodicElement13 {
   no: string;
@@ -659,7 +658,7 @@ export interface PeriodicElement15 {
   amt: string;
   pay: string;
   desc: string;
-  status: string;
+  
 }
 export interface PeriodicElement16 {
   no: string;
@@ -670,7 +669,7 @@ export interface PeriodicElement16 {
   number: string;
   mdate: string;
   desc: string;
-  status: string;
+  
 }
 export interface PeriodicElement14 {
   no: string;
@@ -682,6 +681,6 @@ export interface PeriodicElement14 {
   grateemp: string;
   date: string;
   desc: string;
-  status: string;
+  
 }
 

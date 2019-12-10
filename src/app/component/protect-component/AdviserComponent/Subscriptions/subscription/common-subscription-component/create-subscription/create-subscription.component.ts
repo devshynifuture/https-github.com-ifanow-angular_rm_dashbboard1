@@ -22,7 +22,7 @@ import { UtilService } from "../../../../../../../services/util.service";
   ],
 })
 export class CreateSubscriptionComponent implements OnInit {
-  @Input() subFeeMode;
+
   feeModeData: any;
   isFlagPayyee: boolean;
   payeeSettingData: any = null;
@@ -30,9 +30,9 @@ export class CreateSubscriptionComponent implements OnInit {
   constructor(private enumService: EnumServiceService, public subInjectService: SubscriptionInject,
     private eventService: EventService, private fb: FormBuilder,
     private subService: SubscriptionService, public datepipe: DatePipe) {
-    this.eventService.sidebarSubscribeData.subscribe(
-      data => this.subFeeMode = data
-    );
+    // this.eventService.sidebarSubscribeData.subscribe(
+    //   data => this.subFeeMode = data
+    // );
     this.subInjectService.event.subscribe(
       data => {
         this.isFlagPayyee = data.flag;
@@ -92,7 +92,6 @@ export class CreateSubscriptionComponent implements OnInit {
   advisorId;
 
   ngOnInit() {
-
     // this.stepper.selectedIndex = 0;
     this.isFlagPayyee = true;
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
