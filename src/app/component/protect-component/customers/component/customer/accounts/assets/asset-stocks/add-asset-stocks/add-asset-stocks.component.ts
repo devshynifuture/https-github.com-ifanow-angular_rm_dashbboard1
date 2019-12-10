@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-asset-stocks',
@@ -10,10 +13,16 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class AddAssetStocksComponent implements OnInit {
   assetForm: any;
   ownerData: any;
+  advisorId: any;
+  clientId: any;
+  ownerName: any;
+  familyMemberId: any;
 
-  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder) { }
+  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
   }
   @Input() set data(data) {
     if (data == null) {
@@ -29,8 +38,10 @@ export class AddAssetStocksComponent implements OnInit {
     this.ownerData = this.assetForm.controls;
     console.log(this.assetForm)
   }
-  close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  display(value) {
+    console.log('value selected', value)
+    this.ownerName = value.userName;
+    this.familyMemberId = value.id
   }
   submitStockData() {
     switch (true) {
@@ -50,8 +61,33 @@ export class AddAssetStocksComponent implements OnInit {
         this.assetForm.get('portfolioName').markAsTouched();
         break;
       default:
-        console.log("call api")
-        break;
+        let obj = {
+          "clientId": this.clientId,
+          "advisorId": this.advisorId,
+          "familyMemberId": this.familyMemberId,
+          "ownerName": this.ownerName,
+          "portfolioName": this.assetForm.get("portfolioName").value,
+          "stocks": [
+            {
+              "valueAsOn": this.assetForm.get("valueAsOn").value,
+              "currentMarketValue": this.assetForm.get("currentMarketValue").value,
+              "amountInvested": this.assetForm.get("amtInvested").value,
+              "stockType": 1
+            }
+          ]
+        }
+        this.cusService.addAssetStocks(obj).subscribe(
+          data => this.submitStockDataRes(data),
+          err => this.eventService.openSnackBar(err)
+        )
+      // stock type portfolio summary
     }
+  }
+  submitStockDataRes(data) {
+    console.log(data)
+    this.close();
+  }
+  close() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 }
