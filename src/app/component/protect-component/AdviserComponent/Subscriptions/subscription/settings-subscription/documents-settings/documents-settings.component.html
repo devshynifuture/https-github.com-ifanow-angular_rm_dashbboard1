@@ -33,7 +33,7 @@
           </mat-card>
         </div>
         <div class="col-md-4 pr-20 pb-20 pl-0" *ngFor="let singleDocument of documentSettingData">
-          <app-single-document-view [singleDocument]="singleDocument"></app-single-document-view>
+          <app-single-document-view [singleDocument]="singleDocument" (valueChange)='display($event)'></app-single-document-view>
         </div>
       </div>
     </div>

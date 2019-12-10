@@ -257,6 +257,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     console.log('addFilters', addFilters);
     if (!_.includes(this.filterStatus, addFilters)) {
       this.filterStatus.push(addFilters);
+      console.log(this.filterStatus)
     } else {
       // _.remove(this.filterStatus, this.senddataTo);
     }

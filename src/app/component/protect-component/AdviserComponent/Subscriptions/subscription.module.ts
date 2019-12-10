@@ -57,6 +57,7 @@ import { CommonModule } from '@angular/common';
 import { AddQuotationComponent } from './subscription/common-subscription-component/add-quotation/add-quotation.component';
 import { SubscriptionRoutingModule } from './subscription-routing.module';
 import { SubscriptionEntry } from './subscription.entry.module';
+import { AddVariableFeeComponent } from './subscription/common-subscription-component/add-variable-fee/add-variable-fee.component';
 
 export const componentList = [SubscriptionComponent,
   InvoicePdfDocumentComponent,
@@ -103,7 +104,8 @@ export const componentList = [SubscriptionComponent,
   SingleDocumentViewComponent,
   CustomDialogContainerComponent,
   HowItWorksComponent,
-  AddQuotationComponent
+  AddQuotationComponent,
+  AddVariableFeeComponent
 ];
 
 @NgModule({
