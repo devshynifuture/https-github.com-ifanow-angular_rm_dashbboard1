@@ -21,6 +21,7 @@ import * as _ from 'lodash';
 import * as Excel from 'exceljs/dist/exceljs';
 import { saveAs } from 'file-saver'
 import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../../excel.service';
 
 
 @Component({
@@ -189,7 +190,7 @@ export class RetirementAccountComponent implements OnInit {
       this.footer.push(Object.assign(footerData))
 
     }
-    this.exportExcel(headerData, header, this.excelData, this.footer,value)
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
   }
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
   }
@@ -216,46 +217,6 @@ export class RetirementAccountComponent implements OnInit {
       advisorId: this.advisorId
     };
     this.getListEPF();
-  }
-  async exportExcel(headerData, header, data, footer,value) {
-    const wb = new Excel.Workbook()
-    const ws = wb.addWorksheet()
-    //ws.mergeCells('A1', 'M1');
-    const meta1 = ws.getCell('A1')
-    const meta2 = ws.getCell('A2')
-    const meta3 = ws.getCell('A3')
-    meta1.font = { bold: true }
-    meta2.font = { bold: true }
-    meta3.font = { bold: true }
-    ws.getCell('A1').value = 'Type of report - ' + value;
-    ws.getCell('A2').value = 'Client name - Rahul Jain';
-    ws.getCell('A3').value = 'Report as on - ' + new Date();
-    //ws.getCell('A1').alignment = { horizontal: 'center' };
-    const head = ws.getRow(5)
-    head.font = { bold: true }
-    head.fill = {
-      type: 'pattern',
-      pattern: 'darkVertical',
-      fgColor: {
-        argb: '#f5f7f7'
-      }
-    };
-    ws.getRow(5).values = header;
-    ws.columns.alignment = { horizontal: 'left' };
-    ws.columns = headerData
-    data.forEach(element => {
-      ws.addRow(element)
-    });
-    footer.forEach(element => {
-      const last = ws.addRow(element)
-      last.font = { bold: true }
-    });
-    const buf = await wb.xlsx.writeBuffer()
-    saveAs(new Blob([buf]), 'Rahul Jain-' + value + '-' + new Date() + '.xlsx')
-  }
-  getfixedIncomeData(value) {
-    this.showRecurring = value;
-    (value == '2') ? this.getListNPS() : (value == '3') ? this.getListGratuity() : (value == '4') ? this.getListSuperannuation() : (value == '5') ? this.getListEPS() : this.getListEPF();
   }
   openRetirement(value, state, data) {
     const fragmentData = {

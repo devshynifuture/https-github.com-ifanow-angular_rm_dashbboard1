@@ -11,6 +11,7 @@ import { DetailedKvpComponent } from './detailed-kvp/detailed-kvp.component';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import * as Excel from 'exceljs/dist/exceljs';
 import { saveAs } from 'file-saver'
+import { ExcelService } from '../../../../excel.service';
 @Component({
   selector: 'app-kvp-scheme',
   templateUrl: './kvp-scheme.component.html',
@@ -60,43 +61,8 @@ async ExportTOExcel(value) {
     this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue), '',
     this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountInvested), '', '', '', '']
   this.footer.push(Object.assign(footerData))
-  this.exportExcel(headerData, header, this.excelData, this.footer,value)
+  ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
 }
-async exportExcel(headerData, header, data, footer,value) {
-  const wb = new Excel.Workbook()
-  const ws = wb.addWorksheet()
-  const meta1 = ws.getCell('A1')
-  const meta2 = ws.getCell('A2')
-  const meta3 = ws.getCell('A3')
-  meta1.font = { bold: true }
-  meta2.font = { bold: true }
-  meta3.font = { bold: true }
-  ws.getCell('A1').value = 'Type of report - ' + value;
-  ws.getCell('A2').value = 'Client name - Rahul Jain';
-  ws.getCell('A3').value = 'Report as on - ' + new Date();
-  const head = ws.getRow(5)
-  head.font = { bold: true }
-  head.fill = {
-    type: 'pattern',
-    pattern: 'darkVertical',
-    fgColor: {
-      argb: '#f5f7f7'
-    }
-  };
-  ws.getRow(5).values = header;
-  ws.columns.alignment = { horizontal: 'left' };
-  ws.columns = headerData
-  data.forEach(element => {
-    ws.addRow(element)
-  });
-  footer.forEach(element => {
-    const last = ws.addRow(element)
-    last.font = { bold: true }
-  });
-  const buf = await wb.xlsx.writeBuffer()
-  saveAs(new Blob([buf]), 'Rahul Jain-' + value + '-' + new Date() + '.xlsx')
-}
-
   getKvpSchemedata() {
     const obj = {
       advisorId: this.advisorId,
