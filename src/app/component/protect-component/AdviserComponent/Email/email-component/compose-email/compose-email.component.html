@@ -57,14 +57,14 @@
     <div class="row btl-1 pt-16">
         <div class="col-md-9">
             <mat-chip-list #chipList aria-label="docName selection">
-                <mat-chip *ngFor="let doc of docObj ; let i = index" (removed)="remove(i)">
+                <!-- <mat-chip *ngFor="let doc of docObj ; let i = index" (removed)="remove(i)">
                     {{doc.documentName}}
                     <mat-icon matChipRemove>cancel</mat-icon>
-                </mat-chip>
+                </mat-chip> -->
             </mat-chip-list>
             <div class="row">
                 <div class="col-md-2">
-                    <button mat-stroked-button class="btn-primary br-0" (click)="sendEmail()">Send</button>
+                    <button mat-stroked-button class="btn-primary br-0">Send</button>
                 </div>
             </div>
         </div>

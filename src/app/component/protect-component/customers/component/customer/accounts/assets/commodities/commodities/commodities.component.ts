@@ -13,6 +13,7 @@ import { DetailedViewOthersComponent } from '../others/detailed-view-others/deta
 import * as Excel from 'exceljs/dist/exceljs';
 import { saveAs } from 'file-saver'
 import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../../excel.service';
 
 @Component({
   selector: 'app-commodities',
@@ -22,10 +23,10 @@ import { FormatNumberDirective } from 'src/app/format-number.directive';
 export class CommoditiesComponent implements OnInit {
   showRequring: string;
   isLoading: boolean = true;
-  displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue', 'pvalue', 'desc', 'icons'];
+  displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue', 'pvalue', 'desc','status', 'icons'];
   datasource9 = ELEMENT_DATA9;
 
-  displayedColumns10 = ['no', 'owner', 'type', 'mvalue', 'pvalue', 'pur', 'rate', 'desc', 'icons'];
+  displayedColumns10 = ['no', 'owner', 'type', 'mvalue', 'pvalue', 'pur', 'rate', 'desc', 'status','icons'];
   datasource10 = ELEMENT_DATA10;
   advisorId: any;
   goldList: any;
@@ -99,43 +100,9 @@ export class CommoditiesComponent implements OnInit {
       this.footer.push(Object.assign(footerData))
 
     }
-    this.exportExcel(headerData, header, this.excelData, this.footer,value)
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
   }
-  async exportExcel(headerData, header, data, footer,value) {
-    const wb = new Excel.Workbook()
-    const ws = wb.addWorksheet()
-    //ws.mergeCells('A1', 'M1');
-    const meta1 = ws.getCell('A1')
-    const meta2 = ws.getCell('A2')
-    const meta3 = ws.getCell('A3')
-    meta1.font = { bold: true }
-    meta2.font = { bold: true }
-    meta3.font = { bold: true }
-    ws.getCell('A1').value = 'Type of report - ' + value;
-    ws.getCell('A2').value = 'Client name - Rahul Jain';
-    ws.getCell('A3').value = 'Report as on - ' + new Date();
-    const head = ws.getRow(5)
-    head.font = { bold: true }
-    head.fill = {
-      type: 'pattern',
-      pattern: 'darkVertical',
-      fgColor: {
-        argb: '#f5f7f7'
-      }
-    };
-    ws.getRow(5).values = header;
-    ws.columns.alignment = { horizontal: 'left' };
-    ws.columns = headerData
-    data.forEach(element => {
-      ws.addRow(element)
-    });
-    footer.forEach(element => {
-      const last = ws.addRow(element)
-      last.font = { bold: true }
-    });
-    const buf = await wb.xlsx.writeBuffer()
-    saveAs(new Blob([buf]), 'Rahul Jain-' + value + '-' + new Date() + '.xlsx')
-  }
+  
   getfixedIncomeData(value) {
     console.log('value++++++', value)
     this.showRequring = value
@@ -325,23 +292,24 @@ export interface PeriodicElement9 {
   mvalue: string;
   pvalue: string;
   desc: string;
+  status:String
 }
 
 const ELEMENT_DATA9: PeriodicElement9[] = [
   {
     no: '1.', owner: 'Rahul Jain'
     , grams: "50 tolas", car: "24", price: "32,000(as on 20/08/2019)",
-    mvalue: "60,000", pvalue: "60,000", desc: "ICICI FD", 
+    mvalue: "60,000", pvalue: "60,000", desc: "ICICI FD", status:''
   },
   {
     no: '2.', owner: 'Rahul Jain'
     , grams: "25 tolas", car: "24", price: "32,000(as on 20/08/2019)",
-    mvalue: "60,000", pvalue: "60,000", desc: "ICICI FD", 
+    mvalue: "60,000", pvalue: "60,000", desc: "ICICI FD", status:''
   },
   {
     no: '', owner: 'Total'
     , grams: "", car: "", price: "",
-    mvalue: "1,28,925", pvalue: "1,20,000", desc: "", 
+    mvalue: "1,28,925", pvalue: "1,20,000", desc: "", status:''
   },
 
 ];
