@@ -1,6 +1,7 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {EmailServiceService} from './../../email-service.service';
 import {Component, OnInit} from '@angular/core';
+import {EmailUtilService} from "../../../../../../services/email-util.service";
 
 @Component({
   selector: 'app-left-sidebar',
@@ -24,11 +25,37 @@ export class LeftSidebarComponent implements OnInit {
 
   getFileDetails(e) {
     console.log('LeftSidebarComponent getFileDetails e : ', e.target.files[0]);
+    const singleFile = e.target.files[0];
+
+    const fileData = [];
+
+    EmailUtilService.getBase64FromFile(singleFile, (successData) => {
+      fileData.push({
+        filename: singleFile.name,
+        size: singleFile.size,
+        mimeType: singleFile.type,
+        data: successData
+      });
+      this.createUpdateDraft(null, ['gaurav@futurewise.co.in'],
+        'This is a test message', 'This is a test message body', fileData);
+    });
 
   }
 
-  createUpdateDraft(id, subject, bodyMessage, attachments) {
+  createUpdateDraft(id: string, toAddress: Array<any>, subject: string, bodyMessage: string, fileData: Array<any>) {
 
+    const requestJson = {
+      id,
+      toAddress,
+      subject,
+      message: bodyMessage,
+      fileData
+    };
+
+    console.log('LeftSidebarComponent createUpdateDraft requestJson : ', requestJson);
+    this.emailService.createUpdateDraft(requestJson).subscribe((responseJson) => {
+    }, (error) => {
+    });
   }
 
   loadList(obj) {

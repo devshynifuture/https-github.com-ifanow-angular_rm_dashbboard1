@@ -51,11 +51,12 @@ export class EmailServiceService {
   }
 
 
-  createUpdateDraft() {
+  createUpdateDraft(body) {
     const userInfo = AuthService.getUserInfo();
-    return this.http.post(apiConfig.GMAIL_URL + appConfig.GET_RIGHT_SIDE_NAV, {
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.CREATE_DRAFT, {
       email: userInfo.emailId,
-      userId: userInfo.advisorId
+      userId: userInfo.advisorId,
+      ...body
     });
   }
   openEmailAddTask(data) {
