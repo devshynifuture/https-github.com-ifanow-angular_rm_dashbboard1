@@ -1,13 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EnumServiceService} from '../../../../../../../services/enum-service.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {INT_TYPE} from '@angular/compiler/src/output/output_ast';
-import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EnumServiceService } from '../../../../../../../services/enum-service.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { INT_TYPE } from '@angular/compiler/src/output/output_ast';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { from } from 'rxjs';
 import { UtilService } from 'src/app/services/util.service';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
@@ -34,7 +34,7 @@ export interface PeriodicElement {
     //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     // },
     // { provide: MAT_DATE_LOCALE, useValue: 'en' },
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 
 })
@@ -143,16 +143,16 @@ export class InvoiceComponent implements OnInit {
       this.finalAmount = 0;
       this.discount = 0;
       this.storeData =
-      this.taxStatus = ['IGST(18%)'];
+        this.taxStatus = ['IGST(18%)'];
       this.editPayment.controls.serviceName.enable()
 
     }
   }
 
   gstTreatment = [
-    {name: "Registered Business - Regular", value: 0},
-    {name: "Registered Business - Composition", value: 1},
-    {name: "Unregistered Business", value: 2}
+    { name: "Registered Business - Regular", value: 0 },
+    { name: "Registered Business - Composition", value: 1 },
+    { name: "Unregistered Business", value: 2 }
   ]
 
   keyPress(event: any) {
@@ -199,7 +199,7 @@ export class InvoiceComponent implements OnInit {
     console.log(this.storeData);
     this.editPayment = this.fb.group({
       id: [data.id],
-      clientName: [(data.clientName == undefined)? '':data.clientName, [Validators.required]],
+      clientName: [(data.clientName == undefined) ? '' : data.clientName, [Validators.required]],
       billerName: [(data.billerName == undefined) ? '' : data.billerName, [Validators.required]],
       advisorId: [(data.advisorId == undefined) ? '' : data.advisorId, [Validators.required]],
       billerAddress: [this.defaultVal.biller.billerAddress],
@@ -327,13 +327,13 @@ export class InvoiceComponent implements OnInit {
       billingAddress: [(data.billingAddress == undefined) ? '' : data.billingAddress, [Validators.required]],
       invoiceNumber: [data.invoiceNumber, [Validators.required]],
       invoiceDate: [data.invoiceDate, [Validators.required]],
-      finalAmount: [(data.finalAmount== undefined) ? 0 : parseInt(data.finalAmount), [Validators.required]],
-      discount: [(data.discount== undefined) ? 0 : data.discount, [Validators.required]],
+      finalAmount: [(data.finalAmount == undefined) ? 0 : parseInt(data.finalAmount), [Validators.required]],
+      discount: [(data.discount == undefined) ? 0 : data.discount, [Validators.required]],
       dueDate: [data.dueDate, [Validators.required]],
       footnote: [data.footnote, [Validators.required]],
       terms: [data.terms, [Validators.required]],
       taxStatus: ['IGST(18%)'],
-      serviceName: [(data.services == undefined) ? '0' :(data.services.length == 0)? '0': data.services[0].serviceName, [Validators.required]],
+      serviceName: [(data.services == undefined) ? '0' : (data.services.length == 0) ? '0' : data.services[0].serviceName, [Validators.required]],
       subTotal: [(data == undefined) ? '' : data.subTotal],
       igstTaxAmount: [data.igstTaxAmount],
       auto: [data.auto]
@@ -650,24 +650,24 @@ export class InvoiceComponent implements OnInit {
       clientData: this.storeData,
       templateType: 1, //2 is for quotation
       documentList: [this.storeData],
-      isInv:true
+      isInv: true
     };
     // this.dataSource.forEach(singleElement => {
     //   if (singleElement.selected) {
     //     data.documentList.push(singleElement);
     //   }
     // });
-    if(input=='upper'){
-      this.OpenEmailUpper(data,'emailInvoiceFroala');
-    }else{
-      this.OpenEmail(data,'emailInvoiceFroala');
+    if (input == 'upper') {
+      this.OpenEmailUpper(data, 'emailInvoiceFroala');
+    } else {
+      this.OpenEmail(data, 'emailInvoiceFroala');
 
     }
   }
-  OpenEmail(data,value) {
+  OpenEmail(data, value) {
     const fragmentData = {
       flag: value,
-      data:data,
+      data: data,
       id: 1,
       state: 'open'
     };
@@ -675,17 +675,17 @@ export class InvoiceComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', );
+          console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }
       }
 
     );
   }
-  OpenEmailUpper(data,value) {
+  OpenEmailUpper(data, value) {
     const fragmentData = {
       flag: value,
-      data:data,
+      data: data,
       id: 1,
       state: 'open'
     };
@@ -693,7 +693,7 @@ export class InvoiceComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', );
+          console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }
       }

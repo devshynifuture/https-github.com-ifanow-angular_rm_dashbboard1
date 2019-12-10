@@ -21,7 +21,7 @@
             </div>
             <div class="col-md-9">
                 <p class="m-0 text-black">
-                    support@futurewise.co.in
+                    {{ 'support@futurewise.co.in' }}
                 </p>
             </div>
             <div class="col-md-2 pr-0">
@@ -38,7 +38,6 @@
                 <p class="m-0 text-custom">To</p>
             </div>
             <div class="col-md-11">
-                <!-- <p class="m-0 text-black">{{this._inputData.clientData.userEmailId}}</p> -->
                 <input type="text" [(ngModel)]="receipentEmail" />
             </div>
         </div>
@@ -52,32 +51,21 @@
             </div>
         </div>
         <div class="form-group mb-0 mt-8">
-            <!-- <app-froala [(model)]="emailBody" (modelChange)="saveData($event)"></app-froala> -->
+            <app-froala [(model)]="emailBody" modelChange="saveData($event)"></app-froala>
         </div>
     </div>
     <div class="row btl-1 pt-16">
         <div class="col-md-9">
-            <mat-chip-list #chipList aria-labeal="docName selection">
-                <!-- <mat-chip *ngFor="let doc of docObj ; let i = index" >
+            <mat-chip-list #chipList aria-label="docName selection">
+                <!-- <mat-chip *ngFor="let doc of docObj ; let i = index" (removed)="remove(i)">
                     {{doc.documentName}}
                     <mat-icon matChipRemove>cancel</mat-icon>
                 </mat-chip> -->
-                <!-- <input matInput
-                       [matChipInputFor]="chipList"
-                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                       [matChipInputAddOnBlur]="addOnBlur"
-                       (matChipInputTokenEnd)="add($event)"> -->
             </mat-chip-list>
             <div class="row">
                 <div class="col-md-2">
                     <button mat-stroked-button class="btn-primary br-0">Send</button>
                 </div>
-                <!--        <div class="col-md-1">-->
-                <!--          <h3 class="m-0 pt-8 f-700 text-custom c-p">A</h3>-->
-                <!--        </div>-->
-                <!--        <div class="col-md-1">-->
-                <!--          <img src="/assets/images/svg/delete.svg" class="pt-8 c-p">-->
-                <!--        </div>-->
             </div>
         </div>
         <!--    <div class="col-md-3">-->

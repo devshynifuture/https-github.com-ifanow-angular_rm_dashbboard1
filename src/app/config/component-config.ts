@@ -258,5 +258,22 @@ export const appConfig = {
   ADD_INCOME_LIST: 'account/income/add',
   EDIT_INCOME_LIST: 'account/income/edit',
   GET_GLOBAL_GROWTH_RATE: 'account/income/growth/rate/global/get',
-  DELETE_INCOME: 'account/income/delete?'
+  DELETE_INCOME: 'account/income/delete?',
+
+
+  // gmail
+  ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
+  GET_PROFILE: 'gmail/users/getProfile',
+  GET_RIGHT_SIDE_NAV: 'user/label/list/get',
+  DELETE_MESSAGES: 'gmail/messages/delete',
+  MODIFY_MESSAGES: 'gmail/messages/modify',
+  MOVE_MESSAGES_TO_TRASH: 'gmail/messages/thrash',
+  MOVE_MESSAGES_FROM_TRASH: 'gmail/messages/unthrash',
+  DELETE_MULTIPLE_THREADS: 'gmail/threads/delete',
+  MODIFY_MULTIPLE_THREADS: 'gmail/threads/modify',
+  MOVE_THREADS_TO_THRASH: 'gmail/threads/thrash',
+  GET_DRAFT_LIST: 'user/draft/list/get',
+  GET_GMAIL_INBOX_LIST: 'user/thread/list/get',
+  CREATE_DRAFT: 'user/draft/create',
+
 };

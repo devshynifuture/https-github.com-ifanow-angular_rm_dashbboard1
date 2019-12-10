@@ -1,3 +1,12 @@
+<button mat-icon-button (click)="goBack()">
+    <mat-icon>arrow_left</mat-icon>
+</button>
+
+<button mat-button (click)="openEmailAddTask(null)">Add Task</button>
+
+<button mat-button (click)="openComposeEmail(null)">Compose</button>
 <p>
     email view works
 </p>
+
+<button mat-raised-button (click)="openBottomSheet()">Reply</button>

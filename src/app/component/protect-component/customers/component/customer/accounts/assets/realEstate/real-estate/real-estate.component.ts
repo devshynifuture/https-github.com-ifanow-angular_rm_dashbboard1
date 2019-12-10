@@ -12,6 +12,7 @@ import {DetailedViewRealEstateComponent} from '../detailed-view-real-estate/deta
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import * as Excel from 'exceljs/dist/exceljs';
 import { saveAs } from 'file-saver'
+import { ExcelService } from '../../../../excel.service';
 
 @Component({
   selector: 'app-real-estate',
@@ -30,7 +31,7 @@ export class RealEstateComponent implements OnInit {
   footer= [];
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
-  displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status', 'icons'];
+  displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc','status', 'icons'];
   excelData: any[];
 
   constructor(public subInjectService: SubscriptionInject, publicutilService: UtilService,
@@ -65,41 +66,7 @@ export class RealEstateComponent implements OnInit {
       this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMarketValue), '',
       this.formatNumber.first.formatAndRoundOffNumber(this.sumOfpurchasedValue), '', '']
     this.footer.push(Object.assign(footerData))
-    this.exportExcel(headerData, header, this.excelData, this.footer,value)
-  }
-  async exportExcel(headerData, header, data, footer,value) {
-    const wb = new Excel.Workbook()
-    const ws = wb.addWorksheet()
-    const meta1 = ws.getCell('A1')
-    const meta2 = ws.getCell('A2')
-    const meta3 = ws.getCell('A3')
-    meta1.font = { bold: true }
-    meta2.font = { bold: true }
-    meta3.font = { bold: true }
-    ws.getCell('A1').value = 'Type of report - ' + value;
-    ws.getCell('A2').value = 'Client name - Rahul Jain';
-    ws.getCell('A3').value = 'Report as on - ' + new Date();
-    const head = ws.getRow(5)
-    head.font = { bold: true }
-    head.fill = {
-      type: 'pattern',
-      pattern: 'darkVertical',
-      fgColor: {
-        argb: '#f5f7f7'
-      }
-    };
-    ws.getRow(5).values = header;
-    ws.columns.alignment = { horizontal: 'left' };
-    ws.columns = headerData
-    data.forEach(element => {
-      ws.addRow(element)
-    });
-    footer.forEach(element => {
-      const last = ws.addRow(element)
-      last.font = { bold: true }
-    });
-    const buf = await wb.xlsx.writeBuffer()
-    saveAs(new Blob([buf]), 'Rahul Jain-' + value + '-' + new Date() + '.xlsx')
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
   }
   // datasource3 = ELEMENT_DATA3;
 
@@ -221,7 +188,7 @@ export interface PeriodicElement3 {
   value: string;
   pvalue: string;
   desc: string;
-  status: string;
+  status:string
 }
 
 const ELEMENT_DATA3: PeriodicElement3[] = [
@@ -232,7 +199,7 @@ const ELEMENT_DATA3: PeriodicElement3[] = [
     value: '60,000',
     pvalue: '60,000',
     desc: 'ICICI FD',
-    status: 'ICICI FD'
+    status:''
   },
   {
     no: '1.',
@@ -241,7 +208,7 @@ const ELEMENT_DATA3: PeriodicElement3[] = [
     value: '60,000',
     pvalue: '60,000',
     desc: 'ICICI FD',
-    status: 'ICICI FD'
+    status:''
   },
-  {no: ' ', owner: 'Total', type: '', value: '1,28,925', pvalue: '1,28,925', desc: '', status: ' '},
+  {no: ' ', owner: 'Total', type: '', value: '1,28,925', pvalue: '1,28,925', desc: '',status:''},
 ];

@@ -1,25 +1,27 @@
+import { FormsModule } from '@angular/forms';
+import { EmailListComponent } from './email-list.component';
+import { EmailViewComponent } from './email-view/email-view.component';
 import { MaterialModule } from './../../../../../../material/material';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { EmailListRoutingModule } from './email-list-routing.module';
 import { EmailListingComponent } from './email-listing/email-listing.component';
-import { EmailViewComponent } from './email-view/email-view.component';
 
 import { EmailReplyComponent } from './email-reply/email-reply.component';
 
 
 @NgModule({
   declarations: [
+    EmailListComponent,
     EmailListingComponent,
-    EmailViewComponent,
-    EmailViewComponent,
-    EmailReplyComponent
+    EmailReplyComponent,
+    EmailViewComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
-    EmailListRoutingModule
+    EmailListRoutingModule,
   ]
 })
 export class EmailListModule { }

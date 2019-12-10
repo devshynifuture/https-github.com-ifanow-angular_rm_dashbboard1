@@ -3,12 +3,12 @@ import { HttpService } from 'src/app/http-service/http-service';
 import { apiConfig } from 'src/app/config/main-config';
 import { appConfig } from 'src/app/config/component-config';
 import { HttpParams } from '@angular/common/http';
-
+import * as Excel from 'exceljs/dist/exceljs';
+import { saveAs } from 'file-saver'
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
-
   constructor(private http: HttpService) { }
 
   addLifeInsurance(data) {
@@ -42,8 +42,8 @@ export class CustomerService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_FIXEDDEPOSIT, data)
   }
   getListOfFamilyByClient(data) {
-    let httpParams = new HttpParams();
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIST_FAMILY_MEMBER, data)
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIST_FAMILY_MEMBER, httpParams)
   }
   getFixedDeposit(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FIXEDDEPOSIT, data)
