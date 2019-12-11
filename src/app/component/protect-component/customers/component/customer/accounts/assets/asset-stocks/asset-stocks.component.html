@@ -194,7 +194,8 @@
         <div class="stock-overview" id="table-low">
             <table mat-table [dataSource]="singlePortfolio.stocks">
                 <ng-container matColumnDef="static-header">
-                    <td mat-header-cell *matHeaderCellDef colspan="12" class=" text-center text-primary bg-white">
+                  <td *matHeaderCellDef [attr.colspan]="displayedColumns25.length"
+                      class=" text-center text-primary bg-white" mat-header-cell>
                         dasdasdasd
                     </td>
                 </ng-container>

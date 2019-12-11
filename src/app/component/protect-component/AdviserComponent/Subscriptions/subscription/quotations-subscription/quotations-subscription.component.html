@@ -1,58 +1,84 @@
 <div class="bg-white pb-36 mt-70" id="ui-invoice">
     <div class="wrapper-20">
-        <div class="row">
+        <div class="row" *ngIf="showFilter==false">
             <div class="col-md-8 p-0">
                 <h4 class="pt-8 mb-0">Quotations</h4>
             </div>
             <div class="col-md-4 right text-right p-0">
-                <i class="material-icons mr-12 icon-light v-sub c-p">
+                <i class="material-icons mr-12 icon-light c-p v-sub">
           search
         </i>
-                <button mat-stroked-button class="btn-default addon mr-12"><i
-            class="material-icons">filter_list</i>FILTERS</button>
-                <button mat-stroked-button class="btn-primary addon" (click)="openPopup('QUOTATION')"><i
-            class="material-icons">add</i>ADD NEW</button>
+                <button (click)="showFilters(showFilter)" class="btn-default addon mr-12" mat-stroked-button><i
+            class="material-icons">filter_list</i>FILTERS
+        </button>
+                <!-- <button class="btn-primary addon" mat-stroked-button><i class="material-icons">add</i>ADD NEW</button> -->
             </div>
         </div>
-        <div class="row pt-12">
-            <div class="col-md-8 p-0 custom-tags">
-                <mat-chip-list>
-                    <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let status of filterStatus; let ind = index">
-                        {{status.name}}<i class="material-icons text-custom ml-12" (click)="remove(ind)">
-              cancel
-            </i></mat-chip>
-                    <mat-chip-list>
-                        <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let dateFilter of filterDate; let i = index">
-                            <p>{{dateFilter.name}}</p>
-                            <input matInput placeholder="Choose a date" [satDatepicker]="picker2" [(ngModel)]="selectedDateRange" (dateChange)="orgValueChange(selectedDateRange)">
-                            <sat-datepicker #picker2 [rangeMode]="true">
-                            </sat-datepicker>
-                            <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
-                            <i class="material-icons text-custom ml-12" (click)="removeDate(i)">
-                cancel
-              </i>
-                        </mat-chip>
-                    </mat-chip-list>
-                </mat-chip-list>
+        <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
+            <div class="row">
+                <div class="col-md-8 p-0">
+                    <h4 class="pt-8 mb-0">Quotations</h4>
+                </div>
+                <div class="col-md-4 right text-right p-0">
+                    <i class="material-icons mr-12 icon-light c-p v-sub">
+            search
+          </i>
+                    <button mat-stroked-button class="btn-default addon mr-12" (click)="showFilters(showFilter)"><i
+              class="material-icons">filter_list</i>FILTERS
+          </button>
+                    <!-- <button mat-stroked-button class="btn-primary addon"><i class="material-icons">add</i>ADD NEW</button> -->
+                </div>
             </div>
-            <div class="col-md-4 right text-right p-0">
-                <div class="row">
-                    <!-- <div class="col-md-6">
-            <select class="form-control br-0" id="sel11" [(ngModel)]='selectedStatusFilter'
-                    (change)="addFilters(selectedStatusFilter)">
-              <option value="" [disabled]="true">FILTERS ONE</option>
-              <option *ngFor="let chip of chips" [ngValue]="chip">{{chip.name}}</option>
-            </select>
-          </div> -->
-                    <div class="col-md-6">
-                        <select class="form-control br-0" id="sel12" [(ngModel)]='selectedDateFilter' (change)="addFiltersDate($event.target.value)">
-              <option value="" [disabled]="true">FILTERS ONE</option>
-              <option *ngFor="let dateAdd of dateChips" [ngValue]="dateAdd">{{dateAdd.name}}</option>
-            </select>
+            <div class="row pt-12">
+                <div class="col-md-8 p-0 custom-tags">
+                    <mat-chip-list>
+                        <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let status of filterStatus; let ind = index">
+                            {{status.name}}<i class="material-icons text-custom ml-12" (click)="remove(ind)">
+                cancel
+              </i></mat-chip>
+                        <mat-chip-list>
+                            <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let dateFilter of filterDate; let i = index">
+                                <!--                  <div class="row">-->
+                                <p>{{dateFilter.name}}</p>
+                                <input matInput placeholder="Choose a date" [satDatepicker]="picker2" [(ngModel)]="selectedDateRange" (dateChange)="orgValueChange(selectedDateRange)">
+                                <sat-datepicker #picker2 [rangeMode]="true">
+                                </sat-datepicker>
+                                <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
+                                <i class="material-icons text-custom ml-12" (click)="removeDate(i)">
+                  cancel
+                </i>
+                            </mat-chip>
+                        </mat-chip-list>
+                    </mat-chip-list>
+                </div>
+                <div class="col-md-4 right text-right p-0">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <mat-label>FILTERS ONE</mat-label>
+                                    <mat-select class="form-control br-0" id="sel11" [(ngModel)]='selectedStatusFilter' (selectionChange)="addFilters(selectedStatusFilter)">
+                                        <mat-option *ngFor="let chip of chips" [value]="chip">
+                                            {{chip.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <mat-label>FILTERS TWO</mat-label>
+                                    <mat-select class="form-control br-0" id="sel12" [(ngModel)]='selectedStatusFilter' (selectionChange)="addFiltersDate(selectedStatusFilter)">
+                                        <mat-option *ngFor="let dateAdd of dateChips" [value]="dateAdd">
+                                            {{dateAdd.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
         <table mat-table [dataSource]="dataSource" id="table-low" class="mt-8">
