@@ -20,7 +20,9 @@ import {HistoryRiskProfileComponent} from './profile-plan/history-risk-profile/h
 import {PlanRoutingModule} from "./plan-routing.module";
 import {IncomeComponent} from './profile-plan/income/income.component';
 import {ExpensesComponent} from '../accounts/expenses/expenses.component';
-import {AddPlaninsuranceComponent} from "./insurance-plan/add-planinsurance/add-planinsurance.component";
+
+// import {AddPlaninsuranceComponent} from "./insurance-plan/add-planinsurance/add-planinsurance.component";
+// import { EditNoteGoalComponent } from './goals-plan/edit-note-goal/edit-note-goal.component';
 // import { AddGoalsComponent } from './add-goals/add-goals.component';
 
 
@@ -48,7 +50,9 @@ import {AddPlaninsuranceComponent} from "./insurance-plan/add-planinsurance/add-
     HistoryRiskProfileComponent,
     IncomeComponent,
     ExpensesComponent,
-    AddPlaninsuranceComponent,
+    
+    // AddPlaninsuranceComponent,
+        
    
     
     
