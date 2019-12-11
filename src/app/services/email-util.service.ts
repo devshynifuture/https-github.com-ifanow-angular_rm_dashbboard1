@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { GmailInboxResponseI } from '../component/protect-component/AdviserComponent/Email/email-component/email.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -40,5 +41,67 @@ export class EmailUtilService {
       console.log('Error: ', error);
       errorCallback(error);
     };
+  }
+
+  static decodeGmailThreadExtractMessage(gmailThread: GmailInboxResponseI) {
+    let decodedPartArray = []
+    let tempHeaders: {}[];
+    gmailThread.messages.forEach((message) => {
+      const { payload: { parts } } = message;
+      const { payload: { headers } } = message;
+      if (parts && parts !== null) {
+        parts.forEach((part) => {
+          if (part.body.data && part.body.data !== null) {
+            decodedPartArray.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data));
+          }
+          else {
+            decodedPartArray.push('');
+          }
+        });
+      } else {
+        decodedPartArray.push('');
+      }
+
+      tempHeaders = headers;
+    });
+    return { decodedPart: decodedPartArray, headers: tempHeaders };
+  }
+
+  static getGmailLabelIdsFromMessages(gmailThread: GmailInboxResponseI) {
+    let labelIdsArray: Object[] = [];
+    gmailThread.messages.forEach((message) => {
+      const { labelIds } = message;
+      labelIdsArray.push({
+        labelIds
+      });
+    });
+    return labelIdsArray;
+  }
+
+  static getIdAndDateAndSnippetOfGmailThreadMessages(gmailThread: GmailInboxResponseI) {
+    let arrayObj = [];
+    gmailThread.messages.forEach((message) => {
+      const { historyId, id, internalDate, threadId, snippet } = message;
+      arrayObj.push({ historyId, id, internalDate, threadId, snippet });
+    });
+    return arrayObj;
+  }
+
+  static getIdsOfGmailThreads(gmailThread: GmailInboxResponseI) {
+    const { historyId, id } = gmailThread;
+    return { historyId, id };
+  }
+
+  static getSubjectAndFromOfGmailHeaders(gmailThread: GmailInboxResponseI) {
+    let headerSubjectArray: string[] = [];
+    let headerFromArray: string[] = [];
+    gmailThread.messages.forEach((message) => {
+      const { payload: { headers } } = message;
+      headers.forEach((header) => {
+        (header.name === 'Subject') ? headerSubjectArray.push(header.value) : '';
+        (header.name === 'From') ? headerFromArray.push(header.value) : '';
+      })
+    });
+    return { headerSubjectArray, headerFromArray };
   }
 }
