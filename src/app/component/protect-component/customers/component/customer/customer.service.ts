@@ -399,4 +399,14 @@ export class CustomerService {
   addAssetStocks(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_ASSET_STOCK, data)
   }
+  getPortfolioList(data) {
+    let httpParams = new HttpParams().set('advisorId', data.advisorId).set("clientId", data.clientId)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PORTFOLIO_LIST, data)
+  }
+  getScripList(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SCRIP_lIST, data)
+  }
+  addPortfolio(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_PORTFOLIO, data)
+  }
 }

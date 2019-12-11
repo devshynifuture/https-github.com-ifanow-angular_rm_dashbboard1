@@ -151,6 +151,9 @@ export const appConfig = {
   NEW_FOLDER: 'document/account/document/all-file/folder/post',
   GET_ASSET_STOCK: 'account/asset/stock/list/get',
   ADD_ASSET_STOCK: 'account/asset/stock/add',
+  GET_PORTFOLIO_LIST: 'account/asset/stock/portfolio-list/get',
+  GET_SCRIP_lIST: 'account/asset/stock/scrip-name/get',
+  ADD_PORTFOLIO: 'account/asset/stock/portfolio/add',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   GET_EPF: 'account/asset/retirement/epf/list/get',

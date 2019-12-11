@@ -6,6 +6,7 @@ import { StockScripLevelHoldingComponent } from './stock-scrip-level-holding/sto
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { StockScripLevelTransactionComponent } from './stock-scrip-level-transaction/stock-scrip-level-transaction.component';
 
 @Component({
   selector: 'app-asset-stocks',
@@ -65,13 +66,14 @@ export class AssetStocksComponent implements OnInit {
       }
     );
   }
-  openScriptLevelHolding(data) {
+  openScriptLevel(flag, data) {
+    let component = (flag == 'holding') ? StockScripLevelHoldingComponent : StockScripLevelTransactionComponent;
     const fragmentData = {
       flag: 'addScriptLevelHolding',
       data,
       id: 1,
       state: 'open70',
-      componentName: StockScripLevelHoldingComponent
+      componentName: component
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
