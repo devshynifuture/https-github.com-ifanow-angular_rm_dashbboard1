@@ -18,6 +18,7 @@ export class RiskProfileComponent implements OnInit {
   sendRiskList: any;
   flag: boolean;
   advisorId: any;
+  score
   showRisk = false
 
   constructor(private fb: FormBuilder, public planService: PlanService, ) { }
@@ -76,5 +77,6 @@ export class RiskProfileComponent implements OnInit {
   submitRiskRes(data) {
     console.log(data)
     this.showRisk = true
+    this.score = data.score
   }
 }
