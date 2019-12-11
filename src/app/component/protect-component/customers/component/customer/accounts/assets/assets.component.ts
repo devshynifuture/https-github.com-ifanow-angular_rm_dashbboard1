@@ -99,10 +99,10 @@ export class AssetsComponent implements OnInit {
   displayedColumns25 = ['scrip', 'owner', 'bal', 'price', 'mprice', 'amt', 'cvalue', 'gain', 'ret', 'xirr', 'dividend', 'icons'];
   dataSource25 = ELEMENT_DATA25;
 
-  viewMode;
+  viewMode = 'tab2';
 
   ngOnInit() {
-    this.viewMode = 'tab1';
+    // this.viewMode = 'tab2';
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getAssetCountGLobalData();
