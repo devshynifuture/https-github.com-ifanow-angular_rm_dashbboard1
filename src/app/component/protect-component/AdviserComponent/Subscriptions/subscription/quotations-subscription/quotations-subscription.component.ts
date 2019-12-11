@@ -62,6 +62,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   ];
   selectedDateRange: { begin: Date; end: Date; };
   selectedDateFilter: any;
+  showFilter=false;
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
     public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
   }
@@ -128,6 +129,16 @@ export class QuotationsSubscriptionComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+
+  }
+  showFilters(showFilter) {
+    if (showFilter == true) {
+      this.showFilter = false;
+    } else {
+      this.showFilter = true;
+    }
+    console.log('this.filterStatus: ', this.filterStatus);
+    console.log('this.filterDate: ', this.filterDate);
 
   }
   addFilters(addFilters) {
