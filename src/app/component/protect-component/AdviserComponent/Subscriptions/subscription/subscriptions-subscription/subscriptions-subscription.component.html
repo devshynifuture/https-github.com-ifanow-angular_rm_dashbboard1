@@ -57,7 +57,7 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <mat-label>FILTERS ONE</mat-label>
+                                        <!-- <mat-label>FILTERS ONE</mat-label> -->
                                         <mat-select class="form-control br-0" id="sel11" [(ngModel)]='selectedStatusFilter' (selectionChange)="addFilters(selectedStatusFilter)">
                                             <mat-option *ngFor="let chip of chips" [value]="chip">
                                                 {{chip.name}}
@@ -69,7 +69,7 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <mat-label>FILTERS TWO</mat-label>
+                                        <!-- <mat-label>FILTERS TWO</mat-label> -->
                                         <mat-select class="form-control br-0" id="sel12" [(ngModel)]='selectedStatusFilter' (selectionChange)="addFiltersDate(selectedStatusFilter)">
                                             <mat-option *ngFor="let dateAdd of dateChips" [value]="dateAdd">
                                                 {{dateAdd.name}}

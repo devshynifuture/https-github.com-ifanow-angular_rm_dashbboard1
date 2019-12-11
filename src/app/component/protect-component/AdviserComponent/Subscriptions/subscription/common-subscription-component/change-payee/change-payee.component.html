@@ -4,8 +4,8 @@
     </div>
     <div class="col-md-2 text-right">
         <i class="material-icons pt-16 pr-16 c-p" (click)="Close('close')">
-      clear
-    </i>
+            clear
+        </i>
     </div>
 </div>
 <ng-template matStepLabel *ngIf="getRowData">Payee Settings</ng-template>
@@ -24,7 +24,7 @@
                         <mat-checkbox class="custom-checkbox" [(ngModel)]="singlePlan.selected"></mat-checkbox>
                     </div>
                     <div class="col-md-12 p-0">
-                        <h3 class="m-0 pt-18 pl-24">{{singlePlan.companyDisplayName}}</h3>
+                        <h3 class="m-0 pt-18 pl-24 fontPlayfair">{{singlePlan.companyDisplayName}}</h3>
                         <h5 class="m-0 pt-4 pb-44 pl-24 text-custom">ARN123</h5>
                     </div>
                 </div>
@@ -38,13 +38,13 @@
                             <p class="mb-0">{{singlePlan.country}},{{singlePlan.zipCode}}</p>
                         </div>
                         <div class="col-md-6 p-0">
-                            <p class="text-custom m-0 f-12 pl-24"> SPLITTING RATIO (%)</p>
+                            <p class="text-custom m-0 f-12"> SPLITTING RATIO (%)</p>
                             <div class="row" (click)="matSliderOnChange(0,singlePlan,0)">
-                                <div class="col-md-8">
-                                    <mat-slider class="ml-24" [disabled]="singlePlan.selected==0||singlePlan.selected !=1" [max]='100' [(ngModel)]="singlePlan.share" (change)="matSliderOnChange(0,singlePlan,$event.value)"></mat-slider>
+                                <div class="col-md-8 p-0">
+                                    <mat-slider [disabled]="singlePlan.selected==0||singlePlan.selected !=1" [max]='100' [(ngModel)]="singlePlan.share" (change)="matSliderOnChange(0,singlePlan,$event.value)"></mat-slider>
                                 </div>
                                 <div class="col-md-4 pr-0 pt-8">
-                                    <input [(ngModel)]="singlePlan.share" type="number" (change)="matSliderOnChange(0,singlePlan,0)" min="0" max="100" class="m-0 f-13 text-black b-a wrapper-8" />
+                                    <input [(ngModel)]="singlePlan.share" type="number" (change)="matSliderOnChange(0,singlePlan,0)" min="0" max="100" class="m-0 f-13 form-control text-black b-a p-4 text-center" />
                                 </div>
                             </div>
                         </div>
@@ -73,7 +73,7 @@
         </div>
         <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit" [disabled]="totalValue!=100" (click)="saveChangePayeeSetting()">Save
-      </button>
+            </button>
 
 
         </div>

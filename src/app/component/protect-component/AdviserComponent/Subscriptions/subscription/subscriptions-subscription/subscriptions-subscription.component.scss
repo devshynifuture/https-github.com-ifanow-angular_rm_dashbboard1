@@ -20,3 +20,7 @@
     left: 0%;
     right: auto;
 }
+
+::ng-deep .mat-select {
+    border: 1px solid rgba(0, 0, 0, .12) !important;
+}
