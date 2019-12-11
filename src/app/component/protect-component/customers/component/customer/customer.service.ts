@@ -393,4 +393,10 @@ export class CustomerService {
   newFolder(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.NEW_FOLDER, data)
   }
+  getAssetStockData(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_STOCK, data)
+  }
+  addAssetStocks(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_ASSET_STOCK, data)
+  }
 }

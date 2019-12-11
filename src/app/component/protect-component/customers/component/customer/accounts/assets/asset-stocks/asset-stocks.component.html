@@ -79,24 +79,27 @@
                 </div>
                 <div class="col-md-12 p-0">
                     <p class="m-0 text-custom pt-24 pl-8">Current value</p>
-                    <h2 class="m-0 f-300 text-black pt-4 pl-8 pb-24">₹28,37,842</h2>
+                    <h2 class="m-0 f-300 text-black pt-4 pl-8 pb-24" *ngIf="assetStocksdata" appFormatNumber>
+                        {{assetStocksdata.grandTotalCurrentValue | currency:'INR'}}</h2>
                 </div>
                 <div class="col-md-12 p-0">
                     <div class="row bg-light lter pt-20 pb-20 bt-1">
                         <div class="col-md-4 pr-0 pl-12">
                             <p class="text-custom m-0">Amount invested</p>
-                            <h5 class="m-0 text-black">₹19,24,908</h5>
+                            <h5 class="m-0 text-black" *ngIf="assetStocksdata" appFormatNumber>
+                                {{assetStocksdata.grandTotalAmountInvested | currency:'INR'}}</h5>
                         </div>
                         <div class="col-md-4 pr-0 pl-12">
                             <p class="text-custom m-0">Unrealized gain/loss</p>
-                            <h5 class="m-0 text-danger">₹-93,908</h5>
+                            <h5 class="m-0 text-danger" *ngIf="assetStocksdata" appFormatNumber>
+                                {{assetStocksdata.grandTotalUnrealizedGainLoss | currency:'INR'}}</h5>
                         </div>
                         <div class="col-md-4 pr-0 pl-12">
                             <p class="text-custom m-0">Returns</p>
-                            <h5 class="m-0 text-danger">5.23% <i class="material-icons text-danger v-sub f-18 f-700">
-                                    arrow_upward
-                                </i>
-                            </h5>
+                            <h5 class="m-0 text-danger" *ngIf="assetStocksdata">{{assetStocksdata.grandTotalAbsReturns}}
+                            </h5> <i class="material-icons text-danger v-sub f-18 f-700">
+                                arrow_upward
+                            </i>
                         </div>
                     </div>
                 </div>
@@ -182,54 +185,57 @@
             </div>
         </div>
     </div>
-    <div class="row pt-12">
+    <div *ngFor="let singlePortfolio of portfolioData" class="row pt-12">
         <div class="col-md-12 p-0">
             <div class="bg-white">
-                <h5 class="m-0 wrapper-8 b-a bb-0 text-primary">MOTILAL OSWAL PORTFOLIO | RAHUL JAIN</h5>
+                <h5 class="m-0 wrapper-8 b-a bb-0 text-primary">{{singlePortfolio.portfolioName}} | RAHUL JAIN</h5>
             </div>
         </div>
         <div class="stock-overview" id="table-low">
-            <table mat-table [dataSource]="dataSource25">
+            <table mat-table [dataSource]="singlePortfolio.stocks">
                 <ng-container matColumnDef="static-header">
                     <td mat-header-cell *matHeaderCellDef colspan="12" class=" text-center text-primary bg-white">
-                        Engineering
+                        dasdasdasd
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="scrip">
                     <th mat-header-cell *matHeaderCellDef class="br t-18"> Scrip </th>
-                    <td mat-cell *matCellDef="let element" class="br t-18"> {{element.scrip}} </td>
+                    <td mat-cell *matCellDef="let element" class="br t-18"> {{element.scripName}} </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
                     <th mat-header-cell *matHeaderCellDef class="br t-18"> Owner </th>
-                    <td mat-cell *matCellDef="let element" class="br t-18"> {{element.owner}} </td>
+                    <td mat-cell *matCellDef="let element" class="br t-18"> {{element.ownerName}} </td>
                 </ng-container>
                 <ng-container matColumnDef="bal">
                     <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Balance shares </th>
-                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.bal}} </td>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.balanceShares}} </td>
                 </ng-container>
                 <ng-container matColumnDef="price">
                     <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Average price </th>
-                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.price}} </td>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.averagePrice}} </td>
                 </ng-container>
                 <ng-container matColumnDef="mprice">
                     <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Market price </th>
-                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.mprice}} </td>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.scripCurrentValue}}
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="amt">
                     <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Amount invested </th>
-                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.amt}} </td>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.amountInvested}} </td>
                 </ng-container>
                 <ng-container matColumnDef="cvalue">
                     <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Current value </th>
-                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.cvalue}} </td>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.currentMarketValue}}
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="gain">
                     <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Unrealized gain/loss </th>
-                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.gain}} </td>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.unrealizedGainLoss}}
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="ret">
                     <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Absolute returns % </th>
-                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.ret}} </td>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.absoluteReturn}} </td>
                 </ng-container>
                 <ng-container matColumnDef="xirr">
                     <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> XIRR % </th>
@@ -261,7 +267,7 @@
         </div>
     </div>
 
-    <div class="row pt-12">
+    <!-- <div class="row pt-12">
         <div class="col-md-12 p-0">
             <div class="bg-white">
                 <h5 class="m-0 wrapper-8 b-a bb-0 text-primary">SHAREKHAN PORTFOLIO | SHILPA JAIN</h5>
@@ -338,5 +344,5 @@
                 <tr mat-header-row *matHeaderRowDef="['static-header']" class="p-0 bt-0 bb-0"></tr>
             </table>
         </div>
-    </div>
+    </div> -->
 </div>

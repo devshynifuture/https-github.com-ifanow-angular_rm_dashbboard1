@@ -182,7 +182,9 @@ ul {
 .mat-stroked-button {
     font-weight: normal;
 }
-
+.pl-50{
+    padding-left: 50px !important;
+}
 .loader {
     margin: 0 auto;
     top: 50%;
@@ -513,4 +515,10 @@ ul {
         font-size: 14px !important;
         line-height: 36px !important;
     }
+}
+.text-regular{
+        margin: 0 !important;
+        color: #83959D;
+        font-size: 14px;
+        font-family: "Roboto", sans-serif;
 }

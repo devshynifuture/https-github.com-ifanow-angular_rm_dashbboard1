@@ -3,6 +3,9 @@ import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddAssetStocksComponent } from './add-asset-stocks/add-asset-stocks.component';
 import { StockScripLevelHoldingComponent } from './stock-scrip-level-holding/stock-scrip-level-holding.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-asset-stocks',
@@ -12,12 +15,35 @@ import { StockScripLevelHoldingComponent } from './stock-scrip-level-holding/sto
 export class AssetStocksComponent implements OnInit {
   displayedColumns25 = ['scrip', 'owner', 'bal', 'price', 'mprice', 'amt', 'cvalue', 'gain', 'ret', 'xirr', 'dividend', 'icons'];
   dataSource25 = ELEMENT_DATA25;
+  advisorId: any;
+  clientId: any;
+  assetStocksdata: any;
+  portfolioData: any;
 
-  constructor(private subInjectService: SubscriptionInject) { }
+  constructor(private subInjectService: SubscriptionInject, private cusService: CustomerService, private eventService: EventService) { }
 
   ngOnInit() {
     this.dataSource25 = ELEMENT_DATA25;
     console.log(this.dataSource25)
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.getStocksData();
+  }
+  getStocksData() {
+    const obj =
+    {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    }
+    this.cusService.getAssetStockData(obj).subscribe(
+      data => this.getStocksDataRes(data),
+      err => this.eventService.openSnackBar(err)
+    )
+  }
+  getStocksDataRes(data) {
+    console.log(data)
+    this.assetStocksdata = data;
+    this.portfolioData = data.portfolios;
   }
   openAddStock(data) {
     const fragmentData = {
@@ -31,6 +57,7 @@ export class AssetStocksComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getStocksData();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 
@@ -44,7 +71,7 @@ export class AssetStocksComponent implements OnInit {
       data,
       id: 1,
       state: 'open70',
-      componentName:StockScripLevelHoldingComponent
+      componentName: StockScripLevelHoldingComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
