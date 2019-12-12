@@ -23,16 +23,18 @@
                 <mat-card class="example-card bg-grey lter p-0 flex-fill">
                     <mat-card-header>
                         <div class="wrapper-20">
-                            <mat-card-title class="mb-0 text-break f-24">{{singlePlan.name}}</mat-card-title>
+                            <mat-card-title class="mb-0 text-break f-24" matTooltip="{{singlePlan.name}}">
+                                {{singlePlan.name}}
+                            </mat-card-title>
                             <mat-card-subtitle class="pt-4 pb-12 mb-0">{{singlePlan.code}}</mat-card-subtitle>
                         </div>
                     </mat-card-header>
 
                     <mat-card-content class="bg-white mb-0">
                         <div class="row wrapper-20">
-                            <div class="col-md-12 height105 p-0">
+                            <div class="col-md-12 height120 p-0">
                                 <p class="mb-0 text-primitive f-12">DESCRIPTION</p>
-                                <p class="mb-0 pt-8 plan-description pb-20">{{singlePlan.description}}</p>
+                                <p class="mb-0 pt-8 plan-description">{{singlePlan.description}}</p>
                             </div>
 
                         </div>

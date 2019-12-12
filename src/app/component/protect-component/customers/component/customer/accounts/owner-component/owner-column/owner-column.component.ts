@@ -35,11 +35,13 @@ export class OwnerColumnComponent implements OnInit {
     console.log('ownerData', this.ownerData)
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getListFamilyMem('');
+   // this.getListFamilyMem('');
     this.getdataForm()
     this.family = this.s;
   }
   getListFamilyMem(data) {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId

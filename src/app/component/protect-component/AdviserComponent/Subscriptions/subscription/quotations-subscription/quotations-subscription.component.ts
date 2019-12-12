@@ -61,7 +61,8 @@ export class QuotationsSubscriptionComponent implements OnInit {
     { name: 'Client consent', value: 3 }
   ];
   selectedDateRange: { begin: Date; end: Date; };
-  selectedDateFilter: any;
+  selectedStatusFilter:any;
+  showFilter=false;
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
     public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
   }
@@ -130,10 +131,21 @@ export class QuotationsSubscriptionComponent implements OnInit {
     });
 
   }
+  showFilters(showFilter) {
+    if (showFilter == true) {
+      this.showFilter = false;
+    } else {
+      this.showFilter = true;
+    }
+    console.log('this.filterStatus: ', this.filterStatus);
+    console.log('this.filterDate: ', this.filterDate);
+
+  }
   addFilters(addFilters) {
     console.log('addFilters', addFilters);
     if (!_.includes(this.filterStatus, addFilters)) {
       this.filterStatus.push(addFilters);
+      this.getQuotationsData()
     } else {
       // _.remove(this.filterStatus, this.senddataTo);
     }

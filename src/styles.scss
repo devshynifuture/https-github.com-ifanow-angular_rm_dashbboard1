@@ -339,8 +339,8 @@
 }
 
 .example-card.height-470 {
-    height: 100%;
-    // height: 470px;
+    //height: 100%;
+    height: 457px;
 }
 
 .icon-center {
@@ -1077,10 +1077,12 @@ mat-tab-group[vertical] {
 
 #ui-add-goals {
     padding-bottom: 60px !important;
+    height: 100vh !important;
     .col-half-offset {
         margin-left: 3.26667%;
     }
-    h5 {
-        padding-left: 50px;
-    }
+}
+
+.height120 {
+    height: 120px;
 }

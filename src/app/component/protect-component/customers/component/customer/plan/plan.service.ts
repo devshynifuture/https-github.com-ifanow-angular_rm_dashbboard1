@@ -32,4 +32,11 @@ export class PlanService {
   {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INCOME,data)
   }
+  getRiskProfile(data)
+  {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_RISK_PROFILE,data)
+  }
+  submitRisk(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.SUBMIT_RISK,data)
+  }
 }

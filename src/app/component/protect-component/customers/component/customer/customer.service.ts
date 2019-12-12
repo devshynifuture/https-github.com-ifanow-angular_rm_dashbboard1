@@ -3,12 +3,12 @@ import { HttpService } from 'src/app/http-service/http-service';
 import { apiConfig } from 'src/app/config/main-config';
 import { appConfig } from 'src/app/config/component-config';
 import { HttpParams } from '@angular/common/http';
-
+import * as Excel from 'exceljs/dist/exceljs';
+import { saveAs } from 'file-saver'
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
-
   constructor(private http: HttpService) { }
 
   addLifeInsurance(data) {
@@ -42,8 +42,8 @@ export class CustomerService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_FIXEDDEPOSIT, data)
   }
   getListOfFamilyByClient(data) {
-    let httpParams = new HttpParams();
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIST_FAMILY_MEMBER, data)
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIST_FAMILY_MEMBER, httpParams)
   }
   getFixedDeposit(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FIXEDDEPOSIT, data)
@@ -260,10 +260,9 @@ export class CustomerService {
   editPOTD(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_POTD_SCHEME, data)
   }
-  getAssetCountGlobalData(data)
-  {
-    let httpParams=new HttpParams().set('advisorId',data.advisorId).set('clientId',data.clientId)
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_COUNT_GLOBAL_DATA,httpParams)
+  getAssetCountGlobalData(data) {
+    let httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_COUNT_GLOBAL_DATA, httpParams)
   }
   deletePPF(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_PPF_SCHEME, data)
@@ -292,18 +291,16 @@ export class CustomerService {
   deletePOMIS(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_POMIS_SCHEME, data)
   }
-  getPolicyName(data)
-  { 
-    let httpParams=new HttpParams().set('policyName',data.policyName)
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_POLICY_NAME,httpParams)
+  getPolicyName(data) {
+    let httpParams = new HttpParams().set('policyName', data.policyName)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_POLICY_NAME, httpParams)
   }
-  deleteInsurance(data)
-  {
-   return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INSURANCE,data)
+  deleteInsurance(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INSURANCE, data)
   }
-  getInsuranceData(data){
-    let httpParams=new HttpParams().set("advisorId",data.advisorId).set("clientId",data.clientId).set("insuranceTypeId",data.insuranceTypeId)
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAL_INSURANCE,data)
+  getInsuranceData(data) {
+    let httpParams = new HttpParams().set("advisorId", data.advisorId).set("clientId", data.clientId).set("insuranceTypeId", data.insuranceTypeId)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAL_INSURANCE, data)
   }
   deleteRealEstate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_REAL_ESTATE, data)
@@ -353,47 +350,53 @@ export class CustomerService {
   getGlobalLiabilities(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GLOBAL_LIABILITIES, data)
   }
-  getAllFiles(data){
+  getAllFiles(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ALL_FILES, data)
   }
-  downloadFile(data){
+  downloadFile(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.DOWNLOAD_FILE, data)
   }
-  deleteFile(data){
+  deleteFile(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_FILE, data)
   }
-  moveFiles(data){
+  moveFiles(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.MOVE_FILES, data)
   }
-  moveFolder(data){
-     return this.http.put(apiConfig.MAIN_URL + appConfig.MOVE_FOLDER, data)
+  moveFolder(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.MOVE_FOLDER, data)
   }
-  copyFiles(data){
-   return this.http.post(apiConfig.MAIN_URL + appConfig.COPY_FILES, data)
+  copyFiles(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.COPY_FILES, data)
   }
-  renameFiles(data){
-   return this.http.put(apiConfig.MAIN_URL + appConfig.RENAME_FILE, data)
+  renameFiles(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.RENAME_FILE, data)
   }
-  renameFolder(data){
+  renameFolder(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.RENAME_FOLDER, data)
   }
-  deleteFolder(data){
+  deleteFolder(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_FOLDER, data)
   }
-  starFile(data){
+  starFile(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.STAR_FILE, data)
   }
-  viewActivityFile(data){
+  viewActivityFile(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.VIEW_ACTIVITY_FILE, data)
   }
-  viewActivityFolder(data){
+  viewActivityFolder(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.VIEW_ACTIVITY_FOLDER, data)
   }
-  uploadFile(data){
+  uploadFile(data) {
     // let httpParams=new HttpParams().set("advisorId",data.advisorId).set("clientId",data.clientId).set('folderId',data.folderId).set('fileName',data.fileName)
     return this.http.get(apiConfig.MAIN_URL + appConfig.UPLOAD_FILE, data)
   }
-  newFolder(data){
+  newFolder(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.NEW_FOLDER, data)
+  }
+  getAssetStockData(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_STOCK, data)
+  }
+  addAssetStocks(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_ASSET_STOCK, data)
   }
 }

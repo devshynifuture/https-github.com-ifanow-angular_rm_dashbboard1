@@ -149,6 +149,11 @@ export const appConfig = {
   GLOBAL_LIABILITIES: 'account/liability/global/get',
   UPLOAD_FILE: 'document/account/document/all-file/file/put',
   NEW_FOLDER: 'document/account/document/all-file/folder/post',
+  GET_ASSET_STOCK: 'account/asset/stock/list/get',
+  ADD_ASSET_STOCK: 'account/asset/stock/add',
+  ////////////////////////////////plan////////////////////////////
+  GET_RISK_PROFILE:'plan/risk-assessment/get',
+  SUBMIT_RISK:'plan/risk-assessment/submit',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   GET_EPF: 'account/asset/retirement/epf/list/get',
