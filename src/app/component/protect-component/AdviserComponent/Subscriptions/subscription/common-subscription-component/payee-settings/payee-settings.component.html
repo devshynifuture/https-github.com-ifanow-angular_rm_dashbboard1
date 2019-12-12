@@ -1,263 +1,255 @@
 <div class="row bb-1 popup-header-fix-60">
-        <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20 lh-22 text-left" *ngIf="inputData.data=='Add'">ADD PAYEE</h4>
-            <h4 class="mb-0 wrapper-20 lh-22 text-left" *ngIf="inputData.data!='Add'">EDIT PAYEE</h4>
-            </div>
-        <div class="col-md-2 text-right">
-            <i class="material-icons pt-16 pr-16 c-p" (click)="Close('close')"> clear</i></div>
+    <div class="col-md-10 p-0">
+        <h4 class="mb-0 wrapper-20 lh-22 text-left" *ngIf="inputData.data=='Add'">ADD PAYEE</h4>
+        <h4 class="mb-0 wrapper-20 lh-22 text-left" *ngIf="inputData.data!='Add'">EDIT PAYEE</h4>
     </div>
-    <div [formGroup]="payeeSettingsForm" class="justify-content-center" id="ui-payee-setting">
-        <div class="row">
-            <div class="col-md-6">
-                <h5 class="m-0">Customer name</h5>
+    <div class="col-md-2 text-right">
+        <i class="material-icons pt-16 pr-16 c-p" (click)="Close('close')"> clear</i></div>
+</div>
+<div [formGroup]="payeeSettingsForm" class="justify-content-center" id="ui-payee-setting">
+    <div class="row">
+        <div class="col-md-6 pr-0">
+            <h5 class="m-0">Customer name</h5>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-0">
+                <input type="text" formControlName="customerName" class="form-control" maxlength="{{getFormControl().customerName.maxLength}}">
             </div>
-            <div class="col-md-6">
-                <div class="form-group mb-0">
-                    <input type="text" formControlName="customerName" class="form-control" maxlength="{{getFormControl().customerName.maxLength}}">
-                  </div>
-                  <div class="row pt-0">
-                  <div class="col-md-8">
-                    <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isCustomerName && getFormControl().customerName.invalid || (getFormControl().customerName.touched && getFormControl().customerName.invalid))}">
-                    Customer name is required</mat-error>
-                    </div>
-                  <div class="col-md-4">
+            <div class="row pt-0">
+                <div class="col-md-8">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isCustomerName && getFormControl().customerName.invalid || (getFormControl().customerName.touched && getFormControl().customerName.invalid))}">
+                        This field is required
+                    </mat-error>
+                </div>
+                <div class="col-md-4">
                     <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().customerName.value?.length?getFormControl().customerName.value.length:0}}/{{getFormControl().customerName.maxLength}}</p>
                 </div>
             </div>
-           
-            </div>
-               
+
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <h5 class="m-0">Display name</h5>
-                <p class="m-0 text-custom f-12">This name will appear in invoices</p>
+
+    </div>
+    <div class="row">
+        <div class="col-md-6 pr-0">
+            <h5 class="m-0">Display name</h5>
+            <p class="m-0 text-custom f-12">This name will appear in invoices</p>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-0 ">
+                <input type="text" formControlName="displayName" class="form-control" maxlength="{{getFormControl().displayName.maxLength}}">
             </div>
-            <div class="col-md-6">
-                  <div class="form-group mb-0 ">
-                    <input type="text" formControlName="displayName" class="form-control" maxlength="{{getFormControl().displayName.maxLength}}">
-                  </div>
-             <div class="row pt-0">
-                  <div class="col-md-8">
-                    <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isDisplayName && getFormControl().displayName.invalid || (getFormControl().displayName.touched && getFormControl().displayName.invalid))}">
-                    Display name is required</mat-error>
-                 </div>
-                  <div class="col-md-4">
+            <div class="row pt-0">
+                <div class="col-md-8">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isDisplayName && getFormControl().displayName.invalid || (getFormControl().displayName.touched && getFormControl().displayName.invalid))}">
+                        This field is required</mat-error>
+                </div>
+                <div class="col-md-4">
                     <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().displayName.value?.length?getFormControl().displayName.value.length:0}}/{{getFormControl().displayName.maxLength}}</p>
                 </div>
             </div>
-            </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <h5 class="m-0">Customer Type</h5>
-            </div>
-            <div class="col-md-6">
-                    <div class="form-group mb-0"> 
-                            <select formControlName="customerType" class="form-control" id="sel1">
+    </div>
+    <div class="row">
+        <div class="col-md-6 pr-0">
+            <h5 class="m-0">Customer Type</h5>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-0">
+                <select formControlName="customerType" class="form-control" id="sel1">
                               <option>Bussiness</option>
                               <option>Individual</option>
                             </select>
-                          </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <h5 class="m-0">Company Name</h5>
+    </div>
+    <div class="row">
+        <div class="col-md-6 pr-0">
+            <h5 class="m-0">Company Name</h5>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-0">
+                <input type="text" formControlName="companyName" class="form-control" maxlength="{{getFormControl().companyName.maxLength}}">
             </div>
-            <div class="col-md-6">
-                <div class="form-group mb-0">
-                    <input type="text" formControlName="companyName" class="form-control" maxlength="{{getFormControl().companyName.maxLength}}">
-                  </div>
-                  <div class="row pt-0">
-                  <div class="col-md-8">
-                    <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isCompanyName && getFormControl().companyName.invalid || (getFormControl().companyName.touched && getFormControl().companyName.invalid))}">
-                    Company name is required</mat-error>
-                 </div>
-                  <div class="col-md-4">
+            <div class="row pt-0">
+                <div class="col-md-8">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isCompanyName && getFormControl().companyName.invalid || (getFormControl().companyName.touched && getFormControl().companyName.invalid))}">
+                        This field is required</mat-error>
+                </div>
+                <div class="col-md-4">
                     <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().companyName.value?.length?getFormControl().companyName.value.length:0}}/{{getFormControl().companyName.maxLength}}</p>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 pr-0">
+            <h5 class="m-0">Email ID</h5>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-0">
+                <input type="email" formControlName="emailId" class="form-control" maxlength="{{getFormControl().emailId.maxLength}}">
+            </div>
+            <div class="row pt-0">
+                <div class="col-md-8">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isEmailId && getFormControl().emailId.invalid || (getFormControl().emailId.touched && getFormControl().emailId.invalid))}">
+                        This field is required</mat-error>
+                </div>
+                <div class="col-md-4">
+                    <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().emailId.value?.length?getFormControl().emailId.value.length:0}}/{{getFormControl().emailId.maxLength}}</p>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <h5 class="m-0">Email ID</h5>
+    </div>
+    <div class="row">
+        <div class="col-md-6 pr-0">
+            <h5 class="m-0">Mobile No.</h5>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group mb-0">
+                <input type="text" (keypress)="keyPress($event)" formControlName="primaryContact" class="form-control" maxlength="{{getFormControl().primaryContact.maxLength}}">
             </div>
-            <div class="col-md-6">
-                <div class="form-group mb-0">
-                    <input type="email" formControlName="emailId" class="form-control" maxlength="{{getFormControl().emailId.maxLength}}">
-                  </div>
-                  <div class="row pt-0">
-                    <div class="col-md-8">
-                      <mat-error class="f-12 pt-4"
-                      [ngClass]="{'v-h':!(isEmailId && getFormControl().emailId.invalid || (getFormControl().emailId.touched && getFormControl().emailId.invalid))}">
-                      EmailId is required</mat-error>
-                   </div>
-                    <div class="col-md-4">
-                      <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().emailId.value?.length?getFormControl().emailId.value.length:0}}/{{getFormControl().emailId.maxLength}}</p>
-                  </div>
-                  </div>
+            <div class="row pt-0">
+                <div class="col-md-9">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isMobileNo && getFormControl().primaryContact.invalid || (getFormControl().primaryContact.touched && getFormControl().primaryContact.invalid))}">
+                        This field is required</mat-error>
+                </div>
+                <div class="col-md-3">
+                    <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().primaryContact.value?.length?getFormControl().primaryContact.value.length:0}}/{{getFormControl().primaryContact.maxLength}}</p>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <h5 class="m-0">Mobile No.</h5>
+    </div>
+    <div class="row">
+        <div class="col-md-6 pr-0">
+            <h5 class="m-0">PAN</h5>
+            <p class="text-custom m-0 pl-40 f-12">If the Customer Type is Business then Company PAN should be mentioned.</p>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group mb-0">
+                <input type="text" formControlName="pan" class="form-control" maxlength="{{getFormControl().pan.maxLength}}">
             </div>
-            <div class="col-md-4">
-                <div class="form-group mb-0">
-                    <input type="text" (keypress)="keyPress($event)" formControlName="primaryContact" class="form-control"  maxlength="{{getFormControl().primaryContact.maxLength}}">
-                  </div>
-                  <div class="row pt-0">
-                    <div class="col-md-9">
-                      <mat-error class="f-12 pt-4"
-                     [ngClass]="{'v-h':!(isMobileNo && getFormControl().primaryContact.invalid || (getFormControl().primaryContact.touched && getFormControl().primaryContact.invalid))}">
-                      Mobile No is required</mat-error>
-                   </div>
-                    <div class="col-md-3">
-                      <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().primaryContact.value?.length?getFormControl().primaryContact.value.length:0}}/{{getFormControl().primaryContact.maxLength}}</p>
-                  </div>
-                  </div>
+            <div class="row pt-0">
+                <div class="col-md-8">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isPan && getFormControl().pan.invalid || (getFormControl().pan.touched && getFormControl().pan.invalid))}">
+                        This field is required</mat-error>
+                </div>
+                <div class="col-md-4">
+                    <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().pan.value?.length?getFormControl().pan.value.length:0}}/{{getFormControl().pan.maxLength}}</p>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6 p-0">
-                <h5 class="m-0 pr-20">PAN</h5>
-                <p class="text-custom m-0 pl-40 f-12">If the Customer Type is Business then Company PAN should be mentioned.</p>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group mb-0">
-                    <input type="text" formControlName="pan" class="form-control" maxlength="{{getFormControl().pan.maxLength}}">
-                  </div>
-                  <div class="row pt-0">
-                    <div class="col-md-8">
-                      <mat-error class="f-12 pt-4"
-                      [ngClass]="{'v-h':!(isPan && getFormControl().pan.invalid || (getFormControl().pan.touched && getFormControl().pan.invalid))}">
-                      PAN is required</mat-error>
-                   </div>
-                    <div class="col-md-4">
-                      <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().pan.value?.length?getFormControl().pan.value.length:0}}/{{getFormControl().pan.maxLength}}</p>
-                  </div>
-                  </div>
-            </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 pr-0">
+            <h5 class="m-0">GST Treatment</h5>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <h5 class="m-0">GST Treatment</h5>
-            </div>
-            <div class="col-md-6">
-                    <div class="form-group mb-0"> 
-                            <select formControlName="gstTreatment" class="form-control" id="sel11">
+        <div class="col-md-6">
+            <div class="form-group mb-0">
+                <select formControlName="gstTreatment" class="form-control" id="sel11">
                               <option>Registered Business - Regular</option>
                               <option>Registered Business - Composition</option>
                               <option>Unregistered Business</option>
                             </select>
-                          </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <h5 class="m-0">GSTIN</h5>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group mb-0">
-                    <input type="text" formControlName="gstIn" class="form-control" maxlength="{{getFormControl().gstIn.maxLength}}"> 
-                  </div>
-                  <div class="row pt-0">
-                    <div class="col-md-8">
-                      <mat-error class="f-12 pt-4"
-                      [ngClass]="{'v-h':!(isGstIn && getFormControl().gstIn.invalid || (getFormControl().gstIn.touched && getFormControl().gstIn.invalid))}">
-                      GSTIN is required</mat-error>
-                   </div>
-                    <div class="col-md-4">
-                      <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().gstIn.value?.length?getFormControl().gstIn.value.length:0}}/{{getFormControl().gstIn.maxLength}}</p>
-                  </div>
-                  </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <h5 class="m-0">Billing Address</h5>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group mb-0">
-                    <textarea class="form-control" formControlName="billingAddress" rows="5" maxlength="{{getFormControl().billingAddress.maxLength}}"></textarea>
-                  </div>
-                  <div class="row pt-0">
-                    <div class="col-md-8">
-                      <mat-error class="f-12 pt-4"
-                      [ngClass]="{'v-h':!(isBillingAddress && getFormControl().billingAddress.invalid || (getFormControl().billingAddress.touched && getFormControl().billingAddress.invalid))}">
-                      Billing Address is required</mat-error>
-                   </div>
-                    <div class="col-md-4">
-                      <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().billingAddress.value?.length?getFormControl().billingAddress.value.length:0}}/{{getFormControl().billingAddress.maxLength}}</p>
-                  </div>
-                  </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <h5 class="m-0">Pin Code</h5>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group mb-0">
-                    <input type="email" formControlName="pincode" class="form-control" maxlength="{{getFormControl().pincode.maxLength}}">
-                  </div>
-                  <div class="row pt-0">
-                    <div class="col-md-8">
-                      <mat-error class="f-12 pt-4"
-                      [ngClass]="{'v-h':!(isPincode && getFormControl().pincode.invalid || (getFormControl().pincode.touched && getFormControl().pincode.invalid))}">
-                      Pin Code is required</mat-error>
-                   </div>
-                    <div class="col-md-4">
-                      <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().pincode.value?.length?getFormControl().pincode.value.length:0}}/{{getFormControl().pincode.maxLength}}</p>
-                  </div>
-                  </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <h5 class="m-0">city</h5>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group mb-0">
-                    <input type="email" formControlName="city" class="form-control">
-                  </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <h5 class="m-0">State</h5>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group mb-0">
-                    <input type="email" formControlName="state" class="form-control">
-                  </div>
-            </div>
-        </div>
-        <div class="row pb-44">
-            <div class="col-md-6">
-                <h5 class="m-0">Country</h5>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group mb-0">
-                    <input type="email" formControlName="country" class="form-control">
-                  </div>
             </div>
         </div>
     </div>
-    <div class="bottom-fixed wrapper-16 pb-12">
-        <div class="row">
-            <div class="col-md-4 p-0">
-                <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="Close('close')">Cancel</h5>
+    <div class="row">
+        <div class="col-md-6 pr-0">
+            <h5 class="m-0">GSTIN</h5>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-0">
+                <input type="text" formControlName="gstIn" class="form-control" maxlength="{{getFormControl().gstIn.maxLength}}">
             </div>
-            <div class="col-md-8 right text-right">
-                <button mat-button class="btn-bottom br-0 text-inherit" (click)="savePayeeSettings()">SAVE <i class="material-icons">
+            <div class="row pt-0">
+                <div class="col-md-8">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isGstIn && getFormControl().gstIn.invalid || (getFormControl().gstIn.touched && getFormControl().gstIn.invalid))}">
+                        This field is required</mat-error>
+                </div>
+                <div class="col-md-4">
+                    <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().gstIn.value?.length?getFormControl().gstIn.value.length:0}}/{{getFormControl().gstIn.maxLength}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 pr-0">
+            <h5 class="m-0">Billing Address</h5>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-0">
+                <textarea class="form-control" formControlName="billingAddress" rows="5" maxlength="{{getFormControl().billingAddress.maxLength}}"></textarea>
+            </div>
+            <div class="row pt-0">
+                <div class="col-md-8">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isBillingAddress && getFormControl().billingAddress.invalid || (getFormControl().billingAddress.touched && getFormControl().billingAddress.invalid))}">
+                        This field is required</mat-error>
+                </div>
+                <div class="col-md-4">
+                    <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().billingAddress.value?.length?getFormControl().billingAddress.value.length:0}}/{{getFormControl().billingAddress.maxLength}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 pr-0">
+            <h5 class="m-0">Pin Code</h5>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-0">
+                <input type="email" formControlName="pincode" class="form-control" maxlength="{{getFormControl().pincode.maxLength}}">
+            </div>
+            <div class="row pt-0">
+                <div class="col-md-8">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isPincode && getFormControl().pincode.invalid || (getFormControl().pincode.touched && getFormControl().pincode.invalid))}">
+                        This field is required</mat-error>
+                </div>
+                <div class="col-md-4">
+                    <p class="mb-0 f-12 text-custom text-right pt-4">{{getFormControl().pincode.value?.length?getFormControl().pincode.value.length:0}}/{{getFormControl().pincode.maxLength}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 pr-0">
+            <h5 class="m-0">City</h5>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-0">
+                <input type="email" formControlName="city" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 pr-0">
+            <h5 class="m-0">State</h5>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-0">
+                <input type="email" formControlName="state" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="row pb-44">
+        <div class="col-md-6 pr-0">
+            <h5 class="m-0">Country</h5>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-0">
+                <input type="email" formControlName="country" class="form-control">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed wrapper-16 pb-12">
+    <div class="row">
+        <div class="col-md-4 p-0">
+            <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="Close('close')">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="savePayeeSettings()">SAVE <i class="material-icons">
                     arrow_drop_up
                     </i></button>
-            </div>
         </div>
     </div>
+</div>

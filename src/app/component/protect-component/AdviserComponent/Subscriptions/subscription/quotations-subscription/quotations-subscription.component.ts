@@ -145,6 +145,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     console.log('addFilters', addFilters);
     if (!_.includes(this.filterStatus, addFilters)) {
       this.filterStatus.push(addFilters);
+      this.getQuotationsData()
     } else {
       // _.remove(this.filterStatus, this.senddataTo);
     }

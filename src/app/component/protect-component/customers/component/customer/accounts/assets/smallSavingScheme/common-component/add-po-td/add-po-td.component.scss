@@ -1,0 +1,9 @@
+::ng-deep .mat-datepicker-toggle {
+    position: absolute;
+    right: 8px !important;
+    top: -16px !important;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+    width: 1.5em !important;
+}
