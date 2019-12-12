@@ -24,7 +24,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="scripName">
-                        <mat-option *ngFor="let signleScrip of scripList" [value]="signleScrip.scripName">
+                        <mat-option *ngFor="let signleScrip of scripList" [value]="signleScrip">
                             {{ signleScrip.name}}
                         </mat-option>
                         <mat-option (click)="addScrip()"><strong><i class="material-icons">add</i>New scrip</strong>

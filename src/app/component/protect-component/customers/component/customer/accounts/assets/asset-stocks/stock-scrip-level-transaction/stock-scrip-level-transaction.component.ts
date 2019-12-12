@@ -172,6 +172,10 @@ export class StockScripLevelTransactionComponent implements OnInit {
     this.scripList = data.scripName;
   }
   saveSchemeHolding() {
+    if (this.scipLevelTransactionForm.get('scripName').invalid) {
+      this.scipLevelTransactionForm.get('scripName').markAsTouched();
+      return;
+    };
     if (this.scipLevelTransactionForm.get('portfolioName').invalid) {
       this.scipLevelTransactionForm.get('portfolioName').markAsTouched();
       return;
