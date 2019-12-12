@@ -160,6 +160,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       })])
     });
     if (data.loanPartPayments != undefined) {
+      this.showTransact = true;
       data.loanPartPayments.forEach(element => {
         this.addLiabilityForm.controls.transact.push(this.fb.group({
           partPaymentDate: [new Date(element.partPaymentDate), [Validators.required]],
@@ -192,7 +193,10 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   }
 
   removeTransaction(item) {
-    this.transactEntries.removeAt(item);
+    if(this.transactEntries.length > 1){
+      this.transactEntries.removeAt(item);
+    }
+    
   }
 
   saveFormData(state) {

@@ -44,6 +44,7 @@ export class DocumentsSettingsComponent implements OnInit {
       data => this.getDocumentsSettingResponse(data)
     )
   }
+  /**this function is used for calling get api in documentSetting component */
   display(data){
     this.getDocumentsSetting();
   }

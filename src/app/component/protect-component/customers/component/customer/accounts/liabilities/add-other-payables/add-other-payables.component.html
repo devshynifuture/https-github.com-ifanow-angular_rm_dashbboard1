@@ -13,24 +13,14 @@
     </div>
 </div>
 <div class="pt-100 pl-24 pr-24 pb-48 mb-48" [formGroup]="otherLiabilityForm">
-    <!-- <div class="row pt-40">
-        <div class="col-md-5 text-right">
-            <h5 class="m-0 pt-8">Owner</h5>
-            <p class="m-0 f-12 text-custom">In whose name is this asset</p>
+    <div class="row">
+        <div class="col-md-5 pr-0 text-right">
+          <h5 class="m-0 pt-8">Owner</h5>
         </div>
-        <div class="col-md-5 pl-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input matInput #ownerName class="form-control br-0" formControlName="ownerName">
-                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isOwner && getFormControl().ownerName.invalid || getFormControl().ownerName.touched && getFormControl().ownerName.invalid)}">
-                        Owner name is required
-                    </mat-error>
-                    <mat-hint align="end" class="f-12">{{ownerName.value.length}}/40</mat-hint>
-                </mat-form-field>
-            </div>
+        <div class="col-md-5">
+          <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
         </div>
-    </div> -->
-    <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
+      </div>
     <div class="row pt-40">
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8">Date of receipt</h5>

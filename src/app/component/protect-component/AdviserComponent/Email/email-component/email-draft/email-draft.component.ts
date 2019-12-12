@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
 import { EmailInterfaceI } from '../email.interface';
+import { Subscription } from 'rxjs';
 
 
 const ELEMENT_DATA: EmailInterfaceI[] = [
@@ -27,7 +28,7 @@ const ELEMENT_DATA: EmailInterfaceI[] = [
   styleUrls: ['./email-draft.component.scss']
 })
 export class EmailDraftComponent implements OnInit {
-  emailDraftSubscription;
+  emailDraftSubscription: Subscription;
   emailDraftList: Object[] = [];
   dataSource;
 
@@ -37,34 +38,37 @@ export class EmailDraftComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.getEmailDraftListRes();
+  }
 
-    this.emailDraftSubscription = this.emailService.getEmailDraftList().subscribe(responseData => {
+  getEmailDraftListRes() {
+    this.emailDraftSubscription = this.emailService.getEmailDraftList()
+      .subscribe(responseData => {
 
-      responseData.forEach(element => {
-        const { messages: { payload: { headers }, snippet } } = element;
-        const { messages } = element;
-        const { internalDate } = messages;
-        const { labelIds } = messages;
-        let [, , , subjectObj] = headers;
-        const subject = subjectObj['value'];
-        console.log('draft values ->>>>>>>>>>>>>>>>>')
-        console.log(headers);
-        console.log(snippet);
-        console.log(' internal Date->   ', internalDate);
-        console.log(labelIds);
-        const Obj = {
-          message: snippet,
-          labelId: labelIds[0],
-          date: internalDate,
-          headers,
-          subject
-        }
-        this.emailDraftList.push(Obj);
-
-      });
-      // console.log(responseData);
-      this.dataSource = new MatTableDataSource<Object>(this.emailDraftList);
-    });
+        responseData.forEach(element => {
+          const { messages: { payload: { headers }, snippet } } = element;
+          const { messages } = element;
+          const { internalDate } = messages;
+          const { labelIds } = messages;
+          let [, , , subjectObj] = headers;
+          const subject = subjectObj['value'];
+          // console.log('draft values ->>>>>>>>>>>>>>>>>')
+          // console.log(headers);
+          // console.log(snippet);
+          // console.log(' internal Date->   ', internalDate);
+          // console.log(labelIds);
+          const Obj = {
+            message: snippet,
+            labelId: labelIds[0],
+            date: internalDate,
+            headers,
+            subject
+          }
+          this.emailDraftList.push(Obj);
+        });
+        // console.log(responseData);
+        this.dataSource = new MatTableDataSource<Object>(this.emailDraftList);
+      }, error => console.error(error));
   }
 
   ngOnDestroy() {
@@ -97,6 +101,7 @@ export class EmailDraftComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
+  // go to email view component 
   gotoEmailView(dataObj: Object) {
     this.emailService.sendNextData(dataObj);
     this.emailService.openComposeEmail(dataObj);

@@ -24,7 +24,7 @@
       <div class="col-md-9 p-0">
         <h3 class="mb-8 mt-20">{{storeData.documentName}}</h3>
         <!-- <textarea [froalaEditor]="config" (froalaModelChange)="onChange($event)" [(froalaModel)]="model"></textarea> -->
-        <!-- <app-froala [(model)]="storeData.documentText" modelChange="saveData($event)"></app-froala> -->
+        <app-froala [(model)]="storeData.documentText" modelChange="saveData($event)"></app-froala>
         <!-- <div id="ui-froala">
                 <div [froalaEditor] formControlName="mail_body">Hello, Froala!</div>
           <button type="submit" (click)="onSubmit()" [disabled]="!mailForm.valid" mat-stroked-button

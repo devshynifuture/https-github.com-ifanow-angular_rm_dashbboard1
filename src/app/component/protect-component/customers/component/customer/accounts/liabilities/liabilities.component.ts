@@ -1,14 +1,14 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 // import {UtilService} from '../../../../../../../services/util.service';
-import {EventService} from '../../../../../../../Data-service/event.service';
-import {SubscriptionInject} from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {CustomerService} from '../../customer.service';
-import {AuthService} from 'src/app/auth-service/authService';
+import { EventService } from '../../../../../../../Data-service/event.service';
+import { SubscriptionInject } from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { CustomerService } from '../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
 import * as _ from 'lodash';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {AddLiabilitiesComponent} from "../../../common-component/add-liabilities/add-liabilities.component";
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { AddLiabilitiesComponent } from "../../../common-component/add-liabilities/add-liabilities.component";
 import { LiabilitiesDetailComponent } from '../../../common-component/liabilities-detail/liabilities-detail.component';
 
 
@@ -20,19 +20,19 @@ import { LiabilitiesDetailComponent } from '../../../common-component/liabilitie
 
 export class LiabilitiesComponent implements OnInit {
 
-  displayedColumns = ['no', 'name', 'type', 'loan', 'ldate', 'today', 'ten', 'rate', 'emi', 'fin', 'status', 'icons'];
+  displayedColumns: string[] = ['no', 'name', 'type', 'loan', 'ldate', 'today', 'ten', 'rate', 'emi', 'fin', 'status', 'icons'];
   // dataSource = ELEMENT_DATA;
   advisorId: any;
   dataSource: any;
   storeData: any;
   dataStore: any;
   showFilter: any;
-  home = [];
-  vehicle = [];
-  education = [];
-  creditCard = [];
-  personal = [];
-  mortgage = [];
+  home: Object[] = [];
+  vehicle: Object[] = [];
+  education: Object[] = [];
+  creditCard: Object[] = [];
+  personal: Object[] = [];
+  mortgage: Object[] = [];
   dataToShow: any;
   OtherData: any;
   OtherPayableData: any;
@@ -46,10 +46,10 @@ export class LiabilitiesComponent implements OnInit {
 
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
-              public customerService: CustomerService, public util: UtilService, public dialog: MatDialog) {
+    public customerService: CustomerService, public util: UtilService, public dialog: MatDialog) {
   }
 
-  viewMode;
+  viewMode: string;
 
   ngOnInit() {
     this.viewMode = 'tab1';
@@ -181,8 +181,6 @@ export class LiabilitiesComponent implements OnInit {
     );
   }
 
-
-
   openThirtyPercent(flagValue, data) {
     const fragmentData = {
       flag: flagValue,
@@ -203,13 +201,13 @@ export class LiabilitiesComponent implements OnInit {
   }
 
 
-  addLiabilitiesDetail(flagValue,data) {
+  addLiabilitiesDetail(flagValue, data) {
     const fragmentData = {
       flag: flagValue,
       id: 1,
-      data:data,
+      data: data,
       state: 'open35',
-      componentName : LiabilitiesDetailComponent,
+      componentName: LiabilitiesDetailComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
