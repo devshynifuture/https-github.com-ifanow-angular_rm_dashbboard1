@@ -159,7 +159,7 @@ export class AddOtherPayablesComponent implements OnInit {
             "outstandingBalance":obj.balance,
             "dateOfReceived":obj.dateOfReceipt,
             "dateOfRepayment":obj.dateOfRepayment,
-            "id":this._inputData.id,
+            "id":this._data.id,
             }
             this.custumService.editOtherPayables(editObj).subscribe(
               data => this.editOtherPayablesRes(data)
