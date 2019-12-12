@@ -1,5 +1,4 @@
 <div class="wrapper-8 pb-44">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <div class="row">
     <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
       <button [matMenuTriggerFor]="menu" class="ba-black br-0" mat-stroked-button>
@@ -21,17 +20,15 @@
       <h4 class="m-0 text-black roboto">Stocks overview</h4>
     </div>
     <div class="col-md-8 p-0 right text-right">
-      <img class="c-p" src="assets/images/svg/download-bordered.svg">
-      <img class="c-p" src="assets/images/svg/up-down.svg">
-      <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
-      <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
-        class="material-icons">filter_list</i>FILTERS
-      </button>
-      <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button><i
-        class="material-icons">add</i>ADD NEW
-      </button>
+      <img src="assets/images/svg/download-bordered.svg" class="c-p">
+      <img src="assets/images/svg/up-down.svg" class="c-p">
+      <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
+      <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
+          class="material-icons">filter_list</i>FILTERS</button>
+      <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"><i
+          class="material-icons">add</i>ADD NEW</button>
       <mat-menu #menu1="matMenu" class="add-new">
-        <button (click)="openAddStock(null)" class="b-b" mat-menu-item>
+        <button (click)="openAddStock('addPortfolio',null)" mat-menu-item class="b-b">
           <div class="row">
             <div class="col-md-2 pr-8 text-right">
               <img src="assets/images/svg/dark-three-dot.svg">
@@ -44,7 +41,20 @@
             </div>
           </div>
         </button>
-        <button (click)="openScriptLevelHolding(null)" class="b-b" mat-menu-item>
+        <button (click)="openAddStock('holding',null)" mat-menu-item>
+          <div class="row">
+            <div class="col-md-2 pr-8 text-right">
+              <img src="assets/images/svg/dark-download.svg">
+            </div>
+            <div class="col-md-10">
+              <p class="m-0 text-black">Scheme level holdings</p>
+              <p class="m-0 pt-4 f-13 text-custom">Add holding data at
+                <br> scheme level for better reporting
+              </p>
+            </div>
+          </div>
+        </button>
+        <button (click)="openAddStock('transaction',null)" mat-menu-item class="b-b">
           <div class="row">
             <div class="col-md-2 pr-8 text-right">
               <img src="assets/images/svg/scheme-icon.svg">
@@ -57,22 +67,10 @@
             </div>
           </div>
         </button>
-        <button mat-menu-item>
-          <div class="row">
-            <div class="col-md-2 pr-8 text-right">
-              <img src="assets/images/svg/dark-download.svg">
-            </div>
-            <div class="col-md-10">
-              <p class="m-0 text-black">Import data</p>
-              <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
-                <br> scheme level for better reporting
-              </p>
-            </div>
-          </div>
-        </button>
       </mat-menu>
     </div>
   </div>
+
   <div class="row pt-12">
     <div class="col-md-5 pl-0 pr-4">
       <div class="row b-a">
@@ -100,8 +98,8 @@
               <p class="text-custom m-0">Returns</p>
               <h5 *ngIf="assetStockData" class="m-0 text-danger">{{assetStockData.grandTotalAbsReturns}}
               </h5> <i class="material-icons text-danger v-sub f-18 f-700">
-              arrow_upward
-            </i>
+                arrow_upward
+              </i>
             </div>
           </div>
         </div>
@@ -235,58 +233,57 @@
         <ng-container matColumnDef="amt">
           <th *matHeaderCellDef class="br t-8 text-right" mat-header-cell> Amount invested</th>
           <td *matCellDef="let element" class="br t-8 text-right" mat-cell> {{element.amountInvested}} </td>
-          <td *matFooterCellDef appFormatNumber class="br t-8 text-right"
-              mat-footer-cell>{{ singlePortfolio.amountInvested}}</td>
+          <td *matFooterCellDef appFormatNumber class="br t-8 text-right" mat-footer-cell>
+            {{ singlePortfolio.amountInvested}}</td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
           <th *matHeaderCellDef class="br t-8 text-right" mat-header-cell> Current value</th>
           <td *matCellDef="let element" class="br t-8 text-right" mat-cell> {{element.currentMarketValue}}
           </td>
-          <td *matFooterCellDef appFormatNumber class="br t-8 text-right"
-              mat-footer-cell>{{ singlePortfolio.currentMarketValue}}</td>
+          <td *matFooterCellDef appFormatNumber class="br t-8 text-right" mat-footer-cell>
+            {{ singlePortfolio.currentMarketValue}}</td>
         </ng-container>
         <ng-container matColumnDef="gain">
           <th *matHeaderCellDef class="br t-8 text-right" mat-header-cell> Unrealized gain/loss</th>
           <td *matCellDef="let element" class="br t-8 text-right" mat-cell> {{element.unrealizedGainLoss}}
           </td>
-          <td *matFooterCellDef appFormatNumber class="br t-8 text-right"
-              mat-footer-cell>{{ singlePortfolio.unrealizedGainLoss}}</td>
+          <td *matFooterCellDef appFormatNumber class="br t-8 text-right" mat-footer-cell>
+            {{ singlePortfolio.unrealizedGainLoss}}</td>
         </ng-container>
         <ng-container matColumnDef="ret">
           <th *matHeaderCellDef class="br t-8 text-right" mat-header-cell> Absolute returns %</th>
           <td *matCellDef="let element" class="br t-8 text-right" mat-cell> {{element.absoluteReturn}} </td>
-          <td *matFooterCellDef appFormatNumber class="br t-8 text-right"
-              mat-footer-cell>{{ singlePortfolio.absoluteReturn}}</td>
+          <td *matFooterCellDef appFormatNumber class="br t-8 text-right" mat-footer-cell>
+            {{ singlePortfolio.absoluteReturn}}</td>
         </ng-container>
         <ng-container matColumnDef="xirr">
           <th *matHeaderCellDef class="br t-8 text-right" mat-header-cell> XIRR %</th>
           <td *matCellDef="let element" class="br t-8 text-right" mat-cell> {{element.xirr}} </td>
-          <td *matFooterCellDef appFormatNumber class="br t-8 text-right"
-              mat-footer-cell>{{ singlePortfolio.xirr}}</td>
+          <td *matFooterCellDef appFormatNumber class="br t-8 text-right" mat-footer-cell>{{ singlePortfolio.xirr}}</td>
         </ng-container>
         <ng-container matColumnDef="dividend">
           <th *matHeaderCellDef class="br t-8 text-right" mat-header-cell> Dividend</th>
           <td *matCellDef="let element" class="br t-8 text-right" mat-cell> {{element.dividend}} </td>
-          <td *matFooterCellDef appFormatNumber class="br t-8 text-right"
-              mat-footer-cell>{{ singlePortfolio.dividend}}</td>
+          <td *matFooterCellDef appFormatNumber class="br t-8 text-right" mat-footer-cell>{{ singlePortfolio.dividend}}
+          </td>
         </ng-container>
         <ng-container matColumnDef="groupHeader">
-          <td *matCellDef="let group" [attr.colspan]="displayedColumns25.length"
-              class="t-2 text-center">{{group.groupName}}</td>
+          <td *matCellDef="let group" [attr.colspan]="displayedColumns25.length" class="t-2 text-center">
+            {{group.groupName}}</td>
         </ng-container>
 
 
         <ng-container matColumnDef="icons">
           <th *matHeaderCellDef class="t-2" mat-header-cell></th>
           <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menu25"
-                                                                class="material-icons c-p text-black">
-            more_vert
-          </i>
+              class="material-icons c-p text-black">
+              more_vert
+            </i>
             <mat-menu #menu25="matMenu">
-              <button mat-menu-item>Edit</button>
+              <button mat-menu-item (click)="editStock(element,singlePortfolio)">Edit</button>
               <button mat-menu-item>Detailed view</button>
               <button mat-menu-item>Activity</button>
-              <button mat-menu-item>Delete</button>
+              <button mat-menu-item (click)="deleteModal('STOCK',element)">Delete</button>
             </mat-menu>
           </td>
 

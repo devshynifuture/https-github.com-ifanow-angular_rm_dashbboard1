@@ -29,11 +29,11 @@ export class AddAssetStocksComponent implements OnInit {
       data = {}
     }
     this.assetForm = this.fb.group({
-      ownerName: [, [Validators.required]],
-      currentMarketValue: [, [Validators.required]],
-      valueAsOn: [, [Validators.required]],
-      amtInvested: [, [Validators.required]],
-      portfolioName: [, [Validators.required]]
+      ownerName: [data.ownerName, [Validators.required]],
+      currentMarketValue: [data.currentMarketValue, [Validators.required]],
+      valueAsOn: [new Date(data.valueAsOn), [Validators.required]],
+      amtInvested: [data.amountInvested, [Validators.required]],
+      portfolioName: [data.portfolioName, [Validators.required]]
     })
     this.ownerData = this.assetForm.controls;
     console.log(this.assetForm)
