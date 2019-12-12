@@ -13,7 +13,7 @@
         <div class="col-md-12">
             <form [formGroup]="planDataForm">
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-5 pr-0">
                         <h5>Plan name</h5>
                     </div>
                     <div class="col-md-5">
@@ -22,8 +22,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-8">
-                                <mat-error class="f-12 pt-4" 
-                                    [ngClass]="{'v-h': !(isPlanValid && getFormControl().planName.invalid || getFormControl().planName.touched && getFormControl().planName.invalid)}">
+                                <mat-error class="f-12 pt-4" [ngClass]="{'v-h': !(isPlanValid && getFormControl().planName.invalid || getFormControl().planName.touched && getFormControl().planName.invalid)}">
                                     Plan name is required</mat-error>
                             </div>
                             <div class="col-md-4">
@@ -32,7 +31,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row pt-44">
+                <div class="row pt-24">
                     <div class="col-md-5">
                         <h5>Code </h5>
                     </div>
@@ -42,8 +41,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-8">
-                                <mat-error class="f-12"
-                                    [ngClass]="{'v-h': !(isCodeValid && getFormControl().code.invalid || getFormControl().code.touched && getFormControl().code.invalid)}">
+                                <mat-error class="f-12" [ngClass]="{'v-h': !(isCodeValid && getFormControl().code.invalid || getFormControl().code.touched && getFormControl().code.invalid)}">
                                     Code is required</mat-error>
                             </div>
                             <div class="col-md-4">
@@ -52,7 +50,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row pt-44">
+                <div class="row pt-24">
                     <div class="col-md-5">
                         <h5>Description</h5>
                     </div>
@@ -62,8 +60,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-8">
-                                <mat-error class="f-12"
-                                    [ngClass]="{'d-n': !(isDescValid && getFormControl().description.invalid || getFormControl().description.touched && getFormControl().description.invalid)}">
+                                <mat-error class="f-12" [ngClass]="{'d-n': !(isDescValid && getFormControl().description.invalid || getFormControl().description.touched && getFormControl().description.invalid)}">
                                     Description is required</mat-error>
                             </div>
                             <div class="col-md-4">

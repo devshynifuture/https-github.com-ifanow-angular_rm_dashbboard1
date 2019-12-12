@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { AddAssetStocksComponent } from './add-asset-stocks/add-asset-stocks.component';
-import { StockScripLevelHoldingComponent } from './stock-scrip-level-holding/stock-scrip-level-holding.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, OnInit} from '@angular/core';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {AddAssetStocksComponent} from './add-asset-stocks/add-asset-stocks.component';
+import {StockScripLevelHoldingComponent} from './stock-scrip-level-holding/stock-scrip-level-holding.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-asset-stocks',
@@ -13,38 +14,101 @@ import { EventService } from 'src/app/Data-service/event.service';
   styleUrls: ['./asset-stocks.component.scss']
 })
 export class AssetStocksComponent implements OnInit {
-  displayedColumns25 = ['scrip', 'owner', 'bal', 'price', 'mprice', 'amt', 'cvalue', 'gain', 'ret', 'xirr', 'dividend', 'icons'];
+  displayedColumns25 = ['scrip', 'owner', 'bal', 'price', 'mprice', 'amt', 'cvalue', 'gain', 'ret',
+    'xirr', 'dividend', 'icons'];
+
+  footerColumns = ['scrip', /*'owner', 'bal', 'price', 'mprice',*/ 'amt', 'cvalue', 'gain', 'ret',
+    'xirr', 'dividend', 'icons'];
   dataSource25 = ELEMENT_DATA25;
   advisorId: any;
   clientId: any;
-  assetStocksdata: any;
+  assetStockData: any;
   portfolioData: any;
+  isLoading = false;
 
-  constructor(private subInjectService: SubscriptionInject, private cusService: CustomerService, private eventService: EventService) { }
+  constructor(private subInjectService: SubscriptionInject, private cusService: CustomerService, private eventService: EventService) {
+  }
 
   ngOnInit() {
     this.dataSource25 = ELEMENT_DATA25;
-    console.log(this.dataSource25)
+    console.log(this.dataSource25);
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getStocksData();
   }
+
   getStocksData() {
-    const obj =
-    {
+    this.isLoading = true;
+    const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
-    }
+    };
     this.cusService.getAssetStockData(obj).subscribe(
-      data => this.getStocksDataRes(data),
-      err => this.eventService.openSnackBar(err)
-    )
+      data => {
+        this.getStocksDataRes(data);
+        this.isLoading = false;
+      },
+      err => {
+        this.isLoading = false;
+        this.eventService.openSnackBar(err);
+      }
+    );
   }
+
   getStocksDataRes(data) {
-    console.log(data)
-    this.assetStocksdata = data;
+    console.log('AssetStockComponent getStocksDataRes data : ', data);
+    this.assetStockData = data;
     this.portfolioData = data.portfolios;
   }
+
+  checkAndFillDataSource(singlePortfolio) {
+    const stocks = singlePortfolio.stocks;
+    const customStock = [];
+    const categoryWiseMap = {};
+    singlePortfolio.dividend = 0;
+    singlePortfolio.xirr = 0;
+    singlePortfolio.absoluteReturn = 0;
+    singlePortfolio.unrealizedGainLoss = 0;
+    singlePortfolio.currentMarketValue = 0;
+
+    singlePortfolio.amountInvested = 0;
+
+    // if (stocks) {
+    stocks.forEach((singleStock) => {
+      singlePortfolio.dividend += singleStock.dividend;
+      singlePortfolio.xirr += singleStock.xirr;
+      singlePortfolio.absoluteReturn += singleStock.absoluteReturn;
+      singlePortfolio.unrealizedGainLoss += singleStock.unrealizedGainLoss;
+      singlePortfolio.currentMarketValue += singleStock.currentMarketValue;
+      singlePortfolio.amountInvested += singleStock.amountInvested;
+
+      if (singleStock.stockCategoryName) {
+        const categoryArray = categoryWiseMap[singleStock.stockCategoryName] ? categoryWiseMap[singleStock.stockCategoryName] : [];
+        categoryArray.push(singleStock);
+        categoryWiseMap[singleStock.stockCategoryName] = categoryArray;
+      } else {
+        customStock.push(singleStock);
+      }
+    });
+
+    const customDataSource = new MatTableDataSource(customStock);
+    Object.keys(categoryWiseMap).map(key => {
+      customDataSource.data.push({groupName: key});
+      categoryWiseMap[key].forEach((singleData) => {
+        customDataSource.data.push(singleData);
+      });
+    });
+    return customDataSource;
+    // } else {
+    // }
+  }
+
+  isGroup(index, item): boolean {
+    // console.log('index : ', index);
+    // console.log('item : ', item);
+    return item.groupName;
+  }
+
   openAddStock(data) {
     const fragmentData = {
       flag: 'addStock',
@@ -65,6 +129,7 @@ export class AssetStocksComponent implements OnInit {
       }
     );
   }
+
   openScriptLevelHolding(data) {
     const fragmentData = {
       flag: 'addScriptLevelHolding',
@@ -100,6 +165,7 @@ export interface PeriodicElement25 {
   xirr: string;
   dividend: string;
 }
+
 const ELEMENT_DATA25: PeriodicElement25[] = [
 
   {

@@ -1,0 +1,16 @@
+.borderlightPlaceholders {
+    border: 1px solid #BCC6CA;
+}
+
+::ng-deep .fr-toolbar.fr-top {
+    width: 100%;
+}
+
+::ng-deep .fr-box.fr-basic .fr-wrapper {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.minHeight {
+    min-height: 595px;
+}
