@@ -1,7 +1,7 @@
-import {ActivatedRoute, Router} from '@angular/router';
-import {EmailServiceService} from './../../email-service.service';
-import {Component, OnInit} from '@angular/core';
-import {EmailUtilService} from "../../../../../../services/email-util.service";
+import { ActivatedRoute, Router } from '@angular/router';
+import { EmailServiceService } from './../../email-service.service';
+import { Component, OnInit } from '@angular/core';
+import { EmailUtilService } from "../../../../../../services/email-util.service";
 
 @Component({
   selector: 'app-left-sidebar',
@@ -12,8 +12,8 @@ export class LeftSidebarComponent implements OnInit {
   navList;
 
   constructor(private emailService: EmailServiceService,
-              private router: Router,
-              private activatedRoute: ActivatedRoute) {
+    private router: Router,
+    private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -61,22 +61,26 @@ export class LeftSidebarComponent implements OnInit {
   loadList(obj) {
     switch (obj.name.toLowerCase()) {
       case 'inbox':
-        this.router.navigate(['inbox'], {relativeTo: this.activatedRoute});
+        this.router.navigate(['inbox'], { relativeTo: this.activatedRoute });
         break;
       case 'sent':
-        this.router.navigate(['sent'], {relativeTo: this.activatedRoute});
+        this.router.navigate(['sent'], { relativeTo: this.activatedRoute });
         break;
       case 'draft':
-        this.router.navigate(['draft'], {relativeTo: this.activatedRoute});
+        this.router.navigate(['draft'], { relativeTo: this.activatedRoute });
         break;
       case 'trash':
-        this.router.navigate(['trash'], {relativeTo: this.activatedRoute});
+        this.router.navigate(['trash'], { relativeTo: this.activatedRoute });
         break;
       // case 'spam': this.router.navigate(['spam'], { relativeTo: this.activatedRoute });
       //   break;
       default:
-        this.router.navigate(['inbox'], {relativeTo: this.activatedRoute});
+        this.router.navigate(['inbox'], { relativeTo: this.activatedRoute });
     }
+  }
+
+  openCompose() {
+    this.emailService.openComposeEmail(null);
   }
 
 }
