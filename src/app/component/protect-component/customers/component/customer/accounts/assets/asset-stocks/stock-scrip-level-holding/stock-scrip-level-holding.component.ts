@@ -24,6 +24,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
   ownerName: any;
   familyMemberId: any;
   familyWisePortfolio = [];
+  editApiData: any;
 
   constructor(public dialog: MatDialog, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
@@ -112,6 +113,11 @@ export class StockScripLevelHoldingComponent implements OnInit {
     if (data == null) {
       data = {};
       this.addHoldings();
+    }
+    else {
+      this.editApiData = data;
+      this.familyMemberId = data.familyMemberId;
+      this.ownerName = data.ownerName;
     }
     this.scipLevelHoldingForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],

@@ -412,4 +412,7 @@ export class CustomerService {
   deleteStockData(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_STOCK, data)
   }
+  editStockData(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_STOCK, data);
+  }
 }
