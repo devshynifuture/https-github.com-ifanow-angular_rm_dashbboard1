@@ -39,8 +39,7 @@
             <mat-option value="5">Personal</mat-option>
             <mat-option value="6">Mortgage</mat-option>
           </mat-select>
-          <mat-error class="f-12 pt-4"
-            [ngClass]="{'v-h':!(isLoanType && getFormControl().loanType.invalid || getFormControl().loanType.touched && getFormControl().loanType.invalid)}">
+          <mat-error class="f-12 pt-4">
             Loan type is required
           </mat-error>
         </mat-form-field>
@@ -57,8 +56,7 @@
         <mat-form-field>
           <input matInput #loanAmount class="form-control rupess br-0" (keypress)="keyPress($event)"
             formControlName="loanAmount" maxlength="{{getFormControl().loanAmount.maxLength}}">
-          <mat-error class="f-12 pt-4"
-            [ngClass]="{'v-h':!(isLoanAmount && getFormControl().loanAmount.invalid || getFormControl().loanAmount.touched && getFormControl().loanAmount.invalid)}">
+          <mat-error class="f-12 pt-4">
             Loan amount is required
           </mat-error>
           <mat-hint align="end" class="f-12">{{loanAmount.value.length}}/20</mat-hint>
@@ -76,8 +74,7 @@
         <mat-form-field>
           <input matInput #loanTenure class="form-control br-0" (keypress)="keyPress($event)"
             formControlName="loanTenure" maxlength="{{getFormControl().loanTenure.maxLength}}">
-          <mat-error class="f-12 pt-4"
-            [ngClass]="{'v-h':!(isLoanTenure && getFormControl().loanTenure.invalid || getFormControl().loanTenure.touched && getFormControl().loanTenure.invalid)}">
+          <mat-error class="f-12 pt-4">
             Loan tenure is required
           </mat-error>
           <mat-hint align="end" class="f-12">{{loanTenure.value.length}}/20</mat-hint>
@@ -121,8 +118,7 @@
         <mat-form-field>
           <input matInput #loanTenure class="form-control br-0" (keypress)="keyPress($event)"
             formControlName="outstandingAmt" maxlength="{{getFormControl().outstandingAmt.maxLength}}">
-          <mat-error class="f-12 pt-4"
-            [ngClass]="{'v-h':!(isOtAmt && getFormControl().outstandingAmt.invalid || getFormControl().outstandingAmt.touched && getFormControl().outstandingAmt.invalid)}">
+          <mat-error class="f-12 pt-4">
             Outstanding amount is required
           </mat-error>
           <mat-hint align="end" class="f-12">{{loanTenure.value.length}}/20</mat-hint>
@@ -162,8 +158,7 @@
             <mat-option value="4">Quaterly</mat-option>
             <mat-option value="12">Monthly</mat-option>
           </mat-select>
-          <mat-error class="f-12 pt-4"
-            [ngClass]="{'v-h':!(isEmiFrequency && getFormControl().emiFrequency.invalid || getFormControl().emiFrequency.touched && getFormControl().emiFrequency.invalid)}">
+          <mat-error class="f-12 pt-4">
             Emi frequency is required
           </mat-error>
         </mat-form-field>
@@ -180,8 +175,7 @@
         <mat-form-field>
           <input matInput #interest class="form-control br-0 percentage" (keypress)="keyPress($event)"
             formControlName="interest" maxlength="{{getFormControl().interest.maxLength}}">
-          <mat-error class="f-12 pt-4"
-            [ngClass]="{'v-h':!(isinterestRate && getFormControl().interest.invalid || getFormControl().interest.touched && getFormControl().interest.invalid)}">
+          <mat-error class="f-12 pt-4">
             Annual interest rate is required
           </mat-error>
           <mat-hint align="end" class="f-12">{{interest.value.length}}/20</mat-hint>
@@ -295,8 +289,8 @@
               <mat-form-field>
                 <input matInput #partPayment class="form-control br-0" (keypress)="keyPress($event)"
                   formControlName="partPayment">
-                <mat-error class="f-12 pt-4" *ngIf="getFormControl().transact.untouched ">
-                  is required
+                <mat-error class="f-12 pt-4">
+                 payment Amount is required
                 </mat-error>
                 <mat-hint align="end" class="f-12">{{partPayment.value.length}}/20</mat-hint>
               </mat-form-field>
@@ -310,7 +304,7 @@
                   <mat-option value="2">Keep the term as it is and reduce the EMI</mat-option>
                 </mat-select>
                 <mat-error class="f-12 pt-4">
-                  is required
+                 option is required
                 </mat-error>
               </mat-form-field>
 
