@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {UtilService} from 'src/app/services/util.service';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {AddPlaninsuranceComponent} from './add-planinsurance/add-planinsurance.component';
+import { AddSuggestPolicyComponent } from './add-suggest-policy/add-suggest-policy.component';
+import { CurrentPolicyComponent } from './current-policy/current-policy.component';
 
 @Component({
   selector: 'app-insurance-plan',
@@ -27,6 +29,44 @@ export class InsurancePlanComponent implements OnInit {
       flag: 'addPlanInsurance',
       data,
       componentName: AddPlaninsuranceComponent,
+      id: 1,
+      state: 'open',
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+  opensuggestpolicy(data) {
+    const fragmentData = {
+      flag: 'opensuggestpolicy',
+      data,
+      componentName: AddSuggestPolicyComponent,
+      id: 1,
+      state: 'open',
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+  opencurrentpolicies(data) {
+    const fragmentData = {
+      flag: 'opencurrentpolicies',
+      data,
+      componentName: CurrentPolicyComponent,
       id: 1,
       state: 'open',
     };

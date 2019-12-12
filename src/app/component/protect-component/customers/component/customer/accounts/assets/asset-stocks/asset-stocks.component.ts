@@ -1,12 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {AddAssetStocksComponent} from './add-asset-stocks/add-asset-stocks.component';
-import {StockScripLevelHoldingComponent} from './stock-scrip-level-holding/stock-scrip-level-holding.component';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatTableDataSource} from '@angular/material/table';
+import { Component, OnInit } from '@angular/core';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AddAssetStocksComponent } from './add-asset-stocks/add-asset-stocks.component';
+import { StockScripLevelHoldingComponent } from './stock-scrip-level-holding/stock-scrip-level-holding.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { StockScripLevelTransactionComponent } from './stock-scrip-level-transaction/stock-scrip-level-transaction.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-asset-stocks',
@@ -26,7 +29,7 @@ export class AssetStocksComponent implements OnInit {
   portfolioData: any;
   isLoading = false;
 
-  constructor(private subInjectService: SubscriptionInject, private cusService: CustomerService, private eventService: EventService) {
+  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private cusService: CustomerService, private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -93,7 +96,7 @@ export class AssetStocksComponent implements OnInit {
 
     const customDataSource = new MatTableDataSource(customStock);
     Object.keys(categoryWiseMap).map(key => {
-      customDataSource.data.push({groupName: key});
+      customDataSource.data.push({ groupName: key });
       categoryWiseMap[key].forEach((singleData) => {
         customDataSource.data.push(singleData);
       });
@@ -108,14 +111,61 @@ export class AssetStocksComponent implements OnInit {
     // console.log('item : ', item);
     return item.groupName;
   }
+  deleteModal(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.cusService.deleteStockData(data.id).subscribe(
+          data => {
+            this.eventService.openSnackBar("PPF is deleted", "dismiss")
+            dialogRef.close();
+            this.getStocksData();
+          },
+          err => this.eventService.openSnackBar(err)
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
 
-  openAddStock(data) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+  editStock(data, portfolioData) {
+    let component;
+    console.log(data.stockType)
+    switch (true) {
+      case (data.stockType == 1):
+        component = AddAssetStocksComponent;
+        break;
+      case (data.stockType == 2):
+        component = StockScripLevelHoldingComponent;
+        break;
+      default:
+        component = StockScripLevelTransactionComponent;
+    }
+    data.portfolioName = portfolioData.portfolioName
     const fragmentData = {
       flag: 'addStock',
       data,
       id: 1,
       state: 'open',
-      componentName: AddAssetStocksComponent
+      componentName: component
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -129,19 +179,30 @@ export class AssetStocksComponent implements OnInit {
       }
     );
   }
-
-  openScriptLevelHolding(data) {
+  openAddStock(flag, data) {
+    let component;
+    switch (true) {
+      case (flag == "addPortfolio"):
+        component = AddAssetStocksComponent;
+        break;
+      case (flag == "holding"):
+        component = StockScripLevelHoldingComponent;
+        break;
+      default:
+        component = StockScripLevelTransactionComponent
+    }
     const fragmentData = {
-      flag: 'addScriptLevelHolding',
+      flag: 'editStock',
       data,
       id: 1,
-      state: 'open70',
-      componentName: StockScripLevelHoldingComponent
+      state: 'open',
+      componentName: component
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getStocksData();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 

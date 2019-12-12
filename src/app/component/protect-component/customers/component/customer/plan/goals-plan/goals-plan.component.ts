@@ -9,6 +9,8 @@ import { KeyInfoComponent } from './key-info/key-info.component';
 import { CalculatorsComponent } from './calculators/calculators.component';
 import { AddGoalsComponent } from '../add-goals/add-goals.component';
 import { EventService } from 'src/app/Data-service/event.service';
+import { EditNoteGoalComponent } from './edit-note-goal/edit-note-goal.component';
+import { ViewPastnotGoalComponent } from './view-pastnot-goal/view-pastnot-goal.component';
 
 export interface PeriodicElement {
   position: string;
@@ -118,6 +120,47 @@ export class GoalsPlanComponent implements OnInit {
       }
     );
   }
+  openEdit(data) {
+    console.log('hello mf button clicked');
+    const fragmentData = {
+      flag: 'openEdit',
+      data,
+      componentName: EditNoteGoalComponent, 
+      id: 1,
+      state: 'open65'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+          console.log('this is sidebardata in subs subs : ', sideBarData);
+          if (UtilService.isDialogClose(sideBarData)) {
+            console.log('this is sidebardata in subs subs 2: ', sideBarData);
+            rightSideDataSub.unsubscribe();
+
+          }
+      }
+    );
+  }
+  openView(data) {
+    console.log('hello mf button clicked');
+    const fragmentData = {
+      flag: 'openView',
+      data,
+      componentName: ViewPastnotGoalComponent, 
+      id: 1,
+      state: 'open35'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+          console.log('this is sidebardata in subs subs : ', sideBarData);
+          if (UtilService.isDialogClose(sideBarData)) {
+            console.log('this is sidebardata in subs subs 2: ', sideBarData);
+            rightSideDataSub.unsubscribe();
+
+          }
+      }
+    );
+  }
+  
   openCalculators(data) {
     console.log('hello mf button clicked');
     const fragmentData = {

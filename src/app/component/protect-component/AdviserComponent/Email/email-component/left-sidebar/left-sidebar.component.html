@@ -1,15 +1,20 @@
-<mat-action-list class="p-2" *ngIf="navList != null && navList != 'undefined'">
-    <input (change)="getFileDetails($event)" class="inputfile inputfile-3" id="file-3" type="file">
-    <button (click)="loadList(nav)" *ngFor="let nav of navList" mat-list-item>
-        <mat-icon></mat-icon>
-        <p matLine>{{ nav.name | lowercase }}</p>
-    </button>
-    <!-- <button mat-list-item class="btn-custom-compose" [ngClass]="">
+<!-- <mat-action-list class="p-2" *ngIf="navList != null && navList != 'undefined'"> -->
+<div class="p-16">
+  <button mat-stroked-button class="btn-primary br-0 w-100">Compose</button>
+</div>
+<mat-action-list>
+  <!-- <input (change)="getFileDetails($event)" class="inputfile inputfile-3" id="file-3" type="file">
+  <button (click)="loadList(nav)" *ngFor="let nav of navList" class="btn-primary" mat-list-item>
+    <mat-icon></mat-icon>
+    <p matLine>{{ nav.name | lowercase }}</p>
+  </button> -->
+
+  <!-- <button mat-list-item class="btn-custom-compose" [ngClass]="">
       <mat-icon matListIcon>create</mat-icon>
       <p matLine>Compose</p>
   </button>
   <button mat-list-item [ngClass]="" routerLink="inbox">
-      <mat-icon matListIcon>inbox</mat-icon>
+      <img src="/assets/images/svg/crm-inbox.svg">
       <p matLine>Inbox</p>
   </button>
   <button mat-list-item [ngClass]="" routerLink="sent">
@@ -27,5 +32,49 @@
   <button mat-list-item [ngClass]="" routerLink="trash">
       <mat-icon matListIcon> delete</mat-icon>
       <p matLine>Trash</p>
-  </button> -->
+  </button>
+</mat-action-list> -->
+  <mat-list>
+    <mat-list-item class="row c-p">
+      <div class="col-md-3">
+        <img src="/assets/images/svg/crm-inbox.svg">
+      </div>
+      <div class="col-md-9">
+        <h5 mat-line class="m-0 pt-4 text-primary" routerLink="inbox">Inbox</h5>
+      </div>
+    </mat-list-item>
+    <mat-list-item class="row c-p">
+      <div class="col-md-3">
+        <img src="/assets/images/svg/crm-sent.svg">
+      </div>
+      <div class="col-md-9">
+        <h5 mat-line class="m-0 pt-4">Sent</h5>
+      </div>
+    </mat-list-item>
+    <mat-list-item class="row c-p">
+      <div class="col-md-3">
+        <img src="/assets/images/svg/crm-archive.svg">
+      </div>
+      <div class="col-md-9">
+        <h5 mat-line class="m-0 pt-4" routerLink="draft">Drafts</h5>
+      </div>
+    </mat-list-item>
+    <mat-list-item class="row c-p">
+      <div class="col-md-3">
+        <img src="/assets/images/svg/crm-archive.svg">
+      </div>
+      <div class="col-md-9">
+        <h5 mat-line class="m-0 pt-4">Archive</h5>
+      </div>
+    </mat-list-item>
+    <mat-list-item class="row c-p">
+      <div class="col-md-3">
+        <img src="/assets/images/svg/crm-trash.svg">
+      </div>
+      <div class="col-md-9">
+        <h5 mat-line class="m-0 pt-4">Trash</h5>
+      </div>
+    </mat-list-item>
+  </mat-list>
+
 </mat-action-list>
