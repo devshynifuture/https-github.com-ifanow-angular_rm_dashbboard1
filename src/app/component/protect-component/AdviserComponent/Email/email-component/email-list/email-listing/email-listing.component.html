@@ -63,7 +63,7 @@
     <!-- Weight Column -->
     <ng-container matColumnDef="subjectMessage">
         <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-cell *matCellDef="let element"> {{element.subjectMessage}} </td>
+        <td mat-cell *matCellDef="let element" (click)="gotoEmailView(element)"> {{element.subjectMessage}} </td>
     </ng-container>
 
     <!-- Symbol Column -->

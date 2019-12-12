@@ -15,7 +15,10 @@ import { Location } from '@angular/common';
   styleUrls: ['./email-view.component.scss']
 })
 export class EmailViewComponent implements OnInit, OnDestroy {
-  emailObj: Object = null;
+  emailObj: any = null;
+  subject: string;
+  from: string;
+  body;
 
   constructor(private emailService: EmailServiceService,
     private _bottomSheet: MatBottomSheet,
@@ -24,9 +27,32 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   emailSubscription;
 
   ngOnInit() {
+    this.getEmailThread();
+  }
+
+  getEmailThread() {
     this.emailSubscription = this.emailService.data.subscribe(response => {
       this.emailObj = response;
+      let { parsedData: { headers } } = this.emailObj;
+
+      let subject = headers.filter((header) => {
+        return header.name === 'Subject';
+      });
+
+      let from = headers.filter((header) => {
+        return header.name === 'From';
+      })
+
+      let { parsedData: { decodedPart } } = this.emailObj;
+      this.body = decodedPart;
+
+
+      console.log('this is single thread response ->>>>>>>>>>>>>')
       console.log(response);
+
+      this.subject = subject[0]['value'];
+      this.from = from[0]['value'];
+      // console.log(response);
     });
   }
 

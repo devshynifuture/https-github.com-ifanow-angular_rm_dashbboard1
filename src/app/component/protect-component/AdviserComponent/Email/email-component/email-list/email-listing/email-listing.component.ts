@@ -51,12 +51,14 @@ export class EmailListingComponent implements OnInit, OnDestroy {
   nextPageToken;
   messageDetailArray: GmailInboxResponseI[];
   messageListArray;
-  dataSource;
+  dataSource = null;
 
   ngOnInit() {
-    this.getPaginatorLengthRes();
-    this.getGmailListInboxRes();
-    this.dataSource.paginator = this.paginator;
+    if (this.dataSource === null && this.paginator) {
+      this.getPaginatorLengthRes();
+      this.getGmailListInboxRes();
+      this.dataSource.paginator = this.paginator;
+    }
   }
 
   getPaginatorLengthRes() {
@@ -69,7 +71,6 @@ export class EmailListingComponent implements OnInit, OnDestroy {
   getGmailListInboxRes() {
     this.gmailInboxListSubscription = this.emailService.getMailInboxList('INBOX')
       .subscribe(responseData => {
-        let tempArray = [];
         let tempArray1 = [];
         // console.log('this is gmails inbox data ->');
         const parsedResponseData = JSON.parse(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(responseData));
@@ -80,15 +81,15 @@ export class EmailListingComponent implements OnInit, OnDestroy {
         gmailThreads.forEach((thread: GmailInboxResponseI, index: number) => {
 
           let parsedData: any; // object containing array of decoded parts and headers
-          // let idsOfThread: any; // Object of historyId and Id of thread
+          let idsOfThread: any; // Object of historyId and Id of thread
           let dateIdsSnippetsOfMessages: any; // array of Objects having ids, date snippets of messages
-          // let labelIdsfromMessages;
+          let labelIdsfromMessages;
           let extractSubjectFromHeaders;
 
           parsedData = EmailUtilService.decodeGmailThreadExtractMessage(thread);
-          // idsOfThread = EmailUtilService.getIdsOfGmailThreads(thread);
+          idsOfThread = EmailUtilService.getIdsOfGmailThreads(thread);
           dateIdsSnippetsOfMessages = EmailUtilService.getIdAndDateAndSnippetOfGmailThreadMessages(thread);
-          // labelIdsfromMessages = EmailUtilService.getGmailLabelIdsFromMessages(thread);
+          labelIdsfromMessages = EmailUtilService.getGmailLabelIdsFromMessages(thread);
           extractSubjectFromHeaders = EmailUtilService.getSubjectAndFromOfGmailHeaders(thread);
           // const Obj = {
           //   parsedData,
@@ -101,6 +102,9 @@ export class EmailListingComponent implements OnInit, OnDestroy {
 
           const Obj1 = {
             position: index + 1,
+            idsOfThread,
+            parsedData,
+            labelIdsfromMessages,
             emailers: `${extractSubjectFromHeaders['headerFromArray'][0].split('<')[0].trim()}`,
             subjectMessage: `${extractSubjectFromHeaders['headerSubjectArray'][0]} - ${dateIdsSnippetsOfMessages[0]['snippet']}`,
             date: `${dateIdsSnippetsOfMessages[0]['internalDate']}`
@@ -134,8 +138,11 @@ export class EmailListingComponent implements OnInit, OnDestroy {
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+    if (this.dataSource) {
+      const numRows = this.dataSource.data.length;
+
+      return numSelected === numRows;
+    }
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
