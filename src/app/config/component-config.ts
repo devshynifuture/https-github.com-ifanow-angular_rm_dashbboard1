@@ -195,7 +195,7 @@ export const appConfig = {
   ADD_SETTING_PLAN_OVERVIEW: 'subscription/plan/add',
   MAP_SERVICE_TO_PLAN: 'subscription/setting/plan/mapservice',
   MAP_DOCUMENTS_TO_PLAN: 'subscription/setting/plan/map/document',
-  GET_PLAN_DOCUMENTS_DATA: 'subscription/setting/plan-document/get',
+  GET_PLAN_DOCUMENTS_DATA: 'subscription/setting/plan-admindocument/get',
   GET_DOCUMENT_COUNT_SIGNED: 'subscription/document/analytics/get',
   GET_CLIENT_WITH_SCRIPTION: 'subscription/analytics/get',
   GET_INVOICE_TO_BE_REVIEWED: 'subscription/invoice/review/get',

@@ -25,7 +25,6 @@ export class EmailAddTaskComponent implements OnInit {
     this.subInjectService.rightSliderData(state);
   }
 
-
   sendEmail() {
     // const emailRequestData = {
     //   body: this.emailBody,

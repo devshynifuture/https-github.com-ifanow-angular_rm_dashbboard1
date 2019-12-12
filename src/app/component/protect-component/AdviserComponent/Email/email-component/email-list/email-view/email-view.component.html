@@ -5,16 +5,19 @@
 <!-- <button mat-button (click)="openEmailAddTask(null)">Add Task</button> -->
 
 <!-- <button mat-button (click)="openComposeEmail(null)">Compose</button> -->
-
-
-
 <!-- <button mat-raised-button (click)="openBottomSheet()">Reply</button> -->
-
+<mat-toolbar>
+    <button mat-icon-button (click)="goBack()">
+        <mat-icon>arrow_left</mat-icon>
+    </button>
+</mat-toolbar>
 <div class="chatBox">
     <div class="messengerDiv">
         <div class="userOne">
-            <h2>Abhishek</h2>
-            user one
+            <p> {{ subject }}</p>
+            <h2>{{from}}</h2>
+            <div *ngFor="let part of body" [innerHTML]="part">
+            </div>
         </div>
         <div class="userTwo">
             <h2>Sunny</h2>
@@ -29,11 +32,6 @@
             <h2>Sunny</h2>
             adasd ad ad as asdasdoug oadsousagd sado
         </div>
-
-
-
-
-
     </div>
 
     <div class="typeMessageBox">
@@ -51,8 +49,5 @@
                 </div>
             </div>
         </div>
-
-
     </div>
-
 </div>
