@@ -117,7 +117,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
         // console.log('this is decoded object data ->>>>');
         // console.log(this.messageDetailArray);
         this.dataSource = new MatTableDataSource<MessageListArray>(this.messageListArray);
-      });
+      }, error => console.error(error));
   }
 
   ngOnDestroy() {

@@ -43,7 +43,7 @@ export class EmailUtilService {
     };
   }
 
-  static decodeGmailThreadExtractMessage(gmailThread: GmailInboxResponseI) {
+  static decodeGmailThreadExtractMessage(gmailThread: GmailInboxResponseI): Object {
     let decodedPartArray = []
     let tempHeaders: {}[];
     gmailThread.messages.forEach((message) => {
@@ -67,7 +67,7 @@ export class EmailUtilService {
     return { decodedPart: decodedPartArray, headers: tempHeaders };
   }
 
-  static getGmailLabelIdsFromMessages(gmailThread: GmailInboxResponseI) {
+  static getGmailLabelIdsFromMessages(gmailThread: GmailInboxResponseI): Object[] {
     let labelIdsArray: Object[] = [];
     gmailThread.messages.forEach((message) => {
       const { labelIds } = message;
@@ -78,8 +78,8 @@ export class EmailUtilService {
     return labelIdsArray;
   }
 
-  static getIdAndDateAndSnippetOfGmailThreadMessages(gmailThread: GmailInboxResponseI) {
-    let arrayObj = [];
+  static getIdAndDateAndSnippetOfGmailThreadMessages(gmailThread: GmailInboxResponseI): Object[] {
+    let arrayObj: Object[] = [];
     gmailThread.messages.forEach((message) => {
       const { historyId, id, internalDate, threadId, snippet } = message;
       arrayObj.push({ historyId, id, internalDate, threadId, snippet });
@@ -87,12 +87,12 @@ export class EmailUtilService {
     return arrayObj;
   }
 
-  static getIdsOfGmailThreads(gmailThread: GmailInboxResponseI) {
+  static getIdsOfGmailThreads(gmailThread: GmailInboxResponseI): Object {
     const { historyId, id } = gmailThread;
     return { historyId, id };
   }
 
-  static getSubjectAndFromOfGmailHeaders(gmailThread: GmailInboxResponseI) {
+  static getSubjectAndFromOfGmailHeaders(gmailThread: GmailInboxResponseI): Object {
     let headerSubjectArray: string[] = [];
     let headerFromArray: string[] = [];
     gmailThread.messages.forEach((message) => {
