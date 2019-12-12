@@ -17,9 +17,6 @@ import { DetailedViewEPFComponent } from '../add-epf/detailed-view-epf/detailed-
 import { DetailedViewEPSComponent } from '../add-eps/detailed-view-eps/detailed-view-eps.component';
 import { DetailedViewGratuityComponent } from '../add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
 import { DetaildedViewSuperannuationComponent } from '../add-superannuation/detailded-view-superannuation/detailded-view-superannuation.component';
-import * as _ from 'lodash';
-import * as Excel from 'exceljs/dist/exceljs';
-import { saveAs } from 'file-saver'
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
 
@@ -221,8 +218,8 @@ export class RetirementAccountComponent implements OnInit {
   getfixedIncomeData(value) {
     this.showRecurring = value;
     (value == '2') ? this.getListNPS() : (value == '3') ? this.getListGratuity() : (value == '4') ? this.getListSuperannuation() : (value == '5') ? this.getListEPS() : this.getListEPF();
-    }
-    
+  }
+
   openRetirement(value, state, data) {
     const fragmentData = {
       flag: value,
@@ -420,7 +417,7 @@ export class RetirementAccountComponent implements OnInit {
       }
     );
   }
-  openAddSchemeHolding(data,state) {
+  openAddSchemeHolding(data, state) {
     const fragmentData = {
       flag: 'addSchemeHolding',
       data,

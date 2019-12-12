@@ -6,7 +6,6 @@ import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import * as moment from 'moment';
-import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth-service/authService';
 
 
@@ -86,15 +85,15 @@ export class BondsComponent implements OnInit {
     this.bonds = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       bondName: [(data == undefined) ? '' : data.bondName, [Validators.required]],
-      type: [(data == undefined) ? '' :( data.type)+"", [Validators.required]],
+      type: [(data == undefined) ? '' : (data.type) + "", [Validators.required]],
       amountInvest: [(data == undefined) ? '' : data.amountInvested, [Validators.required]],
       rateReturns: [(data == undefined) ? '' : data.rateOfReturn, [Validators.required]],
-      couponOption: [(data == undefined) ? '' :( data.couponPayoutFrequencyId)+"", [Validators.required]],
+      couponOption: [(data == undefined) ? '' : (data.couponPayoutFrequencyId) + "", [Validators.required]],
       commencementDate: [(data == undefined) ? '' : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(data == undefined) ? '' : data.couponRate, [Validators.required]],
-      compound: [(data == undefined) ? '' :( data.compounding)+"", [Validators.required]],
+      compound: [(data == undefined) ? '' : (data.compounding) + "", [Validators.required]],
       linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount, [Validators.required]],
-      tenure: [(data == undefined) ? '' :( data.tenure)+"", [Validators.required]],
+      tenure: [(data == undefined) ? '' : (data.tenure) + "", [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
@@ -128,7 +127,7 @@ export class BondsComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId,
       familyMemberId: this.familyMemberId,
-      ownerName: (this.ownerName == undefined)?this.bonds.controls.ownerName.value:this.ownerName,
+      ownerName: (this.ownerName == undefined) ? this.bonds.controls.ownerName.value : this.ownerName,
       amountInvested: this.bonds.controls.amountInvest.value,
       bondName: this.bonds.controls.bondName.value,
       // couponAmount: this.bonds.controls.couponAmount.value,
