@@ -90,9 +90,9 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     this.showTransact = true;
     if (this.transactEntries.length == 0) {
       this.transactEntries.push(this.fb.group({
-        partPaymentDate: null,
-        partPayment: null,
-        option: null
+        partPaymentDate:  ["", [Validators.required]],
+        partPayment:  ["", [Validators.required]],
+        option:  ["", [Validators.required]]
       }));
     }
   }
@@ -154,9 +154,9 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       finInstitution: [data.financialInstitution],
       collateral: [],
       transact: this.fb.array([this.fb.group({
-        partPaymentDate: null,
-        partPayment: null,
-        option: null
+        partPaymentDate: ["", [Validators.required]],
+        partPayment: ["", [Validators.required]],
+        option: ["", [Validators.required]]
       })])
     });
     if (data.loanPartPayments != undefined) {
@@ -186,9 +186,9 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
 
   addTransaction() {
     this.transactEntries.push(this.fb.group({
-      partPaymentDate: null,
-      partPayment: null,
-      option: null
+      partPaymentDate:  ["", [Validators.required]],
+      partPayment:  ["", [Validators.required]],
+      option:  ["", [Validators.required]]
     }));
   }
 
@@ -200,23 +200,29 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   }
 
   saveFormData(state) {
-    if (this.addLiabilityForm.controls.loanType.invalid) {
-      this.isLoanType = true;
+    if (this.addLiabilityForm.get('loanType').invalid) {
+      this.addLiabilityForm.get('loanType').markAsTouched();
       return;
-    } else if (this.addLiabilityForm.controls.loanAmount.invalid) {
-      this.isLoanAmount = true;
+    } else if (this.addLiabilityForm.get('loanAmount').invalid) {
+      this.addLiabilityForm.get('loanAmount').markAsTouched();
       return;
-    } else if (this.addLiabilityForm.controls.loanTenure.invalid) {
-      this.isLoanTenure = true;
+    } else if (this.addLiabilityForm.get('loanTenure').invalid) {
+      this.addLiabilityForm.get('loanTenure').markAsTouched();
+       return;
+    } else if (this.addLiabilityForm.get('poDate').invalid) {
+      this.addLiabilityForm.get('poDate').markAsTouched();
       return;
-    } else if (this.addLiabilityForm.controls.CommencementDate.invalid) {
-      this.isdateValid = true;
+    } else if (this.addLiabilityForm.get('outstandingAmt').invalid) {
+      this.addLiabilityForm.get('outstandingAmt').markAsTouched();
       return;
-    } else if (this.addLiabilityForm.controls.emiFrequency.invalid) {
-      this.isEmiFrequency = true;
+    } else if (this.addLiabilityForm.get('CommencementDate').invalid) {
+      this.addLiabilityForm.get('CommencementDate').markAsTouched();
       return;
-    } else if (this.addLiabilityForm.controls.interest.invalid) {
-      this.isinterestRate = true;
+    } else if (this.addLiabilityForm.get('emiFrequency').invalid) {
+      this.addLiabilityForm.get('emiFrequency').markAsTouched();
+      return;
+    } else if (this.addLiabilityForm.get('interest').invalid) {
+      this.addLiabilityForm.get('interest').markAsTouched();
       return;
     } else {
       const obj = {
