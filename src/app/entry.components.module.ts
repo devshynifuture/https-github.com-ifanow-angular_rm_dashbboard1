@@ -71,6 +71,11 @@ import {AddExpensesComponent} from './component/protect-component/customers/comp
 import {KeyInfoComponent} from './component/protect-component/customers/component/customer/plan/goals-plan/key-info/key-info.component';
 import {CalculatorsComponent} from './component/protect-component/customers/component/customer/plan/goals-plan/calculators/calculators.component';
 import {AddGoalsComponent} from './component/protect-component/customers/component/customer/plan/add-goals/add-goals.component';
+import { EditNoteGoalComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/edit-note-goal/edit-note-goal.component';
+import { ViewPastnotGoalComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/view-pastnot-goal/view-pastnot-goal.component';
+import { AddPlaninsuranceComponent } from './component/protect-component/customers/component/customer/plan/insurance-plan/add-planinsurance/add-planinsurance.component';
+import { AddSuggestPolicyComponent } from './component/protect-component/customers/component/customer/plan/insurance-plan/add-suggest-policy/add-suggest-policy.component';
+import { CurrentPolicyComponent } from './component/protect-component/customers/component/customer/plan/insurance-plan/current-policy/current-policy.component';
 
 
 export const componentList = [
@@ -193,7 +198,7 @@ export const componentList = [
   CopyDocumentsComponent,
 
   DetailedPoRdComponent,
-
+  AddPlaninsuranceComponent,
   DetailedPoRdComponent,
   DetailedViewSchemeHoldingComponent,
   ViewActivityComponent,
@@ -212,6 +217,11 @@ export const componentList = [
   // EmailAddTaskComponent,
   CalculatorsComponent,
   AddGoalsComponent,
+  EditNoteGoalComponent,
+  ViewPastnotGoalComponent,
+  AddSuggestPolicyComponent,
+  CurrentPolicyComponent,
+
   // ComposeEmailComponent
 ];
 

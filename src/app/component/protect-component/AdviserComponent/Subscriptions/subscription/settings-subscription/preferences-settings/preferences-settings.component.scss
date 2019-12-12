@@ -63,6 +63,30 @@ h5 {
     background-color: #d90000;
     color: #fff;
 }
-.mat-card:not([class*=mat-elevation-z]){
+
+.mat-card:not([class*=mat-elevation-z]) {
     box-shadow: none !important;
+}
+
+.b-outline {
+    outline: 1px solid #dee5e7 !important;
+    position: relative;
+    &::before {
+        content: '';
+        width: 10px;
+        height: 40px;
+        z-index: 2;
+        background: #fff;
+        position: absolute;
+        right: -5px;
+        top: 0px;
+    }
+}
+
+.preferencesMenuList {
+    .vertical-menu {
+        li {
+            padding: 10px 12px !important;
+        }
+    }
 }

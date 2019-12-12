@@ -29,25 +29,22 @@
                 <input matInput formControlName="commencementDate" class="form-control br-0" [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isDate && getFormControl().commencementDate.invalid || getFormControl().commencementDate.touched && getFormControl().commencementDate.invalid)}">
-                    Commencement date is required
+                <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isDate && getFormControl().commencementDate.invalid || getFormControl().commencementDate.touched && getFormControl().commencementDate.invalid)}">
+                    This field is required
                 </mat-error>
             </mat-form-field>
 
         </div>
     </div>
-    <div class="row pt-24">
+    <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Pension amount</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #pensionAmount type="number" (utils.keypress)="utils.keyPress($event)"
-                        maxlength="20" class="form-control br-0 rupess" formControlName="pensionAmount">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isPensionAmount && getFormControl().pensionAmount.invalid || getFormControl().pensionAmount.touched && getFormControl().pensionAmount.invalid)}">
+                    <input matInput #pensionAmount type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="pensionAmount">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isPensionAmount && getFormControl().pensionAmount.invalid || getFormControl().pensionAmount.touched && getFormControl().pensionAmount.invalid)}">
                         Pension amount is required
                     </mat-error>
                 </mat-form-field>
@@ -69,9 +66,8 @@
                         <mat-option value="4">Semi annually</mat-option>
                         <mat-option value="5">Annually</mat-option>
                     </mat-select>
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isPensionPayFreq && getFormControl().pensionPayFreq.invalid || getFormControl().pensionPayFreq.touched && getFormControl().pensionPayFreq.invalid)}">
-                        Pension payout is required
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isPensionPayFreq && getFormControl().pensionPayFreq.invalid || getFormControl().pensionPayFreq.touched && getFormControl().pensionPayFreq.invalid)}">
+                        This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -97,8 +93,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankAcNo type="number" (utils.keypress)="utils.keyPress($event)" maxlength="30"
-                            class="form-control br-0" formControlName="bankAcNo">
+                        <input matInput #bankAcNo type="number" (utils.keypress)="utils.keyPress($event)" maxlength="30" class="form-control br-0" formControlName="bankAcNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -111,8 +106,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" class="form-control br-0"
-                            formControlName="description">
+                        <input matInput #description maxlength="60" class="form-control br-0" formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>

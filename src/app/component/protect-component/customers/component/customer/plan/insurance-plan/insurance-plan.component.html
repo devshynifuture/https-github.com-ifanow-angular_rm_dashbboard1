@@ -486,21 +486,19 @@
             <div class="col-md-4 pr-0">
                 <img src="/assets/images/svg/insurance-right1.svg" class="pt-20">
                 <div class="row pt-20">
-                    <div class="col-md-6 pl-0">
-                        <button (click)="openAddPlanInsurance(null)" mat-stroked-button class="in-btn pl-8"><img
+                    <div class="col-md-12 pl-0">
+                        <button (click)="openAddPlanInsurance(null)" mat-stroked-button class="in-btn pl-8 mr-16"><img
                                 src="/assets/images/svg/btn-links.svg" class="pr-8">Needs analysis</button>
-                        <button mat-stroked-button class="in-btn mt-20 pl-0"><img src="/assets/images/svg/btn-links.svg"
-                                class="pr-12 ">Add policies</button>
+                        <button (click)="opensuggestpolicy(null)" mat-stroked-button class="in-btn mt-20 pl-8"><img src="/assets/images/svg/btn-links.svg"
+                                class="pr-12 ">Suggest policy</button>
                     </div>
-                    <div class="col-md-6">
-                        <button mat-stroked-button class="in-btn pl-8 "><img src="/assets/images/svg/btn-links.svg"
-                                class="pr-8">Current policies</button>
-                        <button mat-stroked-button class="in-btn pl-0 mt-20"><img src="/assets/images/svg/btn-links.svg"
-                                class="pr-24">Calculator</button>
-                    </div>
+                    <div class="col-md-12 p-0 pt-16">
+                        <button (click)="opencurrentpolicies(null)" mat-stroked-button class="in-btn pl-8 w-94"><img src="/assets/images/svg/btn-links.svg"
+                                class="pr-8">Recommendations on current policies</button>
+                    </div>                   
                 </div>
                 <div class="row pt-20">
-                    <div class="col-md-12 right p-0 text-right">
+                    <div class="col-md-12 right text-right">
                         <img src="/assets/images/svg/blue-delete.svg">
                     </div>
                 </div>
