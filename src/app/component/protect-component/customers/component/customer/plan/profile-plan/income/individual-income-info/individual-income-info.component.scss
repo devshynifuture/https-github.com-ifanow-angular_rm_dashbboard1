@@ -59,3 +59,22 @@
 .mat-radio-button {
     min-width: 130px;
 }
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+    width: 1.5em !important;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0px;
+}
+
+.mat-datepicker-toggle {
+    position: absolute;
+    right: 8px !important;
+    top: -18px !important;
+}
+
+.width60 {
+    width: 55px;
+    float: left;
+}

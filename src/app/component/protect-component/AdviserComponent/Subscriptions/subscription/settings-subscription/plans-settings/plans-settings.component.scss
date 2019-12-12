@@ -18,8 +18,8 @@ h3 {
     padding-left: 80px;
 }
 
-.height105 {
-    height: 105px;
+.height120 {
+    height: 120px;
 }
 
 // p{
@@ -161,3 +161,9 @@ a:hover {
 // ::ng-deep .mat-card:not([class*=mat-elevation-z]){
 //     box-shadow: none !important;
 // }
+.matCardTitleBox {
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

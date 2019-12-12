@@ -6,26 +6,21 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2 p-0 pt-1">
+            <div class="col-md-2 p-0 pt-1 preferencesMenuList">
                 <ul class="vertical-menu">
-                    <li (click)="viewMode ='tab1'" [ngClass]="{'b-ua':viewMode =='tab1','f-bold':viewMode =='tab1'}"
-                        class="c-p">
+                    <li (click)="viewMode ='tab1'" [ngClass]="{'b-outline':viewMode =='tab1','':viewMode =='tab1'}" class="c-p">
                         Biller profile
                     </li>
-                    <li (click)="viewMode ='tab2';getPrefixData(1)"
-                        [ngClass]="{'b-ua':viewMode =='tab2','f-bold':viewMode =='tab2'}" class="c-p">
+                    <li (click)="viewMode ='tab2';getPrefixData(1)" [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}" class="c-p">
                         Invoice
                     </li>
-                    <li (click)="viewMode ='tab3';getPrefixData(2)"
-                        [ngClass]="{'b-ua':viewMode =='tab3','f-bold':viewMode =='tab3'}" class="c-p">
+                    <li (click)="viewMode ='tab3';getPrefixData(2)" [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}" class="c-p">
                         Quotations
                     </li>
-                    <li (click)="viewMode ='tab4';getPrefixData(3)"
-                        [ngClass]="{'b-ua':viewMode =='tab4','f-bold':viewMode =='tab4'}" class=" c-p">
+                    <li (click)="viewMode ='tab4';getPrefixData(3)" [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}" class=" c-p">
                         Subscriptions
                     </li>
-                    <li (click)="viewMode ='tab5'" [ngClass]="{'b-ua':viewMode =='tab5','f-bold':viewMode =='tab5'}"
-                        class=" c-p">
+                    <li (click)="viewMode ='tab5'" [ngClass]="{'b-outline':viewMode =='tab5','':viewMode =='tab5'}" class=" c-p">
                         Email settings
                     </li>
                 </ul>
@@ -44,25 +39,20 @@
                     </div>
                     <div class="wrapper-16 pt-8" *ngFor="let singleBillerProfile of billerProfileData">
                         <div class="row b-a bg-grey lter pt-20 pb-16">
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <div class="row">
                                     <div class="col-md-8 p-0">
                                         <h3 class="mb-0">{{singleBillerProfile.companyDisplayName}}</h3>
                                     </div>
                                     <div class="col-md-4">
-
-                                        <button mat-stroked-button *ngIf="singleBillerProfile.isPrimary == true"
-                                            class="text-primary br-0">
-                                            PRIMARY
-                                        </button>
+                                        <button mat-stroked-button *ngIf="singleBillerProfile.isPrimary == true" class="text-primary br-0"> PRIMARY </button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <i class="material-icons text-right right text-custom f-28 c-p"
-                                    [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
-                                    more_vert
-                                </i>
+                            <div class="col-md-4">
+                                <i class="material-icons text-right right text-custom f-28 c-p" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
+                  more_vert
+                </i>
                                 <mat-menu #menu="matMenu">
                                     <a mat-menu-item (click)="getBillerPrimary(singleBillerProfile)">Set as Primary</a>
                                     <a mat-menu-item (click)="Open(singleBillerProfile,'billerProfile')">Edit
@@ -83,7 +73,8 @@
                                         <p class="f-12 pt-24">PAN</p>
                                         <h5>{{singleBillerProfile.pan}}</h5>
                                         <p class="f-12 pt-24">ADDRESS</p>
-                                        <h5>{{singleBillerProfile.billerAddress}},<br><br>{{singleBillerProfile.city}}
+                                        <h5>{{singleBillerProfile.billerAddress}},
+                                            <br>{{singleBillerProfile.city}}
                                             <br>{{singleBillerProfile.zipCode}}, {{singleBillerProfile.state}},
                                             <br> {{singleBillerProfile.country}}</h5>
                                     </div>
@@ -111,8 +102,7 @@
                                             </div>
                                             <div class="col-md-12 p-0 pt-24">
                                                 <p class="f-12">ADDRESS</p>
-                                                <h5>{{singleBillerProfile.branchAddress}},<br>{{singleBillerProfile.bankCity}}
-                                                    {{singleBillerProfile.bankZipCode}},
+                                                <h5>{{singleBillerProfile.branchAddress}},<br>{{singleBillerProfile.bankCity}} {{singleBillerProfile.bankZipCode}},
                                                     <br>{{singleBillerProfile.bankState}} ,
                                                     <br> {{singleBillerProfile.bankCountry}}</h5>
                                             </div>
@@ -122,8 +112,7 @@
                                 <div class="col-md-6 p-0 bl-1">
                                     <div class="wrapper-16">
                                         <p class="f-12">YOUR LOGO</p>
-                                        <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png"
-                                            class="img-icons">
+                                        <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" class="img-icons">
                                     </div>
                                     <hr>
                                     <div class="wrapper-16">
@@ -227,8 +216,7 @@
                     <div class="wrapper-12 pb-0">
                         <div class="row">
                             <div class="col-md-5">
-                                <h4>Email configuration <span matBadge="4" matBadgeOverlap="false"
-                                        class="text-danger ba-danger f-10">NOT CONFIGURED</span></h4>
+                                <h4>Email configuration <span matBadge="4" matBadgeOverlap="false" class="text-danger ba-danger f-10">NOT CONFIGURED</span></h4>
                                 <div class="form-group">
                                     <input type="text" class="form-control br-0">
                                 </div>
@@ -247,12 +235,12 @@
                                         <div class="bg-grey lter wrapper-16 pl-24">
                                             <div class="row">
                                                 <div class="col-md-11 p-0">
-                                                    <h3>Invoice</h3>
+                                                    <h3 class="f-20 l-26">Invoice</h3>
                                                 </div>
-                                                <div class="col-md-1">
-                                                    <i class="material-icons text-right text-custom f-32">
-                                                        more_vert
-                                                    </i>
+                                                <div class="col-md-1 p-0 text-right">
+                                                    <i class="material-icons  text-custom f-32">
+                            more_vert
+                          </i>
                                                 </div>
                                             </div>
                                         </div>
@@ -273,12 +261,12 @@
                                         <div class="bg-grey lter wrapper-16 pl-24">
                                             <div class="row">
                                                 <div class="col-md-11 p-0">
-                                                    <h3> Quotations</h3>
+                                                    <h3 class="f-20 l-26"> Quotations</h3>
                                                 </div>
-                                                <div class="col-md-1">
-                                                    <i class="material-icons text-right text-custom f-32">
-                                                        more_vert
-                                                    </i>
+                                                <div class="col-md-1 p-0 text-right">
+                                                    <i class="material-icons  text-custom f-32">
+                            more_vert
+                          </i>
                                                 </div>
                                             </div>
                                         </div>
@@ -301,20 +289,19 @@
                                         <div class="bg-grey lter wrapper-16 pl-24">
                                             <div class="row">
                                                 <div class="col-md-11 p-0">
-                                                    <h3> Documents with eSign request</h3>
+                                                    <h3 class="f-20 l-26"> Documents with eSign request</h3>
                                                 </div>
-                                                <div class="col-md-1">
-                                                    <i class="material-icons text-right text-custom f-32">
-                                                        more_vert
-                                                    </i>
+                                                <div class="col-md-1 p-0 text-right">
+                                                    <i class="material-icons  text-custom f-32">
+                            more_vert
+                          </i>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="wrapper-20 pl-24">
                                             <div class="row">
                                                 <div class="col-md-12 p-0">
-                                                    <p>This template is used while sending documents to your clients
-                                                        with eSign request.</p>
+                                                    <p>This template is used while sending documents to your clients with eSign request.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -327,20 +314,19 @@
                                         <div class="bg-grey lter wrapper-16 pl-24">
                                             <div class="row">
                                                 <div class="col-md-11 p-0">
-                                                    <h3> Documents without eSign request</h3>
+                                                    <h3 class="f-20 l-26"> Documents without eSign request</h3>
                                                 </div>
-                                                <div class="col-md-1">
-                                                    <i class="material-icons text-right text-custom f-32">
-                                                        more_vert
-                                                    </i>
+                                                <div class="col-md-1 p-0 text-right">
+                                                    <i class="material-icons  text-custom f-32">
+                            more_vert
+                          </i>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="wrapper-20 pl-24">
                                             <div class="row">
                                                 <div class="col-md-12 p-0">
-                                                    <p>This template is used while sending documents to your clients
-                                                        without eSign.
+                                                    <p>This template is used while sending documents to your clients without eSign.
                                                     </p>
                                                 </div>
                                             </div>

@@ -24,11 +24,9 @@
             <h5 class="m-0 pb-8">PRAN</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #pran type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20"
-                        class="form-control br-0 rupess" formControlName="pran">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isPran && getFormControl().pran.invalid || getFormControl().pran.touched && getFormControl().pran.invalid)}">
-                        Pension amount is required
+                    <input matInput #pran type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="pran">
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isPran && getFormControl().pran.invalid || getFormControl().pran.touched && getFormControl().pran.invalid)}">
+                        This field is required
                     </mat-error>
                     <mat-hint align="start" class="f-12">Permanent Retirement Account Number</mat-hint>
                 </mat-form-field>
@@ -67,13 +65,11 @@
     </div>
 
     <div formArrayName="holdingList">
-        <div class="row pb-36 pl-28" *ngFor="let creds of holdings.controls; let i = index; let last = last"
-            [formGroupName]="i">
+        <div class="row pb-36 pl-28" *ngFor="let creds of holdings.controls; let i = index; let last = last" [formGroupName]="i">
             <div class="col-md-4 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput aria-label="State" [matAutocomplete]="auto" class="form-control br-0 pl-8"
-                            formControlName="schemeName">
+                        <input matInput aria-label="State" [matAutocomplete]="auto" class="form-control br-0 pl-8" formControlName="schemeName">
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let s of schemeList" [value]="s.id">{{ s.name }}
                             </mat-option>
@@ -84,8 +80,7 @@
             <div class="col-md-2 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #totalUnits type="number" (utils.keypress)="utils.keyPress($event)"
-                            maxlength="20" class="form-control br-0 rupess" formControlName="totalUnits">
+                        <input matInput #totalUnits type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="totalUnits">
                         <mat-hint align="start" class="m-0 f-11 text-custom pt-4">As in statement</mat-hint>
                     </mat-form-field>
                 </div>
@@ -93,8 +88,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="holdingAsOn" [matDatepicker]="picker"
-                            class="form-control br-0">
+                        <input matInput formControlName="holdingAsOn" [matDatepicker]="picker" class="form-control br-0">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -103,8 +97,7 @@
             <div class="col-md-2 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #totalNetContribution type="number" (utils.keypress)="utils.keyPress($event)"
-                            maxlength="20" class="form-control br-0 rupess" formControlName="totalNetContribution">
+                        <input matInput #totalNetContribution type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="totalNetContribution">
                     </mat-form-field>
 
                 </div>
@@ -132,7 +125,7 @@
         </div>
         <div class="col-md-9 p-0">
             <div class="row">
-                <div class="col-md-3 p-0">
+                <div class="col-md-4">
                     <h5 class="m-0 pb-8">Account preference</h5>
                 </div>
                 <div class="col-md-3 pr-0">
@@ -145,7 +138,7 @@
             </div>
             <div formArrayName="futureContributionList">
                 <div class="row pb-12" *ngFor="let creds of futureContry.controls; let i = index" [formGroupName]="i">
-                    <div class="col-md-3 p-0">
+                    <div class="col-md-4">
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select formControlName="accountPreferenceId" class="form-control br-0">
@@ -158,7 +151,7 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-3 pr-8">
+                    <div class="col-md-3 p-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select formControlName="frequencyId" class="form-control br-0">
@@ -171,16 +164,14 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-3 pr-8">
+                    <div class="col-md-3 pr-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput #currentValue type="number" (utils.keypress)="utils.keyPress($event)"
-                                    maxlength="20" class="form-control br-0 rupess"
-                                    formControlName="approxContribution">
+                                <input matInput #currentValue type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="approxContribution">
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 pr-36 ">
                         <div class="pt-8">
                             <i class="material-icons text-custom c-p" (click)="addFutureContry()">
                                 add
@@ -204,8 +195,7 @@
                     <div class="row">
                         <div class="col-md-4 p-0">
                             <mat-form-field>
-                                <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto"
-                                    list="userName" class="form-control br-0 pl-8" formControlName="nomineeName">
+                                <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto" list="userName" class="form-control br-0 pl-8" formControlName="nomineeName">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option *ngFor="let item of familyList" [value]="item.userName">
                                         <span>{{item.userName}}</span>
@@ -215,8 +205,7 @@
                         </div>
                         <div class="col-md-3">
                             <mat-form-field>
-                                <input matInput #nomineePercentageShare maxlength="30"
-                                    class="form-control br-0 percentage" formControlName="nomineePercentageShare">
+                                <input matInput #nomineePercentageShare maxlength="30" class="form-control br-0 percentage" formControlName="nomineePercentageShare">
                             </mat-form-field>
                         </div>
                         <div class="col-md-5" *ngIf="i==0">
@@ -246,7 +235,7 @@
     </div>
 
 </div>
-<div class="bottom-fixed wrapper-12 pt-16">
+<div class="bottom-fixed-70 wrapper-12 pt-16">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
