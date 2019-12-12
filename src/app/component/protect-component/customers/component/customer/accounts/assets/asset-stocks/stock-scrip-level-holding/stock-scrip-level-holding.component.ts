@@ -163,10 +163,22 @@ export class StockScripLevelHoldingComponent implements OnInit {
     });
   }
   saveSchemeHolding() {
+    // if (this.ownerData == undefined) {
+    //   return;
+    // }
     if (this.scipLevelHoldingForm.get('portfolioName').invalid) {
       this.scipLevelHoldingForm.get('portfolioName').markAsTouched();
       return;
-    };
+    }
+    if (this.HoldingArray.invalid) {
+      this.HoldingArray.controls.forEach(element => {
+        element.get('holdingAsOn').markAsTouched();
+        element.get('holdings').markAsTouched();
+        element.get('investedAmt').markAsTouched();
+        element.get('scripName').markAsTouched();
+      })
+      return;
+    }
     let finalStocks = []
     this.HoldingArray.controls.forEach(element => {
       let obj = {

@@ -180,6 +180,15 @@ export class StockScripLevelTransactionComponent implements OnInit {
       this.scipLevelTransactionForm.get('portfolioName').markAsTouched();
       return;
     };
+    if (this.transactionArray.invalid) {
+      this.transactionArray.controls.forEach(element => {
+        element.get('transactionType').markAsTouched();
+        element.get('date').markAsTouched();
+        element.get('transactionAmount').markAsTouched();
+        element.get('quantity').markAsTouched();
+      })
+      return;
+    }
     let finalStocks = []
     this.transactionArray.controls.forEach(element => {
       let obj = {
