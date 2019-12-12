@@ -11,7 +11,6 @@
         <button (click)="showFilters(showFilter)" class="btn-default addon mr-12" mat-stroked-button><i
             class="material-icons">filter_list</i>FILTERS
         </button>
-        <!-- <button class="btn-primary addon" mat-stroked-button><i class="material-icons">add</i>ADD NEW</button> -->
       </div>
     </div>
     <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
@@ -26,7 +25,6 @@
           <button mat-stroked-button class="btn-default addon mr-12" (click)="showFilters(showFilter)"><i
               class="material-icons">filter_list</i>FILTERS
           </button>
-          <!-- <button mat-stroked-button class="btn-primary addon"><i class="material-icons">add</i>ADD NEW</button> -->
         </div>
       </div>
       <div>
@@ -67,11 +65,6 @@
                     </mat-select>
                   </mat-form-field>
                 </div>
-                <!-- <select class="form-control br-0" id="sel11" [(ngModel)]='selectedStatusFilter'
-                  (change)="addFilters(selectedStatusFilter)">
-                  <option [disabled]="true" value="">FILTERS ONE</option>
-                  <option *ngFor="let chip of chips" [ngValue]="chip">{{chip.name}}</option>
-                </select> -->
               </div>
               <div class="col-md-6">
                 <div class="form-group mb-0">
@@ -85,17 +78,10 @@
                     </mat-select>
                   </mat-form-field>
                 </div>
-                <!-- <select class="form-control br-0" id="sel12" [(ngModel)]='selectedDateFilter'
-                  (change)="addFiltersDate($event.target.value)">
-                  <option value="" [disabled]="true">FILTERS TWO</option>
-                  <option *ngFor="let dateAdd of dateChips" [ngValue]="dateAdd">{{dateAdd.name}}</option>
-                </select> -->
               </div>
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
     <table [dataSource]="dataSource" class="mt-8" id="table-low" mat-table>
