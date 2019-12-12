@@ -28,7 +28,6 @@ export class StockScripLevelHoldingComponent implements OnInit {
   constructor(public dialog: MatDialog, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   ngOnInit() {
-    this.addHoldings();
   }
   set data(data) {
     this.getFormData(data);
@@ -110,10 +109,24 @@ export class StockScripLevelHoldingComponent implements OnInit {
     this.scripList = data.scripName;
   }
   getFormData(data) {
+    if (data == null) {
+      data = {};
+      this.addHoldings();
+    }
     this.scipLevelHoldingForm = this.fb.group({
-      ownerName: [, [Validators.required]],
-      portfolioName: [, [Validators.required]]
+      ownerName: [data.ownerName, [Validators.required]],
+      portfolioName: [data.portfolioName, [Validators.required]]
     })
+    if (data.transactionorHoldingSummaryList) {
+      data.transactionorHoldingSummaryList.forEach(element => {
+        this.HoldingArray.push(this.fb.group({
+          scripName: [data.scripName, [Validators.required]],
+          holdings: [element.quantity, [Validators.required]],
+          holdingAsOn: [new Date(element.holdingOrTransactionDate), [Validators.required]],
+          investedAmt: [element.investedOrTransactionAmount, [Validators.required]]
+        }))
+      });
+    }
     this.ownerData = this.scipLevelHoldingForm.controls;
   }
   holdingListForm = this.fb.group({

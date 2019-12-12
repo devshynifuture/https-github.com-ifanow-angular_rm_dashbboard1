@@ -7,6 +7,7 @@ import { CustomerService } from '../../../../customer.service';
 import { AddScripComponent } from '../add-scrip/add-scrip.component';
 import { MatDialog } from '@angular/material';
 import { AddPortfolioComponent } from '../add-portfolio/add-portfolio.component';
+import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-stock-scrip-level-transaction',
@@ -16,7 +17,7 @@ import { AddPortfolioComponent } from '../add-portfolio/add-portfolio.component'
 export class StockScripLevelTransactionComponent implements OnInit {
   ownerData: any;
   portfolioList: any;
-  familyWisePortfolio: any;
+  familyWisePortfolio = [];
   ownerName: any;
   familyMemberId: any;
   scipLevelTransactionForm: any;
@@ -29,19 +30,31 @@ export class StockScripLevelTransactionComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
     this.getFormData(data);
-    this.addTransactions();
     this.getPortfolioList();
     this.getScripList();
   }
   ngOnInit() {
-    this.addTransactions
   }
   getFormData(data) {
+    if (data == undefined) {
+      data = {};
+      this.addTransactions()
+    }
     this.scipLevelTransactionForm = this.fb.group({
-      ownerName: [, [Validators.required]],
-      scripName: [, [Validators.required]],
-      portfolioName: [, [Validators.required]],
+      ownerName: [data.ownerName, [Validators.required]],
+      scripName: [data.scripName, [Validators.required]],
+      portfolioName: [data.portfolioName, [Validators.required]],
     })
+    if (data.transactionorHoldingSummaryList) {
+      data.transactionorHoldingSummaryList.forEach(element => {
+        this.transactionArray.push(this.fb.group({
+          transactionType: [, [Validators.required]],
+          date: [, [Validators.required]],
+          transactionAmount: [, [Validators.required]],
+          quantity: [, [Validators.required]]
+        }))
+      });
+    }
     this.ownerData = this.scipLevelTransactionForm.controls;
   }
   transactionListForm = this.fb.group({
@@ -76,13 +89,17 @@ export class StockScripLevelTransactionComponent implements OnInit {
     console.log(data)
     this.portfolioList = data
   }
+  selectScrip(value) {
+    console.log(value)
+  }
   display(value) {
     console.log('value selected', value)
-    // this.portfolioList.forEach(element => {
-    //   if (element.id == value.id) {
-    //     this.familyWisePortfolio.push(element)
-    //   }
-    // });
+    this.portfolioList.forEach(element => {
+      if (element.familyMemberId == value.id) {
+        this.familyWisePortfolio.push(element)
+      }
+    });
+    console.log(this.familyWisePortfolio)
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
@@ -116,6 +133,11 @@ export class StockScripLevelTransactionComponent implements OnInit {
             dialogRef.close();
             this.eventService.openSnackBar("portfolio is added", "dismiss");
             this.getPortfolioList();
+            this.portfolioList.forEach(element => {
+              if (element.id == this.familyMemberId) {
+                this.familyWisePortfolio.push(element)
+              }
+            });
           },
           err => this.eventService.openSnackBar(err, "dismiss")
         )
@@ -159,14 +181,14 @@ export class StockScripLevelTransactionComponent implements OnInit {
             "holdingOrTransaction": 2,
             "quantity": element.get('quantity').value,
             "holdingOrTransactionDate": element.get('date').value,
-            "transactionTypeOrScripNameId": element.get('quantity').value,
+            "transactionTypeOrScripNameId": element.get('transactionType').value,
             "investedOrTransactionAmount": element.get('transactionAmount').value
           }
         ]
       }
       finalStocks.push(obj)
     })
-
+    console.log(finalStocks)
     const obj =
     {
       "id": 14,
@@ -174,23 +196,8 @@ export class StockScripLevelTransactionComponent implements OnInit {
       "advisorId": this.advisorId,
       "familyMemberId": this.familyMemberId,
       "ownerName": this.ownerName,
-      "portfolioName": "AJAYKUMAR & BROS.",
-      "stocks": [
-        {
-          "scripNameId": 1,
-          "scripCurrentValue": 1.15,
-          "stockType": 3,
-          "transactionorHoldingSummaryList": [
-            {
-              "holdingOrTransaction": 2,
-              "quantity": 1000,
-              "holdingOrTransactionDate": "2019-12-02",
-              "transactionTypeOrScripNameId": 1,
-              "investedOrTransactionAmount": 1000
-            }
-          ]
-        }
-      ]
+      "portfolioName": this.scipLevelTransactionForm.get('portfolioName').value.portfolioName,
+      "stocks": finalStocks
     }
     console.log(obj)
     this.cusService.addAssetStocks(obj).subscribe(

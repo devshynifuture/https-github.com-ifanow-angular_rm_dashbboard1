@@ -6,7 +6,10 @@ import { StockScripLevelHoldingComponent } from './stock-scrip-level-holding/sto
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { MatTableDataSource } from '@angular/material/table';
 import { StockScripLevelTransactionComponent } from './stock-scrip-level-transaction/stock-scrip-level-transaction.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-asset-stocks',
@@ -14,45 +17,155 @@ import { StockScripLevelTransactionComponent } from './stock-scrip-level-transac
   styleUrls: ['./asset-stocks.component.scss']
 })
 export class AssetStocksComponent implements OnInit {
-  displayedColumns25 = ['scrip', 'owner', 'bal', 'price', 'mprice', 'amt', 'cvalue', 'gain', 'ret', 'xirr', 'dividend', 'icons'];
+  displayedColumns25 = ['scrip', 'owner', 'bal', 'price', 'mprice', 'amt', 'cvalue', 'gain', 'ret',
+    'xirr', 'dividend', 'icons'];
+
+  footerColumns = ['scrip', /*'owner', 'bal', 'price', 'mprice',*/ 'amt', 'cvalue', 'gain', 'ret',
+    'xirr', 'dividend', 'icons'];
   dataSource25 = ELEMENT_DATA25;
   advisorId: any;
   clientId: any;
-  assetStocksdata: any;
+  assetStockData: any;
   portfolioData: any;
+  isLoading = false;
 
-  constructor(private subInjectService: SubscriptionInject, private cusService: CustomerService, private eventService: EventService) { }
+  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private cusService: CustomerService, private eventService: EventService) {
+  }
 
   ngOnInit() {
     this.dataSource25 = ELEMENT_DATA25;
-    console.log(this.dataSource25)
+    console.log(this.dataSource25);
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getStocksData();
   }
+
   getStocksData() {
-    const obj =
-    {
+    this.isLoading = true;
+    const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
-    }
+    };
     this.cusService.getAssetStockData(obj).subscribe(
-      data => this.getStocksDataRes(data),
-      err => this.eventService.openSnackBar(err)
-    )
+      data => {
+        this.getStocksDataRes(data);
+        this.isLoading = false;
+      },
+      err => {
+        this.isLoading = false;
+        this.eventService.openSnackBar(err);
+      }
+    );
   }
+
   getStocksDataRes(data) {
-    console.log(data)
-    this.assetStocksdata = data;
+    console.log('AssetStockComponent getStocksDataRes data : ', data);
+    this.assetStockData = data;
     this.portfolioData = data.portfolios;
   }
-  openAddStock(data) {
+
+  checkAndFillDataSource(singlePortfolio) {
+    const stocks = singlePortfolio.stocks;
+    const customStock = [];
+    const categoryWiseMap = {};
+    singlePortfolio.dividend = 0;
+    singlePortfolio.xirr = 0;
+    singlePortfolio.absoluteReturn = 0;
+    singlePortfolio.unrealizedGainLoss = 0;
+    singlePortfolio.currentMarketValue = 0;
+
+    singlePortfolio.amountInvested = 0;
+
+    // if (stocks) {
+    stocks.forEach((singleStock) => {
+      singlePortfolio.dividend += singleStock.dividend;
+      singlePortfolio.xirr += singleStock.xirr;
+      singlePortfolio.absoluteReturn += singleStock.absoluteReturn;
+      singlePortfolio.unrealizedGainLoss += singleStock.unrealizedGainLoss;
+      singlePortfolio.currentMarketValue += singleStock.currentMarketValue;
+      singlePortfolio.amountInvested += singleStock.amountInvested;
+
+      if (singleStock.stockCategoryName) {
+        const categoryArray = categoryWiseMap[singleStock.stockCategoryName] ? categoryWiseMap[singleStock.stockCategoryName] : [];
+        categoryArray.push(singleStock);
+        categoryWiseMap[singleStock.stockCategoryName] = categoryArray;
+      } else {
+        customStock.push(singleStock);
+      }
+    });
+
+    const customDataSource = new MatTableDataSource(customStock);
+    Object.keys(categoryWiseMap).map(key => {
+      customDataSource.data.push({ groupName: key });
+      categoryWiseMap[key].forEach((singleData) => {
+        customDataSource.data.push(singleData);
+      });
+    });
+    return customDataSource;
+    // } else {
+    // }
+  }
+
+  isGroup(index, item): boolean {
+    // console.log('index : ', index);
+    // console.log('item : ', item);
+    return item.groupName;
+  }
+  deleteModal(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.cusService.deleteStockData(data.id).subscribe(
+          data => {
+            this.eventService.openSnackBar("PPF is deleted", "dismiss")
+            dialogRef.close();
+            this.getStocksData();
+          },
+          err => this.eventService.openSnackBar(err)
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+  editStock(data, portfolioData) {
+    let component;
+    console.log(data.stockType)
+    switch (true) {
+      case (data.stockType == 1):
+        component = AddAssetStocksComponent;
+        break;
+      case (data.stockType == 2):
+        component = StockScripLevelHoldingComponent;
+        break;
+      default:
+        component = StockScripLevelTransactionComponent;
+    }
+    data.portfolioName = portfolioData.portfolioName
     const fragmentData = {
       flag: 'addStock',
       data,
       id: 1,
       state: 'open',
-      componentName: AddAssetStocksComponent
+      componentName: component
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -66,19 +179,30 @@ export class AssetStocksComponent implements OnInit {
       }
     );
   }
-  openScriptLevel(flag, data) {
-    let component = (flag == 'holding') ? StockScripLevelHoldingComponent : StockScripLevelTransactionComponent;
+  openAddStock(flag, data) {
+    let component;
+    switch (true) {
+      case (flag == "addPortfolio"):
+        component = AddAssetStocksComponent;
+        break;
+      case (flag == "holding"):
+        component = StockScripLevelHoldingComponent;
+        break;
+      default:
+        component = StockScripLevelTransactionComponent
+    }
     const fragmentData = {
-      flag: 'addScriptLevelHolding',
+      flag: 'editStock',
       data,
       id: 1,
-      state: 'open70',
+      state: 'open',
       componentName: component
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getStocksData();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 
@@ -102,6 +226,7 @@ export interface PeriodicElement25 {
   xirr: string;
   dividend: string;
 }
+
 const ELEMENT_DATA25: PeriodicElement25[] = [
 
   {
