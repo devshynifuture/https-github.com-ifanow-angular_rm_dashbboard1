@@ -83,6 +83,11 @@ export class PlansComponent implements OnInit {
   getPlansMappedResponse(data){
     console.log(data)
     this.servicePlanData = data;
+    this.servicePlanData.forEach(element => {
+      if (element.selected == true) {
+        this.mappedPlan.push(element);
+      }
+    });
   }
   getPlansMappedToDocument() {
     const obj = {
