@@ -1082,8 +1082,19 @@ mat-tab-group[vertical] {
     .col-half-offset {
         margin-left: 3.26667%;
     }
+    
+}
+.viewpast,.current-policy{
+    #table-low{
+        tr.mat-header-row{
+            height: 48px;
+        }
+        tr.mat-row{
+            height: 36px;
+        }
+        tbody td{
+            padding: 10px 8px !important;
+        }
+    }
 }
 
-.height120 {
-    height: 120px;
-}
