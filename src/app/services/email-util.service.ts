@@ -1,4 +1,5 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
+import { GmailInboxResponseI } from '../component/protect-component/AdviserComponent/Email/email-component/email.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -30,21 +31,77 @@ export class EmailUtilService {
     // let me = this;
     // let file = event.target.files[0];
     const reader = new FileReader();
-    // reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
     reader.onload = () => {
       // me.modelvalue = reader.result;
-      console.log('getBase64FromFile  reader.result : ', reader.result);
-      const base64String = EmailUtilService.arrayBufferToBase64(reader.result);
-      console.log('getBase64FromFile  base64String : ', base64String);
-
-      successCallback(base64String);
+      console.log(reader.result);
+      successCallback(reader.result);
     };
     reader.onerror = error => {
       console.log('Error: ', error);
       errorCallback(error);
     };
+  }
 
-    reader.readAsArrayBuffer(file);
+  static decodeGmailThreadExtractMessage(gmailThread: GmailInboxResponseI): Object {
+    let decodedPartArray = []
+    let tempHeaders: {}[];
+    gmailThread.messages.forEach((message) => {
+      const { payload: { parts } } = message;
+      const { payload: { headers } } = message;
+      if (parts && parts !== null) {
+        parts.forEach((part) => {
+          if (part.body.data && part.body.data !== null) {
+            decodedPartArray.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data));
+          }
+          else {
+            decodedPartArray.push('');
+          }
+        });
+      } else {
+        decodedPartArray.push('');
+      }
 
+      tempHeaders = headers;
+    });
+    return { decodedPart: decodedPartArray, headers: tempHeaders };
+  }
+
+  static getGmailLabelIdsFromMessages(gmailThread: GmailInboxResponseI): Object[] {
+    let labelIdsArray: Object[] = [];
+    gmailThread.messages.forEach((message) => {
+      const { labelIds } = message;
+      labelIdsArray.push({
+        labelIds
+      });
+    });
+    return labelIdsArray;
+  }
+
+  static getIdAndDateAndSnippetOfGmailThreadMessages(gmailThread: GmailInboxResponseI): Object[] {
+    let arrayObj: Object[] = [];
+    gmailThread.messages.forEach((message) => {
+      const { historyId, id, internalDate, threadId, snippet } = message;
+      arrayObj.push({ historyId, id, internalDate, threadId, snippet });
+    });
+    return arrayObj;
+  }
+
+  static getIdsOfGmailThreads(gmailThread: GmailInboxResponseI): Object {
+    const { historyId, id } = gmailThread;
+    return { historyId, id };
+  }
+
+  static getSubjectAndFromOfGmailHeaders(gmailThread: GmailInboxResponseI): Object {
+    let headerSubjectArray: string[] = [];
+    let headerFromArray: string[] = [];
+    gmailThread.messages.forEach((message) => {
+      const { payload: { headers } } = message;
+      headers.forEach((header) => {
+        (header.name === 'Subject') ? headerSubjectArray.push(header.value) : '';
+        (header.name === 'From') ? headerFromArray.push(header.value) : '';
+      })
+    });
+    return { headerSubjectArray, headerFromArray };
   }
 }

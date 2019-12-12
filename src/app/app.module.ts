@@ -1,5 +1,4 @@
 import { EntryComponentsModule } from './entry.components.module';
-import { FroalaComponent } from './component/protect-component/common-component/froala/froala.component';
 /* tslint:disable:max-line-length */
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -80,7 +79,6 @@ import { EmailEntryModule } from './component/protect-component/AdviserComponent
     // ConfirmDialogComponent,
     DialogComponent,
     CustomFormInputComponent,
-    // FroalaComponent,
 
 
     BaseComponent,

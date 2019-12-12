@@ -1,12 +1,13 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
-import {Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 // import 'rxjs/Rx';
-import {AuthService} from '../auth-service/authService';
+import { AuthService } from '../auth-service/authService';
 import 'rxjs-compat/add/observable/of';
 import 'rxjs-compat/add/operator/map';
-import {catchError} from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
+import { EmailUtilService } from '../services/email-util.service';
 
 const Buffer = require('buffer/').Buffer;
 declare var require: any;
@@ -213,12 +214,17 @@ export class HttpService {
 
   changeBase64ToString(res) {
     const encodedata = res.payLoad;
-    const datavalue = (Buffer.from(encodedata, 'base64').toString('ascii'));
-    // console.log('datavalue: ', datavalue);
-    // console.log('encodedata: ', encodedata);
+    try {
+      const datavalue = (Buffer.from(encodedata, 'base64').toString('ascii'));
+      // console.log('datavalue: ', datavalue);
+      // console.log('encodedata: ', encodedata);
 
-    const responseData = JSON.parse(datavalue);
-    return responseData;
+      const responseData = JSON.parse(datavalue);
+      return responseData;
+    }
+    catch (e) {
+      return encodedata;
+    }
   }
 
   // ----------------------- End  getmethod url  Code ------------------------------------------------------

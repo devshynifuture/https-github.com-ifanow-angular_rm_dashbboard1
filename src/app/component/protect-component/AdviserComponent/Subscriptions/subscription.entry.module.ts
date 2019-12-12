@@ -12,6 +12,7 @@ import { InvoiceHistoryComponent } from './subscription/common-subscription-comp
 import { CommonFroalaComponent } from './subscription/common-subscription-component/common-froala/common-froala.component';
 import { BillerProfileAdvisorComponent } from './subscription/common-subscription-component/biller-profile-advisor/biller-profile-advisor.component';
 import { HelpComponent } from './subscription/common-subscription-component/help/help.component';
+import { CommonComponentModule } from '../../common-component/common-component.module';
 
 export const componentList = [
     VariableFeeComponent,
@@ -32,6 +33,7 @@ export const componentList = [
         ChartModule,
         FormsModule,
         ReactiveFormsModule,
+        CommonComponentModule
     ],
     exports: [componentList],
     entryComponents: [componentList]

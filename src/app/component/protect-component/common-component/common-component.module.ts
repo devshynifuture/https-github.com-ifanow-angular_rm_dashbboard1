@@ -1,10 +1,10 @@
-import {NgModule} from '@angular/core';
-import {ConfirmDialogComponent} from './confirm-dialog/confirm-dialog.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MaterialModule} from '../../../material/material';
-import {FroalaComponent} from './froala/froala.component';
-import {FroalaEditorModule} from 'angular-froala-wysiwyg';
-import {CommonModule} from '@angular/common';
+import { NgModule } from '@angular/core';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from '../../../material/material';
+import { FroalaComponent } from './froala/froala.component';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -15,6 +15,7 @@ import {CommonModule} from '@angular/common';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
     FroalaEditorModule,
     // AppModule
   ],

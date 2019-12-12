@@ -511,12 +511,12 @@
 
 mat-tab-group[vertical] .mat-tab-labels {
     display: flex;
-    flex-direction: column!important;
+    flex-direction: column !important;
 }
 
 mat-tab-group[vertical] {
     display: flex;
-    flex-direction: row!important;
+    flex-direction: row !important;
 }
 
 // invoice pdf documents
@@ -1082,19 +1082,49 @@ mat-tab-group[vertical] {
     .col-half-offset {
         margin-left: 3.26667%;
     }
-    
 }
-.viewpast,.current-policy{
-    #table-low{
-        tr.mat-header-row{
+
+.viewpast,
+.current-policy {
+    #table-low {
+        tr.mat-header-row {
             height: 48px;
         }
-        tr.mat-row{
+        tr.mat-row {
             height: 36px;
         }
-        tbody td{
+        tbody td {
             padding: 10px 8px !important;
         }
     }
 }
 
+// crm
+#ui-crm {
+    padding-top: 64px;
+    .mat-list-item-content {
+        padding: 0;
+    }
+}
+
+.email-crm {
+    #table-low {
+        thead {
+            display: none !important;
+        }
+        tr {
+            border-left: 0px !important;
+        }
+        tbody td {
+            font-weight: 500;
+        }
+        tr:nth-child(2) {
+            background: #F5F7F7 !important;
+        }
+        // tbody td:nth-child(2) {
+        //   font-weight: 300;
+        // }
+    }
+}
+
+// end crm
