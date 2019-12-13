@@ -38,8 +38,7 @@
             <h5 class="m-0 pb-8">Portfolio name</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select formControlName="portfolioName" [disabled]="familyMemberId==undefined"
-                        class="form-control br-0">
+                    <mat-select formControlName="portfolioName" class="form-control br-0">
                         <mat-option [value]="portfolio" *ngFor="let portfolio of familyWisePortfolio">
                             {{portfolio.portfolioName}}</mat-option>
                         <mat-option (click)="openAddPortfolio()"><strong><i class="material-icons">add</i>New
@@ -79,11 +78,15 @@
             [formGroup]="singleTransaction">
             <div class="col-md-4 pl-0">
                 <div class="form-group mb-0">
-                    <mat-select formControlName="transactionType" [disabled]="familyMemberId==undefined"
-                        class="form-control br-0">
-                        <mat-option value="1">Deposit</mat-option>
-                        <mat-option value="2">Withdrawl</mat-option>
-                    </mat-select>
+                    <mat-form-field>
+                        <mat-select formControlName="transactionType" class="form-control br-0">
+                            <mat-option value="1">Deposit</mat-option>
+                            <mat-option value="2">Withdrawl</mat-option>
+                        </mat-select>
+                        <mat-error>
+                            This field is required
+                        </mat-error>
+                    </mat-form-field>
                 </div>
             </div>
             <div class="col-md-2 p-0">
@@ -93,6 +96,9 @@
                             class="form-control br-0">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
+                        <mat-error>
+                            This field is required
+                        </mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -101,6 +107,9 @@
                     <mat-form-field>
                         <input matInput autocomplete="off" #totalUnits type="number" formControlName="transactionAmount"
                             maxlength="20" class="form-control br-0 rupess">
+                        <mat-error>
+                            This field is required
+                        </mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -109,6 +118,9 @@
                     <mat-form-field>
                         <input matInput autocomplete="off" #totalNetContribution formControlName="quantity"
                             type="number" maxlength="20" class="form-control br-0 rupess">
+                        <mat-error>
+                            This field is required
+                        </mat-error>
                     </mat-form-field>
 
                 </div>

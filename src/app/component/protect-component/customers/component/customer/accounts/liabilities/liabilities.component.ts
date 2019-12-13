@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
 // import {UtilService} from '../../../../../../../services/util.service';
 import { EventService } from '../../../../../../../Data-service/event.service';
 import { SubscriptionInject } from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
@@ -10,6 +10,8 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { AddLiabilitiesComponent } from "../../../common-component/add-liabilities/add-liabilities.component";
 import { LiabilitiesDetailComponent } from '../../../common-component/liabilities-detail/liabilities-detail.component';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../excel.service';
 
 
 @Component({
@@ -42,12 +44,15 @@ export class LiabilitiesComponent implements OnInit {
   totalLoanAmt: any;
   outStandingAmt: any;
   filterData: any;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  excelData: any[];
+  footer = [];
 
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
     public customerService: CustomerService, public util: UtilService, public dialog: MatDialog) {
   }
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChildren(FormatNumberDirective) formatNumber;
 
   viewMode: string;
 
@@ -61,7 +66,32 @@ export class LiabilitiesComponent implements OnInit {
     this.getPayables();
     this.getGlobalLiabilities();
   }
-
+  /**used for excel  */
+  async ExportTOExcel(value) {
+    this.excelData = []
+    var data = []
+    var headerData = [{ width: 20, key: 'Owner' },
+    { width: 20, key: 'Type' },
+    { width: 20, key: 'Loan amount' },
+    { width: 18, key: 'Loan as on' },
+    { width: 25, key: 'Outstanding as on today' },
+    { width: 18, key: 'Tenure remaining' },
+    { width: 25, key: 'Annual interest rate' },
+    { width: 18, key: 'EMI' },
+    { width: 25, key: 'Financial institution' },
+    { width: 18, key: 'Status' },]
+    var header = ['Owner', 'Type', 'Loan amount', 'Loan as on',
+      'Outstanding as on today', 'Tenure remaining', 'Annual interest rate', 'EMI', 'Financial institution', 'Status'];
+    this.dataSource.forEach(element => {
+      data = [element.ownerName, (element.loanTypeId == 1) ? 'Home Loan' : (element.loanTypeId == 2) ? 'Vehicle' : (element.loanTypeId == 3) ? 'Education' : (element.loanTypeId == 4) ? 'Credit Card' : (element.loanTypeId == 5) ? 'Personal' : 'Mortgage', this.formatNumber.first.formatAndRoundOffNumber(element.loanAmount)
+        ,new Date(element.commencementDate), this.formatNumber.first.formatAndRoundOffNumber(element.outstandingAmount),
+      element.loanTenure, element.annualInterestRate, this.formatNumber.first.formatAndRoundOffNumber(element.emi), element.financialInstitution, element.status]
+      this.excelData.push(Object.assign(data))
+    });
+    var footerData = ['Total', '', this.formatNumber.first.formatAndRoundOffNumber(this.totalLoanAmt), '', this.formatNumber.first.formatAndRoundOffNumber(this.outStandingAmt), '', '', '', '', '']
+    this.footer.push(Object.assign(footerData))
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
+  }
   getGlobalLiabilities() {
     const obj = {};
     this.customerService.getGlobalLiabilities(obj).subscribe(

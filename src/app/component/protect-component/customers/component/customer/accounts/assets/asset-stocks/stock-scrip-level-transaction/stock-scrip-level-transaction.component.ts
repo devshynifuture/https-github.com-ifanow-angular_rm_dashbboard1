@@ -7,7 +7,6 @@ import { CustomerService } from '../../../../customer.service';
 import { AddScripComponent } from '../add-scrip/add-scrip.component';
 import { MatDialog } from '@angular/material';
 import { AddPortfolioComponent } from '../add-portfolio/add-portfolio.component';
-import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-stock-scrip-level-transaction',
@@ -24,6 +23,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
   clientId: any;
   advisorId: any;
   scripList: any;
+  editApiData: any;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   @Input() set data(data) {
@@ -40,6 +40,11 @@ export class StockScripLevelTransactionComponent implements OnInit {
       data = {};
       this.addTransactions()
     }
+    else {
+      this.editApiData = data;
+      this.familyMemberId = data.familyMemberId;
+      this.ownerName = data.ownerName
+    }
     this.scipLevelTransactionForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       scripName: [data.scripName, [Validators.required]],
@@ -48,10 +53,10 @@ export class StockScripLevelTransactionComponent implements OnInit {
     if (data.transactionorHoldingSummaryList) {
       data.transactionorHoldingSummaryList.forEach(element => {
         this.transactionArray.push(this.fb.group({
-          transactionType: [, [Validators.required]],
-          date: [, [Validators.required]],
-          transactionAmount: [, [Validators.required]],
-          quantity: [, [Validators.required]]
+          transactionType: [String(element.transactionTypeOrScripNameId), [Validators.required]],
+          date: [new Date(element.holdingOrTransactionDate), [Validators.required]],
+          transactionAmount: [element.investedOrTransactionAmount, [Validators.required]],
+          quantity: [element.quantity, [Validators.required]]
         }))
       });
     }
@@ -166,10 +171,23 @@ export class StockScripLevelTransactionComponent implements OnInit {
     this.scripList = data.scripName;
   }
   saveSchemeHolding() {
+    if (this.scipLevelTransactionForm.get('scripName').invalid) {
+      this.scipLevelTransactionForm.get('scripName').markAsTouched();
+      return;
+    };
     if (this.scipLevelTransactionForm.get('portfolioName').invalid) {
       this.scipLevelTransactionForm.get('portfolioName').markAsTouched();
       return;
     };
+    if (this.transactionArray.invalid) {
+      this.transactionArray.controls.forEach(element => {
+        element.get('transactionType').markAsTouched();
+        element.get('date').markAsTouched();
+        element.get('transactionAmount').markAsTouched();
+        element.get('quantity').markAsTouched();
+      })
+      return;
+    }
     let finalStocks = []
     this.transactionArray.controls.forEach(element => {
       let obj = {

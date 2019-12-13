@@ -13,8 +13,6 @@ import { DetailedViewBondsComponent } from '../bonds/detailed-view-bonds/detaile
 import { BondsComponent } from '../bonds/bonds.component';
 import { UtilService } from 'src/app/services/util.service';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
-import * as Excel from 'exceljs/dist/exceljs';
-import { saveAs } from 'file-saver'
 import * as _ from 'lodash';
 import { ExcelService } from '../../../../excel.service';
 
@@ -29,7 +27,7 @@ export class FixedIncomeComponent implements OnInit {
 
   showRequring: any;
   advisorId: any;
- 
+
   dataSourceRecurring: any;
   dataSourceBond: any;
   clientId: any;
@@ -96,7 +94,7 @@ export class FixedIncomeComponent implements OnInit {
         element.fdNumber, element.description, element.status]
         this.excelData.push(Object.assign(data))
       });
-      var footerData = ['Total','',
+      var footerData = ['Total', '',
         this.formatNumber.first.formatAndRoundOffNumber(this.sumCurrentValue), '',
         this.formatNumber.first.formatAndRoundOffNumber(this.sumAmountInvested), '',
         this.formatNumber.first.formatAndRoundOffNumber(this.sumMaturityValue), '', '', '',]
@@ -116,13 +114,13 @@ export class FixedIncomeComponent implements OnInit {
         'Maturity date', 'RD number', 'Description', 'Status'];
       this.dataSourceRecurring.filteredData.forEach(element => {
         data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue),
-        (element.interestRate),  this.formatNumber.first.formatAndRoundOffNumber(element.monthlyContribution),
+        (element.interestRate), this.formatNumber.first.formatAndRoundOffNumber(element.monthlyContribution),
         new Date(element.maturityDate), (element.rdNumber), element.description, element.status]
         this.excelData.push(Object.assign(data))
       });
       var footerData = ['Total',
-        this.formatNumber.first.formatAndRoundOffNumber(this.totalCurrentValue),'','',
-        this.formatNumber.first.formatAndRoundOffNumber(this.totalMarketValue),'', '', '']
+        this.formatNumber.first.formatAndRoundOffNumber(this.totalCurrentValue), '', '',
+        this.formatNumber.first.formatAndRoundOffNumber(this.totalMarketValue), '', '', '']
       this.footer.push(Object.assign(footerData))
     } else {
       var headerData = [{ width: 20, key: 'Owner' },
@@ -136,21 +134,21 @@ export class FixedIncomeComponent implements OnInit {
       { width: 18, key: 'Type' },
       { width: 15, key: 'Description' },
       { width: 10, key: 'Status' },]
-      var header = ['Owner', 'Current value','Coupon amount', 'Amount invested','Commencement date',
-      'Rate','Maturity value','Tenure','Type','Description','Status'];
+      var header = ['Owner', 'Current value', 'Coupon amount', 'Amount invested', 'Commencement date',
+        'Rate', 'Maturity value', 'Tenure', 'Type', 'Description', 'Status'];
       this.dataSourceBond.filteredData.forEach(element => {
         data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue),
         this.formatNumber.first.formatAndRoundOffNumber(element.couponAmount), (element.amountInvested), new Date(element.commencementDate),
-        (element.rate),(element.maturityValue),(element.tenure),((element.type==1)?'Tax free':'Non tax free'),element.description, element.status]
+        (element.rate), (element.maturityValue), (element.tenure), ((element.type == 1) ? 'Tax free' : 'Non tax free'), element.description, element.status]
         this.excelData.push(Object.assign(data))
       });
       var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.sumCurrentValueB),
-      this.formatNumber.first.formatAndRoundOffNumber(this.sumCouponAmount),
-      this.formatNumber.first.formatAndRoundOffNumber(this.sumAmountInvestedB), '', '', '', '','','','']
+        this.formatNumber.first.formatAndRoundOffNumber(this.sumCouponAmount),
+        this.formatNumber.first.formatAndRoundOffNumber(this.sumAmountInvestedB), '', '', '', '', '', '', '']
       this.footer.push(Object.assign(footerData))
 
     }
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   }
   filterFixedIncome(key: string, value: string) {
     const obj = {
@@ -212,11 +210,11 @@ export class FixedIncomeComponent implements OnInit {
     this.dataSourceFixed.sort = this.fixedIncomeTableSort;
     console.log('soted &&&&&&&&&', this.dataSourceFixed);
     UtilService.checkStatusId(this.dataSourceFixed.filteredData)
-   this.dataSourceFixed.filteredData, function(o) {
-      this.sumCurrentValue += o.nomineePercentageShare;  
+    this.dataSourceFixed.filteredData, function (o) {
+      this.sumCurrentValue += o.nomineePercentageShare;
     };
-       console.log( '&&&&&&&&&',this.sumCurrentValue)
-  //  this.sumAmountInvested = data.sumAmountInvested;
+    console.log('&&&&&&&&&', this.sumCurrentValue)
+     this.sumAmountInvested = data.sumAmountInvested;
     this.sumCurrentValue = data.sumCurrentValue;
     this.sumMaturityValue = data.sumMaturityValue;
 
