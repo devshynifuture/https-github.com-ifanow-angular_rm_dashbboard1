@@ -6,9 +6,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { DatePipe } from '@angular/common';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { SatCalendarHeader } from 'saturn-datepicker';
 import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -72,12 +70,12 @@ export class FixedDepositComponent implements OnInit {
   recuringDeposit: any;
   clientId: any;
   isViewInitCalled = false;
-  constructor(private event: EventService, private router: Router, 
-    private fb: FormBuilder, private custumService: CustomerService, 
+  constructor(private event: EventService, private router: Router,
+    private fb: FormBuilder, private custumService: CustomerService,
     public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
 
-      console.log('This is constructor of FixedDepositComponent')
-     }
+    console.log('This is constructor of FixedDepositComponent')
+  }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -147,9 +145,9 @@ export class FixedDepositComponent implements OnInit {
   getDateYMD() {
     // if(this.fixedDeposit.controls.maturityDate.invalid == true){
     //  let now = moment();
-    moment( this.tenure = this.fixedDeposit.controls.commencementDate.value).add(this.fixedDeposit.controls.tenureM.value, 'months');
+    moment(this.tenure = this.fixedDeposit.controls.commencementDate.value).add(this.fixedDeposit.controls.tenureM.value, 'months');
     moment(this.tenure = this.fixedDeposit.controls.commencementDate.value).add(this.fixedDeposit.controls.tenureY.value, 'years');
-    moment( this.tenure = this.fixedDeposit.controls.commencementDate.value).add(this.fixedDeposit.controls.tenureD.value, 'days');
+    moment(this.tenure = this.fixedDeposit.controls.commencementDate.value).add(this.fixedDeposit.controls.tenureD.value, 'days');
     this.getDate = this.datePipe.transform(this.tenure, 'yyyy-MM-dd')
     return this.getDate;
     // }else{

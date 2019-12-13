@@ -1,4 +1,4 @@
-<div class="popup-header-fix-70">
+<div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20">ADD SCHEME LEVEL HOLDINGS</h4>
@@ -16,7 +16,7 @@
     <div [formGroup]="scipLevelHoldingForm" class="row pt-100 pl-28">
         <div class="col-md-3 p-0">
             <h5 class="m-0 pb-8">Owner</h5>
-            <app-owner-component [data]='ownerData' (valueChange)='display($event)' (valueChange1)='lisNominee($event)'>
+            <app-owner-component [data]='ownerData' (valueChange)='display($event)'>
             </app-owner-component>
         </div>
 
@@ -75,6 +75,7 @@
                             <mat-option (click)="addScrip()"><strong><i class="material-icons">add</i>New scrip</strong>
                             </mat-option>
                         </mat-autocomplete>
+                        <mat-error>This field is required</mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -84,6 +85,7 @@
                         <input matInput autocomplete="off" #totalUnits type="number" formControlName="holdings"
                             maxlength="20" class="form-control br-0 rupess">
                         <mat-hint align="start" class="m-0 f-11 text-custom pt-4">As in statement</mat-hint>
+                        <mat-error>This field is required</mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -94,6 +96,7 @@
                             class="form-control br-0">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
+                        <mat-error>This field is required</mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -102,6 +105,7 @@
                     <mat-form-field>
                         <input matInput autocomplete="off" #totalNetContribution formControlName="investedAmt"
                             type="number" maxlength="20" class="form-control br-0 rupess">
+                        <mat-error>This field is required</mat-error>
                     </mat-form-field>
 
                 </div>
