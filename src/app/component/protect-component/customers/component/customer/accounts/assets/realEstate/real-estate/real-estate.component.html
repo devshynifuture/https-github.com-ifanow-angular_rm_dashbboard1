@@ -1,117 +1,122 @@
 <div *ngIf="isLoading==true">
-  <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div>
 <div class="wrapper-8">
-  <div class="row">
-    <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
-      <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-2">
-        Overview Report
-        <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item>Overview Report</button>
-        <button mat-menu-item>Summary</button>
-        <button mat-menu-item>All Transactions</button>
-        <button mat-menu-item>Unrealized Transactions</button>
-        <button mat-menu-item>Capital Gains</button>
-        <button mat-menu-item>Goal Linkage</button>
-      </mat-menu>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-3 p-0">
-      <h4 class="m-0 text-black roboto">Real estate</h4>
-    </div>
-    <div class="col-md-9 p-0">
-      <div class="row">
-        <div class="col-md-8 text-right p-0">
-          <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
-          <mat-menu #menu5="matMenu">
-            <button mat-menu-item>PDF</button>
-            <button (click)="ExportTOExcel('Real estate')" mat-menu-item>XLS</button>
-          </mat-menu>
-          <img src="assets/images/svg/up-down.svg" class="">
-          <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-12">
-          <mat-menu #menu6="matMenu">
-            <button mat-menu-item>Email Report</button>
-            <button mat-menu-item>Option 2</button>
-            <button mat-menu-item>Option 3</button>
-          </mat-menu>
+    <div class="row">
+        <div class="col-md-12 right text-right pt-28 pb-28 p-0">
+            <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-2">
+                Overview Report
+                <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>Overview Report</button>
+                <button mat-menu-item>Summary</button>
+                <button mat-menu-item>All Transactions</button>
+                <button mat-menu-item>Unrealized Transactions</button>
+                <button mat-menu-item>Capital Gains</button>
+                <button mat-menu-item>Goal Linkage</button>
+            </mat-menu>
         </div>
-        <div class="col-md-4 text-right right p-0">
-          <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
-              class="material-icons">filter_list</i>FILTERS</button>
-          <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('realEstate','')"><i
-              class="material-icons">add</i>ADD NEW</button>
-        </div>
-      </div>
     </div>
-  </div>
-  <div class="example-container mt-8 real-estate">
-    <table matSort mat-table [dataSource]="datasource3" id="table-low">
-      <ng-container matColumnDef="no">
-        <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
-        <td mat-cell *matCellDef="let element; let i = index;" class="br"> {{i+1}} </td>
-        <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
-      </ng-container>
-      <ng-container matColumnDef="owner">
-        <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br"> Owner </th>
-        <td mat-cell *matCellDef="let element" class="br"> {{element.ownerName}} </td>
-        <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700"> Total</td>
-      </ng-container>
-      <ng-container matColumnDef="type">
-        <th mat-sort-header="typeId" mat-header-cell *matHeaderCellDef class="br"> Type </th>
-        <td mat-cell *matCellDef="let element" class="br">
-          {{(element.typeId == 1)?'Residential':(element.typeId == 2)?'Secondary':(element.typeId == 3)?'Commercial':'Land'}}
-        </td>
-        <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
-      </ng-container>
-      <ng-container matColumnDef="value">
-        <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br text-right"> Market value </th>
-        <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
-          {{element.marketValue}} </td>
-        <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700" appFormatNumber>{{sumOfMarketValue}}</td>
-      </ng-container>
-      <ng-container matColumnDef="pvalue">
-        <th mat-sort-header="purchaseValue" mat-header-cell *matHeaderCellDef class="br text-right"> Purchase value
-        </th>
-        <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
-          {{element.purchaseValue}} </td>
-        <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700" appFormatNumber>{{sumOfpurchasedValue}}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="desc">
-        <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br"> Description </th>
-        <td mat-cell *matCellDef="let element" class="br"> {{element.description}} </td>
-        <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
-      </ng-container>
-      <ng-container matColumnDef="status">
-        <th *matHeaderCellDef class="br t-5" mat-header-cell mat-sort-header="active"> Status</th>
-        <td *matCellDef="let element" class="br t-5 text-primary" mat-cell>LIVE </td>
-        <td *matFooterCellDef mat-footer-cell></td>
-      </ng-container>
+    <div class="row">
+        <div class="col-md-7 p-0">
+            <h4 class="m-0 text-black roboto">Real estate</h4>
+        </div>
+        <div class="col-md-5 p-0 text-right right ">
 
-      <ng-container matColumnDef="icons">
-        <th mat-header-cell *matHeaderCellDef class="t-2"></th>
-        <td mat-cell *matCellDef="let element" class="t-2">
-          <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">
-            more_vert
-          </i>
-          <mat-menu #menu4="matMenu">
-            <button mat-menu-item (click)="open('realEstate',element)">Edit</button>
-            <button mat-menu-item (click)="detailedViewRealEstate('addRealEstate',element)">Deatiled View</button>
-            <button mat-menu-item>Activity</button>
-            <button mat-menu-item (click)="deleteModal('REAL ESTATE',element)">Delete</button>
-          </mat-menu>
-        </td>
-        <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns3; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
-      <tr mat-footer-row *matFooterRowDef="displayedColumns3;sticky: true" [hidden]="isLoading"></tr>
-    </table>
-  </div>
+            <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
+            <mat-menu #menu5="matMenu">
+                <button mat-menu-item>PDF</button>
+                <button (click)="ExportTOExcel('Real estate')" mat-menu-item>XLS</button>
+            </mat-menu>
+            <img src="assets/images/svg/up-down.svg" class="">
+            <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-12">
+            <mat-menu #menu6="matMenu">
+                <button mat-menu-item>Email Report</button>
+                <button mat-menu-item>Option 2</button>
+                <button mat-menu-item>Option 3</button>
+            </mat-menu>
 
-  <!--  <div *ngIf="isLoading">-->
-  <!--    <mat-spinner class="loader" [diameter]="30"></mat-spinner>-->
-  <!--  </div>-->
+
+            <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
+                    class="material-icons">filter_list</i>FILTERS</button>
+            <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('realEstate','')"><i
+                    class="material-icons">add</i>ADD NEW</button>
+
+        </div>
+    </div>
+    <div class="example-container mt-8 p-0 col-md-12 real-estate">
+        <table matSort mat-table [dataSource]="datasource3" id="table-low">
+            <ng-container matColumnDef="no">
+                <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br w-2"> No </th>
+                <td mat-cell *matCellDef="let element; let i = index;" class="br w-2"> {{i+1}} </td>
+                <td mat-footer-cell *matFooterCellDef class=" text-left pl-4 f-500"> Total</td>
+
+            </ng-container>
+            <ng-container matColumnDef="owner">
+                <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br w-20"> Owner </th>
+                <td mat-cell *matCellDef="let element" class="br w-20"> {{element.ownerName}} </td>
+                <td mat-footer-cell *matFooterCellDef class="br text-right w-2"> </td>
+            </ng-container>
+            <ng-container matColumnDef="type">
+                <th mat-sort-header="typeId" mat-header-cell *matHeaderCellDef class="br text-right w-15"> Type </th>
+                <td mat-cell *matCellDef="let element" class="br w-15">
+                    {{(element.typeId == 1)?'Residential':(element.typeId == 2)?'Secondary':(element.typeId == 3)?'Commercial':'Land'}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef class="br text-right w-15"> </td>
+            </ng-container>
+            <ng-container matColumnDef="value">
+                <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br w-15 rightText text-right"> Market value
+                </th>
+                <td mat-cell *matCellDef="let element" class="br w-15 text-right" appFormatNumber>
+                    {{element.marketValue}} </td>
+                <td mat-footer-cell *matFooterCellDef class="br text-right w-15 p-8 f-500" appFormatNumber>
+                    {{sumOfMarketValue}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="pvalue">
+                <th mat-sort-header="purchaseValue" mat-header-cell *matHeaderCellDef class="br w-20 rightText text-right">
+                    Purchase value
+                </th>
+                <td mat-cell *matCellDef="let element" class="br w-20 text-right" appFormatNumber>
+                    {{element.purchaseValue}} </td>
+                <td mat-footer-cell *matFooterCellDef class="br text-right w-20 p-8 f-500" appFormatNumber>
+                    {{sumOfpurchasedValue}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="desc">
+                <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br w-15"> Description </th>
+                <td mat-cell *matCellDef="let element" class="br w-15"> {{element.description}} </td>
+                <td mat-footer-cell *matFooterCellDef class="br text-right w-15"> </td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <th *matHeaderCellDef class="br t-10" mat-header-cell mat-sort-header="active"> Status</th>
+                <td *matCellDef="let element" class="br t-10 text-primary" mat-cell>LIVE </td>
+                <td *matFooterCellDef mat-footer-cell class="t-10"></td>
+            </ng-container>
+
+            <ng-container matColumnDef="icons">
+                <th mat-header-cell *matHeaderCellDef class="t-2"></th>
+                <td mat-cell *matCellDef="let element" class="t-2">
+                    <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">
+                        more_vert
+                    </i>
+                    <mat-menu #menu4="matMenu">
+                        <button mat-menu-item (click)="open('realEstate',element)">Edit</button>
+                        <button mat-menu-item (click)="detailedViewRealEstate('addRealEstate',element)">Deatiled
+                            View</button>
+                        <button mat-menu-item>Activity</button>
+                        <button mat-menu-item (click)="deleteModal('REAL ESTATE',element)">Delete</button>
+                    </mat-menu>
+                </td>
+                <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns3; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+            <tr mat-footer-row *matFooterRowDef="displayedColumns3;sticky: true" [hidden]="isLoading"></tr>
+        </table>
+    </div>
+
+    <!--  <div *ngIf="isLoading">-->
+    <!--    <mat-spinner class="loader" [diameter]="30"></mat-spinner>-->
+    <!--  </div>-->
