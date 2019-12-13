@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LeftsidebarComponent } from './component/left-sidebar/leftsidebar/leftsidebar.component';
 import { LoginComponent } from './component/no-protected/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
+import { CalenderComponent } from './component/protect-component/AdviserComponent/Email/calender/calender.component';
 
 const routes: Routes = [
   {
@@ -40,19 +41,26 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'calender',
+    component: CalenderComponent
+  },
+  {
     path: 'gmail-redirect',
     loadChildren: () => import('./component/gmail-redirect/gmail-redirect.module')
       .then(m => m.GmailRedirectModule)
   },
+
   {
     path: '',
     redirectTo: '/login',
     pathMatch: 'full',
   },
+
   {
     path: 'redirect',
     loadChildren: () => import('./component/gmail-redirect/gmail-redirect.module').then(m => m.GmailRedirectModule)
   }
+
 ];
 
 @NgModule({

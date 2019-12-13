@@ -1,6 +1,8 @@
 <!-- <div *ngIf="clientId && upperSliderData.state == 'close'"> -->
+<div class="show">
   <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" class="img-top">
-  <!--<mat-tab-group [selectedIndex]="selected" animationDuration="0ms" mat-align-tabs="center" id="ui-customer">
+</div>
+<!--<mat-tab-group [selectedIndex]="selected" animationDuration="0ms" mat-align-tabs="center" id="ui-customer">
 
     <mat-tab label="OVERVIEW">
       &lt;!&ndash;      <app-plan></app-plan>&ndash;&gt;
@@ -15,19 +17,19 @@
     <mat-tab label="TRANSACT">Content 3</mat-tab>
 
   </mat-tab-group>-->
-  <nav id="ui-customer" mat-tab-nav-bar>
-    <a (click)="clickEvent(1)" [ngClass]="value == 1 ?'successBorder': 'danger'"
-       [routerLink]="'/customer-detail/overview'" mat-tab-link>OVERVIEW</a>
-    <a (click)="clickEvent(2)" [ngClass]="value == 2  ?'successBorder': 'danger'"
-       [routerLink]="'/customer-detail/account/summary'" mat-tab-link>ACCOUNTS</a>
-    <a (click)="clickEvent(3)" [ngClass]="value == 3?'successBorder': 'danger'"
-       [routerLink]="'/customer-detail/plan/summary'" mat-tab-link>PLAN</a>
-    <a (click)="clickEvent(4)" [ngClass]="value == 4  ?'successBorder': 'danger'"
-       [routerLink]="'/customer-detail/activity'" mat-tab-link>ACTIVITY</a>
-    <a (click)="clickEvent(5)" [ngClass]="value == 5 ?'successBorder': 'danger'"
-       [routerLink]="'/customer-detail/transact'" mat-tab-link>TRANSACT</a>
-  </nav>
-  <router-outlet id="ui-router-outlet"></router-outlet>
+<nav id="ui-customer" mat-tab-nav-bar>
+  <a (click)="clickEvent(1)" [ngClass]="value == 1 ?'successBorder': 'danger'"
+    [routerLink]="'/customer-detail/overview'" mat-tab-link>OVERVIEW</a>
+  <a (click)="clickEvent(2)" [ngClass]="value == 2  ?'successBorder': 'danger'"
+    [routerLink]="'/customer-detail/account/summary'" mat-tab-link>ACCOUNTS</a>
+  <a (click)="clickEvent(3)" [ngClass]="value == 3?'successBorder': 'danger'"
+    [routerLink]="'/customer-detail/plan/summary'" mat-tab-link>PLAN</a>
+  <a (click)="clickEvent(4)" [ngClass]="value == 4  ?'successBorder': 'danger'"
+    [routerLink]="'/customer-detail/activity'" mat-tab-link>ACTIVITY</a>
+  <a (click)="clickEvent(5)" [ngClass]="value == 5 ?'successBorder': 'danger'"
+    [routerLink]="'/customer-detail/transact'" mat-tab-link>TRANSACT</a>
+</nav>
+<router-outlet id="ui-router-outlet"></router-outlet>
 <!-- </div> -->
 <h1 *ngIf="!clientId">Please select client</h1>
 <div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay">

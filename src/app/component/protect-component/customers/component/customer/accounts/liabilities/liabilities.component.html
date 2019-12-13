@@ -106,7 +106,7 @@
                             <h4 class="m-0 text-black roboto" *ngIf="showFilter=='6'">Mortgage</h4>
 
                         </div>
-                        <div class="col-md-8 p-0 right text-right" >
+                        <div class="col-md-8 p-0 right text-right">
                             <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1" class="c-p">
                             <mat-menu #menu1="matMenu">
                                 <button mat-menu-item>PDF</button>
@@ -131,96 +131,121 @@
                 </div>
 
                 <div class="liabilities wrapper-8">
-                    <table matSort mat-table [dataSource]="dataSource" id="table-low">
-                        <ng-container matColumnDef="no">
-                            <th  mat-header-cell *matHeaderCellDef class="br"> No.</th>
-                            <td mat-cell *matCellDef="let element; let i = index;" class="br"> {{i+1}} </td>
-                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
-                        </ng-container>
-                        <ng-container matColumnDef="name">
-                            <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-18"> Owner</th>
-                            <td mat-cell *matCellDef="let element" class="br t-18"> {{element.ownerName}} </td>
-                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700"
-                                [hidden]="dataSource==undefined && showLoader==false"> Total </td>
-                        </ng-container>
-                        <ng-container matColumnDef="type">
-                            <th mat-sort-header="loanTypeId" mat-header-cell *matHeaderCellDef class="br t-12"> Type</th>
-                            <td mat-cell *matCellDef="let element" class="br t-12">
-                                {{(element.loanTypeId == 1)?'Home Loan':(element.loanTypeId == 2)?'Vehicle':(element.loanTypeId == 3)?'Education':(element.loanTypeId == 4)?'Credit Card':(element.loanTypeId == 5)?'Personal':'Mortgage'}}
-                            </td>
-                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
-                        </ng-container>
-                        <ng-container matColumnDef="loan">
-                            <th mat-sort-header="loanAmount" mat-header-cell *matHeaderCellDef class="br text-right t-18"> Loan amount</th>
-                            <td mat-cell *matCellDef="let element" class="br text-right t-18" appFormatNumber>
-                                {{util.formatter(element.loanAmount)}} </td>
-                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700"
-                                [hidden]="dataSource==undefined && showLoader==false" appFormatNumber [value]="totalLoanAmt">
-                                {{util.formatter(totalLoanAmt) || '-'}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="ldate">
-                            <th mat-sort-header="commencementDate" mat-header-cell *matHeaderCellDef class="br"> Loan as on</th>
-                            <td mat-cell *matCellDef="let element" class="br">
-                                {{element.commencementDate | date:'dd/MM/yyyy'}} </td>
-                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
-                        </ng-container>
-                        <ng-container matColumnDef="today">
-                            <th mat-sort-header="outstandingAmount" mat-header-cell *matHeaderCellDef class="br text-right t-14"> Outstanding as on today
-                            </th>
-                            <td mat-cell *matCellDef="let element" class="br text-right t-14" appFormatNumber>
-                                {{util.formatter(element.outstandingAmount)}} </td>
-                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700"
-                                [hidden]="dataSource==undefined && showLoader==false" appFormatNumber [value]="outStandingAmt">
-                                {{util.formatter(outStandingAmt) || '-'}}</td>
-                        </ng-container>
-                        <ng-container matColumnDef="ten">
-                            <th mat-sort-header="loanTenure" mat-header-cell *matHeaderCellDef class="br text-right"> Tenure remaining</th>
-                            <td mat-cell *matCellDef="let element" class="br text-right" > {{element.loanTenure}} </td>
-                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
-                        </ng-container>
-                        <ng-container matColumnDef="rate">
-                            <th mat-sort-header="annualInterestRate" mat-header-cell *matHeaderCellDef class="br text-right t-14"> Annual interest rate</th>
-                            <td mat-cell *matCellDef="let element" class="br text-right t-14"> {{element.annualInterestRate}} </td>
-                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
-                        </ng-container>
-                        <ng-container matColumnDef="emi">
-                            <th mat-sort-header="emi" mat-header-cell *matHeaderCellDef class="br text-right"> EMI</th>
-                            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber> {{util.formatter(element.emi)}} </td>
-                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
-                        </ng-container>
-                        <ng-container matColumnDef="fin">
-                            <th mat-sort-header="financialInstitution" mat-header-cell *matHeaderCellDef class="br t-14"> Financial institution</th>
-                            <td mat-cell *matCellDef="let element" class="br t-14"> {{element.financialInstitution}}
-                            </td>
-                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
-                        </ng-container>
-                        <ng-container matColumnDef="status">
-                            <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br"> Status</th>
-                            <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.status}} </td>
-                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
-                        </ng-container>
-                        <ng-container matColumnDef="icons">
-                            <th mat-header-cell *matHeaderCellDef class="t-2"></th>
-                            <td mat-cell *matCellDef="let element" class="t-2">
-                                <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">
-                                    more_vert
-                                </i>
-                                <mat-menu #menu4="matMenu">
-                                    <button mat-menu-item (click)="open('addLiabilities',element)">Edit</button>
-                                    <button mat-menu-item
-                                        (click)="addLiabilitiesDetail('addLiabilitiesDetail',element)">Deatiled
-                                        View</button>
-                                    <button mat-menu-item>Activity</button>
-                                    <button mat-menu-item (click)="deleteModal('LIABILITIES',element)">Delete</button>
-                                </mat-menu>
-                            </td>
-                            <td mat-footer-cell *matFooterCellDef class="br text-right t-10"> </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                        <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
+                    <div class="row">
+                        <div class="col-md-12 p-0">
+                            <table matSort mat-table [dataSource]="dataSource" id="table-low">
+                                <ng-container matColumnDef="no">
+                                    <th mat-header-cell *matHeaderCellDef class="br"> No.</th>
+                                    <td mat-cell *matCellDef="let element; let i = index;" class="br"> {{i+1}} </td>
+                                    <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
+                                </ng-container>
+                                <ng-container matColumnDef="name">
+                                    <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br"> Owner
+                                    </th>
+                                    <td mat-cell *matCellDef="let element" class="br"> {{element.ownerName}} </td>
+                                    <td mat-footer-cell *matFooterCellDef class="br text-right f-700"
+                                        [hidden]="dataSource==undefined && showLoader==false"> Total </td>
+                                </ng-container>
+                                <ng-container matColumnDef="type">
+                                    <th mat-sort-header="loanTypeId" mat-header-cell *matHeaderCellDef class="br"> Type
+                                    </th>
+                                    <td mat-cell *matCellDef="let element" class="br">
+                                        {{(element.loanTypeId == 1)?'Home Loan':(element.loanTypeId == 2)?'Vehicle':(element.loanTypeId == 3)?'Education':(element.loanTypeId == 4)?'Credit Card':(element.loanTypeId == 5)?'Personal':'Mortgage'}}
+                                    </td>
+                                    <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
+                                </ng-container>
+                                <ng-container matColumnDef="loan">
+                                    <th mat-sort-header="loanAmount" mat-header-cell *matHeaderCellDef
+                                        class="br text-right">
+                                        Loan amount</th>
+                                    <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
+                                        {{util.formatter(element.loanAmount)}} </td>
+                                    <td mat-footer-cell *matFooterCellDef class="br text-right f-700"
+                                        [hidden]="dataSource==undefined && showLoader==false" appFormatNumber [value]="totalLoanAmt">
+                                        {{util.formatter(totalLoanAmt) || '-'}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="ldate">
+                                    <th mat-sort-header="commencementDate" mat-header-cell *matHeaderCellDef class="br">
+                                        Loan as
+                                        on</th>
+                                    <td mat-cell *matCellDef="let element" class="br">
+                                        {{element.commencementDate | date:'dd/MM/yyyy'}} </td>
+                                    <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
+                                </ng-container>
+                                <ng-container matColumnDef="today">
+                                    <th mat-sort-header="outstandingAmount" mat-header-cell *matHeaderCellDef
+                                        class="br text-right"> Outstanding as on today
+                                    </th>
+                                    <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
+                                        {{util.formatter(element.outstandingAmount)}} </td>
+                                    <td mat-footer-cell *matFooterCellDef class="br text-right f-700"
+                                        [hidden]="dataSource==undefined && showLoader==false" appFormatNumber [value]="outStandingAmt"> 
+                                        {{util.formatter(outStandingAmt) || '-'}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="ten">
+                                    <th mat-sort-header="loanTenure" mat-header-cell *matHeaderCellDef
+                                        class="br text-right">
+                                        Tenure remaining</th>
+                                    <td mat-cell *matCellDef="let element" class="br text-right"> {{element.loanTenure}}
+                                    </td>
+                                    <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
+                                </ng-container>
+                                <ng-container matColumnDef="rate">
+                                    <th mat-sort-header="annualInterestRate" mat-header-cell *matHeaderCellDef
+                                        class="br text-right"> Annual interest rate</th>
+                                    <td mat-cell *matCellDef="let element" class="br text-right">
+                                        {{element.annualInterestRate}}
+                                    </td>
+                                    <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
+                                </ng-container>
+                                <ng-container matColumnDef="emi">
+                                    <th mat-sort-header="emi" mat-header-cell *matHeaderCellDef class="br text-right">
+                                        EMI</th>
+                                    <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
+                                        {{util.formatter(element.emi)}} </td>
+                                    <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
+                                </ng-container>
+                                <ng-container matColumnDef="fin">
+                                    <th mat-sort-header="financialInstitution" mat-header-cell *matHeaderCellDef
+                                        class="br">
+                                        Financial institution</th>
+                                    <td mat-cell *matCellDef="let element" class="br"> {{element.financialInstitution}}
+                                    </td>
+                                    <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
+                                </ng-container>
+                                <ng-container matColumnDef="status">
+                                    <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br"> Status
+                                    </th>
+                                    <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.status}}
+                                    </td>
+                                    <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
+                                </ng-container>
+                                <ng-container matColumnDef="icons">
+                                    <th mat-header-cell *matHeaderCellDef class=""></th>
+                                    <td mat-cell *matCellDef="let element" class="">
+                                        <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">
+                                            more_vert
+                                        </i>
+                                        <mat-menu #menu4="matMenu">
+                                            <button mat-menu-item (click)="open('addLiabilities',element)">Edit</button>
+                                            <button mat-menu-item
+                                                (click)="addLiabilitiesDetail('addLiabilitiesDetail',element)">Deatiled
+                                                View</button>
+                                            <button mat-menu-item>Activity</button>
+                                            <button mat-menu-item
+                                                (click)="deleteModal('LIABILITIES',element)">Delete</button>
+                                        </mat-menu>
+                                    </td>
+                                    <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
 
-                    </table>
+                            </table>
+                        </div>
+                    </div>
+
                     <!-- <div *ngIf="dataSource==undefined && showLoader==false">
                         <h4 class="text-center pt-72">{{noData}}</h4>
                         <div class="text-center pt-16">

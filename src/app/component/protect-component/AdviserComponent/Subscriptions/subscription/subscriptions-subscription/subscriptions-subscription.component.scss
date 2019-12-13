@@ -1,27 +1,27 @@
 .example-chip-list {
-    width: 100%;
+  width: 100%;
 }
 
 .btn-header.btn-xs {
-    height: 28px;
-    min-width: 62px;
+  height: 28px;
+  min-width: 62px;
 }
 
 .none {
-    display: none !important;
+  display: none !important;
 }
 
 ::ng-deep .mat-form-field {
-    width: 100%;
+  width: 100%;
 }
 
 ::ng-deep .mat-datepicker-toggle {
-    float: left;
-    left: 0%;
-    right: auto;
-    top: auto !important;
+  float: left;
+  left: 0%;
+  right: auto;
+  top: auto !important;
 }
 
-::ng-deep .mat-select {
-    border: 1px solid rgba(0, 0, 0, .12) !important;
-}
+// ::ng-deep .mat-select {
+//     border: 1px solid rgba(0, 0, 0, .12) !important;
+// }

@@ -1,44 +1,44 @@
 .img-set {
-    padding: 12px;
-    border: 2px solid #83959D;
-    background: #F5F7F7;
-    float: right;
+  padding: 12px;
+  border: 2px solid #83959D;
+  background: #F5F7F7;
+  float: right;
 }
 
 .mat-radio-button {
-    min-width: 0 !important;
+  min-width: 0 !important;
 }
 
 ::ng-deep .mat-radio-group {
-    color: #83959D;
-    font-size: 14px;
+  color: #83959D;
+  font-size: 14px;
 }
 
 ::ng-deep .mat-radio-outer-circle {
-    border-color: #DADADA !important;
+  border-color: #DADADA !important;
 }
 
 ::ng-deep .mat-expansion-panel:not([class*=mat-elevation-z]) {
-    box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 ::ng-deep .mat-expansion-panel-header {
-    background-color: #F5F7F7 !important;
-    font-size: 14px !important;
+  background-color: #F5F7F7 !important;
+  font-size: 14px !important;
 }
 
 ::ng-deep .mat-progress-bar-fill::after {
-    background-color: #008FFF !important;
+  background-color: #008FFF !important;
 }
 
-::ng-deep .mat-progress-bar {
-    height: 30px !important;
-}
+// ::ng-deep .mat-progress-bar {
+//     height: 30px !important;
+// }
 
 ::ng-deep .mat-progress-bar-buffer {
-    background-color: #D9DEE1 !important;
+  background-color: #D9DEE1 !important;
 }
 
 .f-56 {
-    font-size: 56px !important;
+  font-size: 56px !important;
 }
