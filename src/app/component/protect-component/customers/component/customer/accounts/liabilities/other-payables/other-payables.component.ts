@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ViewChildren } from '@angular/core';
 import { CustomerService } from '../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
@@ -9,6 +9,8 @@ import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { DetailedViewOtherPayablesComponent } from '../detailed-view-other-payables/detailed-view-other-payables.component';
 import { AddOtherPayablesComponent } from '../add-other-payables/add-other-payables.component';
 import * as _ from 'lodash';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../excel.service';
 
 @Component({
   selector: 'app-other-payables',
@@ -17,8 +19,9 @@ import * as _ from 'lodash';
 })
 export class OtherPayablesComponent implements OnInit {
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChildren(FormatNumberDirective) formatNumber;
+   
   displayedColumns = ['no', 'name', 'dateOfReceived', 'creditorName', 'amountBorrowed', 'interest', 'dateOfRepayment', 'outstandingBalance', 'description', 'status', 'icons'];
   // dataSource = ELEMENT_DATA;
   advisorId: any;
@@ -27,6 +30,8 @@ export class OtherPayablesComponent implements OnInit {
   @Output() OtherDataChange = new EventEmitter();
   totalAmountBorrowed=0;
   totalAmountOutstandingBalance=0;
+  excelData: any[];
+  footer=[];
   constructor(public custmService:CustomerService,public util:UtilService,public subInjectService:SubscriptionInject,public eventService:EventService,public dialog:MatDialog) { }
 
   ngOnInit() {
@@ -46,6 +51,32 @@ export class OtherPayablesComponent implements OnInit {
     this.payableData.forEach(element => {
       this.totalAmountOutstandingBalance +=element.outstandingBalance
     });
+  }
+
+  /**used for excel  */
+  async ExportTOExcel(value) {
+    this.excelData = []
+    var data = []
+    var headerData = [{ width: 20, key: 'Owner' },
+    { width: 20, key: 'Date of receipt' },
+    { width: 20, key: 'Creditor name' },
+    { width: 18, key: 'Amount borrowed' },
+    { width: 18, key: 'Interest' },
+    { width: 18, key: 'Date of repayment' },
+    { width: 25, key: 'Outstanding balance' },
+    { width: 18, key: 'Description' },
+    { width: 10, key: 'Status' },]
+    var header = ['Owner', 'Date of receipt','Creditor name', 'Amount borrowed',
+      'Interest', 'Date of repayment', 'Outstanding balance', 'Description', 'Status'];
+    this.dataSource.filteredData.forEach(element => {
+      data = [element.ownerName, new Date(element.dateOfReceived),element.creditorName,this.formatNumber.first.formatAndRoundOffNumber(element.amountBorrowed)
+        , element.interest, new Date(element.dateOfRepayment),this.formatNumber.first.formatAndRoundOffNumber(element.outstandingBalance),
+      element.description,element.status]
+      this.excelData.push(Object.assign(data))
+    });
+    var footerData = ['Total','','', this.formatNumber.first.formatAndRoundOffNumber(this.totalAmountBorrowed),'', '', this.formatNumber.first.formatAndRoundOffNumber(this.totalAmountOutstandingBalance), '', '']
+    this.footer.push(Object.assign(footerData))
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   }
   getPayables() {
     let obj = {
