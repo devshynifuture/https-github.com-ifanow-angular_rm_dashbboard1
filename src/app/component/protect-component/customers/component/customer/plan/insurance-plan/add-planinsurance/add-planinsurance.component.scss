@@ -5,10 +5,11 @@
 }
 
 ::ng-deep .mat-expansion-panel-header {
-    height: 39px !important;
+    // height: 39px !important;
     background-color: transparent !important;
     border-bottom: 1px solid #DADCE0;
 }
+
 ::ng-deep .mat-expansion-indicator::after {
     color: #000000 !important
 }
@@ -72,4 +73,16 @@
 
 .borderTop {
     border-top: 1px solid #DADCE0;
+}
+
+::ng-deep .mat-tab-group {
+    display: block !important;
+}
+
+.w-60 {
+    width: 60% !important;
+}
+
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: none;
 }

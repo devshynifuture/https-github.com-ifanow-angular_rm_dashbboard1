@@ -387,7 +387,8 @@
 
 .example-card.height-470 {
   //height: 100%;
-  height: 457px;
+  //height: 457px;
+  height: 480px;
 }
 
 .icon-center {
@@ -1148,8 +1149,6 @@ mat-tab-group[vertical] {
       height: 40px;
     }
 
-
-
     th {
       padding: 10px 8px;
     }
@@ -1201,7 +1200,6 @@ mat-tab-group[vertical] {
   .col-half-offset {
     margin-left: 3.26667%;
   }
-
 }
 
 .viewpast,
@@ -1222,7 +1220,6 @@ mat-tab-group[vertical] {
 }
 
 // crm
-
 #ui-crm {
   padding-top: 64px;
 
@@ -1233,6 +1230,11 @@ mat-tab-group[vertical] {
 }
 
 .email-crm {
+  padding-top: 64px;
+
+  .mat-list-item-content {
+    padding: 0;
+  }
 
   #table-low {
     thead {
@@ -1250,15 +1252,7 @@ mat-tab-group[vertical] {
     tr:nth-child(2) {
       background: #F5F7F7 !important;
     }
-
-
-
-    // tbody td:nth-child(2) {
-    //   font-weight: 300;
-    // }
   }
-
-
 }
 
 // end crm
