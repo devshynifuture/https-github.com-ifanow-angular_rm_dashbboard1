@@ -39,6 +39,12 @@ export class HttpService {
     if (options != undefined) {
       httpOptions = options;
     }
+    /* console.log('HttpService post url : ', url);
+
+     console.log('HttpService post httpOptions : ', httpOptions);
+
+     console.log('HttpService post body : ', body);*/
+
     return this._http
       .post(this.baseUrl + url, body, httpOptions).pipe(
         catchError(err => of([]))
