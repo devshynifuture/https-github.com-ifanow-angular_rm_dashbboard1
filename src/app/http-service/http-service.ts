@@ -216,13 +216,20 @@ export class HttpService {
     const encodedata = res.payLoad;
     try {
       const datavalue = (Buffer.from(encodedata, 'base64').toString('ascii'));
-      // console.log('datavalue: ', datavalue);
+      console.log('datavalue: ', datavalue);
       // console.log('encodedata: ', encodedata);
 
-      const responseData = JSON.parse(datavalue);
-      return responseData;
+      try {
+        const responseData = JSON.parse(datavalue);
+        return responseData;
+
+      } catch (e) {
+        console.error('JSON parse error e : ', e);
+        return JSON.parse(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(encodedata));
+      }
     }
     catch (e) {
+      console.error(e);
       return encodedata;
     }
   }

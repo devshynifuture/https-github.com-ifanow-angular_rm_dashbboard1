@@ -10,6 +10,7 @@ export class EmailUtilService {
   }
 
   static parseBase64AndDecodeGoogleUrlEncoding(contentInBase64) {
+    console.log("parseBase64AndDecodeGoogleUrlEncoding ->> ", contentInBase64);
     return atob(contentInBase64.replace(/\-/g, '+').replace(/_/g, '/'));
   }
 

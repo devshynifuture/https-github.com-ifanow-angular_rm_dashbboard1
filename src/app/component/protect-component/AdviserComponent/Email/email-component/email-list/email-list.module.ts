@@ -1,4 +1,3 @@
-import { FormsModule } from '@angular/forms';
 import { EmailListComponent } from './email-list.component';
 import { EmailViewComponent } from './email-view/email-view.component';
 import { MaterialModule } from './../../../../../../material/material';
@@ -9,6 +8,9 @@ import { EmailListRoutingModule } from './email-list-routing.module';
 import { EmailListingComponent } from './email-listing/email-listing.component';
 
 import { EmailReplyComponent } from './email-reply/email-reply.component';
+import { GmailDatePipe } from './email-listing/gmail-date.pipe';
+import { TruncateStringPipe } from 'src/app/truncate.pipe';
+
 
 
 @NgModule({
@@ -16,12 +18,18 @@ import { EmailReplyComponent } from './email-reply/email-reply.component';
     EmailListComponent,
     EmailListingComponent,
     EmailReplyComponent,
-    EmailViewComponent
+    EmailViewComponent,
+    GmailDatePipe,
+    TruncateStringPipe
   ],
   imports: [
     CommonModule,
     MaterialModule,
-    EmailListRoutingModule,
+    EmailListRoutingModule
+  ],
+  exports: [
+    GmailDatePipe,
+    TruncateStringPipe
   ]
 })
 export class EmailListModule { }

@@ -4,7 +4,6 @@
       <app-left-sidebar></app-left-sidebar>
     </div>
     <div class="col-md-10 p-0">
-      <!-- <router-outlet></router-outlet> -->
       <div class="row">
         <div class="col-md-1 pl-10 pr-0">
           <mat-checkbox>
@@ -20,7 +19,9 @@
         </div>
         <div class="col-md-7"></div>
         <div class="col-md-2">
-          <p class="text-regular pt-14">1-100 of 35,291</p>
+          <p class="text-regular pt-14">
+            1-100 of 35,291
+          </p>
         </div>
         <div class="col-md-1 p-0 pt-8">
           <img src="/assets/images/svg/left-arrow.svg" class="mr-24 c-p">
@@ -28,7 +29,8 @@
         </div>
       </div>
       <div class="email-crm">
-        <table mat-table [dataSource]="dataSource" id="table-low">
+        <router-outlet></router-outlet>
+        <!-- <table mat-table [dataSource]="dataSource" id="table-low">
           <ng-container matColumnDef="checkbox">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element">
@@ -63,7 +65,7 @@
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+        </table> -->
       </div>
     </div>
   </div>
