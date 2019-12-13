@@ -1,4 +1,4 @@
-<div class="popup-header-fix-70">
+<div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20">ADD SCHEME LEVEL HOLDINGS</h4>
@@ -13,23 +13,27 @@
 
 <div class="mb-48">
 
-    <div class="row pt-100 pl-28">
+    <div [formGroup]="scipLevelHoldingForm" class="row pt-100 pl-28">
         <div class="col-md-3 p-0">
             <h5 class="m-0 pb-8">Owner</h5>
-            <!-- <app-owner-component [data]='ownerData' (valueChange)='display($event)' (valueChange1)='lisNominee($event)'>
-            </app-owner-component> -->
+            <app-owner-component [data]='ownerData' (valueChange)='display($event)'>
+            </app-owner-component>
         </div>
 
         <div class="col-md-3">
             <h5 class="m-0 pb-8">Portfolio name</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #pran type="number" maxlength="20" class="form-control br-0 rupess">
+                    <mat-select [disabled]="familyMemberId==undefined" formControlName="portfolioName"
+                        class="form-control br-0">
+                        <mat-option [value]="portfolio" *ngFor="let portfolio of familyWisePortfolio">
+                            {{portfolio.portfolioName}}</mat-option>
+                        <mat-option (click)="openAddPortfolio()"><strong><i class="material-icons">add</i>New
+                                Portfolio</strong></mat-option>
+                    </mat-select>
                     <mat-error>
-                        Pension amount is required
+                        This field is required
                     </mat-error>
-                    <mat-hint align="start" class="f-12">If you have multiple portfolios,you can tag this scrip to one
-                    </mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -65,9 +69,13 @@
                         <input matInput autocomplete="off" aria-label="State" formControlName="scripName"
                             [matAutocomplete]="auto" class="form-control br-0 pl-8">
                         <mat-autocomplete #auto="matAutocomplete">
-                            <!-- <mat-option *ngFor="let s of schemeList" [value]="s.id">{{ s.name }}
-                            </mat-option> -->
+                            <mat-option *ngFor="let signleScrip of scripList" [value]="signleScrip">
+                                {{ signleScrip.name}}
+                            </mat-option>
+                            <mat-option (click)="addScrip()"><strong><i class="material-icons">add</i>New scrip</strong>
+                            </mat-option>
                         </mat-autocomplete>
+                        <mat-error>This field is required</mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -77,6 +85,7 @@
                         <input matInput autocomplete="off" #totalUnits type="number" formControlName="holdings"
                             maxlength="20" class="form-control br-0 rupess">
                         <mat-hint align="start" class="m-0 f-11 text-custom pt-4">As in statement</mat-hint>
+                        <mat-error>This field is required</mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -87,6 +96,7 @@
                             class="form-control br-0">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
+                        <mat-error>This field is required</mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -95,6 +105,7 @@
                     <mat-form-field>
                         <input matInput autocomplete="off" #totalNetContribution formControlName="investedAmt"
                             type="number" maxlength="20" class="form-control br-0 rupess">
+                        <mat-error>This field is required</mat-error>
                     </mat-form-field>
 
                 </div>
@@ -105,7 +116,8 @@
                 <i class="material-icons text-custom c-p" *ngIf="i==HoldingArray.length-1" (click)="addHoldings()">
                     add
                 </i>
-                <i class="material-icons text-custom c-p pl-10" (click)="removeHoldings(i)">
+                <i class="material-icons text-custom c-p pl-10" [hidden]="i==HoldingArray.length-1"
+                    (click)="removeHoldings(i)">
                     remove
                 </i>
             </div>
@@ -114,7 +126,7 @@
     </div>
     <hr class="ml-16 mr-16">
 </div>
-<div class="bottom-fixed wrapper-12 pt-16 w-70">
+<div class="bottom-fixed wrapper-12 pt-16 w-60">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>

@@ -1,14 +1,14 @@
-import {UtilService} from './../../../../services/util.service';
-import {SubscriptionInject} from './../Subscriptions/subscription-inject.service';
-import {ComposeEmailComponent} from './email-component/compose-email/compose-email.component';
-import {appConfig} from 'src/app/config/component-config';
-import {AuthService} from './../../../../auth-service/authService';
-import {BehaviorSubject, throwError} from 'rxjs';
-import {apiConfig} from './../../../../config/main-config';
-import {HttpService} from './../../../../http-service/http-service';
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {EmailAddTaskComponent} from './email-component/email-list/email-add-task/email-add-task.component';
+import { UtilService } from './../../../../services/util.service';
+import { SubscriptionInject } from './../Subscriptions/subscription-inject.service';
+import { ComposeEmailComponent } from './email-component/compose-email/compose-email.component';
+import { appConfig } from 'src/app/config/component-config';
+import { AuthService } from './../../../../auth-service/authService';
+import { BehaviorSubject, throwError } from 'rxjs';
+import { apiConfig } from './../../../../config/main-config';
+import { HttpService } from './../../../../http-service/http-service';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { EmailAddTaskComponent } from './email-component/email-list/email-add-task/email-add-task.component';
 
 
 @Injectable({

@@ -5,14 +5,9 @@
 }
 
 ::ng-deep .mat-expansion-panel-header {
-    height: 39px !important;
+    // height: 39px !important;
     background-color: transparent !important;
     border-bottom: 1px solid #DADCE0;
-}
-
-::ng-deep .mat-tab-body {
-    border-left: 1px solid #DADCE0;
-    border-right: 1px solid #DADCE0;
 }
 
 ::ng-deep .mat-expansion-indicator::after {
@@ -61,8 +56,10 @@
 
 ::ng-deep .tabView .mat-tab-label {
     border-bottom: 1px solid rgba(25, 25, 25, 0.32);
-    height: 48px !important;
-    width: 170px;
+    height: 40px !important;
+    padding: 0px;
+    min-width: 170px !important;
+    color: #000000 !important;
 }
 
 ::ng-deep .mat-tab-header {
@@ -76,4 +73,16 @@
 
 .borderTop {
     border-top: 1px solid #DADCE0;
+}
+
+::ng-deep .mat-tab-group {
+    display: block !important;
+}
+
+.w-60 {
+    width: 60% !important;
+}
+
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: none;
 }

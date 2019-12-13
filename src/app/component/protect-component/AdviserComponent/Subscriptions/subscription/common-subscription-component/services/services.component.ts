@@ -16,7 +16,7 @@ export class ServicesComponent implements OnInit {
 
   @Input() componentFlag: string;
   planServiceData;
-  mappedData;
+  mappedData=[];
   mappedPlan = [];
   @Input() planData;
   _upperData: any;
@@ -107,11 +107,16 @@ export class ServicesComponent implements OnInit {
   }
 
   unmapPlanToService(data) {
-    data.selected = false;
-    _.reject(this.mappedData, delData => {
+    // data.selected = false;
+    // _.reject(this.mappedData, delData => {
+    //   return delData.id == data.id;
+    // });
+      data.selected = false;
+    _.remove(this.mappedData, function (delData) {
       return delData.id == data.id;
     });
-    console.log(this.mappedData.length);
+    console.log(data);
+    // console.log(this.mappedData.length);
   }
 
   savePlanMapToService() {
