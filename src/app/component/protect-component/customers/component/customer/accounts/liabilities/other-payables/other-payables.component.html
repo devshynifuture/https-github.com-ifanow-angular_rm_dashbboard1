@@ -23,7 +23,7 @@
       <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1" class="c-p">
       <mat-menu #menu1="matMenu">
         <button mat-menu-item>PDF</button>
-        <button mat-menu-item>XLS</button>
+        <button mat-menu-item  (click)="ExportTOExcel('Other Payables')">XLS</button>
       </mat-menu>
       <img src="assets/images/svg/up-down.svg" class="c-p">
       <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu" class="c-p mr-12">
@@ -65,8 +65,8 @@
     </ng-container>
     <ng-container matColumnDef="amountBorrowed">
       <th mat-sort-header="amountBorrowed" mat-header-cell *matHeaderCellDef class="br"> Amount borrowed</th>
-      <td mat-cell *matCellDef="let element" class="br text-right"> {{util.formatter(element.amountBorrowed)}} </td>
-      <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700 ">{{util.formatter(totalAmountBorrowed)}}</td>
+      <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber> {{util.formatter(element.amountBorrowed)}} </td>
+      <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700 " appFormatNumber [value]="totalAmountBorrowed">{{util.formatter(totalAmountBorrowed)}}</td>
     </ng-container>
     <ng-container matColumnDef="interest">
       <th mat-sort-header="interest" mat-header-cell *matHeaderCellDef class="br t-14">Interest
@@ -81,8 +81,8 @@
     </ng-container>
     <ng-container matColumnDef="outstandingBalance">
       <th mat-sort-header="outstandingBalance"  mat-header-cell *matHeaderCellDef class="br t-14">Outstanding balance</th>
-      <td mat-cell *matCellDef="let element" class="br t-14 text-right"> {{util.formatter(element.outstandingBalance)}} </td>
-      <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700"> {{util.formatter(totalAmountOutstandingBalance)}}</td>
+      <td mat-cell *matCellDef="let element" class="br t-14 text-right" appFormatNumber> {{util.formatter(element.outstandingBalance)}} </td>
+      <td mat-footer-cell *matFooterCellDef class="br text-right t-10 f-700" appFormatNumber [value]="totalAmountOutstandingBalance"> {{util.formatter(totalAmountOutstandingBalance)}}</td>
     </ng-container>
     <ng-container matColumnDef="description">
       <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br"> Description</th>

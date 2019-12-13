@@ -130,9 +130,9 @@
                 <!-- <mat-radio-button value="2" class="b-a-custom text-primary" (click)="haveMaturity(isMaturity = true)">I
                             have maturity date
                         </mat-radio-button> -->
-                <mat-radio-button value="2" [checked]='true'
-                    [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==2,'text-primary':fixedDeposit.get('maturity').value==2,'b-a':fixedDeposit.get('maturity').value==1}"
-                    class="b-a-custom text-primary" (click)="haveMaturity(isMaturity = true)">I have maturity date
+                <mat-radio-button class="classBlue" value="2" [checked]='true' 
+                    [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==2,'text-primary':fixedDeposit.get('maturity').value==2,'b-a text-custom':fixedDeposit.get('maturity').value==1}"
+                     (click)="haveMaturity(isMaturity = true)">I have maturity date
                 </mat-radio-button>
             </mat-radio-group>
             <mat-error class="f-12 pt-4"

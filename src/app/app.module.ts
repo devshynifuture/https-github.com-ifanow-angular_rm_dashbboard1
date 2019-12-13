@@ -44,9 +44,10 @@ import { DatePipe } from '@angular/common';
 import { MatSortModule, MatTableModule } from '@angular/material';
 import { DynamicComponentService } from './services/dynamic-component.service';
 import { EmailModule } from './component/protect-component/AdviserComponent/Email/email.module';
-import { SubscriptionModule } from './component/protect-component/AdviserComponent/Subscriptions/subscription.module';
+// import { SubscriptionModule } from './component/protect-component/AdviserComponent/Subscriptions/subscription.module';
 import { SubscriptionEntry } from './component/protect-component/AdviserComponent/Subscriptions/subscription.entry.module';
 import { EmailEntryModule } from './component/protect-component/AdviserComponent/Email/email.entry.module';
+
 // import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
 

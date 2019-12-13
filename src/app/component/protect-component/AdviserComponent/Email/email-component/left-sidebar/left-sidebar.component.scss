@@ -1,13 +1,22 @@
-.btn-custom-compose{
-    background: rgb(81, 162, 255);
+.btn-custom-compose {
+  background: rgb(81, 162, 255);
+  color: white;
+  width: 100%;
+  text-align: center;
+
+  p {
     color: white;
-    width: 100%;
-    text-align: center;
-    p{
-        color: white;
-    }
-    &:hover, &:active, &:focus{
-        color: white;
-        background: rgb(81, 162, 255);
-    }
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: white;
+    background: rgb(81, 162, 255);
+  }
+}
+
+::ng-deep .mat-checkbox-frame,
+::ng-deep .mat-select-arrow {
+  border-color: #D9DEE1;
 }

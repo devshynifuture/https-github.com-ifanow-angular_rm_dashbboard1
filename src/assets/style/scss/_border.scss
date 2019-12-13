@@ -1,175 +1,184 @@
 .b-a {
-    border: $border !important;
+  border: $border !important;
 }
 
 .bb-dotted {
-    border-bottom: 2px dotted #dee5e7 !important;
+  border-bottom: 2px dotted #dee5e7 !important;
 }
 
 .b-b {
-    border-bottom: 1px solid #dee5e7 !important;
-}
-.bb-0{
-    border-bottom: 0px !important;
-}
-.b-l {
-    border-left: 1px solid #dee5e7 !important;
-}
-
-.b-t {
-    border-top: 1px solid #dee5e7 !important;
-}
-
-.ba-trans {
-    border-top: 1px solid transparent !important;
-}
-
-.br {
-    border-right: 1px solid #dee5e7 !important;
-}
-
-.bl-0 {
-    border-left: 0px !important;
+  border-bottom: 1px solid #dee5e7 !important;
 }
 
 .bb-0 {
-    border-bottom: 0px !important;
+  border-bottom: 0px !important;
 }
 
-.border-right-1 {
-    border-right: 1px solid #ddd !important;
+.b-l {
+  border-left: 1px solid #dee5e7 !important;
 }
 
-.bb {
-    border-bottom: 1px solid #DADCE0;
+.b-t {
+  border-top: 1px solid #dee5e7 !important;
 }
 
-.bt {
-    border-top: 1px solid #DADCE0;
+.ba-trans {
+  border-top: 1px solid transparent !important;
+}
+
+.btb-none {
+  border-top: 0px !important;
+  border-bottom: 0px !important;
 }
 
 .br {
-    border-right: 1px solid #DADCE0 !important;
+  border-right: 1px solid #dee5e7 !important;
+}
+
+.bl-0 {
+  border-left: 0px !important;
+}
+
+.bb-0 {
+  border-bottom: 0px !important;
+}
+
+.border-right-1 {
+  border-right: 1px solid #ddd !important;
+}
+
+.bb {
+  border-bottom: 1px solid #DADCE0;
+}
+
+.bt {
+  border-top: 1px solid #DADCE0;
+}
+
+.br {
+  border-right: 1px solid #DADCE0 !important;
 }
 
 .bl {
-    border-left: 1px solid #DADCE0;
+  border-left: 1px solid #DADCE0;
 }
-.ba-light{
-    border:1px solid #DADCE0 !important;
+
+.ba-light {
+  border: 1px solid #DADCE0 !important;
 }
+
 .bt-1 {
-    border-top: 1px solid rgba(0, 0, 0, 0.12) !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.12) !important;
 }
 
 .bb-1 {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .btl-1 {
-    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .border-right-u1 {
-    box-shadow: inset -2px 0px 0px 0px #008FFF, 0px 0px 0px 0px #008FFF;
+  box-shadow: inset -2px 0px 0px 0px #008FFF, 0px 0px 0px 0px #008FFF;
 }
 
 .ba-blue {
-    outline: 3px solid #008FFF !important;
+  outline: 3px solid #008FFF !important;
 }
 
 .bu-primary {
-    outline: 1px solid #008FFF !important;
+  outline: 1px solid #008FFF !important;
 }
 
 .b-0 {
-    border: 0px !important;
+  border: 0px !important;
 }
 
 .br-none {
-    border-right: 0 !important;
+  border-right: 0 !important;
 }
 
 .b-a-custom {
-    border: 1px solid #008FFF !important;
+  border: 1px solid #008FFF !important;
 }
 
 .ba-2xb {
-    border: 2px solid #008FFF !important;
+  border: 2px solid #008FFF !important;
 }
 
 .ba-t {
-    border: 1px solid transparent !important;
+  border: 1px solid transparent !important;
 }
 
 .b-ua {
-    outline: 1px solid #dee5e7 !important;
+  outline: 1px solid #dee5e7 !important;
 }
 
 .b-grey {
-    border: 1px solid $grey !important;
+  border: 1px solid $grey !important;
 }
 
 .bt-grey {
-    border-top: 1px solid $grey;
+  border-top: 1px solid $grey;
 }
 
 .br-grey {
-    border-right: 1px solid $grey !important;
+  border-right: 1px solid $grey !important;
 }
 
 .bl-grey {
-    border-left: 1px solid $grey;
+  border-left: 1px solid $grey;
 }
 
 .bb-grey {
-    border-bottom: 1px solid $grey !important;
+  border-bottom: 1px solid $grey !important;
 }
 
 .br-1 {
-    border-radius: 1px !important;
+  border-radius: 1px !important;
 }
 
 .br-2 {
-    border-radius: 2px !important;
+  border-radius: 2px !important;
 }
 
 .br-0 {
-    border-radius: 0px !important;
+  border-radius: 0px !important;
 }
 
 .ba-black {
-    border: 1px solid #1F1F1F !important;
+  border: 1px solid #1F1F1F !important;
 }
 
 .br-50 {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .b-primitive {
-    border: 1px solid #83959D;
+  border: 1px solid #83959D;
 }
 
 .bt-primitive {
-    border-top: 1px solid #83959D;
+  border-top: 1px solid #83959D;
 }
 
 .br-primitive {
-    border-right: 1px solid #83959D;
+  border-right: 1px solid #83959D;
 }
 
 .bb-primitive {
-    border-bottom: 1px solid #83959D;
+  border-bottom: 1px solid #83959D;
 }
 
 .bl-primitive {
-    border-left: 1px solid #83959D;
+  border-left: 1px solid #83959D;
 }
 
 .ba-3x {
-    border: 3px solid #1F1F1F !important;
+  border: 3px solid #1F1F1F !important;
 }
 
 .bl-primitive {
-    border-left: 1px solid #83959D;
+  border-left: 1px solid #83959D;
 }

@@ -7,7 +7,6 @@ import { CustomerService } from '../../../../customer.service';
 import { AddScripComponent } from '../add-scrip/add-scrip.component';
 import { MatDialog } from '@angular/material';
 import { AddPortfolioComponent } from '../add-portfolio/add-portfolio.component';
-import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-stock-scrip-level-transaction',

@@ -387,7 +387,8 @@
 
 .example-card.height-470 {
   //height: 100%;
-  height: 457px;
+  //height: 457px;
+  height: 480px;
 }
 
 .icon-center {
@@ -1148,8 +1149,6 @@ mat-tab-group[vertical] {
       height: 40px;
     }
 
-
-
     th {
       padding: 10px 8px;
     }
@@ -1201,7 +1200,6 @@ mat-tab-group[vertical] {
   .col-half-offset {
     margin-left: 3.26667%;
   }
-
 }
 
 .viewpast,
@@ -1222,16 +1220,20 @@ mat-tab-group[vertical] {
 }
 
 // crm
-
 #ui-crm {
   padding-top: 64px;
 
   .mat-list-item-content {
     padding: 0;
   }
+
 }
 
 .email-crm {
+  .mat-list-item-content {
+    padding: 0;
+  }
+
   #table-low {
     thead {
       display: none !important;
@@ -1248,12 +1250,47 @@ mat-tab-group[vertical] {
     tr:nth-child(2) {
       background: #F5F7F7 !important;
     }
+  }
+}
 
-    // tbody td:nth-child(2) {
-    //   font-weight: 300;
-    // }
+#calender-tabs {
+  .mat-tab-label {
+    padding: 0 !important;
+    min-width: 90px !important;
+    opacity: 1;
+    height: 40px !important;
+
   }
 
+  .mat-checkbox-label {
+    font-size: 14px !important;
+  }
+
+  .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination,
+  .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+    display: none;
+  }
+
+  .mat-ink-bar {
+    height: 2px !important;
+  }
+
+  .mat-tab-label-active {
+    color: #008FFF !important;
+    font-weight: 500 !important;
+  }
+
+  .mat-tab-header {
+    border-bottom: 0px !important;
+  }
+
+  .mat-tab-body-content {
+    overflow: hidden;
+  }
+
+  .mat-checkbox label {
+    padding-top: 20px !important;
+  }
 }
 
 // end crm
