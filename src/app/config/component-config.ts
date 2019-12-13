@@ -156,6 +156,7 @@ export const appConfig = {
   ADD_PORTFOLIO: 'account/asset/stock/portfolio/add',
   DELETE_STOCK: 'account/asset/stock/delete',
   EDIT_STOCK: 'account/asset/stock/edit',
+  ADD_SCRIP: 'account/asset/stock/scrip-name/add',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/submit',
