@@ -24,6 +24,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
   ownerName: any;
   familyMemberId: any;
   familyWisePortfolio = [];
+  editApiData: any;
 
   constructor(public dialog: MatDialog, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
@@ -113,6 +114,11 @@ export class StockScripLevelHoldingComponent implements OnInit {
       data = {};
       this.addHoldings();
     }
+    else {
+      this.editApiData = data;
+      this.familyMemberId = data.familyMemberId;
+      this.ownerName = data.ownerName;
+    }
     this.scipLevelHoldingForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       portfolioName: [data.portfolioName, [Validators.required]]
@@ -157,10 +163,22 @@ export class StockScripLevelHoldingComponent implements OnInit {
     });
   }
   saveSchemeHolding() {
+    // if (this.ownerData == undefined) {
+    //   return;
+    // }
     if (this.scipLevelHoldingForm.get('portfolioName').invalid) {
       this.scipLevelHoldingForm.get('portfolioName').markAsTouched();
       return;
-    };
+    }
+    if (this.HoldingArray.invalid) {
+      this.HoldingArray.controls.forEach(element => {
+        element.get('holdingAsOn').markAsTouched();
+        element.get('holdings').markAsTouched();
+        element.get('investedAmt').markAsTouched();
+        element.get('scripName').markAsTouched();
+      })
+      return;
+    }
     let finalStocks = []
     this.HoldingArray.controls.forEach(element => {
       let obj = {

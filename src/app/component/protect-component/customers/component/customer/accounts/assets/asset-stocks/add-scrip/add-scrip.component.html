@@ -1,9 +1,64 @@
-<h3>ADD A SCRIP</h3>
-<h5>Can't find your scrip?Add from here</h5>
-
-<mat-radio-group>
-    <mat-radio-button value="1" class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio">Domestic
-    </mat-radio-button>
-    <mat-radio-button value="2" class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">International
-    </mat-radio-button>
-</mat-radio-group>
+<div class="pl-28 pt-24">
+    <h3><strong>ADD A SCRIP</strong></h3>
+    <h5><strong>Can't find your scrip?Add from here</strong></h5>
+</div>
+<div class="row pt-4">
+    <div class="col-md-4">
+        <p class="t-right">Script type</p>
+    </div>
+    <div class="col-md-8">
+        <mat-form-field>
+            <mat-radio-group>
+                <mat-radio-button value="1" class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio">Domestic
+                </mat-radio-button>
+                <mat-radio-button value="2" class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">International
+                </mat-radio-button>
+            </mat-radio-group>
+        </mat-form-field>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <p class="t-right">Script name</p>
+    </div>
+    <div class="col-md-7">
+        <mat-form-field>
+            <div class="form-group">
+                <input matInput class="form-control w-98 br-0">
+            </div>
+            <mat-error>This field is required</mat-error>
+        </mat-form-field>
+    </div>
+</div>
+<div class="row pt-4">
+    <div class="col-md-4">
+        <h3 class="t-right">Price details</h3>
+        <p>Enter price in INR Price has to be uploaded manually</p>
+    </div>
+    <div class="col-md-4">
+        <mat-form-field>
+            <div class="form-group">
+                <input type="number" class="form-control">
+            </div>
+            <mat-error>This field is required</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="col-md-4">
+        <mat-form-field>
+            <div class="form-group form-group_one mb-0">
+                <mat-form-field>
+                    <input matInput autocomplete="off" class="form-control br-0" [matDatepicker]="balanceAsOn">
+                    <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
+                    <mat-datepicker #balanceAsOn></mat-datepicker>
+                    <mat-error>This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <mat-error>This field is required</mat-error>
+        </mat-form-field>
+    </div>
+</div>
+<mat-form-field>
+    <button mat-raised-button>CANCEL</button>
+    <button mat-raised-button class="text-danger">ADD</button>
+</mat-form-field>

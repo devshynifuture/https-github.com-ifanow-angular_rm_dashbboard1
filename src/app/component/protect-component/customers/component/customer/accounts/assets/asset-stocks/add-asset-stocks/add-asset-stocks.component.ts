@@ -17,6 +17,7 @@ export class AddAssetStocksComponent implements OnInit {
   clientId: any;
   ownerName: any;
   familyMemberId: any;
+  editApiData: any;
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService) { }
 
@@ -27,6 +28,9 @@ export class AddAssetStocksComponent implements OnInit {
   @Input() set data(data) {
     if (data == null) {
       data = {}
+    }
+    else {
+      this.editApiData = data
     }
     this.assetForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
@@ -61,25 +65,46 @@ export class AddAssetStocksComponent implements OnInit {
         this.assetForm.get('portfolioName').markAsTouched();
         break;
       default:
-        let obj = {
-          "clientId": this.clientId,
-          "advisorId": this.advisorId,
-          "familyMemberId": this.familyMemberId,
-          "ownerName": this.ownerName,
-          "portfolioName": this.assetForm.get("portfolioName").value,
-          "stocks": [
-            {
-              "valueAsOn": this.assetForm.get("valueAsOn").value,
-              "currentMarketValue": this.assetForm.get("currentMarketValue").value,
-              "amountInvested": this.assetForm.get("amtInvested").value,
-              "stockType": 1
-            }
-          ]
+        if (this.editApiData) {
+          let obj =
+          {
+            "id": this.editApiData.id,
+            "clientId": this.clientId,
+            "advisorId": this.advisorId,
+            "familyMemberId": this.familyMemberId,
+            "ownerName": this.ownerName,
+            "currentMarketValue": this.assetForm.get("currentMarketValue").value,
+            "amountInvested": this.assetForm.get("amtInvested").value,
+            "valueAsOn": this.assetForm.get("valueAsOn").value,
+            "portfolioId": this.editApiData.portfolioId,
+            "stockType": 1
+          }
+
+          this.cusService.editStockData(obj).subscribe(
+            data => this.submitStockDataRes(data)
+          )
         }
-        this.cusService.addAssetStocks(obj).subscribe(
-          data => this.submitStockDataRes(data),
-          err => this.eventService.openSnackBar(err)
-        )
+        else {
+          let obj = {
+            "clientId": this.clientId,
+            "advisorId": this.advisorId,
+            "familyMemberId": this.familyMemberId,
+            "ownerName": this.ownerName,
+            "portfolioName": this.assetForm.get("portfolioName").value,
+            "stocks": [
+              {
+                "valueAsOn": this.assetForm.get("valueAsOn").value,
+                "currentMarketValue": this.assetForm.get("currentMarketValue").value,
+                "amountInvested": this.assetForm.get("amtInvested").value,
+                "stockType": 1
+              }
+            ]
+          }
+          this.cusService.addAssetStocks(obj).subscribe(
+            data => this.submitStockDataRes(data),
+            err => this.eventService.openSnackBar(err)
+          )
+        }
       // stock type portfolio summary
     }
   }
