@@ -1258,7 +1258,12 @@ mat-tab-group[vertical] {
     padding: 0 !important;
     min-width: 90px !important;
     opacity: 1;
+    height: 40px !important;
 
+  }
+
+  .mat-checkbox-label {
+    font-size: 14px !important;
   }
 
   .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination,
