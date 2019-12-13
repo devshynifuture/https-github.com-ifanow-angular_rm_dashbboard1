@@ -42,11 +42,10 @@ export class LiabilitiesComponent implements OnInit {
   showLoader: boolean;
   noData: string;
   totalLoanAmt: any;
-  outStandingAmt: any;
+  outStandingAmt=0;
   filterData: any;
   excelData: any[];
   footer = [];
-
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
     public customerService: CustomerService, public util: UtilService, public dialog: MatDialog) {
@@ -84,7 +83,7 @@ export class LiabilitiesComponent implements OnInit {
       'Outstanding as on today', 'Tenure remaining', 'Annual interest rate', 'EMI', 'Financial institution', 'Status'];
     this.dataSource.forEach(element => {
       data = [element.ownerName, (element.loanTypeId == 1) ? 'Home Loan' : (element.loanTypeId == 2) ? 'Vehicle' : (element.loanTypeId == 3) ? 'Education' : (element.loanTypeId == 4) ? 'Credit Card' : (element.loanTypeId == 5) ? 'Personal' : 'Mortgage', this.formatNumber.first.formatAndRoundOffNumber(element.loanAmount)
-        ,new Date(element.commencementDate), this.formatNumber.first.formatAndRoundOffNumber(element.outstandingAmount),
+        , new Date(element.commencementDate), this.formatNumber.first.formatAndRoundOffNumber(element.outstandingAmount),
       element.loanTenure, element.annualInterestRate, this.formatNumber.first.formatAndRoundOffNumber(element.emi), element.financialInstitution, element.status]
       this.excelData.push(Object.assign(data))
     });
@@ -142,6 +141,9 @@ export class LiabilitiesComponent implements OnInit {
           return o.loanAmount;
         });
         this.outStandingAmt = _.sumBy(filterData, function (o) {
+          if (o.outstandingAmount == "NaN") {
+            o.outstandingAmount = 0
+          }
           return o.outstandingAmount;
         });
         this.dataSource = filterData;
@@ -268,7 +270,16 @@ export class LiabilitiesComponent implements OnInit {
       this.noData = "No Data Found";
     } else {
       this.totalLoanAmt = data.totalLoanAmount;
-      this.outStandingAmt = data.totalCapitalOutstanding;
+      // this.outStandingAmt = data.outstandingAmount;
+      data.loans.forEach(element => {
+        this.totalLoanAmt +=element.loanAmount
+      });
+      data.loans.forEach(element => {
+        if (element.outstandingAmount == "NaN") {
+          element.outstandingAmount = 0
+        }
+        this.outStandingAmt +=element.outstandingAmount
+      });
       this.dataStore = [];
       this.dataSource = [];
       this.home = [];

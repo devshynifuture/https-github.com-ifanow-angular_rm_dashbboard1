@@ -73,9 +73,13 @@ export class EmailListingComponent implements OnInit, OnDestroy {
       .subscribe(responseData => {
         let tempArray1 = [];
         // console.log('this is gmails inbox data ->');
-        const parsedResponseData = JSON.parse(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(responseData));
-        console.log(parsedResponseData);
-        const { gmailThreads, nextPageToken } = parsedResponseData;
+        // console.log('responseData from service ->>', responseData);
+        // const parsedResponseData = JSON.parse(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(responseData));
+
+        // console.log('parsed Data from parseBase64AndDecodeGoogleUrlEncoding->> ', responseData);
+        // const { gmailThreads, nextPageToken } = parsedResponseData;
+        const { gmailThreads, nextPageToken } = responseData;
+
         this.nextPageToken = nextPageToken;
         this.gmailThreads = gmailThreads;
         gmailThreads.forEach((thread: GmailInboxResponseI, index: number) => {
@@ -91,14 +95,6 @@ export class EmailListingComponent implements OnInit, OnDestroy {
           dateIdsSnippetsOfMessages = EmailUtilService.getIdAndDateAndSnippetOfGmailThreadMessages(thread);
           labelIdsfromMessages = EmailUtilService.getGmailLabelIdsFromMessages(thread);
           extractSubjectFromHeaders = EmailUtilService.getSubjectAndFromOfGmailHeaders(thread);
-          // const Obj = {
-          //   parsedData,
-          //   idsOfThread,
-          //   dateIdsSnippetsOfMessages,
-          //   labelIdsfromMessages
-          // }
-          // console.log("this is ->>> ");
-          // console.log(dateIdsSnippetsOfMessages);
 
           const Obj1 = {
             position: index + 1,
@@ -106,9 +102,14 @@ export class EmailListingComponent implements OnInit, OnDestroy {
             parsedData,
             labelIdsfromMessages,
             emailers: `${extractSubjectFromHeaders['headerFromArray'][0].split('<')[0].trim()}`,
-            subjectMessage: `${extractSubjectFromHeaders['headerSubjectArray'][0]} - ${dateIdsSnippetsOfMessages[0]['snippet']}`,
+            subjectMessage: {
+              subject: extractSubjectFromHeaders['headerSubjectArray'][0],
+              message: dateIdsSnippetsOfMessages[0]['snippet']
+            },
             date: `${dateIdsSnippetsOfMessages[0]['internalDate']}`
           }
+
+          console.log(Obj1);
 
           // tempArray.push(Obj);
           tempArray1.push(Obj1);
