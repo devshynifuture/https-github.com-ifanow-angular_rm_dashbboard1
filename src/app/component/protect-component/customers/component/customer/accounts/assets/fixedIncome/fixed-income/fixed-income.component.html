@@ -311,10 +311,10 @@
 
 <div *ngIf="showRequring == '3'">
     <div class="row">
-        <div class="col-md-7 text-right">
-
+        <div class="col-md-7 text-left">
+            <h2 class="f-18 m-0">Bonds</h2>
         </div>
-        <div class="col-md-4 text-right right ">
+        <div class="col-md-5 text-right right ">
             <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
             <mat-menu #menu5="matMenu">
                 <button mat-menu-item>PDF</button>
@@ -327,7 +327,7 @@
                 <button mat-menu-item>Option 2</button>
                 <button mat-menu-item>Option 3</button>
             </mat-menu>
-            <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
+            <button mat-stroked-button class="btn-default addon mr-8 ml-8 v-middle"><i
                     class="material-icons">filter_list</i>FILTERS
             </button>
             <button mat-stroked-button class="btn-primary addon v-middle" (click)="openBonds(null)"><i
@@ -336,7 +336,7 @@
 
         </div>
     </div>
-    <div class="example-container mt-8 mb-44 fixed-deposite">
+    <div class="example-container col-md-12 mt-8 mb-44 fixed-deposite">
         <table matSort #bondListTable="matSort" mat-table [dataSource]="dataSourceBond" id="table-low">
             <ng-container matColumnDef="no">
                 <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br t-2"> No</th>
@@ -346,7 +346,7 @@
             <ng-container matColumnDef="owner">
                 <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br "> Owner</th>
                 <td mat-cell *matCellDef="let element" class="br "> {{element.ownerName}} </td>
-                <td mat-footer-cell *matFooterCellDef class="br  text-right"> Total</td>
+                <td mat-footer-cell *matFooterCellDef class="br f-500 p-8 text-left"> Total</td>
             </ng-container>
             <ng-container matColumnDef="cvalue">
                 <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br text-right t-17"> Current value
@@ -354,7 +354,7 @@
                 <td mat-cell *matCellDef="let element" class="br text-right t-17" appFormatNumber>
                     {{ element.currentValue }}
                 </td>
-                <td mat-footer-cell *matFooterCellDef class="br  text-right" appFormatNumber [value]="sumCurrentValueB">
+                <td mat-footer-cell *matFooterCellDef class="br f-500 p-8 text-right" appFormatNumber [value]="sumCurrentValueB">
                     {{ sumCurrentValueB || '-'}}
                 </td>
             </ng-container>
