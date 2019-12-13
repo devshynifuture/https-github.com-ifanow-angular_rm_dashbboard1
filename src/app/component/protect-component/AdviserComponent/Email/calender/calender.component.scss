@@ -1,0 +1,26 @@
+.custom-grid {
+  width: 100%;
+  //   float: left;
+  display: flex;
+  padding: 16px;
+
+  .column {
+
+    width: 14.88%;
+    text-align: center;
+
+    p {
+      cursor: pointer;
+    }
+  }
+
+  .rounded-primary {
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    padding-top: 2px;
+    color: #fff !important;
+    background: #008FFF;
+    cursor: pointer;
+  }
+}
