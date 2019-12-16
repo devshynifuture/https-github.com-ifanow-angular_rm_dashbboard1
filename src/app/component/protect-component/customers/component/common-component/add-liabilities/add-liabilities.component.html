@@ -15,7 +15,7 @@
 </div>
 <div class="pt-100 pl-24 pr-24 pb-48 mb-48" [formGroup]="addLiabilityForm">
 
-  <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
+  <app-owner-column (valueChange)='display($event)' [data]='ownerData'></app-owner-column>
 
   <div class="row pt-40">
     <div class="col-md-5 pr-0 text-right">

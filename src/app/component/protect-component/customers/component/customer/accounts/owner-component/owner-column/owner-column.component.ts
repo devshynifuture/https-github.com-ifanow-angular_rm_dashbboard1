@@ -71,21 +71,27 @@ export class OwnerColumnComponent implements OnInit {
     this.sendData = data;
     if (data.familyMembersList && data.familyMembersList.length > 0) {
       data.familyMembersList.forEach((singleData) => {
+        if (this.ownerData.ownerName.value && this.ownerData.ownerName.value.length > 0) {
+          if (singleData.userName == this.ownerData.ownerName.value) {
+            console.log('family Member matched Value singleData : ', singleData);
+            this.getFormControl().ownerName.setValue(singleData.userName);
+          }
+        }
         this.family.push(singleData);
       });
     }
     this.valueChange1.emit(this.sendData);
     // this.getFormControl().ownerName.markAsTouched();
-    this.getdataForm();
+    // this.getdataForm();
   }
 
   getdataForm() {
     if (this.owner) {
-      this.owner = this.fb.group({
-        ownerName: [(this.ownerData.ownerName.value == null) ? '' : this.ownerData.ownerName.value, [Validators.required]],
-      });
-      // console.log('OwnerColumn impossible getdataForm this.ownerData.ownerName.value : ', this.ownerData.ownerName.value);
-      // this.getFormControl().ownerName.setValue(this.ownerData.ownerName.value);
+      // this.owner = this.fb.group({
+      //   ownerName: [(this.ownerData.ownerName.value == null) ? '' : this.ownerData.ownerName.value, [Validators.required]],
+      // });
+      console.log('OwnerColumn impossible getdataForm this.ownerData.ownerName.value : ', this.ownerData.ownerName.value);
+      this.getFormControl().ownerName.setValue(this.ownerData.ownerName.value);
     } else {
       this.owner = this.fb.group({
         ownerName: [(this.ownerData.ownerName.value == null) ? '' : this.ownerData.ownerName.value, [Validators.required]],
