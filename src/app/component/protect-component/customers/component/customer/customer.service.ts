@@ -413,9 +413,12 @@ export class CustomerService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_STOCK, data)
   }
   editStockData(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_STOCK, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_STOCK_PORTFOLIO, data);
   }
   addScrip(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_SCRIP, data);
+  }
+  editScriplevelHoldingAndTransaction(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_SCRIP_HOLDING_TRANSACTION, data);
   }
 }

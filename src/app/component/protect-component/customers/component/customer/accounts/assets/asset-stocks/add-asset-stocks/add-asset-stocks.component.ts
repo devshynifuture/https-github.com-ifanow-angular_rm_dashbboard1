@@ -39,6 +39,7 @@ export class AddAssetStocksComponent implements OnInit {
       amtInvested: [data.amountInvested, [Validators.required]],
       portfolioName: [data.portfolioName, [Validators.required]]
     })
+    this.familyMemberId = data.familyMemberId;
     this.ownerData = this.assetForm.controls;
     console.log(this.assetForm)
   }
@@ -68,20 +69,22 @@ export class AddAssetStocksComponent implements OnInit {
         if (this.editApiData) {
           let obj =
           {
-            "id": this.editApiData.id,
-            "clientId": this.clientId,
-            "advisorId": this.advisorId,
             "familyMemberId": this.familyMemberId,
             "ownerName": this.ownerName,
-            "currentMarketValue": this.assetForm.get("currentMarketValue").value,
-            "amountInvested": this.assetForm.get("amtInvested").value,
-            "valueAsOn": this.assetForm.get("valueAsOn").value,
-            "portfolioId": this.editApiData.portfolioId,
-            "stockType": 1
+            "portfolioName": this.assetForm.get('portfolioName').value,
+            "id": this.editApiData.portfolioId,
+            "stocks": [
+              {
+                "valueAsOn": this.assetForm.get("valueAsOn").value,
+                "currentMarketValue": this.assetForm.get("currentMarketValue").value,
+                "amountInvested": this.assetForm.get("amtInvested").value,
+                "id": this.editApiData.id
+              }
+            ]
           }
-
           this.cusService.editStockData(obj).subscribe(
-            data => this.submitStockDataRes(data)
+            data => this.submitStockDataRes(data),
+            err => this.eventService.openSnackBar(err)
           )
         }
         else {

@@ -13,25 +13,16 @@
 
 <div class="mb-48">
 
-  <div class="row pt-100 pl-28">
+    <div [formGroup]="scipLevelHoldingForm" class="row pt-100 pl-28">
         <div class="col-md-3 p-0">
             <h5 class="m-0 pb-8">Owner</h5>
-          <!-- <app-owner-column [data]='ownerData' (valueChange)='display($event)' (valueChange1)='lisNominee($event)'>
-          </app-owner-column> -->
+            <app-owner-column [data]='ownerData' (valueChange)='display($event)'>
+            </app-owner-column>
         </div>
 
         <div class="col-md-3">
             <h5 class="m-0 pb-8">Portfolio name</h5>
-          <div class="form-group mb-0">
-            <mat-form-field>
-              <input #pran class="form-control br-0 rupess" matInput maxlength="20" type="number">
-              <mat-error>
-                Pension amount is required
-              </mat-error>
-              <mat-hint align="start" class="f-12">If you have multiple portfolios,you can tag this scrip to one
-              </mat-hint>
-            </mat-form-field>
-          </div>
+            <app-portfolio-field [ownerId]="portfolioFieldData" [owner]="scipLevelHoldingForm"></app-portfolio-field>
         </div>
     </div>
     <div class="row pl-28">
@@ -60,16 +51,16 @@
         <div class="row pb-36 pl-28" *ngFor="let singleHolding of HoldingArray.controls; let i = index;"
             [formGroup]="singleHolding">
             <div class="col-md-4 pl-0">
-              <div class="form-group mb-0">
-                <mat-form-field>
-                  <input [matAutocomplete]="auto" aria-label="State" autocomplete="off" class="form-control br-0 pl-8"
-                         formControlName="scripName" matInput>
-                  <mat-autocomplete #auto="matAutocomplete">
-                    <!-- <mat-option *ngFor="let s of schemeList" [value]="s.id">{{ s.name }}
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input [matAutocomplete]="auto" aria-label="State" autocomplete="off"
+                            class="form-control br-0 pl-8" formControlName="scripName" matInput>
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <!-- <mat-option *ngFor="let s of schemeList" [value]="s.id">{{ s.name }}
                     </mat-option> -->
-                  </mat-autocomplete>
-                </mat-form-field>
-              </div>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
             </div>
             <div class="col-md-2 p-0">
                 <div class="form-group mb-0">
@@ -102,10 +93,10 @@
             </div>
 
             <div class="col-md-1 d-flex pt-10 pl-0">
-              <i (click)="addHoldings()" *ngIf="i==HoldingArray.length-1" class="material-icons text-custom c-p">
+                <i (click)="addHoldings()" *ngIf="i==HoldingArray.length-1" class="material-icons text-custom c-p">
                     add
                 </i>
-              <i (click)="removeHoldings(i)" class="material-icons text-custom c-p pl-10">
+                <i (click)="removeHoldings(i)" class="material-icons text-custom c-p pl-10">
                     remove
                 </i>
             </div>
@@ -114,7 +105,7 @@
     </div>
     <hr class="ml-16 mr-16">
 </div>
-<div class="bottom-fixed wrapper-12 pt-16 w-70">
+<div class="bottom-fixed wrapper-12 pt-16 w-60">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
