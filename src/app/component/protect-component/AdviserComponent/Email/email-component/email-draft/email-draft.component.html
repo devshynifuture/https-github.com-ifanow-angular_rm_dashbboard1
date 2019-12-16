@@ -1,3 +1,34 @@
+<div class="row p-8 w-100 pb-0">
+
+    <div class="col-md-1 pl-10 pr-0">
+        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+            <mat-form-field class="pt-8">
+                <mat-select>
+                    <mat-option value="option">Option</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </mat-checkbox>
+    </div>
+    <div class="col-md-3 p-0">
+        <div class="pt-8">
+            <img src="/assets/images/svg/refresh.svg" class="mr-20 c-p">
+            <img src="/assets/images/svg/double-drawer.svg" class="mr-20 c-p">
+            <img src="/assets/images/svg/delete.svg" class="mr-20 c-p">
+            <mat-icon [matMenuTriggerFor]="menu" class="c-p pab">more_vert</mat-icon>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>Make as read</button>
+                <button mat-menu-item>Make as unread</button>
+            </mat-menu>
+        </div>
+    </div>
+
+    <div class="col-md-5"></div>
+    <div class="col-md-3">
+        <mat-paginator [length]="paginatorLength" [pageSizeOptions]="[25]"></mat-paginator>
+    </div>
+
+</div>
 <table mat-table *ngIf="dataSource" [dataSource]="dataSource" class="example-container">
 
     <!-- Checkbox Column -->

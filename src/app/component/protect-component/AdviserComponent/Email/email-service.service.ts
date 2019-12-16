@@ -7,7 +7,7 @@ import { BehaviorSubject, throwError } from 'rxjs';
 import { apiConfig } from './../../../../config/main-config';
 import { HttpService } from './../../../../http-service/http-service';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { EmailAddTaskComponent } from './email-component/email-list/email-add-task/email-add-task.component';
 
 
@@ -26,6 +26,16 @@ export class EmailServiceService {
   getPaginatorLength() {
     const userInfo = AuthService.getUserInfo();
     return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_PROFILE, {
+      email: userInfo.emailId,
+      userId: userInfo.advisorId
+    });
+  }
+
+  moveMessagesToThrashFromList(ids: string[]) {
+    const userInfo = AuthService.getUserInfo();
+    console.log(userInfo);
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.MOVE_MESSAGES_TO_TRASH, {
+      ids: ids,
       email: userInfo.emailId,
       userId: userInfo.advisorId
     });
@@ -107,8 +117,6 @@ export class EmailServiceService {
         break;
       case 'inbox': this.getEmailList(data);
         break;
-      case 'trash': this.getEmailTrashList(data);
-        break;
       case 'sent': this.getEmailSentList(data);
         break;
 
@@ -134,9 +142,7 @@ export class EmailServiceService {
     });
   }
 
-  getEmailTrashList(data) {
-
-    alert('refreshed ' + data);
+  getListFromGmail(data) {
     // const httpParams = new HttpParams().set('advisorId', data.advisorId);
     // return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
   }

@@ -19,6 +19,9 @@
             <mat-menu #menu="matMenu">
                 <button mat-menu-item>Make as read</button>
                 <button mat-menu-item>Make as unread</button>
+                <button mat-menu-item (click)="moveMessageFromThrash()">
+                    Remove from Trash
+                </button>
             </mat-menu>
         </div>
     </div>
@@ -71,7 +74,7 @@
                 {{element.date | gmailDate}}
             </span>
             <span class="d-none" data-show="icons">
-                <button mat-icon-button>
+                <button mat-icon-button (click)="moveMessageToTrash(element)">
                     <mat-icon>
                         delete
                     </mat-icon>
@@ -85,3 +88,7 @@
         [ngClass]="selectedThreadsArray.includes(row) ? 'selected-tr': ''">
     </tr>
 </table>
+
+<div class="col-md-12" *ngIf="!dataSource">
+    Sorry no data available to show
+</div>

@@ -284,5 +284,6 @@ export const appConfig = {
   GET_DRAFT_LIST: 'user/draft/list/get',
   GET_GMAIL_INBOX_LIST: 'user/thread/list/get',
   CREATE_DRAFT: 'user/draft/create',
+  GET_THRASH_LIST: ''
 
 };

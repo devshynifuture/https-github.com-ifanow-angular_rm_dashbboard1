@@ -21,7 +21,8 @@ const routes: Routes = [
       },
       {
         path: 'sent',
-        component: EmailSentComponent
+        loadChildren: () => import('./email-component/email-list/email-list.module')
+          .then(m => m.EmailListModule)
       },
       {
         path: 'draft',
@@ -33,11 +34,8 @@ const routes: Routes = [
       },
       {
         path: 'trash',
-        component: EmailTrashComponent
-      },
-      {
-        path: 'view',
-        component: EmailViewComponent
+        loadChildren: () => import('./email-component/email-list/email-list.module')
+          .then(m => m.EmailListModule)
       },
       {
         path: '',

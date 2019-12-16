@@ -14,7 +14,7 @@ const routes: Routes = [
         path: '',
         component: EmailListingComponent
       }
-    ]
+    ],
   },
   {
     path: 'view',
