@@ -1,104 +1,103 @@
 <div class="row">
-  <div class="col-md-4 p-0">
-    <h4 class="m-0 text-black roboto pt-8">National savings certificate (NSC)</h4>
-  </div>
-  <div class="col-md-8 p-0 right text-right">
-    <img src="assets/images/svg/download-bordered.svg"[matMenuTriggerFor]="menu5" class="c-p"> 
-    <mat-menu #menu5="matMenu">
-        <button mat-menu-item>PDF</button>
-        <button (click)="ExportTOExcel('NSC')" mat-menu-item>XLS</button>
-      </mat-menu>
-    <img src="assets/images/svg/up-down.svg" class="">
-    <img src="assets/images/svg/three-dot-bordered.svg"[matMenuTriggerFor]="menu6" class="c-p mr-12">
-    <mat-menu #menu6="matMenu">
-        <button mat-menu-item>Email Report</button>
-        <button mat-menu-item>Option 2</button>
-        <button mat-menu-item>Option 3</button>
-      </mat-menu>
+    <div class="col-md-4 p-0">
+        <h4 class="m-0 text-black roboto pt-8">National savings certificate (NSC)</h4>
+    </div>
+    <div class="col-md-8 p-0 right text-right">
+        <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
+        <mat-menu #menu5="matMenu">
+            <button mat-menu-item>PDF</button>
+            <button (click)="ExportTOExcel('NSC')" mat-menu-item>XLS</button>
+        </mat-menu>
+        <img src="assets/images/svg/up-down.svg" class="">
+        <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-12">
+        <mat-menu #menu6="matMenu">
+            <button mat-menu-item>Email Report</button>
+            <button mat-menu-item>Option 2</button>
+            <button mat-menu-item>Option 3</button>
+        </mat-menu>
 
-    <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i class="material-icons">filter_list</i>FILTERS
+        <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i class="material-icons">filter_list</i>FILTERS
     </button>
-    <button (click)="openAddNSC(null,'addNsc')" mat-stroked-button class="btn-primary addon v-middle"><i
+        <button (click)="openAddNSC(null,'addNsc')" mat-stroked-button class="btn-primary addon v-middle"><i
         class="material-icons">add</i>ADD NEW
     </button>
-  </div>
+    </div>
 </div>
-<div class="example-container mt-8 real-estate">
-  <table matSort mat-table [dataSource]="datasource" id="table-low">
-    <ng-container matColumnDef="no">
-      <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
-      <td mat-cell *matCellDef="let element;let i=index" class="br">{{i + 1}}</td>
-      <td mat-footer-cell class="br text-left t-7" *matFooterCellDef></td>
-    </ng-container>
-    <ng-container matColumnDef="owner">
-      <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-25"> Owner</th>
-      <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
-      <td mat-footer-cell class="br text-left t-7" *matFooterCellDef>Total</td>
-    </ng-container>
-    <ng-container matColumnDef="cvalue">
-      <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Current value
-      </th>
-      <td mat-cell *matCellDef="let element" class="br t-10 text-right" appFormatNumber> {{element.currentValue}} </td>
-      <td mat-footer-cell class="br text-left t-7" *matFooterCellDef appFormatNumber [value]="sumOfCurrentValue">
-        {{ sumOfCurrentValue }}</td>
-    </ng-container>
-    <ng-container matColumnDef="rate">
-      <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br text-right"> Rate</th>
-      <td mat-cell *matCellDef="let element" class="br text-right"> {{element.rate}} </td>
-      <td mat-footer-cell class="br text-left t-7" *matFooterCellDef></td>
-    </ng-container>
-    <ng-container matColumnDef="mvalue">
-      <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br text-right">Maturity value</th>
-      <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber> {{element.maturityValue}} </td>
-      <td mat-footer-cell class="br text-left t-7" *matFooterCellDef appFormatNumber [value]="sumOfMaturityValue">
-        {{ sumOfMaturityValue }} </td>
-    </ng-container>
-    <ng-container matColumnDef="mdate">
-      <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br text-left t-7"> Maturity date</th>
-      <td mat-cell *matCellDef="let element" class="br text-left t-7">
-        {{element.maturityDate | date:'dd/MM/yyyy'}} </td>
-      <td mat-footer-cell *matFooterCellDef></td>
-    </ng-container>
-    <ng-container matColumnDef="number">
-      <th mat-sort-header="certificateNumber" mat-header-cell *matHeaderCellDef class="br t-12 text-left"> Certificate
-        number</th>
-      <td mat-cell *matCellDef="let element" class="br t-12 text-left"> {{element.certificateNumber}} </td>
-      <td mat-footer-cell *matFooterCellDef></td>
-    </ng-container>
+<div class="example-container col-md-12 p-0 mt-8 real-estate">
+    <table matSort mat-table [dataSource]="datasource" id="table-low">
+        <ng-container matColumnDef="no">
+            <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
+            <td mat-cell *matCellDef="let element;let i=index" class="br">{{i + 1}}</td>
+            <td mat-footer-cell class=" text-left f-500 text-left pl-4 t-2" *matFooterCellDef> Total</td>
+        </ng-container>
+        <ng-container matColumnDef="owner">
+            <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-25"> Owner</th>
+            <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
+            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef> </td>
+        </ng-container>
+        <ng-container matColumnDef="cvalue">
+            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Current value
+            </th>
+            <td mat-cell *matCellDef="let element" class="br t-10 text-right" appFormatNumber> {{element.currentValue}} </td>
+            <td mat-footer-cell class="br text-right p-8 f-500  t-10" *matFooterCellDef appFormatNumber [value]="sumOfCurrentValue">
+                {{ sumOfCurrentValue }}</td>
+        </ng-container>
+        <ng-container matColumnDef="rate">
+            <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br text-right t-10"> Rate</th>
+            <td mat-cell *matCellDef="let element" class="br t-10 text-right"> {{element.rate}} </td>
+            <td mat-footer-cell class="br text-left t-10" *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="mvalue">
+            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br text-right">Maturity value</th>
+            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber> {{element.maturityValue}} </td>
+            <td mat-footer-cell class="br text-right t-10 f-500 p-8" *matFooterCellDef appFormatNumber [value]="sumOfMaturityValue">
+                {{ sumOfMaturityValue }} </td>
+        </ng-container>
+        <ng-container matColumnDef="mdate">
+            <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br text-left t-7"> Maturity date</th>
+            <td mat-cell *matCellDef="let element" class="br text-left t-7">
+                {{element.maturityDate | date:'dd/MM/yyyy'}} </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="number">
+            <th mat-sort-header="certificateNumber" mat-header-cell *matHeaderCellDef class="br t-12 text-left"> Certificate number
+            </th>
+            <td mat-cell *matCellDef="let element" class="br t-12 text-left"> {{element.certificateNumber}} </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
 
-    <ng-container matColumnDef="desc">
-      <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br t-10"> Description</th>
-      <td mat-cell *matCellDef="let element" class="br t-10"> {{element.description}} </td>
-      <td mat-footer-cell *matFooterCellDef></td>
-    </ng-container>
-    <ng-container matColumnDef="status">
-      <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br"> Status</th>
-      <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.statusId}} </td>
-      <td mat-footer-cell *matFooterCellDef></td>
-    </ng-container>
-    <ng-container matColumnDef="icons">
-      <th mat-header-cell *matHeaderCellDef class="t-2"></th>
-      <td mat-cell *matCellDef="let element" class="t-2"><i class="material-icons c-p text-black"
-          [matMenuTriggerFor]="menubank">
+        <ng-container matColumnDef="desc">
+            <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br t-10"> Description</th>
+            <td mat-cell *matCellDef="let element" class="br t-10"> {{element.description}} </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+            <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br"> Status</th>
+            <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.statusId}} </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="icons">
+            <th mat-header-cell *matHeaderCellDef class="t-2"></th>
+            <td mat-cell *matCellDef="let element" class="t-2"><i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
           more_vert
         </i>
-        <mat-menu #menubank="matMenu">
-          <button mat-menu-item (click)="openAddNSC(element,'editNsc')">Edit</button>
-          <button mat-menu-item (click)="openAddNSC(element,'detailedNsc')">Detailed view</button>
-          <button mat-menu-item>Activity</button>
-          <button mat-menu-item (click)="deleteModal('SUBSCRIPTION',element)">Delete</button>
-        </mat-menu>
-      </td>
-      <td mat-footer-cell *matFooterCellDef></td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns17; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns17;"></tr>
-    <tr mat-footer-row *matFooterRowDef="displayedColumns17;sticky: true" [hidden]="isLoading"></tr>
-  </table>
-  <div *ngIf="datasource==undefined">
-    <h4 class="text-center pt-72">{{noData}}</h4>
-  </div>
+                <mat-menu #menubank="matMenu">
+                    <button mat-menu-item (click)="openAddNSC(element,'editNsc')">Edit</button>
+                    <button mat-menu-item (click)="openAddNSC(element,'detailedNsc')">Detailed view</button>
+                    <button mat-menu-item>Activity</button>
+                    <button mat-menu-item (click)="deleteModal('SUBSCRIPTION',element)">Delete</button>
+                </mat-menu>
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns17; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns17;"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns17;sticky: true" [hidden]="isLoading"></tr>
+    </table>
+    <div *ngIf="datasource==undefined">
+        <h4 class="text-center pt-72">{{noData}}</h4>
+    </div>
 </div>
 <div *ngIf="isLoading">
-  <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div>
