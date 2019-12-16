@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { Router } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
+import {Observable, of, throwError} from 'rxjs';
+import {Router} from '@angular/router';
 // import 'rxjs/Rx';
-import { AuthService } from '../auth-service/authService';
+import {AuthService} from '../auth-service/authService';
 import 'rxjs-compat/add/observable/of';
 import 'rxjs-compat/add/operator/map';
-import { catchError } from 'rxjs/operators';
-import { EmailUtilService } from '../services/email-util.service';
+import {catchError} from 'rxjs/operators';
+import {EmailUtilService} from '../services/email-util.service';
 
 const Buffer = require('buffer/').Buffer;
 declare var require: any;
@@ -40,6 +40,12 @@ export class HttpService {
     if (options != undefined) {
       httpOptions = options;
     }
+    /* console.log('HttpService post url : ', url);
+
+     console.log('HttpService post httpOptions : ', httpOptions);
+
+     console.log('HttpService post body : ', body);*/
+
     return this._http
       .post(this.baseUrl + url, body, httpOptions).pipe(
         catchError(err => of([]))

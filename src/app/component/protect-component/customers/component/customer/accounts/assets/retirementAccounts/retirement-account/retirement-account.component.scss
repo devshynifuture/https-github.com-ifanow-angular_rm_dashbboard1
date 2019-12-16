@@ -1,0 +1,13 @@
+#table-low th {
+    padding: 7px 8px !important;
+}
+
+::ng-deep .mat-sort-header-button {
+    height: auto;
+    letter-spacing: normal;
+}
+
+::ng-deep .rightText .mat-sort-header-container {
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+}
