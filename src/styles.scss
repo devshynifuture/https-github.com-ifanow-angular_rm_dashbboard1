@@ -1253,6 +1253,20 @@ mat-tab-group[vertical] {
   }
 }
 
+#ui-calender {
+  padding-top: 70px;
+
+  .main-header {
+    position: fixed;
+    top: 0;
+    background: #FFFFFF;
+    box-shadow: 5px 1px 10px rgba(0, 0, 0, 0.2), 3px 4px 5px rgba(0, 0, 0, 0.12), 2px 2px 4px rgba(0, 0, 0, 0.14);
+    width: 100%;
+    z-index: 999;
+  }
+
+}
+
 #calender-tabs {
   .mat-tab-label {
     padding: 0 !important;
