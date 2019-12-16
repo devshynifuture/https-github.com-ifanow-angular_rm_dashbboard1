@@ -1,0 +1,28 @@
+<div *ngIf="scripFormControl" [formGroup]="scripFormControl" class="form-group mb-0">
+    <mat-form-field>
+        <input matInput autocomplete="off" aria-label="State" formControlName="scripName" [matAutocomplete]="auto"
+            class="form-control br-0 pl-8">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let singleScrip of scripList" [value]="singleScrip">
+                {{ singleScrip.name}}
+            </mat-option>
+            <mat-option (click)="addScrip()"><strong><i class="material-icons">add</i>New scrip</strong>
+            </mat-option>
+        </mat-autocomplete>
+        <mat-error>This field is required</mat-error>
+    </mat-form-field>
+</div>
+<div *ngIf="scripTransactionForm" [formGroup]="scripTransactionForm">
+    <mat-form-field>
+        <input matInput autocomplete="off" aria-label="State" formControlName="scripName" [matAutocomplete]="auto"
+            class="form-control br-0 pl-8">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let singleScrip of scripList" [value]="singleScrip.name">
+                {{ singleScrip.name}}
+            </mat-option>
+            <mat-option (click)="addScrip()"><strong><i class="material-icons">add</i>New scrip</strong>
+            </mat-option>
+        </mat-autocomplete>
+        <mat-error>This field is required</mat-error>
+    </mat-form-field>
+</div>

@@ -214,7 +214,7 @@ export class FixedIncomeComponent implements OnInit {
       this.sumCurrentValue += o.nomineePercentageShare;
     };
     console.log('&&&&&&&&&', this.sumCurrentValue)
-    //  this.sumAmountInvested = data.sumAmountInvested;
+     this.sumAmountInvested = data.sumAmountInvested;
     this.sumCurrentValue = data.sumCurrentValue;
     this.sumMaturityValue = data.sumMaturityValue;
 

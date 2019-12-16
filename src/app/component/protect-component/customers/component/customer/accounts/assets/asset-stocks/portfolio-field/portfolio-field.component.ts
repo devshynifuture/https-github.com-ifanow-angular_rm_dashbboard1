@@ -1,0 +1,100 @@
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AddPortfolioComponent } from '../add-portfolio/add-portfolio.component';
+import { MatDialog } from '@angular/material';
+import { FormControl, FormBuilder, Validators } from '@angular/forms';
+import { isObject } from 'util';
+
+@Component({
+  selector: 'app-portfolio-field',
+  templateUrl: './portfolio-field.component.html',
+  styleUrls: ['./portfolio-field.component.scss']
+})
+export class PortfolioFieldComponent implements OnInit {
+  advisorId: any;
+  clientId: any;
+  portfolioList: any;
+  familyWisePortfolio: any[];
+  ownerId: any;
+  @Output() outputEvent = new EventEmitter();
+  portfolioForm: any;
+  constructor(private fb: FormBuilder, public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService) { }
+  ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+  }
+  portfolioData = new FormControl();
+  @Input() set owner(data) {
+    this.portfolioForm = data;
+    this.portfolioData.reset();
+    this.getPortfolioList();
+  }
+  getPortfolioList() {
+    const obj =
+    {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    }
+    this.cusService.getPortfolioList(obj).subscribe(
+      data => this.getPortfolioListRes(data),
+      err => this.eventService.openSnackBar(err)
+    )
+  }
+  getPortfolioListRes(data) {
+    console.log(data)
+    let checkOwnerId = false;
+    this.familyWisePortfolio = [];
+    data.forEach(element => {
+      if (element.familyMemberId == this.ownerId) {
+        checkOwnerId = true;
+        this.familyWisePortfolio.push(element)
+      }
+    });
+    (checkOwnerId) ? this.familyWisePortfolio : this.familyWisePortfolio = [];
+    console.log(this.familyWisePortfolio)
+  }
+  openAddPortfolio() {
+    console.log(this.portfolioData)
+    if (this.ownerId == undefined) {
+      this.eventService.openSnackBar("please select owner", "dismiss");
+      return;
+    }
+    const dialogData =
+    {
+      positiveMethod: () => {
+        const obj =
+        {
+          "clientId": this.clientId,
+          "advisorId": this.advisorId,
+          // "portfolioName": this.portFolioData,
+          // "familyMemberId": this.familyMemberId
+        }
+        this.cusService.addPortfolio(obj).subscribe(
+          data => {
+            dialogRef.close();
+            this.eventService.openSnackBar("portfolio is added", "dismiss");
+            this.getPortfolioList();
+          },
+          err => this.eventService.openSnackBar(err, "dismiss")
+        )
+      },
+
+    }
+    const dialogRef = this.dialog.open(AddPortfolioComponent, {
+      width: '390px',
+      height: '220px',
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+  selectPortfolio(data) {
+
+    this.outputEvent.emit(data);
+
+  }
+}

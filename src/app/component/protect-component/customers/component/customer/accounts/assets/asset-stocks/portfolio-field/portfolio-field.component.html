@@ -1,0 +1,10 @@
+<div [formGroup]="portfolioForm" class="form-group mb-0">
+    <mat-select class="form-control br-0" formControlName="portfolioName"
+        (selectionChange)="selectPortfolio(portfolioData.value)">
+        <mat-option [value]="singlePortfolio" *ngFor="let singlePortfolio of familyWisePortfolio">
+            {{singlePortfolio.portfolioName}}
+        </mat-option>
+        <mat-option (click)="openAddPortfolio()"><strong><i class="material-icons">add</i>New
+                Portfolio</strong></mat-option>
+    </mat-select>
+</div>

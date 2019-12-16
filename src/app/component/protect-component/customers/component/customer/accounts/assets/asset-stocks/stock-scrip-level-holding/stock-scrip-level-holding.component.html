@@ -22,20 +22,8 @@
 
         <div class="col-md-3">
             <h5 class="m-0 pb-8">Portfolio name</h5>
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <mat-select [disabled]="familyMemberId==undefined" formControlName="portfolioName"
-                        class="form-control br-0">
-                        <mat-option [value]="portfolio" *ngFor="let portfolio of familyWisePortfolio">
-                            {{portfolio.portfolioName}}</mat-option>
-                        <mat-option (click)="openAddPortfolio()"><strong><i class="material-icons">add</i>New
-                                Portfolio</strong></mat-option>
-                    </mat-select>
-                    <mat-error>
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
+            <app-portfolio-field [owner]="scipLevelHoldingForm" (outputEvent)="getPortfolioData($event)">
+            </app-portfolio-field>
         </div>
     </div>
     <div class="row pl-28">
@@ -64,20 +52,7 @@
         <div class="row pb-36 pl-28" *ngFor="let singleHolding of HoldingArray.controls; let i = index;"
             [formGroup]="singleHolding">
             <div class="col-md-4 pl-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput autocomplete="off" aria-label="State" formControlName="scripName"
-                            [matAutocomplete]="auto" class="form-control br-0 pl-8">
-                        <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let signleScrip of scripList" [value]="signleScrip">
-                                {{ signleScrip.name}}
-                            </mat-option>
-                            <mat-option (click)="addScrip()"><strong><i class="material-icons">add</i>New scrip</strong>
-                            </mat-option>
-                        </mat-autocomplete>
-                        <mat-error>This field is required</mat-error>
-                    </mat-form-field>
-                </div>
+                <app-scrip-field [data]="singleHolding"></app-scrip-field>
             </div>
             <div class="col-md-2 p-0">
                 <div class="form-group mb-0">
@@ -113,7 +88,7 @@
             </div>
 
             <div class="col-md-1 d-flex pt-10 pl-0">
-                <i class="material-icons text-custom c-p" *ngIf="i==HoldingArray.length-1" (click)="addHoldings()">
+                <i class="material-icons text-custom c-p" *ngIf="i==HoldingArray.length-1" (click)="addHoldings(i)">
                     add
                 </i>
                 <i class="material-icons text-custom c-p pl-10" [hidden]="i==HoldingArray.length-1"

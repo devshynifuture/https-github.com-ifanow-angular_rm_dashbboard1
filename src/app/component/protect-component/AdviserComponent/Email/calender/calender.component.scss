@@ -1,0 +1,40 @@
+.custom-grid {
+  width: 100%;
+  //   float: left;
+  display: flex;
+  padding: 16px;
+
+  .column {
+
+    width: 14.88%;
+    text-align: center;
+
+    p {
+      cursor: pointer;
+    }
+
+    .column:last-child {
+      border-right: 0px !important;
+    }
+  }
+
+  .rounded-primary {
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    padding-top: 2px;
+    color: #fff !important;
+    background: #008FFF;
+    cursor: pointer;
+  }
+}
+
+.calender-column {
+  div {
+    height: 106px;
+    width: 106px;
+    border-right: 0.5px solid #DADCE0;
+    border-bottom: 0.5px solid #DADCE0;
+
+  }
+}
