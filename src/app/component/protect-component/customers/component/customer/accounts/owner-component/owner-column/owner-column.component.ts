@@ -11,7 +11,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 export class OwnerColumnComponent implements OnInit {
 
   isownerName = false;
-  owner: any;
+  owner;
   // s: string[] = ['Sneha', 'gayatri', 'Shivani'];
   family = [];
   advisorId: any;
@@ -28,6 +28,10 @@ export class OwnerColumnComponent implements OnInit {
   @Input()
   set data(data) {
     this.ownerData = data;
+    console.log('1111121212121212121212 OwnerColumnComponent data : ', data);
+    if (data) {
+      // this.owner = data;
+    }
     // this.getListFamilyMem();
   }
 
