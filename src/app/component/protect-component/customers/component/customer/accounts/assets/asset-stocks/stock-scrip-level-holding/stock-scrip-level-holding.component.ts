@@ -98,10 +98,10 @@ export class StockScripLevelHoldingComponent implements OnInit {
     // if (this.ownerData == undefined) {
     //   return;
     // }
-    // if (this.scipLevelHoldingForm.get('portfolioName').invalid) {
-    //   this.scipLevelHoldingForm.get('portfolioName').markAsTouched();
-    //   return;
-    // }
+    if (this.scipLevelHoldingForm.get('portfolioName').invalid) {
+      this.scipLevelHoldingForm.get('portfolioName').markAsTouched();
+      return;
+    }
     if (this.HoldingArray.invalid) {
       this.HoldingArray.controls.forEach(element => {
         element.get('holdingAsOn').markAsTouched();
