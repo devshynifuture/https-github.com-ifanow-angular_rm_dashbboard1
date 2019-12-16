@@ -1,369 +1,358 @@
 <div class="popup-header-fix-60">
-    <div class="row bb-1">
-        <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">ADD REAL ESTATE</h4>
-        </div>
-        <div class="col-md-4 text-right">
-            <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
-            </div>
-        </div>
+  <div class="row bb-1">
+    <div class="col-md-8 p-0">
+      <h4 class="mb-0 wrapper-20">ADD REAL ESTATE</h4>
     </div>
+    <div class="col-md-4 text-right">
+      <div class="wrapper-12">
+        <i (click)="close()" class="material-icons c-p pt-8 v-middle"> clear</i>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="pt-100 pb-48 mb-44" [formGroup]="addrealEstateForm">
-    <div class="row ">
-        <div class="col-md-5 p-0">
-            <h5 class="m-0 pb-8">Owner</h5>
-            <div class="col-md-5">
-                <app-owner-component [data]='ownerData' (valueChange)='display($event)'
-                    (valueChange1)='lisNominee($event)'>
-                </app-owner-component>
-            </div>
+  <div class="row ">
+    <div class="col-md-3 p-0">
+      <h5 class="m-0 pb-8">Owner</h5>
+      <app-owner-column (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData'>
+      </app-owner-column>
+    </div>
+    <div class="col-md-1 pt-36">
+      <div class="form-group mb-0">
+        <mat-form-field>
+          <input (keyup)="onChange('owner')" class="b-a" formControlName="ownerPercent" matInput type="number">
+          <mat-error
+            [ngClass]="{'v-h':!(isOwnerPercent && getFormControl().ownerPercent.invalid || getFormControl().ownerPercent.touched && getFormControl().ownerPercent.invalid)}"
+            class="f-12 pt-4">
+            Type is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-2 p-0">
+      <h5 (click)="addNewCoOwner(true)" class="m-0 text-primitive pt-8 c-p pt-44">+ Add co-owner</h5>
+    </div>
+  </div>
+  <div class="pt-44 pb-48 mb-44">
+    <div *ngIf="addOwner==true" class="row pt-24" formArrayName="getCoOwnerName">
+      <div *ngFor="let obj of getCoOwner.controls; let pointIndex=index" [formGroupName]="pointIndex" class="row pt-24">
+        <div class="col-md-5 text-right">
+          <h5 class="m-0 pt-8 ">Co-owner{{pointIndex + 1}}</h5>
         </div>
-        <div class="col-md-2 pt-36">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input matInput class="b-a" type="number" formControlName="ownerPercent"
-                        (keyup)="onChange('owner')">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isOwnerPercent && getFormControl().ownerPercent.invalid || getFormControl().ownerPercent.touched && getFormControl().ownerPercent.invalid)}">
-                        Type is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
+        <div class="col-md-3">
+          <div class="form-group mb-0">
+            <mat-form-field>
+              <input (click)="nomineesList()" [matAutocomplete]="auto" aria-label="State" class="form-control br-0 pl-8"
+                     formControlName="ownerName" list="userName" matInput placeholder="Add co-owner">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let item of familyList" [value]="item.userName">
+                  <span>{{item.userName}}</span>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group mb-0">
+            <mat-form-field>
+              <input (keyup)="onChange('owner')" class="b-a" formControlName="ownershipPerc" matInput type="number">
+
+            </mat-form-field>
+          </div>
         </div>
         <div class="col-md-2 p-0">
-            <h5 class="m-0 text-primitive pt-8 c-p pt-44" (click)="addNewCoOwner(true)">+ Add co-owner</h5>
+          <h5 (click)="removeCoOwner(pointIndex)" class="m-0 text-primitive pt-8 c-p">Remove</h5>
         </div>
+      </div>
     </div>
-    <div class="pt-44 pb-48 mb-44">
-        <div class="row pt-24" formArrayName="getCoOwnerName" *ngIf="addOwner==true">
-            <div class="row pt-24" *ngFor="let obj of getCoOwner.controls; let pointIndex=index"
-                [formGroupName]="pointIndex">
-                <div class="col-md-5 text-right">
-                    <h5 class="m-0 pt-8 ">Co-owner{{pointIndex+1}}</h5>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group mb-0">
-                        <mat-form-field>
-                            <input matInput placeholder="Add co-owner" aria-label="State" (click)="nomineesList()"
-                                [matAutocomplete]="auto" list="userName" class="form-control br-0 pl-8"
-                                formControlName="ownerName">
-                            <mat-autocomplete #auto="matAutocomplete">
-                                <mat-option *ngFor="let item of familyList" [value]="item.userName">
-                                    <span>{{item.userName}}</span>
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group mb-0">
-                        <mat-form-field>
-                            <input matInput class="b-a" type="number" formControlName="ownershipPerc"
-                                (keyup)="onChange('owner')">
+    <mat-hint *ngIf="showError== true" align="end" class="f-12 pt-4 text-danger">
+      Percent cannot be more than 100%
+    </mat-hint>
+    <div class="row pt-44">
+      <div class="col-md-5 text-right">
+        <h5 class="m-0 pt-8">Type</h5>
+      </div>
+      <div class="form-group mb-0">
+        <mat-form-field>
+          <mat-select class="form-control br-0" formControlName="type">
+            <mat-option value="0">Land</mat-option>
+            <mat-option value="1">Residential</mat-option>
+            <mat-option value="2">Secondary</mat-option>
+            <mat-option value="3">Commercial</mat-option>
+          </mat-select>
+          <mat-error
+            [ngClass]="{'v-h':!(isTypeValid && getFormControl().type.invalid || getFormControl().type.touched && getFormControl().type.invalid)}"
+            class="f-12 pt-4">
+            Type is required
+          </mat-error>
+        </mat-form-field>
 
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-2 p-0">
-                    <h5 class="m-0 text-primitive pt-8 c-p" (click)="removeCoOwner(pointIndex)">Remove</h5>
-                </div>
-            </div>
+      </div>
+    </div>
+    <div class="row pt-44">
+      <div class="col-md-5 text-right">
+        <h5 class="m-0 pt-8">Market value</h5>
+        <p class="m-0 f-12 text-custom">Market value has to be<br>
+          updated manually
+        </p>
+      </div>
+      <div class="col-md-3 p-0">
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <input #marketValue class="form-control rupess br-0" formControlName="marketValue" matInput
+                   maxlength="{{getFormControl().marketValue.maxLength}}">
+            <mat-error class="f-12 pt-4">
+              Market value is required
+              <!-- [ngClass]="{'v-h':!(isLoanAmount && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}" -->
+            </mat-error>
+            <mat-hint align="end" class="f-12">{{marketValue.value.length}}/20</mat-hint>
+          </mat-form-field>
         </div>
-        <mat-hint class="f-12 pt-4 text-danger" align="end" *ngIf="showError== true">
-            Percent cannot be more than 100%
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-5 text-right">
+        <h5 (click)="showMore()" *ngIf="showMoreData==false" class="pt-20 text-custom m-0 c-p">+ Add more [optional
+          data]</h5>
+        <h5 (click)="showLess()" *ngIf="showMoreData==true" class="pt-20 text-custom m-0 c-p">Show less</h5>
+      </div>
+    </div>
+    <div *ngIf="showMoreData==true">
+      <div class="row pt-24">
+        <div class="col-md-5 text-right">
+          <h5 class="m-0 pt-36">Purchase period</h5>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4 pr-0 pl-0">
+              <h5 class="m-0 pb-8">Year</h5>
+              <div class="form-group mb-0">
+                <input class="form-control br-0" formControlName="year" type="text" value="₹">
+              </div>
+              <div class="col-md-12 p-0">
+                <p class="m-0 f-12 text-custom pt-4">Optional</p>
+              </div>
+            </div>
+            <div class="col-md-4 pr-0">
+              <h5 class="m-0 pb-8">Month</h5>
+              <div class="form-group mb-0">
+                <mat-form-field>
+                  <mat-select class="form-control br-0" formControlName="month">
+                    <mat-option *ngFor="let M of estateMonths ;  index as i" [value]="i">{{M}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </div>
+            </div>
+            <div class="col-md-4 pr-0">
+              <h5 class="m-0 pb-8">Days</h5>
+              <div class="form-group mb-0">
+                <mat-form-field>
+                  <mat-select class="form-control br-0" formControlName="days">
+                    <mat-option *ngFor="let D of estateDays" [value]="D">{{D}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-24">
+        <div class="col-md-5 text-right">
+          <h5 class="m-0 pt-8">Purchase value</h5>
+        </div>
+        <div class="col-md-5">
+          <div class="row">
+            <div class="col-md-6 p-0">
+              <div class="form-group mb-0">
+                <input class="form-control br-0" formControlName="purchaseValue" type="text" value="₹">
+              </div>
+              <div class="col-md-12 p-0">
+                <p class="m-0 f-12 text-custom">Optional</p>
+              </div>
+            </div>
+            <div class="col-md-6 pr-0">
+              <h5 (click)="addArea()" class="m-0 text-primitive pt-12 c-p">+ Add area details</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showArea==true" class="row pt-24">
+        <div class="col-md-5 text-right">
+          <h5 class="m-0 pt-36">Area details</h5>
+        </div>
+        <div class="col-md-5">
+          <div class="row">
+            <div class="col-md-6 pr-0 pl-0">
+              <h5 class="m-0 pb-8">Unit</h5>
+              <div class="form-group mb-0">
+                <input class="form-control br-0" formControlName="unit" type="text" value="₹">
+              </div>
+              <div class="col-md-12 p-0">
+                <p class="m-0 f-12 text-custom pt-4">Optional</p>
+              </div>
+            </div>
+            <div class="col-md-6 pr-0">
+              <h5 class="m-0 pb-8">Rate per unit</h5>
+              <div class="form-group mb-0">
+                <mat-form-field>
+                  <mat-select class="form-control br-0" formControlName="ratePerUnit">
+                    <mat-option value="1">Square feet</mat-option>
+                    <mat-option value="3">Square meter</mat-option>
+                    <mat-option value="6">Acre</mat-option>
+                    <mat-option value="12">Hectare</mat-option>
+                    <mat-option value="12">Bigha</mat-option>
+                    <mat-option value="12">Biswa</mat-option>
+                    <mat-option value="12">Biswansi</mat-option>
+                    <mat-option value="12">Killa</mat-option>
+                    <mat-option value="12">Ghumaon</mat-option>
+                    <mat-option value="12">Ankanam</mat-option>
+                    <mat-option value="12">Cent</mat-option>
+                    <mat-option value="12">Ground</mat-option>
+                    <mat-option value="12">Guntha</mat-option>
+                    <mat-option value="12">kuncham</mat-option>
+                    <mat-option value="12">Chatak</mat-option>
+                    <mat-option value="12">Dhur</mat-option>
+                    <mat-option value="12">Kattha</mat-option>
+                    <mat-option value="12">Lecha</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showArea==true" class="col-md-2">
+        <h5 (click)="removeArea()" class="m-0 text-custom pt-36 c-p">Remove</h5>
+      </div>
+      <div class="row pt-24">
+        <div class="col-md-5 text-right">
+          <h5 class="m-0 pt-8">Charges</h5>
+          <p class="m-0 f-12 text-custom">Market value has to be<br/>
+            updated manually
+          </p>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4 pl-0 pr-0">
+              <h5 class="m-0 pb-8">Stamp duty</h5>
+              <div class="form-group mb-0">
+                <input class="form-control br-0" formControlName="stampDuty" type="text" value="₹">
+              </div>
+              <div class="col-md-12 p-0">
+                <p class="m-0 f-12 text-custom pt-4">Optional</p>
+              </div>
+            </div>
+            <div class="col-md-4 pr-0">
+              <h5 class="m-0 pb-8">Registration</h5>
+              <div class="form-group mb-0">
+                <input class="form-control br-0" formControlName="registration" type="text" value="₹">
+              </div>
+            </div>
+            <div class="col-md-4 pr-0">
+              <h5 class="m-0 pb-8">GST</h5>
+              <div class="form-group mb-0">
+                <input class="form-control br-0" formControlName="gst" type="text" value="₹">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-24">
+        <div class="col-md-5 text-right">
+          <h5 class="m-0 pt-8">Location</h5>
+        </div>
+        <div class="col-md-5">
+          <div class="form-group mb-0">
+            <input class="form-control br-0" formControlName="location" type="text" value="₹">
+          </div>
+          <div class="col-md-12 p-0">
+            <p class="m-0 f-12 text-custom pt-4">Optional</p>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-24">
+        <div class="col-md-5 text-right">
+          <h5 class="m-0 pt-8">Description</h5>
+        </div>
+        <div class="col-md-5">
+          <div class="form-group mb-0">
+            <input class="form-control br-0" formControlName="description" type="text" value="₹">
+          </div>
+          <div class="col-md-12 p-0">
+            <p class="m-0 f-12 text-custom pt-4">Optional</p>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-24" formArrayName="getNomineeName">
+        <div *ngFor="let obj of getNominee.controls; let pointIndex=index" [formGroupName]="pointIndex"
+             class="row pt-24">
+          <div class="col-md-5 text-right">
+            <h5 *ngIf="pointIndex==0" class="m-0 pt-8 ">Nominee</h5>
+            <h5 *ngIf="pointIndex!=0" class="m-0 pt-8 ">Nominee{{pointIndex}}</h5>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group mb-0">
+              <mat-form-field>
+                <input (click)="nomineesList()" [matAutocomplete]="auto" aria-label="State"
+                       class="form-control br-0 pl-8"
+                       formControlName="name" list="userName" matInput placeholder="Add nominee">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let item of familyList" [value]="item.userName">
+                    <span>{{item.userName}}</span>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div class="col-md-12 p-0">
+              <p class="m-0 f-12 text-custom pt-4">Optional
+              </p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group mb-0">
+              <mat-form-field>
+                <input (keyup)="onChange('nominee')" class="b-a" formControlName="ownershipPer" matInput type="number">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-md-2 p-0">
+            <div *ngIf="pointIndex==0" class="col-md-3">
+              <h5 (click)="addNominee()" class="m-0 text-primitive pt-8 c-p">+ Add Nominee</h5>
+            </div>
+            <div *ngIf="pointIndex > 0" class="col-md-2">
+              <h5 (click)="removeNominee(pointIndex)" class="m-0 text-primitive pt-8 c-p">Remove</h5>
+            </div>
+          </div>
+
+        </div>
+        <mat-hint *ngIf="showError==true" align="end" class="f-12 pt-4 text-danger">
+          Percent cannot be more than 100%
         </mat-hint>
-        <div class="row pt-44">
-            <div class="col-md-5 text-right">
-                <h5 class="m-0 pt-8">Type</h5>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select class="form-control br-0" formControlName="type">
-                            <mat-option value="0">Land</mat-option>
-                            <mat-option value="1">Residential</mat-option>
-                            <mat-option value="2">Secondary</mat-option>
-                            <mat-option value="3">Commercial</mat-option>
-                        </mat-select>
-                        <mat-error class="f-12 pt-4"
-                            [ngClass]="{'v-h':!(isTypeValid && getFormControl().type.invalid || getFormControl().type.touched && getFormControl().type.invalid)}">
-                            Type is required
-                        </mat-error>
-                    </mat-form-field>
-
-                </div>
-            </div>
-
-        </div>
-        <div class="row pt-44">
-            <div class="col-md-5 text-right">
-                <h5 class="m-0 pt-8">Market value</h5>
-                <p class="m-0 f-12 text-custom">Market value has to be<br> updated manually
-                </p>
-            </div>
-            <div class="col-md-3 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput #marketValue class="form-control rupess br-0" formControlName="marketValue"
-                            maxlength="{{getFormControl().marketValue.maxLength}}">
-                        <mat-error class="f-12 pt-4">
-                            Market value is required
-                            <!-- [ngClass]="{'v-h':!(isLoanAmount && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}" -->
-                        </mat-error>
-                        <mat-hint align="end" class="f-12">{{marketValue.value.length}}/20</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-5 text-right">
-                <h5 class="pt-20 text-custom m-0 c-p" (click)="showMore()" *ngIf="showMoreData==false">+ Add more
-                    [optional data]
-                </h5>
-                <h5 class="pt-20 text-custom m-0 c-p" (click)="showLess()" *ngIf="showMoreData==true">Show less</h5>
-            </div>
-        </div>
-        <div *ngIf="showMoreData==true">
-            <div class="row pt-24">
-                <div class="col-md-5 text-right">
-                    <h5 class="m-0 pt-36">Purchase period</h5>
-                </div>
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-md-4 pr-0 pl-0">
-                            <h5 class="m-0 pb-8">Year</h5>
-                            <div class="form-group mb-0">
-                                <input type="text" class="form-control br-0" value="₹" formControlName="year">
-                            </div>
-                            <div class="col-md-12 p-0">
-                                <p class="m-0 f-12 text-custom pt-4">Optional</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4 pr-0">
-                            <h5 class="m-0 pb-8">Month</h5>
-                            <div class="form-group mb-0">
-                                <mat-form-field>
-                                    <mat-select class="form-control br-0" formControlName="month">
-                                        <mat-option *ngFor="let M of estateMonths ;  index as i" [value]="i">{{M}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-
-                            </div>
-                        </div>
-                        <div class="col-md-4 pr-0">
-                            <h5 class="m-0 pb-8">Days</h5>
-                            <div class="form-group mb-0">
-                                <mat-form-field>
-                                    <mat-select class="form-control br-0" formControlName="days">
-                                        <mat-option *ngFor="let D of estateDays" [value]="D">{{D}}</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-24">
-                    <div class="col-md-5 text-right">
-                        <h5 class="m-0 pt-8">Purchase value</h5>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="row">
-                            <div class="col-md-3 p-0">
-                                <div class="form-group mb-0">
-                                    <input type="text" class="form-control br-0" value="₹"
-                                        formControlName="purchaseValue">
-                                </div>
-                                <div class="col-md-12 p-0">
-                                    <p class="m-0 f-12 text-custom">Optional</p>
-                                </div>
-                            </div>
-                            <div class="col-md-2 pr-0">
-                                <h5 class="m-0 text-primitive pt-12 c-p" (click)="addArea()">+ Add area details</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-24" *ngIf="showArea==true">
-                    <div class="col-md-5 text-right">
-                        <h5 class="m-0 pt-36">Area details</h5>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="row">
-                            <div class="col-md-6 pr-0 pl-0">
-                                <h5 class="m-0 pb-8">Unit</h5>
-                                <div class="form-group mb-0">
-                                    <input type="text" class="form-control br-0" value="₹" formControlName="unit">
-                                </div>
-                                <div class="col-md-12 p-0">
-                                    <p class="m-0 f-12 text-custom pt-4">Optional</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 pr-0">
-                                <h5 class="m-0 pb-8">Rate per unit</h5>
-                                <div class="form-group mb-0">
-                                    <mat-form-field>
-                                        <mat-select class="form-control br-0" formControlName="ratePerUnit">
-                                            <mat-option value="1">Square feet</mat-option>
-                                            <mat-option value="3">Square meter</mat-option>
-                                            <mat-option value="6">Acre</mat-option>
-                                            <mat-option value="12">Hectare</mat-option>
-                                            <mat-option value="12">Bigha</mat-option>
-                                            <mat-option value="12">Biswa</mat-option>
-                                            <mat-option value="12">Biswansi</mat-option>
-                                            <mat-option value="12">Killa</mat-option>
-                                            <mat-option value="12">Ghumaon</mat-option>
-                                            <mat-option value="12">Ankanam</mat-option>
-                                            <mat-option value="12">Cent</mat-option>
-                                            <mat-option value="12">Ground</mat-option>
-                                            <mat-option value="12">Guntha</mat-option>
-                                            <mat-option value="12">kuncham</mat-option>
-                                            <mat-option value="12">Chatak</mat-option>
-                                            <mat-option value="12">Dhur</mat-option>
-                                            <mat-option value="12">Kattha</mat-option>
-                                            <mat-option value="12">Lecha</mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2" *ngIf="showArea==true">
-                    <h5 class="m-0 text-custom pt-36 c-p" (click)="removeArea()">Remove</h5>
-                </div>
-
-                <div class="row pt-24">
-                    <div class="col-md-5 text-right">
-                        <h5 class="m-0 pt-8">Charges</h5>
-                        <p class="m-0 f-12 text-custom">Market value has to be<br /> updated manually
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-4 pl-0 pr-0">
-                                <h5 class="m-0 pb-8">Stamp duty</h5>
-                                <div class="form-group mb-0">
-                                    <input type="text" class="form-control br-0" value="₹" formControlName="stampDuty">
-                                </div>
-                                <div class="col-md-12 p-0">
-                                    <p class="m-0 f-12 text-custom pt-4">Optional</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 pr-0">
-                                <h5 class="m-0 pb-8">Registration</h5>
-                                <div class="form-group mb-0">
-                                    <input type="text" class="form-control br-0" value="₹"
-                                        formControlName="registration">
-                                </div>
-                            </div>
-                            <div class="col-md-4 pr-0">
-                                <h5 class="m-0 pb-8">GST</h5>
-                                <div class="form-group mb-0">
-                                    <input type="text" class="form-control br-0" value="₹" formControlName="gst">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-24">
-                    <div class="col-md-5 text-right">
-                        <h5 class="m-0 pt-8">Location</h5>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="form-group mb-0">
-                            <input type="text" class="form-control br-0" value="₹" formControlName="location">
-                        </div>
-                        <div class="col-md-12 p-0">
-                            <p class="m-0 f-12 text-custom pt-4">Optional</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-24">
-                    <div class="col-md-5 text-right">
-                        <h5 class="m-0 pt-8">Description</h5>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="form-group mb-0">
-                            <input type="text" class="form-control br-0" value="₹" formControlName="description">
-                        </div>
-                        <div class="col-md-12 p-0">
-                            <p class="m-0 f-12 text-custom pt-4">Optional</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-24" formArrayName="getNomineeName">
-                    <div class="row pt-24" *ngFor="let obj of getNominee.controls; let pointIndex=index"
-                        [formGroupName]="pointIndex">
-                        <div class="col-md-5 text-right">
-                            <h5 class="m-0 pt-8 " *ngIf="pointIndex==0">Nominee</h5>
-                            <h5 class="m-0 pt-8 " *ngIf="pointIndex!=0">Nominee{{pointIndex}}</h5>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group mb-0">
-                                <mat-form-field>
-                                    <input matInput placeholder="Add nominee" aria-label="State"
-                                        (click)="nomineesList()" [matAutocomplete]="auto" list="userName"
-                                        class="form-control br-0 pl-8" formControlName="name">
-                                    <mat-autocomplete #auto="matAutocomplete">
-                                        <mat-option *ngFor="let item of familyList" [value]="item.userName">
-                                            <span>{{item.userName}}</span>
-                                        </mat-option>
-                                    </mat-autocomplete>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-12 p-0">
-                                <p class="m-0 f-12 text-custom pt-4">Optional
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group mb-0">
-                                <mat-form-field>
-                                    <input matInput type="number" class="b-a" formControlName="ownershipPer"
-                                        (keyup)="onChange('nominee')">
-                                </mat-form-field>
-                            </div>
-                        </div>
-
-                        <div class="col-md-2 p-0">
-                            <div class="col-md-3" *ngIf="pointIndex==0">
-                                <h5 class="m-0 text-primitive pt-8 c-p" (click)="addNominee()">+ Add Nominee</h5>
-                            </div>
-                            <div class="col-md-2" *ngIf="pointIndex > 0">
-                                <h5 class="m-0 text-primitive pt-8 c-p" (click)="removeNominee(pointIndex)">Remove</h5>
-                            </div>
-                        </div>
-
-                    </div>
-                    <mat-hint class="f-12 pt-4 text-danger" align="end" *ngIf="showError==true">
-                        Percent cannot be more than 100%
-                    </mat-hint>
-                </div>
-            </div>
-        </div>
-        <div class="bottom-fixed wrapper-12 pt-16">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
-                </div>
-                <div class="col-md-8 right text-right">
-                    <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFormData()">Save</button>
-                </div>
-            </div>
-            <div class="bottom-fixed wrapper-12 pt-16">
-                <div class="row">
-                    <div class="col-md-4">
-                        <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
-                    </div>
-                    <div class="col-md-8 right text-right">
-                        <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFormData()">Save</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
+  <div class="bottom-fixed wrapper-12 pt-16">
+    <div class="row">
+      <div class="col-md-4">
+        <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+      </div>
+      <div class="col-md-8 right text-right">
+        <button (click)="saveFormData()" class="btn-bottom br-0 text-inherit" mat-button>Save</button>
+      </div>
+    </div>
+    <div class="bottom-fixed wrapper-12 pt-16">
+      <div class="row">
+        <div class="col-md-4">
+          <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+          <button (click)="saveFormData()" class="btn-bottom br-0 text-inherit" mat-button>Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
