@@ -52,6 +52,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
   messageDetailArray: GmailInboxResponseI[];
   messageListArray;
   dataSource = null;
+  selectedThreadsArray: Object[] = [];
 
   ngOnInit() {
     if (this.dataSource === null && this.paginator) {
@@ -148,9 +149,15 @@ export class EmailListingComponent implements OnInit, OnDestroy {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      this.selectedThreadsArray = [];
+    } else {
+      this.dataSource.data.forEach(row => {
+        this.selection.select(row);
+        this.selectedThreadsArray.push(row);
+      });
+    }
   }
 
   /** The label for the checkbox on the passed row */
@@ -168,5 +175,18 @@ export class EmailListingComponent implements OnInit, OnDestroy {
 
   doRefresh() {
     this.emailService.refreshList('inbox');
+  }
+
+  highlightSelectedRow(row: {}) {
+    if (this.selectedThreadsArray.includes(row)) {
+      let indexOf = this.selectedThreadsArray.indexOf(row);
+      let removedRow = this.selectedThreadsArray.splice(indexOf, 1);
+      console.log('removed row -> ', removedRow);
+    } else {
+      this.selectedThreadsArray.push(row);
+      console.log('added row -> ', row);
+    }
+
+    console.log(this.selectedThreadsArray);
   }
 }
