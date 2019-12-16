@@ -555,6 +555,7 @@
                     #ui-planinsurance,
                     #ui-goal {
                         padding-top: 120px !important;
+                        //font-family: "Proxima Nova ", sans-serif;
                     }
                     
                     #ui-account-summary {
@@ -1196,4 +1197,12 @@
                         .mat-checkbox label {
                             padding-top: 20px !important;
                         }
+                    }
+                    
+                    .proximaFont {
+                        font-family: "Proxima Nova ", sans-serif;
+                    }
+                    
+                    .mat-table {
+                        font-family: "Proxima Nova ", sans-serif !important;
                     }
