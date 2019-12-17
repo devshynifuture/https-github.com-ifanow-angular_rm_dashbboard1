@@ -68,9 +68,20 @@ export class ComposeEmailComponent implements OnInit {
   close() {
     this.subInjectService.changeUpperRightSliderState({ state: 'close' });
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
-
     // this.valueChange.emit(this.emailSend);
   }
 
+  handleCloseMail() {
 
+  }
+
+  sendMail() {
+    console.log('send mail');
+    this.checkEmptyFields();
+    this.handleCloseMail();
+  }
+
+  checkEmptyFields() {
+    // validity errors append
+  }
 }

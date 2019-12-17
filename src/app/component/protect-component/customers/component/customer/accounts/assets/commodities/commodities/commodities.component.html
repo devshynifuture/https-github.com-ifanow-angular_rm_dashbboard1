@@ -1,13 +1,9 @@
 <div class="wrapper-8">
     <div class="row pt-28 pb-28">
         <div class="col-md-8 pl-0" id="custom-toggle">
-            <button mat-button value='1' (click)="getfixedIncomeData('1')"
-                [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}"
-                class="br-0 text-custom">
+            <button mat-button value='1' (click)="getfixedIncomeData('1')" [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}" class="br-0 text-custom">
                 Gold</button>
-            <button mat-button value='2' (click)="getfixedIncomeData('2')"
-                [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}"
-                class="br-0 text-custom">
+            <button mat-button value='2' (click)="getfixedIncomeData('2')" [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}" class="br-0 text-custom">
                 Others </button>
         </div>
         <div class="col-md-4 right text-right  pr-0">
@@ -45,21 +41,20 @@
                 </mat-menu>
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                         class="material-icons">filter_list</i>FILTERS</button>
-                <button mat-stroked-button class="btn-primary addon v-middle"
-                    (click)="openCommodities('addGold','open',null)"><i class="material-icons">add</i>ADD NEW</button>
+                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openCommodities('addGold','open',null)"><i class="material-icons">add</i>ADD NEW</button>
             </div>
         </div>
-        <div class="example-container mt-8 real-estate">
+        <div class="example-container col-md-12 p-0 mt-8 real-estate">
             <table matSort #goldListTable="matSort" mat-table [dataSource]="goldList" id="table-low">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
                     <td mat-cell *matCellDef="let element let i = index" class="br"> {{i+1}} </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
+                    <td mat-footer-cell *matFooterCellDef class="t-7 f-500 pl-4 text-left"> Total </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
                     <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-18"> Owner </th>
                     <td mat-cell *matCellDef="let element" class="br t-18"> {{element.ownerName}} </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> Total</td>
+                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-left"> </td>
                 </ng-container>
                 <ng-container matColumnDef="grams">
                     <th mat-sort-header="gramsOrTola" mat-header-cell *matHeaderCellDef class="br text-right">
@@ -74,31 +69,25 @@
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
                 </ng-container>
                 <ng-container matColumnDef="price">
-                    <th mat-sort-header="caratGoldPrice" mat-header-cell *matHeaderCellDef class="br text-right"> Carat
-                        gold price
-                        (10 gram)
+                    <th mat-sort-header="caratGoldPrice" mat-header-cell *matHeaderCellDef class="br text-right"> Carat gold price (10 gram)
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right"> {{element.caratGoldPrice}} </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
                 </ng-container>
                 <ng-container matColumnDef="mvalue">
-                    <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br text-right"> Market
-                        value </th>
+                    <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br text-right"> Market value </th>
                     <td mat-cell *matCellDef="let element" class="br text-right " appFormatNumber>
                         {{element.marketValue}} </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" appFormatNumber
-                        [value]="sumOfMarketValue">
+                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" appFormatNumber [value]="sumOfMarketValue">
                         {{sumOfMarketValue || '-'}} </td>
                 </ng-container>
                 <ng-container matColumnDef="pvalue">
-                    <th mat-sort-header="approximatePurchaseValue" mat-header-cell *matHeaderCellDef
-                        class="br text-right"> Purchase value
+                    <th mat-sort-header="approximatePurchaseValue" mat-header-cell *matHeaderCellDef class="br text-right"> Purchase value
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
                         {{element.approximatePurchaseValue}}
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" appFormatNumber
-                        [value]="sumOfPurchaseValue">
+                    <td mat-footer-cell *matFooterCellDef class="br t-20 p-8 f-500 text-right" appFormatNumber [value]="sumOfPurchaseValue">
                         {{sumOfPurchaseValue || '-'}} </td>
                 </ng-container>
                 <ng-container matColumnDef="desc">
@@ -153,39 +142,37 @@
 
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                         class="material-icons">filter_list</i>FILTERS</button>
-                <button mat-stroked-button class="btn-primary addon v-middle"
-                    (click)="openOthers('addOthers','open',null)"><i class="material-icons">add</i>ADD
+                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openOthers('addOthers','open',null)"><i class="material-icons">add</i>ADD
                     NEW</button>
             </div>
         </div>
-        <div class="example-container mt-8 real-estate">
+        <div class="example-container mt-8 col-md-12 p-0 real-estate">
             <table matSort #otherCommodityListTable mat-table [dataSource]="otherCommodityList" id="table-low">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
                     <td mat-cell *matCellDef="let element let i = index" class="br"> {{i+1}} </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
+                    <td mat-footer-cell *matFooterCellDef class="t-2 text-left pl-4 f-500"> Total</td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
                     <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-18"> Owner </th>
                     <td mat-cell *matCellDef="let element" class="br t-18"> {{element.ownerName}} </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">Total </td>
+                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
                 </ng-container>
                 <ng-container matColumnDef="type">
-                    <th mat-sort-header="commodityTypeId" mat-header-cell *matHeaderCellDef class="br text-right"> Type
-                        of commodity
+                    <th mat-sort-header="commodityTypeId" mat-header-cell *matHeaderCellDef class="br text-right"> Type of commodity
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right">
-                        {{(element.commodityTypeId == 1)?'Art':(element.commodityTypeId == 2)?'Antiques':(element.commodityTypeId == 3)?'Liquor':(element.commodityTypeId == 4)?'Stamps':(element.commodityTypeId == 5)?'Coins':(element.commodityTypeId == 6)?'Silver':(element.commodityTypeId == 7)?'Diamond':'Other'}}
+                        {{(element.commodityTypeId == 1)?'Art':(element.commodityTypeId == 2)?'Antiques':(element.commodityTypeId == 3)?'Liquor':(element.commodityTypeId == 4)?'Stamps':(element.commodityTypeId == 5)?'Coins':(element.commodityTypeId == 6)?'Silver':(element.commodityTypeId
+                        == 7)?'Diamond':'Other'}}
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
                 </ng-container>
 
                 <ng-container matColumnDef="mvalue">
-                    <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br text-right"> Market
-                        value </th>
+                    <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br text-right"> Market value </th>
                     <td mat-cell *matCellDef="let element" class="br text-right ">
                         {{utils.formatter(element.marketValue)}} </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">
+                    <td mat-footer-cell *matFooterCellDef class="br p-8 f-500 t-20 text-right">
                         {{utils.formatter(sumOfMarketValueOther) || '-'}} </td>
                 </ng-container>
                 <ng-container matColumnDef="pvalue">
@@ -194,19 +181,18 @@
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right">
                         {{utils.formatter(element.purchaseValue)}} </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right">
+                    <td mat-footer-cell *matFooterCellDef class="br p-8 f-500 t-20 text-right">
                         {{utils.formatter(sumOfPurchaseValueOther) || '-'}}</td>
                 </ng-container>
                 <ng-container matColumnDef="pur">
                     <th mat-sort-header="dateOfPurchase" mat-header-cell *matHeaderCellDef class="br text-left t-8">
-                        Date of
-                        purchase </th>
-                    <td mat-cell *matCellDef="let element" class="br text-left t-8"> {{element.dateOfPurchase | date:'dd/MM/yyyy'}} </td>
+                        Date of purchase </th>
+                    <td mat-cell *matCellDef="let element" class="br text-left t-8">
+                        {{element.dateOfPurchase | date:'dd/MM/yyyy'}} </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
                 <ng-container matColumnDef="rate">
-                    <th mat-sort-header="growthRate" mat-header-cell *matHeaderCellDef class="br text-right t-8"> Growth
-                        rate
+                    <th mat-sort-header="growthRate" mat-header-cell *matHeaderCellDef class="br text-right t-8"> Growth rate
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right t-8"> {{element.growthRate}} </td>
                     <td mat-footer-cell *matFooterCellDef> </td>
@@ -225,8 +211,7 @@
 
                 <ng-container matColumnDef="icons">
                     <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                    <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black"
-                            [matMenuTriggerFor]="menubank">
+                    <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
                             more_vert
                         </i>
                         <mat-menu #menubank="matMenu">

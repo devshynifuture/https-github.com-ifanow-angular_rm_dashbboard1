@@ -52,6 +52,7 @@ import { AccountRoutingModule } from "./account-routing.module";
 import { AccountCommonModule } from "./account.common.module";
 // import {PDFExportModule} from "@progress/kendo-angular-pdf-export";
 import { AssetStocksComponent } from './assets/asset-stocks/asset-stocks.component';
+import { MutualFundComponent } from './assets/mutual-fund/mutual-fund/mutual-fund.component';
 @NgModule({
   declarations: [
     SchemeLevelTransactionComponent,
@@ -113,6 +114,7 @@ import { AssetStocksComponent } from './assets/asset-stocks/asset-stocks.compone
     FormatNumberDirective,
     DocumentNewFolderComponent,
     AssetStocksComponent,
+    MutualFundComponent
   ],
   imports: [
     AccountRoutingModule,

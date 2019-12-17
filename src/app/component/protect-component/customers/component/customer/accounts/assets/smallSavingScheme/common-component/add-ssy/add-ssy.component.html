@@ -9,39 +9,42 @@
     </div>
 </div>
 <div class="pt-72 pl-24 pr-24 pb-48 mb-48">
-    <div class="row">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Owner</h5>
-            <p class="m-0 f-12 text-custom">In whose name is this asset</p>
-        </div>
-        <div class="col-md-5">
-            <app-owner-component [data]='ownerData' (valueChange)='display($event)'></app-owner-component>
-        </div>
+  <div class="row">
+    <div class="col-md-5 pr-0 text-right">
+      <h5 class="m-0 pt-8">Owner</h5>
+      <p class="m-0 f-12 text-custom">In whose name is this asset</p>
     </div>
+    <div class="col-md-5">
+      <app-owner-column (valueChange)='display($event)' [data]='ownerData'></app-owner-column>
+    </div>
+  </div>
     <div [formGroup]="ssySchemeForm">
         <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
+          <div class="col-md-5 text-right">
                 <h5 class="m-0 pt-8">Guardian</h5>
             </div>
-            <div class="col-md-3 ">
+          <div class="col-md-3 p-0">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input formControlName="guardian" type="text" matInput #guradian class="form-control br-0" maxlength="">
-                        <mat-error class="f-12 pt-4"> This field is required </mat-error>
+                  <mat-form-field><input #guradian class="form-control br-0" formControlName="guardian" matInput
+                                         maxlength="" type="text">
+                    <mat-error class="f-12 pt-4"> Loan amount is required</mat-error>
                         <mat-hint align="end" class="f-12">{{guradian.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
         </div>
         <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
+          <div class="col-md-5 text-right">
                 <h5 class="m-0 pt-8">Account balance</h5>
                 <p class="m-0 f-12 text-custom">Leave blank if you want to enter</p>
                 <p class="m-0 f-12 text-custom">complete transaction history</p>
             </div>
-            <div class="col-md-3">
+          <div class="col-md-3 p-0">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input formControlName="accBalance" type="number" matInput #accountBalance class="form-control rupess br-0" maxlength="">
-                        <mat-error class="f-12 pt-4"> This field is required </mat-error>
+                  <mat-form-field><input #accountBalance class="form-control rupess br-0" formControlName="accBalance"
+                                         matInput
+                                         maxlength="" type="number">
+                    <mat-error class="f-12 pt-4"> Loan amount is required</mat-error>
                         <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
@@ -55,7 +58,9 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
-                    <mat-form-field> <input formControlName="balanceAsOn" matInput class="form-control br-0" [matDatepicker]="balanceAsOn">
+                  <mat-form-field><input [matDatepicker]="balanceAsOn" class="form-control br-0"
+                                         formControlName="balanceAsOn"
+                                         matInput>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
                         <mat-error class="f-12 pt-4">This field is required </mat-error>
@@ -70,26 +75,28 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="commDate" [matDatepicker]="SSYpicker" class="form-control br-0">
+                      <input [matDatepicker]="SSYpicker" class="form-control br-0" formControlName="commDate"
+                             matInput>
                         <mat-datepicker-toggle matSuffix [for]="SSYpicker"></mat-datepicker-toggle>
                         <mat-datepicker #SSYpicker></mat-datepicker>
                         <mat-error class="f-12 pt-4">
-                            This field is required
+                          Commencement date is required
                         </mat-error>
                     </mat-form-field>
                 </div>
             </div>
         </div>
         <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
+          <div class="col-md-5 text-right">
                 <h5 class="m-0 pt-8">Future approx contribution</h5>
             </div>
-            <div class="col-md-3  ">
+          <div class="col-md-3 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input type="number" formControlName="futureAppx" matInput #futureContribution class="form-control rupess br-0" maxlength="">
+                      <input #futureContribution class="form-control rupess br-0" formControlName="futureAppx" matInput
+                             maxlength="" type="number">
                         <mat-error class="f-12 pt-4">
-                            This field is required
+                          Loan amount is required
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{futureContribution.value.length}}/20</mat-hint>
                     </mat-form-field>
@@ -100,7 +107,7 @@
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Frequency</h5>
             </div>
-            <div class="col-md-3">
+          <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select formControlName="frquency" class="form-control br-0">
@@ -132,7 +139,9 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input formControlName="description" matInput #fdNo type="text" maxlength="10" class="form-control br-0">
+                  <mat-form-field><input #fdNo class="form-control br-0" formControlName="description" matInput
+                                         maxlength="10"
+                                         type="text">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -144,7 +153,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input formControlName="linkedAcc" matInput #institution maxlength="30" class="form-control br-0">
+                  <mat-form-field><input #institution class="form-control br-0" formControlName="linkedAcc" matInput
+                                         maxlength="30">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -156,7 +166,9 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input formControlName="bankName" matInput #bankACNo type="text" maxlength="15" class="form-control br-0">
+                  <mat-form-field><input #bankACNo class="form-control br-0" formControlName="bankName" matInput
+                                         maxlength="15"
+                                         type="text">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -168,7 +180,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input formControlName="nominee" matInput #description maxlength="60" class="form-control br-0">
+                  <mat-form-field><input #description class="form-control br-0" formControlName="nominee" matInput
+                                         maxlength="60">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -180,7 +193,8 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input formControlName="agentName" matInput #description maxlength="60" class="form-control br-0">
+                  <mat-form-field><input #description class="form-control br-0" formControlName="agentName" matInput
+                                         maxlength="60">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -194,7 +208,10 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right" (click)="addSSYScheme()"> <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+      <div (click)="addSSYScheme()" class="col-md-8 right text-right">
+        <button class="btn-bottom br-0 text-inherit"
+                mat-button>Save
+        </button>
         </div>
     </div>
 </div>

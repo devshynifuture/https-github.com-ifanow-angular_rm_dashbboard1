@@ -76,6 +76,9 @@ import { ViewPastnotGoalComponent } from './component/protect-component/customer
 import { AddPlaninsuranceComponent } from './component/protect-component/customers/component/customer/plan/insurance-plan/add-planinsurance/add-planinsurance.component';
 import { AddSuggestPolicyComponent } from './component/protect-component/customers/component/customer/plan/insurance-plan/add-suggest-policy/add-suggest-policy.component';
 import { CurrentPolicyComponent } from './component/protect-component/customers/component/customer/plan/insurance-plan/current-policy/current-policy.component';
+import { AddMutualFundComponent } from './component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/add-mutual-fund/add-mutual-fund.component';
+import { MFSchemeLevelHoldingsComponent } from './component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mfscheme-level-holdings/mfscheme-level-holdings.component';
+import { MFSchemeLevelTransactionsComponent } from './component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mfscheme-level-transactions/mfscheme-level-transactions.component';
 
 
 export const componentList = [
@@ -214,6 +217,9 @@ export const componentList = [
   IndividualIncomeInfoComponent,
   AddExpensesComponent,
   KeyInfoComponent,
+  AddMutualFundComponent,
+  MFSchemeLevelHoldingsComponent,
+  MFSchemeLevelTransactionsComponent,
   // EmailAddTaskComponent,
   CalculatorsComponent,
   AddGoalsComponent,
