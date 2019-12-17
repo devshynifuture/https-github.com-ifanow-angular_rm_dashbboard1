@@ -55,6 +55,8 @@ export class PlanComponent implements OnInit {
            this.ref.markForCheck();
          }, 100);*/
         console.log('Navigation is successful!');
+        this.locationService.go('/admin/subscription');
+
       } else {
         console.log('Navigation has failed!');
       }

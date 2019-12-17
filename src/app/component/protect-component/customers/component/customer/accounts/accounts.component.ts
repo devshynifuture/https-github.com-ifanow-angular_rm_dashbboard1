@@ -1,5 +1,5 @@
 import {Router} from '@angular/router';
-import {Component, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-accounts',
@@ -14,7 +14,7 @@ export class AccountsComponent implements OnInit {
     this._value = value;
   }
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private ngZone: NgZone) {
   }
 
   selected;
@@ -43,13 +43,21 @@ export class AccountsComponent implements OnInit {
         console.log('Navigation has failed!');
       }
     });*/
-    this.router.navigate(['/admin', 'subscription'], {/*replaceUrl: true*/}).then(e => {
-      if (e) {
-        console.log('Navigation is successful!');
-      } else {
-        console.log('Navigation has failed!');
-      }
+    // this.locationService.go('/admin/subscription');
+    this.ngZone.run(() => {
+      // this.navigateTo('/');
+
+      this.router.navigate(['/admin', 'subscription'], {/*replaceUrl: true*/}).then(e => {
+        if (e) {
+          console.log('Navigation is successful!');
+          // this.locationService.go('/admin/subscription');
+
+        } else {
+          console.log('Navigation has failed!');
+        }
+      });
     });
+
     // this.
   }
 
