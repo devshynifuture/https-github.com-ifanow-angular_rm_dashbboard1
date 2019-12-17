@@ -1,5 +1,5 @@
-import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-accounts',
@@ -10,7 +10,7 @@ export class AccountsComponent implements OnInit {
   _value: number;
 
   set value(value: number) {
-    console.log("now value is ->>>>", value);
+    console.log('now value is ->>>>', value);
     this._value = value;
   }
 
@@ -21,7 +21,7 @@ export class AccountsComponent implements OnInit {
 
   ngOnInit() {
     this.selected = 1;
-    console.log("this is child url now->>>>>", this.router.url.split('/')[3]);
+    console.log('this is child url now->>>>>', this.router.url.split('/')[3]);
     if (this.router.url.split('/')[3] === 'summary') {
       this._value = 1;
     } else if (this.router.url.split('/')[3] === 'assets') {
@@ -33,6 +33,24 @@ export class AccountsComponent implements OnInit {
     } else if (this.router.url.split('/')[3] === 'documents') {
       this._value = 5;
     }
+  }
+
+  goToAdvisorHome() {
+    /*this.router.navigateByUrl('/admin/subscription').then(e => {
+      if (e) {
+        console.log('Navigation is successful!');
+      } else {
+        console.log('Navigation has failed!');
+      }
+    });*/
+    this.router.navigate(['/admin', 'subscription'], {/*replaceUrl: true*/}).then(e => {
+      if (e) {
+        console.log('Navigation is successful!');
+      } else {
+        console.log('Navigation has failed!');
+      }
+    });
+    // this.
   }
 
 }
