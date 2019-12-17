@@ -10,7 +10,6 @@
                             <mat-panel-title>
                                 {{item.question}}
                             </mat-panel-title>
-                          c
                         </mat-expansion-panel-header>
                         <mat-radio-group aria-label="Select an option" id="custom-radio">
                             <mat-radio-button *ngFor="let choice of item.riskAssessmentChoices" [value]="choice"
@@ -45,13 +44,12 @@
                 </div>
             </div>
         </div>
-        <div #referenceKeyName (click)="onClickMe(referenceKeyName)" id="devshyni"></div>
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-8 p-0">
                     <h5 class="m-0 f-500 text-black">Your risk profile: Moderately aggressive</h5>
-                    <img src="/assets/images/svg/riskprofile.svg" class="w-100 pt-20">
-                    <p class="m-0 text-custom roboto">You are an investor who is willing to take moderately high risk
+                    <div #referenceKeyName (click)="onClickMe(referenceKeyName)" id="Gauge"></div>
+                    <p class="m-0 text-custom roboto" style="text-align: center;">You are an investor who is willing to take moderately high risk
                         for moderately high returns</p>
                 </div>
                 <div class="col-md-4">
