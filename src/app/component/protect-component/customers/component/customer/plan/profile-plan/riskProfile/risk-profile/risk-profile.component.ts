@@ -33,7 +33,9 @@ export class RiskProfileComponent implements OnInit {
   onClickMe(referenceKeyName) {
     alert(referenceKeyName.id);
   }
-
+  onClick(referenceKeyName1) {
+    alert(referenceKeyName1.id);
+  }
   constructor(private fb: FormBuilder, public planService: PlanService, ) {
   }
 
@@ -47,72 +49,85 @@ export class RiskProfileComponent implements OnInit {
   percentage(chartId) {
     Highcharts.setOptions({
       chart: {
-          inverted: true,
-          marginLeft: 135,
-          type: 'bullet'
+        type: 'bar',
+        margin: [5, 15, 10, 100],
       },
-      title: {
-          text: null
-      },
-      legend: {
-          enabled: false
+      credits: { enabled: false },
+      exporting: { enabled: false },
+      legend: { enabled: false },
+      title: { text: '' },
+      xAxis: {
+        tickLength: 0,
+        lineColor: '#999',
+        lineWidth: 1,
+        labels: { style: { fontWeight: 'bold' } }
       },
       yAxis: {
-          gridLineWidth: 0
+        min: 0,
+        minPadding: 0,
+        maxPadding: 0,
+        tickColor: 'black',
+        tickWidth: 1,
+        tickLength: 2,
+        gridLineWidth: 0,
+        endOnTick: true,
+        title: { text: '' },
+        labels: {
+          y: 10,
+          style: {
+            fontSize: '8px'
+          },
+        }
+      },
+      tooltip: {
+        enabled: true,
+        backgroundColor: 'rgba(255, 255, 255, .85)',
+        borderWidth: 0,
+        shadow: true,
+        style: { fontSize: '10px', padding: '2px' },
+        formatter: function () {
+          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y, 2) + "</strong>";
+        }
       },
       plotOptions: {
-          // series: {
-          //     pointPadding: 0.25,
-          //     borderWidth: 0,
-          //     color: '#000',
-          //     targetOptions: {
-          //         width: '200%'
-          //     }
-          // }
-      },
-      credits: {
-          enabled: false
-      },
-      exporting: {
-          enabled: false
+        bar: {
+          color: '#000',
+          shadow: false,
+          borderWidth: 0,
+        },
+        scatter: {
+          marker: {
+            symbol: 'line',
+            lineWidth: 3,
+            radius: 8,
+            lineColor: '#000'
+          }
+        }
       }
-  });
-  this.callFun()
+    });
+    this.callFun()
   }
-  callFun(){
-    Highcharts.chart('container2', {
-      xAxis: {
-          categories: ['<span class="hc-cat-title">Profit</span><br/>%']
-      },
+  callFun() {
+    var chart1 = new Highcharts.Chart({
+      chart: { renderTo: 'container1' },
+      xAxis: { categories: ['<span class="hc-cat-title">Equity%</span>']},
       yAxis: {
-          plotBands: [{
-              from: 0,
-              to: 20,
-              color: '#666'
-          }, {
-              from: 20,
-              to: 25,
-              color: '#999'
-          }, {
-              from: 25,
-              to: 100,
-              color: '#bbb'
-          }],
-          labels: {
-              format: '{value}%'
-          },
-          title: null
+        min:0,
+        max: 100,
+        labels: { y: 10, format: '{value}%', style: { fontSize: '12px' ,fontWeight:'bold',color:'black'} },
+        plotBands: [{ from: 0, to: 20, color: 'rgba(103,103,103,.35)' },
+        { from: 20, to: 40, color: 'rgba(153,153,153,.35)' },
+        { from: 40, to: 60, color: 'rgba(204,204,204,.35)' },
+         { from: 60, to: 80, color: 'rgba(153,153,153,.35)' },
+          { from: 80, to: 100, color: 'rgba(204,204,204,.35)' },]
       },
-      // series: [{
-      //     data: [{
-      //         y: 22,
-      //         target: 27
-      //     }]
-      // }],
-      tooltip: {
-          pointFormat: '<b>{point.y}</b> (with target at {point.target})'
-      }
-  });
+      
+      series: [{ name: 'Measure', pointWidth: 10, data: [80] },
+      { name: 'Target', type: 'scatter', data: [90], }]
+    });
+    Highcharts.Renderer.prototype.symbols.line = function(x, y, width, height) {
+      return ['M',x ,y + width / 2,'L',x+height,y + width / 2];
+  };
   }
   guageFun(chartId) {
     this.gaugeOptions = {
@@ -126,7 +141,7 @@ export class RiskProfileComponent implements OnInit {
       pane: {
         center: ['45%', '80%'],
         size: '140%',
-       startAngle: -90,
+        startAngle: -90,
         endAngle: 90,
         background: {
           backgroundColor: '#EEE',
@@ -212,7 +227,7 @@ export class RiskProfileComponent implements OnInit {
 
       series: [{
         name: '',
-        data: [100],
+        data: [this.score],
         dataLabels: 1,
         tooltip: {
           valueSuffix: ' km/h'
@@ -221,7 +236,7 @@ export class RiskProfileComponent implements OnInit {
 
     }));
   }
-  
+
   checkState(item, data) {
 
     console.log('$$$$$$$$$', this.sendRiskList);
@@ -281,7 +296,7 @@ export class RiskProfileComponent implements OnInit {
     this.showRisk = true;
     setTimeout(() => {
       this.guageFun('Gauge');
-
+      this.percentage('container1')
     }, 300);
     if (data) {
       console.log(data);
