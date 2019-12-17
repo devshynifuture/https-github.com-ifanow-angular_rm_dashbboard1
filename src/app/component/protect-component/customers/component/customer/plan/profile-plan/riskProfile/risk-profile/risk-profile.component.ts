@@ -41,7 +41,6 @@ export class RiskProfileComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getRiskProfileList();
     this.getdataForm('');
-    this.chartFunc('devshyni');
     this.sendRiskList = [];
   }
 
@@ -144,13 +143,21 @@ export class RiskProfileComponent implements OnInit {
     console.log('RiskProfileComponent submitRiskAnalysis solutionList : ', obj);
 
     this.planService.submitRisk(obj).subscribe(
-      data => this.submitRiskRes(data)
+      data => this.submitRiskRes(data), error => {
+        this.submitRiskRes(data);
+      }
     );
   }
 
   submitRiskRes(data) {
-    console.log(data);
     this.showRisk = true;
-    this.score = data.score;
+    setTimeout(() => {
+      this.chartFunc('devshyni');
+
+    }, 300);
+    if (data) {
+      console.log(data);
+      this.score = data.score;
+    }
   }
 }
