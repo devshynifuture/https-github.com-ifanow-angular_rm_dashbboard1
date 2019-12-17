@@ -16,30 +16,45 @@
         <div class="wrapper-40 pt-72">
             <div class="row">
                 <div class="col-md-8 p-0">
-                    <div *ngIf="goalTypeData.name=='House' || goalTypeData.name=='Marriage' || goalTypeData.name=='Wealth creation'"
-                        class="row">
+                    <div *ngIf="goalTypeData.id==1" class="row">
                         <div class="col-md-8 p-0">
-                            <h5 class="m-0 text-black pl-0" *ngIf="Questions">{{Questions.Q}}</h5>
+                            <h5 class="m-0 text-black pl-0">Who are you planning this for?</h5>
                             <div class="form-group mb-0 pt-8">
                                 <select class="form-control br-0" id="sel1">
                                     <option value="1">Rahul Jain</option>
                                     <option value="2">Rahul Jain</option>
                                 </select>
                             </div>
-                            <!-- <div class="col-md-12 p-0">
+                            <div class="col-md-12 p-0">
                                 <p class="text-regular pt-4">Add spouse</p>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
-                    <div class="row"
-                        [ngClass]="{'pt-20':goalTypeData.name=='House' || goalTypeData.name=='Marriage'|| goalTypeData.name=='Wealth creation'}">
+                    <div *ngIf="goalTypeData.id==5 || goalTypeData.id==6" class="row pt-20">
                         <div class="col-md-12 p-0">
-                            <h5 class="m-0 text-black" *ngIf="Questions">{{Questions.Q1}}</h5>
+                            <h5 class="m-0 text-black">Age you want to retire? (present age - 39)</h5>
+                            <div class="row pt-8">
+                                <div class="col-md-4 p-0">
+                                    <div class="form-group mb-0">
+
+                                        <div id="custom-slider">
+                                            <mat-slider></mat-slider>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="goalTypeData.id==1" class="row pt-20">
+                        <div class="col-md-12 p-0">
+                            <h5 class="m-0 text-black">Age you want to retire? (present age - 39)</h5>
                             <div class="row pt-8">
                                 <div class="col-md-4 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input autocomplete="off" matInput #message class="form-control br-0">
+                                            <input autocomplete="off" matInput #message class="form-control br-0"
+                                                value="55 Years">
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -51,9 +66,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-20">
+                    <div *ngIf="goalTypeData.id==1" class="row pt-20">
                         <div class="col-md-12 p-0">
-                            <h5 class="m-0 text-black" *ngIf="Questions">{{Questions.Q2}}</h5>
+                            <h5 class="m-0 text-black">Your current monthly expenses?</h5>
                             <div class="row pt-8">
                                 <div class="col-md-4 p-0">
                                     <div class="form-group mb-0">
@@ -73,26 +88,73 @@
                     </div>
                     <div class="row pt-20">
                         <div class="col-md-12 p-0">
-                            <h5 class="m-0 text-black" *ngIf="Questions">{{Questions.Q3}}</h5>
+                            <h5 class="m-0 text-black">At retirement, by what % will the expenses change?</h5>
                             <div class="row pt-8">
                                 <div class="col-md-4 p-0">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field>
+                                            <input autocomplete="off" matInput #message class="form-control br-0"
+                                                value="-10%">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 pr-0">
+                                    <div id="custom-slider">
+                                        <mat-slider></mat-slider>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="goalTypeData.id==1" class="row pt-20">
+                        <div class="col-md-12 p-0">
+                            <h5 class="m-0 text-black">Milestones you’d also like to plan for (optional)...</h5>
+                            <div class="row pt-8">
+                                <div class="col-md-4 p-0">
+                                    <div class="form-group mb-0">
+                                        <select class="form-control br-0 br-none" id="sel2">
+                                            <option value="1">Select a milestone</option>
+                                            <option value="2">Rahul Jain</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 p-0">
+                                    <div class="form-group mb-0">
+                                        <select class="form-control br-0 br-none" id="sel2">
+                                            <option value="1">Select a milestone</option>
+                                            <option value="2">Rahul Jain</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 p-0">
+                                    <div class="form-group mb-0">
+                                        <input autocomplete="off" matInput #message
+                                            class="form-control br-0 rupess h-38">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-20">
+                        <div class="col-md-12 p-0">
+                            <h5 class="m-0 text-black">Give this goal a name</h5>
+                            <div class="row pt-8">
+                                <div class="col-md-8 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
                                             <input autocomplete="off" matInput #message class="form-control br-0">
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-8 pr-0">
-                                    <div id="custom-slider">
-                                        <mat-slider></mat-slider>
-                                    </div>
-                                </div> -->
+                                <div class="col-md-12 pt-4">
+                                    <p class="f-12 m-0 text-primitive">Optional</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-20">
+                    <div *ngIf="goalTypeData.id!=1" class="row pt-20">
                         <div class="col-md-12 p-0">
-                            <h5 class="m-0 text-black" *ngIf="Questions">{{Questions.Q4}}</h5>
+                            <h5 class="m-0 text-black" *ngIf="Questions">Notes</h5>
                             <div class="row pt-8">
                                 <div class="col-md-8 p-0">
                                     <div class="form-group mb-0">
@@ -124,6 +186,7 @@
             <div class="col-md-10 p-0">
                 <div class="addgoal-common">
                     <mat-progress-bar mode="determinate" value="50">
+
                     </mat-progress-bar>
                 </div>
             </div>
@@ -176,6 +239,7 @@
             <div class="col-md-10 p-0">
                 <div class="addgoal-common">
                     <mat-progress-bar mode="determinate" value="50">
+
                     </mat-progress-bar>
                 </div>
             </div>

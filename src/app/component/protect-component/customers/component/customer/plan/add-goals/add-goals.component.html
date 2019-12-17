@@ -1,4 +1,4 @@
-<div [hidden]="goalTypeData" class="bg-grey lter" id="ui-add-goals">
+<div *ngIf="goalTypeData==undefined" class="bg-grey lter" id="ui-add-goals">
   <div class="row bg-white bb-1 popup-header-fix w-100">
     <div class="col-md-5 p-0">
       <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" class="w-45">
@@ -13,7 +13,7 @@
     </div>
   </div>
   <div class="row pt-100 pl-24 pr-24 pb-40">
-    <div (click)="addSelectedGoalType(singleGoal1)" *ngFor="let singleGoal1 of goalTypeFirstRowListData;index as i"
+    <div (click)="getGoalTypeData(singleGoal1)" *ngFor="let singleGoal1 of goalTypeFirstRowListData;index as i"
       [ngClass]="{'col-half-offset':i!=0}" class="col-md-2 c-p">
       <img *ngIf="singleGoal1.id==1" src="/assets/images/svg/retierment.svg">
       <img *ngIf="singleGoal1.id==2" src="/assets/images/svg/retierment.svg">
@@ -25,7 +25,7 @@
 
   </div>
   <div class="row pl-24 pr-24 pb-40">
-    <div (click)="addSelectedGoalType(singleGoal2)" *ngFor="let singleGoal2 of goalTypeSecondRowListData;index as i"
+    <div (click)="getGoalTypeData(singleGoal2)" *ngFor="let singleGoal2 of goalTypeSecondRowListData;index as i"
       [ngClass]="{'col-half-offset':i!=0}" class="col-md-2 c-p">
       <img *ngIf="singleGoal2.id==6" src="/assets/images/svg/wedding.svg">
       <img *ngIf="singleGoal2.id==7" src="/assets/images/svg/wedding.svg">
@@ -37,9 +37,15 @@
   </div>
 </div>
 <!-- Retirement goal -->
-<div [hidden]="!goalTypeData">
-  <app-single-goal-year (backToaddGoal)="getGoalTypeData($event)" [goalData]="goalTypeData"></app-single-goal-year>
+<div *ngIf="goalTypeData">
+  <div *ngIf="goalFlag">
+    <app-single-goal-year (backToaddGoal)="getGoalTypeData($event)" [goalData]="goalTypeData"></app-single-goal-year>
+  </div>
+  <div *ngIf="goalFlag==false">
+    <app-multi-year-goal [goalData]="goalTypeData"></app-multi-year-goal>
+  </div>
 </div>
+<div></div>
 <!--close Retirement goal -->
 
 <!-- Education goal -->

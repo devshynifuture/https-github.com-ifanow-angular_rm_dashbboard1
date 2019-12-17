@@ -10,21 +10,74 @@ import { PlanService } from '../plan.service';
 })
 export class AddGoalsComponent implements OnInit {
   goalTypeData: any;
+  goalFlag: any;
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, private planService: PlanService) { }
   goalTypeFirstRowListData = [
     { id: 1, name: "Retirement", imageUrl: "GlobalRetirementGoalImage", isActive: 0 },
-    { id: 2, name: "House", imageUrl: "GlobalHouseGoalImage", isActive: 0 },
-    { id: 3, name: "Car", imageUrl: "GlobalCarGoalImage", isActive: 0 },
-    { id: 4, name: "Marriage", imageUrl: "GlobalMarriageGoalImage", isActive: 0 },
+    {
+      id: 2, name: "House", imageUrl: "GlobalHouseGoalImage", isActive: 0, questions: {
+        Q: 'Who are you planning this for?',
+        Q1: 'When do you want to buy house?',
+        Q2: "House's cost as on today?",
+        Q3: 'Give this goal a name',
+        Q4: 'Notes'
+      }
+    },
+    {
+      id: 3, name: "Car", imageUrl: "GlobalCarGoalImage", isActive: 0, questions: {
+        Q1: 'When do you want to buy car?',
+        Q2: "Car's cost as on today?",
+        Q3: 'Give this goal a name',
+        Q4: 'Notes'
+      }
+    },
+    {
+      id: 4, name: "Marriage", imageUrl: "GlobalMarriageGoalImage", isActive: 0, questions: {
+        Q: 'Who are you planning this for?',
+        Q1: 'Member"s age at the time of marriage?',
+        Q2: 'Marriage"s expenses as on today?',
+        Q3: 'Give this goal a name',
+        Q4: 'Notes'
+      }
+    },
     { id: 5, name: "Vacation", imageUrl: "GlobalVacationGoalImage", isActive: 0 }
   ];
   goalTypeSecondRowListData = [
     { id: 6, name: "Education", imageUrl: "GlobalEducationGoalImage", isActive: 0 },
-    { id: 7, name: "Emergency", imageUrl: "GlobalEmergencyGoalImage", isActive: 0 },
-    { id: 8, name: "Wealth creation", imageUrl: "GlobalWealthCreationGoalImage", isActive: 0 },
-    { id: 9, name: "Big spends", imageUrl: "GlobalBigSpendGoalImage", isActive: 0 },
-    { id: 10, name: "Others", imageUrl: "GlobalOthersGoalImage", isActive: 0 }
+    {
+      id: 7, name: "Emergency", imageUrl: "GlobalEmergencyGoalImage", isActive: 0, questions: {
+        Q1: 'Set a time frame to achieve this fund',
+        Q2: 'Emergency fund you want to accumulate?',
+        Q3: 'Give this goal a name',
+        Q4: 'Notes'
+      }
+    },
+    {
+      id: 8, name: "Wealth creation", imageUrl: "GlobalWealthCreationGoalImage", isActive: 0, questions: {
+        Q: 'Who are you planning this for?',
+        Q1: 'When do you want to it?',
+        Q2: "wahts the target amount?",
+        Q3: 'Give this goal a name',
+        Q4: 'Notes'
+      }
+    },
+    {
+      id: 9, name: "Big spends", imageUrl: "GlobalBigSpendGoalImage", isActive: 0, questions: {
+        Q1: 'When year do you plan this to happen?',
+        Q2: 'How much does it cost today',
+        Q3: 'Give this goal a name',
+        Q4: 'notes'
+      }
+    },
+    {
+      id: 10, name: "Others", imageUrl: "GlobalOthersGoalImage", isActive: 0, questions: {
+        Q1: 'When do you want to achieve this?',
+        Q2: 'How much does it cost today',
+        Q3: 'Give this goal a name',
+        Q4: 'notes'
+      }
+    }
   ];
   ngOnInit() {
     // this.getGoalGlobalData();
@@ -58,5 +111,6 @@ export class AddGoalsComponent implements OnInit {
   }
   getGoalTypeData(data) {
     this.goalTypeData = data;
+    this.goalFlag = (data.id == 1 || data.id == 5 || data.id == 6) ? false : true;
   }
 }
