@@ -50,7 +50,7 @@ export class RiskProfileComponent implements OnInit {
     Highcharts.setOptions({
       chart: {
         type: 'bar',
-        margin: [5, 15, 10, 100],
+        margin: [5, 25, 10, 60],
       },
       credits: { enabled: false },
       exporting: { enabled: false },
