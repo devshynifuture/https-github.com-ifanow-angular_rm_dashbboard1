@@ -1,5 +1,6 @@
-import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-plan',
@@ -13,8 +14,12 @@ export class PlanComponent implements OnInit {
     this._value = value;
   }
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, /* private ref: ChangeDetectorRef, */
+              private locationService: Location) {
+  }
+
   selected;
+
   ngOnInit() {
     this.selected = 0;
     if (this.router.url.split('/')[3] == 'summary') {
@@ -36,4 +41,26 @@ export class PlanComponent implements OnInit {
     }
   }
 
+  goToAdvisorHome() {
+    /*this.router.navigateByUrl('/admin/subscription').then(e => {
+      if (e) {
+        console.log('Navigation is successful!');
+      } else {
+        console.log('Navigation has failed!');
+      }
+    });*/
+    this.router.navigate(['/admin', 'subscription'], {/*replaceUrl: true*/}).then(e => {
+      if (e) {
+        /* setTimeout(() => {
+           this.ref.markForCheck();
+         }, 100);*/
+        console.log('Navigation is successful!');
+        this.locationService.go('/admin/subscription');
+
+      } else {
+        console.log('Navigation has failed!');
+      }
+    });
+    // this.
+  }
 }

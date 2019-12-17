@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-add-mutual-fund',
@@ -13,6 +14,10 @@ export class AddMutualFundComponent implements OnInit {
   ownerData: any;
   nomineesListFM: any;
   _data: any;
+  ownerName: any;
+  selectedFamilyData: any;
+  dataFM: any;
+  familyList: any[];
 
   constructor(private fb: FormBuilder, public subInjectService: SubscriptionInject) { }
 
@@ -61,6 +66,23 @@ export class AddMutualFundComponent implements OnInit {
   //   })
   //   this.ownerData = this.MfForm.controls;
   // }
+  display(value) {
+    console.log('value selected', value)
+    this.ownerName = value.userName;
+    this.selectedFamilyData = value
+  }
+  nomineesList() {
+    this.dataFM = this.nomineesListFM
+    if (this.dataFM.length > 0) {
+      let name = this.ownerName
+      var evens = _.reject(this.dataFM, function (n) {
+        return n.userName == name;
+      });
+      this.familyList = evens
+    }
+
+    console.log('familyList', this.familyList)
+  }
   getFormControl() {
     return this.MfForm.controls;
   }

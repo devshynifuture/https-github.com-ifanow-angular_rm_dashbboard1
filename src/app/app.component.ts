@@ -1,12 +1,8 @@
 import {Component} from '@angular/core';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
-import {
-  NavigationStart,
-  NavigationEnd,
-  Event,
-  Router, RouterOutlet
-} from '@angular/router';
+import {Event, NavigationEnd, NavigationStart, Router, RouterOutlet} from '@angular/router';
 import {EventService} from './Data-service/event.service';
+import {RoutingState} from "./services/routing-state.service";
 
 @Component({
   selector: 'app-root',
@@ -19,8 +15,11 @@ export class AppComponent {
   constructor(
     private lBar: SlimLoadingBarService,
     private _router: Router,
-    private eventService: EventService
+    private eventService: EventService,
+    private routingState: RoutingState,
   ) {
+    routingState.loadRouting();
+
     this._router.events.subscribe((event: Event) => {
       // console.log(event);
       this.loadingBarInterceptor(event);

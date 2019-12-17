@@ -417,12 +417,12 @@ export class RetirementAccountComponent implements OnInit {
       }
     );
   }
-  openAddSchemeHolding(data, state) {
+  openAddSchemeHolding(data) {
     const fragmentData = {
       flag: 'addSchemeHolding',
       data,
       id: 1,
-      state: state,
+      state: 'open',
       componentName: NpsSchemeHoldingComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
