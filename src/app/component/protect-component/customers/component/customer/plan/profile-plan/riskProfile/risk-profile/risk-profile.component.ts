@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { PlanService } from '../../../plan.service';
-import { FormBuilder } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {PlanService} from '../../../plan.service';
+import {FormBuilder} from '@angular/forms';
 import * as Highcharts from 'highcharts';
-import { AuthService } from 'src/app/auth-service/authService';
-import { Container } from '@angular/compiler/src/i18n/i18n_ast';
+import {AuthService} from 'src/app/auth-service/authService';
 
 const HighchartsMore = require('highcharts/highcharts-more.src');
 HighchartsMore(Highcharts);
@@ -33,9 +32,11 @@ export class RiskProfileComponent implements OnInit {
   onClickMe(referenceKeyName) {
     alert(referenceKeyName.id);
   }
+
   onClick(referenceKeyName1) {
     alert(referenceKeyName1.id);
   }
+
   constructor(private fb: FormBuilder, public planService: PlanService, ) {
   }
 
@@ -46,21 +47,22 @@ export class RiskProfileComponent implements OnInit {
     this.getdataForm('');
     this.sendRiskList = [];
   }
+
   percentage(chartId) {
     Highcharts.setOptions({
       chart: {
         type: 'bar',
         margin: [5, 25, 10, 60],
       },
-      credits: { enabled: false },
-      exporting: { enabled: false },
-      legend: { enabled: false },
-      title: { text: '' },
+      credits: {enabled: false},
+      exporting: {enabled: false},
+      legend: {enabled: false},
+      title: {text: ''},
       xAxis: {
         tickLength: 0,
         lineColor: '#999',
         lineWidth: 1,
-        labels: { style: { fontWeight: 'bold' } }
+        labels: {style: {fontWeight: 'bold'}}
       },
       yAxis: {
         min: 0,
@@ -71,7 +73,7 @@ export class RiskProfileComponent implements OnInit {
         tickLength: 2,
         gridLineWidth: 0,
         endOnTick: true,
-        title: { text: '' },
+        title: {text: ''},
         labels: {
           y: 10,
           style: {
@@ -84,9 +86,9 @@ export class RiskProfileComponent implements OnInit {
         backgroundColor: 'rgba(255, 255, 255, .85)',
         borderWidth: 0,
         shadow: true,
-        style: { fontSize: '10px', padding: '2px' },
-        formatter: function () {
-          return this.series.name + ": <strong>" + Highcharts.numberFormat(this.y, 2) + "</strong>";
+        style: {fontSize: '10px', padding: '2px'},
+        formatter() {
+          return this.series.name + ': <strong>' + Highcharts.numberFormat(this.y, 2) + '</strong>';
         }
       },
       plotOptions: {
@@ -105,30 +107,32 @@ export class RiskProfileComponent implements OnInit {
         }
       }
     });
-    this.callFun()
+    this.callFun();
   }
+
   callFun() {
-    var chart1 = new Highcharts.Chart({
-      chart: { renderTo: 'container1' },
-      xAxis: { categories: ['<span class="hc-cat-title">Equity%</span>']},
+    let chart1 = new Highcharts.Chart({
+      chart: {renderTo: 'container1'},
+      xAxis: {categories: ['<span class="hc-cat-title">Equity%</span>']},
       yAxis: {
-        min:0,
+        min: 0,
         max: 100,
-        labels: { y: 10, format: '{value}%', style: { fontSize: '12px' ,fontWeight:'bold',color:'black'} },
-        plotBands: [{ from: 0, to: 20, color: 'rgba(103,103,103,.35)' },
-        { from: 20, to: 40, color: 'rgba(153,153,153,.35)' },
-        { from: 40, to: 60, color: 'rgba(204,204,204,.35)' },
-         { from: 60, to: 80, color: 'rgba(153,153,153,.35)' },
-          { from: 80, to: 100, color: 'rgba(204,204,204,.35)' },]
+        labels: {y: 10, format: '{value}%', style: {fontSize: '12px', fontWeight: 'bold', color: 'black'}},
+        plotBands: [{from: 0, to: 20, color: 'rgba(103,103,103,.35)'},
+          {from: 20, to: 40, color: 'rgba(153,153,153,.35)'},
+          {from: 40, to: 60, color: 'rgba(204,204,204,.35)'},
+          {from: 60, to: 80, color: 'rgba(153,153,153,.35)'},
+          {from: 80, to: 100, color: 'rgba(204,204,204,.35)'},]
       },
-      
-      series: [{ name: 'Measure', pointWidth: 10, data: [80] },
-      { name: 'Target', type: 'scatter', data: [90], }]
+
+      // series: [{name: 'Measure', pointWidth: 10, data: [80]},
+      //   {name: 'Target', type: 'scatter', data: [90],}]
     });
-    Highcharts.Renderer.prototype.symbols.line = function(x, y, width, height) {
-      return ['M',x ,y + width / 2,'L',x+height,y + width / 2];
-  };
+    // Highcharts.Renderer.prototype.symbols.line = function (x, y, width, height) {
+    //   return ['M', x, y + width / 2, 'L', x + height, y + width / 2];
+    // };
   }
+
   guageFun(chartId) {
     this.gaugeOptions = {
 
@@ -173,17 +177,17 @@ export class RiskProfileComponent implements OnInit {
           color: '#FFC100',
           thickness: '30%'
         },
-        {
-          from: 121,
-          to: 160,
-          color: '#FDAF40',
-          thickness: '30%'
-        }, {
-          from: 161,
-          to: 200,
-          color: '#FF7272',
-          thickness: '30%'
-        }],
+          {
+            from: 121,
+            to: 160,
+            color: '#FDAF40',
+            thickness: '30%'
+          }, {
+            from: 161,
+            to: 200,
+            color: '#FF7272',
+            thickness: '30%'
+          }],
         lineWidth: 0,
         minorTickInterval: 1,
         tickPositions: [1, 200],
@@ -211,10 +215,11 @@ export class RiskProfileComponent implements OnInit {
         },
       }
     };
-    this.container()
+    this.container();
   }
+
   container() {
-    var chartSpeed = Highcharts.chart('Gauge', Highcharts.merge(this.gaugeOptions, {
+    let chartSpeed = Highcharts.chart('Gauge', Highcharts.merge(this.gaugeOptions, {
       yAxis: {
         title: {
           text: ''
@@ -296,7 +301,7 @@ export class RiskProfileComponent implements OnInit {
     this.showRisk = true;
     setTimeout(() => {
       this.guageFun('Gauge');
-      this.percentage('container1')
+      this.percentage('container1');
     }, 300);
     if (data) {
       console.log(data);
