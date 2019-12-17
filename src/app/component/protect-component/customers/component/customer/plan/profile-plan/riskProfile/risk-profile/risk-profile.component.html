@@ -1,4 +1,4 @@
-<div class="wrapper-28" [formGroup]="riskProfile"  *ngIf="showRisk == false" >
+<div class="wrapper-28" *ngIf="showRisk == false">
     <div class="row">
         <div class="col-md-9">
             <h3 class="m-0 f-500">Your risk profile helps us understand how much investment risk you can
@@ -11,14 +11,16 @@
                                 {{item.question}}
                             </mat-panel-title>
                         </mat-expansion-panel-header>
-                        <mat-radio-group aria-label="Select an option"
-                            id="custom-radio">
-                            <mat-radio-button *ngFor="let choice of item.riskAssessmentChoices"  [value]="choice"  (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight">{{choice.choice}}</mat-radio-button>
+                        <mat-radio-group aria-label="Select an option" id="custom-radio">
+                            <mat-radio-button *ngFor="let choice of item.riskAssessmentChoices" [value]="choice"
+                                (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight">
+                                {{choice.choice}}</mat-radio-button><br>
                         </mat-radio-group>
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>
-            <button mat-stroked-button class="btn-primary mt-150 br-0 right" (click)="submitRiskAnalysis(item)">SUBMIT</button>
+            <button mat-stroked-button class="btn-primary mt-150 br-0 right"
+                (click)="submitRiskAnalysis(item)">SUBMIT</button>
         </div>
         <div class="col-md-3 pr-0">
             <div class="p-20 b-primitive mt-8">
@@ -28,93 +30,78 @@
         </div>
     </div>
 </div>
-  <div class="pt-44 pb-44"  *ngIf="showRisk == true" >
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="row">
-                                                    <div class="col-md-8"></div>
-                                                    <div class="col-md-4">
-                                                            <h5 class="m-0 f-500 text-black">Your risk score</h5>
-                                                            <div class="ba-3x text-center p-24 mt-12">
-                                                                <h1 class="f-48 m-0">{{score}}</h1>
-                                                                <p class="m-0 text-custom f-12 ">Max: 60</p>
-                                                            </div>
-                                                            
-                                                    </div>
-                                                </div>
-                                               
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="row">
-                                                    <div class="col-md-8 p-0">
-                                                            <h5 class="m-0 f-500 text-black">Your risk profile: Moderately aggressive</h5>
-                                                            <img src="/assets/images/svg/riskprofile.svg" class="w-100 pt-20">
-                                                            <p class="m-0 text-custom roboto">You are an investor who is willing to take moderately high risk for moderately high returns</p>
-                                                    </div>
-                                                    <div class="col-md-4">
-            
-                                                    </div>
-            
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                                <div class="col-md-4">
-                                                    <!-- <div class="row">
-                                                        <div class="col-md-5"></div>
-                                                        <div class="col-md-7">
-                                                                <h5 class="m-0 f-500 text-black">Your risk score</h5>
-                                                                <div class="ba-3x text-center p-24 mt-12">
-                                                                    <h1 class="f-48 m-0">38</h1>
-                                                                    <p class="m-0 text-custom f-12 ">Max: 60</p>
-                                                                </div>
-                                                        </div>
-                                                    </div> -->
-                                                        
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <p class="m-0 roboto pb-12 pt-4">Over the next 12 months</p>
-                                                    <div class="row">
-                                                        <div class="col-md-5 bg-danger pt-12 pl-16 pb-8">
-                                                            <div class="row">
-                                                                <div class="col-md-10 p-0">
-                                                                        <h5 class="m-0 text-white">You’re ok if your portfolio 
-                                                                                goes down this much...</h5>
-                                                                                <h1 class="m-0 f-32 text-white pt-8">-10%</h1>
-                                                                </div>
-                                                                <div class="col-md-2 pl-0">
-                                                                        <img src="/assets/images/svg/down-arrow.svg">
-                                                                </div>
-                                                            </div>
-                                                           
-                                                        </div>
-                                                        <div class="col-md-5 bg-success pt-12 pl-16 pb-8">
-                                                                <div class="row">
-                                                                        <div class="col-md-10 p-0">
-                                                                                <h5 class="m-0 text-white">...for a chance of getting
-                                                                                        this much</h5>
-                                                                                        <h1 class="m-0 f-32 text-white pt-8">10%</h1>
-                                                                        </div>
-                                                                        <div class="col-md-2 pl-0">
-                                                                                <img src="/assets/images/svg/up-arrow.svg">
-                                                                        </div>
-                                                                    </div>
-                                                        </div>
-                                                        <div class="col-md-10 pr-0">
-                                                                <p class="m-0 text-custom roboto text-right pt-4">with a 95% probability</p>
-                                                        </div>
-                                                        <div class="col-md-2"></div>
-                                                    </div>
-                                                    
-                                                </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-center"  *ngIf="showRisk == true" >
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <h5 class="m-0 f-500 text-black">Equity asset allocation </h5>
-                                                <img src="/assets/images/svg/assest-allocation.svg" class="w-100">
-                                            </div>
-                                        </div>
-                                    </div>
+<div class="pt-44 pb-44" *ngIf="showRisk == true">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-4">
+                    <h5 class="m-0 f-500 text-black">Your risk score</h5>
+                    <div class="ba-3x text-center p-24 mt-12">
+                        <h1 class="f-48 m-0">{{score}}</h1>
+                        <p class="m-0 text-custom f-12 ">Max: 60</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-8 p-0">
+                    <h5 class="m-0 f-500 text-black">Your risk profile: Moderately aggressive</h5>
+                    <div #referenceKeyName (click)="onClickMe(referenceKeyName)" id="Gauge"></div>
+                    <p class="m-0 text-custom roboto" style="text-align: center;">You are an investor who is willing to take moderately high risk
+                        for moderately high returns</p>
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-8">
+            <p class="m-0 roboto pb-12 pt-4">Over the next 12 months</p>
+            <div class="row">
+                <div class="col-md-5 bg-danger pt-12 pl-16 pb-8">
+                    <div class="row">
+                        <div class="col-md-10 p-0">
+                            <h5 class="m-0 text-white">You’re ok if your portfolio
+                                goes down this much...</h5>
+                            <h1 class="m-0 f-32 text-white pt-8">-10%</h1>
+                        </div>
+                        <div class="col-md-2 pl-0">
+                            <img src="/assets/images/svg/down-arrow.svg">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-5 bg-success pt-12 pl-16 pb-8">
+                    <div class="row">
+                        <div class="col-md-10 p-0">
+                            <h5 class="m-0 text-white">...for a chance of getting
+                                this much</h5>
+                            <h1 class="m-0 f-32 text-white pt-8">10%</h1>
+                        </div>
+                        <div class="col-md-2 pl-0">
+                            <img src="/assets/images/svg/up-arrow.svg">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 pr-0">
+                    <p class="m-0 text-custom roboto text-right pt-4">with a 95% probability</p>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-center" *ngIf="showRisk == true">
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="m-0 f-500 text-black">Equity asset allocation </h5>
+            <img src="/assets/images/svg/assest-allocation.svg" class="w-100">
+        </div>
+    </div>
+</div>

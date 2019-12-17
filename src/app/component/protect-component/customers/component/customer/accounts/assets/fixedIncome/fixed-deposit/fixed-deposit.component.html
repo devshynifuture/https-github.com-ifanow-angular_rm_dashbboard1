@@ -18,327 +18,382 @@
             <p class="m-0 f-12 text-custom">In whose name is this asset</p>
         </div>
         <div class="col-md-5">
-          <app-owner-column (valueChange)='display($event)' (valueChange1)='display($event)' [data]='ownerData'>
-          </app-owner-column>
-          <!--        <app-owner-column [data]='ownerData' (valueChange)='display($event)'></app-owner-column>-->
+            <app-owner-column (valueChange)='display($event)' (valueChange1)='display($event)' [data]='ownerData'>
+            </app-owner-column>
+            <!-- <app-owner-column [data]='ownerData' (valueChange)='display($event)'></app-owner-column>-->
         </div>
     </div>
-  <div class="row pt-40">
-    <div class="col-md-5 text-right">
-      <h5 class="m-0 pt-8">Type of fixed deposit</h5>
+    <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Type of fixed deposit</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select formControlName="FDType" class="form-control br-0">
+                        <mat-option value="">Select option</mat-option>
+                        <mat-option value="1">Bank FD</mat-option>
+                        <mat-option value="2">Corporate FD</mat-option>
+                    </mat-select>
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isFDType && getFormControl().FDType.invalid || getFormControl().FDType.touched && getFormControl().FDType.invalid)}">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
     </div>
-    <div class="col-md-5">
-      <div class="form-group mb-0">
-        <mat-form-field>
-          <mat-select class="form-control br-0" formControlName="FDType">
-            <mat-option value="">Select option</mat-option>
-            <mat-option value="1">Bank FD</mat-option>
-            <mat-option value="2">Corporate FD</mat-option>
-          </mat-select>
-          <mat-error
-            [ngClass]="{'v-h':!(isFDType && getFormControl().FDType.invalid || getFormControl().FDType.touched && getFormControl().FDType.invalid)}"
-            class="f-12 pt-4">
-            This field is required
-          </mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-  </div>
 
-  <div class="row pt-40">
-    <div class="col-md-5 pr-0 text-right">
-      <h5 class="m-0 pt-8">Amount invested</h5>
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Amount invested</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #amountInvest type="text" (keypress)="keyPress($event)" maxlength="20"
+                        class="form-control br-0 rupess" formControlName="amountInvest">
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isAmountInvest && getFormControl().amountInvest.invalid || getFormControl().amountInvest.touched && getFormControl().amountInvest.invalid)}">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
     </div>
-    <div class="col-md-3">
-      <div class="form-group mb-0">
-        <mat-form-field>
-          <input #amountInvest (keypress)="keyPress($event)" class="form-control br-0 rupess"
-                 formControlName="amountInvest" matInput
-                 maxlength="20" type="text">
-          <mat-error
-            [ngClass]="{'v-h':!(isAmountInvest && getFormControl().amountInvest.invalid || getFormControl().amountInvest.touched && getFormControl().amountInvest.invalid)}"
-            class="f-12 pt-4">
-            This field is required
-          </mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-  </div>
-  <div class="row pt-40">
-    <div class="col-md-5 pr-0 text-right">
-      <h5 class="m-0 pt-8">Commencement date</h5>
-    </div>
-    <div class="col-md-3">
-      <mat-form-field>
-        <input [matDatepicker]="picker" formControlName="commencementDate" matInput>
-        <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-        <mat-error
-          [ngClass]="{'v-h':!(isCommencementDate && getFormControl().commencementDate.invalid || getFormControl().commencementDate.touched && getFormControl().commencementDate.invalid)}"
-          class="f-12 pt-4">
-          This field is required
-        </mat-error>
-      </mat-form-field>
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Commencement date</h5>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field>
+                <input matInput formControlName="commencementDate" [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error class="f-12 pt-4"
+                    [ngClass]="{'v-h':!(isCommencementDate && getFormControl().commencementDate.invalid || getFormControl().commencementDate.touched && getFormControl().commencementDate.invalid)}">
+                    This field is required
+                </mat-error>
+            </mat-form-field>
 
+        </div>
     </div>
-  </div>
-  <div class="row pt-40">
-    <div class="col-md-5 pr-0 text-right">
-      <h5 class="m-0 pt-8">Interest rate</h5>
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Interest rate</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput type="text" (keypress)="keyPress($event)" class="form-control br-0 percentage"
+                        formControlName="interestRate">
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
     </div>
-    <div class="col-md-3">
-      <div class="form-group mb-0">
-        <mat-form-field>
-          <input (keypress)="keyPress($event)" class="form-control br-0 percentage" formControlName="interestRate"
-                 matInput
-                 type="text">
-          <mat-error
-            [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}"
-            class="f-12 pt-4">
-            This field is required
-          </mat-error>
-        </mat-form-field>
-      </div>
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Interest compounding</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select formControlName="compound" class="form-control br-0">
+                        <mat-option value="">Select option</mat-option>
+                        <mat-option value="1">Daily</mat-option>
+                        <mat-option value="2">Monthly</mat-option>
+                        <mat-option value="3">Quarterly</mat-option>
+                        <mat-option value="4">Semi annually</mat-option>
+                        <mat-option value="5">Annually</mat-option>
+                    </mat-select>
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isCompound && getFormControl().compound.invalid || getFormControl().compound.touched && getFormControl().compound.invalid)}">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="row pt-40">
-    <div class="col-md-5 pr-0 text-right">
-      <h5 class="m-0 pt-8">Interest compounding</h5>
-    </div>
-    <div class="col-md-3">
-      <div class="form-group mb-0">
-        <mat-form-field>
-          <mat-select class="form-control br-0" formControlName="compound">
-            <mat-option value="">Select option</mat-option>
-            <mat-option value="1">Daily</mat-option>
-            <mat-option value="2">Monthly</mat-option>
-            <mat-option value="3">Quarterly</mat-option>
-            <mat-option value="4">Semi annually</mat-option>
-            <mat-option value="5">Annually</mat-option>
-          </mat-select>
-          <mat-error
-            [ngClass]="{'v-h':!(isCompound && getFormControl().compound.invalid || getFormControl().compound.touched && getFormControl().compound.invalid)}"
-            class="f-12 pt-4">
-            This field is required
-          </mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-  </div>
-  <div class="row pt-40">
-    <div class="col-md-5 pr-0 text-right">
-      <h5 class="m-0 pt-8">FD end date</h5>
-    </div>
-    <div class="col-md-6 pr-0">
-      <mat-radio-group aria-label="Select an option" formControlName="maturity" id="custom-radio">
-        <mat-radio-button (click)="haveMaturity(isMaturity = false)" class="b-ua text-custom" value="1">I
-          have tenure
-        </mat-radio-button>
-        <!-- <mat-radio-button value="2" class="b-a-custom text-primary" (click)="haveMaturity(isMaturity = true)">I
-        have maturity date
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">FD end date</h5>
+        </div>
+        <div class="col-md-6 pr-0">
+            <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="maturity">
+                <mat-radio-button value="1" class="b-ua text-custom"
+                    [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==1,'text-primary':fixedDeposit.get('maturity').value==1,'b-a':fixedDeposit.get('maturity').value==2}"
+                    (click)="haveMaturity(isMaturity = false)">I have tenure
+                </mat-radio-button>
+                <!-- <mat-radio-button value="2" class="b-a-custom text-primary" (click)="haveMaturity(isMaturity = true)">I
+    have maturity date
     </mat-radio-button> -->
-        <mat-radio-button (click)="haveMaturity(isMaturity = true)" [checked]='true' class="b-a-custom text-primary"
-                          value="2">I have maturity date
-        </mat-radio-button>
-      </mat-radio-group>
-      <mat-error
-        [ngClass]="{'v-h':!(isMaturity && getFormControl().maturity.invalid || getFormControl().maturity.touched && getFormControl().maturity.invalid)}"
-        class="f-12 pt-4">
-        This field is required
-      </mat-error>
+                <mat-radio-button class="classBlue" value="2" [checked]='true'
+                    [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==2,'text-primary':fixedDeposit.get('maturity').value==2,'b-a text-custom':fixedDeposit.get('maturity').value==1}"
+                    (click)="haveMaturity(isMaturity = true)">I have maturity date
+                </mat-radio-button>
+            </mat-radio-group>
+            <mat-error class="f-12 pt-4"
+                [ngClass]="{'v-h':!(isMaturity && getFormControl().maturity.invalid || getFormControl().maturity.touched && getFormControl().maturity.invalid)}">
+                This field is required
+            </mat-error>
 
-    </div>
-  </div>
-  <div *ngIf="showTenure == true" class="row pt-24">
-    <div class="col-md-5 pr-0 text-right">
-      <h5 class="m-0 pt-8">Tenure</h5>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-4 p-0">
-          <mat-select class="form-control br-0 br-none" formControlName="tenureY">
-            <mat-option [value]="">Years</mat-option>
-            <mat-option *ngFor="let Y of fdYears" [value]="Y">
-              <span>{{Y}}</span>
-            </mat-option>
-          </mat-select>
         </div>
-        <div class="col-md-4 p-0">
-          <mat-select class="form-control br-0 br-none" formControlName="tenureM">
-            <mat-option [value]="">Months</mat-option>
-            <mat-option *ngFor="let M of fdMonths" [value]="M">
-              <span>{{M}}</span>
-            </mat-option>
-          </mat-select>
+    </div>
+    <div class="row pt-24" *ngIf="showTenure == true">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Tenure</h5>
         </div>
-        <div class="col-md-4 p-0">
-          <mat-select class="form-control br-0" formControlName="tenureD">
-            <mat-option [value]="">Days</mat-option>
-            <mat-option *ngFor="let D of fdDays" [value]="D">
-              <span>{{D}}</span>
-            </mat-option>
-          </mat-select>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-4 p-0">
+                    <mat-select formControlName="tenureY" class="form-control br-0 br-none">
+                        <mat-option [value]="">Years</mat-option>
+                        <mat-option *ngFor="let Y of fdYears" [value]="Y">
+                            <span>{{Y}}</span>
+                        </mat-option>
+                    </mat-select>
+                </div>
+                <div class="col-md-4 p-0">
+                    <mat-select formControlName="tenureM" class="form-control br-0 br-none">
+                        <mat-option [value]="">Months</mat-option>
+                        <mat-option *ngFor="let M of fdMonths" [value]="M">
+                            <span>{{M}}</span>
+                        </mat-option>
+                    </mat-select>
+                </div>
+                <div class="col-md-4 p-0">
+                    <mat-select formControlName="tenureD" class="form-control br-0">
+                        <mat-option [value]="">Days</mat-option>
+                        <mat-option *ngFor="let D of fdDays" [value]="D">
+                            <span>{{D}}</span>
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <mat-error class="f-12 pt-4"
+                    [ngClass]="{'v-h':!(isTenure && getFormControl().tenureY.invalid || getFormControl().tenureY.touched && getFormControl().tenureY.invalid)}">
+                    This field is required
+                </mat-error>
+            </div>
         </div>
-      </div>
-      <div class="col-md-12">
-        <mat-error
-          [ngClass]="{'v-h':!(isTenure && getFormControl().tenureY.invalid || getFormControl().tenureY.touched && getFormControl().tenureY.invalid)}"
-          class="f-12 pt-4">
-          This field is required
-        </mat-error>
-      </div>
     </div>
-  </div>
-  <div *ngIf="showTenure == false" class="row pt-24">
-    <div class="col-md-5 pr-0 text-right">
-      <h5 class="m-0 pt-8">Maturity date</h5>
-    </div>
-    <div class="col-md-3 pr-0">
-      <div class="form-group mb-0 d-flex">
-        <mat-form-field>
-          <input [matDatepicker]="picker1" formControlName="maturityDate" matInput>
-          <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
-          <mat-error
-            [ngClass]="{'v-h':!(isMaturityDate && getFormControl().maturityDate.invalid || getFormControl().maturityDate.touched && getFormControl().maturityDate.invalid)}"
-            class="f-12 pt-4">
-            This field is required
-          </mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-  </div>
 
-  <div class="row pt-40">
-    <div class="col-md-5 text-right">
-      <h5 class="m-0 pt-8">Interest Payout option</h5>
+    <div class="row pt-24" *ngIf="showTenure == false">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Maturity date</h5>
+        </div>
+        <div class="col-md-3 pr-0">
+            <div class="form-group mb-0 d-flex">
+                <mat-form-field>
+                    <input matInput formControlName="maturityDate" [matDatepicker]="picker1">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isMaturityDate && getFormControl().maturityDate.invalid || getFormControl().maturityDate.touched && getFormControl().maturityDate.invalid)}">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+<!-- 
+        <div class="col-md-3 pr-0">
+            <div class="form-group mb-0 d-flex">
+                <mat-form-field>
+                    <input [matDatepicker]="picker1" formControlName="maturityDate" matInput>
+                    <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <mat-error
+                        [ngClass]="{'v-h':!(isMaturityDate && getFormControl().maturityDate.invalid || getFormControl().maturityDate.touched && getFormControl().maturityDate.invalid)}"
+                        class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div> -->
     </div>
-    <div class="col-md-3 pr-0">
-      <mat-form-field>
-        <mat-select class="form-control br-0" formControlName="payOpt">
-          <mat-option value="payOpt"> Select option</mat-option>
-          <mat-option value="1"> Cumulative payout</mat-option>
-          <mat-option (click)="intrestPayout(2)" value="2">Interest payout</mat-option>
-        </mat-select>
-        <mat-error
-          [ngClass]="{'v-h':!(isPayOpt && getFormControl().payOpt.invalid || getFormControl().payOpt.touched && getFormControl().payOpt.invalid)}"
-          class="f-12 pt-4">
-          This field is required
-        </mat-error>
-      </mat-form-field>
-    </div>
-  </div>
-  <div *ngIf="showFreqPayOpt == true" class="row pt-24">
-    <div class="col-md-5 text-right">
-      <h5 class="m-0 pt-8">Frequency of payout per year</h5>
-    </div>
-    <div class="col-md-3 pr-0">
-      <mat-form-field>
-        <mat-select class="form-control br-0" formControlName="frequencyOfPayoutPerYear">
-          <mat-option value="frequencyOfPayoutPerYear"> Select option</mat-option>
-          <mat-option value="1"> Monthly</mat-option>
-          <mat-option value="2">quarterly</mat-option>
-          <mat-option value="2">semi-annually</mat-option>
-        </mat-select>
-        <mat-error
-          [ngClass]="{'v-h':!(isFrequencyOfPayoutPerYear && getFormControl().frequencyOfPayoutPerYear.invalid || getFormControl().frequencyOfPayoutPerYear.touched && getFormControl().frequencyOfPayoutPerYear.invalid)}"
-          class="f-12 pt-4">
-          This field is required
-        </mat-error>
-      </mat-form-field>
-    </div>
-  </div>
 
-  <div class="row pt-40">
-    <div class="col-md-5 text-right">
-      <h5 class="m-0 pt-8">Ownership type</h5>
+    <div class="row pt-40">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Interest Payout option</h5>
+        </div>
+        <div class="col-md-3 pr-0">
+            <mat-form-field>
+                <mat-select formControlName="payOpt" class="form-control br-0">
+                    <mat-option value="payOpt"> Select option</mat-option>
+                    <mat-option value="1"> Cumulative payout</mat-option>
+                    <mat-option value="2" (click)="intrestPayout(2)">Interest payout</mat-option>
+                </mat-select>
+                <mat-error class="f-12 pt-4"
+                    [ngClass]="{'v-h':!(isPayOpt && getFormControl().payOpt.invalid || getFormControl().payOpt.touched && getFormControl().payOpt.invalid)}">
+                    This field is required
+                </mat-error>
+            </mat-form-field>
+        </div>
     </div>
-    <div class="col-md-5">
-      <mat-form-field>
-        <mat-select class="form-control br-0" formControlName="ownerType">
-          <mat-option value=""> Select option</mat-option>
-          <mat-option value="1"> Joint</mat-option>
-          <mat-option value="2">Single</mat-option>
-        </mat-select>
-        <mat-error
-          [ngClass]="{'v-h':!(isOwnerType && getFormControl().ownerType.invalid || getFormControl().ownerType.touched && getFormControl().ownerType.invalid)}"
-          class="f-12 pt-4">
-          This field is required
-        </mat-error>
-      </mat-form-field>
+    <div class="row pt-24" *ngIf="showFreqPayOpt == true">
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Frequency of payout per year</h5>
+        </div>
+        <div class="col-md-3 pr-0">
+            <mat-form-field>
+                <mat-select formControlName="frequencyOfPayoutPerYear" class="form-control br-0">
+                    <mat-option value="frequencyOfPayoutPerYear"> Select option</mat-option>
+                    <mat-option value="1"> Monthly</mat-option>
+                    <mat-option value="2">quarterly</mat-option>
+                    <mat-option value="2">semi-annually</mat-option>
+                </mat-select>
+                <mat-error class="f-12 pt-4"
+                    [ngClass]="{'v-h':!(isFrequencyOfPayoutPerYear && getFormControl().frequencyOfPayoutPerYear.invalid || getFormControl().frequencyOfPayoutPerYear.touched && getFormControl().frequencyOfPayoutPerYear.invalid)}">
+                    This field is required
+                </mat-error>
+            </mat-form-field>
+        </div>
     </div>
-  </div>
-  <div class="row pt-40">
-    <div *ngIf="showHide == true" class="col-md-5 text-right">
-      <h5 (click)="showLess(showHide)" class="m-0 pt-8 text-custom c-p">Show less</h5>
-    </div>
-    <div *ngIf="showHide == false" class="col-md-5 text-right">
-      <h5 (click)="showLess(showHide)" class="m-0 pt-8 text-custom c-p">+ Add more [optional data] </h5>
-    </div>
-    <div class="col-md-5">
 
-    </div>
-  </div>
-  <div *ngIf="showHide == true">
+
     <div class="row pt-40">
-      <div class="col-md-5 pr-0 text-right">
-        <h5 class="m-0 pt-8">FD Number</h5>
-      </div>
-      <div class="col-md-5">
-        <div class="form-group mb-0">
-          <mat-form-field>
-            <input #fdNo (keypress)="keyPress($event)" class="form-control br-0" formControlName="fdNo" matInput
-                   maxlength="10" type="text">
-            <mat-hint align="start" class="f-12">Optional</mat-hint>
-          </mat-form-field>
+        <div class="col-md-5 text-right">
+            <h5 class="m-0 pt-8">Ownership type</h5>
         </div>
-      </div>
+        <div class="col-md-5">
+            <mat-form-field>
+                <mat-select class="form-control br-0" formControlName="ownerType">
+                    <mat-option value=""> Select option</mat-option>
+                    <mat-option value="1"> Joint</mat-option>
+                    <mat-option value="2">Single</mat-option>
+                </mat-select>
+                <mat-error
+                    [ngClass]="{'v-h':!(isOwnerType && getFormControl().ownerType.invalid || getFormControl().ownerType.touched && getFormControl().ownerType.invalid)}"
+                    class="f-12 pt-4">
+                    This field is required
+                </mat-error>
+            </mat-form-field>
+        </div>
     </div>
+
     <div class="row pt-40">
-      <div class="col-md-5 pr-0 text-right">
-        <h5 class="m-0 pt-8">Bank Account Number</h5>
-      </div>
-      <div class="col-md-5">
-        <div class="form-group mb-0">
-          <mat-form-field>
-            <input #bankACNo (keypress)="keyPress($event)" class="form-control br-0" formControlName="bankACNo" matInput
-                   maxlength="15" type="text">
-            <mat-hint align="start" class="f-12">Optional</mat-hint>
-          </mat-form-field>
+        <div *ngIf="showHide == true" class="col-md-5 text-right">
+            <h5 (click)="showLess(showHide)" class="m-0 pt-8 text-custom c-p">Show less</h5>
         </div>
-      </div>
-    </div>
-    <div class="row pt-40">
-      <div class="col-md-5 pr-0 text-right">
-        <h5 class="m-0 pt-8">Institution name</h5>
-      </div>
-      <div class="col-md-5">
-        <div class="form-group mb-0">
-          <mat-form-field>
-            <input #institution class="form-control br-0" formControlName="institution" matInput
-                   maxlength="30">
-            <mat-hint align="start" class="f-12">Optional</mat-hint>
-          </mat-form-field>
+        <div *ngIf="showHide == false" class="col-md-5 text-right">
+            <h5 (click)="showLess(showHide)" class="m-0 pt-8 text-custom c-p">+ Add more [optional data] </h5>
         </div>
-      </div>
-    </div>
-    <div class="row pt-40">
-      <div class="col-md-5 pr-0 text-right">
-        <h5 class="m-0 pt-8">Description</h5>
-      </div>
-      <div class="col-md-5">
-        <div class="form-group mb-0">
-          <mat-form-field>
-            <input #description class="form-control br-0" formControlName="description" matInput
-                   maxlength="60">
-            <mat-hint align="start" class="f-12">Optional</mat-hint>
-          </mat-form-field>
+        <div class="col-md-5">
+
         </div>
-      </div>
     </div>
-  </div>
+    <div *ngIf="showHide == true">
+        <div class="row pt-40">
+            <div class="col-md-5 text-right">
+                <h5 class="m-0 pt-8">Ownership type</h5>
+            </div>
+            <div class="col-md-5">
+                <mat-form-field>
+                    <mat-select formControlName="ownerType" class="form-control ">
+                        <mat-option value=""> Select option </mat-option>
+                        <mat-option value="1"> Joint </mat-option>
+                        <mat-option value="2">Single </mat-option>
+                    </mat-select>
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isOwnerType && getFormControl().ownerType.invalid || getFormControl().ownerType.touched && getFormControl().ownerType.invalid)}">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Bank Account Number</h5>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input #bankACNo (keypress)="keyPress($event)" class="form-control br-0"
+                            formControlName="bankACNo" matInput maxlength="15" type="text">
+                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="showHide == true">
+            <div class="row pt-40">
+                <div class="col-md-5 pr-0 text-right">
+                    <h5 class="m-0 pt-8">FD Number</h5>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput #fdNo type="text" (keypress)="keyPress($event)" maxlength="10"
+                                class="form-control br-0" formControlName="fdNo">
+                            <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-40">
+                <div class="col-md-5 pr-0 text-right">
+                    <h5 class="m-0 pt-8">Bank Account Number</h5>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput #bankACNo type="text" (keypress)="keyPress($event)" maxlength="15"
+                                class="form-control br-0" formControlName="bankACNo">
+                            <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-40">
+                <div class="col-md-5 pr-0 text-right">
+                    <h5 class="m-0 pt-8">Institution name</h5>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput #institution maxlength="30" class="form-control br-0"
+                                formControlName="institution">
+                            <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-40">
+                <div class="col-md-5 pr-0 text-right">
+                    <h5 class="m-0 pt-8">Description</h5>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput #description maxlength="60" class="form-control br-0"
+                                formControlName="description">
+                            <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Description</h5>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input #description class="form-control br-0" formControlName="description" matInput
+                            maxlength="60">
+                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">
         <div class="col-md-4">
@@ -348,4 +403,3 @@
             <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFixedDeposit()">Save</button>
         </div>
     </div>
-</div>
