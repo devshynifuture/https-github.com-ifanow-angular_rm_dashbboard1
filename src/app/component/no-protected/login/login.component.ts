@@ -63,8 +63,8 @@ export class LoginComponent implements OnInit {
         roleId: 1
       };
 
-      // this.hardCodeLoginForTest();
-      //   console.log(loginData);
+      this.hardCodeLoginForTest();
+      // console.log(loginData);
       this.backOfficeService.loginApi(loginData).subscribe(
         data => {
           if (data) {
