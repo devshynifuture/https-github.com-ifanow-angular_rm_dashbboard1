@@ -1243,24 +1243,74 @@ mat-tab-group[vertical] {
       border-left: 0px !important;
     }
 
-    #table-low {
-      thead {
-        display: none !important;
-      }
+    tbody td {
+      font-weight: 500;
+    }
 
-      tr {
-        border-left: 0px !important;
-      }
-
-      tbody td {
-        font-weight: 500;
-      }
-
-      tr:nth-child(2) {
-        background: #F5F7F7 !important;
-      }
+    tr:nth-child(2) {
+      background: #F5F7F7 !important;
     }
   }
+}
+
+#calender-tabs {
+  .mat-tab-label {
+    padding: 0 !important;
+    min-width: 90px !important;
+    opacity: 1;
+    height: 40px !important;
+  }
+
+  .mat-checkbox-label {
+    font-size: 14px !important;
+
+  }
+
+  .mat-checkbox-layout {
+    padding-top: 20px !important;
+  }
+
+  .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+    display: none;
+  }
+
+  .mat-ink-bar {
+    height: 2px !important;
+  }
+
+  .mat-tab-label-active {
+    color: #008FFF !important;
+    font-weight: 500 !important;
+  }
+
+  .mat-tab-header {
+    border-bottom: 0px !important;
+  }
+
+  .mat-tab-body-content {
+    overflow: hidden;
+  }
+
+}
+
+#ui-calender {
+  .main-header {
+    box-shadow: 5px 1px 10px rgba(0, 0, 0, 0.2), 3px 4px 5px rgba(0, 0, 0, 0.12), 2px 2px 4px rgba(0, 0, 0, 0.14);
+    background-color: #fff;
+    width: 100%;
+    position: fixed;
+    z-index: 9;
+  }
+}
+
+// end crm
+
+.proximaFont {
+  font-family: "Proxima Nova ", sans-serif;
+}
+
+.mat-table {
+  font-family: "Proxima Nova ", sans-serif !important;
 }
 
 .bar {
@@ -1294,51 +1344,4 @@ mat-tab-group[vertical] {
   100% {
     background-position: 100% 0;
   }
-}
-
-#calender-tabs {
-  .mat-tab-label {
-    padding: 0 !important;
-    min-width: 90px !important;
-    opacity: 1;
-    height: 40px !important;
-  }
-
-  .mat-checkbox-label {
-    font-size: 14px !important;
-  }
-
-  .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination,
-  .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
-    display: none;
-  }
-
-  .mat-ink-bar {
-    height: 2px !important;
-  }
-
-  .mat-tab-label-active {
-    color: #008FFF !important;
-    font-weight: 500 !important;
-  }
-
-  .mat-tab-header {
-    border-bottom: 0px !important;
-  }
-
-  .mat-tab-body-content {
-    overflow: hidden;
-  }
-
-  .mat-checkbox label {
-    padding-top: 20px !important;
-  }
-}
-
-.proximaFont {
-  font-family: "Proxima Nova ", sans-serif;
-}
-
-.mat-table {
-  font-family: "Proxima Nova ", sans-serif !important;
 }
