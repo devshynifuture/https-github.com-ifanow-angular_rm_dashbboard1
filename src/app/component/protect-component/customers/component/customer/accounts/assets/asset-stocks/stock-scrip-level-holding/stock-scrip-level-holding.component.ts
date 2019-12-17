@@ -73,12 +73,15 @@ export class StockScripLevelHoldingComponent implements OnInit {
           holdings: [element.quantity, [Validators.required]],
           holdingAsOn: [new Date(element.holdingOrTransactionDate), [Validators.required]],
           investedAmt: [element.investedOrTransactionAmount, [Validators.required]],
-          id: [data.id]
+          id: [element.id]
         })
         this.HoldingArray.push(singleScripData);
       });
     }
     this.familyMemberId = data.familyMemberId;
+    this.portfolioFieldData = {
+      familyMemberId: this.familyMemberId
+    }
     this.ownerData = this.scipLevelHoldingForm.controls;
   }
   holdingListForm = this.fb.group({

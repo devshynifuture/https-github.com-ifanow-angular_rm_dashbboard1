@@ -62,6 +62,10 @@ export class StockScripLevelTransactionComponent implements OnInit {
         }))
       });
     }
+    this.familyMemberId = data.familyMemberId;
+    this.portfolioFieldData = {
+      familyMemberId: this.familyMemberId
+    }
     this.ownerData = this.scipLevelTransactionForm.controls;
     this.scriptForm = { formData: this.scipLevelTransactionForm }
   }
@@ -139,7 +143,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
         {
           "id": element.get('id').value,
           "stockId": this.editApiData.id,
-          "holdingOrTransaction": 1,
+          "holdingOrTransaction": 2,
           "transactionTypeOrScripNameId": element.get('transactionType').value,
           "quantity": element.get('quantity').value,
           "holdingOrTransactionDate": element.get('date').value,
@@ -154,7 +158,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
           }
         ]
       }
-      this.cusService.editScriplevelHoldingAndTransaction(finalStocks).subscribe(
+      this.cusService.editScriplevelHoldingAndTransaction(obj).subscribe(
         data => {
           console.log(data);
           this.Close();

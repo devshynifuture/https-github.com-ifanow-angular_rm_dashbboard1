@@ -52,14 +52,7 @@
             [formGroup]="singleHolding">
             <div class="col-md-4 pl-0">
                 <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input [matAutocomplete]="auto" aria-label="State" autocomplete="off"
-                            class="form-control br-0 pl-8" formControlName="scripName" matInput>
-                        <mat-autocomplete #auto="matAutocomplete">
-                            <!-- <mat-option *ngFor="let s of schemeList" [value]="s.id">{{ s.name }}
-                    </mat-option> -->
-                        </mat-autocomplete>
-                    </mat-form-field>
+                    <app-scrip-field [data]="singleHolding"></app-scrip-field>
                 </div>
             </div>
             <div class="col-md-2 p-0">
