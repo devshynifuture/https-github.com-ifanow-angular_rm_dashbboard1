@@ -43,5 +43,7 @@ export class EmailAddTaskComponent implements OnInit {
 
     // this.valueChange.emit(this.emailSend);
   }
+  saveData(data){
 
+  }
 }
