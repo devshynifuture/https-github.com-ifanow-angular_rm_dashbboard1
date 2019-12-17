@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomerDocumentsComponent } from './customer-documents/customer-documents.component';
 import { AddProfileSummaryComponent } from '../../common-component/add-profile-summary/add-profile-summary.component';
-import { MutualFundsCapitalComponent } from './mutual-funds-capital/mutual-funds-capital.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { InsuranceComponent } from './insurance/insurance.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -53,6 +52,12 @@ import { AccountCommonModule } from "./account.common.module";
 // import {PDFExportModule} from "@progress/kendo-angular-pdf-export";
 import { AssetStocksComponent } from './assets/asset-stocks/asset-stocks.component';
 import { MutualFundComponent } from './assets/mutual-fund/mutual-fund/mutual-fund.component';
+import { MutualFundsCapitalComponent } from './assets/mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
+import { MutualFundOverviewComponent } from './assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
+import { MutualFundSummaryComponent } from './assets/mutual-fund/mutual-fund/mutual-fund-summary/mutual-fund-summary.component';
+import { MutualFundAllTransactionComponent } from './assets/mutual-fund/mutual-fund/mutual-fund-all-transaction/mutual-fund-all-transaction.component';
+import { MutualFundUnrealizedTranComponent } from './assets/mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized-tran.component';
+import { MutualFundGoalLinkageComponent } from './assets/mutual-fund/mutual-fund/mutual-fund-goal-linkage/mutual-fund-goal-linkage.component';
 @NgModule({
   declarations: [
     SchemeLevelTransactionComponent,
@@ -64,7 +69,6 @@ import { MutualFundComponent } from './assets/mutual-fund/mutual-fund/mutual-fun
     InsuranceComponent,
     AddProfileSummaryComponent,
     DocumentsComponent,
-    MutualFundsCapitalComponent,
     BottomSheetComponent,
     // AddLiabilitiesComponent,
     // AddInsuranceComponent,
@@ -114,7 +118,13 @@ import { MutualFundComponent } from './assets/mutual-fund/mutual-fund/mutual-fun
     FormatNumberDirective,
     DocumentNewFolderComponent,
     AssetStocksComponent,
-    MutualFundComponent
+    MutualFundComponent,
+    MutualFundsCapitalComponent,
+    MutualFundOverviewComponent,
+    MutualFundSummaryComponent,
+    MutualFundAllTransactionComponent,
+    MutualFundUnrealizedTranComponent,
+    MutualFundGoalLinkageComponent
   ],
   imports: [
     AccountRoutingModule,
