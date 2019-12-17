@@ -31,7 +31,18 @@ export class EmailServiceService {
     });
   }
 
-  deleteMessageFromTrashForever(ids: string[]) {
+  deleteThreadsFromTrashForever(ids: string[]) {
+    const userInfo = AuthService.getUserInfo();
+
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.DELETE_MULTIPLE_THREADS, {
+      ids: ids,
+      emailId: userInfo.emailId,
+      userId: userInfo.advisorId
+    });
+  }
+
+  // needs to work on ids 
+  deleteMessageFromView(ids?: string) {
     const userInfo = AuthService.getUserInfo();
 
     return this.http.post(apiConfig.GMAIL_URL + appConfig.DELETE_MESSAGES, {
@@ -41,7 +52,18 @@ export class EmailServiceService {
     });
   }
 
-  moveMessagesToThrashFromList(ids: string[]) {
+  moveThreadsToTrashFromList(ids: string[]) {
+    const userInfo = AuthService.getUserInfo();
+
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.MOVE_THREADS_TO_TRASH, {
+      ids: ids,
+      emailId: userInfo.emailId,
+      userId: userInfo.advisorId
+    });
+  }
+
+  // id param to work on
+  moveMessageToTrashFromView(ids?: string) {
     const userInfo = AuthService.getUserInfo();
 
     return this.http.post(apiConfig.GMAIL_URL + appConfig.MOVE_MESSAGES_TO_TRASH, {
@@ -51,8 +73,19 @@ export class EmailServiceService {
     });
   }
 
+  // move gmail inbox threads to list
+  moveThreadsFromTrashToList(ids: string[]) {
+    const userInfo = AuthService.getUserInfo();
 
-  moveMessagesFromTrashToList(ids: string[]) {
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.MOVE_THREADS_FROM_TRASH, {
+      ids,
+      emailId: userInfo.emailId,
+      userId: userInfo.advisorId
+    });
+  }
+
+  // need to work on ids 
+  moveMessagesFromTrashToList(ids?: string[]) {
     const userInfo = AuthService.getUserInfo();
 
     return this.http.post(apiConfig.GMAIL_URL + appConfig.MOVE_MESSAGES_FROM_TRASH, {
@@ -81,7 +114,6 @@ export class EmailServiceService {
     });
   }
 
-
   createUpdateDraft(body) {
     const userInfo = AuthService.getUserInfo();
     return this.http.post(apiConfig.GMAIL_URL + appConfig.CREATE_DRAFT, {
@@ -90,6 +122,7 @@ export class EmailServiceService {
       ...body
     });
   }
+
   openEmailAddTask(data) {
     const fragmentData = {
       flag: 'addEmailTask',
@@ -130,23 +163,6 @@ export class EmailServiceService {
 
   }
 
-  refreshList(data) {
-    switch (data) {
-      case 'archive': this.getEmailArchiveList(data);
-        break;
-      case 'draft': this.getEmailDraftList();
-        break;
-      case 'inbox': this.getEmailList(data);
-        break;
-      case 'sent': this.getEmailSentList(data);
-        break;
-
-      default: throwError('Cannot Refresh');
-    }
-  }
-
-
-
   getEmailList(data) {
 
     alert('refreshed ' + data);
@@ -163,36 +179,7 @@ export class EmailServiceService {
     });
   }
 
-  getListFromGmail(data) {
-    // const httpParams = new HttpParams().set('advisorId', data.advisorId);
-    // return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
-  }
 
-  getEmailSentList(data) {
-
-    alert('refreshed ' + data);
-    // const httpParams = new HttpParams().set('advisorId', data.advisorId);
-    // return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
-  }
-
-  getEmailArchiveList(data) {
-
-    alert('refreshed ' + data);
-    // const httpParams = new HttpParams().set('advisorId', data.advisorId);
-    // return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
-  }
-
-  // getLabelList(){
-  //   return this.http.get(apiConfig.MAIN_URL + appConfig);
-  // }
-
-  // getUserList(){
-  //   return this.http.get(apiConfig.MAIN_URL + appConfig);
-  // }
-
-  // saveUser(data){
-  //   return this.http.post(apiConfig.MAIN_URL + appConfig, data);
-  // }
 
   sendNextData(data: Object) {
     this.dataSourceOneMailView.next(data);

@@ -71,6 +71,6 @@ export class EmailTrashComponent implements OnInit {
   }
 
   doRefresh() {
-    this.emailService.refreshList('trash');
+    this.ngOnInit();
   }
 }

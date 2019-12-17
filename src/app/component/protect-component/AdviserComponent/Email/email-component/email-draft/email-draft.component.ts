@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { EmailInterfaceI } from '../email.interface';
+import { EmailInterfaceI, ExtractedGmailDataI } from '../email.interface';
 
 
 const ELEMENT_DATA: EmailInterfaceI[] = [
@@ -31,13 +31,15 @@ export class EmailDraftComponent implements OnInit, OnDestroy {
   emailDraftSubscription;
   emailDraftList: object[] = [];
   dataSource;
+  selectedThreadsArray: ExtractedGmailDataI[] = [];
   displayedColumns: string[] = ['select', 'labelId', 'subject', 'message', 'date'];
   selection = new SelectionModel<object>(true, []);
 
   constructor(private subInjectService: SubscriptionInject,
     private emailService: EmailServiceService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    // private router: Router,
+    // private activatedRoute: ActivatedRoute,
+  ) {
   }
 
   ngOnInit() {
@@ -45,33 +47,34 @@ export class EmailDraftComponent implements OnInit, OnDestroy {
   }
 
   getDraftList() {
-    this.emailDraftSubscription = this.emailService.getEmailDraftList().subscribe(responseData => {
+    this.emailDraftSubscription = this.emailService.getEmailDraftList()
+      .subscribe(responseData => {
 
-      responseData.forEach(element => {
-        const { messages: { payload: { headers }, snippet } } = element;
-        const { messages } = element;
-        const { internalDate } = messages;
-        const { labelIds } = messages;
-        const [, , , subjectObj] = headers;
-        const subject = subjectObj.value;
-        console.log('draft values ->>>>>>>>>>>>>>>>>');
-        console.log(headers);
-        console.log(snippet);
-        console.log(' internal Date->   ', internalDate);
-        console.log(labelIds);
-        const Obj = {
-          message: snippet,
-          labelId: labelIds[0],
-          date: internalDate,
-          headers,
-          subject
-        };
-        this.emailDraftList.push(Obj);
+        responseData.forEach(element => {
+          const { messages: { payload: { headers }, snippet } } = element;
+          const { messages } = element;
+          const { internalDate } = messages;
+          const { labelIds } = messages;
+          const [, , , subjectObj] = headers;
+          const subject = subjectObj.value;
+          console.log('draft values ->>>>>>>>>>>>>>>>>');
+          console.log(headers);
+          console.log(snippet);
+          console.log(' internal Date->   ', internalDate);
+          console.log(labelIds);
+          const Obj = {
+            message: snippet,
+            labelId: labelIds[0],
+            date: internalDate,
+            headers,
+            subject
+          };
+          this.emailDraftList.push(Obj);
 
+        });
+        // console.log(responseData);
+        this.dataSource = new MatTableDataSource<object>(this.emailDraftList);
       });
-      // console.log(responseData);
-      this.dataSource = new MatTableDataSource<object>(this.emailDraftList);
-    });
   }
 
   ngOnDestroy() {
@@ -87,10 +90,17 @@ export class EmailDraftComponent implements OnInit, OnDestroy {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      this.selectedThreadsArray = [];
+    } else {
+      this.dataSource.data.forEach(row => {
+        this.selection.select(row);
+        this.selectedThreadsArray.push(row);
+      });
+    }
   }
+
 
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?): string {
@@ -106,7 +116,21 @@ export class EmailDraftComponent implements OnInit, OnDestroy {
   }
 
   doRefresh() {
-    this.emailService.refreshList('draft');
+    this.ngOnInit();
+  }
+
+  // ui select highlight
+  highlightSelectedRow(row: ExtractedGmailDataI) {
+    if (this.selectedThreadsArray.includes(row)) {
+      let indexOf = this.selectedThreadsArray.indexOf(row);
+      let removedRow = this.selectedThreadsArray.splice(indexOf, 1);
+      console.log('removed row -> ', removedRow);
+    } else {
+      this.selectedThreadsArray.push(row);
+      console.log('added row -> ', row);
+    }
+
+    console.log(this.selectedThreadsArray);
   }
 
 }
