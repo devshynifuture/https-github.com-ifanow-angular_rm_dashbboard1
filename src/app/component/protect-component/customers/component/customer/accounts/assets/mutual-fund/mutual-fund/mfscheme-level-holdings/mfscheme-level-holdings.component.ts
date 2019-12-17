@@ -30,18 +30,18 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     if (data == undefined) {
       data = {};
     }
-    this.schemeLevelHoldingForm = this.fb.group({
-      ownerName: [data.ownerName , [Validators.required]],
-      dateOfReceipt: [new Date(data.dateOfReceived), [Validators.required]],
-      creditorName: [data.creditorName, [Validators.required]],
-      amtBorrowed:[data.amountBorrowed,[Validators.required]],
-      interest: [data.interest, [Validators.required]],
-      dateOfRepayment: [new Date(data.dateOfRepayment), [Validators.required]],
-      balance: [data.outstandingBalance, [Validators.required]],
-      collateral: [data.collateral],
-    });
+    // this.schemeLevelHoldingForm = this.fb.group({
+    //   ownerName: [data.ownerName , [Validators.required]],
+    //   dateOfReceipt: [new Date(data.dateOfReceived), [Validators.required]],
+    //   creditorName: [data.creditorName, [Validators.required]],
+    //   amtBorrowed:[data.amountBorrowed,[Validators.required]],
+    //   interest: [data.interest, [Validators.required]],
+    //   dateOfRepayment: [new Date(data.dateOfRepayment), [Validators.required]],
+    //   balance: [data.outstandingBalance, [Validators.required]],
+    //   collateral: [data.collateral],
+    // });
 
-    this.ownerData = this.schemeLevelHoldingForm.controls;
+    // this.ownerData = this.schemeLevelHoldingForm.controls;
 
   }
   display(value) {
