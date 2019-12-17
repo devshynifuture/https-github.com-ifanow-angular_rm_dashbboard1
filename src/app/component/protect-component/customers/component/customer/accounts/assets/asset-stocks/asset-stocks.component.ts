@@ -152,6 +152,7 @@ export class AssetStocksComponent implements OnInit {
     switch (true) {
       case (data.stockType == 1):
         component = AddAssetStocksComponent;
+        data = portfolioData;
         break;
       case (data.stockType == 2):
         component = StockScripLevelHoldingComponent;

@@ -4,9 +4,8 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../customer.service';
-import { AddScripComponent } from '../add-scrip/add-scrip.component';
 import { MatDialog } from '@angular/material';
-import { AddPortfolioComponent } from '../add-portfolio/add-portfolio.component';
+
 
 @Component({
   selector: 'app-stock-scrip-level-transaction',
@@ -27,6 +26,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
   ownerInfo: any;
   portfolioData: any;
   scriptForm: any;
+  portfolioFieldData: { familyMemberId: any; };
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   @Input() set data(data) {
@@ -57,9 +57,14 @@ export class StockScripLevelTransactionComponent implements OnInit {
           transactionType: [String(element.transactionTypeOrScripNameId), [Validators.required]],
           date: [new Date(element.holdingOrTransactionDate), [Validators.required]],
           transactionAmount: [element.investedOrTransactionAmount, [Validators.required]],
-          quantity: [element.quantity, [Validators.required]]
+          quantity: [element.quantity, [Validators.required]],
+          id: [element.id]
         }))
       });
+    }
+    this.familyMemberId = data.familyMemberId;
+    this.portfolioFieldData = {
+      familyMemberId: this.familyMemberId
     }
     this.ownerData = this.scipLevelTransactionForm.controls;
     this.scriptForm = { formData: this.scipLevelTransactionForm }
@@ -75,7 +80,8 @@ export class StockScripLevelTransactionComponent implements OnInit {
       transactionType: [, [Validators.required]],
       date: [, [Validators.required]],
       transactionAmount: [, [Validators.required]],
-      quantity: [, [Validators.required]]
+      quantity: [, [Validators.required]],
+      id: []
     }))
   }
   removeTransactions(index) {
@@ -104,6 +110,9 @@ export class StockScripLevelTransactionComponent implements OnInit {
     this.ownerInfo = value
     this.ownerName = value.userName;
     this.familyMemberId = value.id
+    this.portfolioFieldData = {
+      familyMemberId: this.familyMemberId
+    }
   }
   getPortfolioData(data) {
     console.log("", data)
@@ -127,43 +136,75 @@ export class StockScripLevelTransactionComponent implements OnInit {
       })
       return;
     }
-    let finalStocks = []
-    this.transactionArray.controls.forEach(element => {
+    if (this.editApiData) {
+      let finalStocks = [];
+      this.transactionArray.controls.forEach(element => {
+        let singleList =
+        {
+          "id": element.get('id').value,
+          "stockId": this.editApiData.id,
+          "holdingOrTransaction": 2,
+          "transactionTypeOrScripNameId": element.get('transactionType').value,
+          "quantity": element.get('quantity').value,
+          "holdingOrTransactionDate": element.get('date').value,
+          "investedOrTransactionAmount": element.get('transactionAmount').value
+        }
+        finalStocks.push(singleList);
+      })
       let obj = {
-        "scripNameId": this.scipLevelTransactionForm.get('scripName').value.id,
-        "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
-        "stockType": 3,
-        "transactionorHoldingSummaryList": [
+        "stocks": [
           {
-            "holdingOrTransaction": 2,
-            "quantity": element.get('quantity').value,
-            "holdingOrTransactionDate": element.get('date').value,
-            "transactionTypeOrScripNameId": element.get('transactionType').value,
-            "investedOrTransactionAmount": element.get('transactionAmount').value
+            "transactionorHoldingSummaryList": finalStocks
           }
         ]
       }
-      finalStocks.push(obj)
-    })
-    console.log(finalStocks)
-    const obj =
-    {
-      "id": this.portfolioData.id,
-      "clientId": this.clientId,
-      "advisorId": this.advisorId,
-      "familyMemberId": this.familyMemberId,
-      "ownerName": this.ownerName,
-      "portfolioName": this.portfolioData.portfolioName,
-      "stocks": finalStocks
+      this.cusService.editScriplevelHoldingAndTransaction(obj).subscribe(
+        data => {
+          console.log(data);
+          this.Close();
+        },
+        err => this.eventService.openSnackBar(err)
+      )
     }
-    console.log(obj)
-    this.cusService.addAssetStocks(obj).subscribe(
-      data => {
-        console.log(data);
-        this.Close();
-      },
-      err => this.eventService.openSnackBar(err, "dismiss")
-    )
+    else {
+      let finalStocks = [];
+      this.transactionArray.controls.forEach(element => {
+        let obj = {
+          "scripNameId": this.scipLevelTransactionForm.get('scripName').value.id,
+          "scripCurrentValue": this.scipLevelTransactionForm.get('scripName').value.currentValue,
+          "stockType": 3,
+          "transactionorHoldingSummaryList": [
+            {
+              "holdingOrTransaction": 2,
+              "quantity": element.get('quantity').value,
+              "holdingOrTransactionDate": element.get('date').value,
+              "transactionTypeOrScripNameId": element.get('transactionType').value,
+              "investedOrTransactionAmount": element.get('transactionAmount').value
+            }
+          ]
+        }
+        finalStocks.push(obj)
+      })
+      console.log(finalStocks)
+      const obj =
+      {
+        "id": this.scipLevelTransactionForm.get('portfolioName').value.id,
+        "clientId": this.clientId,
+        "advisorId": this.advisorId,
+        "familyMemberId": this.familyMemberId,
+        "ownerName": this.ownerName,
+        "portfolioName": this.scipLevelTransactionForm.get('portfolioName').value.portfolioName,
+        "stocks": finalStocks
+      }
+      console.log(obj)
+      this.cusService.addAssetStocks(obj).subscribe(
+        data => {
+          console.log(data);
+          this.Close();
+        },
+        err => this.eventService.openSnackBar(err, "dismiss")
+      )
+    }
   }
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });

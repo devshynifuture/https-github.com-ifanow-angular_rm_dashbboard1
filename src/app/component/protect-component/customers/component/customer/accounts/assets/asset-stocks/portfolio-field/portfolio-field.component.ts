@@ -17,20 +17,26 @@ export class PortfolioFieldComponent implements OnInit {
   clientId: any;
   portfolioList: any;
   familyWisePortfolio: any[];
-  ownerId: any;
   @Output() outputEvent = new EventEmitter();
   portfolioForm: any;
+  ownerIdData: any;
   constructor(private fb: FormBuilder, public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService) { }
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
   }
   portfolioData = new FormControl();
   @Input() set owner(data) {
     this.portfolioForm = data;
     this.portfolioData.reset();
-    this.getPortfolioList();
   }
+  @Input() set ownerId(data) {
+    if (data == undefined) {
+      return;
+    }
+    this.ownerIdData = data;
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.getPortfolioList()
+  };
   getPortfolioList() {
     const obj =
     {
@@ -47,7 +53,7 @@ export class PortfolioFieldComponent implements OnInit {
     let checkOwnerId = false;
     this.familyWisePortfolio = [];
     data.forEach(element => {
-      if (element.familyMemberId == this.ownerId) {
+      if (element.familyMemberId == this.ownerIdData.familyMemberId) {
         checkOwnerId = true;
         this.familyWisePortfolio.push(element)
       }
@@ -57,7 +63,7 @@ export class PortfolioFieldComponent implements OnInit {
   }
   openAddPortfolio() {
     console.log(this.portfolioData)
-    if (this.ownerId == undefined) {
+    if (this.ownerIdData) {
       this.eventService.openSnackBar("please select owner", "dismiss");
       return;
     }

@@ -155,11 +155,13 @@ export const appConfig = {
   GET_SCRIP_lIST: 'account/asset/stock/scrip-name/get',
   ADD_PORTFOLIO: 'account/asset/stock/portfolio/add',
   DELETE_STOCK: 'account/asset/stock/delete',
-  EDIT_STOCK: 'account/asset/stock/edit',
+  EDIT_STOCK_PORTFOLIO: 'account/asset/stock/portfolio/edit',
   ADD_SCRIP: 'account/asset/stock/scrip-name/add',
+  EDIT_SCRIP_HOLDING_TRANSACTION: 'account/asset/stock/holding/transaction/edit',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/submit',
+  GET_GLOBAL_GOAL_DATA: 'goal-planning/goal/global-data/get',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   GET_EPF: 'account/asset/retirement/epf/list/get',

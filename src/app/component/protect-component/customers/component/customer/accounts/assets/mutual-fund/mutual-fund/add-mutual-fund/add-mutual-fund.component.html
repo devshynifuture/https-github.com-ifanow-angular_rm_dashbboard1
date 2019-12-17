@@ -1,0 +1,142 @@
+<div class="popup-header-fix-60">
+  <div class="row bb-1">
+    <div class="col-md-8 p-0">
+      <h4 class="mb-0 wrapper-20">ADD PORTFOLIO SUMMARY</h4>
+    </div>
+    <div class="col-md-4 text-right">
+      <div class="wrapper-12">
+        <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+      </div>
+    </div>
+  </div>
+</div>
+<div [formGroup]="MfForm" class="pt-100 pl-24 pr-24 pb-48 mb-48">
+  <div class="row">
+    <div class="col-md-5 pr-0 text-right">
+      <h5 class="m-0 pt-8">Owner</h5>
+      <p class="m-0 f-12 text-custom">In whose name is this asset</p>
+    </div>
+    <div class="col-md-5">
+      <app-owner-column (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData'>
+      </app-owner-column>
+    </div>
+  </div>
+  <div class="row pt-40">
+    <div class="col-md-5 pr-0 text-right">
+      <h5 class="m-0 pt-8">Current market value</h5>
+      <p class="m-0 f-12 text-custom">This has to updated manually at all times</p>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group mb-0">
+        <mat-form-field>
+          <input matInput autocomplete="off" formControlName="currentMarketValue" type="number" #institution
+            maxlength="30" class="form-control rupess br-0">
+          <mat-error>This field is required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-40">
+    <div class="col-md-5 pr-0 text-right">
+      <h5 class="m-0 pt-8">Value as on</h5>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group form-group_one mb-0">
+        <mat-form-field>
+          <input matInput autocomplete="off" formControlName="valueAsOn" class="form-control br-0"
+            [matDatepicker]="balanceAsOn">
+          <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
+          <mat-datepicker #balanceAsOn></mat-datepicker>
+          <mat-error>This field is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-40">
+    <div class="col-md-5 pr-0 text-right">
+      <h5 class="m-0 pt-8">Amount invested</h5>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group mb-0">
+        <mat-form-field>
+          <input matInput autocomplete="off" formControlName="amtInvested" type="number" #institution maxlength="30"
+            class="form-control rupess br-0">
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 p-0">
+        <p class="m-0 f-12 text-custom pt-4">Optional
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-40">
+    <div class="col-md-5 pr-0 text-right">
+      <h5 class="m-0 pt-8">Description</h5>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group mb-0">
+        <mat-form-field>
+          <input matInput autocomplete="off" type="text" formControlName="description" #institution maxlength="30"
+            class="form-control ruppes br-0">
+          <mat-error>This field is required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-24" formArrayName="getNomineeName">
+    <div *ngFor="let obj of getNominee.controls; let pointIndex=index" [formGroupName]="pointIndex" class="row pt-24">
+      <div class="col-md-5 text-right">
+        <h5 *ngIf="pointIndex==0" class="m-0 pt-8 ">Nominee</h5>
+        <h5 *ngIf="pointIndex!=0" class="m-0 pt-8 ">Nominee{{pointIndex}}</h5>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <input (click)="nomineesList()" [matAutocomplete]="auto" aria-label="State" class="form-control br-0 pl-8"
+              formControlName="name" list="userName" matInput placeholder="Add nominee">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let item of familyList" [value]="item.userName">
+                <span>{{item.userName}}</span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-md-12 p-0">
+          <p class="m-0 f-12 text-custom pt-4">Optional
+          </p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <input class="b-a" formControlName="ownershipPer" matInput type="number">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col-md-2 p-0">
+        <div *ngIf="pointIndex==0" class="col-md-3">
+          <h5 class="m-0 text-primitive pt-8 c-p">+ Add Nominee</h5>
+        </div>
+        <div *ngIf="pointIndex > 0" class="col-md-2">
+          <h5  class="m-0 text-primitive pt-8 c-p">Remove</h5>
+        </div>
+      </div>
+
+    </div>
+    <!-- <mat-hint *ngIf="showError==true" align="end" class="f-12 pt-4 text-danger">
+      Percent cannot be more than 100%
+    </mat-hint> -->
+  </div>
+</div>
+<div class="bottom-fixed wrapper-12">
+  <div class="row">
+    <div class="col-md-10">
+      <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
+    </div>
+    <div class="col-md-2 pr-0">
+      <button mat-stroked-button class="br-0 btn-bottom right">Save</button>
+    </div>
+  </div>
+</div>

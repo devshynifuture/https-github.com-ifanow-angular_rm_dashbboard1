@@ -1,4 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {CustomerService} from '../../../customer.service';
 import {AuthService} from 'src/app/auth-service/authService';
@@ -6,12 +14,14 @@ import {AuthService} from 'src/app/auth-service/authService';
 @Component({
   selector: 'app-owner-column',
   templateUrl: './owner-column.component.html',
-  styleUrls: ['./owner-column.component.scss']
+  styleUrls: ['./owner-column.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class OwnerColumnComponent implements OnInit {
 
   isownerName = false;
-  owner: any;
+  owner;
   // s: string[] = ['Sneha', 'gayatri', 'Shivani'];
   family = [];
   advisorId: any;
@@ -19,7 +29,7 @@ export class OwnerColumnComponent implements OnInit {
   clientId: any;
   sendData: any;
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService) {
+  constructor(private fb: FormBuilder, private custumService: CustomerService, private ref: ChangeDetectorRef) {
   }
 
   @Output() valueChange = new EventEmitter();
@@ -28,6 +38,10 @@ export class OwnerColumnComponent implements OnInit {
   @Input()
   set data(data) {
     this.ownerData = data;
+    console.log('1111121212121212121212 OwnerColumnComponent data : ', data);
+    if (data) {
+      // this.owner = data;
+    }
     // this.getListFamilyMem();
   }
 
@@ -81,6 +95,10 @@ export class OwnerColumnComponent implements OnInit {
       });
     }
     this.valueChange1.emit(this.sendData);
+    setTimeout(() => {
+      this.ref.markForCheck();
+    }, 100);
+
     // this.getFormControl().ownerName.markAsTouched();
     // this.getdataForm();
   }
