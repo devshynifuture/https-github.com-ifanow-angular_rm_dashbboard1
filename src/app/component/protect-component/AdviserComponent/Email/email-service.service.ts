@@ -7,7 +7,7 @@ import { BehaviorSubject, throwError } from 'rxjs';
 import { apiConfig } from './../../../../config/main-config';
 import { HttpService } from './../../../../http-service/http-service';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { EmailAddTaskComponent } from './email-component/email-list/email-add-task/email-add-task.component';
 
 
@@ -31,12 +31,33 @@ export class EmailServiceService {
     });
   }
 
+  deleteMessageFromTrashForever(ids: string[]) {
+    const userInfo = AuthService.getUserInfo();
+
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.DELETE_MESSAGES, {
+      ids: ids,
+      emailId: userInfo.emailId,
+      userId: userInfo.advisorId
+    });
+  }
+
   moveMessagesToThrashFromList(ids: string[]) {
     const userInfo = AuthService.getUserInfo();
-    console.log(userInfo);
+
     return this.http.post(apiConfig.GMAIL_URL + appConfig.MOVE_MESSAGES_TO_TRASH, {
       ids: ids,
-      email: userInfo.emailId,
+      emailId: userInfo.emailId,
+      userId: userInfo.advisorId
+    });
+  }
+
+
+  moveMessagesFromTrashToList(ids: string[]) {
+    const userInfo = AuthService.getUserInfo();
+
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.MOVE_MESSAGES_FROM_TRASH, {
+      ids,
+      emailId: userInfo.emailId,
       userId: userInfo.advisorId
     });
   }

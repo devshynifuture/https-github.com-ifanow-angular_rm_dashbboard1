@@ -40,3 +40,20 @@ export interface GmailPartI {
     mimeType: string,
     partId: string
 }
+
+export interface ExtractedGmailDataI {
+    position: number;
+    idsOfThread: { historyId: string, id: string },
+    parsedData: { decodedPart: string[], headers: {}[] },
+    labelIdsFromMessages: { labelIds: string[] }[],
+    emailers: string,
+    subjectMessage: { subject: string, message: string },
+    date: string
+}
+
+export interface MessageListArray {
+    position: number,
+    emailers: string,
+    subjectMessage: string,
+    date: string
+}

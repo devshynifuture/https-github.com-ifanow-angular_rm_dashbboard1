@@ -277,13 +277,12 @@ export const appConfig = {
   DELETE_MESSAGES: 'gmail/messages/delete',
   MODIFY_MESSAGES: 'gmail/messages/modify',
   MOVE_MESSAGES_TO_TRASH: 'gmail/messages/thrash',
-  MOVE_MESSAGES_FROM_TRASH: 'gmail/messages/unthrash',
+  MOVE_MESSAGES_FROM_TRASH: 'gmail/messages/untrash',
   DELETE_MULTIPLE_THREADS: 'gmail/threads/delete',
   MODIFY_MULTIPLE_THREADS: 'gmail/threads/modify',
   MOVE_THREADS_TO_THRASH: 'gmail/threads/thrash',
   GET_DRAFT_LIST: 'user/draft/list/get',
   GET_GMAIL_INBOX_LIST: 'user/thread/list/get',
   CREATE_DRAFT: 'user/draft/create',
-  GET_THRASH_LIST: ''
 
 };

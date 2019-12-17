@@ -2,6 +2,10 @@
     display: none !important;
 }
 
+::ng-deep .mat-paginator-range-label{
+    margin: 0;
+}
+
 .selected-tr{
     background: #d2ebff;
 }

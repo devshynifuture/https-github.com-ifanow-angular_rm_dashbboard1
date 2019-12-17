@@ -19,8 +19,11 @@
             <mat-menu #menu="matMenu">
                 <button mat-menu-item>Make as read</button>
                 <button mat-menu-item>Make as unread</button>
-                <button mat-menu-item (click)="moveMessageFromThrash()">
+                <button mat-menu-item (click)="moveMessageFromTrash()">
                     Remove from Trash
+                </button>
+                <button mat-menu-item (click)="deleteForeverFromTrash()">
+                    Delete selected forever
                 </button>
             </mat-menu>
         </div>
@@ -74,7 +77,7 @@
                 {{element.date | gmailDate}}
             </span>
             <span class="d-none" data-show="icons">
-                <button mat-icon-button (click)="moveMessageToTrash(element)">
+                <button mat-icon-button (click)="moveMessageToTrash(element)" [disabled]="trashAction">
                     <mat-icon>
                         delete
                     </mat-icon>
