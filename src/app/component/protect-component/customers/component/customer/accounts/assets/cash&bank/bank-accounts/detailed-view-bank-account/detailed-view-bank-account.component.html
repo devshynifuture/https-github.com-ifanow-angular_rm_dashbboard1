@@ -1,4 +1,4 @@
-<div class="popup-header-fix">
+<div class="popup-header-fix-35">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
             <h4 class="mb-0 wrapper-20">BANK ACCOUNT - DETAILED VIEW</h4>
@@ -12,7 +12,7 @@
 </div>
 
 
-<div class="pl-20 pr-20 pb-48">
+<div class="pl-20 pr-20 mt-44 pb-48">
     <div class="row pt-40">
         <div class="col-md-12 p-0">
             <div class="insurance-ui bt">
@@ -26,7 +26,7 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                            Account type
+                        Account type
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(bankAccount.accountType==1)?'Current':'Savings'}}
@@ -34,7 +34,7 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                            Account balance
+                        Account balance
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{bankAccount.accountBalance}}
@@ -42,7 +42,7 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                            Balance as on
+                        Balance as on
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{bankAccount.balanceAsOn}}
@@ -50,7 +50,7 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                            Interest rate
+                        Interest rate
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{bankAccount.interestRate}}
@@ -58,7 +58,7 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                            Interest compounding
+                        Interest compounding
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(bankAccount.interestCompounding==1)?'Daily':(bankAccount.interestCompounding==2)?'Monthly':(bankAccount.interestCompounding==3)?'Quarterly':(bankAccount.interestCompounding==4)?'Semi annually':'Annually'}}
@@ -66,7 +66,7 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                            Account No.
+                        Account No.
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{bankAccount.accountNo}}
@@ -74,20 +74,20 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                            Bank Name
+                        Bank Name
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{bankAccount.description}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
-                        <div class="col-md-8 text-left f-14 roboto p-0">
-                                Description
-                        </div>
-                        <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{bankAccount.description}}
-                        </div>
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Description
                     </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{bankAccount.description}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

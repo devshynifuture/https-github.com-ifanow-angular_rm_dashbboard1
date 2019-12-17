@@ -17,8 +17,8 @@
             <p class="m-0 f-12 text-custom">In whose name is this asset</p>
         </div>
         <div class="col-md-5">
-            <app-owner-component (valueChange)='display($event)' [data]='ownerData'>
-            </app-owner-component>
+          <app-owner-column (valueChange)='display($event)' [data]='ownerData'>
+          </app-owner-column>
         </div>
     </div>
     <div class="row pt-40">

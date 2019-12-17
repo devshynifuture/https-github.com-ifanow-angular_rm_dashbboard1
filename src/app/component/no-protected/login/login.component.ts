@@ -58,61 +58,58 @@ export class LoginComponent implements OnInit {
     // this.router.navigate(['/admin/subscription']);
     if (this.loginForm.valid) {
       const loginData = {
-        name: this.loginForm.controls.name.value,
+        userName: this.loginForm.controls.name.value,
         password: this.loginForm.controls.password.value,
-        id: 0,
-        role: 'admin'
+        roleId: 1
       };
 
-
-      const jsonData = {
-        advisorId: 2808,
-        clientId: 2978,
-        emailId: 'gaurav@futurewise.co.in',
-        authToken: 'data',
-        imgUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'
-      };
-
-      this.authService.setToken('data');
-
-      this.authService.setUserInfo(jsonData);
-      this.authService.setClientData({
-        id: 2978, name: 'Aryendra Kumar Saxena'
-      });
-      // this.authService.setToken(loginData.payLoad);
-      this.eventService.openSnackBar('Login SuccessFully', 'dismiss');
-      this.router.navigate(['/admin/subscription']);
-
-
+      // this.hardCodeLoginForTest();
       //   console.log(loginData);
-      //   this.backOfficeService.loginApi(loginData).subscribe(
-      //     data => {
-      //       if (data) {
-      //         console.log('data: ', data);
-      //         const jsonData = {
-      //             advisorId: 2808,
-      //             clientId: 2978,
-      //             authToken: data,
-      //             imgUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'
-      //           }
-      //         ;
-      //         this.authService.setToken(data);
+      this.backOfficeService.loginApi(loginData).subscribe(
+        data => {
+          if (data) {
+            console.log('data: ', data);
+            this.authService.setToken(data.token);
+            if (!data.advisorId) {
+              data.advisorId = data.adminAdvisorId;
+            }
+            this.authService.setUserInfo(data);
+            this.eventService.openSnackBar('Login SuccessFully', 'dismiss');
+            this.router.navigate(['/admin/subscription']);
 
-      //         this.authService.setUserInfo(jsonData);
-      //         this.authService.setToken(loginData.payLoad);
-      //         this.eventService.openSnackBar('Login SuccessFully', 'dismiss');
-      //         this.router.navigate(['/admin/subscription']);
-
-      //       }
-      //       this.closeDialog(data);
-      //     },
-      //     err => {
-      //       console.log('error on login: ', err);
-      //       this.eventService.openSnackBar(err, 'dismiss');
-      //     }
-      //   );
-      // }
+            // Hard coded client login for testing
+            this.authService.setClientData({
+              id: 2978, name: 'Aryendra Kumar Saxena'
+            });
+          }
+          this.closeDialog(data);
+        },
+        err => {
+          console.log('error on login: ', err);
+          this.eventService.openSnackBar(err, 'dismiss');
+        }
+      );
     }
+  }
+
+  hardCodeLoginForTest() {
+    const jsonData = {
+      advisorId: 2808,
+      clientId: 2978,
+      emailId: 'gaurav@futurewise.co.in',
+      authToken: 'data',
+      imgUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'
+    };
+
+    this.authService.setToken('data');
+
+    this.authService.setUserInfo(jsonData);
+    this.authService.setClientData({
+      id: 2978, name: 'Aryendra Kumar Saxena'
+    });
+    // this.authService.setToken(loginData.payLoad);
+    this.eventService.openSnackBar('Login SuccessFully', 'dismiss');
+    this.router.navigate(['/admin/subscription']);
   }
 
   closeDialog(data) {
