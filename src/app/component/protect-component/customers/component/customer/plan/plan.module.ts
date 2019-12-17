@@ -20,6 +20,7 @@ import {HistoryRiskProfileComponent} from './profile-plan/history-risk-profile/h
 import {PlanRoutingModule} from "./plan-routing.module";
 import {IncomeComponent} from './profile-plan/income/income.component';
 import {ExpensesComponent} from '../accounts/expenses/expenses.component';
+import { RiskProfileComponent } from './profile-plan/riskProfile/risk-profile/risk-profile.component';
 
 // import { AddGoalsComponent } from './add-goals/add-goals.component';
 
@@ -47,7 +48,8 @@ import {ExpensesComponent} from '../accounts/expenses/expenses.component';
     AddProfilePlanComponent,
     HistoryRiskProfileComponent,
     IncomeComponent,
-    ExpensesComponent
+    ExpensesComponent,
+    RiskProfileComponent
    
     
     
@@ -62,7 +64,7 @@ import {ExpensesComponent} from '../accounts/expenses/expenses.component';
     ReactiveFormsModule
   ],
   exports: [PlanComponent, AddScenariosComponent, AddInvestmentPlanComponent,
-    AddProfilePlanComponent, HistoryRiskProfileComponent],
+    AddProfilePlanComponent, HistoryRiskProfileComponent,RiskProfileComponent],
   entryComponents: []
 })
 export class PlanModule {

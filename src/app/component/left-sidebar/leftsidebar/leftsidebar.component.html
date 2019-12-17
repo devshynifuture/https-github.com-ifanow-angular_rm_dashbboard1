@@ -17,7 +17,7 @@
                 </mat-form-field>
                 <p class="f-14 f-500 mb-0">Ronak Hindocha</p>
             </div>
-            <div class="pt-12 scorllable">
+            <div class="pt-12 scorllable ">
                 <a mat-list-item class="sidenav-link" routerLink="/admin/dashboard">
                     <img src="assets/images/svg/time-meter.svg">
                     <span *ngIf="showTabs" class="title" mat-line>Dashboard</span>
@@ -66,12 +66,10 @@
     </mat-sidenav>
     <mat-sidenav-content id="left">
         <mat-toolbar class="bg-white bl-1" class="fix-top pl-0">
-            <button *ngIf="showTabs==false" type="button" aria-label="Toggle sidenav" mat-icon-button
-                (click)="showMainNavWrapper()">
+            <button *ngIf="showTabs==false" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="showMainNavWrapper()">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
-            <button *ngIf="showTabs" class="btn_nav" type="button" aria-label="Toggle sidenav" mat-icon-button
-                (click)="showsmallNavWrapper()">
+            <button *ngIf="showTabs" class="btn_nav" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="showsmallNavWrapper()">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
 

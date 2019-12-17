@@ -20,7 +20,7 @@
         <div class="col-md-5">
             <app-owner-column (valueChange)='display($event)' (valueChange1)='display($event)' [data]='ownerData'>
             </app-owner-column>
-            <!--        <app-owner-column [data]='ownerData' (valueChange)='display($event)'></app-owner-column>-->
+            <!-- <app-owner-column [data]='ownerData' (valueChange)='display($event)'></app-owner-column>-->
         </div>
     </div>
     <div class="row pt-40">
@@ -120,8 +120,8 @@
                 <mat-radio-button value="1" class="b-ua text-custom" [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==1,'text-primary':fixedDeposit.get('maturity').value==1,'b-a':fixedDeposit.get('maturity').value==2}" (click)="haveMaturity(isMaturity = false)">I have tenure
                 </mat-radio-button>
                 <!-- <mat-radio-button value="2" class="b-a-custom text-primary" (click)="haveMaturity(isMaturity = true)">I
-                            have maturity date
-                        </mat-radio-button> -->
+    have maturity date
+    </mat-radio-button> -->
                 <mat-radio-button class="classBlue" value="2" [checked]='true' [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==2,'text-primary':fixedDeposit.get('maturity').value==2,'b-a text-custom':fixedDeposit.get('maturity').value==1}" (click)="haveMaturity(isMaturity = true)">I have maturity date
                 </mat-radio-button>
             </mat-radio-group>
@@ -186,19 +186,21 @@
                 </mat-form-field>
             </div>
         </div>
-
+        <!-- 
         <div class="col-md-3 pr-0">
             <div class="form-group mb-0 d-flex">
                 <mat-form-field>
                     <input [matDatepicker]="picker1" formControlName="maturityDate" matInput>
                     <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
-                    <mat-error [ngClass]="{'v-h':!(isMaturityDate && getFormControl().maturityDate.invalid || getFormControl().maturityDate.touched && getFormControl().maturityDate.invalid)}" class="f-12 pt-4">
+                    <mat-error
+                        [ngClass]="{'v-h':!(isMaturityDate && getFormControl().maturityDate.invalid || getFormControl().maturityDate.touched && getFormControl().maturityDate.invalid)}"
+                        class="f-12 pt-4">
                         This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <div class="row pt-40">
@@ -376,4 +378,3 @@
             <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFixedDeposit()">Save</button>
         </div>
     </div>
-</div>
