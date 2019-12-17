@@ -19,7 +19,7 @@
             <mat-menu #menu="matMenu">
                 <button mat-menu-item>Make as read</button>
                 <button mat-menu-item>Make as unread</button>
-                <button mat-menu-item (click)="moveThreadsFromTrash()">
+                <button mat-menu-item *ngIf="trashAction" (click)="moveThreadsFromTrash()">
                     Remove from Trash
                 </button>
                 <button *ngIf="selectedThreadsArray.length != 0 && trashAction" mat-menu-item

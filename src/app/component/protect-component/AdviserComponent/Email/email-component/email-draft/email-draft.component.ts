@@ -1,3 +1,5 @@
+import { GmailInboxResponseI, MessageListArray } from './../email.interface';
+import { EmailUtilService } from 'src/app/services/email-util.service';
 import { SubscriptionInject } from './../../../Subscriptions/subscription-inject.service';
 import { EmailServiceService } from './../../email-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -34,6 +36,9 @@ export class EmailDraftComponent implements OnInit, OnDestroy {
   selectedThreadsArray: ExtractedGmailDataI[] = [];
   displayedColumns: string[] = ['select', 'labelId', 'subject', 'message', 'date'];
   selection = new SelectionModel<object>(true, []);
+  messageListArray = [];
+  paginator;
+
 
   constructor(private subInjectService: SubscriptionInject,
     private emailService: EmailServiceService,
@@ -49,31 +54,53 @@ export class EmailDraftComponent implements OnInit, OnDestroy {
   getDraftList() {
     this.emailDraftSubscription = this.emailService.getEmailDraftList()
       .subscribe(responseData => {
+        let tempArray1 = [];
+        let index = 0;
 
-        responseData.forEach(element => {
-          const { messages: { payload: { headers }, snippet } } = element;
-          const { messages } = element;
-          const { internalDate } = messages;
-          const { labelIds } = messages;
-          const [, , , subjectObj] = headers;
-          const subject = subjectObj.value;
-          console.log('draft values ->>>>>>>>>>>>>>>>>');
-          console.log(headers);
-          console.log(snippet);
-          console.log(' internal Date->   ', internalDate);
-          console.log(labelIds);
-          const Obj = {
-            message: snippet,
-            labelId: labelIds[0],
-            date: internalDate,
-            headers,
-            subject
-          };
-          this.emailDraftList.push(Obj);
+        // responseData.forEach((thread: GmailInboxResponseI, index: number) => {
 
-        });
+        let parsedData: any; // object containing array of decoded parts and headers
+        let idsOfThread: any; // Object of historyId and Id of thread
+        let dateIdsSnippetsOfMessages: any; // array of Objects having ids, date snippets of messages
+        let labelIdsfromMessages;
+        let extractSubjectFromHeaders;
+
+        parsedData = EmailUtilService.decodeGmailThreadExtractMessage(responseData);
+        idsOfThread = EmailUtilService.getIdsOfGmailThreads(responseData);
+        dateIdsSnippetsOfMessages = EmailUtilService.getIdAndDateAndSnippetOfGmailThreadMessages(responseData);
+        labelIdsfromMessages = EmailUtilService.getGmailLabelIdsFromMessages(responseData);
+        extractSubjectFromHeaders = EmailUtilService.getSubjectAndFromOfGmailHeaders(responseData);
+
+        const Obj1 = {
+          position: index + 1,
+          idsOfThread,
+          parsedData,
+          labelIdsfromMessages,
+          emailers: `${extractSubjectFromHeaders['headerFromArray'][0].split('<')[0].trim()}`,
+          subjectMessage: {
+            subject: extractSubjectFromHeaders['headerSubjectArray'][0],
+            message: dateIdsSnippetsOfMessages[0]['snippet']
+          },
+          date: `${dateIdsSnippetsOfMessages[0]['internalDate']}`
+        }
+
+        // console.log(Obj1);
+
+        // tempArray.push(Obj);
+        tempArray1.push(Obj1);
+        // console.log('headers subbect and from');
+        // console.log(extractSubjectFromHeaders);
+        // });
+
+        this.messageListArray = tempArray1;
+        console.log("this is message list array ->>>>>>>");
+        console.log(this.messageListArray);
+        // this.messageDetailArray = tempArray;
+        // console.log('this is decoded object data ->>>>');
+        // console.log(this.messageDetailArray);
+        this.dataSource = new MatTableDataSource<MessageListArray>(this.messageListArray);
+        this.dataSource.paginator = this.paginator;
         // console.log(responseData);
-        this.dataSource = new MatTableDataSource<object>(this.emailDraftList);
       });
   }
 
@@ -84,8 +111,11 @@ export class EmailDraftComponent implements OnInit, OnDestroy {
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+    if (this.dataSource) {
+      const numRows = this.dataSource.data.length;
+
+      return numSelected === numRows;
+    }
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */

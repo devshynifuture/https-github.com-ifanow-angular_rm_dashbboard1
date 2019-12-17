@@ -28,6 +28,7 @@ const routes: Routes = [
         path: 'draft',
         loadChildren: () => import('./email-component/email-list/email-list.module')
           .then(m => m.EmailListModule)
+        // component: EmailDraftComponent
       },
       {
         path: 'archive',

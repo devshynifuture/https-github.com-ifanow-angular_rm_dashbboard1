@@ -8,8 +8,8 @@ export interface EmailInterfaceI {
 }
 
 export interface GmailInboxResponseI {
-    historyId: string,
-    id: string,
+    historyId: string | null,
+    id: string | null,
     messages: GmailSingleMessageI[]
 }
 

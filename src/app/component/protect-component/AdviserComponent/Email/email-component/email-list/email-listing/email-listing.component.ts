@@ -145,9 +145,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
       });
     }
 
-
   }
-
 
   openDraftView(dataObj) {
     this.emailService.sendNextData(dataObj);
@@ -209,6 +207,8 @@ export class EmailListingComponent implements OnInit, OnDestroy {
           let dateIdsSnippetsOfMessages: any; // array of Objects having ids, date snippets of messages
           let labelIdsfromMessages;
           let extractSubjectFromHeaders;
+          let extractAttachmentFiles = null;
+          let attachmentFiles;
 
           parsedData = EmailUtilService.decodeGmailThreadExtractMessage(thread);
           idsOfThread = EmailUtilService.getIdsOfGmailThreads(thread);
@@ -216,10 +216,22 @@ export class EmailListingComponent implements OnInit, OnDestroy {
           labelIdsfromMessages = EmailUtilService.getGmailLabelIdsFromMessages(thread);
           extractSubjectFromHeaders = EmailUtilService.getSubjectAndFromOfGmailHeaders(thread);
 
+          if (this.showDraftView) {
+            extractAttachmentFiles = EmailUtilService.getAttachmentFileData(thread);
+            console.log("this is thread in draft");
+            console.log(thread);
+          }
+
+          if (extractAttachmentFiles !== null) {
+            attachmentFiles = extractAttachmentFiles;
+          } else {
+            attachmentFiles = '';
+          }
           const Obj1 = {
             position: index + 1,
             idsOfThread,
             parsedData,
+            attachmentFiles,
             labelIdsfromMessages,
             emailers: `${extractSubjectFromHeaders['headerFromArray'][0].split('<')[0].trim()}`,
             subjectMessage: {
@@ -241,6 +253,8 @@ export class EmailListingComponent implements OnInit, OnDestroy {
         // this.messageDetailArray = tempArray;
         // console.log('this is decoded object data ->>>>');
         // console.log(this.messageDetailArray);
+
+        console.log(this.messageListArray);
         this.dataSource = new MatTableDataSource<MessageListArray>(this.messageListArray);
         this.dataSource.paginator = this.paginator;
 
