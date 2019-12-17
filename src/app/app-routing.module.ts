@@ -9,22 +9,22 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    outlet: 'main-app-router'
+    // outlet: 'main-app-router'
   },
   {
     path: 'admin', component: LeftsidebarComponent,
-    outlet: 'main-app-router',
+    // outlet: 'main-app-router',
     children: [
       {
         path: 'subscription',
-        outlet: 'main-left-router',
+        // outlet: 'main-left-router',
 
         loadChildren: () => import('./component/protect-component/AdviserComponent/Subscriptions/subscription.module')
           .then(m => m.SubscriptionModule)
       },
       {
         path: 'emails',
-        outlet: 'main-left-router',
+        // outlet: 'main-left-router',
         loadChildren: () => import('./component/protect-component/AdviserComponent/Email/email.module')
           .then(m => m.EmailModule)
       },
