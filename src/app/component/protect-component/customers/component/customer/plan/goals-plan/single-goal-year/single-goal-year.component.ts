@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-single-goal-year',
@@ -7,7 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class SingleGoalYearComponent implements OnInit {
 
-  constructor() { }
+  constructor(private subInjectService: SubscriptionInject) { }
   @Input() goalData;
   @Output() backToaddGoal = new EventEmitter();
   ngOnInit() {
@@ -15,4 +16,9 @@ export class SingleGoalYearComponent implements OnInit {
   back() {
     this.backToaddGoal.emit(undefined);
   }
+  close() {
+    
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
+  
 }
