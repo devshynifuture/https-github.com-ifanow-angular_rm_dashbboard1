@@ -6,6 +6,9 @@ import { MFSchemeLevelTransactionsComponent } from '../mfscheme-level-transactio
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import * as Highcharts from 'highcharts';
+const HighchartsMore = require('highcharts/highcharts-more.src');
+HighchartsMore(Highcharts);
 
 @Component({
   selector: 'app-mutual-fund-overview',
@@ -21,6 +24,87 @@ export class MutualFundOverviewComponent implements OnInit {
   displayedColumns1 = ['data', 'amts'];
   datasource1 = ELEMENT_DATA1;
   ngOnInit() {
+    this.pieChart('piechartMutualFund')
+  }
+  onClick(referenceKeyName) {
+    alert(referenceKeyName.id);
+  }
+  pieChart(id){
+    Highcharts.chart('piechartMutualFund', {
+      chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: 0,
+          plotShadow: false
+      },
+      title: {
+          text: '',
+          align: 'center',
+          verticalAlign: 'middle',
+          y: 60
+      },
+      tooltip: {
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions: {
+          pie: {
+              dataLabels: {
+                  enabled: true,
+                  distance: -50,
+                  style: {
+                      fontWeight: 'bold',
+                      color: 'white'
+                  }
+              },
+              startAngle: 0,
+              endAngle: 360,
+              center: ['52%', '55%'],
+              size: '120%'
+          }
+      },
+      series: [{
+        type: 'pie',
+        name: 'Browser share',
+        innerSize: '60%',
+        data: [
+		           {
+                name: 'Equity',
+                y: 23,
+                color: "#008FFF",
+                dataLabels: {
+                    enabled: false
+                }
+            },{
+                name: 'Debt',
+                y: 13,
+                color: "#5DC644",
+                dataLabels: {
+                    enabled: false
+                }
+            },{
+                name: 'Hybrid',
+                y: 25.42,
+                color: "#FFC100",
+                dataLabels: {
+                    enabled: false
+                }
+            },{
+                name: 'Other',
+                y: 12.61,
+                color: "#A0AEB4",
+                dataLabels: {
+                    enabled: false
+                }
+            },{
+            	name: 'Solutions oriented',
+                y: 23.42,
+                 color: "#FF7272",
+                dataLabels: {
+                    enabled: false
+                }
+            }
+        ]
+    }]
+  });
   }
   openMutualFund(flag, data) {
     let component;
