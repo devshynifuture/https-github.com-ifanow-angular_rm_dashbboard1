@@ -131,8 +131,8 @@ export class RiskProfileComponent implements OnInit {
           { from: 80, to: 100, color: '#CACFD2' },]
       },
       
-      series: [{ name: 'Measure', pointWidth: 10, data: [80] },
-      { name: 'Target', type: 'scatter', data: [90], }]
+      // series: [{ name: 'Measure', pointWidth: 10, data: [80] },
+      // { name: 'Target', type: 'scatter', data: [90], }]
     });
   //   Highcharts.Renderer.prototype.symbols.line = function(x, y, width, height) {
   //     return ['M',x ,y + width / 2,'L',x+height,y + width / 2];
