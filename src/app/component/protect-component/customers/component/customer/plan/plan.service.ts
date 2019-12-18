@@ -9,34 +9,31 @@ import { HttpParams } from '@angular/common/http';
 })
 export class PlanService {
 
-  constructor(private http:HttpService) { }
-   
-  getIncomeData(data)
-  {
-    let httpParams=new HttpParams().set('advisorId',data.advisorId).set('clientId',data.clientId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_INCOME_LIST,httpParams)
+  constructor(private http: HttpService) { }
+
+  getIncomeData(data) {
+    let httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_INCOME_LIST, httpParams)
   }
-  addIncomeData(data)
-  {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_INCOME_LIST,data)
+  addIncomeData(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_INCOME_LIST, data)
   }
-  editIncomeData(data)
-  {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_INCOME_LIST,data)
+  editIncomeData(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_INCOME_LIST, data)
   }
-  getGlobalGrowthRateData(data)
-  {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAL_GROWTH_RATE,data)
+  getGlobalGrowthRateData(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAL_GROWTH_RATE, data)
   }
-  deleteIncome(data)
-  {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INCOME,data)
+  deleteIncome(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INCOME, data)
   }
-  getRiskProfile(data)
-  {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_RISK_PROFILE,data)
+  getRiskProfile(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_RISK_PROFILE, data)
   }
-  submitRisk(data){
-    return this.http.post(apiConfig.MAIN_URL + appConfig.SUBMIT_RISK,data)
+  submitRisk(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.SUBMIT_RISK, data)
+  }
+  getGoalGlobalData(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAL_GOAL_DATA, data);
   }
 }

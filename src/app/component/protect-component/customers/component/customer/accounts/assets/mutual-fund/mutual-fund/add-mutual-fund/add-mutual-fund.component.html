@@ -62,12 +62,10 @@
         <mat-form-field>
           <input matInput autocomplete="off" formControlName="amtInvested" type="number" #institution maxlength="30"
             class="form-control rupess br-0">
+            <mat-error>This field is required</mat-error>
         </mat-form-field>
       </div>
-      <div class="col-md-12 p-0">
-        <p class="m-0 f-12 text-custom pt-4">Optional
-        </p>
-      </div>
+     
     </div>
   </div>
   <div class="row pt-40">
@@ -81,6 +79,10 @@
             class="form-control ruppes br-0">
           <mat-error>This field is required</mat-error>
         </mat-form-field>
+      </div>
+      <div class="col-md-12 p-0">
+        <p class="m-0 f-12 text-custom pt-4">Optional
+        </p>
       </div>
     </div>
   </div>
@@ -110,20 +112,20 @@
       <div class="col-md-2">
         <div class="form-group mb-0">
           <mat-form-field>
-            <input (keyup)="onChange('nominee')" class="b-a" formControlName="ownershipPer" matInput type="number">
+            <input class="b-a percentage" formControlName="ownershipPer"  (keyup)="onChange('nominee')" matInput type="number">
           </mat-form-field>
         </div>
       </div>
 
       <div class="col-md-2 p-0">
         <div *ngIf="pointIndex==0" class="col-md-3">
-          <h5 (click)="addNominee()" class="m-0 text-primitive pt-8 c-p">+ Add Nominee</h5>
+          <h5 class="m-0 text-primitive pt-8 c-p"  (click)="addNominee()">+ Add Nominee</h5>
         </div>
         <div *ngIf="pointIndex > 0" class="col-md-2">
-          <h5 (click)="removeNominee(pointIndex)" class="m-0 text-primitive pt-8 c-p">Remove</h5>
+          <h5  class="m-0 text-primitive pt-8 c-p" (click)="removeNominee(pointIndex)">Remove</h5>
         </div>
-      </div>
 
+      </div>
     </div>
     <mat-hint *ngIf="showError==true" align="end" class="f-12 pt-4 text-danger">
       Percent cannot be more than 100%
@@ -136,7 +138,7 @@
       <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
     </div>
     <div class="col-md-2 pr-0">
-      <button mat-stroked-button class="br-0 btn-bottom right" (click)="submitStockData()">Save</button>
+      <button mat-stroked-button class="br-0 btn-bottom right" (click)="SavePorfolio()">Save</button>
     </div>
   </div>
 </div>

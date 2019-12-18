@@ -30,6 +30,10 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     this.getEmailThread();
   }
 
+  ngOnDestroy() {
+    this.emailSubscription.unsubscribe();
+  }
+
   getEmailThread() {
     this.emailSubscription = this.emailService.data.subscribe(response => {
       this.emailObj = response;
@@ -56,8 +60,36 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    this.emailSubscription.unsubscribe();
+  moveMessageToTrash() {
+    // id param to work on
+    const messageToTrashSubscription = this.emailService.moveMessageToTrashFromView()
+      .subscribe(response => {
+        console.log(response);
+        messageToTrashSubscription.unsubscribe();
+      },
+        error => {
+          console.log(error);
+        })
+  }
+
+  moveMessageFromTrash() {
+    // need to pass ids
+    const messageFromTrashSubscription = this.emailService.moveMessagesFromTrashToList()
+      .subscribe(response => {
+        console.log(response);
+        messageFromTrashSubscription.unsubscribe();
+      },
+        error => {
+          console.log(error);
+        });
+  }
+
+  deleteMessageFromView() {
+    // need to pass ids
+    const deleteMessageSubscription = this.emailService.deleteMessageFromView().subscribe(response => {
+      console.log(response);
+      deleteMessageSubscription.unsubscribe();
+    }, error => console.log(error));
   }
 
   openBottomSheet() {

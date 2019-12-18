@@ -33,6 +33,10 @@ export class EmailTrashComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.getTrashList();
+  }
+
+  getTrashList() {
   }
 
   displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
@@ -67,6 +71,6 @@ export class EmailTrashComponent implements OnInit {
   }
 
   doRefresh() {
-    this.emailService.refreshList('trash');
+    this.ngOnInit();
   }
 }

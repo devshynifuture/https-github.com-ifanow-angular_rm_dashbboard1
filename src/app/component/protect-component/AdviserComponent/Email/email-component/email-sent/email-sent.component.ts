@@ -67,6 +67,6 @@ export class EmailSentComponent implements OnInit {
   }
 
   doRefresh() {
-    this.emailService.refreshList('sent');
+    this.ngOnInit();
   }
 }

@@ -1,197 +1,49 @@
-<div class="bg-grey lter" id="ui-add-goals">
-    <div class="row bg-white bb-1 popup-header-fix w-100">
-      <div class="col-md-5 p-0">
-        <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" class="w-45">
-      </div>
-      <div class="col-md-5">
-        <h5 class="m-0 p-20 pl-50">Rahul, tell us about your goals...</h5>
-      </div>
-      <div class="col-md-2">
-        <i class="material-icons pt-16 pb-12 c-p right pr-16" (click)="close('close')">
-        close
-        </i>
-      </div>
+<div [hidden]="goalTypeData" class="bg-grey lter" id="ui-add-goals">
+  <div class="row bg-white bb-1 popup-header-fix w-100">
+    <div class="col-md-5 p-0">
+      <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png" class="w-45">
     </div>
-    <div class="row pt-100 pl-24 pr-24 pb-40">
-      <div class="col-md-2 c-p">
-        <img src="/assets/images/svg/wedding.svg">
-        <h5 class="text-center m-0 pt-12 text-black">Retirement</h5>
-      </div>
-      <div class="col-md-2 col-half-offset c-p">
-        <img src="/assets/images/svg/daugther-edu.svg">
-        <h5 class="text-center m-0 pt-12 text-black">Education</h5>
-      </div>
-      <div class="col-md-2 col-half-offset c-p">
-        <img src="/assets/images/svg/wedding.svg">
-        <h5 class="text-center m-0 pt-12 text-black">House</h5>
-      </div>
-      <div class="col-md-2 col-half-offset c-p">
-        <img src="/assets/images/svg/car.svg">
-        <h5 class="text-center m-0 pt-12 text-black">Car</h5>
-      </div>
-      <div class="col-md-2 col-half-offset c-p">
-        <img src="/assets/images/svg/wedding.svg">
-        <h5 class="text-center m-0 pt-12 text-black">Marriage</h5>
-      </div>
-      <div class="row pt-44">
-      <div class="col-md-2 c-p">
-        <img src="/assets/images/svg/wedding.svg">
-        <h5 class="text-center m-0 pt-12 text-black">Vacation</h5>
-      </div>
-      <div class="col-md-2 col-half-offset c-p">
-        <img src="/assets/images/svg/wedding.svg">
-        <h5 class="text-center m-0 pt-12 text-black">Emergency</h5>
-      </div>
-      <div class="col-md-2 col-half-offset c-p">
-        <img src="/assets/images/svg/car.svg">
-        <h5 class="text-center m-0 pt-12 text-black">Wealth creation</h5>
-      </div>
-      <div class="col-md-2 col-half-offset c-p">
-        <img src="/assets/images/svg/wedding.svg">
-        <h5 class="text-center m-0 pt-12 text-black">Big spend</h5>
-      </div>
-      <div class="col-md-2 col-half-offset c-p">
-        <img src="/assets/images/svg/wedding.svg">
-        <h5 class="text-center m-0 pt-12 text-black">Others</h5>
-      </div>
-      </div>
-      </div> 
-    <!-- Retirement goal -->
-    <!-- <div class="row bg-grey lter">
-      <div class="col-md-8 p-0">
-        <div class="wrapper-40 pt-72">
-          <div class="row">
-            <div class="col-md-8 p-0">
-              <div class="row">
-                <div class="col-md-8 p-0">
-                  <h5 class="m-0 text-black pl-0">Who are you planning this for?</h5>
-                  <div class="form-group mb-0 pt-8">
-                    <select class="form-control br-0" id="sel1">
-                      <option value="1">Rahul Jain</option>
-                      <option value="2">Rahul Jain</option>
-                    </select>
-                  </div>
-                  <div class="col-md-12 p-0">
-                    <p class="text-regular pt-4">Add spouse</p>
-                  </div>
-                </div>
-              </div>
-              <div class="row pt-20">
-                <div class="col-md-12 p-0">
-                  <h5 class="m-0 text-black">Age you want to retire? (present age - 39)</h5>
-                  <div class="row pt-8">
-                    <div class="col-md-4 p-0">
-                      <div class="form-group mb-0">
-                        <mat-form-field>
-                          <input matInput #message class="form-control br-0" value="55 Years">
-                        </mat-form-field>
-                      </div>
-                    </div>
-                    <div class="col-md-8 pr-0">
-                      <div id="custom-slider">
-                        <mat-slider></mat-slider>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row pt-20">
-                <div class="col-md-12 p-0">
-                  <h5 class="m-0 text-black">Your current monthly expenses?</h5>
-                  <div class="row pt-8">
-                    <div class="col-md-4 p-0">
-                      <div class="form-group mb-0">
-                        <mat-form-field>
-                          <input matInput #message class="form-control br-0 rupess">
-                        </mat-form-field>
-                      </div>
-                    </div>
-                    <div class="col-md-8 pr-0">
-                      <div id="custom-slider">
-                        <mat-slider></mat-slider>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row pt-20">
-                <div class="col-md-12 p-0">
-                  <h5 class="m-0 text-black">At retirement, by what % will the expenses change?</h5>
-                  <div class="row pt-8">
-                    <div class="col-md-4 p-0">
-                      <div class="form-group mb-0">
-                        <mat-form-field>
-                          <input matInput #message class="form-control br-0" value="-10%">
-                        </mat-form-field>
-                      </div>
-                    </div>
-                    <div class="col-md-8 pr-0">
-                      <div id="custom-slider">
-                        <mat-slider></mat-slider>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row pt-20">
-                <div class="col-md-12 p-0">
-                  <h5 class="m-0 text-black">Milestones you’d also like to plan for (optional)...</h5>
-                  <div class="row pt-8">
-                    <div class="col-md-4 p-0">
-                      <div class="form-group mb-0">
-                        <select class="form-control br-0 br-none" id="sel2">
-                          <option value="1">Select a milestone</option>
-                          <option value="2">Rahul Jain</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-md-4 p-0">
-                      <div class="form-group mb-0">
-                        <select class="form-control br-0 br-none" id="sel2">
-                          <option value="1">Select a milestone</option>
-                          <option value="2">Rahul Jain</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-md-4 p-0">
-                      <div class="form-group mb-0">
-                        <input matInput #message class="form-control br-0 rupess h-38">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row pt-20">
-                  <div class="col-md-12 p-0">
-                    <h5 class="m-0 text-black">Give this goal a name</h5>
-                    <div class="row pt-8">
-                      <div class="col-md-8 p-0">
-                        <div class="form-group mb-0">
-                          <mat-form-field>
-                            <input matInput #message class="form-control br-0">
-                          </mat-form-field>
-                        </div>
-                      </div>
-                      <div class="col-md-12 pt-4">
-                        <p class="f-12 m-0 text-primitive">Optional</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-              <img src="/assets/images/svg/retierment.svg">
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4"></div>
-      </div>
-     
-    </div> -->
-     <!--close Retirement goal -->
+    <div class="col-md-5">
+      <h5 class="m-0 p-20 pl-50">Rahul, tell us about your goals...</h5>
+    </div>
+    <div class="col-md-2">
+      <i class="material-icons pt-16 pb-12 c-p right pr-16" (click)="close('close')">
+        close
+      </i>
+    </div>
+  </div>
+  <div class="row pt-100 pl-24 pr-24 pb-40">
+    <div (click)="addSelectedGoalType(singleGoal1)" *ngFor="let singleGoal1 of goalTypeFirstRowListData;index as i"
+      [ngClass]="{'col-half-offset':i!=0}" class="col-md-2 c-p">
+      <img *ngIf="singleGoal1.id==1" src="/assets/images/svg/retierment.svg">
+      <img *ngIf="singleGoal1.id==2" src="/assets/images/svg/retierment.svg">
+      <img *ngIf="singleGoal1.id==3" src="/assets/images/svg/car.svg">
+      <img *ngIf="singleGoal1.id==4" src="/assets/images/svg/wedding.svg">
+      <img *ngIf="singleGoal1.id==5" src="/assets/images/svg/retierment.svg">
+      <h5 class="text-center m-0 pt-12 text-black">{{singleGoal1.name}}</h5>
+    </div>
 
-     <!-- Education goal -->
-     <!-- <div class="row bg-grey lter pt-72 pb-44">
+  </div>
+  <div class="row pl-24 pr-24 pb-40">
+    <div (click)="addSelectedGoalType(singleGoal2)" *ngFor="let singleGoal2 of goalTypeSecondRowListData;index as i"
+      [ngClass]="{'col-half-offset':i!=0}" class="col-md-2 c-p">
+      <img *ngIf="singleGoal2.id==6" src="/assets/images/svg/wedding.svg">
+      <img *ngIf="singleGoal2.id==7" src="/assets/images/svg/wedding.svg">
+      <img *ngIf="singleGoal2.id==8" src="/assets/images/svg/wedding.svg">
+      <img *ngIf="singleGoal2.id==9" src="/assets/images/svg/wedding.svg">
+      <img *ngIf="singleGoal2.id==10" src="/assets/images/svg/wedding.svg">
+      <h5 class="text-center m-0 pt-12 text-black">{{singleGoal2.name}}</h5>
+    </div>
+  </div>
+</div>
+<!-- Retirement goal -->
+<div [hidden]="!goalTypeData">
+  <app-single-goal-year (backToaddGoal)="getGoalTypeData($event)" [goalData]="goalTypeData"></app-single-goal-year>
+</div>
+<!--close Retirement goal -->
+
+<!-- Education goal -->
+<!-- <div class="row bg-grey lter pt-72 pb-44">
         <div class="col-md-8 p-0">
           <div class="wrapper-40 pt-0">
             <div class="row pt-16">
@@ -240,7 +92,7 @@
                       </div>
                     </div>
                     <!-- on click text -->
-                    <!-- <div class="row pt-8">
+<!-- <div class="row pt-8">
                       <div class="col-md-2 p-0">
                         <p class="text-regular text-black pt-16">Age 20</p>
                       </div>
@@ -291,10 +143,10 @@
                         </div>
                       </div>
                     </div> -->
-                  <!-- </div>
+<!-- </div>
                 </div> -->
-                
-                <!-- <div class="row pt-20">
+
+<!-- <div class="row pt-20">
                     <div class="col-md-12 p-0">
                       <h5 class="m-0 text-black">Give this goal a name</h5>
                       <div class="row pt-8">
@@ -441,11 +293,11 @@
                         </div>
           </div>
         </div> -->
-      
-     <!-- close Education goal -->
 
-     <!-- House goal -->
-     <!-- <div class="row bg-grey lter">
+<!-- close Education goal -->
+
+<!-- House goal -->
+<!-- <div class="row bg-grey lter">
       <div class="col-md-8 p-0">
         <div class="wrapper-40 pt-72">
           <div class="row pt-28">
@@ -543,14 +395,14 @@
         <div class="col-md-4"></div>
       </div>
     </div> -->
-     <!-- close House goal -->
-    <div class="bottom-fixed wrapper-12 w-100">
-        <div class="row">
-          <div class="col-md-4">
-            <h4 class="mb-0 pt-8 text-white c-p f-16" (click)="close('close')">Cancel</h4>
-          </div>
-          <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
-          </div>
-        </div>
-      </div>
+<!-- close House goal -->
+<div [hidden]="goalTypeData" class="bottom-fixed wrapper-12 w-100">
+  <div class="row">
+    <div class="col-md-4">
+      <h4 class="mb-0 pt-8 text-white c-p f-16" (click)="close('close')">Cancel</h4>
+    </div>
+    <!-- <div class="col-md-8 right text-right">
+      <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+    </div> -->
+  </div>
+</div>

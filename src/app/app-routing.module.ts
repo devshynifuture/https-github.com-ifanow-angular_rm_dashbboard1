@@ -1,26 +1,30 @@
-import { OverviewComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/overview/overview.component';
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { LeftsidebarComponent } from './component/left-sidebar/leftsidebar/leftsidebar.component';
-import { LoginComponent } from './component/no-protected/login/login.component';
-import { AuthGuard } from './guards/auth.guard';
-import { CalenderComponent } from './component/protect-component/AdviserComponent/Email/calender/calender.component';
+import {OverviewComponent} from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/overview/overview.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {LeftsidebarComponent} from './component/left-sidebar/leftsidebar/leftsidebar.component';
+import {LoginComponent} from './component/no-protected/login/login.component';
+import {CalenderComponent} from './component/protect-component/AdviserComponent/Email/calender/calender.component';
 
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    // outlet: 'main-app-router'
   },
   {
     path: 'admin', component: LeftsidebarComponent,
+    // outlet: 'main-app-router',
     children: [
       {
         path: 'subscription',
+        // outlet: 'main-left-router',
+
         loadChildren: () => import('./component/protect-component/AdviserComponent/Subscriptions/subscription.module')
           .then(m => m.SubscriptionModule)
       },
       {
         path: 'emails',
+        // outlet: 'main-left-router',
         loadChildren: () => import('./component/protect-component/AdviserComponent/Email/email.module')
           .then(m => m.EmailModule)
       },
@@ -64,7 +68,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {enableTracing: false  /*preloadingStrategy: PreloadAllModules*/})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
