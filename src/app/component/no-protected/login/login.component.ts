@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
       };
 
       this.hardCodeLoginForTest();
-      //   console.log(loginData);
+      // console.log(loginData);
       this.backOfficeService.loginApi(loginData).subscribe(
         data => {
           if (data) {
