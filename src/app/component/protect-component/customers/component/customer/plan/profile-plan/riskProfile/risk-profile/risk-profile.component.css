@@ -1,0 +1,17 @@
+#Gauge {
+  height: 150px !important;
+}
+
+#container1 {
+  height: 80px !important;
+  width: 450px;
+}
+
+body {
+  font-family: helvetica, sans-serif;
+  font-size: .7em;
+}
+
+p {
+  margin: .5em 1em;
+}

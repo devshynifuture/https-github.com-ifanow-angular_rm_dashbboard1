@@ -66,7 +66,7 @@ export class EmailArchiveComponent implements OnInit {
   }
 
   doRefresh() {
-    this.emailService.refreshList('archive');
+    this.ngOnInit();
   }
 
 }
