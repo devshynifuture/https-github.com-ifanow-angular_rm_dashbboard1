@@ -105,4 +105,22 @@ export class EmailUtilService {
     });
     return { headerSubjectArray, headerFromArray };
   }
+
+  static getAttachmentFileData(gmailResponse) {
+    const returnArray = [];
+    gmailResponse.messages.forEach((message) => {
+      console.log(message);
+      // const { payload: { headers } } = message;
+      const { payload: { parts } } = message;
+      parts.forEach((part) => {
+        const { mimeType } = part;
+        const { headers } = part;
+        returnArray.push({
+          headers,
+          mimeType
+        });
+      });
+    });
+    return returnArray;
+  }
 }

@@ -41,8 +41,18 @@ export class ConfirmDialogComponent implements OnInit {
   }
 
   clickButton2() {
-    if (this.dialogData.negativeMethod != undefined) {
+    if (this.dialogData.positiveMethod) {
       this.dialogData.positiveMethod();
+    } else {
+      console.log('positive not defined 11111111111111111111111111111111111111111111');
+
+    }
+  }
+
+  clickButton1() {
+    if (this.dialogData.negativeMethod) {
+      this.dialogData.negativeMethod();
+      this.dialogClose();
     } else {
       console.log('negative not defined 11111111111111111111111111111111111111111111');
 

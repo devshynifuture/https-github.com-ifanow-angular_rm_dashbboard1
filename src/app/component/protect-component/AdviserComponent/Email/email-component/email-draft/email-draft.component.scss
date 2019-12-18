@@ -1,8 +1,11 @@
-.is-read{
-    font-weight: bolder !important;
-    background: #fff;
+::ng-deep .mat-paginator-page-size{
+    display: none !important;
 }
 
-table{
-    background: #F5F7F7;
+::ng-deep .mat-paginator-range-label{
+    margin: 0;
+}
+
+.selected-tr{
+    background: #d2ebff;
 }
