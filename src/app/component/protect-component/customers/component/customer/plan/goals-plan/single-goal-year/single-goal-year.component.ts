@@ -34,6 +34,5 @@ export class SingleGoalYearComponent implements OnInit {
       state: 'close'
     };
     this.eventService.changeUpperSliderState(fragmentData)
-
   }
 }
