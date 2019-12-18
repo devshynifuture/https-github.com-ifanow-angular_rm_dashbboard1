@@ -1,14 +1,14 @@
-import { GmailInboxResponseI } from './../../email.interface';
+import { ConfirmDialogComponent } from './../../../../../common-component/confirm-dialog/confirm-dialog.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatPaginator } from '@angular/material';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
+import { MatPaginator, MatDialog } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { SubscriptionInject } from './../../../../Subscriptions/subscription-inject.service';
 
 import { EmailServiceService } from './../../../email-service.service';
-import { EmailInterfaceI } from '../../email.interface';
+import { EmailInterfaceI, ExtractedGmailDataI, MessageListArray, GmailInboxResponseI } from '../../email.interface';
 import { EmailUtilService } from 'src/app/services/email-util.service';
 
 const ELEMENT_DATA: EmailInterfaceI[] = [
@@ -24,12 +24,6 @@ const ELEMENT_DATA: EmailInterfaceI[] = [
   { position: 10, name: 'draft Neon', weight: 20.1797, symbol: 'Ne', isRead: false },
 ];
 
-export interface MessageListArray {
-  position: number,
-  emailers: string,
-  subjectMessage: string,
-  date: string
-}
 
 @Component({
   selector: 'app-email-listing',
@@ -38,11 +32,13 @@ export interface MessageListArray {
 })
 export class EmailListingComponent implements OnInit, OnDestroy {
 
+
   constructor(
     private subInjectService: SubscriptionInject,
     private emailService: EmailServiceService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private dialog: MatDialog) { }
 
   paginatorLength;
   paginatorSubscription;
@@ -52,14 +48,28 @@ export class EmailListingComponent implements OnInit, OnDestroy {
   messageDetailArray: GmailInboxResponseI[];
   messageListArray;
   dataSource = null;
-  selectedThreadsArray: Object[] = [];
+  selectedThreadsArray: ExtractedGmailDataI[] = [];
+  listSubscription;
+  trashAction: boolean = false;
+  showDraftView: boolean = false;
+
+  displayedColumns: string[] = ['select', 'emailers', 'subjectMessage', 'date'];
+
+  selection = new SelectionModel<MessageListArray>(true, []);
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
-    if (this.dataSource === null && this.paginator) {
-      this.getPaginatorLengthRes();
-      this.getGmailListInboxRes();
-      this.dataSource.paginator = this.paginator;
-    }
+    const location = this.router.url.split('/')[3];
+    (location === 'trash') ? this.trashAction = true : this.trashAction = false;
+    (location === 'draft') ? this.showDraftView = true : this.showDraftView = false;
+    this.getGmailList(location.toUpperCase());
+    this.getPaginatorLengthRes();
+  }
+
+  ngOnDestroy() {
+    this.paginatorSubscription.unsubscribe();
+    this.listSubscription.unsubscribe();
   }
 
   getPaginatorLengthRes() {
@@ -69,8 +79,115 @@ export class EmailListingComponent implements OnInit, OnDestroy {
     });
   }
 
-  getGmailListInboxRes() {
-    this.gmailInboxListSubscription = this.emailService.getMailInboxList('INBOX')
+  // threads section
+  deleteThreadsForeverFromTrash() {
+    console.log("this is selected threads array");
+    console.log(this.selectedThreadsArray);
+    const ids: string[] = [];
+    if (this.selectedThreadsArray !== []) {
+      this.selectedThreadsArray.forEach((selectedThread) => {
+        const { idsOfThread: { id } } = selectedThread;
+        ids.push(id);
+      });
+
+      const dialogData = {
+        header: 'DELETE',
+        body: 'Are you sure you want to delete the selected mails?',
+        body2: 'This cannot be undone',
+        btnYes: 'DELETE',
+        btnNo: 'CANCEL',
+        positiveMethod: () => {
+          const deleteFromTrashSubscription = this.emailService.deleteThreadsFromTrashForever(ids)
+            .subscribe(response => {
+              console.log(response);
+              deleteFromTrashSubscription.unsubscribe();
+              this.ngOnInit();
+            }, error => console.error(error));
+
+        },
+        negativeMethod: () => {
+          console.log('aborted');
+        }
+
+      }
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '400px',
+        data: dialogData,
+        autoFocus: false,
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+
+      });
+    } else {
+      const dialogData = {
+        header: 'Warning',
+        body: 'No Mails selected. Cannot delete',
+        body2: 'Please Select atleast one mail before Deleting!',
+        // btnYes: '',
+        btnNo: 'CANCEL',
+        positiveMethod: () => {
+          console.log('aborted')
+        },
+        negativeMethod: () => {
+          console.log('aborted');
+        }
+
+      }
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '400px',
+        data: dialogData,
+        autoFocus: false,
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+
+      });
+    }
+
+  }
+
+  openDraftView(dataObj) {
+    this.emailService.sendNextData(dataObj);
+    this.emailService.openComposeEmail(dataObj);
+  }
+
+  // move single thread to trash
+  moveThreadToTrash(element) {
+    console.log('this needs to be deleted ->>>', element);
+    const { idsOfThread: { id } } = element;
+    const ids: string[] = [];
+    ids.push(id);
+    // {"ids":["abc","xyz"],"userId":2727,"emailId":"gaurav@futurewise.co.in"}
+    const threadsToTrashSubscription = this.emailService.moveThreadsToTrashFromList(ids)
+      .subscribe(response => {
+        console.log(response);
+        threadsToTrashSubscription.unsubscribe();
+        this.ngOnInit();
+      });
+
+  }
+
+  // move threads from trash
+  moveThreadsFromTrash() {
+    console.log("this is selected threads array");
+    console.log(this.selectedThreadsArray);
+    const ids: string[] = [];
+    this.selectedThreadsArray.forEach((selectedThread) => {
+      const { idsOfThread: { id } } = selectedThread;
+      ids.push(id);
+    });
+    console.log(ids);
+    const untrashSubscription = this.emailService.moveThreadsFromTrashToList(ids).subscribe(response => {
+      console.log(response);
+      untrashSubscription.unsubscribe();
+      this.ngOnInit();
+    }, error => console.error(error));
+  }
+
+  // get List view
+  getGmailList(data) {
+    this.listSubscription = this.emailService.getMailInboxList(data)
       .subscribe(responseData => {
         let tempArray1 = [];
         // console.log('this is gmails inbox data ->');
@@ -90,6 +207,8 @@ export class EmailListingComponent implements OnInit, OnDestroy {
           let dateIdsSnippetsOfMessages: any; // array of Objects having ids, date snippets of messages
           let labelIdsfromMessages;
           let extractSubjectFromHeaders;
+          let extractAttachmentFiles = null;
+          let attachmentFiles;
 
           parsedData = EmailUtilService.decodeGmailThreadExtractMessage(thread);
           idsOfThread = EmailUtilService.getIdsOfGmailThreads(thread);
@@ -97,10 +216,22 @@ export class EmailListingComponent implements OnInit, OnDestroy {
           labelIdsfromMessages = EmailUtilService.getGmailLabelIdsFromMessages(thread);
           extractSubjectFromHeaders = EmailUtilService.getSubjectAndFromOfGmailHeaders(thread);
 
+          if (this.showDraftView) {
+            extractAttachmentFiles = EmailUtilService.getAttachmentFileData(thread);
+            console.log("this is thread in draft");
+            console.log(thread);
+          }
+
+          if (extractAttachmentFiles !== null) {
+            attachmentFiles = extractAttachmentFiles;
+          } else {
+            attachmentFiles = '';
+          }
           const Obj1 = {
             position: index + 1,
             idsOfThread,
             parsedData,
+            attachmentFiles,
             labelIdsfromMessages,
             emailers: `${extractSubjectFromHeaders['headerFromArray'][0].split('<')[0].trim()}`,
             subjectMessage: {
@@ -110,7 +241,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
             date: `${dateIdsSnippetsOfMessages[0]['internalDate']}`
           }
 
-          console.log(Obj1);
+          // console.log(Obj1);
 
           // tempArray.push(Obj);
           tempArray1.push(Obj1);
@@ -122,20 +253,13 @@ export class EmailListingComponent implements OnInit, OnDestroy {
         // this.messageDetailArray = tempArray;
         // console.log('this is decoded object data ->>>>');
         // console.log(this.messageDetailArray);
+
+        console.log(this.messageListArray);
         this.dataSource = new MatTableDataSource<MessageListArray>(this.messageListArray);
+        this.dataSource.paginator = this.paginator;
+
       }, error => console.error(error));
   }
-
-  ngOnDestroy() {
-    this.paginatorSubscription.unsubscribe();
-    this.gmailInboxListSubscription.unsubscribe();
-  }
-
-  displayedColumns: string[] = ['select', 'emailers', 'subjectMessage', 'date'];
-
-  selection = new SelectionModel<MessageListArray>(true, []);
-
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -168,16 +292,18 @@ export class EmailListingComponent implements OnInit, OnDestroy {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`; //
   }
 
+  // routing to view page
   gotoEmailView(dataObj: Object) {
     this.emailService.sendNextData(dataObj);
     this.router.navigate(['view'], { relativeTo: this.activatedRoute });
   }
 
   doRefresh() {
-    this.emailService.refreshList('inbox');
+    this.ngOnInit();
   }
 
-  highlightSelectedRow(row: {}) {
+  // ui select highlight
+  highlightSelectedRow(row: ExtractedGmailDataI) {
     if (this.selectedThreadsArray.includes(row)) {
       let indexOf = this.selectedThreadsArray.indexOf(row);
       let removedRow = this.selectedThreadsArray.splice(indexOf, 1);
@@ -189,4 +315,6 @@ export class EmailListingComponent implements OnInit, OnDestroy {
 
     console.log(this.selectedThreadsArray);
   }
+
+
 }

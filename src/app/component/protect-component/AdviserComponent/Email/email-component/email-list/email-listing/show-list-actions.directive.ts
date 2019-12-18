@@ -7,6 +7,7 @@ export class ShowListActionsDirective {
 
   constructor(private el: ElementRef,
     private renderer: Renderer2) { }
+
   @HostListener('mouseenter') showActionsOnList() {
     const lastTd = this.el.nativeElement.querySelector('td.mat-cell:last-of-type')
     const icons = lastTd.querySelector('[data-show="icons"]');
