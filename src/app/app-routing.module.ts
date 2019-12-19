@@ -26,6 +26,11 @@ const routes: Routes = [
         loadChildren: () => import('./component/protect-component/AdviserComponent/Email/email.module')
           .then(m => m.EmailModule)
       },
+      {
+        path: 'activies',
+        loadChildren: () => import('./component/protect-component/AdviserComponent/Activies/activies/activies.module').then(m => m.ActiviesModule)
+      }
+
     ]
   },
   {
@@ -64,7 +69,7 @@ const routes: Routes = [
     path: 'redirect',
     // outlet: 'mainrouter',
     loadChildren: () => import('./component/gmail-redirect/gmail-redirect.module').then(m => m.GmailRedirectModule)
-  }
+  },
 
 ];
 
