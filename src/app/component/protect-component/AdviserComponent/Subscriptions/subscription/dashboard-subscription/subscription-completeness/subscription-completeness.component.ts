@@ -99,7 +99,7 @@ export class SubscriptionCompletenessComponent implements OnInit {
     // this.eventService.tabData(value.selectedTab)
     switch (value.selectedTab) {
       case (1):
-        this.router.navigate(['admin', 'subscription', 'clients']);
+        this.router.navigate(['admin/subscription/clients',]);
         break;
       case (3):
         this.router.navigate(['admin', 'subscription', 'quotations']);
@@ -116,8 +116,6 @@ export class SubscriptionCompletenessComponent implements OnInit {
       default:
         console.log("default selection")
     }
-
-
   }
 
   openPopup(data) {
