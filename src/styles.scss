@@ -89,7 +89,6 @@
   width: 485px !important;
 }
 
-
 #ui-dashboard {
   .subscription-summary {
     p {
@@ -1270,7 +1269,6 @@ mat-tab-group[vertical] {
 
   .mat-checkbox-label {
     font-size: 14px !important;
-
   }
 
   .mat-checkbox-layout {
@@ -1297,7 +1295,6 @@ mat-tab-group[vertical] {
   .mat-tab-body-content {
     overflow: hidden;
   }
-
 }
 
 #ui-calender {
@@ -1311,7 +1308,6 @@ mat-tab-group[vertical] {
 }
 
 .crm-sidebar {
-
   .mat-drawer-inner-container {
     background-color: #fff;
     width: 230px;
@@ -1342,7 +1338,6 @@ mat-tab-group[vertical] {
     font-size: 14px !important;
     letter-spacing: 0.25px;
     font-family: "Roboto";
-
   }
 
   .mat-list-text {
@@ -1366,7 +1361,6 @@ mat-tab-group[vertical] {
     padding-right: 55px !important;
     margin-top: -12px;
   }
-
 
   .sidenav-link .mat-list-icon {
     width: 24px;
@@ -1394,8 +1388,6 @@ mat-tab-group[vertical] {
     }
   }
 
-
-
   img.header-img {
     width: 30%;
     border-radius: 50%;
@@ -1415,18 +1407,31 @@ mat-tab-group[vertical] {
     padding: 5px;
   }
 
-
-
   .scorllable {
     max-height: calc(100vh - 9rem);
     overflow-y: auto;
     padding-bottom: 80px;
   }
-
 }
 
 // end crm
+// Activies
+#ui-activies {
+  padding-top: 64px;
 
+  .main-header {
+
+    box-shadow: 5px 1px 10px rgba(0, 0, 0, 0.2), 3px 4px 5px rgba(0, 0, 0, 0.12), 2px 2px 4px rgba(0, 0, 0, 0.14);
+
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+    background: #fff !important;
+
+  }
+}
+
+// end Activies
 .proximaFont {
   font-family: "Proxima Nova ", sans-serif;
 }

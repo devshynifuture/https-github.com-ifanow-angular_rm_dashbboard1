@@ -11,7 +11,7 @@
         </i>
     </div>
 </div>
-<div class="row bg-grey lter">
+<div [formGroup]="multiYearGoalForm" class="row bg-grey lter">
     <div class="col-md-8 p-0">
         <div class="wrapper-40 pt-72">
             <div class="row">
@@ -20,10 +20,13 @@
                         <div class="col-md-8 p-0">
                             <h5 class="m-0 text-black pl-0">Who are you planning this for?</h5>
                             <div class="form-group mb-0 pt-8">
-                                <select class="form-control br-0" id="sel1">
-                                    <option value="1">Rahul Jain</option>
-                                    <option value="2">Rahul Jain</option>
-                                </select>
+                                <mat-form-field>
+                                    <mat-select class="form-control br-0 br-none" formControlName="name">
+                                        <mat-option>Rahul Jain</mat-option>
+                                        <mat-option>Rahul Jain</mat-option>
+                                    </mat-select>
+                                    <mat-error>This field is required</mat-error>
+                                </mat-form-field>
                             </div>
                             <div class="col-md-12 p-0">
                                 <p class="text-regular pt-4">Add spouse</p>
@@ -36,11 +39,9 @@
                             <div class="row pt-8">
                                 <div class="col-md-4 p-0">
                                     <div class="form-group mb-0">
-
                                         <div id="custom-slider">
                                             <mat-slider></mat-slider>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -53,8 +54,9 @@
                                 <div class="col-md-4 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input autocomplete="off" matInput #message class="form-control br-0"
-                                                value="55 Years">
+                                            <input formControlName="retirementAge" autocomplete="off" matInput #message
+                                                class="form-control br-0" value="55 Years">
+                                            <mat-error>This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -73,8 +75,9 @@
                                 <div class="col-md-4 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input autocomplete="off" matInput #message
-                                                class="form-control br-0 rupess">
+                                            <input formControlName="monthlyExpenses" autocomplete="off" matInput
+                                                #message class="form-control br-0 rupess">
+                                            <mat-error>This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -93,8 +96,9 @@
                                 <div class="col-md-4 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input autocomplete="off" matInput #message class="form-control br-0"
-                                                value="-10%">
+                                            <input formControlName="expenseChanges" autocomplete="off" matInput #message
+                                                class="form-control br-0" value="-10%">
+                                            <mat-error>This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -112,18 +116,24 @@
                             <div class="row pt-8">
                                 <div class="col-md-4 p-0">
                                     <div class="form-group mb-0">
-                                        <select class="form-control br-0 br-none" id="sel2">
-                                            <option value="1">Select a milestone</option>
-                                            <option value="2">Rahul Jain</option>
-                                        </select>
+                                        <mat-form-field>
+                                            <mat-select class="form-control br-0 br-none" formControlName="milstones">
+                                                <mat-option>Rahul Jain</mat-option>
+                                                <mat-option>Rahul Jain</mat-option>
+                                            </mat-select>
+                                            <mat-error>This field is required</mat-error>
+                                        </mat-form-field>
                                     </div>
                                 </div>
                                 <div class="col-md-4 p-0">
                                     <div class="form-group mb-0">
-                                        <select class="form-control br-0 br-none" id="sel2">
-                                            <option value="1">Select a milestone</option>
-                                            <option value="2">Rahul Jain</option>
-                                        </select>
+                                        <mat-form-field>
+                                            <mat-select class="form-control br-0 br-none">
+                                                <mat-option>Rahul Jain</mat-option>
+                                                <mat-option>Rahul Jain</mat-option>
+                                            </mat-select>
+                                            <mat-error>This field is required</mat-error>
+                                        </mat-form-field>
                                     </div>
                                 </div>
                                 <div class="col-md-4 p-0">
@@ -142,7 +152,9 @@
                                 <div class="col-md-8 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input autocomplete="off" matInput #message class="form-control br-0">
+                                            <input formControlName="goalName" autocomplete="off" matInput #message
+                                                class="form-control br-0">
+                                            <mat-error>This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -152,14 +164,16 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="goalTypeData.id!=1" class="row pt-20">
+                    <div *ngIf="goalTypeData.id==5 || goalTypeData.id==6" class="row pt-20">
                         <div class="col-md-12 p-0">
-                            <h5 class="m-0 text-black" *ngIf="Questions">Notes</h5>
+                            <h5 class="m-0 text-black">Notes</h5>
                             <div class="row pt-8">
                                 <div class="col-md-8 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input autocomplete="off" matInput #message class="form-control br-0">
+                                            <input formControlName="notes" autocomplete="off" matInput #message
+                                                class="form-control br-0">
+                                            <mat-error>This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>

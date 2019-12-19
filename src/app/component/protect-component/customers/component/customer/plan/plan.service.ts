@@ -34,6 +34,41 @@ export class PlanService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.SUBMIT_RISK, data)
   }
   getGoalGlobalData(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAL_GOAL_DATA, data);
+    let httpParams = new HttpParams().set('advisorId', data.advisorId)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAL_GOAL_DATA, httpParams);
+  }
+  addRetirementGoal(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_RETIREMENT_GOAL, data)
+  }
+  addHouseGoal(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_HOUSE_GOAL, data)
+  }
+  addCarGoal(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_CAR_GOAL, data)
+  }
+  addMarriageGoal(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_MARRIAGE_GOAL, data)
+  }
+  addVacationGoal(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_VACATION_GOAL, data)
+  }
+  addEducationGoal(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_EDUCATION_GOAL, data)
+  }
+  addEmergencyGoal(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_EMERGENCY_GOAL, data)
+  }
+  addWealthCreationGoal(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_WEALTH_CREATION_GOAL, data)
+  }
+  addBigSpendsGoal(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_BIGSPEND_GOAL, data)
+  }
+  addOthersGoal(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_OTHERS_GOAL, data)
+  }
+  getListOfFamilyByClient(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIST_FAMILY_MEMBER, httpParams)
   }
 }

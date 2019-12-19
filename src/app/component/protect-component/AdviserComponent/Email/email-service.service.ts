@@ -1,3 +1,4 @@
+import { EmailUtilService } from 'src/app/services/email-util.service';
 import { UtilService } from './../../../../services/util.service';
 import { SubscriptionInject } from './../Subscriptions/subscription-inject.service';
 import { ComposeEmailComponent } from './email-component/compose-email/compose-email.component';
@@ -111,6 +112,95 @@ export class EmailServiceService {
     return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_RIGHT_SIDE_NAV, {
       email: userInfo.emailId,
       userId: userInfo.advisorId
+    });
+  }
+
+  // needs to work on email body attachments and to from of http Params
+  createDraft({ to, from, emailBody, attachments, subject }) {
+    const userInfo = AuthService.getUserInfo();
+    const encodedEmailBody = EmailUtilService.changeStringToBase46(emailBody);
+    console.log("THIS IS SOMETHING OF YOUR INTEREST =>>>>>", emailBody);
+    const obj =
+    {
+      "attachmentIds": [
+        ""
+      ],
+      "bccs": [
+        ""
+      ],
+      "ccs": [
+        ""
+      ],
+      "contentType": "",
+      "draft": {
+        "historyId": "",
+        "id": "",
+        "messages": {
+          "historyId": 0,
+          "id": "",
+          "internalDate": 0,
+          "labelIds": [
+            "DRAFT"
+          ],
+          "payload": {
+            "body": {
+              "data": encodedEmailBody,
+              "size": 0
+            },
+            "fileName": "",
+            "headers": [
+              {
+                "name": "",
+                "value": ""
+              }
+            ],
+            "mimeType": "",
+            "partId": "",
+            "parts": [
+              {
+                "body": {
+                  "data": "",
+                  "size": 0
+                },
+                "fileName": "",
+                "headers": [
+                  {
+                    "name": "",
+                    "value": ""
+                  }
+                ],
+                "mimeType": "",
+                "partId": ""
+              }
+            ]
+          },
+          "sizeEstimate": 0,
+          "snippet": "",
+          "threadId": ""
+        },
+        "threadId": ""
+      },
+      "email": "",
+      "fileData": [
+        {
+          "data": "",
+          "filename": "",
+          "mimeType": "",
+          "partId": "",
+          "size": 0
+        }
+      ],
+      "id": userInfo.emailId,
+      "message": encodedEmailBody,
+      "subject": subject,
+      "toAddress": [
+        to
+      ],
+      "userId": 2727
+    };
+
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.CREATE_DRAFT, {
+      ...obj
     });
   }
 
