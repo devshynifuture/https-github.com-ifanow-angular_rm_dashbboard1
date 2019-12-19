@@ -14,69 +14,107 @@
             </div>
         </div>
     </div>
-    <div class="wrapper-8 pt-12">
-        <div class="row">
-            <div class="col-md-1">
-                <p class="m-0 text-custom">From</p>
-            </div>
-            <div class="col-md-9">
-                <p class="m-0 text-black">
-                    {{ from }}
-                </p>
-            </div>
-            <div class="col-md-2 pr-0">
-                <ul class="text-custom right f-14 pr-8 f-500">
-                    <li class="pr-4">CC</li>
-                    <li> BCC</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="wrapper-8 pb-16">
-        <div class="row">
-            <div class="col-md-1">
-                <p class="m-0 text-custom">To</p>
-            </div>
-            <div class="col-md-11">
-                <input type="text" [(ngModel)]="to" />
-            </div>
-        </div>
-    </div>
-    <div class="wrapper-16 pt-0 pb-0">
-        <div class="btl-1 bb-1">
+    <form [formGroup]="emailForm" (ngSubmit)="onSendEmail()">
+        <div class="wrapper-8 pt-12">
             <div class="row">
-
-                <p class="m-0 text-custom pt-8 pb-8 pl-8">Subject</p>
-                <input type="text" [(ngModel)]="subject" class="form-control br-0">
-            </div>
-        </div>
-        <div class="form-group mb-0 mt-8">
-            <app-froala [(model)]="emailBody" modelChange="saveData($event)"></app-froala>
-        </div>
-    </div>
-    <div class="row btl-1 pt-16">
-        <div class="col-md-9">
-            <mat-chip-list #chipList aria-label="docName selection">
-                <!-- <mat-chip *ngFor="let doc of docObj ; let i = index" (removed)="remove(i)">
-                    {{doc.documentName}}
-                    <mat-icon matChipRemove>cancel</mat-icon>
-                </mat-chip> -->
-            </mat-chip-list>
-            <div class="row">
-                <div class="col-md-2">
-                    <button mat-stroked-button class="btn-primary br-0" (click)="sendMail()">Send</button>
+                <div class="col-md-1">
+                    <p class="m-0 text-custom">From</p>
+                </div>
+                <div class="col-md-9">
+                    <!-- <p class="m-0 text-black">
+                        {{ from }}
+                    </p> -->
+                    <input type="text" [(ngModel)]="from" formControlName="sender">
+                    <div *ngIf="!emailForm.controls['sender'].valid && emailForm.controls['sender'].touched"
+                        [ngClass]="emailForm.controls['sender'].valid && emailForm.controls['sender'].touched ? '': 'is-invalid'">
+                        invalid email
+                    </div>
+                </div>
+                <div class="col-md-2 pr-0">
+                    <ul class="text-custom right f-14 pr-8 f-500">
+                        <li class="pr-4" (click)="toggleCC()">CC</li>
+                        <li (click)="toggleBCC()"> BCC</li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <!--    <div class="col-md-3">-->
-        <!--      <div class="row">-->
-        <!--        <div class="col-md-8 pl-0">-->
-        <!--          <p class="m-0 text-custom pt-8 c-p"> Use template</p>-->
-        <!--        </div>-->
-        <!--        <div class="col-md-1">-->
-        <!--          <img src="/assets/images/svg/delete.svg" class="c-p pt-8">-->
-        <!--        </div>-->
-        <!--      </div>-->
-        <!--    </div>-->
-    </div>
+        <div class="wrapper-8 pb-16">
+            <div class="row">
+                <div class="col-md-1">
+                    <p class="m-0 text-custom">To</p>
+                </div>
+                <div class="col-md-11">
+                    <input type="text" [(ngModel)]="to" formControlName="receiver" (change)="createDraft()" />
+                    <div *ngIf="!emailForm.controls['receiver'].valid && emailForm.controls['receiver'].touched"
+                        [ngClass]="emailForm.controls['receiver'].valid && emailForm.controls['receiver'].touched ? '': 'is-invalid'">
+                        invalid email
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-16" *ngIf="isCcSelected">
+                <div class="col-md-1">
+                    <p class="m-1 text-custom">CC</p>
+                </div>
+                <div class="col-md-11">
+                    <input type="text" formControlName="carbonCopy" *ngIf="isCcSelected">
+                    <div *ngIf="!emailForm.controls['carbonCopy'].valid && emailForm.controls['carbonCopy'].touched"
+                        [ngClass]="emailForm.controls['carbonCopy'].valid && emailForm.controls['carbonCopy'].touched ? '': 'is-invalid'">
+                        invalid email
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pt-16" *ngIf="isBccSelected">
+                <div class="col-md-1">
+                    <p class="m-1 text-custom">BCC</p>
+                </div>
+                <div class="col-md-11">
+                    <input type="text" formControlName="blindCarbonCopy" *ngIf="isBccSelected">
+                    <div *ngIf="!emailForm.controls['blindCarbonCopy'].valid && emailForm.controls['blindCarbonCopy'].touched"
+                        [ngClass]="emailForm.controls['carbonCopy'].valid && emailForm.controls['carbonCopy'].touched ? '': 'is-invalid'">
+                        invalid email
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="wrapper-16 pt-0 pb-0">
+            <div class="btl-1 bb-1">
+                <div class="row">
+
+                    <p class="m-0 text-custom pt-8 pb-8 pl-8">Subject</p>
+                    <input type="text" [(ngModel)]="subject" formControlName="subject" class="form-control br-0">
+                </div>
+            </div>
+            <div class="form-group mb-0 mt-8">
+                <app-froala [(model)]="emailBody" (modelChange)="saveData($event)"></app-froala>
+            </div>
+        </div>
+        <div class="row btl-1 pt-16">
+            <div class="col-md-9">
+                <mat-chip-list #chipList aria-label="docName selection">
+                    <!-- <mat-chip *ngFor="let doc of docObj ; let i = index" (removed)="remove(i)">
+                    {{doc.documentName}}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip> -->
+                </mat-chip-list>
+                <div class="row">
+                    <div class="col-md-2">
+                        <button type="submit" mat-stroked-button class="btn-primary br-0">Send</button>
+                    </div>
+                </div>
+            </div>
+            <!--    <div class="col-md-3">-->
+            <!--      <div class="row">-->
+            <!--        <div class="col-md-8 pl-0">-->
+            <!--          <p class="m-0 text-custom pt-8 c-p"> Use template</p>-->
+            <!--        </div>-->
+            <!--        <div class="col-md-1">-->
+            <!--          <img src="/assets/images/svg/delete.svg" class="c-p pt-8">-->
+            <!--        </div>-->
+            <!--      </div>-->
+            <!--    </div>-->
+        </div>
+    </form>
 </div>

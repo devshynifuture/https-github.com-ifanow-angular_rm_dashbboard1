@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './../../../../material/material';
 import { CommonComponentModule } from './../../common-component/common-component.module';
 import { EmailArchiveComponent } from './email-component/email-archive/email-archive.component';
@@ -33,6 +33,7 @@ import { CalenderComponent } from './calender/calender.component';
     EmailListModule,
     EmailRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     EmailEntryModule
   ],
   exports: [
