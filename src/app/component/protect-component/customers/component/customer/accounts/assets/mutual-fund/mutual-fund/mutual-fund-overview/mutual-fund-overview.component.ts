@@ -29,6 +29,7 @@ export class MutualFundOverviewComponent implements OnInit {
   onClick(referenceKeyName) {
     alert(referenceKeyName.id);
   }
+ 
   pieChart(id){
     Highcharts.chart('piechartMutualFund', {
       chart: {

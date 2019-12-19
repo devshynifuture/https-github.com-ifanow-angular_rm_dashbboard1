@@ -33,7 +33,7 @@
             <div class="height-700">
                 <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
-                        <p class="text-black m-0 roboto pt-8">Mutual funds</p>
+                        <a class="text-black m-0 roboto pt-8" routerLink="/customer/detail/account/assets"[queryParams]="{ tab: 'tab1'}">Mutual funds</a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <p class="text-black m-0 roboto pt-8">₹57,22,896</p>
@@ -42,7 +42,7 @@
                 </div>
                 <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
-                        <p class="text-black m-0 roboto pt-8">Stocks</p>
+                            <a class="text-black m-0 roboto pt-8" routerLink="/customer/detail/account/assets"[queryParams]="{ tab: 'tab2'}">Stocks</a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <p class="text-black m-0  roboto pt-8">₹57,22,896</p>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
-                        <p class="text-black m-0 roboto pt-8">Fixed income</p>
+                            <a class="text-black m-0 roboto pt-8" routerLink="/customer/detail/account/assets"[queryParams]="{ tab: 'tab3'}">Fixed income</a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <p class="text-black m-0 roboto pt-8">₹57,22,896</p>
@@ -60,7 +60,8 @@
                 </div>
                 <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
-                        <p class="text-black m-0 roboto pt-8">Real estate</p>
+                        <p class="text-black m-0 roboto pt-8"></p>
+                        <a class="text-black m-0 roboto pt-8" routerLink="/customer/detail/account/assets"[queryParams]="{ tab: 'tab4'}">Real estate</a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <p class="text-black m-0 roboto pt-8">₹57,22,896</p>
@@ -69,7 +70,7 @@
                 </div>
                 <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
-                        <p class="text-black m-0 roboto pt-8">Retirement a/c</p>
+                            <a class="text-black m-0 roboto pt-8" routerLink="/customer/detail/account/assets"[queryParams]="{ tab: 'tab5'}">Retirement a/c</a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <p class="text-black m-0 f-500 roboto pt-8 pr-8">-</p>
@@ -78,7 +79,7 @@
                 </div>
                 <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
-                        <p class="text-black m-0 roboto pt-8">Small savings</p>
+                            <a class="text-black m-0 roboto pt-8" routerLink="/customer/detail/account/assets"[queryParams]="{ tab: 'tab6'}">Small savings</a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <p class="text-black m-0 roboto pt-8">₹57,22,896</p>
@@ -87,7 +88,7 @@
                 </div>
                 <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
-                        <p class="text-black m-0 roboto pt-8">Cash & Bank</p>
+                        <a class="text-black m-0 roboto pt-8" routerLink="/customer/detail/account/assets"[queryParams]="{ tab: 'tab7'}">Cash & Bank</a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <p class="text-black m-0 roboto pt-8">₹57,22,896</p>
@@ -96,7 +97,7 @@
                 </div>
                 <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
-                        <p class="text-black m-0 roboto pt-8">Commodities</p>
+                        <a class="text-black m-0 roboto pt-8" routerLink="/customer/detail/account/assets"[queryParams]="{ tab: 'tab8'}">Commodities</a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <p class="text-black m-0 f-500 roboto pt-8 pr-8">-</p>
@@ -104,7 +105,7 @@
                     </div>
                 </div>
 
-                <div class="row c-p">
+                <!-- <div class="row c-p">
                     <div class="col-md-6 pr-0">
                         <p class="text-black m-0 roboto pt-8">Miscellaneous</p>
                     </div>
@@ -112,7 +113,7 @@
                         <p class="text-black m-0 roboto pt-8">₹57,22,896</p>
                         <p class="text-success m-0 roboto pb-8">12.23%</p>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="col-md-8 p-0 b-l">
@@ -121,9 +122,10 @@
                     <h3 class="m-0 roboto wrapper-20 f-500 text-black">Portfolio Summary</h3>
                 </div>
                 <div class="col-md-4 pl-0">
-                    <button mat-button [matMenuTriggerFor]="menu" class="right text-right b-a mt-12 br-0">As on 03/10/2019 <i class="material-icons text-custom">
-                                keyboard_arrow_down
-                                </i></button>
+                    <button mat-button [matMenuTriggerFor]="menu" class="right text-right b-a mt-12 br-0">As on
+                        03/10/2019 <i class="material-icons text-custom">
+                            keyboard_arrow_down
+                        </i></button>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item>Item 1</button>
                         <button mat-menu-item>Item 2</button>
@@ -157,7 +159,7 @@
                 <div class="col-md-5 pl-8">
                     <div class="b-a mt-20">
                         <h4 class="m-0 wrapper-20 pb-0">Asset allocation</h4>
-                        <img src="assets/images/svg/chart.svg" class="img-allocation">
+                        <div class="highcharts-figure" id="piechartMutualFund"></div>
                     </div>
                 </div>
             </div>
@@ -178,18 +180,20 @@
                         </div>
                     </div>
                     <div class="col-md-2 pt-4">
-                        <button mat-button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0">All bank a/c <i class="material-icons text-custom">
-                                            keyboard_arrow_down
-                                            </i></button>
+                        <button mat-button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0">All bank a/c <i
+                                class="material-icons text-custom">
+                                keyboard_arrow_down
+                            </i></button>
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item>Item 1</button>
                             <button mat-menu-item>Item 2</button>
                         </mat-menu>
                     </div>
                     <div class="col-md-2 pt-4">
-                        <button mat-button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0">All family <i class="material-icons text-custom">
-                                            keyboard_arrow_down
-                                            </i></button>
+                        <button mat-button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0">All family <i
+                                class="material-icons text-custom">
+                                keyboard_arrow_down
+                            </i></button>
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item>Item 1</button>
                             <button mat-menu-item>Item 2</button>
@@ -201,7 +205,8 @@
                         <div class="row b-grey">
                             <div class="col-md-7 p-0 br-grey">
                                 <h5 class="m-0 roboto pt-8 pl-4 pb-8 text-black f-500 bb-grey">Description</h5>
-                                <p class="m-0 p-4 pb-0">Aditya Birla Sun Life Frontline Equity Fund - Regular - Growth <span class="text-custom">987987/08</span>
+                                <p class="m-0 p-4 pb-0">Aditya Birla Sun Life Frontline Equity Fund - Regular - Growth
+                                    <span class="text-custom">987987/08</span>
                                 </p>
                                 <p class="m-0 p-4"><strong>MF</strong> Rahul Jain</p>
                             </div>
@@ -271,7 +276,8 @@
             <div class="b-a">
                 <div class="row b-b">
                     <div class="col-md-3 p-0">
-                        <img src="http://localhost:4200/assets/images/img1.jpg" class="t-85 pt-16 pb-20 pl-8 rounded-circle">
+                        <img src="http://localhost:4200/assets/images/img1.jpg"
+                            class="t-85 pt-16 pb-20 pl-8 rounded-circle">
                     </div>
                     <div class="col-md-9 p-0 text-left">
                         <p class="text-black m-0 f-500 pt-20">Acme Financial Advisors</p>

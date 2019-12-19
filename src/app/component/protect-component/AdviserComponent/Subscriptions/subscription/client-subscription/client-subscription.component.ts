@@ -6,6 +6,7 @@ import { SubscriptionService } from '../../subscription.service';
 import { UtilService } from "../../../../../../services/util.service";
 import { AuthService } from "../../../../../../auth-service/authService";
 import { HelpComponent } from '../common-subscription-component/help/help.component';
+import { SubscriptionUpperSliderComponent } from '../common-subscription-component/upper-slider/subscription-upper-slider.component';
 
 export interface PeriodicElement {
   name: string;
@@ -70,38 +71,58 @@ export class ClientSubscriptionComponent implements OnInit {
     // this.subInjectService.rightSideData(state);
   }
 
-  openFragment(data, clientData) {
-    /* const fragmentData = {
-       flag: 'emailOnly',
-       data: clientData,
-       id: 1,
-       state: 'open'
-     };
-     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-       sideBarData => {
-         console.log('this is sidebardata in subs subs : ', sideBarData);
-         if (UtilService.isDialogClose(sideBarData)) {
-           console.log('this is sidebardata in subs subs 2: ',);
-           rightSideDataSub.unsubscribe();
-         }
+  // openFragment(data, clientData) {
+  /* const fragmentData = {
+     flag: 'emailOnly',
+     data: clientData,
+     id: 1,
+     state: 'open'
+   };
+   const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+     sideBarData => {
+       console.log('this is sidebardata in subs subs : ', sideBarData);
+       if (UtilService.isDialogClose(sideBarData)) {
+         console.log('this is sidebardata in subs subs 2: ',);
+         rightSideDataSub.unsubscribe();
        }
-     );*/
-    clientData.flag = data;
+     }
+   );*/
+  //   clientData.flag = data;
+  //   const fragmentData = {
+  //     flag: 'app-subscription-upper-slider',
+  //     id: 1,
+  //     data: clientData,
+  //     state: 'open'
+  //   };
+
+  //   const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+  //     upperSliderData => {
+  //       if (UtilService.isDialogClose(upperSliderData)) {
+  //         this.getClientSubscriptionList();
+  //         subscription.unsubscribe();
+  //       }
+  //     }
+  //   );
+  // }
+  openFragment(flag, data) {
+    data.flag = flag
+    console.log('hello mf button clicked');
     const fragmentData = {
-      flag: 'app-subscription-upper-slider',
+      flag: 'openUpper',
       id: 1,
-      data: clientData,
+      data,
+      direction: 'top',
+      componentName: SubscriptionUpperSliderComponent,
       state: 'open'
     };
 
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
-          this.getClientSubscriptionList();
+          // this.getClientSubscriptionList();
           subscription.unsubscribe();
         }
       }
     );
   }
-
 }
