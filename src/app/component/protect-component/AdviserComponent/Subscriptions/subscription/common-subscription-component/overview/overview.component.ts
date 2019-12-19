@@ -1,11 +1,11 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {MatDialogRef, MatDialog} from '@angular/material';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {UtilService} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionService} from '../../../subscription.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { MatDialogRef, MatDialog } from '@angular/material';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionService } from '../../../subscription.service';
 
 @Component({
   selector: 'app-overview',
@@ -17,8 +17,8 @@ export class OverviewComponent implements OnInit {
   advisorId: any;
 
   constructor(public dialog: MatDialog, private subService: SubscriptionService,
-              private eventService: EventService,
-              private subinject: SubscriptionInject, public subInjectService: SubscriptionInject) {
+    private eventService: EventService,
+    private subinject: SubscriptionInject, public subInjectService: SubscriptionInject) {
   }
 
   _upperData;
@@ -46,29 +46,29 @@ export class OverviewComponent implements OnInit {
   }
 
   dialogClose() {
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
   }
 
   changeDisplay() {
     this.overviewDesign = 'false';
   }
 
-  openForm(data,value) {
-      const fragmentData = {
-        flag: value,
-        data,
-        id: 1,
-        state: 'open'
-      };
-      const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
-        sideBarData => {
-          // console.log('this is sidebardata in subs subs : ', sideBarData);
-          if (UtilService.isDialogClose(sideBarData)) {
-            // console.log('this is sidebardata in subs subs 2: ', sideBarData);
-            rightSideDataSub.unsubscribe();
-          }
+  openForm(data, value) {
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open'
+    };
+    const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        // console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          // console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
         }
-      );
+      }
+    );
   }
 
   deleteModal(singlePlan, value) {
@@ -115,7 +115,7 @@ export class OverviewComponent implements OnInit {
 
   deletedData(data) {
     if (data == true) {
-      this.eventService.changeUpperSliderState({state: 'close'});
+      this.eventService.changeUpperSliderState({ state: 'close' });
       this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
     }
   }

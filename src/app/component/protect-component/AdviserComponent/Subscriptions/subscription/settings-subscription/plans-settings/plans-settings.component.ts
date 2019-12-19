@@ -5,6 +5,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
 import { UtilService } from "../../../../../../../services/util.service";
+import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
 
 @Component({
   selector: 'app-plans-settings',
@@ -53,34 +54,54 @@ export class PlansSettingsComponent implements OnInit {
     this.dataService.openSnackBar(err, 'Dismiss');
   }
 
+  // openFragment(singlePlan, data) {
+  //   this.subinject.pushUpperData(singlePlan);
+  //   (singlePlan == '') ? singlePlan = data : singlePlan.flag = data
+  //   const fragmentData = {
+  //     flag: 'app-subscription-upper-slider',
+  //     data: singlePlan,
+  //     state: 'open'
+  //   };
+  //   const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+  //     upperSliderData => {
+  //       if (UtilService.isDialogClose(upperSliderData)) {
+  //         this.getSettingsPlanData();
+  //         subscription.unsubscribe();
+  //       }
+  //     }
+  //   );
+
+  // /* const dialogRef = this.dialog.open(UpperSliderComponent, {
+  //    width: '1400px',
+  //    data: Fragmentdata,
+  //    autoFocus: false,
+  //    panelClass: 'dialogBox',
+  //
+  //  });
+  //
+  //  dialogRef.afterClosed().subscribe(result => {
+  //
+  //  });*/
+
   openFragment(singlePlan, data) {
-    this.subinject.pushUpperData(singlePlan);
-    // singlePlan.flag = data;
     (singlePlan == '') ? singlePlan = data : singlePlan.flag = data
+    console.log('hello mf button clicked');
     const fragmentData = {
-      flag: 'app-subscription-upper-slider',
+      flag: 'openUpper',
+      id: 1,
       data: singlePlan,
+      direction: 'top',
+      componentName: SubscriptionUpperSliderComponent,
       state: 'open'
     };
+
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
-          this.getSettingsPlanData();
+          // this.getClientSubscriptionList();
           subscription.unsubscribe();
         }
       }
     );
-
-    // /* const dialogRef = this.dialog.open(UpperSliderComponent, {
-    //    width: '1400px',
-    //    data: Fragmentdata,
-    //    autoFocus: false,
-    //    panelClass: 'dialogBox',
-    //
-    //  });
-    //
-    //  dialogRef.afterClosed().subscribe(result => {
-    //
-    //  });*/
   }
 }

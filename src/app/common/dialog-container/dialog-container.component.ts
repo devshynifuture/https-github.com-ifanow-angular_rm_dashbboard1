@@ -66,6 +66,7 @@ export class DialogContainerComponent implements OnInit {
           this.openDynamicComponent(data);
         }
         this.upperSliderData = data;
+        console.log("upper slider Subscription data", this.upperSliderData)
         // this.fragmentData = data;
       }
     );
