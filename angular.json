@@ -73,7 +73,12 @@
             "production": {
               "browserTarget": "myPlanner2:build:production"
             }
-          }
+          },
+          "polyfills": "src/polyfills.ts",
+          "exceljs": [
+            "/node_modules/exceljs/dist/exceljs.min"
+          ]
+
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
