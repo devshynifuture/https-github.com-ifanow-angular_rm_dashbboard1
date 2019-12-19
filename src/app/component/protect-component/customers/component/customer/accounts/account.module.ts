@@ -49,7 +49,7 @@ import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { DocumentNewFolderComponent } from '../../common-component/document-new-folder/document-new-folder.component';
 import { AccountRoutingModule } from "./account-routing.module";
 import { AccountCommonModule } from "./account.common.module";
-// import {PDFExportModule} from "@progress/kendo-angular-pdf-export";
+import {PDFExportModule} from "@progress/kendo-angular-pdf-export";
 import { AssetStocksComponent } from './assets/asset-stocks/asset-stocks.component';
 import { MutualFundComponent } from './assets/mutual-fund/mutual-fund/mutual-fund.component';
 import { MutualFundsCapitalComponent } from './assets/mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
@@ -136,7 +136,7 @@ import { MutualFundGoalLinkageComponent } from './assets/mutual-fund/mutual-fund
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
-    // PDFExportModule,
+    PDFExportModule,
     MaterialModule
   ],
   exports: [

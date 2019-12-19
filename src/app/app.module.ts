@@ -48,8 +48,6 @@ import { EmailModule } from './component/protect-component/AdviserComponent/Emai
 import { SubscriptionEntry } from './component/protect-component/AdviserComponent/Subscriptions/subscription.entry.module';
 import { EmailEntryModule } from './component/protect-component/AdviserComponent/Email/email.entry.module';
 
-// import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
-
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -80,8 +78,6 @@ import { EmailEntryModule } from './component/protect-component/AdviserComponent
     // ConfirmDialogComponent,
     DialogComponent,
     CustomFormInputComponent,
-
-
     BaseComponent,
     // RadioGroupDirectiveDirective,
 
@@ -108,12 +104,11 @@ import { EmailEntryModule } from './component/protect-component/AdviserComponent
     MDBBootstrapModule.forRoot(), DragDropModule,
     CustomCommonModule,
     EmailModule,
-    // PDFExportModule,
 
     // EntryComponentsModule,
     // AccountEntryModule,
     // PlanEntryModule,
-    EmailEntryModule
+    EmailEntryModule,
   ],
   providers: [AuthService, HttpService, DatePipe, DynamicComponentService],
   bootstrap: [AppComponent],

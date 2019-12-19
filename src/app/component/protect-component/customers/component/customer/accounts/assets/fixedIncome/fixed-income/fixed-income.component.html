@@ -318,7 +318,7 @@
             <div class="col-md-5 p-0 text-right right ">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
-                    <button mat-menu-item>PDF</button>
+                    <button mat-menu-item kendo-button (click)="pdf.saveAs('invoice.pdf')">PDF</button>
                     <button mat-menu-item (click)="ExportTOExcel('Bonds')">XLS</button>
                 </mat-menu>
                 <img src="assets/images/svg/up-down.svg">
@@ -337,6 +337,7 @@
 
             </div>
         </div>
+        <kendo-pdf-export #pdf  margin="2cm">
         <div class="example-container p-0 col-md-12 mt-8 mb-44 fixed-deposite">
             <table matSort #bondListTable="matSort" mat-table [dataSource]="dataSourceBond" id="table-low">
                 <ng-container matColumnDef="no">
@@ -444,6 +445,7 @@
                 <tr mat-footer-row *matFooterRowDef="displayedColumns6;sticky: true" [hidden]="isLoading"></tr>
             </table>
         </div>
+        </kendo-pdf-export>
     </div>
 
 </div>
