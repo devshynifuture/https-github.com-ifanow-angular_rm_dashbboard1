@@ -68,15 +68,25 @@ export class SubscriptionComponent implements OnInit {
   }
 
   getTabChangeData(data) {
-    if(data=="")
-    {
-      return
-    }
-    this.tabGroup.selectedIndex=6
-    if(data==6)
-    {
-      this.settingIndex=3
-    }
+    this._value=data;
+    // if(data==1){
+    //   this._value=2;
+    // } else if(data==3){
+    //   this._value=4;
+    // }else if(data==4){
+    //   this._value=5
+    // }else if(data==5){
+    //   this._value=6;
+    // }else if(){}
+    // if(data=="")
+    // {
+    //   return
+    // }
+    // this.tabGroup.selectedIndex=6
+    // if(data==6)
+    // {
+    //   this.settingIndex=3
+    // }
   }
 
   tabClick(event) {
