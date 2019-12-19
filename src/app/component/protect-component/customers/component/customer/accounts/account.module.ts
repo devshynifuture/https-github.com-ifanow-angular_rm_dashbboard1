@@ -135,7 +135,6 @@ import {MutualFundGoalLinkageComponent} from './assets/mutual-fund/mutual-fund/m
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
-    // PDFExportModule,
     MaterialModule
   ],
   exports: [

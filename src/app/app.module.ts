@@ -48,6 +48,7 @@ import { EmailEntryModule } from './component/protect-component/AdviserComponent
 import 'zone.js/dist/zone';
 import { CalenderComponent } from "./component/protect-component/AdviserComponent/Email/calender/calender.component";
 import { SubscriptionUpperEntry } from './component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
+import { EmailModule } from './component/protect-component/AdviserComponent/Email/email.module';
 // import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
 
@@ -80,8 +81,6 @@ import { SubscriptionUpperEntry } from './component/protect-component/AdviserCom
     // ConfirmDialogComponent,
     DialogComponent,
     CustomFormInputComponent,
-
-
     BaseComponent,
     // RadioGroupDirectiveDirective,
 
@@ -111,8 +110,7 @@ import { SubscriptionUpperEntry } from './component/protect-component/AdviserCom
     MDBBootstrapModule.forRoot(),
     DragDropModule,
     CustomCommonModule,
-    // EmailModule,
-    // PDFExportModule,
+    EmailModule,
 
     // EntryComponentsModule,
     // AccountEntryModule,
