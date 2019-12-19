@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { MatSort } from '@angular/material';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../../../excel.service';
 
 @Component({
   selector: 'app-mutual-funds-capital',
@@ -6,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./mutual-funds-capital.component.scss']
 })
 export class MutualFundsCapitalComponent implements OnInit {
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChildren(FormatNumberDirective) formatNumber;
   displayedColumns: string[] = ['schemeName', 'folioNumber', 'investorName', 'stGain', 'stLoss', 'ltGain', 'indexedGain', 'liloss', 'indexedLoss'];
   dataSource = ELEMENT_DATA;
 
@@ -14,12 +19,42 @@ export class MutualFundsCapitalComponent implements OnInit {
 
   displayedColumns2: string[] = ['schemeName2', 'folioNumber', 'dividendPayoutAmount', 'dividendReInvestmentAmount', 'totalReinvestmentAmount'];
   dataSource2 = ELEMENT_DATA2;
+  excelData: any[];
+  footer=[];
+  stGain: number;
+  indexedGain: number;
 
   constructor() { }
 
   ngOnInit() {
+    this.stGain=875.32;
+    this.indexedGain=125.4
   }
-
+  /**used for excel */
+  async ExportTOExcel(value) {
+    this.excelData = []
+    var data = []
+    var headerData = [{ width: 20, key: 'Scheme name' },
+    { width: 20, key: 'Folio number ' },
+    { width: 20, key: 'Investor name ' },
+    { width: 18, key: 'ST gain' },
+    { width: 18, key: 'ST loss ' },
+    { width: 18, key: 'LT gain' },
+    { width: 25, key: 'Indexed gain' },
+    { width: 18, key: ' LT loss' },
+    { width: 10, key: ' Indexed loss' },]
+    var header = ['Scheme name', 'Folio number','Investor name', 'ST gain',
+      'ST loss', 'LT gain', 'Indexed gain', 'LT loss', 'Indexed loss'];
+    this.dataSource.forEach(element => {
+      data = [element.schemeName,element.folioNumber,element.investorName,element.stGain
+        , element.stLoss,element.ltGain,element.indexedGain,
+      element.liloss,element.indexedLoss]
+      this.excelData.push(Object.assign(data))
+    });
+    var footerData = ['Total','','',this.stGain,'', '', this.indexedGain, '', '']
+    this.footer.push(Object.assign(footerData))
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
+  }
 } 
 
 export interface PeriodicElement {

@@ -77,7 +77,80 @@
                 <i class="material-icons icon">
                     search
                 </i>
-                <input class="search-field" type="text" placeholder="SEARCH" name="email">
+                <input class="search-field" type="text" placeholder="SEARCH" name="email" [matMenuTriggerFor]="menu">
+                <mat-menu #menu="matMenu" class="w-485">
+                    <div class="pt-10 pb-10">
+                        <p class="f-500 roboto m-0 pl-10 pb-10">CLIENTS</p>
+                        <button mat-menu-item>
+                            <div class="row">
+                                <div class="col-md-1 p-0">
+                                    <img class="w-100 br-50" src="/assets/images/img1.jpg">
+                                </div>
+                                <div class="col-md-7 pt-8">
+                                    <p class="text-black f-500 roboto m-0">Amit Maheshwari</p>
+                                    <p class="f-12 text-primitive roboto m-0">amit.maheshwari123@gmail.com</p>
+                                </div>
+                                <div class="col-md-3 p-0">
+                                    <button mat-stroked-button class="small-primary">GROUP HEAD</button>
+                                </div>
+                            </div>
+                        </button>
+                        <button mat-menu-item>
+                            <div class="row">
+                                <div class="col-md-1 p-0">
+                                    <img class="w-100 br-50" src="/assets/images/img1.jpg">
+                                </div>
+                                <div class="col-md-7 pt-8">
+                                    <p class="text-black f-500 roboto m-0">Amit Maheshwari</p>
+                                    <p class="f-12 text-primitive roboto m-0">amit.maheshwari123@gmail.com</p>
+                                </div>
+                                <div class="col-md-3 p-0">
+                                    <button mat-stroked-button class="small-primitive">FAMILY MEMBER</button>
+                                </div>
+                            </div>
+                        </button>
+                        <p class="f-500 roboto m-0 pl-10 pb-10 pt-10">LEADS</p>
+                        <button mat-menu-item>
+                            <div class="row">
+                                <div class="col-md-1 p-0">
+                                    <img class="w-100 br-50" src="/assets/images/img1.jpg">
+                                </div>
+                                <div class="col-md-7 pt-8">
+                                    <p class="text-black f-500 roboto m-0">Amit Maheshwari</p>
+                                    <p class="f-12 text-primitive roboto m-0">amit.maheshwari123@gmail.com</p>
+                                </div>
+                                <div class="col-md-3 p-0">
+                                    <button mat-stroked-button class="small-primary">GROUP HEAD</button>
+                                </div>
+                            </div>
+                        </button>
+
+                    </div>
+                    <div class="row bg-grey lter p-8">
+                        <div class="col-md-8 p-0">
+                            <div class="row">
+                                <div class="col-md-1 p-0">
+                                    <img src="/assets/images/svg/downarrw-bg.svg" class="c-p">
+                                </div>
+                                <div class="col-md-1 p-0 pl-8">
+                                    <img src="/assets/images/svg/uparrow-bg.svg" class="c-p">
+                                </div>
+                                <div class="col-md-4">
+                                    <p class="text-primitive roboto m-0 pt-4 c-p">to navigate</p>
+                                </div>
+                                <div class="col-md-1 p-0">
+                                    <img src="/assets/images/svg/centered-left.svg" class="c-p">
+                                </div>
+                                <div class="col-md-4 pl-8">
+                                    <p class="text-primitive roboto m-0 pt-4 c-p">to enter</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-primitive roboto text-right pt-4 c-p m-0">All shortcuts</p>
+                        </div>
+                    </div>
+                </mat-menu>
             </div>
             <div class="hide-on-800 flex right-fixed tablate-none">
                 <a mat-list-item class="sidenav-link">
