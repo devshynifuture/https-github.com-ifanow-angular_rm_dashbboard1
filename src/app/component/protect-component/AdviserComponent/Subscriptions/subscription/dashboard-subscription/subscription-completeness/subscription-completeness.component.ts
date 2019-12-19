@@ -72,13 +72,13 @@ export class SubscriptionCompletenessComponent implements OnInit {
       data.forEach((singleData) => {
       });
       if (data.length >= 6) {
-        data[0].selectedTab = 6;
-        data[1].selectedTab = 6;
+        data[0].selectedTab = 7;
+        data[1].selectedTab = 7;
         data[1].selectedSettingTab = 3
-        data[2].selectedTab = 1;
-        data[3].selectedTab = 3;
-        data[4].selectedTab = 5;
-        data[5].selectedTab = 4;
+        data[2].selectedTab = 2;
+        data[3].selectedTab = 4;
+        data[4].selectedTab = 6;
+        data[5].selectedTab = 5;
       }
     }
     this.dataObj = data;
@@ -96,21 +96,21 @@ export class SubscriptionCompletenessComponent implements OnInit {
   }
 
   currentTabs(value) {
-    // this.eventService.tabData(value.selectedTab)
+    this.eventService.tabData(value.selectedTab)
     switch (value.selectedTab) {
-      case (1):
+      case (2):
         this.router.navigate(['admin/subscription/clients',]);
         break;
-      case (3):
+      case (4):
         this.router.navigate(['admin', 'subscription', 'quotations']);
         break;
-      case (4):
+      case (5):
         this.router.navigate(['admin', 'subscription', 'invoices']);
         break;
-      case (5):
+      case (6):
         this.router.navigate(['admin', 'subscription', 'documents']);
         break;
-      case (6):
+      case (7):
         this.router.navigate(['admin', 'subscription', 'settings']);
         break;
       default:

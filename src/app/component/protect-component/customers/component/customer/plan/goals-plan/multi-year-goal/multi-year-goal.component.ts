@@ -43,4 +43,7 @@ export class MultiYearGoalComponent implements OnInit {
     this.eventService.changeUpperSliderState(fragmentData)
 
   }
+  open(){
+    
+  }
 }

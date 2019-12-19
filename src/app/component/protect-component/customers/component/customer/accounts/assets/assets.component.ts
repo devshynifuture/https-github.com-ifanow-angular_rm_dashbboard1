@@ -5,6 +5,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { MatDialog } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
+import { ActivatedRoute } from '@angular/router';
 import { UpperCustomerComponent } from '../../../common-component/upper-customer/upper-customer.component';
 
 @Component({
@@ -25,9 +26,12 @@ export class AssetsComponent implements OnInit {
     { name: 'Cash & Bank', viewmode: 'tab7', count: '0' },
     { name: 'Commodities', viewmode: 'tab8', count: '0' }
   ];
+  tab: any;
+  Settab: any;
+  viewMode = 'tab1';
 
   constructor(private subInjectService: SubscriptionInject, private eventService: EventService,
-    public dialog: MatDialog, private cusService: CustomerService) {
+    public dialog: MatDialog, private cusService: CustomerService,private route: ActivatedRoute) {
   }
 
   private loadComponent = false;
@@ -99,14 +103,25 @@ export class AssetsComponent implements OnInit {
   displayedColumns25 = ['scrip', 'owner', 'bal', 'price', 'mprice', 'amt', 'cvalue', 'gain', 'ret', 'xirr', 'dividend', 'icons'];
   dataSource25 = ELEMENT_DATA25;
 
-  viewMode = 'tab2';
+  
 
   ngOnInit() {
     // this.viewMode = 'tab2';
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getAssetCountGLobalData();
-
+    this.route.queryParams.subscribe((params) => {
+      if (params.tab) {
+        this.Settab = params.tab;
+        this.viewMode = this.Settab;
+        // this.route.navigate([], {
+        //   queryParams: {
+        //     tab: null,
+        //   },
+        //   queryParamsHandling: 'merge',
+        // });
+      }
+    });
 
   }
 

@@ -6,7 +6,7 @@
         <h5 class="m-0 p-20 pl-50" *ngIf="goalTypeData">{{goalTypeData.name}} goal</h5>
     </div>
     <div class="col-md-2">
-        <i class="material-icons pt-16 pb-12 c-p right pr-16" (click)="close()">
+        <i class="material-icons pt-16 pb-12 c-p right pr-16" (click)="close('close')">
             close
         </i>
     </div>
@@ -273,7 +273,7 @@
 <div class="bottom-fixed wrapper-12 w-100">
     <div class="row">
         <div class="col-md-4">
-            <h4 class="mb-0 pt-8 text-white c-p f-16" (click)="close()">Cancel</h4>
+            <h4 class="mb-0 pt-8 text-white c-p f-16" (click)="close('close')">Cancel</h4>
         </div>
         <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit" (click)="addSingleYearGoal()">Save</button>
