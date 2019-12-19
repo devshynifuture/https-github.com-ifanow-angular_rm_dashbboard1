@@ -213,13 +213,13 @@ export class EmailServiceService {
     });
   }
 
-  openEmailAddTask(data) {
+  openEmailAddTask(data, componentName) {
     const fragmentData = {
       flag: 'addEmailTask',
       data,
       id: 1,
       state: 'open35',
-      componentName: EmailAddTaskComponent,
+      componentName,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -233,13 +233,13 @@ export class EmailServiceService {
     );
   }
 
-  openComposeEmail(data) {
+  openComposeEmail(data, componentName) {
     const fragmentData = {
       flag: 'composeEmail',
       data,
       id: 1,
       state: 'open35',
-      componentName: ComposeEmailComponent,
+      componentName
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

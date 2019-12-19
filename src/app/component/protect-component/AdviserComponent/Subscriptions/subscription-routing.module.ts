@@ -11,7 +11,8 @@ import { DashboardSubscriptionComponent } from './subscription/dashboard-subscri
 
 
 const routes: Routes = [{
-  path: '', component: SubscriptionComponent,
+  path: '',
+  // component: SubscriptionComponent,
   children: [
     {
       path: 'dashboard',

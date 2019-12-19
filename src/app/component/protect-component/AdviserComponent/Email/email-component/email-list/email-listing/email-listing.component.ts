@@ -1,3 +1,4 @@
+import { ComposeEmailComponent } from './../../compose-email/compose-email.component';
 import { ConfirmDialogComponent } from './../../../../../common-component/confirm-dialog/confirm-dialog.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
@@ -149,7 +150,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
 
   openDraftView(dataObj) {
     this.emailService.sendNextData(dataObj);
-    this.emailService.openComposeEmail(dataObj);
+    this.emailService.openComposeEmail(dataObj, ComposeEmailComponent);
   }
 
   // move single thread to trash

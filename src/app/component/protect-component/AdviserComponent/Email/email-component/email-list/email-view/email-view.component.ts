@@ -97,11 +97,11 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   }
 
   openEmailAddTask(data) {
-    this.emailService.openEmailAddTask(data);
+    this.emailService.openEmailAddTask(data, ComposeEmailComponent);
   }
 
   openComposeEmail(data) {
-    this.emailService.openComposeEmail(data);
+    this.emailService.openComposeEmail(data, ComposeEmailComponent);
   }
 
   goBack() {

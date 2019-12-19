@@ -1,12 +1,7 @@
-import { EmailListComponent } from './email-component/email-list/email-list.component';
-import { EmailComponent } from './email-component/email.component';
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { EmailSentComponent } from './email-component/email-sent/email-sent.component';
-import { EmailDraftComponent } from './email-component/email-draft/email-draft.component';
-import { EmailArchiveComponent } from './email-component/email-archive/email-archive.component';
-import { EmailTrashComponent } from './email-component/email-trash/email-trash.component';
-import { EmailViewComponent } from './email-component/email-list/email-view/email-view.component';
+import {EmailComponent} from './email-component/email.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {EmailArchiveComponent} from './email-component/email-archive/email-archive.component';
 
 
 const routes: Routes = [
@@ -43,7 +38,8 @@ const routes: Routes = [
         path: '',
         redirectTo: 'inbox',
         pathMatch: 'full'
-      }
+      },
+
     ]
   }
 ];
@@ -52,4 +48,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class EmailRoutingModule { }
+export class EmailRoutingModule {
+}

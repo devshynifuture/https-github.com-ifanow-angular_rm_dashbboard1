@@ -4,10 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4200 --poll=2000",
-    "build": "ng build",
+    "build": "ng build --stats-json",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "compress": "npx gzipper --verbose ./dist/myPlanner2 ./gzipped",
+
     "stats": "webpack-bundle-analyzer dist/myPlanner2/stats-es5.json"
   },
   "private": true,
@@ -59,6 +61,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~12.12.14",
     "codelyzer": "^5.0.0",
+    "gzipper": "^3.4.2",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",
