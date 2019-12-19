@@ -1,9 +1,10 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {ModifyFeeDialogComponent} from '../modify-fee-dialog/modify-fee-dialog.component';
-import {MatDialog} from '@angular/material';
-import {UtilService} from "../../../../../../../services/util.service";
-import {EventService} from "../../../../../../../Data-service/event.service";
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ModifyFeeDialogComponent } from '../modify-fee-dialog/modify-fee-dialog.component';
+import { MatDialog } from '@angular/material';
+import { UtilService } from "../../../../../../../services/util.service";
+import { EventService } from "../../../../../../../Data-service/event.service";
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { SubscriptionUpperSliderComponent } from '../upper-slider/subscription-upper-slider.component';
 
 
 @Component({
@@ -23,38 +24,60 @@ export class SingleDocumentViewComponent implements OnInit {
   ngOnInit() {
   }
 
-  editDocument() {
+  // editDocument() {
 
+  //   const fragmentData = {
+  //     flag: 'app-subscription-upper-slider',
+  //     data: {documentData: this.singleDocument, flag: 'documents'},
+  //     id: 1,
+  //     state: 'open'
+  //   };
+  //   console.log('editDocument: ', fragmentData);
+  // this.eventService.changeUpperSliderState(fragmentData);
+  // this.overviewDesign = 'false';
+  /*  const dialogRef = this.dialog.open(ModifyFeeDialogComponent, {
+      width: '1400px',
+      data: '',
+      autoFocus: false,
+      panelClass: 'dialogBox',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });*/
+  //     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+  //       upperSliderData => {
+  //         if (UtilService.isDialogClose(upperSliderData)) {
+  //           // this.getDocumentsSetting();
+  //           this.valueChange.emit('close');
+  //           subscription.unsubscribe();
+  //         }
+  //       }
+  //     );
+
+  // }
+
+  editDocument() {
+    console.log('hello mf button clicked');
     const fragmentData = {
-      flag: 'app-subscription-upper-slider',
-      data: {documentData: this.singleDocument, flag: 'documents'},
+      flag: 'openUpper',
       id: 1,
+      data: { documentData: this.singleDocument, flag: 'documents' },
+      direction: 'top',
+      componentName: SubscriptionUpperSliderComponent,
       state: 'open'
     };
-    console.log('editDocument: ', fragmentData);
-    // this.eventService.changeUpperSliderState(fragmentData);
-    // this.overviewDesign = 'false';
-    /*  const dialogRef = this.dialog.open(ModifyFeeDialogComponent, {
-        width: '1400px',
-        data: '',
-        autoFocus: false,
-        panelClass: 'dialogBox',
-      });
 
-      dialogRef.afterClosed().subscribe(result => {
-
-      });*/
-      const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-        upperSliderData => {
-          if (UtilService.isDialogClose(upperSliderData)) {
-            // this.getDocumentsSetting();
-            this.valueChange.emit('close');
-            subscription.unsubscribe();
-          }
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
         }
-      );
-
+      }
+    );
   }
+
   deleteModal(value) {
     const dialogData = {
       data: value,

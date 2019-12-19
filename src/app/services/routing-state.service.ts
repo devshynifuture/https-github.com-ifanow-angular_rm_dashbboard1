@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {filter} from 'rxjs/operators';
 
@@ -9,7 +9,17 @@ import {filter} from 'rxjs/operators';
 export class RoutingState {
   private history = [];
 
-  constructor(private router: Router) {
+  mainrouter;
+
+  constructor(private router: Router, private ngZone: NgZone) {
+  }
+
+  public setMainRouter(mainrouter) {
+    this.mainrouter = mainrouter;
+  }
+
+  public getMainRouter() {
+    return this.mainrouter;
   }
 
   public loadRouting(): void {
@@ -18,6 +28,9 @@ export class RoutingState {
       .subscribe(({urlAfterRedirects}: NavigationEnd) => {
         this.history = [...this.history, urlAfterRedirects];
         console.log('123456789 loadRouting history : ', this.history);
+        if (this.getMainRouter())
+          console.log('goToSpecificRoute urlString this.getMainRouter().detach() : ', this.getMainRouter());
+
       });
   }
 
@@ -28,4 +41,25 @@ export class RoutingState {
   public getPreviousUrl(): string {
     return this.history[this.history.length - 2] || '/index';
   }
+
+  public goToSpecificRoute(urlString) {
+    // this.getMainRouter().clear();
+    console.log('goToSpecificRoute urlString this.getMainRouter().detach() : ', this.getMainRouter());
+    this.ngZone.run(() => {
+      this.router.navigate([urlString]).then((status: boolean) => {
+        if (status) {
+          console.log('goToSpecificRoute urlString success : ', urlString);
+          // this.router.navigate([urlString]);
+        } else {
+          console.error('goToSpecificRoute urlString failure : ', urlString);
+        }
+      }).catch(error => {
+        console.error('goToSpecificRoute catch error : ', error, ' for urlString : ', urlString);
+
+      });
+    });
+
+  }
+
+
 }

@@ -241,7 +241,7 @@
         float: right;
         width: 100%;
         padding-right: 15px;
-        right: 0;
+        // right: 0;
         z-index: 10;
         background: #fff !important;
         box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2), 0px 1px 0px rgba(0, 0, 0, 0.12), 0px 3px 3px rgba(0, 0, 0, 0.14);
@@ -1266,6 +1266,19 @@ mat-tab-group[vertical] {
 }
 
 // end crm
+// Activies
+#ui-activies {
+    padding-top: 64px;
+    .main-header {
+        box-shadow: 5px 1px 10px rgba(0, 0, 0, 0.2), 3px 4px 5px rgba(0, 0, 0, 0.12), 2px 2px 4px rgba(0, 0, 0, 0.14);
+        position: fixed;
+        width: 100%;
+        z-index: 10;
+        background: #fff !important;
+    }
+}
+
+// end Activies
 .proximaFont {
     font-family: "Proxima Nova ", sans-serif;
 }
