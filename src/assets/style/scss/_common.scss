@@ -1,7 +1,8 @@
 body {
     padding: 0;
     margin: 0;
-    font-family: 'Roboto', sans-serif;
+    // font-family: 'Roboto', sans-serif;
+    font-family: "Proxima Nova ", sans-serif;
 }
 
 h1,
@@ -9,7 +10,7 @@ h2,
 h3,
 h4,
 h5 {
-    font-family: $font-roboto;
+    // font-family: $font-roboto;
     font-weight: $normal;
     letter-spacing: 0.2px;
     // text-transform: capitalize;
@@ -109,7 +110,7 @@ a:hover {
 }
 
 .roboto {
-    font-family: 'Roboto', sans-serif !important;
+    // font-family: 'Roboto', sans-serif !important;
 }
 
 ul {
@@ -120,7 +121,6 @@ ul {
 
 li {
     text-align: center;
-
 }
 
 .right {
@@ -130,9 +130,11 @@ li {
 .left {
     float: left !important;
 }
-.none{
+
+.none {
     display: $none !important;
 }
+
 .mat-drawer-inner-container {
     overflow: hidden !important;
 }
@@ -141,16 +143,20 @@ li {
     color: rgba(0, 0, 0, .54);
     text-transform: capitalize;
 }
-.pab{
+
+.pab {
     position: absolute;
 }
-.iflex{
+
+.iflex {
     display: $iflex !important;
 }
-.hw-10{
+
+.hw-10 {
     height: 10px;
     width: 10px;
 }
+
 ul {
     list-style-type: none;
     display: flex;
@@ -182,9 +188,11 @@ ul {
 .mat-stroked-button {
     font-weight: normal;
 }
-.pl-50{
+
+.pl-50 {
     padding-left: 50px !important;
 }
+
 .loader {
     margin: 0 auto;
     top: 50%;
@@ -517,9 +525,10 @@ ul {
         line-height: 36px !important;
     }
 }
-.text-regular{
-        margin: 0 !important;
-        color: #83959D;
-        font-size: 14px;
-        font-family: "Roboto", sans-serif;
+
+.text-regular {
+    margin: 0 !important;
+    color: #83959D;
+    font-size: 14px;
+    font-family: "Roboto", sans-serif;
 }
