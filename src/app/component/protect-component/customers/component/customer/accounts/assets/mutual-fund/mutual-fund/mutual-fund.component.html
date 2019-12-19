@@ -2,7 +2,6 @@
   <div class="wrapper-8">
     <div class="row">
       <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
-
         <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
           {{viewMode}}
           <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
@@ -23,12 +22,19 @@
       <app-mutual-fund-overview></app-mutual-fund-overview>
     </div>
     <div *ngSwitchCase="'Summary'">
+      <app-mutual-fund-summary></app-mutual-fund-summary>
     </div>
-    <div *ngSwitchCase="'All Transactions'"></div>
-    <div *ngSwitchCase="'Unrealized Transactions'"></div>
+    <div *ngSwitchCase="'All Transactions'">
+      <app-mutual-fund-all-transaction></app-mutual-fund-all-transaction>
+    </div>
+    <div *ngSwitchCase="'Unrealized Transactions'">
+      <app-mutual-fund-unrealized-tran></app-mutual-fund-unrealized-tran>
+    </div>
     <div *ngSwitchCase="'Capital Gains'">
       <app-mutual-funds-capital></app-mutual-funds-capital>
     </div>
-    <div *ngSwitchCase="'Goal Linkage'"></div>
+    <div *ngSwitchCase="'Goal Linkage'">
+      <app-mutual-fund-goal-linkage></app-mutual-fund-goal-linkage>
+    </div>
   </div>
 </div>
