@@ -49,10 +49,7 @@ import { RiskProfileComponent } from './profile-plan/riskProfile/risk-profile/ri
     HistoryRiskProfileComponent,
     IncomeComponent,
     ExpensesComponent,
-    RiskProfileComponent
-
-
-
+    RiskProfileComponent,
   ],
   imports: [
     PlanRoutingModule,

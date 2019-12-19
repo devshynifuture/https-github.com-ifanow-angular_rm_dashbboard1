@@ -8,8 +8,8 @@ export interface EmailInterfaceI {
 }
 
 export interface GmailInboxResponseI {
-    historyId: string,
-    id: string,
+    historyId: string | null,
+    id: string | null,
     messages: GmailSingleMessageI[]
 }
 
@@ -39,4 +39,21 @@ export interface GmailPartI {
     headers: { name: string, value: string }[],
     mimeType: string,
     partId: string
+}
+
+export interface ExtractedGmailDataI {
+    position: number;
+    idsOfThread: { historyId: string, id: string },
+    parsedData: { decodedPart: string[], headers: {}[] },
+    labelIdsFromMessages: { labelIds: string[] }[],
+    emailers: string,
+    subjectMessage: { subject: string, message: string },
+    date: string
+}
+
+export interface MessageListArray {
+    position: number,
+    emailers: string,
+    subjectMessage: string,
+    date: string
 }

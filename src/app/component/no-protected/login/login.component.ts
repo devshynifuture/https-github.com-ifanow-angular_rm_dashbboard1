@@ -63,8 +63,8 @@ export class LoginComponent implements OnInit {
         roleId: 1
       };
 
-      // this.hardCodeLoginForTest();
-      //   console.log(loginData);
+      this.hardCodeLoginForTest();
+      // console.log(loginData);
       this.backOfficeService.loginApi(loginData).subscribe(
         data => {
           if (data) {
@@ -94,7 +94,7 @@ export class LoginComponent implements OnInit {
 
   hardCodeLoginForTest() {
     const jsonData = {
-      advisorId: 2808,
+      advisorId: 2727,
       clientId: 2978,
       emailId: 'gaurav@futurewise.co.in',
       authToken: 'data',

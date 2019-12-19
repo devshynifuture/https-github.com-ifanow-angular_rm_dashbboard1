@@ -9,8 +9,12 @@ export class EmailUtilService {
   constructor() {
   }
 
+  static changeStringToBase46(value: string) {
+    return btoa(value);
+  }
+
   static parseBase64AndDecodeGoogleUrlEncoding(contentInBase64) {
-    console.log("parseBase64AndDecodeGoogleUrlEncoding ->> ", contentInBase64);
+    // console.log("parseBase64AndDecodeGoogleUrlEncoding ->> ", contentInBase64);
     return atob(contentInBase64.replace(/\-/g, '+').replace(/_/g, '/'));
   }
 
@@ -104,5 +108,23 @@ export class EmailUtilService {
       })
     });
     return { headerSubjectArray, headerFromArray };
+  }
+
+  static getAttachmentFileData(gmailResponse) {
+    const returnArray = [];
+    gmailResponse.messages.forEach((message) => {
+      // console.log(message);
+      // const { payload: { headers } } = message;
+      const { payload: { parts } } = message;
+      parts.forEach((part) => {
+        const { mimeType } = part;
+        const { headers } = part;
+        returnArray.push({
+          headers,
+          mimeType
+        });
+      });
+    });
+    return returnArray;
   }
 }

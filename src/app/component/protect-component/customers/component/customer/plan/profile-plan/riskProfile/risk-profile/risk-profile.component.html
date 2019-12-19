@@ -1,3 +1,6 @@
+<div *ngIf="showLoader==true">
+    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+</div>
 <div class="wrapper-28" *ngIf="showRisk == false">
     <div class="row">
         <div class="col-md-9">
@@ -12,12 +15,15 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <mat-radio-group aria-label="Select an option" id="custom-radio">
-                            <mat-radio-button *ngFor="let choice of item.riskAssessmentChoices" [value]="choice"
-                                (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight">
+                            <mat-radio-button *ngFor="let choice of item.riskAssessmentChoices; let i = index" [value]="choice"
+                                (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight;checkState(item)">
                                 {{choice.choice}}</mat-radio-button><br>
                         </mat-radio-group>
                     </mat-expansion-panel>
                 </mat-accordion>
+            </div>
+            <div *ngIf="showErrorMsg == true" class="text-danger">{{showErrorMsg}}
+                please complete all questions for test result
             </div>
             <button mat-stroked-button class="btn-primary mt-150 br-0 right"
                 (click)="submitRiskAnalysis(item)">SUBMIT</button>
@@ -25,7 +31,7 @@
         <div class="col-md-3 pr-0">
             <div class="p-20 b-primitive mt-8">
                 <mat-progress-bar mode="determinate" value="30"></mat-progress-bar>
-                <h5 class="pt-8 m-0 pt-12 text-center">3 of 15 completed</h5>
+                <h5 class="pt-8 m-0 pt-12 text-center">3 of 5 completed</h5>
             </div>
         </div>
     </div>
@@ -58,6 +64,7 @@
         </div>
     </div>
     <div class="row">
+            <!-- <button mat-raised-button color="primary" (click)="open('riskProfile')">History</button> -->
         <div class="col-md-4">
         </div>
         <div class="col-md-8">

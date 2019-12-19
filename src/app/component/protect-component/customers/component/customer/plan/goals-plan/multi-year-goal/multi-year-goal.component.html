@@ -11,61 +11,71 @@
         </i>
     </div>
 </div>
-<div [formGroup]="singleYearGoalForm" class="row bg-grey lter">
+<div [formGroup]="multiYearGoalForm" class="row bg-grey lter">
     <div class="col-md-8 p-0">
         <div class="wrapper-40 pt-72">
             <div class="row">
                 <div class="col-md-8 p-0">
-                    <div *ngIf="goalTypeData.name=='House' || goalTypeData.name=='Marriage' || goalTypeData.name=='Wealth creation'"
-                        class="row">
+                    <div *ngIf="goalTypeData.id==1" class="row">
                         <div class="col-md-8 p-0">
-                            <h5 class="m-0 text-black pl-0" *ngIf="Questions">{{Questions.Q}}</h5>
+                            <h5 class="m-0 text-black pl-0">Who are you planning this for?</h5>
                             <div class="form-group mb-0 pt-8">
                                 <mat-form-field>
-                                    <mat-select formControlName="field1" class="form-control br-0 br-none">
-                                        <mat-option *ngFor="let familyMember of familyData" [value]="familyMember">
-                                            {{familyMember.userName}}</mat-option>
+                                    <mat-select class="form-control br-0 br-none" formControlName="name">
+                                        <mat-option>Rahul Jain</mat-option>
+                                        <mat-option>Rahul Jain</mat-option>
                                     </mat-select>
                                     <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
-                            <!-- <div class="col-md-12 p-0">
+                            <div class="col-md-12 p-0">
                                 <p class="text-regular pt-4">Add spouse</p>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
-                    <div class="row"
-                        [ngClass]="{'pt-20':goalTypeData.name=='House' || goalTypeData.name=='Marriage'|| goalTypeData.name=='Wealth creation'}">
+                    <div *ngIf="goalTypeData.id==5 || goalTypeData.id==6" class="row pt-20">
                         <div class="col-md-12 p-0">
-                            <h5 class="m-0 text-black" *ngIf="Questions">{{Questions.Q1}}</h5>
+                            <h5 class="m-0 text-black">Age you want to retire? (present age - 39)</h5>
+                            <div class="row pt-8">
+                                <div class="col-md-4 p-0">
+                                    <div class="form-group mb-0">
+                                        <div id="custom-slider">
+                                            <mat-slider></mat-slider>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="goalTypeData.id==1" class="row pt-20">
+                        <div class="col-md-12 p-0">
+                            <h5 class="m-0 text-black">Age you want to retire? (present age - 39)</h5>
                             <div class="row pt-8">
                                 <div class="col-md-4 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input formControlName="field2" autocomplete="off" matInput #message
-                                                class="form-control br-0">
+                                            <input formControlName="retirementAge" autocomplete="off" matInput #message
+                                                class="form-control br-0" value="55 Years">
                                             <mat-error>This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
                                 <div class="col-md-8 pr-0">
                                     <div id="custom-slider">
-                                        <mat-slider [min]="singleYearGoalForm.get('field2').value"
-                                            max="{{singleYearGoalForm.get('field2').value+70}}"
-                                            (input)="onInputChange1($event)"></mat-slider>
+                                        <mat-slider></mat-slider>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-20">
+                    <div *ngIf="goalTypeData.id==1" class="row pt-20">
                         <div class="col-md-12 p-0">
-                            <h5 class="m-0 text-black" *ngIf="Questions">{{Questions.Q2}}</h5>
+                            <h5 class="m-0 text-black">Your current monthly expenses?</h5>
                             <div class="row pt-8">
                                 <div class="col-md-4 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input maxlength="3" formControlName="field3" autocomplete="off" matInput
+                                            <input formControlName="monthlyExpenses" autocomplete="off" matInput
                                                 #message class="form-control br-0 rupess">
                                             <mat-error>This field is required</mat-error>
                                         </mat-form-field>
@@ -73,7 +83,7 @@
                                 </div>
                                 <div class="col-md-8 pr-0">
                                     <div id="custom-slider">
-                                        <mat-slider (input)="onInputChange2($event)"></mat-slider>
+                                        <mat-slider></mat-slider>
                                     </div>
                                 </div>
                             </div>
@@ -81,33 +91,87 @@
                     </div>
                     <div class="row pt-20">
                         <div class="col-md-12 p-0">
-                            <h5 class="m-0 text-black" *ngIf="Questions">{{Questions.Q3}}</h5>
+                            <h5 class="m-0 text-black">At retirement, by what % will the expenses change?</h5>
                             <div class="row pt-8">
                                 <div class="col-md-4 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input formControlName="field4" autocomplete="off" matInput #message
+                                            <input formControlName="expenseChanges" autocomplete="off" matInput #message
+                                                class="form-control br-0" value="-10%">
+                                            <mat-error>This field is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 pr-0">
+                                    <div id="custom-slider">
+                                        <mat-slider></mat-slider>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="goalTypeData.id==1" class="row pt-20">
+                        <div class="col-md-12 p-0">
+                            <h5 class="m-0 text-black">Milestones you’d also like to plan for (optional)...</h5>
+                            <div class="row pt-8">
+                                <div class="col-md-4 p-0">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field>
+                                            <mat-select class="form-control br-0 br-none" formControlName="milstones">
+                                                <mat-option>Rahul Jain</mat-option>
+                                                <mat-option>Rahul Jain</mat-option>
+                                            </mat-select>
+                                            <mat-error>This field is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 p-0">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field>
+                                            <mat-select class="form-control br-0 br-none">
+                                                <mat-option>Rahul Jain</mat-option>
+                                                <mat-option>Rahul Jain</mat-option>
+                                            </mat-select>
+                                            <mat-error>This field is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 p-0">
+                                    <div class="form-group mb-0">
+                                        <input autocomplete="off" matInput #message
+                                            class="form-control br-0 rupess h-38">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-20">
+                        <div class="col-md-12 p-0">
+                            <h5 class="m-0 text-black">Give this goal a name</h5>
+                            <div class="row pt-8">
+                                <div class="col-md-8 p-0">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field>
+                                            <input formControlName="goalName" autocomplete="off" matInput #message
                                                 class="form-control br-0">
                                             <mat-error>This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-8 pr-0">
-                                    <div id="custom-slider">
-                                        <mat-slider></mat-slider>
-                                    </div>
-                                </div> -->
+                                <div class="col-md-12 pt-4">
+                                    <p class="f-12 m-0 text-primitive">Optional</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-20">
+                    <div *ngIf="goalTypeData.id==5 || goalTypeData.id==6" class="row pt-20">
                         <div class="col-md-12 p-0">
-                            <h5 class="m-0 text-black" *ngIf="Questions">{{Questions.Q4}}</h5>
+                            <h5 class="m-0 text-black">Notes</h5>
                             <div class="row pt-8">
                                 <div class="col-md-8 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input formControlName="field5" autocomplete="off" matInput #message
+                                            <input formControlName="notes" autocomplete="off" matInput #message
                                                 class="form-control br-0">
                                             <mat-error>This field is required</mat-error>
                                         </mat-form-field>
@@ -136,6 +200,7 @@
             <div class="col-md-10 p-0">
                 <div class="addgoal-common">
                     <mat-progress-bar mode="determinate" value="50">
+
                     </mat-progress-bar>
                 </div>
             </div>
@@ -188,6 +253,7 @@
             <div class="col-md-10 p-0">
                 <div class="addgoal-common">
                     <mat-progress-bar mode="determinate" value="50">
+
                     </mat-progress-bar>
                 </div>
             </div>
@@ -239,7 +305,7 @@
             <h4 class="mb-0 pt-8 text-white c-p f-16" (click)="close()">Cancel</h4>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="addSingleYearGoal()">Save</button>
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="open()">Save</button>
         </div>
     </div>
 </div>

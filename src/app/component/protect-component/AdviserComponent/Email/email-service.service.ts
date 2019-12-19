@@ -1,3 +1,4 @@
+import { EmailUtilService } from 'src/app/services/email-util.service';
 import { UtilService } from './../../../../services/util.service';
 import { SubscriptionInject } from './../Subscriptions/subscription-inject.service';
 import { ComposeEmailComponent } from './email-component/compose-email/compose-email.component';
@@ -31,6 +32,70 @@ export class EmailServiceService {
     });
   }
 
+  deleteThreadsFromTrashForever(ids: string[]) {
+    const userInfo = AuthService.getUserInfo();
+
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.DELETE_MULTIPLE_THREADS, {
+      ids: ids,
+      emailId: userInfo.emailId,
+      userId: userInfo.advisorId
+    });
+  }
+
+  // needs to work on ids 
+  deleteMessageFromView(ids?: string) {
+    const userInfo = AuthService.getUserInfo();
+
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.DELETE_MESSAGES, {
+      ids: ids,
+      emailId: userInfo.emailId,
+      userId: userInfo.advisorId
+    });
+  }
+
+  moveThreadsToTrashFromList(ids: string[]) {
+    const userInfo = AuthService.getUserInfo();
+
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.MOVE_THREADS_TO_TRASH, {
+      ids: ids,
+      emailId: userInfo.emailId,
+      userId: userInfo.advisorId
+    });
+  }
+
+  // id param to work on
+  moveMessageToTrashFromView(ids?: string) {
+    const userInfo = AuthService.getUserInfo();
+
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.MOVE_MESSAGES_TO_TRASH, {
+      ids: ids,
+      emailId: userInfo.emailId,
+      userId: userInfo.advisorId
+    });
+  }
+
+  // move gmail inbox threads to list
+  moveThreadsFromTrashToList(ids: string[]) {
+    const userInfo = AuthService.getUserInfo();
+
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.MOVE_THREADS_FROM_TRASH, {
+      ids,
+      emailId: userInfo.emailId,
+      userId: userInfo.advisorId
+    });
+  }
+
+  // need to work on ids 
+  moveMessagesFromTrashToList(ids?: string[]) {
+    const userInfo = AuthService.getUserInfo();
+
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.MOVE_MESSAGES_FROM_TRASH, {
+      ids,
+      emailId: userInfo.emailId,
+      userId: userInfo.advisorId
+    });
+  }
+
   getMailInboxList(labelIds: string, maxResults: number = 50, pageToken: string = '') {
     const userInfo = AuthService.getUserInfo();
     return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_GMAIL_INBOX_LIST, {
@@ -50,6 +115,94 @@ export class EmailServiceService {
     });
   }
 
+  // needs to work on email body attachments and to from of http Params
+  createDraft({ to, from, emailBody, attachments, subject }) {
+    const userInfo = AuthService.getUserInfo();
+    const encodedEmailBody = EmailUtilService.changeStringToBase46(emailBody);
+    console.log("THIS IS SOMETHING OF YOUR INTEREST =>>>>>", emailBody);
+    const obj =
+    {
+      "attachmentIds": [
+        ""
+      ],
+      "bccs": [
+        ""
+      ],
+      "ccs": [
+        ""
+      ],
+      "contentType": "",
+      "draft": {
+        "historyId": "",
+        "id": "",
+        "messages": {
+          "historyId": 0,
+          "id": "",
+          "internalDate": 0,
+          "labelIds": [
+            "DRAFT"
+          ],
+          "payload": {
+            "body": {
+              "data": encodedEmailBody,
+              "size": 0
+            },
+            "fileName": "",
+            "headers": [
+              {
+                "name": "",
+                "value": ""
+              }
+            ],
+            "mimeType": "",
+            "partId": "",
+            "parts": [
+              {
+                "body": {
+                  "data": "",
+                  "size": 0
+                },
+                "fileName": "",
+                "headers": [
+                  {
+                    "name": "",
+                    "value": ""
+                  }
+                ],
+                "mimeType": "",
+                "partId": ""
+              }
+            ]
+          },
+          "sizeEstimate": 0,
+          "snippet": "",
+          "threadId": ""
+        },
+        "threadId": ""
+      },
+      "email": "",
+      "fileData": [
+        {
+          "data": "",
+          "filename": "",
+          "mimeType": "",
+          "partId": "",
+          "size": 0
+        }
+      ],
+      "id": userInfo.emailId,
+      "message": encodedEmailBody,
+      "subject": subject,
+      "toAddress": [
+        to
+      ],
+      "userId": 2727
+    };
+
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.CREATE_DRAFT, {
+      ...obj
+    });
+  }
 
   createUpdateDraft(body) {
     const userInfo = AuthService.getUserInfo();
@@ -59,6 +212,7 @@ export class EmailServiceService {
       ...body
     });
   }
+
   openEmailAddTask(data) {
     const fragmentData = {
       flag: 'addEmailTask',
@@ -99,25 +253,6 @@ export class EmailServiceService {
 
   }
 
-  refreshList(data) {
-    switch (data) {
-      case 'archive': this.getEmailArchiveList(data);
-        break;
-      case 'draft': this.getEmailDraftList();
-        break;
-      case 'inbox': this.getEmailList(data);
-        break;
-      case 'trash': this.getEmailTrashList(data);
-        break;
-      case 'sent': this.getEmailSentList(data);
-        break;
-
-      default: throwError('Cannot Refresh');
-    }
-  }
-
-
-
   getEmailList(data) {
 
     alert('refreshed ' + data);
@@ -134,38 +269,7 @@ export class EmailServiceService {
     });
   }
 
-  getEmailTrashList(data) {
 
-    alert('refreshed ' + data);
-    // const httpParams = new HttpParams().set('advisorId', data.advisorId);
-    // return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
-  }
-
-  getEmailSentList(data) {
-
-    alert('refreshed ' + data);
-    // const httpParams = new HttpParams().set('advisorId', data.advisorId);
-    // return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
-  }
-
-  getEmailArchiveList(data) {
-
-    alert('refreshed ' + data);
-    // const httpParams = new HttpParams().set('advisorId', data.advisorId);
-    // return this.http.get(apiConfig.MAIN_URL + appConfig, httpParams);
-  }
-
-  // getLabelList(){
-  //   return this.http.get(apiConfig.MAIN_URL + appConfig);
-  // }
-
-  // getUserList(){
-  //   return this.http.get(apiConfig.MAIN_URL + appConfig);
-  // }
-
-  // saveUser(data){
-  //   return this.http.post(apiConfig.MAIN_URL + appConfig, data);
-  // }
 
   sendNextData(data: Object) {
     this.dataSourceOneMailView.next(data);
