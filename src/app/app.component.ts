@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {Event, NavigationEnd, NavigationStart, Router, RouterOutlet} from '@angular/router';
 import {EventService} from './Data-service/event.service';
@@ -11,9 +11,8 @@ import {RoutingState} from "./services/routing-state.service";
 })
 export class AppComponent implements AfterViewInit {
   @ViewChild('mainrouter', {
-    read: ViewContainerRef,
     static: true
-  }) mainrouter: ViewContainerRef;
+  }) mainrouter;
 
   ngAfterViewInit(): void {
     this.routingState.setMainRouter(this.mainrouter);
