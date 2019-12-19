@@ -1,3 +1,4 @@
+import { ComposeEmailComponent } from './../compose-email/compose-email.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmailServiceService } from './../../email-service.service';
 import { Component, OnInit } from '@angular/core';
@@ -80,7 +81,7 @@ export class LeftSidebarComponent implements OnInit {
   }
 
   openCompose() {
-    this.emailService.openComposeEmail(null);
+    this.emailService.openComposeEmail(null, ComposeEmailComponent);
   }
 
 }

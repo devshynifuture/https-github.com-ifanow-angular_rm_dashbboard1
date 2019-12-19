@@ -101,7 +101,7 @@ export class SubscriptionUpperSliderComponent implements OnInit {
 
   openClientDetails() {
     this.authService.setClientData(this.fragmentData.data);
-    this.router.navigateByUrl('/customer-detail', {state: this.fragmentData.data});
+    this.router.navigateByUrl('/customer/detail', {state: this.fragmentData.data});
     this.dialogClose();
 
   }

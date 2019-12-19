@@ -1,5 +1,6 @@
 import {Router} from '@angular/router';
 import {Component, NgZone, OnInit} from '@angular/core';
+import {RoutingState} from "../../../../../../services/routing-state.service";
 
 @Component({
   selector: 'app-accounts',
@@ -14,7 +15,7 @@ export class AccountsComponent implements OnInit {
     this._value = value;
   }
 
-  constructor(private router: Router, private ngZone: NgZone) {
+  constructor(private router: Router, private ngZone: NgZone, private routingStateService: RoutingState) {
   }
 
   selected;
@@ -44,21 +45,22 @@ export class AccountsComponent implements OnInit {
       }
     });*/
     // this.locationService.go('/admin/subscription');
-    this.ngZone.run(() => {
-      // this.navigateTo('/');
+    /* this.ngZone.run(() => {
+       // this.navigateTo('/');
 
-      this.router.navigate(['/admin', 'subscription'], {/*replaceUrl: true*/}).then(e => {
-        if (e) {
-          console.log('Navigation is successful!');
-          // this.locationService.go('/admin/subscription');
+       this.router.navigate(['/admin', 'subscription'], {/!*replaceUrl: true*!/}).then(e => {
+         if (e) {
+           // this.router.navigate(['/admin', 'subscription']);
+           console.log('Navigation is successful!');
+           // this.locationService.go('/admin/subscription');
 
-        } else {
-          console.log('Navigation has failed!');
-        }
-      });
-    });
+         } else {
+           console.log('Navigation has failed!');
+         }
+       });
+     });*/
 
-    // this.
+    this.routingStateService.goToSpecificRoute('/admin/subscription');
   }
 
 }

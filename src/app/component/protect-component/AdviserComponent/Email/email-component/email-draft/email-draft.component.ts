@@ -1,3 +1,4 @@
+import { ComposeEmailComponent } from './../compose-email/compose-email.component';
 import { GmailInboxResponseI, MessageListArray } from './../email.interface';
 import { EmailUtilService } from 'src/app/services/email-util.service';
 import { SubscriptionInject } from './../../../Subscriptions/subscription-inject.service';
@@ -142,7 +143,7 @@ export class EmailDraftComponent implements OnInit, OnDestroy {
 
   gotoEmailView(dataObj: object) {
     this.emailService.sendNextData(dataObj);
-    this.emailService.openComposeEmail(dataObj);
+    this.emailService.openComposeEmail(dataObj, ComposeEmailComponent);
   }
 
   doRefresh() {
