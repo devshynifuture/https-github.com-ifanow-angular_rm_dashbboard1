@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LeftsidebarComponent} from './component/left-sidebar/leftsidebar/leftsidebar.component';
 import {LoginComponent} from './component/no-protected/login/login.component';
+import {CalenderComponent} from "./component/protect-component/AdviserComponent/Email/calender/calender.component";
 
 const routes: Routes = [
   {
@@ -29,7 +30,15 @@ const routes: Routes = [
       {
         path: 'activies',
         loadChildren: () => import('./component/protect-component/AdviserComponent/Activies/activies/activies.module').then(m => m.ActiviesModule)
-      }
+      },
+      {
+        path: 'calender',
+        component: CalenderComponent
+      },
+      /*   {
+           path: 'calender',
+           component: CalenderComponent
+         },*/
 
     ]
   },
@@ -48,10 +57,7 @@ const routes: Routes = [
       // }
     ]
   },
-  /* {
-     path: 'calender',
-     component: CalenderComponent
-   },*/
+
   {
     path: 'gmail-redirect',
     // outlet: 'mainrouter',

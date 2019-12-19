@@ -46,6 +46,7 @@ import {DynamicComponentService} from './services/dynamic-component.service';
 import {SubscriptionEntry} from './component/protect-component/AdviserComponent/Subscriptions/subscription.entry.module';
 import {EmailEntryModule} from './component/protect-component/AdviserComponent/Email/email.entry.module';
 import 'zone.js/dist/zone';
+import {CalenderComponent} from "./component/protect-component/AdviserComponent/Email/calender/calender.component";
 // import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
 
@@ -87,6 +88,8 @@ import 'zone.js/dist/zone';
     // CustomDialogContainerComponent,
     // AddLiabilitiesComponent,
     // AddInsuranceComponent
+    CalenderComponent,
+
   ],
   imports: [
 
