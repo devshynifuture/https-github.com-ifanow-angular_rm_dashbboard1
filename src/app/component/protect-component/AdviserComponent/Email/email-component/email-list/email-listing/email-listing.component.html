@@ -63,7 +63,7 @@
         <th mat-header-cell *matHeaderCellDef> </th>
         <td mat-cell *matCellDef="let element" class="d-flex"
             (click)="showDraftView ? openDraftView(element): gotoEmailView(element)">
-            {{element.subjectMessage.subject | truncate:"30"}}
+            {{element.subjectMessage.subject | truncate:30}}
             <p class="m-0 pl-12 text-primitive">
                 {{element.subjectMessage.message | truncate:30}}
             </p>

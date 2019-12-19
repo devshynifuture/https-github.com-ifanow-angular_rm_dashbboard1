@@ -61,7 +61,12 @@ export class EmailListingComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
-    const location = this.router.url.split('/')[3];
+    let location;
+    if(this.router.url === '/'){
+      location = 'inbox';
+    } else {
+      location = this.router.url.split('/')[3];
+    }
     (location === 'trash') ? this.trashAction = true : this.trashAction = false;
     (location === 'draft') ? this.showDraftView = true : this.showDraftView = false;
     this.getGmailList(location.toUpperCase());
