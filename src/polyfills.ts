@@ -55,7 +55,10 @@
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-import 'zone.js/dist/zone';  
+// import 'exceljs/dist/exceljs.min.js';
+
+// import 'zone.js/dist/zone';
+
 (window as any).global = window;
 // import 'web-animations-js';
 /***************************************************************************************************

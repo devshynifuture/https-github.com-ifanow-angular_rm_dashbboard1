@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {Event, NavigationEnd, NavigationStart, Router, RouterOutlet} from '@angular/router';
 import {EventService} from './Data-service/event.service';
@@ -9,8 +9,15 @@ import {RoutingState} from "./services/routing-state.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  isOverlayVisible;
+export class AppComponent implements AfterViewInit {
+  @ViewChild('mainrouter', {
+    read: ViewContainerRef,
+    static: true
+  }) mainrouter: ViewContainerRef;
+
+  ngAfterViewInit(): void {
+    this.routingState.setMainRouter(this.mainrouter);
+  }
 
   constructor(
     private lBar: SlimLoadingBarService,
@@ -24,12 +31,6 @@ export class AppComponent {
       // console.log(event);
       this.loadingBarInterceptor(event);
     });
-    this.eventService.overlayVisibleData.subscribe(
-      data => {
-        this.isOverlayVisible = data;
-        console.log('AppComponent constructor: ', this.isOverlayVisible);
-      }
-    );
   }
 
   private loadingBarInterceptor(event: Event) {

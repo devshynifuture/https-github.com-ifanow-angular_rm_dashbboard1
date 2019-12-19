@@ -16,6 +16,7 @@ export class SingleGoalYearComponent implements OnInit {
   advisorId: any;
   familyData: any;
   singleYearGoalForm;
+  yearData: number;
   constructor(private eventService: EventService, private fb: FormBuilder, private planService: PlanService) { }
   @Input() set goalData(data) {
     this.clientId = AuthService.getClientId();
@@ -36,16 +37,13 @@ export class SingleGoalYearComponent implements OnInit {
       field4: [, [Validators.required]],
       field5: [, [Validators.required]]
     });
-    let yearData;
     if (this.goalTypeData.id == 9 || this.goalTypeData.id == 10) {
-      yearData = new Date().getFullYear();
-      this.singleYearGoalForm.controls['field2'].setValue(yearData);
+      this.yearData = new Date().getFullYear();
+      this.singleYearGoalForm.controls['field2'].setValue(this.yearData);
     }
     else {
-
+      this.singleYearGoalForm.controls['field2'].setValue(0);
     }
-    // (this.goalTypeData.id == 9 || this.goalTypeData.id == 10) ? this.singleYearGoalForm.controls.field1.setValidators([]) : this.singleYearGoalForm.controls.field1.setValidators(Validators.minLength(yearData));
-    // (this.goalTypeData.id == 9 || this.goalTypeData.id == 10) ? this.singleYearGoalForm.controls.field1.setValue(yearData) : this.singleYearGoalForm.controls.field1.setValue(0);
   };
   @Output() backToaddGoal = new EventEmitter();
   ngOnInit() {
@@ -84,13 +82,6 @@ export class SingleGoalYearComponent implements OnInit {
       },
       err => this.eventService.openSnackBar(err, "dismiss")
     )
-  }
-  onInputChange2(data) {
-    this.singleYearGoalForm.controls.field3.setValue(data.value)
-    console.log(data)
-  }
-  onInputChange1(data) {
-    this.singleYearGoalForm.controls.field2.setValue(data.value)
   }
   addSingleYearGoal() {
     switch (true) {
@@ -228,7 +219,7 @@ export class SingleGoalYearComponent implements OnInit {
           const obj = {
             "clientId": this.clientId,
             "advisorId": this.advisorId,
-            "goalStartDate": this.singleYearGoalForm.get('field2').value,
+            "goalStartDate": this.singleYearGoalForm.get('field2').value + '-01-01',
             "goalPresentValue": this.singleYearGoalForm.get('field3').value,
             "goalName": this.singleYearGoalForm.get('field4').value,
             "notes": this.singleYearGoalForm.get('field5').value,
@@ -247,14 +238,19 @@ export class SingleGoalYearComponent implements OnInit {
           const obj = {
             "clientId": this.clientId,
             "advisorId": this.advisorId,
-            "goalStartDate": this.singleYearGoalForm.get('field2').value,
+            "goalStartDate": this.singleYearGoalForm.get('field2').value + '-01-01',
             "goalPresentValue": this.singleYearGoalForm.get('field3').value,
             "goalName": this.singleYearGoalForm.get('field4').value,
             "notes": this.singleYearGoalForm.get('field5').value,
             "imageUrl": "image.png"
           }
           this.planService.addOthersGoal(obj).subscribe(
-            data => console.log(data)
+            data => {
+              console.log(data),
+                this.eventService.openSnackBar("Others spends is added", 'dismiss'),
+                this.close('close')
+            },
+            err => this.eventService.openSnackBar(err, "dismiss")
           )
         }
     }
