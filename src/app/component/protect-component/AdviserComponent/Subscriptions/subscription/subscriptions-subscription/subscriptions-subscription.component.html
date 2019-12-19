@@ -1,4 +1,4 @@
-<div id="pdfDoc" class="bg-white pb-36 mt-70" id="ui-subs">
+<div id="pdfDoc" class="bg-white pb-36 pt-80 " id="ui-subs">
     <div class="wrapper-20">
         <div class="row" *ngIf="showFilter==false">
             <div class="col-md-8 p-0">
@@ -54,11 +54,11 @@
                     </div>
                     <div class="col-md-4 right text-right p-0">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 sub_input">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
                                         <!-- <mat-label>FILTERS ONE</mat-label> -->
-                                        <mat-select class="form-control br-0" id="sel11" [(ngModel)]='selectedStatusFilter' (selectionChange)="addFilters(selectedStatusFilter)">
+                                        <mat-select class="form-control" id="sel11" [(ngModel)]='selectedStatusFilter' (selectionChange)="addFilters(selectedStatusFilter)">
                                             <mat-option *ngFor="let chip of chips" [value]="chip">
                                                 {{chip.name}}
                                             </mat-option>
@@ -66,7 +66,7 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 sub_input">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
                                         <!-- <mat-label>FILTERS TWO</mat-label> -->
