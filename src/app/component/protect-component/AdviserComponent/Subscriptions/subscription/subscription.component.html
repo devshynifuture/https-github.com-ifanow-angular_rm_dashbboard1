@@ -1,26 +1,21 @@
 <div id="ui-subscriptions">
-  <div class="sub-header-fix">
-    <div class="bg-white">
-      <h1 class="cusotm-haeding-main">Subscriptions</h1>
-    
-      <nav mat-tab-nav-bar id="ui-customer-secondhead" class="text-right"
-      (selectedTabChange)="tabClick($event)">
-        <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" mat-tab-link [routerLink]="'dashboard'">DASHBOARD</a>
-        <a (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" mat-tab-link [routerLink]="'clients'">CLIENTS</a>
-        <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" mat-tab-link
-          [routerLink]="'subscriptions'">SUBSCRIPTIONS</a>
-        <a (click)="value=4" [ngClass]="_value == 4 ? 'active': ''" mat-tab-link
-          [routerLink]="'quotations'">QUOTATIONS</a>
-        <!-- <a mat-tab-link [routerLink]="'expenses'">EXPENSES</a> -->
-        <a (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" mat-tab-link
-          [routerLink]="'invoices'">INVOICES</a>
-          <a (click)="value=6" [ngClass]="_value == 6 ? 'active': ''" mat-tab-link
-          [routerLink]="'documents'">DOCUMENTS</a>
-          <a (click)="value=7" [ngClass]="_value == 7 ? 'active': ''" mat-tab-link
-          [routerLink]="'settings'">SETTINGS</a>
-      </nav>
-      <router-outlet></router-outlet>
-      <!-- <mat-tab-group mat-align-tabs="end" animationDuration="0ms" [selectedIndex]="selected"
+    <div class="sub-header-fix">
+        <div class="bg-white">
+            <h1 class="cusotm-haeding-main">Subscriptions</h1>
+
+            <nav mat-tab-nav-bar id="ui-customer-secondhead" class="text-right" (selectedTabChange)="tabClick($event)">
+                <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" mat-tab-link [routerLink]="'dashboard'">DASHBOARD</a>
+                <a (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" mat-tab-link [routerLink]="'clients'">CLIENTS</a>
+                <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" mat-tab-link [routerLink]="'subscriptions'">SUBSCRIPTIONS</a>
+                <a (click)="value=4" [ngClass]="_value == 4 ? 'active': ''" mat-tab-link [routerLink]="'quotations'">QUOTATIONS</a>
+                <!-- <a mat-tab-link [routerLink]="'expenses'">EXPENSES</a> -->
+                <a (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" mat-tab-link [routerLink]="'invoices'">INVOICES</a>
+                <a (click)="value=6" [ngClass]="_value == 6 ? 'active': ''" mat-tab-link [routerLink]="'documents'">DOCUMENTS</a>
+                <a (click)="value=7" [ngClass]="_value == 7 ? 'active': ''" mat-tab-link [routerLink]="'settings'">SETTINGS</a>
+            </nav>
+
+            <router-outlet></router-outlet>
+            <!-- <mat-tab-group mat-align-tabs="end" animationDuration="0ms" [selectedIndex]="selected"
                      (selectedTabChange)="tabClick($event)">
 
         <mat-tab label="DASHBOARD">
@@ -57,10 +52,10 @@
           </ng-template>
         </mat-tab>
       </mat-tab-group> -->
-  <!-- </div>
+            <!-- </div>
 </div> -->
-</div>
-</div>
+        </div>
+    </div>
 </div>
 <!--<div *ngIf="isOverlayVisible" class="custom-overlay">-->
 
