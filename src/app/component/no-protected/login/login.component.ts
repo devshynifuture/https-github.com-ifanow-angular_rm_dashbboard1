@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
             }
             this.authService.setUserInfo(data);
             this.eventService.openSnackBar('Login SuccessFully', 'dismiss');
-            this.router.navigate(['/admin/subscription']);
+            this.router.navigate(['admin','subscription','dashboard']);
 
             // Hard coded client login for testing
             this.authService.setClientData({
@@ -109,7 +109,7 @@ export class LoginComponent implements OnInit {
     });
     // this.authService.setToken(loginData.payLoad);
     this.eventService.openSnackBar('Login SuccessFully', 'dismiss');
-    this.router.navigate(['/admin/subscription']);
+    this.router.navigate(['admin','subscription','dashboard']);
   }
 
   closeDialog(data) {
