@@ -57,26 +57,6 @@ import {MutualFundGoalLinkageComponent} from './assets/mutual-fund/mutual-fund/m
 // import {CashflowsPlanComponent} from '../plan/cashflows-plan/cashflows-plan.component';
 // import {InvestmentsPlanComponent} from '../plan/investments-plan/investments-plan.component';
 // import {ScenariosPlanComponent} from '../plan/scenarios-plan/scenarios-plan.component';
-<<<<<<< HEAD
-
-import { CashAndBankComponent } from './assets/cash&bank/cash-and-bank/cash-and-bank.component';
-import { CommoditiesComponent } from './assets/commodities/commodities/commodities.component';
-import { SkeletonLoadingDirective } from 'src/app/skeleton-loading.directive';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { DocumentNewFolderComponent } from '../../common-component/document-new-folder/document-new-folder.component';
-import { AccountRoutingModule } from "./account-routing.module";
-import { AccountCommonModule } from "./account.common.module";
-import {PDFExportModule} from "@progress/kendo-angular-pdf-export";
-import { AssetStocksComponent } from './assets/asset-stocks/asset-stocks.component';
-import { MutualFundComponent } from './assets/mutual-fund/mutual-fund/mutual-fund.component';
-import { MutualFundsCapitalComponent } from './assets/mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
-import { MutualFundOverviewComponent } from './assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
-import { MutualFundSummaryComponent } from './assets/mutual-fund/mutual-fund/mutual-fund-summary/mutual-fund-summary.component';
-import { MutualFundAllTransactionComponent } from './assets/mutual-fund/mutual-fund/mutual-fund-all-transaction/mutual-fund-all-transaction.component';
-import { MutualFundUnrealizedTranComponent } from './assets/mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized-tran.component';
-import { MutualFundGoalLinkageComponent } from './assets/mutual-fund/mutual-fund/mutual-fund-goal-linkage/mutual-fund-goal-linkage.component';
-=======
->>>>>>> 4399ed53da93984f231c523b8d640b9e06587724
 @NgModule({
   declarations: [
     SchemeLevelTransactionComponent,
@@ -155,7 +135,6 @@ import { MutualFundGoalLinkageComponent } from './assets/mutual-fund/mutual-fund
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
-    PDFExportModule,
     MaterialModule
   ],
   exports: [
