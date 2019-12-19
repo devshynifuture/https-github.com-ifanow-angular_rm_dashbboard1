@@ -1,14 +1,14 @@
 <div id="advisor-home">
-  <a [routerLink]="['../../../admin','subscription']" class="sidenav-link" mat-list-item>
+  <!--  <a [routerLink]="['../../../admin','subscription']" class="sidenav-link" mat-list-item>-->
     <!--  <a mat-list-item class="sidenav-link" [routerLink]="['/login']">-->
     <!---->
     <!--  <a mat-list-item class="sidenav-link" [routerLink]="['',{outlet:{secondary:'/admin/subscription'}}]">-->
     <!--    <button class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">-->
-    <button class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">
+  <button (click)="goToAdvisorHome()" class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">
       keyboard_backspace
     </i>ADVISOR HOME
     </button>
-  </a>
+  <!--  </a>-->
 </div>
 <nav mat-tab-nav-bar id="ui-customer-secondhead">
   <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" mat-tab-link [routerLink]="'summary'">SUMMARY</a>
