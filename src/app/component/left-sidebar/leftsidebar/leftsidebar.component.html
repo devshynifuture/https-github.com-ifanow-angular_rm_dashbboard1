@@ -81,6 +81,12 @@
                 <mat-menu #menu="matMenu" class="w-485">
                     <div class="pt-10 pb-10">
                         <p class="f-500 roboto m-0 pl-10 pb-10">CLIENTS</p>
+                        <input matInput placeholder="You can search Client" aria-label="State" [matAutocomplete]="auto" list="serviceName" class="form-control w-100 br-0 pl-8">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <!-- <mat-option *ngFor="let s of serviceList" [value]="s.serviceName">
+                                <span>{{s.serviceName}}</span>
+                            </mat-option> -->
+                        </mat-autocomplete>
                         <button mat-menu-item>
                             <div class="row">
                                 <div class="col-md-1 p-0">

@@ -8,17 +8,42 @@ import * as Highcharts from 'highcharts';
 })
 export class SummaryComponent implements OnInit {
 
-  constructor( public eventService: EventService) { }
+  constructor( public eventService: EventService,) { }
 
   ngOnInit() {
     this.pieChart('piechartMutualFund')
     this.lineChart('container')
+    this.cashFlow('cashFlow')
   }
-  currentTabs(value) {
-    this.eventService.tabData(value.selectedTab)
+  cashFlow(id){
+    var chart1 = new Highcharts.Chart('cashFlow', {
+      chart: {
+          type: 'column'
+      },
+      title: {
+          text: ''
+      },
+      xAxis: {
+          categories: ['10', '20', '30', '40', '50']
+      },
+      credits: {
+          enabled: false
+      },
+      series: [{
+          name: 'Inflow',
+          color:'#5cc644',
+          data: [5, 3, 4, 7, 2],
+          type: undefined,
+      }, {
+          name: 'outFlow',
+          color:'#ef6725',
+          data: [2, -2, -3, 2, 1],
+          type: undefined,
+      }]
+  });
   }
   lineChart(id){
-    Highcharts.chart('container', {
+    var chart1 = new Highcharts.Chart('container', {
       chart: {
           zoomType: 'x'
       },
