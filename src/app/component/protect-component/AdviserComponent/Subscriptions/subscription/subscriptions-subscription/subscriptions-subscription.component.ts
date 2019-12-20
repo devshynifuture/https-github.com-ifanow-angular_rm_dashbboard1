@@ -82,8 +82,9 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   subscriptionValue: any;
   @Input() upperData;
   advisorId;
-  dataSource;
+  dataSource = [{}, {}, {}];
   DataToSend;
+  isLoading = false;
   chips = [
     { name: 'LIVE', value: 2 },
     { name: 'FUTURE', value: 3 },
@@ -136,12 +137,14 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       offset: 0,
       order: 0,
     };
+    this.isLoading = true;
     this.subService.getSubSummary(obj).subscribe(
       data => this.getSubSummaryRes(data)
     );
   }
 
   getSubSummaryRes(data) {
+    this.isLoading = false;
     if (data) {
       this.dataSource = data;
       this.DataToSend = data;
@@ -268,7 +271,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     console.log('filterSubscriptionRes', data);
     if (data == undefined) {
       this.noData = 'No Data Found';
-      this.dataSource = '';
+      this.dataSource = [];
     } else {
       this.dataSource = data;
     }

@@ -54,13 +54,14 @@ export class EmailUtilService {
     gmailThread.messages.forEach((message) => {
       const { payload: { parts } } = message;
       const { payload: { headers } } = message;
+      const { snippet } = message;
       if (parts && parts !== null) {
         parts.forEach((part) => {
           if (part.body.data && part.body.data !== null) {
             decodedPartArray.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data));
           }
           else {
-            decodedPartArray.push('');
+            decodedPartArray.push(snippet);
           }
         });
       } else {
