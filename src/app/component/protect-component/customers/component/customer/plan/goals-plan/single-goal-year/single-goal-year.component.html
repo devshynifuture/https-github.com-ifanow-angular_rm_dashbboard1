@@ -43,37 +43,49 @@
                                 <div class="col-md-4 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input #myInput3 (input)="mySlider3.value=myInput3.value"
-                                                formControlName="field2" autocomplete="off" matInput #message
+                                            <input #myInput3 type="number" (input)="changeField2Data(myInput3.value)"
+                                                formControlName="field2" autocomplete="off" matInput
                                                 class="form-control br-0">
-                                            <mat-error>This field is required</mat-error>
                                         </mat-form-field>
+                                        <mat-error *ngIf="singleYearGoalForm.get('field2').value==null">This field
+                                            is required</mat-error>
                                     </div>
                                 </div>
-                                <div class="col-md-8 pr-0">
+                                <div class=" col-md-8 pr-0">
                                     <div id="custom-slider">
-                                        <mat-slider #mySlider3 [min]="field2SliderData" [max]="field2SliderData+60"
-                                            (input)="myInput3.value=mySlider3.value">
+                                        <mat-slider *ngIf="goalTypeData.id==2" #mySlider3 formControlName="field2"
+                                            [min]="field2SliderData" (input)="changeField2Data(mySlider3.value)"
+                                            [max]="field2SliderData+60" (input)="changeField2Data(mySlider3.value)">
+                                        </mat-slider>
+                                        <mat-slider *ngIf="goalTypeData.id==3" formControlName="field2" #mySlider3
+                                            [min]="yearData" (input)="changeField2Data(mySlider3.value)"
+                                            [max]="yearData+20" (input)="changeField2Data(mySlider3.value)">
+                                        </mat-slider>
+                                        <mat-slider *ngIf="goalTypeData.id==4"
+                                            (input)="changeField2Data(mySlider3.value)" formControlName="field2"
+                                            #mySlider3 [min]="field2SliderData" [max]="60"
+                                            (input)="changeField2Data(mySlider3.value)">
+                                        </mat-slider>
+                                        <mat-slider *ngIf="goalTypeData.id==7"
+                                            (input)="changeField2Data(mySlider3.value)" formControlName="field2"
+                                            #mySlider3 [min]="1" [max]="60" (input)="changeField2Data(mySlider3.value)">
+                                        </mat-slider>
+                                        <mat-slider *ngIf="goalTypeData.id==8"
+                                            (input)="changeField2Data(mySlider3.value)" #mySlider3
+                                            formControlName="field2" [min]="field2SliderData+2"
+                                            [max]="field2SliderData+28" (input)="changeField2Data(mySlider3.value)">
+                                        </mat-slider>
+                                        <mat-slider *ngIf="goalTypeData.id==9"
+                                            (input)="changeField2Data(mySlider3.value)" #mySlider3
+                                            formControlName="field2" [min]="yearData" [max]="yearData+30"
+                                            (input)="changeField2Data(mySlider3.value)">
+                                        </mat-slider>
+                                        <mat-slider *ngIf="goalTypeData.id==10"
+                                            (input)="changeField2Data(mySlider3.value)" formControlName="field2"
+                                            #mySlider3 [min]="yearData" [max]="yearData+30"
+                                            (input)="changeField2Data(mySlider3.value)">
                                         </mat-slider>
                                     </div>
-                                    <!-- <mat-slider *ngIf="goalTypeData.id==3" #mySlider3 [min]="yearData"
-                                            [max]="yearData+20" (input)="myInput3.value = mySlider3.value">
-                                        </mat-slider>
-                                        <mat-slider *ngIf="goalTypeData.id==4" #mySlider3 [min]="field2SliderData"
-                                            [max]="60" (input)="myInput3.value = mySlider3.value">
-                                        </mat-slider>
-                                        <mat-slider *ngIf="goalTypeData.id==7" #mySlider3 [min]="1" [max]="60"
-                                            (input)="myInput3.value = mySlider3.value">
-                                        </mat-slider>
-                                        <mat-slider *ngIf="goalTypeData.id==8" #mySlider3 [min]="field2SliderData+2"
-                                            [max]="field2SliderData+28" (input)="myInput3.value = mySlider3.value">
-                                        </mat-slider>
-                                        <mat-slider *ngIf="goalTypeData.id==9" #mySlider3 [min]="yearData"
-                                            [max]="yearData+30" (input)="myInput3.value = mySlider3.value">
-                                        </mat-slider>
-                                        <mat-slider *ngIf="goalTypeData.id==10" #mySlider3 [min]="yearData"
-                                            [max]="yearData+30" (input)="myInput3.value = mySlider3.value">
-                                        </mat-slider> -->
                                 </div>
                             </div>
                         </div>
@@ -85,8 +97,8 @@
                                 <div class="col-md-4 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input #myInput2 (input)="mySlider2.value = myInput2.value" maxlength="3"
-                                                formControlName="field3" autocomplete="off" matInput #message
+                                            <input #myInput2 type="number" (input)="changeField3Data(myInput2.value)"
+                                                formControlName="field3" autocomplete="off" matInput
                                                 class="form-control br-0 rupess">
                                             <mat-error>This field is required</mat-error>
                                         </mat-form-field>
@@ -94,23 +106,27 @@
                                 </div>
                                 <div class="col-md-8 pr-0">
                                     <div id="custom-slider">
-                                        <mat-slider *ngIf="goalTypeData.id==2" [min]="field3SliderData" [max]="10000000"
-                                            #mySlider2 (input)="myInput2.value = mySlider2.value"></mat-slider>
-                                        <!-- <mat-slider *ngIf="goalTypeData.id==3" [min]="field3SliderData" [max]="50000000"
-                                            #mySlider2 (input)="myInput2.value = mySlider2.value"></mat-slider>
-                                        <mat-slider *ngIf="goalTypeData.id==4" [min]="field3SliderData" [max]="10000000"
-                                            #mySlider2 (input)="myInput2.value = mySlider2.value"></mat-slider>
-                                        <mat-slider *ngIf="goalTypeData.id==7" [min]="10000" [max]="10000000" #mySlider2
-                                            (input)="myInput2.value = mySlider2.value">
+                                        <mat-slider formControlName="field3" *ngIf="goalTypeData.id==2"
+                                            [min]="field3SliderData" [max]="10000000" #mySlider2
+                                            (input)="myInput2.value = mySlider2.value"></mat-slider>
+                                        <mat-slider *ngIf="goalTypeData.id==3" formControlName="field3"
+                                            [min]="field3SliderData" [max]="50000000" #mySlider2
+                                            (input)="myInput2.value = mySlider2.value"></mat-slider>
+                                        <mat-slider *ngIf="goalTypeData.id==4" formControlName="field3"
+                                            [min]="field3SliderData" [max]="10000000" #mySlider2
+                                            (input)="myInput2.value = mySlider2.value"></mat-slider>
+                                        <mat-slider *ngIf="goalTypeData.id==7" formControlName="field3" [min]="10000"
+                                            [max]="10000000" #mySlider2 (input)="myInput2.value = mySlider2.value">
                                         </mat-slider>
-                                        <mat-slider *ngIf="goalTypeData.id==8" [min]="75000" [max]="1000000000"
-                                            #mySlider2 (input)="myInput2.value = mySlider2.value">
+                                        <mat-slider *ngIf="goalTypeData.id==8" formControlName="field3" [min]="75000"
+                                            [max]="1000000000" #mySlider2 (input)="myInput2.value = mySlider2.value">
                                         </mat-slider>
-                                        <mat-slider *ngIf="goalTypeData.id==9" [min]="100000" [max]="100000000"
-                                            #mySlider2 (input)="myInput2.value = mySlider2.value"></mat-slider>
-                                        <mat-slider *ngIf="goalTypeData.id==10" [min]="500000" [max]="100000000"
-                                            #mySlider2 (input)="myInput2.value = mySlider2.value">
-                                        </mat-slider> -->
+                                        <mat-slider *ngIf="goalTypeData.id==9" formControlName="field3" [min]="100000"
+                                            [max]="100000000" #mySlider2 (input)="myInput2.value = mySlider2.value">
+                                        </mat-slider>
+                                        <mat-slider *ngIf="goalTypeData.id==10" formControlName="field3" [min]="500000"
+                                            [max]="100000000" #mySlider2 (input)="myInput2.value = mySlider2.value">
+                                        </mat-slider>
                                     </div>
                                 </div>
                             </div>
@@ -123,7 +139,7 @@
                                 <div class="col-md-4 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input formControlName="field4" autocomplete="off" matInput #message
+                                            <input formControlName="field4" autocomplete="off" matInput
                                                 class="form-control br-0">
                                             <mat-error>This field is required</mat-error>
                                         </mat-form-field>
@@ -144,7 +160,7 @@
                                 <div class="col-md-8 p-0">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
-                                            <input formControlName="field5" autocomplete="off" matInput #message
+                                            <input formControlName="field5" autocomplete="off" matInput
                                                 class="form-control br-0">
                                             <mat-error>This field is required</mat-error>
                                         </mat-form-field>
@@ -166,7 +182,8 @@
 
     </div>
     <div class="col-md-4 p-0">
-        <h5 class="m-0 text-black pt-16">Rahul, here’s how people with similar profile as yours are planning for their
+        <h5 class="m-0 text-black pt-16">Rahul, here’s how people with similar profile as yours are planning for
+            their
             house goal.<img src="/assets/images/svg/info.svg"></h5>
         <h5 class="m-0 f-500 text-black pt-20">Retirement age</h5>
         <div class="row pt-12">
