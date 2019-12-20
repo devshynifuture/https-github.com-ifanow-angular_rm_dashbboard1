@@ -20,7 +20,9 @@ const routes: Routes = [
         // outlet: 'main-left-router',
         // outlet: 'mainleftbar',
         loadChildren: () => import('./component/protect-component/AdviserComponent/Subscriptions/subscription.module')
-          .then(m => m.SubscriptionModule)
+          .then(m => m.SubscriptionModule),
+        // data: {preload: true}
+
       },
       {
         path: 'emails',
@@ -50,7 +52,9 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () => import('./component/protect-component/customers/customers.module')
-          .then(m => m.CustomersModule)
+          .then(m => m.CustomersModule),
+        // data: {preload: true}
+
       },
       // {
       //   path: 'overview',
