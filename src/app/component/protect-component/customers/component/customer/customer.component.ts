@@ -21,7 +21,6 @@ import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } fr
 export class CustomerComponent extends DialogContainerComponent implements OnInit {
   selected: number;
   clientId;
-  value: number;
   overview = false;
   plans = false;
   activity = false;
@@ -29,6 +28,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   transact = false;
   currentUrl: string;
   clientData: any;
+  value: any;
 
 
   constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
@@ -82,6 +82,10 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
 
   clickEvent(value) {
     this.value = value;
+  }
+
+  tabClick(event) {
+    // this.eventService.sidebarData(event.tab.textLabel);
   }
 
 }
