@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from "../../../../../auth-service/authService";
 import { DialogContainerComponent } from "../../../../../common/dialog-container/dialog-container.component";
 import { EventService } from "../../../../../Data-service/event.service";
@@ -28,10 +28,11 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   accounts = false;
   transact = false;
   currentUrl: string;
+  clientData: any;
 
 
   constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
-    protected dynamicComponentService: DynamicComponentService) {
+    protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute) {
     super(eventService, subinject, dynamicComponentService);
     console.log(router.getCurrentNavigation().extras.state);
 
@@ -41,7 +42,10 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
 
 
   ngOnInit() {
-
+    this.route.queryParams.subscribe(params => {
+      this.clientData = params['clientData']
+    });
+    console.log("clientData", this.clientData)
     if (this.router.url.split('/')[2] === 'overview') {
       this.value = 1;
     } else if (this.router.url.split('/')[2] === 'account') {

@@ -5,6 +5,9 @@ import { EventService } from '../../../Data-service/event.service';
 import { transition } from '@angular/animations';
 import { SubscriptionInject } from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormControl } from '@angular/forms';
+import { startWith, map } from 'rxjs/operators';
+import { SubscriptionService } from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-leftsidebar',
   templateUrl: './leftsidebar.component.html',
@@ -18,25 +21,58 @@ export class LeftsidebarComponent implements OnInit {
   arrow = false;
   userInfo: any;
   sideNavContainerClass;
-  myControl = new FormControl();
-
-
+  filteredOptions: any;
+  advisorId: any;
+  clientList: any;
+  myControl: FormControl;
   constructor(private authService: AuthService, private _eref: ElementRef,
-    private eventService: EventService, private subinject: SubscriptionInject) {
+    private eventService: EventService, private subinject: SubscriptionInject, private subService: SubscriptionService, private router: Router) {
     // this.eventService.sideNavContainerClassData.subscribe(
     //   data => this.sideNavContainerClass = data
     // );
   }
-
+  serachClientData(data) {
+    console.log(data)
+    this.getClientSubscriptionList();
+  }
+  getClientSubscriptionList() {
+    const obj = {
+      id: this.advisorId
+    };
+    this.subService.getSubscriptionClientsList(obj).subscribe(
+      data => this.getClientListResponse(data)
+    );
+  }
+  getClientListResponse(data) {
+    console.log(data)
+    this.clientList = data;
+    // this.myControl.setValue(searchData)
+    // this.filteredOptions = this.myControl.valueChanges.pipe(
+    //   startWith(''),
+    //   map(value => typeof value == 'string' ? value : value.name),
+    //   map(name => name ? this._filter(name) : this.clientList.slice())
+    // )
+  }
+  selectClient(singleClientData) {
+    console.log(singleClientData)
+    this.router.navigate(["customer", "detail", "account", "assets"], { queryParams: { singleClientData } });
+  }
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.onResize();
     this.userInfo = AuthService.getUserInfo();
-
-    // this.userInfo = this.authService.getUserInfo();
-    // console.log(' userInfo', this.userInfo);
-    // console.log(this.authService.getAdvisorId());
+    this.myControl = new FormControl();
+    this.getClientSubscriptionList();
   }
+  // private _filter(name: string): Client[] {
+  //   const filterValue = name.toLowerCase();
 
+  //   return this.clientList.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+  // }
+
+  // displayFn(client?: Client): string | undefined {
+  //   return client ? client.name : undefined;
+  // }
 
   showMainNavWrapper() {
     $('#d').addClass('width-230');
@@ -95,6 +131,8 @@ export class LeftsidebarComponent implements OnInit {
   // prepareRoute(outlet: RouterOutlet) {
   //   return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   // }
-
+}
+export interface Client {
+  name: string;
 }
 
