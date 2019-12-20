@@ -5,18 +5,19 @@
 
       <nav (selectedTabChange)="tabClick($event)" class="text-right" id="ui-customer-secondhead" mat-tab-nav-bar>
         <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'./dashboard'"
-           mat-tab-link>DASHBOARD</a>
+          mat-tab-link>DASHBOARD</a>
         <a (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'./clients'" mat-tab-link>CLIENTS</a>
-        <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'./subscriptions'" mat-tab-link>SUBSCRIPTIONS</a>
+        <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'./subscriptions'"
+          mat-tab-link>SUBSCRIPTIONS</a>
         <a (click)="value=4" [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'./quotations'"
-           mat-tab-link>QUOTATIONS</a>
+          mat-tab-link>QUOTATIONS</a>
         <!-- <a mat-tab-link [routerLink]="'expenses'">EXPENSES</a> -->
         <a (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'./invoices'"
-           mat-tab-link>INVOICES</a>
+          mat-tab-link>INVOICES</a>
         <a (click)="value=6" [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'./documents'"
-           mat-tab-link>DOCUMENTS</a>
-        <a (click)="value=7" [ngClass]="_value == 7 ? 'active': ''" [routerLink]="'./settings'"
-           mat-tab-link>SETTINGS</a>
+          mat-tab-link>DOCUMENTS</a>
+        <a (click)="value=7" [ngClass]="_value == 7 ? 'active': ''" [routerLink]="'./settings'" [state]="{ example: 0 }"
+          mat-tab-link>SETTINGS</a>
       </nav>
 
       <router-outlet></router-outlet>
