@@ -38,7 +38,7 @@ export class SingleGoalYearComponent implements OnInit {
     this.Questions = data.questions;
     this.singleYearGoalForm = this.fb.group({
       field1: [, [Validators.required]],
-      field2: [, [Validators.required]],
+      field2: [, [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       field3: [, [Validators.required]],
       field4: [, [Validators.required]],
       field5: [, [Validators.required]]
@@ -71,8 +71,11 @@ export class SingleGoalYearComponent implements OnInit {
   @Output() backToaddGoal = new EventEmitter();
   ngOnInit() {
   }
-  inputData(data) {
-    console.log(this.sliderRef.nativeElement);
+  changeField2Data(data) {
+    this.singleYearGoalForm.controls.field2.setValue(data)
+  }
+  changeField3Data(data) {
+    this.singleYearGoalForm.controls.field3.setValue(data)
   }
   back() {
     this.backToaddGoal.emit(undefined);
@@ -82,6 +85,7 @@ export class SingleGoalYearComponent implements OnInit {
     console.log(value)
     switch (this.goalTypeData.id) {
       case 2:
+        this.singleYearGoalForm.controls["field2"].setValidators([Validators.minLength(this.yearData), Validators.maxLength(this.yearData + 60)]);
         this.field2SliderData = value.age;
         this.field3SliderData = 500000;
         this.singleYearGoalForm.get('field2').setValue(value.age);
@@ -141,7 +145,7 @@ export class SingleGoalYearComponent implements OnInit {
       case (this.singleYearGoalForm.get('field1').invalid && (this.goalTypeData.id == 2 || this.goalTypeData.id == 4 || this.goalTypeData.id == 8)):
         this.singleYearGoalForm.get('field1').markAsTouched();
         break;
-      case (this.singleYearGoalForm.get('field2').invalid):
+      case (this.singleYearGoalForm.get('field2').value == null):
         this.singleYearGoalForm.get('field2').markAsTouched();
         break;
       case (this.singleYearGoalForm.get('field3').invalid):
