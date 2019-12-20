@@ -32,25 +32,26 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
 
 
   constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
-    protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute) {
+    protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute, private authService: AuthService) {
     super(eventService, subinject, dynamicComponentService);
     console.log(router.getCurrentNavigation().extras.state);
+    if (router.getCurrentNavigation().extras.state && router.getCurrentNavigation().extras.state.id) {
+      this.authService.setClientData(router.getCurrentNavigation().extras.state);
+    }
     this.eventService.tabChangeData.subscribe(
       data => this.getTabChangeData(data)
-      );
+    );
   }
-  getTabChangeData(data){
+  getTabChangeData(data) {
     setTimeout(() => {
-    this.value = data
+      this.value = data
     }, 300);
   }
   status: boolean = false;
 
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.clientData = params['clientData']
-    });
+    this.clientData = window.history.state;
     console.log("clientData", this.clientData)
     if (this.router.url.split('/')[2] === 'overview') {
       this.value = 1;

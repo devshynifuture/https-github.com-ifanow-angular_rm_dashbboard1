@@ -55,7 +55,7 @@ export class LeftsidebarComponent implements OnInit {
   }
   selectClient(singleClientData) {
     console.log(singleClientData)
-    this.router.navigate(["customer", "detail", "account", "assets"], { queryParams: { singleClientData } });
+    this.router.navigate(["customer", "detail", "account", "assets"], { state: { ...singleClientData } });
   }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
