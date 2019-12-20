@@ -1,3 +1,4 @@
+import { EmailUtilService } from './../../../../../../services/email-util.service';
 import { FormBuilder, FormGroup, FormArray, Form } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -23,23 +24,19 @@ export class ComposeEmailComponent implements OnInit {
   receipentEmail: string;
   subject: string;
   emailBody: string = '';
-  from;
-  to;
+  from: string = "";
+  to: string = "";
   date;
   doc: [];
   docObj: [];
-  message;
+  message: string;
   data;
   isCcSelected: boolean = false;
   isBccSelected: boolean = false;
+  isFromChanged: boolean = false;
+  formState: Object;
 
   emailForm: FormGroup;
-
-  createDraft() {
-    // this.emailService.createUpdateDraft()
-    //   .subscribe(response => console.log(response),
-    //     error => console.error(error));
-  }
 
   // @Input() set data(data) {
   //   this._data = data;
@@ -50,6 +47,11 @@ export class ComposeEmailComponent implements OnInit {
   // }
 
   ngOnInit() {
+    this.createEmailForm();
+
+  }
+
+  createEmailForm() {
     // console.log("this is data sent from draft list ->>>>  ", this.data);
     this.emailForm = this.fb.group({
       receiver: ['', Validators.email],
@@ -61,12 +63,13 @@ export class ComposeEmailComponent implements OnInit {
       blindCarbonCopy: ['', Validators.email]
     });
 
-    if (this.data !== undefined && this.data !== null) {
+    if (this.data) {
+      console.log("hello this is data ->>>>>>>>>>>>>>>", this.data);
       const { subjectMessage: { subject, message } } = this.data;
       const { date } = this.data;
       this.date = date;
       this.subject = subject;
-      this.message = message;
+      this.emailBody = message;
       const { parsedData: { headers } } = this.data;
       headers.forEach(element => {
         if (element.name === "From") {
@@ -76,38 +79,34 @@ export class ComposeEmailComponent implements OnInit {
           this.to = element.value.split('<')[1].split('>')[0];
         }
       });
+
+      this.initEmailFormState(this.data);
     }
 
-
-    //   const { subject, message, date, headers } = this.data;
-    //   const [, , , , fromObj, toObj] = headers;
-    //   const from = fromObj['value'];
-    //   const to = toObj['value'];
-
-    //   this.subject = subject;
-    //   this.message = message;
-    //   this.date = date;
-    //   this.from = from;
-    //   this.to = to.split('<')[1].split('>')[0];
-
-    // }
   }
 
-  toggleCC() {
+  toggleCC(): void {
     this.isCcSelected = !this.isCcSelected;
     this.emailForm.get('carbonCopy').setValue("");
   }
 
-  toggleBCC() {
+  toggleBCC(): void {
     this.isBccSelected = !this.isBccSelected;
     this.emailForm.get('blindCarbonCopy').setValue("");
   }
 
-  // onCreateDraft() {
-  //   this.emailService.createUpdateDraft(this.body)
-  //     .subscribe(response => console.log('draft creation response ->>>>>', response),
-  //       error => console.error('error', error));
-  // }
+  didFromOfEmailChanged(): boolean {
+    console.log("did from Of email changed->>>", this.isFromChanged);
+    return this.isFromChanged;
+  }
+
+  initEmailFormState(emailObj?: {}): void {
+
+  }
+
+  setFromOfEmail(value: boolean): void {
+    this.isFromChanged = value;
+  }
 
   // sendEmail() {
   //   const emailRequestData = {
@@ -120,8 +119,9 @@ export class ComposeEmailComponent implements OnInit {
   //   console.log('send email complete JSON : ', JSON.stringify(emailRequestData));
   // }
 
-  close() {
-    if (this.from !== '' && this.from !== null) {
+  close(): void {
+
+    if (this.didFromOfEmailChanged() && this.emailForm.valid) {
       const Obj = {
         to: this.to ? this.to : '',
         from: this.from ? this.from : '',
@@ -137,7 +137,7 @@ export class ComposeEmailComponent implements OnInit {
     // this.valueChange.emit(this.emailSend);
   }
 
-  onSendEmail() {
+  onSendEmail(): void {
     console.log(this.emailForm.value);
   }
 
@@ -145,17 +145,54 @@ export class ComposeEmailComponent implements OnInit {
 
   }
 
-  sendMail() {
+  sendMail(): void {
     console.log('send mail');
-    this.checkEmptyFields();
     this.handleCloseMail();
   }
 
-  checkEmptyFields() {
-    // validity errors append;
+  saveData(event): void {
+    this.emailForm.get('messageBody').setValue(event);
   }
 
-  saveData(event) {
-    this.emailForm.get('messageBody').setValue(event);
+  createUpdateDraft(id: string, toAddress: Array<any>, subject: string, bodyMessage: string, fileData: Array<any>) {
+    let encodedSubject = EmailUtilService.changeStringToBase46(subject);
+    let encodedMessage = EmailUtilService.changeStringToBase46(bodyMessage);
+    const requestJson = {
+      id,
+      toAddress,
+      subject: encodedSubject,
+      message: encodedMessage,
+      fileData
+    };
+
+    console.log('LeftSidebarComponent createUpdateDraft requestJson : ', requestJson);
+    const createUpdateDraftSubscription = this.emailService.createUpdateDraft(requestJson)
+      .subscribe((responseJson) => {
+        console.log(requestJson);
+        console.log("+++++++++++++++");
+        console.log(responseJson);
+        createUpdateDraftSubscription.unsubscribe();
+      }, (error) => {
+        console.error(error);
+      });
+  }
+
+  getFileDetails(e) {
+    console.log('LeftSidebarComponent getFileDetails e : ', e.target.files[0]);
+    const singleFile = e.target.files[0];
+
+    const fileData = [];
+
+    EmailUtilService.getBase64FromFile(singleFile, (successData) => {
+      fileData.push({
+        filename: singleFile.name,
+        size: singleFile.size,
+        mimeType: singleFile.type,
+        data: successData
+      });
+      this.createUpdateDraft(null, ['gaurav@futurewise.co.in'],
+        'This is a test message', 'This is a test message body', fileData);
+    });
+
   }
 }

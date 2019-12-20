@@ -6,11 +6,11 @@
             </div>
             <div class="col-md-4 right text-right p-0">
                 <i class="material-icons mr-12 icon-light c-p v-sub">
-          search
-        </i>
+                    search
+                </i>
                 <button (click)="showFilters(showFilter)" class="btn-default addon mr-12" mat-stroked-button><i
-            class="material-icons">filter_list</i>FILTERS
-        </button>
+                        class="material-icons">filter_list</i>FILTERS
+                </button>
             </div>
         </div>
         <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
@@ -20,11 +20,11 @@
                 </div>
                 <div class="col-md-4 right text-right p-0">
                     <i class="material-icons mr-12 icon-light c-p v-sub">
-            search
-          </i>
+                        search
+                    </i>
                     <button mat-stroked-button class="btn-default addon mr-12" (click)="showFilters(showFilter)"><i
-              class="material-icons">filter_list</i>FILTERS
-          </button>
+                            class="material-icons">filter_list</i>FILTERS
+                    </button>
                 </div>
             </div>
             <div class="row pt-12">
@@ -32,8 +32,8 @@
                     <mat-chip-list>
                         <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let status of filterStatus; let ind = index">
                             {{status.name}}<i class="material-icons text-custom ml-12" (click)="remove(ind)">
-                cancel
-              </i></mat-chip>
+                                cancel
+                            </i></mat-chip>
                         <mat-chip-list>
                             <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let dateFilter of filterDate; let i = index">
                                 <!--                  <div class="row">-->
@@ -43,8 +43,8 @@
                                 </sat-datepicker>
                                 <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
                                 <i class="material-icons text-custom ml-12" (click)="removeDate(i)">
-                  cancel
-                </i>
+                                    cancel
+                                </i>
                             </mat-chip>
                         </mat-chip-list>
                     </mat-chip-list>
@@ -79,7 +79,7 @@
                 </div>
             </div>
         </div>
-        <table mat-table [dataSource]="dataSource" id="table-low" class="mt-8">
+        <table mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="f-18"> Client name </th>
                 <td mat-cell *matCellDef="let element" (click)="Open('viewDocuments',element)" class="c-p">
@@ -87,37 +87,49 @@
             </ng-container>
             <ng-container matColumnDef="docname">
                 <th mat-header-cell *matHeaderCellDef class="f-18"> Document name </th>
-                <td mat-cell *matCellDef="let element"> {{element.documentName}} </td>
+                <td mat-cell *matCellDef="let element">
+                    <div class="bar"> {{element.documentName}} </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="plan">
                 <th mat-header-cell *matHeaderCellDef class="f-18"> Plan name </th>
-                <td mat-cell *matCellDef="let element"> {{element.planName}} </td>
+                <td mat-cell *matCellDef="let element">
+                    <div class="bar"> {{element.planName}} </div>
+                </td>
             </ng-container>
             <!-- Name Column -->
             <ng-container matColumnDef="servicename">
                 <th mat-header-cell *matHeaderCellDef class="f-18"> Service name </th>
-                <td mat-cell *matCellDef="let element"> {{element.serviceName}} </td>
+                <td mat-cell *matCellDef="let element">
+                    <div class="bar"> {{element.serviceName}} </div>
+                </td>
             </ng-container>
             <!-- Weight Column -->
             <ng-container matColumnDef="cdate">
                 <th mat-header-cell *matHeaderCellDef class="f-18"> Created date </th>
-                <td mat-cell *matCellDef="let element"> {{element.startDate | date:'dd/MM/yyyy'}} </td>
+                <td mat-cell *matCellDef="let element">
+                    <div class="bar"> {{element.startDate | date:'dd/MM/yyyy'}} </div>
+                </td>
             </ng-container>
             <!-- Weight Column -->
             <ng-container matColumnDef="sdate">
                 <th mat-header-cell *matHeaderCellDef class="f-18"> Sent date </th>
-                <td mat-cell *matCellDef="let element"> {{element.sentDate | date:'dd/MM/yyyy'}} </td>
+                <td mat-cell *matCellDef="let element">
+                    <div class="bar"> {{element.sentDate | date:'dd/MM/yyyy'}} </div>
+                </td>
             </ng-container>
             <!-- Symbol Column -->
             <ng-container matColumnDef="clientsign">
                 <th mat-header-cell *matHeaderCellDef class="f-18"> Client sign... </th>
-                <td mat-cell *matCellDef="let element"> {{element.clientsign | date:'dd/MM/yyyy'}} </td>
+                <td mat-cell *matCellDef="let element">
+                    <div class="bar"> {{element.clientsign | date:'dd/MM/yyyy'}} </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="status">
                 <th *matHeaderCellDef class=" t-10" mat-header-cell> Status</th>
                 <td *matCellDef="let element" mat-cell (click)="Open('openEmailQuot',element)">
                     <span>
-            <span class="text-success t-10 f-500 c-p" *ngIf="element.status==1">READY TO SEND</span>
+                        <span class="text-success t-10 f-500 c-p" *ngIf="element.status==1">READY TO SEND</span>
                     <span class="text-success t-10 f-500 c-p" *ngIf="element.status==0">NOT STARTED</span>
                     </span>
                 </td>
@@ -125,8 +137,8 @@
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"> </th>
                 <td mat-cell *matCellDef="let element" style="width: 2%;"><i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu">
-            more_vert
-          </i>
+                        more_vert
+                    </i>
                     <mat-menu #menu="matMenu">
                         <a mat-menu-item (click)="Open('viewDoc',element)">View & Edit document</a>
                         <a mat-menu-item (click)="deleteModal('DOCUMENT')">Delete document</a>

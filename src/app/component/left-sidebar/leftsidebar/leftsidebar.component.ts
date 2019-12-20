@@ -1,13 +1,13 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import {Component, ElementRef, NgZone, OnInit} from '@angular/core';
 import $ from 'jquery';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from '../../../Data-service/event.service';
-import { transition } from '@angular/animations';
-import { SubscriptionInject } from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormControl } from '@angular/forms';
-import { startWith, map } from 'rxjs/operators';
-import { SubscriptionService } from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { Router } from '@angular/router';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from '../../../Data-service/event.service';
+import {transition} from '@angular/animations';
+import {SubscriptionInject} from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {FormControl} from '@angular/forms';
+import {SubscriptionService} from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
+import {Router} from '@angular/router';
+
 @Component({
   selector: 'app-leftsidebar',
   templateUrl: './leftsidebar.component.html',
@@ -25,16 +25,20 @@ export class LeftsidebarComponent implements OnInit {
   advisorId: any;
   clientList: any;
   myControl: FormControl;
+
   constructor(private authService: AuthService, private _eref: ElementRef,
-    private eventService: EventService, private subinject: SubscriptionInject, private subService: SubscriptionService, private router: Router) {
+              private eventService: EventService, private subinject: SubscriptionInject,
+              private subService: SubscriptionService, private router: Router, private ngZone: NgZone) {
     // this.eventService.sideNavContainerClassData.subscribe(
     //   data => this.sideNavContainerClass = data
     // );
   }
+
   serachClientData(data) {
     console.log(data)
     this.getClientSubscriptionList();
   }
+
   getClientSubscriptionList() {
     const obj = {
       id: this.advisorId
@@ -43,6 +47,7 @@ export class LeftsidebarComponent implements OnInit {
       data => this.getClientListResponse(data)
     );
   }
+
   getClientListResponse(data) {
     console.log(data)
     this.clientList = data;
@@ -53,10 +58,14 @@ export class LeftsidebarComponent implements OnInit {
     //   map(name => name ? this._filter(name) : this.clientList.slice())
     // )
   }
+
   selectClient(singleClientData) {
-    console.log(singleClientData)
-    this.router.navigate(["customer", "detail", "account", "assets"], { state: { ...singleClientData } });
+    console.log(singleClientData);
+    this.ngZone.run(() => {
+      this.router.navigate(["customer", "detail", "account", "assets"], {state: {...singleClientData}});
+    });
   }
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.onResize();
@@ -64,6 +73,7 @@ export class LeftsidebarComponent implements OnInit {
     this.myControl = new FormControl();
     this.getClientSubscriptionList();
   }
+
   // private _filter(name: string): Client[] {
   //   const filterValue = name.toLowerCase();
 
@@ -132,6 +142,7 @@ export class LeftsidebarComponent implements OnInit {
   //   return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   // }
 }
+
 export interface Client {
   name: string;
 }
