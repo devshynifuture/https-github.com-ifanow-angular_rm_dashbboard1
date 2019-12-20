@@ -119,7 +119,7 @@ export class EmailServiceService {
     const userInfo = AuthService.getUserInfo();
     const encodedSubject = EmailUtilService.changeStringToBase46(subject);
     const encodedEmailBody = EmailUtilService.changeStringToBase46(emailBody);
-    console.log("THIS IS SOMETHING OF YOUR INTEREST =>>>>>", emailBody);
+
     const obj =
     {
       "attachmentIds": [
