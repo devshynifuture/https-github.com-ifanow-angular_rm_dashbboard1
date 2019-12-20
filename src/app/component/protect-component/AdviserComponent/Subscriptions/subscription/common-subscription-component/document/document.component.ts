@@ -234,7 +234,7 @@ export class DocumentComponent implements OnInit {
         data.documentList.push(singleElement);
       }
     });
-    this.open('emailOnlyDoc',data);
+    this.open('email', data);
   }
 
   open(value, data) {

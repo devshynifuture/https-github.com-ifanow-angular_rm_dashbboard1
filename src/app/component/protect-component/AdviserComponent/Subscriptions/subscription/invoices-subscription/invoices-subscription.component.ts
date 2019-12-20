@@ -1,12 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { SubscriptionService } from '../../subscription.service';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { AuthService } from "../../../../../../auth-service/authService";
-import { UtilService } from "../../../../../../services/util.service";
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionService} from '../../subscription.service';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {AuthService} from "../../../../../../auth-service/authService";
+import {UtilService} from "../../../../../../services/util.service";
 import * as _ from 'lodash';
 
 export interface PeriodicElement {
@@ -82,7 +81,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
       // id: 2735, // pass here advisor id for Invoice advisor
       module: 1
     };
-
+    this.isLoading = true;
     this.subscription.getInvoices(obj).subscribe(
       data => this.getInvoiceResponseData(data)
     );
@@ -96,7 +95,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   }
 
   getInvoiceResponseData(data) {
-    this.isLoading = true;
+    this.isLoading = false;
     if (data == undefined) {
       this.noData = "No Data Found";
     } else {
