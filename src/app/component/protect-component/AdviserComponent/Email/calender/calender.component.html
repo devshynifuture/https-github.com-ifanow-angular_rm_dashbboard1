@@ -161,7 +161,7 @@
     <div class="row h-100vh pt-72">
         <div class="col-md-2 p-0 bg-grey lter">
             <div class="p-12 text-right">
-                <button mat-raised-button class="btn-primary br-0"><img src="/assets/images/svg/plus.svg"
+                <button mat-raised-button class="btn-primary br-0" (click)="openDialog()" ><img src="/assets/images/svg/plus.svg"
                         class="pr-12">ADD
                     NEW</button>
             </div>
@@ -207,7 +207,7 @@
             <div class="custom-grid pt-0">
                 <div class="column" *ngFor="let day of daysArr; let i = index" style="padding: 7px 0px;">
                     <p  
-                    [class.rounded-primary]="day == todayDate && i > addLastMonthDays - 1 && i < numbersOfDays - 1" 
+                    [class.rounded-primary]="day == todayDate && i > addLastMonthDays - 1 && i < numbersOfDays - 1 && currentMonth == month" 
                     [class.text-primitive]="i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1"  
                     class="m-0 roboto f-11">{{day}}</p>
                 </div>
@@ -277,7 +277,7 @@
             </div>
             <div class="custom-grid p-0 b-a bb-0  calender-column">
                 <div class="column" *ngFor="let day of daysArr; let i = index">
-                    <mat-chip [class.actived]="day == todayDate && i > addLastMonthDays - 1 && i < numbersOfDays - 1" 
+                    <mat-chip [class.actived]="day == todayDate && i > addLastMonthDays - 1 && i < numbersOfDays - 1 && currentMonth == month" 
                     [class.text-primitive]="i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1" 
                     >{{day}}</mat-chip> 
                     <mat-chip-list class="pink mt-8" [hidden]="true">
