@@ -1,3 +1,4 @@
+import { ComposeEmailComponent } from './../../compose-email/compose-email.component';
 import { ConfirmDialogComponent } from './../../../../../common-component/confirm-dialog/confirm-dialog.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
@@ -60,7 +61,12 @@ export class EmailListingComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
-    const location = this.router.url.split('/')[3];
+    let location;
+    if(this.router.url === '/'){
+      location = 'inbox';
+    } else {
+      location = this.router.url.split('/')[3];
+    }
     (location === 'trash') ? this.trashAction = true : this.trashAction = false;
     (location === 'draft') ? this.showDraftView = true : this.showDraftView = false;
     this.getGmailList(location.toUpperCase());
@@ -149,7 +155,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
 
   openDraftView(dataObj) {
     this.emailService.sendNextData(dataObj);
-    this.emailService.openComposeEmail(dataObj);
+    this.emailService.openComposeEmail(dataObj, ComposeEmailComponent);
   }
 
   // move single thread to trash

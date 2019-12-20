@@ -47,6 +47,7 @@ export class FixedIncomeComponent implements OnInit {
   excelData: any[];
   footer = [];
   dataSourceFixed: any;
+  hidePdf: boolean;
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService, public dialog: MatDialog) { }
   viewMode;
   displayedColumns4 = ['no', 'owner', 'type', 'cvalue', 'rate', 'amt', 'mdate', 'mvalue', 'number', 'desc', 'status', 'icons'];
@@ -61,6 +62,7 @@ export class FixedIncomeComponent implements OnInit {
 
   ngOnInit() {
     this.showRequring = '1';
+    this.hidePdf = true
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getFixedDepositList()
@@ -464,7 +466,15 @@ const ELEMENT_DATA4: PeriodicElement4[] = [
     number: '980787870909', desc: 'ICICI FD', status: 'LIVE'
   },
   {
-    no: '', owner: 'Total', type: '',
+    no: '4', owner: 'Total', type: '',
+    cdate: '1,28,925', rate: '8.40%', amt: '1,50,000', mdate: '', mvalue: '1,50,000',
+    number: '', desc: '', status: ''
+  }, {
+    no: '4', owner: 'Total', type: '',
+    cdate: '1,28,925', rate: '8.40%', amt: '1,50,000', mdate: '', mvalue: '1,50,000',
+    number: '', desc: '', status: ''
+  }, {
+    no: '4', owner: 'Total', type: '',
     cdate: '1,28,925', rate: '8.40%', amt: '1,50,000', mdate: '', mvalue: '1,50,000',
     number: '', desc: '', status: ''
   },

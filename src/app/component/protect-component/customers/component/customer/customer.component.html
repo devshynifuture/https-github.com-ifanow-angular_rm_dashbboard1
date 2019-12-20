@@ -19,15 +19,15 @@
   </mat-tab-group>-->
 <nav id="ui-customer" mat-tab-nav-bar>
   <a (click)="clickEvent(1)" [ngClass]="value == 1 ?'successBorder': 'danger'"
-    [routerLink]="'/customer-detail/overview'" mat-tab-link>OVERVIEW</a>
+     [routerLink]="'./overview'" mat-tab-link>OVERVIEW</a>
   <a (click)="clickEvent(2)" [ngClass]="value == 2  ?'successBorder': 'danger'"
-    [routerLink]="'/customer-detail/account/summary'" mat-tab-link>ACCOUNTS</a>
+     [routerLink]="'./account/summary'" mat-tab-link>ACCOUNTS</a>
   <a (click)="clickEvent(3)" [ngClass]="value == 3?'successBorder': 'danger'"
-    [routerLink]="'/customer-detail/plan/summary'" mat-tab-link>PLAN</a>
+     [routerLink]="'./plan/summary'" mat-tab-link>PLAN</a>
   <a (click)="clickEvent(4)" [ngClass]="value == 4  ?'successBorder': 'danger'"
-    [routerLink]="'/customer-detail/activity'" mat-tab-link>ACTIVITY</a>
+     [routerLink]="'./activity'" mat-tab-link>ACTIVITY</a>
   <a (click)="clickEvent(5)" [ngClass]="value == 5 ?'successBorder': 'danger'"
-    [routerLink]="'/customer-detail/transact'" mat-tab-link>TRANSACT</a>
+     [routerLink]="'./transact'" mat-tab-link>TRANSACT</a>
 </nav>
 <router-outlet id="ui-router-outlet"></router-outlet>
 <!-- </div> -->

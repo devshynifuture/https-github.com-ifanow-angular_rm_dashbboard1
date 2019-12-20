@@ -13,17 +13,20 @@ import { CommonFroalaComponent } from './subscription/common-subscription-compon
 import { BillerProfileAdvisorComponent } from './subscription/common-subscription-component/biller-profile-advisor/biller-profile-advisor.component';
 import { HelpComponent } from './subscription/common-subscription-component/help/help.component';
 import { CommonComponentModule } from '../../common-component/common-component.module';
+import { SubscriptionUpperSliderComponent } from './subscription/common-subscription-component/upper-slider/subscription-upper-slider.component';
+import { ClientUpperSubscriptionComponent } from './subscription/common-subscription-component/subscriptions-upper-slider/client-upper-subscription.component';
+import { SubscriptionUpperEntry } from './subscription-upper-entry-module';
 
 export const componentList = [
-    VariableFeeComponent,
-    FixedFeeComponent,
-    CreateSubscriptionComponent,
-    BillerSettingsComponent,
-    ChangePayeeComponent,
+    // VariableFeeComponent,
+    // FixedFeeComponent,
+    // CreateSubscriptionComponent,
+    // BillerSettingsComponent,
+    // ChangePayeeComponent,
     InvoiceHistoryComponent,
-    CommonFroalaComponent,
+    // CommonFroalaComponent,
     BillerProfileAdvisorComponent,
-    HelpComponent
+    HelpComponent,
 ]
 @NgModule({
     declarations: componentList,
@@ -33,7 +36,8 @@ export const componentList = [
         ChartModule,
         FormsModule,
         ReactiveFormsModule,
-        CommonComponentModule
+        CommonComponentModule,
+        SubscriptionUpperEntry
     ],
     exports: [componentList],
     entryComponents: [componentList]

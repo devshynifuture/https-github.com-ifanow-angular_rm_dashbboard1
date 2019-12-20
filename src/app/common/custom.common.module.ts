@@ -1,10 +1,8 @@
-import { NgModule } from '@angular/core';
-import { DialogContainerComponent } from './dialog-container/dialog-container.component';
-import { MaterialModule } from '../material/material';
-import { SubscriptionModule } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { EmailModule } from '../component/protect-component/AdviserComponent/Email/email.module';
+import {NgModule} from '@angular/core';
+import {DialogContainerComponent} from './dialog-container/dialog-container.component';
+import {MaterialModule} from '../material/material';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
 
 // import {AppModule} from "../app.module";
 
@@ -17,13 +15,13 @@ import { EmailModule } from '../component/protect-component/AdviserComponent/Ema
   ],
   imports: [
     MaterialModule,
-    SubscriptionModule,
+    // SubscriptionModule,
     // AccountModule,
     // PlanModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    EmailModule
+    // EmailModule
     // DynamicComponentModule,
     // AccountEntryModule,
     // PlanEntryModule,

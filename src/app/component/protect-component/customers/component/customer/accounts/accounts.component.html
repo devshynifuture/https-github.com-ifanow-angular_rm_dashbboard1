@@ -1,16 +1,25 @@
 <div id="advisor-home">
+  <!--  <a [routerLink]="['../../../admin','subscription']" class="sidenav-link" mat-list-item>-->
+    <!--  <a mat-list-item class="sidenav-link" [routerLink]="['/login']">-->
+    <!---->
+    <!--  <a mat-list-item class="sidenav-link" [routerLink]="['',{outlet:{secondary:'/admin/subscription'}}]">-->
+    <!--    <button class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">-->
   <button (click)="goToAdvisorHome()" class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">
       keyboard_backspace
     </i>ADVISOR HOME
-  </button>
+    </button>
+  <!--  </a>-->
 </div>
 <nav mat-tab-nav-bar id="ui-customer-secondhead">
-  <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" mat-tab-link [routerLink]="'summary'">SUMMARY</a>
-  <a (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" mat-tab-link [routerLink]="'assets'">ASSETS</a>
-  <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" mat-tab-link [routerLink]="'liabilities'">LIABILITIES</a>
-  <a (click)="value=4" [ngClass]="_value == 4 ? 'active': ''" mat-tab-link [routerLink]="'insurance'">INSURANCE</a>
+  <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'./summary'" mat-tab-link>SUMMARY</a>
+  <a (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'./assets'" mat-tab-link>ASSETS</a>
+
+  <!--     [routerLink]="[{outlet:{accountRouterOutlet:['assets']}}]">ASSETS</a>-->
+  <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'./liabilities'"
+     mat-tab-link>LIABILITIES</a>
+  <a (click)="value=4" [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'./insurance'" mat-tab-link>INSURANCE</a>
   <!-- <a mat-tab-link [routerLink]="'expenses'">EXPENSES</a> -->
-  <a (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" mat-tab-link [routerLink]="'documents'">DOCUMENTS</a>
+  <a (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'./documents'" mat-tab-link>DOCUMENTS</a>
 </nav>
 <router-outlet></router-outlet>
 <!-- <mat-tab-group [selectedIndex]="selected" mat-align-tabs="center" id="ui-account-second-head" animationDuration="0ms">

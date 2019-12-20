@@ -1,4 +1,3 @@
-import { EntryComponentsModule } from './entry.components.module';
 /* tslint:disable:max-line-length */
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -43,11 +42,13 @@ import { CustomCommonModule } from './common/custom.common.module';
 import { DatePipe } from '@angular/common';
 import { MatSortModule, MatTableModule } from '@angular/material';
 import { DynamicComponentService } from './services/dynamic-component.service';
-import { EmailModule } from './component/protect-component/AdviserComponent/Email/email.module';
 // import { SubscriptionModule } from './component/protect-component/AdviserComponent/Subscriptions/subscription.module';
 import { SubscriptionEntry } from './component/protect-component/AdviserComponent/Subscriptions/subscription.entry.module';
 import { EmailEntryModule } from './component/protect-component/AdviserComponent/Email/email.entry.module';
-
+import 'zone.js/dist/zone';
+import { CalenderComponent } from "./component/protect-component/AdviserComponent/Email/calender/calender.component";
+import { SubscriptionUpperEntry } from './component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
+import { EmailModule } from './component/protect-component/AdviserComponent/Email/email.module';
 // import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
 
@@ -80,8 +81,6 @@ import { EmailEntryModule } from './component/protect-component/AdviserComponent
     // ConfirmDialogComponent,
     DialogComponent,
     CustomFormInputComponent,
-
-
     BaseComponent,
     // RadioGroupDirectiveDirective,
 
@@ -89,12 +88,15 @@ import { EmailEntryModule } from './component/protect-component/AdviserComponent
     // CustomDialogContainerComponent,
     // AddLiabilitiesComponent,
     // AddInsuranceComponent
+    CalenderComponent,
+
   ],
   imports: [
+
     SubscriptionEntry,
+    SubscriptionUpperEntry,
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
@@ -105,19 +107,28 @@ import { EmailEntryModule } from './component/protect-component/AdviserComponent
     // CommonSubscriptionComponent,
     SlimLoadingBarModule.forRoot(),
 
-    MDBBootstrapModule.forRoot(), DragDropModule,
+    MDBBootstrapModule.forRoot(),
+    DragDropModule,
     CustomCommonModule,
     EmailModule,
-    // PDFExportModule,
 
     // EntryComponentsModule,
     // AccountEntryModule,
     // PlanEntryModule,
-    EmailEntryModule
+    EmailEntryModule,
+
+    // SubscriptionRoutingModule,
+    // PlanRoutingModule,
+    // AccountRoutingModule,
+    // SubscriptionModule,
+    // CustomersModule,
+    // AccountModule,
+    // PlanModule,
+    AppRoutingModule
   ],
   providers: [AuthService, HttpService, DatePipe, DynamicComponentService],
   bootstrap: [AppComponent],
-  entryComponents: [SubscriptionEntry.getComponentList()]
+  entryComponents: [SubscriptionEntry.getComponentList(), SubscriptionUpperEntry.getComponentList()]
   // entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
 })
 export class AppModule {
