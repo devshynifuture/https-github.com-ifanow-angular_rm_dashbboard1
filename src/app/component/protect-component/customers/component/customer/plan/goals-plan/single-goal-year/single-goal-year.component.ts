@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -21,6 +21,8 @@ export class SingleGoalYearComponent implements OnInit {
   field2SliderData: any;
   field2MinData: any;
   field3SliderData: any;
+  @ViewChild('myInput3', { static: true }) inputRef: ElementRef;
+  @ViewChild('mySlider3', { static: true }) sliderRef: ElementRef<object>;
   constructor(private eventService: EventService, private fb: FormBuilder, private planService: PlanService, private utilService: UtilService) { }
   @Input() set goalData(data) {
     this.clientId = AuthService.getClientId();
@@ -68,6 +70,9 @@ export class SingleGoalYearComponent implements OnInit {
   };
   @Output() backToaddGoal = new EventEmitter();
   ngOnInit() {
+  }
+  inputData(data) {
+    console.log(this.sliderRef.nativeElement);
   }
   back() {
     this.backToaddGoal.emit(undefined);
