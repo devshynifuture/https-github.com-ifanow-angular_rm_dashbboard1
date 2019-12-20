@@ -50,7 +50,8 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.ngOnInit();
   }
 
-  dataSource: any;
+  dataSource: [{ selected: '' }, { selected: '' }, { selected: '' }];
+  isLoading = false;
   subscriptionValue: any;
   invoiceSub: any;
   invoiceSubscription: string;
@@ -59,7 +60,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   showEdit: boolean;
   showPdfInvoice;
   singleInvoiceData;
-  showLoader = true;
+  //showLoader = true;
   advisorId;
   displayedColumns: string[] = ['checkbox', 'date', 'invoicenum', 'name', 'status', 'email', 'duedate', 'amt', 'balance'];
   @Input() invoiceValue
@@ -71,9 +72,11 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.invoiceSubscription = 'false';
     this.invoiceDesign = 'true';
     this.dataCount = 0;
+
   }
 
   getInvoiceSubData() {
+
     const obj = {
       id: this.advisorId,
       // id: 2735, // pass here advisor id for Invoice advisor
@@ -86,12 +89,14 @@ export class InvoicesSubscriptionComponent implements OnInit {
   }
 
   addInvoice(edit) {
+
     this.invoiceSubscription = edit;
     // this.invoiceDesign = edit;
     console.log("edit", edit)
   }
 
   getInvoiceResponseData(data) {
+    this.isLoading = true;
     if (data == undefined) {
       this.noData = "No Data Found";
     } else {
@@ -100,7 +105,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
       this.invoiceClientData = data;
       ELEMENT_DATA.forEach(item => item.selected = false);
       this.dataSource = ELEMENT_DATA;
-      this.showLoader = false;
+      // this.showLoader = false;
     }
   }
 
