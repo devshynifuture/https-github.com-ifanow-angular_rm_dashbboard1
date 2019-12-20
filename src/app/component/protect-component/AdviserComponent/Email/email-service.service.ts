@@ -1,15 +1,14 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
 import { EmailUtilService } from 'src/app/services/email-util.service';
 import { UtilService } from './../../../../services/util.service';
 import { SubscriptionInject } from './../Subscriptions/subscription-inject.service';
-import { ComposeEmailComponent } from './email-component/compose-email/compose-email.component';
 import { appConfig } from 'src/app/config/component-config';
 import { AuthService } from './../../../../auth-service/authService';
-import { BehaviorSubject, throwError } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { apiConfig } from './../../../../config/main-config';
 import { HttpService } from './../../../../http-service/http-service';
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { EmailAddTaskComponent } from './email-component/email-list/email-add-task/email-add-task.component';
 
 
 @Injectable({
@@ -118,8 +117,9 @@ export class EmailServiceService {
   // needs to work on email body attachments and to from of http Params
   createDraft({ to, from, emailBody, attachments, subject }) {
     const userInfo = AuthService.getUserInfo();
+    const encodedSubject = EmailUtilService.changeStringToBase46(subject);
     const encodedEmailBody = EmailUtilService.changeStringToBase46(emailBody);
-    console.log("THIS IS SOMETHING OF YOUR INTEREST =>>>>>", emailBody);
+
     const obj =
     {
       "attachmentIds": [
@@ -180,7 +180,7 @@ export class EmailServiceService {
         },
         "threadId": ""
       },
-      "email": "",
+      "email": userInfo.emailId,
       "fileData": [
         {
           "data": "",
@@ -190,9 +190,9 @@ export class EmailServiceService {
           "size": 0
         }
       ],
-      "id": userInfo.emailId,
+      "id": "0",
       "message": encodedEmailBody,
-      "subject": subject,
+      "subject": encodedSubject,
       "toAddress": [
         to
       ],
@@ -206,6 +206,11 @@ export class EmailServiceService {
 
   createUpdateDraft(body) {
     const userInfo = AuthService.getUserInfo();
+    // console.log(apiConfig.GMAIL_URL + appConfig.CREATE_DRAFT, " \n http params \n", {
+    //   emailId: userInfo.emailId,
+    //   userId: userInfo.advisorId,
+    //   ...body
+    // });
     return this.http.post(apiConfig.GMAIL_URL + appConfig.CREATE_DRAFT, {
       email: userInfo.emailId,
       userId: userInfo.advisorId,

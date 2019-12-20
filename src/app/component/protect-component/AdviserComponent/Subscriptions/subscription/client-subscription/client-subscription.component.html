@@ -10,11 +10,11 @@
             </div>
         </div>
         <div class="clientTable">
-            <table mat-table [dataSource]="dataSource" id="table-low" class="mt-8 ">
+            <table mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef class="f-18"> Clients name </th>
                     <td mat-cell *matCellDef="let element" (click)="openFragment('clients',element)" class="c-p">
-                        {{element.name}}
+                        <div class="bar"> {{element.name}} </div>
                     </td>
                 </ng-container>
 
@@ -22,20 +22,24 @@
                 <ng-container matColumnDef="email">
                     <th mat-header-cell *matHeaderCellDef class="f-18"> Email </th>
                     <td mat-cell *matCellDef="let element" (click)="openFragment('clients',element)" class="c-p">
-                        {{element.userEmailId}} </td>
+                        <div class="bar"> {{element.userEmailId}} </div>
+                    </td>
                 </ng-container>
 
                 <!-- Weight Column -->
                 <ng-container matColumnDef="num">
                     <th mat-header-cell *matHeaderCellDef class="f-18"> Contact no. </th>
                     <td mat-cell *matCellDef="let element" (click)="openFragment('clients',element)" class="c-p">
-                        {{element.mobileNumber}} </td>
+                        <div class="bar"> {{element.mobileNumber}} </div>
+                    </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="balance">
                     <th mat-header-cell *matHeaderCellDef class="f-18 text-right"> Balance due (₹)</th>
-                    <td mat-cell *matCellDef="let element" (click)="openFragment('clients',element)" class="c-p text-right">{{element.balanceDue}} </td>
+                    <td mat-cell *matCellDef="let element" (click)="openFragment('clients',element)" class="c-p text-right">
+                        <div class="bar"> {{element.balanceDue}} </div>
+                    </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

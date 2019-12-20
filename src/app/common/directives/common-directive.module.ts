@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 // import { LiabilityrightComponent } from './component/customer/accounts/liabilities/liabilityright/liabilityright.component';
 import { RadioGroupDirectiveDirective } from './radio-group-directive.directive';
 import { CustomRightAnimationDirective } from './custom-right-animation.directive';
+import { SkeletoneLoadingDirective } from './skeletone-loading.directive';
 
 // import {AppModule} from "../app.module";
 
@@ -11,9 +12,10 @@ import { CustomRightAnimationDirective } from './custom-right-animation.directiv
   declarations: [
     RadioGroupDirectiveDirective,
     CustomRightAnimationDirective,
+    SkeletoneLoadingDirective,
 
   ],
-  exports: [RadioGroupDirectiveDirective],
+  exports: [RadioGroupDirectiveDirective, SkeletoneLoadingDirective],
   imports: [
 
     // AppModule

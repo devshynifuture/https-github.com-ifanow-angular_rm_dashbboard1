@@ -215,6 +215,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
           let extractSubjectFromHeaders;
           let extractAttachmentFiles = null;
           let attachmentFiles;
+          let messageCountInAThread: number;
 
           parsedData = EmailUtilService.decodeGmailThreadExtractMessage(thread);
           idsOfThread = EmailUtilService.getIdsOfGmailThreads(thread);
@@ -222,6 +223,8 @@ export class EmailListingComponent implements OnInit, OnDestroy {
           labelIdsfromMessages = EmailUtilService.getGmailLabelIdsFromMessages(thread);
           extractSubjectFromHeaders = EmailUtilService.getSubjectAndFromOfGmailHeaders(thread);
 
+
+          messageCountInAThread = parsedData.decodedPart.length / 2;
           if (this.showDraftView) {
             extractAttachmentFiles = EmailUtilService.getAttachmentFileData(thread);
             console.log("this is thread in draft");
@@ -238,6 +241,8 @@ export class EmailListingComponent implements OnInit, OnDestroy {
             idsOfThread,
             parsedData,
             attachmentFiles,
+            messageHeaders: extractSubjectFromHeaders['headerFromArray'],
+            messageCount: messageCountInAThread,
             labelIdsfromMessages,
             emailers: `${extractSubjectFromHeaders['headerFromArray'][0].split('<')[0].trim()}`,
             subjectMessage: {
@@ -265,6 +270,48 @@ export class EmailListingComponent implements OnInit, OnDestroy {
         this.dataSource.paginator = this.paginator;
 
       }, error => console.error(error));
+  }
+
+  getFileDetails(e) {
+    console.log('LeftSidebarComponent getFileDetails e : ', e.target.files[0]);
+    const singleFile = e.target.files[0];
+
+    const fileData = [];
+
+    EmailUtilService.getBase64FromFile(singleFile, (successData) => {
+      fileData.push({
+        filename: singleFile.name,
+        size: singleFile.size,
+        mimeType: singleFile.type,
+        data: successData
+      });
+      this.createUpdateDraft(null, ['gaurav@futurewise.co.in'],
+        'This is a test message', 'This is a test message body', fileData);
+    });
+
+  }
+
+  createUpdateDraft(id: string, toAddress: Array<any>, subject: string, bodyMessage: string, fileData: Array<any>) {
+    let encodedSubject = EmailUtilService.changeStringToBase46(subject);
+    let encodedMessage = EmailUtilService.changeStringToBase46(bodyMessage);
+    const requestJson = {
+      id,
+      toAddress,
+      subject: encodedSubject,
+      message: encodedMessage,
+      fileData
+    };
+
+    console.log('LeftSidebarComponent createUpdateDraft requestJson : ', requestJson);
+    const createUpdateDraftSubscription = this.emailService.createUpdateDraft(requestJson)
+      .subscribe((responseJson) => {
+        console.log(requestJson);
+        console.log("+++++++++++++++");
+        console.log(responseJson);
+        createUpdateDraftSubscription.unsubscribe();
+      }, (error) => {
+        console.error(error);
+      });
   }
 
   /** Whether the number of selected elements matches the total number of rows. */

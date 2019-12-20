@@ -24,7 +24,7 @@
                     <!-- <p class="m-0 text-black">
                         {{ from }}
                     </p> -->
-                    <input type="text" [(ngModel)]="from" formControlName="sender">
+                    <input type="text" [(ngModel)]="from" (keyup)="setFromOfEmail(true)" formControlName="sender">
                     <div *ngIf="!emailForm.controls['sender'].valid && emailForm.controls['sender'].touched"
                         [ngClass]="emailForm.controls['sender'].valid && emailForm.controls['sender'].touched ? '': 'is-invalid'">
                         invalid email
@@ -44,7 +44,7 @@
                     <p class="m-0 text-custom">To</p>
                 </div>
                 <div class="col-md-11">
-                    <input type="text" [(ngModel)]="to" formControlName="receiver" (change)="createDraft()" />
+                    <input type="text" [(ngModel)]="to" formControlName="receiver" />
                     <div *ngIf="!emailForm.controls['receiver'].valid && emailForm.controls['receiver'].touched"
                         [ngClass]="emailForm.controls['receiver'].valid && emailForm.controls['receiver'].touched ? '': 'is-invalid'">
                         invalid email
@@ -100,8 +100,14 @@
                 </mat-chip> -->
                 </mat-chip-list>
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <button type="submit" mat-stroked-button class="btn-primary br-0">Send</button>
+                    </div>
+                    <div class="col-md-8">
+                        <button mat-icon-button (click)="fileInput.click()">
+                            <mat-icon>attach_file</mat-icon>
+                            <input #fileInput type="file" (change)="getFileDetails($event)" style="display:none;" />
+                        </button>
                     </div>
                 </div>
             </div>

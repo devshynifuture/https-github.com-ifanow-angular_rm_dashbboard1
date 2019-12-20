@@ -1,9 +1,8 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {LeftsidebarComponent} from './component/left-sidebar/leftsidebar/leftsidebar.component';
-import {LoginComponent} from './component/no-protected/login/login.component';
-import {CalenderComponent} from "./component/protect-component/AdviserComponent/Email/calender/calender.component";
-import {SelectivePreloadingStrategyService} from "./services/selective-preloading-strategy.service";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LeftsidebarComponent } from './component/left-sidebar/leftsidebar/leftsidebar.component';
+import { LoginComponent } from './component/no-protected/login/login.component';
+import { CalenderComponent } from "./component/protect-component/AdviserComponent/Email/calender/calender.component";
 
 const routes: Routes = [
   {
@@ -81,10 +80,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    enableTracing: false, preloadingStrategy: SelectivePreloadingStrategyService,
-    /*preloadingStrategy: PreloadAllModules*/
-  })],
+  imports: [RouterModule.forRoot(routes, { enableTracing: false  /*preloadingStrategy: PreloadAllModules*/ })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
