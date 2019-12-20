@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {filter} from 'rxjs/operators';
 
@@ -11,7 +11,7 @@ export class RoutingState {
 
   mainrouter;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private ngZone: NgZone) {
   }
 
   public setMainRouter(mainrouter) {
@@ -45,17 +45,20 @@ export class RoutingState {
   public goToSpecificRoute(urlString) {
     // this.getMainRouter().clear();
     console.log('goToSpecificRoute urlString this.getMainRouter().detach() : ', this.getMainRouter());
+    this.ngZone.run(() => {
+      this.router.navigate([urlString]).then((status: boolean) => {
+        if (status) {
+          console.log('goToSpecificRoute urlString success : ', urlString);
+          // this.router.navigate([urlString]);
+        } else {
+          console.error('goToSpecificRoute urlString failure : ', urlString);
+        }
+      }).catch(error => {
+        console.error('goToSpecificRoute catch error : ', error, ' for urlString : ', urlString);
 
-    this.router.navigate([urlString]).then((status: boolean) => {
-      if (status) {
-        console.log('goToSpecificRoute urlString success : ', urlString);
-      } else {
-        console.error('goToSpecificRoute urlString failure : ', urlString);
-      }
-    }).catch(error => {
-      console.error('goToSpecificRoute catch error : ', error, ' for urlString : ', urlString);
-
+      });
     });
+
   }
 
 

@@ -1,21 +1,28 @@
-img{
+img {
     width: 100%;
     height: 310px;
 }
-.bottom-tops{
+
+.bottom-tops {
     bottom: -50%;
     position: relative;
 }
-.green{
+
+.green {
     background: #02B875;
     padding: 4px 5px;
 }
-.blue{
+
+.blue {
     background: #008FFF;
     color: #fff;
     padding: 4px 7px;
-
 }
-.btn-success{
+
+.btn-success {
     background-color: #02B875;
+}
+
+#ui-document-settings {
+    margin-top: 20px !important;
 }
