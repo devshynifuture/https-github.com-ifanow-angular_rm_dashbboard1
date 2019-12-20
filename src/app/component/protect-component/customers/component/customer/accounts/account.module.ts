@@ -126,7 +126,6 @@ import {MutualFundGoalLinkageComponent} from './assets/mutual-fund/mutual-fund/m
     MutualFundGoalLinkageComponent
   ],
   imports: [
-    AccountRoutingModule,
     AccountCommonModule,
     // BrowserModule,
     // OwnerComponentModule,
@@ -135,7 +134,9 @@ import {MutualFundGoalLinkageComponent} from './assets/mutual-fund/mutual-fund/m
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    // PDFExportModule,
+    MaterialModule,
+    AccountRoutingModule,
   ],
   exports: [
     AccountsComponent,

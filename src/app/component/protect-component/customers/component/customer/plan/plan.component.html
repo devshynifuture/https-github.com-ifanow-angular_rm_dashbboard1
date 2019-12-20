@@ -1,18 +1,23 @@
 <div id="plan-home">
-  <button (click)="goToAdvisorHome()" class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">
-            keyboard_backspace
-        </i>ADVISOR HOME</button>
+  <a class="sidenav-link" href="/admin/subscription/dashboard" mat-list-item>
+    <button class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">
+
+      <!--  <button (click)="goToAdvisorHome()" class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">-->
+      keyboard_backspace
+    </i>ADVISOR HOME
+    </button>
+  </a>
 </div>
 <nav mat-tab-nav-bar id="ui-customer-secondhead">
-    <a (click)="value=1" mat-tab-link [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'summary'">SUMMARY</a>
-    <a (click)="value=2" mat-tab-link [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'profile'">PROFILE</a>
-    <a (click)="value=3" mat-tab-link [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'insurance'">INSURANCE</a>
-    <a (click)="value=4" mat-tab-link [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'goals'">GOALS</a>
-    <a (click)="value=5" mat-tab-link [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'taxes'">TAXES</a>
-    <a (click)="value=6" mat-tab-link [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'cash-flow'">CASH FLOWS</a>
-    <a (click)="value=7" mat-tab-link [ngClass]="_value == 7 ? 'active': ''"
-        [routerLink]="'investments'">INVESTMENTS</a>
-    <a (click)="value=8" mat-tab-link [ngClass]="_value == 8 ? 'active': ''" [routerLink]="'scenarios'">SCENARIOS</a>
+  <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'summary'" mat-tab-link>SUMMARY</a>
+  <a (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'profile'" mat-tab-link>PROFILE</a>
+  <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'insurance'" mat-tab-link>INSURANCE</a>
+  <a (click)="value=4" [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'goals'" mat-tab-link>GOALS</a>
+  <a (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'taxes'" mat-tab-link>TAXES</a>
+  <a (click)="value=6" [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'cash-flow'" mat-tab-link>CASH FLOWS</a>
+  <a (click)="value=7" [ngClass]="_value == 7 ? 'active': ''" [routerLink]="'investments'"
+     mat-tab-link>INVESTMENTS</a>
+  <a (click)="value=8" [ngClass]="_value == 8 ? 'active': ''" [routerLink]="'scenarios'" mat-tab-link>SCENARIOS</a>
 </nav>
 <!-- <mat-tab-group [selectedIndex]="selected" mat-align-tabs="center" id="ui-account-second-head" animationDuration="0ms">
     <mat-tab label="SUMMARY">

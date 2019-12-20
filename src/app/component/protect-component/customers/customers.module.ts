@@ -25,7 +25,6 @@ import {DynamicComponentService} from '../../../services/dynamic-component.servi
   imports: [
     // BrowserModule,
     CommonModule,
-    CustomersRoutingModule,
     MaterialModule,
     ChartModule,
     FormsModule,
@@ -37,6 +36,8 @@ import {DynamicComponentService} from '../../../services/dynamic-component.servi
     EntryComponentsModule,
     AccountEntryModule,
     PlanEntryModule,
+    CustomersRoutingModule,
+
     // PlanModule
   ],
   exports: [],
