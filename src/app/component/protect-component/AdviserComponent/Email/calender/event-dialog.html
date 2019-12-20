@@ -1,0 +1,26 @@
+<div class="p-24">
+<h1 mat-dialog-title>Add New</h1>
+<div mat-dialog-content class="p-24">
+    <form [formGroup]="eventForm">
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Title" formControlName="title">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <textarea matInput placeholder="Description" formControlName="description"></textarea>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <textarea matInput placeholder="Event address" formControlName="location"></textarea>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput formControlName="startDateTime" [matDatepicker]="picker"  placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    </form>
+<!-- <input matInput [(ngModel)]="data.animal"> -->
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="eventForm.value" cdkFocusInitial>Ok</button>
+</div>
+</div>
