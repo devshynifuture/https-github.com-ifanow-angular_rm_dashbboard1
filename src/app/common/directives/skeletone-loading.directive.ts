@@ -1,9 +1,10 @@
-import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Renderer2, Input } from '@angular/core';
 
 @Directive({
   selector: '[appSkeletonLoading]'
 })
-export class SkeletonLoadingDirective {
+export class SkeletoneLoadingDirective {
+
 
   constructor(private elementRef: ElementRef, private renderer: Renderer2) {
   }
@@ -19,6 +20,10 @@ export class SkeletonLoadingDirective {
     }
   }
 
+  get appSkeletonLoading() {
+    return this.isLoading;
+  }
+
   addClass(className: string) {
     this.renderer.addClass(this.elementRef.nativeElement, className);
 
@@ -27,5 +32,6 @@ export class SkeletonLoadingDirective {
   removeClass(className: string) {
     this.renderer.removeClass(this.elementRef.nativeElement, className);
   }
+
 
 }

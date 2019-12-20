@@ -34,8 +34,9 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'docname', 'plan', 'servicename', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
 
-  dataSource: any;
+  dataSource = [{}, {}, {}];
   advisorId;
+  isLoading = false;
   noData: string;
   filterStatus = [];
   filterDate = [];
@@ -58,6 +59,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
     this.getdocumentSubData();
   }
@@ -123,6 +125,8 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   }
 
   filterSubscriptionRes(data) {
+
+
     console.log('filterSubscriptionRes', data);
     this.dataSource = data;
     // this.getSubSummaryRes(data);
@@ -153,6 +157,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   }
 
   getdocumentResponseData(data) {
+    this.isLoading = false;
     if (data == undefined) {
       this.noData = "No Data Found";
     } else {

@@ -1,11 +1,11 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {SubscriptionService} from '../../../subscription.service';
 import {MatDialog} from '@angular/material';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { UtilService } from 'src/app/services/util.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {UtilService} from 'src/app/services/util.service';
+import {AuthService} from 'src/app/auth-service/authService';
 
 export interface PeriodicElement {
   Invoicenumber: string;
@@ -62,15 +62,15 @@ export class InvoicesComponent implements OnInit {
     );
   }
   getInvoiceResponseData(data) {
-    if(data==undefined){
-      this.noData="No Data Found";
-    }else{
+    if (data == undefined) {
+      this.noData = "No Data Found";
+    } else {
       const ELEMENT_DATA = data;
-    // this.invoiceClientData = data;
-    ELEMENT_DATA.forEach(item => item.selected = false);
-    this.dataSource = ELEMENT_DATA;
-    this._clientData=this.dataSource;
-   }
+      // this.invoiceClientData = data;
+      ELEMENT_DATA.forEach(item => item.selected = false);
+      this.dataSource = ELEMENT_DATA;
+      this._clientData = this.dataSource;
+    }
   }
   openEdit(edit) {
     this.invoiceDesign = edit;
@@ -141,17 +141,17 @@ export class InvoicesComponent implements OnInit {
   openSendEmail() {
     const data = {
       advisorId: this.advisorId,
-      clientData:this.upperData,
+      clientData: this.upperData,
       templateType: 1, //2 is for quotation
       documentList: [],
-      isInv:true
+      isInv: true
     };
     this.dataSource.forEach(singleElement => {
       if (singleElement.selected) {
         data.documentList.push(singleElement);
       }
     });
-    this.open(data, 'emailOnlyInv');
+    this.open(data, 'email');
   }
 
   open(data, value) {
@@ -170,7 +170,7 @@ export class InvoicesComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ',);
+          console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }
       }
@@ -197,7 +197,7 @@ export class InvoicesComponent implements OnInit {
     // this.subInjectService.addSingleProfile(data);
     const fragmentData = {
       flag: value,
-      data:data,
+      data: data,
       id: 1,
       state: 'open'
     };
@@ -206,11 +206,11 @@ export class InvoicesComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         this.dataTOget = sideBarData;
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', );
+          console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }
       }
-      
+
     );
   }
 

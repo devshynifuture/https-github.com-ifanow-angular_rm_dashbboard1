@@ -83,29 +83,38 @@
                 </div>
             </div>
         </div>
-        <table [dataSource]="dataSource" class="mt-8" id="table-low" mat-table>
+        <table [dataSource]="dataSource" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low" mat-table>
 
 
             <ng-container matColumnDef="client">
                 <th *matHeaderCellDef class="f-18 t-20" mat-header-cell> Client & Plan details</th>
-                <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" *matCellDef="let element" class="c-p t-20" mat-cell> {{element.planName}} <br>
-                    <small class="text-custom roboto">{{element.clientName}}</small> </td>
+                <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" *matCellDef="let element" class="c-p t-20" mat-cell>
+                    <div class="bar">
+                        {{element.planName}} <br>
+                        <small class="text-custom roboto">{{element.clientName}}</small>
+                    </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="service">
                 <th *matHeaderCellDef class="f-18 t-12" mat-header-cell> Service name</th>
-                <td *matCellDef="let element" class="c-p t-12" mat-cell> {{element.serviceName}} </td>
+                <td *matCellDef="let element" class="c-p t-12" mat-cell>
+                    <div class="bar"> {{element.serviceName}} </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="amt">
                 <th *matHeaderCellDef class="f-18 t-10" mat-header-cell> Fee amount</th>
 
-                <td (click)="openFeeEditor(element)" *matCellDef="let element" class="c-p t-10 text-primary text-underline" mat-cell> View details
+                <td (click)="openFeeEditor(element)" *matCellDef="let element" class="c-p t-10 text-primary text-underline" mat-cell>
+                    View details
                 </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="sub">
                 <th *matHeaderCellDef class="f-18 t-10" mat-header-cell> Subs #</th>
-                <td *matCellDef="let element" (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" class="t-10 c-p" mat-cell> {{element.subscriptionNumber}} </td>
+                <td *matCellDef="let element" (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" class="t-10 c-p" mat-cell>
+                    <div class="bar"> {{element.subscriptionNumber}} </div>
+                </td>
             </ng-container>
             <!-- Weight Column -->
             <ng-container matColumnDef="status">
@@ -138,13 +147,15 @@
             <!-- Symbol Column -->
             <ng-container matColumnDef="lastbilling">
                 <th *matHeaderCellDef class="f-18 t-10" mat-header-cell> Last billing...</th>
-                <td *matCellDef="let element" class="t-10" mat-cell> {{element.prevBillingDate | date:'dd/MM/yyyy'}}
+                <td *matCellDef="let element" class="t-10" mat-cell>
+                    <div class="bar"> {{element.prevBillingDate | date:'dd/MM/yyyy'}} </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="nextbilling">
                 <th *matHeaderCellDef class="f-18 text-right pr-24 t-15" mat-header-cell> Next billing...</th>
                 <td *matCellDef="let element" class="text-right pr-8 t-15" mat-cell>
-                    {{element.nextBillingDate | date:'dd/MM/yyyy'}} </td>
+                    <div class="bar"> {{element.nextBillingDate | date:'dd/MM/yyyy'}} </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="feemode">
                 <th *matHeaderCellDef class="f-18 text-right pr-24 t-12" mat-header-cell> Fee mode</th>

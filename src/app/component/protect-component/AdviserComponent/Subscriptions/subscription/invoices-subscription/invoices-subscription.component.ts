@@ -1,8 +1,7 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionService} from '../../subscription.service';
 import {SubscriptionInject} from '../../subscription-inject.service';
 import {EventService} from 'src/app/Data-service/event.service';
-import {ValueConverter} from '@angular/compiler/src/render3/view/template';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material';
 import {AuthService} from "../../../../../../auth-service/authService";
@@ -29,13 +28,13 @@ export interface PeriodicElement {
 export class InvoicesSubscriptionComponent implements OnInit {
 
   chips = [
-    {name: 'LIVE', value: 1},
-    {name: 'PAID', value: 2},
-    {name: 'OVERDUE', value: 3}
+    { name: 'LIVE', value: 1 },
+    { name: 'PAID', value: 2 },
+    { name: 'OVERDUE', value: 3 }
   ];
   dateChips = [
-    {name: 'Date', value: 1},
-    {name: 'Due date', value: 2},
+    { name: 'Date', value: 1 },
+    { name: 'Due date', value: 2 },
   ];
   invoiceDesign: string;
   noData: string;
@@ -46,11 +45,12 @@ export class InvoicesSubscriptionComponent implements OnInit {
   selectedDateRange: { begin: Date; end: Date; };
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
-              private eventService: EventService, public subscription: SubscriptionService) {
+    private eventService: EventService, public subscription: SubscriptionService) {
     this.ngOnInit();
   }
 
-  dataSource: any;
+  dataSource: [{ selected: '' }, { selected: '' }, { selected: '' }];
+  isLoading = false;
   subscriptionValue: any;
   invoiceSub: any;
   invoiceSubscription: string;
@@ -59,7 +59,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   showEdit: boolean;
   showPdfInvoice;
   singleInvoiceData;
-  showLoader = true;
+  //showLoader = true;
   advisorId;
   displayedColumns: string[] = ['checkbox', 'date', 'invoicenum', 'name', 'status', 'email', 'duedate', 'amt', 'balance'];
   @Input() invoiceValue
@@ -71,27 +71,31 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.invoiceSubscription = 'false';
     this.invoiceDesign = 'true';
     this.dataCount = 0;
+
   }
 
   getInvoiceSubData() {
+
     const obj = {
       id: this.advisorId,
       // id: 2735, // pass here advisor id for Invoice advisor
       module: 1
     };
-
+    this.isLoading = true;
     this.subscription.getInvoices(obj).subscribe(
       data => this.getInvoiceResponseData(data)
     );
   }
 
   addInvoice(edit) {
+
     this.invoiceSubscription = edit;
     // this.invoiceDesign = edit;
     console.log("edit", edit)
   }
 
   getInvoiceResponseData(data) {
+    this.isLoading = false;
     if (data == undefined) {
       this.noData = "No Data Found";
     } else {
@@ -100,7 +104,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
       this.invoiceClientData = data;
       ELEMENT_DATA.forEach(item => item.selected = false);
       this.dataSource = ELEMENT_DATA;
-      this.showLoader = false;
+      // this.showLoader = false;
     }
   }
 
@@ -115,8 +119,8 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.invoiceSub = value;
     this.invoiceSubscription = 'true';
     this.eventService.sidebarData(value)
-// this.subscriptionValue = value
-// this.subInjectService.rightSideData(state);
+    // this.subscriptionValue = value
+    // this.subInjectService.rightSideData(state);
     this.subInjectService.addSingleProfile(data);
     // const fragmentData = {
     //   flag: value,
@@ -173,7 +177,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
-      this.selectAll({checked: false}) : this.selectAll({checked: true});
+      this.selectAll({ checked: false }) : this.selectAll({ checked: true });
   }
 
   display(data) {
@@ -207,7 +211,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = {begin: beginDate, end: endDate};
+    this.selectedDateRange = { begin: beginDate, end: endDate };
   }
 
   removeDate(item) {
