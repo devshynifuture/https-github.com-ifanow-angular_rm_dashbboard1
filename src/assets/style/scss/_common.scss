@@ -111,6 +111,7 @@ a:hover {
 
 .roboto {
     // font-family: 'Roboto', sans-serif !important;
+    font-family: "Proxima Nova ", sans-serif;
 }
 
 ul {
@@ -524,6 +525,35 @@ ul {
         font-size: 14px !important;
         line-height: 36px !important;
     }
+}
+
+.text-regular {
+    margin: 0 !important;
+    color: #83959D;
+    font-size: 14px;
+    font-family: "Roboto", sans-serif;
+}
+
+button.warning-sm {
+    color: #FF6823;
+    border-color: #FF6823 !important;
+    font-size: 12px !important;
+    border-radius: 2px !important;
+    min-width: 0 !important;
+    height: 20px !important;
+    padding: 0 2px !important;
+    line-height: 0 !important;
+}
+
+button.primary-sm {
+    color: #008FFF;
+    border-color: #008FFF !important;
+    font-size: 12px !important;
+    border-radius: 2px !important;
+    min-width: 0 !important;
+    height: 20px !important;
+    padding: 0 2px !important;
+    line-height: 0 !important;
 }
 
 .text-regular {
