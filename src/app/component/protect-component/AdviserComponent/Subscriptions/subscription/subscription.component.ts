@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {EventService} from 'src/app/Data-service/event.service';
-import {EnumDataService} from "../../../../../services/enum-data.service";
-import { MatTabGroup } from '@angular/material';
-import { Router } from '@angular/router';
+import {EnumDataService} from '../../../../../services/enum-data.service';
+import {MatTabGroup} from '@angular/material';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-subscription',
@@ -16,7 +16,10 @@ export class SubscriptionComponent implements OnInit {
     console.log('now value is ->>>>', value);
     this._value = value;
   }
-  constructor(private eventService: EventService, private enumDataService: EnumDataService,private router: Router) {
+
+  @ViewChild(MatTabGroup, {static: true}) tabGroup: MatTabGroup;
+
+  constructor(private eventService: EventService, private enumDataService: EnumDataService, private router: Router) {
     this.eventService.sidebarSubscribeData.subscribe(
       data => this.getFileResponseDataAum(data)
     );
@@ -24,7 +27,6 @@ export class SubscriptionComponent implements OnInit {
       data => this.getTabChangeData(data)
     );
   }
-  @ViewChild(MatTabGroup,{static:true}) tabGroup: MatTabGroup;
 
   subscriptionTab;
 
@@ -45,30 +47,30 @@ export class SubscriptionComponent implements OnInit {
       this._value = 4;
     } else if (this.router.url.split('/')[3] === 'invoices') {
       this._value = 5;
-    }else if (this.router.url.split('/')[3] === 'documents') {
+    } else if (this.router.url.split('/')[3] === 'documents') {
       this._value = 6;
-    }else if (this.router.url.split('/')[3] === 'settings') {
+    } else if (this.router.url.split('/')[3] === 'settings') {
       this._value = 7;
     }
 
     // this.selected = 6;
   }
-  getIndex(value)
-  {
-    console.log(this.tabGroup)
-    if(value.selectedSettingTab)
-    {
-      this.tabGroup.selectedIndex=value.selectedTab;
-      this.settingIndex=value
+
+  getIndex(value) {
+    console.log(this.tabGroup);
+    if (value.selectedSettingTab) {
+      this.tabGroup.selectedIndex = value.selectedTab;
+      this.settingIndex = value;
     }
     // this.selected=index
   }
+
   getFileResponseDataAum(data) {
     this.subscriptionTab = data;
   }
 
   getTabChangeData(data) {
-    this._value=data;
+    this._value = data;
     // if(data==1){
     //   this._value=2;
     // } else if(data==3){
@@ -91,11 +93,11 @@ export class SubscriptionComponent implements OnInit {
 
   tabClick(event) {
     this.eventService.sidebarData(event.tab.textLabel);
-    if(event.index!=6)
-    {
-      this.settingIndex=0
+    if (event.index != 6) {
+      this.settingIndex = 0;
     }
   }
+
   help() {
 
   }

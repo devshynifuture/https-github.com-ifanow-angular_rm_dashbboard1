@@ -1,6 +1,7 @@
 import {Router} from '@angular/router';
 import {Component, NgZone, OnInit} from '@angular/core';
-import {RoutingState} from "../../../../../../services/routing-state.service";
+import {RoutingState} from '../../../../../../services/routing-state.service';
+import {EventService} from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-accounts',
@@ -9,19 +10,31 @@ import {RoutingState} from "../../../../../../services/routing-state.service";
 })
 export class AccountsComponent implements OnInit {
   _value: number;
+  loading: boolean;
+  showRouter = false;
 
   set value(value: number) {
     console.log('now value is ->>>>', value);
     this._value = value;
   }
 
-  constructor(private router: Router, private ngZone: NgZone, private routingStateService: RoutingState) {
+  constructor(private eventService: EventService, private router: Router, private ngZone: NgZone, private routingStateService: RoutingState) {
+    this.eventService.tabChangeData.subscribe(
+      data => this.getTabChangeData(data)
+      );
   }
-
+  getTabChangeData(data){
+    setTimeout(() => {
+    this._value = data
+    this.loading = false
+    }, 300);
+  }
   selected;
 
   ngOnInit() {
+    this.showRouter = true;
     this.selected = 1;
+     this.loading = false
     console.log('this is child url now->>>>>', this.router.url.split('/')[3]);
     if (this.router.url.split('/')[3] === 'summary') {
       this._value = 1;
@@ -59,8 +72,10 @@ export class AccountsComponent implements OnInit {
          }
        });
      });*/
-
-    this.routingStateService.goToSpecificRoute('/admin/subscription');
+    this.showRouter = false;
+    setTimeout(() => {
+      this.routingStateService.goToSpecificRoute('/admin/subscription/dashboard');
+    }, 200);
   }
 
 }
