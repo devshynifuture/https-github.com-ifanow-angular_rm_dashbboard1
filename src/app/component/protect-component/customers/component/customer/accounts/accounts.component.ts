@@ -1,6 +1,6 @@
 import {Router} from '@angular/router';
 import {Component, NgZone, OnInit} from '@angular/core';
-import {RoutingState} from "../../../../../../services/routing-state.service";
+import {RoutingState} from '../../../../../../services/routing-state.service';
 import {EventService} from 'src/app/Data-service/event.service';
 
 @Component({

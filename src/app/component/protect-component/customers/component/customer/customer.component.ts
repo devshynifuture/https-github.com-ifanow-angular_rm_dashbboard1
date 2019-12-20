@@ -47,6 +47,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
       this.value = data
     }, 300);
   }
+
   status: boolean = false;
 
 
@@ -54,23 +55,29 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     this.clientData = window.history.state;
     console.log("clientData", this.clientData)
     if (this.router.url.split('/')[2] === 'overview') {
-      this.value = 1;
-    } else if (this.router.url.split('/')[2] === 'account') {
-      this.value = 2;
-    } else if (this.router.url.split('/')[2] === 'plan') {
-      this.value = 3;
-    } else if (this.router.url.split('/')[2] === 'activity') {
-      this.value = 4;
-    } else if (this.router.url.split('/')[2] === 'transact') {
-      this.value = 5;
-    }
+      const routeName = this.router.url.split('/')[3];
+      console.log('CustomerComponent ngOnInit routeName : ', routeName);
+      if (routeName == 'overview') {
+        this.value = 1;
+      } else if (routeName == 'account') {
+        this.value = 2;
+      } else if (routeName == 'plan') {
+        this.value = 3;
+      } else if (routeName == 'activity') {
+        this.value = 4;
+      } else if (routeName == 'transact') {
+        this.value = 5;
+      }
 
-    this.selected = 2;
-    const passedParameter = history.state;
-    this.clientId = passedParameter ? passedParameter.id : undefined;
-    console.log('passedParameter: ', passedParameter);
-    console.log('session storage clientData', AuthService.getClientData());
-    this.clientId = AuthService.getClientId();
+      this.selected = 2;
+      const passedParameter = history.state;
+      this.clientId = passedParameter ? passedParameter.id : undefined;
+      console.log('passedParameter: ', passedParameter);
+      console.log('session storage clientData', AuthService.getClientData());
+      this.clientId = AuthService.getClientId();
+      console.log('CustomerComponent ngOnInit value : ', this.value);
+
+    }
   }
 
   clickEvent(value) {
