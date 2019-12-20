@@ -1,7 +1,8 @@
 body {
-  padding: 0;
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
+    padding: 0;
+    margin: 0;
+    // font-family: 'Roboto', sans-serif;
+    font-family: "Proxima Nova ", sans-serif;
 }
 
 h1,
@@ -9,10 +10,10 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: $font-roboto;
-  font-weight: $normal;
-  letter-spacing: 0.2px;
-  // text-transform: capitalize;
+    // font-family: $font-roboto;
+    font-weight: $normal;
+    letter-spacing: 0.2px;
+    // text-transform: capitalize;
 }
 
 // label{
@@ -108,10 +109,6 @@ a:hover {
   word-break: break-all !important;
 }
 
-.roboto {
-  font-family: 'Roboto', sans-serif !important;
-}
-
 ul {
   list-style-type: none;
   padding: 0;
@@ -119,8 +116,7 @@ ul {
 }
 
 li {
-  text-align: center;
-
+    text-align: center;
 }
 
 .right {
@@ -132,7 +128,7 @@ li {
 }
 
 .none {
-  display: $none !important;
+    display: $none !important;
 }
 
 .mat-drawer-inner-container {
@@ -145,16 +141,16 @@ li {
 }
 
 .pab {
-  position: absolute;
+    position: absolute;
 }
 
 .iflex {
-  display: $iflex !important;
+    display: $iflex !important;
 }
 
 .hw-10 {
-  height: 10px;
-  width: 10px;
+    height: 10px;
+    width: 10px;
 }
 
 ul {
@@ -190,7 +186,7 @@ ul {
 }
 
 .pl-50 {
-  padding-left: 50px !important;
+    padding-left: 50px !important;
 }
 
 .loader {
@@ -580,4 +576,11 @@ button.primary-sm {
   padding: 0 2px !important;
   line-height: 0 !important;
 
+}
+
+.text-regular {
+    margin: 0 !important;
+    color: #83959D;
+    font-size: 14px;
+    font-family: "Roboto", sans-serif;
 }
