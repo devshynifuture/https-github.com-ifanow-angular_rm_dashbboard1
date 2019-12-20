@@ -1,8 +1,9 @@
 // import DialogContainerComponent from ''
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 // import { LiabilityrightComponent } from './component/customer/accounts/liabilities/liabilityright/liabilityright.component';
-import {RadioGroupDirectiveDirective} from './radio-group-directive.directive';
+import { RadioGroupDirectiveDirective } from './radio-group-directive.directive';
 import { CustomRightAnimationDirective } from './custom-right-animation.directive';
+import { SkeletonLoadingDirective } from './skeleton-loading.directive';
 
 // import {AppModule} from "../app.module";
 
@@ -10,9 +11,11 @@ import { CustomRightAnimationDirective } from './custom-right-animation.directiv
 @NgModule({
   declarations: [
     RadioGroupDirectiveDirective,
-    CustomRightAnimationDirective
+    CustomRightAnimationDirective,
+    SkeletonLoadingDirective
+
   ],
-  exports: [RadioGroupDirectiveDirective],
+  exports: [RadioGroupDirectiveDirective, SkeletonLoadingDirective, CustomRightAnimationDirective],
   imports: [
 
     // AppModule

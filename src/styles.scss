@@ -1287,11 +1287,14 @@ mat-tab-group[vertical] {
     font-family: "Proxima Nova ", sans-serif !important;
 }
 
-.bar {
-    background-color: #E7E7E7;
-    height: 14px;
-    border-radius: 7px;
-    width: 100%;
+.skeletonAnimation td {
+    position: relative;
+    .bar {
+        background-color: #E7E7E7;
+        border-radius: 5px;
+        padding: 7px;
+        width: 90%;
+    }
     &:after {
         position: absolute;
         transform: translateY(-50%);
@@ -1301,19 +1304,10 @@ mat-tab-group[vertical] {
         display: block;
         width: 100%;
         height: 24px;
-        background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+        background-image: linear-gradient( 100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
         background-size: 200px 24px;
         background-position: -100px 0;
         background-repeat: no-repeat;
         animation: loading 1s infinite;
-    }
-}
-
-@keyframes loading {
-    40% {
-        background-position: 100% 0;
-    }
-    100% {
-        background-position: 100% 0;
     }
 }

@@ -29,7 +29,8 @@ export class ClientSubscriptionComponent implements OnInit {
   @Input() upperData: any;
 
   displayedColumns: string[] = ['name', 'email', 'num', 'balance'];
-  dataSource;
+  dataSource = [{}, {}, {}];
+  isLoading = false;
   advisorId;
 
   ngOnInit() {
@@ -42,12 +43,15 @@ export class ClientSubscriptionComponent implements OnInit {
     const obj = {
       id: this.advisorId
     };
+    this.isLoading = true;
     this.subService.getSubscriptionClientsList(obj).subscribe(
       data => this.getClientListResponse(data)
+
     );
   }
 
   getClientListResponse(data) {
+    this.isLoading = false;
     this.dataSource = data;
   }
 

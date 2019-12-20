@@ -19,6 +19,9 @@ export class SkeletonLoadingDirective {
     }
   }
 
+  get appSkeletonLoading() {
+    return this.isLoading;
+  }
   addClass(className: string) {
     this.renderer.addClass(this.elementRef.nativeElement, className);
 
