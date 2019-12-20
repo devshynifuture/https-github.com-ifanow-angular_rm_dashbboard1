@@ -55,7 +55,8 @@
     <!-- emailer name column -->
     <ng-container matColumnDef="emailers">
         <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-cell *matCellDef="let element"> {{element.emailers | truncate:20}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.emailers | truncate:20}}
+            {{ element.messageCount === 1 ? '': element.messageCount }} </td>
     </ng-container>
 
     <!-- subject and message Column -->

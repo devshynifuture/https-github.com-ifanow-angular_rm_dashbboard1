@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PlanService } from '../../plan.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-single-goal-year',
@@ -17,7 +18,12 @@ export class SingleGoalYearComponent implements OnInit {
   familyData: any;
   singleYearGoalForm;
   yearData: number;
-  constructor(private eventService: EventService, private fb: FormBuilder, private planService: PlanService) { }
+  field2SliderData: any;
+  field2MinData: any;
+  field3SliderData: any;
+  @ViewChild('myInput3', { static: true }) inputRef: ElementRef;
+  @ViewChild('mySlider3', { static: true }) sliderRef: ElementRef<object>;
+  constructor(private eventService: EventService, private fb: FormBuilder, private planService: PlanService, private utilService: UtilService) { }
   @Input() set goalData(data) {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
@@ -32,24 +38,74 @@ export class SingleGoalYearComponent implements OnInit {
     this.Questions = data.questions;
     this.singleYearGoalForm = this.fb.group({
       field1: [, [Validators.required]],
-      field2: [, [Validators.required]],
-      field3: [0, [Validators.required]],
+      field2: [, [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+      field3: [, [Validators.required]],
       field4: [, [Validators.required]],
       field5: [, [Validators.required]]
     });
-    if (this.goalTypeData.id == 9 || this.goalTypeData.id == 10) {
-      this.yearData = new Date().getFullYear();
-      this.singleYearGoalForm.controls['field2'].setValue(this.yearData);
+    switch (this.goalTypeData.id) {
+      case 3:
+        this.yearData = new Date().getFullYear();
+        this.singleYearGoalForm.controls['field2'].setValue(this.yearData);
+        this.field3SliderData = 500000;
+        this.singleYearGoalForm.controls['field3'].setValue(500000);
+        break;
+      case 7:
+        this.singleYearGoalForm.controls['field2'].setValue(1);
+        this.singleYearGoalForm.controls['field3'].setValue(100000);
+        break;
+      case 9:
+        this.yearData = new Date().getFullYear();
+        this.singleYearGoalForm.controls['field2'].setValue(this.yearData);
+        this.singleYearGoalForm.controls['field3'].setValue(100000);
+        break;
+      case 10:
+        this.yearData = new Date().getFullYear();
+        this.singleYearGoalForm.controls['field2'].setValue(this.yearData);
+        this.singleYearGoalForm.controls['field3'].setValue(500000);
+      default:
+        return;
     }
-    else {
-      this.singleYearGoalForm.controls['field2'].setValue(0);
-    }
+
   };
   @Output() backToaddGoal = new EventEmitter();
   ngOnInit() {
   }
+  changeField2Data(data) {
+    this.singleYearGoalForm.controls.field2.setValue(data)
+  }
+  changeField3Data(data) {
+    this.singleYearGoalForm.controls.field3.setValue(data)
+  }
   back() {
     this.backToaddGoal.emit(undefined);
+  }
+  selectOwner(value) {
+    console.log(this.yearData)
+    console.log(value)
+    switch (this.goalTypeData.id) {
+      case 2:
+        this.singleYearGoalForm.controls["field2"].setValidators([Validators.minLength(this.yearData), Validators.maxLength(this.yearData + 60)]);
+        this.field2SliderData = value.age;
+        this.field3SliderData = 500000;
+        this.singleYearGoalForm.get('field2').setValue(value.age);
+        this.singleYearGoalForm.get('field3').setValue(500000);
+        break;
+      case 4:
+        this.field2SliderData = value.age;
+        this.field3SliderData = 100000;
+        this.singleYearGoalForm.get('field2').setValue(value.age);
+        this.singleYearGoalForm.get('field3').setValue(100000);
+        break;
+      case 8:
+        this.field2SliderData = value.age;
+        this.singleYearGoalForm.get('field2').setValue(value.age + 2);
+        this.singleYearGoalForm.get('field3').setValue(75000);
+        break;
+      default:
+        console.log("data")
+        return;
+    }
   }
   close(state) {
     const fragmentData = {
@@ -67,7 +123,8 @@ export class SingleGoalYearComponent implements OnInit {
     }
     this.planService.getListOfFamilyByClient(obj).subscribe(
       data => {
-        console.log(data)
+        this.utilService.calculateAgeFromCurrentDate(data.familyMembersList)
+        console.log(data);
         data.familyMembersList.unshift(
           {
             clientId: this.clientId,
@@ -88,7 +145,7 @@ export class SingleGoalYearComponent implements OnInit {
       case (this.singleYearGoalForm.get('field1').invalid && (this.goalTypeData.id == 2 || this.goalTypeData.id == 4 || this.goalTypeData.id == 8)):
         this.singleYearGoalForm.get('field1').markAsTouched();
         break;
-      case (this.singleYearGoalForm.get('field2').invalid):
+      case (this.singleYearGoalForm.get('field2').value == null):
         this.singleYearGoalForm.get('field2').markAsTouched();
         break;
       case (this.singleYearGoalForm.get('field3').invalid):
@@ -98,10 +155,7 @@ export class SingleGoalYearComponent implements OnInit {
         this.singleYearGoalForm.get('field4').markAsTouched();
         break;
       default:
-        if (this.goalTypeData.id == 1) {
-
-        }
-        else if (this.goalTypeData.id == 2) {
+        if (this.goalTypeData.id == 2) {
           const obj =
           {
             "clientId": this.clientId,
@@ -128,7 +182,6 @@ export class SingleGoalYearComponent implements OnInit {
           const obj = {
             "clientId": this.clientId,
             "advisorId": this.advisorId,
-            "currentAge": 11,
             "whatAgeBuyCar": this.singleYearGoalForm.get('field2').value,
             "goalPresentValue": this.singleYearGoalForm.get('field3').value,
             "goalName": this.singleYearGoalForm.get('field4').value,
@@ -166,12 +219,6 @@ export class SingleGoalYearComponent implements OnInit {
             },
             err => this.eventService.openSnackBar(err)
           )
-        }
-        else if (this.goalTypeData.id == 5) {
-
-        }
-        else if (this.goalTypeData.id == 6) {
-
         }
         else if (this.goalTypeData.id == 7) {
           const obj = {

@@ -45,8 +45,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
   advisorId;
-  dataSource;
+  dataSource = [{}, {}, {}];
   noData: string;
+  isLoading = false;
   filterStatus = [];
   filterDate = [];
   statusIdList = [];
@@ -61,17 +62,19 @@ export class QuotationsSubscriptionComponent implements OnInit {
     { name: 'Client consent', value: 3 }
   ];
   selectedDateRange: { begin: Date; end: Date; };
-  selectedStatusFilter:any;
-  showFilter=false;
+  selectedStatusFilter: any;
+  showFilter = false;
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
     public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
+    this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
     this.getQuotationsData();
   }
   orgValueChange(selectedDateRange) {
+
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     UtilService.getStartOfTheDay(beginDate);
@@ -96,6 +99,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   getQuotationsDataResponse(data) {
+    this.isLoading = false;
     if (data == undefined) {
       this.noData = "No Data Found";
     } else {

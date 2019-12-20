@@ -30,9 +30,8 @@ export class ClientSubscriptionComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'email', 'num', 'balance'];
   dataSource = [{}, {}, {}];
-  isLoading = false;
   advisorId;
-
+  isLoading = false;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     console.log('clients');

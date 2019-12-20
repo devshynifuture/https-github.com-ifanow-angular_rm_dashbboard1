@@ -34,7 +34,7 @@ import { RealEstateComponent } from './assets/realEstate/real-estate/real-estate
 import { OtherPayablesComponent } from './liabilities/other-payables/other-payables.component';
 import { CashAndBankComponent } from './assets/cash&bank/cash-and-bank/cash-and-bank.component';
 import { CommoditiesComponent } from './assets/commodities/commodities/commodities.component';
-//import {SkeletonLoadingDirective} from 'src/app/skeleton-loading.directive';
+// import {SkeletonLoadingDirective} from 'src/app/skeleton-loading.directive';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { DocumentNewFolderComponent } from '../../common-component/document-new-folder/document-new-folder.component';
 import { AccountRoutingModule } from './account-routing.module';
@@ -126,7 +126,6 @@ import { MutualFundGoalLinkageComponent } from './assets/mutual-fund/mutual-fund
     MutualFundGoalLinkageComponent
   ],
   imports: [
-    AccountRoutingModule,
     AccountCommonModule,
     // BrowserModule,
     // OwnerComponentModule,
@@ -135,7 +134,9 @@ import { MutualFundGoalLinkageComponent } from './assets/mutual-fund/mutual-fund
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    // PDFExportModule,
+    MaterialModule,
+    AccountRoutingModule,
   ],
   exports: [
     AccountsComponent,

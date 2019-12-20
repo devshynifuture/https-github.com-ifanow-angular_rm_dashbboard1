@@ -1,12 +1,13 @@
 .custom-grid {
   width: 100%;
   //   float: left;
+  flex-wrap: wrap;
   display: flex;
   padding: 16px;
 
   .column {
 
-    width: 14.88%;
+    width: 14.28%;
     text-align: center;
 
     p {
@@ -40,12 +41,6 @@
   line-height: 0 !important;
 }
 
-.actived {
-  padding: 5px 8px;
-  color: #fff !important;
-  background: #008FFF;
-  float: right;
-}
 
 .calender-column {
   div {
@@ -53,13 +48,25 @@
     width: 106px;
     border-right: 0.5px solid #DADCE0;
     border-bottom: 0.5px solid #DADCE0;
-
+    
   }
-
+  
   p {
-    text-align: right;
+    text-align: center;
     padding: 8px;
   }
+  
+}
+
+.mat-chip.mat-standard-chip {
+  float: right;
+  background-color: transparent;
+}
+.actived {
+  padding: 5px 8px;
+  color: #fff !important;
+  background-color: #008FFF !important;
+  float: right;
 }
 
 .pink {
