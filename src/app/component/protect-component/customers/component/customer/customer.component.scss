@@ -32,3 +32,17 @@
 #ui-router-outlet {
   z-index: 10;
 }
+
+
+#ui-customer-container .mat-tab-link.active {
+  background-color: transparent !important;
+  border-bottom: 4px solid #008FFF !important;
+  color: #008FFF !important
+}
+
+#ui-customer-container .mat-tab-link {
+  color: #595252 !important;
+  border-bottom: 4px solid transparent;
+  width: 120px !important;
+  background: transparent !important;
+}

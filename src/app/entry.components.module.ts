@@ -81,6 +81,7 @@ import { AddMutualFundComponent } from './component/protect-component/customers/
 import { MFSchemeLevelHoldingsComponent } from './component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mfscheme-level-holdings/mfscheme-level-holdings.component';
 import { MFSchemeLevelTransactionsComponent } from './component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mfscheme-level-transactions/mfscheme-level-transactions.component';
 import { MultiYearGoalComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/multi-year-goal/multi-year-goal.component';
+import { SelectAdviceComponent } from './component/protect-component/customers/component/customer/customer-activity/advice-activity/select-advice/select-advice.component';
 
 
 export const componentList = [
@@ -230,7 +231,8 @@ export const componentList = [
   AddSuggestPolicyComponent,
   CurrentPolicyComponent,
   SingleGoalYearComponent,
-  MultiYearGoalComponent
+  MultiYearGoalComponent,
+  SelectAdviceComponent
   // ComposeEmailComponent
 ];
 

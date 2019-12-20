@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {LeftsidebarComponent} from './component/left-sidebar/leftsidebar/leftsidebar.component';
 import {LoginComponent} from './component/no-protected/login/login.component';
 import {CalenderComponent} from "./component/protect-component/AdviserComponent/Email/calender/calender.component";
+import {SelectivePreloadingStrategyService} from "./services/selective-preloading-strategy.service";
 
 const routes: Routes = [
   {
@@ -19,7 +20,9 @@ const routes: Routes = [
         // outlet: 'main-left-router',
         // outlet: 'mainleftbar',
         loadChildren: () => import('./component/protect-component/AdviserComponent/Subscriptions/subscription.module')
-          .then(m => m.SubscriptionModule)
+          .then(m => m.SubscriptionModule),
+        // data: {preload: true}
+
       },
       {
         path: 'emails',
@@ -49,7 +52,9 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () => import('./component/protect-component/customers/customers.module')
-          .then(m => m.CustomersModule)
+          .then(m => m.CustomersModule),
+        // data: {preload: true}
+
       },
       // {
       //   path: 'overview',
@@ -76,11 +81,22 @@ const routes: Routes = [
     // outlet: 'mainrouter',
     loadChildren: () => import('./component/gmail-redirect/gmail-redirect.module').then(m => m.GmailRedirectModule)
   },
+  {
+    path: 'not-found',
+    loadChildren: './component/protect-component/common-component/not-found/not-found.module#NotFoundModule'
+  },
+  {
+    path: '**',
+    redirectTo: 'not-found'
+  }
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {enableTracing: false  /*preloadingStrategy: PreloadAllModules*/})],
+  imports: [RouterModule.forRoot(routes, {
+    enableTracing: false, preloadingStrategy: SelectivePreloadingStrategyService,
+    /*preloadingStrategy: PreloadAllModules*/
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
