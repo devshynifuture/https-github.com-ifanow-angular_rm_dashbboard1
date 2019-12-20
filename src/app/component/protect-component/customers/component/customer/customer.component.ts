@@ -35,9 +35,15 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute) {
     super(eventService, subinject, dynamicComponentService);
     console.log(router.getCurrentNavigation().extras.state);
-
+    this.eventService.tabChangeData.subscribe(
+      data => this.getTabChangeData(data)
+      );
   }
-
+  getTabChangeData(data){
+    setTimeout(() => {
+    this.value = data
+    }, 300);
+  }
   status: boolean = false;
 
 

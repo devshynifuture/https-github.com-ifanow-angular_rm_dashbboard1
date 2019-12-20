@@ -51,7 +51,7 @@
                 </div>
                 <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
-                            <a class="text-black m-0 roboto pt-8" routerLink="/customer/detail/account/assets"[queryParams]="{ tab: 'tab3'}">Fixed income</a>
+                            <a class="text-black m-0 roboto pt-8"routerLink="/customer/detail/account/assets"[queryParams]="{ tab: 'tab3'}">Fixed income</a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <p class="text-black m-0 roboto pt-8">₹57,22,896</p>
@@ -61,7 +61,7 @@
                 <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
                         <p class="text-black m-0 roboto pt-8"></p>
-                        <a class="text-black m-0 roboto pt-8" routerLink="/customer/detail/account/assets"[queryParams]="{ tab: 'tab4'}">Real estate</a>
+                        <a class="text-black m-0 roboto pt-8"routerLink="/customer/detail/account/assets"[queryParams]="{ tab: 'tab4'}">Real estate</a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <p class="text-black m-0 roboto pt-8">₹57,22,896</p>
@@ -78,8 +78,8 @@
                     </div>
                 </div>
                 <div class="row bb c-p">
-                    <div class="col-md-6 pr-0">
-                            <a class="text-black m-0 roboto pt-8" routerLink="/customer/detail/account/assets"[queryParams]="{ tab: 'tab6'}">Small savings</a>
+                    <div class="col-md-6 pr-0" >
+                            <a class="text-black m-0 roboto pt-8"routerLink="/customer/detail/account/assets"[queryParams]="{ tab: 'tab6'}">Small savings</a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <p class="text-black m-0 roboto pt-8">₹57,22,896</p>
@@ -88,7 +88,7 @@
                 </div>
                 <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
-                        <a class="text-black m-0 roboto pt-8" routerLink="/customer/detail/account/assets"[queryParams]="{ tab: 'tab7'}">Cash & Bank</a>
+                        <a class="text-black m-0 roboto pt-8"  routerLink="/customer/detail/account/assets"[queryParams]="{ tab: 'tab7'}">Cash & Bank</a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <p class="text-black m-0 roboto pt-8">₹57,22,896</p>
@@ -145,7 +145,8 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 p-0">
-                                <img src="assets/images/svg/summary.svg" class="w-100">
+                                    <div class="highcharts-figure"id="container"></div>
+                                <!-- <img src="assets/images/svg/summary.svg" class="w-100"> -->
                                 <ul class="pl-20 pb-20">
                                     <li class="pr-4 text-black">90-days</li>
                                     <li class="text-success pr-24">₹7,25,872</li>
@@ -266,7 +267,7 @@
                         </div>
                     </div>
                     <div class="col-md-5">
-                        <img src="assets/images/svg/cashflow.svg">
+                        <div id="cashFlow"></div>
                     </div>
                 </div>
             </div>

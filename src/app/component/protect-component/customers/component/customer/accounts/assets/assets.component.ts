@@ -103,7 +103,6 @@ export class AssetsComponent implements OnInit {
   displayedColumns25 = ['scrip', 'owner', 'bal', 'price', 'mprice', 'amt', 'cvalue', 'gain', 'ret', 'xirr', 'dividend', 'icons'];
   dataSource25 = ELEMENT_DATA25;
 
-  
 
   ngOnInit() {
     // this.viewMode = 'tab2';
@@ -114,12 +113,7 @@ export class AssetsComponent implements OnInit {
       if (params.tab) {
         this.Settab = params.tab;
         this.viewMode = this.Settab;
-        // this.route.navigate([], {
-        //   queryParams: {
-        //     tab: null,
-        //   },
-        //   queryParamsHandling: 'merge',
-        // });
+        this.eventService.tabData('2')
       }
     });
 
