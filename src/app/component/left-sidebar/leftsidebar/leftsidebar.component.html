@@ -18,12 +18,12 @@
                 <p class="f-14 f-500 mb-0">Ronak Hindocha</p>
             </div>
             <div class="pt-12 scorllable ">
-              <a class="sidenav-link" mat-list-item routerLink="./dashboard">
+                <a class="sidenav-link" mat-list-item routerLink="./dashboard">
                     <img src="assets/images/svg/time-meter.svg">
                     <span *ngIf="showTabs" class="title" mat-line>Dashboard</span>
                 </a>
                 <a mat-list-item class="sidenav-link">
-                  <img routerLink="/customer/detail/overview" src="assets/images/svg/people.svg">
+                    <img routerLink="/customer/detail/overview" src="assets/images/svg/people.svg">
                     <span *ngIf="showTabs" class="title" mat-line>People</span>
                 </a>
                 <a mat-list-item class="sidenav-link">
@@ -33,7 +33,7 @@
                         keyboard_arrow_right
                     </mat-icon>
                 </a>
-              <a class="sidenav-link" mat-list-item routerLink="./emails/inbox">
+                <a class="sidenav-link" mat-list-item routerLink="./emails/inbox">
                     <img src="assets/images/svg/mail.svg">
                     <span *ngIf="showTabs" class="title" mat-line>Email</span>
                 </a>
@@ -41,15 +41,15 @@
                     <img src="assets/images/svg/cart.svg">
                     <span *ngIf="showTabs" class="title" mat-line>Transactions</span>
                 </a>
-              <a class="sidenav-link" mat-list-item routerLink="./subscription">
+                <a class="sidenav-link" mat-list-item routerLink="./subscription">
                     <img src="assets/images/svg/ruppes.svg">
                     <span *ngIf="showTabs" class="title" mat-line>Subscription</span>
                 </a>
-              <a class="sidenav-link" mat-list-item routerLink="/customer/detail/account/assets">
+                <a class="sidenav-link" mat-list-item routerLink="/customer/detail/account/assets">
                     <img src="assets/images/svg/ruppes.svg">
                     <span *ngIf="showTabs" class="title" mat-line>Clients</span>
                 </a>
-              <a class="sidenav-link" mat-list-item routerLink="./calender">
+                <a class="sidenav-link" mat-list-item routerLink="./calender">
                     <img src="assets/images/svg/file-lines.svg">
                     <span *ngIf="showTabs" class="title" mat-line>Documents</span>
                 </a>
@@ -66,14 +66,16 @@
     </mat-sidenav>
     <mat-sidenav-content id="left">
         <mat-toolbar class="bg-white bl-1" class="fix-top pl-0">
-            <button *ngIf="showTabs==false" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="showMainNavWrapper()">
+            <button *ngIf="showTabs==false" type="button" aria-label="Toggle sidenav" mat-icon-button
+                (click)="showMainNavWrapper()">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
-            <button *ngIf="showTabs" class="btn_nav" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="showsmallNavWrapper()">
+            <button *ngIf="showTabs" class="btn_nav" type="button" aria-label="Toggle sidenav" mat-icon-button
+                (click)="showsmallNavWrapper()">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
 
-            <div class="search-container mr-32">
+            <!-- <div class="search-container mr-32">
                 <i class="material-icons icon">
                     search
                 </i>
@@ -151,7 +153,34 @@
                         </div>
                     </div>
                 </mat-menu>
-            </div>
+            </div> -->
+            <mat-form-field class="w-40">
+                <div class="form-group">
+                    <input type="text" #inputSearch class="form-control" matInput [formControl]="myControl"
+                        [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <!-- <mat-option>
+                            <p>Start typing to search clients,leads otr team members</p>
+                        </mat-option> -->
+                        <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of clientList"
+                            [value]="singleClient.name">
+                            <div class="row">
+                                <div class="col-md-1">
+
+                                </div>
+                                <div class="col-md-8">
+                                    <a>
+                                        <p class="t-left">{{singleClient.name}}</p>
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <button mat-stroked-button class="small-primitive">FAMILY MEMBER</button>
+                                </div>
+                            </div>
+                        </mat-option>
+                    </mat-autocomplete>
+                </div>
+            </mat-form-field>
             <div class="hide-on-800 flex right-fixed tablate-none">
                 <a mat-list-item class="sidenav-link">
                     <img src="assets/images/svg/bell.svg" class="t-15">
@@ -192,7 +221,7 @@
             <!--          <div [@routeAnimations]="prepareRoute(outlet)" >-->
             <!--            <router-outlet #outlet="outlet"></router-outlet>-->
             <!--          </div>-->
-          <router-outlet></router-outlet>
+            <router-outlet></router-outlet>
         </div>
     </mat-sidenav-content>
 
