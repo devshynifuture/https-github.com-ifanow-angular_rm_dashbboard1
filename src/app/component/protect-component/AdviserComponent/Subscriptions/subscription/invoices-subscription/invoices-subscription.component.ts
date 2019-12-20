@@ -1,12 +1,12 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {SubscriptionService} from '../../subscription.service';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ValueConverter} from '@angular/compiler/src/render3/view/template';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {AuthService} from "../../../../../../auth-service/authService";
-import {UtilService} from "../../../../../../services/util.service";
+import { Component, OnInit, Input } from '@angular/core';
+import { SubscriptionService } from '../../subscription.service';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ValueConverter } from '@angular/compiler/src/render3/view/template';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { AuthService } from "../../../../../../auth-service/authService";
+import { UtilService } from "../../../../../../services/util.service";
 import * as _ from 'lodash';
 
 export interface PeriodicElement {
@@ -29,13 +29,13 @@ export interface PeriodicElement {
 export class InvoicesSubscriptionComponent implements OnInit {
 
   chips = [
-    {name: 'LIVE', value: 1},
-    {name: 'PAID', value: 2},
-    {name: 'OVERDUE', value: 3}
+    { name: 'LIVE', value: 1 },
+    { name: 'PAID', value: 2 },
+    { name: 'OVERDUE', value: 3 }
   ];
   dateChips = [
-    {name: 'Date', value: 1},
-    {name: 'Due date', value: 2},
+    { name: 'Date', value: 1 },
+    { name: 'Due date', value: 2 },
   ];
   invoiceDesign: string;
   noData: string;
@@ -46,7 +46,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   selectedDateRange: { begin: Date; end: Date; };
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
-              private eventService: EventService, public subscription: SubscriptionService) {
+    private eventService: EventService, public subscription: SubscriptionService) {
     this.ngOnInit();
   }
 
@@ -115,8 +115,8 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.invoiceSub = value;
     this.invoiceSubscription = 'true';
     this.eventService.sidebarData(value)
-// this.subscriptionValue = value
-// this.subInjectService.rightSideData(state);
+    // this.subscriptionValue = value
+    // this.subInjectService.rightSideData(state);
     this.subInjectService.addSingleProfile(data);
     // const fragmentData = {
     //   flag: value,
@@ -173,7 +173,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
-      this.selectAll({checked: false}) : this.selectAll({checked: true});
+      this.selectAll({ checked: false }) : this.selectAll({ checked: true });
   }
 
   display(data) {
@@ -207,7 +207,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = {begin: beginDate, end: endDate};
+    this.selectedDateRange = { begin: beginDate, end: endDate };
   }
 
   removeDate(item) {
