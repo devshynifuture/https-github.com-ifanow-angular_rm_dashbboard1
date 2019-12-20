@@ -1,11 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import {Component, OnInit} from '@angular/core';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'app-calender',
   templateUrl: './calender.component.html',
   styleUrls: ['./calender.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalenderComponent implements OnInit {
   viewDate: Date = new Date();
@@ -18,11 +18,13 @@ export class CalenderComponent implements OnInit {
   todayDate;
   addLastMonthDays;
   daysArr = [];
-  constructor(private ref: ChangeDetectorRef) { }
+
+  constructor(/*private ref: ChangeDetectorRef*/) {
+  }
 
   ngOnInit() {
     this.updateDate = new BehaviorSubject(this.viewDate);
-    
+
     this.month= this.viewDate.getMonth();
     this.year = this.viewDate.getFullYear();
     this.todayDate = this.viewDate.getDate();
@@ -32,7 +34,7 @@ export class CalenderComponent implements OnInit {
     console.log(this.numbersOfDays, this.lastMonthDays, this.nextMonthDays, "this.numbersOfDays");
     let firstDay = (new Date(this.year, this.month)).getDay();
     console.log(firstDay, "firstDay", this.month);
-    
+
     for(let i = 1; i<= this.numbersOfDays; i++ ){
       this.daysArr.push(i);
     }
@@ -69,26 +71,26 @@ export class CalenderComponent implements OnInit {
     return 32 - new Date(year + 1, month + 1, 32).getDate();
   }
 
-  
+
   nextMonth(){
-    
-    
+
+
     this.viewDate.setMonth(this.viewDate.getMonth()+1)
     this.updateDate.next(this.viewDate);
     console.log("hi hello", this.viewDate);
     this.ngOnInit();
-    setTimeout(() => {
+    /*setTimeout(() => {
       this.ref.markForCheck();
-    }, 100);
+    }, 100);*/
   }
-  
+
   lastMonth(){
     this.viewDate.setMonth(this.viewDate.getMonth()-1)
     this.updateDate.next(this.viewDate);
     this.ngOnInit();
-    setTimeout(() => {
+    /*setTimeout(() => {
       this.ref.markForCheck();
-    }, 100);
+    }, 100);*/
 
   }
 
