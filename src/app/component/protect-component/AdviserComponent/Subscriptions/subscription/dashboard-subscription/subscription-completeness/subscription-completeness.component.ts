@@ -111,7 +111,7 @@ export class SubscriptionCompletenessComponent implements OnInit {
         this.router.navigate(['admin', 'subscription', 'documents']);
         break;
       case (7):
-        this.router.navigate(['admin', 'subscription', 'settings']);
+        this.router.navigate(['admin', 'subscription', 'settings'], { state: { example: 3 } });
         break;
       default:
         console.log("default selection")
