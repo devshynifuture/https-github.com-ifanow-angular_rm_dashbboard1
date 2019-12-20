@@ -21,7 +21,6 @@ import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from
 export class CustomerComponent extends DialogContainerComponent implements OnInit {
   selected: number;
   clientId;
-  value: number;
   overview = false;
   plans = false;
   activity = false;
@@ -37,6 +36,17 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     this.eventService.tabChangeData.subscribe(
       data => this.getTabChangeData(data)
     );
+  }
+
+  _value: number;
+
+  get value() {
+    return this._value;
+  }
+
+  set value(value: number) {
+    console.log('now value is ->>>>', value);
+    this._value = value;
   }
 
   getTabChangeData(data) {
@@ -78,6 +88,10 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
 
   clickEvent(value) {
     this.value = value;
+  }
+
+  tabClick(event) {
+    // this.eventService.sidebarData(event.tab.textLabel);
   }
 
 }
