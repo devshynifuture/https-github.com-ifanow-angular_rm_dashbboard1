@@ -20,19 +20,21 @@ export class PlansSettingsComponent implements OnInit {
 
   button: any;
 
-  showLoader;
+  //showLoader;
 
-  planSettingData;
+  planSettingData = [{}, {}, {}];
+  isLoading = false;
   advisorId;
 
   ngOnInit() {
+    this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
     this.getSettingsPlanData();
     // this.openFragment('', 'plan');
   }
 
   getSettingsPlanData() {
-    this.showLoader = true;
+    //this.showLoader = true;
     const obj = {
       // advisorId: 12345
       advisorId: this.advisorId,
@@ -45,9 +47,10 @@ export class PlansSettingsComponent implements OnInit {
   }
 
   getSettingsPlanResponse(data) {
+    this.isLoading = false;
     console.log('get plan', data);
     this.planSettingData = data;
-    this.showLoader = false;
+    //this.showLoader = false;
   }
 
   getFilerrorResponse(err) {

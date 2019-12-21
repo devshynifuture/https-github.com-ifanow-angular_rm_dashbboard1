@@ -1,7 +1,7 @@
-<div *ngIf="showLoader">
+<!-- <div *ngIf="showLoader">
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div>
-<div *ngIf="showLoader==false" class="bg-white pb-36">
+</div> -->
+<div class="bg-white pb-36">
     <div class="wrapper-20 pr-0">
         <div class="row">
             <div class="col-md-12 p-0">
@@ -20,41 +20,44 @@
             </div>
 
             <div class="col-md-4 pr-20 pb-20 pl-0 d-flex" *ngFor="let singlePlan of planSettingData">
-                <mat-card class="example-card bg-grey lter p-0 flex-fill">
-                    <mat-card-header>
-                        <div class="wrapper-20 pb-10 height120">
-                            <mat-card-title class="mb-0 text-break f-24" matTooltip="{{singlePlan.name}}">
-                                {{singlePlan.name}}
-                            </mat-card-title>
-                            <mat-card-subtitle class="pt-4 pb-12 mb-0">{{singlePlan.code}}</mat-card-subtitle>
-                        </div>
-                    </mat-card-header>
-
-                    <mat-card-content class="bg-white mb-0">
-                        <div class="row wrapper-20">
-                            <div class="col-md-12 height120 p-0">
-                                <p class="mb-0 text-primitive f-12">DESCRIPTION</p>
-                                <p class="mb-0 pt-8 plan-description">{{singlePlan.description}}</p>
+                <mat-card class="example-card bg-grey lter p-0 flex-fill skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <div class="bar">
+                        <mat-card-header>
+                            <div class="wrapper-20 pb-10 height120">
+                                <mat-card-title class="mb-0 text-break f-24 skeletonAnimation">
+                                    <div class="bar"> {{singlePlan.name}} </div>
+                                </mat-card-title>
+                                <mat-card-subtitle class="pt-4 pb-12 mb-0">{{singlePlan.code}}</mat-card-subtitle>
                             </div>
+                        </mat-card-header>
 
-                        </div>
-                        <div class="row wrapper-20 bt-1 bb-1">
-                            <div class="col-md-6 p-0">
-                                <p class="f-14 text-primitive mb-8">SERVICES</p>
-                                <p class="f-24 mb-0">{{singlePlan.serviceCount}}</p>
-                            </div>
-                            <div class="col-md-6 p-0">
-                                <p class="f-14 text-primitive mb-8">DOCUMENTS</p>
-                                <p class="f-24">{{singlePlan.docCount}}</p>
-                            </div>
+                        <mat-card-content class="bg-white mb-0">
+                            <div class="row wrapper-20">
+                                <div class="col-md-12 height120 p-0">
+                                    <p class="mb-0 text-primitive f-12">DESCRIPTION</p>
+                                    <p class="mb-0 pt-8 plan-description">{{singlePlan.description}}</p>
+                                </div>
 
-                        </div>
-                    </mat-card-content>
-                    <mat-card-actions class="block text-center pt-20 pb-20 mb-0">
-                        <button mat-stroked-button class="btn-header addon mb-12 mt-12 br-0" (click)="openFragment(singlePlan,'plan')">INFO
-                        </button>
-                    </mat-card-actions>
+                            </div>
+                            <div class="row wrapper-20 bt-1 bb-1">
+                                <div class="col-md-6 p-0">
+                                    <p class="f-14 text-primitive mb-8">SERVICES</p>
+                                    <p class="f-24 mb-0">{{singlePlan.serviceCount}}</p>
+                                </div>
+                                <div class="col-md-6 p-0">
+                                    <p class="f-14 text-primitive mb-8">DOCUMENTS</p>
+                                    <p class="f-24">{{singlePlan.docCount}}</p>
+                                </div>
+
+                            </div>
+                        </mat-card-content>
+                        <mat-card-actions class="block text-center pt-20 pb-20 mb-0">
+                            <button mat-stroked-button class="btn-header addon mb-12 mt-12 br-0" (click)="openFragment(singlePlan,'plan')">INFO
+                            </button>
+                        </mat-card-actions>
+                    </div>
                 </mat-card>
+
             </div>
         </div>
     </div>
