@@ -63,8 +63,8 @@ export class RiskProfileComponent implements OnInit {
       legend: { enabled: false },
       title: { text: '' },
       xAxis: {
-        tickLength: 2,
-        tickWidth: 1,
+        tickLength: 8,
+        tickWidth: 4,
         lineColor: '#999',
         lineWidth: 1,
         labels: { style: { fontWeight: 'bold' } }
@@ -123,6 +123,7 @@ export class RiskProfileComponent implements OnInit {
         max: 100,
         lineWidth: 2,
         lineColor: 'black',
+        tickLength: 4,
         labels: { y: 10, format: '{value}%', style: { fontSize: '12px' ,fontWeight:'bold',color:'black'} },
         plotBands: [{ from: 0, to: 20, color: '#CACFD2' },
         { from: 20, to: 40, color: '#CACFD2' },
@@ -131,8 +132,8 @@ export class RiskProfileComponent implements OnInit {
           { from: 80, to: 100, color: '#CACFD2' },]
       },
       
-      // series: [{ name: 'Measure', pointWidth: 10, data: [80] },
-      // { name: 'Target', type: 'scatter', data: [90], }]
+      series: [{ name: 'Measure', pointWidth: 10, data: [80],type: undefined },
+      { name: 'Target', type: 'scatter', data: [90], }]
     });
   //   Highcharts.Renderer.prototype.symbols.line = function(x, y, width, height) {
   //     return ['M',x ,y + width / 2,'L',x+height,y + width / 2];
@@ -148,8 +149,8 @@ export class RiskProfileComponent implements OnInit {
       title: null,
 
       pane: {
-        center: ['45%', '80%'],
-        size: '140%',
+        center: ['40%', '80%'],
+        size: '150%',
         startAngle: -90,
         endAngle: 90,
         background: {
