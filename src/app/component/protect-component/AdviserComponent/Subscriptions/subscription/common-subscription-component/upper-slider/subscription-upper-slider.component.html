@@ -169,20 +169,22 @@
   <app-email-quotation [headerDataInvoice]="headerDataInvoice" *ngIf="rightSliderFlag=='eSignInvoices'">
   </app-email-quotation>
   <app-email-quotation [headerData]="headerData" *ngIf="rightSliderFlag=='emailQuot'"></app-email-quotation>
-  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnly'"></app-email-only>
-  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnlyDoc'"></app-email-only>
-  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnlyInv'"></app-email-only>
-  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailInvoiceFroala'">
-  </app-email-only>
-  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailQuotationFroala'">
-  </app-email-only>
+  <app-email-only *ngIf="rightSliderFlag=='email'" [inputData]="upperRightSideInputData.data"></app-email-only>
+  <!--  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnlyDoc'"></app-email-only>-->
+  <!--  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnlyInv'"></app-email-only>-->
+  <!--  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailInvoiceFroala'">-->
+  <!--  </app-email-only>-->
+  <!--  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailQuotationFroala'">-->
+  <!--  </app-email-only>-->
 
 
-  <app-common-froala [data]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='viewQuotation'"
+  <app-common-froala *ngIf="rightSliderFlag=='viewQuotation'" [data]="upperRightSideInputData.data"
+                     [screenType]="'selector'"
     [changeFooter]='rightSliderFlag'></app-common-froala>
 
   <!--  <app-common-froala [data]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='viewQuotation'"></app-common-froala>-->
-  <app-common-froala [data]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='viewDocuments'"></app-common-froala>
+  <app-common-froala *ngIf="rightSliderFlag=='viewDocuments'" [data]="upperRightSideInputData.data"
+                     [screenType]="'selector'"></app-common-froala>
   <!--  (valueChange)='display($event)'-->
   <!--</div>-->
 </app-custom-dialog-container>
