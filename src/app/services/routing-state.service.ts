@@ -48,7 +48,10 @@ export class RoutingState {
     this.ngZone.run(() => {
       this.router.navigate([urlString]).then((status: boolean) => {
         if (status) {
-          console.log('goToSpecificRoute urlString success : ', urlString);
+          console.log('goToSpecificRoute urlString  success : ', urlString);
+          console.log('goToSpecificRoute urlString success this.getMainRouter().detach() : ', this.getMainRouter());
+
+          this.getMainRouter().nativeElement.onClick();
           // this.router.navigate([urlString]);
         } else {
           console.error('goToSpecificRoute urlString failure : ', urlString);

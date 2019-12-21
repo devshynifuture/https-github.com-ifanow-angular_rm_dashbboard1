@@ -12,6 +12,7 @@ import {EmailComponent} from './email-component/email.component';
 import {LeftSidebarComponent} from './email-component/left-sidebar/left-sidebar.component';
 import {EmailRoutingModule} from './email-routing.module';
 import {EmailEntryModule} from './email.entry.module';
+import { EventDialog } from './calender/calender.component';
 
 
 @NgModule({
@@ -22,6 +23,10 @@ import {EmailEntryModule} from './email.entry.module';
     EmailDraftComponent,
     EmailArchiveComponent,
     EmailTrashComponent,
+    EventDialog
+  ],
+  entryComponents:[
+    EventDialog
   ],
   imports: [
     CommonModule,
