@@ -1,3 +1,91 @@
+
+<mat-toolbar class="bg-white bl-1" class="fix-top pl-0">
+    <!-- <button *ngIf="showTabs==false" type="button" aria-label="Toggle sidenav" mat-icon-button
+        (click)="showMainNavWrapper()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <button *ngIf="showTabs" class="btn_nav" type="button" aria-label="Toggle sidenav" mat-icon-button
+        (click)="showsmallNavWrapper()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button> -->
+
+    <mat-toolbar  class="bg-white p-0 " style=" width:300px; text-align: center; border-right: 1px #dddddd;">
+        <!-- <img src="assets/images/img1.jpg" class="w-100"> -->
+        <div style="margin: 0px auto;">LOGO</div>
+    </mat-toolbar>
+   
+    <mat-form-field class="w-40">
+        <div class="form-group">
+            <input type="text" #inputSearch class="form-control" matInput [formControl]="myControl"
+                [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+                <!-- <mat-option>
+                    <p>Start typing to search clients,leads otr team members</p>
+                </mat-option> -->
+                <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of clientList"
+                    [value]="singleClient.name">
+                    <div class="row">
+                        <div class="col-md-1">
+
+                        </div>
+                        <div class="col-md-8">
+                            <a>
+                                <p class="t-left">{{singleClient.name}}</p>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <button mat-stroked-button class="small-primitive">FAMILY MEMBER</button>
+                        </div>
+                    </div>
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+    </mat-form-field>
+    <div class="hide-on-800 flex right-fixed tablate-none">
+        <a mat-list-item class="sidenav-link">
+            <img src="assets/images/svg/bell.svg" class="t-15">
+        </a>
+        <a mat-list-item class="sidenav-link">
+            <img src="assets/images/svg/earphone.svg">
+        </a>
+        <a mat-list-item class="sidenav-link">
+            <img src="assets/images/svg/setting.svg">
+        </a>
+    </div>
+    <i (click)="openSettings()" class="material-icons tabs-right desktop-none">
+        more_vert
+    </i>
+</mat-toolbar>
+        
+<div id="showSettings" *ngIf="showSettings" class="desktop-none tabs-mt-70">
+    <div class="bg-success">
+        <div class="search-container tabs-block">
+            <i class="material-icons icon">
+                search
+            </i>
+            <input class="search-field" type="text" placeholder="SEARCH" name="email">
+        </div>
+        <div class="pl-48 flex tabs-right">
+            <a mat-list-item class="sidenav-link">
+                <mat-icon mat-list-icon>notifications_none</mat-icon>
+            </a>
+            <a mat-list-item class="sidenav-link">
+                <mat-icon mat-list-icon>headset_mic</mat-icon>
+            </a>
+            <a mat-list-item class="sidenav-link">
+                <mat-icon mat-list-icon>settings</mat-icon>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="sub-header-fix fix-top" style="margin-top: 64px;">
+    <div class="bg-white">
+        ani
+    </div>
+</div>
+
+
 <div class="side-arrow" >
         <!-- (click)="sidenav.toggle()" -->
     <img src="/assets/images/svg/arrow-right.svg">
