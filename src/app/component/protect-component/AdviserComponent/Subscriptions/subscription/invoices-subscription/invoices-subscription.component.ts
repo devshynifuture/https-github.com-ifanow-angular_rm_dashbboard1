@@ -1,11 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionService} from '../../subscription.service';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {AuthService} from "../../../../../../auth-service/authService";
-import {UtilService} from "../../../../../../services/util.service";
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionService } from '../../subscription.service';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { AuthService } from "../../../../../../auth-service/authService";
+import { UtilService } from "../../../../../../services/util.service";
 import * as _ from 'lodash';
 
 export interface PeriodicElement {
