@@ -33,18 +33,16 @@ const routes: Routes = [
         path: 'activies',
         loadChildren: () => import('./component/protect-component/AdviserComponent/Activies/activies/activies.module').then(m => m.ActiviesModule)
       },
-      
-      /*   {
-           path: 'calender',
-           component: CalenderComponent
-         },*/
-
+      {
+        path: 'calender',
+        component: CalenderComponent
+      },
     ]
   },
-  {
-    path: 'calender',
-    component: CalenderComponent
-  },
+  // {
+  //   path: 'calender',
+  //   component: CalenderComponent
+  // },
   {
     path: 'customer',
     // outlet: 'secondary',
