@@ -6,7 +6,7 @@
   padding: 16px;
 
   .column {
-
+    position: relative;
     width: 14.28%;
     text-align: center;
 
@@ -70,6 +70,10 @@
   color: #fff !important;
   background-color: #008FFF !important;
   float: right;
+}
+
+.date-info{
+position: absolute; top:0px; right: 0px; border: none !important; height: 100%; width: 100%;
 }
 
 .pink {

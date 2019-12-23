@@ -29,6 +29,7 @@ export class CalenderComponent implements OnInit {
   addLastMonthDays;
   daysArr = [];
 
+  eventData:any;
   eventTitle;
   eventDescription;
 
@@ -38,6 +39,36 @@ export class CalenderComponent implements OnInit {
     this.currentMonth = new Date().getMonth();
     this.viewDate = new Date();
     this.updateCalender();
+    console.log(Intl.DateTimeFormat().resolvedOptions().timeZone, "test date");
+    this.eventData = [{
+      "eventId":"02megf77o1dqjkhevj9udlfh25",
+      "userId":2808,
+      "fileId":12345,
+      "calendarId":"chetan@futurewise.co.in",
+      "summary":"doom event",
+        "location":"800 Howard St., San Francisco, CA 94103",
+        "title":"it is successful",
+        "description":"it is successful",
+        "start":{
+          "dateTime":"2019-12-23T05:00:00-07:00",
+          "timeZone":"America/Los_Angeles"
+        },
+        "end":{
+          "dateTime":"2019-12-23T06:00:00-07:00",
+          "timeZone":"America/Los_Angeles"
+        },
+        "timeZone":"America/Los_Angeles",
+        "recurrence":["RRULE:FREQ=DAILY;COUNT=2"],
+        "attendeeList":["chetan@futurewise.co.in","chetan@futurewise.co.in"]
+    }]
+
+    let formatedEvent = [];
+    for(let e of this.eventData){
+      e.start.dateTime = this.formateDate(new Date(e.start.dateTime));
+     
+      formatedEvent.push(e);
+    }
+    console.log(formatedEvent, "this.eventData 12345");
   }
 
   updateCalender() {
@@ -103,10 +134,18 @@ export class CalenderComponent implements OnInit {
     this.updateCalender();
   }
 
+  formateDate(date){
+    var dd = date.getDate();
+    var mm = date.getMonth()+1; //January is 0!
+    var yyyy = date.getFullYear();
+
+    return dd+'/'+mm+'/'+yyyy;
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(EventDialog, {
       width: '30%',
-      data: { name: this.eventTitle, animal: this.eventDescription }
+      data: this.eventData
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -143,26 +182,13 @@ export class EventDialog implements OnInit{
   
   startDate;
   eventForm: FormGroup;
+  eventData:any;
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<EventDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-      
-    // this.dialogData = {
-    //   "eventId": "v8o6srjpr3kqa50a0cu2f2abls",
-    //   "userId": 2727,
-    //   "fileId": 12345,
-    //   "calendarId": "gaurav@futurewise.co.in",
-    //   "summary": "new event",
-    //   "location": "800 Howard St., San Francisco, CA 94103",
-    //   "title": "it is successful",
-    //   "description": "it is successful",
-    //   "startDateTime": "",
-    //   "timeZone": "America/Los_Angeles",
-    //   "endDateTime": "2019-12-18T17:00:00-07:00",
-    //   "recurrence": ["RRULE:FREQ=DAILY;COUNT=2"],
-    //   "attendees": ["chetan@futurewise.co.in", "chetan@futurewise.co.in"]
-    // }
+      console.log(data, "this.eventData 111");
+      this.eventData = data;
   }
 
   ngOnInit(){
