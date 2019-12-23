@@ -10,3 +10,75 @@
         </div>
     </div>
 </div>
+<div class="pt-80 pl-20 pr-20">
+    <div class="row">
+        <div class="col-md-12 p-0">
+            <img src="/assets/images/svg/left-arrows.svg" class="c-p">
+        </div>
+    </div>
+    <div class="row pt-20">
+        <div class="col-md-8 p-0 pr-20">
+            <mat-radio-group aria-label="Select an option">
+                <mat-radio-button value="1" class="text-primary bu-primary ">New</mat-radio-button>
+                <mat-radio-button value="2" class="text-custom b-ua">Existing </mat-radio-button>
+            </mat-radio-group>
+            <div class="row pt-40">
+                <div class="col-md-12 p-0">
+                    <h5 class="m-0">Select a scheme to invest in</h5>
+                    <div class="form-group mb-0 pt-8">
+
+                        <input matInput class="form-control br-0" placeholder="Start typing to see scheme names">
+                    </div>
+                    <p class="m-0 text-primitive f-12 pt-4">Last closing NAV: 390.27</p>
+                </div>
+            </div>
+            <div class="row pt-40">
+                <div class="col-md-4 p-0">
+                    <h5 class="m-0">Enter amount</h5>
+                    <div class="form-group mb-0 pt-8">
+                        <input matInput class="form-control br-0 rupess">
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-40">
+                <div class="col-md-7 p-0 pr-8">
+                    <h5 class="m-0">Select bank account</h5>
+                    <div class="form-group br-0">
+                        <mat-form-field>
+                            <mat-select class="form-control">
+                                <mat-option value="option">Option</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-5 p-0 pl-8">
+                    <h5 class="m-0">Mode</h5>
+                    <div class="form-group br-0">
+                        <mat-form-field>
+                            <mat-select class="form-control">
+                                <mat-option value="option">Option</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 p-0 bg-grey lter">
+            <mat-tab-group animationDuration="0ms" mat-align-tabs="center">
+                <mat-tab label="SCHEME INFO">Content 1</mat-tab>
+                <mat-tab label="CALCULATOR">Content 2</mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed w-65 wrapper-12">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-stroked-button class="text-success br-0 bg-white text-inherit mr-20">SAVE & CLOSE</button>
+            <button mat-button class="btn-bottom br-0 text-inherit">SAVE & ADD ANOTHER</button>
+        </div>
+    </div>
+</div>
