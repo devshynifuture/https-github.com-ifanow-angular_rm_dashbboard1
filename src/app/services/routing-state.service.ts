@@ -1,5 +1,5 @@
 import {Injectable, NgZone} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
+import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {filter} from 'rxjs/operators';
 
 
@@ -7,11 +7,18 @@ import {filter} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class RoutingState {
+
+  constructor(private router: Router, private ngZone: NgZone) {
+  }
+
   private history = [];
 
   mainrouter;
 
-  constructor(private router: Router, private ngZone: NgZone) {
+  prepareRoute(outlet: RouterOutlet) {
+    const outPutData = outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
+    console.log('RoutingState prepareRoute outPutData : ', outPutData);
+    return outPutData;
   }
 
   public setMainRouter(mainrouter) {
@@ -51,7 +58,7 @@ export class RoutingState {
           console.log('goToSpecificRoute urlString  success : ', urlString);
           console.log('goToSpecificRoute urlString success this.getMainRouter().detach() : ', this.getMainRouter());
 
-          this.getMainRouter().nativeElement.onClick();
+          // this.getMainRouter().nativeElement.onClick();
           // this.router.navigate([urlString]);
         } else {
           console.error('goToSpecificRoute urlString failure : ', urlString);

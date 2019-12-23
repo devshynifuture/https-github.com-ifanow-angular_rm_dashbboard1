@@ -80,8 +80,8 @@
             </div>
         </div>
         <div class="example-container col-md-12 p-0 mt-8 mb-44 newFont fixed-deposite">
-            <table *ngIf="dataSource" matSort #fixedIncomeTableSort="matSort" mat-table [dataSource]="dataSourceFixed"
-                id="table-low">
+            <table *ngIf="dataSourceFixed" matSort #fixedIncomeTableSort="matSort" mat-table
+                [dataSource]="dataSourceFixed" id="table-low">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
                     <td *matCellDef="let element let i = index;" class="br " mat-cell> {{isLoading ? '' : i + 1 }} </td>
@@ -188,8 +188,8 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns4;sticky: true"></tr>
             </table>
-            <div *ngIf="dataSource==undefined">
-                <h4 class="text-center pt-72">no data found</h4>
+            <div *ngIf="dataSourceFixed==undefined">
+                <h4 class="text-center pt-72">{{noData}}</h4>
             </div>
         </div>
     </div>
@@ -242,7 +242,7 @@
             </div>
         </div>
         <div class="example-container col-md-12 p-0 mt-8 mb-44 fixed-deposite">
-            <table *ngIf="dataSource" matSort #recurringDepositTable="matSort" mat-table
+            <table *ngIf="dataSourceRecurring" matSort #recurringDepositTable="matSort" mat-table
                 [dataSource]="dataSourceRecurring" id="table-low">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
@@ -330,8 +330,8 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns5;sticky: true" [hidden]="isLoading"></tr>
             </table>
-            <div *ngIf="dataSource==undefined">
-                <h4 class="text-center pt-72">no data found</h4>
+            <div *ngIf="dataSourceRecurring==undefined">
+                <h4 class="text-center pt-72">{{noData}}</h4>
             </div>
         </div>
     </div>
@@ -368,7 +368,7 @@
             </div>
         </div>
         <div class="example-container p-0 col-md-12 mt-8 mb-44 fixed-deposite">
-            <table *ngIf="dataSource" matSort #bondListTable="matSort" mat-table [dataSource]="dataSourceBond"
+            <table *ngIf="dataSourceBond" matSort #bondListTable="matSort" mat-table [dataSource]="dataSourceBond"
                 id="table-low">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br t-2"> No</th>
@@ -479,10 +479,12 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns6;"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns6;sticky: true" [hidden]="isLoading"></tr>
             </table>
-            <div *ngIf="dataSource==undefined">
-                <h4 class="text-center pt-72">no data found</h4>
+            <div *ngIf="dataSourceBond==undefined">
+                <h4 class="text-center pt-72">{{noData}}</h4>
             </div>
         </div>
     </div>
-
+</div>
+<div *ngIf="isLoading">
+    <mat-spinner [diameter]="30" class="loader"></mat-spinner>
 </div>

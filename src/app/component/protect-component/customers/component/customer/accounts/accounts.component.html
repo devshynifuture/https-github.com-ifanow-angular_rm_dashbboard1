@@ -8,28 +8,31 @@
     <!--  <a mat-list-item class="sidenav-link" [routerLink]="['',{outlet:{secondary:'/admin/subscription'}}]">-->
     <!--          <button class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">-->
     <button (click)="goToAdvisorHome()" class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">
-      keyboard_backspace
-    </i>ADVISOR HOME
+        keyboard_backspace
+      </i>ADVISOR HOME
     </button>
     <!--    </a>-->
   </div>
   <nav id="ui-customer-secondhead" mat-tab-nav-bar>
-    <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'./summary'" mat-tab-link>SUMMARY</a>
-    <a (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'./assets'" mat-tab-link>ASSETS</a>
+    <a (click)="value=1" routerLinkActive="active" [routerLink]="'./summary'" mat-tab-link>SUMMARY</a>
+    <a (click)="value=2" routerLinkActive="active" [routerLink]="'./assets'" mat-tab-link>ASSETS</a>
 
     <!--     [routerLink]="[{outlet:{accountRouterOutlet:['assets']}}]">ASSETS</a>-->
-    <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'./liabilities'"
-       mat-tab-link>LIABILITIES</a>
-    <a (click)="value=4" [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'./insurance'" mat-tab-link>INSURANCE</a>
+    <a (click)="value=3" routerLinkActive="active" [routerLink]="'./liabilities'" mat-tab-link>LIABILITIES</a>
+    <a (click)="value=4" routerLinkActive="active" [routerLink]="'./insurance'" mat-tab-link>INSURANCE</a>
     <!-- <a mat-tab-link [routerLink]="'expenses'">EXPENSES</a> -->
-    <a (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'./documents'" mat-tab-link>DOCUMENTS</a>
+    <a (click)="value=5" routerLinkActive="active" [routerLink]="'./documents'" mat-tab-link>DOCUMENTS</a>
   </nav>
   <!--  <div *ngIf="showRouter">-->
-  <router-outlet id="accounts1">
-    <ng-template>
-      <router-outlet id="accounts2"></router-outlet>
-    </ng-template>
+  <!--  <div [@routeAnimations]="routingStateService.prepareRoute(outlet)">-->
+
+  <router-outlet #outlet="outlet">
+
   </router-outlet>
+  <ng-template>
+    <router-outlet></router-outlet>
+  </ng-template>
+  <!--  </div>-->
   <!-- <ng-template>
      <router-outlet></router-outlet>
    </ng-template>-->

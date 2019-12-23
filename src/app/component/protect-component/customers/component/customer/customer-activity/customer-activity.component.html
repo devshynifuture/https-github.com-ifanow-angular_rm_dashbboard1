@@ -14,11 +14,11 @@
         [routerLink]="'investments'">INVESTMENTS</a>
     <a (click)="value=8" mat-tab-link [ngClass]="_value == 8 ? 'active': ''" [routerLink]="'scenarios'">SCENARIOS</a>
  -->
-    <a mat-tab-link [routerLink]="'summary'">SUMMARY</a>
-    <a mat-tab-link [routerLink]="'advice'">ADVICE</a>
-    <a mat-tab-link [routerLink]="'deployments'">DEPLOYMENTS</a>
-    <a mat-tab-link [routerLink]="'summary'">ACTION PLANS</a>
-    <a mat-tab-link [routerLink]="'summary'">TASKS</a>
-    <a mat-tab-link [routerLink]="'summary'">NOTES</a>
+    <a mat-tab-link routerLinkActive="active" [routerLink]="'summary'">SUMMARY</a>
+    <a mat-tab-link routerLinkActive="active" [routerLink]="'advice'">ADVICE</a>
+    <a mat-tab-link routerLinkActive="active" [routerLink]="'deployments'">DEPLOYMENTS</a>
+    <a mat-tab-link routerLinkActive="active" [routerLink]="'summary'">ACTION PLANS</a>
+    <a mat-tab-link routerLinkActive="active" [routerLink]="'summary'">TASKS</a>
+    <a mat-tab-link routerLinkActive="active" [routerLink]="'summary'">NOTES</a>
 </nav>
 <router-outlet></router-outlet>

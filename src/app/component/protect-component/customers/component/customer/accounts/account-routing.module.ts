@@ -16,11 +16,14 @@ const routes: Routes = [{
     {
       path: 'summary',
       component: SummaryComponent,
+      data: {animation: 'Tab1'}
       // outlet: 'accountRouterOutlet'
     },
     {
       path: 'assets',
       component: AssetsComponent,
+      data: {animation: 'Tab2'}
+
       // outlet: 'accountRouterOutlet'
     },
     {
