@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from '../../subscription-inject.service';
-import { MatDialog, MAT_DATE_FORMATS } from '@angular/material';
+import { MatDialog, MAT_DATE_FORMATS, MatSort, MatTableDataSource } from '@angular/material';
 import { DeleteSubscriptionComponent } from '../common-subscription-component/delete-subscription/delete-subscription.component';
 import { SubscriptionService } from '../../subscription.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
@@ -75,6 +75,7 @@ export interface PeriodicElement {
   ],
 })
 export class SubscriptionsSubscriptionComponent implements OnInit {
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   displayedColumns: string[] = ['client', 'service', 'amt', 'sub', 'status', 'activation',
     'lastbilling', 'nextbilling', 'feemode', 'icons'];
@@ -82,7 +83,6 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   subscriptionValue: any;
   @Input() upperData;
   advisorId;
-  dataSource = [{}, {}, {}];
   DataToSend;
   isLoading = false;
   chips = [
@@ -113,6 +113,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   getDate2: string;
   selectedDateRange = { begin: new Date(), end: new Date() };
   noData: string;
+  dataSource:any;
+  data: any;
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
     private eventService: EventService, private subService: SubscriptionService,
@@ -120,6 +122,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dataSource = [{}, {}, {}];
+
     this.advisorId = AuthService.getAdvisorId();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     // console.log("feeeee...",this.feeCollectionMode);
@@ -144,9 +148,12 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
   getSubSummaryRes(data) {
+    this.data=data;
     this.isLoading = false;
     if (data) {
-      this.dataSource = data;
+      // this.dataSource = data;
+      this.dataSource = new MatTableDataSource(this.data);
+      this.dataSource.sort = this.sort;
       this.DataToSend = data;
     } else {
       // console.log(data);
