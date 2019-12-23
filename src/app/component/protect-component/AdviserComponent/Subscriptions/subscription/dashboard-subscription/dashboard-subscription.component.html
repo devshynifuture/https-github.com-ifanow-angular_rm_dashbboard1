@@ -93,11 +93,12 @@
                     more_horiz
                   </i> -->
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 skeletonAnimation">
                                     <div class="pl-20 pr-20 c-p">
                                         <p class="f-300 f-18 mb-0">Total sales</p>
-                                        <h2 class="text-primary mb-0 pb-28 pt-8">
-                                            {{totalSaleReceived ? totalSaleReceived.totalSales : '-'}}
+                                        <h2 class="text-primary mb-0 pb-28 pt-8 relClass">
+                                            <div class="bar"> {{totalSaleReceived ? totalSaleReceived.totalSales : '-'}}
+                                            </div>
                                         </h2>
                                     </div>
                                 </div>
