@@ -4,13 +4,13 @@
     <!--      <a mat-list-item class="sidenav-link" [routerLink]="['/admin/subscription/dashboard']">-->
     <!--    <a class="sidenav-link" href="/admin/subscription/dashboard" mat-list-item>-->
 
-      <!---->
-      <!--  <a mat-list-item class="sidenav-link" [routerLink]="['',{outlet:{secondary:'/admin/subscription'}}]">-->
+    <!---->
+    <!--  <a mat-list-item class="sidenav-link" [routerLink]="['',{outlet:{secondary:'/admin/subscription'}}]">-->
     <!--          <button class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">-->
     <button (click)="goToAdvisorHome()" class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">
-        keyboard_backspace
-      </i>ADVISOR HOME
-      </button>
+      keyboard_backspace
+    </i>ADVISOR HOME
+    </button>
     <!--    </a>-->
   </div>
   <nav id="ui-customer-secondhead" mat-tab-nav-bar>
@@ -25,7 +25,14 @@
     <a (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'./documents'" mat-tab-link>DOCUMENTS</a>
   </nav>
   <!--  <div *ngIf="showRouter">-->
-    <router-outlet></router-outlet>
+  <router-outlet id="accounts1">
+    <ng-template>
+      <router-outlet id="accounts2"></router-outlet>
+    </ng-template>
+  </router-outlet>
+  <!-- <ng-template>
+     <router-outlet></router-outlet>
+   </ng-template>-->
   <!--  </div>-->
   <!-- <mat-tab-group [selectedIndex]="selected" mat-align-tabs="center" id="ui-account-second-head" animationDuration="0ms">
     <mat-tab label="SUMMARY ssfsf">
