@@ -40,7 +40,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class DashboardSubscriptionComponent implements OnInit {
   invoiceHisData: any;
   showLetsBeginData: any;
-  totalSaleReceived: {};
+  totalSaleReceived: any;
   isLoading = false;
   @Output() subIndex = new EventEmitter()
   constructor(private enumService: EnumServiceService,
