@@ -57,7 +57,7 @@ export class EmailOnlyComponent implements OnInit {
   // get data() {
   //   return this._inputData;
   // }
-  @Input() set inputData(inputData) {
+  @Input() set data(inputData) {
     let obj = []
     this.doc = inputData.documentList;
     if (inputData.isInv == true) {
@@ -99,7 +99,7 @@ export class EmailOnlyComponent implements OnInit {
     this.getEmailTemplateFilterData();
   }
 
-  get inputData() {
+  get data() {
     return this._inputData;
   }
 

@@ -24,10 +24,8 @@ import { ExcelService } from '../../../../excel.service';
 })
 export class FixedIncomeComponent implements OnInit {
   isLoading = true;
-
   showRequring: any;
   advisorId: any;
-
   dataSourceRecurring: any;
   dataSourceBond: any;
   clientId: any;
@@ -48,6 +46,7 @@ export class FixedIncomeComponent implements OnInit {
   footer = [];
   dataSourceFixed: any;
   hidePdf: boolean;
+  noData: any;
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService, public dialog: MatDialog) { }
   viewMode;
   displayedColumns4 = ['no', 'owner', 'type', 'cvalue', 'rate', 'amt', 'mdate', 'mvalue', 'number', 'desc', 'status', 'icons'];
@@ -65,6 +64,7 @@ export class FixedIncomeComponent implements OnInit {
     this.hidePdf = true
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.isLoading = true;
     this.getFixedDepositList()
     this.dataSourceFixed = new MatTableDataSource([{}, {}, {}]);
   }
@@ -208,17 +208,22 @@ export class FixedIncomeComponent implements OnInit {
   getFixedDepositRes(data) {
     console.log('getFixedDepositRes ********** ', data);
     this.isLoading = false;
-    this.dataSourceFixed.data = data.fixedDepositList;
-    this.dataSourceFixed.sort = this.fixedIncomeTableSort;
-    console.log('soted &&&&&&&&&', this.dataSourceFixed);
-    UtilService.checkStatusId(this.dataSourceFixed.filteredData)
-    this.dataSourceFixed.filteredData, function (o) {
-      this.sumCurrentValue += o.nomineePercentageShare;
-    };
-    console.log('&&&&&&&&&', this.sumCurrentValue)
-     this.sumAmountInvested = data.sumAmountInvested;
-    this.sumCurrentValue = data.sumCurrentValue;
-    this.sumMaturityValue = data.sumMaturityValue;
+    if (data.fixedDepositList) {
+      this.dataSourceFixed.data = data.fixedDepositList;
+      this.dataSourceFixed.sort = this.fixedIncomeTableSort;
+      console.log('soted &&&&&&&&&', this.dataSourceFixed);
+      UtilService.checkStatusId(this.dataSourceFixed.filteredData)
+      this.dataSourceFixed.filteredData, function (o) {
+        this.sumCurrentValue += o.nomineePercentageShare;
+      };
+      console.log('&&&&&&&&&', this.sumCurrentValue)
+      this.sumAmountInvested = data.sumAmountInvested;
+      this.sumCurrentValue = data.sumCurrentValue;
+      this.sumMaturityValue = data.sumMaturityValue;
+    }
+    else {
+      this.noData = "No Data Found"
+    }
 
   }
 
@@ -236,11 +241,16 @@ export class FixedIncomeComponent implements OnInit {
   getRecurringDepositRes(data) {
     console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
     this.isLoading = false;
-    this.dataSourceRecurring = new MatTableDataSource(data.recurringDeposits);
-    this.dataSourceRecurring.sort = this.recurringDepositTableSort;
-    UtilService.checkStatusId(this.dataSourceRecurring.filteredData)
-    this.totalCurrentValue = data.totalCurrentValue;
-    this.totalMarketValue = data.totalMarketValue;
+    if (data.recurringDeposits) {
+      this.dataSourceRecurring = new MatTableDataSource(data.recurringDeposits);
+      this.dataSourceRecurring.sort = this.recurringDepositTableSort;
+      UtilService.checkStatusId(this.dataSourceRecurring.filteredData)
+      this.totalCurrentValue = data.totalCurrentValue;
+      this.totalMarketValue = data.totalMarketValue;
+    }
+    else {
+      this.noData = "No Data Found"
+    }
   }
 
   getBondsList() {
@@ -257,12 +267,17 @@ export class FixedIncomeComponent implements OnInit {
   getBondsRes(data) {
     console.log('getBondsRes ******** ', data);
     this.isLoading = false;
-    this.dataSourceBond = new MatTableDataSource(data.bondList);
-    this.dataSourceBond.sort = this.bondListTableSort;
-    UtilService.checkStatusId(this.dataSourceBond.filteredData)
-    this.sumAmountInvestedB = data.sumAmountInvested;
-    this.sumCouponAmount = data.sumCouponAmount;
-    this.sumCurrentValueB = data.sumCurrentValue;
+    if (data.bondList) {
+      this.dataSourceBond = new MatTableDataSource(data.bondList);
+      this.dataSourceBond.sort = this.bondListTableSort;
+      UtilService.checkStatusId(this.dataSourceBond.filteredData)
+      this.sumAmountInvestedB = data.sumAmountInvested;
+      this.sumCouponAmount = data.sumCouponAmount;
+      this.sumCurrentValueB = data.sumCurrentValue;
+    }
+    else {
+      this.noData = "No Data Found"
+    }
   }
   deleteModal(value, data) {
     const dialogData = {

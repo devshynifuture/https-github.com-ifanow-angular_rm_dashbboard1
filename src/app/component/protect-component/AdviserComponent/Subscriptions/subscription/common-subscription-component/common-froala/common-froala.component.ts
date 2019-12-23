@@ -32,15 +32,15 @@ export class CommonFroalaComponent implements OnInit {
   }
 }
 */
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {SubscriptionService} from '../../../subscription.service';
-import {UtilService} from 'src/app/services/util.service';
-import {EmailOnlyComponent} from "../email-only/email-only.component";
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { SubscriptionService } from '../../../subscription.service';
+import { UtilService } from 'src/app/services/util.service';
+import { EmailOnlyComponent } from '../email-only/email-only.component';
 
 @Component({
   selector: 'app-common-froala',
@@ -248,7 +248,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
       advisorId: 2828,
       clientData: this.storeData,
       templateType: this.templateType, // 2 is for quotation
-      documentList: [this.storeData]
+      documentList: [this.storeData],
     };
     // this.dataSource.forEach(singleElement => {
     //   if (singleElement.selected) {
@@ -264,7 +264,8 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
       data,
       id: 1,
       state: 'open',
-      componentName: EmailOnlyComponent
+      componentName:EmailOnlyComponent
+
     };
     if (this.screenType) {
       const rightSideDataSub2 = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(

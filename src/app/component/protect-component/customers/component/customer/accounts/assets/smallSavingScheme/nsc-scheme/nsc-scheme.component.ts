@@ -40,7 +40,7 @@ export class NscSchemeComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = 2978;
     this.getNscSchemedata();
-    this.footer  =[];
+    this.footer = [];
   }
   async ExportTOExcel(value) {
     this.excelData = []
@@ -56,15 +56,15 @@ export class NscSchemeComponent implements OnInit {
     var header = ['Owner', 'Current Value', 'Rate', ' Maturity Value',
       'Maturity Date', 'Certificate Number', 'Description', 'Status'];
     this.datasource.filteredData.forEach(element => {
-      data = [element.ownerName,  this.formatNumber.first.formatAndRoundOffNumber(element.currentValue), (element.rate),
-         this.formatNumber.first.formatAndRoundOffNumber(element.maturityValue),new Date(element.maturityDate),element.certificateNumber, element.description, element.status]
+      data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue), (element.rate),
+      this.formatNumber.first.formatAndRoundOffNumber(element.maturityValue), new Date(element.maturityDate), element.certificateNumber, element.description, element.status]
       this.excelData.push(Object.assign(data))
     });
     var footerData = ['Total',
-      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue),'',
-      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMaturityValue), '', '', '' , '']
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue), '',
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMaturityValue), '', '', '', '']
     this.footer.push(Object.assign(footerData))
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   }
   getNscSchemedata() {
     const obj = {
@@ -80,10 +80,10 @@ export class NscSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data.NationalSavingCertificate.length != 0) {
       this.datasource = new MatTableDataSource(data.NationalSavingCertificate);
-      this.datasource.sort = this.sort;
-      UtilService.checkStatusId(this.datasource.filteredData)
-      this.sumOfMaturityValue = data.SumOfMaturityValue;
-      this.sumOfCurrentValue = data.SumOfCurrentValue;
+      // this.datasource.sort = this.sort;
+      // UtilService.checkStatusId(this.datasource.filteredData)
+      // this.sumOfMaturityValue = data.SumOfMaturityValue;
+      // this.sumOfCurrentValue = data.SumOfCurrentValue;
       this.nscData = data
     } else {
       this.noData = "No Scheme there"
