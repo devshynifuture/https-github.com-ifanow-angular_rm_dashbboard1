@@ -883,7 +883,15 @@ mat-tab-group[vertical] {
   }
 }
 
-#advisor-home,
+#advisor-home {
+  position: fixed;
+  z-index: 112;
+  margin-top: 72px;
+  border: 1px solid #FFC100;
+  color: #FFC100;
+  margin-left: 20px;
+}
+
 #plan-home {
   position: fixed;
   z-index: 112;
