@@ -1,22 +1,21 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatBottomSheet, MatDialog, MatTableDataSource, MatSort } from '@angular/material';
-import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
-import { EventService } from 'src/app/Data-service/event.service';
-import { Router } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from '../../customer.service';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {MatBottomSheet, MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {BottomSheetComponent} from '../../../common-component/bottom-sheet/bottom-sheet.component';
+import {EventService} from 'src/app/Data-service/event.service';
+import {Router} from '@angular/router';
+import {FormBuilder} from '@angular/forms';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from '../../customer.service';
 import * as _ from 'lodash';
-import { AuthService } from 'src/app/auth-service/authService';
-import { HttpHeaders } from '@angular/common/http';
-import { DocumentNewFolderComponent } from '../../../common-component/document-new-folder/document-new-folder.component';
-import { HttpService } from 'src/app/http-service/http-service';
-import { CopyDocumentsComponent } from '../../../common-component/copy-documents/copy-documents.component';
-import { ViewActivityComponent } from './view-activity/view-activity.component';
-import { rename } from 'fs';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { EmailQuotationComponent } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-quotation/email-quotation.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {HttpHeaders} from '@angular/common/http';
+import {DocumentNewFolderComponent} from '../../../common-component/document-new-folder/document-new-folder.component';
+import {HttpService} from 'src/app/http-service/http-service';
+import {CopyDocumentsComponent} from '../../../common-component/copy-documents/copy-documents.component';
+import {ViewActivityComponent} from './view-activity/view-activity.component';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {EmailQuotationComponent} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-quotation/email-quotation.component';
 
 @Component({
   selector: 'app-documents',
@@ -24,13 +23,24 @@ import { EmailQuotationComponent } from 'src/app/component/protect-component/Adv
   styleUrls: ['./documents.component.scss']
 })
 
-export class DocumentsComponent implements AfterViewInit {
-  ngAfterViewInit(): void {
-    this.commonFileFolders = new MatTableDataSource(this.getSort);
-    this.commonFileFolders.sort = this.sort;
-    console.log('sorted', this.commonFileFolders);
-  }
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+export class DocumentsComponent implements AfterViewInit, OnInit {
+
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  fileType = [
+    {id: 1, name: 'PDF'},
+    {id: 2, name: 'DOC'},
+    {id: 3, name: 'XLSX'},
+    {id: 4, name: 'MP3'},
+    {id: 5, name: 'MP4'},
+    {id: 6, name: 'WAV'},
+    {id: 7, name: 'ZIP'},
+    {id: 8, name: 'BIN'},
+    {id: 9, name: 'ISO'},
+    {id: 10, name: 'JPEG'},
+    {id: 11, name: 'JPG'},
+    {id: 12, name: 'TXT'},
+    {id: 13, name: 'HTML'},
+  ];
   displayedColumns: string[] = ['emptySpace', 'name', 'lastModi', 'type', 'size', 'icons'];
   dataSource = ELEMENT_DATA;
   percentDone: number;
@@ -52,21 +62,13 @@ export class DocumentsComponent implements AfterViewInit {
   valueFirst: any;
   animal: any;
   name: string;
-  fileType = [
-    { id: 1, name: 'PDF' },
-    { id: 2, name: 'DOC' },
-    { id: 3, name: 'XLSX' },
-    { id: 4, name: 'MP3' },
-    { id: 5, name: 'MP4' },
-    { id: 6, name: 'WAV' },
-    { id: 7, name: 'ZIP' },
-    { id: 8, name: 'BIN' },
-    { id: 9, name: 'ISO' },
-    { id: 10, name: 'JPEG' },
-    { id: 11, name: 'JPG' },
-    { id: 12, name: 'TXT' },
-    { id: 13, name: 'HTML' },
-  ];
+
+  constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
+              private event: EventService, private router: Router, private fb: FormBuilder,
+              private custumService: CustomerService, public subInjectService: SubscriptionInject,
+              public utils: UtilService, public dialog: MatDialog) {
+  }
+
   showDots = false;
   parentId: any;
   filenm: string;
@@ -80,13 +82,14 @@ export class DocumentsComponent implements AfterViewInit {
 
 
   getSort: any;
-  constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
-    private event: EventService, private router: Router, private fb: FormBuilder,
-    private custumService: CustomerService, public subInjectService: SubscriptionInject,
-    public utils: UtilService, public dialog: MatDialog) {
-  }
 
   viewMode;
+
+  ngAfterViewInit(): void {
+    this.commonFileFolders = new MatTableDataSource(this.getSort);
+    this.commonFileFolders.sort = this.sort;
+    console.log('sorted', this.commonFileFolders);
+  }
 
   ngOnInit() {
     const tabValue = 'Documents';
@@ -99,22 +102,23 @@ export class DocumentsComponent implements AfterViewInit {
     this.getAllFileList(tabValue);
     this.showLoader = true;
   }
+
   openDialog(element, value): void {
     const dialogRef = this.dialog.open(DocumentNewFolderComponent, {
       width: '30%',
-      data: { name: value, animal: element }
+      data: {name: value, animal: element}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
       this.animal = result;
       if (this.animal.rename == undefined) {
-        this.createFolder(this.animal)
+        this.createFolder(this.animal);
       }
       if (this.animal.rename.flag == 'fileName') {
-        this.renameFile(this.animal)
+        this.renameFile(this.animal);
       } else {
-        this.renameFolders(this.animal)
+        this.renameFolders(this.animal);
       }
     });
 
@@ -123,15 +127,16 @@ export class DocumentsComponent implements AfterViewInit {
   openDialogCopy(element, value): void {
     const dialogRef = this.dialog.open(CopyDocumentsComponent, {
       width: '40%',
-      data: { name: value, animal: element }
+      data: {name: value, animal: element}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.animal = result;
-      this.getAllFileList(this.animal)
+      this.getAllFileList(this.animal);
     });
   }
+
   renameFile(element) {
     const obj = {
       clientId: this.clientId,
@@ -165,24 +170,27 @@ export class DocumentsComponent implements AfterViewInit {
     console.log(data);
     this.getAllFileList(this.valueTab);
   }
+
   createFolder(element) {
-    console.log('folder name', element)
-    this.createdFolderName = element
+    console.log('folder name', element);
+    this.createdFolderName = element;
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
       folderParentId: (this.parentId == undefined) ? 0 : this.parentId,
       folderName: element.newFolder
     };
-    this.detailed = obj
+    this.detailed = obj;
     this.custumService.newFolder(obj).subscribe(
       data => this.newFolderRes(data)
     );
   }
+
   newFolderRes(data) {
-    console.log('newFolderRes', data)
+    console.log('newFolderRes', data);
     this.getAllFileList(this.valueTab);
   }
+
   openBottomSheet(): void {
     this._bottomSheet.open(BottomSheetComponent);
   }
@@ -224,17 +232,17 @@ export class DocumentsComponent implements AfterViewInit {
     this.allFiles = data.files;
     this.AllDocs = data.folders;
     this.commonFileFolders = data.folders;
-    this.getSort = this.commonFileFolders
+    this.getSort = this.commonFileFolders;
     this.commonFileFolders.push.apply(this.commonFileFolders, this.allFiles);
     if (this.commonFileFolders.openFolderId == undefined || this.openFolderName.length == 0) {
-      Object.assign(this.commonFileFolders, { openFolderNm: value.folderName });
-      Object.assign(this.commonFileFolders, { openFolderId: value.id });
-      this.parentId = (value.id == undefined) ? 0 : value.id
-      console.log('parentId', this.parentId)
+      Object.assign(this.commonFileFolders, {openFolderNm: value.folderName});
+      Object.assign(this.commonFileFolders, {openFolderId: value.id});
+      this.parentId = (value.id == undefined) ? 0 : value.id;
+      console.log('parentId', this.parentId);
       this.openFolderName.push(this.commonFileFolders);
       this.valueFirst = this.openFolderName[0];
       if (this.commonFileFolders.length > 0) {
-        this.fileTypeGet()
+        this.fileTypeGet();
         this.backUpfiles.push(this.commonFileFolders);
       }
       console.log('this.backUpfiles', this.backUpfiles);
@@ -249,18 +257,20 @@ export class DocumentsComponent implements AfterViewInit {
     this.commonFileFolders.sort = this.sort;
     console.log('sorted', this.commonFileFolders);
   }
+
   fileTypeGet() {
     this.commonFileFolders.forEach(p => {
       this.fileType.forEach(n => {
         if (n.id == p.fileTypeId) {
-          p.fileTypeId = n.name
+          p.fileTypeId = n.name;
         }
       });
     });
   }
+
   getFolders(data) {
-    this.parentId = (data == undefined) ? 0 : data[0].folderParentId
-    console.log('parentId', this.parentId)
+    this.parentId = (data == undefined) ? 0 : data[0].folderParentId;
+    console.log('parentId', this.parentId);
     this.openFolderName = _.reject(this.openFolderName, function (n) {
       return n.openFolderId > data.openFolderId + 1;
     });
@@ -269,7 +279,7 @@ export class DocumentsComponent implements AfterViewInit {
       return n.openFolderId > data.openFolderId;
     });
     this.commonFileFolders = data;
-    this.fileTypeGet()
+    this.fileTypeGet();
     this.valueFirst = this.openFolderName[0];
   }
 
@@ -289,12 +299,13 @@ export class DocumentsComponent implements AfterViewInit {
       docGetFlag: this.valueTab,
       folderParentId: (value.id == undefined) ? 0 : value.id,
     };
-    console.log('this.parentId', this.parentId)
+    console.log('this.parentId', this.parentId);
     console.log('backUpfiles', this.backUpfiles);
     this.custumService.getAllFiles(obj).subscribe(
       data => this.getAllFilesRes(data, value)
     );
   }
+
   downlodFiles(element) {
     const obj = {
       clientId: this.clientId,
@@ -306,13 +317,15 @@ export class DocumentsComponent implements AfterViewInit {
       data => this.downloadFileRes(data)
     );
   }
+
   downloadFileRes(data) {
     console.log(data);
     window.open(data);
   }
+
   deleteModal(flag, data) {
     const dialogData = {
-      data: data,
+      data,
       header: 'DELETE',
       body: 'Are you sure you want to delete?',
       body2: 'This cannot be undone',
@@ -320,37 +333,39 @@ export class DocumentsComponent implements AfterViewInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         if (flag == 'FOLDER') {
-          var obj = {
+
+        } else {
+
+        }
+        if (flag == 'FOLDER') {
+          const obj = {
             clientId: this.clientId,
             advisorId: this.advisorId,
             id: data.id
           };
+          this.custumService.deleteFolder(obj).subscribe(
+            data => {
+              this.eventService.openSnackBar('Deleted', 'dismiss');
+              dialogRef.close();
+              this.getAllFileList(this.valueTab);
+            },
+            err => this.eventService.openSnackBar(err)
+          );
         } else {
-          var obj1 = {
+          const obj1 = {
             clientId: this.clientId,
             advisorId: this.advisorId,
             parentFolderId: data.parentFolderId,
             id: data.id
           };
-        }
-        if (flag == 'FOLDER') {
-          this.custumService.deleteFolder(obj).subscribe(
-            data => {
-              this.eventService.openSnackBar("Deleted", "dismiss")
-              dialogRef.close();
-              this.getAllFileList(this.valueTab);
-            },
-            err => this.eventService.openSnackBar(err)
-          )
-        } else {
           this.custumService.deleteFile(obj1).subscribe(
             data => {
-              this.eventService.openSnackBar("Deleted", "dismiss")
+              this.eventService.openSnackBar('Deleted', 'dismiss');
               dialogRef.close();
               this.getAllFileList(this.valueTab);
             },
             err => this.eventService.openSnackBar(err)
-          )
+          );
         }
       },
       negativeMethod: () => {
@@ -368,10 +383,11 @@ export class DocumentsComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
     });
   }
+
   OpenEmail(data) {
     const fragmentData = {
       flag: 'addSchemeHolding',
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: EmailQuotationComponent
@@ -386,6 +402,7 @@ export class DocumentsComponent implements AfterViewInit {
       }
     );
   }
+
   starFiles(element) {
     const obj = {
       clientId: this.clientId,
@@ -425,19 +442,22 @@ export class DocumentsComponent implements AfterViewInit {
     }
 
   }
+
   viewActivityFolderRes(data) {
-    console.log(data)
-    this.openActivity(data)
+    console.log(data);
+    this.openActivity(data);
   }
+
   viewActivityFileRes(data) {
     console.log(data);
-    data.foldersNm = this.openFolderName
-    this.openActivity(data)
+    data.foldersNm = this.openFolderName;
+    this.openActivity(data);
   }
+
   openActivity(data) {
     const fragmentData = {
       flag: 'addSchemeHolding',
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: ViewActivityComponent
@@ -467,15 +487,16 @@ export class DocumentsComponent implements AfterViewInit {
       data: this.myFiles,
     });
   }
+
   uploadDocumentFolder(data) {
     this.myFiles = [];
-    var array = [];
+    const array = [];
 
-    let folderName = data.target.files[0].webkitRelativePath.split('/');
+    const folderName = data.target.files[0].webkitRelativePath.split('/');
     this.folderNameToDisplay = {
       newFolder: folderName[0]
-    }
-    this.createFolder(this.folderNameToDisplay)
+    };
+    this.createFolder(this.folderNameToDisplay);
     for (let i = 0; i < data.target.files.length; i++) {
       this.myFiles.push(data.target.files[i]);
     }
@@ -498,12 +519,14 @@ export class DocumentsComponent implements AfterViewInit {
       data: fragData
     });
   }
+
   uploadFiles() {
     const frmData = new FormData();
     for (let i = 0; i < this.myFiles.length; i++) {
       frmData.append('fileUpload', this.myFiles[i]);
     }
   }
+
   uploadFile(element, fileName) {
     const obj = {
       clientId: this.clientId,
@@ -515,6 +538,7 @@ export class DocumentsComponent implements AfterViewInit {
       data => this.uploadFileRes(data, fileName)
     );
   }
+
   uploadFileRes(data, fileName) {
 
     const fileuploadurl = data;
@@ -539,11 +563,11 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { emptySpace: '', name: 'Identity & address proofs', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
-  { emptySpace: '', name: 'Accounts', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
-  { emptySpace: '', name: 'Planning', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
-  { emptySpace: '', name: 'Transaction', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
-  { emptySpace: '', name: 'Agreements & invoices', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
+  {emptySpace: '', name: 'Identity & address proofs', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  {emptySpace: '', name: 'Accounts', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  {emptySpace: '', name: 'Planning', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  {emptySpace: '', name: 'Transaction', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  {emptySpace: '', name: 'Agreements & invoices', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
 
 ];
 
