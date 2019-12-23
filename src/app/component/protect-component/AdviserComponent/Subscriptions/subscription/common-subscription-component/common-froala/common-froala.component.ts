@@ -40,6 +40,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { MatDialog } from '@angular/material';
 import { SubscriptionService } from '../../../subscription.service';
 import { UtilService } from 'src/app/services/util.service';
+import { EmailOnlyComponent } from '../email-only/email-only.component';
 
 @Component({
   selector: 'app-common-froala',
@@ -245,7 +246,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
       advisorId: 2828,
       clientData: this.storeData,
       templateType: this.templateType, // 2 is for quotation
-      documentList: [this.storeData]
+      documentList: [this.storeData],
     };
     // this.dataSource.forEach(singleElement => {
     //   if (singleElement.selected) {
@@ -260,7 +261,9 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
       flag: value,
       data,
       id: 1,
-      state: 'open'
+      state: 'open',
+      componentName:EmailOnlyComponent
+
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
