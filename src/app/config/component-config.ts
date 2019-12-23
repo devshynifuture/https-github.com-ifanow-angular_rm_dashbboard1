@@ -174,6 +174,7 @@ export const appConfig = {
   ADD_OTHERS_GOAL: 'goal-planning/others/goal/add',
   ADD_EXPENSE:'account/expense/recurring/expense/add',
   EDIT_EXPENSE:'/account/expense/recurring/expense/edit',
+  RISK_HISTORY:'plan/risk-assessment/history/get',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   GET_EPF: 'account/asset/retirement/epf/list/get',
