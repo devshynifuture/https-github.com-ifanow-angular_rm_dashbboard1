@@ -72,7 +72,7 @@
             </div>
         </div>
         <div class="example-container col-md-12 p-0 mt-8 real-estate" id="epf" #EPF #epf>
-            <table *ngIf="dataSource" matSort #epfListTable="matSort" mat-table [dataSource]="dataEPFList" matSort
+            <table *ngIf="dataEPFList" matSort #epfListTable="matSort" mat-table [dataSource]="dataEPFList" matSort
                 id="table-low">
 
                 <ng-container matColumnDef="no">
@@ -183,8 +183,8 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns11;"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns11;sticky: true" [hidden]="isLoading"></tr>
             </table>
-            <div *ngIf="dataSource==undefined">
-                <h4 class="text-center pt-72">no data found</h4>
+            <div *ngIf="dataEPFList==undefined">
+                <h4 class="text-center pt-72">{{noData}}</h4>
             </div>
         </div>
     </div>
@@ -263,7 +263,7 @@
             </mat-menu>
         </div>
         <div class="example-container mt-8 col-md-12 p-0 real-estate" #NPS #nps>
-            <table *ngIf="dataSource" matSort #npsListTable="matSort" mat-table [dataSource]="dataNPSList"
+            <table *ngIf="dataNPSList" matSort #npsListTable="matSort" mat-table [dataSource]="dataNPSList"
                 id="table-low">
                 <ng-container matColumnDef="no">
                     <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
@@ -342,8 +342,8 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns12;"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns12;sticky: true" [hidden]="isLoading"></tr>
             </table>
-            <div *ngIf="dataSource==undefined">
-                <h4 class="text-center pt-72">no data found</h4>
+            <div *ngIf="dataNPSList==undefined">
+                <h4 class="text-center pt-72">{{noData}}</h4>
             </div>
         </div>
     </div>
@@ -376,8 +376,8 @@
         </div>
     </div>
     <div class="example-container mt-8 col-md-12 p-0 real-estate" #GRATUITY #Gratuity>
-        <table *ngIf="dataSource" #gratuityListTable="matSort" [dataSource]="dataGratuityList" id="table-low" mat-table
-            matSort>
+        <table *ngIf="dataGratuityList" #gratuityListTable="matSort" [dataSource]="dataGratuityList" id="table-low"
+            mat-table matSort>
             <ng-container matColumnDef="no">
                 <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
                 <td *matCellDef="let element let i = index" class="br t-2" mat-cell> {{i + 1}} </td>
@@ -460,8 +460,8 @@
             <tr *matRowDef="let row; columns: displayedColumns13;" mat-row></tr>
             <tr *matFooterRowDef="displayedColumns13;sticky: true" mat-footer-row></tr>
         </table>
-        <div *ngIf="dataSource==undefined">
-            <h4 class="text-center pt-72">no data found</h4>
+        <div *ngIf="dataGratuityList==undefined">
+            <h4 class="text-center pt-72">{{noData}}</h4>
         </div>
     </div>
 </div>
@@ -493,7 +493,7 @@
         </div>
     </div>
     <div class="example-container col-md-12 p-0 mt-8 real-estate" #SUPERANNUATION #Superannuation>
-        <table *ngIf="dataSource" #superAnnuationListTable="matSort" [dataSource]="dataSuperannuationList"
+        <table *ngIf="dataSuperannuationList" #superAnnuationListTable="matSort" [dataSource]="dataSuperannuationList"
             id="table-low" mat-table matSort>
             <ng-container matColumnDef="no">
                 <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
@@ -595,8 +595,8 @@
             <tr *matRowDef="let row; columns: displayedColumns14;" mat-row></tr>
             <tr *matFooterRowDef="displayedColumns14;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
         </table>
-        <div *ngIf="dataSource==undefined">
-            <h4 class="text-center pt-72">no data found</h4>
+        <div *ngIf="dataSuperannuationList==undefined">
+            <h4 class="text-center pt-72">{{noData}}</h4>
         </div>
     </div>
 </div>
@@ -627,7 +627,7 @@
         </div>
     </div>
     <div class="example-container mt-8 col-md-12 p-0 real-estate" #EPS #eps>
-        <table *ngIf="dataSource" #epsListTable="matSort" [dataSource]="EPSList" id="table-low" mat-table matSort>
+        <table *ngIf="EPSList" #epsListTable="matSort" [dataSource]="EPSList" id="table-low" mat-table matSort>
             <ng-container matColumnDef="no">
                 <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
                 <td *matCellDef="let element let i = index" class="br t-2" mat-cell> {{i + 1}} </td>
@@ -705,8 +705,8 @@
             <tr *matRowDef="let row; columns: displayedColumns15;" mat-row></tr>
             <tr *matFooterRowDef="displayedColumns15;sticky: true" mat-footer-row></tr>
         </table>
-        <div *ngIf="dataSource==undefined">
-            <h4 class="text-center pt-72">no data found</h4>
+        <div *ngIf="EPSList==undefined">
+            <h4 class="text-center pt-72">{{noData}}</h4>
         </div>
     </div>
 </div>
