@@ -37,6 +37,7 @@
                             <div class="col-md-7 p-0">
                                 <p class="mb-0 text-primitive f-12">FEE TYPE</p>
                                 <label class="bg-header mt-4 f-16" *ngIf="singleService.servicePricing.feeTypeId==1">Fixed</label>
+                                <label class="bg-header mt-4 f-16" *ngIf="!singleService.servicePricing"> - </label>
                                 <label class="bg-header mt-4 f-16" *ngIf="singleService.servicePricing.feeTypeId==2">Variable</label>
                             </div>
                             <div class="col-md-5 p-0">

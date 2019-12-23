@@ -22,7 +22,7 @@ export class PlansSettingsComponent implements OnInit {
 
   //showLoader;
 
-  planSettingData = [{}, {}, {}];
+  planSettingData = [{ name: ' ' }, {}, {}];
   isLoading = false;
   advisorId;
 
