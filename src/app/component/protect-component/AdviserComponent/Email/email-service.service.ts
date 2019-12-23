@@ -204,6 +204,92 @@ export class EmailServiceService {
     });
   }
 
+  updateDraft({ id, to, from, emailBody, attachments, subject }) {
+    const userInfo = AuthService.getUserInfo();
+    const Obj = {
+      "attachmentIds": [
+        ""
+      ],
+      "bccs": [
+        ""
+      ],
+      "ccs": [
+        ""
+      ],
+      "contentType": "",
+      "draft": {
+        "historyId": "",
+        "id": "",
+        "messages": {
+          "historyId": 0,
+          "id": "",
+          "internalDate": 0,
+          "labelIds": [
+            "DRAFT"
+          ],
+          "payload": {
+            "body": {
+              "data": "",
+              "size": 0
+            },
+            "fileName": "",
+            "headers": [
+              {
+                "name": "",
+                "value": ""
+              }
+            ],
+            "mimeType": "",
+            "partId": "",
+            "parts": [
+              {
+                "body": {
+                  "data": "",
+                  "size": 0
+                },
+                "fileName": "",
+                "headers": [
+                  {
+                    "name": "",
+                    "value": ""
+                  }
+                ],
+                "mimeType": "",
+                "partId": ""
+              }
+            ]
+          },
+          "sizeEstimate": 0,
+          "snippet": "",
+          "threadId": ""
+        },
+        "threadId": ""
+      },
+      "email": userInfo.emailId,
+      "fileData": [
+        {
+          "data": "",
+          "filename": "",
+          "mimeType": "",
+          "partId": "",
+          "size": 0
+        }
+      ],
+      "id": id,
+      "message": emailBody,
+      "subject": subject,
+      "toAddress": [
+        to
+      ],
+      "userId": 2727
+    };
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.UPDATE_DRAFT, {
+      email: userInfo.emailId,
+      userId: userInfo.advisorId,
+      ...Obj
+    });
+  }
+
   createUpdateDraft(body) {
     const userInfo = AuthService.getUserInfo();
     // console.log(apiConfig.GMAIL_URL + appConfig.CREATE_DRAFT, " \n http params \n", {
@@ -211,6 +297,14 @@ export class EmailServiceService {
     //   userId: userInfo.advisorId,
     //   ...body
     // });
+
+    console.log("draft obj ->>>>>>>>>>", {
+      email: userInfo.emailId,
+      userId: userInfo.advisorId,
+      ...body
+    });
+
+
     return this.http.post(apiConfig.GMAIL_URL + appConfig.CREATE_DRAFT, {
       email: userInfo.emailId,
       userId: userInfo.advisorId,

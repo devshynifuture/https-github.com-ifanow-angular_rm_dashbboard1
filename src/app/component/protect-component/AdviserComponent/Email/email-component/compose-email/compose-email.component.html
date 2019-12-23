@@ -14,7 +14,7 @@
             </div>
         </div>
     </div>
-    <form [formGroup]="emailForm" (ngSubmit)="onSendEmail()">
+    <form [formGroup]="emailForm" #eForm (ngSubmit)="onSendEmail()">
         <div class="wrapper-8 pt-12">
             <div class="row">
                 <div class="col-md-1">
@@ -24,7 +24,7 @@
                     <!-- <p class="m-0 text-black">
                         {{ from }}
                     </p> -->
-                    <input type="text" [(ngModel)]="from" (keyup)="setFromOfEmail(true)" formControlName="sender">
+                    <input type="text" [(ngModel)]="from" formControlName="sender">
                     <div *ngIf="!emailForm.controls['sender'].valid && emailForm.controls['sender'].touched"
                         [ngClass]="emailForm.controls['sender'].valid && emailForm.controls['sender'].touched ? '': 'is-invalid'">
                         invalid email

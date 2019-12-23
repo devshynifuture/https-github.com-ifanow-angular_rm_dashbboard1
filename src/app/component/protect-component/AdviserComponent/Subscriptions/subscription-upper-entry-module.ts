@@ -62,6 +62,7 @@ export const componentList = [
     VariableFeeComponent,
     ChangePayeeComponent,
     CommonFroalaComponent,
+    EmailOnlyComponent
 ]
 @NgModule({
     declarations: componentList,

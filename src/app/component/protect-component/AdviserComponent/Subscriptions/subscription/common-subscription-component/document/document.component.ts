@@ -234,7 +234,7 @@ export class DocumentComponent implements OnInit {
         data.documentList.push(singleElement);
       }
     });
-    this.open('emailOnlyDoc',data);
+    this.open('email', data);
   }
 
   open(value, data) {
@@ -552,7 +552,7 @@ export class DocumentComponent implements OnInit {
         // advisorId: 12345,
         advisorId: this.advisorId,
         documentRepositoryId: element.documentRepositoryId,
-        mappingId: element.mappingId
+        mappingId: this.upperData.id
       };
       obj.push(data);
     });

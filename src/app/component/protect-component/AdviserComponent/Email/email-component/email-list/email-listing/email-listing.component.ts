@@ -62,7 +62,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     let location;
-    if(this.router.url === '/'){
+    if (this.router.url === '/') {
       location = 'inbox';
     } else {
       location = this.router.url.split('/')[3];
@@ -154,8 +154,12 @@ export class EmailListingComponent implements OnInit, OnDestroy {
   }
 
   openDraftView(dataObj) {
-    this.emailService.sendNextData(dataObj);
-    this.emailService.openComposeEmail(dataObj, ComposeEmailComponent);
+    const idArray = [];
+    this.messageListArray.forEach((item) => {
+      idArray.push(item["idsOfThread"]["id"]);
+    })
+    this.emailService.sendNextData({ dataObj, idArray });
+    this.emailService.openComposeEmail({ dataObj, idArray }, ComposeEmailComponent);
   }
 
   // move single thread to trash

@@ -1,16 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EnumServiceService } from '../../../../../../../services/enum-service.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { INT_TYPE } from '@angular/compiler/src/output/output_ast';
-import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { from } from 'rxjs';
-import { UtilService } from 'src/app/services/util.service';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EnumServiceService} from '../../../../../../../services/enum-service.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {MAT_DATE_FORMATS} from '@angular/material/core';
+import {UtilService} from 'src/app/services/util.service';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 
 
 export interface PeriodicElement {
@@ -658,9 +656,9 @@ export class InvoiceComponent implements OnInit {
     //   }
     // });
     if (input == 'upper') {
-      this.OpenEmailUpper(data, 'emailInvoiceFroala');
+      this.OpenEmailUpper(data, 'email');
     } else {
-      this.OpenEmail(data, 'emailInvoiceFroala');
+      this.OpenEmail(data, 'email');
 
     }
   }
