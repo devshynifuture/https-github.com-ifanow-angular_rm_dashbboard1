@@ -23,10 +23,10 @@ import { ExcelService } from '../../../../excel.service';
 export class CommoditiesComponent implements OnInit {
   showRequring: string;
   isLoading: boolean = true;
-  displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue', 'pvalue', 'desc','status', 'icons'];
+  displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue', 'pvalue', 'desc', 'status', 'icons'];
   datasource9 = ELEMENT_DATA9;
 
-  displayedColumns10 = ['no', 'owner', 'type', 'mvalue', 'pvalue', 'pur', 'rate', 'desc', 'status','icons'];
+  displayedColumns10 = ['no', 'owner', 'type', 'mvalue', 'pvalue', 'pur', 'rate', 'desc', 'status', 'icons'];
   datasource10 = ELEMENT_DATA10;
   advisorId: any;
   goldList: any;
@@ -42,6 +42,7 @@ export class CommoditiesComponent implements OnInit {
   @ViewChild('otherCommodityListTable', { static: false }) otherCommodityListTableSort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
+  noData: string;
 
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) { }
   ngOnInit() {
@@ -95,14 +96,14 @@ export class CommoditiesComponent implements OnInit {
         (element.growthRate), element.description, element.status]
         this.excelData.push(Object.assign(data))
       });
-      var footerData = ['Total','','', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMarketValue),
+      var footerData = ['Total', '', '', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMarketValue),
         this.formatNumber.first.formatAndRoundOffNumber(this.sumOfPurchaseValue), '', '', '', '']
       this.footer.push(Object.assign(footerData))
 
     }
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   }
-  
+
   getfixedIncomeData(value) {
     console.log('value++++++', value)
     this.showRequring = value
@@ -170,10 +171,14 @@ export class CommoditiesComponent implements OnInit {
   getGoldRes(data) {
     console.log('getGoldList @@@@', data);
     this.isLoading = false;
-    this.goldList = new MatTableDataSource(data.goldList);
-    this.goldList.sort = this.goldListTableSort;
-    this.sumOfMarketValue = data.sumOfMarketValue
-    this.sumOfPurchaseValue = data.sumOfPurchaseValue
+    if (data.goldList.length != 0) {
+      this.goldList = new MatTableDataSource(data.goldList);
+      this.goldList.sort = this.goldListTableSort;
+      this.sumOfMarketValue = data.sumOfMarketValue
+      this.sumOfPurchaseValue = data.sumOfPurchaseValue
+    } else {
+      this.noData = "No Scheme Found";
+    }
   }
   getOtherList() {
     this.isLoading = true;
@@ -188,11 +193,15 @@ export class CommoditiesComponent implements OnInit {
   getOthersRes(data) {
     console.log('getOthersRes @@@@', data);
     this.isLoading = false;
-
-    this.otherCommodityList = new MatTableDataSource(data.otherCommodityList);
-    this.otherCommodityList.sort = this.otherCommodityListTableSort;
-    this.sumOfMarketValueOther = data.sumOfMarketValue
-    this.sumOfPurchaseValueOther = data.sumOfPurchaseValue
+    if (data.otherCommodityList.length != 0) {
+      this.otherCommodityList = new MatTableDataSource(data.otherCommodityList);
+      this.otherCommodityList.sort = this.otherCommodityListTableSort;
+      this.sumOfMarketValueOther = data.sumOfMarketValue
+      this.sumOfPurchaseValueOther = data.sumOfPurchaseValue
+    }
+    else {
+      this.noData = "No Scheme Found";
+    }
   }
   openCommodities(value, state, data) {
     const fragmentData = {
@@ -292,24 +301,24 @@ export interface PeriodicElement9 {
   mvalue: string;
   pvalue: string;
   desc: string;
-  status:String
+  status: String
 }
 
 const ELEMENT_DATA9: PeriodicElement9[] = [
   {
     no: '1.', owner: 'Rahul Jain'
     , grams: "50 tolas", car: "24", price: "32,000(as on 20/08/2019)",
-    mvalue: "60,000", pvalue: "60,000", desc: "ICICI FD", status:''
+    mvalue: "60,000", pvalue: "60,000", desc: "ICICI FD", status: ''
   },
   {
     no: '2.', owner: 'Rahul Jain'
     , grams: "25 tolas", car: "24", price: "32,000(as on 20/08/2019)",
-    mvalue: "60,000", pvalue: "60,000", desc: "ICICI FD", status:''
+    mvalue: "60,000", pvalue: "60,000", desc: "ICICI FD", status: ''
   },
   {
     no: '', owner: 'Total'
     , grams: "", car: "", price: "",
-    mvalue: "1,28,925", pvalue: "1,20,000", desc: "", status:''
+    mvalue: "1,28,925", pvalue: "1,20,000", desc: "", status: ''
   },
 
 ];
@@ -333,7 +342,7 @@ const ELEMENT_DATA10: PeriodicElement10[] = [
 
   {
     no: '2.', owner: 'Shilpa Jain'
-    , type: "Cumulative", mvalue: "60,000", pvalue: "1,00,000", pur: "18/09/2021", rate: "8.40%", desc: "ICICI FD", 
+    , type: "Cumulative", mvalue: "60,000", pvalue: "1,00,000", pur: "18/09/2021", rate: "8.40%", desc: "ICICI FD",
   },
   {
     no: '', owner: 'Total'
