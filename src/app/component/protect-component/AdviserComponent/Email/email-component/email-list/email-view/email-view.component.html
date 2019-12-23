@@ -25,7 +25,10 @@
                 <h5 class="f-12">
                     {{ messagesHeaders[i].split('<')[1].split('>')[0] }}
                 </h5>
-                <p [innerHTML]="part">
+                <p [innerHTML]="part.item">
+                </p>
+                <p>
+                    <span>{{ part.date | date: "medium" }}</span>
                 </p>
             </div>
         </div>

@@ -58,6 +58,10 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         })
 
         let { parsedData: { decodedPart } } = this.emailObj;
+
+        let { messageDates } = this.emailObj;
+
+        console.log("this are message dates", messageDates);
         console.log("this is decoded part : >>>>>", decodedPart);
 
         let extractHtmlValue = decodedPart.filter((part, index) => {
@@ -65,6 +69,10 @@ export class EmailViewComponent implements OnInit, OnDestroy {
             return part;
           }
         });
+
+        extractHtmlValue = extractHtmlValue.map((item, index) => {
+          return { item, date: messageDates[index] }
+        })
 
         this.body = extractHtmlValue;
 

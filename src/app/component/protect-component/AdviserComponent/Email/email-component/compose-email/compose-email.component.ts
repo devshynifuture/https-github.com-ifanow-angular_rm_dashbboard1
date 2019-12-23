@@ -1,5 +1,5 @@
 import { EmailUtilService } from './../../../../../../services/email-util.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Form } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 import { SubscriptionService } from './../../../Subscriptions/subscription.service';
@@ -31,16 +31,58 @@ export class ComposeEmailComponent implements OnInit {
   doc: [];
   docObj: [];
   message: string;
-  data;
+  data = null;
   isCcSelected: boolean = false;
   isBccSelected: boolean = false;
   isFromChanged: boolean = false;
   idArray: [] = [];
+  prevStateOfForm;
+  currentStateOfForm: Form;
+  toCreateOrUpdate: string = '';
 
   emailForm: FormGroup;
 
   ngOnInit() {
     this.createEmailForm();
+    if (this.data && this.data !== null) {
+      // this.prevStateOfForm
+      console.log("this is data: =>>>>>>>>>", this.data);
+
+      const { dataObj } = this.data;
+      let from, to;
+
+      const { parsedData: { headers } } = dataObj;
+      headers.forEach(element => {
+        if (element.name === "From") {
+          from = element.value.split('<')[1].split('>')[0];
+        }
+        if (element.name === "To") {
+          to = element.value.split('<')[1].split('>')[0];
+        }
+      });
+
+      this.emailForm.setValue({
+        sender: from,
+        receiver: to,
+        carbonCopy: '',
+        blindCarbonCopy: '',
+        subject: this.data.dataObj.subjectMessage.subject,
+        messageBody: this.data.dataObj.subjectMessage.message,
+        attachments: '',
+      });
+
+      this.prevStateOfForm = this.emailForm;
+    } else {
+      console.log("no data present");
+      this.prevStateOfForm = this.emailForm.value;
+    }
+    this.emailForm.valueChanges.subscribe((value) => {
+      if (this.prevStateOfForm === value) {
+        this.toCreateOrUpdate = 'create';
+      } else {
+        this.toCreateOrUpdate = 'update';
+      }
+    });
   }
 
   createEmailForm() {
@@ -101,36 +143,36 @@ export class ComposeEmailComponent implements OnInit {
   // }
 
   close(): void {
-    this.idArray.forEach(element => {
-      if (element !== this.idOfMessage) {
-        const Obj = {
-          to: this.to ? this.to : '',
-          from: this.from ? this.from : '',
-          emailBody: this.emailBody ? this.emailBody : '',
-          attachments: '',
-          subject: this.subject ? this.subject : ''
-        }
-        this.emailService.createDraft(Obj)
-          .subscribe(response => console.log(response), error => console.error(error));
-      } else if (element !== this.idOfMessage) {
-
-        const Obj = {
-          id: this.idOfMessage,
-          to: this.to ? this.to : '',
-          from: this.from ? this.from : '',
-          emailBody: this.emailBody ? this.emailBody : '',
-          attachments: '',
-          subject: this.subject ? this.subject : ''
-        }
-        console.log(" update api for draft");
-        this.emailService.updateDraft(Obj)
-          .subscribe(response => console.log(response), error => console.error(error))
+    let Obj;
+    if (this.toCreateOrUpdate === 'create') {
+      Obj = {
+        to: '',
+        from: '',
+        emailBody: '',
+        attachments: '',
+        subject: ''
       }
-    });
+      console.log("created")
+    } else if (this.toCreateOrUpdate === 'update') {
+      Obj = {
+        to: this.to,
+        from: this.from,
+        emailBody: this.emailBody,
+        attachments: '',
+        subject: this.subject,
+      }
+      console.log("updated");
+    } else {
+      this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+      this.subInjectService.changeNewRightSliderState({ state: 'close' });
+      console.log("closed...");
+    }
 
+    this.emailService.createDraft(Obj)
+      .subscribe(response => console.log(response), error => console.error(error));
+    // this.valueChange.emit(this.emailSend);
     this.subInjectService.changeUpperRightSliderState({ state: 'close' });
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
-    // this.valueChange.emit(this.emailSend);
   }
 
   onSendEmail(): void {
@@ -151,8 +193,8 @@ export class ComposeEmailComponent implements OnInit {
   }
 
   createUpdateDraft(id: string, toAddress: Array<any>, subject: string, bodyMessage: string, fileData: Array<any>) {
-    let encodedSubject = EmailUtilService.changeStringToBase46(subject);
-    let encodedMessage = EmailUtilService.changeStringToBase46(bodyMessage);
+    let encodedSubject = EmailUtilService.changeStringToBase64(subject);
+    let encodedMessage = EmailUtilService.changeStringToBase64(bodyMessage);
     const requestJson = {
       id,
       toAddress,
