@@ -43,13 +43,13 @@ export class InvoicesSubscriptionComponent implements OnInit {
   statusIdList = [];
   showFilter = false;
   selectedDateRange: { begin: Date; end: Date; };
+  dataSource: any;
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
     private eventService: EventService, public subscription: SubscriptionService) {
     this.ngOnInit();
   }
 
-  dataSource: [{ selected: '' }, { selected: '' }, { selected: '' }];
   isLoading = false;
   subscriptionValue: any;
   invoiceSub: any;
@@ -65,6 +65,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   @Input() invoiceValue
 
   ngOnInit() {
+    this.dataSource= [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
     this.getInvoiceSubData();
     this.showEdit = false;
@@ -75,13 +76,12 @@ export class InvoicesSubscriptionComponent implements OnInit {
   }
 
   getInvoiceSubData() {
-
+    this.isLoading = true;
     const obj = {
       id: this.advisorId,
       // id: 2735, // pass here advisor id for Invoice advisor
       module: 1
     };
-    this.isLoading = true;
     this.subscription.getInvoices(obj).subscribe(
       data => this.getInvoiceResponseData(data)
     );
