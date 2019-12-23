@@ -86,6 +86,9 @@ export class CalenderComponent implements OnInit {
     return 32 - new Date(year + 1, month + 1, 32).getDate();
   }
 
+  persentMonth(){
+    this.viewDate = new Date();
+  }
 
   nextMonth() {
     this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1))

@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { PlanService } from '../../../plan.service';
 import { FormBuilder } from '@angular/forms';
+import { UtilService } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
 import * as _ from 'lodash';
 import { AuthService } from 'src/app/auth-service/authService';
 import { Container } from '@angular/compiler/src/i18n/i18n_ast';
+import { HistoryRiskProfileComponent } from '../../history-risk-profile/history-risk-profile.component';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 const HighchartsMore = require('highcharts/highcharts-more.src');
 HighchartsMore(Highcharts);
@@ -38,7 +41,7 @@ export class RiskProfileComponent implements OnInit {
   onClick(referenceKeyName1) {
     alert(referenceKeyName1.id);
   }
-  constructor(private fb: FormBuilder, public planService: PlanService, ) {
+  constructor(private fb: FormBuilder, public planService: PlanService, private subInjectService: SubscriptionInject) {
   }
 
   ngOnInit() {
@@ -221,17 +224,15 @@ export class RiskProfileComponent implements OnInit {
           text: ''
         },
       },
-
       credits: {
         enabled: true
       },
-
       series: [{
         name: '',
         data: [this.score],
         dataLabels: 1,
         tooltip: {
-          valueSuffix: ' km/h'
+          valueSuffix: ''
         },
       }]
 
@@ -307,5 +308,25 @@ export class RiskProfileComponent implements OnInit {
       this.equityAllocationLowerLimit = data.equityAllocationLowerLimit
       this.equityAllocationUpperLimit = data.equityAllocationUpperLimit
     }
+  }
+  open(flagValue, data) {
+    const fragmentData = {
+      flag: flagValue,
+      data,
+      state: 'open30',
+      componentName: HistoryRiskProfileComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+  close() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 }
