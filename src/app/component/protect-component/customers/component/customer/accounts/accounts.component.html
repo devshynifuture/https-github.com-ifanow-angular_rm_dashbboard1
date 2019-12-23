@@ -1,33 +1,17 @@
 <div id="ui-account-container">
   <div id="advisor-home">
-    <!--  <a [routerLink]="[{ outlets: { primary: '/admin/subscription/dashboard'}}]" class="sidenav-link" mat-list-item>-->
-    <!--      <a mat-list-item class="sidenav-link" [routerLink]="['/admin/subscription/dashboard']">-->
-    <!--    <a class="sidenav-link" href="/admin/subscription/dashboard" mat-list-item>-->
-
-    <!---->
-    <!--  <a mat-list-item class="sidenav-link" [routerLink]="['',{outlet:{secondary:'/admin/subscription'}}]">-->
-    <!--          <button class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">-->
     <button (click)="goToAdvisorHome()" class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">
-      keyboard_backspace
-    </i>ADVISOR HOME
+        keyboard_backspace
+      </i>ADVISOR HOME
     </button>
-    <!--    </a>-->
   </div>
   <nav id="ui-customer-secondhead" mat-tab-nav-bar>
-    <!--    [routerLink]="'./summary'"-->
-    <a (click)="navBarClick('summary',1)" mat-tab-link
-       routerLinkActive="active">SUMMARY</a>
+    <a (click)="navBarClick('summary',1)" mat-tab-link routerLinkActive="active">SUMMARY</a>
     <a (click)="navBarClick('assets',2)" mat-tab-link routerLinkActive="active">ASSETS</a>
-
-    <!--     [routerLink]="[{outlet:{accountRouterOutlet:['assets']}}]">ASSETS</a>-->
-    <!--    [ngClass]="_value == 3 ? 'active': ''"-->
-    <a (click)="navBarClick('liabilities',3)" mat-tab-link
-       routerLinkActive="active">LIABILITIES</a>
+    <a (click)="navBarClick('liabilities',3)" mat-tab-link routerLinkActive="active">LIABILITIES</a>
     <a (click)="navBarClick('insurance',4)" mat-tab-link routerLinkActive="active">INSURANCE</a>
-    <!-- <a mat-tab-link [routerLink]="'expenses'">EXPENSES</a> -->
     <a (click)="navBarClick('documents',5)" mat-tab-link routerLinkActive="active">DOCUMENTS</a>
   </nav>
-  <!--  <div *ngIf="showRouter">-->
   <div [@routeAnimations]="routingStateService.prepareRoute(outlet)">
 
     <router-outlet #outlet="outlet">
