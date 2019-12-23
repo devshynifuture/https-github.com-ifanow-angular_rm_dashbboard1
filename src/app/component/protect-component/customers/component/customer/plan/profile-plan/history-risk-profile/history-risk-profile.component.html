@@ -22,7 +22,7 @@
       
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef> Risk status </th>
-          <td mat-cell *matCellDef="let element"> {{element.riskProfileStatus}} </td>
+          <td mat-cell *matCellDef="let element" [ngClass]=" element.riskProfileStatus === 'Aggressive' ? 'activeColor' : element.riskProfileStatus === 'Moderate' ? 'moderate' : 'moderateCon'"> {{element.riskProfileStatus}} </td>
         </ng-container>
       
         <ng-container matColumnDef="weight">
