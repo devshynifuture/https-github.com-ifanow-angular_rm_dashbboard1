@@ -1,7 +1,4 @@
-<div *ngIf="showLoader">
-    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div>
-<div *ngIf="showLoader==false" id="ui-document-settings">
+<div id="ui-document-settings">
 
     <div class="bg-white pb-36 ">
 
@@ -31,8 +28,8 @@
 
                     </mat-card>
                 </div>
-                <div class="col-md-4 pr-20 pb-20 pl-0" *ngFor="let singleDocument of documentSettingData">
-                    <app-single-document-view [singleDocument]="singleDocument" (valueChange)='display($event)'>
+                <div class="col-md-4 pr-20 pb-20 pl-0 " *ngFor="let singleDocument of documentSettingData">
+                    <app-single-document-view class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" [singleDocument]="singleDocument" (valueChange)='display($event)'>
                     </app-single-document-view>
                 </div>
             </div>

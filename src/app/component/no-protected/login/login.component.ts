@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
             }
             this.authService.setUserInfo(data);
             this.eventService.openSnackBar('Login SuccessFully', 'dismiss');
-            this.router.navigate(['admin','subscription','dashboard']);
+            this.router.navigate(['admin', 'subscription', 'dashboard']);
 
             // Hard coded client login for testing
             this.authService.setClientData({
@@ -94,7 +94,7 @@ export class LoginComponent implements OnInit {
 
   hardCodeLoginForTest() {
     const jsonData = {
-      advisorId: 2727,
+      advisorId: 2808,
       clientId: 2978,
       emailId: 'gaurav@futurewise.co.in',
       authToken: 'data',
@@ -109,7 +109,7 @@ export class LoginComponent implements OnInit {
     });
     // this.authService.setToken(loginData.payLoad);
     this.eventService.openSnackBar('Login SuccessFully', 'dismiss');
-    this.router.navigate(['admin','subscription','dashboard']);
+    this.router.navigate(['admin', 'subscription', 'dashboard']);
   }
 
   closeDialog(data) {

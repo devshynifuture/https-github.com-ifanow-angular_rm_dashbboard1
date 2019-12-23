@@ -42,10 +42,11 @@ export class LiabilitiesComponent implements OnInit {
   showLoader: boolean;
   noData: string;
   totalLoanAmt: any;
-  outStandingAmt=0;
+  outStandingAmt = 0;
   filterData: any;
   excelData: any[];
   footer = [];
+
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
     public customerService: CustomerService, public util: UtilService, public dialog: MatDialog) {
@@ -67,6 +68,7 @@ export class LiabilitiesComponent implements OnInit {
   }
   /**used for excel  */
   async ExportTOExcel(value) {
+
     this.excelData = []
     var data = []
     var headerData = [{ width: 20, key: 'Owner' },
@@ -254,6 +256,7 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   getLiability(data) {
+
     this.dataToShow = data.data;
     const obj = {
       advisorId: this.advisorId,
@@ -272,13 +275,13 @@ export class LiabilitiesComponent implements OnInit {
       this.totalLoanAmt = data.totalLoanAmount;
       // this.outStandingAmt = data.outstandingAmount;
       data.loans.forEach(element => {
-        this.totalLoanAmt +=element.loanAmount
+        this.totalLoanAmt += element.loanAmount
       });
       data.loans.forEach(element => {
         if (element.outstandingAmount == "NaN") {
           element.outstandingAmount = 0
         }
-        this.outStandingAmt +=element.outstandingAmount
+        this.outStandingAmt += element.outstandingAmount
       });
       this.dataStore = [];
       this.dataSource = [];
@@ -310,6 +313,7 @@ export class LiabilitiesComponent implements OnInit {
       });
       this.sortTable(this.dataToShow);
     }
+
   }
 
   clickHandling() {
