@@ -40,7 +40,13 @@
     <a (click)="value=5" [ngClass]="_value == 5 ?'successBorder': 'danger'" [routerLink]="'./transact'"
       mat-tab-link>TRANSACT</a>
   </nav>
-  <router-outlet></router-outlet>
+  <router-outlet id="cust1"></router-outlet>
+  <ng-template>
+    <router-outlet id="cust2"></router-outlet>
+  </ng-template>
+  <ng-template>
+    <router-outlet id="cust3"></router-outlet>
+  </ng-template>
 </div>
 <!-- </div> -->
 
