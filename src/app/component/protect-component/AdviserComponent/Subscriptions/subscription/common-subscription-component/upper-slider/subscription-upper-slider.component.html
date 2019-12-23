@@ -169,7 +169,7 @@
   <app-email-quotation [headerDataInvoice]="headerDataInvoice" *ngIf="rightSliderFlag=='eSignInvoices'">
   </app-email-quotation>
   <app-email-quotation [headerData]="headerData" *ngIf="rightSliderFlag=='emailQuot'"></app-email-quotation>
-  <app-email-only *ngIf="rightSliderFlag=='email'" [inputData]="upperRightSideInputData.data"></app-email-only>
+  <app-email-only *ngIf="rightSliderFlag=='email'" [data]="upperRightSideInputData.data"></app-email-only>
   <!--  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnlyDoc'"></app-email-only>-->
   <!--  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailOnlyInv'"></app-email-only>-->
   <!--  <app-email-only [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='emailInvoiceFroala'">-->
