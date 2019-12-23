@@ -11,3 +11,11 @@
   min-width: 160px !important;
   font-size: 12px !important;
 }
+
+::ng-deep .w-340 {
+  width: 340px !important;
+
+  .mat-menu-item {
+    height: 68px !important;
+  }
+}
