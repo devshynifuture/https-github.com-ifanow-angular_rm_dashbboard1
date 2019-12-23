@@ -24,11 +24,15 @@
     <a (click)="value=5" routerLinkActive="active" [routerLink]="'./documents'" mat-tab-link>DOCUMENTS</a>
   </nav>
   <!--  <div *ngIf="showRouter">-->
-  <router-outlet id="accounts1">
-    <ng-template>
-      <router-outlet id="accounts2"></router-outlet>
-    </ng-template>
+  <!--  <div [@routeAnimations]="routingStateService.prepareRoute(outlet)">-->
+
+  <router-outlet #outlet="outlet">
+
   </router-outlet>
+  <ng-template>
+    <router-outlet></router-outlet>
+  </ng-template>
+  <!--  </div>-->
   <!-- <ng-template>
      <router-outlet></router-outlet>
    </ng-template>-->
