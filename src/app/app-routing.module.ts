@@ -37,13 +37,12 @@ const routes: Routes = [
         path: 'calender',
         component: CalenderComponent
       },
-      /*   {
-           path: 'calender',
-           component: CalenderComponent
-         },*/
-
     ]
   },
+  // {
+  //   path: 'calender',
+  //   component: CalenderComponent
+  // },
   {
     path: 'customer',
     // outlet: 'secondary',
