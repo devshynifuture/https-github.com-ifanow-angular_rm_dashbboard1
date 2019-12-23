@@ -46,7 +46,6 @@ import { RiskProfileComponent } from './profile-plan/riskProfile/risk-profile/ri
     AddScenariosComponent,
     AddInvestmentPlanComponent,
     AddProfilePlanComponent,
-    HistoryRiskProfileComponent,
     IncomeComponent,
     ExpensesComponent,
     RiskProfileComponent,
@@ -61,7 +60,7 @@ import { RiskProfileComponent } from './profile-plan/riskProfile/risk-profile/ri
     ReactiveFormsModule
   ],
   exports: [PlanComponent, AddScenariosComponent, AddInvestmentPlanComponent,
-    AddProfilePlanComponent, HistoryRiskProfileComponent, RiskProfileComponent],
+    AddProfilePlanComponent, RiskProfileComponent],
   entryComponents: []
 })
 export class PlanModule {

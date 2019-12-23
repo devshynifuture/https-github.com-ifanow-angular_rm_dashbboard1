@@ -77,4 +77,7 @@ export class PlanService {
   editExpense(data){
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_EXPENSE, data)
   }
+  getRiskHistory(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.RISK_HISTORY, data)
+  }
 }
