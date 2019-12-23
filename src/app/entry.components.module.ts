@@ -82,6 +82,7 @@ import { MFSchemeLevelHoldingsComponent } from './component/protect-component/cu
 import { MFSchemeLevelTransactionsComponent } from './component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mfscheme-level-transactions/mfscheme-level-transactions.component';
 import { MultiYearGoalComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/multi-year-goal/multi-year-goal.component';
 import { SelectAdviceComponent } from './component/protect-component/customers/component/customer/customer-activity/advice-activity/select-advice/select-advice.component';
+import { HistoryRiskProfileComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/history-risk-profile/history-risk-profile.component';
 
 
 export const componentList = [
@@ -96,7 +97,7 @@ export const componentList = [
   OthersComponent,
   CashInHandComponent,
   BankAccountsComponent,
-
+  HistoryRiskProfileComponent,
   NpsSchemeHoldingComponent,
   NpsSummaryPortfolioComponent,
   AddGratuityComponent,

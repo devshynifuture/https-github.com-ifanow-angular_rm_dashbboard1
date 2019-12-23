@@ -1,30 +1,28 @@
-import { NgModule } from '@angular/core';
-import { ScenariosPlanComponent } from './scenarios-plan/scenarios-plan.component';
-import { CashflowsPlanComponent } from './cashflows-plan/cashflows-plan.component';
-import { ProfilePlanComponent } from './profile-plan/profile-plan.component';
-import { InvestmentsPlanComponent } from './investments-plan/investments-plan.component';
-import { GoalsPlanComponent } from './goals-plan/goals-plan.component';
-import { SummaryPlanComponent } from './summary-plan/summary-plan.component';
-import { InsurancePlanComponent } from './insurance-plan/insurance-plan.component';
-import { PlanComponent } from './plan.component';
-import { TexesPlanComponent } from './texes-plan/texes-plan.component';
-import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../../../../../../material/material';
-import { ChartModule } from 'angular-highcharts';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AddScenariosComponent } from './scenarios-plan/add-scenarios/add-scenarios.component';
-import { AddInvestmentPlanComponent } from './investments-plan/add-investment-plan/add-investment-plan.component';
-import { AddProfilePlanComponent } from './profile-plan/add-profile-plan/add-profile-plan.component';
-import { HistoryRiskProfileComponent } from './profile-plan/history-risk-profile/history-risk-profile.component';
+import {NgModule} from '@angular/core';
+import {ScenariosPlanComponent} from './scenarios-plan/scenarios-plan.component';
+import {CashflowsPlanComponent} from './cashflows-plan/cashflows-plan.component';
+import {ProfilePlanComponent} from './profile-plan/profile-plan.component';
+import {InvestmentsPlanComponent} from './investments-plan/investments-plan.component';
+import {GoalsPlanComponent} from './goals-plan/goals-plan.component';
+import {SummaryPlanComponent} from './summary-plan/summary-plan.component';
+import {InsurancePlanComponent} from './insurance-plan/insurance-plan.component';
+import {PlanComponent} from './plan.component';
+import {TexesPlanComponent} from './texes-plan/texes-plan.component';
+import {CommonModule} from '@angular/common';
+import {MaterialModule} from '../../../../../../material/material';
+import {ChartModule} from 'angular-highcharts';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AddScenariosComponent} from './scenarios-plan/add-scenarios/add-scenarios.component';
+import {AddInvestmentPlanComponent} from './investments-plan/add-investment-plan/add-investment-plan.component';
+import {AddProfilePlanComponent} from './profile-plan/add-profile-plan/add-profile-plan.component';
+import {HistoryRiskProfileComponent} from './profile-plan/history-risk-profile/history-risk-profile.component';
 // import {BrowserModule} from '@angular/platform-browser';
-import { PlanRoutingModule } from "./plan-routing.module";
-import { IncomeComponent } from './profile-plan/income/income.component';
-import { ExpensesComponent } from '../accounts/expenses/expenses.component';
-import { RiskProfileComponent } from './profile-plan/riskProfile/risk-profile/risk-profile.component';
+import {PlanRoutingModule} from "./plan-routing.module";
+import {IncomeComponent} from './profile-plan/income/income.component';
+import {ExpensesComponent} from '../accounts/expenses/expenses.component';
+import {RiskProfileComponent} from './profile-plan/riskProfile/risk-profile/risk-profile.component';
 
 // import { AddGoalsComponent } from './add-goals/add-goals.component';
-
-
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -46,7 +44,6 @@ import { RiskProfileComponent } from './profile-plan/riskProfile/risk-profile/ri
     AddScenariosComponent,
     AddInvestmentPlanComponent,
     AddProfilePlanComponent,
-    HistoryRiskProfileComponent,
     IncomeComponent,
     ExpensesComponent,
     RiskProfileComponent,
@@ -60,8 +57,8 @@ import { RiskProfileComponent } from './profile-plan/riskProfile/risk-profile/ri
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [PlanComponent, AddScenariosComponent, AddInvestmentPlanComponent,
-    AddProfilePlanComponent, HistoryRiskProfileComponent, RiskProfileComponent],
+  // exports: [PlanComponent, AddScenariosComponent, AddInvestmentPlanComponent,
+  //   AddProfilePlanComponent, HistoryRiskProfileComponent, RiskProfileComponent],
   entryComponents: []
 })
 export class PlanModule {
