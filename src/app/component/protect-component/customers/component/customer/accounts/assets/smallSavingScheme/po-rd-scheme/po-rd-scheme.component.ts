@@ -33,7 +33,7 @@ export class PoRdSchemeComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns21 = ['no', 'owner', 'cvalue', 'rate', 'deposit', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
-  datasource;
+  dataSource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = 2978;
@@ -55,7 +55,7 @@ export class PoRdSchemeComponent implements OnInit {
     { width: 10, key: 'Status' },]
     var header = ['Owner', 'Current Value', 'Rate', 'Monthly Deposit',
       'Maturity Value', 'Maturity Date', 'RD Number', 'Description', 'Status'];
-    this.datasource.filteredData.forEach(element => {
+    this.dataSource.filteredData.forEach(element => {
       data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue),
       (element.rate), (element.deposit), this.formatNumber.first.formatAndRoundOffNumber(element.maturityValue),
       new Date(element.maturityDate), (element.rdNuumber), element.description, element.status]
@@ -80,9 +80,9 @@ export class PoRdSchemeComponent implements OnInit {
     console.log(data);
     this.isLoading = false;
     if (data) {
-      this.datasource = new MatTableDataSource(data.postOfficeRDList)
-      this.datasource.sort = this.sort;
-      UtilService.checkStatusId(this.datasource.filteredData)
+      this.dataSource = new MatTableDataSource(data.postOfficeRDList)
+      this.dataSource.sort = this.sort;
+      UtilService.checkStatusId(this.dataSource.filteredData)
       this.sumOfCurrentValue = data.sumOfCurrentValue;
       this.sumOfMonthlyDeposit = data.sumOfMonthlyDeposit;
       this.sumOfMaturityValue = data.sumOfMaturityValue;
