@@ -21,7 +21,7 @@ export class KvpSchemeComponent implements OnInit {
   clientId: number;
   advisorId: any;
   noData: string;
-  isLoading: boolean = true;
+  isLoading = false;
   kvpData: any;
   sumOfCurrentValue: number;
   sumOfAmountInvested: number;
@@ -29,41 +29,43 @@ export class KvpSchemeComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
- footer = [];
+  footer = [];
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns18 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
-  datasource;
+  datasource: any = [{}, {}, {}];
 
   ngOnInit() {
+
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getKvpSchemedata()
   }
-async ExportTOExcel(value) {
-  this.excelData = []
-  var data = []
-  var headerData = [{ width: 20, key: 'Owner' },
-  { width: 20, key: 'Current Value' },
-  { width: 10, key: 'Rate' },
-  { width: 25, key: 'Amount Invested' },
-  { width: 20, key: 'Maturity Value' },
-  { width: 15, key: 'Maturity Date' },
-  { width: 15, key: 'Description' },
-  { width: 10, key: 'Status' },]
-  var header = ['Owner', 'Current Value', 'Rate', 'Amount Invested',
-    'Maturity Value', 'Maturity Date', 'Description', 'Status'];
-  this.datasource.filteredData.forEach(element => {
-    data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue), (element.rate),
-    this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested),(element.maturityValue), new Date(element.maturityDate),element.description, element.status]
-    this.excelData.push(Object.assign(data))
-  });
-  var footerData = ['Total',
-    this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue), '',
-    this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountInvested), '', '', '', '']
-  this.footer.push(Object.assign(footerData))
-  ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
-}
+  async ExportTOExcel(value) {
+    this.excelData = []
+    var data = []
+    var headerData = [{ width: 20, key: 'Owner' },
+    { width: 20, key: 'Current Value' },
+    { width: 10, key: 'Rate' },
+    { width: 25, key: 'Amount Invested' },
+    { width: 20, key: 'Maturity Value' },
+    { width: 15, key: 'Maturity Date' },
+    { width: 15, key: 'Description' },
+    { width: 10, key: 'Status' },]
+    var header = ['Owner', 'Current Value', 'Rate', 'Amount Invested',
+      'Maturity Value', 'Maturity Date', 'Description', 'Status'];
+    this.datasource.filteredData.forEach(element => {
+      data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue), (element.rate),
+      this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested), (element.maturityValue), new Date(element.maturityDate), element.description, element.status]
+      this.excelData.push(Object.assign(data))
+    });
+    var footerData = ['Total',
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue), '',
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountInvested), '', '', '', '']
+    this.footer.push(Object.assign(footerData))
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
+  }
   getKvpSchemedata() {
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
@@ -121,13 +123,13 @@ async ExportTOExcel(value) {
 
     });
   }
-  openAddKVP(data,flag) {
+  openAddKVP(data, flag) {
     const fragmentData = {
       flag: 'addKVP',
       data,
       id: 1,
-      state:(flag=="detailedKvp")?'open35':'open',
-      componentName:(flag=="detailedKvp")?DetailedKvpComponent:AddKvpComponent
+      state: (flag == "detailedKvp") ? 'open35' : 'open',
+      componentName: (flag == "detailedKvp") ? DetailedKvpComponent : AddKvpComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

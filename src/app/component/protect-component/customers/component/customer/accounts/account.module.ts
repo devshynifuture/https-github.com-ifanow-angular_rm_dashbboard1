@@ -48,6 +48,7 @@ import { MutualFundSummaryComponent } from './assets/mutual-fund/mutual-fund/mut
 import { MutualFundAllTransactionComponent } from './assets/mutual-fund/mutual-fund/mutual-fund-all-transaction/mutual-fund-all-transaction.component';
 import { MutualFundUnrealizedTranComponent } from './assets/mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized-tran.component';
 import { MutualFundGoalLinkageComponent } from './assets/mutual-fund/mutual-fund/mutual-fund-goal-linkage/mutual-fund-goal-linkage.component';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 
 // import {PlanComponent} from '../plan/plan.component';
 // import {SummaryPlanComponent} from '../plan/summary-plan/summary-plan.component';
@@ -140,6 +141,7 @@ import { MutualFundGoalLinkageComponent } from './assets/mutual-fund/mutual-fund
     // PDFExportModule,
     MaterialModule,
     AccountRoutingModule,
+    CustomDirectiveModule
   ],
   exports: [
     AccountsComponent,

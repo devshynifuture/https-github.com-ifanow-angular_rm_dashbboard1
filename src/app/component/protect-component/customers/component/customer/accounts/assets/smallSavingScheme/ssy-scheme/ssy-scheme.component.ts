@@ -29,7 +29,7 @@ export class SsySchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
   noData: string;
-  isLoading: boolean = true;
+  isLoading = false;
   ssyData: any;
   sumOfCurrentValue: number;
   sumOfAmountInvested: number;
@@ -41,7 +41,7 @@ export class SsySchemeComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private eventService: EventService) { }
   displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
-  datasource;
+  datasource: any = [{}, {}, {}];
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();;
@@ -63,17 +63,18 @@ export class SsySchemeComponent implements OnInit {
       'Account Number', 'Maturity Date', 'Description', 'Status'];
     this.datasource.filteredData.forEach(element => {
       data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue), (element.rate),
-      this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested),(element.number), new Date(element.maturityDate),element.description, element.status]
+      this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested), (element.number), new Date(element.maturityDate), element.description, element.status]
       this.excelData.push(Object.assign(data))
     });
     var footerData = ['Total',
       this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue), '',
       this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountInvested), '', '', '', '']
     this.footer.push(Object.assign(footerData))
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   }
 
   getSsySchemedata() {
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
