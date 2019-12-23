@@ -28,26 +28,24 @@
   <div [@openClose]="currentState" class="right_sidenav">
     <ng-template #dynamic></ng-template>
   </div>
-  <nav (selectedTabChange)="tabClick($event)" id="ui-customer" mat-tab-nav-bar>
+  <nav id="ui-customer" mat-tab-nav-bar>
     <a (click)="value=1" [ngClass]="_value == 1 ?'successBorder': 'danger'" [routerLink]="'./overview'"
-      mat-tab-link>OVERVIEW</a>
+       mat-tab-link>OVERVIEW</a>
     <a (click)="value=2" [ngClass]="_value == 2  ?'successBorder': 'danger'" [routerLink]="['./account','summary']"
-      mat-tab-link>ACCOUNTS</a>
+       mat-tab-link>ACCOUNTS</a>
     <a (click)="value=3" [ngClass]="_value == 3?'successBorder': 'danger'" [routerLink]="['./plan','summary']"
-      mat-tab-link>PLAN</a>
+       mat-tab-link>PLAN</a>
     <a (click)="value=4" [ngClass]="_value == 4  ?'successBorder': 'danger'" [routerLink]="'./activity'"
-      mat-tab-link>ACTIVITY</a>
+       mat-tab-link>ACTIVITY</a>
     <a (click)="value=5" [ngClass]="_value == 5 ?'successBorder': 'danger'" [routerLink]="'./transact'"
-      mat-tab-link>TRANSACT</a>
+       mat-tab-link>TRANSACT</a>
   </nav>
-  <router-outlet id="cust1"></router-outlet>
-  <ng-template>
-    <router-outlet id="cust2"></router-outlet>
-  </ng-template>
-  <ng-template>
-    <router-outlet id="cust3"></router-outlet>
-  </ng-template>
+
 </div>
+<router-outlet id="cust1"></router-outlet>
+<!--<ng-template>-->
+<!--  <router-outlet id="cust2"></router-outlet>-->
+<!--</ng-template>-->
 <!-- </div> -->
 
 <!--<app-dialog-container [parentComponentName]="'customer'"></app-dialog-container>-->
