@@ -1,3 +1,4 @@
+import { EmailUtilService } from './../../../../../../../services/email-util.service';
 import { ComposeEmailComponent } from './../../compose-email/compose-email.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
@@ -8,6 +9,7 @@ import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-shee
 import { EmailReplyComponent } from '../email-reply/email-reply.component';
 import { EmailAddTaskComponent } from '../email-add-task/email-add-task.component';
 import { Location } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-email-view',
@@ -19,12 +21,13 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   subject: string;
   from: string;
   body;
+  emailSubscription: Subscription;
+  messagesHeaders: string[];
 
   constructor(private emailService: EmailServiceService,
     private _bottomSheet: MatBottomSheet,
     private route: Router,
     private location: Location) { }
-  emailSubscription;
 
   ngOnInit() {
     this.getEmailThread();
@@ -37,26 +40,45 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   getEmailThread() {
     this.emailSubscription = this.emailService.data.subscribe(response => {
       this.emailObj = response;
-      let { parsedData: { headers } } = this.emailObj;
 
-      let subject = headers.filter((header) => {
-        return header.name === 'Subject';
-      });
+      console.log("this is email Object passed from list component ->>>  ", this.emailObj);
+      if (this.emailObj) {
 
-      let from = headers.filter((header) => {
-        return header.name === 'From';
-      })
+        let { parsedData: { headers } } = this.emailObj;
 
-      let { parsedData: { decodedPart } } = this.emailObj;
-      this.body = decodedPart;
+        let { messageHeaders } = this.emailObj;
+        this.messagesHeaders = messageHeaders;
 
+        let subject = headers.filter((header) => {
+          return header.name === 'Subject';
+        });
 
-      console.log('this is single thread response ->>>>>>>>>>>>>')
-      console.log(response);
+        let from = headers.filter((header) => {
+          return header.name === 'From';
+        })
 
-      this.subject = subject[0]['value'];
-      this.from = from[0]['value'];
-      // console.log(response);
+        let { parsedData: { decodedPart } } = this.emailObj;
+        console.log("this is decoded part : >>>>>", decodedPart);
+
+        let extractHtmlValue = decodedPart.filter((part, index) => {
+          if (index % 2 === 1) {
+            return part;
+          }
+        });
+
+        this.body = extractHtmlValue;
+
+        console.log(this.body);
+
+        console.log('this is single thread response ->>>>>>>>>>>>>')
+
+        console.log(response);
+
+        this.subject = subject[0]['value'];
+        this.from = from[0]['value'];
+        // console.log(response);
+
+      }
     });
   }
 
@@ -107,4 +129,6 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   goBack() {
     this.location.back();
   }
+
+
 }

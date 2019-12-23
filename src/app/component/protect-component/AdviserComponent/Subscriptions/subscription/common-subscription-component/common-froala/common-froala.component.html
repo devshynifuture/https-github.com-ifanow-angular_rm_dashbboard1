@@ -88,7 +88,8 @@
       <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()" *ngIf="changeFooter=='emailQuotation'">
         SAVE
       </button>
-      <div *ngIf="changeFooter!='emailQuotation' || changeEmailOnly!=undefined || screenType!=undefined">
+      <div *ngIf="changeFooter!='emailQuotation' || changeEmailOnly!=undefined">
+        <!--      <div *ngIf="changeFooter!='emailQuotation' || changeEmailOnly!=undefined || screenType!=undefined">-->
         <button mat-button class="btn-bottom br-0 text-inherit mr-20" *ngIf="changeEmailOnly=='openEmailQuot'">Email
           only <i class="material-icons">
             arrow_drop_up

@@ -61,7 +61,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
   templateType: number;
 
   constructor(public subscription: SubscriptionService, public subInjectService: SubscriptionInject,
-    public eventService: EventService, public dialog: MatDialog) {
+              public eventService: EventService, public dialog: MatDialog) {
     // this.dataSub = this.subInjectService.singleProfileData.subscribe(
     //   data=>this.getcommanFroalaData(data)
     // );
@@ -107,8 +107,8 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
     // } else {
     //   this.subInjectService.rightSideData(value);
     // }
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
-    this.subInjectService.changeUpperRightSliderState({ state: 'close', data });
+    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeUpperRightSliderState({state: 'close', data});
 
     // this.subInjectService.changeUpperRightSliderState({value:'close'})
     // this.subInjectService.changeUpperRightSliderState({value:'close'})
@@ -217,6 +217,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
     });
 
   }
+
   openSendEmailQuotation() {
     if (this.storeData.quotation) {
       this.templateType = 2;
@@ -234,8 +235,9 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
     //     data.documentList.push(singleElement);
     //   }
     // });
-    this.OpenEmail(data, 'emailQuotationFroala');
+    this.OpenEmail(data, 'email');
   }
+
   openSendEmail() {
     if (this.storeData.isDocument == true) {
       this.templateType = 4;
@@ -253,7 +255,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
     //     data.documentList.push(singleElement);
     //   }
     // });
-    this.OpenEmail(data, 'emailQuotationFroala');
+    this.OpenEmail(data, 'email');
   }
 
   OpenEmail(data, value) {
@@ -265,21 +267,25 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
       componentName:EmailOnlyComponent
 
     };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        if (UtilService.isDialogClose(sideBarData)) {
-          rightSideDataSub.unsubscribe();
+    if (this.screenType) {
+      const rightSideDataSub2 = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
+        sideBarData => {
+          console.log('this is sidebardata in subs subs : ', sideBarData);
+          if (UtilService.isDialogClose(sideBarData)) {
+            console.log('this is sidebardata in subs subs 2: ');
+            rightSideDataSub2.unsubscribe();
+          }
         }
-      }
-    );
-    const rightSideDataSub2 = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ');
-          rightSideDataSub2.unsubscribe();
+      );
+    } else {
+      const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+        sideBarData => {
+          if (UtilService.isDialogClose(sideBarData)) {
+            rightSideDataSub.unsubscribe();
+          }
         }
-      }
-    );
+      );
+    }
+
   }
 }

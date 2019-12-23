@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from "../../../../../auth-service/authService";
-import { DialogContainerComponent } from "../../../../../common/dialog-container/dialog-container.component";
-import { EventService } from "../../../../../Data-service/event.service";
-import { SubscriptionInject } from "../../../AdviserComponent/Subscriptions/subscription-inject.service";
-import { DynamicComponentService } from "../../../../../services/dynamic-component.service";
-import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from "../../../../../animation/animation";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthService} from '../../../../../auth-service/authService';
+import {DialogContainerComponent} from '../../../../../common/dialog-container/dialog-container.component';
+import {EventService} from '../../../../../Data-service/event.service';
+import {SubscriptionInject} from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import {DynamicComponentService} from '../../../../../services/dynamic-component.service';
+import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../../../../animation/animation';
 
 @Component({
   selector: 'app-customer',
@@ -19,44 +19,64 @@ import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } fr
   ]
 })
 export class CustomerComponent extends DialogContainerComponent implements OnInit {
+
+
+  status = false;
+
+  constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
+              protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute, private authService: AuthService) {
+    super(eventService, subinject, dynamicComponentService);
+    console.log(router.getCurrentNavigation().extras.state);
+    if (router.getCurrentNavigation().extras.state && router.getCurrentNavigation().extras.state.id) {
+      this.authService.setClientData(router.getCurrentNavigation().extras.state);
+    }
+    this.eventService.tabChangeData.subscribe(
+      data => this.getTabChangeData(data)
+    );
+  }
+
+  _value: number;
   selected: number;
   clientId;
-  value: number;
   overview = false;
   plans = false;
   activity = false;
   accounts = false;
   transact = false;
   currentUrl: string;
+  clientData: any;
 
-
-  constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
-    protected dynamicComponentService: DynamicComponentService) {
-    super(eventService, subinject, dynamicComponentService);
-    console.log(router.getCurrentNavigation().extras.state);
-    this.eventService.tabChangeData.subscribe(
-      data => this.getTabChangeData(data)
-      );
+  get value() {
+    return this._value;
   }
-  getTabChangeData(data){
+
+  set value(value: number) {
+    console.log('now value is ->>>>', value);
+    this._value = value;
+  }
+
+  getTabChangeData(data) {
     setTimeout(() => {
-    this.value = data
+
+      this.value = data;
+      console.log('CustomerComponent getTabChangeData value : ', this.value);
+
     }, 300);
   }
-  status: boolean = false;
 
 
   ngOnInit() {
-
-    if (this.router.url.split('/')[2] === 'overview') {
+    const routeName = this.router.url.split('/')[3];
+    console.log('CustomerComponent ngOnInit routeName : ', routeName);
+    if (routeName == 'overview') {
       this.value = 1;
-    } else if (this.router.url.split('/')[2] === 'account') {
+    } else if (routeName == 'account') {
       this.value = 2;
-    } else if (this.router.url.split('/')[2] === 'plan') {
+    } else if (routeName == 'plan') {
       this.value = 3;
-    } else if (this.router.url.split('/')[2] === 'activity') {
+    } else if (routeName == 'activity') {
       this.value = 4;
-    } else if (this.router.url.split('/')[2] === 'transact') {
+    } else if (routeName == 'transact') {
       this.value = 5;
     }
 
@@ -66,10 +86,16 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     console.log('passedParameter: ', passedParameter);
     console.log('session storage clientData', AuthService.getClientData());
     this.clientId = AuthService.getClientId();
+    console.log('CustomerComponent ngOnInit value : ', this.value);
+
   }
 
   clickEvent(value) {
     this.value = value;
+  }
+
+  tabClick(event) {
+    // this.eventService.sidebarData(event.tab.textLabel);
   }
 
 }

@@ -776,7 +776,7 @@ mat-tab-group[vertical] {
   width: 100%;
   top: 0;
   background: #fff;
-  z-index: 999;
+  z-index: 99;
 
   .left-icons {
     position: fixed;
@@ -1170,7 +1170,6 @@ mat-tab-group[vertical] {
   }
 }
 
-
 #ui-add-goals {
   padding-bottom: 60px !important;
   height: 100vh !important;
@@ -1205,11 +1204,15 @@ mat-tab-group[vertical] {
   font-family: "Proxima Nova ", sans-serif !important;
 }
 
-.bar {
-  background-color: #E7E7E7;
-  height: 14px;
-  border-radius: 7px;
-  width: 100%;
+.skeletonAnimation td {
+  position: relative;
+
+  .bar {
+    background-color: #E7E7E7;
+    height: 20px;
+    border-radius: 7px;
+    width: 80%;
+  }
 
   &:after {
     position: absolute;
@@ -1225,15 +1228,5 @@ mat-tab-group[vertical] {
     background-position: -100px 0;
     background-repeat: no-repeat;
     animation: loading 1s infinite;
-  }
-}
-
-@keyframes loading {
-  40% {
-    background-position: 100% 0;
-  }
-
-  100% {
-    background-position: 100% 0;
   }
 }

@@ -1,7 +1,7 @@
 import {Router} from '@angular/router';
 import {Component, NgZone, OnInit} from '@angular/core';
-import {RoutingState} from "../../../../../../services/routing-state.service";
-import { EventService } from 'src/app/Data-service/event.service';
+import {RoutingState} from '../../../../../../services/routing-state.service';
+import {EventService} from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-accounts',
@@ -11,6 +11,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 export class AccountsComponent implements OnInit {
   _value: number;
   loading: boolean;
+  showRouter = false;
 
   set value(value: number) {
     console.log('now value is ->>>>', value);
@@ -31,6 +32,7 @@ export class AccountsComponent implements OnInit {
   selected;
 
   ngOnInit() {
+    this.showRouter = true;
     this.selected = 1;
      this.loading = false
     console.log('this is child url now->>>>>', this.router.url.split('/')[3]);
@@ -70,8 +72,10 @@ export class AccountsComponent implements OnInit {
          }
        });
      });*/
-
-    this.routingStateService.goToSpecificRoute('/admin/subscription');
+    this.showRouter = false;
+    setTimeout(() => {
+      this.routingStateService.goToSpecificRoute('/admin/subscription/dashboard');
+    }, 200);
   }
 
 }
