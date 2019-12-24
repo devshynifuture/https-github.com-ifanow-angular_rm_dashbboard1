@@ -211,7 +211,9 @@ export class EmailListingComponent implements OnInit, OnDestroy {
         this.nextPageToken = nextPageToken;
         this.gmailThreads = gmailThreads;
         gmailThreads.forEach((thread: GmailInboxResponseI, index: number) => {
-
+          thread.messages.map((message) => {
+            message.payload.body.data = btoa(message.payload.body.data);
+          });
           let parsedData: any; // object containing array of decoded parts and headers
           let idsOfThread: any; // Object of historyId and Id of thread
           let dateIdsSnippetsOfMessages: any; // array of Objects having ids, date snippets of messages
@@ -220,20 +222,21 @@ export class EmailListingComponent implements OnInit, OnDestroy {
           let extractAttachmentFiles = null;
           let attachmentFiles;
           let messageCountInAThread: number;
+          let messageDates: number[] = [];
 
           parsedData = EmailUtilService.decodeGmailThreadExtractMessage(thread);
           idsOfThread = EmailUtilService.getIdsOfGmailThreads(thread);
           dateIdsSnippetsOfMessages = EmailUtilService.getIdAndDateAndSnippetOfGmailThreadMessages(thread);
           labelIdsfromMessages = EmailUtilService.getGmailLabelIdsFromMessages(thread);
           extractSubjectFromHeaders = EmailUtilService.getSubjectAndFromOfGmailHeaders(thread);
+          messageCountInAThread = Math.ceil(parsedData.decodedPart.length / 2);
 
+          dateIdsSnippetsOfMessages.forEach(element => {
+            const { internalDate } = element;
+            messageDates.push(internalDate);
+          });
 
-          messageCountInAThread = parsedData.decodedPart.length / 2;
-          if (this.showDraftView) {
-            extractAttachmentFiles = EmailUtilService.getAttachmentFileData(thread);
-            console.log("this is thread in draft");
-            console.log(thread);
-          }
+          extractAttachmentFiles = EmailUtilService.getAttachmentFileData(thread);
 
           if (extractAttachmentFiles !== null) {
             attachmentFiles = extractAttachmentFiles;
@@ -246,9 +249,10 @@ export class EmailListingComponent implements OnInit, OnDestroy {
             parsedData,
             attachmentFiles,
             messageHeaders: extractSubjectFromHeaders['headerFromArray'],
+            messageDates,
             messageCount: messageCountInAThread,
             labelIdsfromMessages,
-            emailers: `${extractSubjectFromHeaders['headerFromArray'][0].split('<')[0].trim()}`,
+            emailers: `${typeof (extractSubjectFromHeaders['headerFromArray'][0]) === 'string' ? extractSubjectFromHeaders['headerFromArray'][0].split('<')[0].trim() : ''}`,
             subjectMessage: {
               subject: extractSubjectFromHeaders['headerSubjectArray'][0],
               message: dateIdsSnippetsOfMessages[0]['snippet']
@@ -296,13 +300,11 @@ export class EmailListingComponent implements OnInit, OnDestroy {
   }
 
   createUpdateDraft(id: string, toAddress: Array<any>, subject: string, bodyMessage: string, fileData: Array<any>) {
-    let encodedSubject = EmailUtilService.changeStringToBase46(subject);
-    let encodedMessage = EmailUtilService.changeStringToBase46(bodyMessage);
     const requestJson = {
       id,
       toAddress,
-      subject: encodedSubject,
-      message: encodedMessage,
+      subject: subject,
+      message: bodyMessage,
       fileData
     };
 

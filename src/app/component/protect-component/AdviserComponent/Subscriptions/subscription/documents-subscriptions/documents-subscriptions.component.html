@@ -30,15 +30,18 @@
             <div class="row pt-12">
                 <div class="col-md-8 p-0 custom-tags">
                     <mat-chip-list>
-                        <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let status of filterStatus; let ind = index">
+                        <mat-chip class="bg-white b-a c-p f-400 p-12"
+                            *ngFor="let status of filterStatus; let ind = index">
                             {{status.name}}<i class="material-icons text-custom ml-12" (click)="remove(ind)">
                                 cancel
                             </i></mat-chip>
                         <mat-chip-list>
-                            <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let dateFilter of filterDate; let i = index">
+                            <mat-chip class="bg-white b-a c-p f-400 p-12"
+                                *ngFor="let dateFilter of filterDate; let i = index">
                                 <!--                  <div class="row">-->
                                 <p>{{dateFilter.name}}</p>
-                                <input matInput placeholder="Choose a date" [satDatepicker]="picker2" [(ngModel)]="selectedDateRange" (dateChange)="orgValueChange(selectedDateRange)">
+                                <input matInput placeholder="Choose a date" [satDatepicker]="picker2"
+                                    [(ngModel)]="selectedDateRange" (dateChange)="orgValueChange(selectedDateRange)">
                                 <sat-datepicker #picker2 [rangeMode]="true">
                                 </sat-datepicker>
                                 <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
@@ -55,7 +58,8 @@
                             <div class="form-group mb-0">
                                 <mat-form-field>
                                     <!-- <mat-label>FILTERS ONE</mat-label> -->
-                                    <mat-select class="form-control br-0" id="sel11" [(ngModel)]='selectedStatusFilter' (selectionChange)="addFilters(selectedStatusFilter)">
+                                    <mat-select class="form-control br-0" id="sel11" [(ngModel)]='selectedStatusFilter'
+                                        (selectionChange)="addFilters(selectedStatusFilter)">
                                         <mat-option *ngFor="let chip of chips" [value]="chip">
                                             {{chip.name}}
                                         </mat-option>
@@ -67,7 +71,8 @@
                             <div class="form-group mb-0">
                                 <mat-form-field>
                                     <!-- <mat-label>FILTERS TWO</mat-label> -->
-                                    <mat-select class="form-control br-0" id="sel12" [(ngModel)]='selectedStatusFilter' (selectionChange)="addFiltersDate(selectedStatusFilter)">
+                                    <mat-select class="form-control br-0" id="sel12" [(ngModel)]='selectedStatusFilter'
+                                        (selectionChange)="addFiltersDate(selectedStatusFilter)">
                                         <mat-option *ngFor="let dateAdd of dateChips" [value]="dateAdd">
                                             {{dateAdd.name}}
                                         </mat-option>
@@ -79,64 +84,69 @@
                 </div>
             </div>
         </div>
-        <table mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+        <table matSort mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation"
+            appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Client name </th>
+                <th mat-sort-header="serviceName" mat-header-cell *matHeaderCellDef class="f-18"> Client name </th>
                 <td mat-cell *matCellDef="let element" (click)="Open('viewDocuments',element)" class="c-p">
-                    {{element.serviceName}} </td>
+                    <div class="bar">
+                        {{element.serviceName}}
+                    </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="docname">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Document name </th>
+                <th mat-sort-header="documentName" mat-header-cell *matHeaderCellDef class="f-18"> Document name </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="bar"> {{element.documentName}} </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="plan">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Plan name </th>
+                <th mat-sort-header="planName" mat-header-cell *matHeaderCellDef class="f-18"> Plan name </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="bar"> {{element.planName}} </div>
                 </td>
             </ng-container>
             <!-- Name Column -->
             <ng-container matColumnDef="servicename">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Service name </th>
+                <th mat-sort-header="serviceName" mat-header-cell *matHeaderCellDef class="f-18"> Service name </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="bar"> {{element.serviceName}} </div>
                 </td>
             </ng-container>
             <!-- Weight Column -->
             <ng-container matColumnDef="cdate">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Created date </th>
+                <th mat-sort-header="startDate" mat-header-cell *matHeaderCellDef class="f-18"> Created date </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="bar"> {{element.startDate | date:'dd/MM/yyyy'}} </div>
                 </td>
             </ng-container>
             <!-- Weight Column -->
             <ng-container matColumnDef="sdate">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Sent date </th>
+                <th mat-sort-header="sentDate" mat-header-cell *matHeaderCellDef class="f-18"> Sent date </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="bar"> {{element.sentDate | date:'dd/MM/yyyy'}} </div>
                 </td>
             </ng-container>
             <!-- Symbol Column -->
             <ng-container matColumnDef="clientsign">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Client sign... </th>
+                <th mat-sort-header="clientsign" mat-header-cell *matHeaderCellDef class="f-18"> Client sign... </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="bar"> {{element.clientsign | date:'dd/MM/yyyy'}} </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="status">
-                <th *matHeaderCellDef class=" t-10" mat-header-cell> Status</th>
+                <th mat-sort-header="status" *matHeaderCellDef class=" t-10" mat-header-cell> Status</th>
                 <td *matCellDef="let element" mat-cell (click)="Open('openEmailQuot',element)">
                     <span>
                         <span class="text-success t-10 f-500 c-p" *ngIf="element.status==1">READY TO SEND</span>
-                    <span class="text-success t-10 f-500 c-p" *ngIf="element.status==0">NOT STARTED</span>
+                        <span class="text-success t-10 f-500 c-p" *ngIf="element.status==0">NOT STARTED</span>
                     </span>
                 </td>
             </ng-container>
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"> </th>
-                <td mat-cell *matCellDef="let element" style="width: 2%;"><i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu">
+                <td mat-cell *matCellDef="let element" style="width: 2%;"><i class="material-icons c-p iconscolors"
+                        [matMenuTriggerFor]="menu">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">

@@ -17,8 +17,9 @@ import { SubscriptionUpperSliderComponent } from '../../common-subscription-comp
 })
 export class DocumentsSettingsComponent implements OnInit {
   button: any;
-  documentSettingData;
-  showLoader;
+  documentSettingData = [{}, {}, {}];
+  isLoading = false;
+  //showLoader;
 
   constructor(public dialog: MatDialog, public eventService: EventService, public subInjectService: SubscriptionInject,
     private subService: SubscriptionService) {
@@ -33,7 +34,8 @@ export class DocumentsSettingsComponent implements OnInit {
   }
 
   getDocumentsSetting() {
-    this.showLoader = true;
+    this.isLoading = true;
+    //this.showLoader = true;
     const obj = {
       advisorId: this.advisorId,
 
@@ -50,8 +52,9 @@ export class DocumentsSettingsComponent implements OnInit {
     this.getDocumentsSetting();
   }
   getDocumentsSettingResponse(data) {
+    this.isLoading = false;
     this.documentSettingData = data;
-    this.showLoader = false;
+    //this.showLoader = false;
   }
 
   Open(value, state) {

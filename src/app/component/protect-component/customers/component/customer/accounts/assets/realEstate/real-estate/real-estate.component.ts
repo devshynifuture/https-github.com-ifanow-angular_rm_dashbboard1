@@ -21,9 +21,9 @@ import { ExcelService } from '../../../../excel.service';
 })
 export class RealEstateComponent implements OnInit {
 
-  isLoading: boolean;
+  isLoading = true;
   advisorId: any;
-  datasource3: any;
+  datasource3: any = [{}, {}, {}];
   clientId: any;
   ownerName: any;
   sumOfMarketValue: any;
@@ -47,6 +47,7 @@ export class RealEstateComponent implements OnInit {
     this.getRealEstate();
   }
   async ExportTOExcel(value) {
+    this.isLoading = true;
     this.excelData = []
     var data = []
     var headerData = [{ width: 20, key: 'Owner' },
@@ -82,9 +83,10 @@ export class RealEstateComponent implements OnInit {
   }
 
   getRealEstateRes(data) {
+    this.isLoading = false;
     console.log(data);
     this.isLoading = false;
-    if (data.realEstateList) {
+    if (data.realEstateList.length > 0) {
       data.realEstateList.forEach(element => {
         if (element.realEstateOwners.length != 0) {
           const array = element.realEstateOwners;

@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {SubscriptionService} from '../../../subscription.service';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {UtilService} from 'src/app/services/util.service';
 import {AuthService} from 'src/app/auth-service/authService';
@@ -24,6 +24,8 @@ export interface PeriodicElement {
   styleUrls: ['./invoices.component.scss']
 })
 export class InvoicesComponent implements OnInit {
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
   clientList: any;
   dataTOget: object;
   noData: string;
@@ -65,10 +67,12 @@ export class InvoicesComponent implements OnInit {
     if (data == undefined) {
       this.noData = "No Data Found";
     } else {
-      const ELEMENT_DATA = data;
+      // const ELEMENT_DATA = data;
       // this.invoiceClientData = data;
-      ELEMENT_DATA.forEach(item => item.selected = false);
-      this.dataSource = ELEMENT_DATA;
+      data.forEach(item => item.selected = false);
+      // this.dataSource = data;
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.sort = this.sort;
       this._clientData = this.dataSource;
     }
   }

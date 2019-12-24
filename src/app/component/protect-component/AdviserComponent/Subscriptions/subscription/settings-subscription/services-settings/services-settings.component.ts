@@ -19,12 +19,14 @@ export class ServicesSettingsComponent implements OnInit {
 
   button: any;
 
-  showLoader;
+  //showLoader;
 
-  serviceSettingData;
+  serviceSettingData = [{}, {}, {}];
+  isLoading = false;
   advisorId;
 
   ngOnInit() {
+    this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
     this.getServiceSettingSubData();
   }
@@ -73,7 +75,7 @@ export class ServicesSettingsComponent implements OnInit {
   }
 
   getServiceSettingSubData() {
-    this.showLoader = true;
+    //this.showLoader = true;
     const obj = {
       // advisorId: 2808
       advisorId: this.advisorId,
@@ -88,7 +90,7 @@ export class ServicesSettingsComponent implements OnInit {
   getServiceSettingSubResponse(data) {
     console.log('service data', data);
     this.serviceSettingData = data;
-    this.showLoader = false;
+    //this.showLoader = false;
   }
 
   getFileErrorResponse(err) {

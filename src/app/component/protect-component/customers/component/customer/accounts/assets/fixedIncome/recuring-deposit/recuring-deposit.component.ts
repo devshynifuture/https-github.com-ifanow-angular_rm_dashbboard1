@@ -168,12 +168,14 @@ export class RecuringDepositComponent implements OnInit {
       this.dataSource = obj
       if (this.recuringDeposit.controls.id.value == undefined) {
         this.custumService.addRecurringDeposit(obj).subscribe(
-          data => this.addrecuringDepositRes(data)
+          data => this.addrecuringDepositRes(data),
+          err => this.event.openSnackBar(err, "dismiss")
         );
       } else {
         //edit call
         this.custumService.editRecurringDeposit(obj).subscribe(
-          data => this.editrecuringDepositRes(data)
+          data => this.editrecuringDepositRes(data),
+          err => this.event.openSnackBar(err, "dismiss")
         );
       }
 

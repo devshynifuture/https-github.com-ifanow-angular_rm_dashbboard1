@@ -21,7 +21,8 @@ export class NscSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
   noData: string;
-  isLoading: boolean = true;
+  //isLoading: boolean = true;
+  isLoading = false;
   nscData: any;
   sortedData: any;
   sumOfCurrentValue: number;
@@ -35,7 +36,7 @@ export class NscSchemeComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns17 = ['no', 'owner', 'cvalue', 'rate', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
-  datasource;
+  datasource: any = [{}, {}, {}];
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = 2978;
@@ -67,6 +68,7 @@ export class NscSchemeComponent implements OnInit {
     ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   }
   getNscSchemedata() {
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId

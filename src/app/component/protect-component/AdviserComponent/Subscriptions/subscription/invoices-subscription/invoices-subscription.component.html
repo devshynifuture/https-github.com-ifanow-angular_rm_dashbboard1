@@ -79,7 +79,7 @@
 
       </div> -->
         </div>
-        <table mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+        <table matSort mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="checkbox">
                 <th mat-header-cell *matHeaderCellDef class="f-18">
 
@@ -95,52 +95,52 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="date">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Date</th>
+                <th  mat-sort-header="invoiceDate" mat-header-cell *matHeaderCellDef class="f-18"> Date</th>
                 <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceSubscription','open')">
                     <div class="bar"> {{element.invoiceDate | date:'dd/MM/yyyy'}} </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="invoicenum">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Invoice number</th>
+                <th  mat-sort-header="invoiceNumber" mat-header-cell *matHeaderCellDef class="f-18"> Invoice number</th>
                 <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceSubscription','open')">
                     <div class="bar"> {{element.invoiceNumber}} </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Client name</th>
+                <th  mat-sort-header="clientName" mat-header-cell *matHeaderCellDef class="f-18"> Client name</th>
                 <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceSubscription','open')">
                     <div class="bar"> {{element.clientName}} </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Email</th>
+                <th  mat-sort-header="email" mat-header-cell *matHeaderCellDef class="f-18"> Email</th>
                 <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceSubscription','open')">
                     <div class="bar"> {{element.email}} </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Status</th>
+                <th  mat-sort-header="status" mat-header-cell *matHeaderCellDef class="f-18"> Status</th>
                 <td mat-cell *matCellDef="let element" [ngClass]="{'text-danger':element.status=='OVERDUE','text-primary':element.status=='SENT','text-success':element.status=='PAID'}" ngcl class="c-p" (click)="openInvoice(element,'invoiceSubscription','open')">
                     <div class="bar"> {{element.status}} </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="duedate">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Due date</th>
+                <th  mat-sort-header="dueDate" mat-header-cell *matHeaderCellDef class="f-18"> Due date</th>
                 <td mat-cell *matCellDef="let element" (click)="openInvoice(element,'invoiceSubscription','open')">
                     <div class="bar"> {{element.dueDate | date:'dd/MM/yyyy'}} </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="amt">
-                <th mat-header-cell *matHeaderCellDef class="f-18"> Amount(₹)</th>
+                <th  mat-sort-header="finalAmount" mat-header-cell *matHeaderCellDef class="f-18"> Amount(₹)</th>
                 <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceSubscription','open')">
                     <div class="bar"> {{formatter(element.finalAmount)||''}} </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="balance">
-                <th mat-header-cell *matHeaderCellDef class="f-18 text-right pr-24"> Balance due(₹)</th>
+                <th  mat-sort-header="balanceDue" mat-header-cell *matHeaderCellDef class="f-18 text-right pr-24"> Balance due(₹)</th>
                 <td mat-cell *matCellDef="let element" class="text-right pr-8 c-p" (click)="openInvoice(element,'invoiceSubscription','open')">
                     <div class="bar"> {{formatter(element.balanceDue)||''}} </div>
                 </td>

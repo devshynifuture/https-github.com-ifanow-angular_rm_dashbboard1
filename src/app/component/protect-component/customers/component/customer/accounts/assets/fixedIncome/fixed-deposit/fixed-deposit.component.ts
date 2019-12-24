@@ -1,15 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {CustomerService} from '../../../../customer.service';
-import {MAT_DATE_FORMATS} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {AuthService} from 'src/app/auth-service/authService';
-import {DatePipe} from '@angular/common';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {Observable} from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { CustomerService } from '../../../../customer.service';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { AuthService } from 'src/app/auth-service/authService';
+import { DatePipe } from '@angular/common';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { Observable } from 'rxjs';
 import * as moment from 'moment';
-import {Router} from '@angular/router';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Router } from '@angular/router';
+import { EventService } from 'src/app/Data-service/event.service';
 
 
 @Component({
@@ -18,7 +18,7 @@ import {EventService} from 'src/app/Data-service/event.service';
   styleUrls: ['./fixed-deposit.component.scss'],
   providers: [
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class FixedDepositComponent implements OnInit {
@@ -53,11 +53,11 @@ export class FixedDepositComponent implements OnInit {
   fdDays: string[];
   inputData: any;
   compoundValue = [
-    {name: 'Daily', value: 2},
-    {name: 'Monthly', value: 3},
-    {name: 'Quarterly', value: 1},
-    {name: 'Semi annually ', value: 4},
-    {name: 'Annually', value: 5}
+    { name: 'Daily', value: 2 },
+    { name: 'Monthly', value: 3 },
+    { name: 'Quarterly', value: 1 },
+    { name: 'Semi annually ', value: 4 },
+    { name: 'Annually', value: 5 }
   ];
   ownerData: any;
   tenure: any;
@@ -72,8 +72,8 @@ export class FixedDepositComponent implements OnInit {
   isViewInitCalled = false;
 
   constructor(private event: EventService, private router: Router,
-              private fb: FormBuilder, private custumService: CustomerService,
-              public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
+    private fb: FormBuilder, private custumService: CustomerService,
+    public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
 
     console.log('This is constructor of FixedDepositComponent');
   }
@@ -132,7 +132,7 @@ export class FixedDepositComponent implements OnInit {
   }
 
   Close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   display(value) {
@@ -279,11 +279,13 @@ export class FixedDepositComponent implements OnInit {
       if (this.fixedDeposit.controls.id.value) {
         // edit call
         this.custumService.editFixedDeposit(obj).subscribe(
-          data => this.editFixedDepositRes(data)
+          data => this.editFixedDepositRes(data),
+          err => this.event.openSnackBar(err, "dismiss")
         );
       } else {
         this.custumService.addFixedDeposit(obj).subscribe(
-          data => this.addFixedDepositRes(data)
+          data => this.addFixedDepositRes(data),
+          err => this.event.openSnackBar(err, "dismiss")
         );
       }
 
@@ -293,11 +295,11 @@ export class FixedDepositComponent implements OnInit {
   addFixedDepositRes(data) {
     console.log('addFixedDepositRes', data);
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 
   editFixedDepositRes(data) {
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 }
