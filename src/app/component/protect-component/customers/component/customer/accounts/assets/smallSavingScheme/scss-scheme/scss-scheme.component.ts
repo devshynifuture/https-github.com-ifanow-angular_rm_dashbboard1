@@ -26,50 +26,51 @@ export class ScssSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
   noData: string;
-  isLoading: boolean = true;
+  isLoading = false;
   scssData: any;
   sumOfQuarterlyPayout: number;
   sumOfTotalAmountReceived: number;
   sumOfAmountInvested: number;
-  footer =[];
+  footer = [];
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns19 = ['no', 'owner', 'payout', 'rate', 'tamt', 'amt', 'mdate', 'desc', 'status', 'icons'];
-  datasource;
+  datasource: any = [{}, {}, {}];
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getScssSchemedata()
   }
 
-async ExportTOExcel(value) {
-  this.excelData = []
-  var data = []
-  var headerData = [{ width: 20, key: 'Owner' },
-  { width: 20, key: 'Quarterly Payout' },
-  { width: 10, key: 'Rate'},
-  { width: 20, key: 'Total Amount Recieved' },
-  { width: 25, key: 'Amount Invested' },
-  { width: 15, key: 'Maturity Date' },
-  { width: 15, key: 'Description' },
-  { width: 10, key: 'Status' },]
-  var header = ['Owner', 'Quarterly Payout', 'Rate', 'Total Amount Recieved','Amount Invested',
-   'Maturity Date', 'Description', 'Status'];
-  this.datasource.filteredData.forEach(element => {
-    data = [element.ownerName,(element.quarterlyPayout), (element.rate),this.formatNumber.first.formatAndRoundOffNumber(element.totalAmountReceived),
-    this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested),(element.maturityValue), new Date(element.maturityDate),element.description, element.status]
-    this.excelData.push(Object.assign(data))
-  });
-  var footerData = ['Total','', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfQuarterlyPayout),
-    this.formatNumber.first.formatAndRoundOffNumber(this.sumOfTotalAmountReceived),
-    this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountInvested), '', '', '']
-  this.footer.push(Object.assign(footerData))
-  ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
-}
+  async ExportTOExcel(value) {
+    this.excelData = []
+    var data = []
+    var headerData = [{ width: 20, key: 'Owner' },
+    { width: 20, key: 'Quarterly Payout' },
+    { width: 10, key: 'Rate' },
+    { width: 20, key: 'Total Amount Recieved' },
+    { width: 25, key: 'Amount Invested' },
+    { width: 15, key: 'Maturity Date' },
+    { width: 15, key: 'Description' },
+    { width: 10, key: 'Status' },]
+    var header = ['Owner', 'Quarterly Payout', 'Rate', 'Total Amount Recieved', 'Amount Invested',
+      'Maturity Date', 'Description', 'Status'];
+    this.datasource.filteredData.forEach(element => {
+      data = [element.ownerName, (element.quarterlyPayout), (element.rate), this.formatNumber.first.formatAndRoundOffNumber(element.totalAmountReceived),
+      this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested), (element.maturityValue), new Date(element.maturityDate), element.description, element.status]
+      this.excelData.push(Object.assign(data))
+    });
+    var footerData = ['Total', '', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfQuarterlyPayout),
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfTotalAmountReceived),
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountInvested), '', '', '']
+    this.footer.push(Object.assign(footerData))
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
+  }
 
   getScssSchemedata() {
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -129,13 +130,13 @@ async ExportTOExcel(value) {
       this.noData = "No Scheme Found";
     }
   }
-  openAddSCSS(data,flag) {
+  openAddSCSS(data, flag) {
     const fragmentData = {
       flag: 'addSCSS',
       data,
       id: 1,
-      state:(flag=="detailedScss")?'open35':'open',
-      componentName:(flag=="detailedScss")?DetailedScssComponent:AddScssComponent
+      state: (flag == "detailedScss") ? 'open35' : 'open',
+      componentName: (flag == "detailedScss") ? DetailedScssComponent : AddScssComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

@@ -22,15 +22,15 @@ import { ExcelService } from '../../../../excel.service';
 })
 export class CommoditiesComponent implements OnInit {
   showRequring: string;
-  isLoading: boolean = true;
+  isLoading = false;
   displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue', 'pvalue', 'desc', 'status', 'icons'];
   datasource9 = ELEMENT_DATA9;
 
   displayedColumns10 = ['no', 'owner', 'type', 'mvalue', 'pvalue', 'pur', 'rate', 'desc', 'status', 'icons'];
   datasource10 = ELEMENT_DATA10;
   advisorId: any;
-  goldList: any;
-  otherCommodityList: any;
+  goldList: any = [{}, {}, {}];
+  otherCommodityList: any = [{}, {}, {}];
   clientId: any;
   sumOfMarketValue: any;
   sumOfPurchaseValue: any;
@@ -160,6 +160,7 @@ export class CommoditiesComponent implements OnInit {
     });
   }
   getGoldList() {
+    this.isLoading = true;
     let obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
@@ -169,8 +170,9 @@ export class CommoditiesComponent implements OnInit {
     );
   }
   getGoldRes(data) {
-    console.log('getGoldList @@@@', data);
     this.isLoading = false;
+    console.log('getGoldList @@@@', data);
+
     if (data.goldList.length != 0) {
       this.goldList = new MatTableDataSource(data.goldList);
       this.goldList.sort = this.goldListTableSort;
@@ -191,8 +193,9 @@ export class CommoditiesComponent implements OnInit {
     );
   }
   getOthersRes(data) {
-    console.log('getOthersRes @@@@', data);
     this.isLoading = false;
+    console.log('getOthersRes @@@@', data);
+
     if (data.otherCommodityList.length != 0) {
       this.otherCommodityList = new MatTableDataSource(data.otherCommodityList);
       this.otherCommodityList.sort = this.otherCommodityListTableSort;

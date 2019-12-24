@@ -44,7 +44,7 @@ export class FixedIncomeComponent implements OnInit {
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   footer = [];
-  dataSourceFixed: any;
+  dataSourceFixed: any = [{}, {}, {}];
   hidePdf: boolean;
   noData: any;
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService, public dialog: MatDialog) { }
@@ -64,7 +64,7 @@ export class FixedIncomeComponent implements OnInit {
     this.hidePdf = true
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.isLoading = true;
+
     this.getFixedDepositList()
     this.dataSourceFixed = new MatTableDataSource([{}, {}, {}]);
   }
@@ -185,11 +185,15 @@ export class FixedIncomeComponent implements OnInit {
   getfixedIncomeData(value) {
     console.log('value++++++', value);
     this.showRequring = value;
+    this.isLoading = true;
     if (value == '2') {
+      this.dataSourceRecurring = new MatTableDataSource([{}, {}, {}]);
       this.getRecurringDepositList();
     } else if (value == '3') {
+      this.dataSourceBond = new MatTableDataSource([{}, {}, {}]);
       this.getBondsList();
     } else {
+      this.dataSourceFixed = new MatTableDataSource([{}, {}, {}]);
       this.getFixedDepositList();
     }
 
@@ -241,8 +245,9 @@ export class FixedIncomeComponent implements OnInit {
   }
 
   getRecurringDepositRes(data) {
-    console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
     this.isLoading = false;
+    console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
+
     if (data.recurringDeposits) {
       this.dataSourceRecurring = new MatTableDataSource(data.recurringDeposits);
       this.dataSourceRecurring.sort = this.recurringDepositTableSort;
@@ -256,7 +261,7 @@ export class FixedIncomeComponent implements OnInit {
   }
 
   getBondsList() {
-    this.isLoading = true;
+
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
@@ -268,6 +273,7 @@ export class FixedIncomeComponent implements OnInit {
   }
 
   getBondsRes(data) {
+    this.isLoading = true;
     console.log('getBondsRes ******** ', data);
     this.isLoading = false;
     if (data.bondList) {
