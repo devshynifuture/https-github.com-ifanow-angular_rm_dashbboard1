@@ -1,19 +1,21 @@
 import { EmailUtilService } from './../../../../../../services/email-util.service';
 import { FormBuilder, FormGroup, Form } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { SubscriptionService } from './../../../Subscriptions/subscription.service';
 import { SubscriptionInject } from './../../../Subscriptions/subscription-inject.service';
 import { EmailServiceService } from './../../email-service.service';
 import { EventService } from './../../../../../../Data-service/event.service';
 import { Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-compose-email',
   templateUrl: './compose-email.component.html',
   styleUrls: ['./compose-email.component.scss']
 })
-export class ComposeEmailComponent implements OnInit {
+export class ComposeEmailComponent implements OnInit, OnDestroy {
+
 
   constructor(private subInjectService: SubscriptionInject,
     public subscription: SubscriptionService,
@@ -39,6 +41,7 @@ export class ComposeEmailComponent implements OnInit {
   prevStateOfForm;
   currentStateOfForm: Form;
   toCreateOrUpdate: string = '';
+  emailFormChangeSubscription: Subscription;
 
   emailForm: FormGroup;
 
@@ -71,18 +74,50 @@ export class ComposeEmailComponent implements OnInit {
         attachments: '',
       });
 
-      this.prevStateOfForm = this.emailForm;
+      this.prevStateOfForm = this.emailForm.value;
+      console.log("this is prev state of form", this.prevStateOfForm);
     } else {
       console.log("no data present");
       this.prevStateOfForm = this.emailForm.value;
     }
-    this.emailForm.valueChanges.subscribe((value) => {
-      if (this.prevStateOfForm === value) {
+    this.emailFormChangeSubscription = this.emailForm.valueChanges.subscribe((value) => {
+      console.log(value);
+      if (this.areTwoObjectsSame(this.prevStateOfForm, value)) {
         this.toCreateOrUpdate = 'create';
+        console.log("create or update", this.toCreateOrUpdate);
       } else {
         this.toCreateOrUpdate = 'update';
+        console.log("create or update", this.toCreateOrUpdate);
       }
     });
+  }
+
+  areTwoObjectsSame(obj1: Object, obj2: Object): boolean {
+
+    // Create arrays of property names
+    var obj1Props = Object.getOwnPropertyNames(obj1);
+    var obj2Props = Object.getOwnPropertyNames(obj2);
+
+    // If number of properties is different,
+    // objects are not equivalent
+    if (obj1Props.length != obj2Props.length) {
+      return false;
+    }
+
+    for (var i = 0; i < obj1Props.length; i++) {
+      var propName = obj2Props[i];
+
+      // If values of same property are not equal,
+      // objects are not equivalent
+      if (obj1[propName] !== obj2[propName]) {
+        return false;
+      }
+    }
+
+    // If we made it this far, objects
+    // are considered equivalent
+    return true;
+
   }
 
   createEmailForm() {
@@ -152,7 +187,9 @@ export class ComposeEmailComponent implements OnInit {
         attachments: '',
         subject: ''
       }
-      console.log("created")
+      this.emailService.createDraft(Obj)
+        .subscribe(response => console.log(response), error => console.error(error));
+      console.log("created");
     } else if (this.toCreateOrUpdate === 'update') {
       Obj = {
         to: this.to,
@@ -161,6 +198,9 @@ export class ComposeEmailComponent implements OnInit {
         attachments: '',
         subject: this.subject,
       }
+      this.emailService.updateDraft(Obj)
+        .subscribe(response => console.log(response), error => console.error(error));
+
       console.log("updated");
     } else {
       this.subInjectService.changeUpperRightSliderState({ state: 'close' });
@@ -168,8 +208,6 @@ export class ComposeEmailComponent implements OnInit {
       console.log("closed...");
     }
 
-    this.emailService.createDraft(Obj)
-      .subscribe(response => console.log(response), error => console.error(error));
     // this.valueChange.emit(this.emailSend);
     this.subInjectService.changeUpperRightSliderState({ state: 'close' });
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
@@ -232,5 +270,11 @@ export class ComposeEmailComponent implements OnInit {
         'This is a test message', 'This is a test message body', fileData);
     });
 
+  }
+
+  ngOnDestroy(): void {
+    if (this.emailFormChangeSubscription) {
+      this.emailFormChangeSubscription.unsubscribe();
+    }
   }
 }
