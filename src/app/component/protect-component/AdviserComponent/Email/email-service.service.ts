@@ -117,8 +117,7 @@ export class EmailServiceService {
   // needs to work on email body attachments and to from of http Params
   createDraft({ to, from, emailBody, attachments, subject }) {
     const userInfo = AuthService.getUserInfo();
-    const encodedSubject = EmailUtilService.changeStringToBase46(subject);
-    const encodedEmailBody = EmailUtilService.changeStringToBase46(emailBody);
+
 
     const obj =
     {
@@ -144,7 +143,7 @@ export class EmailServiceService {
           ],
           "payload": {
             "body": {
-              "data": encodedEmailBody,
+              "data": emailBody,
               "size": 0
             },
             "fileName": "",
@@ -191,8 +190,8 @@ export class EmailServiceService {
         }
       ],
       "id": "0",
-      "message": encodedEmailBody,
-      "subject": encodedSubject,
+      "message": emailBody,
+      "subject": subject,
       "toAddress": [
         to
       ],
