@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { RadioGroupDirectiveDirective } from './radio-group-directive.directive';
 import { CustomRightAnimationDirective } from './custom-right-animation.directive';
 import { SkeletoneLoadingDirective } from './skeletone-loading.directive';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
 
 // import {AppModule} from "../app.module";
 
@@ -13,9 +14,9 @@ import { SkeletoneLoadingDirective } from './skeletone-loading.directive';
     RadioGroupDirectiveDirective,
     CustomRightAnimationDirective,
     SkeletoneLoadingDirective,
-
+    FormatNumberDirective
   ],
-  exports: [RadioGroupDirectiveDirective, SkeletoneLoadingDirective],
+  exports: [RadioGroupDirectiveDirective, SkeletoneLoadingDirective, FormatNumberDirective],
   imports: [
 
     // AppModule

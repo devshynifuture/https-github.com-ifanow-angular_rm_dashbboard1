@@ -25,7 +25,7 @@ export interface PeriodicElement {
 })
 export class InvoicesComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-
+  isLoading = false;
   clientList: any;
   dataTOget: object;
   noData: string;
@@ -46,6 +46,8 @@ export class InvoicesComponent implements OnInit {
   dataSource;
 
   ngOnInit() {
+    this.isLoading = true;
+    this.dataSource = [{}, {}, {}];
     this.getInvoiceList();
     this.advisorId = AuthService.getAdvisorId();
     console.log('CLIENT INVOICE ');
@@ -64,6 +66,7 @@ export class InvoicesComponent implements OnInit {
     );
   }
   getInvoiceResponseData(data) {
+    this.isLoading = false;
     if (data == undefined) {
       this.noData = "No Data Found";
     } else {
