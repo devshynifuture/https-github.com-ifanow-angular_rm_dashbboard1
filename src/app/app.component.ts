@@ -24,7 +24,7 @@ export class AppComponent implements AfterViewInit {
     private _router: Router, private eventService: EventService,
     private routingState: RoutingState, private changeDetector: ChangeDetectorRef
   ) {
-    routingState.changeDetector = changeDetector;
+    // routingState.changeDetector = changeDetector;
     routingState.router = _router;
     routingState.loadRouting();
 

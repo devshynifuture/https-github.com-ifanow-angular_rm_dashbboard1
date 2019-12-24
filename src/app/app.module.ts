@@ -46,7 +46,10 @@ import {DynamicComponentService} from './services/dynamic-component.service';
 import {SubscriptionEntry} from './component/protect-component/AdviserComponent/Subscriptions/subscription.entry.module';
 import {EmailEntryModule} from './component/protect-component/AdviserComponent/Email/email.entry.module';
 import 'zone.js/dist/zone';
-import {CalenderComponent} from "./component/protect-component/AdviserComponent/Email/calender/calender.component";
+import {
+  CalenderComponent,
+  EventDialog
+} from "./component/protect-component/AdviserComponent/Email/calender/calender.component";
 import {SubscriptionUpperEntry} from './component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
 // import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
@@ -88,6 +91,7 @@ import {SubscriptionUpperEntry} from './component/protect-component/AdviserCompo
     // AddLiabilitiesComponent,
     // AddInsuranceComponent
     CalenderComponent,
+    EventDialog
 
   ],
   imports: [
@@ -103,31 +107,16 @@ import {SubscriptionUpperEntry} from './component/protect-component/AdviserCompo
     MomentDateModule,
     MatSortModule,
     MatTableModule,
-    // CommonSubscriptionComponent,
     SlimLoadingBarModule.forRoot(),
-
     MDBBootstrapModule.forRoot(),
     DragDropModule,
     CustomCommonModule,
-    // EmailModule,
-
-    // EntryComponentsModule,
-    // AccountEntryModule,
-    // PlanEntryModule,
     EmailEntryModule,
-
-    // SubscriptionRoutingModule,
-    // PlanRoutingModule,
-    // AccountRoutingModule,
-    // SubscriptionModule,
-    // CustomersModule,
-    // AccountModule,
-    // PlanModule,
     AppRoutingModule
   ],
   providers: [AuthService, HttpService, DatePipe, DynamicComponentService],
   bootstrap: [AppComponent],
-  entryComponents: [SubscriptionEntry.getComponentList(), SubscriptionUpperEntry.getComponentList()]
+  entryComponents: [SubscriptionEntry.getComponentList(), SubscriptionUpperEntry.getComponentList(), EventDialog]
   // entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
 })
 export class AppModule {

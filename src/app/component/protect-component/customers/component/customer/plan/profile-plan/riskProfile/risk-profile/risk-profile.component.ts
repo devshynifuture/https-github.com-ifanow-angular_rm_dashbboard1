@@ -240,9 +240,9 @@ export class RiskProfileComponent implements OnInit {
   }
   checkState(item) {
     this.statusArray.push(item)
-    this.statusArray = _.uniqBy(this.statusArray, function (e) {
-      return e.id;
-    });
+    // this.statusArray = _.uniqBy(this.statusArray, function (e) {
+    //   return e.id;
+    // });
     this.progressBar = this.statusArray.length * 20
   }
   getdataForm(data) {

@@ -261,7 +261,7 @@
     </div>
 </div> -->
 <!-- activity -->
-<div class="row pt-72 pl-20 pr-20">
+<!-- <div class="row pt-90 pl-20 pr-20">
     <div class="col-md-8 p-0">
         <h4 class="f-700 m-0 text-black">RATIONALE <img src="/assets/images/svg/toggle.svg" class="c-p"></h4>
         <h5 class="m-0 pt-8 pb-8">Aditya birla sun life - Equity Savings Fund Regular Plan Growth</h5>
@@ -320,21 +320,8 @@
     </div>
     <div class="col-md-4">
         <ul class="d-block">
-            <!-- <li class="pt-20"> <button mat-stroked-button class="br-0 pl-8 bg-grey lter text-primitive w-70"><img
-                        src="/assets/images/svg/right.svg" class="pr-8">Task</button> </li>
-            <li class="pt-20"> <button mat-stroked-button class="br-0 pl-8 bg-grey lter text-primitive w-70"><img
-                        src="/assets/images/svg/linked-goal.svg" class="pr-8">Goal linkage</button> </li>
-            <li class="pt-20"> <button mat-stroked-button class="br-0 pl-8 bg-grey lter text-primitive w-70"><img
-                        src="/assets/images/svg/attech.svg" class="pr-8">Attachment</button> </li>
-            <li class="pt-20"> <button mat-stroked-button class="br-0 pl-8 bg-grey lter text-primitive w-70"><img
-                        src="/assets/images/svg/right.svg" class="pr-8">Rationale</button> </li>
-            <li class="pt-20"> <button mat-stroked-button class="br-0 pl-8 bg-grey lter text-primitive w-70"><img
-                        src="/assets/images/svg/file-light.svg" class="pr-8">Note</button> </li>
-            <li class="pt-20"> <button mat-stroked-button class="br-0 pl-8 w-70"><img src="/assets/images/svg/right.svg"
-                        class="pr-8">View
-                    activity log</button> </li> -->
-            <li class="pt-20"><button mat-stroked-button class="br-0 btn-lt min-160"><img
-                        src="/assets/images/svg/right.svg" class="left pt-8">Task</button></li>
+            <li><button mat-stroked-button class="br-0 btn-lt min-160"><img src="/assets/images/svg/right.svg"
+                        class="left pt-8">Task</button></li>
 
             <li class="pt-20"><button mat-stroked-button class="br-0 btn-lt min-160"><img
                         src="/assets/images/svg/goal-linking.svg" class="left pt-8">Goal linkage</button></li>
@@ -354,8 +341,93 @@
                     log</button></li>
         </ul>
     </div>
-</div>
+</div> -->
 <!-- end activity -->
+
+<!-- RATIONALE -->
+<div class="pt-80 pr-20 pl-20">
+    <div class="row">
+        <div class="col-md-12 p-0 text-right">
+            <button mat-stroked-button class="br-0 text-custom pl-8"><img src="/assets/images/svg/left-arrows.svg"
+                    class="pr-24 v-sub">Go back</button>
+        </div>
+    </div>
+    <div class="row pt-20">
+        <div class="col-md-4 p-0">
+            <h4 class="m-0 f-700 text-black"> <img src="/assets/images/svg/double-invaded.svg"
+                    class="pr-4">RATIONALE<img src="/assets/images/svg/toggle.svg"></h4>
+        </div>
+        <div class="col-md-8 text-right right p-0">
+            <button mat-stroked-button [matMenuTriggerFor]="menu" class="btn-primary br-0"><img
+                    src="/assets/images/svg/plus.svg" class="pr-8">ADD
+                NEW</button>
+            <mat-menu #menu="matMenu" class="w-340">
+                <button mat-menu-item>
+                    <div class="row pt-8 pb-8">
+                        <div class="col-md-2 p-0">
+                            <img src="/assets/images/svg/level.svg" class="v-sub">
+                        </div>
+                        <div class="col-md-10 pl-0">
+                            <p class="m-0 text-black roboto">Portfolio level</p>
+                            <p class="m-0 text-primitive roboto w-b pt-4">Add rationale & attachment <br>at portfolio
+                                level</p>
+                        </div>
+                    </div>
+                </button>
+                <button mat-menu-item>
+                    <div class="row pt-8 pb-8">
+                        <div class="col-md-2 p-0">
+                            <img src="/assets/images/svg/scheme-icon.svg" class="v-super">
+                        </div>
+                        <div class="col-md-10 pl-0">
+                            <p class="m-0 text-black roboto">Scheme level</p>
+                            <p class="m-0 text-primitive roboto w-b pt-4">Add rationale & attachment <br>at scheme level
+                            </p>
+                        </div>
+                    </div>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+    <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+        <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Category </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        </ng-container>
+        <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef> Rationale </th>
+            <td mat-cell *matCellDef="let element" class="text-success"> {{element.symbol}} </td>
+        </ng-container>
+        <ng-container matColumnDef="attch">
+            <th mat-header-cell *matHeaderCellDef> Attachment </th>
+            <td mat-cell *matCellDef="let element" class="text-success"> {{element.attch}} </td>
+        </ng-container>
+        <ng-container matColumnDef="icons">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element" class="c-p"> <i class="material-icons" [matMenuTriggerFor]="menu1">
+                    more_vert
+                </i>
+                <mat-menu #menu1="matMenu">
+                    <button mat-menu-item>Hide from activity view</button>
+                    <button mat-menu-item>Remove rationale</button>
+                    <button mat-menu-item>Remove attachment</button>
+                    <button mat-menu-item>Delete record</button>
+                </mat-menu>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
+<!-- end RATIONALE -->
 <div class="bottom-fixed w-65 wrapper-12">
     <div class="row">
         <div class="col-md-4">
