@@ -170,7 +170,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   openPlanSlider(value, state, data) {
     let componentName;
     (value == 'billerSettings') ? componentName = BillerSettingsComponent : (value == 'changePayee') ? componentName = ChangePayeeComponent :
-      (value == "SUBSCRIPTIONS") ? componentName = InvoiceHistoryComponent : (data.subscriptionPricing.feeTypeId == 1) ?
+      (value == 'SUBSCRIPTIONS') ? componentName = InvoiceHistoryComponent : (data.subscriptionPricing.feeTypeId == 1) ?
         data.subFlag = 'createSubFixed' : data.subFlag = 'createSubVariable';
     if (data.subFlag) {
       componentName = CreateSubscriptionComponent;
@@ -182,7 +182,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       data,
       id: 1,
       state: 'open',
-      componentName: componentName
+      componentName
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -275,7 +275,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     console.log('addFilters', addFilters);
     if (!_.includes(this.filterStatus, addFilters)) {
       this.filterStatus.push(addFilters);
-      console.log(this.filterStatus)
+      console.log(this.filterStatus);
     } else {
       // _.remove(this.filterStatus, this.senddataTo);
     }
@@ -294,11 +294,11 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
   addFiltersDate(dateFilter) {
-    this.filterDate = []
+    this.filterDate = [];
     if (this.filterDate.length >= 1) {
-      this.filterDate = []
+      this.filterDate = [];
     }
-    this.filterDate.push((dateFilter == "1: Object") ? 1 : (dateFilter == "2: Object") ? 2 : 3);
+    this.filterDate.push((dateFilter == '1: Object') ? 1 : (dateFilter == '2: Object') ? 2 : 3);
     console.log('addFilters', dateFilter);
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
@@ -328,9 +328,9 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     UtilService.getStartOfTheDay(beginDate);
 
     const endDate = new Date();
-    UtilService.getStartOfTheDay(endDate)
+    UtilService.getStartOfTheDay(endDate);
     this.selectedDateRange = {begin: selectedDateRange.begin, end: selectedDateRange.end};
-    this.callFilter()
+    this.callFilter();
   }
 
   orgValueChange2(value) {
