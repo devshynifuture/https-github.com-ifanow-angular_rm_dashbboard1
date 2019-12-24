@@ -41,7 +41,6 @@ export class AccountsComponent implements OnInit {
       this._value = data;
       this.loading = false;
     }, 300);
-    this.ngOnInit()
   }
 
   ngOnInit() {

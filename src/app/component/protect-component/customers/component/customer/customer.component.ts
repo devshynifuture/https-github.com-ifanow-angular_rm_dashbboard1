@@ -62,7 +62,6 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
       console.log('CustomerComponent getTabChangeData value : ', this.value);
 
     }, 300);
-    this.ngOnInit()
   }
 
 
