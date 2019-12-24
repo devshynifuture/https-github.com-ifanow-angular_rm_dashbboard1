@@ -122,11 +122,13 @@
                 <div class="liabilities wrapper-8">
                     <div class="row">
                         <div class="col-md-12 p-0">
-                            <table matSort mat-table [dataSource]="dataSource" id="table-low">
+                            <table matSort mat-table [dataSource]="dataSource" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                                 <ng-container matColumnDef="no">
                                     <th mat-header-cell *matHeaderCellDef class="br"> No.</th>
                                     <td mat-cell *matCellDef="let element; let i = index;" class="br">
-                                        <div class="bar"> {{i+1}} </div>
+                                        <div class="bar">
+                                            <div class="bar"> {{i+1}} </div>
+                                        </div>
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                 </ng-container>
