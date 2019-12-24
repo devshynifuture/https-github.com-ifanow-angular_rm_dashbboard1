@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {EventService} from 'src/app/Data-service/event.service';
@@ -43,6 +43,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./document.component.scss']
 })
 export class DocumentComponent implements OnInit {
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
   quotationDesignEmail: any;
   // @Input() upperData;
 
@@ -106,7 +108,7 @@ export class DocumentComponent implements OnInit {
   }
 
   displayedColumns: string[] = ['checkbox', 'document', 'plan', 'service', 'date', 'sdate', 'cdate', 'status', 'icons'];
-  dataSource = [];
+  dataSource :any;
 
   ngOnInit() {
     this.documentDesign = 'true';
@@ -153,7 +155,9 @@ export class DocumentComponent implements OnInit {
         singleData.selected = false;
         singleData.documentText = singleData.docText;
       });
-      this.dataSource = data;
+      // this.dataSource = data;
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.sort = this.sort;
     }
 
   }
