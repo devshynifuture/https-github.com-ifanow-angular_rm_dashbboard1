@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -16,9 +16,9 @@ export class HistoryRiskProfileComponent implements OnInit {
   advisorId: any;
   clientId: any;
   dataSourceHistory: any;
+  storeResult: any;
 
   constructor(private subInjectService: SubscriptionInject, public planService: PlanService,) { }
-
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -32,6 +32,19 @@ export class HistoryRiskProfileComponent implements OnInit {
     this.planService.getRiskHistory(obj).subscribe(
       data => this.getRiskHistoryRes(data), error => {
       });
+  }
+  viewResult(obj){
+    const data = {
+      clientRiskProfileId : obj.id
+    }
+    this.planService.getResultRisk(data).subscribe(
+      data => this.getResultRiskRes(data), error => {
+      });
+  }
+  getResultRiskRes(data){
+    console.log(data)
+    this.storeResult = data
+    this.Close(data)
   }
   getRiskHistoryRes(data){
     console.log('getRiskHistoryRes',data)
@@ -56,8 +69,8 @@ export class HistoryRiskProfileComponent implements OnInit {
       }
     );
   }
-  Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  Close(data) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close',data });
   }
 
 }
