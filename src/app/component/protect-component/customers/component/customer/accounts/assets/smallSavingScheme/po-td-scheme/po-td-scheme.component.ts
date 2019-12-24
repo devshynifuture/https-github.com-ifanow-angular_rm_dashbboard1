@@ -31,7 +31,7 @@ export class PoTdSchemeComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns22 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'tenure', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
-  datasource;
+  dataSource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = 2978;
@@ -52,7 +52,7 @@ export class PoTdSchemeComponent implements OnInit {
     { width: 15, key: 'Status' },]
     var header = ['Owner', 'Current Value', 'Rate', 'Amount Invested',
       'Tenure', 'Maturity Value', 'Maturity Date', 'TD Number', 'Description','Status'];
-    this.datasource.filteredData.forEach(element => {
+    this.dataSource.filteredData.forEach(element => {
       data = [element.ownerName, (element.currentValue), (element.rate), (element.balance),
       new Date(element.balanceAsOn), element.description, element.status]
       this.excelData.push(Object.assign(data))
@@ -76,9 +76,9 @@ export class PoTdSchemeComponent implements OnInit {
     console.log(data);
     this.isLoading = false;
     if (data.postOfficeTdList.length != 0) {
-      this.datasource = new MatTableDataSource(data.postOfficeTdList);
-      this.datasource.sort = this.sort;
-      UtilService.checkStatusId(this.datasource.filteredData)
+      this.dataSource = new MatTableDataSource(data.postOfficeTdList);
+      this.dataSource.sort = this.sort;
+      UtilService.checkStatusId(this.dataSource.filteredData)
     } else {
       this.noData = "No Scheme Found";
     }

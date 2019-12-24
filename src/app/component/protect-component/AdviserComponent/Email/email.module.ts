@@ -12,8 +12,6 @@ import {EmailComponent} from './email-component/email.component';
 import {LeftSidebarComponent} from './email-component/left-sidebar/left-sidebar.component';
 import {EmailRoutingModule} from './email-routing.module';
 import {EmailEntryModule} from './email.entry.module';
-import { EventDialog } from './calender/calender.component';
-
 
 @NgModule({
   declarations: [
@@ -23,10 +21,6 @@ import { EventDialog } from './calender/calender.component';
     EmailDraftComponent,
     EmailArchiveComponent,
     EmailTrashComponent,
-    EventDialog
-  ],
-  entryComponents:[
-    EventDialog
   ],
   imports: [
     CommonModule,

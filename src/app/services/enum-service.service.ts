@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {element} from 'protractor';
+import { Injectable } from '@angular/core';
+import { element } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class EnumServiceService {
     feeCollectionMode: []
   };
 
-public  addToGlobalEnumData(data) {
+  public addToGlobalEnumData(data) {
     // obj.forEach(element =>
     //   {
     //     element.selected=false;
