@@ -5,7 +5,7 @@ import {AssetsComponent} from './assets/assets.component';
 import {SummaryComponent} from './summary/summary.component';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AccountsComponent} from "./accounts.component";
+import {AccountsComponent} from './accounts.component';
 // import {CustomerComponent} from './component/customer/customer.component';
 
 
@@ -16,11 +16,14 @@ const routes: Routes = [{
     {
       path: 'summary',
       component: SummaryComponent,
+      data: {animation: 'Tab1'}
       // outlet: 'accountRouterOutlet'
     },
     {
       path: 'assets',
       component: AssetsComponent,
+      data: {animation: 'Tab2'}
+
       // outlet: 'accountRouterOutlet'
     },
     {

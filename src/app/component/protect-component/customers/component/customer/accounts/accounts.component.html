@@ -1,32 +1,30 @@
 <div id="ui-account-container">
   <div id="advisor-home">
-    <!--  <a [routerLink]="[{ outlets: { primary: '/admin/subscription/dashboard'}}]" class="sidenav-link" mat-list-item>-->
-    <!--      <a mat-list-item class="sidenav-link" [routerLink]="['/admin/subscription/dashboard']">-->
-    <!--    <a class="sidenav-link" href="/admin/subscription/dashboard" mat-list-item>-->
-
-      <!---->
-      <!--  <a mat-list-item class="sidenav-link" [routerLink]="['',{outlet:{secondary:'/admin/subscription'}}]">-->
-    <!--          <button class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">-->
     <button (click)="goToAdvisorHome()" class="btn-yellow" mat-stroked-button><i class="material-icons mr-12">
         keyboard_backspace
       </i>ADVISOR HOME
-      </button>
-    <!--    </a>-->
+    </button>
   </div>
   <nav id="ui-customer-secondhead" mat-tab-nav-bar>
-    <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'./summary'" mat-tab-link>SUMMARY</a>
-    <a (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'./assets'" mat-tab-link>ASSETS</a>
-
-    <!--     [routerLink]="[{outlet:{accountRouterOutlet:['assets']}}]">ASSETS</a>-->
-    <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'./liabilities'"
-       mat-tab-link>LIABILITIES</a>
-    <a (click)="value=4" [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'./insurance'" mat-tab-link>INSURANCE</a>
-    <!-- <a mat-tab-link [routerLink]="'expenses'">EXPENSES</a> -->
-    <a (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'./documents'" mat-tab-link>DOCUMENTS</a>
+    <a (click)="navBarClick('summary',1)" mat-tab-link routerLinkActive="active">SUMMARY</a>
+    <a (click)="navBarClick('assets',2)" mat-tab-link routerLinkActive="active">ASSETS</a>
+    <a (click)="navBarClick('liabilities',3)" mat-tab-link routerLinkActive="active">LIABILITIES</a>
+    <a (click)="navBarClick('insurance',4)" mat-tab-link routerLinkActive="active">INSURANCE</a>
+    <a (click)="navBarClick('documents',5)" mat-tab-link routerLinkActive="active">DOCUMENTS</a>
   </nav>
-  <div *ngIf="showRouter">
-    <router-outlet></router-outlet>
+  <div [@routeAnimations]="routingStateService.prepareRoute(outlet)">
+
+    <router-outlet #outlet="outlet">
+
+    </router-outlet>
+    <ng-template>
+      <router-outlet></router-outlet>
+    </ng-template>
   </div>
+  <!-- <ng-template>
+     <router-outlet></router-outlet>
+   </ng-template>-->
+  <!--  </div>-->
   <!-- <mat-tab-group [selectedIndex]="selected" mat-align-tabs="center" id="ui-account-second-head" animationDuration="0ms">
     <mat-tab label="SUMMARY ssfsf">
       <ng-template matTabContent>

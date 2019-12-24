@@ -1,0 +1,35 @@
+::ng-deep .fixed-checkbox-right {
+  position: absolute;
+  right: 8%;
+  top: -5%;
+}
+
+// ::ng-deep .mat-checkbox-frame {
+//   border-color: #008FFF;
+// }
+::ng-deep .min-160 {
+  min-width: 160px !important;
+  font-size: 12px !important;
+}
+
+::ng-deep .w-340 {
+  width: 340px !important;
+
+  .mat-menu-item {
+    height: 68px !important;
+  }
+}
+
+::ng-deep .mat-tab-header {
+  border-bottom: 0px;
+
+  .mat-tab-label {
+    padding: 0;
+    min-width: 120px !important;
+  }
+
+  .mat-tab-label-active {
+    color: #008FFF !important;
+    opacity: .9;
+  }
+}

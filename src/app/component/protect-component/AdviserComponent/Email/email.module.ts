@@ -13,7 +13,6 @@ import {LeftSidebarComponent} from './email-component/left-sidebar/left-sidebar.
 import {EmailRoutingModule} from './email-routing.module';
 import {EmailEntryModule} from './email.entry.module';
 
-
 @NgModule({
   declarations: [
     EmailComponent,

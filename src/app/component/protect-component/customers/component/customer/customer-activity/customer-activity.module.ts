@@ -8,6 +8,7 @@ import { AdviceActivityComponent } from './advice-activity/advice-activity.compo
 import { DeploymentsActivityComponent } from './deployments-activity/deployments-activity.component';
 
 
+
 @NgModule({
   declarations: [CustomerActivityComponent, AdviceActivityComponent, DeploymentsActivityComponent],
   imports: [

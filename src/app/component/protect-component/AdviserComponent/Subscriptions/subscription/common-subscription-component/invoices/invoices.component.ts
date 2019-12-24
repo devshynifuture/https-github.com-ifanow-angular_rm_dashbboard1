@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { SubscriptionService } from '../../../subscription.service';
-import { MatDialog } from '@angular/material';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { UtilService } from 'src/app/services/util.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, Input, OnInit} from '@angular/core';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {SubscriptionService} from '../../../subscription.service';
+import {MatDialog} from '@angular/material';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {UtilService} from 'src/app/services/util.service';
+import {AuthService} from 'src/app/auth-service/authService';
 
 export interface PeriodicElement {
   Invoicenumber: string;
@@ -151,7 +151,7 @@ export class InvoicesComponent implements OnInit {
         data.documentList.push(singleElement);
       }
     });
-    this.open(data, 'emailOnlyInv');
+    this.open(data, 'email');
   }
 
   open(data, value) {

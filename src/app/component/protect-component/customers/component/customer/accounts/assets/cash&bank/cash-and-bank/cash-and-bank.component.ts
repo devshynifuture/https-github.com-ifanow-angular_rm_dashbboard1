@@ -22,20 +22,20 @@ import { ExcelService } from '../../../../excel.service';
 export class CashAndBankComponent implements OnInit {
   showRequring: string;
   advisorId: any;
-  bankAccountList: any;
-  cashInHandList: any;
+  bankAccountList: any = [{}, {}, {}];
+  cashInHandList: any = [{}, {}, {}];
   clientId: any;
   totalAccountBalance: any;
   sumOfCashValue: any;
-  isLoading = true;
+  isLoading = false;
   noData: string;
   excelData: any[];
-  footer= [];
+  footer = [];
 
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) { }
-  displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc','status', 'icons'];
+  displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc', 'status', 'icons'];
   datasource7 = ELEMENT_DATA7;
-  displayedColumns8 = ['no', 'owner', 'cash', 'bal', 'desc', 'status','icons'];
+  displayedColumns8 = ['no', 'owner', 'cash', 'bal', 'desc', 'status', 'icons'];
   datasource8 = ELEMENT_DATA8;
 
   @ViewChild('bankAccountListTable', { static: false }) bankAccountListTableSort: MatSort;
@@ -57,7 +57,7 @@ export class CashAndBankComponent implements OnInit {
       { width: 25, key: ' Balance as on' },
       { width: 15, key: 'Description' },
       { width: 10, key: 'Status' },]
-      var header = ['Owner', 'Account type',' Balance as on', 'Description', 'Status'];
+      var header = ['Owner', 'Account type', ' Balance as on', 'Description', 'Status'];
       this.cashInHandList.filteredData.forEach(element => {
         data = [element.ownerName, (element.accountType), (element.balanceAsOn),
         element.description, element.status]
@@ -87,10 +87,11 @@ export class CashAndBankComponent implements OnInit {
       var footerData = ['Total', '', '', '', this.formatNumber.first.formatAndRoundOffNumber(this.totalAccountBalance), '', '', '', '']
       this.footer.push(Object.assign(footerData))
     }
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   }
   getfixedIncomeData(value) {
     console.log('value++++++', value);
+    this.isLoading = true;
     this.showRequring = value;
     if (value == '2') {
       this.getCashInHandList();
@@ -147,6 +148,7 @@ export class CashAndBankComponent implements OnInit {
     });
   }
   getBankAccountList() {
+    this.isLoading = true;
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
@@ -157,11 +159,17 @@ export class CashAndBankComponent implements OnInit {
   }
 
   getBankAccountsRes(data) {
+    this.isLoading = false;
     console.log('getBankAccountsRes ####', data);
     this.isLoading = false;
-    this.bankAccountList = new MatTableDataSource(data.cashInBankAccounts);
-    this.bankAccountList.sort = this.bankAccountListTableSort;
-    this.totalAccountBalance = data.totalAccountBalance
+    if (data.cashInBankAccounts.length != 0) {
+      this.bankAccountList = new MatTableDataSource(data.cashInBankAccounts);
+      this.bankAccountList.sort = this.bankAccountListTableSort;
+      this.totalAccountBalance = data.totalAccountBalance
+    }
+    else {
+      this.noData = "No Scheme Found";
+    }
   }
   getCashInHandList() {
     this.isLoading = true;
@@ -176,9 +184,13 @@ export class CashAndBankComponent implements OnInit {
   getCashInHandRes(data) {
     console.log('getCashInHandRes ###', data);
     this.isLoading = false;
-    this.cashInHandList = new MatTableDataSource(data.cashInHands);
-    this.cashInHandList.sort = this.cashInHandListTableSort;
-    this.sumOfCashValue = data.sumOfCashValue
+    if (data.cashInHands.length != 0) {
+      this.cashInHandList = new MatTableDataSource(data.cashInHands);
+      this.cashInHandList.sort = this.cashInHandListTableSort;
+      this.sumOfCashValue = data.sumOfCashValue
+    } else {
+      this.noData = "No Scheme Found";
+    }
   }
   openCashAndBank(data) {
     const fragmentData = {
@@ -202,7 +214,7 @@ export class CashAndBankComponent implements OnInit {
   openCashInHand(data) {
     const fragmentData = {
       flag: 'addCashInHand',
-      data:data,
+      data: data,
       id: 1,
       state: 'open',
       componentName: CashInHandComponent
@@ -261,24 +273,24 @@ export interface PeriodicElement7 {
   account: string;
   bank: string;
   desc: string;
-  status:string
+  status: string
 }
 
 const ELEMENT_DATA7: PeriodicElement7[] = [
   {
     no: '1.', owner: 'Rahul Jain',
     type: 'Savings', amt: '08/02/2019', rate: '8.40%', bal: '1,00,000', account: '980787870909', bank: 'ICICI',
-    desc: 'ICICI FD', status:''
+    desc: 'ICICI FD', status: ''
   },
   {
     no: '2.', owner: 'Shilpa Jain',
     type: 'Current', amt: '08/02/2019', rate: '8.60%', bal: '50,000', account: '77676767622', bank: 'Axis',
-    desc: 'Axis bank FD', status:''
+    desc: 'Axis bank FD', status: ''
   },
   {
     no: '', owner: 'Total',
     type: '', amt: '', rate: '', bal: '1,50,000', account: '', bank: '',
-    desc: '', status:''
+    desc: '', status: ''
   },
 
 
@@ -305,7 +317,7 @@ const ELEMENT_DATA8: PeriodicElement8[] = [
   {
     no: '', owner: 'Total'
     , cash: '1,28,925', bal: '',
-    desc: '', 
+    desc: '',
   },
 
 

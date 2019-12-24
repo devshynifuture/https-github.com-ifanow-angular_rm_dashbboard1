@@ -1,5 +1,5 @@
 <div id="ui-invoice-pdf-documents" *ngIf="invoiceInSub=='invoiceSubscription' && showEdit==false">
-    <div class="bg-white mt-70">
+    <div class="bg-white pt-72 ">
         <div class="row b-b">
             <div class="col-md-4 p-0">
                 <div class="row">
@@ -12,8 +12,8 @@
          more_vert
          </i> -->
                         <button mat-stroked-button class="btn-primary br-0 my-btn mt-4"><i class="material-icons">
-                        add
-                     </i></button>
+                                add
+                            </i></button>
 
                     </div>
                 </div>
@@ -25,8 +25,8 @@
                     </div>
                     <div (click)="Close('close')" class="col-md-2">
                         <i class="material-icons text-right pt-16 c-p right">
-                     clear
-                  </i>
+                            clear
+                        </i>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="col-md-4 right text-right">
                         <button mat-stroked-button class="btn-primary br-0 mb-12" (click)="recordPayment()">RECORD
-                     PAYMENT</button>
+                            PAYMENT</button>
                     </div>
                 </div>
 
@@ -167,7 +167,8 @@
                                             <p class="f-500 roboto pt-8">Balance due</p>
                                         </div>
                                         <div class="col-md-4">
-                                            <p class="f-500 roboto pt-8 text-right">₹{{formatter(storeData.balanceDue)}}</p>
+                                            <p class="f-500 roboto pt-8 text-right">₹{{formatter(storeData.balanceDue)}}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -198,7 +199,8 @@
                             <!-- Position Column -->
                             <ng-container matColumnDef="date">
                                 <th mat-header-cell *matHeaderCellDef>Date </th>
-                                <td mat-cell *matCellDef="let element"> {{element.paymentDate | date:'dd/MM/yyyy'}} </td>
+                                <td mat-cell *matCellDef="let element"> {{element.paymentDate | date:'dd/MM/yyyy'}}
+                                </td>
                             </ng-container>
 
                             <!-- Name Column -->
@@ -221,8 +223,8 @@
                             <ng-container matColumnDef="icons">
                                 <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
                                 <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
-                              more_vert
-                           </i>
+                                        more_vert
+                                    </i>
                                     <mat-menu #menu="matMenu">
                                         <a mat-menu-item (click)="editForm(element)">Edit</a>
                                     </mat-menu>
@@ -331,10 +333,10 @@
                             <div class="col-md-5">
                                 <div class="form-group mb-0">
                                     <select class="form-control" id="Category" formControlName="paymentMode">
-                              <option value="0" disabled selected hidden>Select payment mode</option>
-                              <option *ngFor="let feeCollectionMode of feeCollectionMode"
-                                 value="{{feeCollectionMode.name}}">{{feeCollectionMode.name}}</option>
-                           </select>
+                                        <option value="0" disabled selected hidden>Select payment mode</option>
+                                        <option *ngFor="let feeCollectionMode of feeCollectionMode"
+                                            value="{{feeCollectionMode.name}}">{{feeCollectionMode.name}}</option>
+                                    </select>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
@@ -354,12 +356,13 @@
                             <div class="col-md-5">
                                 <div class="form-group mb-0">
                                     <select formControlName="gstTreatment" class="form-control">
-                              <option value="0" disabled selected hidden>Select gst treatment</option>
-                              <option *ngFor="let gst of this.gstTreatment" value="{{gst.name}}">{{gst.name}}</option>
-                              <!-- <option value="1">Registered Business - Regular</option>
+                                        <option value="0" disabled selected hidden>Select gst treatment</option>
+                                        <option *ngFor="let gst of this.gstTreatment" value="{{gst.name}}">{{gst.name}}
+                                        </option>
+                                        <!-- <option value="1">Registered Business - Regular</option>
          <option value="2">Registered Business - Composition</option>
          <option value="3">Unregistered Business</option> -->
-                           </select>
+                                    </select>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
@@ -408,8 +411,8 @@
                         </div>
                         <div class="col-md-1">
                             <i class="material-icons text-light c-p p-8 f-24 b-a text-right right">
-                        save_alt
-                     </i>
+                                save_alt
+                            </i>
                         </div>
                     </div>
                     <div class="row pt-32 pb-28 bb-1">
@@ -584,8 +587,8 @@
         </div>
         <div class="col-md-2">
             <i class="material-icons text-right pt-16 pr-16 c-p right" (click)="Close('close')">
-            clear
-         </i>
+                clear
+            </i>
         </div>
     </div>
     <div class="row bb-1 pt-72" *ngIf="showRecord==false && feeCalc==false">
@@ -753,8 +756,8 @@
                 <ng-container matColumnDef="icons">
                     <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
                     <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
-                     more_vert
-                  </i>
+                            more_vert
+                        </i>
                         <mat-menu #menu="matMenu">
                             <a mat-menu-item (click)="editForm(element)">Edit</a>
                         </mat-menu>
@@ -861,10 +864,11 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <select class="form-control" id="Category" formControlName="paymentMode" id="sel1">
-                     <option value="0" disabled selected hidden>Select payment mode</option>
-                     <option *ngFor="let feeCollectionMode of feeCollectionMode" value="{{feeCollectionMode.name}}">
-                        {{feeCollectionMode.name}}</option>
-                  </select>
+                            <option value="0" disabled selected hidden>Select payment mode</option>
+                            <option *ngFor="let feeCollectionMode of feeCollectionMode"
+                                value="{{feeCollectionMode.name}}">
+                                {{feeCollectionMode.name}}</option>
+                        </select>
                     </div>
                     <div class="row">
                         <div class="col-md-10 pr-0">
@@ -884,12 +888,12 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <select formControlName="gstTreatment" class="form-control">
-                     <option value="0" disabled selected hidden>Select gst treatment</option>
-                     <option *ngFor="let gst of this.gstTreatment" value="{{gst.name}}">{{gst.name}}</option>
-                     <!-- <option value="1">Registered Business - Regular</option>
+                            <option value="0" disabled selected hidden>Select gst treatment</option>
+                            <option *ngFor="let gst of this.gstTreatment" value="{{gst.name}}">{{gst.name}}</option>
+                            <!-- <option value="1">Registered Business - Regular</option>
         <option value="2">Registered Business - Composition</option>
         <option value="3">Unregistered Business</option> -->
-                  </select>
+                        </select>
                     </div>
                     <div class="row">
                         <div class="col-md-10 pr-0">
@@ -937,8 +941,8 @@
             </div>
             <div class="col-md-1">
                 <i class="material-icons text-light c-p p-8 f-24 b-a text-right right">
-               save_alt
-            </i>
+                    save_alt
+                </i>
             </div>
         </div>
         <div class="row pt-32 pb-28 bb-1">
@@ -1154,7 +1158,8 @@
             <div class="row pt-10">
                 <div class="col-md-6 pl-0">
                     <p class="m-0 text-custom f-12">BILLER ADDRESS</p>
-                    <p *ngIf="editAdd1 == false" class="m-0 text-black text-break w-90 l-21">{{storeData.billerAddress}}</p>
+                    <p *ngIf="editAdd1 == false" class="m-0 text-black text-break w-90 l-21">{{storeData.billerAddress}}
+                    </p>
                     <textarea rows="5" *ngIf="editAdd1 == true" class="form-control br-0" formControlName="billerAddress" maxlength="{{getFormControledit().billerAddress.maxLength}}"></textarea>
                     <p class="m-0 text-primary c-p f-12" (click)="onclickChangeAdd1(editAdd1)">CHANGE</p>
                     <p class="mb-0 f-12 text-custom text-right pt-4 pr-36">
@@ -1163,7 +1168,8 @@
                 </div>
                 <div class="col-md-6 pl-0">
                     <p class="m-0 text-custom f-12">PAYEE ADDRESS</p>
-                    <p *ngIf="editAdd2 == false" class="m-0 text-black text-break l-21 w-90">{{storeData.billingAddress}}</p>
+                    <p *ngIf="editAdd2 == false" class="m-0 text-black text-break l-21 w-90">
+                        {{storeData.billingAddress}}</p>
                     <textarea rows="5" *ngIf="editAdd2 == true" class="form-control br-0" formControlName="billingAddress" maxlength="{{getFormControledit().billingAddress.maxLength}}"></textarea>
                     <p class="m-0 text-primary c-p f-12" (click)="onclickChangeAdd2(editAdd2)">CHANGE</p>
                     <p class="mb-0 f-12 text-custom text-right pt-4 pr-12">
@@ -1280,10 +1286,10 @@
                     </div>
                     <div class="col-md-2 pl-0">
                         <select id="serviceName" class="form-control" (change)="changeTaxStatus($event.target.value)" formControlName="taxStatus">
-                     <option value="">Select tax type</option>
-                     <option value="IGST(18%)">IGST(18%)</option>
-                     <option value="SGST(9%)|CGST(9%)">SGST(9%)|CGST(9%)</option>
-                  </select>
+                            <option value="">Select tax type</option>
+                            <option value="IGST(18%)">IGST(18%)</option>
+                            <option value="SGST(9%)|CGST(9%)">SGST(9%)|CGST(9%)</option>
+                        </select>
                         <div class="col-md-8">
                             <mat-error class="f-12 pt-4" *ngIf="isTaxstatus && getFormControledit().taxStatus.invalid || (getFormControledit().taxStatus.touched && getFormControledit().taxStatus.invalid)">
                                 Tax status is required

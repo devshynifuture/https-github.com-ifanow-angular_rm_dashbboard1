@@ -1,8 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SubscriptionService } from '../../subscription.service';
 import { SubscriptionInject } from '../../subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
 import { AuthService } from "../../../../../../auth-service/authService";
@@ -44,13 +43,13 @@ export class InvoicesSubscriptionComponent implements OnInit {
   statusIdList = [];
   showFilter = false;
   selectedDateRange: { begin: Date; end: Date; };
+  dataSource: any;
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
     private eventService: EventService, public subscription: SubscriptionService) {
     this.ngOnInit();
   }
 
-  dataSource: [{ selected: '' }, { selected: '' }, { selected: '' }];
   isLoading = false;
   subscriptionValue: any;
   invoiceSub: any;
@@ -66,6 +65,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   @Input() invoiceValue
 
   ngOnInit() {
+    this.dataSource= [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
     this.getInvoiceSubData();
     this.showEdit = false;
@@ -76,13 +76,12 @@ export class InvoicesSubscriptionComponent implements OnInit {
   }
 
   getInvoiceSubData() {
-
+    this.isLoading = true;
     const obj = {
       id: this.advisorId,
       // id: 2735, // pass here advisor id for Invoice advisor
       module: 1
     };
-
     this.subscription.getInvoices(obj).subscribe(
       data => this.getInvoiceResponseData(data)
     );
@@ -96,7 +95,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   }
 
   getInvoiceResponseData(data) {
-    this.isLoading = true;
+    this.isLoading = false;
     if (data == undefined) {
       this.noData = "No Data Found";
     } else {

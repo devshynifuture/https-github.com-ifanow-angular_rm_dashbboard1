@@ -1,5 +1,5 @@
 import { EmailUtilService } from './../../../../../../services/email-util.service';
-import { FormBuilder, FormGroup, FormArray, Form } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 import { SubscriptionService } from './../../../Subscriptions/subscription.service';
@@ -26,6 +26,7 @@ export class ComposeEmailComponent implements OnInit {
   emailBody: string = '';
   from: string = "";
   to: string = "";
+  idOfMessage;
   date;
   doc: [];
   docObj: [];
@@ -34,43 +35,39 @@ export class ComposeEmailComponent implements OnInit {
   isCcSelected: boolean = false;
   isBccSelected: boolean = false;
   isFromChanged: boolean = false;
-  formState: Object;
+  idArray: [] = [];
 
   emailForm: FormGroup;
 
-  // @Input() set data(data) {
-  //   this._data = data;
-  // }
-
-  // get data() {
-  //   return this._data;
-  // }
-
   ngOnInit() {
     this.createEmailForm();
-
   }
 
   createEmailForm() {
     // console.log("this is data sent from draft list ->>>>  ", this.data);
     this.emailForm = this.fb.group({
-      receiver: ['', Validators.email],
       sender: ['', Validators.email],
+      receiver: ['', Validators.email],
+      carbonCopy: ['', Validators.email],
+      blindCarbonCopy: ['', Validators.email],
       subject: [''],
       messageBody: [''],
       attachments: [''],
-      carbonCopy: ['', Validators.email],
-      blindCarbonCopy: ['', Validators.email]
     });
 
     if (this.data) {
       console.log("hello this is data ->>>>>>>>>>>>>>>", this.data);
-      const { subjectMessage: { subject, message } } = this.data;
-      const { date } = this.data;
+      const { dataObj, idArray } = this.data;
+      const { idsOfThread: { id } } = dataObj;
+      this.idOfMessage = id;
+
+      this.idArray = idArray;
+      const { subjectMessage: { subject, message } } = dataObj;
+      const { date } = dataObj;
       this.date = date;
       this.subject = subject;
       this.emailBody = message;
-      const { parsedData: { headers } } = this.data;
+      const { parsedData: { headers } } = dataObj;
       headers.forEach(element => {
         if (element.name === "From") {
           this.from = element.value.split('<')[1].split('>')[0];
@@ -79,10 +76,7 @@ export class ComposeEmailComponent implements OnInit {
           this.to = element.value.split('<')[1].split('>')[0];
         }
       });
-
-      this.initEmailFormState(this.data);
     }
-
   }
 
   toggleCC(): void {
@@ -93,19 +87,6 @@ export class ComposeEmailComponent implements OnInit {
   toggleBCC(): void {
     this.isBccSelected = !this.isBccSelected;
     this.emailForm.get('blindCarbonCopy').setValue("");
-  }
-
-  didFromOfEmailChanged(): boolean {
-    console.log("did from Of email changed->>>", this.isFromChanged);
-    return this.isFromChanged;
-  }
-
-  initEmailFormState(emailObj?: {}): void {
-
-  }
-
-  setFromOfEmail(value: boolean): void {
-    this.isFromChanged = value;
   }
 
   // sendEmail() {
@@ -120,18 +101,33 @@ export class ComposeEmailComponent implements OnInit {
   // }
 
   close(): void {
+    this.idArray.forEach(element => {
+      if (element !== this.idOfMessage) {
+        const Obj = {
+          to: this.to ? this.to : '',
+          from: this.from ? this.from : '',
+          emailBody: this.emailBody ? this.emailBody : '',
+          attachments: '',
+          subject: this.subject ? this.subject : ''
+        }
+        this.emailService.createDraft(Obj)
+          .subscribe(response => console.log(response), error => console.error(error));
+      } else if (element !== this.idOfMessage) {
 
-    if (this.didFromOfEmailChanged() && this.emailForm.valid) {
-      const Obj = {
-        to: this.to ? this.to : '',
-        from: this.from ? this.from : '',
-        emailBody: this.emailBody ? this.emailBody : '',
-        attachments: '',
-        subject: this.subject ? this.subject : ''
+        const Obj = {
+          id: this.idOfMessage,
+          to: this.to ? this.to : '',
+          from: this.from ? this.from : '',
+          emailBody: this.emailBody ? this.emailBody : '',
+          attachments: '',
+          subject: this.subject ? this.subject : ''
+        }
+        console.log(" update api for draft");
+        this.emailService.updateDraft(Obj)
+          .subscribe(response => console.log(response), error => console.error(error))
       }
-      this.emailService.createDraft(Obj)
-        .subscribe(response => console.log(response), error => console.log(error));
-    }
+    });
+
     this.subInjectService.changeUpperRightSliderState({ state: 'close' });
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
     // this.valueChange.emit(this.emailSend);

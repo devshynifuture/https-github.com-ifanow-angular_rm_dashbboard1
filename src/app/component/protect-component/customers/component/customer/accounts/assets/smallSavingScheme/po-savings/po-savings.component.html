@@ -23,51 +23,66 @@
     </div>
 </div>
 <div class="example-container mt-8 col-md-12 p-0 real-estate">
-    <table matSort mat-table [dataSource]="datasource" id="table-low">
+    <table matSort mat-table [dataSource]="datasource" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
-            <td mat-cell *matCellDef="let element;index as i" class="br"> {{i+1}} </td>
+            <td mat-cell *matCellDef="let element;index as i" class="br">
+                <div class="bar"> {{i+1}} </div>
+            </td>
             <td mat-footer-cell class=" pl-4 f-500 text-left t-7" *matFooterCellDef> Total </td>
         </ng-container>
         <ng-container matColumnDef="owner">
             <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
-            <td mat-cell *matCellDef="let element" class="br t-25"> {{element.ownerName}} </td>
+            <td mat-cell *matCellDef="let element" class="br t-25">
+                <div class="bar"> {{element.ownerName}} </div>
+            </td>
             <td mat-footer-cell class="br text-left t-7" *matFooterCellDef></td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
             <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Current value </th>
-            <td mat-cell *matCellDef="let element" class="br t-14 text-right" appFormatNumber> {{element.currentValue}}
+            <td mat-cell *matCellDef="let element" class="br t-14 text-right" appFormatNumber>
+                <div class="bar"> {{element.currentValue}} </div>
             </td>
             <td mat-footer-cell class="br text-right f-500 p-8 t-7" *matFooterCellDef appFormatNumber [value]="currentValueSum">
-                {{currentValueSum}} </td>
+                <div class="bar"> {{currentValueSum}} </div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="rate">
             <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br text-right"> Rate </th>
-            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.rate}} </td>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"> {{element.rate}} </div>
+            </td>
             <td mat-footer-cell class="br text-left t-7" *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="balanceM">
             <th mat-sort-header="balance" mat-header-cell *matHeaderCellDef class="br text-right">Balance mentioned
             </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber> {{element.balance}} </td>
+            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
+                <div class="bar"> {{element.balance}} </div>
+            </td>
             <td mat-footer-cell class="br text-right f-500 p-8 t-7" *matFooterCellDef appFormatNumber [value]="balanceMentionedSum">{{balanceMentionedSum}}</td>
         </ng-container>
         <ng-container matColumnDef="balAs">
             <th mat-sort-header="balanceAsOn" mat-header-cell *matHeaderCellDef class="br text-right">Balance as on</th>
-            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.balanceAsOn |date:'dd/MM/yyyy'}}
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"> {{element.balanceAsOn |date:'dd/MM/yyyy'}} </div>
             </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="desc">
             <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br t-10"> Description </th>
-            <td mat-cell *matCellDef="let element" class="br t-10"> {{element.description}} </td>
+            <td mat-cell *matCellDef="let element" class="br t-10">
+                <div class="bar"> {{element.description}} </div>
+            </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="status">
             <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br"> Status </th>
-            <td mat-cell *matCellDef="let element" class="br text-primary"> LIVE </td>
+            <td mat-cell *matCellDef="let element" class="br text-primary">
+                <div class="bar"> LIVE </div>
+            </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="icons">
@@ -92,7 +107,7 @@
         <h4 class="text-center pt-72">{{noData}}</h4>
     </div>
 </div>
-
+<!-- 
 <div *ngIf="isLoading">
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div>
+</div> -->

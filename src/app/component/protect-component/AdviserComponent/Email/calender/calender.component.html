@@ -1,9 +1,88 @@
-<div class="side-arrow" >
-        <!-- (click)="sidenav.toggle()" -->
+
+<!-- <mat-toolbar class="bg-white bl-1" class="fix-top pl-0">
+   
+    <mat-toolbar  class="bg-white p-0 " style=" width:300px; text-align: center; border-right: 1px #dddddd;">
+       
+        <div style="margin: 0px auto;">LOGO</div>
+    </mat-toolbar>
+   
+    <mat-form-field class="w-40">
+        <div class="form-group">
+            <input type="text" #inputSearch class="form-control" matInput [formControl]="myControl"
+                [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+                
+                <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of clientList"
+                    [value]="singleClient.name">
+                    <div class="row">
+                        <div class="col-md-1">
+
+                        </div>
+                        <div class="col-md-8">
+                            <a>
+                                <p class="t-left">{{singleClient.name}}</p>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <button mat-stroked-button class="small-primitive">FAMILY MEMBER</button>
+                        </div>
+                    </div>
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+    </mat-form-field>
+    <div class="hide-on-800 flex right-fixed tablate-none">
+        <a mat-list-item class="sidenav-link">
+            <img src="assets/images/svg/bell.svg" class="t-15">
+        </a>
+        <a mat-list-item class="sidenav-link">
+            <img src="assets/images/svg/earphone.svg">
+        </a>
+        <a mat-list-item class="sidenav-link">
+            <img src="assets/images/svg/setting.svg">
+        </a>
+    </div>
+    <i (click)="openSettings()" class="material-icons tabs-right desktop-none">
+        more_vert
+    </i>
+</mat-toolbar>
+        
+<div id="showSettings" *ngIf="showSettings" class="desktop-none tabs-mt-70">
+    <div class="bg-success">
+        <div class="search-container tabs-block">
+            <i class="material-icons icon">
+                search
+            </i>
+            <input class="search-field" type="text" placeholder="SEARCH" name="email">
+        </div>
+        <div class="pl-48 flex tabs-right">
+            <a mat-list-item class="sidenav-link">
+                <mat-icon mat-list-icon>notifications_none</mat-icon>
+            </a>
+            <a mat-list-item class="sidenav-link">
+                <mat-icon mat-list-icon>headset_mic</mat-icon>
+            </a>
+            <a mat-list-item class="sidenav-link">
+                <mat-icon mat-list-icon>settings</mat-icon>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="sub-header-fix fix-top" style="margin-top: 64px;">
+    <div class="bg-white">
+        ani
+    </div>
+</div> -->
+
+<!-----above commented code is according to the CRM Prototype ---------------------------------------------------->
+
+<!-- <div class="side-arrow" (click)="sidenav.toggle()">
+        
     <img src="/assets/images/svg/arrow-right.svg">
 </div>
 
-<!-- <mat-drawer #sidenav mode="toggle" closed class="crm-sidebar">
+<mat-drawer #sidenav mode="toggle" closed class="crm-sidebar">
     <div class="pt-16">
         <img src="assets/images/img1.jpg" class="header-img pt-0 pb-0">
     </div>
@@ -129,8 +208,13 @@
     </div>
 </mat-drawer> -->
 
+<!-----above commented code is side bar toggle according to the CRM Prototype ---------------------------------------------------->
+
+
+
 <div id="ui-calender">
-    <!-- <div class="row main-header p-16">
+    <!-- <div style="background:red; height: 64px"></div> -->
+    <div class="row main-header p-16">
         <div class="col-md-8 p-0">
             <div class="row">
                 <div class="col-md-3 p-0">
@@ -138,30 +222,30 @@
 
                 </div>
                 <div class="col-md-1 p-0">
-                    <button mat-stroked-button class="br-2 ba-black text-black">Today</button>
+                    <button mat-stroked-button (click)="persentMonth()" class="br-2 ba-black text-black">Today</button>
                 </div>
                 <div class="col-md-2 p-0 pt-8 pl-28 pr-0">
-                    <img src="/assets/images/svg/arrowright-black.svg" class="mr-24 c-p">
-                    <img src="/assets/images/svg/arrowleft-black.svg" class="c-p">
+                    <img src="/assets/images/svg/arrowright-black.svg" (click)="lastMonth()" class="mr-24 c-p">
+                    <img src="/assets/images/svg/arrowleft-black.svg" (click)="nextMonth()" class="c-p">
                 </div>
                 <div class="col-md-4 p-0">
-                    <h3 class="m-0 pt-8">December 2019</h3>
+                    <h3 class="m-0 pt-8">{{viewDate | date: 'MMMM y'}}</h3>
                 </div>
             </div>
         </div>
         <div class="col-md-4 p-0 right">
             <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="right">
-                <mat-button-toggle value="bold">Day</mat-button-toggle>
-                <mat-button-toggle value="italic">Week</mat-button-toggle>
-                <mat-button-toggle value="underline" class="btn-primary">Month</mat-button-toggle>
+                <mat-button-toggle value="bold" routerLink="/admin/day-calender" routerLinkActive="btn-primary">Day</mat-button-toggle>
+                <mat-button-toggle value="italic" routerLink="/admin/week-calender" routerLinkActive="btn-primary">Week</mat-button-toggle>
+                <mat-button-toggle value="underline" routerLink="/admin/calender" routerLinkActive="btn-primary">Month</mat-button-toggle>
             </mat-button-toggle-group>
             <button mat-stroked-button class="br-2 ba-black text-black right mr-16">Schedule</button>
         </div>
-    </div> -->
+    </div>
     <div class="row h-100vh pt-72">
         <div class="col-md-2 p-0 bg-grey lter">
             <div class="p-12 text-right">
-                <button mat-raised-button class="btn-primary br-0"><img src="/assets/images/svg/plus.svg"
+                <button mat-raised-button class="btn-primary br-0" (click)="openDialog()" ><img src="/assets/images/svg/plus.svg"
                         class="pr-12">ADD
                     NEW</button>
             </div>
@@ -207,13 +291,13 @@
             <div class="custom-grid pt-0">
                 <div class="column" *ngFor="let day of daysArr; let i = index" style="padding: 7px 0px;">
                     <p  
-                    [class.rounded-primary]="day == todayDate && i > addLastMonthDays - 1 && i < numbersOfDays - 1" 
+                    [class.rounded-primary]="day == todayDate && i > addLastMonthDays - 1 && i < numbersOfDays - 1 && currentMonth == month" 
                     [class.text-primitive]="i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1"  
                     class="m-0 roboto f-11">{{day}}</p>
                 </div>
             </div>
             
-            <div class="p-16" id="calender-tabs">
+            <div class="p-16" id="calender-tabs" style=" top:30px;">
                 <mat-tab-group animationDuration="0ms">
                     <mat-tab label="Categories">
                         <div class="row">
@@ -277,7 +361,7 @@
             </div>
             <div class="custom-grid p-0 b-a bb-0  calender-column">
                 <div class="column" *ngFor="let day of daysArr; let i = index">
-                    <mat-chip [class.actived]="day == todayDate && i > addLastMonthDays - 1 && i < numbersOfDays - 1" 
+                    <mat-chip [class.actived]="day == todayDate && i > addLastMonthDays - 1 && i < numbersOfDays - 1 && currentMonth == month" 
                     [class.text-primitive]="i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1" 
                     >{{day}}</mat-chip> 
                     <mat-chip-list class="pink mt-8" [hidden]="true">

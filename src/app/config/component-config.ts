@@ -172,6 +172,9 @@ export const appConfig = {
   ADD_WEALTH_CREATION_GOAL: 'goal-planning/wealth-creation/goal/add',
   ADD_BIGSPEND_GOAL: 'goal-planning/big-spend/goal/add',
   ADD_OTHERS_GOAL: 'goal-planning/others/goal/add',
+  ADD_EXPENSE:'account/expense/recurring/expense/add',
+  EDIT_EXPENSE:'/account/expense/recurring/expense/edit',
+  RISK_HISTORY:'plan/risk-assessment/history/get',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   GET_EPF: 'account/asset/retirement/epf/list/get',
@@ -297,5 +300,6 @@ export const appConfig = {
   GET_DRAFT_LIST: 'user/draft/list/get',
   GET_GMAIL_INBOX_LIST: 'user/thread/list/get',
   CREATE_DRAFT: 'user/draft/create',
+  UPDATE_DRAFT: 'user/draft/modify/put'
 
 };
