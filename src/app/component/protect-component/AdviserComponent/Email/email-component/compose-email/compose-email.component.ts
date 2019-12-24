@@ -16,7 +16,6 @@ import { Subscription } from 'rxjs';
 })
 export class ComposeEmailComponent implements OnInit, OnDestroy {
 
-
   constructor(private subInjectService: SubscriptionInject,
     public subscription: SubscriptionService,
     public eventService: EventService,
