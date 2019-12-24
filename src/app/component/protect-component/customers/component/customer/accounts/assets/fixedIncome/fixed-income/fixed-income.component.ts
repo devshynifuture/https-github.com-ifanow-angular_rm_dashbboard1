@@ -205,7 +205,8 @@ export class FixedIncomeComponent implements OnInit {
       advisorId: this.advisorId
     };
     this.custumService.getFixedDeposit(obj).subscribe(
-      data => this.getFixedDepositRes(data)
+      data => this.getFixedDepositRes(data),
+      err => this.eventService.openSnackBar(err, "dismiss")
     );
   }
 
@@ -238,7 +239,8 @@ export class FixedIncomeComponent implements OnInit {
       advisorId: this.advisorId
     };
     this.custumService.getRecurringDeposit(obj).subscribe(
-      data => this.getRecurringDepositRes(data)
+      data => this.getRecurringDepositRes(data),
+      err => this.eventService.openSnackBar(err, "dismiss")
     );
   }
 
@@ -265,7 +267,8 @@ export class FixedIncomeComponent implements OnInit {
       advisorId: this.advisorId
     };
     this.custumService.getBonds(obj).subscribe(
-      data => this.getBondsRes(data)
+      data => this.getBondsRes(data),
+      err => this.eventService.openSnackBar(err, "dismiss")
     );
   }
 
