@@ -133,8 +133,12 @@ export class LiabilitiesComponent implements OnInit {
     this.showFilter = data;
     const filterData = [];
     if (data == 'tab1') {
-      this.dataSource = this.dataStore;
+      // this.dataSource = this.dataStore;
+      this.dataSource = new MatTableDataSource(this.dataStore);
+      this.dataSource.sort = this.sort;
     } else {
+      this.dataSource = new MatTableDataSource(this.dataStore);
+      this.dataSource.sort = this.sort;
       this.dataStore.forEach(element => {
         if (element.loanTypeId == data) {
           filterData.push(element);
@@ -153,7 +157,9 @@ export class LiabilitiesComponent implements OnInit {
           }
           return o.outstandingAmount;
         });
-        this.dataSource = filterData;
+        // this.dataSource = filterData;
+        this.dataSource = new MatTableDataSource(filterData);
+        this.dataSource.sort = this.sort;
 
       }
     }
@@ -297,9 +303,9 @@ export class LiabilitiesComponent implements OnInit {
       this.personal = [];
       this.mortgage = [];
       this.dataStore = data.loans;
-      // this.dataSource = data.loans;
-      this.dataSource = new MatTableDataSource(data.loans);
-      this.dataSource.sort = this.sort;
+      this.dataSource = data.loans;
+      // this.dataSource = new MatTableDataSource(data.loans);
+      // this.dataSource.sort = this.sort;
       this.storeData = data.loans.length;
       this.dataStore.forEach(element => {
         if (element.loanTypeId == 1) {

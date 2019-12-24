@@ -202,9 +202,9 @@
           <div class="col-md-9 p-0">
             <p class="m-0 text-black text-left pt-12">{{dataCount}} documents selected</p>
           </div>
-          <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+          <table matSort mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
             <ng-container matColumnDef="checkbox">
-              <th mat-header-cell *matHeaderCellDef class="f-18">
+              <th  mat-header-cell *matHeaderCellDef class="f-18">
                 <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0 && isAllSelected()"
                   [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll">
                 </mat-checkbox>
@@ -215,37 +215,37 @@
               </td>
             </ng-container>
             <ng-container matColumnDef="document">
-              <th mat-header-cell *matHeaderCellDef> Document name</th>
+              <th mat-sort-header="documentName" mat-header-cell *matHeaderCellDef> Document name</th>
               <td mat-cell *matCellDef="let element" class="c-p" (click)="open('viewDocuments',element)">
                 {{element.documentName}}
               </td>
             </ng-container>
 
             <ng-container matColumnDef="plan">
-              <th mat-header-cell *matHeaderCellDef> Plan name</th>
+              <th mat-sort-header="planName" mat-header-cell *matHeaderCellDef> Plan name</th>
               <td mat-cell *matCellDef="let element"> {{element.planName}} </td>
             </ng-container>
             <ng-container matColumnDef="service">
-              <th mat-header-cell *matHeaderCellDef> Service name</th>
+              <th mat-sort-header="serviceName"mat-header-cell *matHeaderCellDef> Service name</th>
               <td mat-cell *matCellDef="let element"> {{element.serviceName}} </td>
             </ng-container>
             <ng-container matColumnDef="date">
-              <th mat-header-cell *matHeaderCellDef class="text-right"> Created date</th>
+              <th mat-sort-header="startDate" mat-header-cell *matHeaderCellDef class="text-right"> Created date</th>
               <td mat-cell *matCellDef="let element" class="text-right">
                 {{element.startDate | date:'dd/MM/yyyy'}} </td>
             </ng-container>
             <ng-container matColumnDef="sdate">
-              <th mat-header-cell *matHeaderCellDef class="text-right"> Sent date</th>
+              <th mat-sort-header="sentDate" mat-header-cell *matHeaderCellDef class="text-right"> Sent date</th>
               <td mat-cell *matCellDef="let element" class="text-right">
                 {{element.sentDate | date:'dd/MM/yyyy'}} </td>
             </ng-container>
             <ng-container matColumnDef="cdate">
-              <th mat-header-cell *matHeaderCellDef class="text-right"> Client sign date</th>
+              <th mat-sort-header="cdate" mat-header-cell *matHeaderCellDef class="text-right"> Client sign date</th>
               <td mat-cell *matCellDef="let element" class="text-right">
                 {{element.cdate | date:'dd/MM/yyyy'}} </td>
             </ng-container>
             <ng-container matColumnDef="status">
-              <th *matHeaderCellDef class=" t-10" mat-header-cell> Status</th>
+              <th mat-sort-header="s" *matHeaderCellDef class=" t-10" mat-header-cell> Status</th>
               <td *matCellDef="let element" mat-cell>
                 <span>
                   <span class="text-success t-10 f-500 c-p" *ngIf="element.status==1">READY TO

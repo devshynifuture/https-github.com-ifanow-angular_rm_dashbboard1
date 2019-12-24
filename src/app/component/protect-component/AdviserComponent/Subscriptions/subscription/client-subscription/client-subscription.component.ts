@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from '../../subscription-inject.service';
 import { SubscriptionService } from '../../subscription.service';
@@ -21,6 +21,8 @@ export interface PeriodicElement {
   styleUrls: ['./client-subscription.component.scss']
 })
 export class ClientSubscriptionComponent implements OnInit {
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  dataSource:any;
 
   constructor(public dialog: MatDialog, public eventService: EventService, public subInjectService: SubscriptionInject,
     private subService: SubscriptionService) {
@@ -29,10 +31,10 @@ export class ClientSubscriptionComponent implements OnInit {
   @Input() upperData: any;
 
   displayedColumns: string[] = ['name', 'email', 'num', 'balance'];
-  dataSource = [{}, {}, {}];
   advisorId;
   isLoading = false;
   ngOnInit() {
+    this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
     console.log('clients');
     this.getClientSubscriptionList();
@@ -51,7 +53,10 @@ export class ClientSubscriptionComponent implements OnInit {
 
   getClientListResponse(data) {
     this.isLoading = false;
-    this.dataSource = data;
+
+    // this.dataSource = data;
+    this.dataSource = new MatTableDataSource(data);
+      this.dataSource.sort = this.sort;
   }
 
   Open(value, state) {
