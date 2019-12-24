@@ -9,7 +9,7 @@ export class EmailUtilService {
   constructor() {
   }
 
-  static changeStringToBase46(value: string) {
+  static changeStringToBase64(value: string) {
     return btoa(value);
   }
 
@@ -114,17 +114,19 @@ export class EmailUtilService {
   static getAttachmentFileData(gmailResponse) {
     const returnArray = [];
     gmailResponse.messages.forEach((message) => {
-      // console.log(message);
+
       // const { payload: { headers } } = message;
       const { payload: { parts } } = message;
-      parts.forEach((part) => {
-        const { mimeType } = part;
-        const { headers } = part;
-        returnArray.push({
-          headers,
-          mimeType
+      console.log("parts for attachments ->>>", parts);
+      if (parts && parts !== null) {
+        parts.forEach((part) => {
+          const { mimeType, headers } = part;
+          returnArray.push({
+            headers,
+            mimeType
+          });
         });
-      });
+      }
     });
     return returnArray;
   }
