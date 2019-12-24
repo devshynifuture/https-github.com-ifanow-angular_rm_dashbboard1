@@ -38,7 +38,6 @@ import { CommoditiesComponent } from './assets/commodities/commodities/commoditi
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { DocumentNewFolderComponent } from '../../common-component/document-new-folder/document-new-folder.component';
 import { AccountRoutingModule } from './account-routing.module';
-import { AccountCommonModule } from './account.common.module';
 // import {PDFExportModule} from "@progress/kendo-angular-pdf-export";
 import { AssetStocksComponent } from './assets/asset-stocks/asset-stocks.component';
 import { MutualFundComponent } from './assets/mutual-fund/mutual-fund/mutual-fund.component';
@@ -49,7 +48,6 @@ import { MutualFundAllTransactionComponent } from './assets/mutual-fund/mutual-f
 import { MutualFundUnrealizedTranComponent } from './assets/mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized-tran.component';
 import { MutualFundGoalLinkageComponent } from './assets/mutual-fund/mutual-fund/mutual-fund-goal-linkage/mutual-fund-goal-linkage.component';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
-
 // import {PlanComponent} from '../plan/plan.component';
 // import {SummaryPlanComponent} from '../plan/summary-plan/summary-plan.component';
 // import {ProfilePlanComponent} from '../plan/profile-plan/profile-plan.component';
@@ -71,19 +69,11 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
     AddProfileSummaryComponent,
     DocumentsComponent,
     BottomSheetComponent,
-    // AddLiabilitiesComponent,
-    // AddInsuranceComponent,
     LibilitiesRightComponent,
-    // FixedDepositComponent,
-    // FactShitComponent,
-    // TransactionsComponent,
-    // UpperCustomerComponent ,
     RightFilterComponent,
     FixedIncomeComponent,
-    // BondsComponent,
     IncomeDetailComponent,
     DetailedViewComponent,
-    // LiabilitiesDetailComponent,
     RetirementAccountComponent,
     PPFSchemeComponent,
     NscSchemeComponent,
@@ -96,26 +86,9 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
     PoMisSchemeComponent,
     SmallSavingSchemeComponent,
     RealEstateComponent,
-    // AddRealEstateComponent,
-    // NpsSummaryPortfolioComponent,
-    // AddPpfComponent,
-    // AddNscComponent,
-    // AddSsyComponent,
-    // AddKvpComponent,
-    // AddScssComponent,
-    // AddPoSavingComponent,
-    // AddPoTdComponent,
-    // AddPoMisComponent,
-    // AddPoRdComponent,
     OtherPayablesComponent,
     CashAndBankComponent,
     CommoditiesComponent,
-    // GoldComponent,
-    // OthersComponent,
-    // BankAccountsComponent,
-    // CashInHandComponent,
-    // AddTransactionComponent,
-    // SkeletonLoadingDirective,
     FormatNumberDirective,
     DocumentNewFolderComponent,
     AssetStocksComponent,
@@ -129,50 +102,17 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
 
   ],
   imports: [
-    AccountCommonModule,
-    // BrowserModule,
-    // OwnerComponentModule,
+    // AccountCommonModule,
+    AccountRoutingModule,
     CommonModule,
     MaterialModule,
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
-
-    // PDFExportModule,
-    MaterialModule,
-    AccountRoutingModule,
     CustomDirectiveModule
+
   ],
-  exports: [
-    AccountsComponent,
-    CashAndBankComponent,
-    CommoditiesComponent,
-    LibilitiesRightComponent,
-    // AddSuperannuationComponent,
-    // AddEPSComponent,
-    // AddGratuityComponent,
-    ReactiveFormsModule,
-    IncomeDetailComponent,
-    ReactiveFormsModule,
-    // FactShitComponent,
-    // TransactionsComponent,
-    // UpperCustomerComponent,
-    RightFilterComponent,
-    DetailedViewComponent,
-    // LiabilitiesDetailComponent,
-    RealEstateComponent,
-    // AddPpfComponent,
-    // AddNscComponent,
-    // AddSsyComponent,
-    // AddKvpComponent,
-    // AddScssComponent,
-    // AddPoSavingComponent,
-    // AddPoMisComponent,
-    // AddPoTdComponent,
-    // AddPoRdComponent,
-    OtherPayablesComponent,
-    // EntryComponentsModule
-  ],
+  exports: [],
   entryComponents: [BottomSheetComponent, DocumentNewFolderComponent]
 })
 export class AccountModule {
