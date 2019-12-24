@@ -22,12 +22,12 @@ import { ExcelService } from '../../../../excel.service';
 export class CashAndBankComponent implements OnInit {
   showRequring: string;
   advisorId: any;
-  bankAccountList: any;
-  cashInHandList: any;
+  bankAccountList: any = [{}, {}, {}];
+  cashInHandList: any = [{}, {}, {}];
   clientId: any;
   totalAccountBalance: any;
   sumOfCashValue: any;
-  isLoading = true;
+  isLoading = false;
   noData: string;
   excelData: any[];
   footer = [];
@@ -148,6 +148,7 @@ export class CashAndBankComponent implements OnInit {
     });
   }
   getBankAccountList() {
+    this.isLoading = true;
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
@@ -158,6 +159,7 @@ export class CashAndBankComponent implements OnInit {
   }
 
   getBankAccountsRes(data) {
+    this.isLoading = false;
     console.log('getBankAccountsRes ####', data);
     this.isLoading = false;
     if (data.cashInBankAccounts.length != 0) {

@@ -47,6 +47,7 @@ export class ClientSubscriptionComponent implements OnInit {
     this.isLoading = true;
     this.subService.getSubscriptionClientsList(obj).subscribe(
       data => this.getClientListResponse(data)
+
     );
   }
 

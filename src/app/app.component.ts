@@ -3,6 +3,7 @@ import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {Event, NavigationEnd, NavigationStart, Router, RouterOutlet} from '@angular/router';
 import {EventService} from './Data-service/event.service';
 import {RoutingState} from "./services/routing-state.service";
+import {ChangeDetectorRef} from "@angular/core/src/metadata/*";
 
 @Component({
   selector: 'app-root',
@@ -20,10 +21,11 @@ export class AppComponent implements AfterViewInit {
 
   constructor(
     private lBar: SlimLoadingBarService,
-    private _router: Router,
-    private eventService: EventService,
-    private routingState: RoutingState,
+    private _router: Router, private eventService: EventService,
+    private routingState: RoutingState, private changeDetector: ChangeDetectorRef
   ) {
+    // routingState.changeDetector = changeDetector;
+    routingState.router = _router;
     routingState.loadRouting();
 
     this._router.events.subscribe((event: Event) => {
@@ -38,6 +40,9 @@ export class AppComponent implements AfterViewInit {
     }
     if (event instanceof NavigationEnd) {
       this.lBar.complete();
+      // this.changeDetector.markForCheck();
+      // window.scrollTo(0, 0);
+      // window.focus();
     }
   }
 

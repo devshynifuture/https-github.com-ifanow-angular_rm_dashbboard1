@@ -16,5 +16,4 @@ export class AddExpensesComponent implements OnInit {
   close(){
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
-
 }

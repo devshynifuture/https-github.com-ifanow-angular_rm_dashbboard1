@@ -75,3 +75,7 @@ h3 {
 ::ng-deep .mat-form-field {
     width: 100%;
 }
+
+::ng-deep .custom-checkbox .mat-checkbox-inner-container {
+    border: transparent !important
+}

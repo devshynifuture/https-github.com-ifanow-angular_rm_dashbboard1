@@ -25,7 +25,7 @@ export class LiabilitiesComponent implements OnInit {
   displayedColumns: string[] = ['no', 'name', 'type', 'loan', 'ldate', 'today', 'ten', 'rate', 'emi', 'fin', 'status', 'icons'];
   // dataSource = ELEMENT_DATA;
   advisorId: any;
-  dataSource: any;
+  dataSource: any = [{}, {}, {}];
   storeData: any;
   dataStore: any;
   showFilter: any;
@@ -39,7 +39,8 @@ export class LiabilitiesComponent implements OnInit {
   OtherData: any;
   OtherPayableData: any;
   clientId: any;
-  showLoader: boolean;
+  // showLoader: boolean;
+  isLoading = false;
   noData: string;
   totalLoanAmt: any;
   outStandingAmt = 0;
@@ -57,9 +58,10 @@ export class LiabilitiesComponent implements OnInit {
   viewMode: string;
 
   ngOnInit() {
+
     this.viewMode = 'tab1';
     this.showFilter = 'tab1';
-    this.showLoader = true;
+    //this.showLoader = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getLiability('');
@@ -94,6 +96,7 @@ export class LiabilitiesComponent implements OnInit {
     ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   }
   getGlobalLiabilities() {
+    this.isLoading = true;
     const obj = {};
     this.customerService.getGlobalLiabilities(obj).subscribe(
       data => this.getGlobalLiabilitiesRes(data)
@@ -101,6 +104,7 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   getGlobalLiabilitiesRes(data) {
+    this.isLoading = false;
     console.log(data);
   }
 
@@ -115,6 +119,7 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   getOtherPayablesRes(data) {
+
     console.log(data);
     this.OtherPayableData = data;
     this.OtherData = data.length;
@@ -274,7 +279,7 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   getLiabiltyRes(data) {
-    this.showLoader = false;
+    // this.showLoader = false;
     if (data.loans == undefined) {
       this.noData = "No Data Found";
     } else {

@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { PlanService } from '../../../plan.service';
 import { FormBuilder } from '@angular/forms';
+import { UtilService } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
 import * as _ from 'lodash';
 import { AuthService } from 'src/app/auth-service/authService';
 import { Container } from '@angular/compiler/src/i18n/i18n_ast';
+import { HistoryRiskProfileComponent } from '../../history-risk-profile/history-risk-profile.component';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 const HighchartsMore = require('highcharts/highcharts-more.src');
 HighchartsMore(Highcharts);
@@ -30,7 +33,7 @@ export class RiskProfileComponent implements OnInit {
   showRisk = false;
   clickMessage = '';
   name = 'Angular';
-  showLoader : boolean;
+  showLoader: boolean;
 
   onClickMe(referenceKeyName) {
     alert(referenceKeyName.id);
@@ -38,7 +41,7 @@ export class RiskProfileComponent implements OnInit {
   onClick(referenceKeyName1) {
     alert(referenceKeyName1.id);
   }
-  constructor(private fb: FormBuilder, public planService: PlanService, ) {
+  constructor(private fb: FormBuilder, public planService: PlanService, private subInjectService: SubscriptionInject) {
   }
 
   ngOnInit() {
@@ -47,7 +50,8 @@ export class RiskProfileComponent implements OnInit {
     this.getRiskProfileList();
     this.getdataForm('');
     this.sendRiskList = [];
-    this.array = [];
+    this.progressBar = [];
+    this.statusArray = [];
     this.showLoader = true;
     this.showErrorMsg = false
     this.count = 0
@@ -63,12 +67,13 @@ export class RiskProfileComponent implements OnInit {
       legend: { enabled: false },
       title: { text: '' },
       xAxis: {
-        tickLength: 2,
-        tickWidth: 1,
+        tickLength: 8,
+        tickWidth: 4,
         lineColor: '#999',
         lineWidth: 1,
         labels: { style: { fontWeight: 'bold' } }
       },
+
       yAxis: {
         min: 0,
         minPadding: 0,
@@ -116,40 +121,34 @@ export class RiskProfileComponent implements OnInit {
   }
   callFun() {
     var chart1 = new Highcharts.Chart({
+
       chart: { renderTo: 'container1' },
-      xAxis: { categories: ['<span class="hc-cat-title">Equity%</span>']},
+      xAxis: { categories: ['<span class="hc-cat-title">Equity%</span>'] },
       yAxis: {
-        min:0,
+        min: 0,
         max: 100,
         lineWidth: 2,
         lineColor: 'black',
-        labels: { y: 10, format: '{value}%', style: { fontSize: '12px' ,fontWeight:'bold',color:'black'} },
-        plotBands: [{ from: 0, to: 20, color: '#CACFD2' },
-        { from: 20, to: 40, color: '#CACFD2' },
-        { from: 40, to: 60, color: '#CACFD2' },
-         { from: 60, to: 80, color: '#CACFD2' },
-          { from: 80, to: 100, color: '#CACFD2' },]
+        tickLength: 4,
+        labels: { y: 10, format: '{value}%', style: { fontSize: '12px', fontWeight: 'bold', color: 'black' } },
+        plotBands: [
+          { from: 0, to: this.equityAllocationLowerLimit, color: '#CACFD2' },
+          { from: this.equityAllocationLowerLimit, to: this.equityAllocationUpperLimit, color: '#4790ff' },
+          { from: this.equityAllocationUpperLimit, to: 100, color: '#CACFD2' },]
       },
-      
-      // series: [{ name: 'Measure', pointWidth: 10, data: [80] },
-      // { name: 'Target', type: 'scatter', data: [90], }]
+      series: [{ name: 'Measure', pointWidth: 10, data: [0], type: undefined },
+      { name: 'Target', type: 'scatter', }]
     });
-  //   Highcharts.Renderer.prototype.symbols.line = function(x, y, width, height) {
-  //     return ['M',x ,y + width / 2,'L',x+height,y + width / 2];
-  // };
   }
   guageFun(chartId) {
     this.gaugeOptions = {
-
       chart: {
         type: 'gauge'
       },
-
       title: null,
-
       pane: {
-        center: ['45%', '80%'],
-        size: '140%',
+        center: ['40%', '80%'],
+        size: '150%',
         startAngle: -90,
         endAngle: 90,
         background: {
@@ -159,12 +158,9 @@ export class RiskProfileComponent implements OnInit {
           shape: 'solid'
         }
       },
-
       tooltip: {
         enabled: false
       },
-
-      // the value axis
       yAxis: {
         plotBands: [{
           from: 1,
@@ -197,7 +193,7 @@ export class RiskProfileComponent implements OnInit {
         minorTickInterval: 1,
         tickPositions: [1, 200],
         tickAmount: 1,
-        min: 1,
+        min: 0,
         max: 200,
         title: {
           y: -70
@@ -206,7 +202,6 @@ export class RiskProfileComponent implements OnInit {
           y: 16
         }
       },
-
       plotOptions: {
         solidgauge: {
           dataLabels: {
@@ -229,24 +224,26 @@ export class RiskProfileComponent implements OnInit {
           text: ''
         },
       },
-
       credits: {
         enabled: true
       },
-
       series: [{
         name: '',
         data: [this.score],
         dataLabels: 1,
         tooltip: {
-          valueSuffix: ' km/h'
+          valueSuffix: ''
         },
       }]
 
     }));
   }
   checkState(item) {
-
+    this.statusArray.push(item)
+    // this.statusArray = _.uniqBy(this.statusArray, function (e) {
+    //   return e.id;
+    // });
+    this.progressBar = this.statusArray.length * 20
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -308,6 +305,28 @@ export class RiskProfileComponent implements OnInit {
     if (data) {
       console.log(data);
       this.score = data.score;
+      this.equityAllocationLowerLimit = data.equityAllocationLowerLimit
+      this.equityAllocationUpperLimit = data.equityAllocationUpperLimit
     }
+  }
+  open(flagValue, data) {
+    const fragmentData = {
+      flag: flagValue,
+      data,
+      state: 'open30',
+      componentName: HistoryRiskProfileComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+  close() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 }

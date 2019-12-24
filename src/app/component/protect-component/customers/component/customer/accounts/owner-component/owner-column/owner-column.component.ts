@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {CustomerService} from '../../../customer.service';
 import {AuthService} from 'src/app/auth-service/authService';
@@ -15,7 +7,7 @@ import {AuthService} from 'src/app/auth-service/authService';
   selector: 'app-owner-column',
   templateUrl: './owner-column.component.html',
   styleUrls: ['./owner-column.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 
 })
 export class OwnerColumnComponent implements OnInit {
@@ -29,7 +21,7 @@ export class OwnerColumnComponent implements OnInit {
   clientId: any;
   sendData: any;
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService, private ref: ChangeDetectorRef) {
+  constructor(private fb: FormBuilder, private custumService: CustomerService/*, private ref: ChangeDetectorRef*/) {
   }
 
   @Output() valueChange = new EventEmitter();
@@ -95,9 +87,9 @@ export class OwnerColumnComponent implements OnInit {
       });
     }
     this.valueChange1.emit(this.sendData);
-    setTimeout(() => {
+    /*setTimeout(() => {
       this.ref.markForCheck();
-    }, 100);
+    }, 100);*/
 
     // this.getFormControl().ownerName.markAsTouched();
     // this.getdataForm();

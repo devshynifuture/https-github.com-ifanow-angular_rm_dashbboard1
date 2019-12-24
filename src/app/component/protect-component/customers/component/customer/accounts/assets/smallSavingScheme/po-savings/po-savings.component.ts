@@ -22,7 +22,7 @@ export class PoSavingsComponent implements OnInit {
   advisorId: any;
   clientId: number;
   noData: string;
-  isLoading: boolean = true;
+  isLoading = false;
   posavingdata: any;
   currentValueSum: number;
   balanceMentionedSum: number;
@@ -30,12 +30,12 @@ export class PoSavingsComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
-  footer =[];
+  footer = [];
 
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
-  displayedColumns20 = ['no', 'owner', 'cvalue', 'rate', 'balanceM', 'balAs', 'desc','status', 'icons'];
-  datasource;
+  displayedColumns20 = ['no', 'owner', 'cvalue', 'rate', 'balanceM', 'balAs', 'desc', 'status', 'icons'];
+  datasource: any = [{}, {}, {}];
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = 2978;
@@ -53,18 +53,19 @@ export class PoSavingsComponent implements OnInit {
     { width: 15, key: 'Description' },
     { width: 15, key: 'Status' },]
     var header = ['Owner', 'Current Value', 'Rate', 'Balance Mentioned',
-      'Balance As On', 'Description','Status'];
+      'Balance As On', 'Description', 'Status'];
     this.datasource.filteredData.forEach(element => {
       data = [element.ownerName, (element.currentValue), (element.rate), (element.balance),
       new Date(element.balanceAsOn), element.description, element.status]
       this.excelData.push(Object.assign(data))
     });
-    var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.currentValueSum),'',
-      this.formatNumber.first.formatAndRoundOffNumber(this.balanceMentionedSum), '', '','']
+    var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.currentValueSum), '',
+      this.formatNumber.first.formatAndRoundOffNumber(this.balanceMentionedSum), '', '', '']
     this.footer.push(Object.assign(footerData))
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   }
   getPoSavingSchemedata() {
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId

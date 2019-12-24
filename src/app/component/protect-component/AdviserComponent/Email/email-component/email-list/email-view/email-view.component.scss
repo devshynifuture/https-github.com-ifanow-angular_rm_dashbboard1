@@ -3,7 +3,7 @@
             height: 100vh;
             padding: 10px;
             position: relative;
-            overflow: hidden;
+            overflow: auto;
         }
         
         // .messengerDiv {
@@ -26,6 +26,7 @@
             }
             .chatMsgBox {
                 width: 100%;
+                overflow-wrap: break-word;
                 p {
                     margin: 0px;
                     font-size: 13px;
@@ -101,6 +102,7 @@
             }
             .chatMsgBox {
                 width: 100%;
+                overflow-wrap: break-word;
                 p {
                     margin: 0px;
                     font-size: 13px;

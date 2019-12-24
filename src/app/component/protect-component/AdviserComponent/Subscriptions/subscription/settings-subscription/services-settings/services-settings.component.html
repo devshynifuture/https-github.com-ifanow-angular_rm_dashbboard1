@@ -2,87 +2,119 @@
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div> -->
 <div class="wrapper-20  pr-0">
-    <div class="row">
-        <div class="col-md-12 p-0">
-            <h4 class="pt-20 pb-28 m-0">Services</h4>
-        </div>
+  <div class="row">
+    <div class="col-md-12 p-0">
+      <h4 class="pt-20 pb-28 m-0">Services</h4>
     </div>
+  </div>
 
-    <div class="row">
-        <div (click)="openFragment('','services')" class="col-md-4 pr-20 pb-20 pl-0 c-p">
-            <mat-card class="example-card height-470 bg-grey lter">
+  <div class="row">
+    <div (click)="openFragment('','services')" class="col-md-4 pr-20 pb-20 pl-0 c-p">
+      <mat-card class="example-card height-470 bg-grey lter">
 
-                <mat-card-content>
-                    <p class="text-center">
-                        <i class="material-icons icon-center"> add </i>
-                    </p>
-                </mat-card-content>
+        <mat-card-content>
+          <p class="text-center">
+            <i class="material-icons icon-center"> add </i>
+          </p>
+        </mat-card-content>
 
-            </mat-card>
-        </div>
-        <div class="col-md-4 pr-20 pb-20 pl-0 " *ngFor="let singleService of serviceSettingData">
-            <mat-card class="example-card bg-grey lter p-0 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-                <div class="bar">
-                    <mat-card-header>
-                        <div class="wrapper-20 height120">
-                            <mat-card-title class="mb-0 text-break text-lighter f-24">{{singleService.serviceName}}
-                            </mat-card-title>
-                            <mat-card-subtitle class="pt-4 pb-12">{{singleService.serviceCode}}</mat-card-subtitle>
-                        </div>
-                    </mat-card-header>
+      </mat-card>
+    </div>
+    <div *ngFor="let singleService of serviceSettingData" class="col-md-4 pr-20 pb-20 pl-0 ">
+      <mat-card [appSkeletonLoading]="isLoading" appSkeletonLoading
+                class="example-card bg-grey lter p-0 skeletonAnimation">
+        <div class="bar">
+          <mat-card-header>
+            <div class="wrapper-20 height120">
+              <mat-card-title class="mb-0 text-break text-lighter f-24">{{singleService.serviceName}}
+              </mat-card-title>
+              <mat-card-subtitle class="pt-4 pb-12">{{singleService.serviceCode}}</mat-card-subtitle>
+            </div>
+          </mat-card-header>
 
-                    <mat-card-content class="bg-white mb-0">
+          <mat-card-content class="bg-white mb-0">
 
-                        <div class="row wrapper-20">
-                            <div class="col-md-7 p-0">
-                                <p class="mb-0 text-primitive f-12">FEE TYPE</p>
-                                <label class="bg-header mt-4 f-16" *ngIf="singleService.servicePricing.feeTypeId==1">Fixed</label>
-                                <label class="bg-header mt-4 f-16" *ngIf="singleService.servicePricing.feeTypeId==2">Variable</label>
-                            </div>
-                            <div class="col-md-5 p-0">
-                                <p class="f-12 mb-0 text-primitive">BILLING NATURE</p>
-                                <p class="f-18 pt-4 text-lighter mb-0 f-16" *ngIf="singleService.servicePricing.billingNature==1">Recurring</p>
-                                <p class="f-18 pt-4 text-lighter mb-0 f-16" *ngIf="singleService.servicePricing.billingNature==2">Once</p>
-                            </div>
-                        </div>
-                        <div class="row wrapper-20 pt-0">
-                            <div class="col-md-7 p-0">
-                                <p class="mb-0 text-primitive f-12">BILLING MODE</p>
-                                <p class="mb-0 f-18 text-lighter f-16" *ngIf="singleService.servicePricing.billingMode==1">
-                                    Start Of Period</p>
-                                <p class="mb-0 f-18 text-lighter f-16" *ngIf="singleService.servicePricing.billingMode==2">
-                                    End Of Period
-                                </p>
-                            </div>
-                            <div class="col-md-5 p-0">
-                                <p class="f-12 mb-0 text-primitive">FEES</p>
-                                <h4 class="m-0 p-0 text-lighter lh-16 f-16" *ngIf="singleService.servicePricing.feeTypeId==2">
-                                    {{singleService.servicePricing.pricingList[2].pricing}}%/ Year</h4>
-                                <h4 class="m-0 p-0 text-lighter lh-16 f-16" *ngIf="singleService.servicePricing.feeTypeId==1">
-                                    Rs{{singleService.averageFees}}/ Year</h4>
-                            </div>
-                        </div>
-                        <div class="row wrapper-20 bt-1 bb-1">
-                            <div class="col-md-4 p-0">
-                                <p class="f-14 text-primitive">PLANS</p>
-                                <p class="f-24">{{singleService.planCount}}</p>
-                            </div>
-                            <div class="col-md-4 p-0">
-                                <p class="f-14 text-primitive">MODULES</p>
-                                <p class="f-24">{{singleService.moduleCount}}</p>
-                            </div>
-                            <div class="col-md-4 p-0">
-                                <p class="f-14 text-primitive">DOCUMENTS</p>
-                                <p class="f-24">{{singleService.docCount}}</p>
-                            </div>
-
-                        </div>
-                    </mat-card-content>
-                    <mat-card-actions (click)="openFragment(singleService,'services')" class="block text-center pt-20 pb-20 mb-0">
-                        <button mat-stroked-button class="btn-header addon mb-12 mt-8 br-0">INFO</button>
-                    </mat-card-actions>
+            <div class="row wrapper-20">
+              <div class="col-md-7 p-0">
+                <p class="mb-0 text-primitive f-12">FEE TYPE</p>
+                <label *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==1"
+                       class="bg-header mt-4 f-16">Fixed</label>
+                <label *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2"
+                       class="bg-header mt-4 f-16">Variable</label>
+              </div>
+              <div class="col-md-5 p-0">
+                <p class="f-12 mb-0 text-primitive">BILLING NATURE</p>
+                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.billingNature==1"
+                   class="f-18 pt-4 text-lighter mb-0 f-16">
+                  Recurring</p>
+                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.billingNature==2"
+                   class="f-18 pt-4 text-lighter mb-0 f-16">
+                  Once</p>
+              </div>
+            </div>
+            <div class="row wrapper-20 pt-0">
+              <div class="col-md-7 p-0">
+                <p class="mb-0 text-primitive f-12">BILLING MODE</p>
+                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.billingMode==1"
+                   class="mb-0 text-lighter f-16">
+                  Start Of Period</p>
+                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.billingMode==2"
+                   class="mb-0 text-lighter f-16">
+                  End Of Period
+                </p>
+              </div>
+              <div class="col-md-5 p-0">
+                <p class="f-12 mb-0 text-primitive">FEES</p>
+                <h4 *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2"
+                    class="m-0 p-0 text-lighter lh-16 f-16">
+                  {{singleService.servicePricing.pricingList[2].pricing}}%/ Year</h4>
+                <h4 *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==1"
+                    class="m-0 p-0 text-lighter lh-16 f-16">
+                  Rs{{singleService.averageFees}}/ Year</h4>
+              </div>
+              <div class="row wrapper-20 pt-0">
+                <div class="col-md-7 p-0">
+                  <p class="mb-0 text-primitive f-12">BILLING MODE</p>
+                  <p *ngIf="singleService.servicePricing&&singleService.servicePricing.billingMode==1"
+                     class="mb-0 f-18 text-lighter f-16">
+                    Start Of Period</p>
+                  <p *ngIf="singleService.servicePricing&&singleService.servicePricing.billingMode==2"
+                     class="mb-0 f-18 text-lighter f-16">
+                    End Of Period
+                  </p>
                 </div>
-            </mat-card>
+                <div class="col-md-5 p-0">
+                  <p class="f-12 mb-0 text-primitive">FEES</p>
+                  <h4 *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2"
+                      class="m-0 p-0 text-lighter lh-16 f-16">
+                    {{singleService.servicePricing.pricingList[2].pricing}}%/ Year</h4>
+                  <h4 *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==1"
+                      class="m-0 p-0 text-lighter lh-16 f-16">
+                    Rs{{singleService.averageFees}}/ Year</h4>
+                </div>
+              </div>
+              <div class="row wrapper-20 bt-1 bb-1">
+                <div class="col-md-4 p-0">
+                  <p class="f-14 text-primitive">PLANS</p>
+                  <p class="f-24">{{singleService.planCount}}</p>
+                </div>
+                <div class="col-md-4 p-0">
+                  <p class="f-14 text-primitive">MODULES</p>
+                  <p class="f-24">{{singleService.moduleCount}}</p>
+                </div>
+                <div class="col-md-4 p-0">
+                  <p class="f-14 text-primitive">DOCUMENTS</p>
+                  <p class="f-24">{{singleService.docCount}}</p>
+                </div>
+
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions (click)="openFragment(singleService,'services')" class="block text-center pt-20 pb-20 mb-0">
+            <button class="btn-header addon mb-12 mt-8 br-0" mat-stroked-button>INFO</button>
+          </mat-card-actions>
         </div>
+      </mat-card>
     </div>
+  </div>
 </div>
