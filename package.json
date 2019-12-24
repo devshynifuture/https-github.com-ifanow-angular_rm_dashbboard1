@@ -33,7 +33,7 @@
     "bootstrap": "^4.4.1",
     "browserslist": "^4.8.2",
     "caniuse-lite": "^1.0.30001016",
-    "exceljs": "^3.5.0",
+    "exceljs": "3.3.0",
     "file-saver": "^2.0.2",
     "font-awesome": "^4.7.0",
     "froala-editor": "^3.0.6",
