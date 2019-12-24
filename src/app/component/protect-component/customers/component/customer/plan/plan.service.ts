@@ -80,4 +80,7 @@ export class PlanService {
   getRiskHistory(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.RISK_HISTORY, data)
   }
+  getResultRisk(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.RESULT_VIEW, data)
+  }
 }
