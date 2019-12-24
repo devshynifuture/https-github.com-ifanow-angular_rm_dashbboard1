@@ -33,7 +33,7 @@ export interface PeriodicElement {
   ],
 })
 export class DocumentsSubscriptionsComponent implements OnInit {
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   displayedColumns: string[] = ['name', 'docname', 'plan', 'servicename', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
 
