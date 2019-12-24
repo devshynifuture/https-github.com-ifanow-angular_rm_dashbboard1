@@ -46,7 +46,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   advisorId;
 
   ngOnInit() {
-    this.isLoading = false;
+    this.isLoading = true;
     this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
     this.getSummaryDataClient();

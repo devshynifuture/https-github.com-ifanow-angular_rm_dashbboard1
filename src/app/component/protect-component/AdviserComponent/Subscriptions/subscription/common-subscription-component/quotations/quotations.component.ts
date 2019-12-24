@@ -37,7 +37,7 @@ export class QuotationsComponent implements OnInit {
       data => this.getQuotationDesignData(data)
     );
   }
-
+  isLoading = false;
   quotationDesignEmail;
   quotationDesign;
   dataCount;
@@ -58,6 +58,8 @@ export class QuotationsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoading = true;
+    this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
     this.quotationDesign = 'true';
     console.log('quotation');
@@ -117,6 +119,7 @@ export class QuotationsComponent implements OnInit {
   }
 
   getQuotationsListResponse(data) {
+    this.isLoading = false;
     if (data == undefined) {
       this.noData = 'No Data Found';
     } else {

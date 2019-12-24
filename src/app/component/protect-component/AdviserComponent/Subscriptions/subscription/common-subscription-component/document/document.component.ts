@@ -60,6 +60,8 @@ export class DocumentComponent implements OnInit {
   _upperData: any;
   noData: string;
   componentFlag: any;
+  isLoading = false;
+
 
   constructor(public subInjectService: SubscriptionInject,
               private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
@@ -111,6 +113,8 @@ export class DocumentComponent implements OnInit {
   dataSource :any;
 
   ngOnInit() {
+    this.isLoading = true;
+    this.dataSource = [{}, {}, {}];
     this.documentDesign = 'true';
     console.log('upperData', this.upperData);
     this.dataCount = 0;
@@ -147,6 +151,7 @@ export class DocumentComponent implements OnInit {
   }
 
   getDocumentResponseData(data) {
+    this.isLoading = false;
     console.log(data);
     if (data == undefined) {
       this.noData = "No Data Found";
