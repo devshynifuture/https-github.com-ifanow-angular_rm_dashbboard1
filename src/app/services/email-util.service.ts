@@ -117,7 +117,6 @@ export class EmailUtilService {
 
       // const { payload: { headers } } = message;
       const { payload: { parts } } = message;
-      console.log("parts for attachments ->>>", parts);
       if (parts && parts !== null) {
         parts.forEach((part) => {
           const { mimeType, headers } = part;

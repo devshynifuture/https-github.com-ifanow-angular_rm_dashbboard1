@@ -41,82 +41,12 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   currentStateOfForm: Form;
   toCreateOrUpdate: string = '';
   emailFormChangeSubscription: Subscription;
+  didFormChanged: boolean = false;
 
   emailForm: FormGroup;
 
   ngOnInit() {
     this.createEmailForm();
-    if (this.data && this.data !== null) {
-      // this.prevStateOfForm
-      console.log("this is data: =>>>>>>>>>", this.data);
-
-      const { dataObj } = this.data;
-      let from, to;
-
-      const { parsedData: { headers } } = dataObj;
-      headers.forEach(element => {
-        if (element.name === "From") {
-          from = element.value.split('<')[1].split('>')[0];
-        }
-        if (element.name === "To") {
-          to = element.value.split('<')[1].split('>')[0];
-        }
-      });
-
-      this.emailForm.setValue({
-        sender: from,
-        receiver: to,
-        carbonCopy: '',
-        blindCarbonCopy: '',
-        subject: this.data.dataObj.subjectMessage.subject,
-        messageBody: this.data.dataObj.subjectMessage.message,
-        attachments: '',
-      });
-
-      this.prevStateOfForm = this.emailForm.value;
-      console.log("this is prev state of form", this.prevStateOfForm);
-    } else {
-      console.log("no data present");
-      this.prevStateOfForm = this.emailForm.value;
-    }
-    this.emailFormChangeSubscription = this.emailForm.valueChanges.subscribe((value) => {
-      console.log(value);
-      if (this.areTwoObjectsSame(this.prevStateOfForm, value)) {
-        this.toCreateOrUpdate = 'create';
-        console.log("create or update", this.toCreateOrUpdate);
-      } else {
-        this.toCreateOrUpdate = 'update';
-        console.log("create or update", this.toCreateOrUpdate);
-      }
-    });
-  }
-
-  areTwoObjectsSame(obj1: Object, obj2: Object): boolean {
-
-    // Create arrays of property names
-    var obj1Props = Object.getOwnPropertyNames(obj1);
-    var obj2Props = Object.getOwnPropertyNames(obj2);
-
-    // If number of properties is different,
-    // objects are not equivalent
-    if (obj1Props.length != obj2Props.length) {
-      return false;
-    }
-
-    for (var i = 0; i < obj1Props.length; i++) {
-      var propName = obj2Props[i];
-
-      // If values of same property are not equal,
-      // objects are not equivalent
-      if (obj1[propName] !== obj2[propName]) {
-        return false;
-      }
-    }
-
-    // If we made it this far, objects
-    // are considered equivalent
-    return true;
-
   }
 
   createEmailForm() {
@@ -177,9 +107,10 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   // }
 
   close(): void {
-    let Obj;
-    if (this.toCreateOrUpdate === 'create') {
-      Obj = {
+    if ((!this.data && this.data === null) && this.didFormChanged) {
+      // call create api from compose
+
+      let Obj = {
         to: '',
         from: '',
         emailBody: '',
@@ -189,23 +120,43 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
       this.emailService.createDraft(Obj)
         .subscribe(response => console.log(response), error => console.error(error));
       console.log("created");
-    } else if (this.toCreateOrUpdate === 'update') {
-      Obj = {
-        to: this.to,
-        from: this.from,
-        emailBody: this.emailBody,
-        attachments: '',
-        subject: this.subject,
-      }
-      this.emailService.updateDraft(Obj)
-        .subscribe(response => console.log(response), error => console.error(error));
-
-      console.log("updated");
-    } else {
-      this.subInjectService.changeUpperRightSliderState({ state: 'close' });
-      this.subInjectService.changeNewRightSliderState({ state: 'close' });
-      console.log("closed...");
+      console.log("call create api from compose");
+    } else if ((this.data && this.data !== null) && this.didFormChanged) {
+      // call update api
+      console.log("call update api from detail view");
+    } else if ((this.data && this.data !== null) && !this.didFormChanged) {
+      // close the dialog
+      console.log("close the dialog");
     }
+    // let Obj;
+    // if (this.toCreateOrUpdate === 'create') {
+    //   Obj = {
+    //     to: '',
+    //     from: '',
+    //     emailBody: '',
+    //     attachments: '',
+    //     subject: ''
+    //   }
+    //   this.emailService.createDraft(Obj)
+    //     .subscribe(response => console.log(response), error => console.error(error));
+    //   console.log("created");
+    // } else if (this.toCreateOrUpdate === 'update') {
+    //   Obj = {
+    //     to: this.to,
+    //     from: this.from,
+    //     emailBody: this.emailBody,
+    //     attachments: '',
+    //     subject: this.subject,
+    //   }
+    //   this.emailService.updateDraft(Obj)
+    //     .subscribe(response => console.log(response), error => console.error(error));
+
+    //   console.log("updated");
+    // } else {
+    //   this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    //   this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    //   console.log("closed...");
+    // }
 
     // this.valueChange.emit(this.emailSend);
     this.subInjectService.changeUpperRightSliderState({ state: 'close' });

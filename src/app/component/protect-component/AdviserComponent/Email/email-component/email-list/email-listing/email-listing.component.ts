@@ -211,9 +211,9 @@ export class EmailListingComponent implements OnInit, OnDestroy {
         this.nextPageToken = nextPageToken;
         this.gmailThreads = gmailThreads;
         gmailThreads.forEach((thread: GmailInboxResponseI, index: number) => {
-          thread.messages.map((message) => {
-            message.payload.body.data = btoa(message.payload.body.data);
-          });
+          // thread.messages.map((message) => {
+          //   message.payload.body.data = btoa(message.payload.body.data);
+          // });
           let parsedData: any; // object containing array of decoded parts and headers
           let idsOfThread: any; // Object of historyId and Id of thread
           let dateIdsSnippetsOfMessages: any; // array of Objects having ids, date snippets of messages
@@ -373,6 +373,15 @@ export class EmailListingComponent implements OnInit, OnDestroy {
     }
 
     console.log(this.selectedThreadsArray);
+  }
+
+  multipleMoveToTrash(ids) {
+    console.log(this.selectedThreadsArray);
+  }
+
+
+  multipleDeletes() {
+    this.selectedThreadsArray
   }
 
 
