@@ -28,7 +28,7 @@ export class CalenderComponent implements OnInit {
   currentMonth;
   addLastMonthDays;
   daysArr = [];
-
+  formatedEvent = []
   eventData:any;
   eventTitle;
   eventDescription;
@@ -62,13 +62,16 @@ export class CalenderComponent implements OnInit {
         "attendeeList":["chetan@futurewise.co.in","chetan@futurewise.co.in"]
     }]
 
-    let formatedEvent = [];
+    this.formatedEvent = [];
     for(let e of this.eventData){
-      e.start.dateTime = this.formateDate(new Date(e.start.dateTime));
+      e["day"] = this.formateDate(new Date(e.start.dateTime));
+      e["month"] = this.formateMonth(new Date(e.start.dateTime));
+      e["year"] = this.formateYear(new Date(e.start.dateTime));
+      e["time"] = this.formateTime(new Date(e.start.dateTime));
      
-      formatedEvent.push(e);
+      this.formatedEvent.push(e);
     }
-    console.log(formatedEvent, "this.eventData 12345");
+    console.log(this.formatedEvent, "this.eventData 12345", this.viewDate.toISOString());
   }
 
   updateCalender() {
@@ -136,10 +139,24 @@ export class CalenderComponent implements OnInit {
 
   formateDate(date){
     var dd = date.getDate();
-    var mm = date.getMonth()+1; //January is 0!
-    var yyyy = date.getFullYear();
+   
+    return dd;
+  }
 
-    return dd+'/'+mm+'/'+yyyy;
+  formateMonth(date){
+    var mm = date.getMonth()+1; //January is 0!
+    return mm;
+  }
+
+  formateYear(date){
+    var yyyy = date.getFullYear();
+    return yyyy;
+  }
+
+  formateTime(date){
+    var hh = date.getUTCHours();
+    var mm = date.getUTCMinutes();
+    return hh + ":" + mm;
   }
 
   openDialog(): void {
@@ -149,6 +166,8 @@ export class CalenderComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(this.googleDate(result.startDateTime._d) , 'The dialog was qqqq123');
+
       this.dialogData = {
         "eventId": "v8o6srjpr3kqa50a0cu2f2abls",
         "userId": 2727,
@@ -158,17 +177,39 @@ export class CalenderComponent implements OnInit {
         "location": "800 Howard St., San Francisco, CA 94103",
         "title": "it is successful",
         "description": "it is successful",
-        "startDateTime": result.startDateTime._d,
+        "startDateTime": this.googleDate(result.startDateTime._d),
         "timeZone": "America/Los_Angeles",
-        "endDateTime": "2019-12-18T17:00:00-07:00",
+        "endDateTime": this.googleDate(result.endDateTime._d),
         "recurrence": ["RRULE:FREQ=DAILY;COUNT=2"],
         "attendees": ["chetan@futurewise.co.in", "chetan@futurewise.co.in"]
       }
+      console.log(new Date(this.dialogData.startDateTime), 'The dialog was closed777');
+      // this.dialogData.startDateTime = new Date(this.dialogData.startDateTime).setHours(13,47,22);
+      this.dialogData.startDateTime = this.googleDate(result.startDateTime._d);
+      this.dialogData.endDateTime = this.googleDate(result.endDateTime._d);
       console.log(this.dialogData, 'The dialog was closed');
-      console.log(result.startDateTime._d  , 'The dialog was closed123');
+      console.log(this.googleDate(result.startDateTime._d) , 'The dialog was closed123');
     });
   }
 
+googleDate(date){
+  var current_day = new Date();
+  var current_date = date.getDate();
+  var current_month = date.getMonth() + 1;
+  var current_year = date.getFullYear();
+  var current_hrs = current_day.getHours();
+  var current_mins = current_day.getMinutes();
+  var current_secs = current_day.getSeconds();
+   
+  // Add 0 before date, month, hrs, mins or secs if they are less than 0
+  current_date = current_date < 10 ? '0' + current_date : current_date;
+  current_month = current_month < 10 ? '0' + current_month : current_month;
+  console.log(current_year + '-' + current_month + '-' + current_date + 'T' + current_hrs + ':' + current_mins + ':' + current_secs, "hi date");
+  
+  // Current datetime
+  // String such as 2016-07-16T19:20:30
+  return current_year + '-' + current_month + '-' + current_date + 'T' + current_hrs + ':' + current_mins + ':' + current_secs;
+  }
 }
 
 @Component({
@@ -209,6 +250,10 @@ export class EventDialog implements OnInit{
     });
   }
 
+  setTime(event, timeMood){
+    console.log(event, timeMood, "hahah");
+    
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
