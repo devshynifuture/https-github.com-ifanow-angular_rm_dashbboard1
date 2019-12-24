@@ -41,6 +41,7 @@
     "highcharts": "^7.2.1",
     "jquery": "^3.4.1",
     "lodash": "^4.17.15",
+    "moment": "^2.24.0",
     "ng-circle-progress": "^1.5.1",
     "ng2-slim-loading-bar": "^4.0.0",
     "primeicons": "^2.0.0",

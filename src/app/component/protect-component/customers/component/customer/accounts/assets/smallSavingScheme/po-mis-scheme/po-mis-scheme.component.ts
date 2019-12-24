@@ -20,7 +20,7 @@ import { ExcelService } from '../../../../excel.service';
 export class PoMisSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
-  isLoading: boolean = true;
+  isLoading = false;
   noData: string;
   pomisData: any;
   sumOfCurrentValue: number;
@@ -31,44 +31,45 @@ export class PoMisSchemeComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
-  footer =[];
+  footer = [];
 
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject, public util: UtilService) { }
   displayedColumns = ['no', 'owner', 'cvalue', 'mpayout', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
-  datasource;
+  datasource: any = [{}, {}, {}];
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = 2978;
     this.getPoMisSchemedata()
   }
 
-async ExportTOExcel(value) {
-  this.excelData = []
-  var data = []
-  var headerData = [{ width: 20, key: 'Owner' },
-  { width: 20, key: 'Current Value' },
-  { width: 10, key: 'Monthly Payout' },
-  { width: 10, key: 'Rate' },
-  { width: 20, key: 'Amount Invested' },
-  { width: 20, key: 'Maturity Value' },
-  { width: 20, key: 'Maturity Date' },
-  { width: 15, key: 'Description' },
-  { width: 15, key: 'Status' },]
-  var header = ['Owner', 'Current Value','Monthly Payout','Rate',
-    'Amount Invested', 'Maturity Value', 'Maturity Date','Description','Status'];
-  this.datasource.filteredData.forEach(element => {
-    data = [element.ownerName, (element.currentValue), this.formatNumber.first.formatAndRoundOffNumber(element.monthlyPayout),(element.rate), this.formatNumber.first.formatAndRoundOffNumber(element.maturityValue),
-      this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested),new Date(element.maturityDate), element.description, element.status]
-    this.excelData.push(Object.assign(data))
-  });
-  var footerData = ['Total',  this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue),
-  this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMonthlyPayout),
-  this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountInvested),'',
-  this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMaturityValue), '', '','',]
-  this.footer.push(Object.assign(footerData))
-  ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
-}
+  async ExportTOExcel(value) {
+    this.excelData = []
+    var data = []
+    var headerData = [{ width: 20, key: 'Owner' },
+    { width: 20, key: 'Current Value' },
+    { width: 10, key: 'Monthly Payout' },
+    { width: 10, key: 'Rate' },
+    { width: 20, key: 'Amount Invested' },
+    { width: 20, key: 'Maturity Value' },
+    { width: 20, key: 'Maturity Date' },
+    { width: 15, key: 'Description' },
+    { width: 15, key: 'Status' },]
+    var header = ['Owner', 'Current Value', 'Monthly Payout', 'Rate',
+      'Amount Invested', 'Maturity Value', 'Maturity Date', 'Description', 'Status'];
+    this.datasource.filteredData.forEach(element => {
+      data = [element.ownerName, (element.currentValue), this.formatNumber.first.formatAndRoundOffNumber(element.monthlyPayout), (element.rate), this.formatNumber.first.formatAndRoundOffNumber(element.maturityValue),
+      this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested), new Date(element.maturityDate), element.description, element.status]
+      this.excelData.push(Object.assign(data))
+    });
+    var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue),
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMonthlyPayout),
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountInvested), '',
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMaturityValue), '', '', '',]
+    this.footer.push(Object.assign(footerData))
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
+  }
   getPoMisSchemedata() {
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId

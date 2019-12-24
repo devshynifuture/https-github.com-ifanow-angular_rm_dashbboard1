@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 
 
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
 import { SubscriptionService } from '../../../subscription.service';
 import { ConsentTandCComponent } from '../consent-tand-c/consent-tand-c.component';
@@ -27,6 +27,8 @@ export interface PeriodicElement {
   styleUrls: ['./quotations.component.scss']
 })
 export class QuotationsComponent implements OnInit {
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
   noData: string;
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog,
@@ -35,13 +37,13 @@ export class QuotationsComponent implements OnInit {
       data => this.getQuotationDesignData(data)
     );
   }
-
+  isLoading = false;
   quotationDesignEmail;
   quotationDesign;
   dataCount;
   _clientData;
   displayedColumns: string[] = ['checkbox', 'document', 'plan', 'date', 'sdate', 'cdate', 'status', 'send', 'icons'];
-  dataSource = [];
+  dataSource :any;
   changeEmail = 'footerChange';
   advisorId;
 
@@ -56,6 +58,8 @@ export class QuotationsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoading = true;
+    this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
     this.quotationDesign = 'true';
     console.log('quotation');
@@ -115,13 +119,16 @@ export class QuotationsComponent implements OnInit {
   }
 
   getQuotationsListResponse(data) {
+    this.isLoading = false;
     if (data == undefined) {
       this.noData = 'No Data Found';
     } else {
       data.forEach(singleData => {
         singleData.isChecked = false;
       });
-      this.dataSource = data;
+      // this.dataSource = data;
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.sort = this.sort;
     }
   }
 

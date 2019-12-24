@@ -19,7 +19,7 @@ import { ExcelService } from '../../../excel.service';
 })
 export class OtherPayablesComponent implements OnInit {
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
    
   displayedColumns = ['no', 'name', 'dateOfReceived', 'creditorName', 'amountBorrowed', 'interest', 'dateOfRepayment', 'outstandingBalance', 'description', 'status', 'icons'];

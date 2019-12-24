@@ -11,11 +11,11 @@
                     <mat-expansion-panel>
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                {{item.question}}
+                                {{item.question || item.riskAssessmentQuestion}}
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <mat-radio-group aria-label="Select an option" id="custom-radio">
-                            <mat-radio-button *ngFor="let choice of item.riskAssessmentChoices; let i = index" [value]="choice"
+                            <mat-radio-button *ngFor="let choice of item.riskAssessmentChoices; let i = index"  [checked]="choice.selected" [value]="choice"
                                 (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight;checkState(item)">
                                 {{choice.choice}}</mat-radio-button><br>
                         </mat-radio-group>
@@ -25,10 +25,11 @@
             <div *ngIf="showErrorMsg == true" class="text-danger">{{showErrorMsg}}
                 please complete all questions for test result
             </div>
-            <button mat-stroked-button class="btn-primary mt-20 br-0 right"
+            <button *ngIf="showButton == true" mat-stroked-button class="btn-primary mt-20 br-0 right"
                 (click)="submitRiskAnalysis(item)">SUBMIT</button>
         </div>
         <div class="col-md-3 pr-0">
+                <button mat-raised-button color="primary" (click)="open('riskProfile', null)">History</button>
             <div class="p-20 b-primitive mt-8">
                 <mat-progress-bar mode="determinate" value="{{this.progressBar}}"></mat-progress-bar>
                 <h5 class="pt-8 m-0 pt-12 text-center">{{this.statusArray.length}} of 5 completed</h5>

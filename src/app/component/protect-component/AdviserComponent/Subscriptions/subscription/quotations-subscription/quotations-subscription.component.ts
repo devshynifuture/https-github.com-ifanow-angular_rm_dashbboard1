@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { SubscriptionInject } from '../../subscription-inject.service';
 import { SubscriptionService } from '../../subscription.service';
@@ -42,10 +42,9 @@ export interface PeriodicElement {
   ],
 })
 export class QuotationsSubscriptionComponent implements OnInit {
-
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   displayedColumns: string[] = ['name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
   advisorId;
-  dataSource = [{}, {}, {}];
   noData: string;
   isLoading = false;
   filterStatus = [];
@@ -64,11 +63,13 @@ export class QuotationsSubscriptionComponent implements OnInit {
   selectedDateRange: { begin: Date; end: Date; };
   selectedStatusFilter: any;
   showFilter = false;
+  dataSource:any;
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
     public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
+    this.dataSource = [{}, {}, {}];
     this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
     this.getQuotationsData();
@@ -104,7 +105,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
       this.noData = "No Data Found";
     } else {
       console.log(data);
-      this.dataSource = data;
+      // this.dataSource = data;
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.sort = this.sort;
     }
   }
   deleteModal(value) {

@@ -1,8 +1,8 @@
-import {Router} from '@angular/router';
-import {Component, NgZone, OnInit} from '@angular/core';
-import {RoutingState} from '../../../../../../services/routing-state.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {slideInAnimation} from '../../../../../../animation/router.animation';
+import { Router } from '@angular/router';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { RoutingState } from '../../../../../../services/routing-state.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { slideInAnimation } from '../../../../../../animation/router.animation';
 
 @Component({
   selector: 'app-accounts',
@@ -25,16 +25,16 @@ export class AccountsComponent implements OnInit {
   selected;
 
   constructor(private eventService: EventService, private router: Router, private ngZone: NgZone,
-              public routingStateService: RoutingState) {
+    public routingStateService: RoutingState) {
     this.eventService.tabChangeData.subscribe(
       data => this.getTabChangeData(data)
     );
   }
 
-  navBarClick(navigationUrl, navId) {
-    this.routingStateService.goToSpecificRoute('/customer/detail/account/' + navigationUrl);
-    this.value = navId;
-  }
+  // navBarClick(navigationUrl, navId) {
+  //   this.routingStateService.goToSpecificRoute('/customer/detail/account/' + navigationUrl);
+  //   this.value = navId;
+  // }
 
   getTabChangeData(data) {
     setTimeout(() => {
@@ -46,21 +46,22 @@ export class AccountsComponent implements OnInit {
   ngOnInit() {
     this.showRouter = true;
     this.selected = 1;
+    this._value = 1;
     this.loading = false;
     console.log('this is child url now->>>>>', this.router.url.split('/')[3]);
-    if (this.router.url.split('/')[3] === 'summary') {
+    var roterName = this.router.url.split('/')[3]
+    if (roterName === 'summary') {
       this._value = 1;
-    } else if (this.router.url.split('/')[3] === 'assets') {
+    } else if (roterName === 'assets') {
       this._value = 2;
-    } else if (this.router.url.split('/')[3] === 'liabilities') {
+    } else if (roterName === 'liabilities') {
       this._value = 3;
-    } else if (this.router.url.split('/')[3] === 'insurance') {
+    } else if (roterName === 'insurance') {
       this._value = 4;
-    } else if (this.router.url.split('/')[3] === 'documents') {
+    } else if (roterName === 'documents') {
       this._value = 5;
     }
   }
-
   goToAdvisorHome() {
     /*this.router.navigateByUrl('/admin/subscription').then(e => {
       if (e) {

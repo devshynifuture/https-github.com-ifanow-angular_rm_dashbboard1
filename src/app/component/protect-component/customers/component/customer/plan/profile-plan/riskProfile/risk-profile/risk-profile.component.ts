@@ -54,8 +54,10 @@ export class RiskProfileComponent implements OnInit {
     this.statusArray = [];
     this.showLoader = true;
     this.showErrorMsg = false
+    this.showButton = true
     this.count = 0
   }
+
   percentage(chartId) {
     Highcharts.setOptions({
       chart: {
@@ -240,9 +242,9 @@ export class RiskProfileComponent implements OnInit {
   }
   checkState(item) {
     this.statusArray.push(item)
-    this.statusArray = _.uniqBy(this.statusArray, function (e) {
-      return e.id;
-    });
+    // this.statusArray = _.uniqBy(this.statusArray, function (e) {
+    //   return e.id;
+    // });
     this.progressBar = this.statusArray.length * 20
   }
   getdataForm(data) {
@@ -319,12 +321,22 @@ export class RiskProfileComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
+        this.getResultData(sideBarData)
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
       }
     );
+  }
+  getResultData(data){
+    console.log(data)
+
+    if(data != undefined){
+      this.showRisk = false
+      this.riskAssessmentQuestionList = data.data
+      this.showButton = false
+    }
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
