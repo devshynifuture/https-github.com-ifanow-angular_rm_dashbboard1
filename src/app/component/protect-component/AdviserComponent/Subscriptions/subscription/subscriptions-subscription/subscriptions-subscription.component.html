@@ -186,7 +186,6 @@
             <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
         </table>
         <!-- dataSource=='' This condition will always return 'false' since the types '{}[]' and 'string' have no overlap.-->
-        <h4 *ngIf="dataSource.length == 0" class="text-center pt-72">{{noData}}</h4>
         <h4 *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4>
 
     </div>
