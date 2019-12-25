@@ -72,47 +72,6 @@ export class UtilService {
     });
     console.log('Status >>>>>>', element);
   }
-  static async exportAs(headerData, excelData: any, footer: any[]) {
-    // var wb = new Workbook()
-    // const ws = wb.addWorksheet()
-    // //---------MetaData----------//
-
-    // //ws.mergeCells('A1', 'M1');
-    // const meta1 = ws.getCell('A1')
-    // const meta2 = ws.getCell('A2')
-    // const meta3 = ws.getCell('A3')
-    // meta1.font = { bold: true }
-    // meta2.font = { bold: true }
-    // meta3.font = { bold: true }
-    // ws.getCell('A1').value = 'Type of report - ' + 'value';
-    // ws.getCell('A2').value = 'Client name - Rahul Jain';
-    // ws.getCell('A3').value = 'Report as on - ' + new Date();
-    // //ws.getCell('A1').alignment = { horizontal: 'center' };
-    // const head = ws.getRow(5)
-    // head.font = { bold: true }
-    // head.fill = {
-    //   type: 'pattern',
-    //   pattern: 'darkVertical',
-    //   fgColor: {
-    //     argb: '#f5f7f7'
-    //   }
-    // };
-    // //---------header----------//
-    // ws.getRow(5).values = headerData;
-    // //----------data---------//
-    // excelData.forEach(element => {
-    //   ws.addRow(element)
-    // });
-    // //-------footerData---------//
-    // footer.forEach(element => {
-    //   const last = ws.addRow(element)
-    //   last.font = { bold: true }
-    // });
-    // const buf = await wb.xlsx.writeBuffer()
-    // saveAs(new Blob([buf]), 'Rahul Jain-' + 'value' + '-' + new Date() + '.xlsx')
-
-  }
-
   totalCalculator(data: number[]) {
     return data.reduce((accumulator, currentValue) => {
       accumulator = accumulator + currentValue;

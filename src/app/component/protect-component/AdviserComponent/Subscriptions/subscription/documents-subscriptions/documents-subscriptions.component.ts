@@ -1,18 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort } from '@angular/material';
-import { MatTableDataSource } from '@angular/material/table';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort} from '@angular/material';
+import {MatTableDataSource} from '@angular/material/table';
 
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionService } from '../../subscription.service';
-import { AuthService } from "../../../../../../auth-service/authService";
-import { UtilService } from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionService} from '../../subscription.service';
+import {AuthService} from "../../../../../../auth-service/authService";
+import {UtilService} from 'src/app/services/util.service';
 import * as _ from 'lodash';
-import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from 'saturn-datepicker';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
+import {DatePipe} from '@angular/common';
+import {MAT_DATE_FORMATS} from 'saturn-datepicker';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {CommonFroalaComponent} from '../common-subscription-component/common-froala/common-froala.component';
+
 export interface PeriodicElement {
   name: string;
   docname: string;
@@ -57,6 +58,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   selectedStatusFilter: any;
   showFilter = false;
   dataSource: any;
+  private clientId: any;
   constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public eventService: EventService,
     public subscription: SubscriptionService, private datePipe: DatePipe) {
   }
@@ -66,6 +68,8 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
     this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+
     this.getdocumentSubData();
   }
   Open(value, data) {
@@ -107,7 +111,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   getdocumentSubData() {
     const obj = {
       advisorId: this.advisorId,
-      clientId: 2978,
+      clientId: this.clientId,
       flag: 4,
       limit: 10,
       offset: 0,
