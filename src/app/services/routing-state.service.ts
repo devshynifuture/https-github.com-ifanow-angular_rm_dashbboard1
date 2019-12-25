@@ -2,6 +2,8 @@ import {Injectable, NgZone} from '@angular/core';
 import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {filter} from 'rxjs/operators';
 
+// declare gives Angular app access to ga function
+declare let gtag: Function;
 
 @Injectable({
   providedIn: 'root'
@@ -45,8 +47,10 @@ export class RoutingState {
       .subscribe(({urlAfterRedirects}: NavigationEnd) => {
         this.history = [...this.history, urlAfterRedirects];
         console.log('123456789 loadRouting history : ', this.history);
-        if (this.getMainRouter())
-          console.log('goToSpecificRoute urlString this.getMainRouter().detach() : ', this.getMainRouter());
+        gtag('config', 'UA-154885656-1', {page_path: urlAfterRedirects});
+
+        // if (this.getMainRouter())
+        //   console.log('goToSpecificRoute urlString this.getMainRouter().detach() : ', this.getMainRouter());
 
       });
   }
