@@ -32,7 +32,7 @@ export class ScssSchemeComponent implements OnInit {
   sumOfTotalAmountReceived: number;
   sumOfAmountInvested: number;
   footer = [];
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }

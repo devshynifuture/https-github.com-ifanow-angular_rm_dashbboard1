@@ -28,7 +28,7 @@ export class PoMisSchemeComponent implements OnInit {
   sumOfAmountInvested: number;
   sumOfMaturityValue: number;
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   footer = [];
