@@ -48,6 +48,10 @@ h5 {
   margin: 0 !important;
 }
 
+.roboto {
+  font-family: "Roboto", sans-serif !important;
+}
+
 .mat-radio-disabled .mat-radio-label,
 label {
   margin: 0 !important;
@@ -578,11 +582,4 @@ button.primary-sm {
   height: 20px !important;
   padding: 0 2px !important;
   line-height: 0 !important;
-}
-
-.text-regular {
-  margin: 0 !important;
-  color: #83959D;
-  font-size: 14px;
-  font-family: "Roboto", sans-serif;
 }
