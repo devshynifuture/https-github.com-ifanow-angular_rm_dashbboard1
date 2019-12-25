@@ -39,7 +39,7 @@ export class CommoditiesComponent implements OnInit {
   footer = [];
 
   @ViewChild('goldListTable', { static: false }) goldListTableSort: MatSort;
-  @ViewChild('otherCommodityListTable', { static: false }) otherCommodityListTableSort: MatSort;
+  @ViewChild('otherListTable', { static: false }) otherListTableSort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   noData: string;
@@ -49,8 +49,8 @@ export class CommoditiesComponent implements OnInit {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getGoldList();
-    this.getOtherList();
+    this.getGoldList()
+
   }
   async ExportTOExcel(value) {
     this.excelData = []
@@ -198,7 +198,7 @@ export class CommoditiesComponent implements OnInit {
 
     if (data.otherCommodityList.length != 0) {
       this.otherCommodityList = new MatTableDataSource(data.otherCommodityList);
-      this.otherCommodityList.sort = this.otherCommodityListTableSort;
+        this.otherCommodityList.sort = this.otherListTableSort;
       this.sumOfMarketValueOther = data.sumOfMarketValue
       this.sumOfPurchaseValueOther = data.sumOfPurchaseValue
     }
