@@ -33,6 +33,7 @@ import { VariableFeeComponent } from './subscription/common-subscription-compone
 import { ChangePayeeComponent } from './subscription/common-subscription-component/change-payee/change-payee.component';
 import { CommonFroalaComponent } from './subscription/common-subscription-component/common-froala/common-froala.component';
 import { CustomHtmlModule } from 'src/app/common/customhtml/customhtml/custom-html.module';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 
 export const componentList = [
     OverviewComponent,
@@ -73,7 +74,8 @@ export const componentList = [
         FormsModule,
         ReactiveFormsModule,
         CommonComponentModule,
-        CustomHtmlModule
+        CustomHtmlModule,
+        CustomDirectiveModule
     ],
     exports: [componentList],
     entryComponents: [componentList]
