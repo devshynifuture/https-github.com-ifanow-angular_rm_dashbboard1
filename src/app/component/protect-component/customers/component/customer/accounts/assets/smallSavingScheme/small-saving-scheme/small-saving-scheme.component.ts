@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { element } from 'protractor';
+import { ExcelService } from '../../../../excel.service';
 
 @Component({
   selector: 'app-small-saving-scheme',
@@ -8,7 +9,7 @@ import { element } from 'protractor';
 })
 export class SmallSavingSchemeComponent implements OnInit {
   selectedTab: number;
-  constructor() { }
+  constructor(private excel : ExcelService,) { }
 
   ngOnInit() {
     this.selectedTab=1;

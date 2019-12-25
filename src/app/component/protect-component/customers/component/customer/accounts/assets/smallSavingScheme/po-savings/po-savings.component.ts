@@ -33,7 +33,7 @@ export class PoSavingsComponent implements OnInit {
   footer = [];
 
 
-  constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
+  constructor(private excel : ExcelService,public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns20 = ['no', 'owner', 'cvalue', 'rate', 'balanceM', 'balAs', 'desc', 'status', 'icons'];
   datasource: any = [{}, {}, {}];
   ngOnInit() {

@@ -3,8 +3,6 @@ import { HttpService } from 'src/app/http-service/http-service';
 import { apiConfig } from 'src/app/config/main-config';
 import { appConfig } from 'src/app/config/component-config';
 import { HttpParams } from '@angular/common/http';
-import * as Excel from 'exceljs/dist/exceljs';
-import { saveAs } from 'file-saver'
 @Injectable({
   providedIn: 'root'
 })

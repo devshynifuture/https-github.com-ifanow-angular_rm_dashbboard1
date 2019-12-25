@@ -29,13 +29,13 @@ export class RealEstateComponent implements OnInit {
   sumOfMarketValue: any;
   sumOfpurchasedValue: any;
   footer = [];
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status', 'icons'];
   excelData: any[];
   noData: string;
 
-  constructor(public subInjectService: SubscriptionInject, publicutilService: UtilService,
+  constructor(private excel : ExcelService,public subInjectService: SubscriptionInject, publicutilService: UtilService,
     public custmService: CustomerService, public cusService: CustomerService,
     public eventService: EventService, public dialog: MatDialog) {
   }

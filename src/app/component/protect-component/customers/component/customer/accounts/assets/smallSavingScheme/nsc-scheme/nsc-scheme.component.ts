@@ -34,7 +34,7 @@ export class NscSchemeComponent implements OnInit {
   excelData: any[];
   footer
 
-  constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
+  constructor(private excel : ExcelService,public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns17 = ['no', 'owner', 'cvalue', 'rate', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
   datasource: any = [{}, {}, {}];
   ngOnInit() {
@@ -82,7 +82,7 @@ export class NscSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data.NationalSavingCertificate.length != 0) {
       this.datasource = new MatTableDataSource(data.NationalSavingCertificate);
-      // this.datasource.sort = this.sort;
+      this.datasource.sort = this.sort;
       // UtilService.checkStatusId(this.datasource.filteredData)
       // this.sumOfMaturityValue = data.SumOfMaturityValue;
       // this.sumOfCurrentValue = data.SumOfCurrentValue;

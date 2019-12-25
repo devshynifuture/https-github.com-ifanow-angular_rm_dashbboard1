@@ -47,7 +47,7 @@ export class FixedIncomeComponent implements OnInit {
   dataSourceFixed: any = [{}, {}, {}];
   hidePdf: boolean;
   noData: any;
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService, public dialog: MatDialog) { }
+  constructor(private excelSer : ExcelService,private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService, public dialog: MatDialog) { }
   viewMode;
   displayedColumns4 = ['no', 'owner', 'type', 'cvalue', 'rate', 'amt', 'mdate', 'mvalue', 'number', 'desc', 'status', 'icons'];
   datasource4 = ELEMENT_DATA4;

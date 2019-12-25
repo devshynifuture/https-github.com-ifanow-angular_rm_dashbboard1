@@ -22,14 +22,14 @@ export class PoTdSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
   noData: string;
-  footer =[];
+  footer = [];
   isLoading: boolean = true;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
 
-  constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
+  constructor(private excel: ExcelService, public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns22 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'tenure', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
   dataSource;
   ngOnInit() {
@@ -51,16 +51,16 @@ export class PoTdSchemeComponent implements OnInit {
     { width: 15, key: 'Description' },
     { width: 15, key: 'Status' },]
     var header = ['Owner', 'Current Value', 'Rate', 'Amount Invested',
-      'Tenure', 'Maturity Value', 'Maturity Date', 'TD Number', 'Description','Status'];
+      'Tenure', 'Maturity Value', 'Maturity Date', 'TD Number', 'Description', 'Status'];
     this.dataSource.filteredData.forEach(element => {
       data = [element.ownerName, (element.currentValue), (element.rate), (element.balance),
       new Date(element.balanceAsOn), element.description, element.status]
       this.excelData.push(Object.assign(data))
     });
     var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(), '',
-      this.formatNumber.first.formatAndRoundOffNumber(), '', '','',]
+      this.formatNumber.first.formatAndRoundOffNumber(), '', '', '',]
     this.footer.push(Object.assign(footerData))
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer,value)
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   }
 
   getPoTdSchemedata() {
