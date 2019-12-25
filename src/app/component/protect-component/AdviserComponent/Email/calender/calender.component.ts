@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
@@ -32,7 +32,9 @@ export class CalenderComponent implements OnInit {
   eventData:any;
   eventTitle;
   eventDescription;
-
+  startTime;
+  endTime;
+  current_day = new Date();
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -166,8 +168,8 @@ export class CalenderComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(this.googleDate(result.startDateTime._d) , 'The dialog was qqqq123');
-
+      console.log(result, "result 123");
+      
       this.dialogData = {
         "eventId": "v8o6srjpr3kqa50a0cu2f2abls",
         "userId": 2727,
@@ -177,38 +179,57 @@ export class CalenderComponent implements OnInit {
         "location": "800 Howard St., San Francisco, CA 94103",
         "title": "it is successful",
         "description": "it is successful",
-        "startDateTime": this.googleDate(result.startDateTime._d),
+        "startDateTime": "",
         "timeZone": "America/Los_Angeles",
-        "endDateTime": this.googleDate(result.endDateTime._d),
+        "endDateTime": "",
         "recurrence": ["RRULE:FREQ=DAILY;COUNT=2"],
         "attendees": ["chetan@futurewise.co.in", "chetan@futurewise.co.in"]
       }
-      console.log(new Date(this.dialogData.startDateTime), 'The dialog was closed777');
-      // this.dialogData.startDateTime = new Date(this.dialogData.startDateTime).setHours(13,47,22);
-      this.dialogData.startDateTime = this.googleDate(result.startDateTime._d);
-      this.dialogData.endDateTime = this.googleDate(result.endDateTime._d);
+      this.startTime = result.startTime;
+      this.endTime = result.endTime;
+      this.dialogData.startDateTime = this.googleDate(result.startDateTime._d == undefined? this.current_day : result.startDateTime._d , "start");
+      this.dialogData.endDateTime = this.googleDate(result.endDateTime._d == undefined? this.current_day : result.endDateTime._d, "end");
       console.log(this.dialogData, 'The dialog was closed');
-      console.log(this.googleDate(result.startDateTime._d) , 'The dialog was closed123');
     });
   }
 
-googleDate(date){
-  var current_day = new Date();
+googleDate(date, timeMood){
+  console.log(date, "date 123");
+  
+  this.current_day = new Date();
   var current_date = date.getDate();
   var current_month = date.getMonth() + 1;
   var current_year = date.getFullYear();
-  var current_hrs = current_day.getHours();
-  var current_mins = current_day.getMinutes();
-  var current_secs = current_day.getSeconds();
+  if(this.startTime == "" || this.endTime == ""){
+    var current_hrs:any = this.current_day.getHours();
+    var current_mins:any = this.current_day.getMinutes();
+    current_hrs = current_hrs < 10 ? '0' + current_hrs : current_hrs;
+    current_mins = current_mins < 10 ? '0' + current_mins : current_mins;
+  }
+  else{
+    var start_hrs_mins = this.startTime;
+    var end_hrs_mins = this.endTime;
+  }
+  var current_secs:any = this.current_day.getSeconds();
    
   // Add 0 before date, month, hrs, mins or secs if they are less than 0
   current_date = current_date < 10 ? '0' + current_date : current_date;
   current_month = current_month < 10 ? '0' + current_month : current_month;
+  
+  current_secs = current_secs < 10 ? '0' + current_secs : current_secs;
   console.log(current_year + '-' + current_month + '-' + current_date + 'T' + current_hrs + ':' + current_mins + ':' + current_secs, "hi date");
   
   // Current datetime
   // String such as 2016-07-16T19:20:30
-  return current_year + '-' + current_month + '-' + current_date + 'T' + current_hrs + ':' + current_mins + ':' + current_secs;
+  if(timeMood == "start" && this.startTime != ""){
+    return current_year + '-' + current_month + '-' + current_date + 'T' + start_hrs_mins + ':' + current_secs;
+  }
+  else if(timeMood == "end" && this.endTime != ""){
+    return current_year + '-' + current_month + '-' + current_date + 'T' + end_hrs_mins + ':' + current_secs;
+  }
+  else{
+    return current_year + '-' + current_month + '-' + current_date + 'T' + current_hrs + ':' + current_mins + ':' + current_secs;
+  }
   }
 }
 
@@ -221,12 +242,16 @@ googleDate(date){
 })
 export class EventDialog implements OnInit{
   
-  startDate;
+  startDate = new Date();
+  startTime="";
+  endTime="";
   eventForm: FormGroup;
   eventData:any;
+  timeArr = ["01:00","01:30","02:00","02:30","03:00","03:30","04:00","04:30","05:00","05:30","06:00","06:30","07:00","07:30","08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:20","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30","24:00"]
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<EventDialog>,
+    private changeDetectorRef: ChangeDetectorRef,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
       console.log(data, "this.eventData 111");
       this.eventData = data;
@@ -246,13 +271,22 @@ export class EventDialog implements OnInit{
       timeZone: new FormControl("America/Los_Angeles"),
       endDateTime: new FormControl(new Date()),
       recurrence: new FormControl("RRULE:FREQ=DAILY;COUNT=2"),
-      attendees: new FormControl(["chetan@futurewise.co.in", "chetan@futurewise.co.in"])
+      attendees: new FormControl(["chetan@futurewise.co.in", "chetan@futurewise.co.in"]),
+      startTime: new FormControl(this.startTime),
+      endTime: new FormControl(this.endTime)
     });
+
   }
 
-  setTime(event, timeMood){
-    console.log(event, timeMood, "hahah");
-    
+  setTime(mood){
+    if(mood == "start"){
+      console.log("hi");
+      
+      console.log(this.eventForm.value.startDateTime._d, "this.eventForm.value.startDateTime_d 123");
+      
+      this.eventForm.get("endTime").setValue(this.timeArr[this.timeArr.indexOf(this.eventForm.value.startTime)+2]); 
+      this.eventForm.get("endDateTime").setValue(this.eventForm.value.startDateTime._d); 
+    }
   }
 
   onNoClick(): void {
