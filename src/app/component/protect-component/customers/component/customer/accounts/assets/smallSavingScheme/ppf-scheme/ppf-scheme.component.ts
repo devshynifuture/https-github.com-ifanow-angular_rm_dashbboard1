@@ -7,6 +7,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService } from 'src/app/services/util.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { ExcelService } from '../../../../excel.service';
 
 @Component({
   selector: 'app-ppf-scheme',
@@ -19,7 +20,7 @@ export class PPFSchemeComponent implements OnInit {
   noData: string;
   isLoading: boolean = true;
 
-  constructor(public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
+  constructor(private excel : ExcelService,public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   displayedColumns = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
   dataSource;
   ngOnInit() {

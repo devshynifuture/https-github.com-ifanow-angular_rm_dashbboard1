@@ -30,7 +30,7 @@ export class KvpSchemeComponent implements OnInit {
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   footer = [];
-  constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
+  constructor(private excel : ExcelService,public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns18 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
   datasource: any = [{}, {}, {}];
 

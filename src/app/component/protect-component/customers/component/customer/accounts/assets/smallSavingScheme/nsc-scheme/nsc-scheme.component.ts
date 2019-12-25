@@ -34,7 +34,7 @@ export class NscSchemeComponent implements OnInit {
   excelData: any[];
   footer
 
-  constructor(public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
+  constructor(private excel : ExcelService,public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) { }
   displayedColumns17 = ['no', 'owner', 'cvalue', 'rate', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
   datasource: any = [{}, {}, {}];
   ngOnInit() {

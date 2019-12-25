@@ -44,7 +44,7 @@ export class CommoditiesComponent implements OnInit {
   excelData: any[];
   noData: string;
 
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) { }
+  constructor(private excel : ExcelService,private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) { }
   ngOnInit() {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();

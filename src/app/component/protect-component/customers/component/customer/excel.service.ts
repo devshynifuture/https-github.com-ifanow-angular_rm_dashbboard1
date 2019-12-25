@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-// import * as Excel from 'exceljs';
-// import {saveAs} from 'file-saver';
+import * as Excel from 'exceljs';
+import {saveAs} from 'file-saver';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class ExcelService {
   }
 
   static async exportExcel(headerData, header, excelData: any, footer: any[], metaData: any) {
-    /* const wb = new Excel.Workbook();
+     const wb = new Excel.Workbook();
      const ws = wb.addWorksheet();
      const meta1 = ws.getCell('A1');
      const meta2 = ws.getCell('A2');
@@ -42,7 +42,7 @@ export class ExcelService {
        last.font = {bold: true};
      });
      const buf = await wb.xlsx.writeBuffer();
-     saveAs(new Blob([buf]), 'Rahul Jain-' + metaData + '-' + new Date() + '.xlsx');*/
+     saveAs(new Blob([buf]), 'Rahul Jain-' + metaData + '-' + new Date() + '.xlsx');
   }
 
 }
