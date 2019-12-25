@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from '../../../customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {MAT_DATE_FORMATS} from '@angular/material/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from '../../../customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-other-payables',
@@ -29,9 +29,12 @@ export class AddOtherPayablesComponent implements OnInit {
   isDateOfRepayment: boolean;
   isBalance: boolean;
   advisorId: any;
+  clientId: number;
   _data: any;
 
-  constructor(private fb: FormBuilder,public subInjectService:SubscriptionInject,public custumService:CustomerService,public eventService:EventService) { }
+  constructor(private fb: FormBuilder, public subInjectService: SubscriptionInject, public custumService: CustomerService, public eventService: EventService) {
+  }
+
   @Input()
   set data(inputData) {
     this._data = inputData;
@@ -42,29 +45,36 @@ export class AddOtherPayablesComponent implements OnInit {
   get data() {
     return this._data;
   }
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.show=false;
+    this.clientId = AuthService.getClientId();
+
+    this.show = false;
   }
-  showMore(){
-    this.show=true;
+
+  showMore() {
+    this.show = true;
   }
-  showLess(){
-    this.show=false;
+
+  showLess() {
+    this.show = false;
   }
-  close(){
+
+  close() {
     // let data=this._inputData.loanTypeId;
-     this.subInjectService.changeNewRightSliderState({ state: 'close' });
-   }
-  getOtherPayable(data){
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
+  }
+
+  getOtherPayable(data) {
     if (data == undefined) {
       data = {};
     }
     this.otherLiabilityForm = this.fb.group({
-      ownerName: [data.ownerName , [Validators.required]],
+      ownerName: [data.ownerName, [Validators.required]],
       dateOfReceipt: [new Date(data.dateOfReceived), [Validators.required]],
       creditorName: [data.creditorName, [Validators.required]],
-      amtBorrowed:[data.amountBorrowed,[Validators.required]],
+      amtBorrowed: [data.amountBorrowed, [Validators.required]],
       interest: [data.interest, [Validators.required]],
       dateOfRepayment: [new Date(data.dateOfRepayment), [Validators.required]],
       balance: [data.outstandingBalance, [Validators.required]],
@@ -78,14 +88,17 @@ export class AddOtherPayablesComponent implements OnInit {
     this.ownerData = this.otherLiabilityForm.controls;
 
   }
+
   getFormControl() {
     return this.otherLiabilityForm.controls;
   }
-  display(value){
-    console.log('value selected', value)
+
+  display(value) {
+    console.log('value selected', value);
     this.ownerName = value.userName;
-    this.selectedFamilyData = value
+    this.selectedFamilyData = value;
   }
+
   keyPress(event: any) {
     const pattern = /[0-9\+\-\ ]/;
 
@@ -94,6 +107,7 @@ export class AddOtherPayablesComponent implements OnInit {
       event.preventDefault();
     }
   }
+
   saveFormData(state) {
     if (this.otherLiabilityForm.controls.dateOfReceipt.invalid) {
       this.isdateValid = true;
@@ -107,88 +121,89 @@ export class AddOtherPayablesComponent implements OnInit {
     } else if (this.otherLiabilityForm.controls.interest.invalid) {
       this.isinterestRate = true;
       return;
-    }else if (this.otherLiabilityForm.controls.dateOfRepayment.invalid) {
+    } else if (this.otherLiabilityForm.controls.dateOfRepayment.invalid) {
       this.isDateOfRepayment = true;
       return;
-    }else if (this.otherLiabilityForm.controls.balance.invalid) {
+    } else if (this.otherLiabilityForm.controls.balance.invalid) {
       this.isBalance = true;
       return;
     } else {
       const obj = {
-      ownerName:(this.ownerName==null)?this.otherLiabilityForm.controls.ownerName.value:this.ownerName,
-      dateOfReceipt: this.otherLiabilityForm.controls.dateOfReceipt.value,
-      creditorName: this.otherLiabilityForm.controls.creditorName.value,
-      amtBorrowed: this.otherLiabilityForm.controls.amtBorrowed.value,
-      interest: this.otherLiabilityForm.controls.interest.value,
-      dateOfRepayment: this.otherLiabilityForm.controls.dateOfRepayment.value,
-      balance: this.otherLiabilityForm.controls.balance.value,
-      collateral:this.otherLiabilityForm.controls.collateral.value,
-        }
-        obj.balance=  parseInt(obj.balance);
-        obj.amtBorrowed = parseInt(obj.amtBorrowed);
-        obj.dateOfReceipt = obj.dateOfReceipt.toISOString().slice(0, 10);
-        obj.dateOfRepayment = obj.dateOfRepayment.toISOString().slice(0, 10);
-        obj.interest = parseInt(obj.interest);
+        ownerName: (this.ownerName == null) ? this.otherLiabilityForm.controls.ownerName.value : this.ownerName,
+        dateOfReceipt: this.otherLiabilityForm.controls.dateOfReceipt.value,
+        creditorName: this.otherLiabilityForm.controls.creditorName.value,
+        amtBorrowed: this.otherLiabilityForm.controls.amtBorrowed.value,
+        interest: this.otherLiabilityForm.controls.interest.value,
+        dateOfRepayment: this.otherLiabilityForm.controls.dateOfRepayment.value,
+        balance: this.otherLiabilityForm.controls.balance.value,
+        collateral: this.otherLiabilityForm.controls.collateral.value,
+      };
+      obj.balance = parseInt(obj.balance);
+      obj.amtBorrowed = parseInt(obj.amtBorrowed);
+      obj.dateOfReceipt = obj.dateOfReceipt.toISOString().slice(0, 10);
+      obj.dateOfRepayment = obj.dateOfRepayment.toISOString().slice(0, 10);
+      obj.interest = parseInt(obj.interest);
 
-         if(this._inputData=='Add'){
-          let objToSend={
-            "advisorId": this.advisorId,
-            "clientId": 2978,
-            "familyMemberId": this.selectedFamilyData.id,
-            "ownerName": obj.ownerName,
-            "creditorName": obj.creditorName,
-            "collateral": obj.collateral,
-            "amountBorrowed": obj.amtBorrowed,
-            "interest": obj.interest,
-            "outstandingBalance": obj.balance,
-            "dateOfReceived": obj.dateOfReceipt,
-            "dateOfRepayment":obj.dateOfRepayment,
-            }
-          console.log("obj",obj);
-          this.custumService.addOtherPayables(objToSend).subscribe(
-            data => this.addOtherPayablesRes(data)
-          );
-         }else{
-          let editObj={
-            "familyMemberId":160023,
-            "ownerName":obj.ownerName,
-            "creditorName":obj.creditorName,
-            "collateral":obj.collateral,
-            "amountBorrowed":obj.amtBorrowed,
-            "interest":obj.interest,
-            "outstandingBalance":obj.balance,
-            "dateOfReceived":obj.dateOfReceipt,
-            "dateOfRepayment":obj.dateOfRepayment,
-            "id":this._data.id,
-            }
-            this.custumService.editOtherPayables(editObj).subscribe(
-              data => this.editOtherPayablesRes(data)
-            );
-         }
+      if (this._inputData == 'Add') {
+        const objToSend = {
+          advisorId: this.advisorId,
+          clientId: this.clientId,
+          familyMemberId: this.selectedFamilyData.id,
+          ownerName: obj.ownerName,
+          creditorName: obj.creditorName,
+          collateral: obj.collateral,
+          amountBorrowed: obj.amtBorrowed,
+          interest: obj.interest,
+          outstandingBalance: obj.balance,
+          dateOfReceived: obj.dateOfReceipt,
+          dateOfRepayment: obj.dateOfRepayment,
+        };
+        console.log('obj', obj);
+        this.custumService.addOtherPayables(objToSend).subscribe(
+          data => this.addOtherPayablesRes(data)
+        );
+      } else {
+        const editObj = {
+          familyMemberId: 160023,
+          ownerName: obj.ownerName,
+          creditorName: obj.creditorName,
+          collateral: obj.collateral,
+          amountBorrowed: obj.amtBorrowed,
+          interest: obj.interest,
+          outstandingBalance: obj.balance,
+          dateOfReceived: obj.dateOfReceipt,
+          dateOfRepayment: obj.dateOfRepayment,
+          id: this._data.id,
+        };
+        this.custumService.editOtherPayables(editObj).subscribe(
+          data => this.editOtherPayablesRes(data)
+        );
+      }
 
-         
-      
-    }
-  }
-  addOtherPayablesRes(data){
-    console.log(data);
-    if(data){
-      console.log(data);
-      this.subInjectService.changeNewRightSliderState({ state: 'close'})
-      this.eventService.openSnackBar('Liabilities added successfully', 'OK');   
-    }else{
-      this.eventService.openSnackBar('Error', 'dismiss');   
 
     }
   }
-  editOtherPayablesRes(data){
+
+  addOtherPayablesRes(data) {
     console.log(data);
-    if(data){
+    if (data) {
       console.log(data);
-      this.subInjectService.changeNewRightSliderState({ state: 'close' })
-      this.eventService.openSnackBar('Liabilities edited successfully', 'OK'); 
-    }else{
-      this.eventService.openSnackBar('Error', 'dismiss');   
+      this.subInjectService.changeNewRightSliderState({state: 'close'});
+      this.eventService.openSnackBar('Liabilities added successfully', 'OK');
+    } else {
+      this.eventService.openSnackBar('Error', 'dismiss');
+
+    }
+  }
+
+  editOtherPayablesRes(data) {
+    console.log(data);
+    if (data) {
+      console.log(data);
+      this.subInjectService.changeNewRightSliderState({state: 'close'});
+      this.eventService.openSnackBar('Liabilities edited successfully', 'OK');
+    } else {
+      this.eventService.openSnackBar('Error', 'dismiss');
     }
   }
 }

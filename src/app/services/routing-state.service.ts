@@ -1,6 +1,7 @@
 import {Injectable, NgZone} from '@angular/core';
 import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {filter} from 'rxjs/operators';
+import {UserTimingService} from "./user-timing.service";
 
 // declare gives Angular app access to ga function
 declare let gtag: Function;
@@ -48,7 +49,7 @@ export class RoutingState {
         this.history = [...this.history, urlAfterRedirects];
         console.log('123456789 loadRouting history : ', this.history);
         gtag('config', 'UA-154885656-1', {page_path: urlAfterRedirects});
-
+        UserTimingService.eventEmitter();
         // if (this.getMainRouter())
         //   console.log('goToSpecificRoute urlString this.getMainRouter().detach() : ', this.getMainRouter());
 

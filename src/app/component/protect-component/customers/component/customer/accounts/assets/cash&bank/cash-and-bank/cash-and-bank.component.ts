@@ -1,19 +1,18 @@
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from '../../../../customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTable, MatTableDataSource } from '@angular/material';
-import { BankAccountsComponent } from '../bank-accounts/bank-accounts.component';
-import { CashInHandComponent } from '../cash-in-hand/cash-in-hand.component';
-import { DetailedViewCashInHandComponent } from '../cash-in-hand/detailed-view-cash-in-hand/detailed-view-cash-in-hand.component';
-import { DetailedViewBankAccountComponent } from '../bank-accounts/detailed-view-bank-account/detailed-view-bank-account.component';
-import * as Excel from 'exceljs/dist/exceljs';
-import { saveAs } from 'file-saver'
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelService } from '../../../../excel.service';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from '../../../../customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {UtilService} from 'src/app/services/util.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {BankAccountsComponent} from '../bank-accounts/bank-accounts.component';
+import {CashInHandComponent} from '../cash-in-hand/cash-in-hand.component';
+import {DetailedViewCashInHandComponent} from '../cash-in-hand/detailed-view-cash-in-hand/detailed-view-cash-in-hand.component';
+import {DetailedViewBankAccountComponent} from '../bank-accounts/detailed-view-bank-account/detailed-view-bank-account.component';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelService} from '../../../../excel.service';
+
 @Component({
   selector: 'app-cash-and-bank',
   templateUrl: './cash-and-bank.component.html',
@@ -32,14 +31,19 @@ export class CashAndBankComponent implements OnInit {
   excelData: any[];
   footer = [];
 
-  constructor(private excel : ExcelService,private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) { }
+  @ViewChild('bankAccountListTable', {static: false}) bankAccountListTableSort: MatSort;
+
   displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc', 'status', 'icons'];
   datasource7 = ELEMENT_DATA7;
   displayedColumns8 = ['no', 'owner', 'cash', 'bal', 'desc', 'status', 'icons'];
   datasource8 = ELEMENT_DATA8;
+  @ViewChild('cashInHandListTable', {static: false}) cashInHandListTableSort: MatSort;
 
-  @ViewChild('bankAccountListTable', { static: false }) bankAccountListTableSort: MatSort;
-  @ViewChild('cashInHandListTable', { static: false }) cashInHandListTableSort: MatSort;
+  constructor(private excel: ExcelService, private subInjectService: SubscriptionInject,
+              private custumService: CustomerService, private eventService: EventService,
+              public utils: UtilService, public dialog: MatDialog) {
+  }
+
   @ViewChildren(FormatNumberDirective) formatNumber;
 
   ngOnInit() {
@@ -48,47 +52,51 @@ export class CashAndBankComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getBankAccountList();
   }
+
   async ExportTOExcel(value) {
-    this.excelData = []
-    var data = []
+    this.excelData = [];
+    let data = [];
+    var headerData = [{width: 20, key: 'Owner'},
+      {width: 20, key: 'Account type'},
+      {width: 25, key: 'Balance as on'},
+      {width: 18, key: 'Rate'},
+      {width: 18, key: 'Balance mentioned'},
+      {width: 18, key: 'Account number'},
+      {width: 18, key: 'Bank name'},
+      {width: 15, key: 'Description'},
+      {width: 10, key: 'Status'}];
+    var header = ['Owner', 'Account type', ' Balance as on', 'Description', 'Status'];
+
     if (value == 'Cash in hand') {
-      var headerData = [{ width: 20, key: 'Owner' },
-      { width: 20, key: 'Account type' },
-      { width: 25, key: ' Balance as on' },
-      { width: 15, key: 'Description' },
-      { width: 10, key: 'Status' },]
-      var header = ['Owner', 'Account type', ' Balance as on', 'Description', 'Status'];
+      headerData = [{width: 20, key: 'Owner'},
+        {width: 20, key: 'Account type'},
+        {width: 25, key: ' Balance as on'},
+        {width: 15, key: 'Description'},
+        {width: 10, key: 'Status'},];
       this.cashInHandList.filteredData.forEach(element => {
         data = [element.ownerName, (element.accountType), (element.balanceAsOn),
-        element.description, element.status]
-        this.excelData.push(Object.assign(data))
+          element.description, element.status];
+        this.excelData.push(Object.assign(data));
       });
-      var footerData = ['Total',
-        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCashValue), '', '', , '']
-      this.footer.push(Object.assign(footerData))
+      const footerData = ['Total',
+        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCashValue), '', '', , ''];
+      this.footer.push(Object.assign(footerData));
     } else {
-      var headerData = [{ width: 20, key: 'Owner' },
-      { width: 20, key: 'Account type' },
-      { width: 25, key: 'Balance as on' },
-      { width: 18, key: 'Rate' },
-      { width: 18, key: 'Balance mentioned' },
-      { width: 18, key: 'Account number' },
-      { width: 18, key: 'Bank name' },
-      { width: 15, key: 'Description' },
-      { width: 10, key: 'Status' },]
-      var header = ['Owner', 'Account type', 'Balance as on', 'Rate',
+
+      header = ['Owner', 'Account type', 'Balance as on', 'Rate',
         'Balance mentioned', 'Account number', 'Bank name', 'Description', 'Status'];
       this.bankAccountList.filteredData.forEach(element => {
         data = [element.ownerName, (element.accountType == 1) ? 'Current' : 'Savings', new Date(element.balanceAsOn),
-        (element.interestRate), this.formatNumber.first.formatAndRoundOffNumber(element.accountBalance),
-        (element.account), element.bankName, element.description, element.status]
-        this.excelData.push(Object.assign(data))
+          (element.interestRate), this.formatNumber.first.formatAndRoundOffNumber(element.accountBalance),
+          (element.account), element.bankName, element.description, element.status];
+        this.excelData.push(Object.assign(data));
       });
-      var footerData = ['Total', '', '', '', this.formatNumber.first.formatAndRoundOffNumber(this.totalAccountBalance), '', '', '', '']
-      this.footer.push(Object.assign(footerData))
+      const footerData = ['Total', '', '', '', this.formatNumber.first.formatAndRoundOffNumber(this.totalAccountBalance), '', '', '', ''];
+      this.footer.push(Object.assign(footerData));
     }
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
   }
+
   getfixedIncomeData(value) {
     console.log('value++++++', value);
     this.isLoading = true;
@@ -99,6 +107,7 @@ export class CashAndBankComponent implements OnInit {
       this.getBankAccountList();
     }
   }
+
   deleteModal(value, data) {
     const dialogData = {
       data: value,
@@ -111,16 +120,16 @@ export class CashAndBankComponent implements OnInit {
         if (value == 'BANK ACCOUNT') {
           this.custumService.deleteBankAccount(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("Bank account is deleted", "dismiss")
+              this.eventService.openSnackBar('Bank account is deleted', 'dismiss');
               dialogRef.close();
               this.getBankAccountList();
             },
             err => this.eventService.openSnackBar(err)
-          )
+          );
         } else {
           this.custumService.deleteCashInHand(data.id).subscribe(
             data => {
-              this.eventService.openSnackBar("Cash In Hand is deleted", "dismiss")
+              this.eventService.openSnackBar('Cash In Hand is deleted', 'dismiss');
               dialogRef.close();
               this.getCashInHandList();
             },
@@ -147,6 +156,7 @@ export class CashAndBankComponent implements OnInit {
 
     });
   }
+
   getBankAccountList() {
     this.isLoading = true;
     const obj = {
@@ -165,12 +175,12 @@ export class CashAndBankComponent implements OnInit {
     if (data.cashInBankAccounts.length != 0) {
       this.bankAccountList = new MatTableDataSource(data.cashInBankAccounts);
       this.bankAccountList.sort = this.bankAccountListTableSort;
-      this.totalAccountBalance = data.totalAccountBalance
-    }
-    else {
-      this.noData = "No Scheme Found";
+      this.totalAccountBalance = data.totalAccountBalance;
+    } else {
+      this.noData = 'No Scheme Found';
     }
   }
+
   getCashInHandList() {
     this.isLoading = true;
     const obj = {
@@ -181,21 +191,23 @@ export class CashAndBankComponent implements OnInit {
       data => this.getCashInHandRes(data)
     );
   }
+
   getCashInHandRes(data) {
     console.log('getCashInHandRes ###', data);
     this.isLoading = false;
     if (data.cashInHands.length != 0) {
       this.cashInHandList = new MatTableDataSource(data.cashInHands);
       this.cashInHandList.sort = this.cashInHandListTableSort;
-      this.sumOfCashValue = data.sumOfCashValue
+      this.sumOfCashValue = data.sumOfCashValue;
     } else {
-      this.noData = "No Scheme Found";
+      this.noData = 'No Scheme Found';
     }
   }
+
   openCashAndBank(data) {
     const fragmentData = {
       flag: '',
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: BankAccountsComponent
@@ -211,10 +223,11 @@ export class CashAndBankComponent implements OnInit {
       }
     );
   }
+
   openCashInHand(data) {
     const fragmentData = {
       flag: 'addCashInHand',
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: CashInHandComponent
@@ -263,6 +276,7 @@ export class CashAndBankComponent implements OnInit {
     );
   }
 }
+
 export interface PeriodicElement7 {
   no: string;
   owner: string;
@@ -273,7 +287,7 @@ export interface PeriodicElement7 {
   account: string;
   bank: string;
   desc: string;
-  status: string
+  status: string;
 }
 
 const ELEMENT_DATA7: PeriodicElement7[] = [
@@ -295,6 +309,7 @@ const ELEMENT_DATA7: PeriodicElement7[] = [
 
 
 ];
+
 export interface PeriodicElement8 {
   no: string;
   owner: string;

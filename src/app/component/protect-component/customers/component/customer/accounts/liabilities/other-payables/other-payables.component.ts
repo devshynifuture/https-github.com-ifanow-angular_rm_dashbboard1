@@ -1,16 +1,15 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ViewChildren } from '@angular/core';
-import { CustomerService } from '../../../customer.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { DetailedViewOtherPayablesComponent } from '../detailed-view-other-payables/detailed-view-other-payables.component';
-import { AddOtherPayablesComponent } from '../add-other-payables/add-other-payables.component';
-import * as _ from 'lodash';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelService } from '../../../excel.service';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewChildren} from '@angular/core';
+import {CustomerService} from '../../../customer.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {DetailedViewOtherPayablesComponent} from '../detailed-view-other-payables/detailed-view-other-payables.component';
+import {AddOtherPayablesComponent} from '../add-other-payables/add-other-payables.component';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelService} from '../../../excel.service';
 
 @Component({
   selector: 'app-other-payables',
@@ -19,23 +18,27 @@ import { ExcelService } from '../../../excel.service';
 })
 export class OtherPayablesComponent implements OnInit {
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
-   
+
   displayedColumns = ['no', 'name', 'dateOfReceived', 'creditorName', 'amountBorrowed', 'interest', 'dateOfRepayment', 'outstandingBalance', 'description', 'status', 'icons'];
   // dataSource = ELEMENT_DATA;
   advisorId: any;
+  clientId: number
   dataSource: any;
   @Input() payableData;
   @Output() OtherDataChange = new EventEmitter();
-  totalAmountBorrowed=0;
-  totalAmountOutstandingBalance=0;
+  totalAmountBorrowed = 0;
+  totalAmountOutstandingBalance = 0;
   excelData: any[];
-  footer=[];
-  constructor(public custmService:CustomerService,public util:UtilService,public subInjectService:SubscriptionInject,public eventService:EventService,public dialog:MatDialog) { }
+  footer = [];
+
+  constructor(public custmService: CustomerService, public util: UtilService, public subInjectService: SubscriptionInject, public eventService: EventService, public dialog: MatDialog) {
+  }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.dataSource = this.payableData;
     this.dataSource = new MatTableDataSource(this.payableData);
     this.dataSource.sort = this.sort;
@@ -43,56 +46,59 @@ export class OtherPayablesComponent implements OnInit {
     //   return o.amountBorrowed;
     // });
     this.payableData.forEach(element => {
-      this.totalAmountBorrowed+=element.amountBorrowed
+      this.totalAmountBorrowed += element.amountBorrowed;
     });
     // this.totalAmountOutstandingBalance = _.sumBy(this.payableData, function (o) {
     //   return o.outstandingBalance;
     // });
     this.payableData.forEach(element => {
-      this.totalAmountOutstandingBalance +=element.outstandingBalance
+      this.totalAmountOutstandingBalance += element.outstandingBalance;
     });
   }
 
   /**used for excel  */
   async ExportTOExcel(value) {
-    this.excelData = []
-    var data = []
-    var headerData = [{ width: 20, key: 'Owner' },
-    { width: 20, key: 'Date of receipt' },
-    { width: 20, key: 'Creditor name' },
-    { width: 18, key: 'Amount borrowed' },
-    { width: 18, key: 'Interest' },
-    { width: 18, key: 'Date of repayment' },
-    { width: 25, key: 'Outstanding balance' },
-    { width: 18, key: 'Description' },
-    { width: 10, key: 'Status' },]
-    var header = ['Owner', 'Date of receipt','Creditor name', 'Amount borrowed',
+    this.excelData = [];
+    let data = [];
+    const headerData = [{width: 20, key: 'Owner'},
+      {width: 20, key: 'Date of receipt'},
+      {width: 20, key: 'Creditor name'},
+      {width: 18, key: 'Amount borrowed'},
+      {width: 18, key: 'Interest'},
+      {width: 18, key: 'Date of repayment'},
+      {width: 25, key: 'Outstanding balance'},
+      {width: 18, key: 'Description'},
+      {width: 10, key: 'Status'},];
+    const header = ['Owner', 'Date of receipt', 'Creditor name', 'Amount borrowed',
       'Interest', 'Date of repayment', 'Outstanding balance', 'Description', 'Status'];
     this.dataSource.filteredData.forEach(element => {
-      data = [element.ownerName, new Date(element.dateOfReceived),element.creditorName,this.formatNumber.first.formatAndRoundOffNumber(element.amountBorrowed)
-        , element.interest, new Date(element.dateOfRepayment),this.formatNumber.first.formatAndRoundOffNumber(element.outstandingBalance),
-      element.description,element.status]
-      this.excelData.push(Object.assign(data))
+      data = [element.ownerName, new Date(element.dateOfReceived), element.creditorName, this.formatNumber.first.formatAndRoundOffNumber(element.amountBorrowed)
+        , element.interest, new Date(element.dateOfRepayment), this.formatNumber.first.formatAndRoundOffNumber(element.outstandingBalance),
+        element.description, element.status];
+      this.excelData.push(Object.assign(data));
     });
-    var footerData = ['Total','','', this.formatNumber.first.formatAndRoundOffNumber(this.totalAmountBorrowed),'', '', this.formatNumber.first.formatAndRoundOffNumber(this.totalAmountOutstandingBalance), '', '']
-    this.footer.push(Object.assign(footerData))
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
+    const footerData = ['Total', '', '', this.formatNumber.first.formatAndRoundOffNumber(this.totalAmountBorrowed), '', '', this.formatNumber.first.formatAndRoundOffNumber(this.totalAmountOutstandingBalance), '', ''];
+    this.footer.push(Object.assign(footerData));
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
   }
+
   getPayables() {
-    let obj = {
-      'advisorId': this.advisorId,
-      'clientId': 2978
-    }
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
     this.custmService.getOtherPayables(obj).subscribe(
       data => this.getOtherPayablesRes(data)
     );
   }
+
   getOtherPayablesRes(data) {
     console.log(data);
     this.dataSource = data;
     this.OtherDataChange.emit(this.dataSource);
 
   }
+
   deleteModal(value, data) {
     const dialogData = {
       data: value,
@@ -104,12 +110,12 @@ export class OtherPayablesComponent implements OnInit {
       positiveMethod: () => {
         this.custmService.deleteOtherPayables(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar("Other payables is deleted", "dismiss")
+            this.eventService.openSnackBar('Other payables is deleted', 'dismiss');
             dialogRef.close();
             this.getPayables();
           },
           err => this.eventService.openSnackBar(err)
-        )
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -128,10 +134,11 @@ export class OtherPayablesComponent implements OnInit {
 
     });
   }
+
   open(flagValue, data) {
     const fragmentData = {
       flag: flagValue,
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: AddOtherPayablesComponent
@@ -149,10 +156,11 @@ export class OtherPayablesComponent implements OnInit {
       }
     );
   }
+
   openDetailedView(data) {
     const fragmentData = {
       flag: 'openOtherPayables',
-      data: data,
+      data,
       id: 1,
       state: 'open35',
       componentName: DetailedViewOtherPayablesComponent
@@ -169,6 +177,7 @@ export class OtherPayablesComponent implements OnInit {
     );
   }
 }
+
 export interface PeriodicElement {
   no: string;
   name: string;

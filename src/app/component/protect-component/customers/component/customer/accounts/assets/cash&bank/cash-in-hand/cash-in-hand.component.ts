@@ -1,12 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { CustomerService } from '../../../../customer.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from '@angular/material';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { AuthService } from 'src/app/auth-service/authService';
-import { UtilService } from 'src/app/services/util.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {CustomerService} from '../../../../customer.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {DatePipe} from '@angular/common';
+import {MAT_DATE_FORMATS} from '@angular/material';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {AuthService} from 'src/app/auth-service/authService';
+import {UtilService} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-cash-in-hand',
@@ -14,21 +14,25 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./cash-in-hand.component.scss'],
   providers: [
     [DatePipe],
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 })
 export class CashInHandComponent implements OnInit {
   inputData: any;
   ownerName: any;
   familyMemberId: any;
-  isCahsBalance =false;
-  isBalanceAsOn = false
+  isCahsBalance = false;
+  isBalanceAsOn = false;
   ownerData: any;
   cashInHand: any;
   showHide = false;
   advisorId: any;
+  private clientId: any;
 
-  constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe,public utils: UtilService) { }
+  constructor(private fb: FormBuilder, private custumService: CustomerService,
+              public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
+  }
+
   @Input()
   set data(data) {
     this.inputData = data;
@@ -38,19 +42,24 @@ export class CashInHandComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.getdataForm(this.inputData);
 
   }
+
   display(value) {
-    console.log('value selected', value)
+    console.log('value selected', value);
     this.ownerName = value.userName;
-    this.familyMemberId = value.id
+    this.familyMemberId = value.id;
   }
+
   Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' })
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
+
   showLess(value) {
     if (value == true) {
       this.showHide = false;
@@ -58,9 +67,10 @@ export class CashInHandComponent implements OnInit {
       this.showHide = true;
     }
   }
-  getdataForm(data){
+
+  getdataForm(data) {
     if (data == undefined) {
-      data = {}
+      data = {};
     }
     this.cashInHand = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
@@ -72,50 +82,54 @@ export class CashInHandComponent implements OnInit {
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
     this.ownerData = this.cashInHand.controls;
-    this.familyMemberId = this.cashInHand.controls.familyMemberId.value
-    this.familyMemberId = this.familyMemberId[0]
+    this.familyMemberId = this.cashInHand.controls.familyMemberId.value;
+    this.familyMemberId = this.familyMemberId[0];
   }
+
   getFormControl(): any {
     return this.cashInHand.controls;
   }
-  saveCashInHand(){
-    
-      if (this.cashInHand.controls.balanceAsOn.invalid) {
-        this.isBalanceAsOn = true;
-        return;
-      } else if (this.cashInHand.controls.cashBalance.invalid) {
-        this.isCahsBalance = true;
-        return;
+
+  saveCashInHand() {
+
+    if (this.cashInHand.controls.balanceAsOn.invalid) {
+      this.isBalanceAsOn = true;
+      return;
+    } else if (this.cashInHand.controls.cashBalance.invalid) {
+      this.isCahsBalance = true;
+      return;
+    } else {
+      const obj = {
+        advisorId: this.advisorId,
+        clientId: this.clientId,
+        familyMemberId: this.familyMemberId,
+        ownerName: (this.ownerName == undefined) ? this.cashInHand.controls.ownerName.value : this.ownerName,
+        balanceAsOn: this.datePipe.transform(this.cashInHand.controls.balanceAsOn.value, 'yyyy-MM-dd'),
+        cashValue: this.cashInHand.controls.cashBalance.value,
+        bankAccountNumber: this.cashInHand.controls.bankAcNo.value,
+        description: this.cashInHand.controls.description.value,
+        id: this.cashInHand.controls.id.value
+      };
+      if (this.cashInHand.controls.id.value == undefined) {
+        this.custumService.addCashInHand(obj).subscribe(
+          data => this.addCashInHandRes(data)
+        );
       } else {
-        let obj = {
-          advisorId: this.advisorId,
-          clientId: 2978,
-          familyMemberId: this.familyMemberId,
-          ownerName: (this.ownerName == undefined) ? this.cashInHand.controls.ownerName.value : this.ownerName,
-          balanceAsOn:this.datePipe.transform(this.cashInHand.controls.balanceAsOn.value, 'yyyy-MM-dd'),
-          cashValue: this.cashInHand.controls.cashBalance.value,
-          bankAccountNumber: this.cashInHand.controls.bankAcNo.value,
-          description: this.cashInHand.controls.description.value,
-          id: this.cashInHand.controls.id.value
-        }
-        if (this.cashInHand.controls.id.value == undefined) {
-          this.custumService.addCashInHand(obj).subscribe(
-            data => this.addCashInHandRes(data)
-          );
-        } else {
-          //edit call
-          this.custumService.editCashInHand(obj).subscribe(
-            data => this.editCashInHandRes(data)
-          );
-        }
+        // edit call
+        this.custumService.editCashInHand(obj).subscribe(
+          data => this.editCashInHandRes(data)
+        );
       }
     }
-    addCashInHandRes(data) {
-      console.log('addrecuringDepositRes', data)
-      this.subInjectService.changeNewRightSliderState({ state: 'close', data })
-    }
-    editCashInHandRes(data) {
-      this.subInjectService.changeNewRightSliderState({ state: 'close', data })
-    }
+  }
+
+  addCashInHandRes(data) {
+    console.log('addrecuringDepositRes', data);
+    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+  }
+
+  editCashInHandRes(data) {
+    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+  }
 
 }
