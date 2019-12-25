@@ -169,12 +169,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
     const ids: string[] = [];
     ids.push(id);
     // {"ids":["abc","xyz"],"userId":2727,"emailId":"gaurav@futurewise.co.in"}
-    const threadsToTrashSubscription = this.emailService.moveThreadsToTrashFromList(ids)
-      .subscribe(response => {
-        console.log(response);
-        threadsToTrashSubscription.unsubscribe();
-        this.ngOnInit();
-      });
+    this.threadsToTrashService(ids);
 
   }
 
@@ -193,6 +188,15 @@ export class EmailListingComponent implements OnInit, OnDestroy {
       untrashSubscription.unsubscribe();
       this.ngOnInit();
     }, error => console.error(error));
+  }
+
+  threadsToTrashService(ids) {
+    const threadsToTrashSubscription = this.emailService.moveThreadsToTrashFromList(ids)
+      .subscribe(response => {
+        console.log(response);
+        threadsToTrashSubscription.unsubscribe();
+        this.ngOnInit();
+      });
   }
 
   // get List view
@@ -375,14 +379,22 @@ export class EmailListingComponent implements OnInit, OnDestroy {
     console.log(this.selectedThreadsArray);
   }
 
-  multipleMoveToTrash(ids) {
-    console.log(this.selectedThreadsArray);
+  multipleMoveToTrash() {
+    const selectedArray = this.selectedThreadsArray;
+    // const { idsOfThread: { id } } =
+    let ids = [];
+    selectedArray.forEach((item) => {
+      const { idsOfThread: { id } } = item;
+      ids.push(id);
+    });
+
+    this.threadsToTrashService(ids);
+
   }
 
 
-  multipleDeletes() {
-    this.selectedThreadsArray
-  }
-
+  // multipleDeletes() {
+  //   this.selectedThreadsArray
+  // }
 
 }
