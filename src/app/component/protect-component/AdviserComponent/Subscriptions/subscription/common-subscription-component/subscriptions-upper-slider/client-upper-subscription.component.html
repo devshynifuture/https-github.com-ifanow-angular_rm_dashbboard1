@@ -164,6 +164,8 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
+        <h4 *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4>
+
 
     </div>
 </div>

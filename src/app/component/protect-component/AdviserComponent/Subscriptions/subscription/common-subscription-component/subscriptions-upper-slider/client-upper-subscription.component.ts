@@ -29,15 +29,19 @@ export interface PeriodicElement {
   styleUrls: ['./client-upper-subscription.component.scss']
 })
 export class ClientUpperSubscriptionComponent implements OnInit {
-  data: any;
+  //data: any;
   isLoading = false;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
+  noData: string;
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, public subscription: SubscriptionService) {
   }
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   ELEMENT_DATA;
-  dataSource: any;
+  //dataSource: any;
+
 
   displayedColumns: string[] = ['service', 'amt', 'type', 'subs', 'status', 'date', 'bdate', 'ndate', 'mode', 'icons'];
 
@@ -102,7 +106,12 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     };
 
     this.subscription.getSubSummary(obj).subscribe(
-      data => this.getSubSummaryRes(data)
+      data => this.getSubSummaryRes(data),
+      (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
@@ -129,8 +138,22 @@ export class ClientUpperSubscriptionComponent implements OnInit {
 
   getSubSummaryRes(data) {
     this.isLoading = false;
-    console.log(data);
-    this.dataSource = data;
+
+    if (data && data.length > 0) {
+      this.data = data;
+      this.dataSource = data;
+      this.dataSource.sort = this.sort;
+      // this.DataToSend = data;
+    } else {
+      this.data = [];
+      this.dataSource = data;
+      // console.log(data);
+      this.dataSource.data = []
+      this.noData = 'No Data Found';
+    }
+
+    // console.log(data);
+    // this.dataSource = data;
     // (data) ? this.dataSource = data : this.dataSource = [];
     // this.dataSource = new MatTableDataSource(data);
 
