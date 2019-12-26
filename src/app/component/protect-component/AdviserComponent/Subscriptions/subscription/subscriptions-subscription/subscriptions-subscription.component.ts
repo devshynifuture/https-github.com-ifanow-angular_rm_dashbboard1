@@ -113,9 +113,10 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   getDate2: string;
   selectedDateRange = { begin: new Date(), end: new Date() };
   noData: string;
-  data: Array<any> = [];
-
+  data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
+
+
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
     private eventService: EventService, private subService: SubscriptionService,
@@ -143,19 +144,24 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       order: 0,
     };
     this.isLoading = true;
-    //this.dataSource.data = [{}, {}, {}];
-    this.dataSource = new MatTableDataSource([{}, {}, {}]);
+    // this.dataSource.data = [{}, {}, {}];
+
 
     this.subService.getSubSummary(obj).subscribe(
-      data => this.getSubSummaryRes(data)
+      data => this.getSubSummaryRes(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
     );
+
   }
 
   getSubSummaryRes(data) {
     this.isLoading = false;
     console.log('this is getSubSummaryRes : ', data);
 
-    if (data) {
+    if (data && data.length > 0) {
       this.data = data;
       this.dataSource.data = data;
       this.dataSource.sort = this.sort;
@@ -164,6 +170,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       this.data = [];
       this.dataSource.data = data;
       // console.log(data);
+      this.dataSource.data = []
       this.noData = 'No Data Found';
     }
   }
