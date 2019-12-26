@@ -143,7 +143,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       order: 0,
     };
     this.isLoading = true;
-    this.dataSource.data = [{}, {}, {}];
+    //this.dataSource.data = [{}, {}, {}];
+    this.dataSource = new MatTableDataSource([{}, {}, {}]);
 
     this.subService.getSubSummary(obj).subscribe(
       data => this.getSubSummaryRes(data)
