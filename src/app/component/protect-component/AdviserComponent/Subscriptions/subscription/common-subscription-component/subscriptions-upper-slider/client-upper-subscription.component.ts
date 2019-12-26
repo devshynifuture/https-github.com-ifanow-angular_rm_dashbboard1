@@ -129,8 +129,9 @@ export class ClientUpperSubscriptionComponent implements OnInit {
 
   getSubSummaryRes(data) {
     this.isLoading = false;
-    console.log(data);
+    console.log(data , "hi client");
     this.dataSource = data;
+    
     // (data) ? this.dataSource = data : this.dataSource = [];
     // this.dataSource = new MatTableDataSource(data);
 
