@@ -63,13 +63,15 @@ export class QuotationsSubscriptionComponent implements OnInit {
   selectedDateRange: { begin: Date; end: Date; };
   selectedStatusFilter: any;
   showFilter = false;
-  dataSource:any;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
+
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
     public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
-    this.dataSource = [{}, {}, {}];
+    //this.dataSource = [{}, {}, {}];
     this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
     this.getQuotationsData();
@@ -94,20 +96,39 @@ export class QuotationsSubscriptionComponent implements OnInit {
       toDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.end, 'yyyy-MM-dd') : null,
       dateType: (this.filterDate.length == 0) ? 0 : this.filterDate,
     };
+
+
+    this.dataSource.data = [{}, {}, {}];
     this.subService.getSubscriptionQuotationData(obj).subscribe(
-      data => this.getQuotationsDataResponse(data)
+      data => this.getQuotationsDataResponse(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
+
+
   getQuotationsDataResponse(data) {
     this.isLoading = false;
-    if (data == undefined) {
-      this.noData = "No Data Found";
-    } else {
-      console.log(data);
-      // this.dataSource = data;
-      this.dataSource = new MatTableDataSource(data);
+    if (data && data.length > 0) {
+      this.data = data;
+      this.dataSource.data = data;
       this.dataSource.sort = this.sort;
+      //  this.noData = "No Data Found";
+    } else {
+
+      this.data = [];
+      this.dataSource.data = data;
+      // console.log(data);
+      this.dataSource.data = []
+      this.noData = 'No Data Found';
+
+      // console.log(data);
+      // this.dataSource = data;
+      // this.dataSource = new MatTableDataSource(data);
+      //this.dataSource.sort = this.sort;
     }
   }
   deleteModal(value) {
