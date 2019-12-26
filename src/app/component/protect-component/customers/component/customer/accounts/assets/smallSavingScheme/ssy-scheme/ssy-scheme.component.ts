@@ -98,7 +98,7 @@ export class SsySchemeComponent implements OnInit {
       this.sumOfAmountInvested = data.SumOfAmountInvested;
       this.ssyData = data;
     } else {
-      this.noData = 'No Scheme Found';
+      this.noData = 'No scheme found';
     }
 
   }

@@ -1,23 +1,23 @@
-import {AddScssComponent} from './../common-component/add-scss/add-scss.component';
-import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../../../customer.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {EventService} from 'src/app/Data-service/event.service';
-import {DetailedScssComponent} from './detailed-scss/detailed-scss.component';
-import {FormatNumberDirective} from 'src/app/format-number.directive';
-import {ExcelService} from '../../../../excel.service';
+import { AddScssComponent } from './../common-component/add-scss/add-scss.component';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../customer.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { DetailedScssComponent } from './detailed-scss/detailed-scss.component';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../../excel.service';
 
 @Component({
   selector: 'app-scss-scheme',
   templateUrl: './scss-scheme.component.html',
   styleUrls: ['./scss-scheme.component.scss'],
   providers: [
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ]
 })
 export class ScssSchemeComponent implements OnInit {
@@ -30,7 +30,7 @@ export class ScssSchemeComponent implements OnInit {
   sumOfTotalAmountReceived: number;
   sumOfAmountInvested: number;
   footer = [];
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
 
@@ -38,7 +38,7 @@ export class ScssSchemeComponent implements OnInit {
   }
 
   displayedColumns19 = ['no', 'owner', 'payout', 'rate', 'tamt', 'amt', 'mdate', 'desc', 'status', 'icons'];
-  datasource: any = [{}, {}, {}];
+  datasource = new MatTableDataSource([{}, {}, {}]);
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -49,21 +49,21 @@ export class ScssSchemeComponent implements OnInit {
   async ExportTOExcel(value) {
     this.excelData = [];
     let data = [];
-    const headerData = [{width: 20, key: 'Owner'},
-      {width: 20, key: 'Quarterly Payout'},
-      {width: 10, key: 'Rate'},
-      {width: 20, key: 'Total Amount Recieved'},
-      {width: 25, key: 'Amount Invested'},
-      {width: 15, key: 'Maturity Date'},
-      {width: 15, key: 'Description'},
-      {width: 10, key: 'Status'},];
+    const headerData = [{ width: 20, key: 'Owner' },
+    { width: 20, key: 'Quarterly Payout' },
+    { width: 10, key: 'Rate' },
+    { width: 20, key: 'Total Amount Recieved' },
+    { width: 25, key: 'Amount Invested' },
+    { width: 15, key: 'Maturity Date' },
+    { width: 15, key: 'Description' },
+    { width: 10, key: 'Status' },];
     const header = ['Owner', 'Quarterly Payout', 'Rate', 'Total Amount Recieved', 'Amount Invested',
       'Maturity Date', 'Description', 'Status'];
     this.datasource.filteredData.forEach(element => {
       data = [element.ownerName, (element.quarterlyPayout), (element.rate),
-        this.formatNumber.first.formatAndRoundOffNumber(element.totalAmountReceived),
-        this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested),
-        (element.maturityValue), new Date(element.maturityDate), element.description, element.status];
+      this.formatNumber.first.formatAndRoundOffNumber(element.totalAmountReceived),
+      this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested),
+      (element.maturityValue), new Date(element.maturityDate), element.description, element.status];
       this.excelData.push(Object.assign(data));
     });
     const footerData = ['Total', '', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfQuarterlyPayout),
@@ -81,7 +81,11 @@ export class ScssSchemeComponent implements OnInit {
       requiredDate: ''
     };
     this.cusService.getSmallSavingSchemeSCSSData(obj).subscribe(
-      data => this.getKvpSchemedataResponse(data)
+      data => this.getKvpSchemedataResponse(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.datasource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
@@ -124,8 +128,8 @@ export class ScssSchemeComponent implements OnInit {
   getKvpSchemedataResponse(data: any) {
     console.log(data);
     this.isLoading = false;
-    if (data.scssList.length != 0) {
-      this.datasource = new MatTableDataSource(data.scssList);
+    if (data && data.scssList && data.scssList.length > 0) {
+      this.datasource.data = data.scssList;
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);
       this.sumOfAmountInvested = data.sumOfAmountInvested;
@@ -133,8 +137,10 @@ export class ScssSchemeComponent implements OnInit {
       this.sumOfQuarterlyPayout = data.sumOfQuarterlyPayout;
       this.scssData = data;
     } else {
-      this.noData = 'No Scheme Found';
+      this.noData = 'No scheme found';
+      this.datasource.data = []
     }
+    console.log('datasource', this.datasource)
   }
 
   openAddSCSS(data, flag) {

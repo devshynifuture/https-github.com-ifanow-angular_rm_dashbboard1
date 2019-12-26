@@ -101,7 +101,7 @@ export class PoMisSchemeComponent implements OnInit {
 
       this.pomisData = data;
     } else {
-      this.noData = 'No Scheme Found';
+      this.noData = 'No scheme found';
     }
   }
 

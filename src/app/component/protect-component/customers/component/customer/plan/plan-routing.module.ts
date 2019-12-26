@@ -1,14 +1,14 @@
-import {CashflowsPlanComponent} from './cashflows-plan/cashflows-plan.component';
-import {ScenariosPlanComponent} from './scenarios-plan/scenarios-plan.component';
-import {InvestmentsPlanComponent} from './investments-plan/investments-plan.component';
-import {TexesPlanComponent} from './texes-plan/texes-plan.component';
-import {GoalsPlanComponent} from './goals-plan/goals-plan.component';
-import {InsurancePlanComponent} from './insurance-plan/insurance-plan.component';
-import {ProfilePlanComponent} from './profile-plan/profile-plan.component';
-import {SummaryPlanComponent} from './summary-plan/summary-plan.component';
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {PlanComponent} from './plan.component';
+import { CashflowsPlanComponent } from './cashflows-plan/cashflows-plan.component';
+import { ScenariosPlanComponent } from './scenarios-plan/scenarios-plan.component';
+import { InvestmentsPlanComponent } from './investments-plan/investments-plan.component';
+import { TexesPlanComponent } from './texes-plan/texes-plan.component';
+import { GoalsPlanComponent } from './goals-plan/goals-plan.component';
+import { InsurancePlanComponent } from './insurance-plan/insurance-plan.component';
+import { ProfilePlanComponent } from './profile-plan/profile-plan.component';
+import { SummaryPlanComponent } from './summary-plan/summary-plan.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { PlanComponent } from './plan.component';
 // import {CustomerComponent} from './component/customer/customer.component';
 
 
@@ -47,6 +47,11 @@ const routes: Routes = [{
     {
       path: 'scenarios',
       component: ScenariosPlanComponent
+    },
+    {
+      path: '',
+      redirectTo: 'summary',
+      pathMatch: 'full'
     }
   ]
 }];

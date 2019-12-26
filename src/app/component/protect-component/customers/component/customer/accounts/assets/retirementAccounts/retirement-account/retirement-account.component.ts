@@ -526,7 +526,7 @@ export class RetirementAccountComponent implements OnInit {
       this.sumOfemployersMonthlyContribution = data.sumOfemployersMonthlyContribution;
     }
     else {
-      this.noData = "No Data Found";
+      this.noData = "No scheme found";
     }
 
   }
@@ -546,7 +546,7 @@ export class RetirementAccountComponent implements OnInit {
       this.sumOfAmountReceived = data.sumOfAmountReceived;
     }
     else {
-      this.noData = "No Data Found";
+      this.noData = "No scheme found";
     }
 
   }
@@ -568,7 +568,7 @@ export class RetirementAccountComponent implements OnInit {
       this.totalCurrentValue = data.totalCurrentValue;
     }
     else {
-      this.noData = "No Data Found";
+      this.noData = "No scheme found";
 
     }
 
@@ -590,7 +590,7 @@ export class RetirementAccountComponent implements OnInit {
       this.sumOfAnnualEmployerContribution = data.sumOfAnnualEmployerContribution;
     }
     else {
-      this.noData = "No Data Found";
+      this.noData = "No scheme found";
 
     }
 
@@ -612,7 +612,7 @@ export class RetirementAccountComponent implements OnInit {
       this.totalPensionAmount = data.totalPensionAmount;
     }
     else {
-      this.noData = "No Data Found";
+      this.noData = "No scheme found";
 
     }
 
