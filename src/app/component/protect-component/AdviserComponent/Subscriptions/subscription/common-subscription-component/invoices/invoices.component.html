@@ -70,7 +70,8 @@
                 <td mat-cell *matCellDef="let element" class="c-p"
                     (click)="openInvoice(element,'invoiceUpperSlider','open')">
                     <div class="bar">
-                        {{element.services? element.services.length > 0? element.services[0].serviceName: '-' : '-'}}
+                        {{(element.services)?((element.services.length > 0)?element.services[0].serviceName:'-'):''}}
+                        <!-- {{(element.services && element.services.length > 0)? element.services[0].serviceName : '-'}} -->
                     </div>
                 </td>
             </ng-container>
@@ -88,9 +89,9 @@
                 <th mat-sort-header="status" mat-header-cell *matHeaderCellDef> Status</th>
                 <td mat-cell *matCellDef="let element" class="c-p"
                     (click)="openInvoice(element,'invoiceUpperSlider','open')"
-                    [ngClass]="{'text-danger':element.status=='OVERDUE','text-primary':element.status=='SENT','text-success':element.status=='PAID'}">
+                    [ngClass]="{'text-danger':element.status==0,'text-primary':element.status==1,'text-success':element.status==2}">
                     <div class="bar">
-                        {{element.status}}
+                            {{(element.status==0)?'OVERDUE':(element.status==1)?'OVERDUE':(element.status==2)?'PAID':''}} 
                     </div>
                 </td>
             </ng-container>

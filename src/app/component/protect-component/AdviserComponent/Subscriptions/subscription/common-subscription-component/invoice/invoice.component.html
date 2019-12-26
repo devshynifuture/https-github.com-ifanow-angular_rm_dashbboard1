@@ -52,8 +52,8 @@
                         <p class="m-0 f-13 pt-12">{{strData.invoiceDate | date:'dd/MM/yyyy'}}</p>
                     </div>
                     <div class="col-md-5 text-right pr-8">
-                        <p class="m-0 f-13 pt-12" [ngClass]="strData.status == 'PAID' ? 'text-success f-400' : 'text-danger f-400'">
-                            {{strData.status}}</p>
+                        <p class="m-0 f-13 pt-12" [ngClass]="{'text-danger':strData.status==0,'text-primary':strData.status==1,'text-success':strData.status==2}">
+                            {{(strData.status==0)?'OVERDUE':(strData.status==1)?'OVERDUE':(strData.status==2)?'PAID':''}}</p>
                     </div>
                 </div>
             </div>
@@ -109,8 +109,8 @@
                                     <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>: {{storeData.invoiceDate| date:'dd/MM/yyyy'}}</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <h2 [ngClass]="storeData.status == 'PAID' ? 'text-success f-400' : 'text-danger f-400'">
-                                        {{storeData.status}}</h2>
+                                    <h2 [ngClass]="{'text-danger':storeData.status==0,'text-primary':storeData.status==1,'text-success':storeData.status==2}">
+                                        {{(storeData.status==0)?'OVERDUE':(storeData.status==1)?'OVERDUE':(storeData.status==2)?'PAID':''}}</h2>
                                 </div>
 
                             </div>
@@ -640,10 +640,9 @@
                         <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>: {{storeData.invoiceDate | date:'dd/MM/yyyy'}}</p>
                     </div>
                     <div class="col-md-4">
-                        <h2 [ngClass]="storeData.status == 'PAID' ? 'text-success f-400' : 'text-danger f-400'">
-                            {{storeData.status}}</h2>
+                        <h2 [ngClass]="{'text-danger':storeData.status==0,'text-primary':storeData.status==1,'text-success':storeData.status==2}">
+                                {{(storeData.status==0)?'OVERDUE':(storeData.status==1)?'OVERDUE':(storeData.status==2)?'PAID':''}}</h2>
                     </div>
-
                 </div>
                 <div>
                     <div class="row">
