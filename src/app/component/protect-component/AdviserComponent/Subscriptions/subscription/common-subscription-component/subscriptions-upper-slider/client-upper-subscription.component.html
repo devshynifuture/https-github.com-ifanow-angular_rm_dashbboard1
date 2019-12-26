@@ -11,8 +11,8 @@
                 <h5>Next, you will be able to send Quotations, sign Documents etc.</h5>
                 <h5>Let’s get started!</h5>
                 <button mat-stroked-button class="btn-primary br-0 mt-44" (click)="openPlanSlider('planRightSlider','open',null)">Add
-          Plan
-        </button>
+                    Plan
+                </button>
             </div>
         </div>
     </div>
@@ -30,9 +30,9 @@
         <div class="row">
             <div class="col-md-12 p-0 pt-16">
                 <button mat-stroked-button class="btn-primary br-0 right text-right addon" (click)="openPlanSlider('planRightSlider','open',null)"><i class="material-icons">
-            add
-          </i> ADD PLAN
-        </button>
+                        add
+                    </i> ADD PLAN
+                </button>
                 <button mat-button class="br-0 text-black right text-right mr-12">HELP</button>
             </div>
         </div>
@@ -63,14 +63,15 @@
                 <th mat-sort-header="feeTypeId" mat-header-cell *matHeaderCellDef class="f-18"> Fee type</th>
                 <td mat-cell *matCellDef="let element">
                     <span *ngIf="element.subscriptionPricing">
-            <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==1">FIXED</span>
+                        <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==1">FIXED</span>
                     <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==2">VARIABLE</span>
                     </span>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="subs">
-                <th mat-sort-header="subscriptionNumber" mat-header-cell *matHeaderCellDef class="f-18"> Subscription #</th>
+                <th mat-sort-header="subscriptionNumber" mat-header-cell *matHeaderCellDef class="f-18"> Subscription #
+                </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="bar">
                         {{element.serviceName}}
@@ -107,7 +108,8 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="bdate">
-                <th mat-sort-header="prevBillingDate" mat-header-cell *matHeaderCellDef class="f-18"> Last billing date</th>
+                <th mat-sort-header="prevBillingDate" mat-header-cell *matHeaderCellDef class="f-18"> Last billing date
+                </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="bar">
                         {{element.prevBillingDate | date:'dd/MM/yyyy'}}
@@ -115,7 +117,8 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="ndate">
-                <th mat-sort-header="nextBillingDate" mat-header-cell *matHeaderCellDef class="f-18"> Next billing date</th>
+                <th mat-sort-header="nextBillingDate" mat-header-cell *matHeaderCellDef class="f-18"> Next billing date
+                </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="bar">
                         {{element.nextBillingDate | date:'dd/MM/yyyy'}}
@@ -133,20 +136,25 @@
                 <td mat-cell *matCellDef="let element" style="width: 2%;">
 
                     <i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
-            more_vert
-          </i>
+                        more_vert
+                    </i>
                     <mat-menu #menu="matMenu">
                         <a mat-menu-item (click)="Open('open',element)">View & Edit fee structure</a>
-                        <a mat-menu-item class="bt-1" (click)="openPlanSlider('billerSettings','open',element)">Change Biller</a>
-                        <a mat-menu-item class="bt-1" (click)="openPlanSlider('changePayee','open',element)">Change Payee</a>
+                        <a mat-menu-item class="bt-1" (click)="openPlanSlider('billerSettings','open',element)">Change
+                            Biller</a>
+                        <a mat-menu-item class="bt-1" (click)="openPlanSlider('changePayee','open',element)">Change
+                            Payee</a>
                         <a *ngIf="element.status!=1" mat-menu-item class="bt-1" (click)="delete('cancelSubscription',element)">Cancel subscription</a>
-                        <a mat-menu-item class="bt-1" (click)="deleteModal('SUBSCRIPTION',element)">Delete subscription</a>
+                        <a mat-menu-item class="bt-1" (click)="deleteModal('SUBSCRIPTION',element)">Delete
+                            subscription</a>
                     </mat-menu>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+
+        <h4 *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4>
 
 
     </div>
