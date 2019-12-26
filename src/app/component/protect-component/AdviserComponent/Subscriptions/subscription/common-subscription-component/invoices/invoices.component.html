@@ -35,7 +35,7 @@
                 <p class="m-0 text-black text-left pt-12">{{dataCount}} invoices selected</p>
             </div>
         </div>
-        <table matSort mat-table [dataSource]="dataSource" class="mt-8" id="table-low" class="mt-8 skeletonAnimation"
+        <table matSort mat-table  [dataSource]="dataSource" class="mt-8" id="table-low" class="mt-8 skeletonAnimation"
             appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="checkbox">
                 <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;">
@@ -140,7 +140,11 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <h4 *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4>
+        <div *ngIf="dataSource==undefined" class="d-flex flex-column align-items-center">
+            <h4 class="text-center pt-72">{{noData}}</h4>
+            
+        </div>
+        <!-- <h4 *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4> -->
     </div>
     <!-- <div class="bottom-fixed wrapper-16 w-100">
                 <div class="row">
