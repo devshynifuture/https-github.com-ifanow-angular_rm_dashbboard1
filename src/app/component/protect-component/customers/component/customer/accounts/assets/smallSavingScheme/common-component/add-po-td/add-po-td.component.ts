@@ -52,10 +52,10 @@ export class AddPoTdComponent implements OnInit {
     }
     this.POTDForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
-      amtInvested: [data.amountInvested, [Validators.required,Validators.min(200)]],
+      amtInvested: [data.amountInvested, [Validators.required, Validators.min(200)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       tenure: [data.tenure, [Validators.required]],
-      ownershipType: [(data.ownerTypeId)?String(data.ownerTypeId):'1', [Validators.required]]
+      ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]]
     })
     this.POTDOptionalForm = this.fb.group({
       poBranch: [],
@@ -92,8 +92,7 @@ export class AddPoTdComponent implements OnInit {
         finalTransctList.push(obj)
       });
     }
-    
-    else if (this.POTDForm.get('amtInvested').invalid) {
+    if (this.POTDForm.get('amtInvested').invalid) {
       this.POTDForm.get('amtInvested').markAsTouched();
       return
     }
