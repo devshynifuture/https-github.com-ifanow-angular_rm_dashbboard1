@@ -94,7 +94,7 @@ export class NscSchemeComponent implements OnInit {
       // this.sumOfCurrentValue = data.SumOfCurrentValue;
       this.nscData = data;
     } else {
-      this.noData = 'No Scheme there';
+      this.noData = 'No scheme found';
     }
   }
 

@@ -1,14 +1,18 @@
 <div class="wrapper-8">
     <div class="row pt-28 pb-28">
         <div class="col-md-8 pl-0" id="custom-toggle">
-            <button (click)="getfixedIncomeData('1')" [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}" class="br-0 text-custom" mat-button>
+            <button (click)="getfixedIncomeData('1')"
+                [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}"
+                class="br-0 text-custom" mat-button>
                 Bank accounts
             </button>
-            <button (click)="getfixedIncomeData('2')" [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}" class="br-0 text-custom" mat-button>
+            <button (click)="getfixedIncomeData('2')"
+                [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}"
+                class="br-0 text-custom" mat-button>
                 Cash in hand
             </button>
         </div>
-        <div class="col-md-4 right text-right  pr-0">
+        <!-- <div class="col-md-4 right text-right  pr-0">
             <button [matMenuTriggerFor]="menu" class="ba-black br-0" mat-stroked-button>
                 Overview Report
                 <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
@@ -21,14 +25,14 @@
                 <button mat-menu-item>Capital Gains</button>
                 <button mat-menu-item>Goal Linkage</button>
             </mat-menu>
-        </div>
+        </div> -->
     </div>
     <div *ngIf="showRequring == '1'">
         <div class="row">
             <div class="col-md-4 p-0">
                 <h4 class="m-0 text-black roboto pt-8">Bank accounts</h4>
             </div>
-            <div class="col-md-8 p-0 right text-right">
+            <div class="col-md-8 p-0 right text-right" *ngIf="bankAccountList!=undefined">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button mat-menu-item>PDF</button>
@@ -51,7 +55,8 @@
             </div>
         </div>
         <div class="example-container mt-8 col-md-12 p-0 real-estate">
-            <table matSort #bankAccountListTable="matSort" [dataSource]="bankAccountList" id="table-low" mat-table class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table matSort #bankAccountListTable="matSort" [dataSource]="bankAccountList" id="table-low" mat-table
+                class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" *matHeaderCellDef class="br" mat-header-cell> No</th>
                     <td *matCellDef="let element let i = index" class="br" mat-cell>
@@ -74,7 +79,8 @@
                     <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
                 </ng-container>
                 <ng-container matColumnDef="amt">
-                    <th mat-sort-header="balanceAsOn" *matHeaderCellDef class="br text-left" mat-header-cell> Balance as on
+                    <th mat-sort-header="balanceAsOn" *matHeaderCellDef class="br text-left" mat-header-cell> Balance as
+                        on
                     </th>
                     <td *matCellDef="let element" class="br text-left" mat-cell>
                         <div class="bar"> {{element.balanceAsOn | date:'dd/MM/yyyy'}} </div>
@@ -96,7 +102,8 @@
                     <td *matCellDef="let element" class="br text-right t-5" mat-cell>
                         <div class="bar"> {{element.accountBalance}} </div>
                     </td>
-                    <td *matFooterCellDef class="br t-20 f-500 p-8 text-right" mat-footer-cell appFormatNumber [value]="totalAccountBalance">
+                    <td *matFooterCellDef class="br t-20 f-500 p-8 text-right" mat-footer-cell appFormatNumber
+                        [value]="totalAccountBalance">
                         <div class="bar"> {{totalAccountBalance || '-'}} </div>
                     </td>
                 </ng-container>
@@ -146,8 +153,12 @@
                 <tr *matRowDef="let row; columns: displayedColumns7;" mat-row></tr>
                 <tr *matFooterRowDef="displayedColumns7;sticky: true" mat-footer-row></tr>
             </table>
-            <div *ngIf="bankAccountList==undefined">
+            <div *ngIf="bankAccountList==undefined" class="d-flex flex-column align-items-center">
                 <h4 class="text-center pt-72">{{noData}}</h4>
+                <button (click)="openCashAndBank('')" class="btn-primary addon v-middle" mat-stroked-button><i
+                        class="material-icons">add</i>ADD
+                    NEW
+                </button>
             </div>
         </div>
     </div>
@@ -156,7 +167,7 @@
             <div class="col-md-4 p-0">
                 <h4 class="m-0 text-black roboto pt-8">Cash in hand</h4>
             </div>
-            <div class="col-md-8 p-0 right text-right">
+            <div class="col-md-8 p-0 right text-right" *ngIf="cashInHandList!=undefined">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button mat-menu-item>PDF</button>
@@ -179,7 +190,8 @@
             </div>
         </div>
         <div class="example-container mt-8 col-md-12 p-0 real-estate">
-            <table matSort #cashInHandListTable="matSort" [dataSource]="cashInHandList" id="table-low" mat-table class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table matSort #cashInHandListTable="matSort" [dataSource]="cashInHandList" id="table-low" mat-table
+                class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" *matHeaderCellDef class="br t-2" mat-header-cell> No</th>
@@ -196,17 +208,20 @@
                     <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
                 </ng-container>
                 <ng-container matColumnDef="cash">
-                    <th mat-sort-header="cashValue" *matHeaderCellDef class="br text-right" mat-header-cell> Account type
+                    <th mat-sort-header="cashValue" *matHeaderCellDef class="br text-right" mat-header-cell> Account
+                        type
                     </th>
                     <td *matCellDef="let element" class="br text-right" mat-cell appFormatNumber>
                         <div class="bar"> {{element.cashValue}} </div>
                     </td>
-                    <td *matFooterCellDef class="br t-20 p-8 f-500 text-right" mat-footer-cell appFormatNumber [value]="sumOfCashValue">
+                    <td *matFooterCellDef class="br t-20 p-8 f-500 text-right" mat-footer-cell appFormatNumber
+                        [value]="sumOfCashValue">
                         <div class="bar"> {{ sumOfCashValue || '-'}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="bal">
-                    <th mat-sort-header="balanceAsOn" *matHeaderCellDef class="br text-left" mat-header-cell> Balance as on
+                    <th mat-sort-header="balanceAsOn" *matHeaderCellDef class="br text-left" mat-header-cell> Balance as
+                        on
                     </th>
                     <td *matCellDef="let element" class="br text-left" mat-cell>
                         <div class="bar"> {{element.balanceAsOn | date:'dd/MM/yyyy'}} </div>
@@ -229,7 +244,8 @@
                 </ng-container>
                 <ng-container matColumnDef="icons">
                     <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                    <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+                    <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black"
+                            [matMenuTriggerFor]="menubank">
                             more_vert
                         </i>
                         <mat-menu #menubank="matMenu">
@@ -246,12 +262,13 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns8;"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns8;sticky: true" [hidden]="isLoading"></tr>
             </table>
-            <div *ngIf="cashInHandList==undefined">
+            <div *ngIf="cashInHandList==undefined" class="d-flex flex-column align-items-center">
                 <h4 class="text-center pt-72">{{noData}}</h4>
+                <button (click)="openCashInHand(null)" class="btn-primary addon v-middle" mat-stroked-button><i
+                        class="material-icons">add</i>ADD
+                    NEW
+                </button>
             </div>
         </div>
     </div>
 </div>
-<!-- <div *ngIf="isLoading">
-    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div> -->

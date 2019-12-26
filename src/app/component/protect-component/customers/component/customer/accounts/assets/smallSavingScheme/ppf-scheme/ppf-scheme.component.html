@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-md-5 p-0">
-        <h4 class="m-0 text-black roboto pt-8">PUBLIC PROVIDENT FUND (PPF)</h4>
+        <h4 class="m-0 text-black roboto pt-8">Public provident fund (PPF)</h4>
     </div>
-    <div class="col-md-7 p-0 right text-right">
+    <div class="col-md-7 p-0 right text-right" *ngIf="dataSource!=undefined">
         <img src="assets/images/svg/download-bordered.svg" class="c-p">
         <img src="assets/images/svg/up-down.svg" class="">
         <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
@@ -83,11 +83,9 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
     </table>
-    <div *ngIf="dataSource==undefined">
-        <h4 class="text-center pt-72">{{noData }}</h4>
+    <div *ngIf="dataSource==undefined" class="d-flex flex-column align-items-center" >
+        <h4 class="pt-72">{{noData }}</h4>
+        <button mat-stroked-button class="btn-primary addon v-middle mt-20" (click)="openAddPPF(null)"><i
+                class="material-icons">add</i>ADD NEW</button>
     </div>
-</div>
-
-<div *ngIf="isLoading">
-    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div>
