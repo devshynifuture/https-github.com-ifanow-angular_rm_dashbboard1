@@ -18,7 +18,11 @@ const routes: Routes = [
         path: 'deployments',
         component: DeploymentsActivityComponent
       },
-
+      {
+        path: '',
+        redirectTo: 'advice',
+        pathMatch: 'full'
+      }
     ]
   }
 ];
