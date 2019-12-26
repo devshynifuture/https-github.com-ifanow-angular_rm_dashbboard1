@@ -106,12 +106,11 @@ export class ChangePayeeComponent implements OnInit {
   }
 
   openAddPayee() {
-    let obj =
-    {
+    const obj = {
       data: 'Add',
       flag: false
-    }
-    this.payeeFlag.emit(obj)
+    };
+    this.payeeFlag.emit(obj);
   }
   onInputChange(event: MatSliderChange, singlePlan) {
     console.log('This is emitted as the thumb slides');
