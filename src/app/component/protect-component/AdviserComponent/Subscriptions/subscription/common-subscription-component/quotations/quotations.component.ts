@@ -43,7 +43,7 @@ export class QuotationsComponent implements OnInit {
   dataCount;
   _clientData;
   displayedColumns: string[] = ['checkbox', 'document', 'plan', 'date', 'sdate', 'cdate', 'status', 'send', 'icons'];
-  dataSource :any;
+  dataSource: any;
   changeEmail = 'footerChange';
   advisorId;
 
@@ -70,11 +70,11 @@ export class QuotationsComponent implements OnInit {
   Open(value, state, data) {
     const fragmentData = {
       flag: value,
-      data:data,
+      data: data,
       id: 1,
       state,
     };
-    data.userEmailId=this._clientData.userEmailId
+    data.userEmailId = this._clientData.userEmailId
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
@@ -188,9 +188,9 @@ export class QuotationsComponent implements OnInit {
       templateType: 2, // 2 is for quotation
       documentList: []
     };
-    if(this.dataSource.length==1){
-          data.documentList=this.dataSource;
-    }else{
+    if (this.dataSource.length == 1) {
+      data.documentList = this.dataSource;
+    } else {
       this.dataSource.forEach(singleElement => {
         if (singleElement.selected) {
           data.documentList.push(singleElement);
@@ -284,8 +284,8 @@ export class QuotationsComponent implements OnInit {
     // this.dataSource.forEach(item => item.selected = 'checked');
 
     this.dataCount = 0;
-    if (this.dataSource) {
-      this.dataSource.forEach(item => {
+    if (this.dataSource.filteredData) {
+      this.dataSource.filteredData.forEach(item => {
         item.selected = event.checked;
         if (item.selected) {
           this.dataCount++;

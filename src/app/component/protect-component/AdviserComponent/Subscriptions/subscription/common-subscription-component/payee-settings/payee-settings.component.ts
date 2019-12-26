@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-payee-settings',
@@ -14,11 +14,12 @@ export class PayeeSettingsComponent implements OnInit {
   clientId: any;
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService,
-    private subService: SubscriptionService, private fb: FormBuilder) {
+              private subService: SubscriptionService, private fb: FormBuilder) {
   }
 
   @Input() upperData;
   @Output() totalPayeeData = new EventEmitter<Object>();
+
   @Input()
   set data(data) {
     this.inputData = data;
@@ -155,7 +156,7 @@ export class PayeeSettingsComponent implements OnInit {
   Close(data) {
     // this.subInjectService.rightSliderData(state)
     // this.subInjectService.rightSideData(state);
-    this.subInjectService.changeUpperRightSliderState({ state: 'close', data });
+    this.subInjectService.changeUpperRightSliderState({state: 'close', data});
   }
 
   savePayeeSettings() {
@@ -253,8 +254,7 @@ export class PayeeSettingsComponent implements OnInit {
       }
       this.subInjectService.addEvent(obj)
       this.eventService.openSnackBar('Client profile added Successfully', 'OK');
-    }
-    else {
+    } else {
       console.log('addClientBillerProfileRes', data);
       this.updatedData = data;
       this.closeTab(data);

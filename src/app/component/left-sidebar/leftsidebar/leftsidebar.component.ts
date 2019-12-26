@@ -2,7 +2,6 @@ import {Component, ElementRef, NgZone, OnInit} from '@angular/core';
 import $ from 'jquery';
 import {AuthService} from 'src/app/auth-service/authService';
 import {EventService} from '../../../Data-service/event.service';
-import {transition} from '@angular/animations';
 import {SubscriptionInject} from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {FormControl} from '@angular/forms';
 import {SubscriptionService} from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
@@ -25,6 +24,7 @@ export class LeftsidebarComponent implements OnInit {
   advisorId: any;
   clientList: any;
   myControl: FormControl;
+  advisorName;
 
   constructor(private authService: AuthService, private _eref: ElementRef,
               private eventService: EventService, private subinject: SubscriptionInject,
@@ -68,6 +68,7 @@ export class LeftsidebarComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.advisorName = AuthService.getUserInfo().fullName;
     this.onResize();
     this.userInfo = AuthService.getUserInfo();
     this.myControl = new FormControl();

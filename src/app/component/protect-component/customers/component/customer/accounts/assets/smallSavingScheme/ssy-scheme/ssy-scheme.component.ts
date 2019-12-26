@@ -41,8 +41,8 @@ export class SsySchemeComponent implements OnInit {
   }
 
   displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
-  datasource: any = [{}, {}, {}];
-
+  data: Array<any> = [{}, {}, {}];
+  datasource = new MatTableDataSource(this.data);
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -81,8 +81,11 @@ export class SsySchemeComponent implements OnInit {
       clientId: this.clientId
     };
     this.cusService.getSmallSavingSchemeSSYData(obj).subscribe(
-      data => this.getSsySchemedataResponse(data),
-      err => this.eventService.openSnackBar(err)
+      data => this.getSsySchemedataResponse(data),(error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.datasource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
@@ -99,6 +102,7 @@ export class SsySchemeComponent implements OnInit {
       this.ssyData = data;
     } else {
       this.noData = 'No scheme found';
+      this.datasource.data = []
     }
 
   }

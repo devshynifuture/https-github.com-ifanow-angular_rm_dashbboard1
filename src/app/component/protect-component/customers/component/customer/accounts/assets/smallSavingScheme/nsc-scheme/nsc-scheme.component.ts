@@ -38,7 +38,8 @@ export class NscSchemeComponent implements OnInit {
   }
 
   displayedColumns17 = ['no', 'owner', 'cvalue', 'rate', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
-  datasource: any = [{}, {}, {}];
+  data: Array<any> = [{}, {}, {}];
+  datasource = new MatTableDataSource(this.data);
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -79,7 +80,11 @@ export class NscSchemeComponent implements OnInit {
       clientId: this.clientId
     };
     this.cusService.getSmallSavingSchemeNSCData(obj).subscribe(
-      data => this.getNscSchemedataResponse(data)
+      data => this.getNscSchemedataResponse(data) ,(error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.datasource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
@@ -95,6 +100,7 @@ export class NscSchemeComponent implements OnInit {
       this.nscData = data;
     } else {
       this.noData = 'No scheme found';
+      this.datasource.data = []
     }
   }
 
