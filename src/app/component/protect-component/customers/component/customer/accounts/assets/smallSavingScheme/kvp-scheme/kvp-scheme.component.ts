@@ -90,7 +90,7 @@ export class KvpSchemeComponent implements OnInit {
       this.sumOfAmountInvested = data.SumOfAmountInvested;
       this.kvpData = data;
     } else {
-      this.noData = 'No Scheme Found';
+      this.noData = 'No scheme found';
     }
   }
 

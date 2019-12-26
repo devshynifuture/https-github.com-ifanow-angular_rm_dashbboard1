@@ -227,7 +227,7 @@ export class FixedIncomeComponent implements OnInit {
       this.sumMaturityValue = data.sumMaturityValue;
     }
     else {
-      this.noData = "No Data Found"
+      this.noData = "No scheme found";
     }
 
   }
@@ -256,7 +256,7 @@ export class FixedIncomeComponent implements OnInit {
       this.totalMarketValue = data.totalMarketValue;
     }
     else {
-      this.noData = "No Data Found"
+      this.noData = "No scheme found";
     }
   }
 
@@ -285,7 +285,7 @@ export class FixedIncomeComponent implements OnInit {
       this.sumCurrentValueB = data.sumCurrentValue;
     }
     else {
-      this.noData = "No Data Found"
+      this.noData = "No scheme found";
     }
   }
   deleteModal(value, data) {
@@ -411,7 +411,6 @@ export class FixedIncomeComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-
         }
       }
     );

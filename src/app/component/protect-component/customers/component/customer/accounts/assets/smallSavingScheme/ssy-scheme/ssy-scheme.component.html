@@ -2,7 +2,7 @@
     <div class="col-md-5 p-0">
         <h4 class="m-0 text-black roboto pt-8">Sukanya samriddhi yojana (SSY)</h4>
     </div>
-    <div class="col-md-7 p-0 right text-right">
+    <div class="col-md-7 p-0 right text-right" *ngIf="datasource!=undefined">
         <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
         <mat-menu #menu5="matMenu">
             <button mat-menu-item>PDF</button>
@@ -108,8 +108,10 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns16;"></tr>
         <tr mat-footer-row *matFooterRowDef="displayedColumns16;sticky: true" [hidden]="isLoading"></tr>
     </table>
-    <div *ngIf="datasource==undefined">
+    <div *ngIf="datasource==undefined" class="d-flex flex-column align-items-center">
         <h4 class="text-center pt-72">{{noData}}</h4>
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="addOpenSSY(null,'addSsy')"><i
+            class="material-icons">add</i>ADD NEW</button>
     </div>
 </div>
 <!-- <div *ngIf="isLoading">

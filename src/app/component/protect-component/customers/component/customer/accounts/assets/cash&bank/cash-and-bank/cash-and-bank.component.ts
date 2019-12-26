@@ -177,7 +177,7 @@ export class CashAndBankComponent implements OnInit {
       this.bankAccountList.sort = this.bankAccountListTableSort;
       this.totalAccountBalance = data.totalAccountBalance;
     } else {
-      this.noData = 'No Scheme Found';
+      this.noData = 'No scheme found';
     }
   }
 
@@ -200,7 +200,7 @@ export class CashAndBankComponent implements OnInit {
       this.cashInHandList.sort = this.cashInHandListTableSort;
       this.sumOfCashValue = data.sumOfCashValue;
     } else {
-      this.noData = 'No Scheme Found';
+      this.noData = 'No scheme found';
     }
   }
 

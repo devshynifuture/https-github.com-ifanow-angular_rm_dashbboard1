@@ -87,12 +87,6 @@ export class OwnerColumnComponent implements OnInit {
       });
     }
     this.valueChange1.emit(this.sendData);
-    /*setTimeout(() => {
-      this.ref.markForCheck();
-    }, 100);*/
-
-    // this.getFormControl().ownerName.markAsTouched();
-    // this.getdataForm();
   }
 
   getdataForm() {

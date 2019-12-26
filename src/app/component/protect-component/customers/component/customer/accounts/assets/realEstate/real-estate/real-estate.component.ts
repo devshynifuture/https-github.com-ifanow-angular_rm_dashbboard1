@@ -104,7 +104,7 @@ export class RealEstateComponent implements OnInit {
       this.sumOfMarketValue = data.sumOfMarketValue;
       this.sumOfpurchasedValue = data.sumOfpurchasedValue;
     } else {
-      this.noData = 'No Data Found';
+      this.noData = 'No schemes found';
     }
   }
 
