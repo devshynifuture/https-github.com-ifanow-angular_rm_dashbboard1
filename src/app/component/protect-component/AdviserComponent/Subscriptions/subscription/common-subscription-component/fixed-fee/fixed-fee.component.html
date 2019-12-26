@@ -86,8 +86,10 @@
     <div class="col-md-4 pl-8">
       <h5 class="mb-0 pt-4 text-white c-p" (click)="Close('close')">Cancel</h5>
     </div>
-   
-    <div class="col-md-8 right text-right">
+    <div *ngIf="singleSubscriptionData.isCreateSub==false" class="col-md-8 right text-right">
+      <button mat-button (click)="saveFixedModifyFees()" class="btn-bottom br-0 text-inherit">Next</button>
+    </div>
+    <div *ngIf="singleSubscriptionData.isCreateSub" class="col-md-8 right text-right">
       <button mat-button (click)="saveFixedModifyFees()" class="btn-bottom br-0 text-inherit">Save</button>
     </div>
     <!-- <div *ngIf="createSubData && singleSubscriptionData.subscriptionPricing" class="col-md-8 right text-right">

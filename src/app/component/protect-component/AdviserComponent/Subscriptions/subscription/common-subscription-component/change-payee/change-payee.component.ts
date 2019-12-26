@@ -1,32 +1,48 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {SubscriptionService} from '../../../subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatSliderChange} from '@angular/material';
-import {HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
-import {GestureConfig} from '@angular/material/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { SubscriptionService } from '../../../subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatSliderChange } from '@angular/material';
+import { HAMMER_GESTURE_CONFIG } from "@angular/platform-browser";
+import { GestureConfig } from "@angular/material/core";
+import { UtilService } from 'src/app/services/util.service';
+import { isObject } from 'util';
 
 @Component({
   selector: 'app-change-payee',
   templateUrl: './change-payee.component.html',
   styleUrls: ['./change-payee.component.scss'],
   providers: [
-    {provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig},
+    { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig },
   ]
 })
 export class ChangePayeeComponent implements OnInit {
   payeeDataRes: any;
+  noDataMessage: string;
 
   @Input() set upperData(data) {
-    this.getPayeeData(data);
+    if (data == undefined) {
+      return;
+    }
+    else {
+      this.getPayeeData(data);
+    }
   }
 
   @Input()
   set data(payeeData) {
-    this._payeeData = payeeData;
-    console.log('input payeeData : ', payeeData);
-    this.getPayeeData(payeeData);
-
+    if (payeeData == undefined) {
+      return;
+    }
+    else if (payeeData.length > 0) {
+      this.payeeDataRes = payeeData;
+      return;
+    }
+    else {
+      this._payeeData = payeeData;
+      console.log('input payeeData : ', payeeData);
+      this.getPayeeData(payeeData)
+    }
   }
 
   get payeeData() {
@@ -38,7 +54,7 @@ export class ChangePayeeComponent implements OnInit {
   }
 
 
-  noDataMessage = 'Loading...';
+  // noDataMessage = 'Loading...';
   _payeeData: any;
 
   @Output() outputData = new EventEmitter<Object>();
@@ -133,13 +149,8 @@ export class ChangePayeeComponent implements OnInit {
       this.clickedOnMatSlider = false;
       return;
     }
-    if (data == 1) {
-      singlePlan.selected = 0;
-    } else {
-      singlePlan.selected = 1;
-    }
-
-    this.calculateMaxValue();
+    (data == 1) ? singlePlan.selected = 0 : singlePlan.selected = 1;
+    this.calculateMaxValue(this.payeeDataRes);
   }
 
   matSliderOnChange(data, singlePlan, value) {
@@ -150,12 +161,12 @@ export class ChangePayeeComponent implements OnInit {
     } else {
       singlePlan.selected = 1;
     }
-    this.calculateMaxValue();
+    this.calculateMaxValue(this.payeeDataRes);
   }
 
-  calculateMaxValue() {
+  calculateMaxValue(data) {
     this.totalValue = 0;
-    this._payeeData.forEach(singlePayee => {
+    data.forEach(singlePayee => {
       if (singlePayee.selected == 1) {
         const tempValue = this.totalValue + singlePayee.share;
         console.log('calculateMaxValue tempValue: ', tempValue);
@@ -171,7 +182,7 @@ export class ChangePayeeComponent implements OnInit {
       }
     });
 
-    this.outputData.emit(this._payeeData);
+    this.outputData.emit(data);
     return this.totalValue;
 
   }
