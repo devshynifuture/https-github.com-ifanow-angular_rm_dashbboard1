@@ -81,6 +81,7 @@ export class ScssSchemeComponent implements OnInit {
       clientId: this.clientId,
       requiredDate: ''
     };
+    this.datasource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemeSCSSData(obj).subscribe(
       data => this.getKvpSchemedataResponse(data), (error) => {
         this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
