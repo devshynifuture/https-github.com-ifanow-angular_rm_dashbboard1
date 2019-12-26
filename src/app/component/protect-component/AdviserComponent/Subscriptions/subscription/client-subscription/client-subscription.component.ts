@@ -15,6 +15,8 @@ export interface PeriodicElement {
   balance: string;
 }
 
+
+
 @Component({
   selector: 'app-client-subscription',
   templateUrl: './client-subscription.component.html',
@@ -22,7 +24,9 @@ export interface PeriodicElement {
 })
 export class ClientSubscriptionComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  dataSource:any;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
+  noData: string;
 
   constructor(public dialog: MatDialog, public eventService: EventService, public subInjectService: SubscriptionInject,
     private subService: SubscriptionService) {
@@ -34,7 +38,7 @@ export class ClientSubscriptionComponent implements OnInit {
   advisorId;
   isLoading = false;
   ngOnInit() {
-    this.dataSource = [{}, {}, {}];
+    //this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
     console.log('clients');
     this.getClientSubscriptionList();
@@ -46,17 +50,35 @@ export class ClientSubscriptionComponent implements OnInit {
     };
     this.isLoading = true;
     this.subService.getSubscriptionClientsList(obj).subscribe(
-      data => this.getClientListResponse(data)
-
+      data => this.getClientListResponse(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
   getClientListResponse(data) {
     this.isLoading = false;
 
-    // this.dataSource = data;
-    this.dataSource = new MatTableDataSource(data);
+    if (data && data.length > 0) {
+      this.data = data;
+      this.dataSource.data = data;
       this.dataSource.sort = this.sort;
+      // this.DataToSend = data;
+    } else {
+
+      this.data = [];
+      this.dataSource.data = data;
+      // console.log(data);
+      this.dataSource.data = []
+      this.noData = 'No Data Found';
+
+    }
+
+    // this.dataSource = data;
+    // this.dataSource = new MatTableDataSource(data);
+    // this.dataSource.sort = this.sort;
   }
 
   Open(value, state) {

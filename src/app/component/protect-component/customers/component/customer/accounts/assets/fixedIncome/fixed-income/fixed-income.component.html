@@ -38,7 +38,7 @@
             <div class="col-md-7 p-0 text-left">
                 <h2 class="f-18 m-0 proximaFont ">Fixed deposit</h2>
             </div>
-            <div class="col-md-5 p-0 text-right right" *ngIf="dataSourceFixed!=undefined">
+            <div class="col-md-5 p-0 text-right right"*ngIf="dataSourceFixed.filteredData.length > 0">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button mat-menu-item>PDF</button>
@@ -79,7 +79,7 @@
             </div>
         </div>
         <div class="example-container col-md-12 p-0 mt-8 mb-44 newFont fixed-deposite">
-            <table matSort #fixedIncomeTableSort="matSort" mat-table [dataSource]="dataSourceFixed" id="table-low"
+            <table  *ngIf="dataSourceFixed.filteredData.length > 0" matSort #fixedIncomeTableSort="matSort" mat-table [dataSource]="dataSourceFixed" id="table-low"
                 class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
@@ -203,7 +203,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns4;sticky: true"></tr>
             </table>
-            <div *ngIf="dataSourceFixed==undefined" class="d-flex flex-column align-items-center">
+            <div *ngIf="dataSourceFixed.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <h4 class="text-center pt-72">{{noData}}</h4>
                 <button mat-stroked-button class="btn-primary proximaFont addon v-middle"
                     (click)="openPortfolioSummary('addFixedDeposit','open')"><i class="material-icons">add</i>ADD NEW
@@ -219,7 +219,7 @@
                     Recurring deposits
                 </h2>
             </div>
-            <div class="col-md-5 p-0 text-right right " *ngIf="dataSourceRecurring!=undefined">
+            <div class="col-md-5 p-0 text-right right "*ngIf="dataSourceRecurring.filteredData.length > 0">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button mat-menu-item>PDF</button>
@@ -256,7 +256,7 @@
             </div>
         </div>
         <div class="example-container col-md-12 p-0 mt-8 mb-44 fixed-deposite">
-            <table matSort #recurringDepositTable="matSort" mat-table [dataSource]="dataSourceRecurring" id="table-low"
+            <table *ngIf="dataSourceRecurring.filteredData.length > 0" matSort #recurringDepositTable="matSort" mat-table [dataSource]="dataSourceRecurring" id="table-low"
                 class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
@@ -353,7 +353,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns5;sticky: true" [hidden]="isLoading"></tr>
             </table>
-            <div *ngIf="dataSourceRecurring==undefined" class="d-flex flex-column align-items-center">
+            <div *ngIf="dataSourceRecurring.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <h4 class="text-center pt-72">{{noData}}</h4>
                 <button mat-stroked-button class="btn-primary addon v-middle"
                     (click)="openAddRecurringDeposit('open')"><i class="material-icons">add</i>ADD NEW
@@ -367,7 +367,7 @@
             <div class="col-md-7 p-0 text-left">
                 <h2 class="f-18 m-0 proximaFont">Bonds</h2>
             </div>
-            <div class="col-md-5 p-0 text-right right " *ngIf="dataSourceBond!=undefined">
+            <div class="col-md-5 p-0 text-right right " *ngIf="dataSourceBond.filteredData.length > 0">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button mat-menu-item>PDF</button>
@@ -389,7 +389,7 @@
             </div>
         </div>
         <div class="example-container p-0 col-md-12 mt-8 mb-44 fixed-deposite">
-            <table matSort #bondListTable="matSort" mat-table [dataSource]="dataSourceBond" id="table-low"
+            <table *ngIf="dataSourceBond.filteredData.length > 0" matSort #bondListTable="matSort" mat-table [dataSource]="dataSourceBond" id="table-low"
                 class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br t-2"> No</th>
@@ -512,7 +512,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns6;"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns6;sticky: true" [hidden]="isLoading"></tr>
             </table>
-            <div *ngIf="dataSourceBond==undefined" class="d-flex flex-column align-items-center">
+            <div *ngIf="dataSourceBond.filteredData.length == 0"class="d-flex flex-column align-items-center">
                 <h4 class="text-center pt-72">{{noData}}</h4>
                 <button mat-stroked-button class="btn-primary addon v-middle" (click)="openBonds(null)"><i
                         class="material-icons">add</i>ADD NEW
@@ -521,6 +521,3 @@
         </div>
     </div>
 </div>
-<!-- <div *ngIf="isLoading">
-    <mat-spinner [diameter]="30" class="loader"></mat-spinner>
-</div> -->

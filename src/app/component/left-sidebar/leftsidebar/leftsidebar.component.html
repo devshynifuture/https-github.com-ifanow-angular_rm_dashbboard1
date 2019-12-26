@@ -26,7 +26,7 @@
                     <img routerLink="/customer/detail/overview" src="assets/images/svg/people.svg">
                     <span *ngIf="showTabs" class="title" mat-line>People</span>
                 </a>
-                <a mat-list-item class="sidenav-link" routerLink="./calender" >
+                <a mat-list-item class="sidenav-link" routerLink="./calender">
                     <img src="assets/images/svg/file-lines.svg">
                     <span *ngIf="showTabs" class="title" mat-line>Activities</span>
                     <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
@@ -41,9 +41,9 @@
                     <img src="assets/images/svg/cart.svg">
                     <span *ngIf="showTabs" class="title" mat-line>Transactions</span>
                 </a>
-                <a class="sidenav-link" mat-list-item routerLink="./subscription">
-                    <img src="assets/images/svg/ruppes.svg">
-                    <span *ngIf="showTabs" class="title" mat-line>Subscription</span>
+                <a class="sidenav-link" mat-list-item routerLink="./subscription/dashboard">
+                  <img src="assets/images/svg/ruppes.svg">
+                  <span *ngIf="showTabs" class="title" mat-line>Subscription</span>
                 </a>
                 <a class="sidenav-link" mat-list-item routerLink="/customer/detail/account/assets">
                     <img src="assets/images/svg/ruppes.svg">
@@ -66,104 +66,22 @@
     </mat-sidenav>
     <mat-sidenav-content id="left">
         <mat-toolbar class="bg-white bl-1" class="fix-top pl-0">
-            <button *ngIf="showTabs==false" type="button" aria-label="Toggle sidenav" mat-icon-button
-                (click)="showMainNavWrapper()">
+            <button *ngIf="showTabs==false" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="showMainNavWrapper()">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
-            <button *ngIf="showTabs" class="btn_nav" type="button" aria-label="Toggle sidenav" mat-icon-button
-                (click)="showsmallNavWrapper()">
+            <button *ngIf="showTabs" class="btn_nav" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="showsmallNavWrapper()">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
 
-            <!-- <div class="search-container mr-32">
-                <i class="material-icons icon">
-                    search
-                </i>
-                <input class="search-field" type="text" placeholder="SEARCH" name="email" [matMenuTriggerFor]="menu">
-                <mat-menu #menu="matMenu" class="w-485">
-                    <div class="pt-10 pb-10">
-                        <p class="f-500 roboto m-0 pl-10 pb-10">CLIENTS</p>
-                        <button mat-menu-item>
-                            <div class="row">
-                                <div class="col-md-1 p-0">
-                                    <img class="w-100 br-50" src="/assets/images/img1.jpg">
-                                </div>
-                                <div class="col-md-7 pt-8">
-                                    <p class="text-black f-500 roboto m-0">Amit Maheshwari</p>
-                                    <p class="f-12 text-primitive roboto m-0">amit.maheshwari123@gmail.com</p>
-                                </div>
-                                <div class="col-md-3 p-0">
-                                    <button mat-stroked-button class="small-primary">GROUP HEAD</button>
-                                </div>
-                            </div>
-                        </button>
-                        <button mat-menu-item>
-                            <div class="row">
-                                <div class="col-md-1 p-0">
-                                    <img class="w-100 br-50" src="/assets/images/img1.jpg">
-                                </div>
-                                <div class="col-md-7 pt-8">
-                                    <p class="text-black f-500 roboto m-0">Amit Maheshwari</p>
-                                    <p class="f-12 text-primitive roboto m-0">amit.maheshwari123@gmail.com</p>
-                                </div>
-                                <div class="col-md-3 p-0">
-                                    <button mat-stroked-button class="small-primitive">FAMILY MEMBER</button>
-                                </div>
-                            </div>
-                        </button>
-                        <p class="f-500 roboto m-0 pl-10 pb-10 pt-10">LEADS</p>
-                        <button mat-menu-item>
-                            <div class="row">
-                                <div class="col-md-1 p-0">
-                                    <img class="w-100 br-50" src="/assets/images/img1.jpg">
-                                </div>
-                                <div class="col-md-7 pt-8">
-                                    <p class="text-black f-500 roboto m-0">Amit Maheshwari</p>
-                                    <p class="f-12 text-primitive roboto m-0">amit.maheshwari123@gmail.com</p>
-                                </div>
-                                <div class="col-md-3 p-0">
-                                    <button mat-stroked-button class="small-primary">GROUP HEAD</button>
-                                </div>
-                            </div>
-                        </button>
 
-                    </div>
-                    <div class="row bg-grey lter p-8">
-                        <div class="col-md-8 p-0">
-                            <div class="row">
-                                <div class="col-md-1 p-0">
-                                    <img src="/assets/images/svg/downarrw-bg.svg" class="c-p">
-                                </div>
-                                <div class="col-md-1 p-0 pl-8">
-                                    <img src="/assets/images/svg/uparrow-bg.svg" class="c-p">
-                                </div>
-                                <div class="col-md-4">
-                                    <p class="text-primitive roboto m-0 pt-4 c-p">to navigate</p>
-                                </div>
-                                <div class="col-md-1 p-0">
-                                    <img src="/assets/images/svg/centered-left.svg" class="c-p">
-                                </div>
-                                <div class="col-md-4 pl-8">
-                                    <p class="text-primitive roboto m-0 pt-4 c-p">to enter</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <p class="text-primitive roboto text-right pt-4 c-p m-0">All shortcuts</p>
-                        </div>
-                    </div>
-                </mat-menu>
-            </div> -->
-            <mat-form-field class="w-40">
-                <div class="form-group">
-                    <input type="text" #inputSearch class="form-control" matInput [formControl]="myControl"
-                        [matAutocomplete]="auto">
+            <mat-form-field class="width40">
+                <div class="form-group searchBoxHeader">
+                    <input type="text" #inputSearch class="form-control" matInput [formControl]="myControl" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
                         <!-- <mat-option>
                             <p>Start typing to search clients,leads otr team members</p>
                         </mat-option> -->
-                        <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of clientList"
-                            [value]="singleClient.name">
+                        <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of clientList" [value]="singleClient.name">
                             <div class="row">
                                 <div class="col-md-1">
 
@@ -221,11 +139,11 @@
             <!--          <div [@routeAnimations]="prepareRoute(outlet)" >-->
             <!--            <router-outlet #outlet="outlet"></router-outlet>-->
             <!--          </div>-->
-          <router-outlet id="left1">
-            <ng-template>
-              <router-outlet id="left2"></router-outlet>
-            </ng-template>
-          </router-outlet>
+            <router-outlet id="left1">
+                <ng-template>
+                    <router-outlet id="left2"></router-outlet>
+                </ng-template>
+            </router-outlet>
 
 
         </div>

@@ -57,7 +57,7 @@ export class AddSsyComponent implements OnInit {
       balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       futureAppx: [data.futureApproxContribution, [Validators.required]],
-      frquency: [data.frequency?String(data.frequency):'1', [Validators.required]]
+      frquency: [data.frequency ? String(data.frequency) : '1', [Validators.required]]
     })
     this.ssySchemeOptionalForm = this.fb.group({
       description: [data.description],
@@ -81,11 +81,10 @@ export class AddSsyComponent implements OnInit {
     console.log(data)
     this.transactionData = data.controls
   }
-  
+
   addSSYScheme() {
     let finalTransctList = []
-    if(this.transactionData)
-    {
+    if (this.transactionData) {
       this.transactionData.forEach(element => {
         let obj = {
           "date": element.controls.date.value._d,
@@ -95,10 +94,7 @@ export class AddSsyComponent implements OnInit {
         finalTransctList.push(obj)
       });
     }
-    // if (this.ownerName == undefined) {
-    //   return
-    // }
-    else if (this.ssySchemeForm.get('guardian').invalid) {
+    if (this.ssySchemeForm.get('guardian').invalid) {
       this.ssySchemeForm.get('guardian').markAsTouched();
       return
     }

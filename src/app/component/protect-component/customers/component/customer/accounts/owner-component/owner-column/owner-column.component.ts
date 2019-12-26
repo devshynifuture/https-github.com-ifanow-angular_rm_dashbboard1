@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { CustomerService } from '../../../customer.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {CustomerService} from '../../../customer.service';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-owner-column',
@@ -32,7 +32,7 @@ export class OwnerColumnComponent implements OnInit {
     this.ownerData = data;
     console.log('1111121212121212121212 OwnerColumnComponent data : ', data);
     if (data) {
-      this.owner = data;
+      // this.owner = data;
     }
     // this.getListFamilyMem();
   }
