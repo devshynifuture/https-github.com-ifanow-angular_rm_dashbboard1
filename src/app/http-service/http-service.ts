@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { Router } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
+import {Observable, of, throwError} from 'rxjs';
+import {Router} from '@angular/router';
 // import 'rxjs/Rx';
-import { AuthService } from '../auth-service/authService';
+import {AuthService} from '../auth-service/authService';
 import 'rxjs-compat/add/observable/of';
 import 'rxjs-compat/add/operator/map';
-import { catchError } from 'rxjs/operators';
-import { EmailUtilService } from '../services/email-util.service';
+import {catchError} from 'rxjs/operators';
+import {EmailUtilService} from '../services/email-util.service';
 
 const Buffer = require('buffer/').Buffer;
 declare var require: any;
@@ -33,18 +33,23 @@ export class HttpService {
   }
 
   post(url: string, body, options?): Observable<any> {
-    let httpOptions = {
-      headers: new HttpHeaders().set('authToken', this._userService.getToken())
-        .set('Content-Type', 'application/json')
-    };
-    if (options != undefined) {
+    let httpOptions: { headers: HttpHeaders };
+
+    if (options) {
       httpOptions = options;
+    } else {
+      httpOptions = {
+        headers: new HttpHeaders().set('Content-Type', 'application/json')
+      };
+      if (this._userService.getToken()) {
+        httpOptions.headers = httpOptions.headers.set('authToken', this._userService.getToken());
+      }
     }
-    /* console.log('HttpService post url : ', url);
+    console.log('HttpService post url : ', url);
 
-     console.log('HttpService post httpOptions : ', httpOptions);
+    console.log('HttpService post httpOptions : ', httpOptions);
 
-     console.log('HttpService post body : ', body);*/
+    console.log('HttpService post body : ', body);
 
     return this._http
       .post(this.baseUrl + url, body, httpOptions).pipe(
@@ -57,6 +62,8 @@ export class HttpService {
         // })
       )
       .map((res: any) => {
+        console.log('resData: undecoded ', res);
+
         if (res.status === 200 || res.status === 201) {
           // console.log('resData: decoded ', res);
 
@@ -231,8 +238,7 @@ export class HttpService {
       } catch (e) {
         return JSON.parse(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(encodedata));
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.error(e);
       return encodedata;
     }
