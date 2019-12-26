@@ -163,7 +163,7 @@ export class CalenderComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(EventDialog, {
-      width: '30%',
+      width: '50%',
       data: this.eventData
     });
 
@@ -246,6 +246,7 @@ export class EventDialog implements OnInit{
   startTime="";
   endTime="";
   eventForm: FormGroup;
+  showTime:boolean = false;
   eventData:any;
   timeArr = ["01:00","01:30","02:00","02:30","03:00","03:30","04:00","04:30","05:00","05:30","06:00","06:30","07:00","07:30","08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:20","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30","24:00"]
   constructor(
@@ -276,16 +277,24 @@ export class EventDialog implements OnInit{
       endTime: new FormControl(this.endTime)
     });
 
+
+
+  }
+
+  addTime(){
+    this.showTime = true;
+    this.eventForm.get("startTime").setValue("09:00"); 
+    this.eventForm.get("endTime").setValue("10:00"); 
   }
 
   setTime(mood){
-    if(mood == "start"){
+    if(mood == "start" && this.eventForm.value.endTime < this.eventForm.value.startTime){
       console.log("hi");
       
       console.log(this.eventForm.value.startDateTime._d, "this.eventForm.value.startDateTime_d 123");
       
       this.eventForm.get("endTime").setValue(this.timeArr[this.timeArr.indexOf(this.eventForm.value.startTime)+2]); 
-      this.eventForm.get("endDateTime").setValue(this.eventForm.value.startDateTime._d); 
+      // this.eventForm.get("endDateTime").setValue(this.eventForm.value.startDateTime._d); 
     }
   }
 

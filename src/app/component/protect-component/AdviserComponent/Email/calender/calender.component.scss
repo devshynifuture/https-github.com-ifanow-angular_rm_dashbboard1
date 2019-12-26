@@ -19,6 +19,7 @@
     }
   }
 
+  
   #ui-calender{
     position: relative;
     .main-header {
@@ -436,5 +437,15 @@ img.header-img {
 .scorllable::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+event-dialog{
+    .date-wrapper{
+        
+        mat-form-field{
+            width: 75px !important;
+        }
+    }
+}
+
 
 /***********************************************************************************/
