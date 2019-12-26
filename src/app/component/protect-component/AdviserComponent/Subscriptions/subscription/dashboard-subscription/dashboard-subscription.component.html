@@ -1,17 +1,23 @@
 <div class="full-lights pb-36 " *ngIf="showSubStep==false" id="ui-dashboard" [ngClass]="showLetsBegin==true ? 'pt-130': 'pt-0'  ">
     <div class="wrapper-20">
-        <div class="row bg-red mt-20 mb-36" *ngIf="showLetsBegin">
-            <div class="col-md-5">
+
+        <div class="row  bg-red mt-20 mb-36 " *ngIf="showLetsBegin">
+
+            <div class="col-md-5 height204">
                 <img src="assets/images/svg/Dashboard.svg" class="dashboard-img">
             </div>
-            <div class="col-md-7">
+            <div class="col-md-7 height204">
                 <h1>Welcome Ronak Hindocha</h1>
                 <p class="mb-0 pt-12">We’re excited to see you here! The dashboard currently looks barren. </p>
                 <p> Fret not. We’ll help you in this journey. We’re in this together. </p>
-                <button (click)="showSubscriptionSteps()" mat-flat-button class="btn-red addon mb-28 mt-16">Let's begin
+                <button (click)="showSubscriptionSteps()" mat-flat-button class="btn-red addon mb-28 mt-16">Let's
+                    begin
                     <i class="material-icons right text-right"> arrow_forward </i></button>
             </div>
+
         </div>
+
+
         <div class=" subscription-summary" [ngClass]="showLetsBegin==true ? 'pt-40': 'pt-100'  ">
             <div class="row skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <div class="col-md-4 pl-0 relClass">
