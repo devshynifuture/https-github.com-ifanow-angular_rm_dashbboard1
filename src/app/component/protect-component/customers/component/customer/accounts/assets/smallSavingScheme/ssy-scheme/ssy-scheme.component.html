@@ -2,7 +2,7 @@
     <div class="col-md-5 p-0">
         <h4 class="m-0 text-black roboto pt-8">Sukanya samriddhi yojana (SSY)</h4>
     </div>
-    <div class="col-md-7 p-0 right text-right" *ngIf="datasource!=undefined">
+    <div class="col-md-7 p-0 right text-right" *ngIf="datasource.filteredData.length > 0">
         <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
         <mat-menu #menu5="matMenu">
             <button mat-menu-item>PDF</button>
@@ -22,7 +22,7 @@
     </div>
 </div>
 <div class="example-container mt-8 col-md-12 p-0 real-estate">
-    <table *ngIf="datasource" matSort mat-table [dataSource]="datasource" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+    <table *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -108,12 +108,9 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns16;"></tr>
         <tr mat-footer-row *matFooterRowDef="displayedColumns16;sticky: true" [hidden]="isLoading"></tr>
     </table>
-    <div *ngIf="datasource==undefined" class="d-flex flex-column align-items-center">
+    <div *ngIf="datasource.filteredData.length == 0" class="d-flex flex-column align-items-center">
         <h4 class="text-center pt-72">{{noData}}</h4>
         <button mat-stroked-button class="btn-primary addon v-middle" (click)="addOpenSSY(null,'addSsy')"><i
             class="material-icons">add</i>ADD NEW</button>
     </div>
 </div>
-<!-- <div *ngIf="isLoading">
-    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div> -->
