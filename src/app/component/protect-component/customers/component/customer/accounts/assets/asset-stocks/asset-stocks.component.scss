@@ -1,50 +1,69 @@
 .stock-overview#table-low {
-    th {
-        padding: 6px 5px !important;
-    }
-    tr.mat-header-row {
-        height: 48px !important;
-    }
-    tbody td {
-        padding: 3px 8px !important;
-    }
-    tr.mat-row {
-        height: 36px !important;
-    }
+  th {
+    padding: 6px 5px !important;
+  }
+
+  tr.mat-header-row {
+    height: 48px !important;
+  }
+
+  tbody td {
+    padding: 3px 8px !important;
+  }
+
+  tr.mat-row {
+    height: 36px !important;
+  }
+
 }
 
+::ng-deep td.mat-footer-cell {
+  word-break: break-all !important;
+}
+
+
+
 #piechartStock {
-    height: 200px;
-    width:200px;
+  height: 200px;
+  width: 200px;
 }
 
 .highcharts-data-table table {
-	font-family: Verdana, sans-serif;
-	border-collapse: collapse;
-	border: 1px solid #EBEBEB;
-	margin: 10px auto;
-	text-align: center;
-	width: 100%;
-	max-width: 500px;
+  font-family: Verdana, sans-serif;
+  border-collapse: collapse;
+  border: 1px solid #EBEBEB;
+  margin: 10px auto;
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
 }
-::ng-deep .highcharts-credits{
-    display: none !important;
+
+::ng-deep .highcharts-credits {
+  display: none !important;
 }
+
 .highcharts-data-table caption {
-    padding: 1em 0;
-    font-size: 1.2em;
-    color: #555;
+  padding: 1em 0;
+  font-size: 1.2em;
+  color: #555;
 }
+
 .highcharts-data-table th {
-	font-weight: 600;
-    padding: 0.5em;
+  font-weight: 600;
+  padding: 0.5em;
 }
-.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
-    padding: 0.5em;
+
+.highcharts-data-table td,
+.highcharts-data-table th,
+.highcharts-data-table caption {
+  padding: 0.5em;
 }
-.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
-    background: #f8f8f8;
+
+.highcharts-data-table thead tr,
+.highcharts-data-table tr:nth-child(even) {
+  background: #f8f8f8;
 }
+
 .highcharts-data-table tr:hover {
-    background: #f1f7ff;
+  background: #f1f7ff;
 }
