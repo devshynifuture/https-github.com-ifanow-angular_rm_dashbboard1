@@ -25,7 +25,7 @@ export class LiabilitiesComponent implements OnInit {
   displayedColumns: string[] = ['no', 'name', 'type', 'loan', 'ldate', 'today', 'ten', 'rate', 'emi', 'fin', 'status', 'icons'];
   // dataSource = ELEMENT_DATA;
   advisorId: any;
-  dataSource: any;
+  dataSource: any = [{}, {}, {}];
   storeData: any;
   dataStore: any;
   showFilter: any;
@@ -39,15 +39,17 @@ export class LiabilitiesComponent implements OnInit {
   OtherData: any;
   OtherPayableData: any;
   clientId: any;
-  showLoader: boolean;
+  // showLoader: boolean;
+  isLoading = false;
   noData: string;
   totalLoanAmt: any;
-  outStandingAmt=0;
+  outStandingAmt = 0;
   filterData: any;
   excelData: any[];
   footer = [];
 
-  constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
+
+  constructor(private excel : ExcelService,private eventService: EventService, private subInjectService: SubscriptionInject,
     public customerService: CustomerService, public util: UtilService, public dialog: MatDialog) {
   }
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -56,9 +58,10 @@ export class LiabilitiesComponent implements OnInit {
   viewMode: string;
 
   ngOnInit() {
+
     this.viewMode = 'tab1';
     this.showFilter = 'tab1';
-    this.showLoader = true;
+    //this.showLoader = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getLiability('');
@@ -67,6 +70,7 @@ export class LiabilitiesComponent implements OnInit {
   }
   /**used for excel  */
   async ExportTOExcel(value) {
+
     this.excelData = []
     var data = []
     var headerData = [{ width: 20, key: 'Owner' },
@@ -92,6 +96,7 @@ export class LiabilitiesComponent implements OnInit {
     ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   }
   getGlobalLiabilities() {
+    this.isLoading = true;
     const obj = {};
     this.customerService.getGlobalLiabilities(obj).subscribe(
       data => this.getGlobalLiabilitiesRes(data)
@@ -99,6 +104,7 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   getGlobalLiabilitiesRes(data) {
+    this.isLoading = false;
     console.log(data);
   }
 
@@ -113,6 +119,7 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   getOtherPayablesRes(data) {
+
     console.log(data);
     this.OtherPayableData = data;
     this.OtherData = data.length;
@@ -126,8 +133,12 @@ export class LiabilitiesComponent implements OnInit {
     this.showFilter = data;
     const filterData = [];
     if (data == 'tab1') {
-      this.dataSource = this.dataStore;
+      // this.dataSource = this.dataStore;
+      this.dataSource = new MatTableDataSource(this.dataStore);
+      this.dataSource.sort = this.sort;
     } else {
+      this.dataSource = new MatTableDataSource(this.dataStore);
+      this.dataSource.sort = this.sort;
       this.dataStore.forEach(element => {
         if (element.loanTypeId == data) {
           filterData.push(element);
@@ -146,7 +157,9 @@ export class LiabilitiesComponent implements OnInit {
           }
           return o.outstandingAmount;
         });
-        this.dataSource = filterData;
+        // this.dataSource = filterData;
+        this.dataSource = new MatTableDataSource(filterData);
+        this.dataSource.sort = this.sort;
 
       }
     }
@@ -254,6 +267,7 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   getLiability(data) {
+
     this.dataToShow = data.data;
     const obj = {
       advisorId: this.advisorId,
@@ -265,20 +279,20 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   getLiabiltyRes(data) {
-    this.showLoader = false;
+    // this.showLoader = false;
     if (data.loans == undefined) {
       this.noData = "No Data Found";
     } else {
       this.totalLoanAmt = data.totalLoanAmount;
       // this.outStandingAmt = data.outstandingAmount;
       data.loans.forEach(element => {
-        this.totalLoanAmt +=element.loanAmount
+        this.totalLoanAmt += element.loanAmount
       });
       data.loans.forEach(element => {
         if (element.outstandingAmount == "NaN") {
           element.outstandingAmount = 0
         }
-        this.outStandingAmt +=element.outstandingAmount
+        this.outStandingAmt += element.outstandingAmount
       });
       this.dataStore = [];
       this.dataSource = [];
@@ -289,9 +303,9 @@ export class LiabilitiesComponent implements OnInit {
       this.personal = [];
       this.mortgage = [];
       this.dataStore = data.loans;
-      // this.dataSource = data.loans;
-      this.dataSource = new MatTableDataSource(data.loans);
-      this.dataSource.sort = this.sort;
+      this.dataSource = data.loans;
+      // this.dataSource = new MatTableDataSource(data.loans);
+      // this.dataSource.sort = this.sort;
       this.storeData = data.loans.length;
       this.dataStore.forEach(element => {
         if (element.loanTypeId == 1) {
@@ -310,6 +324,7 @@ export class LiabilitiesComponent implements OnInit {
       });
       this.sortTable(this.dataToShow);
     }
+
   }
 
   clickHandling() {

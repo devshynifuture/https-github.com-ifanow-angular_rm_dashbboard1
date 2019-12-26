@@ -6,11 +6,11 @@
     </button>
   </div>
   <nav id="ui-customer-secondhead" mat-tab-nav-bar>
-    <a (click)="navBarClick('summary',1)" mat-tab-link routerLinkActive="active">SUMMARY</a>
-    <a (click)="navBarClick('assets',2)" mat-tab-link routerLinkActive="active">ASSETS</a>
-    <a (click)="navBarClick('liabilities',3)" mat-tab-link routerLinkActive="active">LIABILITIES</a>
-    <a (click)="navBarClick('insurance',4)" mat-tab-link routerLinkActive="active">INSURANCE</a>
-    <a (click)="navBarClick('documents',5)" mat-tab-link routerLinkActive="active">DOCUMENTS</a>
+    <a [routerLink]="['/customer/detail/account/summary']" mat-tab-link routerLinkActive="active">SUMMARY</a>
+    <a [routerLink]="['/customer/detail/account/assets']" mat-tab-link routerLinkActive="active">ASSETS</a>
+    <a [routerLink]="['/customer/detail/account/liabilities']" mat-tab-link routerLinkActive="active">LIABILITIES</a>
+    <a [routerLink]="['/customer/detail/account/insurance']" mat-tab-link routerLinkActive="active">INSURANCE</a>
+    <a [routerLink]="['/customer/detail/account/documents']" mat-tab-link routerLinkActive="active">DOCUMENTS</a>
   </nav>
   <div [@routeAnimations]="routingStateService.prepareRoute(outlet)">
 

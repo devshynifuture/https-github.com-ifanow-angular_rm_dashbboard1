@@ -175,6 +175,7 @@ export const appConfig = {
   ADD_EXPENSE:'account/expense/recurring/expense/add',
   EDIT_EXPENSE:'/account/expense/recurring/expense/edit',
   RISK_HISTORY:'plan/risk-assessment/history/get',
+  RESULT_VIEW:'plan/risk-assessment-result/get',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   GET_EPF: 'account/asset/retirement/epf/list/get',

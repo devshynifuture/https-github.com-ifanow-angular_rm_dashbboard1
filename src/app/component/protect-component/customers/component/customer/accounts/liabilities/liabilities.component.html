@@ -1,6 +1,3 @@
-<div *ngIf="showLoader==true">
-    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div>
 <div class="account_side-menu" id="ui-liabilities">
     <div class="row h-100vh">
         <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
@@ -110,7 +107,7 @@
                             <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1" class="c-p">
                             <mat-menu #menu1="matMenu">
                                 <button mat-menu-item>PDF</button>
-                                <button mat-menu-item  (click)="ExportTOExcel('Liabilities')">XLS</button>
+                                <button mat-menu-item (click)="ExportTOExcel('Liabilities')">XLS</button>
                             </mat-menu>
                             <img src="assets/images/svg/up-down.svg" class="c-p">
                             <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu"
@@ -133,24 +130,33 @@
                 <div class="liabilities wrapper-8">
                     <div class="row">
                         <div class="col-md-12 p-0">
-                            <table matSort mat-table [dataSource]="dataSource" id="table-low">
+                            <table matSort mat-table [dataSource]="dataSource" id="table-low" class="skeletonAnimation"
+                                appSkeletonLoading [appSkeletonLoading]="isLoading">
                                 <ng-container matColumnDef="no">
                                     <th mat-header-cell *matHeaderCellDef class="br"> No.</th>
-                                    <td mat-cell *matCellDef="let element; let i = index;" class="br"> {{i+1}} </td>
+                                    <td mat-cell *matCellDef="let element; let i = index;" class="br">
+                                        <div class="bar">
+                                            <div class="bar"> {{i+1}} </div>
+                                        </div>
+                                    </td>
                                     <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="name">
                                     <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br"> Owner
                                     </th>
-                                    <td mat-cell *matCellDef="let element" class="br"> {{element.ownerName}} </td>
+                                    <td mat-cell *matCellDef="let element" class="br">
+                                        <div class="bar">{{element.ownerName}} </div>
+                                    </td>
                                     <td mat-footer-cell *matFooterCellDef class="br text-right f-700"
-                                        [hidden]="dataSource==undefined && showLoader==false"> Total </td>
+                                        [hidden]="dataSource==undefined"> Total </td>
                                 </ng-container>
                                 <ng-container matColumnDef="type">
                                     <th mat-sort-header="loanTypeId" mat-header-cell *matHeaderCellDef class="br"> Type
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br">
-                                        {{(element.loanTypeId == 1)?'Home Loan':(element.loanTypeId == 2)?'Vehicle':(element.loanTypeId == 3)?'Education':(element.loanTypeId == 4)?'Credit Card':(element.loanTypeId == 5)?'Personal':'Mortgage'}}
+                                        <div class="bar">
+                                            {{(element.loanTypeId == 1)?'Home Loan':(element.loanTypeId == 2)?'Vehicle':(element.loanTypeId == 3)?'Education':(element.loanTypeId == 4)?'Credit Card':(element.loanTypeId == 5)?'Personal':'Mortgage'}}
+                                        </div>
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                 </ng-container>
@@ -159,17 +165,23 @@
                                         class="br text-right">
                                         Loan amount</th>
                                     <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
-                                        {{util.formatter(element.loanAmount)}} </td>
+                                        <div class="bar"> {{util.formatter(element.loanAmount)}} </div>
+                                    </td>
                                     <td mat-footer-cell *matFooterCellDef class="br text-right f-700"
-                                        [hidden]="dataSource==undefined && showLoader==false" appFormatNumber [value]="totalLoanAmt">
-                                        {{util.formatter(totalLoanAmt) || '-'}} </td>
+                                        [hidden]="dataSource==undefined" appFormatNumber
+                                        [value]="totalLoanAmt">
+                                        <div class="bar">
+                                            {{util.formatter(totalLoanAmt) || '-'}}
+                                        </div>
+                                    </td>
                                 </ng-container>
                                 <ng-container matColumnDef="ldate">
                                     <th mat-sort-header="commencementDate" mat-header-cell *matHeaderCellDef class="br">
-                                        Loan as
-                                        on</th>
+                                        Loan as on
+                                    </th>
                                     <td mat-cell *matCellDef="let element" class="br">
-                                        {{element.commencementDate | date:'dd/MM/yyyy'}} </td>
+                                        <div class="bar"> {{element.commencementDate | date:'dd/MM/yyyy'}} </div>
+                                    </td>
                                     <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="today">
@@ -177,16 +189,22 @@
                                         class="br text-right"> Outstanding as on today
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
-                                        {{(element.outstandingAmount=='NaN')?0:util.formatter(element.outstandingAmount)}} </td>
+                                        <div class="bar">
+                                            {{(element.outstandingAmount=='NaN')?0:util.formatter(element.outstandingAmount)}}
+                                        </div>
+                                    </td>
                                     <td mat-footer-cell *matFooterCellDef class="br text-right f-700"
-                                        [hidden]="dataSource==undefined && showLoader==false" appFormatNumber [value]="outStandingAmt"> 
-                                        {{util.formatter(outStandingAmt) || '-'}}</td>
+                                        [hidden]="dataSource==undefined" appFormatNumber
+                                        [value]="outStandingAmt">
+                                        <div class="bar"> {{util.formatter(outStandingAmt) || '-'}} </div>
+                                    </td>
                                 </ng-container>
                                 <ng-container matColumnDef="ten">
                                     <th mat-sort-header="loanTenure" mat-header-cell *matHeaderCellDef
                                         class="br text-right">
                                         Tenure remaining</th>
-                                    <td mat-cell *matCellDef="let element" class="br text-right"> {{element.loanTenure}}
+                                    <td mat-cell *matCellDef="let element" class="br text-right">
+                                        <div class="bar"> {{element.loanTenure}} </div>
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                 </ng-container>
@@ -194,7 +212,7 @@
                                     <th mat-sort-header="annualInterestRate" mat-header-cell *matHeaderCellDef
                                         class="br text-right"> Annual interest rate</th>
                                     <td mat-cell *matCellDef="let element" class="br text-right">
-                                        {{element.annualInterestRate}}
+                                        <div class="bar"> {{element.annualInterestRate}} </div>
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                 </ng-container>
@@ -202,21 +220,24 @@
                                     <th mat-sort-header="emi" mat-header-cell *matHeaderCellDef class="br text-right">
                                         EMI</th>
                                     <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
-                                        {{util.formatter(element.emi)}} </td>
+                                        <div class="bar"> {{util.formatter(element.emi)}} </div>
+                                    </td>
                                     <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="fin">
                                     <th mat-sort-header="financialInstitution" mat-header-cell *matHeaderCellDef
                                         class="br">
                                         Financial institution</th>
-                                    <td mat-cell *matCellDef="let element" class="br"> {{element.financialInstitution}}
+                                    <td mat-cell *matCellDef="let element" class="br">
+                                        <div class="bar"> {{element.financialInstitution}} </div>
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="status">
                                     <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br"> Status
                                     </th>
-                                    <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.status}}
+                                    <td mat-cell *matCellDef="let element" class="br text-primary">
+                                        <div class="bar"> {{element.status}} </div>
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                 </ng-container>

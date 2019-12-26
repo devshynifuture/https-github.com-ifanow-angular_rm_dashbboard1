@@ -1,18 +1,16 @@
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { CustomerService } from '../../../../customer.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {CustomerService} from '../../../../customer.service';
+import {AuthService} from 'src/app/auth-service/authService';
 import * as _ from 'lodash';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { AddRealEstateComponent } from '../add-real-estate/add-real-estate.component';
-import { DetailedViewRealEstateComponent } from '../detailed-view-real-estate/detailed-view-real-estate.component';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import * as Excel from 'exceljs/dist/exceljs';
-import { saveAs } from 'file-saver'
-import { ExcelService } from '../../../../excel.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {AddRealEstateComponent} from '../add-real-estate/add-real-estate.component';
+import {DetailedViewRealEstateComponent} from '../detailed-view-real-estate/detailed-view-real-estate.component';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelService} from '../../../../excel.service';
 
 @Component({
   selector: 'app-real-estate',
@@ -21,23 +19,23 @@ import { ExcelService } from '../../../../excel.service';
 })
 export class RealEstateComponent implements OnInit {
 
-  isLoading: boolean;
+  isLoading = true;
   advisorId: any;
-  datasource3: any;
+  datasource3: any = [{}, {}, {}];
   clientId: any;
   ownerName: any;
   sumOfMarketValue: any;
   sumOfpurchasedValue: any;
   footer = [];
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status', 'icons'];
   excelData: any[];
   noData: string;
 
-  constructor(public subInjectService: SubscriptionInject, publicutilService: UtilService,
-    public custmService: CustomerService, public cusService: CustomerService,
-    public eventService: EventService, public dialog: MatDialog) {
+  constructor(private excel: ExcelService, public subInjectService: SubscriptionInject,
+              public custmService: CustomerService, public cusService: CustomerService,
+              public eventService: EventService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -46,28 +44,30 @@ export class RealEstateComponent implements OnInit {
     this.isLoading = true;
     this.getRealEstate();
   }
+
   async ExportTOExcel(value) {
-    this.excelData = []
-    var data = []
-    var headerData = [{ width: 20, key: 'Owner' },
-    { width: 20, key: 'Type' },
-    { width: 10, key: 'Rate' },
-    { width: 20, key: 'Market Value' },
-    { width: 15, key: 'Purchase Value' },
-    { width: 15, key: 'Description' },
-    { width: 10, key: 'Status' },]
-    var header = ['Owner', 'Type', 'Rate', 'Market Value',
+    this.isLoading = true;
+    this.excelData = [];
+    let data = [];
+    let headerData = [{width: 20, key: 'Owner'},
+      {width: 20, key: 'Type'},
+      {width: 10, key: 'Rate'},
+      {width: 20, key: 'Market Value'},
+      {width: 15, key: 'Purchase Value'},
+      {width: 15, key: 'Description'},
+      {width: 10, key: 'Status'},];
+    let header = ['Owner', 'Type', 'Rate', 'Market Value',
       'Purchase Value', 'Description', 'Status'];
     this.datasource3.filteredData.forEach(element => {
       data = [element.ownerName, ((element.typeId == 1) ? 'Residential' : (element.typeId == 2) ? 'Secondary' : (element.typeId == 3) ? 'Commercial' : 'Land'), (element.rate),
-      this.formatNumber.first.formatAndRoundOffNumber(element.marketValue), (element.purchaseValue), element.description, element.status]
-      this.excelData.push(Object.assign(data))
+        this.formatNumber.first.formatAndRoundOffNumber(element.marketValue), (element.purchaseValue), element.description, element.status];
+      this.excelData.push(Object.assign(data));
     });
-    var footerData = ['Total', '',
+    let footerData = ['Total', '',
       this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMarketValue), '',
-      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfpurchasedValue), '', '']
-    this.footer.push(Object.assign(footerData))
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfpurchasedValue), '', ''];
+    this.footer.push(Object.assign(footerData));
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
   }
   // datasource3 = ELEMENT_DATA3;
 
@@ -82,9 +82,10 @@ export class RealEstateComponent implements OnInit {
   }
 
   getRealEstateRes(data) {
+    this.isLoading = false;
     console.log(data);
     this.isLoading = false;
-    if (data.realEstateList) {
+    if (data.realEstateList.length > 0) {
       data.realEstateList.forEach(element => {
         if (element.realEstateOwners.length != 0) {
           const array = element.realEstateOwners;
@@ -102,9 +103,8 @@ export class RealEstateComponent implements OnInit {
       this.datasource3.sort = this.sort;
       this.sumOfMarketValue = data.sumOfMarketValue;
       this.sumOfpurchasedValue = data.sumOfpurchasedValue;
-    }
-    else {
-      this.noData = "No Data Found";
+    } else {
+      this.noData = 'No Data Found';
     }
   }
 
@@ -192,7 +192,7 @@ export interface PeriodicElement3 {
   value: string;
   pvalue: string;
   desc: string;
-  status: string
+  status: string;
 }
 
 const ELEMENT_DATA3: PeriodicElement3[] = [

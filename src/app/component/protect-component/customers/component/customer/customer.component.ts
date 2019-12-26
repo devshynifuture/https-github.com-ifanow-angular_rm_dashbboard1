@@ -62,11 +62,14 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
       console.log('CustomerComponent getTabChangeData value : ', this.value);
 
     }, 300);
-    this.ngOnInit()
   }
 
 
   ngOnInit() {
+    // const performance = Performance().prototype;
+    // performance.mark('');
+    // performance.toJSON();
+    // Performance.prototype  .mark();
     const routeName = this.router.url.split('/')[3];
     console.log('CustomerComponent ngOnInit routeName : ', routeName);
     if (routeName == 'overview') {

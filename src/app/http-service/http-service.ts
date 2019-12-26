@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
-import {Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 // import 'rxjs/Rx';
-import {AuthService} from '../auth-service/authService';
+import { AuthService } from '../auth-service/authService';
 import 'rxjs-compat/add/observable/of';
 import 'rxjs-compat/add/operator/map';
-import {catchError} from 'rxjs/operators';
-import {EmailUtilService} from '../services/email-util.service';
+import { catchError } from 'rxjs/operators';
+import { EmailUtilService } from '../services/email-util.service';
 
 const Buffer = require('buffer/').Buffer;
 declare var require: any;
@@ -222,15 +222,13 @@ export class HttpService {
     const encodedata = res.payLoad;
     try {
       const datavalue = (Buffer.from(encodedata, 'base64').toString('ascii'));
-      console.log('datavalue: ', datavalue);
+      console.log('datavalue helo: ', datavalue);
       // console.log('encodedata: ', encodedata);
 
       try {
         const responseData = JSON.parse(datavalue);
         return responseData;
-
       } catch (e) {
-        console.error('JSON parse error e : ', e);
         return JSON.parse(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(encodedata));
       }
     }

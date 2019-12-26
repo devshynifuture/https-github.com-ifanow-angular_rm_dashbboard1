@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../customer.service';
-import { trigger, transition, query, stagger, animate, style } from '@angular/animations';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AddInsuranceComponent } from '../../../common-component/add-insurance/add-insurance.component';
-import { DetailedViewComponent } from "../../../common-component/detailed-view/detailed-view.component";
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../customer.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AddInsuranceComponent} from '../../../common-component/add-insurance/add-insurance.component';
+import {DetailedViewComponent} from "../../../common-component/detailed-view/detailed-view.component";
 
 @Component({
   selector: 'app-insurance',
@@ -28,11 +27,14 @@ export class InsuranceComponent implements OnInit {
   lifeInsuranceFlag: boolean;
   generalInsuranceFlag: boolean;
 
-  constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject, private cusService: CustomerService) {
-  }
+  lifeInsuranceList = [{name: 'Term', id: 1}, {name: 'Traditional', id: 2}, {name: 'ULIP', id: 3}];
 
   viewMode;
-  lifeInsuranceList = [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }];
+
+  constructor(private eventService: EventService, public dialog: MatDialog,
+              private subInjectService: SubscriptionInject, private cusService: CustomerService) {
+  }
+
   generalLifeInsuranceList = [/*"Health", "Car/2 Wheeler", "Travel", "Personal accident", "Critical illness", "Cancer", "Home", "Others"*/];
   insuranceTypeId;
 
@@ -63,8 +65,7 @@ export class InsuranceComponent implements OnInit {
 
     if (data) {
       this.dataSource = data.insuranceList;
-    }
-    else {
+    } else {
       this.dataSource = data
       this.noData = "No Insurance Data"
     }
@@ -101,7 +102,7 @@ export class InsuranceComponent implements OnInit {
     this.lifeInsuranceFlag = false;
     this.insuranceTypeId = typeId;
     this.insuranceSubTypeId = typeSubId;
-    this.getInsuranceSubTypeData(this.advisorId, 2978, typeId, typeSubId);
+    this.getInsuranceSubTypeData(this.advisorId, this.clientId, typeId, typeSubId);
   }
 
   deleteModal(value, data) {
@@ -147,7 +148,7 @@ export class InsuranceComponent implements OnInit {
       this.insuranceSubTypeId = 0;
       this.generalLifeInsuranceList = [];
       this.lifeInsuranceList = [];
-      [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }].map((i) => {
+      [{name: 'Term', id: 1}, {name: 'Traditional', id: 2}, {name: 'ULIP', id: 3}].map((i) => {
         this.lifeInsuranceList.push(i);
       });
     } else {
@@ -155,10 +156,10 @@ export class InsuranceComponent implements OnInit {
       this.lifeInsuranceFlag = false;
       this.generalInsuranceFlag = true;
       this.generalLifeInsuranceList = [];
-      [{ name: 'Health', id: 4 }, { name: 'Car/2 Wheeler', id: 5 }, { name: 'Travel', id: 6 }, {
+      [{name: 'Health', id: 4}, {name: 'Car/2 Wheeler', id: 5}, {name: 'Travel', id: 6}, {
         name: 'Personal accident',
         id: 7
-      }, { name: 'Critical illness', id: 8 }, { name: 'Cancer', id: 9 }, { name: 'Home', id: 10 }, {
+      }, {name: 'Critical illness', id: 8}, {name: 'Cancer', id: 9}, {name: 'Home', id: 10}, {
         name: 'Others',
         id: 11
       }].map((i) => {

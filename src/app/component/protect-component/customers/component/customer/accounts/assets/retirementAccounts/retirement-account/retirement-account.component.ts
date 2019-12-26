@@ -30,10 +30,10 @@ export class RetirementAccountComponent implements OnInit {
   showRecurring = '1';
   getObject: {};
   advisorId: any;
-  dataGratuityList: any;
-  dataSuperannuationList: any;
-  EPSList: any;
-  dataNPSList: any;
+  dataGratuityList: any = [{}, {}, {}];
+  dataSuperannuationList: any = [{}, {}, {}];
+  EPSList: any = [{}, {}, {}];
+  dataNPSList: any = [{}, {}, {}];
   clientId: any;
   sumOfcurrentEpfBalance: any;
   sumOfcurrentValue: any;
@@ -46,7 +46,8 @@ export class RetirementAccountComponent implements OnInit {
   totalPensionAmount: any;
   totalContribution: any;
   totalCurrentValue: any;
-  dataEPFList: any;
+  dataEPFList: any = [{}, {}, {}];
+  isLoading = true;
 
 
   @ViewChild('epfListTable', { static: false }) epfListTableSort: MatSort;
@@ -190,7 +191,7 @@ export class RetirementAccountComponent implements OnInit {
     }
     ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   }
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
+  constructor(private excel : ExcelService,private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
   }
 
   displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'empc', 'rate', 'bal', 'bacla', 'year', 'desc', 'status', 'icons'];
@@ -205,7 +206,7 @@ export class RetirementAccountComponent implements OnInit {
   datasource15;
   displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
   datasource16;
-  isLoading = true;
+  // isLoading = true;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -506,12 +507,14 @@ export class RetirementAccountComponent implements OnInit {
     });
   }
   getListEPF() {
+    this.isLoading = true;
     const obj = this.getObject;
     this.custumService.getEPF(obj).subscribe(
       data => this.getEPFRes(data)
     );
   }
   getEPFRes(data) {
+    this.isLoading = false;
     console.log('getEPFRes =', data);
     this.isLoading = false;
     if (data.listOfEpf) {
@@ -555,8 +558,9 @@ export class RetirementAccountComponent implements OnInit {
     );
   }
   getNPSRes(data) {
-    console.log('getNPSRes =', data);
     this.isLoading = false;
+    console.log('getNPSRes =', data);
+    //this.isLoading = false;
     if (data.npsList) {
       this.dataNPSList = new MatTableDataSource(data.npsList);
       this.dataNPSList.sort = this.npsListTableSort;

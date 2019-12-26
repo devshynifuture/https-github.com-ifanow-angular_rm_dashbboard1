@@ -7,6 +7,7 @@ import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import * as moment from 'moment';
 import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class BondsComponent implements OnInit {
   ownerData: any;
   clientId: any;
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
+  constructor(private eventService: EventService, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
   }
   @Input()
   set data(data) {
@@ -148,12 +149,14 @@ export class BondsComponent implements OnInit {
     this.dataSource = obj
     if (this.bonds.controls.id.value == undefined) {
       this.custumService.addBonds(obj).subscribe(
-        data => this.addBondsRes(data)
+        data => this.addBondsRes(data),
+        err => this.eventService.openSnackBar(err, "dismiss")
       );
     } else {
       //edit call
       this.custumService.editBonds(obj).subscribe(
-        data => this.editBondsRes(data)
+        data => this.editBondsRes(data),
+        err => this.eventService.openSnackBar(err)
       );
     }
   }

@@ -10,9 +10,9 @@
             </div>
         </div>
         <div class="clientTable">
-            <table mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table matSort mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef class="f-18"> Clients name </th>
+                    <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="f-18"> Clients name </th>
                     <td mat-cell *matCellDef="let element" (click)="openFragment('clients',element)" class="c-p">
                         <div class="bar"> {{element.name}} </div>
                     </td>
@@ -20,7 +20,7 @@
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="email">
-                    <th mat-header-cell *matHeaderCellDef class="f-18"> Email </th>
+                    <th mat-sort-header="userEmailId" mat-header-cell *matHeaderCellDef class="f-18"> Email </th>
                     <td mat-cell *matCellDef="let element" (click)="openFragment('clients',element)" class="c-p">
                         <div class="bar"> {{element.userEmailId}} </div>
                     </td>
@@ -28,7 +28,7 @@
 
                 <!-- Weight Column -->
                 <ng-container matColumnDef="num">
-                    <th mat-header-cell *matHeaderCellDef class="f-18"> Contact no. </th>
+                    <th mat-sort-header="mobileNumber" mat-header-cell *matHeaderCellDef class="f-18"> Contact no. </th>
                     <td mat-cell *matCellDef="let element" (click)="openFragment('clients',element)" class="c-p">
                         <div class="bar"> {{element.mobileNumber}} </div>
                     </td>
@@ -36,7 +36,7 @@
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="balance">
-                    <th mat-header-cell *matHeaderCellDef class="f-18 text-right"> Balance due (₹)</th>
+                    <th mat-sort-header="balanceDue" mat-header-cell *matHeaderCellDef class="f-18 text-right"> Balance due (₹)</th>
                     <td mat-cell *matCellDef="let element" (click)="openFragment('clients',element)" class="c-p text-right">
                         <div class="bar"> {{element.balanceDue}} </div>
                     </td>

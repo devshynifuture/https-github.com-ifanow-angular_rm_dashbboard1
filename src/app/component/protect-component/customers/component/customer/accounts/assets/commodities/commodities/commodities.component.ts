@@ -1,19 +1,17 @@
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from '../../../../customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { GoldComponent } from '../gold/gold.component';
-import { OthersComponent } from '../others/others.component';
-import { DetailedViewGoldComponent } from '../gold/detailed-view-gold/detailed-view-gold.component';
-import { DetailedViewOthersComponent } from '../others/detailed-view-others/detailed-view-others.component';
-import * as Excel from 'exceljs/dist/exceljs';
-import { saveAs } from 'file-saver'
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelService } from '../../../../excel.service';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from '../../../../customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {UtilService} from 'src/app/services/util.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {GoldComponent} from '../gold/gold.component';
+import {OthersComponent} from '../others/others.component';
+import {DetailedViewGoldComponent} from '../gold/detailed-view-gold/detailed-view-gold.component';
+import {DetailedViewOthersComponent} from '../others/detailed-view-others/detailed-view-others.component';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelService} from '../../../../excel.service';
 
 @Component({
   selector: 'app-commodities',
@@ -22,15 +20,15 @@ import { ExcelService } from '../../../../excel.service';
 })
 export class CommoditiesComponent implements OnInit {
   showRequring: string;
-  isLoading: boolean = true;
+  isLoading = false;
   displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue', 'pvalue', 'desc', 'status', 'icons'];
   datasource9 = ELEMENT_DATA9;
 
   displayedColumns10 = ['no', 'owner', 'type', 'mvalue', 'pvalue', 'pur', 'rate', 'desc', 'status', 'icons'];
   datasource10 = ELEMENT_DATA10;
   advisorId: any;
-  goldList: any;
-  otherCommodityList: any;
+  goldList: any = [{}, {}, {}];
+  otherCommodityList: any = [{}, {}, {}];
   clientId: any;
   sumOfMarketValue: any;
   sumOfPurchaseValue: any;
@@ -39,12 +37,12 @@ export class CommoditiesComponent implements OnInit {
   footer = [];
 
   @ViewChild('goldListTable', { static: false }) goldListTableSort: MatSort;
-  @ViewChild('otherCommodityListTable', { static: false }) otherCommodityListTableSort: MatSort;
+  @ViewChild('otherListTable', { static: false }) otherListTableSort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   noData: string;
 
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) { }
+  constructor(private excel : ExcelService,private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) { }
   ngOnInit() {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
@@ -160,6 +158,7 @@ export class CommoditiesComponent implements OnInit {
     });
   }
   getGoldList() {
+    this.isLoading = true;
     let obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
@@ -169,8 +168,9 @@ export class CommoditiesComponent implements OnInit {
     );
   }
   getGoldRes(data) {
-    console.log('getGoldList @@@@', data);
     this.isLoading = false;
+    console.log('getGoldList @@@@', data);
+
     if (data.goldList.length != 0) {
       this.goldList = new MatTableDataSource(data.goldList);
       this.goldList.sort = this.goldListTableSort;
@@ -191,11 +191,12 @@ export class CommoditiesComponent implements OnInit {
     );
   }
   getOthersRes(data) {
-    console.log('getOthersRes @@@@', data);
     this.isLoading = false;
+    console.log('getOthersRes @@@@', data);
+
     if (data.otherCommodityList.length != 0) {
       this.otherCommodityList = new MatTableDataSource(data.otherCommodityList);
-      this.otherCommodityList.sort = this.otherCommodityListTableSort;
+        this.otherCommodityList.sort = this.otherListTableSort;
       this.sumOfMarketValueOther = data.sumOfMarketValue
       this.sumOfPurchaseValueOther = data.sumOfPurchaseValue
     }

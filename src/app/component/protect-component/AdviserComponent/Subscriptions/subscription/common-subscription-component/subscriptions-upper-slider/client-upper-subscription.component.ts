@@ -1,12 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort } from '@angular/material';
 import { DeleteSubscriptionComponent } from '../delete-subscription/delete-subscription.component';
 import { SubscriptionService } from '../../../subscription.service';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
+import { MatTableDataSource } from '@angular/material/table';
+
 
 export interface PeriodicElement {
   service: string;
@@ -28,12 +30,15 @@ export interface PeriodicElement {
   styleUrls: ['./client-upper-subscription.component.scss']
 })
 export class ClientUpperSubscriptionComponent implements OnInit {
+  data: any;
+  isLoading = false;
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, public subscription: SubscriptionService) {
   }
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   ELEMENT_DATA;
-  dataSource;
+  dataSource: any;
 
   displayedColumns: string[] = ['service', 'amt', 'type', 'subs', 'status', 'date', 'bdate', 'ndate', 'mode', 'icons'];
 
@@ -41,6 +46,8 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   advisorId;
 
   ngOnInit() {
+    this.isLoading = true;
+    this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
     this.getSummaryDataClient();
     console.log(this.upperData);
@@ -121,8 +128,14 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   }
 
   getSubSummaryRes(data) {
+    this.isLoading = false;
     console.log(data);
-    (data) ? this.dataSource = data : this.dataSource = [];
+    this.dataSource = data;
+    // (data) ? this.dataSource = data : this.dataSource = [];
+    // this.dataSource = new MatTableDataSource(data);
+
+    // this.dataSource.sort = this.sort;
+
   }
 
 

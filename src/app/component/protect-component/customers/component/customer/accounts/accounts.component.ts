@@ -1,8 +1,8 @@
-import {Router} from '@angular/router';
-import {Component, NgZone, OnInit} from '@angular/core';
-import {RoutingState} from '../../../../../../services/routing-state.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {slideInAnimation} from '../../../../../../animation/router.animation';
+import { Router } from '@angular/router';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { RoutingState } from '../../../../../../services/routing-state.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { slideInAnimation } from '../../../../../../animation/router.animation';
 
 @Component({
   selector: 'app-accounts',
@@ -25,23 +25,22 @@ export class AccountsComponent implements OnInit {
   selected;
 
   constructor(private eventService: EventService, private router: Router, private ngZone: NgZone,
-              public routingStateService: RoutingState) {
+    public routingStateService: RoutingState) {
     this.eventService.tabChangeData.subscribe(
       data => this.getTabChangeData(data)
     );
   }
 
-  navBarClick(navigationUrl, navId) {
-    this.routingStateService.goToSpecificRoute('/customer/detail/account/' + navigationUrl);
-    this.value = navId;
-  }
+  // navBarClick(navigationUrl, navId) {
+  //   this.routingStateService.goToSpecificRoute('/customer/detail/account/' + navigationUrl);
+  //   this.value = navId;
+  // }
 
   getTabChangeData(data) {
     setTimeout(() => {
       this._value = data;
       this.loading = false;
     }, 300);
-    this.ngOnInit()
   }
 
   ngOnInit() {
@@ -51,9 +50,9 @@ export class AccountsComponent implements OnInit {
     this.loading = false;
     console.log('this is child url now->>>>>', this.router.url.split('/')[3]);
     var roterName = this.router.url.split('/')[3]
-    if (roterName=== 'summary') {
+    if (roterName === 'summary') {
       this._value = 1;
-    } else if (roterName=== 'assets') {
+    } else if (roterName === 'assets') {
       this._value = 2;
     } else if (roterName === 'liabilities') {
       this._value = 3;

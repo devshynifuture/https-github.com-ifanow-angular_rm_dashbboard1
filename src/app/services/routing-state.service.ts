@@ -1,7 +1,10 @@
-import {ChangeDetectorRef, Injectable, NgZone} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {filter} from 'rxjs/operators';
+import {UserTimingService} from "./user-timing.service";
 
+// declare gives Angular app access to ga function
+declare let gtag: Function;
 
 @Injectable({
   providedIn: 'root'
@@ -25,19 +28,9 @@ export class RoutingState {
     this._router = router;
   }
 
-  private _changeDetector: ChangeDetectorRef;
-
-  get changeDetector() {
-    return this._changeDetector;
-  }
-
-  set changeDetector(changeDetector) {
-    this._changeDetector = changeDetector;
-  }
-
   prepareRoute(outlet: RouterOutlet) {
     const outPutData = outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
-    console.log('RoutingState prepareRoute outPutData : ', outPutData);
+    // console.log('RoutingState prepareRoute outPutData : ', outPutData);
     return outPutData;
   }
 
@@ -55,8 +48,10 @@ export class RoutingState {
       .subscribe(({urlAfterRedirects}: NavigationEnd) => {
         this.history = [...this.history, urlAfterRedirects];
         console.log('123456789 loadRouting history : ', this.history);
-        if (this.getMainRouter())
-          console.log('goToSpecificRoute urlString this.getMainRouter().detach() : ', this.getMainRouter());
+        gtag('config', 'UA-154885656-1', {page_path: urlAfterRedirects});
+        UserTimingService.eventEmitter();
+        // if (this.getMainRouter())
+        //   console.log('goToSpecificRoute urlString this.getMainRouter().detach() : ', this.getMainRouter());
 
       });
   }
@@ -70,18 +65,11 @@ export class RoutingState {
   }
 
   public goToSpecificRoute(urlString) {
-    // this.getMainRouter().clear();
     console.log('goToSpecificRoute urlString this.getMainRouter().detach() : ', this.getMainRouter());
-    // setTimeout(() => {
-    //
-    // }, 100);
     this.ngZone.run(() => {
       this.router.navigate([urlString]).then((status: boolean) => {
         if (status) {
           console.log('goToSpecificRoute urlString  success : ', urlString);
-          console.log('goToSpecificRoute urlString success this.getMainRouter().detach() : ', this.getMainRouter());
-          // this.getMainRouter().nativeElement.onClick();
-          // this.router.navigate([urlString]);
         } else {
           console.error('goToSpecificRoute urlString failure : ', urlString);
         }
@@ -90,8 +78,5 @@ export class RoutingState {
 
       });
     });
-
   }
-
-
 }

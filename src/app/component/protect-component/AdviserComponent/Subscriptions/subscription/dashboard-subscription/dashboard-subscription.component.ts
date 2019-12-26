@@ -41,6 +41,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   invoiceHisData: any;
   showLetsBeginData: any;
   totalSaleReceived: any;
+  isLoading = false;
   @Output() subIndex = new EventEmitter()
   constructor(private enumService: EnumServiceService,
     public subInjectService: SubscriptionInject, public eventService: EventService,
@@ -54,7 +55,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   dataSourceClientWithSub;
   dataSourceInvoice;
   subSummaryData;
-  dataSource;
+  dataSource = [{}, {}, {}];
   showSubStep = false;
   displayedColumns: string[] = ['name', 'service', 'amt', 'billing', 'icons'];
   chart: Chart;
@@ -164,6 +165,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   }
 
   getTotalRecivedByDash() {
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       period: 0
@@ -174,6 +176,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   }
 
   getTotalRecivedRes(data) {
+    this.isLoading = false;
     console.log('getTotalRecivedRes', data);
     this.totalSaleReceived = data;
   }
