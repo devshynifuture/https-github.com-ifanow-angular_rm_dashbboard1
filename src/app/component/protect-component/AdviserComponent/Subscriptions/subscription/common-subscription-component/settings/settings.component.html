@@ -1,182 +1,188 @@
 <div class="wrapper-20 bg-grey lter heading-fix">
-    <h3 class="m-0 text-center head-common">{{upperData.name}}</h3>
+  <h3 class="m-0 text-center head-common">{{upperData.name}}</h3>
 </div>
 <div class="bg-white">
-    <div class="wrapper-20 pt-32">
-        <div class="row pt-180">
+  <div class="wrapper-20 pt-32">
+    <div class="row pt-180">
+      <div class="col-md-12 p-0">
+        <button (click)="openPayeeSettings('Add','payeeSettings','open')"
+                class="btn-primary br-0 right text-right addon"
+                mat-stroked-button><i class="material-icons">
+          add</i> ADD MORE
+        </button>
+        <button class="text-black right br-0 mr-12 text-right" mat-button>HELP</button>
+
+      </div>
+    </div>
+  </div>
+  <h4 *ngIf="SettingProfileData==undefined" class="text-center pt-72">{{noData}}</h4>
+  <div *ngFor="let profileData of SettingProfileData" class="d-flex justify-content-center">
+    <div class="row wrapper-100 pb-72 pt-8 pb-10">
+      <div class="hoverable">
+        <div class="row b-a bg-grey lter">
+          <div class="col-md-8 p-0">
+            <h3 class="mb-0 p-24 fontPlayfair">{{profileData.name}}</h3>
+          </div>
+          <div class="col-md-4 pt-16">
+            <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu"
+               class="material-icons text-right right text-custom f-28 c-p">
+              more_vert
+            </i>
+            <mat-menu #menu="matMenu">
+              <a (click)="setPrimaryField(profileData)" mat-menu-item>Set as Primary</a>
+              <a (click)="openPayeeSettings(profileData,'payeeSettings','open')" mat-menu-item>Edit
+                Client Profile</a>
+              <a (click)="deleteModal(profileData)" class="bt-1" mat-menu-item>Delete Client
+                Profile</a>
+            </mat-menu>
+            <button *ngIf="profileData.isPrimary == true" class="text-primary br-0 right text-right" mat-stroked-button>
+              PRIMARY
+            </button>
+          </div>
+        </div>
+        <div class="b-a bt-none">
+          <div class="row">
             <div class="col-md-12 p-0">
-                <button (click)="openPayeeSettings('Add','payeeSettings','open')" mat-stroked-button class="btn-primary br-0 right text-right addon"><i class="material-icons">
-                        add</i> ADD MORE</button>
-                <button mat-button class="text-black right br-0 mr-12 text-right">HELP</button>
-
-            </div>
-        </div>
-    </div>
-    <h4 *ngIf="SettingProfileData==undefined" class="text-center pt-72">{{noData}}</h4>
-    <div *ngFor="let profileData of SettingProfileData" class="d-flex justify-content-center">
-        <div class="row wrapper-100 pb-72 pt-8 pb-10">
-            <div class="hoverable">
-                <div class="row b-a bg-grey lter">
-                    <div class="col-md-8 p-0">
-                        <h3 class="mb-0 p-24 fontPlayfair">{{profileData.name}}</h3>
-                    </div>
-                    <div class="col-md-4 pt-16">
-                        <i class="material-icons text-right right text-custom f-28 c-p" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
-                            more_vert
-                        </i>
-                        <mat-menu #menu="matMenu">
-                            <a mat-menu-item (click)="setPrimaryField(profileData)">Set as Primary</a>
-                            <a mat-menu-item (click)="openPayeeSettings(profileData,'payeeSettings','open')">Edit
-                                Client Profile</a>
-                            <a mat-menu-item class="bt-1" (click)="deleteModal(profileData)">Delete Client
-                                Profile</a>
-                        </mat-menu>
-                        <button mat-stroked-button class="text-primary br-0 right text-right" *ngIf="profileData.isPrimary == true">PRIMARY</button>
-                    </div>
+              <div class="wrapper-20">
+                <div class="row">
+                  <div class="col-md-3">
+                    <p>CUSTOMER TYPE</p>
+                    <h5>{{(profileData.customerTypeId == 1) ? 'Bussiness' : 'Individual'}}</h5>
+                  </div>
+                  <div class="col-md-3">
+                    <p>PAN</p>
+                    <h5>{{profileData.pan}}</h5>
+                  </div>
+                  <div class="col-md-3">
+                    <p>GST TREATMENT</p>
+                    <h5>{{(profileData.gstTreatmentId == 1) ? 'Registered Business - Regular' : (profileData.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business'}}
+                    </h5>
+                  </div>
+                  <div class="col-md-3">
+                    <p>GST</p>
+                    <h5>{{profileData.gstin}}</h5>
+                  </div>
                 </div>
-                <div class="b-a bt-none">
+              </div>
+              <div class="wrapper-20 pl-36 bt-1">
+                <div class="row ">
+                  <div class="col-md-6 p-0">
+                    <p>BILLING ADDRESS</p>
+                    <h5 style="word-break: break-all;">{{profileData.billerAddress}},<br> {{profileData.city}},
+                      <br> {{profileData.state}}
+                      <br> {{profileData.country}}
+                      <br> {{profileData.zipCode}}
+                    </h5>
+                  </div>
+                  <div class="col-md-3 p-0">
+                    <p>DISPLAY NAME</p>
+                    <h5>{{profileData.companyDisplayName}}</h5>
                     <div class="row">
-                        <div class="col-md-12 p-0">
-                            <div class="wrapper-20">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <p>CUSTOMER TYPE</p>
-                                        <h5>{{(profileData.customerTypeId == 1) ?'Bussiness':'Individual'}}</h5>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p>PAN</p>
-                                        <h5>{{profileData.pan}}</h5>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p>GST TREATMENT</p>
-                                        <h5>{{(profileData.gstTreatmentId == 1)?'Registered Business - Regular':(profileData.gstTreatmentId == 2)?'Registered Business - Composition':'Unregistered Business'}}
-                                        </h5>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p>GST</p>
-                                        <h5>{{profileData.gstin}}</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="wrapper-20 pl-36 bt-1">
-                                <div class="row ">
-                                    <div class="col-md-6 p-0">
-                                        <p>BILLING ADDRESS</p>
-                                        <h5 style="word-break: break-all;">{{profileData.billerAddress}},<br> {{profileData.city}},
-                                            <br> {{profileData.state}}
-                                            <br> {{profileData.country}}
-                                            <br> {{profileData.zipCode}}
-                                        </h5>
-                                    </div>
-                                    <div class="col-md-3 p-0">
-                                        <p>DISPLAY NAME</p>
-                                        <h5>{{profileData.companyDisplayName}}</h5>
-                                        <div class="row">
-                                            <div class="col-md-12 block p-0 pt-24">
-                                                <p>MOBILE NO</p>
-                                                <h5>{{profileData.primaryContact}}</h5>
-                                            </div>
+                      <div class="col-md-12 block p-0 pt-24">
+                        <p>MOBILE NO</p>
+                        <h5>{{profileData.primaryContact}}</h5>
+                      </div>
 
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-3 p-0">
-                                        <p>COMPANY NAME</p>
-                                        <h5>{{profileData.companyName}}</h5>
-                                        <div class="row">
-                                            <div class="col-md-12 block p-0 pt-24">
-                                                <p>EMAIL</p>
-                                                <h5 style="word-break: break-all;">{{profileData.email}}</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
+
+                  </div>
+                  <div class="col-md-3 p-0">
+                    <p>COMPANY NAME</p>
+                    <h5>{{profileData.companyName}}</h5>
+                    <div class="row">
+                      <div class="col-md-12 block p-0 pt-24">
+                        <p>EMAIL</p>
+                        <h5 style="word-break: break-all;">{{profileData.email}}</h5>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
-
+      </div>
     </div>
-    <!-- <div class="d-flex justify-content-center">
-                    <div class="row">
-                      <div class="wrapper-100 pt-8">
-                        <div class="row b-a bg-grey lter pt-20 pb-20">
-                            <div class="col-md-8">
-                                    <h3 class="mb-0 pt-8">Rupa Ronak Hindocha</h3>
-                            </div>
-                            <div class="col-md-4">
-                                    <i class="material-icons text-right right text-custom pt-4 f-28">
-                                            more_vert
-                                            </i>
-                                    <button mat-stroked-button class="text-primary br-0 right text-right">PRIMARY</button>
-                            </div>
-                        </div>
-                        <div class="b-a bt-none">
-                            <div class="row">
-                                <div class="col-md-12 p-0">
-                                    <div class="wrapper-20">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <p>CUSTOMER TYPE</p>
-                                                <h5>Business</h5>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <p>PAN</p>
-                                                <h5>AABCF7680A</h5>
-                                            </div>
-                                            <div class="col-md-3">
-                                                    <p>GST TREATMENT</p>
-                                                    <h5>Regsitered Business - Regular</h5>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p>GST</p>
-                                                    <h5>27AABCF7680A1Z7</h5>
-                                                </div>
-                                        </div>
-                                    </div>
-                                    <div class="wrapper-24 pl-36 bt-1">
-                                        <div class="row ">
-                                            <div class="col-md-6 p-0">
-                                                <p>BILLING ADDRESS</p>
-                                                <h5>203-A,”A” Wing, Suashish IT Park,<br>
-                                                        Off. Dattapada Road,<br>
-                                                        Borivali East<br>
-                                                        Mumbai 400 066<br>
-                                                        Maharashtra, India</h5>
-                                            </div>
-                                            <div class="col-md-3 p-0">
-                                                    <p>DISPLAY NAME</p>
-                                                    <h5>ABC Industrial automation Pvt. Ltd.</h5>
-                                                    <div class="col-md-12 block p-0 pt-24">
-                                                            <p>EMAIL</p>
-                                                            <h5>firstname.lastname@abcautomation.com</h5>
-                                                        </div>
-                                                </div>
-                                                <div class="col-md-3 p-0">
-                                                        <p>COMPANY NAME</p>
-                                                        <h5>ABC Industrial automation Pvt. Ltd.</h5>
-                                                    </div>
 
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
+  </div>
+  <!-- <div class="d-flex justify-content-center">
+                  <div class="row">
+                    <div class="wrapper-100 pt-8">
+                      <div class="row b-a bg-grey lter pt-20 pb-20">
+                          <div class="col-md-8">
+                                  <h3 class="mb-0 pt-8">Rupa Ronak Hindocha</h3>
+                          </div>
+                          <div class="col-md-4">
+                                  <i class="material-icons text-right right text-custom pt-4 f-28">
+                                          more_vert
+                                          </i>
+                                  <button mat-stroked-button class="text-primary br-0 right text-right">PRIMARY</button>
+                          </div>
+                      </div>
+                      <div class="b-a bt-none">
+                          <div class="row">
+                              <div class="col-md-12 p-0">
+                                  <div class="wrapper-20">
+                                      <div class="row">
+                                          <div class="col-md-3">
+                                              <p>CUSTOMER TYPE</p>
+                                              <h5>Business</h5>
+                                          </div>
+                                          <div class="col-md-3">
+                                              <p>PAN</p>
+                                              <h5>AABCF7680A</h5>
+                                          </div>
+                                          <div class="col-md-3">
+                                                  <p>GST TREATMENT</p>
+                                                  <h5>Regsitered Business - Regular</h5>
+                                              </div>
+                                              <div class="col-md-3">
+                                                  <p>GST</p>
+                                                  <h5>27AABCF7680A1Z7</h5>
+                                              </div>
+                                      </div>
+                                  </div>
+                                  <div class="wrapper-24 pl-36 bt-1">
+                                      <div class="row ">
+                                          <div class="col-md-6 p-0">
+                                              <p>BILLING ADDRESS</p>
+                                              <h5>203-A,”A” Wing, Suashish IT Park,<br>
+                                                      Off. Dattapada Road,<br>
+                                                      Borivali East<br>
+                                                      Mumbai 400 066<br>
+                                                      Maharashtra, India</h5>
+                                          </div>
+                                          <div class="col-md-3 p-0">
+                                                  <p>DISPLAY NAME</p>
+                                                  <h5>ABC Industrial automation Pvt. Ltd.</h5>
+                                                  <div class="col-md-12 block p-0 pt-24">
+                                                          <p>EMAIL</p>
+                                                          <h5>firstname.lastname@abcautomation.com</h5>
+                                                      </div>
+                                              </div>
+                                              <div class="col-md-3 p-0">
+                                                      <p>COMPANY NAME</p>
+                                                      <h5>ABC Industrial automation Pvt. Ltd.</h5>
+                                                  </div>
 
-                    </div>
-      -->
-    <!-- <div>
-          <app-payee-settings (getEditData)="dataTosendSetting($event)"></app-payee-settings>
-      </div> -->
-    <!-- <div class="bottom-fixed wrapper-12 w-100">
-        <div class="row">
-            <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="dialogClose()">Cancel</h5>
-            </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              </div>
+                          </div>
+                          </div>
+                      </div>
 
-        </div>
+                  </div>
+    -->
+  <!-- <div>
+        <app-payee-settings (getEditData)="dataTosendSetting($event)"></app-payee-settings>
     </div> -->
+  <!-- <div class="bottom-fixed wrapper-12 w-100">
+      <div class="row">
+          <div class="col-md-4">
+          <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="dialogClose()">Cancel</h5>
+          </div>
+
+      </div>
+  </div> -->
