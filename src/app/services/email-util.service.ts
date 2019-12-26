@@ -60,6 +60,7 @@ export class EmailUtilService {
           if (part.body.data && part.body.data !== null) {
             decodedPartArray.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data));
           }
+          // not perfect
           else {
             decodedPartArray.push(snippet);
           }

@@ -357,6 +357,29 @@ export class EmailListingComponent implements OnInit, OnDestroy {
 
   // routing to view page
   gotoEmailView(dataObj: Object) {
+    // if(dataObj)
+    let nullCountMessage = 0;
+    let nullCountParts = 0;
+    const gmailThread: GmailInboxResponseI = this.gmailThreads[dataObj['position'] - 1];
+    // check for payload body data === null
+
+    const id: string = gmailThread.id;
+
+    gmailThread.messages.forEach((message) => {
+      // check for payload parts each part body data === null
+      message.payload.parts.forEach((part) => {
+        if (part.body.data === null) {
+          // get message object;
+
+          this.emailService.gmailMessageDetail(id)
+            .subscribe((response) => {
+              const raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
+              part.body.data = raw;
+            });
+        }
+      });
+    });
+
     this.emailService.sendNextData(dataObj);
     this.router.navigate(['view'], { relativeTo: this.activatedRoute });
   }
