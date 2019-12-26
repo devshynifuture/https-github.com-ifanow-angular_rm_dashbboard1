@@ -68,6 +68,7 @@ export class InvoicesComponent implements OnInit {
   getInvoiceResponseData(data) {
     this.isLoading = false;
     if (data == undefined) {
+      this.dataSource=undefined
       this.noData = "No Data Found";
     } else {
       // const ELEMENT_DATA = data;

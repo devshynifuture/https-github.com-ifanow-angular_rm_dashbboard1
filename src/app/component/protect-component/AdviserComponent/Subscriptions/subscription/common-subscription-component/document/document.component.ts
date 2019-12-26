@@ -154,6 +154,7 @@ export class DocumentComponent implements OnInit {
     this.isLoading = false;
     console.log(data);
     if (data == undefined) {
+      this.dataSource=undefined;
       this.noData = "No Data Found";
     } else {
       data.forEach(singleData => {

@@ -98,6 +98,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   getInvoiceResponseData(data) {
     this.isLoading = false;
     if (data == undefined) {
+      this.dataSource=undefined;
       this.noData = "No Data Found";
     } else {
       console.log(data);
