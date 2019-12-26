@@ -81,7 +81,11 @@ export class ScssSchemeComponent implements OnInit {
       requiredDate: ''
     };
     this.cusService.getSmallSavingSchemeSCSSData(obj).subscribe(
-      data => this.getKvpSchemedataResponse(data)
+      data => this.getKvpSchemedataResponse(data), (error) =>{
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.datasource = [];
+        this.isLoading =false;
+      }
     );
   }
 
@@ -124,7 +128,7 @@ export class ScssSchemeComponent implements OnInit {
   getKvpSchemedataResponse(data: any) {
     console.log(data);
     this.isLoading = false;
-    if (data.scssList.length != 0) {
+    if (data && data.scssList && data.scssList.length > 0) {
       this.datasource = new MatTableDataSource(data.scssList);
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);
@@ -134,7 +138,9 @@ export class ScssSchemeComponent implements OnInit {
       this.scssData = data;
     } else {
       this.noData = 'No scheme found';
+      this.datasource = []
     }
+    console.log('datasource',this.datasource)
   }
 
   openAddSCSS(data, flag) {
