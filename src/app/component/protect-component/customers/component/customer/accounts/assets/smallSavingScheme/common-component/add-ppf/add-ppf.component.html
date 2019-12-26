@@ -30,7 +30,7 @@
                 <p class="m-0 f-12 text-custom">Leave blank if you want to enter</p>
                 <p class="m-0 f-12 text-custom">complete transaction history</p>
             </div>
-            <div class="col-md-3 p-0">
+            <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input #accBal (keypress)="check()" autocomplete="off" class="form-control rupess br-0"
@@ -83,10 +83,10 @@
             </div>
         </div>
         <div class="row pt-40">
-            <div class="col-md-5 text-right">
+            <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Future approx contribution</h5>
             </div>
-            <div class="col-md-3 p-0">
+            <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input #futureContribution class="form-control rupess br-0" formControlName="futureContribution"
@@ -173,6 +173,52 @@
                     </mat-form-field>
                 </div>
             </div>
+        </div>
+        <div class="pt-44" formArrayName="npsNomineesList">
+            <div class="row pb-16" *ngFor="let creds of nominee.controls; let i = index" [formGroupName]="i">
+                <div class="col-md-5 text-right pr-0">
+                    <h5 class="m-0 pt-8">Nominee{{i+1}}</h5>
+                </div>
+                <div class="col-md-7 pr-0">
+                    <div class="form-group mb-0">
+                        <div class="row">
+                            <div class="col-md-4 p-0">
+                                <mat-form-field>
+                                    <input (click)="nomineesList()" [matAutocomplete]="auto" aria-label="State"
+                                        class="form-control br-0 pl-8" formControlName="nomineeName" list="userName"
+                                        matInput placeholder="Add nominee">
+                                    <mat-autocomplete #auto="matAutocomplete">
+                                        <mat-option *ngFor="let item of familyList" [value]="item.userName">
+                                            <span>{{item.userName}}</span>
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <!-- <input matInput #nomineePercentageShare type="number"
+                                        (utils.keypress)="utils.keyPress($event)" class="form-control br-0 percentage"
+                                        formControlName="nomineePercentageShare"> -->
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-5" *ngIf="i==0">
+                                <p class="m-0 c-p text-custom pt-12" (click)="addNominee()">+ Add nominee</p>
+                            </div>
+                            <div class="col-md-3" *ngIf="i > 0">
+                                <p class="m-0 c-p text-custom pt-12" (click)="removeNominee(i)">Remove</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="f-12 text-custom pt-4 mb-0">Optional</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <mat-hint class="f-12 pt-4 text-danger" align="end" *ngIf="showError== true">
+                Percent cannot be more than 100%
+            </mat-hint>
         </div>
     </div>
     <app-add-transaction (outputEvent)="getFormData($event)"></app-add-transaction>

@@ -25,8 +25,10 @@
         <div class="col-md-2">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput class=" form-control br-0" type="number" formControlName="ownerPercent" (keyup)="onChange('owner')">
-                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isOwnerPercent && getFormControl().ownerPercent.invalid || getFormControl().ownerPercent.touched && getFormControl().ownerPercent.invalid)}">
+                    <input matInput class=" form-control br-0" type="number" formControlName="ownerPercent"
+                        (keyup)="onChange('owner')">
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isOwnerPercent && getFormControl().ownerPercent.invalid || getFormControl().ownerPercent.touched && getFormControl().ownerPercent.invalid)}">
                         Type is required
                     </mat-error>
                 </mat-form-field>
@@ -41,14 +43,16 @@
 
     <div class="pt-20 pb-48 mb-44 ">
         <div formArrayName="getCoOwnerName" *ngIf="addOwner==true">
-            <div class="row pt-24" *ngFor="let obj of getCoOwner.controls; let pointIndex=index" [formGroupName]="pointIndex">
+            <div class="row pt-24" *ngFor="let obj of getCoOwner.controls; let pointIndex=index"
+                [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">Co-owner{{pointIndex+1}}</h5>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto" list="userName" class="form-control br-0 pl-8" formControlName="ownerName">
+                            <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto"
+                                list="userName" class="form-control br-0 pl-8" formControlName="ownerName">
                             <mat-autocomplete #auto="matAutocomplete">
                                 <mat-option *ngFor="let item of familyList" [value]="item.userName">
                                     <span>{{item.userName}}</span>
@@ -60,7 +64,8 @@
                 <div class="col-md-2">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput class="form-control br-0" type="number" formControlName="ownershipPerc" (keyup)="onChange('owner')">
+                            <input matInput class="form-control br-0" type="number" formControlName="ownershipPerc"
+                                (keyup)="onChange('owner')">
 
                         </mat-form-field>
                     </div>
@@ -88,7 +93,8 @@
                             <mat-option value="2">Secondary</mat-option>
                             <mat-option value="3">Commercial</mat-option>
                         </mat-select>
-                        <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isTypeValid && getFormControl().type.invalid || getFormControl().type.touched && getFormControl().type.invalid)}">
+                        <mat-error class="f-12 pt-4"
+                            [ngClass]="{'v-h':!(isTypeValid && getFormControl().type.invalid || getFormControl().type.touched && getFormControl().type.invalid)}">
                             Type is required
                         </mat-error>
                     </mat-form-field>
@@ -122,7 +128,8 @@
         <div class="col-md-2">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #marketValue class="form-control rupess br-0" formControlName="marketValue" maxlength="{{getFormControl().marketValue.maxLength}}">
+                    <input matInput #marketValue class="form-control rupess br-0" formControlName="marketValue"
+                        maxlength="{{getFormControl().marketValue.maxLength}}">
                     <mat-error class="f-12 pt-4">
                         Market value is required
                         <!-- [ngClass]="{'v-h':!(isLoanAmount && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}" -->
@@ -135,7 +142,8 @@
     </div>
     <div class="row">
         <div class="col-md-5 text-right">
-            <h5 class="pt-20 text-custom m-0 c-p" (click)="showMore()" *ngIf="showMoreData==false">+ Add more [optional data]
+            <h5 class="pt-20 text-custom m-0 c-p" (click)="showMore()" *ngIf="showMoreData==false">+ Add more [optional
+                data]
             </h5>
             <h5 class="pt-20 text-custom m-0 c-p" (click)="showLess()" *ngIf="showMoreData==true">Show less</h5>
         </div>
@@ -313,7 +321,8 @@
             </div>
         </div>
         <div class="pt-24" formArrayName="getNomineeName">
-            <div class="row pt-24" *ngFor="let obj of getNominee.controls; let pointIndex=index" [formGroupName]="pointIndex">
+            <div class="row pt-24" *ngFor="let obj of getNominee.controls; let pointIndex=index"
+                [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 " *ngIf="pointIndex==0">Nominee</h5>
                     <h5 class="m-0 pt-8 " *ngIf="pointIndex!=0">Nominee{{pointIndex}}</h5>
@@ -321,7 +330,8 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto" list="userName" class="form-control br-0 pl-8" formControlName="name">
+                            <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto"
+                                list="userName" class="form-control br-0 pl-8" formControlName="name">
                             <mat-autocomplete #auto="matAutocomplete">
                                 <mat-option *ngFor="let item of familyList" [value]="item.userName">
                                     <span>{{item.userName}}</span>
@@ -337,7 +347,8 @@
                 <div class="col-md-1 pl-0">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput type="number" class="br-0 form-control" formControlName="ownershipPer" (keyup)="onChange('nominee')">
+                            <input matInput type="number" class="br-0 form-control" formControlName="ownershipPer"
+                                (keyup)="onChange('nominee')">
                         </mat-form-field>
                     </div>
                 </div>
