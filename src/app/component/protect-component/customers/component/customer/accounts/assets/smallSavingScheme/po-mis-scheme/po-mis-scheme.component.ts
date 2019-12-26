@@ -38,7 +38,9 @@ export class PoMisSchemeComponent implements OnInit {
   }
 
   displayedColumns = ['no', 'owner', 'cvalue', 'mpayout', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
-  datasource: any = [{}, {}, {}];
+  data: Array<any> = [{}, {}, {}];
+  datasource = new MatTableDataSource(this.data);
+
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -83,7 +85,11 @@ export class PoMisSchemeComponent implements OnInit {
       clientId: this.clientId
     };
     this.cusService.getSmallSavingSchemePOMISData(obj).subscribe(
-      data => this.getPoMisSchemedataResponse(data)
+      data => this.getPoMisSchemedataResponse(data) ,(error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.datasource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
@@ -102,6 +108,7 @@ export class PoMisSchemeComponent implements OnInit {
       this.pomisData = data;
     } else {
       this.noData = 'No scheme found';
+      this.datasource.data = []
     }
   }
 
