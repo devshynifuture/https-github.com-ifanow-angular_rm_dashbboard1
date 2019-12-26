@@ -25,7 +25,8 @@
     </div>
 </div>
 <div class="example-container col-md-12 p-0 mt-8 real-estate">
-    <table *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+    <table *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="table-low"
+        class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
             <td mat-cell *matCellDef="let element;let i=index" class="br">
@@ -41,12 +42,14 @@
             <td mat-footer-cell class="br text-left t-7" *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Current value
+            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Current
+                value
             </th>
             <td mat-cell *matCellDef="let element" class="br t-10 text-right" appFormatNumber>
                 <div class="bar"> {{element.currentValue}} </div>
             </td>
-            <td mat-footer-cell class="br text-right p-8 f-500  t-10" *matFooterCellDef appFormatNumber [value]="sumOfCurrentValue">
+            <td mat-footer-cell class="br text-right p-8 f-500  t-10" *matFooterCellDef appFormatNumber
+                [value]="sumOfCurrentValue">
                 {{ sumOfCurrentValue }}</td>
         </ng-container>
         <ng-container matColumnDef="rate">
@@ -62,7 +65,8 @@
             <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
                 <div class="bar"> {{element.maturityValue}} </div>
             </td>
-            <td mat-footer-cell class="br text-right t-10 f-500 p-8" *matFooterCellDef appFormatNumber [value]="sumOfMaturityValue">
+            <td mat-footer-cell class="br text-right t-10 f-500 p-8" *matFooterCellDef appFormatNumber
+                [value]="sumOfMaturityValue">
                 {{ sumOfMaturityValue }} </td>
         </ng-container>
         <ng-container matColumnDef="mdate">
@@ -97,7 +101,8 @@
         </ng-container>
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef class="t-2"></th>
-            <td mat-cell *matCellDef="let element" class="t-2"><i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+            <td mat-cell *matCellDef="let element" class="t-2"><i class="material-icons c-p text-black"
+                    [matMenuTriggerFor]="menubank">
                     more_vert
                 </i>
                 <mat-menu #menubank="matMenu">
@@ -114,9 +119,9 @@
         <tr mat-footer-row *matFooterRowDef="displayedColumns17;sticky: true" [hidden]="isLoading"></tr>
     </table>
     <div *ngIf="datasource.filteredData.length == 0" class="d-flex flex-column align-items-center">
-        <h4 class="text-center pt-72">{{noData}}</h4>
+        <h4 class="text-center pt-72">No Scheme Found</h4>
         <button (click)="openAddNSC(null,'addNsc')" mat-stroked-button class="btn-primary addon v-middle"><i
-            class="material-icons">add</i>ADD NEW
-    </button>
+                class="material-icons">add</i>ADD NEW
+        </button>
     </div>
 </div>
