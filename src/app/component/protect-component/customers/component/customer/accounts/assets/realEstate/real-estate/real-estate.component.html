@@ -2,7 +2,7 @@
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div> -->
 <div class="wrapper-8">
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-md-12 right text-right pt-28 pb-28 p-0">
             <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-2">
                 Overview Report
@@ -17,12 +17,12 @@
                 <button mat-menu-item>Goal Linkage</button>
             </mat-menu>
         </div>
-    </div>
+    </div> -->
     <div class="row">
         <div class="col-md-7 p-0">
             <h4 class="m-0 text-black roboto">Real estate </h4>
         </div>
-        <div class="col-md-5 p-0 text-right right ">
+        <div class="col-md-5 p-0 text-right right " *ngIf="datasource3!=undefined">
 
             <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
             <mat-menu #menu5="matMenu">
@@ -46,7 +46,8 @@
         </div>
     </div>
     <div class="example-container mt-8 p-0 col-md-12 real-estate">
-        <table *ngIf="datasource3" matSort mat-table [dataSource]="datasource3" id="table-low" class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+        <table *ngIf="datasource3" matSort mat-table [dataSource]="datasource3" id="table-low"
+            class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="no">
                 <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br w-2"> No </th>
                 <td mat-cell *matCellDef="let element; let i = index;" class="br w-2">
@@ -72,7 +73,8 @@
                 <td mat-footer-cell *matFooterCellDef class="br text-right w-15"> </td>
             </ng-container>
             <ng-container matColumnDef="value">
-                <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br w-15 rightText text-right"> Market value
+                <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef
+                    class="br w-15 rightText text-right"> Market value
                 </th>
                 <td mat-cell *matCellDef="let element" class="br w-15 text-right" appFormatNumber>
                     <div class="bar"> {{element.marketValue}} </div>
@@ -82,7 +84,8 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="pvalue">
-                <th mat-sort-header="purchaseValue" mat-header-cell *matHeaderCellDef class="br w-20 rightText text-right">
+                <th mat-sort-header="purchaseValue" mat-header-cell *matHeaderCellDef
+                    class="br w-20 rightText text-right">
                     Purchase value
                 </th>
                 <td mat-cell *matCellDef="let element" class="br w-20 text-right" appFormatNumber>
@@ -125,8 +128,10 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
             <tr mat-footer-row *matFooterRowDef="displayedColumns3;sticky: true" [hidden]="isLoading"></tr>
         </table>
-        <div *ngIf="datasource3==undefined">
+        <div *ngIf="datasource3==undefined" class="d-flex flex-column align-items-center">
             <h4 class="text-center pt-72">{{noData}}</h4>
+            <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('realEstate','')"><i
+                    class="material-icons">add</i>ADD NEW</button>
         </div>
     </div>
 
