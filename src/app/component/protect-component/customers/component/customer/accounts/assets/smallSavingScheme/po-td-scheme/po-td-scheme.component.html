@@ -147,8 +147,8 @@
         <tr mat-footer-row *matFooterRowDef="displayedColumns22;sticky: true" [hidden]="isLoading"></tr>
     </table>
     <div *ngIf="dataSource==undefined" class="d-flex flex-column align-items-center">
-        <h4 class="text-center pt-72">{{noData}}</h4>
+        <h4 class="text-center pt-72">No Scheme Found</h4>
         <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOTD(null)"><i
-            class="material-icons">add</i>ADD NEW</button>
+                class="material-icons">add</i>ADD NEW</button>
     </div>
 </div>
