@@ -81,8 +81,8 @@ export class LoginComponent implements OnInit {
             this.authService.setClientData({
               id: 2978, name: 'Aryendra Kumar Saxena'
             });
+
           }
-          this.closeDialog(data);
         },
         err => {
           console.log('error on login: ', err);
