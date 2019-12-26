@@ -201,81 +201,82 @@
            </td>
          </ng-container>-->
         <ng-container matColumnDef="scrip">
-          <th *matHeaderCellDef class="br t-18" mat-header-cell> Scrip</th>
-          <td *matCellDef="let element" class="br t-18" mat-cell> {{element.scripName}} </td>
-          <th *matFooterCellDef [attr.colspan]="5" class="br t-8 text-right" mat-header-cell> Total</th>
+          <th *matHeaderCellDef class="br" mat-header-cell> Scrip</th>
+          <td *matCellDef="let element" class="br" mat-cell> {{element.scripName}} </td>
+          <th *matFooterCellDef [attr.colspan]="5" class="br text-right" mat-header-cell
+            style="background-color: #fff !important;"> Total</th>
         </ng-container>
         <ng-container matColumnDef="owner">
-          <th *matHeaderCellDef class="br t-18" mat-header-cell> Owner</th>
-          <td *matCellDef="let element" class="br t-18" mat-cell> {{element.ownerName}} </td>
-          <th *matFooterCellDef class="br t-8 text-right" mat-header-cell></th>
+          <th *matHeaderCellDef class="br" mat-header-cell> Owner</th>
+          <td *matCellDef="let element" class="br" mat-cell> {{element.ownerName}} </td>
+          <th *matFooterCellDef class="br text-right" mat-header-cell></th>
 
         </ng-container>
         <ng-container matColumnDef="bal">
-          <th *matHeaderCellDef class="br t-8 text-right" mat-header-cell> Balance shares</th>
-          <td *matCellDef="let element" class="br t-8 text-right" mat-cell> {{element.balanceShares}} </td>
-          <th *matFooterCellDef class="br t-8 text-right" mat-header-cell></th>
+          <th *matHeaderCellDef class="br text-right" mat-header-cell> Balance shares</th>
+          <td *matCellDef="let element" class="br text-right" mat-cell> {{element.balanceShares}} </td>
+          <th *matFooterCellDef class="br text-right" mat-header-cell></th>
 
         </ng-container>
         <ng-container matColumnDef="price">
-          <th *matHeaderCellDef class="br t-8 text-right" mat-header-cell> Average price</th>
-          <td *matCellDef="let element" class="br t-8 text-right" mat-cell> {{element.averagePrice}} </td>
-          <th *matFooterCellDef class="br t-8 text-right" mat-header-cell></th>
+          <th *matHeaderCellDef class="br text-right" mat-header-cell> Average price</th>
+          <td *matCellDef="let element" class="br  text-right" mat-cell> {{element.averagePrice}} </td>
+          <th *matFooterCellDef class="br text-right" mat-header-cell></th>
 
         </ng-container>
         <ng-container matColumnDef="mprice">
-          <th *matHeaderCellDef class="br t-8 text-right" mat-header-cell> Market price</th>
-          <td *matCellDef="let element" class="br t-8 text-right" mat-cell> {{element.scripCurrentValue}}
+          <th *matHeaderCellDef class="br text-right" mat-header-cell> Market price</th>
+          <td *matCellDef="let element" class="br text-right" mat-cell> {{element.scripCurrentValue}}
           </td>
           <!--          <th mat-header-cell *matFooterCellDef class="br t-8 text-right"> Total</th>-->
 
         </ng-container>
         <ng-container matColumnDef="amt">
-          <th *matHeaderCellDef class="br t-8 text-right" mat-header-cell> Amount invested</th>
-          <td *matCellDef="let element" class="br t-8 text-right" mat-cell> {{element.amountInvested}} </td>
-          <td *matFooterCellDef appFormatNumber class="br t-8 text-right" mat-footer-cell>
+          <th *matHeaderCellDef class="br text-right" mat-header-cell> Amount invested</th>
+          <td *matCellDef="let element" class="br text-right" mat-cell> {{element.amountInvested}} </td>
+          <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
             {{ singlePortfolio.amountInvested}}</td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-          <th *matHeaderCellDef class="br t-8 text-right" mat-header-cell> Current value</th>
-          <td *matCellDef="let element" class="br t-8 text-right" mat-cell> {{element.currentMarketValue}}
+          <th *matHeaderCellDef class="br text-right" mat-header-cell> Current value</th>
+          <td *matCellDef="let element" class="br text-right" mat-cell> {{element.currentMarketValue}}
           </td>
-          <td *matFooterCellDef appFormatNumber class="br t-8 text-right" mat-footer-cell>
+          <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
             {{ singlePortfolio.currentMarketValue}}</td>
         </ng-container>
         <ng-container matColumnDef="gain">
-          <th *matHeaderCellDef class="br t-8 text-right" mat-header-cell> Unrealized gain/loss</th>
-          <td *matCellDef="let element" class="br t-8 text-right" mat-cell> {{element.unrealizedGainLoss}}
+          <th *matHeaderCellDef class="br text-right" mat-header-cell> Unrealized gain/loss</th>
+          <td *matCellDef="let element" class="br text-right" mat-cell> {{element.unrealizedGainLoss}}
           </td>
-          <td *matFooterCellDef appFormatNumber class="br t-8 text-right" mat-footer-cell>
+          <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
             {{ singlePortfolio.unrealizedGainLoss}}</td>
         </ng-container>
         <ng-container matColumnDef="ret">
-          <th *matHeaderCellDef class="br t-8 text-right" mat-header-cell> Absolute returns %</th>
-          <td *matCellDef="let element" class="br t-8 text-right" mat-cell> {{element.absoluteReturn}} </td>
-          <td *matFooterCellDef appFormatNumber class="br t-8 text-right" mat-footer-cell>
+          <th *matHeaderCellDef class="br text-right" mat-header-cell> Absolute returns %</th>
+          <td *matCellDef="let element" class="br text-right" mat-cell> {{element.absoluteReturn}} </td>
+          <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
             {{ singlePortfolio.absoluteReturn}}</td>
         </ng-container>
         <ng-container matColumnDef="xirr">
-          <th *matHeaderCellDef class="br t-8 text-right" mat-header-cell> XIRR %</th>
-          <td *matCellDef="let element" class="br t-8 text-right" mat-cell> {{element.xirr}} </td>
-          <td *matFooterCellDef appFormatNumber class="br t-8 text-right" mat-footer-cell>{{ singlePortfolio.xirr}}</td>
+          <th *matHeaderCellDef class="br text-right" mat-header-cell> XIRR %</th>
+          <td *matCellDef="let element" class="br text-right" mat-cell> {{element.xirr}} </td>
+          <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>{{ singlePortfolio.xirr}}</td>
         </ng-container>
         <ng-container matColumnDef="dividend">
-          <th *matHeaderCellDef class="br t-8 text-right" mat-header-cell> Dividend</th>
-          <td *matCellDef="let element" class="br t-8 text-right" mat-cell> {{element.dividend}} </td>
-          <td *matFooterCellDef appFormatNumber class="br t-8 text-right" mat-footer-cell>{{ singlePortfolio.dividend}}
+          <th *matHeaderCellDef class="br text-right" mat-header-cell> Dividend</th>
+          <td *matCellDef="let element" class="br text-right" mat-cell> {{element.dividend}} </td>
+          <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>{{ singlePortfolio.dividend}}
           </td>
         </ng-container>
         <ng-container matColumnDef="groupHeader">
-          <td *matCellDef="let group" [attr.colspan]="displayedColumns25.length" class="t-2 text-center">
+          <td *matCellDef="let group" [attr.colspan]="displayedColumns25.length" class="text-center">
             {{group.groupName}}</td>
         </ng-container>
 
 
         <ng-container matColumnDef="icons">
-          <th *matHeaderCellDef class="t-2" mat-header-cell></th>
-          <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menu25"
+          <th *matHeaderCellDef class="" mat-header-cell></th>
+          <td *matCellDef="let element" class="" mat-cell><i [matMenuTriggerFor]="menu25"
               class="material-icons c-p text-black">
               more_vert
             </i>
