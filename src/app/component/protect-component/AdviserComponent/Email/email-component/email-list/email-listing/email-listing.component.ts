@@ -389,7 +389,6 @@ export class EmailListingComponent implements OnInit, OnDestroy {
     });
 
     this.threadsToTrashService(ids);
-
   }
 
 
