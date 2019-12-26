@@ -32,7 +32,7 @@ export interface PeriodicElement {
 export class ClientUpperSubscriptionComponent implements OnInit {
   data: any;
   isLoading = false;
-
+  clientData:any = [];
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, public subscription: SubscriptionService) {
   }
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -131,11 +131,20 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     this.isLoading = false;
     console.log(data , "hi client");
     this.dataSource = data;
+    this.clientData = data;
     
-    // (data) ? this.dataSource = data : this.dataSource = [];
-    // this.dataSource = new MatTableDataSource(data);
+    for(let d of data){
+      if(d.subscriptionPricing.feeTypeId==1){
+        d['feeTypeId'] = "FIXED"
+      }
+      else{
+        d['feeTypeId'] = "VARIABLE"
+      }
+      
+    }
+    this.dataSource = new MatTableDataSource(data);
 
-    // this.dataSource.sort = this.sort;
+    this.dataSource.sort = this.sort;
 
   }
 
