@@ -1,20 +1,20 @@
+<div class="form-group mb-0" [formGroup]="owner">
+    <mat-form-field class="w-100">
+        <mat-select formControlName="ownerName" class="form-control br-0">
+            <mat-option value=''>Search family members</mat-option>
+            <mat-option *ngFor="let f of family" [value]="f.userName" (click)="getOwnerName(f)">
+                <span>{{f.userName}}</span>
+            </mat-option>
+        </mat-select>
+        <mat-error class="f-12 pt-4"
+            [ngClass]="{'v-h':!(isownerName && getFormControl().ownerName.invalid || getFormControl().ownerName.touched && getFormControl().ownerName.invalid)}">
+            This field is required
+        </mat-error>
+    </mat-form-field>
 
-    <div class="form-group mb-0"[formGroup]="owner">
-        <mat-form-field class="w-100">
-            <mat-select formControlName="ownerName" class="form-control br-0">
-                <mat-option value=''>Search family members</mat-option>
-                <mat-option *ngFor="let f of family" [value]="f.userName" (click)="getOwnerName(f)">
-                    <span>{{f.userName}}</span>
-                </mat-option>
-            </mat-select>
-            <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isownerName && getFormControl().ownerName.invalid || getFormControl().ownerName.touched && getFormControl().ownerName.invalid)}">
-                This field is required
-            </mat-error>
-        </mat-form-field>
-        	
-        <!-- <select class="form-control br-0" formControlName="ownerName">
+    <!-- <select class="form-control br-0" formControlName="ownerName">
                 <option value="" disabled>Search family members</option>
                 <option *ngFor="let f of family" [ngValue]="f.userName">{{f.userName}}</option>
              </select>  -->
 
-    </div>
+</div>
