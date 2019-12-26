@@ -14,7 +14,7 @@ export class FixedFeeComponent implements OnInit {
   isFeeValid: boolean;
   isBillValid: boolean;
   @Input() createSubData;
-  @Output() outputData=new EventEmitter<Object>();
+  @Output() outputData = new EventEmitter<Object>();
   isSave: boolean;
   constructor(private fb: FormBuilder, public subInjectService: SubscriptionInject, private subService: SubscriptionService) {
   }
@@ -34,7 +34,7 @@ export class FixedFeeComponent implements OnInit {
     billingMode: ['1']
   });
   ngOnInit() {
-    this.isSave=true
+    this.isSave = true
   }
   getFixedFee() {
     return this.fixedFeeStructureForm.controls;
@@ -47,22 +47,22 @@ export class FixedFeeComponent implements OnInit {
     else {
       this.singleSubscriptionData = fixedData
       this.getFixedFee().fees.setValue(fixedData.subscriptionPricing.pricing);
-      this.getFixedFee().billingNature.setValue(fixedData.subscriptionPricing.billingNature);
+      this.getFixedFee().billingNature.setValue(String(fixedData.subscriptionPricing.billingNature));
       this.getFixedFee().billEvery.setValue(fixedData.subscriptionPricing.billEvery);
       this.getFixedFee().Duration.setValue(fixedData.subscriptionPricing.billingCycle);
-      this.getFixedFee().billingMode.setValue(fixedData.subscriptionPricing.billingMode);
+      this.getFixedFee().billingMode.setValue(String(fixedData.subscriptionPricing.billingMode));
     }
   }
   enableForm() {
     this.fixedFeeStructureForm.enable();
-    this.isSave=false
+    this.isSave = false
   }
-  Close(state) {
+  Close() {
     this.ngOnInit();
-    this.subInjectService.rightSideData(state)
-    this.subInjectService.rightSliderData(state)
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
     this.fixedFeeStructureForm.reset();
-    this.isSave=true
+    this.isSave = true
   }
   saveFixedModifyFees() {
     if (this.getFixedFee().fees.invalid) {
@@ -90,7 +90,7 @@ export class FixedFeeComponent implements OnInit {
         ]
       };
       console.log(obj)
-      if (this.singleSubscriptionData.isCreateSub==false) {
+      if (this.singleSubscriptionData.isCreateSub == false) {
         obj.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId;
         obj.clientId = this.singleSubscriptionData.clientId;
         obj.subId = this.singleSubscriptionData.id;

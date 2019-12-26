@@ -23,12 +23,12 @@
       <div class="col-md-7">
         <mat-radio-group formControlName="billingNature">
           <mat-radio-button value="1"
-                            [ngClass]="{'b-a-custom': variableFeeStructureForm.get('billingNature').value==1,'text-primary':variableFeeStructureForm.get('billingNature').value==1,'b-a':variableFeeStructureForm.get('billingNature').value==2}"
-                            class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio">Recurring
+            [ngClass]="{'b-a-custom': variableFeeStructureForm.get('billingNature').value==1,'text-primary':variableFeeStructureForm.get('billingNature').value==1,'b-a':variableFeeStructureForm.get('billingNature').value==2}"
+            class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio">Recurring
           </mat-radio-button>
           <mat-radio-button value="2"
-                            [ngClass]="{'b-a-custom': variableFeeStructureForm.get('billingNature').value==2,'text-primary':variableFeeStructureForm.get('billingNature').value==2,'b-a':variableFeeStructureForm.get('billingNature').value==1}"
-                            class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">Once
+            [ngClass]="{'b-a-custom': variableFeeStructureForm.get('billingNature').value==2,'text-primary':variableFeeStructureForm.get('billingNature').value==2,'b-a':variableFeeStructureForm.get('billingNature').value==1}"
+            class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">Once
           </mat-radio-button>
         </mat-radio-group>
       </div>
@@ -42,7 +42,7 @@
           <div class="col-md-5 p-0">
             <div class="form-group">
               <input type="number" pattern="\d*" onKeyPress="if(this.value.length==2) return false;"
-                     formControlName="billEvery" [disabled]="true" class="form-control br-0">
+                formControlName="billEvery" [disabled]="true" class="form-control br-0">
             </div>
           </div>
 
@@ -86,15 +86,15 @@
             <div class="row ui-mff">
               <div class="col-md-4 p-0 bl-0 br-grey">
                 <input type="number" onKeyPress="if(this.value.length==4) return false;" placeholder="%"
-                       formControlName="equity" class="form-control br-0 h-39">
+                  formControlName="equity" class="form-control br-0 h-39">
               </div>
               <div class="col-md-4 p-0 br-grey">
                 <input type="number" onKeyPress="if(this.value.length==4) return false;" placeholder="%"
-                       formControlName="debt" class="form-control br-0 h-39">
+                  formControlName="debt" class="form-control br-0 h-39">
               </div>
               <div class="col-md-4 p-0">
                 <input type="number" onKeyPress="if(this.value.length==4) return false;" placeholder="%"
-                       formControlName="liquid" class="form-control br-0 h-39">
+                  formControlName="liquid" class="form-control br-0 h-39">
               </div>
             </div>
           </div>
@@ -115,15 +115,15 @@
             <div class="row ui-mff">
               <div class="col-md-4 br-grey p-0 bl-0 bb-grey">
                 <input type="number" onKeyPress="if(this.value.length==4) return false;" placeholder="%"
-                       formControlName="equity" class="form-control br-0 h-39 br-grey">
+                  formControlName="equity" class="form-control br-0 h-39 br-grey">
               </div>
               <div class="col-md-4 br-grey bb-grey p-0">
                 <input type="number" onKeyPress="if(this.value.length==4) return false;" placeholder="%"
-                       formControlName="debt" class="form-control br-0 h-39 br-grey">
+                  formControlName="debt" class="form-control br-0 h-39 br-grey">
               </div>
               <div class="col-md-4 br-grey bb-grey p-0">
                 <input type="number" onKeyPress="if(this.value.length==4) return false;" placeholder="%"
-                       formControlName="liquid" class="form-control br-0 h-39 br-grey">
+                  formControlName="liquid" class="form-control br-0 h-39 br-grey">
               </div>
             </div>
           </div>
@@ -142,12 +142,13 @@
         <div class="row" disabled>
           <div class="col-md-10 p-0">
             <div class="b-a wrapper-12">
-              <mat-chip-list *ngIf="otherAssetData" [disabled]="!variableFeeStructureForm.enabled" aria-label="Fish selection">
+              <mat-chip-list *ngIf="otherAssetData" [disabled]="!variableFeeStructureForm.enabled"
+                aria-label="Fish selection">
                 <mat-chip (click)="select(assets)" *ngFor="let assets of otherAssetData"
-                          [ngClass]="{'btn-primary':assets.selected}" class="f-13 f-400 wrapper-16"><i
-                  class="material-icons mr-8 text-grey f-16">
-                  check
-                </i>
+                  [ngClass]="{'btn-primary':assets.selected}" class="f-13 f-400 wrapper-16"><i
+                    class="material-icons mr-8 text-grey f-16">
+                    check
+                  </i>
                   <div *ngIf="assets">{{assets.subAssetClassName}}</div>
                 </mat-chip>
               </mat-chip-list>
@@ -155,7 +156,7 @@
           </div>
           <div class="col-md-2 p-0">
             <input type="number" maxlength="4" formControlName="pricing" placeholder="%"
-                   class="form-control br-0 h-39 br-grey">
+              class="form-control br-0 h-39 br-grey">
           </div>
 
         </div>
@@ -170,11 +171,11 @@
       <h5 class="mb-0 pt-4 text-white c-p" (click)="close()">Cancel</h5>
     </div>
     <div class="col-md-8 right text-right">
-      <button [ngClass]="{'v-h':isSave}" mat-button [disabled]="isLoading" (click)="saveVariableModifyFees()"
-              class="btn-bottom br-0 text-inherit">Save
+      <button *ngIf="singleSubscriptionData.isCreateSub" mat-button [disabled]="isLoading"
+        (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">Save
       </button>
-      <button *ngIf="singleSubscriptionData.isSaveBtn==false" mat-button (click)="saveVariableModifyFees()"
-              class="btn-bottom br-0 text-inherit">NEXT STEP
+      <button *ngIf="singleSubscriptionData.isCreateSub==false" mat-button (click)="saveVariableModifyFees()"
+        class="btn-bottom br-0 text-inherit">NEXT STEP
       </button>
       <!-- <mat-spinner *ngIf="isLoading"></mat-spinner> -->
     </div>
