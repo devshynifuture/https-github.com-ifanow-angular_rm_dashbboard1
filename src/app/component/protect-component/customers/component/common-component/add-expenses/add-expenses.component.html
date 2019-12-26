@@ -243,7 +243,7 @@
 <div class="popup-header-fix-35">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20">ADD BUDGET</h4>
+            <h4 class="mb-0 wrapper-20">ADD TRANSACTONS</h4>
         </div>
         <div class="col-md-2 text-left">
             <div class="wrapper-12">
@@ -253,69 +253,96 @@
     </div>
 </div>
 <!-- [formGroup]="expenses"   Property 'expenses' does not exist on type 'AddExpensesComponent' -->
-<div  class="pt-72 pl-24 pr-24 pb-48 mb-48">
+<div class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="expenses">
+    <div class="row">
+        <div class="col-md-5">
+            <h5 class="m-0 pt-8">Choose a date</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput class="form-control br-0" [matDatepicker]="picker" formControlName="date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <h5 class="m-0 pt-8">Choose a time</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput class="form-control br-0" maxlength="20" formControlName="time">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6">
             <h5 class="m-0 pt-8">Select a category</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select class="form-control br-0">
-                        <mat-option disabled selected hidden>Household expenses</mat-option>
-                        <mat-option value="1">Household expenses</mat-option>
+                    <mat-select class="form-control br-0" formControlName="category">
+                        <mat-option *ngFor="let choice of expenseList" [value]="choice.expenseType">
+                            {{choice.expenseType}}</mat-option>
                     </mat-select>
                     <mat-error class="f-12 pt-4">
                         This is required
                     </mat-error>
-
                 </mat-form-field>
             </div>
         </div>
     </div>
     <div class="row pt-32">
-        <div class="col-md-3">
+        <div class="col-md-6">
             <h5 class="m-0 pt-8">Enter amount</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput class="form-control rupess br-0">
+                    <input matInput class="form-control rupess br-0" formControlName="amount">
                     <mat-error class="f-12 pt-4">
                         This is required
                     </mat-error>
-
                 </mat-form-field>
             </div>
         </div>
     </div>
     <div class="row pt-32">
-        <div class="col-md-3">
-            <h5 class="m-0 pt-8">Select time range</h5>
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <mat-select class="form-control br-0">
-                        <mat-option disabled selected hidden> This quarter </mat-option>
-                        <mat-option value="1"> This quarter </mat-option>
-                    </mat-select>
-                    <mat-error class="f-12 pt-4">
-                        This is required
-                    </mat-error>
-
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-
-    <div class="row pt-32">
-        <div class="col-md-3">
+        <div class="col-md-6">
             <h5 class="m-0 pt-8">Payment mode</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select class="form-control br-0">
+                    <mat-select class="form-control br-0" formControlName="paymentMode">
                         <mat-option disabled selected hidden> Credit card </mat-option>
                         <mat-option value="1"> Credit card </mat-option>
                     </mat-select>
                     <mat-error class="f-12 pt-4">
                         This is required
                     </mat-error>
-
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-md-6">
+            <h5 class="m-0 pt-8">Description</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput class="form-control br-0" maxlength="20" formControlName="description">
+                    <mat-error class="f-12 pt-4">
+                        This is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-md-6">
+            <h5 class="m-0 pt-8">Family member</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control br-0" formControlName="familyMember">
+                        <mat-option > {{familyMember.userName}} </mat-option>
+                    </mat-select>
+                    <mat-error class="f-12 pt-4">
+                        This is required
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -329,7 +356,7 @@
         </div>
         <div class="col-md-8 right text-right">
             <!-- (click)="saveAddInsurance()" Property 'saveAddInsurance' does not exist on type 'AddExpensesComponent'-->
-            <button mat-button class="btn-bottom br-0 text-inherit" >SAVE</button>
+            <button mat-button class="btn-bottom br-0 text-inherit">SAVE</button>
 
         </div>
     </div>

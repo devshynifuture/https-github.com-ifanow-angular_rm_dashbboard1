@@ -1,27 +1,25 @@
-import { AddSsyComponent } from './../common-component/add-ssy/add-ssy.component';
-import { Component, OnInit, ViewChild, ViewEncapsulation, ViewChildren } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../../customer.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { DetailedSsyComponent } from './detailed-ssy/detailed-ssy.component';
-import * as Excel from 'exceljs/dist/exceljs';
-import { saveAs } from 'file-saver'
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelService } from '../../../../excel.service';
+import {AddSsyComponent} from './../common-component/add-ssy/add-ssy.component';
+import {Component, OnInit, ViewChild, ViewChildren, ViewEncapsulation} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../../customer.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {DetailedSsyComponent} from './detailed-ssy/detailed-ssy.component';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelService} from '../../../../excel.service';
 
 @Component({
   selector: 'app-ssy-scheme',
   templateUrl: './ssy-scheme.component.html',
   styles: [`
-  kendo-pdf-export {
-    font-family: 'Material Icons';
-    font-size: 1px;
-  }
-`,
+    kendo-pdf-export {
+      font-family: 'Material Icons';
+      font-size: 1px;
+    }
+  `,
   ],
   encapsulation: ViewEncapsulation.None
 })
@@ -34,43 +32,46 @@ export class SsySchemeComponent implements OnInit {
   sumOfCurrentValue: number;
   sumOfAmountInvested: number;
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   footer = [];
 
-  constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private eventService: EventService) { }
+  constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private eventService: EventService) {
+  }
+
   displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
   datasource: any = [{}, {}, {}];
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();;
-    this.getSsySchemedata()
+    this.clientId = AuthService.getClientId();
+    this.getSsySchemedata();
   }
 
   async ExportTOExcel(value) {
-    this.excelData = []
-    var data = []
-    var headerData = [{ width: 20, key: 'Owner' },
-    { width: 20, key: 'Current Value' },
-    { width: 10, key: 'Rate' },
-    { width: 25, key: 'Total Amount Invested' },
-    { width: 20, key: 'Account Number' },
-    { width: 15, key: 'Maturity Date' },
-    { width: 15, key: 'Description' },
-    { width: 10, key: 'Status' },]
-    var header = ['Owner', 'Current Value', 'Rate', 'Total Amount Invested',
+    this.excelData = [];
+    let data = [];
+    const headerData = [{width: 20, key: 'Owner'},
+      {width: 20, key: 'Current Value'},
+      {width: 10, key: 'Rate'},
+      {width: 25, key: 'Total Amount Invested'},
+      {width: 20, key: 'Account Number'},
+      {width: 15, key: 'Maturity Date'},
+      {width: 15, key: 'Description'},
+      {width: 10, key: 'Status'},];
+    const header = ['Owner', 'Current Value', 'Rate', 'Total Amount Invested',
       'Account Number', 'Maturity Date', 'Description', 'Status'];
     this.datasource.filteredData.forEach(element => {
       data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue), (element.rate),
-      this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested), (element.number), new Date(element.maturityDate), element.description, element.status]
-      this.excelData.push(Object.assign(data))
+        this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested), (element.number), new Date(element.maturityDate), element.description, element.status];
+      this.excelData.push(Object.assign(data));
     });
-    var footerData = ['Total',
+    const footerData = ['Total',
       this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue), '',
-      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountInvested), '', '', '', '']
-    this.footer.push(Object.assign(footerData))
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
+      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountInvested), '', '', '', ''];
+    this.footer.push(Object.assign(footerData));
+    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
   }
 
   getSsySchemedata() {
@@ -78,12 +79,13 @@ export class SsySchemeComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
-    }
+    };
     this.cusService.getSmallSavingSchemeSSYData(obj).subscribe(
       data => this.getSsySchemedataResponse(data),
       err => this.eventService.openSnackBar(err)
-    )
+    );
   }
+
   getSsySchemedataResponse(data) {
     console.log(data);
 
@@ -91,15 +93,16 @@ export class SsySchemeComponent implements OnInit {
     if (data.SSYList.length != 0) {
       this.datasource = new MatTableDataSource(data.SSYList);
       this.datasource.sort = this.sort;
-      UtilService.checkStatusId(this.datasource.filteredData)
+      UtilService.checkStatusId(this.datasource.filteredData);
       this.sumOfCurrentValue = data.SumOfCurrentValue;
       this.sumOfAmountInvested = data.SumOfAmountInvested;
       this.ssyData = data;
     } else {
-      this.noData = "No Scheme Found";
+      this.noData = 'No scheme found';
     }
 
   }
+
   deleteModal(value, data) {
     const dialogData = {
       data: value,
@@ -111,12 +114,12 @@ export class SsySchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deleteSSY(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar("SSY is deleted", "dismiss")
+            this.eventService.openSnackBar('SSY is deleted', 'dismiss');
             dialogRef.close();
             this.getSsySchemedata();
           },
           err => this.eventService.openSnackBar(err)
-        )
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -135,19 +138,20 @@ export class SsySchemeComponent implements OnInit {
 
     });
   }
+
   addOpenSSY(data, flag) {
     const fragmentData = {
       flag: 'addSyss',
       data,
       id: 1,
-      state: (flag == "detailedSsy") ? 'open35' : 'open',
-      componentName: (flag == "detailedSsy") ? DetailedSsyComponent : AddSsyComponent
+      state: (flag == 'detailedSsy') ? 'open35' : 'open',
+      componentName: (flag == 'detailedSsy') ? DetailedSsyComponent : AddSsyComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getSsySchemedata()
+          this.getSsySchemedata();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 

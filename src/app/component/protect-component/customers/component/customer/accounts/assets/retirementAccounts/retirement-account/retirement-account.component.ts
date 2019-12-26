@@ -191,7 +191,7 @@ export class RetirementAccountComponent implements OnInit {
     }
     ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   }
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
+  constructor(private excel : ExcelService,private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
   }
 
   displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'empc', 'rate', 'bal', 'bacla', 'year', 'desc', 'status', 'icons'];
@@ -526,7 +526,7 @@ export class RetirementAccountComponent implements OnInit {
       this.sumOfemployersMonthlyContribution = data.sumOfemployersMonthlyContribution;
     }
     else {
-      this.noData = "No Data Found";
+      this.noData = "No scheme found";
     }
 
   }
@@ -546,7 +546,7 @@ export class RetirementAccountComponent implements OnInit {
       this.sumOfAmountReceived = data.sumOfAmountReceived;
     }
     else {
-      this.noData = "No Data Found";
+      this.noData = "No scheme found";
     }
 
   }
@@ -568,7 +568,7 @@ export class RetirementAccountComponent implements OnInit {
       this.totalCurrentValue = data.totalCurrentValue;
     }
     else {
-      this.noData = "No Data Found";
+      this.noData = "No scheme found";
 
     }
 
@@ -590,7 +590,7 @@ export class RetirementAccountComponent implements OnInit {
       this.sumOfAnnualEmployerContribution = data.sumOfAnnualEmployerContribution;
     }
     else {
-      this.noData = "No Data Found";
+      this.noData = "No scheme found";
 
     }
 
@@ -612,7 +612,7 @@ export class RetirementAccountComponent implements OnInit {
       this.totalPensionAmount = data.totalPensionAmount;
     }
     else {
-      this.noData = "No Data Found";
+      this.noData = "No scheme found";
 
     }
 

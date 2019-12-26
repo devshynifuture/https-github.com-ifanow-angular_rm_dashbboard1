@@ -10,7 +10,7 @@ import { DocumentsComponent } from '../documents/documents.component';
 
 
 @NgModule({
-  declarations: [AccountsDocumentsComponent, DocumentsComponent],
+  declarations: [AccountsDocumentsComponent, DocumentsComponent,CustomerDocumentsComponent],
   imports: [
     CommonModule,
     AccountsDocumentsRoutingModule,

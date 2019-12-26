@@ -4,11 +4,11 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 // import {CustomerComponent} from '../customer.component';
 import {ChartModule} from 'angular-highcharts';
 import {MaterialModule} from '../../../../../../material/material';
-import {FactShitComponent} from '../../common-component/fact-shit/fact-shit.component';
+import {FactSheetComponent} from '../../common-component/fact-shit/fact-sheet.component';
 import {TransactionsComponent} from '../../common-component/transactions/transactions.component';
 
 const componentList = [
-  FactShitComponent,
+  FactSheetComponent,
   TransactionsComponent];
 
 @NgModule({
