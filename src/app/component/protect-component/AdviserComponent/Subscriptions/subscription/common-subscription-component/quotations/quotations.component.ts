@@ -99,17 +99,21 @@ export class QuotationsComponent implements OnInit {
 
   selectedInvoice() {
     this.dataCount = 0;
-    this.dataSource.forEach(item => {
-      console.log('item item ', item);
-      if (item.selected) {
-        this.dataCount++;
-      }
-    });
+    if (this.dataSource.filteredData != undefined) {
+      this.dataSource.filteredData.forEach(item => {
+        console.log('item item ', item);
+        if (item.selected) {
+          this.dataCount++;
+        }
+      });
+    }
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    return this.dataCount === this.dataSource.length;
+    if (this.dataSource.filteredData != undefined) {
+      return this.dataCount === this.dataSource.filteredData.length;
+    }
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */

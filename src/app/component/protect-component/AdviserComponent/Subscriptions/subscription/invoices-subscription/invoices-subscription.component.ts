@@ -66,7 +66,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   @Input() invoiceValue
 
   ngOnInit() {
-    this.dataSource= [{}, {}, {}];
+    this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
     this.getInvoiceSubData();
     this.showEdit = false;
@@ -153,28 +153,33 @@ export class InvoicesSubscriptionComponent implements OnInit {
     // const checked = event.target.checked;
     // this.dataSource.forEach(item => item.selected = 'checked');
     this.dataCount = 0;
-    this.dataSource.forEach(item => {
-      item.selected = event.checked;
-      if (item.selected) {
-        this.dataCount++;
-      }
-    });
-
+    if (this.dataSource.filteredData != undefined) {
+      this.dataSource.filteredData.forEach(item => {
+        item.selected = event.checked;
+        if (item.selected) {
+          this.dataCount++;
+        }
+      });
+    }
   }
 
   changeSelect() {
     this.dataCount = 0;
-    this.dataSource.forEach(item => {
-      console.log('item item ', item);
-      if (item.selected) {
-        this.dataCount++;
-      }
-    });
+    if (this.dataSource.filteredData != undefined) {
+      this.dataSource.filteredData.forEach(item => {
+        console.log('item item ', item);
+        if (item.selected) {
+          this.dataCount++;
+        }
+      });
+    }
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    return this.dataCount === this.dataSource.length;
+    if (this.dataSource.filteredData != undefined) {
+      return this.dataCount === this.dataSource.filteredData.length;
+    }
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
