@@ -169,6 +169,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.isLoading = false;
 
     if (data == undefined) {
+      this.dataSource=undefined;
       this.noData = "No Data Found";
     } else {
       console.log(data);

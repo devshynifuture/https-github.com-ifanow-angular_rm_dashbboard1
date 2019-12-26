@@ -202,6 +202,7 @@
           <div class="col-md-9 p-0">
             <p class="m-0 text-black text-left pt-12">{{dataCount}} documents selected</p>
           </div>
+        </div>
           <table matSort mat-table [dataSource]="dataSource" class="mt-8" id="table-low" class="mt-8 skeletonAnimation"
             appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="checkbox">
@@ -297,7 +298,6 @@
           </table>
           <h4 *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4>
         </div>
-      </div>
     </div>
 
 

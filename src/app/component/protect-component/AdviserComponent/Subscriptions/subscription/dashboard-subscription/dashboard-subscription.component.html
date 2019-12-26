@@ -1,6 +1,8 @@
 <div *ngIf="showSubStep==false" [ngClass]="showLetsBegin==true ? 'pt-130': 'pt-0'  " class="full-lights pb-36 " id="ui-dashboard">
     <div class="wrapper-20">
-        <div *ngIf="showLetsBegin" class="row bg-red mt-20 mb-36">
+        <!-- <div *ngIf="showLetsBegin" class="row bg-red mt-20 mb-36"> -->
+
+        <div class="row bg-red mt-20 mb-36">
             <div class="col-md-5">
                 <img class="dashboard-img" src="assets/images/svg/Dashboard.svg">
             </div>
@@ -9,7 +11,7 @@
                 <p class="mb-0 pt-12">We’re excited to see you here! The dashboard currently looks barren. </p>
                 <p> Fret not. We’ll help you in this journey. We’re in this together. </p>
                 <button (click)="showSubscriptionSteps()" class="btn-red addon mb-28 mt-16" mat-flat-button>Let's begin
-          <i class="material-icons right text-right"> arrow_forward </i></button>
+                    <i class="material-icons right text-right"> arrow_forward </i></button>
             </div>
         </div>
         <div [ngClass]="showLetsBegin==true ? 'pt-40': 'pt-100'  " class=" subscription-summary">
@@ -100,7 +102,7 @@
                                         <p class="f-300 f-18 mb-0">Total sales</p>
                                         <h2 class="text-primary mb-0 pb-28 pt-8 relClass">
                                             <span [value]="totalSaleReceived ? totalSaleReceived.totalSales : 0" appFormatNumber class="bar">
-                      </span>
+                                            </span>
                                         </h2>
                                     </div>
                                 </div>
@@ -183,7 +185,7 @@
    <button mat-button class="text-custom">UPCOMING</button>-->
                                     </div>
                                 </div>
-                                <div class="sub-summary">
+                                <div class="sub-summary overflow-hidden">
                                     <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table>
                                         <tbody>
                                             <ng-container matColumnDef="name">
@@ -214,19 +216,19 @@
                                                 <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;">
                                                 </th>
                                                 <td *matCellDef="let element" mat-cell style="width: 2%;"><i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
-                            more_vert
-                          </i>
+                                                        more_vert
+                                                    </i>
                                                     <mat-menu #menu="matMenu">
                                                         <a (click)="Open(element)" mat-menu-item>View & Modify fee
-                              structure</a>
+                                                            structure</a>
                                                         <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change
-                              Biller</a>
+                                                            Biller</a>
                                                         <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change
-                              Payee</a>
+                                                            Payee</a>
                                                         <a (click)="delete('cancelSubscription')" class="bt-1" mat-menu-item>Cancel
-                              subscription</a>
+                                                            subscription</a>
                                                         <a (click)="deleteModal('SUBSCRIPTION')" mat-menu-item>Delete
-                              subscription</a>
+                                                            subscription</a>
                                                     </mat-menu>
                                                 </td>
                                             </ng-container>
