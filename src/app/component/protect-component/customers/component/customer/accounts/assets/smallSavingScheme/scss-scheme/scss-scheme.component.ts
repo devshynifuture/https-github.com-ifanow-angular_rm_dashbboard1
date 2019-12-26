@@ -133,7 +133,7 @@ export class ScssSchemeComponent implements OnInit {
       this.sumOfQuarterlyPayout = data.sumOfQuarterlyPayout;
       this.scssData = data;
     } else {
-      this.noData = 'No Scheme Found';
+      this.noData = 'No scheme found';
     }
   }
 

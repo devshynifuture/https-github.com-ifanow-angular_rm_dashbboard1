@@ -2,7 +2,7 @@
     <div class="col-md-4 p-0">
         <h4 class="m-0 text-black roboto pt-8">Post office time deposit (PO TD)</h4>
     </div>
-    <div class="col-md-8 p-0 right text-right">
+    <div class="col-md-8 p-0 right text-right" *ngIf="dataSource!=undefined">
         <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
         <mat-menu #menu5="matMenu">
             <button mat-menu-item>PDF</button>
@@ -146,11 +146,9 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns22;"></tr>
         <tr mat-footer-row *matFooterRowDef="displayedColumns22;sticky: true" [hidden]="isLoading"></tr>
     </table>
-    <div *ngIf="dataSource==undefined">
+    <div *ngIf="dataSource==undefined" class="d-flex flex-column align-items-center">
         <h4 class="text-center pt-72">{{noData}}</h4>
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOTD(null)"><i
+            class="material-icons">add</i>ADD NEW</button>
     </div>
-</div>
-
-<div *ngIf="isLoading">
-    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div>

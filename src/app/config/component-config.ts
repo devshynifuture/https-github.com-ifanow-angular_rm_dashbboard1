@@ -172,8 +172,8 @@ export const appConfig = {
   ADD_WEALTH_CREATION_GOAL: 'goal-planning/wealth-creation/goal/add',
   ADD_BIGSPEND_GOAL: 'goal-planning/big-spend/goal/add',
   ADD_OTHERS_GOAL: 'goal-planning/others/goal/add',
-  ADD_EXPENSE:'account/expense/recurring/expense/add',
-  EDIT_EXPENSE:'/account/expense/recurring/expense/edit',
+  ADD_EXPENSE:'account/expense/transaction/add',
+  EDIT_EXPENSE:'account/expense/transaction/edit',
   RISK_HISTORY:'plan/risk-assessment/history/get',
   RESULT_VIEW:'plan/risk-assessment-result/get',
   ////////////////////////////// subscription////////////////////////////////////////////

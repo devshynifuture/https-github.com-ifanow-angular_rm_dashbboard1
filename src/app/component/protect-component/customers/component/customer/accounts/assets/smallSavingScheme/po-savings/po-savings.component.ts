@@ -88,7 +88,7 @@ export class PoSavingsComponent implements OnInit {
       this.balanceMentionedSum = data.balanceMentionedSum;
       this.posavingdata = data;
     } else {
-      this.noData = 'No Scheme Found';
+      this.noData = 'No scheme found';
     }
   }
 

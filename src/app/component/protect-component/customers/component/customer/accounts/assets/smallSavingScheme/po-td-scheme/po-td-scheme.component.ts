@@ -84,7 +84,7 @@ export class PoTdSchemeComponent implements OnInit {
       this.dataSource.sort = this.sort;
       UtilService.checkStatusId(this.dataSource.filteredData);
     } else {
-      this.noData = 'No Scheme Found';
+      this.noData = 'No scheme found';
     }
   }
 

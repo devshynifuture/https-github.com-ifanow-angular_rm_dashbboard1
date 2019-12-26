@@ -1,8 +1,3 @@
-import { DocumentsComponent } from './documents/documents.component';
-import { InsuranceComponent } from './insurance/insurance.component';
-import { LiabilitiesComponent } from './liabilities/liabilities.component';
-import { AssetsComponent } from './assets/assets.component';
-import { SummaryComponent } from './summary/summary.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountsComponent } from './accounts.component';
@@ -13,6 +8,7 @@ const routes: Routes = [{
   path: '',
   component: AccountsComponent,
   children: [
+
     {
       path: 'summary',
       loadChildren: () => import('./accounts-summary/accounts-summary.module').then(m => m.AccountsSummaryModule),
@@ -41,7 +37,12 @@ const routes: Routes = [{
       path: 'documents',
       loadChildren: () => import('./accounts-documents/accounts-documents.module').then(m => m.AccountsDocumentsModule)
       // outlet: 'accountRouterOutlet'
-    }
+    },
+    {
+      path: '',
+      redirectTo: 'summary',
+      pathMatch: 'full'
+    },
   ],
 },
 
