@@ -8,17 +8,18 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
   styleUrls: ['./profile-plan.component.scss']
 })
 export class ProfilePlanComponent implements OnInit {
-  
+
   viewMode
   constructor(private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
-    this.viewMode="tab1"
+    this.viewMode = "tab1"
+    console.log(this.viewMode)
   }
 
- 
 
-  open(flagValue){
+
+  open(flagValue) {
     const fragmentData = {
       flag: flagValue,
       id: 1,
@@ -30,7 +31,7 @@ export class ProfilePlanComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-    
+
         }
       }
     );
@@ -38,5 +39,5 @@ export class ProfilePlanComponent implements OnInit {
 
   panelOpenState = false;
 
-  
+
 }

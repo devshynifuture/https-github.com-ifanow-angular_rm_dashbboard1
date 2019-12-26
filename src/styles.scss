@@ -703,7 +703,7 @@ mat-tab-group[vertical] {
     width: 100%;
     top: 0;
     background: #fff;
-    z-index: 99;
+    z-index: 100;
     .left-icons {
         position: fixed;
         z-index: 11;
@@ -724,6 +724,7 @@ mat-tab-group[vertical] {
         height: 58px !important;
         padding: 0 !important;
         padding-bottom: 5px !important;
+        border-bottom: 1px solid transparent !important;
     }
     // .mat-ink-bar {
     //     height: 6px !important;
@@ -1120,7 +1121,7 @@ mat-tab-group[vertical] {
             display: block;
             width: 100%;
             height: 24px;
-            background-image: linear-gradient( 100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+            background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
             background-size: 200px 24px;
             background-position: -100px 0;
             background-repeat: no-repeat;
@@ -1149,7 +1150,7 @@ mat-tab-group[vertical] {
             display: block;
             width: 100%;
             height: 24px;
-            background-image: linear-gradient( 100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+            background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
             background-size: 200px 24px;
             background-position: -100px 0;
             background-repeat: no-repeat;
