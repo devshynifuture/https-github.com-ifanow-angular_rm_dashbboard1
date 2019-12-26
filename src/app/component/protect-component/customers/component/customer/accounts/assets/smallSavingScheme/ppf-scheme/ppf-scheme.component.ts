@@ -1,12 +1,13 @@
-import { AddPpfComponent } from './../common-component/add-ppf/add-ppf.component';
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../../customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import {AddPpfComponent} from './../common-component/add-ppf/add-ppf.component';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../../customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {ExcelService} from '../../../../excel.service';
 
 @Component({
   selector: 'app-ppf-scheme',
@@ -19,12 +20,12 @@ export class PPFSchemeComponent implements OnInit {
   noData: string;
   isLoading: boolean = true;
 
-  constructor(public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
+  constructor(private excel : ExcelService,public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   displayedColumns = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
   dataSource;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId = 2978;
+    this.clientId = AuthService.getClientId();
     this.getPpfSchemeData();
   }
   getPpfSchemeData() {
