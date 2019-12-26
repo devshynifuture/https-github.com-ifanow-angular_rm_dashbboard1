@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { BackOfficeService } from '../../protect-component/AdviserComponent/backOffice/back-office.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {BackOfficeService} from '../../protect-component/AdviserComponent/backOffice/back-office.service';
 
 @Component({
   selector: 'app-login',
@@ -63,32 +63,32 @@ export class LoginComponent implements OnInit {
         roleId: 1
       };
 
-      // this.hardCodeLoginForTest();
+      this.hardCodeLoginForTest();
       // console.log(loginData);
-      this.backOfficeService.loginApi(loginData).subscribe(
-        data => {
-          if (data) {
-            console.log('data: ', data);
-            this.authService.setToken(data.token);
-            if (!data.advisorId) {
-              data.advisorId = data.adminAdvisorId;
-            }
-            this.authService.setUserInfo(data);
-            this.eventService.openSnackBar('Login SuccessFully', 'dismiss');
-            this.router.navigate(['admin', 'subscription', 'dashboard']);
+      /* this.backOfficeService.loginApi(loginData).subscribe(
+         data => {
+           if (data) {
+             console.log('data: ', data);
+             this.authService.setToken(data.token);
+             if (!data.advisorId) {
+               data.advisorId = data.adminAdvisorId;
+             }
+             this.authService.setUserInfo(data);
+             this.eventService.openSnackBar('Login SuccessFully', 'dismiss');
+             this.router.navigate(['admin', 'subscription', 'dashboard']);
 
-            // Hard coded client login for testing
-            this.authService.setClientData({
-              id: 2978, name: 'Aryendra Kumar Saxena'
-            });
-          }
-          this.closeDialog(data);
-        },
-        err => {
-          console.log('error on login: ', err);
-          this.eventService.openSnackBar(err, 'dismiss');
-        }
-      );
+             // Hard coded client login for testing
+             this.authService.setClientData({
+               id: 2978, name: 'Aryendra Kumar Saxena'
+             });
+           }
+           this.closeDialog(data);
+         },
+         err => {
+           console.log('error on login: ', err);
+           this.eventService.openSnackBar(err, 'dismiss');
+         }
+       );*/
     }
   }
 
