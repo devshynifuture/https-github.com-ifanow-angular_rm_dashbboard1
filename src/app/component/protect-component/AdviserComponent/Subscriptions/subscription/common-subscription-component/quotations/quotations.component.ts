@@ -284,8 +284,8 @@ export class QuotationsComponent implements OnInit {
     // this.dataSource.forEach(item => item.selected = 'checked');
 
     this.dataCount = 0;
-    if (this.dataSource) {
-      this.dataSource.forEach(item => {
+    if (this.dataSource.filteredData) {
+      this.dataSource.filteredData.forEach(item => {
         item.selected = event.checked;
         if (item.selected) {
           this.dataCount++;
