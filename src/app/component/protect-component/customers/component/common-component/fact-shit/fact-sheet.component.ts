@@ -26,13 +26,13 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {name: 'ICICI Bank', sector: "Financial", ins: 'Equity', all: "12.23%", assets: "1,290"},
-  {name: 'ICICI Bank', sector: "Financial", ins: 'Equity', all: "12.23%", assets: "1,290"},
-  {name: 'ICICI Bank', sector: "Financial", ins: 'Equity', all: "12.23%", assets: "1,290"},
-  {name: 'ICICI Bank', sector: "Financial", ins: 'Equity', all: "12.23%", assets: "1,290"},
-  {name: 'ICICI Bank', sector: "Financial", ins: 'Equity', all: "12.23%", assets: "1,290"},
-  {name: 'ICICI Bank', sector: "Financial", ins: 'Equity', all: "12.23%", assets: "1,290"},
-  {name: 'ICICI Bank', sector: "Financial", ins: 'Equity', all: "12.23%", assets: "1,290"},
-  {name: 'ICICI Bank', sector: "Financial", ins: 'Equity', all: "12.23%", assets: "1,290"},
+  {name: 'ICICI Bank', sector: 'Financial', ins: 'Equity', all: '12.23%', assets: '1,290'},
+  {name: 'ICICI Bank', sector: 'Financial', ins: 'Equity', all: '12.23%', assets: '1,290'},
+  {name: 'ICICI Bank', sector: 'Financial', ins: 'Equity', all: '12.23%', assets: '1,290'},
+  {name: 'ICICI Bank', sector: 'Financial', ins: 'Equity', all: '12.23%', assets: '1,290'},
+  {name: 'ICICI Bank', sector: 'Financial', ins: 'Equity', all: '12.23%', assets: '1,290'},
+  {name: 'ICICI Bank', sector: 'Financial', ins: 'Equity', all: '12.23%', assets: '1,290'},
+  {name: 'ICICI Bank', sector: 'Financial', ins: 'Equity', all: '12.23%', assets: '1,290'},
+  {name: 'ICICI Bank', sector: 'Financial', ins: 'Equity', all: '12.23%', assets: '1,290'},
 
 ];
