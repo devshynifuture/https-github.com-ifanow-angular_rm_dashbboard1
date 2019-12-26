@@ -1,18 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { SubscriptionService } from '../../../subscription.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MatSliderChange } from '@angular/material';
-import { HAMMER_GESTURE_CONFIG } from "@angular/platform-browser";
-import { GestureConfig } from "@angular/material/core";
-import { UtilService } from 'src/app/services/util.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {SubscriptionService} from '../../../subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatSliderChange} from '@angular/material';
+import {HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
+import {GestureConfig} from '@angular/material/core';
 
 @Component({
   selector: 'app-change-payee',
   templateUrl: './change-payee.component.html',
   styleUrls: ['./change-payee.component.scss'],
   providers: [
-    { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig },
+    {provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig},
   ]
 })
 export class ChangePayeeComponent implements OnInit {
@@ -26,7 +25,7 @@ export class ChangePayeeComponent implements OnInit {
   set data(payeeData) {
     this._payeeData = payeeData;
     console.log('input payeeData : ', payeeData);
-    this.getPayeeData(payeeData)
+    this.getPayeeData(payeeData);
 
   }
 
@@ -91,12 +90,11 @@ export class ChangePayeeComponent implements OnInit {
   }
 
   openAddPayee() {
-    let obj =
-    {
+    const obj = {
       data: 'Add',
       flag: false
-    }
-    this.payeeFlag.emit(obj)
+    };
+    this.payeeFlag.emit(obj);
   }
   onInputChange(event: MatSliderChange, singlePlan) {
     console.log('This is emitted as the thumb slides');
