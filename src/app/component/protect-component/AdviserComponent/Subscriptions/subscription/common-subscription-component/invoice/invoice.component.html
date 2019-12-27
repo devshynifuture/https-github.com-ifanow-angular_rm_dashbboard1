@@ -34,7 +34,8 @@
         </div>
         <div class="row ">
             <div class="col-md-4 p-0 max-height-100">
-                <div class="invoiceSpacing b-b" *ngFor="let strData of dataInvoices" (click)="passInvoice(strData,$event)">
+                <div class="invoiceSpacing b-b" *ngFor="let strData of dataInvoices"
+                    (click)="passInvoice(strData,$event)">
                     <div class="row">
                         <div class="col-md-8">
                             <p class="m-0 f-15">{{strData.clientName}}</p>
@@ -51,7 +52,8 @@
                             <p class="m-0 f-13 pt-12">{{strData.invoiceDate | date:'dd/MM/yyyy'}}</p>
                         </div>
                         <div class="col-md-5 text-right pr-8">
-                            <p class="m-0 f-13 pt-12" [ngClass]="{'text-danger':strData.status==0,'text-primary':strData.status==1,'text-success':strData.status==2}">
+                            <p class="m-0 f-13 pt-12"
+                                [ngClass]="{'text-danger':strData.status==0,'text-primary':strData.status==1,'text-success':strData.status==2}">
                                 {{(strData.status==0)?'OVERDUE':(strData.status==1)?'OVERDUE':(strData.status==2)?'PAID':''}}
                             </p>
                         </div>
@@ -66,7 +68,8 @@
                         <img src="assets/images/svg/mail-light.svg" class="b-a" (click)="openSendEmail(null)">
                         <img src="assets/images/svg/pdf-icons.svg" class="b-a ">
                         <img src="assets/images/svg/printer.svg" class="b-a " (click)="printPage()">
-                        <img src="assets/images/svg/delete.svg" class="b-a wrapper-9 ml-8" (click)="deleteModal('INVOICE',element)">
+                        <img src="assets/images/svg/delete.svg" class="b-a wrapper-9 ml-8"
+                            (click)="deleteModal('INVOICE',element)">
                     </div>
                     <div class="col-md-4 right text-right">
                         <button mat-stroked-button class="btn-primary br-0 mb-12" (click)="recordPayment()">RECORD
@@ -82,7 +85,8 @@
                                     <h1 class="f-42 text-custom pt-48 f-700">INVOICE</h1>
                                 </div>
                                 <div class="col-md-3 text-right">
-                                    <img src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png" class="pt-20">
+                                    <img src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png"
+                                        class="pt-20">
                                 </div>
                             </div>
                         </div>
@@ -105,12 +109,15 @@
 
                             <div class="row pt-44">
                                 <div class="col-md-8">
-                                    <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>: {{storeData.invoiceNumber}}
+                                    <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>:
+                                        {{storeData.invoiceNumber}}
                                     </p>
-                                    <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>: {{storeData.invoiceDate| date:'dd/MM/yyyy'}}</p>
+                                    <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>:
+                                        {{storeData.invoiceDate| date:'dd/MM/yyyy'}}</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <h2 [ngClass]="{'text-danger':storeData.status==0,'text-primary':storeData.status==1,'text-success':storeData.status==2}">
+                                    <h2
+                                        [ngClass]="{'text-danger':storeData.status==0,'text-primary':storeData.status==1,'text-success':storeData.status==2}">
                                         {{(storeData.status==0)?'OVERDUE':(storeData.status==1)?'OVERDUE':(storeData.status==2)?'PAID':''}}
                                     </h2>
                                 </div>
@@ -157,7 +164,8 @@
                                         <div class="col-md-8">
                                             <p class="f-500 roboto pt-8">Total</p>
                                         </div>
-                                        <div class="col-md-4 text-right" *ngIf="storeData.cgst!=undefined && storeData.sgst!=undefined">
+                                        <div class="col-md-4 text-right"
+                                            *ngIf="storeData.cgst!=undefined && storeData.sgst!=undefined">
                                             <p class="f-500 roboto pt-8">₹{{formatter(storeData.finalAmount)}}</p>
                                         </div>
                                         <div class="col-md-4 text-right" *ngIf="storeData.igst!=undefined">
@@ -184,7 +192,8 @@
                                 <p class="m-0 text-black f-500 pt-12">Fee calculation - Attachment</p>
                             </div>
                             <div class="col-md-2 wrapper-9 right">
-                                <button mat-stroked-button class="btn-primary br-0" (click)="OpenFeeCalc()">View</button>
+                                <button mat-stroked-button class="btn-primary br-0"
+                                    (click)="OpenFeeCalc()">View</button>
                             </div>
                         </div>
                         <div class="row pt-32">
@@ -224,7 +233,8 @@
                             </ng-container>
                             <ng-container matColumnDef="icons">
                                 <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
-                                <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
+                                <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menu"
+                                        class="material-icons c-p iconscolors">
                                         more_vert
                                     </i>
                                     <mat-menu #menu="matMenu">
@@ -246,11 +256,14 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input type="text" (keypress)="keyPress($event)" class="form-control" maxlength="{{getFormControl().amountReceived.maxLength}}" formControlName="amountReceived">
+                                    <input type="text" (keypress)="keyPress($event)" class="form-control"
+                                        maxlength="{{getFormControl().amountReceived.maxLength}}"
+                                        formControlName="amountReceived">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
-                                        <mat-error class="f-12 pt-4" *ngIf="isamountValid && getFormControl().amountReceived.invalid || (getFormControl().amountReceived.touched && getFormControl().amountReceived.invalid)">
+                                        <mat-error class="f-12 pt-4"
+                                            *ngIf="isamountValid && getFormControl().amountReceived.invalid || (getFormControl().amountReceived.touched && getFormControl().amountReceived.invalid)">
                                             amount received is required</mat-error>
                                     </div>
                                     <div class="col-md-2 pl-0">
@@ -268,12 +281,15 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input type="text" (keypress)="keyPress($event)" class="form-control" maxlength="{{getFormControl().chargesIfAny.maxLength}}" formControlName="chargesIfAny">
+                                    <input type="text" (keypress)="keyPress($event)" class="form-control"
+                                        maxlength="{{getFormControl().chargesIfAny.maxLength}}"
+                                        formControlName="chargesIfAny">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
                                         <!-- <p class="f-12 m-0 text-left text-custom pt-4" *ngIf="getFormControl().chargesIfAny.untouched">Assistive text</p> -->
-                                        <mat-error class="f-12 pt-4" *ngIf="ischargeValid && getFormControl().chargesIfAny.invalid || (getFormControl().chargesIfAny.touched && getFormControl().chargesIfAny.invalid)">
+                                        <mat-error class="f-12 pt-4"
+                                            *ngIf="ischargeValid && getFormControl().chargesIfAny.invalid || (getFormControl().chargesIfAny.touched && getFormControl().chargesIfAny.invalid)">
                                             chargesIfAny is required</mat-error>
                                     </div>
                                     <div class="col-md-2 pl-0">
@@ -290,12 +306,14 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input type="text" class="form-control" maxlength="{{getFormControl().tds.maxLength}}" formControlName="tds">
+                                    <input type="text" class="form-control"
+                                        maxlength="{{getFormControl().tds.maxLength}}" formControlName="tds">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
                                         <!-- <p class="f-12 m-0 text-left text-custom pt-4" *ngIf="getFormControl().tds.untouched">Assistive text</p> -->
-                                        <mat-error class="f-12 pt-4" *ngIf="istdsValid && getFormControl().tds.invalid || (getFormControl().tds.touched && getFormControl().tds.invalid)">
+                                        <mat-error class="f-12 pt-4"
+                                            *ngIf="istdsValid && getFormControl().tds.invalid || (getFormControl().tds.touched && getFormControl().tds.invalid)">
                                             TDS is required</mat-error>
                                     </div>
                                     <div class="col-md-2 pl-0">
@@ -315,13 +333,15 @@
                                     <!-- <input type="date" class="form-control" formControlName="paymentDate"> -->
 
                                     <mat-form-field>
-                                        <input matInput formControlName="paymentDate" [matDatepicker]="picker" class="form-control">
+                                        <input matInput formControlName="paymentDate" [matDatepicker]="picker"
+                                            class="form-control">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                     </mat-form-field>
                                     <div class="row">
                                         <div class="col-md-10 pr-0">
-                                            <mat-error class="f-12 pt-4" *ngIf="isdateValid && getFormControl().paymentDate.invalid || (getFormControl().paymentDate.touched && getFormControl().paymentDate.invalid)">
+                                            <mat-error class="f-12 pt-4"
+                                                *ngIf="isdateValid && getFormControl().paymentDate.invalid || (getFormControl().paymentDate.touched && getFormControl().paymentDate.invalid)">
                                                 payment date is required</mat-error>
                                         </div>
                                     </div>
@@ -342,7 +362,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
-                                        <mat-error class="f-12 pt-4" *ngIf="ismodeValid && getFormControl().paymentMode.invalid || (getFormControl().paymentMode.touched && getFormControl().paymentMode.invalid)">
+                                        <mat-error class="f-12 pt-4"
+                                            *ngIf="ismodeValid && getFormControl().paymentMode.invalid || (getFormControl().paymentMode.touched && getFormControl().paymentMode.invalid)">
                                             paymentMode is required</mat-error>
                                     </div>
                                     <!-- <div class="col-md-2 pl-0">
@@ -368,7 +389,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
-                                        <mat-error class="f-12 pt-4" *ngIf="isgstValid && getFormControl().gstTreatment.invalid || (getFormControl().gstTreatment.touched && getFormControl().gstTreatment.invalid)">
+                                        <mat-error class="f-12 pt-4"
+                                            *ngIf="isgstValid && getFormControl().gstTreatment.invalid || (getFormControl().gstTreatment.touched && getFormControl().gstTreatment.invalid)">
                                             gst treatment is required</mat-error>
                                     </div>
                                 </div>
@@ -380,7 +402,8 @@
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group mb-0">
-                                    <textarea class="form-control" rows="5" formControlName="notes" maxlength="{{getFormControl().notes.maxLength}}"></textarea>
+                                    <textarea class="form-control" rows="5" formControlName="notes"
+                                        maxlength="{{getFormControl().notes.maxLength}}"></textarea>
                                 </div>
                                 <div class="row ">
 
@@ -401,7 +424,8 @@
                             <div class="col-md-12 right text-right">
                                 <h5 class="mat-stroked-button br-0 text-light mr-20" (click)="cancel()">CANCEL</h5>
 
-                                <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFormData()">SAVE</button>
+                                <button mat-button class="btn-bottom br-0 text-inherit"
+                                    (click)="saveFormData()">SAVE</button>
                             </div>
                         </div>
                     </div>
@@ -615,7 +639,8 @@
                         <h1 class="f-42 text-custom pt-48 f-700">INVOICE</h1>
                     </div>
                     <div class="col-md-3 text-right">
-                        <img src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png" class="pt-20">
+                        <img src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png"
+                            class="pt-20">
                     </div>
                 </div>
             </div>
@@ -637,12 +662,15 @@
 
                 <div class="row pt-44">
                     <div class="col-md-8">
-                        <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>: {{storeData.invoiceNumber}}
+                        <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>:
+                            {{storeData.invoiceNumber}}
                         </p>
-                        <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>: {{storeData.invoiceDate | date:'dd/MM/yyyy'}}</p>
+                        <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>:
+                            {{storeData.invoiceDate | date:'dd/MM/yyyy'}}</p>
                     </div>
                     <div class="col-md-4">
-                        <h2 [ngClass]="{'text-danger':storeData.status==0,'text-primary':storeData.status==1,'text-success':storeData.status==2}">
+                        <h2
+                            [ngClass]="{'text-danger':storeData.status==0,'text-primary':storeData.status==1,'text-success':storeData.status==2}">
                             {{(storeData.status==0)?'OVERDUE':(storeData.status==1)?'OVERDUE':(storeData.status==2)?'PAID':''}}
                         </h2>
                     </div>
@@ -689,7 +717,8 @@
                                 <div class="col-md-8">
                                     <p class="f-500 roboto pt-8">Total</p>
                                 </div>
-                                <div class="col-md-4 text-right" *ngIf="storeData.cgst!=undefined && storeData.sgst!=undefined">
+                                <div class="col-md-4 text-right"
+                                    *ngIf="storeData.cgst!=undefined && storeData.sgst!=undefined">
                                     <p class="f-500 roboto pt-8">{{formatter(storeData.finalAmount)}}</p>
                                 </div>
                                 <div class="col-md-4 text-right" *ngIf="storeData.igst!=undefined">
@@ -757,7 +786,8 @@
                 </ng-container>
                 <ng-container matColumnDef="icons">
                     <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
-                    <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
+                    <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menu"
+                            class="material-icons c-p iconscolors">
                             more_vert
                         </i>
                         <mat-menu #menu="matMenu">
@@ -779,11 +809,13 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group mb-0">
-                        <input type="text" (keypress)="keyPress($event)" class="form-control" maxlength="{{getFormControl().amountReceived.maxLength}}" formControlName="amountReceived">
+                        <input type="text" (keypress)="keyPress($event)" class="form-control"
+                            maxlength="{{getFormControl().amountReceived.maxLength}}" formControlName="amountReceived">
                     </div>
                     <div class="row">
                         <div class="col-md-10">
-                            <mat-error class="f-12 pt-4" *ngIf="isamountValid && getFormControl().amountReceived.invalid || (getFormControl().amountReceived.touched && getFormControl().amountReceived.invalid)">
+                            <mat-error class="f-12 pt-4"
+                                *ngIf="isamountValid && getFormControl().amountReceived.invalid || (getFormControl().amountReceived.touched && getFormControl().amountReceived.invalid)">
                                 amount received is required</mat-error>
                         </div>
                         <div class="col-md-2 pl-0">
@@ -800,13 +832,15 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group mb-0">
-                        <input type="text" (keypress)="keyPress($event)" class="form-control" maxlength="{{getFormControl().chargesIfAny.maxLength}}" formControlName="chargesIfAny">
+                        <input type="text" (keypress)="keyPress($event)" class="form-control"
+                            maxlength="{{getFormControl().chargesIfAny.maxLength}}" formControlName="chargesIfAny">
                     </div>
 
                     <div class="row">
                         <div class="col-md-10 pr-0">
                             <!-- <p class="f-12 m-0 text-left text-custom pt-4" *ngIf="getFormControl().chargesIfAny.untouched">Assistive text</p> -->
-                            <mat-error class="f-12 pt-4" *ngIf="ischargeValid && getFormControl().chargesIfAny.invalid || (getFormControl().chargesIfAny.touched && getFormControl().chargesIfAny.invalid)">
+                            <mat-error class="f-12 pt-4"
+                                *ngIf="ischargeValid && getFormControl().chargesIfAny.invalid || (getFormControl().chargesIfAny.touched && getFormControl().chargesIfAny.invalid)">
                                 chargesIfAny is required</mat-error>
                         </div>
                         <div class="col-md-2 pl-0">
@@ -823,12 +857,14 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group mb-0">
-                        <input type="text" class="form-control" maxlength="{{getFormControl().tds.maxLength}}" formControlName="tds">
+                        <input type="text" class="form-control" maxlength="{{getFormControl().tds.maxLength}}"
+                            formControlName="tds">
                     </div>
                     <div class="row">
                         <div class="col-md-10 pr-0">
                             <!-- <p class="f-12 m-0 text-left text-custom pt-4" *ngIf="getFormControl().tds.untouched">Assistive text</p> -->
-                            <mat-error class="f-12 pt-4" *ngIf="istdsValid && getFormControl().tds.invalid || (getFormControl().tds.touched && getFormControl().tds.invalid)">
+                            <mat-error class="f-12 pt-4"
+                                *ngIf="istdsValid && getFormControl().tds.invalid || (getFormControl().tds.touched && getFormControl().tds.invalid)">
                                 TDS is required</mat-error>
                         </div>
                         <div class="col-md-2 pl-0">
@@ -852,7 +888,8 @@
                         </mat-form-field>
                         <div class="row">
                             <div class="col-md-10 pr-0">
-                                <mat-error class="f-12 pt-4" *ngIf="isdateValid && getFormControl().paymentDate.invalid || (getFormControl().paymentDate.touched && getFormControl().paymentDate.invalid)">
+                                <mat-error class="f-12 pt-4"
+                                    *ngIf="isdateValid && getFormControl().paymentDate.invalid || (getFormControl().paymentDate.touched && getFormControl().paymentDate.invalid)">
                                     payment date is required</mat-error>
                             </div>
                         </div>
@@ -874,7 +911,8 @@
                     </div>
                     <div class="row">
                         <div class="col-md-10 pr-0">
-                            <mat-error class="f-12 pt-4" *ngIf="ismodeValid && getFormControl().paymentMode.invalid || (getFormControl().paymentMode.touched && getFormControl().paymentMode.invalid)">
+                            <mat-error class="f-12 pt-4"
+                                *ngIf="ismodeValid && getFormControl().paymentMode.invalid || (getFormControl().paymentMode.touched && getFormControl().paymentMode.invalid)">
                                 paymentMode is required</mat-error>
                         </div>
                         <!-- <div class="col-md-2 pl-0">
@@ -899,7 +937,8 @@
                     </div>
                     <div class="row">
                         <div class="col-md-10 pr-0">
-                            <mat-error class="f-12 pt-4" *ngIf="isgstValid && getFormControl().gstTreatment.invalid || (getFormControl().gstTreatment.touched && getFormControl().gstTreatment.invalid)">
+                            <mat-error class="f-12 pt-4"
+                                *ngIf="isgstValid && getFormControl().gstTreatment.invalid || (getFormControl().gstTreatment.touched && getFormControl().gstTreatment.invalid)">
                                 gst treatment is required</mat-error>
                         </div>
                     </div>
@@ -911,7 +950,8 @@
                 </div>
                 <div class="col-md-5">
                     <div class="form-group mb-0">
-                        <textarea class="form-control" rows="5" formControlName="notes" maxlength="{{getFormControl().notes.maxLength}}"></textarea>
+                        <textarea class="form-control" rows="5" formControlName="notes"
+                            maxlength="{{getFormControl().notes.maxLength}}"></textarea>
                     </div>
                     <div class="row ">
 
@@ -1117,10 +1157,12 @@
         </div>
     </div>
 </div>
-<div class="bg-white pb-44 " [formGroup]="editPayment" *ngIf="showEdit==true" [ngClass]="{'mt-70': invoiceInSub=='invoiceSubscription','mt-0':invoiceInSub!='invoiceSubscription'}">
+<div class="bg-white pb-44 " [formGroup]="editPayment" *ngIf="showEdit==true"
+    [ngClass]="{'mt-70': invoiceInSub=='invoiceSubscription','mt-0':invoiceInSub!='invoiceSubscription'}">
     <div class="row  popup-header">
         <div class="col-md-10 pl-0">
-            <h4 class="f-400 wrapper-20 mb-0" *ngIf="invoiceInSub=='invoiceSubscription'">Edit Invoice of {{storeData.invoiceNumber}}
+            <h4 class="f-400 wrapper-20 mb-0" *ngIf="invoiceInSub=='invoiceSubscription'">Edit Invoice of
+                {{storeData.invoiceNumber}}
             </h4>
             <h4 class="f-400 wrapper-20 mb-0" *ngIf="invoiceInSub!='invoiceSubscription'">Add Invoice</h4>
         </div>
@@ -1140,13 +1182,16 @@
                     <div class="col-md-12 p-0">
                         <div class="form-group">
                             <mat-form-field>
-                                <input matInput aria-label="client" [matAutocomplete]="auto1" class="form-control br-0 pl-8" formControlName="clientName">
+                                <input matInput aria-label="client" [matAutocomplete]="auto1"
+                                    class="form-control br-0 pl-8" formControlName="clientName">
                                 <mat-autocomplete #auto1="matAutocomplete">
-                                    <mat-option *ngFor="let c of clientList" [value]="c.clientName" (onSelectionChange)="selectClient($event, c)">
+                                    <mat-option *ngFor="let c of clientList" [value]="c.clientName"
+                                        (onSelectionChange)="selectClient($event, c)">
                                         <span>{{c.clientName}}</span>
                                     </mat-option>
                                 </mat-autocomplete>
-                                <mat-error class="f-12 pt-4" *ngIf="isClientName && getFormControledit().clientName.invalid || (getFormControledit().clientName.touched && getFormControledit().clientName.invalid)">
+                                <mat-error class="f-12 pt-4"
+                                    *ngIf="isClientName && getFormControledit().clientName.invalid || (getFormControledit().clientName.touched && getFormControledit().clientName.invalid)">
                                     Client name is required
                                 </mat-error>
                             </mat-form-field>
@@ -1162,7 +1207,9 @@
                     <p class="m-0 text-custom f-12">BILLER ADDRESS</p>
                     <p *ngIf="editAdd1 == false" class="m-0 text-black text-break w-90 l-21">{{storeData.billerAddress}}
                     </p>
-                    <textarea rows="5" *ngIf="editAdd1 == true" class="form-control br-0" formControlName="billerAddress" maxlength="{{getFormControledit().billerAddress.maxLength}}"></textarea>
+                    <textarea rows="5" *ngIf="editAdd1 == true" class="form-control br-0"
+                        formControlName="billerAddress"
+                        maxlength="{{getFormControledit().billerAddress.maxLength}}"></textarea>
                     <p class="m-0 text-primary c-p f-12" (click)="onclickChangeAdd1(editAdd1)">CHANGE</p>
                     <p class="mb-0 f-12 text-custom text-right pt-4 pr-36">
                         {{getFormControledit().billerAddress.value?.length?getFormControledit().billerAddress.value.length:0}}/{{getFormControledit().billerAddress.maxLength}}
@@ -1172,7 +1219,9 @@
                     <p class="m-0 text-custom f-12">PAYEE ADDRESS</p>
                     <p *ngIf="editAdd2 == false" class="m-0 text-black text-break l-21 w-90">
                         {{storeData.billingAddress}}</p>
-                    <textarea rows="5" *ngIf="editAdd2 == true" class="form-control br-0" formControlName="billingAddress" maxlength="{{getFormControledit().billingAddress.maxLength}}"></textarea>
+                    <textarea rows="5" *ngIf="editAdd2 == true" class="form-control br-0"
+                        formControlName="billingAddress"
+                        maxlength="{{getFormControledit().billingAddress.maxLength}}"></textarea>
                     <p class="m-0 text-primary c-p f-12" (click)="onclickChangeAdd2(editAdd2)">CHANGE</p>
                     <p class="mb-0 f-12 text-custom text-right pt-4 pr-12">
                         {{getFormControledit().billingAddress.value?.length?getFormControledit().billingAddress.value.length:0}}/{{getFormControledit().billingAddress.maxLength}}
@@ -1192,11 +1241,13 @@
                         <div class="col-md-7 p-0">
                             <div class="form-group mb-0">
 
-                                <input type="email" class="form-control br-0" formControlName="invoiceNumber" maxlength="{{getFormControledit().invoiceNumber.maxLength}}">
+                                <input type="email" class="form-control br-0" formControlName="invoiceNumber"
+                                    maxlength="{{getFormControledit().invoiceNumber.maxLength}}">
 
                             </div>
                             <div class="col-md-12 pl-0">
-                                <mat-error class="f-12 pt-4" *ngIf="isInvoiceNumber && getFormControledit().invoiceNumber.invalid || (getFormControledit().invoiceNumber.touched && getFormControledit().invoiceNumber.invalid)">
+                                <mat-error class="f-12 pt-4"
+                                    *ngIf="isInvoiceNumber && getFormControledit().invoiceNumber.invalid || (getFormControledit().invoiceNumber.touched && getFormControledit().invoiceNumber.invalid)">
                                     Invoice no. is required
                                 </mat-error>
                             </div>
@@ -1220,7 +1271,8 @@
                         </div>
                         <div class="col-md-6"></div>
                         <div class="col-md-6">
-                            <mat-error class="f-12 pt-4" *ngIf="isInvoiceDate && getFormControledit().invoiceDate.invalid || (getFormControledit().invoiceDate.touched && getFormControledit().invoiceDate.invalid)">
+                            <mat-error class="f-12 pt-4"
+                                *ngIf="isInvoiceDate && getFormControledit().invoiceDate.invalid || (getFormControledit().invoiceDate.touched && getFormControledit().invoiceDate.invalid)">
                                 Invoice date is required
                             </mat-error>
                         </div>
@@ -1264,7 +1316,9 @@
                     <div class="col-md-6 pl-0">
                         <div class="row">
                             <div class="form-group mb-0 ml-8 w-100">
-                                <input matInput placeholder="You can search service" aria-label="State" [matAutocomplete]="auto" list="serviceName" class="form-control w-100 br-0 pl-8" formControlName="serviceName">
+                                <input matInput placeholder="You can search service" aria-label="State"
+                                    [matAutocomplete]="auto" list="serviceName" class="form-control w-100 br-0 pl-8"
+                                    formControlName="serviceName">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option *ngFor="let s of serviceList" [value]="s.serviceName">
                                         <span>{{s.serviceName}}</span>
@@ -1272,7 +1326,8 @@
                                 </mat-autocomplete>
                             </div>
                             <div class="col-md-8">
-                                <mat-error class="f-12 pt-4" *ngIf="isServiceName && getFormControledit().serviceName.invalid || (getFormControledit().serviceName.touched && getFormControledit().serviceName.invalid)">
+                                <mat-error class="f-12 pt-4"
+                                    *ngIf="isServiceName && getFormControledit().serviceName.invalid || (getFormControledit().serviceName.touched && getFormControledit().serviceName.invalid)">
                                     Service name is required
                                 </mat-error>
                             </div>
@@ -1281,28 +1336,34 @@
                     <div class="col-md-2 pl-0">
                         <input class="form-control br-0" [(ngModel)]="finalAmount" formControlName="finalAmount">
                         <div class="col-md-8">
-                            <mat-error class="f-12 pt-4" *ngIf="isPrice && getFormControledit().finalAmount.invalid || (getFormControledit().finalAmount.touched && getFormControledit().finalAmount.invalid)">
+                            <mat-error class="f-12 pt-4"
+                                *ngIf="isPrice && getFormControledit().finalAmount.invalid || (getFormControledit().finalAmount.touched && getFormControledit().finalAmount.invalid)">
                                 Price is required
                             </mat-error>
                         </div>
                     </div>
                     <div class="col-md-2 pl-0">
-                        <select id="serviceName" class="form-control" (change)="changeTaxStatus($event.target.value)" formControlName="taxStatus">
+                        <select id="serviceName" class="form-control" (change)="changeTaxStatus($event.target.value)"
+                            formControlName="taxStatus">
                             <option value="">Select tax type</option>
                             <option value="IGST(18%)">IGST(18%)</option>
                             <option value="SGST(9%)|CGST(9%)">SGST(9%)|CGST(9%)</option>
                         </select>
                         <div class="col-md-8">
-                            <mat-error class="f-12 pt-4" *ngIf="isTaxstatus && getFormControledit().taxStatus.invalid || (getFormControledit().taxStatus.touched && getFormControledit().taxStatus.invalid)">
+                            <mat-error class="f-12 pt-4"
+                                *ngIf="isTaxstatus && getFormControledit().taxStatus.invalid || (getFormControledit().taxStatus.touched && getFormControledit().taxStatus.invalid)">
                                 Tax status is required
                             </mat-error>
                         </div>
                     </div>
                     {{storeData.taxStatus}}
                     <div class="col-md-2 p-0">
-                        <h5 *ngIf="storeData.cgstTaxAmount == undefined || storeData.igstTaxAmount" class="m-0 text-right pr-8">₹{{(18/100)*finalAmount++finalAmount}}</h5>
-                        <h5 [hidden]="finalAmount !=undefined" *ngIf="storeData.sgst != undefined" class="m-0 text-right pr-8">{{storeData.cgstTaxAmount}}</h5>
-                        <h5 [hidden]="finalAmount !=undefined" *ngIf="storeData.igst != undefined" class="m-0 text-right pr-8">{{storeData.igstTaxAmount}}</h5>
+                        <h5 *ngIf="storeData.cgstTaxAmount == undefined || storeData.igstTaxAmount"
+                            class="m-0 text-right pr-8">₹{{(18/100)*finalAmount++finalAmount}}</h5>
+                        <h5 [hidden]="finalAmount !=undefined" *ngIf="storeData.sgst != undefined"
+                            class="m-0 text-right pr-8">{{storeData.cgstTaxAmount}}</h5>
+                        <h5 [hidden]="finalAmount !=undefined" *ngIf="storeData.igst != undefined"
+                            class="m-0 text-right pr-8">{{storeData.igstTaxAmount}}</h5>
                     </div>
                 </div>
             </div>
@@ -1369,7 +1430,8 @@
                     </div>
                     <div class="col-md-9 p-0">
                         <div class="form-group mb-0">
-                            <textarea class="form-control" rows="5" formControlName="footnote" maxlength="{{getFormControledit().footnote.maxLength}}"></textarea>
+                            <textarea class="form-control" rows="5" formControlName="footnote"
+                                maxlength="{{getFormControledit().footnote.maxLength}}"></textarea>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
@@ -1391,7 +1453,8 @@
                     </div>
                     <div class="col-md-9 p-0">
                         <div class="form-group mb-0">
-                            <textarea class="form-control" rows="5" formControlName="terms" maxlength="{{getFormControledit().terms.maxLength}}"></textarea>
+                            <textarea class="form-control" rows="5" formControlName="terms"
+                                maxlength="{{getFormControledit().terms.maxLength}}"></textarea>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
