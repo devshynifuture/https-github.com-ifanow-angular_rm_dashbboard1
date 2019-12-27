@@ -11,6 +11,7 @@ import { SubscriptionInject } from './../../../../Subscriptions/subscription-inj
 import { EmailServiceService } from './../../../email-service.service';
 import { EmailInterfaceI, ExtractedGmailDataI, MessageListArray, GmailInboxResponseI } from '../../email.interface';
 import { EmailUtilService } from 'src/app/services/email-util.service';
+import { partition } from 'rxjs/operators';
 
 const ELEMENT_DATA: EmailInterfaceI[] = [
   { position: 1, name: 'draft Hydrogen', weight: 1.0079, symbol: 'H', isRead: false },
@@ -35,7 +36,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private subInjectService: SubscriptionInject,
+    private emailUtilService: EmailUtilService,
     private emailService: EmailServiceService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -169,12 +170,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
     const ids: string[] = [];
     ids.push(id);
     // {"ids":["abc","xyz"],"userId":2727,"emailId":"gaurav@futurewise.co.in"}
-    const threadsToTrashSubscription = this.emailService.moveThreadsToTrashFromList(ids)
-      .subscribe(response => {
-        console.log(response);
-        threadsToTrashSubscription.unsubscribe();
-        this.ngOnInit();
-      });
+    this.threadsToTrashService(ids);
 
   }
 
@@ -195,6 +191,15 @@ export class EmailListingComponent implements OnInit, OnDestroy {
     }, error => console.error(error));
   }
 
+  threadsToTrashService(ids) {
+    const threadsToTrashSubscription = this.emailService.moveThreadsToTrashFromList(ids)
+      .subscribe(response => {
+        console.log(response);
+        threadsToTrashSubscription.unsubscribe();
+        this.ngOnInit();
+      });
+  }
+
   // get List view
   getGmailList(data) {
     this.listSubscription = this.emailService.getMailInboxList(data)
@@ -211,9 +216,26 @@ export class EmailListingComponent implements OnInit, OnDestroy {
         this.nextPageToken = nextPageToken;
         this.gmailThreads = gmailThreads;
         gmailThreads.forEach((thread: GmailInboxResponseI, index: number) => {
-          thread.messages.map((message) => {
-            message.payload.body.data = btoa(message.payload.body.data);
-          });
+          // thread.messages.map((message) => {
+          //   message.payload.body.data = btoa(message.payload.body.data);
+          // });
+          console.log("this is thread -::", thread);
+          thread.messages.forEach((message) => {
+            const id = thread.id;
+            if (message.payload.parts !== null) {
+              message.payload.parts.map((part) => {
+                if (part.body.data === null) {
+                  // get message object;
+
+                  this.emailService.gmailMessageDetail(id)
+                    .subscribe((response) => {
+                      const raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
+                      part.body.data = raw;
+                    });
+                }
+              });
+            }
+          })
           let parsedData: any; // object containing array of decoded parts and headers
           let idsOfThread: any; // Object of historyId and Id of thread
           let dateIdsSnippetsOfMessages: any; // array of Objects having ids, date snippets of messages
@@ -375,5 +397,21 @@ export class EmailListingComponent implements OnInit, OnDestroy {
     console.log(this.selectedThreadsArray);
   }
 
+  multipleMoveToTrash() {
+    const selectedArray = this.selectedThreadsArray;
+    // const { idsOfThread: { id } } =
+    let ids = [];
+    selectedArray.forEach((item) => {
+      const { idsOfThread: { id } } = item;
+      ids.push(id);
+    });
+
+    this.threadsToTrashService(ids);
+  }
+
+
+  // multipleDeletes() {
+  //   this.selectedThreadsArray
+  // }
 
 }
