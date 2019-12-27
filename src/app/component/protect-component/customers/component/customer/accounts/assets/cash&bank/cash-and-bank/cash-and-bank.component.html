@@ -32,7 +32,7 @@
             <div class="col-md-4 p-0">
                 <h4 class="m-0 text-black roboto pt-8">Bank accounts</h4>
             </div>
-            <div class="col-md-8 p-0 right text-right" *ngIf="bankAccountList!=undefined">
+            <div class="col-md-8 p-0 right text-right"  *ngIf="bankAccountList.filteredData.length > 0">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button mat-menu-item>PDF</button>
@@ -55,7 +55,7 @@
             </div>
         </div>
         <div class="example-container mt-8 col-md-12 p-0 real-estate">
-            <table matSort #bankAccountListTable="matSort" [dataSource]="bankAccountList" id="table-low" mat-table
+            <table  *ngIf="bankAccountList.filteredData.length > 0"  matSort #bankAccountListTable="matSort" [dataSource]="bankAccountList" id="table-low" mat-table
                 class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" *matHeaderCellDef class="br" mat-header-cell> No</th>
@@ -153,7 +153,7 @@
                 <tr *matRowDef="let row; columns: displayedColumns7;" mat-row></tr>
                 <tr *matFooterRowDef="displayedColumns7;sticky: true" mat-footer-row></tr>
             </table>
-            <div *ngIf="bankAccountList==undefined" class="d-flex flex-column align-items-center">
+            <div  *ngIf="bankAccountList.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <h4 class="text-center pt-72">{{noData}}</h4>
                 <button (click)="openCashAndBank('')" class="btn-primary addon v-middle" mat-stroked-button><i
                         class="material-icons">add</i>ADD
@@ -167,7 +167,7 @@
             <div class="col-md-4 p-0">
                 <h4 class="m-0 text-black roboto pt-8">Cash in hand</h4>
             </div>
-            <div class="col-md-8 p-0 right text-right" *ngIf="cashInHandList!=undefined">
+            <div class="col-md-8 p-0 right text-right"  *ngIf="cashInHandList.filteredData.length > 0">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button mat-menu-item>PDF</button>
@@ -190,7 +190,7 @@
             </div>
         </div>
         <div class="example-container mt-8 col-md-12 p-0 real-estate">
-            <table matSort #cashInHandListTable="matSort" [dataSource]="cashInHandList" id="table-low" mat-table
+            <table  *ngIf="cashInHandList.filteredData.length > 0" matSort #cashInHandListTable="matSort" [dataSource]="cashInHandList" id="table-low" mat-table
                 class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="no">
@@ -262,7 +262,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns8;"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns8;sticky: true" [hidden]="isLoading"></tr>
             </table>
-            <div *ngIf="cashInHandList==undefined" class="d-flex flex-column align-items-center">
+            <div  *ngIf="cashInHandList.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <h4 class="text-center pt-72">{{noData}}</h4>
                 <button (click)="openCashInHand(null)" class="btn-primary addon v-middle" mat-stroked-button><i
                         class="material-icons">add</i>ADD
