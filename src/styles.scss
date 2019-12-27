@@ -883,6 +883,8 @@ mat-tab-group[vertical] {
   }
 }
 
+
+#plan-home,
 #advisor-home {
   position: fixed;
   z-index: 112;
@@ -890,24 +892,10 @@ mat-tab-group[vertical] {
   border: 1px solid #FFC100;
   color: #FFC100;
   margin-left: 20px;
-}
 
-#plan-home {
-  position: fixed;
-  z-index: 112;
-  margin-top: 72px;
-  border: 1px solid #FFC100;
-  color: #FFC100;
-  margin-left: 20px;
-}
-
-#plan-home {
-  position: fixed;
-  z-index: 112;
-  margin-top: 72px;
-  border: 1px solid #FFC100;
-  color: #FFC100;
-  margin-left: 20px;
+  .btn-yellow {
+    color: #FFC100 !important;
+  }
 }
 
 // #plan-home .mat-stroked-button {
