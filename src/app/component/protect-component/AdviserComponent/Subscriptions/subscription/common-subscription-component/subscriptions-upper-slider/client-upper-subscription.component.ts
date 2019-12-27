@@ -31,6 +31,7 @@ export interface PeriodicElement {
 export class ClientUpperSubscriptionComponent implements OnInit {
   //data: any;
   isLoading = false;
+  clientData:any = [];
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   noData: string;
@@ -139,26 +140,22 @@ export class ClientUpperSubscriptionComponent implements OnInit {
 
   getSubSummaryRes(data) {
     this.isLoading = false;
-    if (data && data.length > 0) {
-      this.planName = data[0].planName
-      this.data = data;
-      this.dataSource = data;
-      this.dataSource.sort = this.sort;
-      // this.DataToSend = data;
-    } else {
-      this.data = [];
-      this.dataSource = data;
-      // console.log(data);
-      this.dataSource.data = []
-      this.noData = 'No Data Found';
+    console.log(data , "hi client");
+    this.dataSource = data;
+    this.clientData = data;
+    
+    for(let d of data){
+      if(d.subscriptionPricing.feeTypeId==1){
+        d['feeTypeId'] = "FIXED"
+      }
+      else{
+        d['feeTypeId'] = "VARIABLE"
+      }
+      
     }
+    this.dataSource = new MatTableDataSource(data);
 
-    // console.log(data);
-    // this.dataSource = data;
-    // (data) ? this.dataSource = data : this.dataSource = [];
-    // this.dataSource = new MatTableDataSource(data);
-
-    // this.dataSource.sort = this.sort;
+    this.dataSource.sort = this.sort;
 
   }
 

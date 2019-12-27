@@ -1,9 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { SubscriptionService } from '../../../subscription.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {SubscriptionService} from '../../../subscription.service';
 import * as _ from 'lodash';
-import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-variable-fee',
@@ -23,21 +22,6 @@ export class VariableFeeComponent implements OnInit {
   @Output() outputData = new EventEmitter<Object>();
   singleSubscriptionData: any;
   isLoading = false;
-
-  constructor(private subService: SubscriptionService, private fb: FormBuilder,
-    public subInjectService: SubscriptionInject) {
-  }
-
-  @Input()
-  set data(data) {
-    this.getSubscribeData(data);
-  }
-
-  @Input()
-  set createFeeData(data) {
-    this.getSubscribeData(data);
-  }
-
   variableFeeStructureForm = this.fb.group({
     billingNature: [, [Validators.required]],
     billEvery: [, [Validators.required]],
@@ -55,6 +39,20 @@ export class VariableFeeComponent implements OnInit {
     otherAssetClassFees: [],
     pricing: [, [Validators.required]]
   });
+
+  constructor(private subService: SubscriptionService, private fb: FormBuilder,
+              public subInjectService: SubscriptionInject) {
+  }
+
+  @Input()
+  set data(data) {
+    this.getSubscribeData(data);
+  }
+
+  @Input()
+  set createFeeData(data) {
+    this.getSubscribeData(data);
+  }
 
   createVariableForm(data) {
     this.variableFeeStructureForm = this.fb.group({
@@ -97,7 +95,7 @@ export class VariableFeeComponent implements OnInit {
       this.getVariableFee().billingNature.setValue(this.singleSubscriptionData.subscriptionPricing.billingNature ? this.singleSubscriptionData.subscriptionPricing.billingNature + '' : '1');
       this.getVariableFee().billEvery.setValue(this.singleSubscriptionData.subscriptionPricing.billEvery);
       (this.singleSubscriptionData.subscriptionPricing.billingCycle == 0) ?
-        this.getVariableFee().Duration.setValue(1) : this.getVariableFee().Duration.setValue(this.singleSubscriptionData.subscriptionPricing.billingCycle);
+          this.getVariableFee().Duration.setValue(1) : this.getVariableFee().Duration.setValue(this.singleSubscriptionData.subscriptionPricing.billingCycle);
       /*//TODO commented for now*/
       this.getVariableFee().directFees.setValue({
         equity: this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[0].equityAllocation,
@@ -124,12 +122,14 @@ export class VariableFeeComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeUpperRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
   select(assetData) {
-    (assetData.selected) ? this.unselectAssets(assetData) : this.selectAssets(assetData);
+    if (this.variableFeeStructureForm.enabled) {
+      (assetData.selected) ? this.unselectAssets(assetData) : this.selectAssets(assetData);
+    }
   }
 
   selectAssets(data) {
@@ -213,13 +213,13 @@ export class VariableFeeComponent implements OnInit {
       } else {
         this.isLoading = true;
         this.subService.editModifyFeeStructure(obj).subscribe(
-          data => {
-            this.saveVariableModifyFeesResponse(data);
-            this.isLoading = false;
-          }
-          , error => {
-            this.isLoading = false;
-          });
+            data => {
+              this.saveVariableModifyFeesResponse(data);
+              this.isLoading = false;
+            }
+            , error => {
+              this.isLoading = false;
+            });
       }
     }
   }
