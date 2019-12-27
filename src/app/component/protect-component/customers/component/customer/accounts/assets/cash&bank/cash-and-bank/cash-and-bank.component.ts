@@ -117,7 +117,7 @@ export class CashAndBankComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        if (value == 'BANK ACCOUNT') {
+        if (value == 'BANK') {
           this.custumService.deleteBankAccount(data.id).subscribe(
             data => {
               this.eventService.openSnackBar('Bank account is deleted', 'dismiss');
