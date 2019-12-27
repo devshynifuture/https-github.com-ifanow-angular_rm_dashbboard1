@@ -30,6 +30,7 @@ export class QuotationsComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   noData: string;
+  quotationData: any[];
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog,
     private subAService: SubscriptionService) {
@@ -186,17 +187,20 @@ export class QuotationsComponent implements OnInit {
 
   }
 
-  openSendEmail() {
+  openSendEmail(element) {
+    this.quotationData=[]
     const data = {
       advisorId: this.advisorId,
       clientData: this._clientData,
       templateType: 2, // 2 is for quotation
       documentList: []
+      
     };
-    if (this.dataSource.length == 1) {
-      data.documentList = this.dataSource;
+    if (this.dataCount == 0) {
+      this.quotationData.push(element);
+      data.documentList = this.quotationData;
     } else {
-      this.dataSource.forEach(singleElement => {
+      this.dataSource.filteredData.forEach(singleElement => {
         if (singleElement.selected) {
           data.documentList.push(singleElement);
         }
