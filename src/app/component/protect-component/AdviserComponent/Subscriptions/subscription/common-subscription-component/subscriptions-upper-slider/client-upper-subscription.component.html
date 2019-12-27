@@ -45,9 +45,15 @@
     </div>
 
     <div class="wrapper-40 pt-0 mt-12 col-md-12 overflow-hidden">
+<<<<<<< HEAD
         <h4 class="pb-8 text-black" *ngIf="clientData.length > 0">{{clientData[0].planName}}</h4>
 
 
+=======
+        <div *ngIf="dataSource != undefined">
+            <h4 class="pb-8 text-black">{{planName}}</h4>
+        </div>
+>>>>>>> 682e89666d5ce6f4dbbd2a8effe3206fb0fd9924
         <table matSort mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation"
             appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="service">

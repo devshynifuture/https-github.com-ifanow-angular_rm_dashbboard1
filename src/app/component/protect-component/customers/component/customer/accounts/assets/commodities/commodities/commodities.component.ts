@@ -49,7 +49,7 @@ export class CommoditiesComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getGoldList()
-
+    this.goldList = new MatTableDataSource(this.data);
   }
   async ExportTOExcel(value) {
     this.excelData = []

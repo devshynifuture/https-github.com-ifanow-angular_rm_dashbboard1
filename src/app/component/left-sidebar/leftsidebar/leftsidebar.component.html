@@ -1,153 +1,158 @@
 <mat-sidenav-container (window:resize)="onResize()" class="sidenav-container">
-    <mat-sidenav #sidenav mode="side" opened role="navigation">
-        <mat-nav-list id="d" class="width-230 pt-0">
-            <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0">
-                <img src="{{userInfo.imgUrl}}" class="w-100">
+  <mat-sidenav #sidenav mode="side" opened role="navigation">
+    <mat-nav-list class="width-230 pt-0" id="d">
+      <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0">
+        <img class="w-100" src="{{userInfo.imgUrl}}">
 
-            </mat-toolbar>
-            <div *ngIf="showTabs" class="pt-16">
-                <img src="assets/images/img1.jpg" class="header-img pt-0 pb-0">
-            </div>
-            <div *ngIf="showTabs" class="main-details">
-                <mat-form-field>
-                    <mat-select class="form-control f-500">
-                        <mat-option class="f-500" value="option">Advisor Login</mat-option>
-                        <mat-option class="f-500" value="option">Client Login</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <p class="f-14 f-500 mb-0">{{advisorName}}</p>
-            </div>
-            <div class="pt-12 scorllable ">
-                <a class="sidenav-link" mat-list-item routerLink="./dashboard">
-                    <img src="assets/images/svg/time-meter.svg">
-                    <span *ngIf="showTabs" class="title" mat-line>Dashboard</span>
-                </a>
-                <a mat-list-item class="sidenav-link">
-                    <img routerLink="/customer/detail/overview" src="assets/images/svg/people.svg">
-                    <span *ngIf="showTabs" class="title" mat-line>People</span>
-                </a>
-                <a mat-list-item class="sidenav-link" routerLink="./calender">
-                    <img src="assets/images/svg/file-lines.svg">
-                    <span *ngIf="showTabs" class="title" mat-line>Activities</span>
-                    <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
-                        keyboard_arrow_right
-                    </mat-icon>
-                </a>
-                <a class="sidenav-link" mat-list-item routerLink="./emails/inbox">
-                    <img src="assets/images/svg/mail.svg">
-                    <span *ngIf="showTabs" class="title" mat-line>Email</span>
-                </a>
-                <a mat-list-item class="sidenav-link">
-                    <img src="assets/images/svg/cart.svg">
-                    <span *ngIf="showTabs" class="title" mat-line>Transactions</span>
-                </a>
-                <a class="sidenav-link" mat-list-item routerLink="./subscription/dashboard">
-                  <img src="assets/images/svg/ruppes.svg">
-                  <span *ngIf="showTabs" class="title" mat-line>Subscription</span>
-                </a>
-                <a class="sidenav-link" mat-list-item routerLink="/customer/detail/account/assets">
-                    <img src="assets/images/svg/ruppes.svg">
-                    <span *ngIf="showTabs" class="title" mat-line>Clients</span>
-                </a>
-                <a class="sidenav-link" mat-list-item routerLink="/calender">
-                    <img src="assets/images/svg/file-lines.svg">
-                    <span *ngIf="showTabs" class="title" mat-line>Documents</span>
-                </a>
-                <a mat-list-item class="sidenav-link">
-                    <img src="assets/images/svg/secure.svg">
-                    <span *ngIf="showTabs" class="title" mat-line>Compliance</span>
-                </a>
-                <a mat-list-item class="sidenav-link">
-                    <img src="assets/images/svg/folder-light.svg">
-                    <span *ngIf="showTabs" class="title" mat-line>Back Office</span>
-                </a>
-            </div>
-        </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content id="left">
-        <mat-toolbar class="bg-white bl-1" class="fix-top pl-0">
-            <button *ngIf="showTabs==false" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="showMainNavWrapper()">
-                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-            </button>
-            <button *ngIf="showTabs" class="btn_nav" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="showsmallNavWrapper()">
-                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-            </button>
+      </mat-toolbar>
+      <div *ngIf="showTabs" class="pt-16">
+        <img class="header-img pt-0 pb-0" src="assets/images/img1.jpg">
+      </div>
+      <div *ngIf="showTabs" class="main-details">
+        <mat-form-field>
+          <mat-select [(ngModel)]="loginType" class="form-control f-500">
+            <mat-option [value]=1 class="f-500">Advisor Login</mat-option>
+            <mat-option [value]=2 class="f-500">Client Login</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <p class="f-14 f-500 mb-0">{{advisorName}}</p>
+      </div>
+      <div class="pt-12 scorllable ">
+        <a class="sidenav-link" mat-list-item routerLink="./dashboard">
+          <img src="assets/images/svg/time-meter.svg">
+          <span *ngIf="showTabs" class="title" mat-line>Dashboard</span>
+        </a>
+        <a class="sidenav-link" mat-list-item>
+          <img routerLink="/customer/detail/overview" src="assets/images/svg/people.svg">
+          <span *ngIf="showTabs" class="title" mat-line>People</span>
+        </a>
+        <a class="sidenav-link" mat-list-item routerLink="./calender">
+          <img src="assets/images/svg/file-lines.svg">
+          <span *ngIf="showTabs" class="title" mat-line>Activities</span>
+          <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
+            keyboard_arrow_right
+          </mat-icon>
+        </a>
+        <a class="sidenav-link" mat-list-item routerLink="./emails/inbox">
+          <img src="assets/images/svg/mail.svg">
+          <span *ngIf="showTabs" class="title" mat-line>Email</span>
+        </a>
+        <a class="sidenav-link" mat-list-item>
+          <img src="assets/images/svg/cart.svg">
+          <span *ngIf="showTabs" class="title" mat-line>Transactions</span>
+        </a>
+        <a class="sidenav-link" mat-list-item routerLink="./subscription/dashboard">
+          <img src="assets/images/svg/ruppes.svg">
+          <span *ngIf="showTabs" class="title" mat-line>Subscription</span>
+        </a>
+        <a class="sidenav-link" mat-list-item routerLink="/customer/detail/account/assets">
+          <img src="assets/images/svg/ruppes.svg">
+          <span *ngIf="showTabs" class="title" mat-line>Clients</span>
+        </a>
+        <a class="sidenav-link" mat-list-item routerLink="/calender">
+          <img src="assets/images/svg/file-lines.svg">
+          <span *ngIf="showTabs" class="title" mat-line>Documents</span>
+        </a>
+        <a class="sidenav-link" mat-list-item>
+          <img src="assets/images/svg/secure.svg">
+          <span *ngIf="showTabs" class="title" mat-line>Compliance</span>
+        </a>
+        <a class="sidenav-link" mat-list-item>
+          <img src="assets/images/svg/folder-light.svg">
+          <span *ngIf="showTabs" class="title" mat-line>Back Office</span>
+        </a>
+      </div>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content id="left">
+    <mat-toolbar class="bg-white bl-1" class="fix-top pl-0">
+      <button (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav" mat-icon-button
+              type="button">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav"
+              mat-icon-button
+              type="button">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
 
 
-            <mat-form-field class="width40">
-                <div class="form-group searchBoxHeader">
-                    <input type="text" #inputSearch class="form-control" matInput [formControl]="myControl" [matAutocomplete]="auto">
-                    <mat-autocomplete #auto="matAutocomplete">
-                        <!-- <mat-option>
-                            <p>Start typing to search clients,leads otr team members</p>
-                        </mat-option> -->
-                        <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of clientList" [value]="singleClient.name">
-                            <div class="row">
-                                <div class="col-md-1">
+      <mat-form-field class="width40">
+        <div class="form-group searchBoxHeader">
+          <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control" matInput
+                 type="text">
+          <mat-autocomplete #auto="matAutocomplete">
+            <!-- <mat-option>
+                <p>Start typing to search clients,leads otr team members</p>
+            </mat-option> -->
+            <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of clientList"
+                        [value]="singleClient.name">
+              <div class="row">
+                <div class="col-md-1">
 
-                                </div>
-                                <div class="col-md-8">
-                                    <a>
-                                        <p class="t-left">{{singleClient.name}}</p>
-                                    </a>
-                                </div>
-                                <div class="col-md-3">
-                                    <button mat-stroked-button class="small-primitive">FAMILY MEMBER</button>
-                                </div>
-                            </div>
-                        </mat-option>
-                    </mat-autocomplete>
                 </div>
-            </mat-form-field>
-            <div class="hide-on-800 flex right-fixed tablate-none">
-                <a mat-list-item class="sidenav-link">
-                    <img src="assets/images/svg/bell.svg" class="t-15">
-                </a>
-                <a mat-list-item class="sidenav-link">
-                    <img src="assets/images/svg/earphone.svg">
-                </a>
-                <a mat-list-item class="sidenav-link">
-                    <img src="assets/images/svg/setting.svg">
-                </a>
-            </div>
-            <i (click)="openSettings()" class="material-icons tabs-right desktop-none">
-                more_vert
-            </i>
-        </mat-toolbar>
-        <div id="showSettings" *ngIf="showSettings" class="desktop-none tabs-mt-70">
-            <div class="bg-success">
-                <div class="search-container tabs-block">
-                    <i class="material-icons icon">
-                        search
-                    </i>
-                    <input class="search-field" type="text" placeholder="SEARCH" name="email">
+                <div class="col-md-8">
+                  <a>
+                    <p class="t-left">{{singleClient.name}}</p>
+                  </a>
                 </div>
-                <div class="pl-48 flex tabs-right">
-                    <a mat-list-item class="sidenav-link">
-                        <mat-icon mat-list-icon>notifications_none</mat-icon>
-                    </a>
-                    <a mat-list-item class="sidenav-link">
-                        <mat-icon mat-list-icon>headset_mic</mat-icon>
-                    </a>
-                    <a mat-list-item class="sidenav-link">
-                        <mat-icon mat-list-icon>settings</mat-icon>
-                    </a>
+                <div class="col-md-3">
+                  <button class="small-primitive" mat-stroked-button>FAMILY MEMBER</button>
                 </div>
-            </div>
+              </div>
+            </mat-option>
+          </mat-autocomplete>
         </div>
-        <div class="wrapperauto">
-            <!--          <div [@routeAnimations]="prepareRoute(outlet)" >-->
-            <!--            <router-outlet #outlet="outlet"></router-outlet>-->
-            <!--          </div>-->
-            <router-outlet id="left1">
-                <ng-template>
-                    <router-outlet id="left2"></router-outlet>
-                </ng-template>
-            </router-outlet>
-
-
+      </mat-form-field>
+      <div class="hide-on-800 flex right-fixed tablate-none">
+        <a class="sidenav-link" mat-list-item>
+          <img class="t-15" src="assets/images/svg/bell.svg">
+        </a>
+        <a class="sidenav-link" mat-list-item>
+          <img src="assets/images/svg/earphone.svg">
+        </a>
+        <a class="sidenav-link" mat-list-item>
+          <img src="assets/images/svg/setting.svg">
+        </a>
+      </div>
+      <i (click)="openSettings()" class="material-icons tabs-right desktop-none">
+        more_vert
+      </i>
+    </mat-toolbar>
+    <div *ngIf="showSettings" class="desktop-none tabs-mt-70" id="showSettings">
+      <div class="bg-success">
+        <div class="search-container tabs-block">
+          <i class="material-icons icon">
+            search
+          </i>
+          <input class="search-field" name="email" placeholder="SEARCH" type="text">
         </div>
-    </mat-sidenav-content>
+        <div class="pl-48 flex tabs-right">
+          <a class="sidenav-link" mat-list-item>
+            <mat-icon mat-list-icon>notifications_none</mat-icon>
+          </a>
+          <a class="sidenav-link" mat-list-item>
+            <mat-icon mat-list-icon>headset_mic</mat-icon>
+          </a>
+          <a class="sidenav-link" mat-list-item>
+            <mat-icon mat-list-icon>settings</mat-icon>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="wrapperauto">
+      <!--          <div [@routeAnimations]="prepareRoute(outlet)" >-->
+      <!--            <router-outlet #outlet="outlet"></router-outlet>-->
+      <!--          </div>-->
+      <router-outlet id="left1">
+        <ng-template>
+          <router-outlet id="left2"></router-outlet>
+        </ng-template>
+      </router-outlet>
+
+
+    </div>
+  </mat-sidenav-content>
 
 </mat-sidenav-container>
 

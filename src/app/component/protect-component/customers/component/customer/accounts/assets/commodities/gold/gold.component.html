@@ -100,7 +100,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input matInput type="text" (utils.keypress)="utils.keyPress($event)"
-                        class="form-control br-0 percentage" formControlName="purchaseYear">
+                        class="form-control br-0 " formControlName="tenure">
                     <!-- <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isPurchaseYear && getFormControl().purchaseYear.invalid || getFormControl().purchaseYear.touched && getFormControl().purchaseYear.invalid)}">
                         This field is required
                     </mat-error> -->
@@ -129,10 +129,20 @@
             </div>
         </div>
     </div>
-    <div class="row pt-40">
-        <div class="col-md-5 text-right" *ngIf="showHide == true">
+        <!-- <div class="col-md-5 text-right" *ngIf="showHide == true">
             <h5 class="m-0 pt-8 text-custom c-p" (click)="showLess(showHide)">Show less</h5>
-        </div>
+        </div> -->
+        <div class="row pt-40">
+                <div class="col-md-5 text-right" *ngIf="showHide == true">
+                    <h5 class="m-0 pt-8 text-custom c-p" (click)="showLess(showHide)">Show less</h5>
+                </div>
+                <div class="col-md-5 text-right" *ngIf="showHide == false">
+                    <h5 class="m-0 pt-8 text-custom c-p" (click)="showLess(showHide)">+ Add more [optional data] </h5>
+                </div>
+                <div class="col-md-5">
+        
+                </div>
+            </div>
         <div *ngIf="showHide == true">
             <div class="row pt-40">
                 <div class="col-md-5 pr-0 text-right">
@@ -178,23 +188,8 @@
 
                 </div>
             </div>
-            <div class="row pt-40">
-                <div class="col-md-5 pr-0 text-right">
-                    <h5 class="m-0 pt-8">Bank account number</h5>
-                </div>
-                <div class="col-md-5">
-                    <div class="form-group mb-0">
-                        <mat-form-field>
-                            <input matInput #description maxlength="60" class="form-control br-0"
-                                formControlName="description">
-                            <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
-</div>
 
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">
