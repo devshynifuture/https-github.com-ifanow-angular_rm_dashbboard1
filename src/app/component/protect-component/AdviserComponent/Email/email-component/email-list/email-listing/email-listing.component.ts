@@ -11,6 +11,7 @@ import { SubscriptionInject } from './../../../../Subscriptions/subscription-inj
 import { EmailServiceService } from './../../../email-service.service';
 import { EmailInterfaceI, ExtractedGmailDataI, MessageListArray, GmailInboxResponseI } from '../../email.interface';
 import { EmailUtilService } from 'src/app/services/email-util.service';
+import { partition } from 'rxjs/operators';
 
 const ELEMENT_DATA: EmailInterfaceI[] = [
   { position: 1, name: 'draft Hydrogen', weight: 1.0079, symbol: 'H', isRead: false },
@@ -218,7 +219,23 @@ export class EmailListingComponent implements OnInit, OnDestroy {
           // thread.messages.map((message) => {
           //   message.payload.body.data = btoa(message.payload.body.data);
           // });
-          console.log(thread);
+          console.log("this is thread -::", thread);
+          thread.messages.forEach((message) => {
+            const id = thread.id;
+            if (message.payload.parts !== null) {
+              message.payload.parts.map((part) => {
+                if (part.body.data === null) {
+                  // get message object;
+
+                  this.emailService.gmailMessageDetail(id)
+                    .subscribe((response) => {
+                      const raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
+                      part.body.data = raw;
+                    });
+                }
+              });
+            }
+          })
           let parsedData: any; // object containing array of decoded parts and headers
           let idsOfThread: any; // Object of historyId and Id of thread
           let dateIdsSnippetsOfMessages: any; // array of Objects having ids, date snippets of messages
@@ -358,29 +375,6 @@ export class EmailListingComponent implements OnInit, OnDestroy {
 
   // routing to view page
   gotoEmailView(dataObj: Object) {
-    // if(dataObj)
-    let nullCountMessage = 0;
-    let nullCountParts = 0;
-    const gmailThread: GmailInboxResponseI = this.gmailThreads[dataObj['position'] - 1];
-    // check for payload body data === null
-
-    const id: string = gmailThread.id;
-
-    gmailThread.messages.forEach((message) => {
-      // check for payload parts each part body data === null
-      message.payload.parts.forEach((part) => {
-        if (part.body.data === null) {
-          // get message object;
-
-          this.emailService.gmailMessageDetail(id)
-            .subscribe((response) => {
-              const raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
-              part.body.data = raw;
-            });
-        }
-      });
-    });
-
     this.emailService.sendNextData(dataObj);
     this.router.navigate(['view'], { relativeTo: this.activatedRoute });
   }

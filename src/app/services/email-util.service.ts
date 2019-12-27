@@ -63,9 +63,9 @@ export class EmailUtilService {
             decodedPartArray.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data));
           }
           // not perfect
-          // else {
-          //   decodedPartArray.push(snippet);
-          // }        
+          else {
+            console.log(" this is null hope so it is not :: data null");
+          }
         });
       } else {
         decodedPartArray.push('');

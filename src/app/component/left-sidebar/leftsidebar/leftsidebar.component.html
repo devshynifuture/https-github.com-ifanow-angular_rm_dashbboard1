@@ -18,7 +18,8 @@
                 <p class="f-14 f-500 mb-0">{{advisorName}}</p>
             </div>
             <div class="pt-12 scorllable ">
-                <a class="sidenav-link" mat-list-item routerLink="./dashboard">
+                <!-- dashboard not created finished so routerLink is removed -->
+                <a class="sidenav-link" mat-list-item>
                     <img src="assets/images/svg/time-meter.svg">
                     <span *ngIf="showTabs" class="title" mat-line>Dashboard</span>
                 </a>
@@ -42,8 +43,8 @@
                     <span *ngIf="showTabs" class="title" mat-line>Transactions</span>
                 </a>
                 <a class="sidenav-link" mat-list-item routerLink="./subscription/dashboard">
-                  <img src="assets/images/svg/ruppes.svg">
-                  <span *ngIf="showTabs" class="title" mat-line>Subscription</span>
+                    <img src="assets/images/svg/ruppes.svg">
+                    <span *ngIf="showTabs" class="title" mat-line>Subscription</span>
                 </a>
                 <a class="sidenav-link" mat-list-item routerLink="/customer/detail/account/assets">
                     <img src="assets/images/svg/ruppes.svg">
@@ -66,22 +67,26 @@
     </mat-sidenav>
     <mat-sidenav-content id="left">
         <mat-toolbar class="bg-white bl-1" class="fix-top pl-0">
-            <button *ngIf="showTabs==false" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="showMainNavWrapper()">
+            <button *ngIf="showTabs==false" type="button" aria-label="Toggle sidenav" mat-icon-button
+                (click)="showMainNavWrapper()">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
-            <button *ngIf="showTabs" class="btn_nav" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="showsmallNavWrapper()">
+            <button *ngIf="showTabs" class="btn_nav" type="button" aria-label="Toggle sidenav" mat-icon-button
+                (click)="showsmallNavWrapper()">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
 
 
             <mat-form-field class="width40">
                 <div class="form-group searchBoxHeader">
-                    <input type="text" #inputSearch class="form-control" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                    <input type="text" #inputSearch class="form-control" matInput [formControl]="myControl"
+                        [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
                         <!-- <mat-option>
                             <p>Start typing to search clients,leads otr team members</p>
                         </mat-option> -->
-                        <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of clientList" [value]="singleClient.name">
+                        <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of clientList"
+                            [value]="singleClient.name">
                             <div class="row">
                                 <div class="col-md-1">
 
