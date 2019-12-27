@@ -45,7 +45,7 @@
                             [ngClass]="{'v-h':!(ispremiumDetailsFrequency && lifeInsuranceForm.get('premiumDetailsFrequency').invalid || (lifeInsuranceForm.get('premiumDetailsFrequency').touched && lifeInsuranceForm.get('premiumDetailsFrequency').invalid))}"
                             class="f-12 pt-4">This field is required
                         </mat-error>
-                    </mat-form-field> 
+                    </mat-form-field>
                 </div>
             </div>
         </div>
@@ -170,7 +170,7 @@
                     <label class="f-16 roboto">Amount</label>
                     <mat-form-field>
                         <input matInput type="number" formControlName="premiumDetailsAmount" #premiumdetails
-                            autocomplete="true" class="form-control br-0">
+                            autocomplete="true" class="form-control rupess br-0">
                         <mat-error
                             [ngClass]="{'v-h':!(ispremiumDetailsAmount && lifeInsuranceForm.get('premiumDetailsAmount').invalid || (lifeInsuranceForm.get('premiumDetailsAmount').touched && lifeInsuranceForm.get('premiumDetailsAmount').invalid))}"
                             class="f-12 pt-4">This field is required
@@ -216,7 +216,7 @@
                     </mat-form-field> -->
                     <mat-form-field>
                         <mat-select formControlName="tenureDetailsPolicy" #frequency autocomplete="off"
-                            class="form-control mt-28 br-0">
+                            class="form-control br-0">
                             <mat-option value="5">5 Years</mat-option>
                             <mat-option value="10">10 Years</mat-option>
                             <mat-option value="15">15 Years</mat-option>
@@ -278,6 +278,9 @@
                             class="f-12 pt-4">This field is required
                         </mat-error>
                     </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <p class="f-12 text-primitive m-0 roboto">Optional</p>
                 </div>
             </div>
         </div>
@@ -386,7 +389,7 @@
                 </mat-tab>
                 <mat-tab label="Cash Flows">
                     <!-- add btn required -->
-                    <div class="row pt-40" [formGroup]="cashFlowForm">
+                    <div class="row pt-40 justify-content-center" [formGroup]="cashFlowForm">
                         <div class="col-md-3 pr-12">
                             <h5 class="m-0 pb-8">Cash Flow Type</h5>
                         </div>
@@ -397,7 +400,8 @@
                             <h5 class="m-0 pb-8">Approx amount</h5>
                         </div>
                         <div formArrayName="cashFlow">
-                            <div class="row pt-28" *ngFor="let obj of cashFlowEntries.controls; let pointIndex=index"
+                            <div class="row pt-4 justify-content-center"
+                                *ngFor="let obj of cashFlowEntries.controls; let pointIndex=index"
                                 [formGroupName]="pointIndex">
                                 <div class="col-md-3">
                                     <div class="form-group mb-0">
@@ -427,7 +431,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-2 p-0">
+                                <div class="col-md-1 p-0">
                                     <i class="material-icons text-primitive c-p float-left"
                                         (click)="addTransaction()">add</i>
                                     <i class="material-icons text-primitive c-p float-right"
@@ -540,7 +544,7 @@
                     <div [formGroup]="Miscellaneous">
                         <div class="row pt-40">
                             <div class="col-md-5 text-right">
-                                <h5 class="m-0 pt-8"> Permium payment mode </h5>
+                                <h5 class="m-0 pt-32"> Permium payment mode </h5>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group ">

@@ -178,7 +178,7 @@
           <mat-error class="f-12 pt-4">
             Annual interest rate is required
           </mat-error>
-          <mat-hint align="end" class="f-12">{{interest.value.length}}/20</mat-hint>
+          <!-- <mat-hint align="end" class="f-12">{{interest.value.length}}/20</mat-hint> -->
         </mat-form-field>
       </div>
     </div>
@@ -186,7 +186,7 @@
 
   <div class="row pt-40" *ngIf="this.show==false">
     <div class="col-md-5 pr-0 text-right">
-      <p class="m-0 text-primitive f-16 c-p" (click)="showMore()"> + Add more [optional data] </p>
+      <h5 class="m-0 text-primitive c-p" (click)="showMore()"> + Add more [optional data] </h5>
     </div>
     <div class="col-md-3 ">
 
@@ -247,7 +247,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-9 p-0">
+  <div class="col-md-12 p-0">
     <div class="row pt-40 justify-content-md-center ">
       <div class="col-md-9 bt-grey text-center">
         <button mat-stroked-button class="btn-dark-black addon mt-16" (click)="showAddTransact()"><i
@@ -261,9 +261,9 @@
         </p>
       </div>
     </div>
-    <div class="row" *ngIf="this.showTransact==true">
-      <div class="col-md-3 p-0">
-        <h5 class="m-0 pb-8">Part Payment date </h5>
+    <div class="row pt-16 justify-content-md-center" *ngIf="this.showTransact==true">
+      <div class="col-md-4 text-center p-0">
+        <h5 class="m-0 pb-8 pl-28">Part Payment date </h5>
       </div>
       <div class="col-md-3 pr-0">
         <h5 class="m-0 pb-8">Part Payment Amount</h5>
@@ -272,7 +272,7 @@
         <h5 class="m-0 pb-8">Option </h5>
       </div>
       <div *ngIf="this.showTransact==true" formArrayName="transact">
-        <div class="row pt-40" *ngFor="let obj of transactEntries.controls; let pointIndex=index"
+        <div class="row" *ngFor="let obj of transactEntries.controls; let pointIndex=index"
           [formGroupName]="pointIndex">
           <div class="col-md-4">
             <mat-form-field>
@@ -290,7 +290,7 @@
                 <input matInput #partPayment class="form-control br-0" (keypress)="keyPress($event)"
                   formControlName="partPayment">
                 <mat-error class="f-12 pt-4">
-                 payment Amount is required
+                  payment Amount is required
                 </mat-error>
                 <mat-hint align="end" class="f-12">{{partPayment.value.length}}/20</mat-hint>
               </mat-form-field>
@@ -300,40 +300,40 @@
             <div class="form-group mb-0">
               <mat-form-field>
                 <mat-select formControlName="option" class="form-control br-0">
-                  <mat-option value="1" matTooltip="Keep the EMI as it is and reduce the term">Keep the EMI as it is and reduce the term</mat-option>
-                  <mat-option value="2" matTooltip="Keep the term as it is and reduce the EMI">Keep the term as it is and reduce the EMI</mat-option>
+                  <mat-option value="1" matTooltip="Keep the EMI as it is and reduce the term">Keep the EMI as it is and
+                    reduce the term</mat-option>
+                  <mat-option value="2" matTooltip="Keep the term as it is and reduce the EMI">Keep the term as it is
+                    and reduce the EMI</mat-option>
                 </mat-select>
                 <mat-error class="f-12 pt-4">
-                 option is required
+                  option is required
                 </mat-error>
               </mat-form-field>
 
             </div>
           </div>
-          <div class="col-md-1 p-0">
-            <div class="pt-36">
-              <i class="material-icons text-primitive c-p float-left" (click)="addTransaction()">add</i>
-              <i class="material-icons text-primitive c-p float-right"
-                (click)="removeTransaction(pointIndex)">remove</i>
-            </div>
+          <div class="col-md-1 p-0 pt-4 d-flex">
+            <i class="material-icons text-primitive pr-16 c-p float-left" (click)="addTransaction()">add</i>
+            <i class="material-icons text-primitive c-p float-right" (click)="removeTransaction(pointIndex)">remove</i>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="bottom-fixed wrapper-12 pt-16">
-    <div class="row">
-      <div class="col-md-4">
-        <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
-      </div>
-      <div class="col-md-8 right text-right">
-        <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFormData('close')">Save</button>
-      </div>
+</div>
+<div class="bottom-fixed w-60 wrapper-12 pt-16">
+  <div class="row">
+    <div class="col-md-4">
+      <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
+    </div>
+    <div class="col-md-8 right text-right">
+      <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFormData('close')">Save</button>
     </div>
   </div>
+</div>
 
-  <!-- LOAN SBI HOME 989898 -->
-  <!-- <div class="popup-header-fix-60">
+<!-- LOAN SBI HOME 989898 -->
+<!-- <div class="popup-header-fix-60">
   <div class="row bb-1">
       <div class="col-md-8 p-0">
           <h4 class="mb-0 wrapper-20">LOAN-SBI HOME 989898</h4>
@@ -367,8 +367,8 @@
   </div>
 </div> -->
 
-  <!-- Loan Chart -->
-  <!--  <div class="popup-header-fix-60">
+<!-- Loan Chart -->
+<!--  <div class="popup-header-fix-60">
   <div class="row bb-1">
       <div class="col-md-8 p-0">
           <h4 class="mb-0 wrapper-20">LOAN-SBI HOME 989898</h4>

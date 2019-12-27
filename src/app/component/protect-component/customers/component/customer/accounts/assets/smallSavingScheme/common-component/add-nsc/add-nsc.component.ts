@@ -25,7 +25,7 @@ export class AddNscComponent implements OnInit {
   familyMemberId: any;
   editApi: any;
   transactionData: any;
-  commDate:any;
+  commDate: any;
   clientId: any;
   @Input()
   set data(data) {
@@ -41,7 +41,7 @@ export class AddNscComponent implements OnInit {
   ngOnInit() {
     this.isOptionalField = true
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId=AuthService.getClientId();
+    this.clientId = AuthService.getClientId();
   }
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
@@ -53,14 +53,14 @@ export class AddNscComponent implements OnInit {
     }
     else {
       this.editApi = data
-      this.commDate=new Date(data.commencementDate)
+      this.commDate = new Date(data.commencementDate)
     }
     this.nscFormField = this.fb.group({
-      ownerName: [String(data.ownerName), [Validators.required]],
-      amountInvested: [data.amountInvested, [Validators.required,Validators.min(100)]],
+      ownerName: [data.ownerName, [Validators.required]],
+      amountInvested: [data.amountInvested, [Validators.required, Validators.min(100)]],
       commDate: [this.commDate, [Validators.required]],
-      Tenure: [(data.tenure)?String(data.tenure):'5', [Validators.required]],
-      ownershipType: [(data.ownerTypeId)?String(data.ownerTypeId):'1', [Validators.required]]
+      Tenure: [(data.tenure) ? String(data.tenure) : '5', [Validators.required]],
+      ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]]
 
     })
     this.nscFormOptionalField = this.fb.group({
@@ -82,24 +82,20 @@ export class AddNscComponent implements OnInit {
     console.log(data)
     this.transactionData = data.controls
   }
-  addNSC() { 
+  addNSC() {
 
-    if(this.transactionData)
-    {
+    if (this.transactionData) {
       let finalTransctList = []
-    this.transactionData.forEach(element => {
-      let obj = {
-        "date": element.controls.date.value._d,
-        "amount": element.controls.amount.value,
-        "paymentType": element.controls.transactionType.value
-      }
-      finalTransctList.push(obj)
-    });
+      this.transactionData.forEach(element => {
+        let obj = {
+          "date": element.controls.date.value._d,
+          "amount": element.controls.amount.value,
+          "paymentType": element.controls.transactionType.value
+        }
+        finalTransctList.push(obj)
+      });
     }
-    // if (this.ownerName == undefined) {
-    //   return
-    // }
-    else if (this.nscFormField.get('amountInvested').invalid) {
+    if (this.nscFormField.get('amountInvested').invalid) {
       this.nscFormField.get('amountInvested').markAsTouched();
       return
     }
@@ -133,9 +129,9 @@ export class AddNscComponent implements OnInit {
           "description": this.nscFormOptionalField.get('description').value,
         }
         this.cusService.editNSCData(obj).subscribe(
-            data => this.addNSCResponse(data),
-            err=>this.eventService.openSnackBar(err)
-          )
+          data => this.addNSCResponse(data),
+          err => this.eventService.openSnackBar(err)
+        )
       }
       else {
         let obj =
@@ -145,7 +141,7 @@ export class AddNscComponent implements OnInit {
           "advisorId": this.advisorId,
           "ownerName": this.ownerName,
           "amountInvested": this.nscFormField.get('amountInvested').value,
-          "commencementDate": this.nscFormField.get('commDate').value._d,
+          "commencementDate": this.nscFormField.get('commDate').value,
           "tenure": this.nscFormField.get('Tenure').value,
           "certificateNumber": this.nscFormOptionalField.get('cNo').value,
           "postOfficeBranch": this.nscFormOptionalField.get('poBranch').value,
@@ -163,7 +159,7 @@ export class AddNscComponent implements OnInit {
     }
   }
   addNSCResponse(data) {
-    (this.editApi)?this.eventService.openSnackBar("NSC is edited","dismiss"):this.eventService.openSnackBar("NSC is added","dismiss")
+    (this.editApi) ? this.eventService.openSnackBar("NSC is edited", "dismiss") : this.eventService.openSnackBar("NSC is added", "dismiss")
     console.log(data)
     this.close()
   }
