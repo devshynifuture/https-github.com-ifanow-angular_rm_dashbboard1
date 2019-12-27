@@ -1,3 +1,16 @@
+<div *ngIf="singleSubscriptionData.isCreateSub" class="row bb-1 popup-header-fix-60">
+  <div class="col-md-8 p-0">
+    <h4 class="wrapper-20 m-0">FIXED FEE STRUCTURE</h4>
+  </div>
+  <div class="col-md-4 text-right">
+    <div class="wrapper-12 pb-10">
+      <button [ngClass]="{'v-h':!isSave}" mat-stroked-button class="br-0 btn-primary mr-20" (click)="enableForm()">
+        EDIT
+      </button>
+      <i class="material-icons c-p v-middle" (click)="close()"> clear</i>
+    </div>
+  </div>
+</div>
 <div class="wrapper-20 pt-36 mb-44 pb-44">
   <div [formGroup]="fixedFeeStructureForm">
     <p class="text-primary">FIXED FEE STRUCTURE</p>
