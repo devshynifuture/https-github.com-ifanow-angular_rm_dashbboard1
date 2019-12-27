@@ -38,7 +38,6 @@ const routes: Routes = [
         path: 'activies',
         loadChildren: () => import('./component/protect-component/AdviserComponent/Activies/activies/activies.module').then(m => m.ActiviesModule),
         data: {animation: 'Tab1', preload: true}
-
       },
       {
         path: 'calender',
