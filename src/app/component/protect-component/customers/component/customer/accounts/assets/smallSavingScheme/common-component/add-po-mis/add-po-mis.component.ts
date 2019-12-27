@@ -1,18 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from '../../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {MAT_DATE_FORMATS} from '@angular/material/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 
 @Component({
   selector: 'app-add-po-mis',
   templateUrl: './add-po-mis.component.html',
   styleUrls: ['./add-po-mis.component.scss'],
   providers: [
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class AddPoMisComponent implements OnInit {
@@ -30,7 +30,7 @@ export class AddPoMisComponent implements OnInit {
   familyMemberId: any;
 
   constructor(private fb: FormBuilder, public subInjectService: SubscriptionInject,
-              public custumService: CustomerService, public eventService: EventService) {
+    public custumService: CustomerService, public eventService: EventService) {
   }
 
   @Input()
@@ -52,7 +52,7 @@ export class AddPoMisComponent implements OnInit {
 
   close() {
     // let data=this._inputData.loanTypeId;
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   display(value) {
@@ -93,7 +93,6 @@ export class AddPoMisComponent implements OnInit {
   saveFormData(state) {
     if (this.pomisForm.controls.amtInvested.invalid) {
       this.pomisForm.get('amtInvested').markAsTouched();
-
       return;
     } else if (this.pomisForm.controls.commencementdate.invalid) {
       this.pomisForm.get('commencementdate').markAsTouched();
@@ -168,7 +167,7 @@ export class AddPoMisComponent implements OnInit {
     console.log(data);
     if (data) {
       console.log(data);
-      this.subInjectService.changeNewRightSliderState({state: 'close'});
+      this.subInjectService.changeNewRightSliderState({ state: 'close' });
       this.eventService.openSnackBar('Liabilities added successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
@@ -180,7 +179,7 @@ export class AddPoMisComponent implements OnInit {
     console.log(data);
     if (data) {
       console.log(data);
-      this.subInjectService.changeNewRightSliderState({state: 'close'});
+      this.subInjectService.changeNewRightSliderState({ state: 'close' });
       this.eventService.openSnackBar('Liabilities edited successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');

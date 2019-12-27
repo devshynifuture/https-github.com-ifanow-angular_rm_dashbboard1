@@ -38,7 +38,8 @@ export class ScssSchemeComponent implements OnInit {
   }
 
   displayedColumns19 = ['no', 'owner', 'payout', 'rate', 'tamt', 'amt', 'mdate', 'desc', 'status', 'icons'];
-  datasource: any = [{}, {}, {}];
+  data: Array<any> = [{}, {}, {}];
+  datasource = new MatTableDataSource(this.data);
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -80,8 +81,13 @@ export class ScssSchemeComponent implements OnInit {
       clientId: this.clientId,
       requiredDate: ''
     };
+    this.datasource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemeSCSSData(obj).subscribe(
-      data => this.getKvpSchemedataResponse(data)
+      data => this.getKvpSchemedataResponse(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.datasource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
@@ -124,8 +130,8 @@ export class ScssSchemeComponent implements OnInit {
   getKvpSchemedataResponse(data: any) {
     console.log(data);
     this.isLoading = false;
-    if (data.scssList.length != 0) {
-      this.datasource = new MatTableDataSource(data.scssList);
+    if (data && data.scssList && data.scssList.length > 0) {
+      this.datasource.data = data.scssList;
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);
       this.sumOfAmountInvested = data.sumOfAmountInvested;
@@ -133,8 +139,10 @@ export class ScssSchemeComponent implements OnInit {
       this.sumOfQuarterlyPayout = data.sumOfQuarterlyPayout;
       this.scssData = data;
     } else {
-      this.noData = 'No Scheme Found';
+      this.noData = 'No scheme found';
+      this.datasource.data = []
     }
+    console.log('datasource', this.datasource)
   }
 
   openAddSCSS(data, flag) {

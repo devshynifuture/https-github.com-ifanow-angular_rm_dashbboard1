@@ -1,38 +1,40 @@
-<div class="full-lights pb-36 " *ngIf="showSubStep==false" id="ui-dashboard" [ngClass]="showLetsBegin==true ? 'pt-130': 'pt-0'  ">
+<div *ngIf="showSubStep==false" [ngClass]="showLetsBegin==true ? 'pt-130': 'pt-0'  " class="full-lights pb-36 " id="ui-dashboard">
     <div class="wrapper-20">
-        <div class="row bg-red mt-20 mb-36" *ngIf="showLetsBegin">
+        <!-- <div *ngIf="showLetsBegin" class="row bg-red mt-20 mb-36"> -->
+
+        <div class="row bg-red mt-20 mb-36">
             <div class="col-md-5">
-                <img src="assets/images/svg/Dashboard.svg" class="dashboard-img">
+                <img class="dashboard-img" src="assets/images/svg/Dashboard.svg">
             </div>
             <div class="col-md-7">
-                <h1>Welcome Ronak Hindocha</h1>
+                <h1>Welcome {{advisorName}}</h1>
                 <p class="mb-0 pt-12">We’re excited to see you here! The dashboard currently looks barren. </p>
                 <p> Fret not. We’ll help you in this journey. We’re in this together. </p>
-                <button (click)="showSubscriptionSteps()" mat-flat-button class="btn-red addon mb-28 mt-16">Let's begin
+                <button (click)="showSubscriptionSteps()" class="btn-red addon mb-28 mt-16" mat-flat-button>Let's begin
                     <i class="material-icons right text-right"> arrow_forward </i></button>
             </div>
         </div>
-        <div class=" subscription-summary" [ngClass]="showLetsBegin==true ? 'pt-40': 'pt-100'  ">
-            <div class="row skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+        <div [ngClass]="showLetsBegin==true ? 'pt-40': 'pt-100'  " class=" subscription-summary">
+            <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="row skeletonAnimation">
                 <div class="col-md-4 pl-0 relClass">
                     <div class="bar">
-                        <div class="bg-white pt-20 pb-16 text-center" *ngIf="dataSourceClientWithSub !=undefined">
+                        <div *ngIf="dataSourceClientWithSub !=undefined" class="bg-white pt-20 pb-16 text-center">
 
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <circle-progress class="progress" [percent]="dataSourceClientWithSub.activeClientPer" [radius]="100" [outerStrokeWidth]="10" [innerStrokeWidth]="10" [space]="-10" [outerStrokeColor]="'#008FFF'" [innerStrokeColor]="'#e7e8ea'" [titleFontSize]="35" [unitsFontSize]="35"
-                                            [showSubtitle]="false" [animation]="true" [animationDuration]="1000" [startFromZero]="false" [responsive]="true">
+                                        <circle-progress [animationDuration]="1000" [animation]="true" [innerStrokeColor]="'#e7e8ea'" [innerStrokeWidth]="10" [outerStrokeColor]="'#008FFF'" [outerStrokeWidth]="10" [percent]="dataSourceClientWithSub.activeClientPer" [radius]="100" [responsive]="true"
+                                            [showSubtitle]="false" [space]="-10" [startFromZero]="false" [titleFontSize]="35" [unitsFontSize]="35" class="progress">
                                         </circle-progress>
                                         <!--<div class="progress blue">
-                                            <span class="progress-left">
-                                                <span class="progress-bar"></span>
-                                            </span>
-                    <span class="progress-right">
-                                                <span class="progress-bar"></span>
-                                            </span>
-                    <div class="progress-value">{{dataSourceClientWithSub.activeClientPer}}%</div>
-                  </div>-->
+                        <span class="progress-left">
+                            <span class="progress-bar"></span>
+                        </span>
+<span class="progress-right">
+                            <span class="progress-bar"></span>
+                        </span>
+<div class="progress-value">{{dataSourceClientWithSub.activeClientPer}}%</div>
+</div>-->
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +65,7 @@
                                 <h4 class="f-300 roboto pl-16 pt-16 mb-16">Invoices to be reviewed</h4>
                             </div>
 
-                            <div class="col-md-12 " *ngFor="let invoice of dataSourceInvoice">
+                            <div *ngFor="let invoice of dataSourceInvoice" class="col-md-12 ">
 
                                 <div class="row pt-16 b-b">
                                     <div class="col-md-8 pl-8">
@@ -92,37 +94,37 @@
                             <div class="row bg-white">
                                 <div class="col-md-12 pt-8 text-right">
                                     <!-- <i class="material-icons f-700 text-custom">
-                    more_horiz
-                  </i> -->
+  more_horiz
+</i> -->
                                 </div>
-                                <div class="col-md-6 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-                                    <div class="pl-20 pr-20 c-p">
+                                <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-6 skeletonAnimation">
+                                    <div class="pl-20 pr-20">
                                         <p class="f-300 f-18 mb-0">Total sales</p>
                                         <h2 class="text-primary mb-0 pb-28 pt-8 relClass">
-                                            <div class="bar"> {{totalSaleReceived ? totalSaleReceived.totalSales : ' '}}
-                                            </div>
+                                            <span [value]="totalSaleReceived ? totalSaleReceived.totalSales : 0" appFormatNumber class="bar">
+                                            </span>
                                         </h2>
                                     </div>
                                 </div>
-                                <div class="col-md-6 p-0 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-                                    <div class="pr-20 pl-20 c-p">
+                                <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-6 p-0 skeletonAnimation">
+                                    <div class="pr-20 pl-20">
                                         <p class="f-300 f-18 mb-0">Fee received</p>
                                         <h2 class="text-primary mb-0 pb-28 pt-8 relClass">
-                                            <div class="bar">
-                                                {{totalSaleReceived ? totalSaleReceived.feeRecieved : ' '}}</div>
+                                            <div [value]="totalSaleReceived ? totalSaleReceived.feeRecieved : 0" appFormatNumber class="bar">
+                                            </div>
                                         </h2>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 pr-0">
-                            <div class="row bg-white" *ngIf="dataSourceSingCount !=undefined">
+                            <div *ngIf="dataSourceSingCount !=undefined" class="row bg-white">
                                 <div class="col-md-12 pt-8 text-right">
                                     <!-- <i class="material-icons text-custom f-700">
-                    more_horiz
-                  </i> -->
+  more_horiz
+</i> -->
                                 </div>
-                                <div class="col-md-6 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                                <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-6 skeletonAnimation">
                                     <div class="pl-20 pr-20 c-p">
                                         <p class="f-300 f-18 mb-0">Docs sent </p>
                                         <h2 class="f-26 text-primary mb-0 pb-28 pt-8 relClass">
@@ -130,7 +132,7 @@
                                         </h2>
                                     </div>
                                 </div>
-                                <div class="col-md-6 pr-0 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                                <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-6 pr-0 skeletonAnimation">
                                     <div class="pl-20 pr-20 c-p">
                                         <p class="f-300 f-18 mb-0">Docs signed </p>
                                         <h2 class="f-26 text-primary mb-0 pb-28 pt-8 relClass">
@@ -146,21 +148,21 @@
 
                     <!-- <div class="bg-white mt-32 none">
 
-                        <div class="ima pl-32">
-                            <p class="f-300 f-18 mb-0 ">Receivables summary</p>
-                            <h2 class="text-primary pt-8 mb-0 c-p">1,23,670</h2>
-                            <div [chart]="chart" class="chart"></div>
+              <div class="ima pl-32">
+                  <p class="f-300 f-18 mb-0 ">Receivables summary</p>
+                  <h2 class="text-primary pt-8 mb-0 c-p">1,23,670</h2>
+                  <div [chart]="chart" class="chart"></div>
 
-                        </div>
-                    </div> -->
+              </div>
+          </div> -->
 
                     <div class="col-md-12 p-0">
                         <div class="wrapper-16 pt-8 bg-white mt-28 pb-20">
                             <div class="row">
                                 <div class="col-md-12 pr-0">
                                     <!-- <i class="material-icons right text-right text-custom f-700">
-                      more_horiz
-                    </i> -->
+    more_horiz
+  </i> -->
                                 </div>
                             </div>
                             <div class="pl-20 pr-2">
@@ -175,63 +177,63 @@
                                         <!--                    <mat-button-toggle value="primary">NOT STARTED</mat-button-toggle>-->
                                         <!--                    <mat-button-toggle value="accent">UPCOMING</mat-button-toggle>-->
                                         <!--                  </mat-button-toggle-group>-->
-                                        <mat-button-toggle-group [(ngModel)]="subscriptionSummaryStatusFilter" (change)="getSummaryDataDashboard($event.value)" multiple=false class="subscription-summary" id="custom-toggle">
-                                            <mat-button-toggle value=1 class="f-14">NOT STARTED</mat-button-toggle>
-                                            <mat-button-toggle value=3 class="f-14">UPCOMING</mat-button-toggle>
+                                        <mat-button-toggle-group (change)="getSummaryDataDashboard($event.value)" [(ngModel)]="subscriptionSummaryStatusFilter" class="subscription-summary" id="custom-toggle" multiple=false>
+                                            <mat-button-toggle class="f-14" value=1>NOT STARTED</mat-button-toggle>
+                                            <mat-button-toggle class="f-14" value=3>UPCOMING</mat-button-toggle>
                                         </mat-button-toggle-group>
                                         <!-- <button mat-stroked-button class="text-primary br-0">NOT STARTED</button>
-                       <button mat-button class="text-custom">UPCOMING</button>-->
+   <button mat-button class="text-custom">UPCOMING</button>-->
                                     </div>
                                 </div>
-                                <div class="sub-summary">
-                                    <table mat-table [dataSource]="dataSource" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                                <div class="sub-summary overflow-hidden">
+                                    <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table>
                                         <tbody>
                                             <ng-container matColumnDef="name">
-                                                <th mat-header-cell *matHeaderCellDef> Client name</th>
-                                                <td mat-cell *matCellDef="let element" (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" class="c-p">
+                                                <th *matHeaderCellDef mat-header-cell> Client name</th>
+                                                <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" *matCellDef="let element" class="c-p" mat-cell>
                                                     <div class="bar"> {{element.clientName}} </div>
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="service">
-                                                <th mat-header-cell *matHeaderCellDef> Service name</th>
-                                                <td mat-cell *matCellDef="let element" class="c-p">
+                                                <th *matHeaderCellDef mat-header-cell> Service name</th>
+                                                <td *matCellDef="let element" class="c-p" mat-cell>
                                                     <div class="bar"> {{element.serviceName}} </div>
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="amt">
-                                                <th mat-header-cell *matHeaderCellDef> Fee amount</th>
-                                                <td mat-cell *matCellDef="let element" (click)="Open(element)" class="c-p text-primary text-underline"> View details
+                                                <th *matHeaderCellDef mat-header-cell> Fee amount</th>
+                                                <td (click)="Open(element)" *matCellDef="let element" class="c-p text-primary text-underline" mat-cell> View details
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="billing">
-                                                <th mat-header-cell *matHeaderCellDef> Next billing...</th>
-                                                <td mat-cell *matCellDef="let element">
+                                                <th *matHeaderCellDef mat-header-cell> Next billing...</th>
+                                                <td *matCellDef="let element" mat-cell>
                                                     <div class="bar"> {{element.nextBillingDate | date:'dd/MM/yyyy'}}
                                                     </div>
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="icons">
-                                                <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;">
+                                                <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;">
                                                 </th>
-                                                <td mat-cell *matCellDef="let element" style="width: 2%;"><i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu">
+                                                <td *matCellDef="let element" mat-cell style="width: 2%;"><i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
                                                         more_vert
                                                     </i>
                                                     <mat-menu #menu="matMenu">
-                                                        <a mat-menu-item (click)="Open(element)">View & Modify fee
+                                                        <a (click)="Open(element)" mat-menu-item>View & Modify fee
                                                             structure</a>
-                                                        <a mat-menu-item class="bt-1" (click)="openPlanSlider('billerSettings','open',element)">Change
+                                                        <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change
                                                             Biller</a>
-                                                        <a mat-menu-item (click)="openPlanSlider('changePayee','open',element)">Change
+                                                        <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change
                                                             Payee</a>
-                                                        <a mat-menu-item class="bt-1" (click)="delete('cancelSubscription')">Cancel
+                                                        <a (click)="delete('cancelSubscription')" class="bt-1" mat-menu-item>Cancel
                                                             subscription</a>
-                                                        <a mat-menu-item (click)="deleteModal('SUBSCRIPTION')">Delete
+                                                        <a (click)="deleteModal('SUBSCRIPTION')" mat-menu-item>Delete
                                                             subscription</a>
                                                     </mat-menu>
                                                 </td>
                                             </ng-container>
-                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                            <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                                            <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
                                         </tbody>
                                     </table>
                                 </div>

@@ -2,7 +2,7 @@
     <div class="col-md-4 p-0">
         <h4 class="m-0 text-black roboto pt-8">Kisan vikas patra (KVP)</h4>
     </div>
-    <div class="col-md-8 p-0 right text-right">
+    <div class="col-md-8 p-0 right text-right" *ngIf="datasource.filteredData.length > 0">
         <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
         <mat-menu #menu5="matMenu">
             <button mat-menu-item>PDF</button>
@@ -23,7 +23,7 @@
     </div>
 </div>
 <div class="example-container mt-8 col-md-12 p-0 real-estate">
-    <table matSort mat-table [dataSource]="datasource" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+    <table *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -111,8 +111,10 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns18;"></tr>
         <tr mat-footer-row *matFooterRowDef="displayedColumns18;sticky: true" [hidden]="isLoading"></tr>
     </table>
-    <div *ngIf="datasource==undefined">
+    <div *ngIf="datasource.filteredData.length == 0" class="d-flex flex-column align-items-center">
         <h4 class="text-center pt-72">{{noData}}</h4>
+        <button mat-stroked-button (click)="openAddKVP(null,'addKvp')" class="btn-primary addon v-middle"><i
+            class="material-icons">add</i>ADD NEW</button>
     </div>
 </div>
 <!-- 

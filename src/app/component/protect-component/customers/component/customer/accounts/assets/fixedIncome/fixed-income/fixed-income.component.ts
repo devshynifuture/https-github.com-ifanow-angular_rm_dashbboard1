@@ -44,9 +44,10 @@ export class FixedIncomeComponent implements OnInit {
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   footer = [];
+  data: Array<any> = [{}, {}, {}];
   dataSourceFixed: any = [{}, {}, {}];
   hidePdf: boolean;
-  noData: any;
+  noData: string;
   constructor(private excelSer : ExcelService,private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public util: UtilService, public dialog: MatDialog) { }
   viewMode;
   displayedColumns4 = ['no', 'owner', 'type', 'cvalue', 'rate', 'amt', 'mdate', 'mvalue', 'number', 'desc', 'status', 'icons'];
@@ -66,7 +67,7 @@ export class FixedIncomeComponent implements OnInit {
     this.clientId = AuthService.getClientId();
 
     this.getFixedDepositList()
-    this.dataSourceFixed = new MatTableDataSource([{}, {}, {}]);
+    this.dataSourceFixed = new MatTableDataSource(this.data);
   }
 
   Close() {
@@ -187,13 +188,13 @@ export class FixedIncomeComponent implements OnInit {
     this.showRequring = value;
     this.isLoading = true;
     if (value == '2') {
-      this.dataSourceRecurring = new MatTableDataSource([{}, {}, {}]);
+      this.dataSourceRecurring = new MatTableDataSource(this.data);
       this.getRecurringDepositList();
     } else if (value == '3') {
-      this.dataSourceBond = new MatTableDataSource([{}, {}, {}]);
+      this.dataSourceBond = new MatTableDataSource(this.data);
       this.getBondsList();
     } else {
-      this.dataSourceFixed = new MatTableDataSource([{}, {}, {}]);
+      this.dataSourceFixed = new MatTableDataSource(this.data);
       this.getFixedDepositList();
     }
 
@@ -205,8 +206,11 @@ export class FixedIncomeComponent implements OnInit {
       advisorId: this.advisorId
     };
     this.custumService.getFixedDeposit(obj).subscribe(
-      data => this.getFixedDepositRes(data),
-      err => this.eventService.openSnackBar(err, "dismiss")
+      data => this.getFixedDepositRes(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.dataSourceFixed.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
@@ -227,7 +231,8 @@ export class FixedIncomeComponent implements OnInit {
       this.sumMaturityValue = data.sumMaturityValue;
     }
     else {
-      this.noData = "No Data Found"
+      this.noData = "No scheme found";
+      this.dataSourceFixed.data = []
     }
 
   }
@@ -239,8 +244,11 @@ export class FixedIncomeComponent implements OnInit {
       advisorId: this.advisorId
     };
     this.custumService.getRecurringDeposit(obj).subscribe(
-      data => this.getRecurringDepositRes(data),
-      err => this.eventService.openSnackBar(err, "dismiss")
+      data => this.getRecurringDepositRes(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.dataSourceRecurring.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
@@ -256,7 +264,8 @@ export class FixedIncomeComponent implements OnInit {
       this.totalMarketValue = data.totalMarketValue;
     }
     else {
-      this.noData = "No Data Found"
+      this.noData = 'No scheme found';
+      this.dataSourceRecurring.data = []
     }
   }
 
@@ -267,8 +276,11 @@ export class FixedIncomeComponent implements OnInit {
       advisorId: this.advisorId
     };
     this.custumService.getBonds(obj).subscribe(
-      data => this.getBondsRes(data),
-      err => this.eventService.openSnackBar(err, "dismiss")
+      data => this.getBondsRes(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.dataSourceBond.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
@@ -285,7 +297,8 @@ export class FixedIncomeComponent implements OnInit {
       this.sumCurrentValueB = data.sumCurrentValue;
     }
     else {
-      this.noData = "No Data Found"
+      this.noData = "No scheme found";
+      this.dataSourceBond.data = []
     }
   }
   deleteModal(value, data) {
@@ -411,7 +424,6 @@ export class FixedIncomeComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-
         }
       }
     );

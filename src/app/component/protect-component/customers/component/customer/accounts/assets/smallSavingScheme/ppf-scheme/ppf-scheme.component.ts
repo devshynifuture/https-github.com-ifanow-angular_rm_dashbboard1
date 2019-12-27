@@ -35,9 +35,11 @@ export class PPFSchemeComponent implements OnInit {
     }
     this.cusService.getSmallSavingSchemePPFData(obj).subscribe(
       data => this.getPpfSchemeDataResponse(data),
-      err => this.eventService.openSnackBar("server issues")
-    )
-
+      (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.dataSource.data = [];
+        this.isLoading = false;
+      });
   }
   getPpfSchemeDataResponse(data) {
     console.log(data);
@@ -45,7 +47,8 @@ export class PPFSchemeComponent implements OnInit {
     if (data.PPFList.length != 0) {
       this.dataSource = data.PPFList;
     } else {
-      this.noData = "No Scheme Found";
+      this.noData = 'No scheme found';
+      //this.dataSource.data = []
     }
   }
   deleteModal(value, data) {

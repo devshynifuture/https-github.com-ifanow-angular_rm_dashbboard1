@@ -5,6 +5,7 @@
 .img-top {
   position: fixed;
   width: 18% !important;
+  z-index: 101;
 
 }
 
@@ -21,13 +22,6 @@
 }
 
 
-.successBorder {
-  border-bottom: 1px solid #008FFF;
-  color: #008FFF !important;
-  opacity: 1;
-  border-bottom: 5px solid;
-  margin-bottom: -5px;
-}
 
 #ui-router-outlet {
   z-index: 10;
@@ -41,8 +35,23 @@
 }
 
 #ui-customer-container .mat-tab-link {
-  color: #595252 !important;
+  color: #595252;
   border-bottom: 4px solid transparent;
   width: 120px !important;
   background: transparent !important;
+  opacity: 1 !important;
+
+}
+
+::ng-deep .successBorder {
+  border-bottom: 4px solid #008FFF !important;
+  color: #008FFF !important;
+  opacity: 1;
+  margin-bottom: -5px;
+
+
+}
+
+::ng-deep a.successBorder:hover {
+  color: #008FFF;
 }

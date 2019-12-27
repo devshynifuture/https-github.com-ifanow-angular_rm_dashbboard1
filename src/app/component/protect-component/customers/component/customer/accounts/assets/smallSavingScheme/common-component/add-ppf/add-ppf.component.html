@@ -19,26 +19,23 @@
                 <p class="m-0 f-12 text-custom">In whose name is this asset</p>
             </div>
             <div class="col-md-5">
-              <app-owner-column (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                                [data]='ownerData'>
-              </app-owner-column>
+                <app-owner-column (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                    [data]='ownerData'>
+                </app-owner-column>
             </div>
         </div>
         <div class="row pt-40">
-          <div class="col-md-5 text-right">
+            <div class="col-md-5 text-right">
                 <h5 class="m-0 pt-8">Account balance</h5>
                 <p class="m-0 f-12 text-custom">Leave blank if you want to enter</p>
                 <p class="m-0 f-12 text-custom">complete transaction history</p>
             </div>
-          <div class="col-md-3 p-0">
+            <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                      <input #accBal (keypress)="check()" autocomplete="off" class="form-control rupess br-0"
-                             formControlName="accountBalance"
-                             matInput type="number">
-                      <mat-error
-                        *ngIf="ppfSchemeForm.get('accountBalance').errors?.required"
-                        class="f-12 pt-4">
+                        <input #accBal (keypress)="check()" autocomplete="off" class="form-control rupess br-0"
+                            formControlName="accountBalance" matInput type="number">
+                        <mat-error *ngIf="ppfSchemeForm.get('accountBalance').errors?.required" class="f-12 pt-4">
                             Account balance is required
                         </mat-error>
                         <mat-error *ngIf="(ppfSchemeForm.get('accountBalance').errors?.min)" class="f-12 pt-4">
@@ -58,8 +55,8 @@
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
-                      <input [matDatepicker]="balanceAsOn" class="form-control br-0" formControlName="balanceAsOn"
-                             matInput>
+                        <input [matDatepicker]="balanceAsOn" class="form-control br-0" formControlName="balanceAsOn"
+                            matInput>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
                         <mat-error class="f-12 pt-4">This field is required
@@ -75,9 +72,8 @@
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
-                      <input [matDatepicker]="CommencementPicker" class="form-control br-0"
-                             formControlName="commencementDate"
-                             matInput>
+                        <input [matDatepicker]="CommencementPicker" class="form-control br-0"
+                            formControlName="commencementDate" matInput>
                         <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
                         <mat-datepicker #CommencementPicker></mat-datepicker>
                         <mat-error class="f-12 pt-4">This field is required
@@ -87,17 +83,16 @@
             </div>
         </div>
         <div class="row pt-40">
-          <div class="col-md-5 text-right">
+            <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Future approx contribution</h5>
             </div>
-          <div class="col-md-3 p-0">
+            <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                      <input #futureContribution class="form-control rupess br-0" formControlName="futureContribution"
-                             matInput
-                             maxlength="" type="number">
+                        <input #futureContribution class="form-control rupess br-0" formControlName="futureContribution"
+                            matInput maxlength="" type="number">
                         <mat-error class="f-12 pt-4">
-                          Loan amount is required
+                            Loan amount is required
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{futureContribution.value.length}}/20</mat-hint>
                     </mat-form-field>
@@ -144,8 +139,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                      <input #fdNo class="form-control br-0" formControlName="description" matInput maxlength="10"
-                             type="text">
+                        <input #fdNo class="form-control br-0" formControlName="description" matInput maxlength="10"
+                            type="text">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -158,8 +153,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                      <input #bankACNo class="form-control br-0" formControlName="bankName" matInput maxlength="15"
-                             type="text">
+                        <input #bankACNo class="form-control br-0" formControlName="bankName" matInput maxlength="15"
+                            type="text">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -172,8 +167,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                      <input #institution class="form-control br-0" formControlName="linkedBankAccount" matInput
-                             maxlength="30">
+                        <input #institution class="form-control br-0" formControlName="linkedBankAccount" matInput
+                            maxlength="30">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -189,9 +184,9 @@
                         <div class="row">
                             <div class="col-md-4 p-0">
                                 <mat-form-field>
-                                  <input (click)="nomineesList()" [matAutocomplete]="auto" aria-label="State"
-                                         class="form-control br-0 pl-8" formControlName="nomineeName" list="userName"
-                                         matInput placeholder="Add nominee">
+                                    <input (click)="nomineesList()" [matAutocomplete]="auto" aria-label="State"
+                                        class="form-control br-0 pl-8" formControlName="nomineeName" list="userName"
+                                        matInput placeholder="Add nominee">
                                     <mat-autocomplete #auto="matAutocomplete">
                                         <mat-option *ngFor="let item of familyList" [value]="item.userName">
                                             <span>{{item.userName}}</span>
@@ -220,7 +215,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <mat-hint class="f-12 pt-4 text-danger" align="end" *ngIf="showError== true">
                 Percent cannot be more than 100%

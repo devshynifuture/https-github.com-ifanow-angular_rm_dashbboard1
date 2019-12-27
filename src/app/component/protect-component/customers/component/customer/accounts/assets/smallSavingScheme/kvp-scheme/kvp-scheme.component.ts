@@ -34,8 +34,8 @@ export class KvpSchemeComponent implements OnInit {
   }
 
   displayedColumns18 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
-  datasource: any = [{}, {}, {}];
-
+  data: Array<any> = [{}, {}, {}];
+  datasource = new MatTableDataSource(this.data);
   ngOnInit() {
 
     this.advisorId = AuthService.getAdvisorId();
@@ -75,14 +75,18 @@ export class KvpSchemeComponent implements OnInit {
       clientId: this.clientId
     };
     this.cusService.getSmallSavingSchemeKVPData(obj).subscribe(
-      data => this.getKvpSchemedataResponse(data)
+      data => this.getKvpSchemedataResponse(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.datasource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
   getKvpSchemedataResponse(data) {
     console.log(data);
     this.isLoading = false;
-    if (data.KVPList.length != 0) {
+    if (data && data.KVPList && data.KVPList.length != 0) {
       this.datasource = new MatTableDataSource(data.KVPList);
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);
@@ -90,7 +94,8 @@ export class KvpSchemeComponent implements OnInit {
       this.sumOfAmountInvested = data.SumOfAmountInvested;
       this.kvpData = data;
     } else {
-      this.noData = 'No Scheme Found';
+      this.noData = 'No scheme found';
+      this.datasource.data = []
     }
   }
 

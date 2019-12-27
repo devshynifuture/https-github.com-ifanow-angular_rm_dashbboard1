@@ -43,7 +43,7 @@ export class QuotationsComponent implements OnInit {
   dataCount;
   _clientData;
   displayedColumns: string[] = ['checkbox', 'document', 'plan', 'date', 'sdate', 'cdate', 'status', 'send', 'icons'];
-  dataSource :any;
+  dataSource: any;
   changeEmail = 'footerChange';
   advisorId;
 
@@ -70,11 +70,11 @@ export class QuotationsComponent implements OnInit {
   Open(value, state, data) {
     const fragmentData = {
       flag: value,
-      data:data,
+      data: data,
       id: 1,
       state,
     };
-    data.userEmailId=this._clientData.userEmailId
+    data.userEmailId = this._clientData.userEmailId
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
@@ -99,17 +99,21 @@ export class QuotationsComponent implements OnInit {
 
   selectedInvoice() {
     this.dataCount = 0;
-    this.dataSource.forEach(item => {
-      console.log('item item ', item);
-      if (item.selected) {
-        this.dataCount++;
-      }
-    });
+    if (this.dataSource.filteredData != undefined) {
+      this.dataSource.filteredData.forEach(item => {
+        console.log('item item ', item);
+        if (item.selected) {
+          this.dataCount++;
+        }
+      });
+    }
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    return this.dataCount === this.dataSource.length;
+    if (this.dataSource.filteredData != undefined) {
+      return this.dataCount === this.dataSource.filteredData.length;
+    }
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
@@ -121,6 +125,7 @@ export class QuotationsComponent implements OnInit {
   getQuotationsListResponse(data) {
     this.isLoading = false;
     if (data == undefined) {
+      this.dataSource=undefined;
       this.noData = 'No Data Found';
     } else {
       data.forEach(singleData => {
@@ -188,9 +193,9 @@ export class QuotationsComponent implements OnInit {
       templateType: 2, // 2 is for quotation
       documentList: []
     };
-    if(this.dataSource.length==1){
-          data.documentList=this.dataSource;
-    }else{
+    if (this.dataSource.length == 1) {
+      data.documentList = this.dataSource;
+    } else {
       this.dataSource.forEach(singleElement => {
         if (singleElement.selected) {
           data.documentList.push(singleElement);
@@ -284,8 +289,8 @@ export class QuotationsComponent implements OnInit {
     // this.dataSource.forEach(item => item.selected = 'checked');
 
     this.dataCount = 0;
-    if (this.dataSource) {
-      this.dataSource.forEach(item => {
+    if (this.dataSource.filteredData) {
+      this.dataSource.filteredData.forEach(item => {
         item.selected = event.checked;
         if (item.selected) {
           this.dataCount++;

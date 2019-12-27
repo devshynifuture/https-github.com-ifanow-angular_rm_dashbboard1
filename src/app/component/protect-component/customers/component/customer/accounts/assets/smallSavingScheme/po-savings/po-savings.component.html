@@ -2,7 +2,7 @@
     <div class="col-md-4 p-0">
         <h4 class="m-0 text-black roboto pt-8">Post office savings a/c</h4>
     </div>
-    <div class="col-md-8 p-0 right text-right">
+    <div class="col-md-8 p-0 right text-right" *ngIf="datasource!=undefined">
         <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
         <mat-menu #menu5="matMenu">
             <button mat-menu-item>PDF</button>
@@ -23,7 +23,8 @@
     </div>
 </div>
 <div class="example-container mt-8 col-md-12 p-0 real-estate">
-    <table matSort mat-table [dataSource]="datasource" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+    <table matSort mat-table [dataSource]="datasource" id="table-low" class="skeletonAnimation" appSkeletonLoading
+        [appSkeletonLoading]="isLoading">
 
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -40,11 +41,13 @@
             <td mat-footer-cell class="br text-left t-7" *matFooterCellDef></td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Current value </th>
+            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Current
+                value </th>
             <td mat-cell *matCellDef="let element" class="br t-14 text-right" appFormatNumber>
                 <div class="bar"> {{element.currentValue}} </div>
             </td>
-            <td mat-footer-cell class="br text-right f-500 p-8 t-7" *matFooterCellDef appFormatNumber [value]="currentValueSum">
+            <td mat-footer-cell class="br text-right f-500 p-8 t-7" *matFooterCellDef appFormatNumber
+                [value]="currentValueSum">
                 <div class="bar"> {{currentValueSum}} </div>
             </td>
         </ng-container>
@@ -62,7 +65,8 @@
             <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
                 <div class="bar"> {{element.balance}} </div>
             </td>
-            <td mat-footer-cell class="br text-right f-500 p-8 t-7" *matFooterCellDef appFormatNumber [value]="balanceMentionedSum">{{balanceMentionedSum}}</td>
+            <td mat-footer-cell class="br text-right f-500 p-8 t-7" *matFooterCellDef appFormatNumber
+                [value]="balanceMentionedSum">{{balanceMentionedSum}}</td>
         </ng-container>
         <ng-container matColumnDef="balAs">
             <th mat-sort-header="balanceAsOn" mat-header-cell *matHeaderCellDef class="br text-right">Balance as on</th>
@@ -87,7 +91,8 @@
         </ng-container>
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-            <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
+            <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black"
+                    [matMenuTriggerFor]="menubank">
                     more_vert
                 </i>
                 <mat-menu #menubank="matMenu">
@@ -103,11 +108,9 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns20;"></tr>
         <tr mat-footer-row *matFooterRowDef="displayedColumns20;sticky: true"></tr>
     </table>
-    <div *ngIf="datasource==undefined">
-        <h4 class="text-center pt-72">{{noData}}</h4>
+    <div *ngIf="datasource==undefined" class="d-flex flex-column align-items-center">
+        <h4 class="text-center pt-72">No Scheme Found</h4>
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOSAVING(null)"><i
+                class="material-icons">add</i>ADD NEW</button>
     </div>
 </div>
-<!-- 
-<div *ngIf="isLoading">
-    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div> -->

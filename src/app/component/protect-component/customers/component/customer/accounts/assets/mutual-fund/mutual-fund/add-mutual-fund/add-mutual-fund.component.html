@@ -62,10 +62,10 @@
         <mat-form-field>
           <input matInput autocomplete="off" formControlName="amtInvested" type="number" #institution maxlength="30"
             class="form-control rupess br-0">
-            <mat-error>This field is required</mat-error>
+          <mat-error>This field is required</mat-error>
         </mat-form-field>
       </div>
-     
+
     </div>
   </div>
   <div class="row pt-40">
@@ -86,17 +86,17 @@
       </div>
     </div>
   </div>
-  <div class="row pt-24" formArrayName="getNomineeName">
+  <div formArrayName="getNomineeName">
     <div *ngFor="let obj of getNominee.controls; let pointIndex=index" [formGroupName]="pointIndex" class="row pt-24">
-      <div class="col-md-5 text-right">
+      <div class="col-md-5 pr-0 text-right">
         <h5 *ngIf="pointIndex==0" class="m-0 pt-8 ">Nominee</h5>
         <h5 *ngIf="pointIndex!=0" class="m-0 pt-8 ">Nominee{{pointIndex}}</h5>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-3 pr-0">
         <div class="form-group mb-0">
           <mat-form-field>
             <input (click)="nomineesList()" [matAutocomplete]="auto" aria-label="State" class="form-control br-0 pl-8"
-              formControlName="name" list="userName" matInput placeholder="Add nominee">
+              formControlName="name" list="userName" matInput>
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option *ngFor="let item of familyList" [value]="item.userName">
                 <span>{{item.userName}}</span>
@@ -112,19 +112,21 @@
       <div class="col-md-2">
         <div class="form-group mb-0">
           <mat-form-field>
-            <input class="b-a percentage" formControlName="ownershipPer"  (keyup)="onChange('nominee')" matInput type="number">
+            <input class="form-control br-0 percentage" formControlName="ownershipPer" (keyup)="onChange('nominee')"
+              matInput type="number">
           </mat-form-field>
         </div>
       </div>
 
       <div class="col-md-2 p-0">
-        <div *ngIf="pointIndex==0" class="col-md-3">
-          <h5 class="m-0 text-primitive pt-8 c-p"  (click)="addNominee()">+ Add Nominee</h5>
+        <div class="row">
+          <div *ngIf="pointIndex==0" class="col-md-12 p-0">
+            <h5 class="m-0 text-primitive pt-8 f-15 c-p" (click)="addNominee()">+ Add Nominee</h5>
+          </div>
+          <div *ngIf="pointIndex > 0" class="col-md-12 pl-0">
+            <h5 class="m-0 text-primitive pt-8 c-p" (click)="removeNominee(pointIndex)">Remove</h5>
+          </div>
         </div>
-        <div *ngIf="pointIndex > 0" class="col-md-2">
-          <h5  class="m-0 text-primitive pt-8 c-p" (click)="removeNominee(pointIndex)">Remove</h5>
-        </div>
-
       </div>
     </div>
     <mat-hint *ngIf="showError==true" align="end" class="f-12 pt-4 text-danger">

@@ -29,16 +29,11 @@
     <ng-template #dynamic></ng-template>
   </div>
   <nav id="ui-customer" mat-tab-nav-bar>
-    <a (click)="value=1" [ngClass]="_value == 1 ?'successBorder': 'danger'" [routerLink]="'./overview'"
-       mat-tab-link>OVERVIEW</a>
-    <a (click)="value=2" [ngClass]="_value == 2  ?'successBorder': 'danger'" [routerLink]="['./account','summary']"
-       mat-tab-link>ACCOUNTS</a>
-    <a (click)="value=3" [ngClass]="_value == 3?'successBorder': 'danger'" [routerLink]="['./plan','summary']"
-       mat-tab-link>PLAN</a>
-    <a (click)="value=4" [ngClass]="_value == 4  ?'successBorder': 'danger'" [routerLink]="'./activity'"
-       mat-tab-link>ACTIVITY</a>
-    <a (click)="value=5" [ngClass]="_value == 5 ?'successBorder': 'danger'" [routerLink]="'./transact'"
-       mat-tab-link>TRANSACT</a>
+    <a [routerLink]="['/customer/detail/overview']" routerLinkActive="successBorder" mat-tab-link>OVERVIEW</a>
+    <a [routerLink]="['/customer/detail/account']" routerLinkActive="successBorder" mat-tab-link>ACCOUNTS</a>
+    <a [routerLink]="['/customer/detail/plan']" routerLinkActive="successBorder" mat-tab-link>PLAN</a>
+    <a [routerLink]="['/customer/detail/activity']" routerLinkActive="successBorder" mat-tab-link>ACTIVITY</a>
+    <a [routerLink]="['/customer/detail/transact']" routerLinkActive="successBorder" mat-tab-link>TRANSACT</a>
   </nav>
 
 </div>

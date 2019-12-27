@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { BackOfficeService } from '../../protect-component/AdviserComponent/backOffice/back-office.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {BackOfficeService} from '../../protect-component/AdviserComponent/backOffice/back-office.service';
 
 @Component({
   selector: 'app-login',
@@ -81,8 +81,8 @@ export class LoginComponent implements OnInit {
             this.authService.setClientData({
               id: 2978, name: 'Aryendra Kumar Saxena'
             });
+
           }
-          this.closeDialog(data);
         },
         err => {
           console.log('error on login: ', err);

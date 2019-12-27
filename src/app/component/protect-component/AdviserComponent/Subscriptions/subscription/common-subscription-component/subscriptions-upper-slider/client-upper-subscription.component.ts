@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
@@ -8,7 +8,6 @@ import { SubscriptionService } from '../../../subscription.service';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
 import { MatTableDataSource } from '@angular/material/table';
-
 
 export interface PeriodicElement {
   service: string;
@@ -30,27 +29,32 @@ export interface PeriodicElement {
   styleUrls: ['./client-upper-subscription.component.scss']
 })
 export class ClientUpperSubscriptionComponent implements OnInit {
-  data: any;
+  //data: any;
   isLoading = false;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
+  noData: string;
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, public subscription: SubscriptionService) {
   }
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   ELEMENT_DATA;
-  dataSource: any;
+  //dataSource: any;
+
 
   displayedColumns: string[] = ['service', 'amt', 'type', 'subs', 'status', 'date', 'bdate', 'ndate', 'mode', 'icons'];
 
-  @Input() upperData;
-  advisorId;
-
-  ngOnInit() {
-    this.isLoading = true;
-    this.dataSource = [{}, {}, {}];
+  @Input() set upperData(data) {
+    console.log(data)
     this.advisorId = AuthService.getAdvisorId();
+    this.clientSubscriptionData = data;
     this.getSummaryDataClient();
-    console.log(this.upperData);
+    this.isLoading = true;
+  };
+  clientSubscriptionData;
+  advisorId;
+  ngOnInit() {
   }
 
   openPlanSlider(value, state, data) {
@@ -64,7 +68,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         value = 'createSubVariable';
         data.subFlag = 'createSubVariable';
       }
-      data.clientId = this.upperData.id;
+      data.clientId = this.clientSubscriptionData.id;
       data.isCreateSub = false;
       data.isSaveBtn = false;
     }
@@ -93,7 +97,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
       // 'module':1,
       // advisorId: 12345,
       advisorId: this.advisorId,
-      clientId: this.upperData.id,
+      clientId: this.clientSubscriptionData.id,
       flag: 4,
       dateType: 0,
       limit: 10,
@@ -102,7 +106,12 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     };
 
     this.subscription.getSubSummary(obj).subscribe(
-      data => this.getSubSummaryRes(data)
+      data => this.getSubSummaryRes(data),
+      (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
@@ -129,8 +138,22 @@ export class ClientUpperSubscriptionComponent implements OnInit {
 
   getSubSummaryRes(data) {
     this.isLoading = false;
-    console.log(data);
-    this.dataSource = data;
+
+    if (data && data.length > 0) {
+      this.data = data;
+      this.dataSource = data;
+      this.dataSource.sort = this.sort;
+      // this.DataToSend = data;
+    } else {
+      this.data = [];
+      this.dataSource = data;
+      // console.log(data);
+      this.dataSource.data = []
+      this.noData = 'No Data Found';
+    }
+
+    // console.log(data);
+    // this.dataSource = data;
     // (data) ? this.dataSource = data : this.dataSource = [];
     // this.dataSource = new MatTableDataSource(data);
 

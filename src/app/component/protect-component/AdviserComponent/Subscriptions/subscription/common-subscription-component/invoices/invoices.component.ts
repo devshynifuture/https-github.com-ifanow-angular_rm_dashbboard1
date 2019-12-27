@@ -1,11 +1,11 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {SubscriptionService} from '../../../subscription.service';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {UtilService} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { SubscriptionService } from '../../../subscription.service';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 export interface PeriodicElement {
   Invoicenumber: string;
@@ -68,6 +68,7 @@ export class InvoicesComponent implements OnInit {
   getInvoiceResponseData(data) {
     this.isLoading = false;
     if (data == undefined) {
+      this.dataSource=undefined
       this.noData = "No Data Found";
     } else {
       // const ELEMENT_DATA = data;
@@ -96,12 +97,14 @@ export class InvoicesComponent implements OnInit {
 
   changeSelect(data) {
     this.dataCount = 0;
-    this.dataSource.forEach(item => {
+    if (this.dataSource.filteredData) {
+    this.dataSource.filteredData.forEach(item => {
       console.log('item item ', item);
       if (item.selected) {
         this.dataCount++;
       }
     });
+  }
     // if(data.selected==false)
     // {
     //   data.selected = true;
@@ -118,7 +121,8 @@ export class InvoicesComponent implements OnInit {
     // const checked = event.target.checked;
     // this.dataSource.forEach(item => item.selected = 'checked');
     this.dataCount = 0;
-    this.dataSource.forEach(item => {
+    if (this.dataSource.filteredData) {
+    this.dataSource.filteredData.forEach(item => {
       //   if(item.selected==false)
       //   {
       //     item.selected = true;
@@ -138,6 +142,7 @@ export class InvoicesComponent implements OnInit {
       //   this.dataCount++
       // }
     });
+  }
     // if(item.selected=="true"){
     //   this.dataCount++;
     // }else{

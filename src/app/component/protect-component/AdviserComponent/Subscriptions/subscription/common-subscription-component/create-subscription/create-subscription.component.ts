@@ -5,10 +5,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionService } from '../../../subscription.service';
 import { MatStepper } from '@angular/material';
 import { EnumServiceService } from '../../../../../../../services/enum-service.service';
-import * as _ from 'lodash';
 import { AuthService } from '../../../../../../../auth-service/authService';
 // import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { DatePipe } from '@angular/common';
 import { UtilService } from "../../../../../../../services/util.service";
@@ -26,7 +25,7 @@ export class CreateSubscriptionComponent implements OnInit {
   feeModeData: any;
   isFlagPayyee: boolean;
   payeeSettingData: any = null;
-
+  advisorName;
   constructor(private enumService: EnumServiceService, public subInjectService: SubscriptionInject,
     private eventService: EventService, private fb: FormBuilder,
     private subService: SubscriptionService, public datepipe: DatePipe) {
@@ -93,6 +92,7 @@ export class CreateSubscriptionComponent implements OnInit {
 
   ngOnInit() {
     // this.stepper.selectedIndex = 0;
+    this.advisorName = AuthService.getUserInfo().fullName;
     this.isFlagPayyee = true;
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     console.log(this.feeCollectionMode);
@@ -124,6 +124,7 @@ export class CreateSubscriptionComponent implements OnInit {
   getSubStartDetails(data) {
     // this.clientData = data.data;
     this.feeModeData = data;
+    this.clientData = data;
     console.log('client Data: ', this.clientData);
     if (data.subscriptionPricing) {
       this.advisorId = AuthService.getAdvisorId();
@@ -233,10 +234,10 @@ export class CreateSubscriptionComponent implements OnInit {
       );
     } else {
 
-      const subAsset = [];
-      this.clientData.subscriptionAssetPricingList[2].otherAssets.forEach(element => {
-        subAsset.push(element.subAssetClassId);
-      });
+      // const subAsset = [];
+      // this.clientData.subscriptionAssetPricingList[2].otherAssets.forEach(element => {
+      //   subAsset.push(element.subAssetClassId);
+      // });
       // const selectedPayee = [];
       // this.clientData;
       const obj = {
@@ -259,7 +260,7 @@ export class CreateSubscriptionComponent implements OnInit {
           billingNature: this.clientData.billingNature,
           feeTypeId: this.clientData.feeTypeId,
           id: 0,
-          pricingList: [
+          subscriptionAssetPricingList: [
             {
               directRegular: 1,
               assetClassId: 1,
@@ -275,7 +276,7 @@ export class CreateSubscriptionComponent implements OnInit {
             },
             {
               assetClassId: 2,
-              subAssetIds: subAsset,
+              subAssetIds: this.clientData.subscriptionAssetPricingList[2].subAssetIds,
               pricing: this.clientData.subscriptionAssetPricingList[2].pricing
             }
           ]

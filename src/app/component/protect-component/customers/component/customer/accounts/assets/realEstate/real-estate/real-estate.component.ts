@@ -1,16 +1,16 @@
-import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {CustomerService} from '../../../../customer.service';
-import {AuthService} from 'src/app/auth-service/authService';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { CustomerService } from '../../../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
 import * as _ from 'lodash';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {AddRealEstateComponent} from '../add-real-estate/add-real-estate.component';
-import {DetailedViewRealEstateComponent} from '../detailed-view-real-estate/detailed-view-real-estate.component';
-import {FormatNumberDirective} from 'src/app/format-number.directive';
-import {ExcelService} from '../../../../excel.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { AddRealEstateComponent } from '../add-real-estate/add-real-estate.component';
+import { DetailedViewRealEstateComponent } from '../detailed-view-real-estate/detailed-view-real-estate.component';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../../excel.service';
 
 @Component({
   selector: 'app-real-estate',
@@ -27,15 +27,15 @@ export class RealEstateComponent implements OnInit {
   sumOfMarketValue: any;
   sumOfpurchasedValue: any;
   footer = [];
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status', 'icons'];
   excelData: any[];
   noData: string;
 
   constructor(private excel: ExcelService, public subInjectService: SubscriptionInject,
-              public custmService: CustomerService, public cusService: CustomerService,
-              public eventService: EventService, public dialog: MatDialog) {
+    public custmService: CustomerService, public cusService: CustomerService,
+    public eventService: EventService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -49,18 +49,18 @@ export class RealEstateComponent implements OnInit {
     this.isLoading = true;
     this.excelData = [];
     let data = [];
-    let headerData = [{width: 20, key: 'Owner'},
-      {width: 20, key: 'Type'},
-      {width: 10, key: 'Rate'},
-      {width: 20, key: 'Market Value'},
-      {width: 15, key: 'Purchase Value'},
-      {width: 15, key: 'Description'},
-      {width: 10, key: 'Status'},];
+    let headerData = [{ width: 20, key: 'Owner' },
+    { width: 20, key: 'Type' },
+    { width: 10, key: 'Rate' },
+    { width: 20, key: 'Market Value' },
+    { width: 15, key: 'Purchase Value' },
+    { width: 15, key: 'Description' },
+    { width: 10, key: 'Status' },];
     let header = ['Owner', 'Type', 'Rate', 'Market Value',
       'Purchase Value', 'Description', 'Status'];
     this.datasource3.filteredData.forEach(element => {
       data = [element.ownerName, ((element.typeId == 1) ? 'Residential' : (element.typeId == 2) ? 'Secondary' : (element.typeId == 3) ? 'Commercial' : 'Land'), (element.rate),
-        this.formatNumber.first.formatAndRoundOffNumber(element.marketValue), (element.purchaseValue), element.description, element.status];
+      this.formatNumber.first.formatAndRoundOffNumber(element.marketValue), (element.purchaseValue), element.description, element.status];
       this.excelData.push(Object.assign(data));
     });
     let footerData = ['Total', '',
@@ -104,7 +104,7 @@ export class RealEstateComponent implements OnInit {
       this.sumOfMarketValue = data.sumOfMarketValue;
       this.sumOfpurchasedValue = data.sumOfpurchasedValue;
     } else {
-      this.noData = 'No Data Found';
+      this.noData = 'No schemes found';
     }
   }
 
