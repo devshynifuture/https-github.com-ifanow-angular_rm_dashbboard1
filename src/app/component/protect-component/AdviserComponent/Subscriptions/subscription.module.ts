@@ -15,7 +15,6 @@ import { SubscriptionEntry } from './subscription.entry.module';
 import { ClientSubscriptionComponent } from './subscription/client-subscription/client-subscription.component';
 import { AddDocumentComponent } from './subscription/common-subscription-component/add-document/add-document.component';
 import { AddQuotationComponent } from './subscription/common-subscription-component/add-quotation/add-quotation.component';
-import { AddVariableFeeComponent } from './subscription/common-subscription-component/add-variable-fee/add-variable-fee.component';
 import { ConsentTandCComponent } from './subscription/common-subscription-component/consent-tand-c/consent-tand-c.component';
 import { DeleteSubscriptionComponent } from './subscription/common-subscription-component/delete-subscription/delete-subscription.component';
 import { HowItWorksComponent } from './subscription/common-subscription-component/how-it-works/how-it-works.component';
@@ -85,7 +84,7 @@ export const componentList = [SubscriptionComponent,
   // CustomDialogContainerComponent,
   HowItWorksComponent,
   AddQuotationComponent,
-  AddVariableFeeComponent
+  //AddVariableFeeComponent
 ];
 
 @NgModule({

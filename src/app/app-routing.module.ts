@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { LeftsidebarComponent } from './component/left-sidebar/leftsidebar/leftsidebar.component';
-import { LoginComponent } from './component/no-protected/login/login.component';
-import { CalenderComponent } from "./component/protect-component/AdviserComponent/Email/calender/calender.component";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {LeftsidebarComponent} from './component/left-sidebar/leftsidebar/leftsidebar.component';
+import {LoginComponent} from './component/no-protected/login/login.component';
+import {CalenderComponent} from "./component/protect-component/AdviserComponent/Email/calender/calender.component";
 
 const routes: Routes = [
   {
@@ -12,6 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'admin', component: LeftsidebarComponent,
+
     // outlet: 'mainrouter',
     children: [
       {
@@ -20,6 +21,8 @@ const routes: Routes = [
         // outlet: 'mainleftbar',
         loadChildren: () => import('./component/protect-component/AdviserComponent/Subscriptions/subscription.module')
           .then(m => m.SubscriptionModule),
+        data: {animation: 'Tab1', preload: true}
+
         // data: {preload: true}
 
       },
@@ -27,11 +30,15 @@ const routes: Routes = [
         path: 'emails',
         // outlet: 'main-left-router',
         loadChildren: () => import('./component/protect-component/AdviserComponent/Email/email.module')
-          .then(m => m.EmailModule)
+          .then(m => m.EmailModule),
+        data: {animation: 'Tab1', preload: true}
+
       },
       {
         path: 'activies',
-        loadChildren: () => import('./component/protect-component/AdviserComponent/Activies/activies/activies.module').then(m => m.ActiviesModule)
+        loadChildren: () => import('./component/protect-component/AdviserComponent/Activies/activies/activies.module').then(m => m.ActiviesModule),
+        data: {animation: 'Tab1', preload: true}
+
       },
       {
         path: 'calender',
@@ -51,6 +58,8 @@ const routes: Routes = [
         path: '',
         loadChildren: () => import('./component/protect-component/customers/customers.module')
           .then(m => m.CustomersModule),
+        data: {animation: 'Tab1', preload: true}
+
         // data: {preload: true}
 
       },
@@ -91,7 +100,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: false  /*preloadingStrategy: PreloadAllModules*/ })],
+  imports: [RouterModule.forRoot(routes, {enableTracing: false  /*preloadingStrategy: PreloadAllModules*/})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

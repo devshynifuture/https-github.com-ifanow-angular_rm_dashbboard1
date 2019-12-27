@@ -27,8 +27,9 @@ export class CommoditiesComponent implements OnInit {
   displayedColumns10 = ['no', 'owner', 'type', 'mvalue', 'pvalue', 'pur', 'rate', 'desc', 'status', 'icons'];
   datasource10 = ELEMENT_DATA10;
   advisorId: any;
-  goldList: any = [{}, {}, {}];
-  otherCommodityList: any = [{}, {}, {}];
+  data: Array<any> = [{}, {}, {}];
+  goldList: any;
+  otherCommodityList: any;
   clientId: any;
   sumOfMarketValue: any;
   sumOfPurchaseValue: any;
@@ -106,8 +107,10 @@ export class CommoditiesComponent implements OnInit {
     console.log('value++++++', value)
     this.showRequring = value
     if (value == '1') {
+      this.goldList = new MatTableDataSource(this.data);
       this.getGoldList()
     } else {
+      this.otherCommodityList = new MatTableDataSource(this.data);
       this.getOtherList()
     }
   }
@@ -164,7 +167,11 @@ export class CommoditiesComponent implements OnInit {
       advisorId: this.advisorId
     }
     this.custumService.getGold(obj).subscribe(
-      data => this.getGoldRes(data)
+      data => this.getGoldRes(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.goldList.data = [];
+        this.isLoading = false;
+      }
     );
   }
   getGoldRes(data) {
@@ -177,7 +184,8 @@ export class CommoditiesComponent implements OnInit {
       this.sumOfMarketValue = data.sumOfMarketValue
       this.sumOfPurchaseValue = data.sumOfPurchaseValue
     } else {
-      this.noData = "No scheme found";
+      this.noData = 'No scheme found';
+      this.goldList.data = []
     }
   }
   getOtherList() {
@@ -187,7 +195,11 @@ export class CommoditiesComponent implements OnInit {
       advisorId: this.advisorId
     }
     this.custumService.getOthers(obj).subscribe(
-      data => this.getOthersRes(data)
+      data => this.getOthersRes(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.otherCommodityList.data = [];
+        this.isLoading = false;
+      }
     );
   }
   getOthersRes(data) {
@@ -201,7 +213,8 @@ export class CommoditiesComponent implements OnInit {
       this.sumOfPurchaseValueOther = data.sumOfPurchaseValue
     }
     else {
-      this.noData = "No scheme found";
+      this.noData = 'No scheme found';
+      this.otherCommodityList.data = []
     }
   }
   openCommodities(value, state, data) {

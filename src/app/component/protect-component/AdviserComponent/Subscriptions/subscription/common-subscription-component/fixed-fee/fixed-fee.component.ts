@@ -51,6 +51,8 @@ export class FixedFeeComponent implements OnInit {
       this.getFixedFee().billEvery.setValue(fixedData.subscriptionPricing.billEvery);
       this.getFixedFee().Duration.setValue(fixedData.subscriptionPricing.billingCycle);
       this.getFixedFee().billingMode.setValue(String(fixedData.subscriptionPricing.billingMode));
+      (this.singleSubscriptionData.isCreateSub == false) ? this.fixedFeeStructureForm.enable() : this.fixedFeeStructureForm.disable();
+
     }
   }
   enableForm() {
