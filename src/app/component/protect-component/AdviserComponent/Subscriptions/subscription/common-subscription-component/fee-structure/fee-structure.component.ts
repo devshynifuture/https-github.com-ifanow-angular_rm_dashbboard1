@@ -49,6 +49,7 @@ export class FeeStructureComponent implements OnInit {
       data,
       id: 1,
       state: 'open'
+      
     };
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
