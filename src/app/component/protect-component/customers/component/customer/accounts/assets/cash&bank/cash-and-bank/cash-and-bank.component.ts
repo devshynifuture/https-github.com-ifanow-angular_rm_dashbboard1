@@ -21,12 +21,13 @@ import {ExcelService} from '../../../../excel.service';
 export class CashAndBankComponent implements OnInit {
   showRequring: string;
   advisorId: any;
-  bankAccountList: any = [{}, {}, {}];
-  cashInHandList: any = [{}, {}, {}];
+  bankAccountList: any;
+  cashInHandList: any;
   clientId: any;
   totalAccountBalance: any;
   sumOfCashValue: any;
   isLoading = false;
+  data: Array<any> = [{}, {}, {}];
   noData: string;
   excelData: any[];
   footer = [];
@@ -103,8 +104,10 @@ export class CashAndBankComponent implements OnInit {
     this.showRequring = value;
     if (value == '2') {
       this.getCashInHandList();
+      this.cashInHandList = new MatTableDataSource(this.data);
     } else {
       this.getBankAccountList();
+       this.bankAccountList = new MatTableDataSource(this.data);
     }
   }
 
@@ -164,8 +167,11 @@ export class CashAndBankComponent implements OnInit {
       advisorId: this.advisorId
     };
     this.custumService.getBankAccounts(obj).subscribe(
-      data => this.getBankAccountsRes(data)
-    );
+      data => this.getBankAccountsRes(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.bankAccountList.data = [];
+        this.isLoading = false;
+      });
   }
 
   getBankAccountsRes(data) {
@@ -178,6 +184,7 @@ export class CashAndBankComponent implements OnInit {
       this.totalAccountBalance = data.totalAccountBalance;
     } else {
       this.noData = 'No scheme found';
+      this.bankAccountList.data = [];
     }
   }
 
@@ -188,19 +195,28 @@ export class CashAndBankComponent implements OnInit {
       advisorId: this.advisorId
     };
     this.custumService.getCashInHand(obj).subscribe(
-      data => this.getCashInHandRes(data)
+      data => this.getCashInHandRes(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.cashInHandList.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
   getCashInHandRes(data) {
     console.log('getCashInHandRes ###', data);
     this.isLoading = false;
+    if(data = undefined){
+      this.noData = 'No scheme found';
+      this.cashInHandList.data = [];
+    }
     if (data.cashInHands.length != 0) {
       this.cashInHandList = new MatTableDataSource(data.cashInHands);
       this.cashInHandList.sort = this.cashInHandListTableSort;
       this.sumOfCashValue = data.sumOfCashValue;
     } else {
       this.noData = 'No scheme found';
+      this.cashInHandList.data = [];
     }
   }
 

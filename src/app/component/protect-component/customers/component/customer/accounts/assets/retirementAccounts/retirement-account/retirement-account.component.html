@@ -49,7 +49,7 @@
             <div class="col-md-7 p-0">
                 <h4 class="m-0 text-black roboto pt-8">Employees providend fund (EPF)</h4>
             </div>
-            <div class="col-md-5 p-0 right text-right" *ngIf="dataEPFList!=undefined">
+            <div class="col-md-5 p-0 right text-right"  *ngIf="dataEPFList.filteredData.length > 0">
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
                 <mat-menu #menu5="matMenu">
                     <button mat-menu-item>PDF</button>
@@ -72,7 +72,7 @@
             </div>
         </div>
         <div class="example-container col-md-12 p-0 mt-8 real-estate" id="epf" #EPF #epf>
-            <table matSort #epfListTable="matSort" mat-table [dataSource]="dataEPFList" matSort id="table-low"
+            <table  *ngIf="dataEPFList.filteredData.length > 0" matSort #epfListTable="matSort" mat-table [dataSource]="dataEPFList" matSort id="table-low"
                 class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="no">
@@ -197,7 +197,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns11;"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns11;sticky: true" [hidden]="isLoading"></tr>
             </table>
-            <div *ngIf="dataEPFList==undefined" class="d-flex flex-column align-items-center">
+            <div  *ngIf="dataEPFList.filteredData.length == 0"class="d-flex flex-column align-items-center">
                 <h4 class="text-center pt-72">{{noData}}</h4>
                 <button (click)="openAddEPF(null)" class="btn-primary addon v-middle" mat-stroked-button><i
                         class="material-icons c-p">add</i>ADD NEW
@@ -211,7 +211,7 @@
         <div class="col-md-4 p-0">
             <h4 class="m-0 text-black roboto pt-8">National pension system (NPS)</h4>
         </div>
-        <div class="col-md-8 p-0 right text-right">
+        <div class="col-md-8 p-0 right text-right"  *ngIf="dataNPSList.filteredData.length > 0">
             <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
             <img class="" src="assets/images/svg/up-down.svg">
             <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
@@ -280,7 +280,7 @@
             </mat-menu>
         </div>
         <div class="example-container mt-8 col-md-12 p-0 real-estate" #NPS #nps>
-            <table matSort #npsListTable="matSort" mat-table [dataSource]="dataNPSList" id="table-low"
+            <table *ngIf="dataNPSList.filteredData.length > 0" matSort #npsListTable="matSort" mat-table [dataSource]="dataNPSList" id="table-low"
                 class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
@@ -373,7 +373,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns12;"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns12;sticky: true" [hidden]="isLoading"></tr>
             </table>
-            <div *ngIf="dataNPSList==undefined" class="d-flex flex-column align-items-center">
+            <div *ngIf="dataNPSList.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <h4 class="text-center pt-72">{{noData}}</h4>
                 <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button><i
                         class="material-icons">add</i>ADD NEW
@@ -388,7 +388,7 @@
         <div class="col-md-4 p-0">
             <h4 class="m-0 text-black roboto pt-8">Gratuity</h4>
         </div>
-        <div class="col-md-8 p-0 right text-right" *ngIf="dataGratuityList!=undefined">
+        <div class="col-md-8 p-0 right text-right" *ngIf="dataGratuityList.filteredData.length > 0">
             <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
             <mat-menu #menu5="matMenu">
                 <button mat-menu-item>PDF</button>
@@ -410,7 +410,7 @@
         </div>
     </div>
     <div class="example-container mt-8 col-md-12 p-0 real-estate" #GRATUITY #Gratuity>
-        <table #gratuityListTable="matSort" [dataSource]="dataGratuityList" id="table-low" mat-table matSort
+        <table *ngIf="dataGratuityList.filteredData.length > 0" #gratuityListTable="matSort" [dataSource]="dataGratuityList" id="table-low" mat-table matSort
             class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="no">
                 <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
@@ -509,7 +509,7 @@
             <tr *matRowDef="let row; columns: displayedColumns13;" mat-row></tr>
             <tr *matFooterRowDef="displayedColumns13;sticky: true" mat-footer-row></tr>
         </table>
-        <div *ngIf="dataGratuityList==undefined" class="d-flex flex-column align-items-center">
+        <div *ngIf="dataGratuityList.filteredData.length == 0" class="d-flex flex-column align-items-center">
             <h4 class="text-center pt-72">{{noData}}</h4>
             <button (click)="openAddGratuity(null)" class="btn-primary addon v-middle" mat-stroked-button><i
                     class="material-icons">add</i>ADD NEW
@@ -522,7 +522,7 @@
         <div class="col-md-4 p-0">
             <h4 class="m-0 text-black roboto pt-8">Superannuation</h4>
         </div>
-        <div class="col-md-8 p-0 right text-right" *ngIf="dataSuperannuationList!=undefined">
+        <div class="col-md-8 p-0 right text-right"*ngIf="dataSuperannuationList.filteredData.length > 0">
             <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
             <mat-menu #menu5="matMenu">
                 <button mat-menu-item>PDF</button>
@@ -545,7 +545,7 @@
         </div>
     </div>
     <div class="example-container col-md-12 p-0 mt-8 real-estate" #SUPERANNUATION #Superannuation>
-        <table #superAnnuationListTable="matSort" [dataSource]="dataSuperannuationList" id="table-low" mat-table matSort
+        <table *ngIf="dataSuperannuationList.filteredData.length > 0" #superAnnuationListTable="matSort" [dataSource]="dataSuperannuationList" id="table-low" mat-table matSort
             class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="no">
                 <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
@@ -657,7 +657,7 @@
             <tr *matRowDef="let row; columns: displayedColumns14;" mat-row></tr>
             <tr *matFooterRowDef="displayedColumns14;sticky: true" [hidden]="isLoading" mat-footer-row></tr>
         </table>
-        <div *ngIf="dataSuperannuationList==undefined" class="d-flex flex-column align-items-center">
+        <div *ngIf="dataSuperannuationList.filteredData.length == 0" class="d-flex flex-column align-items-center">
             <h4 class="text-center pt-72">{{noData}}</h4>
             <button (click)="openAddSuperannuation(null)" class="btn-primary addon v-middle" mat-stroked-button><i
                     class="material-icons">add</i>ADD
@@ -671,7 +671,7 @@
         <div class="col-md-4 p-0">
             <h4 class="m-0 text-black roboto pt-8">EPS</h4>
         </div>
-        <div class="col-md-8 p-0 right text-right" *ngIf="EPSList!=undefined">
+        <div class="col-md-8 p-0 right text-right" *ngIf="EPSList.filteredData.length > 0">
             <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
             <mat-menu #menu5="matMenu">
                 <button mat-menu-item>PDF</button>
@@ -693,7 +693,7 @@
         </div>
     </div>
     <div class="example-container mt-8 col-md-12 p-0 real-estate" #EPS #eps>
-        <table #epsListTable="matSort" [dataSource]="EPSList" id="table-low" mat-table matSort class="skeletonAnimation"
+        <table *ngIf="EPSList.filteredData.length > 0" #epsListTable="matSort" [dataSource]="EPSList" id="table-low" mat-table matSort class="skeletonAnimation"
             appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="no">
                 <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
@@ -783,7 +783,7 @@
             <tr *matRowDef="let row; columns: displayedColumns15;" mat-row></tr>
             <tr *matFooterRowDef="displayedColumns15;sticky: true" mat-footer-row></tr>
         </table>
-        <div *ngIf="EPSList==undefined" class="d-flex flex-column align-items-center">
+        <div *ngIf="EPSList.filteredData.length == 0" class="d-flex flex-column align-items-center">
             <h4 class="text-center pt-72">{{noData}}</h4>
             <button (click)="openAddEPS(null)" class="btn-primary addon v-middle" mat-stroked-button><i
                 class="material-icons">add</i>ADD NEW
@@ -791,6 +791,3 @@
         </div>
     </div>
 </div>
-<!-- <div *ngIf="isLoading">
-    <mat-spinner [diameter]="30" class="loader"></mat-spinner>
-</div> -->
