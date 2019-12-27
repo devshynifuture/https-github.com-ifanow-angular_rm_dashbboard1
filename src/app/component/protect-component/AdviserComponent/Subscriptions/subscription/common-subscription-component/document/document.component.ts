@@ -626,7 +626,7 @@ export class DocumentComponent implements OnInit {
 
   selectAll(event) {
     this.dataCount = 0;
-    if(this.dataSource.filteredData){
+    if(this.dataSource!=undefined){
       this.dataSource.filteredData.forEach(item => {
         item.selected = event.checked;
         if (item.selected) {
@@ -638,7 +638,7 @@ export class DocumentComponent implements OnInit {
 
   changeSelect(element) {
     this.dataCount = 0;
-    if(this.dataSource.filteredData){
+    if(this.dataSource!=undefined){
     this.dataSource.filteredData.forEach(item => {
       console.log('item item ', item);
       if (item.selected) {
@@ -660,7 +660,7 @@ export class DocumentComponent implements OnInit {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    if(this.dataSource.filteredData){
+    if(this.dataSource!=undefined){
     return this.dataCount === this.dataSource.filteredData.length;
     }
   }

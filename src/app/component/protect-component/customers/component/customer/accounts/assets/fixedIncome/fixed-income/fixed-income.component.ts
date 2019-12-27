@@ -253,6 +253,10 @@ export class FixedIncomeComponent implements OnInit {
   }
 
   getRecurringDepositRes(data) {
+    if(data == undefined){
+      this.noData = 'No scheme found';
+      this.dataSourceRecurring.data = []
+    }
     this.isLoading = false;
     console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
 
