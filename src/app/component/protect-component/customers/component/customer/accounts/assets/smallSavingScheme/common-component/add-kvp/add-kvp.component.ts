@@ -6,6 +6,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from '../../../../../customer.service';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-kvp',
@@ -27,7 +28,7 @@ export class AddKvpComponent implements OnInit {
   KVPFormScheme: any;
   KVPOptionalFormScheme: any;
 
-  constructor(private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(public utils: UtilService,private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   ngOnInit() {
     this.isOptionalField = true;
     this.advisorId = AuthService.getAdvisorId();

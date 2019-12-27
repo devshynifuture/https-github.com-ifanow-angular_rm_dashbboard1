@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-po-td',
@@ -28,7 +29,7 @@ export class AddPoTdComponent implements OnInit {
   editApi: any;
   clientId: any;
 
-  constructor(private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
+  constructor(public utils: UtilService,private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   @Input()
   set data(data) {
     this.inputData = data;
