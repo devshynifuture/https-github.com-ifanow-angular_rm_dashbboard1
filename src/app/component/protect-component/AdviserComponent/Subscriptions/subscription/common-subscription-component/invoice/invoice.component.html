@@ -34,26 +34,27 @@
         </div>
         <div class="row ">
             <div class="col-md-4 p-0 max-height-100">
-                <div class="row pt-12 pb-12 bg-white hover roboto bb-1" [ngClass]="strData.id == storeData.id ? 'bg-grey lter' : 'none'" *ngFor="let strData of clientData" (click)="passInvoice(strData,$event)">
-                    <!-- <div class="col-md-1">
-         <mat-checkbox checked="false"></mat-checkbox>
-         </div> -->
-                    <div class="col-md-8">
-                        <p class="m-0 f-15">{{strData.clientName}}</p>
+                <div class="invoiceSpacing b-b" *ngFor="let strData of dataInvoices" (click)="passInvoice(strData,$event)">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p class="m-0 f-15">{{strData.clientName}}</p>
+                        </div>
+                        <div class="col-md-4 text-right pr-8">
+                            <p class="m-0 f-15">{{formatter(strData.finalAmount)}}</p>
+                        </div>
                     </div>
-                    <div class="col-md-4 text-right pr-8">
-                        <p class="m-0 f-15">{{formatter(strData.finalAmount)}}</p>
-                    </div>
-
-                    <div class="col-md-5">
-                        <p class="m-0 f-13 pt-12">{{strData.invoiceNumber}}</p>
-                    </div>
-                    <div class="col-md-2 p-0">
-                        <p class="m-0 f-13 pt-12">{{strData.invoiceDate | date:'dd/MM/yyyy'}}</p>
-                    </div>
-                    <div class="col-md-5 text-right pr-8">
-                        <p class="m-0 f-13 pt-12" [ngClass]="{'text-danger':strData.status==0,'text-primary':strData.status==1,'text-success':strData.status==2}">
-                            {{(strData.status==0)?'OVERDUE':(strData.status==1)?'OVERDUE':(strData.status==2)?'PAID':''}}</p>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p class="m-0 f-13 pt-12">{{strData.invoiceNumber}}</p>
+                        </div>
+                        <div class="col-md-2 p-0">
+                            <p class="m-0 f-13 pt-12">{{strData.invoiceDate | date:'dd/MM/yyyy'}}</p>
+                        </div>
+                        <div class="col-md-5 text-right pr-8">
+                            <p class="m-0 f-13 pt-12" [ngClass]="{'text-danger':strData.status==0,'text-primary':strData.status==1,'text-success':strData.status==2}">
+                                {{(strData.status==0)?'OVERDUE':(strData.status==1)?'OVERDUE':(strData.status==2)?'PAID':''}}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -110,7 +111,8 @@
                                 </div>
                                 <div class="col-md-4">
                                     <h2 [ngClass]="{'text-danger':storeData.status==0,'text-primary':storeData.status==1,'text-success':storeData.status==2}">
-                                        {{(storeData.status==0)?'OVERDUE':(storeData.status==1)?'OVERDUE':(storeData.status==2)?'PAID':''}}</h2>
+                                        {{(storeData.status==0)?'OVERDUE':(storeData.status==1)?'OVERDUE':(storeData.status==2)?'PAID':''}}
+                                    </h2>
                                 </div>
 
                             </div>
@@ -641,7 +643,8 @@
                     </div>
                     <div class="col-md-4">
                         <h2 [ngClass]="{'text-danger':storeData.status==0,'text-primary':storeData.status==1,'text-success':storeData.status==2}">
-                                {{(storeData.status==0)?'OVERDUE':(storeData.status==1)?'OVERDUE':(storeData.status==2)?'PAID':''}}</h2>
+                            {{(storeData.status==0)?'OVERDUE':(storeData.status==1)?'OVERDUE':(storeData.status==2)?'PAID':''}}
+                        </h2>
                     </div>
                 </div>
                 <div>

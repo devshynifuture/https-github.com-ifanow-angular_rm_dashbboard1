@@ -42,6 +42,7 @@ export class InvoiceComponent implements OnInit {
   discount: any;
   inputData: any;
   templateType: number;
+  dataInvoices: any;
 
   [x: string]: any;
 
@@ -129,12 +130,14 @@ export class InvoiceComponent implements OnInit {
     console.log('this.feeCollectionMode', this.feeCollectionMode);
     // this.getPayReceive(data);
     console.log('this.invoiceSubscription', this.invoiceInSub);
+    console.log('###########',this.clientData)
+    this.dataInvoices = this.clientData
     this.showRecord = false;
     this.showEdit = false;
     this.editAdd1 = false;
     this.editAdd2 = false;
     this.feeCalc = false;
-    console.log('invoiceValue+++++++++++', this.invoiceValue);
+    console.log('invoiceValue+++++++++++', this.dataInvoices);
     if (this.invoiceValue == 'edit' || this.invoiceValue == 'EditInInvoice') {
       this.editPayment.reset();
       this.auto = true;

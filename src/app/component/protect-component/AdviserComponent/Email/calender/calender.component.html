@@ -363,16 +363,19 @@
                 <div class="column" *ngFor="let day of daysArr; let i = index">
                     <mat-chip [class.actived]="day == todayDate && i > addLastMonthDays - 1 && i < numbersOfDays - 1 && currentMonth == month" 
                     [class.text-primitive]="i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1" 
-                    >{{day}}</mat-chip> 
-                    <mat-chip-list class="pink mt-8" [hidden]="true">
-                        <mat-chip>Rahul Jain</mat-chip>
-                    </mat-chip-list>
-                    <ul class="blue" [hidden]="true">
-                        <li>8.30 <span class="f-700 m-0">Prospect meeting</span></li>
-                    </ul>
-                    <ul class="yellow" [hidden]="true">
-                        <li>11.00 <span class="f-700 m-0">Srinivas chandra</span></li>
-                    </ul>
+                    >{{day}}</mat-chip>
+                    
+                    <div *ngFor="let event of formatedEvent;" class="date-info" [hidden]="day != event.day || month + 1 != event.month || year != event.year">
+                        <mat-chip-list style="visibility: hidden;" *ngFor="let list of event.attendeeList;"  class="pink mt-8" >
+                            <mat-chip >{{list}}</mat-chip>
+                        </mat-chip-list>
+                        <ul class="blue">
+                            <li>8.30 <span class="f-700 m-0">Prospect meeting</span></li>
+                        </ul>
+                        <ul class="yellow" >
+                            <li>11.00 <span class="f-700 m-0">Srinivas chandra</span></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

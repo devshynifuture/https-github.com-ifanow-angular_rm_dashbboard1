@@ -6,6 +6,7 @@ import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-po-mis',
@@ -29,7 +30,7 @@ export class AddPoMisComponent implements OnInit {
   clientId: number;
   familyMemberId: any;
 
-  constructor(private fb: FormBuilder, public subInjectService: SubscriptionInject,
+  constructor(public utils: UtilService,private fb: FormBuilder, public subInjectService: SubscriptionInject,
     public custumService: CustomerService, public eventService: EventService) {
   }
 
@@ -44,7 +45,7 @@ export class AddPoMisComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-
+    this.clientId = AuthService.getClientId();
     this.show = false;
     this.getPomisData(this.data);
 
@@ -143,7 +144,7 @@ export class AddPoMisComponent implements OnInit {
       } else {
         const editObj = {
           id: this._inputData.id,
-          clientId: 2978,
+          clientId: this.clientId,
           familyMemberId: obj.familyMemberId,
           advisorId: this.advisorId,
           ownerName: obj.ownerName,
@@ -168,7 +169,7 @@ export class AddPoMisComponent implements OnInit {
     if (data) {
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close' });
-      this.eventService.openSnackBar('Liabilities added successfully', 'OK');
+      this.eventService.openSnackBar('Pomis added successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
 
@@ -180,7 +181,7 @@ export class AddPoMisComponent implements OnInit {
     if (data) {
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close' });
-      this.eventService.openSnackBar('Liabilities edited successfully', 'OK');
+      this.eventService.openSnackBar('Pomis edited successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
     }

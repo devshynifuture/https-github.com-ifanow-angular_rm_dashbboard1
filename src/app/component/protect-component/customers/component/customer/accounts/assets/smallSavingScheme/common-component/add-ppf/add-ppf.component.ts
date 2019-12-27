@@ -7,6 +7,7 @@ import { CustomerService } from '../../../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import * as _ from 'lodash';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-ppf',
@@ -31,13 +32,13 @@ export class AddPpfComponent implements OnInit {
   transactionData: any;
   editApi: any;
   clientId: number;
-  nexNomineePer=0;
+  nexNomineePer = 0;
   showError = false;
   nomineesListFM: any;
   dataFM: any;
   familyList: any;
-  errorFieldName:string;
-  constructor(private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  errorFieldName: string;
+  constructor(public utils: UtilService,private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   @Input()
   set data(data) {
@@ -62,18 +63,6 @@ export class AddPpfComponent implements OnInit {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
-  nomineesList() {
-    this.dataFM = this.nomineesListFM
-    if (this.dataFM.length > 0) {
-      let name = this.ownerName
-      var evens = _.reject(this.dataFM, function (n) {
-        return n.userName == name;
-      });
-      this.familyList = evens
-    }
-
-    console.log('familyList', this.familyList)
-  }
 
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
@@ -92,28 +81,15 @@ export class AddPpfComponent implements OnInit {
       balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       commencementDate: [new Date(data.commencementDate), [Validators.required]],
       futureContribution: [data.futureApproxcontribution, [Validators.required]],
-      frquency: [data.frequency, [Validators.required]],
+      frquency: [(data.frequency == undefined) ? "1" : data.frequency, [Validators.required]],
     })
     this.optionalppfSchemeForm = this.fb.group({
       description: [data.description, [Validators.required]],
       bankName: [data.bankName, [Validators.required]],
       linkedBankAccount: [data.linkedBankAccount, [Validators.required]],
-      npsNomineesList: this.fb.array([this.fb.group({
-        nomineeName: null, nomineePercentageShare: [null, [Validators.required, Validators.min(1)]],
-      })]),
+      nominee: [data, [Validators.required]]
     })
     this.ownerData = this.ppfSchemeForm.controls;
-    if (data.npsNomineesList != undefined) {
-
-      data.npsNomineesList.forEach(element => {
-        this.optionalppfSchemeForm.controls.npsNomineesList.push(this.fb.group({
-          nomineeName: [(element.nomineeName), [Validators.required]],
-
-          nomineePercentageShare: [element.nomineePercentageShare, Validators.required],
-        }))
-      })
-      this.nominee.removeAt(0);
-    }
   }
   get nominee() {
     return this.optionalppfSchemeForm.get('npsNomineesList') as FormArray;
@@ -121,42 +97,7 @@ export class AddPpfComponent implements OnInit {
   check() {
     console.log(this.ppfSchemeForm)
   }
-  addNominee() {
-    // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
-    //   return o.nomineePercentageShare;
-    // });
-    this.nominee.value.forEach(element => {
-      this.nexNomineePer+=element.nomineePercentageShare
-    });
-    if (this.nexNomineePer > 100) {
-      this.showError = true
-      console.log('show error Percent cannot be more than 100%')
-    } else {
-      this.showError = false
-    }
-    if (this.showError == false) {
-      this.nominee.push(this.fb.group({
-        nomineeName: null, nomineePercentageShare: null,
-      }));
-    }
-  }
-  removeNominee(item) {
-    if (this.nominee.value.length > 1) {
-      this.nominee.removeAt(item);
-    }
-    // this.nexNomineePer = _.sumBy(this.nominee.value, function (o) {
-    //   return o.nomineePercentageShare;
-    // });`
-    this.nominee.value.forEach(element => {
-      this.nexNomineePer+=element.nomineePercentageShare
-    });
-    if (this.nexNomineePer > 100) {
-      this.showError = true
-      console.log('show error Percent cannot be more than 100%')
-    } else {
-      this.showError = false
-    }
-  }
+
   getFormData(data) {
     console.log(data)
     this.transactionData = data.controls
@@ -205,7 +146,7 @@ export class AddPpfComponent implements OnInit {
         "description": this.optionalppfSchemeForm.get('description').value,
         "bankName": this.optionalppfSchemeForm.get('bankName').value,
         "linkedBankAccount": this.optionalppfSchemeForm.get('linkedBankAccount').value,
-        "nomineeName": /*this.optionalppfSchemeForm.get('nominee').value*/"dfsdas",
+        "nomineeName": this.optionalppfSchemeForm.get('nominee').value,
         "frequency": this.ppfSchemeForm.get('frquency').value,
         "futureApproxcontribution": this.ppfSchemeForm.get('futureContribution').value,
         "publicprovidendfundtransactionlist": finalTransctList,

@@ -82,7 +82,7 @@ export const appConfig = {
   GET_ASSET_SMALL_SAVING_SCHEME_KVP: 'account/asset/ssc/kvp/list/get',
   GET_ASSET_SMALL_SAVING_SCHEME_SCSS: 'account/asset/ssc/scss/list/get',
   GET_ASSET_SMALL_SAVING_SCHEME_POSAVING: 'account/asset/saving-scheme/po-saving/list/get',
-  GET_ASSET_SMALL_SAVING_SCHEME_PO_RD: 'account/asset/ssc/po-rd/list/get',
+  GET_ASSET_SMALL_SAVING_SCHEME_PO_RD: 'account/asset/ssc/pord/list/get',
   GET_ASSET_SMALL_SAVING_SCHEME_PO_TD: 'account/asset/ssc/po-td/list/get',
   GET_ASSET_SMALL_SAVING_SCHEME_PO_MIS: 'account/asset/ssc/po-mis/list/get',
   ADD_OTHER_PAYABLES: 'account/liability/otherpayables/add',

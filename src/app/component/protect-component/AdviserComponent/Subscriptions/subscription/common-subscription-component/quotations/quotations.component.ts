@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 
@@ -30,6 +30,7 @@ export class QuotationsComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   noData: string;
+  quotationData: any[];
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog,
     private subAService: SubscriptionService) {
@@ -37,6 +38,7 @@ export class QuotationsComponent implements OnInit {
       data => this.getQuotationDesignData(data)
     );
   }
+
   isLoading = false;
   quotationDesignEmail;
   quotationDesign;
@@ -99,7 +101,7 @@ export class QuotationsComponent implements OnInit {
 
   selectedInvoice() {
     this.dataCount = 0;
-    if (this.dataSource.filteredData != undefined) {
+    if (this.dataSource != undefined) {
       this.dataSource.filteredData.forEach(item => {
         console.log('item item ', item);
         if (item.selected) {
@@ -111,7 +113,7 @@ export class QuotationsComponent implements OnInit {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    if (this.dataSource.filteredData != undefined) {
+    if (this.dataSource != undefined) {
       return this.dataCount === this.dataSource.filteredData.length;
     }
   }
@@ -125,7 +127,7 @@ export class QuotationsComponent implements OnInit {
   getQuotationsListResponse(data) {
     this.isLoading = false;
     if (data == undefined) {
-      this.dataSource=undefined;
+      this.dataSource = undefined;
       this.noData = 'No Data Found';
     } else {
       data.forEach(singleData => {
@@ -186,17 +188,20 @@ export class QuotationsComponent implements OnInit {
 
   }
 
-  openSendEmail() {
+  openSendEmail(element) {
+    this.quotationData = []
     const data = {
       advisorId: this.advisorId,
       clientData: this._clientData,
       templateType: 2, // 2 is for quotation
       documentList: []
+
     };
-    if (this.dataSource.length == 1) {
-      data.documentList = this.dataSource;
+    if (this.dataCount == 0) {
+      this.quotationData.push(element);
+      data.documentList = this.quotationData;
     } else {
-      this.dataSource.forEach(singleElement => {
+      this.dataSource.filteredData.forEach(singleElement => {
         if (singleElement.selected) {
           data.documentList.push(singleElement);
         }
@@ -289,7 +294,7 @@ export class QuotationsComponent implements OnInit {
     // this.dataSource.forEach(item => item.selected = 'checked');
 
     this.dataCount = 0;
-    if (this.dataSource.filteredData) {
+    if (this.dataSource != undefined) {
       this.dataSource.filteredData.forEach(item => {
         item.selected = event.checked;
         if (item.selected) {
@@ -297,6 +302,10 @@ export class QuotationsComponent implements OnInit {
         }
       });
     }
+  }
+
+  getSelctedQuotation() {
+
   }
 
 }

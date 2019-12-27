@@ -107,7 +107,7 @@ export class FixedFeeComponent implements OnInit {
 
   saveFixedModifyFeesResponse(data) {
     console.log(data, 'modify fixed fee data');
-    this.subInjectService.rightSideData('close');
+    this.Close();
   }
 
 }

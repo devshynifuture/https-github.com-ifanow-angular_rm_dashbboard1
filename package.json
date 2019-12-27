@@ -9,8 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "compress": "npx gzipper --verbose ./dist/myPlanner2 ./gzipped",
-    "stats": "webpack-bundle-analyzer dist/myPlanner2/stats-es5.json"
+    "compress": "npx gzipper --verbose ./dist/myplanner ./gzipped",
+    "stats": "webpack-bundle-analyzer dist/myplanner/stats-es5.json"
   },
   "private": true,
   "dependencies": {
