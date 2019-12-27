@@ -14,44 +14,44 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
   styleUrls: ['./income.component.scss']
 })
 export class IncomeComponent implements OnInit {
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  displayedColumns = ['no', 'owner', 'type', 'amt','income','till','rate','status','icons'];
+  displayedColumns = ['no', 'owner', 'type', 'amt', 'income', 'till', 'rate', 'status', 'icons'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   advisorId: any;
   clientId: any;
-  constructor(public dialog: MatDialog,private eventService:EventService,private subInjectService: SubscriptionInject,private planService:PlanService) { }
+  constructor(public dialog: MatDialog, private eventService: EventService, private subInjectService: SubscriptionInject, private planService: PlanService) { }
   viewMode;
   ngOnInit() {
     this.dataSource.sort = this.sort;
-    this.viewMode="tab1"
-    this.advisorId=AuthService.getAdvisorId();
-    this.clientId=AuthService.getClientId();
+    this.viewMode = "tab1"
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.getIncomeList();
   }
-  getIncomeList()
-  {
-    const obj=
+  getIncomeList() {
+    const obj =
     {
-      advisorId:this.advisorId,
-      clientId:this.clientId
+      advisorId: this.advisorId,
+      clientId: this.clientId
     }
     this.planService.getIncomeData(obj).subscribe(
-      data=>this.getIncomeListRes(data),
-      err=>this.eventService.openSnackBar(err)
+      data => this.getIncomeListRes(data),
+      err => this.eventService.openSnackBar(err)
     )
-    
+
   }
-  getIncomeListRes(data)
-  {
-    this.dataSource=data
+  getIncomeListRes(data) {
+    if (data) {
+      this.dataSource = data;
+    }
   }
-  addIncome(flagValue,data){
-     const fragmentData = {
+  addIncome(flagValue, data) {
+    const fragmentData = {
       flag: flagValue,
       data,
-      state:'open',
-      componentName:AddIncomeComponent
+      state: 'open',
+      componentName: AddIncomeComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -64,7 +64,7 @@ export class IncomeComponent implements OnInit {
       }
     );
   }
-   
+
   deleteModal(value, incomeData) {
     const dialogData = {
       data: value,
@@ -75,11 +75,11 @@ export class IncomeComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         this.planService.deleteIncome(incomeData.id).subscribe(
-          data=>{
+          data => {
             this.getIncomeList();
             dialogRef.close();
           },
-          err=>this.eventService.openSnackBar(err,"dismiss")
+          err => this.eventService.openSnackBar(err, "dismiss")
         )
       },
       negativeMethod: () => {
@@ -99,7 +99,7 @@ export class IncomeComponent implements OnInit {
 
     });
   }
-  addIncomeDetail(flagValue){
+  addIncomeDetail(flagValue) {
     const fragmentData = {
       flag: flagValue,
       id: 1,
@@ -111,12 +111,12 @@ export class IncomeComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-    
+
         }
       }
     );
   }
- 
+
 
 }
 export interface PeriodicElement {
@@ -124,15 +124,15 @@ export interface PeriodicElement {
   owner: string;
   type: string;
   amt: string;
-  income:string;
-  till:string;
-  rate:string;
-  status:string;
- 
+  income: string;
+  till: string;
+  rate: string;
+  status: string;
+
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {no: "1", owner: 'Rahul Jain', type: "Salaried", amt: '60,000',income:"18/09/2021",till:"Retirement",rate:"8.40%",status:"MATURED"},
-  {no: "2", owner: 'Rahul Jain', type: "Salaried", amt: '60,000',income:"18/09/2021",till:"Retirement ",rate:"8.40%",status:"LIVE"},
-  {no: "", owner: 'Total', type: "", amt: '1,60,000',income:"",till:"",rate:"",status:""},
+  { no: "1", owner: 'Rahul Jain', type: "Salaried", amt: '60,000', income: "18/09/2021", till: "Retirement", rate: "8.40%", status: "MATURED" },
+  { no: "2", owner: 'Rahul Jain', type: "Salaried", amt: '60,000', income: "18/09/2021", till: "Retirement ", rate: "8.40%", status: "LIVE" },
+  { no: "", owner: 'Total', type: "", amt: '1,60,000', income: "", till: "", rate: "", status: "" },
 ];     
