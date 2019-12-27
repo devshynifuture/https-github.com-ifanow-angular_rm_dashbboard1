@@ -244,7 +244,7 @@ export class DashboardSubscriptionComponent implements OnInit {
     };
     console.log('filterSubscription eventValue ', eventValue);
     console.log('filterSubscription this.subscriptionSummaryStatusFilter ', this.subscriptionSummaryStatusFilter);
-
+    this.dataSource = [];
     console.log('filterSubscription reqObj ', obj);
     this.subService.filterSubscription(obj).subscribe(
       data => this.getSubSummaryRes(data)
