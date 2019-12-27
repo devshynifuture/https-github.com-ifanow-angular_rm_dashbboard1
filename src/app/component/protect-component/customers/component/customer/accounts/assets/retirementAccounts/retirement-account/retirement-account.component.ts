@@ -30,10 +30,10 @@ export class RetirementAccountComponent implements OnInit {
   showRecurring = '1';
   getObject: {};
   advisorId: any;
-  dataGratuityList: any = [{}, {}, {}];
-  dataSuperannuationList: any = [{}, {}, {}];
-  EPSList: any = [{}, {}, {}];
-  dataNPSList: any = [{}, {}, {}];
+  dataGratuityList: any;
+  dataSuperannuationList: any;
+  EPSList: any;
+  dataNPSList: any;
   clientId: any;
   sumOfcurrentEpfBalance: any;
   sumOfcurrentValue: any;
@@ -46,7 +46,8 @@ export class RetirementAccountComponent implements OnInit {
   totalPensionAmount: any;
   totalContribution: any;
   totalCurrentValue: any;
-  dataEPFList: any = [{}, {}, {}];
+  data: Array<any> = [{}, {}, {}];
+  dataEPFList: any;
   isLoading = true;
 
 
@@ -216,10 +217,26 @@ export class RetirementAccountComponent implements OnInit {
       advisorId: this.advisorId
     };
     this.getListEPF();
+    this.dataEPFList = new MatTableDataSource(this.data);
   }
   getfixedIncomeData(value) {
     this.showRecurring = value;
-    (value == '2') ? this.getListNPS() : (value == '3') ? this.getListGratuity() : (value == '4') ? this.getListSuperannuation() : (value == '5') ? this.getListEPS() : this.getListEPF();
+   if(value == '2'){
+    this.dataNPSList = new MatTableDataSource(this.data);
+    this.getListNPS()
+   }else if(value == '3'){
+    this.dataGratuityList = new MatTableDataSource(this.data);
+    this.getListGratuity()
+   }else if(value == '4'){
+    this.dataSuperannuationList = new MatTableDataSource(this.data);
+    this.getListSuperannuation()
+   }else if(value == '5'){
+    this.EPSList = new MatTableDataSource(this.data);
+    this.getListEPS() 
+   }else{
+    this.getListEPF();
+    this.dataEPFList = new MatTableDataSource(this.data);
+   }
   }
 
   openRetirement(value, state, data) {
@@ -510,7 +527,11 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = true;
     const obj = this.getObject;
     this.custumService.getEPF(obj).subscribe(
-      data => this.getEPFRes(data)
+      data => this.getEPFRes(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.dataEPFList.data = [];
+        this.isLoading = false;
+      }
     );
   }
   getEPFRes(data) {
@@ -527,6 +548,7 @@ export class RetirementAccountComponent implements OnInit {
     }
     else {
       this.noData = "No scheme found";
+      this.dataEPFList.data = [];
     }
 
   }
@@ -534,8 +556,13 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = true;
     const obj = this.getObject;
     this.custumService.getGrauity(obj).subscribe(
-      data => this.getGrauityRes(data)
+      data => this.getGrauityRes(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.dataGratuityList.data = [];
+        this.isLoading = false;
+      }
     );
+    
   }
   getGrauityRes(data) {
     console.log('getGrauityRes =', data);
@@ -547,6 +574,7 @@ export class RetirementAccountComponent implements OnInit {
     }
     else {
       this.noData = "No scheme found";
+      this.dataGratuityList.data = [];
     }
 
   }
@@ -554,7 +582,11 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = true;
     const obj = this.getObject;
     this.custumService.getNPS(obj).subscribe(
-      data => this.getNPSRes(data)
+      data => this.getNPSRes(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.dataNPSList.data = [];
+        this.isLoading = false;
+      }
     );
   }
   getNPSRes(data) {
@@ -569,7 +601,7 @@ export class RetirementAccountComponent implements OnInit {
     }
     else {
       this.noData = "No scheme found";
-
+      this.dataNPSList.data = [];
     }
 
   }
@@ -577,7 +609,11 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = true;
     const obj = this.getObject;
     this.custumService.getSuperannuation(obj).subscribe(
-      data => this.getSuperannuationRes(data)
+      data => this.getSuperannuationRes(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.dataSuperannuationList.data = [];
+        this.isLoading = false;
+      }
     );
   }
   getSuperannuationRes(data) {
@@ -591,7 +627,7 @@ export class RetirementAccountComponent implements OnInit {
     }
     else {
       this.noData = "No scheme found";
-
+      this.dataSuperannuationList.data = [];
     }
 
   }
@@ -599,7 +635,11 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = true;
     const obj = this.getObject;
     this.custumService.getEPS(obj).subscribe(
-      data => this.getEPSRes(data)
+      data => this.getEPSRes(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.EPSList.data = [];
+        this.isLoading = false;
+      }
     );
   }
   getEPSRes(data) {
@@ -613,7 +653,7 @@ export class RetirementAccountComponent implements OnInit {
     }
     else {
       this.noData = "No scheme found";
-
+      this.EPSList.data = [];
     }
 
   }

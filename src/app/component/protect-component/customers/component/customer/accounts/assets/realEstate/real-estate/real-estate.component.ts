@@ -21,7 +21,8 @@ export class RealEstateComponent implements OnInit {
 
   isLoading = true;
   advisorId: any;
-  datasource3: any = [{}, {}, {}];
+  datasource3: any;
+  data: Array<any> = [{}, {}, {}];
   clientId: any;
   ownerName: any;
   sumOfMarketValue: any;
@@ -43,6 +44,7 @@ export class RealEstateComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.isLoading = true;
     this.getRealEstate();
+    this.datasource3 = new MatTableDataSource(this.data);
   }
 
   async ExportTOExcel(value) {
@@ -77,15 +79,22 @@ export class RealEstateComponent implements OnInit {
       clientId: this.clientId
     };
     this.custmService.getRealEstate(obj).subscribe(
-      data => this.getRealEstateRes(data)
-    );
+      data => this.getRealEstateRes(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.datasource3.data = [];
+        this.isLoading = false;
+      });
   }
 
   getRealEstateRes(data) {
     this.isLoading = false;
     console.log(data);
     this.isLoading = false;
-    if (data.realEstateList.length > 0) {
+    if(data == undefined){
+      this.noData = 'No schemes found';
+      this.datasource3.data = [];
+    }
+    else if (data.realEstateList.length > 0) {
       data.realEstateList.forEach(element => {
         if (element.realEstateOwners.length != 0) {
           const array = element.realEstateOwners;
@@ -98,13 +107,13 @@ export class RealEstateComponent implements OnInit {
           }
         }
       });
-
       this.datasource3 = new MatTableDataSource(data.realEstateList);
       this.datasource3.sort = this.sort;
       this.sumOfMarketValue = data.sumOfMarketValue;
       this.sumOfpurchasedValue = data.sumOfpurchasedValue;
     } else {
       this.noData = 'No schemes found';
+      this.datasource3.data = [];
     }
   }
 

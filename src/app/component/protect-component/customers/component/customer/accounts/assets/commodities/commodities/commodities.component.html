@@ -10,27 +10,13 @@
                 class="br-0 text-custom">
                 Others </button>
         </div>
-        <!-- <div class="col-md-4 right text-right  pr-0">
-            <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
-                Overview Report
-                <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item>Overview Report</button>
-                <button mat-menu-item>Summary</button>
-                <button mat-menu-item>All Transactions</button>
-                <button mat-menu-item>Unrealized Transactions</button>
-                <button mat-menu-item>Capital Gains</button>
-                <button mat-menu-item>Goal Linkage</button>
-            </mat-menu>
-        </div> -->
     </div>
     <div *ngIf="showRequring == '1'">
         <div class="row">
             <div class="col-md-4 p-0">
                 <h4 class="m-0 text-black roboto pt-8">Gold</h4>
             </div>
-            <div class="col-md-8 p-0 right text-right" *ngIf="goldList!=undefined">
+            <div class="col-md-8 p-0 right text-right" *ngIf="goldList.filteredData.length > 0">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button mat-menu-item>PDF</button>
@@ -50,7 +36,7 @@
             </div>
         </div>
         <div class="example-container col-md-12 p-0 mt-8 real-estate">
-            <table *ngIf="goldList" matSort #goldListTable="matSort" mat-table [dataSource]="goldList" id="table-low"
+            <table *ngIf="goldList.filteredData.length > 0" matSort #goldListTable="matSort" mat-table [dataSource]="goldList" id="table-low"
                 class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -144,8 +130,8 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns9;"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns9;sticky: true" [hidden]="isLoading"></tr>
             </table>
-            <div *ngIf="goldList==undefined" class="d-flex flex-column align-items-center">
-                <h4 class="text-center pt-72">{{noData }}</h4>
+            <div *ngIf="goldList.filteredData.length == 0" class="d-flex flex-column align-items-center">
+                <h4 class="text-center pt-72">{{noData}}</h4>
                 <button mat-stroked-button class="btn-primary addon v-middle"
                     (click)="openCommodities('addGold','open',null)"><i class="material-icons">add</i>ADD NEW</button>
             </div>
@@ -276,7 +262,7 @@
                 <tr mat-footer-row *matFooterRowDef="displayedColumns10;sticky: true" [hidden]="isLoading"></tr>
             </table>
             <div  *ngIf="otherCommodityList.filteredData.length == 0" class="d-flex flex-column align-items-center">
-                <h4 class="text-center pt-72">{{noData }}</h4>
+                <h4 class="text-center pt-72">{{noData}}</h4>
                 <button mat-stroked-button class="btn-primary addon v-middle"
                     (click)="openOthers('addOthers','open',null)"><i class="material-icons">add</i>ADD
                     NEW</button>
