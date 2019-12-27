@@ -197,7 +197,7 @@ export class VariableFeeComponent implements OnInit {
       if (this.singleSubscriptionData.isCreateSub == false) {
         obj.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId;
         obj.clientId = this.singleSubscriptionData.clientId;
-        obj.subscriptionId = this.singleSubscriptionData.id;
+        obj.subId = this.singleSubscriptionData.id;
         console.log(obj);
         this.outputData.emit(obj);
 

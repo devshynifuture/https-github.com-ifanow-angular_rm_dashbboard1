@@ -72,7 +72,6 @@ export class ChangePayeeComponent implements OnInit {
     this.subInjectService.changeUpperRightSliderState({state: 'close'});
     this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
-
   getPayeeData(data) {
     this.getRowData = data;
     this.dataObj = {

@@ -34,6 +34,7 @@ import { ChangePayeeComponent } from './subscription/common-subscription-compone
 import { CommonFroalaComponent } from './subscription/common-subscription-component/common-froala/common-froala.component';
 import { CustomHtmlModule } from 'src/app/common/customhtml/customhtml/custom-html.module';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { AddVariableFeeComponent } from './subscription/common-subscription-component/add-variable-fee/add-variable-fee.component';
 
 export const componentList = [
     OverviewComponent,
@@ -63,7 +64,8 @@ export const componentList = [
     VariableFeeComponent,
     ChangePayeeComponent,
     CommonFroalaComponent,
-    EmailOnlyComponent
+    EmailOnlyComponent,
+    AddVariableFeeComponent
 ]
 @NgModule({
     declarations: componentList,
