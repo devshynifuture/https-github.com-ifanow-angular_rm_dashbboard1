@@ -1,4 +1,4 @@
-<div class="pl-24 pt-72 pr-24 pb-24">
+<div *ngIf="checkFamList" class="pl-24 pt-72 pr-24 pb-24">
     <div class="row pt-24">
         <div class="col-md-12 mb-28">
             <p class="f-14 roboto f-normal">Great! Tell us, who are the earning members?</p>
@@ -7,9 +7,10 @@
 </div>
 
 
-<div class="familyMemberBox">
+<div *ngIf="checkFamList" class="familyMemberBox">
     <div class="row">
-        <div *ngFor="let familyMember of familyMemberList" (click)="select(familyMember)" class="col-md-6 text-center mb-20">
+        <div *ngFor="let familyMember of familyMemberList" (click)="select(familyMember)"
+            class="col-md-6 text-center mb-20">
             <div class="memberBorderBox" [ngClass]="{'activeMemberBox': familyMember.selected}">
                 <mat-checkbox class="checkPosition" *ngIf="familyMember.selected" checked="true"></mat-checkbox>
                 <img src="assets/images/svg/income-man.svg">
@@ -23,6 +24,9 @@
         </div>
     </div>
 </div>
+<div *ngIf="checkFamList==false">
+    No Family Members Found
+</div>
 <div class="bottom-fixed wrapper-16 pb-12">
     <div class="row">
         <div class="col-md-4 p-0">
@@ -30,7 +34,6 @@
         </div>
         <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit" (click)="nextStep()">NEXT</button>
-
         </div>
     </div>
 </div>
