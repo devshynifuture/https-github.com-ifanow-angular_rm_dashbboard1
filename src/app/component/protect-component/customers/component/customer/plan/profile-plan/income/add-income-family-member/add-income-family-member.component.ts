@@ -18,8 +18,9 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
   setFlag = "addIncome"
   @Output() selectedFamilyMembersData = new EventEmitter();
   selectedFamilyMembers = [];
-  ownerCount=0;
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService,private eventService:EventService) { }
+  ownerCount = 0;
+  checkFamList: boolean;
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) { }
 
   ngOnInit() {
   }
@@ -32,8 +33,7 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
     else {
       (data.setFlag == "addIncome") ? data.flag == "editIncome" : console.log("dsdas");
       data.data.forEach(element => {
-        if(element.selected)
-        {
+        if (element.selected) {
           this.ownerCount++;
         }
       });
@@ -51,6 +51,7 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
     );
   }
   getListOfFamilyByClientRes(data) {
+    (data.familyMembersList.length == 0) ? this.checkFamList = false : this.checkFamList = true;
     this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data.familyMembersList)
     this.familyMemberList.forEach(element => {
       element.selected = false
@@ -58,9 +59,11 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
     console.log(this.familyMemberList)
   }
   nextStep() {
-    if(this.ownerCount==0)
-    {
-      this.eventService.openSnackBar("Please select earning member","dismiss");
+    if (this.familyMemberList.length == 0) {
+      return;
+    }
+    if (this.ownerCount == 0) {
+      this.eventService.openSnackBar("Please select earning member", "dismiss");
       return;
     }
     const obj =
