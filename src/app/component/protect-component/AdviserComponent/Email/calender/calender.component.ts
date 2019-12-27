@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { variable } from '@angular/compiler/src/output/output_ast';
 
 export interface DialogData {
   animal: string;
@@ -42,6 +43,8 @@ export class CalenderComponent implements OnInit {
     this.viewDate = new Date();
     this.updateCalender();
     console.log(Intl.DateTimeFormat().resolvedOptions().timeZone, "test date");
+
+    // demo get data calender
     this.eventData = [{
       "eventId":"02megf77o1dqjkhevj9udlfh25",
       "userId":2808,
@@ -63,6 +66,7 @@ export class CalenderComponent implements OnInit {
         "recurrence":["RRULE:FREQ=DAILY;COUNT=2"],
         "attendeeList":["chetan@futurewise.co.in","chetan@futurewise.co.in"]
     }]
+    // demo get data calender
 
     this.formatedEvent = [];
     for(let e of this.eventData){
@@ -170,25 +174,48 @@ export class CalenderComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result, "result 123");
       
-      this.dialogData = {
-        "eventId": "v8o6srjpr3kqa50a0cu2f2abls",
-        "userId": 2727,
-        "fileId": 12345,
-        "calendarId": "gaurav@futurewise.co.in",
-        "summary": "new event",
-        "location": "800 Howard St., San Francisco, CA 94103",
-        "title": "it is successful",
-        "description": "it is successful",
-        "startDateTime": "",
-        "timeZone": "America/Los_Angeles",
-        "endDateTime": "",
-        "recurrence": ["RRULE:FREQ=DAILY;COUNT=2"],
-        "attendees": ["chetan@futurewise.co.in", "chetan@futurewise.co.in"]
+      this.dialogData = 
+      {
+        "summary": result.summary,
+        "location": result.location,
+        "description": result.description,
+        "start": {
+        "dateTime": "",
+        "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
+        },
+        "end": {
+        "dateTime": "",
+        "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
+        },
+        "recurrence": [
+        "RRULE:FREQ=DAILY;COUNT=2"
+        ],
+        "attendees":result.attendeesList
       }
+
+      // summary: ["new event",[Validators.required]],
+      // location: ["800 Howard St., San Francisco, CA 94103"],
+      // title: ["it is successful",[Validators.required]],
+      
+      // {
+        //   "eventId": "v8o6srjpr3kqa50a0cu2f2abls",
+        //   "userId": 2727,
+        //   "fileId": 12345,
+      //   "calendarId": "gaurav@futurewise.co.in",
+      //   "summary": "new event",
+      //   "location": "800 Howard St., San Francisco, CA 94103",
+      //   "title": "it is successful",
+      //   "description": "it is successful",
+      //   "startDateTime": "",
+      //   "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone,
+      //   "endDateTime": "",
+      //   "recurrence": ["RRULE:FREQ=DAILY;COUNT=2"],
+      //   "attendees": result.attendeesList
+      // }
       this.startTime = result.startTime;
       this.endTime = result.endTime;
-      this.dialogData.startDateTime = this.googleDate(result.startDateTime._d == undefined? this.current_day : result.startDateTime._d , "start");
-      this.dialogData.endDateTime = this.googleDate(result.endDateTime._d == undefined? this.current_day : result.endDateTime._d, "end");
+      this.dialogData.start.dateTime = this.googleDate(result.startDateTime._d == undefined? this.current_day : result.startDateTime._d , "start");
+      this.dialogData.end.dateTime = this.googleDate(result.endDateTime._d == undefined? this.current_day : result.endDateTime._d, "end");
       console.log(this.dialogData, 'The dialog was closed');
     });
   }
@@ -241,7 +268,7 @@ googleDate(date, timeMood){
   ],
 })
 export class EventDialog implements OnInit{
-  
+  attendeesArr = [];
   startDate = new Date();
   startTime="";
   endTime="";
@@ -259,26 +286,39 @@ export class EventDialog implements OnInit{
   }
 
   ngOnInit(){
+    
     this.eventForm = this.fb.group({
-      eventId: new FormControl("v8o6srjpr3kqa50a0cu2f2abls"),
-      userId: new FormControl(2727),
-      fileId: new FormControl(12345),
-      calendarId: new FormControl("gaurav@futurewise.co.in"),
-      summary: new FormControl("new event"),
-      location: new FormControl("800 Howard St., San Francisco, CA 94103"),
-      title: new FormControl("it is successful"),
-      description: new FormControl("it is successful"),
-      startDateTime: new FormControl(new Date()),
-      timeZone: new FormControl("America/Los_Angeles"),
-      endDateTime: new FormControl(new Date()),
-      recurrence: new FormControl("RRULE:FREQ=DAILY;COUNT=2"),
-      attendees: new FormControl(["chetan@futurewise.co.in", "chetan@futurewise.co.in"]),
-      startTime: new FormControl(this.startTime),
-      endTime: new FormControl(this.endTime)
+      // eventId: ["02megf77o1dqjkhevj9udlfh25",[Validators.required]],
+      // userId: [2727,[Validators.required]],
+      // fileId: [12345,[Validators.required]],
+      // calendarId:["gaurav@futurewise.co.in",[Validators.required]],
+      summary: ["",[Validators.required]],
+      location: ["800 Howard St., San Francisco, CA 94103"],
+      title: ["it is successful",[Validators.required]],
+      description: ["it is successful"],
+      startDateTime: [new Date(),[Validators.required]],
+      endDateTime: [new Date(),[Validators.required]],
+      recurrence: ["RRULE:FREQ=DAILY;COUNT=2"],
+      attendee:  ["",[Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+      attendeesList:  [this.attendeesArr],
+      startTime:[this.startTime],
+      endTime: [this.endTime]
     });
 
+    console.log(this.eventForm.get("attendee").value == "", "see value");
+    
 
+  }
 
+  addAttendee(){
+    this.attendeesArr.push({"email":this.eventForm.value.attendee});
+    this.eventForm.get("attendee").setValue("");
+   
+  }
+
+  removeMember(member){
+    // this.attendeesArr.splice(this.attendeesArr.indexOf(member.email), 1)
+    this.attendeesArr = this.attendeesArr.filter((x)=> x.email != member.email);
   }
 
   addTime(){

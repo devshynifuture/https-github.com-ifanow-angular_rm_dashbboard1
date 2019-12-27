@@ -11,13 +11,13 @@
             <h5 class="m-0 text-black">Description</h5>
             <div class="form-group">
                 <mat-form-field>
-                    <textarea matInput class="form-control br-0" rows="4" formControlName="description"></textarea>
+                    <textarea matInput class="form-control br-0 p-8" rows="4" formControlName="description"></textarea>
                 </mat-form-field>
             </div>
             <h5 class="m-0 text-black pt-28">Event address</h5>
             <div class="form-group">
                 <mat-form-field>
-                    <textarea matInput rows="4" formControlName="location" class="form-control"></textarea>
+                    <textarea matInput rows="4" formControlName="location" class="form-control p-8"></textarea>
                 </mat-form-field>
             </div>
             <div class="pt-28">
@@ -78,6 +78,33 @@
                         </div>
                         <div class="col-md-3 pr-0 " style="margin-top: 27px;" *ngIf="!showTime">
                             <button (click)="addTime()">Add Time</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h5 class="m-0 text-black">Attendee List </h5>
+            <div class="row pl-0">
+                <div class="col-md-10 pl-0 " >
+                    <div class="form-group" >
+                        <mat-form-field>
+                            <input matInput formControlName="attendee" class="form-control br-0 ">
+                            <mat-error *ngIf="eventForm.controls['attendee'].hasError('pattern')">Email is valid</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-2 pl-0 mt-8">
+                    <button type="button" [hidden]="eventForm.controls['attendee'].hasError('pattern') || this.eventForm.get('attendee').value == ''" mat-stroked-button class="btn-primary br-0 p-12 btn-sm m-n0" (click)="addAttendee()">
+                        <img src="/assets/images/svg/plus.svg"
+                    >
+                    </button>
+                </div>
+                <div class="col-md-10 pl-0 mt-8" *ngIf="attendeesArr.length > 0">
+                    <div class="row pl-0" *ngFor="let member of attendeesArr" >
+                        <div class="col-md-10 pl-0 " >
+                            {{member.email}}
+                        </div>
+                        <div class="col-md-2 pl-0 " >
+                            <img src="assets/images/svg/delete.svg" (click)="removeMember(member)">
                         </div>
                     </div>
                 </div>
