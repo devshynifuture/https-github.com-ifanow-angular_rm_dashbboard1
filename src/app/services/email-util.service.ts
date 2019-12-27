@@ -6,6 +6,7 @@ import { GmailInboxResponseI } from '../component/protect-component/AdviserCompo
 })
 export class EmailUtilService {
 
+
   constructor() {
   }
 
@@ -49,7 +50,8 @@ export class EmailUtilService {
   }
 
   static decodeGmailThreadExtractMessage(gmailThread: GmailInboxResponseI): Object {
-    let decodedPartArray = []
+    let decodedPartArray = [];
+    let id = gmailThread.id;
     let tempHeaders: {}[];
     gmailThread.messages.forEach((message) => {
       const { payload: { parts } } = message;
@@ -61,9 +63,9 @@ export class EmailUtilService {
             decodedPartArray.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data));
           }
           // not perfect
-          else {
-            decodedPartArray.push(snippet);
-          }
+          // else {
+          //   decodedPartArray.push(snippet);
+          // }        
         });
       } else {
         decodedPartArray.push('');

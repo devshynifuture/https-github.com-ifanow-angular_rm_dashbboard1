@@ -35,7 +35,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private subInjectService: SubscriptionInject,
+    private emailUtilService: EmailUtilService,
     private emailService: EmailServiceService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -218,6 +218,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
           // thread.messages.map((message) => {
           //   message.payload.body.data = btoa(message.payload.body.data);
           // });
+          console.log(thread);
           let parsedData: any; // object containing array of decoded parts and headers
           let idsOfThread: any; // Object of historyId and Id of thread
           let dateIdsSnippetsOfMessages: any; // array of Objects having ids, date snippets of messages
