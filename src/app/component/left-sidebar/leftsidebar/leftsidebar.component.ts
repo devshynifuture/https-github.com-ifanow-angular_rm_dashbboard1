@@ -25,6 +25,7 @@ export class LeftsidebarComponent implements OnInit {
   clientList: any;
   myControl: FormControl;
   advisorName;
+  loginType: number = 1;
 
   constructor(private authService: AuthService, private _eref: ElementRef,
               private eventService: EventService, private subinject: SubscriptionInject,
