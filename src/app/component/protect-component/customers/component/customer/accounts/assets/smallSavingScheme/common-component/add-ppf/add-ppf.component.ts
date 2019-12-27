@@ -7,6 +7,7 @@ import { CustomerService } from '../../../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import * as _ from 'lodash';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-ppf',
@@ -37,7 +38,7 @@ export class AddPpfComponent implements OnInit {
   dataFM: any;
   familyList: any;
   errorFieldName: string;
-  constructor(private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(public utils: UtilService,private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   @Input()
   set data(data) {

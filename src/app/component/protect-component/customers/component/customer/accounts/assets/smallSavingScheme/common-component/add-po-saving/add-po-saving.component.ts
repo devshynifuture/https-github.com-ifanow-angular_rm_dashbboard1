@@ -6,6 +6,7 @@ import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 import {CustomerService} from '../../../../../customer.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-po-saving',
@@ -28,7 +29,7 @@ export class AddPoSavingComponent implements OnInit {
   editApi: any;
   accBalance: number;
 
-  constructor(private fb: FormBuilder, private cusService: CustomerService,
+  constructor(public utils: UtilService,private fb: FormBuilder, private cusService: CustomerService,
               private eventService: EventService, private subInjectService: SubscriptionInject) {
   }
 
