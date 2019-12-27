@@ -1,74 +1,82 @@
 .login_window_wrapper {
-  float: left;
-  width: 100%;
-  background-color: #cccccc;
-  height: 100vh;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+    float: left;
+    width: 100%;
+    background-color: #cccccc;
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .login_window_container {
-  width: 25%;
-  display: block;
-  margin: 40px auto;
-  padding: 30px;
-  background-color: #fff;
+    width: 25%;
+    display: block;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
 }
 
 h3 {
-  text-align: center;
-  margin-bottom: 15px;
+    text-align: center;
+    margin-bottom: 15px;
 }
 
 .m-b-xs {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .form_container_btn_wrapper {
-  float: right;
-  text-align: right;
-  margin-top: 5px;
+    float: right;
+    text-align: right;
+    margin-top: 5px;
 }
 
 .width_100 {
-  width: 100%;
+    width: 100%;
 }
 
 .register_text {
-  text-align: center;
-  text-decoration: none;
-  margin-top: 15px;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 15px;
 }
 
 input.mat-input-element {
-  line-height: 1.2;
+    line-height: 1.2;
 }
 
 .register_text:focus {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 @media(max-width:1062px) {
-  .login_window_container {
-    width: 30%;
-  }
+    .login_window_container {
+        width: 30%;
+    }
 }
 
 @media(max-width:862px) {
-  .login_window_container {
-    width: 40%;
-  }
+    .login_window_container {
+        width: 40%;
+    }
 }
 
 @media(max-width:672px) {
-  .login_window_container {
-    width: 50%;
-  }
+    .login_window_container {
+        width: 50%;
+    }
 }
 
 @media(max-width:490px) {
-  .login_window_container {
-    width: 60%;
-  }
+    .login_window_container {
+        width: 60%;
+    }
+}
+
+.login_window_wrapper .mat-form-field {
+    height: auto !important;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 0px !important;
 }
