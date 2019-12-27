@@ -7,6 +7,7 @@ import { ModifyFeeDialogComponent } from '../../common-subscription-component/mo
 import { AuthService } from "../../../../../../../auth-service/authService";
 import { UtilService } from "../../../../../../../services/util.service";
 import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
+import { HelpComponent } from '../../common-subscription-component/help/help.component';
 
 // import {CustomHtmlComponent} from "../../../../../../../common/customhtml.component";
 
@@ -17,6 +18,9 @@ import { SubscriptionUpperSliderComponent } from '../../common-subscription-comp
 })
 export class DocumentsSettingsComponent implements OnInit {
   button: any;
+  Questions = [{ question: 'Can I create my own template for Quotations?' },
+  { question: 'Can I create my own template for Consent T&C?' },
+  { question: 'What are the Future subscriptions?' }]
   documentSettingData = [{}, {}, {}];
   isLoading = false;
   //showLoader;
@@ -56,7 +60,26 @@ export class DocumentsSettingsComponent implements OnInit {
     this.documentSettingData = data;
     //this.showLoader = false;
   }
-
+  OpenHelp(value, state, data) {
+    const fragmentData = {
+      flag: value,
+      data: data,
+      id: 1,
+      state: state,
+      componentName: HelpComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+    // this.eventService.sidebarData(value);
+    // this.subInjectService.rightSideData(state);
+  }
   Open(value, state) {
     this.eventService.sidebarData(value);
     this.subInjectService.rightSideData(state);
