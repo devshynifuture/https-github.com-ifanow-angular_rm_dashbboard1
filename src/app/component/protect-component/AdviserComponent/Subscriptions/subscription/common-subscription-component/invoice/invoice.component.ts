@@ -9,6 +9,7 @@ import {MatDialog} from '@angular/material';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
 import {UtilService} from 'src/app/services/util.service';
 import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {EmailOnlyComponent} from "../email-only/email-only.component";
 
 
 export interface PeriodicElement {
@@ -32,7 +33,7 @@ export interface PeriodicElement {
     //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     // },
     // { provide: MAT_DATE_LOCALE, useValue: 'en' },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 
 })
@@ -148,9 +149,9 @@ export class InvoiceComponent implements OnInit {
   }
 
   gstTreatment = [
-    { name: "Registered Business - Regular", value: 0 },
-    { name: "Registered Business - Composition", value: 1 },
-    { name: "Unregistered Business", value: 2 }
+    {name: "Registered Business - Regular", value: 0},
+    {name: "Registered Business - Composition", value: 1},
+    {name: "Unregistered Business", value: 2}
   ]
 
   keyPress(event: any) {
@@ -641,6 +642,7 @@ export class InvoiceComponent implements OnInit {
   saveInvoice() {
     console.log(this.editPayment);
   }
+
   openSendEmail(input) {
 
     const data = {
@@ -662,11 +664,13 @@ export class InvoiceComponent implements OnInit {
 
     }
   }
+
   OpenEmail(data, value) {
     const fragmentData = {
       flag: value,
-      data: data,
+      data,
       id: 1,
+      componentName: EmailOnlyComponent,
       state: 'open'
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -677,9 +681,9 @@ export class InvoiceComponent implements OnInit {
           rightSideDataSub.unsubscribe();
         }
       }
-
     );
   }
+
   OpenEmailUpper(data, value) {
     const fragmentData = {
       flag: value,
@@ -695,9 +699,9 @@ export class InvoiceComponent implements OnInit {
           rightSideDataSub.unsubscribe();
         }
       }
-
     );
   }
+
   deleteModal(value, data) {
     const dialogData = {
       data: value,
