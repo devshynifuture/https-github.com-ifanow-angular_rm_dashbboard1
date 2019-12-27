@@ -81,7 +81,7 @@ export class AddPpfComponent implements OnInit {
       balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       commencementDate: [new Date(data.commencementDate), [Validators.required]],
       futureContribution: [data.futureApproxcontribution, [Validators.required]],
-      frquency: [data.frequency, [Validators.required]],
+      frquency: [(data.frequency == undefined) ? "1" : data.frequency, [Validators.required]],
     })
     this.optionalppfSchemeForm = this.fb.group({
       description: [data.description, [Validators.required]],

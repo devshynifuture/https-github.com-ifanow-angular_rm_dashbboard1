@@ -45,7 +45,7 @@ export class AddPoMisComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-
+    this.clientId = AuthService.getClientId();
     this.show = false;
     this.getPomisData(this.data);
 
@@ -144,7 +144,7 @@ export class AddPoMisComponent implements OnInit {
       } else {
         const editObj = {
           id: this._inputData.id,
-          clientId: 2978,
+          clientId: this.clientId,
           familyMemberId: obj.familyMemberId,
           advisorId: this.advisorId,
           ownerName: obj.ownerName,
@@ -169,7 +169,7 @@ export class AddPoMisComponent implements OnInit {
     if (data) {
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close' });
-      this.eventService.openSnackBar('Liabilities added successfully', 'OK');
+      this.eventService.openSnackBar('Pomis added successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
 
@@ -181,7 +181,7 @@ export class AddPoMisComponent implements OnInit {
     if (data) {
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close' });
-      this.eventService.openSnackBar('Liabilities edited successfully', 'OK');
+      this.eventService.openSnackBar('Pomis edited successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
     }

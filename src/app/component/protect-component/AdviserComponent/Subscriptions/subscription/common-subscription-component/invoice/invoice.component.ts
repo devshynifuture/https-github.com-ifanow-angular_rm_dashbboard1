@@ -42,6 +42,7 @@ export class InvoiceComponent implements OnInit {
   discount: any;
   inputData: any;
   templateType: number;
+  dataInvoices: any;
 
   [x: string]: any;
 

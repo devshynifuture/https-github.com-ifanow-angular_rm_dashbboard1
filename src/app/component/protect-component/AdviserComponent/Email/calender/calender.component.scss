@@ -6,7 +6,7 @@
   padding: 16px;
 
   .column {
-
+    position: relative;
     width: 14.28%;
     text-align: center;
 
@@ -19,6 +19,7 @@
     }
   }
 
+  
   #ui-calender{
     position: relative;
     .main-header {
@@ -72,6 +73,10 @@
   float: right;
 }
 
+.date-info{
+position: absolute; top:0px; right: 0px; border: none !important; height: 100%; width: 100%;
+}
+
 .pink {
   .mat-chip.mat-standard-chip {
     background-color: #EA5970;
@@ -84,6 +89,10 @@
     min-height: 24px;
   }
 }
+
+
+    
+       
 
 ul.blue {
   padding-top: 32px;
@@ -428,5 +437,15 @@ img.header-img {
 .scorllable::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+event-dialog{
+    .date-wrapper{
+        
+        mat-form-field{
+            width: 75px !important;
+        }
+    }
+}
+
 
 /***********************************************************************************/
