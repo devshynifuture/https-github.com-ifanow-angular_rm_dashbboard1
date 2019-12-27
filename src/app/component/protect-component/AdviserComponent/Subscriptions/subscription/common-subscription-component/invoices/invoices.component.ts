@@ -68,7 +68,7 @@ export class InvoicesComponent implements OnInit {
   getInvoiceResponseData(data) {
     this.isLoading = false;
     if (data == undefined) {
-      this.dataSource=undefined
+      this.dataSource = undefined
       this.noData = "No Data Found";
     } else {
       // const ELEMENT_DATA = data;
@@ -97,14 +97,14 @@ export class InvoicesComponent implements OnInit {
 
   changeSelect(data) {
     this.dataCount = 0;
-    if (this.dataSource.filteredData) {
-    this.dataSource.filteredData.forEach(item => {
-      console.log('item item ', item);
-      if (item.selected) {
-        this.dataCount++;
-      }
-    });
-  }
+    if (this.dataSource != undefined) {
+      this.dataSource.filteredData.forEach(item => {
+        console.log('item item ', item);
+        if (item.selected) {
+          this.dataCount++;
+        }
+      });
+    }
     // if(data.selected==false)
     // {
     //   data.selected = true;
@@ -121,28 +121,28 @@ export class InvoicesComponent implements OnInit {
     // const checked = event.target.checked;
     // this.dataSource.forEach(item => item.selected = 'checked');
     this.dataCount = 0;
-    if (this.dataSource.filteredData) {
-    this.dataSource.filteredData.forEach(item => {
-      //   if(item.selected==false)
-      //   {
-      //     item.selected = true;
-      //     this.dataCount++;
-      //   }else{
-      //     item.selected = false;
-      //     this.dataCount--;
-      //   }
-      // });
-      item.selected = event.checked;
-      if (item.selected) {
-        this.dataCount++;
-      }
-      // if(item.dataCountd>=1){
-      //   this.dataCount=1
-      // }else{
-      //   this.dataCount++
-      // }
-    });
-  }
+    if (this.dataSource != undefined) {
+      this.dataSource.filteredData.forEach(item => {
+        //   if(item.selected==false)
+        //   {
+        //     item.selected = true;
+        //     this.dataCount++;
+        //   }else{
+        //     item.selected = false;
+        //     this.dataCount--;
+        //   }
+        // });
+        item.selected = event.checked;
+        if (item.selected) {
+          this.dataCount++;
+        }
+        // if(item.dataCountd>=1){
+        //   this.dataCount=1
+        // }else{
+        //   this.dataCount++
+        // }
+      });
+    }
     // if(item.selected=="true"){
     //   this.dataCount++;
     // }else{
