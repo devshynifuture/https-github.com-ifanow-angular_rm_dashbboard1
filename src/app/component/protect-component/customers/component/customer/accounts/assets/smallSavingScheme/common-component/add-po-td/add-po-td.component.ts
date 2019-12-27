@@ -85,7 +85,7 @@ export class AddPoTdComponent implements OnInit {
 
       this.transactionData.forEach(element => {
         let obj = {
-          "date": element.controls.date.value._d,
+          "date": element.controls.date.value,
           "amount": element.controls.amount.value,
           "paymentType": element.controls.transactionType.value
         }
