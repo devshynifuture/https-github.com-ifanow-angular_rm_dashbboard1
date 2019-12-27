@@ -1,23 +1,23 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {MatStepper} from '@angular/material';
-import {EnumServiceService} from '../../../../../../../services/enum-service.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { MatStepper } from '@angular/material';
+import { EnumServiceService } from '../../../../../../../services/enum-service.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
 // import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import {MAT_DATE_FORMATS} from '@angular/material/core';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {DatePipe} from '@angular/common';
-import {UtilService} from "../../../../../../../services/util.service";
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { DatePipe } from '@angular/common';
+import { UtilService } from "../../../../../../../services/util.service";
 
 @Component({
   selector: 'app-create-subscription',
   templateUrl: './create-subscription.component.html',
   styleUrls: ['./create-subscription.component.scss'],
   providers: [
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class CreateSubscriptionComponent implements OnInit {
@@ -124,6 +124,7 @@ export class CreateSubscriptionComponent implements OnInit {
   getSubStartDetails(data) {
     // this.clientData = data.data;
     this.feeModeData = data;
+    this.clientData = data;
     console.log('client Data: ', this.clientData);
     if (data.subscriptionPricing) {
       this.advisorId = AuthService.getAdvisorId();
@@ -233,10 +234,10 @@ export class CreateSubscriptionComponent implements OnInit {
       );
     } else {
 
-      const subAsset = [];
-      this.clientData.subscriptionAssetPricingList[2].otherAssets.forEach(element => {
-        subAsset.push(element.subAssetClassId);
-      });
+      // const subAsset = [];
+      // this.clientData.subscriptionAssetPricingList[2].otherAssets.forEach(element => {
+      //   subAsset.push(element.subAssetClassId);
+      // });
       // const selectedPayee = [];
       // this.clientData;
       const obj = {
@@ -259,7 +260,7 @@ export class CreateSubscriptionComponent implements OnInit {
           billingNature: this.clientData.billingNature,
           feeTypeId: this.clientData.feeTypeId,
           id: 0,
-          pricingList: [
+          subscriptionAssetPricingList: [
             {
               directRegular: 1,
               assetClassId: 1,
@@ -275,7 +276,7 @@ export class CreateSubscriptionComponent implements OnInit {
             },
             {
               assetClassId: 2,
-              subAssetIds: subAsset,
+              subAssetIds: this.clientData.subscriptionAssetPricingList[2].subAssetIds,
               pricing: this.clientData.subscriptionAssetPricingList[2].pricing
             }
           ]
