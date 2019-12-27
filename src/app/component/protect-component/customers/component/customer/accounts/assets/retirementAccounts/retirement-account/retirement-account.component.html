@@ -364,7 +364,7 @@
                             </button>
                             <button mat-menu-item class="c-p">Detailed view</button>
                             <button mat-menu-item class="c-p">Activity</button>
-                            <button mat-menu-item class="c-p" (click)="deleteModal(element,element.id)">Delete</button>
+                            <button mat-menu-item class="c-p" (click)="deleteModal('NPS',element.id)">Delete</button>
                         </mat-menu>
                     </td>
                     <td *matFooterCellDef mat-footer-cell></td>
@@ -500,7 +500,7 @@
                             view
                         </button>
                         <button class="c-p" mat-menu-item>Activity</button>
-                        <button (click)="deleteModal(GRATUITY,element)" class="c-p" mat-menu-item>Delete</button>
+                        <button (click)="deleteModal('GRATUITY',element)" class="c-p" mat-menu-item>Delete</button>
                     </mat-menu>
                 </td>
                 <td *matFooterCellDef mat-footer-cell></td>
@@ -774,7 +774,7 @@
                         <button (click)="openAddEPS(element)" class="c-p" mat-menu-item>Edit</button>
                         <button (click)="detailedViewEPS(element)" class="c-p" mat-menu-item>Detailed view</button>
                         <button class="c-p" mat-menu-item>Activity</button>
-                        <button (click)="deleteModal(element,element)" class="c-p" mat-menu-item>Delete</button>
+                        <button (click)="deleteModal('EPS',element)" class="c-p" mat-menu-item>Delete</button>
                     </mat-menu>
                 </td>
                 <td *matFooterCellDef mat-footer-cell></td>
