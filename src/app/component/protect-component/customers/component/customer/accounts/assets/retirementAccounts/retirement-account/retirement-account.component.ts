@@ -217,6 +217,7 @@ export class RetirementAccountComponent implements OnInit {
       advisorId: this.advisorId
     };
     this.getListEPF();
+    this.dataEPFList = new MatTableDataSource(this.data);
   }
   getfixedIncomeData(value) {
     this.showRecurring = value;

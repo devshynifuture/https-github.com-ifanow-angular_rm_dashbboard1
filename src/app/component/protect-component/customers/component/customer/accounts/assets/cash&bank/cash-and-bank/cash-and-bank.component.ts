@@ -52,6 +52,7 @@ export class CashAndBankComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getBankAccountList();
+    this.bankAccountList = new MatTableDataSource(this.data);
   }
 
   async ExportTOExcel(value) {
@@ -206,11 +207,11 @@ export class CashAndBankComponent implements OnInit {
   getCashInHandRes(data) {
     console.log('getCashInHandRes ###', data);
     this.isLoading = false;
-    if(data = undefined){
+    if(data == undefined){
       this.noData = 'No scheme found';
       this.cashInHandList.data = [];
     }
-    if (data.cashInHands.length != 0) {
+    else if (data.cashInHands.length != 0) {
       this.cashInHandList = new MatTableDataSource(data.cashInHands);
       this.cashInHandList.sort = this.cashInHandListTableSort;
       this.sumOfCashValue = data.sumOfCashValue;

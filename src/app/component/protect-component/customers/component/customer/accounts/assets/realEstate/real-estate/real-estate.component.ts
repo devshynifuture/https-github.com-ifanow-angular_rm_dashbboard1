@@ -94,7 +94,7 @@ export class RealEstateComponent implements OnInit {
       this.noData = 'No schemes found';
       this.datasource3.data = [];
     }
-    if (data.realEstateList.length > 0) {
+    else if (data.realEstateList.length > 0) {
       data.realEstateList.forEach(element => {
         if (element.realEstateOwners.length != 0) {
           const array = element.realEstateOwners;
