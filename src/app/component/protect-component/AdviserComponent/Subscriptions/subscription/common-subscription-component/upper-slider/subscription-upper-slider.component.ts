@@ -108,11 +108,11 @@ export class SubscriptionUpperSliderComponent implements OnInit {
     this.subscriptionTab = event.tab.textLabel;
   }
 
-  openClientDetails() {
-    this.authService.setClientData(this.fragmentData.data);
-    this.router.navigateByUrl('/customer/detail', {state: this.fragmentData.data});
-    this.dialogClose();
+  // openClientDetails() {
+  //   this.authService.setClientData(this.fragmentData.data);
+  //   this.router.navigateByUrl('/customer/detail', {state: this.fragmentData.data});
+  //   this.dialogClose();
 
-  }
+  // }
 
 }

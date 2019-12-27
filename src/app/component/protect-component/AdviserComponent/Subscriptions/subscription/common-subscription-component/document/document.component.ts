@@ -154,6 +154,7 @@ export class DocumentComponent implements OnInit {
     this.isLoading = false;
     console.log(data);
     if (data == undefined) {
+      this.dataSource=undefined;
       this.noData = "No Data Found";
     } else {
       data.forEach(singleData => {
@@ -625,22 +626,26 @@ export class DocumentComponent implements OnInit {
 
   selectAll(event) {
     this.dataCount = 0;
-    this.dataSource.forEach(item => {
-      item.selected = event.checked;
-      if (item.selected) {
-        this.dataCount++;
-      }
-    });
+    if(this.dataSource.filteredData){
+      this.dataSource.filteredData.forEach(item => {
+        item.selected = event.checked;
+        if (item.selected) {
+          this.dataCount++;
+        }
+      });
+    }
   }
 
   changeSelect(element) {
     this.dataCount = 0;
-    this.dataSource.forEach(item => {
+    if(this.dataSource.filteredData){
+    this.dataSource.filteredData.forEach(item => {
       console.log('item item ', item);
       if (item.selected) {
         this.dataCount++;
       }
     });
+  }
     // if(data.selected==false)
     // {
     //   data.selected = true;
@@ -655,7 +660,9 @@ export class DocumentComponent implements OnInit {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    return this.dataCount === this.dataSource.length;
+    if(this.dataSource.filteredData){
+    return this.dataCount === this.dataSource.filteredData.length;
+    }
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */

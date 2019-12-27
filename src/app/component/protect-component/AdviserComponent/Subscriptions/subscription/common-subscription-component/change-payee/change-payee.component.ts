@@ -1,19 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { SubscriptionService } from '../../../subscription.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MatSliderChange } from '@angular/material';
-import { HAMMER_GESTURE_CONFIG } from "@angular/platform-browser";
-import { GestureConfig } from "@angular/material/core";
-import { UtilService } from 'src/app/services/util.service';
-import { isObject } from 'util';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {SubscriptionService} from '../../../subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatSliderChange} from '@angular/material';
+import {HAMMER_GESTURE_CONFIG} from "@angular/platform-browser";
+import {GestureConfig} from "@angular/material/core";
 
 @Component({
   selector: 'app-change-payee',
   templateUrl: './change-payee.component.html',
   styleUrls: ['./change-payee.component.scss'],
   providers: [
-    { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig },
+    {provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig},
   ]
 })
 export class ChangePayeeComponent implements OnInit {
@@ -23,8 +21,7 @@ export class ChangePayeeComponent implements OnInit {
   @Input() set upperData(data) {
     if (data == undefined) {
       return;
-    }
-    else {
+    } else {
       this.getPayeeData(data);
     }
   }
@@ -33,12 +30,10 @@ export class ChangePayeeComponent implements OnInit {
   set data(payeeData) {
     if (payeeData == undefined) {
       return;
-    }
-    else if (payeeData.length > 0) {
+    } else if (payeeData.length > 0) {
       this.payeeDataRes = payeeData;
       return;
-    }
-    else {
+    } else {
       this._payeeData = payeeData;
       console.log('input payeeData : ', payeeData);
       this.getPayeeData(payeeData)
@@ -74,8 +69,8 @@ export class ChangePayeeComponent implements OnInit {
   }
 
   Close(state) {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeUpperRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
   goBack(){
     
@@ -115,6 +110,7 @@ export class ChangePayeeComponent implements OnInit {
     };
     this.payeeFlag.emit(obj);
   }
+
   onInputChange(event: MatSliderChange, singlePlan) {
     console.log('This is emitted as the thumb slides');
     console.log(event.value);
@@ -187,6 +183,10 @@ export class ChangePayeeComponent implements OnInit {
 
     this.outputData.emit(data);
     return this.totalValue;
+
+  }
+
+  goBack() {
 
   }
 }

@@ -18,19 +18,19 @@ const routes: Routes = [{
   children: [
     {
       path: 'summary',
-      component: SummaryPlanComponent
+      loadChildren: () => import('./summary-plan/plan-summary.module').then(m => m.PlanSummaryModule)
     },
     {
       path: 'profile',
-      component: ProfilePlanComponent
+      loadChildren: () => import('./profile-plan/profile-plan.module').then(m => m.ProfilePlanModule)
     },
     {
       path: 'insurance',
-      component: InsurancePlanComponent
+      loadChildren: () => import('./insurance-plan/insurance-plan.module').then(m => m.InsurancePlanModule)
     },
     {
       path: 'goals',
-      component: GoalsPlanComponent
+      loadChildren: () => import('./goals-plan/plan-goals.module').then(m => m.PlanGoalsModule)
     },
     {
       path: 'taxes',
