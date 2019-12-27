@@ -139,7 +139,7 @@
       </div>
       <div class="col-md-7">
 
-        <div class="row" disabled>
+        <div class="row" [ngStyle]="{'pointer-events':(variableFeeStructureForm.disabled)?'none':'all'}">
           <div class="col-md-10 p-0">
             <div class="b-a wrapper-12">
               <mat-chip-list *ngIf="otherAssetData" [disabled]="!variableFeeStructureForm.enabled"

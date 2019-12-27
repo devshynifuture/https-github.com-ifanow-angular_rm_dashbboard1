@@ -237,6 +237,6 @@ export class VariableFeeComponent implements OnInit {
 
     }
     console.log('modify variable data', data);
-    // this.close();
+    this.close();
   }
 }
