@@ -154,7 +154,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     // const checked = event.target.checked;
     // this.dataSource.forEach(item => item.selected = 'checked');
     this.dataCount = 0;
-    if (this.dataSource.filteredData != undefined) {
+    if (this.dataSource != undefined) {
       this.dataSource.filteredData.forEach(item => {
         item.selected = event.checked;
         if (item.selected) {
@@ -166,7 +166,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   changeSelect() {
     this.dataCount = 0;
-    if (this.dataSource.filteredData != undefined) {
+    if (this.dataSource != undefined) {
       this.dataSource.filteredData.forEach(item => {
         console.log('item item ', item);
         if (item.selected) {
@@ -178,7 +178,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    if (this.dataSource.filteredData != undefined) {
+    if (this.dataSource != undefined) {
       return this.dataCount === this.dataSource.filteredData.length;
     }
   }

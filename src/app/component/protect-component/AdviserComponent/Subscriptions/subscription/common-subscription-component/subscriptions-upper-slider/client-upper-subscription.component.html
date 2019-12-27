@@ -46,9 +46,9 @@
     </div>
 
     <div class="wrapper-40 pt-0 mt-12 col-md-12 overflow-hidden">
-        <h4 class="pb-8 text-black" *ngIf="dataSource != undefined">{{dataSource[0].planName}}</h4>
-
-
+        <div *ngIf="dataSource != undefined">
+            <h4 class="pb-8 text-black">{{planName}}</h4>
+        </div>
         <table matSort mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation"
             appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="service">

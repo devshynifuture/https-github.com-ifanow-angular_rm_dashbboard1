@@ -1,15 +1,15 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
-import {SubscriptionService} from '../../../subscription.service';
-import {ConsentTandCComponent} from '../consent-tand-c/consent-tand-c.component';
-import {UtilService} from '../../../../../../../services/util.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
+import { SubscriptionService } from '../../../subscription.service';
+import { ConsentTandCComponent } from '../consent-tand-c/consent-tand-c.component';
+import { UtilService } from '../../../../../../../services/util.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
 
 export interface PeriodicElement {
   document: string;
@@ -27,13 +27,13 @@ export interface PeriodicElement {
   styleUrls: ['./quotations.component.scss']
 })
 export class QuotationsComponent implements OnInit {
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   noData: string;
   quotationData: any[];
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog,
-              private subAService: SubscriptionService) {
+    private subAService: SubscriptionService) {
     this.subInjectService.closeRightSlider.subscribe(
       data => this.getQuotationDesignData(data)
     );
@@ -101,7 +101,7 @@ export class QuotationsComponent implements OnInit {
 
   selectedInvoice() {
     this.dataCount = 0;
-    if (this.dataSource.filteredData != undefined) {
+    if (this.dataSource != undefined) {
       this.dataSource.filteredData.forEach(item => {
         console.log('item item ', item);
         if (item.selected) {
@@ -113,7 +113,7 @@ export class QuotationsComponent implements OnInit {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    if (this.dataSource.filteredData != undefined) {
+    if (this.dataSource != undefined) {
       return this.dataCount === this.dataSource.filteredData.length;
     }
   }
@@ -121,7 +121,7 @@ export class QuotationsComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
-      this.selectAll({checked: false}) : this.selectAll({checked: true});
+      this.selectAll({ checked: false }) : this.selectAll({ checked: true });
   }
 
   getQuotationsListResponse(data) {
@@ -294,7 +294,7 @@ export class QuotationsComponent implements OnInit {
     // this.dataSource.forEach(item => item.selected = 'checked');
 
     this.dataCount = 0;
-    if (this.dataSource.filteredData) {
+    if (this.dataSource != undefined) {
       this.dataSource.filteredData.forEach(item => {
         item.selected = event.checked;
         if (item.selected) {
