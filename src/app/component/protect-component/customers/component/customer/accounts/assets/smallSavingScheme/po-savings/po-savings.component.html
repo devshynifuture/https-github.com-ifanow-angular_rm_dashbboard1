@@ -1,116 +1,121 @@
 <div class="row">
-    <div class="col-md-4 p-0">
-        <h4 class="m-0 text-black roboto pt-8">Post office savings a/c</h4>
-    </div>
-    <div class="col-md-8 p-0 right text-right" *ngIf="datasource!=undefined">
-        <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
-        <mat-menu #menu5="matMenu">
-            <button mat-menu-item>PDF</button>
-            <button (click)="ExportTOExcel('Post office savings a/c')" mat-menu-item>XLS</button>
-        </mat-menu>
-        <img src="assets/images/svg/up-down.svg" class="">
-        <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-12">
-        <mat-menu #menu6="matMenu">
-            <button mat-menu-item>Email Report</button>
-            <button mat-menu-item>Option 2</button>
-            <button mat-menu-item>Option 3</button>
-        </mat-menu>
+  <div class="col-md-4 p-0">
+    <h4 class="m-0 text-black roboto pt-8">Post office savings a/c</h4>
+  </div>
+  <div *ngIf="datasource!=undefined" class="col-md-8 p-0 right text-right">
+    <img [matMenuTriggerFor]="menu5" class="c-p" src="assets/images/svg/download-bordered.svg">
+    <mat-menu #menu5="matMenu">
+      <button mat-menu-item>PDF</button>
+      <button (click)="ExportTOExcel('Post office savings a/c')" mat-menu-item>XLS</button>
+    </mat-menu>
+    <img class="" src="assets/images/svg/up-down.svg">
+    <img [matMenuTriggerFor]="menu6" class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
+    <mat-menu #menu6="matMenu">
+      <button mat-menu-item>Email Report</button>
+      <button mat-menu-item>Option 2</button>
+      <button mat-menu-item>Option 3</button>
+    </mat-menu>
 
-        <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
-                class="material-icons">filter_list</i>FILTERS</button>
-        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOSAVING(null)"><i
-                class="material-icons">add</i>ADD NEW</button>
-    </div>
+    <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
+      class="material-icons">filter_list</i>FILTERS
+    </button>
+    <button (click)="openAddPOSAVING(null)" class="btn-primary addon v-middle" mat-stroked-button><i
+      class="material-icons">add</i>ADD NEW
+    </button>
+  </div>
 </div>
 <div class="example-container mt-8 col-md-12 p-0 real-estate">
-    <table matSort mat-table [dataSource]="datasource" id="table-low" class="skeletonAnimation" appSkeletonLoading
-        [appSkeletonLoading]="isLoading">
+  <table [appSkeletonLoading]="isLoading" [dataSource]="datasource" appSkeletonLoading class="skeletonAnimation"
+         id="table-low" mat-table
+         matSort>
 
-        <ng-container matColumnDef="no">
-            <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
-            <td mat-cell *matCellDef="let element;index as i" class="br">
-                <div class="bar"> {{i+1}} </div>
-            </td>
-            <td mat-footer-cell class=" pl-4 f-500 text-left t-7" *matFooterCellDef> Total </td>
-        </ng-container>
-        <ng-container matColumnDef="owner">
-            <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
-            <td mat-cell *matCellDef="let element" class="br t-25">
-                <div class="bar"> {{element.ownerName}} </div>
-            </td>
-            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef></td>
-        </ng-container>
-        <ng-container matColumnDef="cvalue">
-            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Current
-                value </th>
-            <td mat-cell *matCellDef="let element" class="br t-14 text-right" appFormatNumber>
-                <div class="bar"> {{element.currentValue}} </div>
-            </td>
-            <td mat-footer-cell class="br text-right f-500 p-8 t-7" *matFooterCellDef appFormatNumber
-                [value]="currentValueSum">
-                <div class="bar"> {{currentValueSum}} </div>
-            </td>
-        </ng-container>
+    <ng-container matColumnDef="no">
+      <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="no"> No</th>
+      <td *matCellDef="let element;index as i" class="br" mat-cell>
+        <div class="bar"> {{i + 1}} </div>
+      </td>
+      <td *matFooterCellDef class=" pl-4 f-500 text-left t-7" mat-footer-cell> Total</td>
+    </ng-container>
+    <ng-container matColumnDef="owner">
+      <th *matHeaderCellDef class="br t-25" mat-header-cell mat-sort-header="ownerName"> Owner</th>
+      <td *matCellDef="let element" class="br t-25" mat-cell>
+        <div class="bar"> {{element.ownerName}} </div>
+      </td>
+      <td *matFooterCellDef class="br text-left t-7" mat-footer-cell></td>
+    </ng-container>
+    <ng-container matColumnDef="cvalue">
+      <th *matHeaderCellDef class="br t-14 text-right" mat-header-cell mat-sort-header="currentValue"> Current
+        value
+      </th>
+      <td *matCellDef="let element" appFormatNumber class="br t-14 text-right" mat-cell>
+        <div class="bar"> {{element.currentValue}} </div>
+      </td>
+      <td *matFooterCellDef [value]="currentValueSum" appFormatNumber class="br text-right f-500 p-8 t-7"
+          mat-footer-cell>
+        <div class="bar"> {{currentValueSum}} </div>
+      </td>
+    </ng-container>
 
-        <ng-container matColumnDef="rate">
-            <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br text-right"> Rate </th>
-            <td mat-cell *matCellDef="let element" class="br text-right">
-                <div class="bar"> {{element.rate}} </div>
-            </td>
-            <td mat-footer-cell class="br text-left t-7" *matFooterCellDef> </td>
-        </ng-container>
-        <ng-container matColumnDef="balanceM">
-            <th mat-sort-header="balance" mat-header-cell *matHeaderCellDef class="br text-right">Balance mentioned
-            </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
-                <div class="bar"> {{element.balance}} </div>
-            </td>
-            <td mat-footer-cell class="br text-right f-500 p-8 t-7" *matFooterCellDef appFormatNumber
-                [value]="balanceMentionedSum">{{balanceMentionedSum}}</td>
-        </ng-container>
-        <ng-container matColumnDef="balAs">
-            <th mat-sort-header="balanceAsOn" mat-header-cell *matHeaderCellDef class="br text-right">Balance as on</th>
-            <td mat-cell *matCellDef="let element" class="br text-right">
-                <div class="bar"> {{element.balanceAsOn |date:'dd/MM/yyyy'}} </div>
-            </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
-        </ng-container>
-        <ng-container matColumnDef="desc">
-            <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br t-10"> Description </th>
-            <td mat-cell *matCellDef="let element" class="br t-10">
-                <div class="bar"> {{element.description}} </div>
-            </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
-        </ng-container>
-        <ng-container matColumnDef="status">
-            <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br"> Status </th>
-            <td mat-cell *matCellDef="let element" class="br text-primary">
-                <div class="bar"> LIVE </div>
-            </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
-        </ng-container>
-        <ng-container matColumnDef="icons">
-            <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-            <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black"
-                    [matMenuTriggerFor]="menubank">
-                    more_vert
-                </i>
-                <mat-menu #menubank="matMenu">
-                    <button mat-menu-item (click)="openAddPOSAVING(element)">Edit</button>
-                    <button mat-menu-item (click)="openDetailPoSaving(element)">Detailed view</button>
-                    <button mat-menu-item>Activity</button>
-                    <button mat-menu-item (click)="deleteModal('SUBSCRIPTION',element)">Delete</button>
-                </mat-menu>
-            </td>
-            <td mat-footer-cell *matFooterCellDef> </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns20; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns20;"></tr>
-        <tr mat-footer-row *matFooterRowDef="displayedColumns20;sticky: true"></tr>
-    </table>
-    <div *ngIf="datasource==undefined" class="d-flex flex-column align-items-center">
-        <h4 class="text-center pt-72">No Scheme Found</h4>
-        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOSAVING(null)"><i
-                class="material-icons">add</i>ADD NEW</button>
-    </div>
+    <ng-container matColumnDef="rate">
+      <th *matHeaderCellDef class="br text-right" mat-header-cell mat-sort-header="rate"> Rate</th>
+      <td *matCellDef="let element" class="br text-right" mat-cell>
+        <div class="bar"> {{element.rate}} </div>
+      </td>
+      <td *matFooterCellDef class="br text-left t-7" mat-footer-cell></td>
+    </ng-container>
+    <ng-container matColumnDef="balanceM">
+      <th *matHeaderCellDef class="br text-right" mat-header-cell mat-sort-header="balance">Balance mentioned
+      </th>
+      <td *matCellDef="let element" appFormatNumber class="br text-right" mat-cell>
+        <div class="bar"> {{element.balance}} </div>
+      </td>
+      <td *matFooterCellDef [value]="balanceMentionedSum" appFormatNumber class="br text-right f-500 p-8 t-7"
+          mat-footer-cell>{{balanceMentionedSum}}</td>
+    </ng-container>
+    <ng-container matColumnDef="balAs">
+      <th *matHeaderCellDef class="br text-right" mat-header-cell mat-sort-header="balanceAsOn">Balance as on</th>
+      <td *matCellDef="let element" class="br text-right" mat-cell>
+        <div class="bar"> {{element.balanceAsOn |date:'dd/MM/yyyy'}} </div>
+      </td>
+      <td *matFooterCellDef mat-footer-cell></td>
+    </ng-container>
+    <ng-container matColumnDef="desc">
+      <th *matHeaderCellDef class="br t-10" mat-header-cell mat-sort-header="description"> Description</th>
+      <td *matCellDef="let element" class="br t-10" mat-cell>
+        <div class="bar"> {{element.description}} </div>
+      </td>
+      <td *matFooterCellDef mat-footer-cell></td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="status"> Status</th>
+      <td *matCellDef="let element" class="br text-primary" mat-cell>
+        <div class="bar"> LIVE</div>
+      </td>
+      <td *matFooterCellDef mat-footer-cell></td>
+    </ng-container>
+    <ng-container matColumnDef="icons">
+      <th *matHeaderCellDef class="t-2" mat-header-cell></th>
+      <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menubank"
+                                                            class="material-icons c-p text-black">
+        more_vert
+      </i>
+        <mat-menu #menubank="matMenu">
+          <button (click)="openAddPOSAVING(element)" mat-menu-item>Edit</button>
+          <button (click)="openDetailPoSaving(element)" mat-menu-item>Detailed view</button>
+          <button mat-menu-item>Activity</button>
+          <button (click)="deleteModal('SUBSCRIPTION',element)" mat-menu-item>Delete</button>
+        </mat-menu>
+      </td>
+      <td *matFooterCellDef mat-footer-cell></td>
+    </ng-container>
+    <tr *matHeaderRowDef="displayedColumns20; sticky: true" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns20;" mat-row></tr>
+    <tr *matFooterRowDef="footerRowColumn;sticky: true" [hidden]="datasource.data.length==0" mat-footer-row></tr>
+  </table>
+  <div *ngIf="datasource==undefined" class="d-flex flex-column align-items-center">
+    <h4 class="text-center pt-72">No Scheme Found</h4>
+    <button (click)="openAddPOSAVING(null)" class="btn-primary addon v-middle" mat-stroked-button><i
+      class="material-icons">add</i>ADD NEW
+    </button>
+  </div>
 </div>
