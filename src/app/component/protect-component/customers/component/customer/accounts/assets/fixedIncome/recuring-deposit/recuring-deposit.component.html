@@ -38,8 +38,6 @@
             </div>
         </div>
     </div>
-
-
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Interest rate</h5>
@@ -151,7 +149,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankName type="text" (keypress)="keyPress($event)" maxlength="15"
+                        <input matInput #bankName type="text" maxlength="15"
                             class="form-control br-0" formControlName="bankName">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
@@ -166,7 +164,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #linkBankAc maxlength="30" class="form-control br-0"
+                        <input type="number" matInput #linkBankAc (keypress)="keyPress($event)" maxlength="30" class="form-control br-0"
                             formControlName="linkBankAc">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>

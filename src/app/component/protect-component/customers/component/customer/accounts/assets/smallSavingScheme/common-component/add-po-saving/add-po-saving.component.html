@@ -114,7 +114,7 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput (utils.keypress)="utils.keyPress($event)" formControlName="bankAccNo" #institution maxlength="30" class="form-control br-0">
+                    <mat-form-field> <input type="number" matInput (utils.keypress)="utils.keyPress($event)" formControlName="bankAccNo" #institution maxlength="30" class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
