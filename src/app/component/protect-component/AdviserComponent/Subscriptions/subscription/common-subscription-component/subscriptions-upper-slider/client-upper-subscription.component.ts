@@ -31,7 +31,7 @@ export interface PeriodicElement {
 export class ClientUpperSubscriptionComponent implements OnInit {
   //data: any;
   isLoading = false;
-  clientData:any = [];
+  clientData: any = [];
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   noData: string;
@@ -85,8 +85,8 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
           this.getSummaryDataClient();
+          rightSideDataSub.unsubscribe();
         }
       }
     );
@@ -140,18 +140,18 @@ export class ClientUpperSubscriptionComponent implements OnInit {
 
   getSubSummaryRes(data) {
     this.isLoading = false;
-    console.log(data , "hi client");
+    console.log(data, "hi client");
     this.dataSource = data;
     this.clientData = data;
-    
-    for(let d of data){
-      if(d.subscriptionPricing.feeTypeId==1){
+
+    for (let d of data) {
+      if (d.subscriptionPricing.feeTypeId == 1) {
         d['feeTypeId'] = "FIXED"
       }
-      else{
+      else {
         d['feeTypeId'] = "VARIABLE"
       }
-      
+
     }
     this.dataSource = new MatTableDataSource(data);
 
@@ -177,6 +177,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
           data => {
             this.deletedData(data);
             dialogRef.close();
+            this.getSummaryDataClient();
           }
         );
 
