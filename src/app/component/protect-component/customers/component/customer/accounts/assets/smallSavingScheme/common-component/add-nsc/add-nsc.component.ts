@@ -7,6 +7,7 @@ import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-nsc',
@@ -14,6 +15,7 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./add-nsc.component.scss'],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    [DatePipe],
   ]
 })
 export class AddNscComponent implements OnInit {
@@ -37,7 +39,7 @@ export class AddNscComponent implements OnInit {
   get data() {
     return this.inputData;
   }
-  constructor(public utils: UtilService,private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(private datePipe: DatePipe,public utils: UtilService,private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   isOptionalField
   ngOnInit() {
     this.isOptionalField = true
@@ -120,7 +122,7 @@ export class AddNscComponent implements OnInit {
           "familyMemberId": this.familyMemberId,
           "ownerName": this.ownerName,
           "amountInvested": this.nscFormField.get('amountInvested').value,
-          "commencementDate": this.nscFormField.get('commDate').value._d,
+          "commencementDate": this.datePipe.transform(this.nscFormField.get('commDate').value,'yyyy-MM-dd'),
           "tenure": this.nscFormField.get('Tenure').value,
           "certificateNumber": this.nscFormOptionalField.get('cNo').value,
           "postOfficeBranch": this.nscFormOptionalField.get('poBranch').value,
@@ -142,7 +144,7 @@ export class AddNscComponent implements OnInit {
           "advisorId": this.advisorId,
           "ownerName": this.ownerName,
           "amountInvested": this.nscFormField.get('amountInvested').value,
-          "commencementDate": this.nscFormField.get('commDate').value,
+          "commencementDate": this.datePipe.transform(this.nscFormField.get('commDate').value,'yyyy-MM-dd'),
           "tenure": this.nscFormField.get('Tenure').value,
           "certificateNumber": this.nscFormOptionalField.get('cNo').value,
           "postOfficeBranch": this.nscFormOptionalField.get('poBranch').value,

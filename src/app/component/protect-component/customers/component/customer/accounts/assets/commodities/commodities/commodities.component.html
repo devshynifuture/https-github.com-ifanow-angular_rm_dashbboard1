@@ -132,7 +132,7 @@
             </table>
             <div *ngIf="goldList.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <h4 class="text-center pt-72">{{noData}}</h4>
-                <button mat-stroked-button class="btn-primary addon v-middle"
+                <button mat-stroked-button class="btn-primary addon v-middle mt-20"
                     (click)="openCommodities('addGold','open',null)"><i class="material-icons">add</i>ADD NEW</button>
             </div>
         </div>
@@ -264,7 +264,7 @@
             </table>
             <div  *ngIf="otherCommodityList.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <h4 class="text-center pt-72">{{noData}}</h4>
-                <button mat-stroked-button class="btn-primary addon v-middle"
+                <button mat-stroked-button class="btn-primary addon v-middle mt-20"
                     (click)="openOthers('addOthers','open',null)"><i class="material-icons">add</i>ADD
                     NEW</button>
             </div>
