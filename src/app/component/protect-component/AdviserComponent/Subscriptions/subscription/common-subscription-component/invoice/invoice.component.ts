@@ -347,7 +347,7 @@ export class InvoiceComponent implements OnInit {
     this.getFormControledit().clientName.maxLength = 10;
     this.getFormControledit().billerAddress.maxLength = 150;
     this.getFormControledit().billingAddress.maxLength = 150;
-    this.getFormControledit().invoiceNumber.maxLength = 10;
+    this.getFormControledit().invoiceNumber.maxLength = 20;
     this.getFormControledit().footnote.maxLength = 100;
     this.getFormControledit().terms.maxLength = 100;
     this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.finalAmount.value;
