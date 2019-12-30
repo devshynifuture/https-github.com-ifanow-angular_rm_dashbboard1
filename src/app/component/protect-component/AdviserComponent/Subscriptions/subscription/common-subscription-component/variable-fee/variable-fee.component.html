@@ -155,8 +155,11 @@
             </div>
           </div>
           <div class="col-md-2 p-0">
-            <input type="number" maxlength="4" formControlName="pricing" placeholder="%"
+            <input type="number" maxlength="3" formControlName="pricing" placeholder="%"
               class="form-control br-0 h-39 br-grey">
+            <mat-error *ngIf="(variableFeeStructureForm.get('pricing').errors?.max)" class="f-12 pt-4">
+              Should be less than 100
+          </mat-error>
           </div>
 
         </div>
