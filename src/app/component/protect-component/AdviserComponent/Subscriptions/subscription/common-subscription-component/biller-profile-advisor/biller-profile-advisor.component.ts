@@ -147,7 +147,6 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   Close(data) {
-    // this.subInjectService.rightSideData(value);
     this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 
@@ -164,17 +163,14 @@ export class BillerProfileAdvisorComponent implements OnInit {
         this.selected = 3;
         break;
       case (this.MiscellaneousData.valid && value == 3):
-        this.selected = 4;
         this.submitBillerForm();
       default:
         this.submitBillerForm()
     }
-    // (this.profileDetailsForm.valid) ?  : console.log('please fill profile Data');
-    // (this.logUrl.valid) ? this.selected = 2 : console.log('url is required');
-    // (this.bankDetailsForm.valid) ? this.selected = 3 : console.log('bank details required');
-    // (this.MiscellaneousData.valid) ? this.submitBillerForm() : console.log('miscellaneous required');
   }
-
+  back() {
+    this.selected--;
+  }
   submitBillerForm() {
     if (this.profileDetailsForm.controls.gstinNum.invalid) {
       this.isGstin = true;
