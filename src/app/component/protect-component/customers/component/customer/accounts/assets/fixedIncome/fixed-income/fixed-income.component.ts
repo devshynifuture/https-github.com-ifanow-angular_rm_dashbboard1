@@ -231,7 +231,7 @@ export class FixedIncomeComponent implements OnInit {
       this.sumMaturityValue = data.sumMaturityValue;
     }
     else {
-      this.noData = "No scheme found";
+      this.noData = "No data found";
       this.dataSourceFixed.data = []
     }
 
@@ -254,7 +254,7 @@ export class FixedIncomeComponent implements OnInit {
 
   getRecurringDepositRes(data) {
     if(data == undefined){
-      this.noData = 'No scheme found';
+      this.noData = 'No data found';
       this.dataSourceRecurring.data = []
     }
     this.isLoading = false;
@@ -268,7 +268,7 @@ export class FixedIncomeComponent implements OnInit {
       this.totalMarketValue = data.totalMarketValue;
     }
     else {
-      this.noData = 'No scheme found';
+      this.noData = 'No data found';
       this.dataSourceRecurring.data = []
     }
   }
@@ -301,7 +301,7 @@ export class FixedIncomeComponent implements OnInit {
       this.sumCurrentValueB = data.sumCurrentValue;
     }
     else {
-      this.noData = "No scheme found";
+      this.noData = "No data found";
       this.dataSourceBond.data = []
     }
   }
