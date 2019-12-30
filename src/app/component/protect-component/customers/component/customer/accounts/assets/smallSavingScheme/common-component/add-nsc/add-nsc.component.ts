@@ -61,10 +61,10 @@ export class AddNscComponent implements OnInit {
     this.nscFormField = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       amountInvested: [data.amountInvested, [Validators.required, Validators.min(100)]],
-      commDate: [this.commDate, [Validators.required]],
+      commDate: [new Date(data.commencementDate), [Validators.required]],
       Tenure: [(data.tenure) ? String(data.tenure) : '5', [Validators.required]],
-      ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]]
-
+      ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]],
+      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     })
     this.nscFormOptionalField = this.fb.group({
       cNo: [data.certificateNumber, [Validators.required]],
@@ -74,6 +74,8 @@ export class AddNscComponent implements OnInit {
       description: [data.description, [Validators.required]]
     })
     this.ownerData = this.nscFormField.controls;
+    this.familyMemberId = this.nscFormField.controls.familyMemberId.value
+    this.familyMemberId = this.familyMemberId[0]
 
   }
   display(value) {
@@ -120,7 +122,7 @@ export class AddNscComponent implements OnInit {
         {
           "id": this.editApi.id,
           "familyMemberId": this.familyMemberId,
-          "ownerName": this.ownerName,
+          "ownerName":  (this.ownerName == undefined) ? this.nscFormField.controls.ownerName.value : this.ownerName,
           "amountInvested": this.nscFormField.get('amountInvested').value,
           "commencementDate": this.datePipe.transform(this.nscFormField.get('commDate').value,'yyyy-MM-dd'),
           "tenure": this.nscFormField.get('Tenure').value,
@@ -142,7 +144,7 @@ export class AddNscComponent implements OnInit {
           "clientId": this.clientId,
           "familyMemberId": this.familyMemberId,
           "advisorId": this.advisorId,
-          "ownerName": this.ownerName,
+          "ownerName": (this.ownerName == undefined) ? this.nscFormField.controls.ownerName.value : this.ownerName,
           "amountInvested": this.nscFormField.get('amountInvested').value,
           "commencementDate": this.datePipe.transform(this.nscFormField.get('commDate').value,'yyyy-MM-dd'),
           "tenure": this.nscFormField.get('Tenure').value,
