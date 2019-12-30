@@ -96,7 +96,6 @@ export class LiabilitiesComponent implements OnInit {
     ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   }
   getGlobalLiabilities() {
-    this.isLoading = true;
     const obj = {};
     this.customerService.getGlobalLiabilities(obj).subscribe(
       data => this.getGlobalLiabilitiesRes(data)
@@ -104,7 +103,6 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   getGlobalLiabilitiesRes(data) {
-    this.isLoading = false;
     console.log(data);
   }
 
@@ -267,6 +265,7 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   getLiability(data) {
+    this.isLoading=true;
 
     this.dataToShow = data.data;
     const obj = {
@@ -279,6 +278,7 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   getLiabiltyRes(data) {
+    this.isLoading=false;
     // this.showLoader = false;
     if (data.loans == undefined) {
       this.noData = "No Data Found";
