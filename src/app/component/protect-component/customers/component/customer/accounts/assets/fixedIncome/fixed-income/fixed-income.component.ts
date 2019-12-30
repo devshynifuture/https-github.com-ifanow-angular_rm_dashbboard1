@@ -222,7 +222,7 @@ export class FixedIncomeComponent implements OnInit {
       this.dataSourceFixed.sort = this.fixedIncomeTableSort;
       console.log('soted &&&&&&&&&', this.dataSourceFixed);
       UtilService.checkStatusId(this.dataSourceFixed.filteredData)
-      this.dataSourceFixed.filteredData, function (o) {
+      this.dataSourceFixed.filteredData, (o) =>{
         this.sumCurrentValue += o.nomineePercentageShare;
       };
       console.log('&&&&&&&&&', this.sumCurrentValue)
