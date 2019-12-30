@@ -14,7 +14,7 @@
         <div class="pt-8">
             <img src="/assets/images/svg/refresh.svg" class="mr-20 c-p" (click)="doRefresh()">
             <img src="/assets/images/svg/double-drawer.svg" class="mr-20 c-p">
-            <img src="/assets/images/svg/delete.svg" class="mr-20 c-p">
+            <img src="/assets/images/svg/delete.svg" (click)="multipleMoveToTrash()" class="mr-20 c-p">
             <mat-icon [matMenuTriggerFor]="menu" class="c-p pab">more_vert</mat-icon>
             <mat-menu #menu="matMenu">
                 <button mat-menu-item>Make as read</button>
@@ -36,8 +36,6 @@
     </div>
 
 </div>
-
-
 
 <table mat-table *ngIf="dataSource" id="table-low" [dataSource]="dataSource" class="example-container">
     <!-- Checkbox Column -->

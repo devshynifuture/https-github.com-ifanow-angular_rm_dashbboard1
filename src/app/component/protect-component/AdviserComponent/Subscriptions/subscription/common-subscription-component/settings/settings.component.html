@@ -10,7 +10,7 @@
                 mat-stroked-button><i class="material-icons">
           add</i> ADD MORE
         </button>
-        <button class="text-black right br-0 mr-12 text-right" mat-button>HELP</button>
+        <!-- <button class="text-black right br-0 mr-12 text-right" mat-button>HELP</button> -->
 
       </div>
     </div>
@@ -35,7 +35,7 @@
               <a (click)="deleteModal(profileData)" class="bt-1" mat-menu-item>Delete Client
                 Profile</a>
             </mat-menu>
-            <button *ngIf="profileData.isPrimary == true" class="text-primary br-0 right text-right" mat-stroked-button>
+            <button *ngIf="profileData.isPrimary == true && SettingProfileData.length > 1" class="text-primary br-0 right text-right" mat-stroked-button>
               PRIMARY
             </button>
           </div>

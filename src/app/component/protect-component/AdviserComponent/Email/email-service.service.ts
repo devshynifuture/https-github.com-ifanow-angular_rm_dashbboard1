@@ -9,6 +9,7 @@ import { AuthService } from './../../../../auth-service/authService';
 import { BehaviorSubject } from 'rxjs';
 import { apiConfig } from './../../../../config/main-config';
 import { HttpService } from './../../../../http-service/http-service';
+import { userInfo } from 'os';
 
 
 @Injectable({
@@ -104,6 +105,15 @@ export class EmailServiceService {
       maxResults,
       pageToken
     });
+  }
+
+  gmailMessageDetail(messageId: string) {
+    const userInfo = AuthService.getUserInfo();
+    return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_MESSAGE_DETAIL, {
+      email: userInfo.emailId,
+      userId: userInfo.advisorId,
+      messageId
+    })
   }
 
   getRightSideNavList() {

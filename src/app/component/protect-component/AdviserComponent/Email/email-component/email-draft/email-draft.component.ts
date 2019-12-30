@@ -41,7 +41,7 @@ export class EmailDraftComponent implements OnInit, OnDestroy {
   paginator;
 
 
-  constructor(private subInjectService: SubscriptionInject,
+  constructor(private emailUtilService: EmailUtilService,
     private emailService: EmailServiceService,
     // private router: Router,
     // private activatedRoute: ActivatedRoute,

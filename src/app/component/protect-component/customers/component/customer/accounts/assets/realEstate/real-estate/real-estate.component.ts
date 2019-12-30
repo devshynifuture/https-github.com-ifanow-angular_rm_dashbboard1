@@ -91,7 +91,7 @@ export class RealEstateComponent implements OnInit {
     console.log(data);
     this.isLoading = false;
     if(data == undefined){
-      this.noData = 'No schemes found';
+      this.noData = 'No data found';
       this.datasource3.data = [];
     }
     else if (data.realEstateList.length > 0) {
