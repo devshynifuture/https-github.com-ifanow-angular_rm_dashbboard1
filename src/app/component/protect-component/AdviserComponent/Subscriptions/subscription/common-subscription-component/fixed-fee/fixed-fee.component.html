@@ -102,7 +102,7 @@
     <div *ngIf="singleSubscriptionData.isCreateSub==false" class="col-md-8 right text-right">
       <button mat-button (click)="saveFixedModifyFees()" class="btn-bottom br-0 text-inherit">Next</button>
     </div>
-    <div *ngIf="singleSubscriptionData.isCreateSub" class="col-md-8 right text-right">
+    <div *ngIf="singleSubscriptionData.isCreateSub && isSave==false" class="col-md-8 right text-right">
       <button mat-button (click)="saveFixedModifyFees()" class="btn-bottom br-0 text-inherit">Save</button>
     </div>
     <!-- <div *ngIf="createSubData && singleSubscriptionData.subscriptionPricing" class="col-md-8 right text-right">

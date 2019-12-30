@@ -35,6 +35,8 @@ import { CommonFroalaComponent } from './subscription/common-subscription-compon
 import { CustomHtmlModule } from 'src/app/common/customhtml/customhtml/custom-html.module';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { AddVariableFeeComponent } from './subscription/common-subscription-component/add-variable-fee/add-variable-fee.component';
+import { SubscriptionPopupComponent } from './subscription/common-subscription-component/subscription-popup/subscription-popup.component';
+import { AddDocumentComponent } from './subscription/common-subscription-component/add-document/add-document.component';
 
 export const componentList = [
     OverviewComponent,
@@ -65,7 +67,9 @@ export const componentList = [
     ChangePayeeComponent,
     CommonFroalaComponent,
     EmailOnlyComponent,
-    AddVariableFeeComponent
+    AddVariableFeeComponent,
+    SubscriptionPopupComponent,
+    AddDocumentComponent
 ]
 @NgModule({
     declarations: componentList,
@@ -80,7 +84,7 @@ export const componentList = [
         CustomDirectiveModule
     ],
     exports: [componentList],
-    entryComponents: [componentList]
+    entryComponents: [componentList,SubscriptionPopupComponent,AddDocumentComponent]
 })
 
 export class SubscriptionUpperEntry {

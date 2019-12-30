@@ -13,7 +13,6 @@ import { SubscriptionRoutingModule } from './subscription-routing.module';
 import { SubscriptionUpperEntry } from './subscription-upper-entry-module';
 import { SubscriptionEntry } from './subscription.entry.module';
 import { ClientSubscriptionComponent } from './subscription/client-subscription/client-subscription.component';
-import { AddDocumentComponent } from './subscription/common-subscription-component/add-document/add-document.component';
 import { AddQuotationComponent } from './subscription/common-subscription-component/add-quotation/add-quotation.component';
 import { ConsentTandCComponent } from './subscription/common-subscription-component/consent-tand-c/consent-tand-c.component';
 import { DeleteSubscriptionComponent } from './subscription/common-subscription-component/delete-subscription/delete-subscription.component';
@@ -22,7 +21,6 @@ import { HowToUseDialogComponent } from './subscription/common-subscription-comp
 import { ModifyFeeDialogComponent } from './subscription/common-subscription-component/modify-fee-dialog/modify-fee-dialog.component';
 import { PreferenceEmailInvoiceComponent } from './subscription/common-subscription-component/preference-email-invoice/preference-email-invoice.component';
 import { SingleDocumentViewComponent } from './subscription/common-subscription-component/single-document-view/single-document-view.component';
-import { SubscriptionPopupComponent } from './subscription/common-subscription-component/subscription-popup/subscription-popup.component';
 import { ClientsDashboardComponent } from './subscription/dashboard-subscription/clients-dashboard/clients-dashboard.component';
 import { DashboardSubscriptionComponent } from './subscription/dashboard-subscription/dashboard-subscription.component';
 import { SubscriptionCompletenessComponent } from './subscription/dashboard-subscription/subscription-completeness/subscription-completeness.component';
@@ -67,7 +65,6 @@ export const componentList = [SubscriptionComponent,
   // AddStructureComponent,
   SubscriptionCompletenessComponent,
   // TermsAgreementComponent,
-  SubscriptionPopupComponent,
   DeleteSubscriptionComponent,
   // PlanRightsliderComponent,
   // EmailQuotationComponent,
@@ -75,7 +72,6 @@ export const componentList = [SubscriptionComponent,
   // AddFixedFeeComponent,
   // AddEditDocumentComponent,
   HowToUseDialogComponent,
-  AddDocumentComponent,
   ModifyFeeDialogComponent,
   PreferenceEmailInvoiceComponent,
   ConsentTandCComponent,
@@ -119,10 +115,9 @@ export const componentList = [SubscriptionComponent,
   exports: componentList,
   entryComponents: [
     DeleteSubscriptionComponent,
-    SubscriptionPopupComponent,
     DeleteSubscriptionComponent, HowToUseDialogComponent,
-    AddDocumentComponent, PreferenceEmailInvoiceComponent,
-    ModifyFeeDialogComponent, ConsentTandCComponent, HowItWorksComponent, AddDocumentComponent, AddQuotationComponent]
+    PreferenceEmailInvoiceComponent,
+    ModifyFeeDialogComponent, ConsentTandCComponent, HowItWorksComponent, AddQuotationComponent]
 })
 export class SubscriptionModule {
 }

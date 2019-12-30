@@ -24,6 +24,9 @@ export interface PeriodicElement {
 })
 export class ClientSubscriptionComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  Questions = [{ question: 'How to apply subscription to client?' },
+  { question: 'Can we have more than one subscription applied to the client at the same time?' },
+  { question: 'What are the Future subscription?' }]
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   noData: string;
@@ -81,9 +84,10 @@ export class ClientSubscriptionComponent implements OnInit {
     // this.dataSource.sort = this.sort;
   }
 
-  Open(value, state) {
+  Open(value, state,data) {
     const fragmentData = {
       flag: value,
+      data:data,
       id: 1,
       state: state,
       componentName: HelpComponent
