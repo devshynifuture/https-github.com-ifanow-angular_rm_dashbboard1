@@ -192,7 +192,7 @@
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
                                         <div class="bar">
-                                            {{(element.outstandingAmount)?util.formatter(element.outstandingAmount):(element.outstandingAmount=='NaN')?0:''}}
+                                            {{element.outstandingAmount}}
                                         </div>
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class="br text-right f-700"

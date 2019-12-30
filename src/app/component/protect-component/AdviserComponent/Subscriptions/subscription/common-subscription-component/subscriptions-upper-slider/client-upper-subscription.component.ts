@@ -144,6 +144,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     // this.dataSource = data;
     if(data==undefined){
       this.clientData.length==0;
+      this.dataSource=undefined;
     }else{
       this.clientData = data;
       for (let d of data) {

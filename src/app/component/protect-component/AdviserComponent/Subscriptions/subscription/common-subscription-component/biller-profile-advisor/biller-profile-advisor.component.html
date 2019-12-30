@@ -174,7 +174,7 @@
                 </div>
             </div>
         </mat-tab>
-        <mat-tab [disabled]="profileDetailsForm.invalid" label="Logo">
+        <mat-tab label="Logo">
             <div class="wrapper-40" [formGroup]="logUrl">
                 <div class="row pt-40">
                     <div class="col-md-12">
@@ -201,7 +201,7 @@
                 </div>
             </div>
         </mat-tab>
-        <mat-tab [disabled]="profileDetailsForm.invalid" label="Bank details">
+        <mat-tab label="Bank details">
             <div [formGroup]="bankDetailsForm" class="row pt-40 pb-32">
                 <div class="col-md-12">
                     <div class="row pt-20">
@@ -395,7 +395,7 @@
                 </div>
             </div>
         </mat-tab>
-        <mat-tab [disabled]="profileDetailsForm.invalid" label="Miscellaneous">
+        <mat-tab label="Miscellaneous">
             <div [formGroup]="MiscellaneousData" class="row pt-40 pb-40">
                 <div class="col-md-12">
                     <div class="row pt-20">
@@ -454,6 +454,9 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
+            <button mat-button mat-raised-button class="mr-20 br-0 text-inherit" *ngIf="selected!=0"
+                (click)="back()">PREVIOUS
+            </button>
             <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="selected!=3"
                 (click)="nextStep(selected,'Save&Next')">NEXT
             </button>
