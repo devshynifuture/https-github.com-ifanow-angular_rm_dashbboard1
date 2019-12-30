@@ -197,11 +197,11 @@ export class DashboardSubscriptionComponent implements OnInit {
   changeParentsTab(selectedTab) {
     console.log("this is selected Tab:::::::::::::", selectedTab);
     this.eventService.tabData(selectedTab);
-    if (selectedTab === 2) {
-      this.router.navigate(['../clients'], { relativeTo: this.activatedRoute });
+    if (selectedTab === 3) {
+      this.router.navigate(['../subscriptions'], { relativeTo: this.activatedRoute });
 
-    } else if (selectedTab === 4) {
-      this.router.navigate(['../quotations'], { relativeTo: this.activatedRoute });
+    } else if (selectedTab === 5) {
+      this.router.navigate(['../invoices'], { relativeTo: this.activatedRoute });
     }
   }
 
