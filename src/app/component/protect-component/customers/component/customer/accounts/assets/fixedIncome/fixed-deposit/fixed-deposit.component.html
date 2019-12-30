@@ -288,20 +288,6 @@
         </div>
     </div>
     <div *ngIf="showHide == true">
-        <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-16">Bank Account Number</h5>
-            </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input #bankACNo (keypress)="keyPress($event)" class="form-control br-0"
-                            formControlName="bankACNo" matInput maxlength="15" type="text">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
         <div *ngIf="showHide == true">
             <div class="row pt-40">
                 <div class="col-md-5 pr-0 text-right">
