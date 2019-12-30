@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ElementRef } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionService } from '../../../subscription.service';
@@ -729,9 +729,9 @@ export class InvoiceComponent implements OnInit {
 
   }
 
-  printPage(templateRef) {
-    console.log("this is template html::", templateRef);
-    // window.print();
+  printPage(templateRef: ElementRef) {
+
+    window.print();
   }
 
 }
