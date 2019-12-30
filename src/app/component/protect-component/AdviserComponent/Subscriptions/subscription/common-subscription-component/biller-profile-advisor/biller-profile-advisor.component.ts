@@ -152,25 +152,27 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   nextStep(value, eventName) {
+    console.log(value)
     switch (true) {
-      case (this.profileDetailsForm.invalid):
-        this.submitBillerForm();
+      case (this.profileDetailsForm.valid && value == 0):
+        this.selected = 1;
         break;
-      case (this.logUrl.invalid):
-        this.submitBillerForm();
+      case (this.logUrl.valid && value == 1):
+        this.selected = 2;
         break;
-      case (this.bankDetailsForm.invalid):
-        this.submitBillerForm();
+      case (this.bankDetailsForm.valid && value == 2):
+        this.selected = 3;
         break;
-      case (this.MiscellaneousData.invalid):
+      case (this.MiscellaneousData.valid && value == 3):
+        this.selected = 4;
         this.submitBillerForm();
       default:
-        console.log("fsdafasdas")
+        this.submitBillerForm()
     }
-    (this.profileDetailsForm.valid) ? this.selected = 1 : console.log('please fill profile Data');
-    (this.logUrl.valid) ? this.selected = 2 : console.log('url is required');
-    (this.bankDetailsForm.valid) ? this.selected = 3 : console.log('bank details required');
-    (this.MiscellaneousData.valid) ? this.submitBillerForm() : console.log('miscellaneous required');
+    // (this.profileDetailsForm.valid) ?  : console.log('please fill profile Data');
+    // (this.logUrl.valid) ? this.selected = 2 : console.log('url is required');
+    // (this.bankDetailsForm.valid) ? this.selected = 3 : console.log('bank details required');
+    // (this.MiscellaneousData.valid) ? this.submitBillerForm() : console.log('miscellaneous required');
   }
 
   submitBillerForm() {
@@ -266,7 +268,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
   closeTab(data) {
     if (data == true) {
       this.Close(data);
-      this.eventService.openSnackBar('biller profile is added', 'OK');
+      (this.profileDetailsForm.controls.id.value == undefined) ? this.eventService.openSnackBar('biller profile is added', 'OK') : this.eventService.openSnackBar('biller profile is edited', 'OK');
+      ;
 
     }
   }
