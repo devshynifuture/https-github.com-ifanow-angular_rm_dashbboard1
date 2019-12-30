@@ -67,7 +67,8 @@
                         <img src="assets/images/svg/pencil.svg" class="c-p" (click)="editInvoice()">
                         <img src="assets/images/svg/mail-light.svg" class="b-a" (click)="openSendEmail(null)">
                         <img src="assets/images/svg/pdf-icons.svg" class="b-a ">
-                        <img src="assets/images/svg/printer.svg" class="b-a " (click)="printPage()">
+                        <p templateRefTest>this is hidden</p>
+                        <img src="assets/images/svg/printer.svg" class="b-a " (click)="printPage(templateRefTest)">
                         <img src="assets/images/svg/delete.svg" class="b-a wrapper-9 ml-8"
                             (click)="deleteModal('INVOICE',element)">
                     </div>
