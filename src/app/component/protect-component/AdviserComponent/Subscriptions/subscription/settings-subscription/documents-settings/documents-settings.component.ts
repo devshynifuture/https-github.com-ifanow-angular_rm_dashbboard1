@@ -99,7 +99,7 @@ export class DocumentsSettingsComponent implements OnInit {
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
-          // this.getClientSubscriptionList();
+          this.getDocumentsSetting();
           subscription.unsubscribe();
         }
       }

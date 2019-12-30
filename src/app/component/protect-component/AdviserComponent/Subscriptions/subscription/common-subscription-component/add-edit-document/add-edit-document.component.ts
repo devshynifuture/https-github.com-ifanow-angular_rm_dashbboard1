@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {UtilService} from '../../../../../../../services/util.service';
-import {EventService} from '../../../../../../../Data-service/event.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { UtilService } from '../../../../../../../services/util.service';
+import { EventService } from '../../../../../../../Data-service/event.service';
+import { SubscriptionUpperSliderComponent } from '../upper-slider/subscription-upper-slider.component';
 
 @Component({
   selector: 'app-add-edit-document',
@@ -42,7 +43,7 @@ export class AddEditDocumentComponent implements OnInit {
   }
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private subService: SubscriptionService, private eventService: EventService) {
+    private subService: SubscriptionService, private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -88,7 +89,7 @@ export class AddEditDocumentComponent implements OnInit {
       advisorId: this.advisorId,
       name: this.blankDocumentProperties.controls.docName.value,
       // documentTypeId: parseInt(this.blankDocumentProperties.controls.docType.value),
-      documentTypeId:1,
+      documentTypeId: 1,
       docText: 'docText',
       description: this.blankDocumentProperties.controls.docName.value,
       public: true,
@@ -102,7 +103,7 @@ export class AddEditDocumentComponent implements OnInit {
     this.subService.addSettingDocument(obj).subscribe(
       data => {
         console.log(data);
-        this.subInjectService.changeUpperRightSliderState({state: 'close', data});
+        this.subInjectService.changeUpperRightSliderState({ state: 'close', data });
         this.sendDataToParentUpperFrag(data);
       }
     );
@@ -115,10 +116,14 @@ export class AddEditDocumentComponent implements OnInit {
     // this.fragmentData.data.documentData = data;
 
     const fragmentData = {
-      flag: 'app-subscription-upper-slider',
-      data: {documentData: data, flag: 'documents'},
+      flag: 'openUpper',
+      data: { documentData: data, flag: 'documents' },
+      direction: 'top',
       id: 1,
+      componentName: SubscriptionUpperSliderComponent,
+
       state: 'open'
+
     };
 
     /*this.eventService.upperSliderDataObs.subscribe((upperData) => {
@@ -132,4 +137,6 @@ export class AddEditDocumentComponent implements OnInit {
       }
     );
   }
+
+
 }
