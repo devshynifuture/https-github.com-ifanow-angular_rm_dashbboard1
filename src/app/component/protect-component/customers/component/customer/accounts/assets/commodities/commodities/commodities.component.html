@@ -251,6 +251,7 @@
                         </i>
                         <mat-menu #menubank="matMenu">
                             <button mat-menu-item (click)="openOthers('addOthers','open',element)">Edit</button>
+                            <button mat-menu-item (click)="detailedViewOthers('addOthers',element)">Detailed view</button>
                             <button mat-menu-item>Activity</button>
                             <button (click)="deleteModal('OTHERS',element)" mat-menu-item>Delete</button>
                         </mat-menu>
