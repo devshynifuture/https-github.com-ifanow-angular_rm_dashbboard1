@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -41,7 +41,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService,
-              private eventService: EventService) {
+    private eventService: EventService) {
     // this.subInjectService.singleProfileData.subscribe(
     //   data => this.getSingleBillerProfileData(data)
     // );
@@ -117,7 +117,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       id: [data.id]
     }),
       this.logUrl = this.fb.group({
-        url: [data, [Validators.required]]
+        url: [, [Validators.required]]
       });
     this.bankDetailsForm = this.fb.group({
       nameOnBank: [(data.nameAsPerBank), [Validators.required]],
@@ -148,11 +148,25 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
   Close(data) {
     // this.subInjectService.rightSideData(value);
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 
   nextStep(value, eventName) {
-
+    switch (true) {
+      case (this.profileDetailsForm.invalid):
+        this.submitBillerForm();
+        break;
+      case (this.logUrl.invalid):
+        this.submitBillerForm();
+        break;
+      case (this.bankDetailsForm.invalid):
+        this.submitBillerForm();
+        break;
+      case (this.MiscellaneousData.invalid):
+        this.submitBillerForm();
+      default:
+        console.log("fsdafasdas")
+    }
     (this.profileDetailsForm.valid) ? this.selected = 1 : console.log('please fill profile Data');
     (this.logUrl.valid) ? this.selected = 2 : console.log('url is required');
     (this.bankDetailsForm.valid) ? this.selected = 3 : console.log('bank details required');
