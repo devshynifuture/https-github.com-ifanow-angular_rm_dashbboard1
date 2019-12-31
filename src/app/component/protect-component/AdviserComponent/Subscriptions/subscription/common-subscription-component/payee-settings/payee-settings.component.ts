@@ -95,16 +95,6 @@ export class PayeeSettingsComponent implements OnInit {
   getFormControl() {
     return this.payeeSettingsForm.controls;
   }
-
-  keyPress(event: any) {
-    const pattern = /[0-9\+\-\ ]/;
-
-    const inputChar = String.fromCharCode(event.charCode);
-    if (event.keyCode != 8 && !pattern.test(inputChar)) {
-      event.preventDefault();
-    }
-  }
-
   getClientPayeeSettings(data) {
     data = data.data;
     console.log('payee data', data);

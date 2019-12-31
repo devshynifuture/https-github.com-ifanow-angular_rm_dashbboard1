@@ -54,7 +54,7 @@
     <div class="col-md-3">
       <div class="form-group mb-0">
         <mat-form-field>
-          <input matInput #loanAmount class="form-control rupess br-0" (keypress)="keyPress($event)"
+          <input type="number" matInput #loanAmount class="form-control rupess br-0" (utils.keypress)="utils.keyPress($event)"
             formControlName="loanAmount" maxlength="{{getFormControl().loanAmount.maxLength}}">
           <mat-error class="f-12 pt-4">
             Loan amount is required
@@ -72,7 +72,7 @@
     <div class="col-md-3 ">
       <div class="form-group mb-0">
         <mat-form-field>
-          <input matInput #loanTenure class="form-control br-0" (keypress)="keyPress($event)"
+          <input type="number" matInput #loanTenure class="form-control br-0"  (utils.keypress)="utils.keyPress($event)"
             formControlName="loanTenure" maxlength="{{getFormControl().loanTenure.maxLength}}">
           <mat-error class="f-12 pt-4">
             Loan tenure is required
@@ -116,7 +116,7 @@
       <div class="form-group mb-0">
         <label>Outstanding amount</label>
         <mat-form-field>
-          <input matInput #loanTenure class="form-control br-0" (keypress)="keyPress($event)"
+          <input type="number" matInput #loanTenure class="form-control br-0" (utils.keypress)="utils.keyPress($event)"
             formControlName="outstandingAmt" maxlength="{{getFormControl().outstandingAmt.maxLength}}">
           <mat-error class="f-12 pt-4">
             Outstanding amount is required
@@ -173,7 +173,7 @@
     <div class="col-md-3  ">
       <div class="form-group mb-0">
         <mat-form-field>
-          <input matInput #interest class="form-control br-0 percentage" (keypress)="keyPress($event)"
+          <input type="number" matInput #interest class="form-control br-0 percentage"  (utils.keypress)="utils.keyPress($event)"
             formControlName="interest" maxlength="{{getFormControl().interest.maxLength}}">
           <mat-error class="f-12 pt-4">
             Annual interest rate is required
@@ -209,7 +209,7 @@
       <div class="col-md-3 ">
         <div class="form-group mb-0">
           <mat-form-field>
-            <input matInput #emi class="form-control br-0 rupess" (keypress)="keyPress($event)" formControlName="emi">
+            <input type ="number" matInput #emi class="form-control br-0 rupess" (utils.keypress)="utils.keyPress($event)" formControlName="emi">
             <mat-hint align="start" class="f-12">Option</mat-hint>
           </mat-form-field>
         </div>
@@ -287,7 +287,7 @@
           <div class="col-md-4">
             <div class="form-group mb-0">
               <mat-form-field>
-                <input matInput #partPayment class="form-control br-0" (keypress)="keyPress($event)"
+                <input type="number" matInput #partPayment class="form-control br-0"  (utils.keypress)="utils.keyPress($event)"
                   formControlName="partPayment">
                 <mat-error class="f-12 pt-4">
                   payment Amount is required
