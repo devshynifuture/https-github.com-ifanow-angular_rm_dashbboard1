@@ -246,7 +246,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input type="number"  (utils.keypress)="utils.keyPress($event)" class="form-control" maxlength="{{getFormControl().amountReceived.maxLength}}" formControlName="amountReceived">
+                                    <input type="number"  (keypress)="utils.keyPress($event)" class="form-control" maxlength="{{getFormControl().amountReceived.maxLength}}" formControlName="amountReceived">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
@@ -268,7 +268,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input type="number"  (utils.keypress)="utils.keyPress($event)" class="form-control" maxlength="{{getFormControl().chargesIfAny.maxLength}}" formControlName="chargesIfAny">
+                                    <input type="number"  (keypress)="utils.keyPress($event)" class="form-control" maxlength="{{getFormControl().chargesIfAny.maxLength}}" formControlName="chargesIfAny">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
@@ -779,7 +779,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group mb-0">
-                        <input type="number" (utils.keypress)="utils.keyPress($event)" class="form-control" maxlength="{{getFormControl().amountReceived.maxLength}}" formControlName="amountReceived">
+                        <input type="number" (keypress)="utils.keyPress($event)" class="form-control" maxlength="{{getFormControl().amountReceived.maxLength}}" formControlName="amountReceived">
                     </div>
                     <div class="row">
                         <div class="col-md-10">
@@ -800,7 +800,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group mb-0">
-                        <input type="number" (utils.keypress)="utils.keyPress($event)" class="form-control" maxlength="{{getFormControl().chargesIfAny.maxLength}}" formControlName="chargesIfAny">
+                        <input type="number" (keypress)="utils.keyPress($event)" class="form-control" maxlength="{{getFormControl().chargesIfAny.maxLength}}" formControlName="chargesIfAny">
                     </div>
 
                     <div class="row">
@@ -1279,7 +1279,7 @@
                         </div>
                     </div>
                     <div class="col-md-2 pl-0">
-                        <input type="number" (utils.keypress)="utils.keyPress($event)" class="form-control br-0" [(ngModel)]="finalAmount" formControlName="finalAmount">
+                        <input type="number" (keypress)="utils.keyPress($event)" class="form-control br-0" [(ngModel)]="finalAmount" formControlName="finalAmount">
                         <div class="col-md-8">
                             <mat-error class="f-12 pt-4" *ngIf="isPrice && getFormControledit().finalAmount.invalid || (getFormControledit().finalAmount.touched && getFormControledit().finalAmount.invalid)">
                                 Price is required
@@ -1321,7 +1321,7 @@
                     <h5 class="m-0">Discount ₹</h5>
                 </div>
                 <div class="col-md-2 p-0 b-grey">
-                    <input type="number" (utils.keypress)="utils.keyPress($event)" class="form-control br-0 text-right" [(ngModel)]="discount" formControlName="discount">
+                    <input type="number" (keypress)="utils.keyPress($event)" class="form-control br-0 text-right" [(ngModel)]="discount" formControlName="discount">
                 </div>
             </div>
             <div class="row pt-20 pb-12">
