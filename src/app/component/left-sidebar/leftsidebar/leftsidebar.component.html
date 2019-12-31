@@ -9,8 +9,8 @@
                 <img class="header-img pt-0 pb-0" src="assets/images/img1.jpg">
             </div>
             <div *ngIf="showTabs" class="main-details">
-                <mat-form-field>
-                    <mat-select [(ngModel)]="loginType" class="form-control b-0 f-500">
+                <mat-form-field class="width215">
+                    <mat-select [(ngModel)]="loginType" class="form-control b-0 f-500 ">
                         <mat-option [value]=1 class="f-500">Advisor Login</mat-option>
                         <mat-option [value]=2 class="f-500">Client Login</mat-option>
                     </mat-select>
