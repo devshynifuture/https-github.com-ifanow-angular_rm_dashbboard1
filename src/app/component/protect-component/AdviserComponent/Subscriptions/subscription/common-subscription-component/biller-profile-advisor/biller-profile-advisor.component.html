@@ -186,16 +186,19 @@
                                 <h5 class="text-right m-0 pt-8">Your Logo</h5>
                             </div>
                             <div class="col-md-7">
-                                <img class="t-70 b-a">
+                                <img *ngIf="logoImg" src="{{logoImg}}" class="t-70 b-a">
+                                <div *ngIf="logoImg==undefined" class="imgBox">
+                                    <i class="material-icons c-p" style="font-size: 100px;">
+                                        insert_photo
+                                    </i>
+                                </div>
                                 <div class="row pt-16">
                                     <div class="col-md-12 p-0">
                                         <button mat-stroked-button (click)="file.click()"
                                             class="br-0 btn-primary mr-12">UPLOAD LOGO</button>
-                                        <button mat-stroked-button class="br-0 text-primary">CANCEL</button>
                                     </div>
                                     <input [ngClass]="{'v-h': true}" accept='image/*' #file type="file"
-                                        formControlName="url" (change)="onChange($event.target.files)">
-
+                                        formControlName="url" (click)="onChange($event.target.files)">
                                 </div>
                             </div>
 

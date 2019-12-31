@@ -39,6 +39,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   profileDetailsForm: any;
   bankDetailsForm: any;
   MiscellaneousData: any;
+  logoImg: any;
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService,
@@ -95,17 +96,22 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
   onChange(fileList: FileList) {
     console.log(fileList[0].name)
-    const obj =
-    {
-      clientId: 0,
-      advisorId: this.advisorId,
-      folderId: 0,
-      fileName: fileList[0].name
+    if (fileList[0].type == "image/png" || fileList[0].type == "image/jpeg") {
+      const obj =
+      {
+        clientId: 0,
+        advisorId: this.advisorId,
+        folderId: 0,
+        fileName: fileList[0].name
+      }
+      this.subService.uploadFile(obj).subscribe(
+        data => this.getImageUploadRes(data, fileList[0]),
+        err => this.eventService.openSnackBar(err)
+      )
     }
-    this.subService.uploadFile(obj).subscribe(
-      data => this.getImageUploadRes(data, fileList[0]),
-      err => this.eventService.openSnackBar(err)
-    )
+    else {
+      console.log("asfasdas")
+    }
   }
   getImageUploadRes(url, file) {
     this.http.put(url, file).subscribe((responseData) => {
@@ -118,7 +124,11 @@ export class BillerProfileAdvisorComponent implements OnInit {
         fileName: file.name
       }
       this.subService.getImageUploadData(obj).subscribe(
-        data => console.log(data)
+        data => {
+        this.logoImg = data;
+          console.log(this.logoImg)
+        },
+        err => this.eventService.openSnackBar(err, "dismiss")
       )
 
     });
