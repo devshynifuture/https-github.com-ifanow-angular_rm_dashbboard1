@@ -85,7 +85,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="text" (keypress)="keyPress($event)" class="form-control br-0 percentage"
+                    <input matInput type="number"  (utils.keypress)="utils.keyPress($event)" class="form-control br-0 percentage"
                         formControlName="interestRate">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">

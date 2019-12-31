@@ -27,7 +27,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #noOfcompleteYrs type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0" formControlName="noOfcompleteYrs">
+                    <input matInput #noOfcompleteYrs type="number" (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0" formControlName="noOfcompleteYrs">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isNoOfcompleteYrs && getFormControl().noOfcompleteYrs.invalid || getFormControl().noOfcompleteYrs.touched && getFormControl().noOfcompleteYrs.invalid)}">
                         This field is required
                     </mat-error>

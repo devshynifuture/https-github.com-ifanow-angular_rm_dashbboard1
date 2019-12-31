@@ -49,7 +49,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #accountBalance type="number" (utils.keypress)="utils.keyPress($event)"
+                    <input matInput #accountBalance type="number" (keypress)="utils.keyPress($event)"
                         maxlength="20" class="form-control br-0 rupess" formControlName="accountBalance">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isAccountBalance && getFormControl().accountBalance.invalid || getFormControl().accountBalance.touched && getFormControl().accountBalance.invalid)}">
@@ -84,7 +84,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="number" (utils.keypress)="utils.keyPress($event)"
+                    <input matInput type="number" (keypress)="utils.keyPress($event)"
                         class="form-control br-0 percentage" formControlName="interestRate">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
@@ -150,7 +150,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankAcNo type="number" (utils.keypress)="utils.keyPress($event)" maxlength="30"
+                        <input matInput #bankAcNo type="number" (keypress)="utils.keyPress($event)" maxlength="30"
                             class="form-control br-0" formControlName="bankAcNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>

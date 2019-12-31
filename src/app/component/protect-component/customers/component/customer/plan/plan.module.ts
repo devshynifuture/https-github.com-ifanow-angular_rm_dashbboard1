@@ -43,7 +43,7 @@ import { RiskProfileComponent } from './profile-plan/riskProfile/risk-profile/ri
     TexesPlanComponent,
     AddScenariosComponent,
     AddInvestmentPlanComponent,
-    AddProfilePlanComponent,
+    // AddProfilePlanComponent,
     // IncomeComponent,
     // ExpensesComponent,
     // RiskProfileComponent,
