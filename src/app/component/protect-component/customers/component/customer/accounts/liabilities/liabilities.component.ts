@@ -24,8 +24,9 @@ export class LiabilitiesComponent implements OnInit {
 
   displayedColumns: string[] = ['no', 'name', 'type', 'loan', 'ldate', 'today', 'ten', 'rate', 'emi', 'fin', 'status', 'icons'];
   // dataSource = ELEMENT_DATA;
-  advisorId: any;
-  dataSource: any = [{}, {}, {}];
+  advisorId: any;  
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
   storeData: any;
   dataStore: any;
   showFilter: any;
@@ -64,6 +65,7 @@ export class LiabilitiesComponent implements OnInit {
     //this.showLoader = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+  
     this.getLiability('');
     this.getPayables();
     this.getGlobalLiabilities();
@@ -85,7 +87,7 @@ export class LiabilitiesComponent implements OnInit {
     { width: 18, key: 'Status' },]
     var header = ['Owner', 'Type', 'Loan amount', 'Loan as on',
       'Outstanding as on today', 'Tenure remaining', 'Annual interest rate', 'EMI', 'Financial institution', 'Status'];
-    this.dataSource.forEach(element => {
+    this.dataSource.filteredData.forEach(element => {
       data = [element.ownerName, (element.loanTypeId == 1) ? 'Home Loan' : (element.loanTypeId == 2) ? 'Vehicle' : (element.loanTypeId == 3) ? 'Education' : (element.loanTypeId == 4) ? 'Credit Card' : (element.loanTypeId == 5) ? 'Personal' : 'Mortgage', this.formatNumber.first.formatAndRoundOffNumber(element.loanAmount)
         , new Date(element.commencementDate), this.formatNumber.first.formatAndRoundOffNumber(element.outstandingAmount),
       element.loanTenure, element.annualInterestRate, this.formatNumber.first.formatAndRoundOffNumber(element.emi), element.financialInstitution, element.status]
@@ -119,8 +121,11 @@ export class LiabilitiesComponent implements OnInit {
   getOtherPayablesRes(data) {
 
     console.log(data);
-    this.OtherPayableData = data;
-    this.OtherData = data.length;
+    if(data!=undefined){
+      this.OtherPayableData = data;
+      this.OtherData = data.length;
+    }
+    
   }
 
   sortTable(data) {
@@ -137,14 +142,15 @@ export class LiabilitiesComponent implements OnInit {
     } else {
       this.dataSource = new MatTableDataSource(this.dataStore);
       this.dataSource.sort = this.sort;
-      this.dataStore.forEach(element => {
-        if (element.loanTypeId == data) {
-          filterData.push(element);
-        }
-      });
+      if(this.dataStore){
+        this.dataStore.forEach(element => {
+          if (element.loanTypeId == data) {
+            filterData.push(element);
+          }
+        });
+      }
       if (filterData.length == 0) {
         this.noData = "No Data Found";
-        this.dataSource = undefined;
       } else {
         this.totalLoanAmt = _.sumBy(filterData, function (o) {
           return o.loanAmount;
@@ -273,15 +279,21 @@ export class LiabilitiesComponent implements OnInit {
       clientId: this.clientId
     };
     this.customerService.getLiabilty(obj).subscribe(
-      data => this.getLiabiltyRes(data)
+      data => this.getLiabiltyRes(data),(error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
   getLiabiltyRes(data) {
     this.isLoading=false;
     // this.showLoader = false;
-    if (data.loans == undefined) {
+    if (data.loans.length ==0) {
       this.noData = "No Data Found";
+      this.dataSource.data = []
+
     } else {
       this.totalLoanAmt = data.totalLoanAmount;
       // this.outStandingAmt = data.outstandingAmount;
@@ -295,7 +307,7 @@ export class LiabilitiesComponent implements OnInit {
         this.outStandingAmt += element.outstandingAmount
       });
       this.dataStore = [];
-      this.dataSource = [];
+      this.dataSource.filteredData = [];
       this.home = [];
       this.vehicle = [];
       this.education = [];

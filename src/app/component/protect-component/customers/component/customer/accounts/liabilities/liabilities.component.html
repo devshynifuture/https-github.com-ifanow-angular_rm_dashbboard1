@@ -103,7 +103,7 @@
                             <h4 class="m-0 text-black roboto" *ngIf="showFilter=='6'">Mortgage</h4>
 
                         </div>
-                        <div class="col-md-8 p-0 right text-right">
+                        <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
                             <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1" class="c-p">
                             <mat-menu #menu1="matMenu">
                                 <button mat-menu-item>PDF</button>
@@ -130,7 +130,7 @@
                 <div class="liabilities wrapper-8">
                     <div class="row">
                         <div class="col-md-12 p-0">
-                            <table matSort mat-table [dataSource]="dataSource" id="table-low" class="skeletonAnimation"
+                            <table matSort mat-table [dataSource]="dataSource" *ngIf="dataSource.filteredData.length > 0" id="table-low" class="skeletonAnimation"
                                 appSkeletonLoading [appSkeletonLoading]="isLoading">
                                 <ng-container matColumnDef="no">
                                     <th mat-header-cell *matHeaderCellDef class="br"> No.</th>
@@ -266,6 +266,11 @@
                                 <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
 
                             </table>
+                            <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
+                                <h4 class="text-center pt-72">No Scheme Found</h4>
+                                <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('addLiabilities',showFilter)"><i
+                                        class="material-icons">add</i>ADD NEW</button>
+                            </div>
                         </div>
                     </div>
 
