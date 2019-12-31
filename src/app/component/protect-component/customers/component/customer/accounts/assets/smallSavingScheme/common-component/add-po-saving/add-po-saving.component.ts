@@ -75,7 +75,9 @@ export class AddPoSavingComponent implements OnInit {
       ownerName: [data.ownerName, [Validators.required]],
       accBal: [data.accountBalance, [Validators.required, Validators.min(50), Validators.max(1500000)]],
       balAsOn: [new Date(data.balanceAsOn), [Validators.required]],
-      ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]]
+      ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]],
+      familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]],
+
     });
     this.poSavingOptionalForm = this.fb.group({
       poBranch: [data.postOfficeBranch],
@@ -84,6 +86,8 @@ export class AddPoSavingComponent implements OnInit {
       description: [data.description]
     });
     this.ownerData = this.poSavingForm.controls;
+    this.familyMemberId = this.poSavingForm.controls.familyMemberId.value,
+    this.familyMemberId = this.familyMemberId[0];
 
   }
 
@@ -113,7 +117,7 @@ export class AddPoSavingComponent implements OnInit {
           nominee: this.poSavingOptionalForm.get('nominee').value,
           acNumber: this.poSavingOptionalForm.get('bankAccNo').value,
           description: this.poSavingOptionalForm.get('description').value,
-          ownerName: this.ownerName
+          ownerName:  (this.ownerName == undefined) ? this.poSavingForm.controls.ownerName.value : this.ownerName
         };
         this.cusService.editPOSAVINGData(obj).subscribe(
           data => this.addPOSavingResponse(data),

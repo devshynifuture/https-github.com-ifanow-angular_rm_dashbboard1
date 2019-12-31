@@ -5,6 +5,7 @@ import { UtilService } from "../../../../../../../services/util.service";
 import { EventService } from "../../../../../../../Data-service/event.service";
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { SubscriptionUpperSliderComponent } from '../upper-slider/subscription-upper-slider.component';
+import { SubscriptionService } from '../../../subscription.service';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { SubscriptionUpperSliderComponent } from '../upper-slider/subscription-u
 export class SingleDocumentViewComponent implements OnInit {
 
 
-  constructor(public dialog: MatDialog, private eventService: EventService) {
+  constructor(public dialog: MatDialog, private eventService: EventService,private subService:SubscriptionService) {
   }
 
   @Input() singleDocument;
@@ -78,7 +79,34 @@ export class SingleDocumentViewComponent implements OnInit {
     );
   }
 
-  deleteModal(value) {
+  // deleteModal(value,element) {
+  //   const dialogData = {
+  //     data: value,
+  //     header: 'DELETE',
+  //     body: 'Are you sure you want to delete?',
+  //     body2: 'This cannot be undone',
+  //     btnYes: 'CANCEL',
+  //     btnNo: 'DELETE',
+  //     positiveMethod: () => {
+  //     },
+  //     negativeMethod: () => {
+  //       console.log('2222222222222222222222222222222222222');
+  //     }
+  //   };
+  //   console.log(dialogData + '11111111111111');
+
+  //   const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+  //     width: '400px',
+  //     data: dialogData,
+  //     autoFocus: false,
+
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+
+  //   });
+  // }
+  deleteModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -87,6 +115,15 @@ export class SingleDocumentViewComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
+        this.subService.deleteSettingsDocument(data).subscribe(
+          data => {
+            this.eventService.openSnackBar('document is deleted', 'dismiss');
+            this.valueChange.emit('close');
+            dialogRef.close();
+            // this.getRealEstate();
+          },
+          err => this.eventService.openSnackBar(err)
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');

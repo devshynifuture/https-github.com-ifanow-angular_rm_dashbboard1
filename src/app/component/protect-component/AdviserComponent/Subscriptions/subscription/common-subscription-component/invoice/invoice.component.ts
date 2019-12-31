@@ -1,15 +1,15 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EnumServiceService} from '../../../../../../../services/enum-service.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {MAT_DATE_FORMATS} from '@angular/material/core';
-import {UtilService} from 'src/app/services/util.service';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {EmailOnlyComponent} from '../email-only/email-only.component';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EnumServiceService } from '../../../../../../../services/enum-service.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { UtilService } from 'src/app/services/util.service';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { EmailOnlyComponent } from '../email-only/email-only.component';
 
 
 export interface PeriodicElement {
@@ -33,7 +33,7 @@ export interface PeriodicElement {
     //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     // },
     // { provide: MAT_DATE_LOCALE, useValue: 'en' },
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 
 })
@@ -43,9 +43,9 @@ export class InvoiceComponent implements OnInit {
   [x: string]: any;
 
   gstTreatment = [
-    {name: 'Registered Business - Regular', value: 0},
-    {name: 'Registered Business - Composition', value: 1},
-    {name: 'Unregistered Business', value: 2}
+    { name: 'Registered Business - Regular', value: 0 },
+    { name: 'Registered Business - Composition', value: 1 },
+    { name: 'Unregistered Business', value: 2 }
   ];
 
   constructor(public enumService: EnumServiceService, public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {

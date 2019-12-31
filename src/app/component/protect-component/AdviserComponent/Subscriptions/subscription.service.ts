@@ -151,6 +151,10 @@ export class SubscriptionService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.CREATE_SERVICE_SETTING, data);
   }
 
+  editSettingService(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_SERVICE_SETTING, data);
+  }
+
   docSentSignedCount(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_COUNT_SIGNED, httpParams);
@@ -326,6 +330,10 @@ export class SubscriptionService {
   deleteService(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SERVICE, data);
   }
+
+  deleteSettingsDocument(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SETTING_DOCUMENT, data);
+  } 
 
   getClientList(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId);
