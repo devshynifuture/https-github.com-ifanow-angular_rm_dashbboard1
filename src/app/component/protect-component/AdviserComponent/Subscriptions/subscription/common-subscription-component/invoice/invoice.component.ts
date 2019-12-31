@@ -48,7 +48,7 @@ export class InvoiceComponent implements OnInit {
     { name: 'Unregistered Business', value: 2 }
   ];
 
-  constructor(public enumService: EnumServiceService, public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
+  constructor(public util:UtilService,public enumService: EnumServiceService, public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getInvoiceData(data)
     );
@@ -165,6 +165,10 @@ export class InvoiceComponent implements OnInit {
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();
     }
+  }
+  allowNumbers(event: any) {
+    var k = event.keyCode;
+    return ((k == 47) || (k >= 48 && k <= 57));
   }
 
   getPayReceive(data) {

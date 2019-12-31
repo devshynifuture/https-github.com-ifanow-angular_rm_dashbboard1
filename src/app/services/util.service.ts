@@ -116,11 +116,17 @@ export class UtilService {
       event.preventDefault();
     }
     var k = event.keyCode;
-    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8   || (k >= 48 && k <= 57));
+    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
   }
   // allows text and number NOT special character
-  alphaNumric(event: any){
+  alphaNumric(event: any) {
     var k = event.keyCode;
-    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8   || (k >= 48 && k <= 57));
+    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
   }
+  //used for dateFormat allows numbers and / character
+  dateFormat(event: any) {
+    var k = event.keyCode;
+    return ((k == 47) || (k >= 48 && k <= 57));
+  }
+
 }
