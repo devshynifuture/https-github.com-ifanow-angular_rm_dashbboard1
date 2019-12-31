@@ -51,7 +51,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #amountInvest type="number"(utils.keypress)="utils.keyPress($event)" maxlength="20"
+                    <input matInput #amountInvest type="number"(keypress)="utils.keyPress($event)" maxlength="20"
                         class="form-control br-0 rupess" formControlName="amountInvest">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isAmountInvest && getFormControl().amountInvest.invalid || getFormControl().amountInvest.touched && getFormControl().amountInvest.invalid)}">
@@ -310,7 +310,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput #bankACNo type="text" (keypress)="keyPress($event)" maxlength="15"
+                            <input matInput #bankACNo type="number"  (keypress)="utils.keyPress($event)" maxlength="15"
                                 class="form-control br-0" formControlName="bankACNo">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                         </mat-form-field>
@@ -324,7 +324,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput #institution maxlength="30" class="form-control br-0"
+                            <input type="text" (keypress)="utils.onlyText($event)" matInput #institution maxlength="30" class="form-control br-0"
                                 formControlName="institution">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                         </mat-form-field>

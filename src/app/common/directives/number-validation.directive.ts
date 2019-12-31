@@ -12,8 +12,9 @@ export class NumberValidationDirective {
   @HostListener('input', ['$event']) onInputChange(event) {
     let initialValue = this._el.nativeElement.value;
     if (this._el.nativeElement.value.length <= this.maxLength) {
-      initialValue = initialValue.replace(/[^0-9]*/g, '');
+      initialValue = initialValue.replace(/[^0-9.]+/g, '');
       this.renderer.setProperty(this._el.nativeElement, 'value', initialValue);
+      console.log(initialValue);
       if (initialValue !== this._el.nativeElement.value) {
         event.stopPropagation();
       }
