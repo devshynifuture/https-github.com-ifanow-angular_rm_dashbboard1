@@ -1,12 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {HttpClient} from '@angular/common/http';
-import {PhotoCloudinaryUploadService} from "../../../../../../../services/photo-cloudinary-upload.service";
-import {FileItem, ParsedResponseHeaders} from "ng2-file-upload";
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { HttpClient } from '@angular/common/http';
+import { PhotoCloudinaryUploadService } from "../../../../../../../services/photo-cloudinary-upload.service";
+import { FileItem, ParsedResponseHeaders } from "ng2-file-upload";
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -45,8 +45,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private subService: SubscriptionService,
-              private eventService: EventService, private http: HttpClient) {
+    private subService: SubscriptionService,
+    private eventService: EventService, private http: HttpClient) {
     // this.subInjectService.singleProfileData.subscribe(
     //   data => this.getSingleBillerProfileData(data)
     // );
@@ -197,7 +197,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 
   nextStep(value, eventName) {

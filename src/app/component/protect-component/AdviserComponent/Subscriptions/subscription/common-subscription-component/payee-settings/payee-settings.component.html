@@ -106,7 +106,7 @@
         </div>
         <div class="col-md-4">
             <div class="form-group mb-0">
-                <input type="text" (utils.keypress)="utils.keyPress($event)" formControlName="primaryContact" class="form-control" maxlength="{{getFormControl().primaryContact.maxLength}}">
+                <input type="text" (keypress)="utils.keyPress($event)" formControlName="primaryContact" class="form-control" maxlength="{{getFormControl().primaryContact.maxLength}}">
             </div>
             <div class="row pt-0">
                 <div class="col-md-9">

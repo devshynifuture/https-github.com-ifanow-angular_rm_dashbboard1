@@ -72,7 +72,7 @@
     <div class="col-md-3 ">
       <div class="form-group mb-0">
         <mat-form-field>
-          <input type="number" matInput #loanTenure class="form-control br-0"  (utils.keypress)="utils.keyPress($event)"
+          <input type="number" matInput #loanTenure class="form-control br-0"  (keypress)="utils.keyPress($event)"
             formControlName="loanTenure" maxlength="{{getFormControl().loanTenure.maxLength}}">
           <mat-error class="f-12 pt-4">
             Loan tenure is required

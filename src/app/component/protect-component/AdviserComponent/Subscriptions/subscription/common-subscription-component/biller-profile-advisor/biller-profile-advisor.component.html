@@ -285,7 +285,7 @@
             </div>
             <div class="col-md-7">
               <div class="form-group mb-0">
-                <input  (utils.keypress)="utils.keyPress($event)" class="form-control br-0 text-left" formControlName="acNo"
+                <input  (keypress)="utils.keyPress($event)" class="form-control br-0 text-left" formControlName="acNo"
                        maxlength="{{getFrormControlBank().acNo.maxLength}}"
                        type="number">
               </div>
@@ -402,7 +402,7 @@
             </div>
             <div class="col-md-7">
               <div class="form-group mb-0">
-                <input class="form-control br-0 text-left" formControlName="pincode" type="number"  (utils.keypress)="utils.keyPress($event)">
+                <input class="form-control br-0 text-left" formControlName="pincode" type="number"  (keypress)="utils.keyPress($event)">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
