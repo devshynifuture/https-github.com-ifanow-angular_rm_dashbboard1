@@ -229,8 +229,8 @@ export class InvoiceComponent implements OnInit {
     this.getFormControledit().billerAddress.maxLength = 150;
     this.getFormControledit().billingAddress.maxLength = 150;
     this.getFormControledit().invoiceNumber.maxLength = 10;
-    this.getFormControledit().footnote.maxLength = 100;
-    this.getFormControledit().terms.maxLength = 100;
+    this.getFormControledit().footnote.maxLength = 150;
+    this.getFormControledit().terms.maxLength = 150;
     if (data.auto == true) {
       this.editPayment.controls.serviceName.disable();
     }
