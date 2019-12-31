@@ -1,20 +1,20 @@
-import {BehaviorSubject} from 'rxjs';
-import {Injectable} from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubscriptionInject {
 
-  private newRightSliderData = new BehaviorSubject<object>({state: 'close', fragmentData: {}, flag: ''});
+  private newRightSliderData = new BehaviorSubject<object>({ state: 'close', fragmentData: {}, flag: '' });
   newRightSliderDataObs = this.newRightSliderData.asObservable();
 
-  private upperRightSliderData = new BehaviorSubject<any>({state: 'close', fragmentData: {}, flag: ''});
+  private upperRightSliderData = new BehaviorSubject<any>({ state: 'close', fragmentData: {}, flag: '' });
   upperRightSliderDataObs = this.upperRightSliderData.asObservable();
   // right slider part
   private openCloseRightSlider = new BehaviorSubject<any>('close');
   rightSideBarData = this.openCloseRightSlider.asObservable();
-  
+
   // upper slider part
   private openCloseupperSlider = new BehaviorSubject('');
   rightslider = this.openCloseupperSlider.asObservable();
@@ -34,9 +34,9 @@ export class SubscriptionInject {
 
   private upper = new BehaviorSubject('');
   upperData = this.upper.asObservable();
-  
-  private specialEvent= new BehaviorSubject<any>('');
-  event=this.specialEvent.asObservable();
+
+  private specialEvent = new BehaviorSubject<any>('');
+  event = this.specialEvent.asObservable();
 
   rightSideData(msg) {
     console.log('dialog-container rightSideData: ', msg);
@@ -77,8 +77,7 @@ export class SubscriptionInject {
     this.upperRightSliderData.next(sliderState);
     return this.upperRightSliderDataObs;
   }
-  addEvent(data:object)
-  {
+  addEvent(data: object) {
     this.specialEvent.next(data)
   }
 }

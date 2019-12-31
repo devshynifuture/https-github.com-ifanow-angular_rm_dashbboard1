@@ -17,6 +17,7 @@ export class PhotoCloudinaryUploadService {
       isHTML5: true,
       // Calculate progress independently for each uploaded file
       removeAfterUpload: true,
+      disableMultipart: false,
       // XHR request headers
       headers: [
         {
@@ -27,7 +28,8 @@ export class PhotoCloudinaryUploadService {
     };
 
     const uploader = new FileUploader(uploaderOptions);
-    uploader.addToQueue(files, uploaderOptions);
+    uploader.onAfterAddingFile = fileItem => {
+    };
     uploader.onBuildItemForm = (fileItem: any, form: FormData): any => {
       // Add Cloudinary's unsigned upload preset to the upload form
       form.append('upload_preset', this.uploadPreset);
@@ -54,8 +56,8 @@ export class PhotoCloudinaryUploadService {
       fileItem.withCredentials = false;
       return {fileItem, form};
     };
-
     uploader.onCompleteItem = successCallback;
+    uploader.addToQueue(files, uploaderOptions);
     uploader.uploadAll();
 
   }

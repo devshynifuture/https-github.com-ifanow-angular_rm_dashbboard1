@@ -1,23 +1,25 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[appNumberValidation]'
 })
 export class NumberValidationDirective {
   @Input() maxLength;
-  constructor(private _el: ElementRef) { }
+  constructor(
+    private _el: ElementRef,
+    private renderer: Renderer2) { }
 
   @HostListener('input', ['$event']) onInputChange(event) {
-    const initalValue = this._el.nativeElement.value;
+    let initialValue = this._el.nativeElement.value;
     if (this._el.nativeElement.value.length <= this.maxLength) {
-      this._el.nativeElement.value = initalValue.replace(/[^0-9]*/g, '');
-      if (initalValue !== this._el.nativeElement.value) {
+      initialValue = initialValue.replace(/[^0-9]*/g, '');
+      this.renderer.setProperty(this._el.nativeElement, 'value', initialValue);
+      if (initialValue !== this._el.nativeElement.value) {
         event.stopPropagation();
       }
     }
     else {
-      this._el.nativeElement.value.split("")[this._el.nativeElement.value.length - 1] = '';
-
+      this.renderer.setProperty(this._el.nativeElement, 'value', initialValue.slice(0, this.maxLength));
     }
   }
 }
