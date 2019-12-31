@@ -48,7 +48,7 @@ export class InvoiceComponent implements OnInit {
     { name: 'Unregistered Business', value: 2 }
   ];
 
-  constructor(public enumService: EnumServiceService, public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
+  constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getInvoiceData(data)
     );
@@ -211,7 +211,7 @@ export class InvoiceComponent implements OnInit {
       finalAmount: [(parseInt(data.finalAmount) == undefined) ? '' : parseInt(data.finalAmount), [Validators.required]],
       discount: [(data.discount == undefined) ? '' : data.discount, [Validators.required]],
       invoiceNumber: [(data.invoiceNumber == undefined) ? this.defaultVal.invoiceNumber : data.invoiceNumber, [Validators.required]],
-      invoiceDate: [(data.invoiceDate == undefined) ? '' : data.invoiceDate, [Validators.required]],
+      invoiceDate: [(data.invoiceDate == undefined) ? '' : new Date(data.invoiceDate), [Validators.required]],
       taxStatus: [(data.igst != undefined) ? 'IGST(18%)' : 'SGST(9%)|CGST(9%)'],
       balanceDue: [(data.balanceDue == undefined) ? '' : data.balanceDue],
       serviceName: [(data.services == undefined) ? '' : data.services[0].serviceName, [Validators.required]],
@@ -330,10 +330,10 @@ export class InvoiceComponent implements OnInit {
       billerAddress: [data.billerAddress, [Validators.required]],
       billingAddress: [(data.billingAddress == undefined) ? '' : data.billingAddress, [Validators.required]],
       invoiceNumber: [data.invoiceNumber, [Validators.required]],
-      invoiceDate: [data.invoiceDate, [Validators.required]],
+      invoiceDate: [new Date(data.invoiceDate), [Validators.required]],
       finalAmount: [(data.finalAmount == undefined) ? 0 : parseInt(data.finalAmount), [Validators.required]],
       discount: [(data.discount == undefined) ? 0 : data.discount, [Validators.required]],
-      dueDate: [data.dueDate, [Validators.required]],
+      dueDate: [new Date(data.dueDate), [Validators.required]],
       footnote: [data.footnote, [Validators.required]],
       terms: [data.terms, [Validators.required]],
       taxStatus: ['IGST(18%)'],
@@ -349,7 +349,7 @@ export class InvoiceComponent implements OnInit {
     this.getFormControledit().billingAddress.maxLength = 150;
     this.getFormControledit().invoiceNumber.maxLength = 20;
     this.getFormControledit().footnote.maxLength = 100;
-    this.getFormControledit().terms.maxLength = 100;
+    this.getFormControledit().terms.maxLength = 150;
     this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.finalAmount.value;
     this.discount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.discount.value;
     this.auto = this.editPayment.controls.auto.value;

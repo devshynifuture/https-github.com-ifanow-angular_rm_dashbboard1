@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
 
 
 @Component({
@@ -71,7 +72,7 @@ export class FixedDepositComponent implements OnInit {
   clientId: any;
   isViewInitCalled = false;
 
-  constructor(private event: EventService, private router: Router,
+  constructor( public utils: UtilService,private event: EventService, private router: Router,
     private fb: FormBuilder, private custumService: CustomerService,
     public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
 
@@ -121,16 +122,6 @@ export class FixedDepositComponent implements OnInit {
   getOwnerListRes(data) {
     console.log('familymember', data);
   }
-
-  keyPress(event: any) {
-    const pattern = /[0-9\+\-\. ]/;
-
-    const inputChar = String.fromCharCode(event.charCode);
-    if (event.keyCode != 8 && !pattern.test(inputChar)) {
-      event.preventDefault();
-    }
-  }
-
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }

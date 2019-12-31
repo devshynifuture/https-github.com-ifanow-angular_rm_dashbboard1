@@ -106,7 +106,7 @@
         </div>
         <div class="col-md-4">
             <div class="form-group mb-0">
-                <input type="text" (keypress)="keyPress($event)" formControlName="primaryContact" class="form-control" maxlength="{{getFormControl().primaryContact.maxLength}}">
+                <input type="text" (utils.keypress)="utils.keyPress($event)" formControlName="primaryContact" class="form-control" maxlength="{{getFormControl().primaryContact.maxLength}}">
             </div>
             <div class="row pt-0">
                 <div class="col-md-9">
@@ -126,7 +126,7 @@
         </div>
         <div class="col-md-4">
             <div class="form-group mb-0">
-                <input type="text" formControlName="pan" class="form-control" maxlength="{{getFormControl().pan.maxLength}}">
+                <input type="text" (keypress)="utils.alphaNumric($event)" formControlName="pan" class="form-control" maxlength="{{getFormControl().pan.maxLength}}">
             </div>
             <div class="row pt-0">
                 <div class="col-md-8">
@@ -159,7 +159,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group mb-0">
-                <input type="text" formControlName="gstIn" class="form-control" maxlength="{{getFormControl().gstIn.maxLength}}">
+                <input type="text" (keypress)="utils.alphaNumric($event)" formControlName="gstIn" class="form-control" maxlength="{{getFormControl().gstIn.maxLength}}">
             </div>
             <div class="row pt-0">
                 <div class="col-md-8">
@@ -216,7 +216,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group mb-0">
-                <input type="email" formControlName="city" class="form-control">
+                <input type="text" (keypress)="utils.onlyText($event)" formControlName="city" class="form-control">
             </div>
         </div>
     </div>
@@ -226,7 +226,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group mb-0">
-                <input type="email" formControlName="state" class="form-control">
+                <input type="text" (keypress)="utils.onlyText($event)" formControlName="state" class="form-control">
             </div>
         </div>
     </div>
@@ -236,7 +236,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group mb-0">
-                <input type="email" formControlName="country" class="form-control">
+                <input type="text" (keypress)="utils.onlyText($event)"  formControlName="country" class="form-control">
             </div>
         </div>
     </div>
