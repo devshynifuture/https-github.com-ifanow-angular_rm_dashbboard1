@@ -115,7 +115,7 @@ export class ChangePayeeComponent implements OnInit {
 
   saveChangePayeeSetting() {
     const obj = [];
-    this._payeeData.forEach(element => {
+    this.payeeDataRes.forEach(element => {
       if (element.selected == 1 || element.selected == true) {
         const obj1 = {
           id: element.id,
