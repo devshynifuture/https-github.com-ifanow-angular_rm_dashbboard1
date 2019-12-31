@@ -48,7 +48,7 @@ export class InvoiceComponent implements OnInit {
     { name: 'Unregistered Business', value: 2 }
   ];
 
-  constructor(public utils: UtilService,public enumService: EnumServiceService, public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
+  constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getInvoiceData(data)
     );
@@ -157,6 +157,16 @@ export class InvoiceComponent implements OnInit {
 
     }
   }
+
+  keyPress(event: any) {
+    const pattern = /[0-9\+\-\ ]/;
+
+    const inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
   getPayReceive(data) {
     const obj = {
       invoiceId: data

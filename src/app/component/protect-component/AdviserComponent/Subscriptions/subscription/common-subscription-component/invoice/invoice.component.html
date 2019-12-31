@@ -307,7 +307,7 @@
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
                                     <input type="text" class="form-control"
-                                        maxlength="{{getFormControl().tds.maxLength}}" formControlName="tds">
+                                        maxlength="{{getFormControl().tds.maxLength}}" (keypress)="keyPress($event)" formControlName="tds">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
@@ -333,8 +333,8 @@
                                     <!-- <input type="date" class="form-control" formControlName="paymentDate"> -->
 
                                     <mat-form-field>
-                                        <input matInput formControlName="paymentDate" [matDatepicker]="picker"
-                                            class="form-control">
+                                        <input matInput formControlName="paymentDate" (keypress)="utils.dateFormat($event)" [matDatepicker]="picker"
+                                            class="form-control" placeholder="mm/dd/yyyy" >
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                     </mat-form-field>
@@ -857,7 +857,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group mb-0">
-                        <input type="text" class="form-control" maxlength="{{getFormControl().tds.maxLength}}"
+                        <input type="text" class="form-control rupess" (keypress)="keyPress($event)" maxlength="{{getFormControl().tds.maxLength}}"
                             formControlName="tds">
                     </div>
                     <div class="row">
@@ -882,7 +882,7 @@
                 <div class="col-md-4">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput formControlName="paymentDate" [matDatepicker]="picker" class="form-control">
+                            <input matInput formControlName="paymentDate" [matDatepicker]="picker" class="form-control" (keypress)="utils.dateFormat($event)" placeholder="mm/dd/yyyy" >
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
