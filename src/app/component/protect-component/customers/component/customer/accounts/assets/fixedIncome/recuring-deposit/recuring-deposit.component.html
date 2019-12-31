@@ -149,7 +149,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankName type="text" maxlength="15"
+                        <input matInput #bankName type="text" (keypress)="utils.onlyText($event)" maxlength="15"
                             class="form-control br-0" formControlName="bankName">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
