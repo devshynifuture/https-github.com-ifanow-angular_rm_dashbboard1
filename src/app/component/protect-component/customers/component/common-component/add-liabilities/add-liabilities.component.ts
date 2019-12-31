@@ -172,6 +172,9 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       this.transactEntries.removeAt(0);
 
     }
+    if(this.addLiabilityForm.controls.outstandingCheck.value==true){
+      this.showSelect=true;
+    }
     this.getFormControl().loanAmount.maxLength = 20;
     this.getFormControl().loanTenure.maxLength = 20;
     this.getFormControl().interest.maxLength = 20;

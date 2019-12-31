@@ -18,20 +18,22 @@ import {ExcelService} from '../../../excel.service';
 })
 export class OtherPayablesComponent implements OnInit {
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
 
   displayedColumns = ['no', 'name', 'dateOfReceived', 'creditorName', 'amountBorrowed', 'interest', 'dateOfRepayment', 'outstandingBalance', 'description', 'status', 'icons'];
   // dataSource = ELEMENT_DATA;
   advisorId: any;
   clientId: number
-  dataSource: any;
   @Input() payableData;
   @Output() OtherDataChange = new EventEmitter();
   totalAmountBorrowed = 0;
   totalAmountOutstandingBalance = 0;
   excelData: any[];
   footer = [];
+  noData: string;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
+    @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(public custmService: CustomerService, public util: UtilService, public subInjectService: SubscriptionInject, public eventService: EventService, public dialog: MatDialog) {
   }
@@ -39,21 +41,29 @@ export class OtherPayablesComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.dataSource = this.payableData;
-    this.dataSource = new MatTableDataSource(this.payableData);
-    this.dataSource.sort = this.sort;
+    if(this.payableData==undefined){
+      this.noData = "No Data Found";
+      this.dataSource.filteredData=[]
+    }else{
+      this.dataSource = this.payableData;
+      this.dataSource = new MatTableDataSource(this.payableData);
+      this.dataSource.sort = this.sort;
+      this.payableData.forEach(element => {
+        this.totalAmountBorrowed += element.amountBorrowed;
+      });
+      this.payableData.forEach(element => {
+        this.totalAmountOutstandingBalance += element.outstandingBalance;
+      });
+    }
+  
     // this.totalAmountBorrowed = _.sumBy(this.payableData, function (o) {
     //   return o.amountBorrowed;
     // });
-    this.payableData.forEach(element => {
-      this.totalAmountBorrowed += element.amountBorrowed;
-    });
+   
     // this.totalAmountOutstandingBalance = _.sumBy(this.payableData, function (o) {
     //   return o.outstandingBalance;
     // });
-    this.payableData.forEach(element => {
-      this.totalAmountOutstandingBalance += element.outstandingBalance;
-    });
+   
   }
 
   /**used for excel  */
