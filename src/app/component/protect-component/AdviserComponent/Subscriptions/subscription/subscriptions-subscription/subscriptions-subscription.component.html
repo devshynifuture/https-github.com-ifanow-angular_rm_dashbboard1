@@ -62,7 +62,7 @@
                                         <!-- <mat-label>FILTERS ONE</mat-label> -->
                                         <mat-select class="form-control" id="sel11" [(ngModel)]='selectedStatusFilter' (selectionChange)="addFilters(selectedStatusFilter)">
                                             <mat-option *ngFor="let chip of chips" [value]="chip">
-                                                {{chip.name}}
+                                                {{chip.name}} 
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
