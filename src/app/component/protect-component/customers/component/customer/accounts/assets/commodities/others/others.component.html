@@ -54,7 +54,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #marketValue type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20"
+                    <input matInput #marketValue type="number" (keypress)="utils.keyPress($event)" maxlength="20"
                         class="form-control br-0" formControlName="marketValue">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isMarketValue && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}">
@@ -84,7 +84,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #purchaseValue type="number" (utils.keypress)="utils.keyPress($event)"
+                        <input matInput #purchaseValue type="number" (keypress)="utils.keyPress($event)"
                             maxlength="20" class="form-control br-0" formControlName="purchaseValue">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
@@ -112,7 +112,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #growthRate type="number" (utils.keypress)="utils.keyPress($event)"
+                        <input matInput #growthRate type="number" (keypress)="utils.keyPress($event)"
                             maxlength="30" class="form-control br-0" formControlName="growthRate">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
