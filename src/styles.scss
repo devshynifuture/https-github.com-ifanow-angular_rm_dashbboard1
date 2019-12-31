@@ -651,6 +651,17 @@ mat-tab-group[vertical] {
   .height-700 {
     height: 700px;
     overflow: auto;
+
+    .row {
+      padding-bottom: 12px;
+      padding-top: 12px;
+    }
+
+    a {
+      font-size: 14px !important;
+      line-height: 1.4 !important;
+      vertical-align: top !important;
+    }
   }
 
   .light-blue .mat-progress-bar-fill::after {
@@ -938,7 +949,7 @@ mat-tab-group[vertical] {
   }
 
   tr.mat-row {
-    height: 30px !important;
+    height: 32px !important;
     padding: 6px 3px !important;
   }
 

@@ -11,8 +11,8 @@
 </div>
 
 <div class="wrapper-40 pt-72" id="ui-biller">
-    <mat-tab-group animationDuration="0ms" [selectedIndex]="selected" id="ui-biller-tabs">
-        <mat-tab label="Profile" class="active">
+    <mat-tab-group animationDuration="0ms" class="event-none" [selectedIndex]="selected" id="ui-biller-tabs">
+        <mat-tab label="Profile" class="active ">
             <div class="" [formGroup]="profileDetailsForm">
                 <div class="row pt-40 pb-44">
                     <div class="col-md-12">
@@ -113,7 +113,7 @@
                             </div>
                             <div class="col-md-7">
                                 <div class="form-group mb-0">
-                                    <input type="number" maxlength="6" class="form-control br-0 text-left"
+                                    <input type="number" maxlength="20" class="form-control br-0 text-left"
                                         formControlName="pincode" type="text">
                                 </div>
                                 <div class="row pt-0">
@@ -172,16 +172,19 @@
                                 <h5 class="text-right m-0 pt-8">Your Logo</h5>
                             </div>
                             <div class="col-md-7">
-                                <img class="t-70 b-a">
+                                <img *ngIf="logoImg" src="{{logoImg}}" class="t-70 b-a">
+                                <div *ngIf="logoImg==undefined" class="imgBox">
+                                    <i class="material-icons c-p" style="font-size: 100px;">
+                                        insert_photo
+                                    </i>
+                                </div>
                                 <div class="row pt-16">
                                     <div class="col-md-12 p-0">
                                         <button mat-stroked-button (click)="file.click()"
                                             class="br-0 btn-primary mr-12">UPLOAD LOGO</button>
-                                        <button mat-stroked-button class="br-0 text-primary">CANCEL</button>
                                     </div>
                                     <input [ngClass]="{'v-h': true}" accept='image/*' #file type="file"
-                                        formControlName="url" (change)="onChange($event.target.files)">
-
+                                        formControlName="url" (click)="onChange($event.target.files)">
                                 </div>
                             </div>
 
