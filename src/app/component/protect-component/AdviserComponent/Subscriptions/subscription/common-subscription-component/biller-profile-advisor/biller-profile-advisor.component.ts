@@ -104,14 +104,19 @@ export class BillerProfileAdvisorComponent implements OnInit {
       const tags = this.advisorId + ',biller_profile_logo,';
       PhotoCloudinaryUploadService.uploadFileToCloudinary(files, 'biller_profile_logo', tags,
         (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
-          const responseObject = JSON.parse(response);
+          if (status == 200) {
+            const responseObject = JSON.parse(response);
+            console.log('onChange file upload success response url : ', responseObject.url);
+            /*Call biller profile*/
+          }
+          /*
           console.log('onChange file upload success response : ', response);
           console.log('onChange file upload success headers : ', headers);
           console.log('onChange file upload success status : ', status);
-          console.log('onChange file upload success FileItem : ', item);
+          console.log('onChange file upload success FileItem : ', item);*/
 
         });
-      const obj = {
+      /*const obj = {
         clientId: 0,
         advisorId: this.advisorId,
         folderId: 0,
@@ -120,7 +125,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       this.subService.uploadFile(obj).subscribe(
         data => this.getImageUploadRes(data, fileList[0]),
         err => this.eventService.openSnackBar(err)
-      );
+      );*/
     } else {
       console.log('asfasdas');
     }
