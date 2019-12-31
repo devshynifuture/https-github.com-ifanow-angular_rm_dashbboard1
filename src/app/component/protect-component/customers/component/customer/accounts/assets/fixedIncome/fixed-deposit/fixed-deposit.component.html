@@ -51,7 +51,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #amountInvest type="text"(utils.keypress)="utils.keyPress($event)" maxlength="20"
+                    <input matInput #amountInvest type="number"(utils.keypress)="utils.keyPress($event)" maxlength="20"
                         class="form-control br-0 rupess" formControlName="amountInvest">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isAmountInvest && getFormControl().amountInvest.invalid || getFormControl().amountInvest.touched && getFormControl().amountInvest.invalid)}">

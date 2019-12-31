@@ -6,7 +6,6 @@ import { EnumServiceService } from '../../../../../../../services/enum-service.s
 import * as _ from 'lodash';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-add-variable-fee',

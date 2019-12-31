@@ -40,6 +40,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   invoiceHisData: any;
   showLetsBeginData: any;
   totalSaleReceived: any;
+  dataSource = [{}, {}, {}];
   isLoading = false;
   @Output() subIndex = new EventEmitter()
 
@@ -51,7 +52,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   dataSourceClientWithSub;
   dataSourceInvoice;
   subSummaryData;
-  dataSource = [{}, {}, {}];
+
   showSubStep = false;
   displayedColumns: string[] = ['name', 'service', 'amt', 'billing', 'icons'];
   chart: Chart;
@@ -245,7 +246,7 @@ export class DashboardSubscriptionComponent implements OnInit {
 
     const obj = {
       advisorId: this.advisorId,
-      limit: 10,
+      limit: 3,
       offset: 0,
       dateType: 0,
       statusIdList: [this.subscriptionSummaryStatusFilter],

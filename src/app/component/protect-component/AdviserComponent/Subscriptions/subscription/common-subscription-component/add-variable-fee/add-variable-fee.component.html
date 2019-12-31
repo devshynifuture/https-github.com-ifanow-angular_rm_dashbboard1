@@ -137,14 +137,15 @@
           </div>
           <div class="row ui-mff">
             <div class="col-md-4 p-0 bl-0 br-grey bb-grey">
-              <input type="number" formControlName="equity" placeholder="%" minlength="4"
+              <input type="text" appNumberValidation [maxLength]="4" formControlName="equity" placeholder="%"
                 class="form-control br-0 h-39">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
-              <input type="number" formControlName="debt" placeholder="%" minlength="4" class="form-control br-0 h-39">
+              <input type="text" appNumberValidation [maxLength]="4" formControlName="debt" placeholder="%"
+                class="form-control br-0 h-39">
             </div>
             <div class="col-md-4 p-0 bb-grey br-grey">
-              <input type="number" formControlName="liquid" placeholder="%" minlength="4"
+              <input type="text" appNumberValidation [maxLength]="4" formControlName="liquid" placeholder="%"
                 class="form-control br-0 h-39">
             </div>
           </div>

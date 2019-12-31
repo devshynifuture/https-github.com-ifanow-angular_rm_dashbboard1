@@ -1,11 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {HttpClient} from '@angular/common/http';
+import {PhotoCloudinaryUploadService} from "../../../../../../../services/photo-cloudinary-upload.service";
+import {FileItem, ParsedResponseHeaders} from "ng2-file-upload";
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -43,8 +44,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
   logoImg: any;
 
 
-  constructor(public utils: UtilService,public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService,
-    private eventService: EventService, private http: HttpClient) {
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
+              private subService: SubscriptionService,
+              private eventService: EventService, private http: HttpClient) {
     // this.subInjectService.singleProfileData.subscribe(
     //   data => this.getSingleBillerProfileData(data)
     // );
@@ -96,44 +98,49 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   onChange(fileList: FileList) {
-    console.log(fileList[0].name)
-    if (fileList[0].type == "image/png" || fileList[0].type == "image/jpeg") {
-      const obj =
-      {
+    console.log(fileList[0].name);
+    if (fileList[0].type == 'image/png' || fileList[0].type == 'image/jpeg') {
+      const files = [fileList[0]];
+      const tags = this.advisorId + ',biller_profile_logo,';/*+ this.billerProfileData.id;*/
+      PhotoCloudinaryUploadService.uploadFileToCloudinary(files, 'biller_profile_logo', tags,
+        (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+          console.log('onChange file upload success response : ', response);
+        });
+      /*const obj = {
         clientId: 0,
         advisorId: this.advisorId,
         folderId: 0,
         fileName: fileList[0].name
-      }
+      };
       this.subService.uploadFile(obj).subscribe(
         data => this.getImageUploadRes(data, fileList[0]),
         err => this.eventService.openSnackBar(err)
-      )
-    }
-    else {
-      console.log("asfasdas")
+      );*/
+    } else {
+      console.log('asfasdas');
     }
   }
+
   getImageUploadRes(url, file) {
     this.http.put(url, file).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
-      const obj =
-      {
+      const obj = {
         clientId: 0,
         advisorId: this.advisorId,
         folderId: 0,
         fileName: file.name
-      }
+      };
       this.subService.getImageUploadData(obj).subscribe(
         data => {
-        this.logoImg = data;
-          console.log(this.logoImg)
+          this.logoImg = data;
+          console.log(this.logoImg);
         },
-        err => this.eventService.openSnackBar(err, "dismiss")
-      )
+        err => this.eventService.openSnackBar(err, 'dismiss')
+      );
 
     });
   }
+
   getSingleBillerProfileData(data) {
     if (data == '') {
       data = {};
@@ -180,11 +187,11 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    this.subInjectService.changeNewRightSliderState({state: 'close', data});
   }
 
   nextStep(value, eventName) {
-    console.log(value)
+    console.log(value);
     switch (true) {
       case (this.profileDetailsForm.valid && value == 0):
         this.selected = 1;
@@ -198,12 +205,14 @@ export class BillerProfileAdvisorComponent implements OnInit {
       case (this.MiscellaneousData.valid && value == 3):
         this.submitBillerForm();
       default:
-        this.submitBillerForm()
+        this.submitBillerForm();
     }
   }
+
   back() {
     this.selected--;
   }
+
   submitBillerForm() {
     if (this.profileDetailsForm.controls.gstinNum.invalid) {
       this.isGstin = true;
@@ -297,8 +306,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
   closeTab(data) {
     if (data == true) {
       this.Close(data);
-      (this.profileDetailsForm.controls.id.value == undefined) ? this.eventService.openSnackBar('biller profile is added', 'OK') : this.eventService.openSnackBar('biller profile is edited', 'OK');
-      ;
+      (this.profileDetailsForm.controls.id.value == undefined) ?
+        this.eventService.openSnackBar('biller profile is added', 'OK') : this.eventService.openSnackBar('biller profile is edited', 'OK');
+
 
     }
   }
