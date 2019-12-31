@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild} from '@angular/core';
+import { Component, Input, OnInit, ViewChild, HostListener} from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from '../../subscription-inject.service';
 import { MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource } from '@angular/material';
@@ -19,7 +19,7 @@ import { InvoiceHistoryComponent } from '../common-subscription-component/invoic
 import { ChangePayeeComponent } from '../common-subscription-component/change-payee/change-payee.component';
 import { log } from 'util';
 
-declare var window
+// declare var window
 // export const MY_FORMATS = {
 //   parse: {
 //     dateInput: 'LL',
@@ -78,13 +78,15 @@ export interface PeriodicElement {
 })
 export class SubscriptionsSubscriptionComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
+  selector: string = '.wrapper-20';
   displayedColumns: string[] = ['client', 'service', 'amt', 'sub', 'status', 'activation',
     'lastbilling', 'nextbilling', 'feemode', 'icons'];
 
   // subscriptionValue: any;
   @Input() upperData;
   advisorId;
+  Oposition;
+  getData:any = "";
   // DataToSend;
   isLoading = false;
   chips = [
@@ -120,7 +122,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
 
-
+  scrollPosition;
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
     private eventService: EventService, private subService: SubscriptionService,
@@ -136,48 +138,37 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     // console.log("feeeee...",this.feeCollectionMode);
     this.getSummaryDataAdvisor();
     console.log('upperData', this.upperData);
-    // window.addEventListener('scroll', this.callApi, true); //third parameter
+  
   }
 
-//   @HostListener('window:scroll', ['$event']) onScrollEvent($event) {
-// //In chrome and some browser scroll is given to body tag
-// console.log("hi call 123456");
-// let pos = (document.documentElement.scrollTop || document.body.scrollTop) + document.documentElement.offsetHeight;
-// let max = document.documentElement.scrollHeight;
 
 
-// // pos/max will give you the distance between scroll bottom and and bottom of screen in percentage.
-//  if(pos == max )   {
-//  //Do your action here
-//  this.getSummaryDataAdvisor();
-
-//  }
-// }
-  
-  
-  // callApi(event){
-  //   console.log(event, "event 213");
     
-  //   let uisubs = document.getElementById('ui-subs');
-  //   var contentheight = uisubs.offsetHeight; // get page content height
-  //   var yoffset = window.pageYOffset;
-  //   var y = yoffset + window.innerHeight;
-  //   console.log(y >= contentheight, "status boolean");
+  
+  scrollCall(){
+    let uisubs = document.getElementById('ui-subs');
+    let wrapper = document.getElementById('wrapper');
     
-  //   if(y >= contentheight){
-  //     this.getSummaryDataAdvisor();
-  //     console.log("hi call 123456");
+    var contentheight = wrapper.offsetHeight;
+    var yoffset = uisubs.scrollTop;
+    var y = yoffset + window.innerHeight;
+    console.log(y >= contentheight, y, contentheight, uisubs.scrollTop, "y >= contentheight");
+    
+    if(y >= contentheight && this.getData != undefined){
+      if(this.scrollPosition == undefined ){
+        this.scrollPosition = contentheight - yoffset;
+      }
+      else if(this.scrollPosition < contentheight){
+        this.scrollPosition = contentheight - window.innerHeight;
+      }
       
-  //   }
-  //   var status = document.getElementById('status');
-  //   status.innerHTML = contentheight+ " | " + y;
-  // }
-
-  demoCall(){
-    this.getSummaryDataAdvisor();
+        this.getSummaryDataAdvisor();
+      
+    }
   }
 
   getSummaryDataAdvisor() {
+    
     let obj = {
       advisorId: this.advisorId,
       clientId: 0,
@@ -191,25 +182,30 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.dataSource.data = [{}, {}, {}];
 
 
-    this.subService.getSubSummary(obj).subscribe(
+    const getSubSummarySubscription = this.subService.getSubSummary(obj).subscribe(
       (data) => {
-        this.lastDataId = data[data.length - 1].id;
-        obj.offset = this.lastDataId;
-        console.log(this.lastDataId, obj, "data check");
-        if(this.tableData.length <= 0){
-          this.tableData = data;
+        this.getData = data
+        if(data != undefined){
+          this.lastDataId = data[data.length - 1].id;
+          obj.offset = this.lastDataId;
+          // console.log(this.lastDataId, obj, "data check");
+          if(this.tableData.length <= 0){
+            this.tableData = data;
+          }
+          else{
+            this.tableData = this.tableData.concat(data); 
+            // console.log(this.tableData,  "this.tableData 123");
+          }
+        }else{
+          this.isLoading = false;
+          getSubSummarySubscription.unsubscribe();
         }
-        else{
-          this.tableData = this.tableData.concat(data); 
-          console.log(this.tableData, "this.tableData 123");
-          
+          this.getSubSummaryRes(this.tableData);
+        }, (error) => {
+          this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+          this.dataSource.data = [];
+          this.isLoading = false;
         }
-        this.getSubSummaryRes(this.tableData)
-      }, (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
-        this.dataSource.data = [];
-        this.isLoading = false;
-      }
     );
 
   }
@@ -217,7 +213,11 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   
 
   getSubSummaryRes(data) {
+    let uisubs = document.getElementById('ui-subs');
+    uisubs.scrollTo(0, this.scrollPosition);
     this.isLoading = false;
+    console.log(uisubs.scrollTop, this.scrollPosition, "this.yoffset" );
+    
     console.log('  : ', data);
 
     if (data && data.length > 0) {

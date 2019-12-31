@@ -284,6 +284,8 @@
 }
 
 #ui-subs {
+  background-color: #ccc !important; position: absolute;  height: 100%; overflow: auto; display:block;
+  .wrapper-20{display: block;}
   .custom-tags .mat-form-field-infix {
     padding-top: 4px;
     border-top: 0px !important
