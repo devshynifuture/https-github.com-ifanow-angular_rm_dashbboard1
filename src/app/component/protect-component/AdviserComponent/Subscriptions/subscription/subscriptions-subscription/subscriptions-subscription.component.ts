@@ -88,6 +88,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   Oposition;
   getData:any = "";
   // DataToSend;
+  scrollCallData:boolean = true;
   isLoading = false;
   chips = [
     { name: 'LIVE', value: 2 },
@@ -152,9 +153,10 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     var contentheight = wrapper.offsetHeight;
     var yoffset = uisubs.scrollTop;
     var y = yoffset + window.innerHeight;
-    console.log(y >= contentheight, y, contentheight, uisubs.scrollTop, "y >= contentheight");
+    // console.log(y >= contentheight && this.getData != undefined && this.scrollCallData, this.scrollCallData, "this.scrollCallData 123");
     
-    if(y >= contentheight && this.getData != undefined){
+    if(y >= contentheight && this.getData != undefined && this.scrollCallData){
+      this.scrollCallData = false;
       if(this.scrollPosition == undefined ){
         this.scrollPosition = contentheight - yoffset;
       }
@@ -163,8 +165,11 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       }
       
         this.getSummaryDataAdvisor();
-      
     }
+  }
+
+  demoCall(){
+    this.getSummaryDataAdvisor();
   }
 
   getSummaryDataAdvisor() {
@@ -194,7 +199,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
           }
           else{
             this.tableData = this.tableData.concat(data); 
-            // console.log(this.tableData,  "this.tableData 123");
+            console.log(this.tableData,  "this.tableData 123");
           }
         }else{
           this.isLoading = false;
@@ -224,6 +229,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       this.data = data;
       this.dataSource.data = data;
       this.dataSource.sort = this.sort;
+      this.scrollCallData = true;
       // this.DataToSend = data;
     } else {
       this.data = [];
@@ -419,7 +425,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     // this.statusIdList = (this.sendData == undefined) ? [] : this.sendData;
     const obj = {
       advisorId: this.advisorId,
-      limit: -1,
+      limit: 10,
       offset: 0,
       fromDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.begin, 'yyyy-MM-dd') : null,
       toDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.end, 'yyyy-MM-dd') : null,

@@ -1,4 +1,5 @@
-<div  class="bg-white pb-36 pt-80 " id="ui-subs" (scroll)="scrollCall()">
+<div  class="bg-white pb-36 pt-80 " id="ui-subs" (scroll)="scrollCall()"> 
+    <!-- (scroll)="scrollCall()" -->
     <!-- id="pdfDoc"  removed from above div-->
     <div class="wrapper-20"  id="wrapper">
         <div class="row" *ngIf="showFilter==false">
@@ -40,7 +41,7 @@
                             </mat-chip>
                             <mat-chip-list>
                                 <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let dateFilter of filterDate; let i = index">
-                                    <!--                  <div class="row">-->
+                                    <!--<div class="row">-->
                                     <p>{{dateFilter.name}}</p>
                                     <input class="pl-24" matInput placeholder="Choose a date" [satDatepicker]="picker2" [(ngModel)]="selectedDateRange" (dateChange)="orgValueChange(selectedDateRange)">
                                     <sat-datepicker #picker2 [rangeMode]="true">
@@ -193,7 +194,6 @@
 
     </div>
         <!-- dataSource=='' This condition will always return 'false' since the types '{}[]' and 'string' have no overlap.-->
-      
 
     </div>
 </div>
