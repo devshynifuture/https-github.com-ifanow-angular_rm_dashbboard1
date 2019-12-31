@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionService } from '../../../subscription.service';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -38,10 +39,11 @@ export class BillerProfileAdvisorComponent implements OnInit {
   profileDetailsForm: any;
   bankDetailsForm: any;
   MiscellaneousData: any;
+  logoImg: any;
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService,
-    private eventService: EventService) {
+    private eventService: EventService, private http: HttpClient) {
     // this.subInjectService.singleProfileData.subscribe(
     //   data => this.getSingleBillerProfileData(data)
     // );
@@ -92,15 +94,45 @@ export class BillerProfileAdvisorComponent implements OnInit {
     }
   }
 
-  public onChange(fileList: FileList): void {
-    /* let file = fileList[0];
-     let fileReader: FileReader = new FileReader();
-
-     fileReader.onloadend = function(x) {
-       this.imgUrl=fileReader.result
-         }*/
+  onChange(fileList: FileList) {
+    console.log(fileList[0].name)
+    if (fileList[0].type == "image/png" || fileList[0].type == "image/jpeg") {
+      const obj =
+      {
+        clientId: 0,
+        advisorId: this.advisorId,
+        folderId: 0,
+        fileName: fileList[0].name
+      }
+      this.subService.uploadFile(obj).subscribe(
+        data => this.getImageUploadRes(data, fileList[0]),
+        err => this.eventService.openSnackBar(err)
+      )
+    }
+    else {
+      console.log("asfasdas")
+    }
   }
+  getImageUploadRes(url, file) {
+    this.http.put(url, file).subscribe((responseData) => {
+      console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
+      const obj =
+      {
+        clientId: 0,
+        advisorId: this.advisorId,
+        folderId: 0,
+        fileName: file.name
+      }
+      this.subService.getImageUploadData(obj).subscribe(
+        data => {
+        this.logoImg = data;
+          console.log(this.logoImg)
+        },
+        err => this.eventService.openSnackBar(err, "dismiss")
+      )
 
+    });
+  }
   getSingleBillerProfileData(data) {
     if (data == '') {
       data = {};
