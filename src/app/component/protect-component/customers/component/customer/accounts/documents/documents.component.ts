@@ -114,7 +114,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
       this.animal = result;
-      if (this.animal.rename == undefined) {
+      if (element == 'CREATE') {
         this.createFolder(this.animal);
       }
       if (this.animal.rename.flag == 'fileName') {
@@ -161,7 +161,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId,
       id: element.rename.value.id,
-      fileName: element.newFolder
+      folderName: element.newFolder
     };
     this.custumService.renameFolder(obj).subscribe(
       data => this.renameFolderRes(data)
@@ -539,7 +539,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
-      folderId: element + 1,
+      folderId: element,
       fileName: fileName.name
     };
     this.custumService.uploadFile(obj).subscribe(
@@ -552,7 +552,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
     const fileuploadurl = data;
     const httpOptions = {
       headers: new HttpHeaders()
-        .set('Content-Type', 'application/pdf')
+        .set('Content-Type', '')
     };
     this.http.put(fileuploadurl, fileName, httpOptions).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);

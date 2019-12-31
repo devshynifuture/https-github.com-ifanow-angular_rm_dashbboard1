@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionService } from '../../../subscription.service';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 @Component({
@@ -42,7 +43,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   logoImg: any;
 
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService,
+  constructor(public utils: UtilService,public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService,
     private eventService: EventService, private http: HttpClient) {
     // this.subInjectService.singleProfileData.subscribe(
     //   data => this.getSingleBillerProfileData(data)

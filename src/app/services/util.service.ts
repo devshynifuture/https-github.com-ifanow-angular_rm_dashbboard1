@@ -98,14 +98,35 @@ export class UtilService {
     console.log('family Member with age', this.getFamilyMemberData);
     return this.getFamilyMemberData;
   }
-
+  //Allows only numbers
   keyPress(event: any) {
-    const pattern = /[0-9\+\-\. ]/;
+    const pattern = /[0-9\+\-\ ]/;
 
     const inputChar = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();
     }
+  }
+  //Allow Only text NOT number and special character
+  onlyText(event: any) {
+    const pattern = /[0-9\+\-\. ]/;
+
+    const inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+    var k = event.keyCode;
+    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
+  }
+  // allows text and number NOT special character
+  alphaNumric(event: any) {
+    var k = event.keyCode;
+    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
+  }
+  //used for dateFormat allows numbers and / character
+  dateFormat(event: any) {
+    var k = event.keyCode;
+    return ((k == 47) || (k >= 48 && k <= 57));
   }
 
 }

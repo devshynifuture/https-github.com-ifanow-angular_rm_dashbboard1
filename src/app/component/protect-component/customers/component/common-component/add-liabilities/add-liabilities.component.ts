@@ -7,6 +7,7 @@ import {CustomerService} from '../../customer/customer.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {EventService} from 'src/app/Data-service/event.service';
 import {DataComponent} from "../../../../../../interfaces/data.component";
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-liabilities',
@@ -50,7 +51,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   clientId: any;
 
 
-  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
+  constructor(public utils: UtilService,private subInjectService: SubscriptionInject, private fb: FormBuilder,
               public custumService: CustomerService, public eventService: EventService) {
   }
 

@@ -24,7 +24,7 @@
                                 <div class="form-group mb-0">
 
                                     <input autofocus class="form-control br-0 text-left" formControlName="gstinNum"
-                                        maxlength="{{getFormControlProfile().gstinNum.maxLength}}" type="text">
+                                        maxlength="{{getFormControlProfile().gstinNum.maxLength}}" type="text" (keypress)="utils.alphaNumric($event)">
 
                                 </div>
                                 <div class="row pt-0">
@@ -48,8 +48,8 @@
                             </div>
                             <div class="col-md-7">
                                 <div class="form-group mb-0">
-                                    <input class="form-control mb-0 br-0 text-left" formControlName="panNum"
-                                        maxlength="{{getFormControlProfile().panNum.maxLength}}" type="text">
+                                    <input type="text" (keypress)="utils.alphaNumric($event)" class="form-control mb-0 br-0 text-left" formControlName="panNum"
+                                        maxlength="{{getFormControlProfile().panNum.maxLength}}">
                                 </div>
                                 <div class="row pt-0">
                                     <div class="col-md-8">
@@ -96,8 +96,7 @@
                             </div>
                             <div class="col-md-7">
                                 <div class="form-group mb-0">
-                                    <input type="text" maxlength="50" formControlName="state"
-                                        class="form-control br-0 text-left">
+                                    <input type="text" (keypress)="utils.onlyText($event)" formControlName="state" class="form-control br-0 text-left">
                                 </div>
                                 <div class="row pt-0">
                                     <div class="col-md-8">
@@ -132,8 +131,7 @@
                             </div>
                             <div class="col-md-7">
                                 <div class="form-group mb-0">
-                                    <input type="text" maxlength="50" formControlName="country"
-                                        class="form-control br-0 text-left">
+                                    <input type="text" (keypress)="utils.onlyText($event)" formControlName="country" class="form-control br-0 text-left">
                                 </div>
                                 <div class="row pt-0">
                                     <div class="col-md-8">
@@ -150,8 +148,7 @@
                             </div>
                             <div class="col-md-7">
                                 <div class="form-group mb-0">
-                                    <input type="text" maxlength="50" formControlName="city"
-                                        class="form-control br-0 text-left">
+                                    <input type="text" (keypress)="utils.onlyText($event)" formControlName="city" class="form-control br-0 text-left">
                                 </div>
                                 <div class="row pt-0">
                                     <div class="col-md-8">
@@ -162,17 +159,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="row">
-    <div class="col-md-5">
-    <h5 class="text-right m-0 pt-4">Taxable</h5>
-    </div>
-    <div class="col-md-7">
-    <mat-radio-group aria-label="Select an option">
-    <mat-radio-button value="1" color="primary">Yes</mat-radio-button>
-    <mat-radio-button value="2" color="primary">No</mat-radio-button>
-    </mat-radio-group>
-    </div>
-    </div> -->
                     </div>
                 </div>
             </div>
@@ -338,7 +324,7 @@
                         </div>
                         <div class="col-md-7">
                             <div class="form-group mb-0">
-                                <input type="text" formControlName="city" class="form-control br-0 text-left">
+                                <input type="text" (utils.dontSpecialCharcter)="utils.dontSpecialCharcter($event)" formControlName="city" class="form-control br-0 text-left">
                             </div>
                             <div class="row pt-0">
                                 <div class="col-md-8">
@@ -355,7 +341,7 @@
                         </div>
                         <div class="col-md-7">
                             <div class="form-group mb-0">
-                                <input type="text" formControlName="state" class="form-control br-0 text-left">
+                                <input type="text" (utils.dontSpecialCharcter)="utils.dontSpecialCharcter($event)" formControlName="state" class="form-control br-0 text-left">
                             </div>
                             <div class="row pt-0">
                                 <div class="col-md-8">
@@ -390,7 +376,7 @@
                         </div>
                         <div class="col-md-7">
                             <div class="form-group mb-0">
-                                <input type="text" formControlName="country" class="form-control br-0 text-left">
+                                <input type="text" (utils.dontSpecialCharcter)="utils.dontSpecialCharcter($event)" formControlName="country" class="form-control br-0 text-left">
                             </div>
                             <div class="row pt-0">
                                 <div class="col-md-8">
