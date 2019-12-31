@@ -1,15 +1,15 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EnumServiceService} from '../../../../../../../services/enum-service.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {MAT_DATE_FORMATS} from '@angular/material/core';
-import {UtilService} from 'src/app/services/util.service';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {EmailOnlyComponent} from "../email-only/email-only.component";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EnumServiceService } from '../../../../../../../services/enum-service.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { UtilService } from 'src/app/services/util.service';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { EmailOnlyComponent } from '../email-only/email-only.component';
 
 
 export interface PeriodicElement {
@@ -33,18 +33,38 @@ export interface PeriodicElement {
     //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     // },
     // { provide: MAT_DATE_LOCALE, useValue: 'en' },
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 
 })
 
 export class InvoiceComponent implements OnInit {
+
+  [x: string]: any;
+
+  gstTreatment = [
+    { name: 'Registered Business - Regular', value: 0 },
+    { name: 'Registered Business - Composition', value: 1 },
+    { name: 'Unregistered Business', value: 2 }
+  ];
+
+  constructor(public enumService: EnumServiceService, public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
+    this.dataSub = this.subInjectService.singleProfileData.subscribe(
+      data => this.getInvoiceData(data)
+    );
+    this.subInjectService.singleProfileData.subscribe(
+      data => this.getRecordPayment(data)
+    );
+  }
+
+  get data() {
+    return this.inputData;
+  }
+
   discount: any;
   inputData: any;
   templateType: number;
   dataInvoices: any;
-
-  [x: string]: any;
 
   auto: boolean;
   taxStatus: any;
@@ -100,25 +120,12 @@ export class InvoiceComponent implements OnInit {
   finalAmount: any;
   editFormData: boolean;
 
-  constructor(public enumService: EnumServiceService, public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
-    this.dataSub = this.subInjectService.singleProfileData.subscribe(
-      data => this.getInvoiceData(data)
-    );
-    this.subInjectService.singleProfileData.subscribe(
-      data => this.getRecordPayment(data)
-    );
-  }
-
   @Input()
   set data(data) {
     this.inputData = data;
     console.log('InvoiceComponent inputData', this.inputData);
     this.getInvoiceData(data);
     this.getRecordPayment(data);
-  }
-
-  get data() {
-    return this.inputData;
   }
 
   ngOnInit() {
@@ -130,8 +137,8 @@ export class InvoiceComponent implements OnInit {
     console.log('this.feeCollectionMode', this.feeCollectionMode);
     // this.getPayReceive(data);
     console.log('this.invoiceSubscription', this.invoiceInSub);
-    console.log('###########',this.clientData)
-    this.dataInvoices = this.clientData
+    console.log('###########', this.clientData);
+    this.dataInvoices = this.clientData;
     this.showRecord = false;
     this.showEdit = false;
     this.editAdd1 = false;
@@ -146,16 +153,10 @@ export class InvoiceComponent implements OnInit {
       this.discount = 0;
       this.storeData =
         this.taxStatus = ['IGST(18%)'];
-      this.editPayment.controls.serviceName.enable()
+      this.editPayment.controls.serviceName.enable();
 
     }
   }
-
-  gstTreatment = [
-    {name: "Registered Business - Regular", value: 0},
-    {name: "Registered Business - Composition", value: 1},
-    {name: "Unregistered Business", value: 2}
-  ]
 
   keyPress(event: any) {
     const pattern = /[0-9\+\-\ ]/;
@@ -167,35 +168,36 @@ export class InvoiceComponent implements OnInit {
   }
 
   getPayReceive(data) {
-    let obj = {
+    const obj = {
       invoiceId: data
-    }
+    };
     this.subService.getPaymentReceive(obj).subscribe(
-      data => this.getRes(data)
+      data => this.getPaymentReceivedRes(data)
     );
   }
 
-  getRes(data) {
+  getPaymentReceivedRes(data) {
 
-    console.log("data", data);
     this.dataSource = data;
-    this.feeCollectionMode.forEach(o => {
-      o.value = parseInt(o.value);
-      this.dataSource.forEach(sub => {
-        if (o.value == sub.paymentMode) {
-          sub.paymentMode = o.name;
-        }
-      })
-    });
+    if (data) {
+      this.feeCollectionMode.forEach(o => {
+        o.value = parseInt(o.value);
+        this.dataSource.forEach(sub => {
+          if (o.value == sub.paymentMode) {
+            sub.paymentMode = o.name;
+          }
+        });
+      });
+    }
   }
 
   selectClient(c, data) {
-    console.log(c)
-    console.log('ssss', data)
+    console.log(c);
+    console.log('ssss', data);
 
-    console.log('getInvoiceDataRes', data)
+    console.log('getInvoiceDataRes', data);
     this.storeData = data;
-    this.storeData.billerAddress = this.defaultVal.biller.billerAddress
+    this.storeData.billerAddress = this.defaultVal.biller.billerAddress;
     this.auto = false;
     this.storeData.auto == false;
     console.log(this.storeData);
@@ -230,7 +232,7 @@ export class InvoiceComponent implements OnInit {
     this.getFormControledit().footnote.maxLength = 100;
     this.getFormControledit().terms.maxLength = 100;
     if (data.auto == true) {
-      this.editPayment.controls.serviceName.disable()
+      this.editPayment.controls.serviceName.disable();
     }
     this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.finalAmount.value;
     this.discount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.discount.value;
@@ -320,7 +322,7 @@ export class InvoiceComponent implements OnInit {
   getInvoiceData(data) {
     this.copyStoreData = data;
     this.storeData = data;
-    this.auto = this.storeData.auto
+    this.auto = this.storeData.auto;
     console.log(this.storeData);
     this.editPayment = this.fb.group({
       id: [data.id],
@@ -345,14 +347,14 @@ export class InvoiceComponent implements OnInit {
     this.getFormControledit().clientName.maxLength = 10;
     this.getFormControledit().billerAddress.maxLength = 150;
     this.getFormControledit().billingAddress.maxLength = 150;
-    this.getFormControledit().invoiceNumber.maxLength = 10;
+    this.getFormControledit().invoiceNumber.maxLength = 20;
     this.getFormControledit().footnote.maxLength = 100;
     this.getFormControledit().terms.maxLength = 100;
     this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.finalAmount.value;
     this.discount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.discount.value;
     this.auto = this.editPayment.controls.auto.value;
     if (data.auto == true) {
-      this.editPayment.controls.serviceName.disable()
+      this.editPayment.controls.serviceName.disable();
     }
   }
 
@@ -501,12 +503,12 @@ export class InvoiceComponent implements OnInit {
     this.dataSource = ELEMENT_DATA;
     this.feeCollectionMode.forEach(o => {
       if (o.name == this.dataSource[0].paymentMode) {
-        this.dataSource[0].paymentMode = o.value
+        this.dataSource[0].paymentMode = o.value;
       }
     });
     this.gstTreatment.forEach(o => {
       if (o.name == this.dataSource[0].gstTreatment) {
-        this.dataSource[0].gstTreatment = o.value
+        this.dataSource[0].gstTreatment = o.value;
       }
     });
     this.dataSource[0].amountReceived = parseInt(this.dataSource[0].amountReceived);
@@ -516,32 +518,32 @@ export class InvoiceComponent implements OnInit {
     this.dataSource[0].TDS = parseInt(this.dataSource[0].TDS);
     this.dataSource[0].paymentDate = this.dataSource[0].paymentDate.toISOString().slice(0, 10);
     if (this.editFormData != undefined) {
-      let obj = {
-        "id": this.rPayment.controls.id.value,
-        "paymentMode": this.dataSource[0].paymentMode,
-        "amountReceived": this.dataSource[0].amountReceived,
-        "chargesIfAny": this.dataSource[0].chargeIfAny,
-        "notes": this.dataSource[0].notes,
-        "tds": this.dataSource[0].TDS,
-        "gstTreatmentId": this.dataSource[0].gstTreatment
-      }
+      const obj = {
+        id: this.rPayment.controls.id.value,
+        paymentMode: this.dataSource[0].paymentMode,
+        amountReceived: this.dataSource[0].amountReceived,
+        chargesIfAny: this.dataSource[0].chargeIfAny,
+        notes: this.dataSource[0].notes,
+        tds: this.dataSource[0].TDS,
+        gstTreatmentId: this.dataSource[0].gstTreatment
+      };
       this.subService.editPaymentReceive(obj).subscribe(
         data => this.getSubStagesRecordResponse(data)
       );
     } else {
-      let obj = {
-        "invoiceId": this.storeData.id,
-        "paymentMode": this.dataSource[0].paymentMode,
-        "amountReceived": this.dataSource[0].amountReceived,
-        "paymentDate": this.dataSource[0].paymentDate,
-        "tds": this.dataSource[0].TDS,
-        "notes": this.dataSource[0].notes,
-        "chargesIfAny": this.dataSource[0].chargeIfAny,
-        "advisorId": this.dataSource[0].advisorId,
-        "referenceNumber": this.storeData.invoiceNumber,
-        "gstTreatmentId": this.dataSource[0].gstTreatment
+      const obj = {
+        invoiceId: this.storeData.id,
+        paymentMode: this.dataSource[0].paymentMode,
+        amountReceived: this.dataSource[0].amountReceived,
+        paymentDate: this.dataSource[0].paymentDate,
+        tds: this.dataSource[0].TDS,
+        notes: this.dataSource[0].notes,
+        chargesIfAny: this.dataSource[0].chargeIfAny,
+        advisorId: this.dataSource[0].advisorId,
+        referenceNumber: this.storeData.invoiceNumber,
+        gstTreatmentId: this.dataSource[0].gstTreatment
 
-      }
+      };
       this.subService.getSubscriptionCompleteStages(obj).subscribe(
         data => this.getSubStagesRecordResponse(data)
       );
@@ -551,17 +553,17 @@ export class InvoiceComponent implements OnInit {
   }
 
   getSubStagesRecordResponse(data) {
-    console.log("data", data);
+    console.log('data', data);
     this.feeCollectionMode.forEach(o => {
       if (o.value == this.dataSource[0].paymentMode) {
-        this.dataSource[0].paymentMode = o.name
+        this.dataSource[0].paymentMode = o.name;
       }
     });
-    let obj = {
+    const obj = {
       invoiceId: this.storeData.id
-    }
+    };
     this.subService.getPaymentReceive(obj).subscribe(
-      data => this.getRes(data)
+      data => this.getPaymentReceivedRes(data)
     );
     this.cancel();
   }
@@ -584,11 +586,11 @@ export class InvoiceComponent implements OnInit {
 
   cancel() {
     this.showRecord = false;
-    let obj = {
+    const obj = {
       invoiceId: this.storeData.id
-    }
+    };
     this.subService.getPaymentReceive(obj).subscribe(
-      data => this.getRes(data)
+      data => this.getPaymentReceivedRes(data)
     );
     this.rPayment.reset();
   }
@@ -601,11 +603,11 @@ export class InvoiceComponent implements OnInit {
   passInvoice(data, event) {
     console.log(data);
     this.storeData = data;
-    let obj = {
+    const obj = {
       invoiceId: data.id
-    }
+    };
     this.subService.getPaymentReceive(obj).subscribe(
-      data => this.getRes(data)
+      data => this.getPaymentReceivedRes(data)
     );
   }
 
@@ -626,11 +628,11 @@ export class InvoiceComponent implements OnInit {
   Close(state) {
     if (this.showRecord == true) {
       this.showRecord = false;
-      let obj = {
+      const obj = {
         invoiceId: this.storeData.id
-      }
+      };
       this.subService.getPaymentReceive(obj).subscribe(
-        data => this.getRes(data)
+        data => this.getPaymentReceivedRes(data)
       );
       this.rPayment.reset();
     } else if (this.feeCalc == true) {
@@ -651,7 +653,7 @@ export class InvoiceComponent implements OnInit {
     const data = {
       advisorId: 2828,
       clientData: this.storeData,
-      templateType: 1, //2 is for quotation
+      templateType: 1, // 2 is for quotation
       documentList: [this.storeData],
       isInv: true
     };
@@ -690,7 +692,7 @@ export class InvoiceComponent implements OnInit {
   OpenEmailUpper(data, value) {
     const fragmentData = {
       flag: value,
-      data: data,
+      data,
       id: 1,
       state: 'open'
     };
@@ -729,8 +731,9 @@ export class InvoiceComponent implements OnInit {
 
   }
 
-  printPage() {
-    window.print();
+  printPage(templateRef) {
+    console.log('this is template html::', templateRef);
+    // window.print();
   }
 
 }

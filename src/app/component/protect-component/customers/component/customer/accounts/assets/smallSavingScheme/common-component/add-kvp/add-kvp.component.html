@@ -26,7 +26,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput autocomplete="off" formControlName="amtInvested" #amountInvest type="text" maxlength="20" class="form-control br-0 rupess" (utils.keypress)="utils.keyPress($event)">
+                        <input matInput autocomplete="off" formControlName="amtInvested" #amountInvest type="number" maxlength="20" class="form-control br-0 rupess" (utils.keypress)="utils.keyPress($event)">
                         <mat-error *ngIf="KVPFormScheme.get('amtInvested').errors?.required" class="f-12 pt-4">
                             Amount invested is required
                         </mat-error>
@@ -112,7 +112,7 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput formControlName="bankAccNum" #institution maxlength="30" class="form-control br-0" (utils.keypress)="utils.keyPress($event)">
+                    <mat-form-field> <input type="number" matInput formControlName="bankAccNum" #institution maxlength="30" class="form-control br-0" (utils.keypress)="utils.keyPress($event)">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>

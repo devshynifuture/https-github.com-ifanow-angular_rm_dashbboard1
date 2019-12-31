@@ -1,3 +1,4 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { SubscriptionInject } from '../../subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -59,8 +60,12 @@ export class DashboardSubscriptionComponent implements OnInit {
   showLetsBegin = false;
 
   constructor(private enumService: EnumServiceService,
-    public subInjectService: SubscriptionInject, public eventService: EventService,
-    public dialog: MatDialog, private subService: SubscriptionService) {
+    public subInjectService: SubscriptionInject,
+    public eventService: EventService,
+    public dialog: MatDialog,
+    private subService: SubscriptionService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) {
 
   }
 
@@ -191,8 +196,14 @@ export class DashboardSubscriptionComponent implements OnInit {
   }
 
   changeParentsTab(selectedTab) {
+    console.log("this is selected Tab:::::::::::::", selectedTab);
     this.eventService.tabData(selectedTab);
+    if (selectedTab === 3) {
+      this.router.navigate(['../subscriptions'], { relativeTo: this.activatedRoute });
 
+    } else if (selectedTab === 5) {
+      this.router.navigate(['../invoices'], { relativeTo: this.activatedRoute });
+    }
   }
 
   delete(data) {
@@ -235,7 +246,7 @@ export class DashboardSubscriptionComponent implements OnInit {
 
     const obj = {
       advisorId: this.advisorId,
-      limit: 10,
+      limit: 3,
       offset: 0,
       dateType: 0,
       statusIdList: [this.subscriptionSummaryStatusFilter],

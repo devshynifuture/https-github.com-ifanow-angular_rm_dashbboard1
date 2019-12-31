@@ -30,7 +30,14 @@
           </div>
       </div>
   </div> -->
-  <app-owner-column (valueChange)='display($event)' [data]='ownerData'></app-owner-column>
+  <div class="row">
+    <div class="col-md-5 pr-0 text-right">
+      <h5 class="m-0 pt-8">Owner</h5>
+    </div>
+    <div class="col-md-5">
+      <app-owner-column (valueChange)='display($event)' [data]='ownerData'></app-owner-column>
+    </div>
+  </div>
     <div class="row pt-40">
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8">Date of receipt</h5>

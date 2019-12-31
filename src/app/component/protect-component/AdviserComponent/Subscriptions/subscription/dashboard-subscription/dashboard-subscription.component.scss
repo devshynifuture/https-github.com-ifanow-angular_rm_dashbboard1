@@ -118,3 +118,7 @@ p {
     text-align: center;
     padding: 10px;
 }
+
+::ng-deep #table-low tbody td {
+    padding: 9px 8px !important;
+}

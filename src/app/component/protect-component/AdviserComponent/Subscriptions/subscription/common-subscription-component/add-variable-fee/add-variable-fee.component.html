@@ -101,16 +101,16 @@
         </div>
         <div class="col-md-5 p-0">
           <div class="form-group">
-              <select class="form-control" formControlName="Duration" id="sel1">
-                  <option value="1">Months</option>
-                  <option value="12">Years</option>
-              </select>
+            <select class="form-control" formControlName="Duration" id="sel1">
+              <option value="1">Months</option>
+              <option value="12">Years</option>
+            </select>
           </div>
-      </div>
-      <mat-error class="f-12 pt-4"
+        </div>
+        <mat-error class="f-12 pt-4"
           [ngClass]="{'v-h':!(isBillValid && getFormControl().billEvery.invalid || getFormControl().billEvery.touched && getFormControl().billEvery.invalid)}">
-            Billevery is required
-          </mat-error>
+          Billevery is required
+        </mat-error>
       </div>
     </div>
   </div>
@@ -137,14 +137,14 @@
           </div>
           <div class="row ui-mff">
             <div class="col-md-4 p-0 bl-0 br-grey bb-grey">
-              <input type="number" formControlName="equity" placeholder="%" maxlength="5"
+              <input type="number" formControlName="equity" placeholder="%" minlength="4"
                 class="form-control br-0 h-39">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
-              <input type="number" formControlName="debt" placeholder="%" maxlength="5" class="form-control br-0 h-39">
+              <input type="number" formControlName="debt" placeholder="%" minlength="4" class="form-control br-0 h-39">
             </div>
             <div class="col-md-4 p-0 bb-grey br-grey">
-              <input type="number" formControlName="liquid" placeholder="%" maxlength="5"
+              <input type="number" formControlName="liquid" placeholder="%" minlength="4"
                 class="form-control br-0 h-39">
             </div>
           </div>
@@ -166,14 +166,14 @@
           </div>
           <div class="row ui-mff">
             <div class="col-md-4 p-0 bl-0 bb-grey br-grey">
-              <input type="number" formControlName="equity" placeholder="%" maxlength="5"
+              <input type="number" formControlName="equity" placeholder="%" minl minlength="4"
                 class="form-control br-0 h-39 br-grey">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
-              <input type="number" formControlName="debt" placeholder="%" maxlength="5" class="form-control br-0 h-39">
+              <input type="number" formControlName="debt" placeholder="%" minlength="4" class="form-control br-0 h-39">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
-              <input type="number" formControlName="liquid" placeholder="%" maxlength="5"
+              <input type="number" formControlName="liquid" placeholder="%" minlength="4"
                 class="form-control br-0 h-39">
             </div>
           </div>
@@ -205,7 +205,7 @@
           </div>
         </div>
         <div class="col-md-2 p-0">
-          <input type="number" maxlength="4" formControlName="pricing" placeholder="%"
+          <input type="number" minlength="4" formControlName="pricing" placeholder="%"
             class="form-control br-0 h-39 br-grey">
         </div>
       </div>
@@ -220,8 +220,6 @@
     </div>
     <div class="col-md-8 right text-right">
       <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveVariableFeeData('2')">Save</button>
-
-
     </div>
   </div>
 </div>

@@ -1,21 +1,21 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatBottomSheet, MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {BottomSheetComponent} from '../../../common-component/bottom-sheet/bottom-sheet.component';
-import {EventService} from 'src/app/Data-service/event.service';
-import {Router} from '@angular/router';
-import {FormBuilder} from '@angular/forms';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from '../../customer.service';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatBottomSheet, MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../customer.service';
 import * as _ from 'lodash';
-import {AuthService} from 'src/app/auth-service/authService';
-import {HttpHeaders} from '@angular/common/http';
-import {DocumentNewFolderComponent} from '../../../common-component/document-new-folder/document-new-folder.component';
-import {HttpService} from 'src/app/http-service/http-service';
-import {CopyDocumentsComponent} from '../../../common-component/copy-documents/copy-documents.component';
-import {ViewActivityComponent} from './view-activity/view-activity.component';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {EmailQuotationComponent} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-quotation/email-quotation.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { HttpHeaders } from '@angular/common/http';
+import { DocumentNewFolderComponent } from '../../../common-component/document-new-folder/document-new-folder.component';
+import { HttpService } from 'src/app/http-service/http-service';
+import { CopyDocumentsComponent } from '../../../common-component/copy-documents/copy-documents.component';
+import { ViewActivityComponent } from './view-activity/view-activity.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { EmailQuotationComponent } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-quotation/email-quotation.component';
 
 @Component({
   selector: 'app-documents',
@@ -24,22 +24,23 @@ import {EmailQuotationComponent} from 'src/app/component/protect-component/Advis
 })
 
 export class DocumentsComponent implements AfterViewInit, OnInit {
+  areFoldersAndFilesEmpty: boolean = false;
 
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   fileType = [
-    {id: 1, name: 'PDF'},
-    {id: 2, name: 'DOC'},
-    {id: 3, name: 'XLSX'},
-    {id: 4, name: 'MP3'},
-    {id: 5, name: 'MP4'},
-    {id: 6, name: 'WAV'},
-    {id: 7, name: 'ZIP'},
-    {id: 8, name: 'BIN'},
-    {id: 9, name: 'ISO'},
-    {id: 10, name: 'JPEG'},
-    {id: 11, name: 'JPG'},
-    {id: 12, name: 'TXT'},
-    {id: 13, name: 'HTML'},
+    { id: 1, name: 'PDF' },
+    { id: 2, name: 'DOC' },
+    { id: 3, name: 'XLSX' },
+    { id: 4, name: 'MP3' },
+    { id: 5, name: 'MP4' },
+    { id: 6, name: 'WAV' },
+    { id: 7, name: 'ZIP' },
+    { id: 8, name: 'BIN' },
+    { id: 9, name: 'ISO' },
+    { id: 10, name: 'JPEG' },
+    { id: 11, name: 'JPG' },
+    { id: 12, name: 'TXT' },
+    { id: 13, name: 'HTML' },
   ];
   displayedColumns: string[] = ['emptySpace', 'name', 'lastModi', 'type', 'size', 'icons'];
   dataSource = ELEMENT_DATA;
@@ -64,9 +65,9 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   name: string;
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
-              private event: EventService, private router: Router, private fb: FormBuilder,
-              private custumService: CustomerService, public subInjectService: SubscriptionInject,
-              public utils: UtilService, public dialog: MatDialog) {
+    private event: EventService, private router: Router, private fb: FormBuilder,
+    private custumService: CustomerService, public subInjectService: SubscriptionInject,
+    public utils: UtilService, public dialog: MatDialog) {
   }
 
   showDots = false;
@@ -99,6 +100,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
     this.openFolderName = [];
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.areFoldersAndFilesEmpty = false;
     this.getAllFileList(tabValue);
     this.showLoader = true;
   }
@@ -106,7 +108,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   openDialog(element, value): void {
     const dialogRef = this.dialog.open(DocumentNewFolderComponent, {
       width: '30%',
-      data: {name: value, animal: element}
+      data: { name: value, animal: element }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -127,7 +129,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   openDialogCopy(element, value): void {
     const dialogRef = this.dialog.open(CopyDocumentsComponent, {
       width: '40%',
-      data: {name: value, animal: element}
+      data: { name: value, animal: element }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -228,15 +230,19 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   }
 
   getAllFilesRes(data, value) {
-    console.log(data);
+    console.log("this is folder length and files length ")
+    console.log(data.folders.length, data.files.length);
+    if (data.folders.length === 0 && data.files.length === 0) {
+      this.areFoldersAndFilesEmpty = true;
+    }
     this.allFiles = data.files;
     this.AllDocs = data.folders;
     this.commonFileFolders = data.folders;
     this.getSort = this.commonFileFolders;
     this.commonFileFolders.push.apply(this.commonFileFolders, this.allFiles);
     if (this.commonFileFolders.openFolderId == undefined || this.openFolderName.length == 0) {
-      Object.assign(this.commonFileFolders, {openFolderNm: value.folderName});
-      Object.assign(this.commonFileFolders, {openFolderId: value.id});
+      Object.assign(this.commonFileFolders, { openFolderNm: value.folderName });
+      Object.assign(this.commonFileFolders, { openFolderId: value.id });
       this.parentId = (value.id == undefined) ? 0 : value.id;
       console.log('parentId', this.parentId);
       this.openFolderName.push(this.commonFileFolders);
@@ -284,6 +290,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   }
 
   reset() {
+    this.areFoldersAndFilesEmpty = false;
     if (this.openFolderName.length > 0) {
       this.commonFileFolders = this.backUpfiles[0];
     }
@@ -304,6 +311,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
     this.custumService.getAllFiles(obj).subscribe(
       data => this.getAllFilesRes(data, value)
     );
+    console.log('we have opened the folder,,', value);
   }
 
   downlodFiles(element) {
@@ -563,11 +571,11 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {emptySpace: '', name: 'Identity & address proofs', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
-  {emptySpace: '', name: 'Accounts', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
-  {emptySpace: '', name: 'Planning', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
-  {emptySpace: '', name: 'Transaction', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
-  {emptySpace: '', name: 'Agreements & invoices', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  { emptySpace: '', name: 'Identity & address proofs', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
+  { emptySpace: '', name: 'Accounts', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
+  { emptySpace: '', name: 'Planning', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
+  { emptySpace: '', name: 'Transaction', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
+  { emptySpace: '', name: 'Agreements & invoices', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
 
 ];
 

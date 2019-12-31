@@ -10,7 +10,7 @@
             </div>
             <div *ngIf="showTabs" class="main-details">
                 <mat-form-field>
-                    <mat-select [(ngModel)]="loginType" class="form-control f-500">
+                    <mat-select [(ngModel)]="loginType" class="form-control b-0 f-500">
                         <mat-option [value]=1 class="f-500">Advisor Login</mat-option>
                         <mat-option [value]=2 class="f-500">Client Login</mat-option>
                     </mat-select>
@@ -67,26 +67,22 @@
     </mat-sidenav>
     <mat-sidenav-content id="left">
         <mat-toolbar class="bg-white bl-1" class="fix-top pl-0">
-            <button (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav" mat-icon-button
-                type="button">
+            <button (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav" mat-icon-button type="button">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
-            <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav"
-                mat-icon-button type="button">
+            <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav" mat-icon-button type="button">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
 
 
-            <mat-form-field class="width40">
+            <mat-form-field class="width40 serachbox">
                 <div class="form-group searchBoxHeader">
-                    <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control" matInput
-                        type="text">
+                    <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control" matInput type="text">
                     <mat-autocomplete #auto="matAutocomplete">
                         <!-- <mat-option>
                 <p>Start typing to search clients,leads otr team members</p>
             </mat-option> -->
-                        <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of clientList"
-                            [value]="singleClient.name">
+                        <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of clientList" [value]="singleClient.name">
                             <div class="row">
                                 <div class="col-md-1">
 

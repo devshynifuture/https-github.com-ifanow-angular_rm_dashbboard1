@@ -16,3 +16,7 @@
         background-image: none !important;
         border-color: red !important;
     }
+    ::ng-deep .mat-tab-header
+    {
+        pointer-events: none !important;
+    }
