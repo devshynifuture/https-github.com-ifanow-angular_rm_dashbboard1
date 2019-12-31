@@ -4,6 +4,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from 'src/app/auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-payee-settings',
@@ -13,7 +14,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 export class PayeeSettingsComponent implements OnInit {
   clientId: any;
 
-  constructor(public subInjectService: SubscriptionInject, private eventService: EventService,
+  constructor( public utils: UtilService,public subInjectService: SubscriptionInject, private eventService: EventService,
               private subService: SubscriptionService, private fb: FormBuilder) {
   }
 
@@ -94,16 +95,6 @@ export class PayeeSettingsComponent implements OnInit {
   getFormControl() {
     return this.payeeSettingsForm.controls;
   }
-
-  keyPress(event: any) {
-    const pattern = /[0-9\+\-\ ]/;
-
-    const inputChar = String.fromCharCode(event.charCode);
-    if (event.keyCode != 8 && !pattern.test(inputChar)) {
-      event.preventDefault();
-    }
-  }
-
   getClientPayeeSettings(data) {
     data = data.data;
     console.log('payee data', data);

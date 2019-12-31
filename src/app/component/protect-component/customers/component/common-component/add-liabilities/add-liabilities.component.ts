@@ -7,6 +7,7 @@ import {CustomerService} from '../../customer/customer.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {EventService} from 'src/app/Data-service/event.service';
 import {DataComponent} from "../../../../../../interfaces/data.component";
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-liabilities',
@@ -50,7 +51,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   clientId: any;
 
 
-  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
+  constructor(public utils: UtilService,private subInjectService: SubscriptionInject, private fb: FormBuilder,
               public custumService: CustomerService, public eventService: EventService) {
   }
 
@@ -146,7 +147,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       loanTenure: [data.loanTenure, [Validators.required]],
       outstandingCheck: [data.principalOutstanding],
       poDate: [(data.principalOutstandingAsOn)?new Date(data.principalOutstandingAsOn):'-', [Validators.required]],
-      outstandingAmt: [data.outstandingAmount, [Validators.required]],
+      outstandingAmt: [data.principalOutStandingAmount, [Validators.required]],
       CommencementDate: [new Date(data.commencementDate), [Validators.required]],
       emiFrequency: [(data.frequencyOfPayments) + "", [Validators.required]],
       interest: [data.annualInterestRate, [Validators.required]],
@@ -171,6 +172,9 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       })
       this.transactEntries.removeAt(0);
 
+    }
+    if(this.addLiabilityForm.controls.outstandingCheck.value==true){
+      this.showSelect=true;
     }
     this.getFormControl().loanAmount.maxLength = 20;
     this.getFormControl().loanTenure.maxLength = 20;
@@ -282,7 +286,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           "ownerName": obj.ownerName,
           "loanTypeId": obj.loanType,
           "loanAmount": obj.loanAmount,
-          "outstandingAmount": obj.outstandingAmt,
+          "principalOutStandingAmount": obj.outstandingAmt,
           "loanTenure": obj.loanTenure,
           "commencementDate": obj.CommencementDate,
           "principalOutstandingAsOn": obj.poDate,
@@ -303,7 +307,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           "loanTypeId": obj.loanType,
           "id": this._data.id,
           "loanAmount": obj.loanAmount,
-          "outstandingAmount": obj.outstandingAmt,
+          "principalOutStandingAmount": obj.outstandingAmt,
           "loanTenure": obj.loanTenure,
           "commencementDate": obj.CommencementDate,
           "principalOutstandingAsOn": obj.poDate,

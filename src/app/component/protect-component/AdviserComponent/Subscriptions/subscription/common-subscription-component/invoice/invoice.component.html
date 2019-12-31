@@ -67,8 +67,7 @@
                         <img src="assets/images/svg/pencil.svg" class="c-p" (click)="editInvoice()">
                         <img src="assets/images/svg/mail-light.svg" class="b-a" (click)="openSendEmail(null)">
                         <img src="assets/images/svg/pdf-icons.svg" class="b-a ">
-                        <p templateRefTest>this is hidden</p>
-                        <img src="assets/images/svg/printer.svg" class="b-a " (click)="printPage(templateRefTest)">
+                        <img src="assets/images/svg/printer.svg" class="b-a " (click)="printPage(invoiceTemplate)">
                         <img src="assets/images/svg/delete.svg" class="b-a wrapper-9 ml-8"
                             (click)="deleteModal('INVOICE',element)">
                     </div>
@@ -257,7 +256,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input type="text" (keypress)="keyPress($event)" class="form-control"
+                                    <input type="number"  (utils.keypress)="utils.keyPress($event)" class="form-control"
                                         maxlength="{{getFormControl().amountReceived.maxLength}}"
                                         formControlName="amountReceived">
                                 </div>
@@ -282,7 +281,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input type="text" (keypress)="keyPress($event)" class="form-control"
+                                    <input type="number"  (utils.keypress)="utils.keyPress($event)"class="form-control"
                                         maxlength="{{getFormControl().chargesIfAny.maxLength}}"
                                         formControlName="chargesIfAny">
                                 </div>
@@ -308,7 +307,7 @@
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
                                     <input type="text" class="form-control"
-                                        maxlength="{{getFormControl().tds.maxLength}}" formControlName="tds">
+                                        maxlength="{{getFormControl().tds.maxLength}}" (keypress)="keyPress($event)" formControlName="tds">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
@@ -334,8 +333,8 @@
                                     <!-- <input type="date" class="form-control" formControlName="paymentDate"> -->
 
                                     <mat-form-field>
-                                        <input matInput formControlName="paymentDate" [matDatepicker]="picker"
-                                            class="form-control">
+                                        <input matInput formControlName="paymentDate" (keypress)="utils.dateFormat($event)" [matDatepicker]="picker"
+                                            class="form-control" placeholder="mm/dd/yyyy" >
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                     </mat-form-field>
@@ -810,7 +809,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group mb-0">
-                        <input type="text" (keypress)="keyPress($event)" class="form-control"
+                        <input type="number"  (utils.keypress)="utils.keyPress($event)" class="form-control"
                             maxlength="{{getFormControl().amountReceived.maxLength}}" formControlName="amountReceived">
                     </div>
                     <div class="row">
@@ -833,7 +832,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group mb-0">
-                        <input type="text" (keypress)="keyPress($event)" class="form-control"
+                        <input type="number"  (utils.keypress)="utils.keyPress($event)" class="form-control"
                             maxlength="{{getFormControl().chargesIfAny.maxLength}}" formControlName="chargesIfAny">
                     </div>
 
@@ -858,7 +857,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group mb-0">
-                        <input type="text" class="form-control" maxlength="{{getFormControl().tds.maxLength}}"
+                        <input type="text" class="form-control rupess" (keypress)="keyPress($event)" maxlength="{{getFormControl().tds.maxLength}}"
                             formControlName="tds">
                     </div>
                     <div class="row">
@@ -883,7 +882,7 @@
                 <div class="col-md-4">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput formControlName="paymentDate" [matDatepicker]="picker" class="form-control">
+                            <input matInput formControlName="paymentDate" [matDatepicker]="picker" class="form-control" (keypress)="utils.dateFormat($event)" placeholder="mm/dd/yyyy" >
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
@@ -1317,7 +1316,7 @@
                     <div class="col-md-6 pl-0">
                         <div class="row">
                             <div class="form-group mb-0 ml-8 w-100">
-                                <input matInput placeholder="You can search service" aria-label="State"
+                                <input type="number" (utils.keypress)="utils.keyPress($event)" matInput placeholder="You can search service" aria-label="State"
                                     [matAutocomplete]="auto" list="serviceName" class="form-control w-100 br-0 pl-8"
                                     formControlName="serviceName">
                                 <mat-autocomplete #auto="matAutocomplete">
@@ -1335,7 +1334,7 @@
                         </div>
                     </div>
                     <div class="col-md-2 pl-0">
-                        <input class="form-control br-0" [(ngModel)]="finalAmount" formControlName="finalAmount">
+                        <input type="number" (utils.keypress)="utils.keyPress($event)" class="form-control br-0" [(ngModel)]="finalAmount" formControlName="finalAmount">
                         <div class="col-md-8">
                             <mat-error class="f-12 pt-4"
                                 *ngIf="isPrice && getFormControledit().finalAmount.invalid || (getFormControledit().finalAmount.touched && getFormControledit().finalAmount.invalid)">
@@ -1383,7 +1382,7 @@
                     <h5 class="m-0">Discount ₹</h5>
                 </div>
                 <div class="col-md-2 p-0 b-grey">
-                    <input class="form-control br-0 text-right" [(ngModel)]="discount" formControlName="discount">
+                    <input type="number" (utils.keypress)="utils.keyPress($event)" class="form-control br-0 text-right" [(ngModel)]="discount" formControlName="discount">
                 </div>
             </div>
             <div class="row pt-20 pb-12">

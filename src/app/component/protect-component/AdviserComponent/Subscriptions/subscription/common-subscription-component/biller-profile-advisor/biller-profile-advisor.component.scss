@@ -16,3 +16,15 @@
         background-image: none !important;
         border-color: red !important;
     }
+    ::ng-deep.event-none
+    {
+        .mat-tab-header{
+            pointer-events: none !important;
+        }
+        
+    }
+    .imgBox
+    {
+        width: 230px;
+        height: 130px;
+    }

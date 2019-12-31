@@ -232,6 +232,7 @@ export const appConfig = {
   GET_SUBSCRIPTION_PLAN_SETTING: 'subscription/setting/plan/get',
   GET_SUBSCRIPTION_SERVICE_SETTING: 'subscription/setting/service/get',
   CREATE_SERVICE_SETTING: 'subscription/service/create',
+  EDIT_SERVICE_SETTING: 'subscription/service/edit',
   DELETE_SUBSCRIPTION_PLAN: 'subscription/plan/delete',
   GET_PLAN_MAPPED_TO_ADVISOR: 'subscription/plan/mapped-to/advisor/get',
   GET_SUBSCRIPTION_DOCUMENTS_SETTING: 'subscription/setting/document/get',
@@ -274,6 +275,8 @@ export const appConfig = {
   GET_DOCUMENT_MAPPED_SERVICE: 'subscription/document/service/map/get',
   GET_TOTAL_SALE_RECIVED: 'subscription/dashboard/totalsales/feerecieved/get',
   DELETE_SUB_SETTING_BILLER_PROFILE: 'subscription/setting/billerprofile/delete',
+  GET_IMAGE_UPLOAD: 'document/account/document/all-file/file/get',
+  DELETE_SETTING_DOCUMENT: 'subscription/setting/document/delete',
   GET_BASE_64: 'api/v1/test/base64/decode',
 
 

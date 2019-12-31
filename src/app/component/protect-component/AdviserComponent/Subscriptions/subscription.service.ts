@@ -151,6 +151,10 @@ export class SubscriptionService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.CREATE_SERVICE_SETTING, data);
   }
 
+  editSettingService(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_SERVICE_SETTING, data);
+  }
+
   docSentSignedCount(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_COUNT_SIGNED, httpParams);
@@ -327,6 +331,10 @@ export class SubscriptionService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SERVICE, data);
   }
 
+  deleteSettingsDocument(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SETTING_DOCUMENT, data);
+  } 
+
   getClientList(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENTLIST, httpParams);
@@ -365,6 +373,13 @@ export class SubscriptionService {
   getTotalRecived(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('period', data.period);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TOTAL_SALE_RECIVED, httpParams);
+  }
+  uploadFile(data) {
+    // let httpParams=new HttpParams().set("advisorId",data.advisorId).set("clientId",data.clientId).set('folderId',data.folderId).set('fileName',data.fileName)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.UPLOAD_FILE, data)
+  }
+  getImageUploadData(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_IMAGE_UPLOAD, data)
   }
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
