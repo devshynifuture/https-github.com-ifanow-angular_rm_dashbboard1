@@ -8,7 +8,8 @@ import {FileUploader, FileUploaderOptions, ParsedResponseHeaders} from 'ng2-file
 })
 export class PhotoUploadComponent implements OnInit {
 
-
+  cloudName = 'futurewise';
+  uploadPreset = 'ifanow_unsigned_logo';
   @Input() responses: Array<any>;
 
   private hasBaseDropZoneOver = false;
@@ -23,10 +24,11 @@ export class PhotoUploadComponent implements OnInit {
     this.title = '';
   }
 
+
   ngOnInit(): void {
     // Create the file uploader, wire it to upload to your account
     const uploaderOptions: FileUploaderOptions = {
-      url: `https://api.cloudinary.com/v1_1/futurewise/image/upload`,
+      url: `https://api.cloudinary.com/v1_1/${this.cloudName}/image/upload`,
       // Upload files automatically upon addition to upload queue
       autoUpload: true,
       // Use xhrTransport in favor of iframeTransport
@@ -45,7 +47,7 @@ export class PhotoUploadComponent implements OnInit {
 
     this.uploader.onBuildItemForm = (fileItem: any, form: FormData): any => {
       // Add Cloudinary's unsigned upload preset to the upload form
-      form.append('upload_preset', 'ifanow_unsigned_logo');
+      form.append('upload_preset', this.uploadPreset);
       // Add built-in and custom tags for displaying the uploaded photo in the list
       let tags = 'BillerProfile';
       if (this.title) {
