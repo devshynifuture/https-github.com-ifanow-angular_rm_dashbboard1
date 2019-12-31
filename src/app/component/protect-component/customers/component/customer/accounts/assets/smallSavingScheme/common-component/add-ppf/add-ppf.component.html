@@ -154,7 +154,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input autocomplete="off" #bankACNo class="form-control br-0" formControlName="bankName"
-                            matInput maxlength="15" type="text">
+                            matInput maxlength="15" type="text" (keypress)="utils.onlyText($event)">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
