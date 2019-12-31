@@ -164,6 +164,7 @@ export class PreferencesSettingsComponent implements OnInit {
       positiveMethod: () => {
         this.subService.deleteSubSettingBillerProfile(singleBillerProfile.id).subscribe(
           data => {
+            this.getProfileBillerData();
             dialogRef.close();
           }
         );

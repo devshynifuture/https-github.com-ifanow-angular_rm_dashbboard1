@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -41,7 +41,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService,
-              private eventService: EventService) {
+    private eventService: EventService) {
     // this.subInjectService.singleProfileData.subscribe(
     //   data => this.getSingleBillerProfileData(data)
     // );
@@ -117,7 +117,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       id: [data.id]
     }),
       this.logUrl = this.fb.group({
-        url: [data, [Validators.required]]
+        url: [, [Validators.required]]
       });
     this.bankDetailsForm = this.fb.group({
       nameOnBank: [(data.nameAsPerBank), [Validators.required]],
@@ -147,18 +147,30 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   Close(data) {
-    // this.subInjectService.rightSideData(value);
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 
   nextStep(value, eventName) {
-
-    (this.profileDetailsForm.valid) ? this.selected = 1 : console.log('please fill profile Data');
-    (this.logUrl.valid) ? this.selected = 2 : console.log('url is required');
-    (this.bankDetailsForm.valid) ? this.selected = 3 : console.log('bank details required');
-    (this.MiscellaneousData.valid) ? this.submitBillerForm() : console.log('miscellaneous required');
+    console.log(value)
+    switch (true) {
+      case (this.profileDetailsForm.valid && value == 0):
+        this.selected = 1;
+        break;
+      case (this.logUrl.valid && value == 1):
+        this.selected = 2;
+        break;
+      case (this.bankDetailsForm.valid && value == 2):
+        this.selected = 3;
+        break;
+      case (this.MiscellaneousData.valid && value == 3):
+        this.submitBillerForm();
+      default:
+        this.submitBillerForm()
+    }
   }
-
+  back() {
+    this.selected--;
+  }
   submitBillerForm() {
     if (this.profileDetailsForm.controls.gstinNum.invalid) {
       this.isGstin = true;
@@ -252,7 +264,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
   closeTab(data) {
     if (data == true) {
       this.Close(data);
-      this.eventService.openSnackBar('biller profile is added', 'OK');
+      (this.profileDetailsForm.controls.id.value == undefined) ? this.eventService.openSnackBar('biller profile is added', 'OK') : this.eventService.openSnackBar('biller profile is edited', 'OK');
+      ;
 
     }
   }

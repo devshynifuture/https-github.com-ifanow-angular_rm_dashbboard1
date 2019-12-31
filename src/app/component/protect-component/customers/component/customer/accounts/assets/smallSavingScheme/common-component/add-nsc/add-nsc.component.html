@@ -28,8 +28,9 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input #amountInvest autocomplete="off" (utils.keypress)="utils.keyPress($event)" class="form-control br-0 rupess"
-                                formControlName="amountInvested" matInput maxlength="20" type="number" type="text">
+                            <input type="number" #amountInvest autocomplete="off"
+                                (utils.keypress)="utils.keyPress($event)" class="form-control br-0 rupess"
+                                formControlName="amountInvested" matInput maxlength="20" type="text">
                             <mat-error *ngIf="nscFormField.get('amountInvested').errors?.required" class="f-12 pt-4">
                                 Amount balance is required
                             </mat-error>
@@ -152,8 +153,9 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group mb-0">
-                            <mat-form-field><input #institution (utils.keypress)="utils.keyPress($event)" class="form-control br-0"
-                                    formControlName="linkedBankAccount" matInput maxlength="30">
+                            <mat-form-field><input type="number" #institution (utils.keypress)="utils.keyPress($event)"
+                                    class="form-control br-0" formControlName="linkedBankAccount" matInput
+                                    maxlength="30">
                                 <mat-hint align="start" class="f-12">Optional</mat-hint>
                             </mat-form-field>
                         </div>
@@ -175,7 +177,7 @@
             </div>
         </div>
     </div>
-    <app-add-transaction (outputEvent)="getFormData($event)"></app-add-transaction>
+    <!-- <app-add-transaction (outputEvent)="getFormData($event)"></app-add-transaction> -->
 </div>
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">

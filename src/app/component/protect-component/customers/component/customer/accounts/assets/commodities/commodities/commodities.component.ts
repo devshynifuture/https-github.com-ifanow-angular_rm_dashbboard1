@@ -184,7 +184,7 @@ export class CommoditiesComponent implements OnInit {
       this.sumOfMarketValue = data.sumOfMarketValue
       this.sumOfPurchaseValue = data.sumOfPurchaseValue
     } else {
-      this.noData = 'No scheme found';
+      this.noData = 'No data found';
       this.goldList.data = []
     }
   }
@@ -213,7 +213,7 @@ export class CommoditiesComponent implements OnInit {
       this.sumOfPurchaseValueOther = data.sumOfPurchaseValue
     }
     else {
-      this.noData = 'No scheme found';
+      this.noData = 'No data found';
       this.otherCommodityList.data = []
     }
   }

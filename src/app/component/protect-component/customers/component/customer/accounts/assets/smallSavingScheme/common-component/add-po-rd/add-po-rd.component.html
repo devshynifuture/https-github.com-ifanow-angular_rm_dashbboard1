@@ -26,7 +26,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput type="number" (utils.keypress)="utils.keyPress($event)" autocomplete="off" formControlName="monthlyContribution" #amountInvest type="text" maxlength="20" class="form-control br-0 rupess">
+                        <input matInput type="number" (utils.keypress)="utils.keyPress($event)" formControlName="monthlyContribution" #amountInvest maxlength="20" class="form-control br-0 rupess">
                         <mat-error *ngIf="PORDForm.get('monthlyContribution').errors?.required && PORDForm.get('monthlyContribution').touched" class="f-12 pt-4">
                             Amount invested is required
                         </mat-error>
@@ -124,7 +124,7 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput (utils.keypress)="utils.keyPress($event)" formControlName="linkedBankAcc" #institution maxlength="30" class="form-control br-0">
+                    <mat-form-field> <input type="number" matInput (utils.keypress)="utils.keyPress($event)" formControlName="linkedBankAcc" #institution maxlength="30" class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>

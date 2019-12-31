@@ -37,7 +37,7 @@ export class VariableFeeComponent implements OnInit {
       liquid: [, [Validators.required]]
     }),
     otherAssetClassFees: [],
-    pricing: [, [Validators.required]]
+    pricing: [,  [Validators.required, Validators.min(0), Validators.max(100)]]
   });
 
   constructor(private subService: SubscriptionService, private fb: FormBuilder,
@@ -70,7 +70,7 @@ export class VariableFeeComponent implements OnInit {
         liquid: [data, [Validators.required]]
       }),
       otherAssetClassFees: [],
-      pricing: [data, [Validators.required]]
+      pricing: [data,  [Validators.required, Validators.min(0), Validators.max(100)]]
     });
   }
 

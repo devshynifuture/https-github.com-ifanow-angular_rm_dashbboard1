@@ -141,21 +141,26 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   getSubSummaryRes(data) {
     this.isLoading = false;
     console.log(data, "hi client");
-    this.dataSource = data;
-    this.clientData = data;
-
-    for (let d of data) {
-      if (d.subscriptionPricing.feeTypeId == 1) {
-        d['feeTypeId'] = "FIXED"
+    // this.dataSource = data;
+    if(data==undefined){
+      this.clientData.length==0;
+      this.dataSource=undefined;
+    }else{
+      this.clientData = data;
+      for (let d of data) {
+        if (d.subscriptionPricing.feeTypeId == 1) {
+          d['feeTypeId'] = "FIXED"
+        }
+        else {
+          d['feeTypeId'] = "VARIABLE"
+        }
+  
       }
-      else {
-        d['feeTypeId'] = "VARIABLE"
-      }
-
+      this.dataSource = new MatTableDataSource(data);
+  
+      this.dataSource.sort = this.sort;
     }
-    this.dataSource = new MatTableDataSource(data);
-
-    this.dataSource.sort = this.sort;
+ 
 
   }
 
