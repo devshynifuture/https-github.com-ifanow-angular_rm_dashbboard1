@@ -4,6 +4,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from 'src/app/auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-payee-settings',
@@ -13,7 +14,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 export class PayeeSettingsComponent implements OnInit {
   clientId: any;
 
-  constructor(public subInjectService: SubscriptionInject, private eventService: EventService,
+  constructor( public utils: UtilService,public subInjectService: SubscriptionInject, private eventService: EventService,
               private subService: SubscriptionService, private fb: FormBuilder) {
   }
 

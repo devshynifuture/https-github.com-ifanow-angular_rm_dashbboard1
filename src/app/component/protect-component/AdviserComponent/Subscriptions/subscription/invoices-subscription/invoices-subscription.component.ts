@@ -194,6 +194,17 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.ngOnInit();
   }
 
+  showFilters(showFilter) {
+    if (showFilter == true) {
+      this.showFilter = false;
+    } else {
+      this.showFilter = true;
+    }
+    console.log('this.filterStatus: ', this.filterStatus);
+    console.log('this.filterDate: ', this.filterDate);
+
+  }
+
   addFilters(addFilters) {
     console.log('addFilters', addFilters);
     if (!_.includes(this.filterStatus, addFilters)) {
