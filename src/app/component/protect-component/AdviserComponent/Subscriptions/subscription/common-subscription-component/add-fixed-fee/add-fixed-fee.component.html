@@ -95,7 +95,7 @@
     </div>
     <div class="col-md-5 pr-0">
       <div class="form-group mb-0">
-        <input type="number" maxlength="10" formControlName="fees" class="form-control br-0">
+        <input type="number"(utils.keypress)="utils.keyPress($event)" maxlength="10" formControlName="fees" class="form-control br-0">
       </div>
       <div class="row">
         <div class="col-md-8">
@@ -141,7 +141,7 @@
       <div class="row">
         <div class="col-md-5 p-0">
           <div class="form-group mb-0">
-            <input type="number" pattern="\d*" onKeyPress="if(this.value.length==2) return false;"
+            <input type="number"(utils.keypress)="utils.keyPress($event)"
               formControlName="billEvery" class="form-control br-0">
           </div>
         </div>
