@@ -25,7 +25,7 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input autocomplete="off" (utils.keypress)="utils.keyPress($event)" formControlName="accBal" type="number" matInput #accountBalance class="form-control rupess br-0" maxlength="">
+                    <mat-form-field> <input autocomplete="off" (keypress)="utils.keyPress($event)" formControlName="accBal" type="number" matInput #accountBalance class="form-control rupess br-0" maxlength="">
                         <mat-error *ngIf="poSavingForm.get('accBal').errors?.required && poSavingForm.get('accBal').touched" class="f-12 pt-4">
                             Amount invested is required
                         </mat-error>

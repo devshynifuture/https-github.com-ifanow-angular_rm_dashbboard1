@@ -24,7 +24,7 @@
             <h5 class="m-0 pb-8">PRAN</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #pran type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="pran">
+                    <input matInput #pran type="number" (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="pran">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isPran && getFormControl().pran.invalid || getFormControl().pran.touched && getFormControl().pran.invalid)}">
                         This field is required
                     </mat-error>
@@ -80,7 +80,7 @@
             <div class="col-md-2 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #totalUnits type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="totalUnits">
+                        <input matInput #totalUnits type="number" (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="totalUnits">
                         <mat-hint align="start" class="m-0 f-11 text-custom pt-4">As in statement</mat-hint>
                     </mat-form-field>
                 </div>
@@ -97,7 +97,7 @@
             <div class="col-md-2 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #totalNetContribution type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="totalNetContribution">
+                        <input matInput #totalNetContribution type="number" (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="totalNetContribution">
                     </mat-form-field>
 
                 </div>
@@ -167,7 +167,7 @@
                     <div class="col-md-3 pr-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput #currentValue type="number" (utils.keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="approxContribution">
+                                <input matInput #currentValue type="number" (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="approxContribution">
                             </mat-form-field>
                         </div>
                     </div>
