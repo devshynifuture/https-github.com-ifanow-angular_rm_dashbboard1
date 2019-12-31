@@ -2,8 +2,8 @@ import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {Event, NavigationEnd, NavigationStart, Router, RouterOutlet} from '@angular/router';
 import {EventService} from './Data-service/event.service';
-import {RoutingState} from "./services/routing-state.service";
-import {ChangeDetectorRef} from "@angular/core/src/metadata/*";
+import {RoutingState} from './services/routing-state.service';
+import {ChangeDetectorRef} from '@angular/core/src/metadata/*';
 
 @Component({
   selector: 'app-root',
@@ -37,8 +37,11 @@ export class AppComponent implements AfterViewInit {
   private loadingBarInterceptor(event: Event) {
     if (event instanceof NavigationStart) {
       this.lBar.start();
+      console.log('Performance navigation start', performance.getEntriesByType('navigation'));
     }
     if (event instanceof NavigationEnd) {
+      console.log('Performance navigation end', performance.getEntriesByType('navigation'));
+
       this.lBar.complete();
       // this.changeDetector.markForCheck();
       // window.scrollTo(0, 0);

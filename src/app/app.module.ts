@@ -51,8 +51,9 @@ import {
   EventDialog
 } from "./component/protect-component/AdviserComponent/Email/calender/calender.component";
 import {SubscriptionUpperEntry} from './component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
+import {CloudinaryModule} from '@cloudinary/angular-5.x';
+import * as  Cloudinary from 'cloudinary-core';
 // import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
-
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -109,6 +110,11 @@ import {SubscriptionUpperEntry} from './component/protect-component/AdviserCompo
     MatTableModule,
     SlimLoadingBarModule.forRoot(),
     MDBBootstrapModule.forRoot(),
+    CloudinaryModule.forRoot(Cloudinary,
+      {
+        cloud_name: 'futurewise', upload_preset: 'ifanow_unsigned_logo', /*private_cdn: true,*/
+        /* cname: 'futurewise.images.com'*/
+      }),
     DragDropModule,
     CustomCommonModule,
     EmailEntryModule,
