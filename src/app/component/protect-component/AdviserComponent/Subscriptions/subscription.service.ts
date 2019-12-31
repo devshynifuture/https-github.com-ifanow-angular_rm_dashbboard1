@@ -366,6 +366,13 @@ export class SubscriptionService {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('period', data.period);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TOTAL_SALE_RECIVED, httpParams);
   }
+  uploadFile(data) {
+    // let httpParams=new HttpParams().set("advisorId",data.advisorId).set("clientId",data.clientId).set('folderId',data.folderId).set('fileName',data.fileName)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.UPLOAD_FILE, data)
+  }
+  getImageUploadData(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_IMAGE_UPLOAD, data)
+  }
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
   }

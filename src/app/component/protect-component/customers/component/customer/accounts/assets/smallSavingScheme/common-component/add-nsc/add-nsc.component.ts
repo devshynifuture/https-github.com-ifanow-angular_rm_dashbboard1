@@ -39,7 +39,7 @@ export class AddNscComponent implements OnInit {
   get data() {
     return this.inputData;
   }
-  constructor(private datePipe: DatePipe,public utils: UtilService,private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(private datePipe: DatePipe, public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   isOptionalField
   ngOnInit() {
     this.isOptionalField = true
@@ -83,23 +83,23 @@ export class AddNscComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
-  getFormData(data) {
-    console.log(data)
-    this.transactionData = data.controls
-  }
+  // getFormData(data) {
+  //   console.log(data)
+  //   this.transactionData = data.controls
+  // }
   addNSC() {
 
-    if (this.transactionData) {
-      let finalTransctList = []
-      this.transactionData.forEach(element => {
-        let obj = {
-          "date": element.controls.date.value._d,
-          "amount": element.controls.amount.value,
-          "paymentType": element.controls.transactionType.value
-        }
-        finalTransctList.push(obj)
-      });
-    }
+    // if (this.transactionData) {
+    //   let finalTransctList = []
+    //   this.transactionData.forEach(element => {
+    //     let obj = {
+    //       "date": element.controls.date.value._d,
+    //       "amount": element.controls.amount.value,
+    //       "paymentType": element.controls.transactionType.value
+    //     }
+    //     finalTransctList.push(obj)
+    //   });
+    // }
     if (this.nscFormField.get('amountInvested').invalid) {
       this.nscFormField.get('amountInvested').markAsTouched();
       return
@@ -122,9 +122,9 @@ export class AddNscComponent implements OnInit {
         {
           "id": this.editApi.id,
           "familyMemberId": this.familyMemberId,
-          "ownerName":  (this.ownerName == undefined) ? this.nscFormField.controls.ownerName.value : this.ownerName,
+          "ownerName": (this.ownerName == undefined) ? this.nscFormField.controls.ownerName.value : this.ownerName,
           "amountInvested": this.nscFormField.get('amountInvested').value,
-          "commencementDate": this.datePipe.transform(this.nscFormField.get('commDate').value,'yyyy-MM-dd'),
+          "commencementDate": this.datePipe.transform(this.nscFormField.get('commDate').value, 'yyyy-MM-dd'),
           "tenure": this.nscFormField.get('Tenure').value,
           "certificateNumber": this.nscFormOptionalField.get('cNo').value,
           "postOfficeBranch": this.nscFormOptionalField.get('poBranch').value,
@@ -146,7 +146,7 @@ export class AddNscComponent implements OnInit {
           "advisorId": this.advisorId,
           "ownerName": (this.ownerName == undefined) ? this.nscFormField.controls.ownerName.value : this.ownerName,
           "amountInvested": this.nscFormField.get('amountInvested').value,
-          "commencementDate": this.datePipe.transform(this.nscFormField.get('commDate').value,'yyyy-MM-dd'),
+          "commencementDate": this.datePipe.transform(this.nscFormField.get('commDate').value, 'yyyy-MM-dd'),
           "tenure": this.nscFormField.get('Tenure').value,
           "certificateNumber": this.nscFormOptionalField.get('cNo').value,
           "postOfficeBranch": this.nscFormOptionalField.get('poBranch').value,
