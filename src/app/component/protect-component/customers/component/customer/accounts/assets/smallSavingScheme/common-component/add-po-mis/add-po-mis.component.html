@@ -45,7 +45,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="number" (utils.keypress)="utils.keyPress($event)" autocomplete="off" #amtInvested maxlength="20"
+                    <input matInput type="number" (keypress)="utils.keyPress($event)" autocomplete="off" #amtInvested maxlength="20"
                         class="form-control br-0 rupess" formControlName="amtInvested">
                     <mat-error
                         *ngIf="pomisForm.get('amtInvested').errors?.required && pomisForm.get('amtInvested').touched"
@@ -137,7 +137,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input type="number" (utils.keypress)="utils.keyPress($event)" matInput #institution maxlength="30" class="form-control br-0"
+                        <input type="number" (keypress)="utils.keyPress($event)" matInput #institution maxlength="30" class="form-control br-0"
                             formControlName="accNumber">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
