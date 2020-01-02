@@ -1,11 +1,13 @@
 // import DialogContainerComponent from ''
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 // import { LiabilityrightComponent } from './component/customer/accounts/liabilities/liabilityright/liabilityright.component';
-import { RadioGroupDirectiveDirective } from './radio-group-directive.directive';
-import { CustomRightAnimationDirective } from './custom-right-animation.directive';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { SkeletonLoadingDirective } from './skeleton-loading.directive';
-import { InputValidationDirective, AlphanumricDirective, TextOnlyDirective, Formatter } from './input-validation.directive';
+import {RadioGroupDirectiveDirective} from './radio-group-directive.directive';
+import {CustomRightAnimationDirective} from './custom-right-animation.directive';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {SkeletonLoadingDirective} from './skeleton-loading.directive';
+import {AlphaNumericDirective, Formatter, NumberOnlyDirective, TextOnlyDirective} from './number-only.directive';
+import {InputValueValidationDirective} from './input-value-validation.directive';
+
 // import {AppModule} from "../app.module";
 
 
@@ -16,11 +18,13 @@ import { InputValidationDirective, AlphanumricDirective, TextOnlyDirective, Form
     SkeletonLoadingDirective,
     FormatNumberDirective,
     TextOnlyDirective,
-    InputValidationDirective,
-    AlphanumricDirective,
-    Formatter
+    NumberOnlyDirective,
+    AlphaNumericDirective,
+    Formatter,
+    InputValueValidationDirective
   ],
-  exports: [RadioGroupDirectiveDirective, SkeletonLoadingDirective, FormatNumberDirective,InputValidationDirective,AlphanumricDirective,TextOnlyDirective,Formatter],
+  exports: [RadioGroupDirectiveDirective, SkeletonLoadingDirective, FormatNumberDirective, NumberOnlyDirective,
+    AlphaNumericDirective, TextOnlyDirective, Formatter, InputValueValidationDirective],
   imports: [
 
     // AppModule

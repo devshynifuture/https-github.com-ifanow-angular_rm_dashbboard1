@@ -1,8 +1,8 @@
-import { InputValidationDirective } from './input-validation.directive';
+import {NumberOnlyDirective} from './number-only.directive';
 
 describe('InputValidationDirective', () => {
   it('should create an instance', () => {
-    const directive = new InputValidationDirective();
+    const directive = new NumberOnlyDirective();
     expect(directive).toBeTruthy();
   });
 });

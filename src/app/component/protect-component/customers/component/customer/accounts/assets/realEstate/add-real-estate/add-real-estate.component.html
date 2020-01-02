@@ -39,93 +39,92 @@
         </div>
     </div>
 
-
-
-    <div class="pt-20 pb-48 mb-44 ">
-        <div formArrayName="getCoOwnerName" *ngIf="addOwner==true">
-            <div class="row pt-24" *ngFor="let obj of getCoOwner.controls; let pointIndex=index"
-                [formGroupName]="pointIndex">
-                <div class="col-md-5 pr-0 text-right">
-                    <h5 class="m-0 pt-8 ">Co-owner{{pointIndex+1}}</h5>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group mb-0">
-                        <mat-form-field>
-                            <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto"
-                                list="userName" class="form-control br-0 pl-8" formControlName="ownerName">
-                            <mat-autocomplete #auto="matAutocomplete">
-                                <mat-option *ngFor="let item of familyList" [value]="item.userName">
-                                    <span>{{item.userName}}</span>
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group mb-0">
-                        <mat-form-field>
-                            <input matInput class="form-control br-0" type="number" formControlName="ownershipPerc"
-                                (keyup)="onChange('owner')">
-
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-2 p-0">
-                    <h5 class="m-0 text-primitive pt-8 c-p" (click)="removeCoOwner(pointIndex)">Remove</h5>
-                </div>
-            </div>
-
-        </div>
-        <mat-hint class="f-12 pt-4 text-danger" align="end" *ngIf="showError== true">
-            Percent cannot be more than 100%
-        </mat-hint>
-
-        <div class="row pt-20">
+    <div formArrayName="getCoOwnerName" *ngIf="addOwner==true">
+        <div class="row pt-24" *ngFor="let obj of getCoOwner.controls; let pointIndex=index"
+            [formGroupName]="pointIndex">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Type</h5>
+                <h5 class="m-0 pt-8 ">Co-owner{{pointIndex+1}}</h5>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select class="form-control br-0" formControlName="type">
-                            <mat-option value="0">Land</mat-option>
-                            <mat-option value="1">Residential</mat-option>
-                            <mat-option value="2">Secondary</mat-option>
-                            <mat-option value="3">Commercial</mat-option>
-                        </mat-select>
-                        <mat-error class="f-12 pt-4"
-                            [ngClass]="{'v-h':!(isTypeValid && getFormControl().type.invalid || getFormControl().type.touched && getFormControl().type.invalid)}">
-                            Type is required
-                        </mat-error>
+                        <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto"
+                            list="userName" class="form-control br-0 pl-8" formControlName="ownerName">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let item of familyList" [value]="item.userName">
+                                <span>{{item.userName}}</span>
+                            </mat-option>
+                        </mat-autocomplete>
                     </mat-form-field>
-
                 </div>
             </div>
-            <div class="col-md-4 pr-0">
-                <h5 class="m-0 pb-8">Days</h5>
+            <div class="col-md-2">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select class="form-control br-0" formControlName="days">
-                            <mat-option *ngFor="let D of estateDays" [value]="D">{{D}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                        <input matInput class="form-control br-0" type="number" formControlName="ownershipPerc"
+                            (keyup)="onChange('owner')">
 
+                    </mat-form-field>
                 </div>
+            </div>
+            <div class="col-md-2 p-0">
+                <h5 class="m-0 text-primitive pt-8 c-p" (click)="removeCoOwner(pointIndex)">Remove</h5>
+            </div>
+        </div>
+
+    </div>
+    <mat-hint class="f-12 pt-4 text-danger" align="end" *ngIf="showError== true">
+        Percent cannot be more than 100%
+    </mat-hint>
+
+    <div class="row pt-20">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Type</h5>
+        </div>
+        <div class="col-md-3 pr-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control br-0" formControlName="type">
+                        <mat-option value="0">Land</mat-option>
+                        <mat-option value="1">Residential</mat-option>
+                        <mat-option value="2">Secondary</mat-option>
+                        <mat-option value="3">Commercial</mat-option>
+                    </mat-select>
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isTypeValid && getFormControl().type.invalid || getFormControl().type.touched && getFormControl().type.invalid)}">
+                        Type is required
+                    </mat-error>
+                </mat-form-field>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="row pt-20">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Days</h5>
+        </div>
+        <div class="col-md-3 pr-0">
+
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control br-0" formControlName="days">
+                        <mat-option *ngFor="let D of estateDays" [value]="D">{{D}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
             </div>
         </div>
     </div>
 
-    <div class="row pt-24">
-        <div class="col-md-5 text-right">
-            <h5 class="m-0 pt-8">Purchase value</h5>
-        </div>
 
+    <div class="row pt-24">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Market value</h5>
             <p class="m-0 f-12 text-custom">Market value has to be<br> updated manually
             </p>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3 pr-0">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input matInput #marketValue class="form-control rupess br-0" formControlName="marketValue"
@@ -320,7 +319,7 @@
                 </div>
             </div>
         </div>
-        <div class="pt-24" formArrayName="getNomineeName">
+        <div formArrayName="getNomineeName">
             <div class="row pt-24" *ngFor="let obj of getNominee.controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
@@ -344,7 +343,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="col-md-1 pl-0">
+                <div class="col-md-1 p-0">
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <input matInput type="number" class="br-0 form-control" formControlName="ownershipPer"
@@ -354,7 +353,7 @@
                 </div>
 
 
-                <div class="col-md-3 p-0" *ngIf="pointIndex==0">
+                <div class="col-md-3 pr-0" *ngIf="pointIndex==0">
                     <h5 class="m-0 text-primitive pt-8 c-p" (click)="addNominee()">+ Add Nominee</h5>
                 </div>
                 <div class="col-md-3 p-0" *ngIf="pointIndex > 0">
