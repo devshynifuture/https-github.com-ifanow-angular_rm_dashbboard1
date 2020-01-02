@@ -51,6 +51,7 @@ export class CreateSubscriptionComponent implements OnInit {
 
   @Input()
   set data(data) {
+    this.totalSelectedPayeeShare = 0;
     this.getSubStartDetails(data);
   }
 
@@ -112,11 +113,12 @@ export class CreateSubscriptionComponent implements OnInit {
     }
     if (this.stepper.selectedIndex == 4) {
       let date = this.subscriptionDetails.controls.activationDate.value;
-      if (this.clientData.feeMode == 1) {
+      if (this.clientData.feeTypeId == 1) {
         if (this.clientData.billingNature == "2" || this.clientData.billingMode == '1') {
           this.subDateToShow = this.subscriptionDetails.controls.activationDate.value;
           (this.clientData.billingCycle == 1) ? this.billEveryMsg = "monthly" : this.billEveryMsg = "yearly"
-
+          date = null;
+          return;
         }
         else {
           if (this.clientData.billingCycle == 1) {
@@ -272,10 +274,10 @@ export class CreateSubscriptionComponent implements OnInit {
         Status: 1,
         subscriptionPricing: {
           autoRenew: 0,
-          billEvery: this.clientData.billEvery,
-          billingCycle: 1,
+          billEvery: (this.clientData.billingNature == '2') ? '' : this.clientData.billEvery,
+          billingCycle: (this.clientData.billingNature == '2') ? '' : this.clientData.billingCycle,
           billingMode: this.clientData.billingMode,
-          billingNature: this.clientData.billingNature,
+          billingNature: (this.clientData.billingNature == '2') ? '' : this.clientData.billingNature,
           feeTypeId: this.clientData.feeTypeId,
           subscriptionAssetPricingList: [
             {
