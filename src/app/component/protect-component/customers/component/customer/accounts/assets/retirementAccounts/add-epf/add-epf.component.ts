@@ -111,7 +111,7 @@ export class AddEPFComponent implements OnInit {
         ownerName: (this.ownerName == undefined) ? this.epf.controls.ownerName.value : this.ownerName,
         employeesMonthlyContribution: this.epf.controls.employeeContry.value,
         employersMonthlyContribution: this.epf.controls.employerContry.value,
-        annualSalaryGrowth: this.epf.controls.annualSalGrowth.value,
+        annualSalaryGrowthRate: this.epf.controls.annualSalGrowth.value,
         currentEpfBalance: this.epf.controls.currentEPFBal.value,
         maturityYear: this.epf.controls.maturityYear.value,
         balanceAsOnDate: this.datePipe.transform(this.epf.controls.balanceAsOn.value, 'yyyy-MM-dd'),
