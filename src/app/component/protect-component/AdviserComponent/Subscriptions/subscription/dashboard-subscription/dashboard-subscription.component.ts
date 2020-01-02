@@ -58,6 +58,8 @@ export class DashboardSubscriptionComponent implements OnInit {
   chart: Chart;
   subscriptionSummaryStatusFilter = '1';
   showLetsBegin = false;
+  totalSales: any;
+  feeRecieved: any;
 
   constructor(private enumService: EnumServiceService,
     public subInjectService: SubscriptionInject,
@@ -189,6 +191,8 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.isLoading = false;
     console.log('getTotalRecivedRes', data);
     this.totalSaleReceived = data;
+    this.totalSales = (data) ? data.totalSales : 0;
+    this.feeRecieved = (data) ? data.feeRecieved : 0;
   }
 
   showSubscriptionSteps() {
