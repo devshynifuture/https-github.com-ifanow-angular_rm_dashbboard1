@@ -1,5 +1,5 @@
 <div class="account_side-menu" id="ui-liabilities">
-    <div class="row h-100vh">
+    <div class="row">
         <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
             <ul class="vertical-menu">
                 <li (click)="viewMode ='tab1'" (click)="sortTable('tab1')"
@@ -37,7 +37,7 @@
                         <div class="col-md-2 p-0 text-custom">{{this.personal.length}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('7')" [ngClass]="{'activeColor':showFilter =='tab7'}"
+                <li (click)="viewMode ='tab1'" (click)="sortTable('7')" [ngClass]="{'activeColor':showFilter =='7'}"
                     class=" c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Durables</div>
@@ -98,7 +98,7 @@
 
                             <h4 class="m-0 text-black roboto" *ngIf="showFilter=='5'">Personal</h4>
 
-                            <h4 class="m-0 text-black roboto" *ngIf="showFilter=='tab7'">Durables</h4>
+                            <h4 class="m-0 text-black roboto" *ngIf="showFilter=='7'">Durables</h4>
                             <h4 class="m-0 text-black roboto" *ngIf="showFilter=='4'">Credit card</h4>
                             <h4 class="m-0 text-black roboto" *ngIf="showFilter=='6'">Mortgage</h4>
 
@@ -130,7 +130,8 @@
                 <div class="liabilities wrapper-8">
                     <div class="row">
                         <div class="col-md-12 p-0">
-                            <table matSort mat-table [dataSource]="dataSource" *ngIf="dataSource.filteredData.length > 0" id="table-low" class="skeletonAnimation"
+                            <table matSort mat-table [dataSource]="dataSource"
+                                *ngIf="dataSource.filteredData.length > 0" id="table-low" class="skeletonAnimation"
                                 appSkeletonLoading [appSkeletonLoading]="isLoading">
                                 <ng-container matColumnDef="no">
                                     <th mat-header-cell *matHeaderCellDef class="br"> No.</th>
@@ -165,13 +166,12 @@
                                         class="br text-right">
                                         Loan amount</th>
                                     <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
-                                        <div class="bar"> 
+                                        <div class="bar">
                                             {{(element.loanAmount)?util.formatter(element.loanAmount):''}}
-                                         </div>
+                                        </div>
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class="br text-right f-700"
-                                        [hidden]="dataSource==undefined" appFormatNumber
-                                        [value]="totalLoanAmt">
+                                        [hidden]="dataSource==undefined" appFormatNumber [value]="totalLoanAmt">
                                         <div class="bar">
                                             {{util.formatter(totalLoanAmt) || '-'}}
                                         </div>
@@ -196,8 +196,7 @@
                                         </div>
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class="br text-right f-700"
-                                        [hidden]="dataSource==undefined" appFormatNumber
-                                        [value]="outStandingAmt">
+                                        [hidden]="dataSource==undefined" appFormatNumber [value]="outStandingAmt">
                                         <div class="bar"> {{util.formatter(outStandingAmt) || '-'}} </div>
                                     </td>
                                 </ng-container>
@@ -266,10 +265,12 @@
                                 <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
 
                             </table>
-                            <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
+                            <div *ngIf="dataSource.filteredData.length == 0"
+                                class="d-flex flex-column align-items-center">
                                 <h4 class="text-center pt-72">No Data Found</h4>
-                                <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('addLiabilities',showFilter)"><i
-                                        class="material-icons">add</i>ADD NEW</button>
+                                <button mat-stroked-button class="btn-primary addon v-middle"
+                                    (click)="open('addLiabilities',showFilter)"><i class="material-icons">add</i>ADD
+                                    NEW</button>
                             </div>
                         </div>
                     </div>
