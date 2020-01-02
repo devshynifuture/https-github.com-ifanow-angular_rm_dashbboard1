@@ -124,6 +124,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
   onChange(fileList: FileList) {
     console.log(fileList[0].name);
+    this.logUrl.controls.url.reset();
     this.imageData = fileList[0];
     // this.logoImg=
     const reader = new FileReader();
@@ -133,6 +134,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
   cancelImageUpload() {
     this.logoImg = undefined;
+    this.logUrl.controls.url.reset();
   }
 
   getSingleBillerProfileData(data) {
@@ -192,7 +194,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       case (this.profileDetailsForm.valid && value == 0):
         this.selected = 1;
         break;
-      case (this.logoImg && value == 1):
+      case (this.logUrl.valid && value == 1):
         this.selected = 2;
         break;
       case (this.bankDetailsForm.valid && value == 2):
@@ -236,6 +238,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
       return;
     } else if (this.profileDetailsForm.controls.pincode.invalid) {
       this.isZipCode = true;
+      return;
+    }
+    else if (this.logUrl.controls.url.invalid) {
       return;
     } else if (this.bankDetailsForm.controls.acNo.invalid) {
       this.isAcNo = true;
