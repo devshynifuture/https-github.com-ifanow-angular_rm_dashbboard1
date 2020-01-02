@@ -137,7 +137,7 @@ export class TermsAgreementComponent implements OnInit {
   getResponseData(data) {
     console.log(data);
     if (data == 1) {
-      this.eventService.openSnackBar("Document updated successfully", "OK")
+      this.eventService.openSnackBar("Document added successfully", "OK")
     }
     this.eventService.changeUpperSliderState({ state: 'close' });
   }

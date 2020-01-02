@@ -291,7 +291,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input type="text" class="form-control" maxlength="{{getFormControl().tds.maxLength}}" formControlName="tds">
+                                    <input type="text" class="form-control" #tdsRef maxlength="10" formControlName="tds">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
@@ -301,7 +301,8 @@
                                     </div>
                                     <div class="col-md-2 pl-0">
                                         <p class="mb-0 f-12 text-custom text-right pt-4">
-                                            {{getFormControl().tds.value?.length?getFormControl().tds.value.length:0}}/{{getFormControl().tds.maxLength}}
+                                            {{tdsRef.value.length}}/{{getFormControl().tds.maxLength}}
+                                            <!-- {{getFormControl().tds.value?.length?getFormControl().tds.value.length:0}}/{{getFormControl().tds.maxLength}} -->
                                         </p>
                                     </div>
                                 </div>

@@ -46,7 +46,7 @@ export class AppComponent implements AfterViewInit {
          console.log(' window.onbeforeunload windowEventHandlers  ', windowEventHandlers);
 
        });*/
-    window.onunload = null;
+    // window.onunload = null;
 
     this._router.events.subscribe((event: Event) => {
       // console.log(event);
@@ -57,10 +57,10 @@ export class AppComponent implements AfterViewInit {
   private loadingBarInterceptor(event: Event) {
     if (event instanceof NavigationStart) {
       this.lBar.start();
-      console.log('Performance navigation start', performance.getEntriesByType('navigation'));
+      // console.log('Performance navigation start', performance.getEntriesByType('navigation'));
     }
     if (event instanceof NavigationEnd) {
-      console.log('Performance navigation end', performance.getEntriesByType('navigation'));
+      // console.log('Performance navigation end', performance.getEntriesByType('navigation'));
 
       this.lBar.complete();
       // this.changeDetector.markForCheck();

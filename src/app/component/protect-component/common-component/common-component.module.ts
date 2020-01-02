@@ -7,13 +7,13 @@ import {FroalaEditorModule, FroalaViewModule} from 'angular-froala-wysiwyg';
 import {CommonModule} from '@angular/common';
 import {ErrorPageComponent} from './error-page/error-page.component';
 import {DataNotFoundComponent} from './data-not-found/data-not-found.component';
-import {PhotoUploadComponent} from './photo-upload/photo-upload.component';
+// import {PhotoUploadComponent} from './photo-upload/photo-upload.component';
 import {FileUploadModule} from "ng2-file-upload";
 
 @NgModule({
   declarations: [
-    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, PhotoUploadComponent],
-  exports: [FroalaComponent, ConfirmDialogComponent, PhotoUploadComponent],
+    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, /*PhotoUploadComponent*/],
+  exports: [FroalaComponent, ConfirmDialogComponent, /*PhotoUploadComponent*/],
   imports: [
     MaterialModule,
     CommonModule,

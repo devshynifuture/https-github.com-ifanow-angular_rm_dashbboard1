@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-detailded-view-superannuation',
@@ -11,7 +12,7 @@ export class DetaildedViewSuperannuationComponent implements OnInit {
   inputData: any;
   superannnuation: any;
 
-  constructor(private subInjectService: SubscriptionInject) { }
+  constructor(private utils : UtilService ,private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
     this.superannnuation = this.inputData

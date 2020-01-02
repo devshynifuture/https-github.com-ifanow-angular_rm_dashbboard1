@@ -5,6 +5,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { MatSliderChange } from '@angular/material';
 import { HAMMER_GESTURE_CONFIG } from "@angular/platform-browser";
 import { GestureConfig } from "@angular/material/core";
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-change-payee',
@@ -44,7 +45,7 @@ export class ChangePayeeComponent implements OnInit {
     return this._payeeData;
   }
 
-  constructor(public subInjectService: SubscriptionInject, public subService: SubscriptionService, public eventService: EventService) {
+  constructor( public utils: UtilService,public subInjectService: SubscriptionInject, public subService: SubscriptionService, public eventService: EventService) {
 
   }
 

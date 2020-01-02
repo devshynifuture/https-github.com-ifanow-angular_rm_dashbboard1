@@ -8,6 +8,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import * as moment from 'moment';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
 
 
 @Component({
@@ -40,7 +41,7 @@ export class BondsComponent implements OnInit {
   ownerData: any;
   clientId: any;
 
-  constructor(private eventService: EventService, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
+  constructor( public utils: UtilService,private eventService: EventService, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
   }
   @Input()
   set data(data) {

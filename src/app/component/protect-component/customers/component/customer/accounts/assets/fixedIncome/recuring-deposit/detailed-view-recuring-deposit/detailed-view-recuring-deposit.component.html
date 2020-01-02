@@ -27,7 +27,7 @@
                         Monthly contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{recuringDeposit.monthlyContribution}}
+                        {{utils.formatter(recuringDeposit.monthlyContribution)}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -67,7 +67,7 @@
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{recuringDeposit.currentValue}}
+                        {{utils.formatter(recuringDeposit.currentValue)}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -75,7 +75,7 @@
                         Maturity value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{recuringDeposit.maturityValue}}
+                        {{utils.formatter(recuringDeposit.maturityValue)}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
