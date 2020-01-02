@@ -95,11 +95,16 @@ export class SubscriptionCompletenessComponent implements OnInit {
     this.sub.subscriptionTab = 'SETTINGS';
   }
 
-  currentTabs(value) {
+  currentTabs(value, ind) {
     this.eventService.tabData(value.selectedTab)
+    if (value.selectedTab == 7 && ind == 0) {
+      this.router.navigate(['admin', 'subscription', 'settings'], { state: { example: 0 } });
+    } else {
+      this.router.navigate(['admin', 'subscription', 'settings'], { state: { example: 3 } });
+    }
     switch (value.selectedTab) {
       case (2):
-        this.router.navigate(['admin/subscription/clients',]);
+        this.router.navigate(['admin', 'subscription', 'clients']);
         break;
       case (4):
         this.router.navigate(['admin', 'subscription', 'quotations']);
@@ -109,9 +114,6 @@ export class SubscriptionCompletenessComponent implements OnInit {
         break;
       case (6):
         this.router.navigate(['admin', 'subscription', 'documents']);
-        break;
-      case (7):
-        this.router.navigate(['admin', 'subscription', 'settings'], { state: { example: 3 } });
         break;
       default:
         console.log("default selection")

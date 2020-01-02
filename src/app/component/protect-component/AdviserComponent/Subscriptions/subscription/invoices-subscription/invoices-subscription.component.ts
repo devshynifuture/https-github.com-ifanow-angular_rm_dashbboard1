@@ -1,11 +1,11 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionService} from '../../subscription.service';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {AuthService} from "../../../../../../auth-service/authService";
-import {UtilService} from "../../../../../../services/util.service";
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionService } from '../../subscription.service';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { AuthService } from "../../../../../../auth-service/authService";
+import { UtilService } from "../../../../../../services/util.service";
 import * as _ from 'lodash';
 
 export interface PeriodicElement {
@@ -26,17 +26,17 @@ export interface PeriodicElement {
   styleUrls: ['./invoices-subscription.component.scss']
 })
 export class InvoicesSubscriptionComponent implements OnInit {
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   selectedStatusFilter: any;
   selectedDateFilter: any;
   chips = [
-    {name: 'LIVE', value: 1},
-    {name: 'PAID', value: 2},
-    {name: 'OVERDUE', value: 3}
+    { name: 'LIVE', value: 1 },
+    { name: 'PAID', value: 2 },
+    { name: 'OVERDUE', value: 3 }
   ];
   dateChips = [
-    {name: 'Date', value: 1},
-    {name: 'Due date', value: 2},
+    { name: 'Date', value: 1 },
+    { name: 'Due date', value: 2 },
   ];
   invoiceDesign: string;
   noData: string;
@@ -46,6 +46,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   showFilter = false;
   selectedDateRange: { begin: Date; end: Date; };
   dataSource: any;
+  list: any[];
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
     private eventService: EventService, public subscription: SubscriptionService) {
@@ -99,7 +100,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   getInvoiceResponseData(data) {
     this.isLoading = false;
     if (data == undefined) {
-      this.dataSource=undefined;
+      this.dataSource.data = [];
       this.noData = "No Data Found";
     } else {
       console.log(data);
@@ -217,7 +218,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   filterSubscriptionRes(data) {
     console.log('filterSubscriptionRes', data);
-    this.dataSource = data;
+    this.dataSource.data = data;
     // this.getSubSummaryRes(data);
   }
 
@@ -248,17 +249,30 @@ export class InvoicesSubscriptionComponent implements OnInit {
     data = Math.round(data);
     return data;
   }
-
   deleteModal(value) {
+    this.list = [];
+    this.dataSource.filteredData.forEach(singleElement => {
+      if (singleElement.selected) {
+        this.list.push(singleElement.id);
+      }
+    });
     const dialogData = {
       data: value,
       header: 'DELETE',
-      body: 'Are you sure you want to delete the document GD?',
+      body: 'Are you sure you want to delete?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        console.log('11111111111111111111111111111111111111111111');
+        this.subscription.deleteInvoices(this.list).subscribe(
+          data => {
+            this.dataCount = 0;
+            this.eventService.openSnackBar('invoice deleted successfully.', 'dismiss');
+            dialogRef.close();
+            this.getInvoiceSubData();
+          },
+          err => this.eventService.openSnackBar(err)
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -271,12 +285,10 @@ export class InvoicesSubscriptionComponent implements OnInit {
       data: dialogData,
       autoFocus: false,
 
-
     });
 
     dialogRef.afterClosed().subscribe(result => {
 
     });
-
   }
 }

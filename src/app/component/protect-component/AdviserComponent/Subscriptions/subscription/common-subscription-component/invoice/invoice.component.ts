@@ -1,15 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EnumServiceService } from '../../../../../../../services/enum-service.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { UtilService } from 'src/app/services/util.service';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { EmailOnlyComponent } from '../email-only/email-only.component';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EnumServiceService} from '../../../../../../../services/enum-service.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {MAT_DATE_FORMATS} from '@angular/material/core';
+import {UtilService} from 'src/app/services/util.service';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {EmailOnlyComponent} from '../email-only/email-only.component';
 
 
 export interface PeriodicElement {
@@ -119,6 +119,7 @@ export class InvoiceComponent implements OnInit {
   defaultVal: any;
   finalAmount: any;
   editFormData: boolean;
+  paymentDate: string;
 
   @Input()
   set data(data) {
@@ -158,11 +159,23 @@ export class InvoiceComponent implements OnInit {
     }
   }
 
+  onDateInput(event){
+    this.paymentDate = this.utils.dateFormat(event);
+  }
+
   keyPress(event: any) {
+    console.log(event.target.value.length);
     const pattern = /[0-9\+\-\ ]/;
 
     const inputChar = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+  dontAllowTyping(event, maxLength: number){
+    // console.log(this.rPayment.value());
+    if(event.target.value.length > maxLength){
       event.preventDefault();
     }
   }
@@ -211,7 +224,7 @@ export class InvoiceComponent implements OnInit {
       finalAmount: [(parseInt(data.finalAmount) == undefined) ? '' : parseInt(data.finalAmount), [Validators.required]],
       discount: [(data.discount == undefined) ? '' : data.discount, [Validators.required]],
       invoiceNumber: [(data.invoiceNumber == undefined) ? this.defaultVal.invoiceNumber : data.invoiceNumber, [Validators.required]],
-      invoiceDate: [(data.invoiceDate == undefined) ? '' : new Date(data.invoiceDate), [Validators.required]],
+      invoiceDate: [(data.invoiceDate == undefined) ? new Date() : new Date(data.invoiceDate), [Validators.required]],
       taxStatus: [(data.igst != undefined) ? 'IGST(18%)' : 'SGST(9%)|CGST(9%)'],
       balanceDue: [(data.balanceDue == undefined) ? '' : data.balanceDue],
       serviceName: [(data.services == undefined) ? '' : data.services[0].serviceName, [Validators.required]],
@@ -300,7 +313,7 @@ export class InvoiceComponent implements OnInit {
   getRecordPayment(data) {
     console.log('payee data', data);
     this.rPayment = this.fb.group({
-      amountReceived: [data.amountReceived, [Validators.required]],
+      amountReceived: [data.amountReceived, [Validators.required ,  Validators.min(0), Validators.max(10)]],
       chargesIfAny: [data.chargesIfAny, [Validators.required]],
       tds: [data.tds, [Validators.required]],
       paymentDate: [new Date(data.paymentDate), [Validators.required]],

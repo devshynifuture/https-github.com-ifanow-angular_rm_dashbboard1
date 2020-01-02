@@ -48,7 +48,7 @@
         </mat-radio-group>
       </div>
     </div>
-    <div class="row pt-28">
+    <div *ngIf="fixedFeeStructureForm.get('billingNature').value==1" class="row pt-28">
       <div class="col-md-5">
         <h5 class="text-right pt-12 mb-0">Bill every</h5>
       </div>
@@ -56,7 +56,7 @@
         <div class="row">
           <div class="col-md-5 p-0">
             <div class="form-group mb-0">
-              <input type="number" formControlName="billEvery" class="form-control br-0">
+              <input type="number" (keypress)="utils.keyPress($event)" formControlName="billEvery" class="form-control br-0">
             </div>
             <mat-error class="f-12 pt-4"
               [ngClass]="{'v-h':!(isBillValid && getFixedFee().billEvery.invalid || getFixedFee().billEvery.touched && getFixedFee().billEvery.invalid)}">
@@ -68,14 +68,14 @@
             <div class="form-group">
               <select formControlName='Duration' class="form-control br-0" f id="sel1">
                 <option value="1">Months</option>
-                <option value="12">Yearly</option>
+                <option value="2">Yearly</option>
               </select>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="row pt-28">
+    <div *ngIf="fixedFeeStructureForm.get('billingNature').value==1" class="row pt-28">
       <div class="col-md-5">
         <h5 class="text-right pt-12 mb-0">Billing Mode</h5>
       </div>

@@ -84,10 +84,10 @@ export class ClientSubscriptionComponent implements OnInit {
     // this.dataSource.sort = this.sort;
   }
 
-  Open(value, state,data) {
+  Open(value, state, data) {
     const fragmentData = {
       flag: value,
-      data:data,
+      data: data,
       id: 1,
       state: state,
       componentName: HelpComponent

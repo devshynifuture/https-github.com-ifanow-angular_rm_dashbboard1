@@ -43,7 +43,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #pensionAmount type="number" (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="pensionAmount">
+                    <input matInput #pensionAmount type="number" appNumberValidation maxlength="20" class="form-control br-0 rupess" formControlName="pensionAmount">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isPensionAmount && getFormControl().pensionAmount.invalid || getFormControl().pensionAmount.touched && getFormControl().pensionAmount.invalid)}">
                         Pension amount is required
                     </mat-error>

@@ -2,3 +2,9 @@
   width: 200px !important;
   padding-bottom: 8px !important;
 }
+
+::ng-deep .action {
+  .mat-menu-content {
+    padding-bottom: 0px !important;
+  }
+}

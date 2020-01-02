@@ -79,9 +79,9 @@
     </div>
     <!-- (scroll)="scrollCall()" -->
     <!-- id="pdfDoc"  removed from above div-->
-    <div class="wrapper-20 pt-0 bg-white" id="wrapper" >
+    <div class="wrapper-20 pt-0 bg-white" id="wrapper">
 
-        <div class="tableClass" >
+        <div class="tableClass">
             <table matSort [dataSource]="dataSource" class=" skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading" id="table-low" mat-table>
                 <ng-container matColumnDef="client">
@@ -200,7 +200,14 @@
             </table>
 
         </div>
-        <!-- dataSource=='' This condition will always return 'false' since the types '{}[]' and 'string' have no overlap.-->
+    </div>
 
+
+</div>
+
+<div class="row" *ngIf="dataSource.data.length == 0">
+    <div class="col-md-12  d-flex align-items-center flex-column justify-content-center">
+        <img class="width400" src="assets/images/svg/clients-img.svg">
+        <p class="f-22 f-600 pt-28"> No Data Found </p>
     </div>
 </div>
