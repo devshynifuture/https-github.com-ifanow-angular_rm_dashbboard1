@@ -3,6 +3,7 @@ import {DialogContainerComponent} from './dialog-container/dialog-container.comp
 import {MaterialModule} from '../material/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
+import {ProgressButtonComponent} from './progress-button/progress-button.component';
 
 // import {AppModule} from "../app.module";
 
@@ -11,6 +12,7 @@ import {CommonModule} from '@angular/common';
   declarations: [
     // ConfirmDialogComponent,
     DialogContainerComponent,
+    ProgressButtonComponent,
     // DynamicComponentComponent
   ],
   imports: [
@@ -27,7 +29,7 @@ import {CommonModule} from '@angular/common';
     // PlanEntryModule,
     // EntryComponentsModule
   ],
-  exports: [DialogContainerComponent],
+  exports: [DialogContainerComponent, ProgressButtonComponent],
   // entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
 })
 export class CustomCommonModule {
