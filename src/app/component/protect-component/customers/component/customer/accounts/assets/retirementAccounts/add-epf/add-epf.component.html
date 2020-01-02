@@ -28,7 +28,7 @@
         <div class="col-md-3 ">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #employeeContry type="number" (keypress)="utils.keyPress($event)"
+                    <input matInput #employeeContry type="number"  appNumberOnly [maxLength]="10"
                         maxlength="20" class="form-control br-0 rupess" formControlName="employeeContry">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isEmployeeContry && getFormControl().employeeContry.invalid || getFormControl().employeeContry.touched && getFormControl().employeeContry.invalid)}">
@@ -46,7 +46,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #employerContry type="number" (keypress)="utils.keyPress($event)"
+                    <input matInput #employerContry type="number"   appNumberOnly [maxLength]="10"
                         maxlength="20" class="form-control br-0 rupess" formControlName="employerContry">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isEmployerContry && getFormControl().employerContry.invalid || getFormControl().employerContry.touched && getFormControl().employerContry.invalid)}">
@@ -63,7 +63,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #currentEPFBal type="number" (keypress)="utils.keyPress($event)"
+                    <input matInput #currentEPFBal type="number"  appNumberOnly [maxLength]="10"
                         maxlength="20" class="form-control br-0 rupess" formControlName="currentEPFBal">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isCurrentEPFBal && getFormControl().currentEPFBal.invalid || getFormControl().currentEPFBal.touched && getFormControl().currentEPFBal.invalid)}">
@@ -97,7 +97,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #annualSalGrowth type="number" (keypress)="utils.keyPress($event)"
+                    <input matInput #annualSalGrowth type="number"  appNumberOnly [maxLength]="3"
                         maxlength="20" class="form-control br-0 percentage" formControlName="annualSalGrowth">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isAnnualSalGrowth && getFormControl().annualSalGrowth.invalid || getFormControl().annualSalGrowth.touched && getFormControl().annualSalGrowth.invalid)}">
@@ -154,7 +154,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankAcNo type="number" (keypress)="utils.keyPress($event)" maxlength="30"
+                        <input matInput #bankAcNo type="number" appNumberOnly [maxLength]="16" maxlength="30"
                             class="form-control br-0" formControlName="bankAcNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
