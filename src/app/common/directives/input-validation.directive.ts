@@ -13,7 +13,6 @@ export class InputValidationDirective {
 
   @HostListener('input', ['$event']) onInputChange(event) {
     let initialValue = this._el.nativeElement.value;
-    console.log('tera wala log',initialValue)
     console.log('####',event)
     if (this._el.nativeElement.value.length <= this.maxLength) {
       if (initialValue > 100) {
@@ -42,8 +41,6 @@ export class AlphanumricDirective {
     @HostListener('input', ['$event']) onInputChange(event) {
       console.log(event)
       let initialValue = this._el.nativeElement.value;
-
-      console.log('ye toh mera wala log hai',initialValue)
       var k = initialValue;
       initialValue = initialValue.replace(/[^a-z0-9]/gi,''); 
       this.renderer.setProperty(this._el.nativeElement, 'value', initialValue);
@@ -59,10 +56,20 @@ export class TextOnlyDirective {
     @HostListener('input', ['$event']) onInputChange(event) {
       console.log(event)
       let initialValue = this._el.nativeElement.value;
-
-      console.log('ye toh mera wala log hai',initialValue)
       var k = initialValue;
       initialValue = initialValue.replace(/[^a-z]/gi,''); 
       this.renderer.setProperty(this._el.nativeElement, 'value', initialValue);
+    }
+}
+@Directive({
+  selector: '[appFormatter]'
+})
+export class Formatter {
+  constructor( private _el: ElementRef,
+    private renderer: Renderer2) { }
+    @HostListener('input', ['$event']) onInputChange(event) {
+      console.log(event)
+      let initialValue = this._el.nativeElement.value;
+      return Math.round(initialValue);
     }
 }
