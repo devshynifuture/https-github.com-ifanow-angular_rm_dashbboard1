@@ -317,11 +317,11 @@
                                     <!-- <input type="date" class="form-control" formControlName="paymentDate"> -->
 
                                     <mat-form-field>
-                                        <input matInput formControlName="paymentDate" [matDatepicker]="picker" (keypress)="utils.dateFormat($event)" placeholder="mm/dd/yyyy" maxlength="8" class="form-control">
+                                        <input matInput formControlName="paymentDate" [matDatepicker]="picker" [value]="paymentDate" appDateInputFormat placeholder="mm/dd/yyyy" maxlength="8" class="form-control">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                     </mat-form-field>
-                                    
+
                                     <div class="row">
                                         <div class="col-md-10 pr-0">
                                             <mat-error class="f-12 pt-4" *ngIf="isdateValid && getFormControl().paymentDate.invalid || (getFormControl().paymentDate.touched && getFormControl().paymentDate.invalid)">

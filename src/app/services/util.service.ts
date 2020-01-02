@@ -131,12 +131,24 @@ export class UtilService {
 
   //used for dateFormat allows numbers and / character
   dateFormat(event: any) {
-    if(event.target.value.length !== null && event.target.value.length === 2 ||event.target.value.length !== null && event.target.value.length === 4){
-      return `${event.target.value}/`;
+    let res: string;
+    if(this.alphaNumric(event)){
+      res = event.target.value;
+   
+      if(((event.keyCode == 47) || (event.keyCode >= 48 && event.keyCode <= 57))){
+        if(event.target.value.length && event.target.value.length !== null){
+          // console.log(event.target.value);
+          if(event.target.value.length === 2 || event.target.value === 4){
+            res += '/';
+            return res;
+          } 
+        }
+      } else {
+        return res;
+      }
     }
-    console.log(")()()(()",event.target.value.length);
-    var k = event.keyCode;
-    return ((k == 47) || (k >= 48 && k <= 57));
+    else {
+      return '';
+    }
   }
-
 }

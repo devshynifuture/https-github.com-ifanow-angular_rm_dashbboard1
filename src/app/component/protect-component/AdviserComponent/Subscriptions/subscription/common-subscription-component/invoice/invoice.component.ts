@@ -119,6 +119,7 @@ export class InvoiceComponent implements OnInit {
   defaultVal: any;
   finalAmount: any;
   editFormData: boolean;
+  paymentDate: string;
 
   @Input()
   set data(data) {
@@ -156,6 +157,10 @@ export class InvoiceComponent implements OnInit {
       this.editPayment.controls.serviceName.enable();
 
     }
+  }
+
+  onDateInput(event){
+    this.paymentDate = this.utils.dateFormat(event);
   }
 
   keyPress(event: any) {

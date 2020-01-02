@@ -7,6 +7,7 @@ import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { SkeletonLoadingDirective } from './skeleton-loading.directive';
 import { InputValidationDirective, AlphanumricDirective, TextOnlyDirective, Formatter } from './input-validation.directive';
 // import {AppModule} from "../app.module";
+import { DateInputFormatDirective } from './date-input-format.directive';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { InputValidationDirective, AlphanumricDirective, TextOnlyDirective, Form
     TextOnlyDirective,
     InputValidationDirective,
     AlphanumricDirective,
-    Formatter
+    Formatter,
+    DateInputFormatDirective
   ],
   exports: [RadioGroupDirectiveDirective, SkeletonLoadingDirective, FormatNumberDirective,InputValidationDirective,AlphanumricDirective,TextOnlyDirective,Formatter],
   imports: [
