@@ -46,7 +46,7 @@ export class AppComponent implements AfterViewInit {
          console.log(' window.onbeforeunload windowEventHandlers  ', windowEventHandlers);
 
        });*/
-    window.onunload = null;
+    // window.onunload = null;
 
     this._router.events.subscribe((event: Event) => {
       // console.log(event);
