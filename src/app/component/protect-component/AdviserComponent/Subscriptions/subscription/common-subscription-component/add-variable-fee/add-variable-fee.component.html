@@ -96,7 +96,8 @@
       <div class="row">
         <div class="col-md-5 p-0">
           <div class="form-group mb-0">
-            <input type="text" formControlName="billEvery" class="form-control br-0">
+            <input type="number" pattern="\d*" onKeyPress="if(this.value.length==2) return false;"
+              formControlName="billEvery" class="form-control br-0">
           </div>
         </div>
         <div class="col-md-5 p-0">
@@ -137,14 +138,15 @@
           </div>
           <div class="row ui-mff">
             <div class="col-md-4 p-0 bl-0 br-grey bb-grey">
-              <input type="number" formControlName="equity" placeholder="%" minlength="4"
+              <input type="text" appNumberValidation [maxLength]="4" formControlName="equity" placeholder="%"
                 class="form-control br-0 h-39">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
-              <input type="number" formControlName="debt" placeholder="%" minlength="4" class="form-control br-0 h-39">
+              <input type="text" appNumberValidation [maxLength]="4" formControlName="debt" placeholder="%"
+                class="form-control br-0 h-39">
             </div>
             <div class="col-md-4 p-0 bb-grey br-grey">
-              <input type="number" formControlName="liquid" placeholder="%" minlength="4"
+              <input type="text" appNumberValidation [maxLength]="4" formControlName="liquid" placeholder="%"
                 class="form-control br-0 h-39">
             </div>
           </div>
@@ -166,14 +168,15 @@
           </div>
           <div class="row ui-mff">
             <div class="col-md-4 p-0 bl-0 bb-grey br-grey">
-              <input type="number" formControlName="equity" placeholder="%" minl minlength="4"
+              <input type="text" appNumberValidation [maxLength]="4" formControlName="equity" placeholder="%"
                 class="form-control br-0 h-39 br-grey">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
-              <input type="number" formControlName="debt" placeholder="%" minlength="4" class="form-control br-0 h-39">
+              <input type="text" appNumberValidation [maxLength]="4" formControlName="debt" placeholder="%"
+                class="form-control br-0 h-39">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
-              <input type="number" formControlName="liquid" placeholder="%" minlength="4"
+              <input type="text" appNumberValidation [maxLength]="4" formControlName="liquid" placeholder="%"
                 class="form-control br-0 h-39">
             </div>
           </div>
@@ -205,7 +208,7 @@
           </div>
         </div>
         <div class="col-md-2 p-0">
-          <input type="number" minlength="4" formControlName="pricing" placeholder="%"
+          <input type="text" appNumberValidation [maxLength]="4" formControlName="pricing" placeholder="%"
             class="form-control br-0 h-39 br-grey">
         </div>
       </div>

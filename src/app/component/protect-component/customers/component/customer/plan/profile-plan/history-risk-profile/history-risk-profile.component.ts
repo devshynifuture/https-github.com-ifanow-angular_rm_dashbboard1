@@ -18,13 +18,13 @@ export class HistoryRiskProfileComponent implements OnInit {
   dataSourceHistory: any;
   storeResult: any;
 
-  constructor(private subInjectService: SubscriptionInject, public planService: PlanService,) { }
+  constructor(private subInjectService: SubscriptionInject, public planService: PlanService, ) { }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.riskHistory()
+    this.riskHistory();
   }
-  riskHistory(){
+  riskHistory() {
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -33,22 +33,22 @@ export class HistoryRiskProfileComponent implements OnInit {
       data => this.getRiskHistoryRes(data), error => {
       });
   }
-  viewResult(obj){
+  viewResult(obj) {
     const data = {
-      clientRiskProfileId : obj.id
+      clientRiskProfileId: obj.id
     }
     this.planService.getResultRisk(data).subscribe(
       data => this.getResultRiskRes(data), error => {
       });
   }
-  getResultRiskRes(data){
-    console.log(data)
-    this.storeResult = data
-    this.Close(data)
+  getResultRiskRes(data) {
+    console.log(data);
+    this.storeResult = data;
+    this.Close(data);
   }
-  getRiskHistoryRes(data){
-    console.log('getRiskHistoryRes',data)
-    this.dataSourceHistory = data.clientRiskProfileList
+  getRiskHistoryRes(data) {
+    console.log('getRiskHistoryRes', data);
+    this.dataSourceHistory = data.clientRiskProfileList;
   }
   open(flagValue, data) {
     const fragmentData = {
@@ -70,7 +70,7 @@ export class HistoryRiskProfileComponent implements OnInit {
     );
   }
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close',data });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 
 }
@@ -82,7 +82,7 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {position: '2019-09-20', name: 'Aggressive', weight: 90, symbol: 'H'},
-  {position: '2019-09-21', name: 'Moderate', weight: 40, symbol: 'He'},
-  {position: '2019-09-22', name: 'Moderately conservative', weight: 60, symbol: 'Li'}
+  { position: '2019-09-20', name: 'Aggressive', weight: 90, symbol: 'H' },
+  { position: '2019-09-21', name: 'Moderate', weight: 40, symbol: 'He' },
+  { position: '2019-09-22', name: 'Moderately conservative', weight: 60, symbol: 'Li' }
 ];

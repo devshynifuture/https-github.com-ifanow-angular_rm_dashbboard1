@@ -1,9 +1,9 @@
-import {Component, OnInit, Input, Output, EventEmitter, forwardRef} from '@angular/core';
-import {FormGroup, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {HowToUseDialogComponent} from '../how-to-use-dialog/how-to-use-dialog.component';
-import {MatDialog} from '@angular/material';
-import {SubscriptionService} from '../../../subscription.service';
+import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { FormGroup, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { HowToUseDialogComponent } from '../how-to-use-dialog/how-to-use-dialog.component';
+import { MatDialog } from '@angular/material';
+import { SubscriptionService } from '../../../subscription.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 
@@ -26,7 +26,7 @@ export class TermsAgreementComponent implements OnInit {
   _upperData: any;
   dataTerms: any;
 
-  constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public subService: SubscriptionService,private eventService:EventService) {
+  constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public subService: SubscriptionService, private eventService: EventService) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getcommanFroalaData(data)
     );
@@ -76,14 +76,14 @@ export class TermsAgreementComponent implements OnInit {
   Close() {
     // this.subInjectService.rightSideData(value);
     // this.valueChange.emit(this.quotationDesignE);
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
 
   }
   onSubmit() {
     // TODO: Use EventEmitter with form value
     console.log(this.mailForm.value);
   }
-  getDataTerms(data){
+  getDataTerms(data) {
     this.dataTerms = data.documentData
   }
   openDialog(data) {
@@ -102,7 +102,7 @@ export class TermsAgreementComponent implements OnInit {
     });
 
   }
-  OpenEdit(data){
+  OpenEdit(data) {
     const fragmentData = {
       flag: 'addEditDocument',
       data: this._upperData.documentData,
@@ -121,10 +121,13 @@ export class TermsAgreementComponent implements OnInit {
   }
   updateData(data) {
     const obj = {
-      name:data.name,
-      description:data.description,
+      advisorId: data.advisorId,
+      availableAt: data.availableAt,
+      description: data.description,
+      docText: data.docText,
       documentRepositoryId: data.documentRepositoryId, // pass here advisor id for Invoice advisor
-      docText: data.docText
+      documentTypeId:data.documentTypeId,
+      name: data.name,
     };
     this.subService.updateDocumentData(obj).subscribe(
       data => this.getResponseData(data)
@@ -133,10 +136,10 @@ export class TermsAgreementComponent implements OnInit {
 
   getResponseData(data) {
     console.log(data);
-    if(data == 1){
-      this.eventService.openSnackBar("Document updated successfully","OK")
+    if (data == 1) {
+      this.eventService.openSnackBar("Document added successfully", "OK")
     }
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
   }
 
   // Begin ControlValueAccesor methods.

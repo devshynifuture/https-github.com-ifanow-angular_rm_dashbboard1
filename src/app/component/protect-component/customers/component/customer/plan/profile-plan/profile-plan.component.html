@@ -4,15 +4,15 @@
         <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
             <ul class="vertical-menu">
                 <li (click)="viewMode ='tab1'" [ngClass]="{'b-ua':viewMode =='tab1'}" class="b-ua c-p">
-                        <div class="row">
-                            <div class="col-md-12 p-0">Income</div>
-                        </div>
+                    <div class="row">
+                        <div class="col-md-12 p-0">Income</div>
+                    </div>
                 </li>
                 <li (click)="viewMode ='tab2'" [ngClass]="{'b-ua':viewMode =='tab2'}" class="b-ua c-p">
                     <div class="row">
                         <div class="col-md-12 p-0">Expenses</div>
                     </div>
-            </li>
+                </li>
                 <li (click)="viewMode ='tab3'" [ngClass]="{'b-ua':viewMode =='tab3'}" class="b-ua c-p">
                     <div class="row">
                         <div class="col-md-12 p-0">Family details</div>
@@ -29,12 +29,12 @@
 
                     </div>
                 </li>
-                <li (click)="viewMode ='tab7'" [ngClass]="{'b-ua':viewMode =='tab6'}" class=" c-p">
+                <li (click)="viewMode ='tab6'" [ngClass]="{'b-ua':viewMode =='tab6'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-12 p-0">Financial plans</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab6'" [ngClass]="{'b-ua':viewMode =='tab7'}" class=" c-p">
+                <li (click)="viewMode ='tab7'" [ngClass]="{'b-ua':viewMode =='tab7'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-12 p-0">Preferences</div>
                     </div>
@@ -43,7 +43,7 @@
         </div>
         <div class="col-md-10 b-a p-0" [ngSwitch]="viewMode">
             <div *ngSwitchCase="'tab1'">
-              <app-income></app-income>
+                <app-income></app-income>
             </div>
             <div *ngSwitchCase="'tab2'">
                 <app-expenses></app-expenses>
@@ -266,7 +266,7 @@
             </div>
 
             <div *ngSwitchCase="'tab4'">
-              <app-risk-profile></app-risk-profile>
+                <app-risk-profile></app-risk-profile>
                 <!-- <div class="d-flex justify-content-center mt-150">
                       <div class="row">
                         <div class="col-md-12 text-center">

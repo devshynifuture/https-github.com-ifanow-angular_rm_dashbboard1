@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild} from '@angular/core';
+import { Component, Input, OnInit, ViewChild, HostListener} from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from '../../subscription-inject.service';
 import { MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource } from '@angular/material';
@@ -19,7 +19,7 @@ import { InvoiceHistoryComponent } from '../common-subscription-component/invoic
 import { ChangePayeeComponent } from '../common-subscription-component/change-payee/change-payee.component';
 import { log } from 'util';
 
-declare var window
+// declare var window
 // export const MY_FORMATS = {
 //   parse: {
 //     dateInput: 'LL',
@@ -78,14 +78,19 @@ export interface PeriodicElement {
 })
 export class SubscriptionsSubscriptionComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
+  selector: string = '.wrapper-20';
   displayedColumns: string[] = ['client', 'service', 'amt', 'sub', 'status', 'activation',
     'lastbilling', 'nextbilling', 'feemode', 'icons'];
 
   // subscriptionValue: any;
   @Input() upperData;
   advisorId;
+  lastFilterDataId;
+  Oposition;
+  getData:any = "";
+  filterDataArr = [];
   // DataToSend;
+  scrollCallData:boolean = true;
   isLoading = false;
   chips = [
     { name: 'LIVE', value: 2 },
@@ -116,11 +121,12 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   selectedDateRange = { begin: new Date(), end: new Date() };
   noData: string;
   lastDataId;
+  statusIdLength = 0;
   tableData = [];
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
 
-
+  scrollPosition;
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
     private eventService: EventService, private subService: SubscriptionService,
@@ -136,48 +142,48 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     // console.log("feeeee...",this.feeCollectionMode);
     this.getSummaryDataAdvisor();
     console.log('upperData', this.upperData);
-    // window.addEventListener('scroll', this.callApi, true); //third parameter
+  
   }
 
-//   @HostListener('window:scroll', ['$event']) onScrollEvent($event) {
-// //In chrome and some browser scroll is given to body tag
-// console.log("hi call 123456");
-// let pos = (document.documentElement.scrollTop || document.body.scrollTop) + document.documentElement.offsetHeight;
-// let max = document.documentElement.scrollHeight;
 
 
-// // pos/max will give you the distance between scroll bottom and and bottom of screen in percentage.
-//  if(pos == max )   {
-//  //Do your action here
-//  this.getSummaryDataAdvisor();
-
-//  }
-// }
-  
-  
-  // callApi(event){
-  //   console.log(event, "event 213");
     
-  //   let uisubs = document.getElementById('ui-subs');
-  //   var contentheight = uisubs.offsetHeight; // get page content height
-  //   var yoffset = window.pageYOffset;
-  //   var y = yoffset + window.innerHeight;
-  //   console.log(y >= contentheight, "status boolean");
+  
+  scrollCall(){
+    let uisubs = document.getElementById('ui-subs');
+    let wrapper = document.getElementById('wrapper');
     
-  //   if(y >= contentheight){
-  //     this.getSummaryDataAdvisor();
-  //     console.log("hi call 123456");
+    var contentheight = wrapper.offsetHeight;
+    var yoffset = uisubs.scrollTop;
+    var y = yoffset + window.innerHeight;
+    // console.log(y >= contentheight && this.getData != undefined && this.scrollCallData, this.scrollCallData, "this.scrollCallData 123");
+    console.log(this.getData != undefined ,this.scrollCallData, "|| this.statusIdList.length > 0");
+    
+    if((y >= contentheight && this.getData != undefined && this.scrollCallData) ){
+      this.scrollCallData = false;
+      if(this.scrollPosition == undefined ){
+        this.scrollPosition = contentheight - yoffset;
+      }
+      else if(this.scrollPosition < contentheight){
+        this.scrollPosition = contentheight - window.innerHeight;
+      }
+
+      if(this.statusIdList.length <= 0){
+
+        this.getSummaryDataAdvisor();
+      }else{
+        this.callFilter();
+      }
       
-  //   }
-  //   var status = document.getElementById('status');
-  //   status.innerHTML = contentheight+ " | " + y;
-  // }
+    }
+  }
 
   demoCall(){
     this.getSummaryDataAdvisor();
   }
 
   getSummaryDataAdvisor() {
+    
     let obj = {
       advisorId: this.advisorId,
       clientId: 0,
@@ -191,25 +197,30 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.dataSource.data = [{}, {}, {}];
 
 
-    this.subService.getSubSummary(obj).subscribe(
+    const getSubSummarySubscription = this.subService.getSubSummary(obj).subscribe(
       (data) => {
-        this.lastDataId = data[data.length - 1].id;
-        obj.offset = this.lastDataId;
-        console.log(this.lastDataId, obj, "data check");
-        if(this.tableData.length <= 0){
-          this.tableData = data;
+        this.getData = data
+        if(data != undefined){
+          this.lastDataId = data[data.length - 1].id;
+          obj.offset = this.lastDataId;
+          // console.log(this.lastDataId, obj, "data check");
+          if(this.tableData.length <= 0){
+            this.tableData = data;
+          }
+          else{
+            this.tableData = this.tableData.concat(data); 
+            console.log(this.tableData,  "this.tableData 123");
+          }
+        }else{
+          this.isLoading = false;
+          getSubSummarySubscription.unsubscribe();
         }
-        else{
-          this.tableData = this.tableData.concat(data); 
-          console.log(this.tableData, "this.tableData 123");
-          
+          this.getSubSummaryRes(this.tableData);
+        }, (error) => {
+          this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+          this.dataSource.data = [];
+          this.isLoading = false;
         }
-        this.getSubSummaryRes(this.tableData)
-      }, (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
-        this.dataSource.data = [];
-        this.isLoading = false;
-      }
     );
 
   }
@@ -217,13 +228,18 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   
 
   getSubSummaryRes(data) {
+    let uisubs = document.getElementById('ui-subs');
+    uisubs.scrollTo(0, this.scrollPosition);
     this.isLoading = false;
+    console.log(uisubs.scrollTop, this.scrollPosition, "this.yoffset" );
+    
     console.log('  : ', data);
 
     if (data && data.length > 0) {
       this.data = data;
       this.dataSource.data = data;
       this.dataSource.sort = this.sort;
+      this.scrollCallData = true;
       // this.DataToSend = data;
     } else {
       this.data = [];
@@ -342,6 +358,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     console.log('addFilters', addFilters);
     if (!_.includes(this.filterStatus, addFilters)) {
       this.filterStatus.push(addFilters);
+      this.lastFilterDataId = 0;
+      this.filterDataArr = [];
       console.log(this.filterStatus);
     } else {
       // _.remove(this.filterStatus, this.senddataTo);
@@ -353,9 +371,27 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     console.log('filterSubscriptionRes', data);
     if (data == undefined) {
       this.noData = 'No Data Found';
-      this.dataSource.data = [];
+      // this.dataSource.data = [];
     } else {
-      this.dataSource.data = data;
+      console.log(this.statusIdList.length, this.statusIdLength < this.statusIdList.length, this.statusIdLength,"this.statusIdList.length123");
+      // if(this.statusIdLength < this.statusIdList.length || this.statusIdList.length <= 0){
+      //   this.statusIdLength = this.statusIdList.length;
+      //   this.lastFilterDataId = 0;
+      // }else{
+      
+        this.lastFilterDataId = data[data.length - 1].id;
+      // }
+      console.log(this.lastFilterDataId, "this.lastFilterDataId");
+      if(this.filterDataArr.length <= 0){
+        this.filterDataArr = data;
+      }
+      else{
+        this.filterDataArr = this.filterDataArr.concat(data); 
+        console.log(this.filterDataArr,  "this.filterDataArr 123");
+      }
+      this.scrollCallData = true;
+
+      this.dataSource.data = this.filterDataArr;
     }
     // this.getSubSummaryRes(data);
   }
@@ -365,6 +401,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     if (this.filterDate.length >= 1) {
       this.filterDate = [];
     }
+    this.filterDataArr = [];
+    this.lastFilterDataId = 0;
     this.filterDate.push((dateFilter == '1: Object') ? 1 : (dateFilter == '2: Object') ? 2 : 3);
     console.log('addFilters', dateFilter);
     const beginDate = new Date();
@@ -380,11 +418,14 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   removeDate(item) {
     this.filterDate.splice(item, 1);
+    this.lastFilterDataId = 0;
     this.callFilter();
   }
 
   remove(item) {
     this.filterStatus.splice(item, 1);
+    this.filterDataArr = this.filterDataArr.filter((x)=>{x.status != item.value})
+    this.lastFilterDataId = 0;
     this.callFilter();
 
   }
@@ -412,15 +453,18 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       this.statusIdList = [];
       this.filterStatus.forEach(singleFilter => {
         this.statusIdList.push(singleFilter.value);
+        console.log(this.statusIdList, "this.statusIdList 1233");
       });
     } else {
       this.statusIdList = [];
     }
     // this.statusIdList = (this.sendData == undefined) ? [] : this.sendData;
+    console.log(this.lastFilterDataId,this.statusIdLength < this.statusIdList.length , "aaaa");
+    
     const obj = {
       advisorId: this.advisorId,
-      limit: -1,
-      offset: 0,
+      limit: 10,
+      offset: this.lastFilterDataId,
       fromDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.begin, 'yyyy-MM-dd') : null,
       toDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.end, 'yyyy-MM-dd') : null,
       statusIdList: this.statusIdList,
@@ -431,7 +475,9 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       this.getSummaryDataAdvisor();
     } else {
       this.subService.filterSubscription(obj).subscribe(
-        data => this.filterSubscriptionRes(data)
+        (data) =>{
+           this.filterSubscriptionRes(data)
+          }
       );
     }
   }

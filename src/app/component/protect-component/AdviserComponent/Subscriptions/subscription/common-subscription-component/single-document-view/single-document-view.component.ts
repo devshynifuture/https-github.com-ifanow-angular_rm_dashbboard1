@@ -72,6 +72,8 @@ export class SingleDocumentViewComponent implements OnInit {
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
+          this.valueChange.emit('close');
+
           // this.getClientSubscriptionList();
           subscription.unsubscribe();
         }

@@ -1,3 +1,4 @@
+import { AddProfilePlanComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/add-profile-plan/add-profile-plan.component';
 import { DetailedPoTdComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/po-td-scheme/detailed-po-td/detailed-po-td.component';
 import { AddPoRdComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-po-rd/add-po-rd.component';
 import { AddPoMisComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-po-mis/add-po-mis.component';
@@ -83,6 +84,7 @@ import { MFSchemeLevelTransactionsComponent } from './component/protect-componen
 import { MultiYearGoalComponent } from './component/protect-component/customers/component/customer/plan/goals-plan/multi-year-goal/multi-year-goal.component';
 import { SelectAdviceComponent } from './component/protect-component/customers/component/customer/customer-activity/advice-activity/select-advice/select-advice.component';
 import { HistoryRiskProfileComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/history-risk-profile/history-risk-profile.component';
+import { CustomDirectiveModule } from './common/directives/common-directive.module';
 
 
 export const componentList = [
@@ -248,7 +250,7 @@ export const componentList = [
     // OwnerComponentModule,
     AccountEntryModule,
     AccountCommonModule,
-
+    CustomDirectiveModule,
   ],
   exports: [
     FormsModule,

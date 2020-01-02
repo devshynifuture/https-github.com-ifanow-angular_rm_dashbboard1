@@ -4,7 +4,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionService } from '../../../subscription.service';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { PhotoCloudinaryUploadService } from '../../../../../../../services/photo-cloudinary-upload.service';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { UtilService } from "../../../../../../../services/util.service";
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -40,9 +43,12 @@ export class BillerProfileAdvisorComponent implements OnInit {
   bankDetailsForm: any;
   MiscellaneousData: any;
   logoImg: any;
+  imageData: File;
+  uploadedImage: any;
 
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService,
+  constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
+    private subService: SubscriptionService,
     private eventService: EventService, private http: HttpClient) {
     // this.subInjectService.singleProfileData.subscribe(
     //   data => this.getSingleBillerProfileData(data)
@@ -54,6 +60,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
+    this.logoImg = data.logoUrl;
     this.getSingleBillerProfileData(data);
   }
 
@@ -94,51 +101,50 @@ export class BillerProfileAdvisorComponent implements OnInit {
     }
   }
 
-  onChange(fileList: FileList) {
-    console.log(fileList[0].name)
-    if (fileList[0].type == "image/png" || fileList[0].type == "image/jpeg") {
-      const obj =
-      {
-        clientId: 0,
-        advisorId: this.advisorId,
-        folderId: 0,
-        fileName: fileList[0].name
-      }
-      this.subService.uploadFile(obj).subscribe(
-        data => this.getImageUploadRes(data, fileList[0]),
-        err => this.eventService.openSnackBar(err)
-      )
-    }
-    else {
-      console.log("asfasdas")
-    }
-  }
-  getImageUploadRes(url, file) {
-    this.http.put(url, file).subscribe((responseData) => {
-      console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
-      const obj =
-      {
-        clientId: 0,
-        advisorId: this.advisorId,
-        folderId: 0,
-        fileName: file.name
-      }
-      this.subService.getImageUploadData(obj).subscribe(
-        data => {
-        this.logoImg = data;
-          console.log(this.logoImg)
-        },
-        err => this.eventService.openSnackBar(err, "dismiss")
-      )
+  uploadImage() {
+    if (this.imageData.type == 'image/png' || this.imageData.type == 'image/jpeg') {
+      const files = [this.imageData];
+      const tags = this.advisorId + ',biller_profile_logo,';
+      PhotoCloudinaryUploadService.uploadFileToCloudinary(files, 'biller_profile_logo', tags,
+        (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+          if (status == 200) {
+            const responseObject = JSON.parse(response);
+            console.log('onChange file upload success response url : ', responseObject.url);
+            this.logoImg = responseObject.url
+            this.uploadedImage = JSON.stringify(responseObject);
+            this.eventService.openSnackBar("Image uploaded sucessfully", "dismiss");
+          }
 
-    });
+        });
+
+    } else {
+      console.log('asfasdas');
+    }
   }
+
+  onChange(fileList: FileList) {
+    console.log(fileList[0].name);
+    this.logUrl.controls.url.reset();
+    this.imageData = fileList[0];
+    // this.logoImg=
+    const reader = new FileReader();
+    reader.onload = e => this.logoImg = reader.result;
+    reader.readAsDataURL(this.imageData);
+  }
+
+  cancelImageUpload() {
+    this.logoImg = undefined;
+    this.logUrl.controls.url.reset();
+  }
+
   getSingleBillerProfileData(data) {
     if (data == '') {
       data = {};
     }
     this.display = data;
     this.profileDetailsForm = this.fb.group({
+      companyDisplayName: [data.companyDisplayName, [Validators.required]],
+      companyName: [data.companyName, [Validators.required]],
       gstinNum: [(data.gstin), [Validators.required]],
       panNum: [(data.pan), [Validators.required]],
       Address: [(data.billerAddress), [Validators.required]],
@@ -149,7 +155,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       id: [data.id]
     }),
       this.logUrl = this.fb.group({
-        url: [, [Validators.required]]
+        url: [data.logoUrl, [Validators.required]]
       });
     this.bankDetailsForm = this.fb.group({
       nameOnBank: [(data.nameAsPerBank), [Validators.required]],
@@ -183,7 +189,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   nextStep(value, eventName) {
-    console.log(value)
+    console.log(value);
     switch (true) {
       case (this.profileDetailsForm.valid && value == 0):
         this.selected = 1;
@@ -196,15 +202,23 @@ export class BillerProfileAdvisorComponent implements OnInit {
         break;
       case (this.MiscellaneousData.valid && value == 3):
         this.submitBillerForm();
+        break;
       default:
-        this.submitBillerForm()
+        this.submitBillerForm();
     }
   }
+
   back() {
     this.selected--;
   }
+
   submitBillerForm() {
-    if (this.profileDetailsForm.controls.gstinNum.invalid) {
+    if (this.profileDetailsForm.controls.companyDisplayName.invalid) {
+      return;
+    } else if (this.profileDetailsForm.controls.companyName.invalid) {
+
+      return;
+    } else if (this.profileDetailsForm.controls.gstinNum.invalid) {
       this.isGstin = true;
       return;
     } else if (this.profileDetailsForm.controls.panNum.invalid) {
@@ -224,6 +238,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
       return;
     } else if (this.profileDetailsForm.controls.pincode.invalid) {
       this.isZipCode = true;
+      return;
+    }
+    else if (this.logUrl.controls.url.invalid) {
       return;
     } else if (this.bankDetailsForm.controls.acNo.invalid) {
       this.isAcNo = true;
@@ -264,29 +281,32 @@ export class BillerProfileAdvisorComponent implements OnInit {
         billerAddress: this.profileDetailsForm.controls.Address.value,
         branchAddress: this.bankDetailsForm.controls.address.value,
         city: this.profileDetailsForm.controls.city.value,
-        companyDisplayName: 'stringfgdfg',
-        companyName: 'stringname',
+        companyDisplayName: this.profileDetailsForm.controls.companyDisplayName.value,
+        companyName: this.profileDetailsForm.controls.companyName.value,
         country: this.profileDetailsForm.controls.country.value,
         footnote: this.MiscellaneousData.controls.footnote.value,
         gstin: this.profileDetailsForm.controls.gstinNum.value,
         ifscCode: this.bankDetailsForm.controls.ifscCode.value,
-        logoUrl: 'www.google.com',
+        logoUrl: this.logoImg,
         nameAsPerBank: this.bankDetailsForm.controls.nameOnBank.value,
         pan: this.profileDetailsForm.controls.panNum.value,
         state: this.profileDetailsForm.controls.state.value,
         terms: this.MiscellaneousData.controls.terms.value,
         zipCode: this.profileDetailsForm.controls.pincode.value,
-        id: this.profileDetailsForm.controls.id.value
+        id: this.profileDetailsForm.controls.id.value,
+        cloudinary_json: this.uploadedImage
       };
       console.log(obj);
       if (this.profileDetailsForm.controls.id.value == undefined) {
         this.subService.saveBillerProfileSettings(obj).subscribe(
-          data => this.closeTab(data)
+          data => this.closeTab(data),
+          err => this.eventService.openSnackBar(err, "dismiss")
         );
 
       } else {
         this.subService.updateBillerProfileSettings(obj).subscribe(
-          data => this.closeTab(data)
+          data => this.closeTab(data),
+          err => this.eventService.openSnackBar(err, "dismiss")
         );
       }
 
@@ -296,8 +316,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
   closeTab(data) {
     if (data == true) {
       this.Close(data);
-      (this.profileDetailsForm.controls.id.value == undefined) ? this.eventService.openSnackBar('biller profile is added', 'OK') : this.eventService.openSnackBar('biller profile is edited', 'OK');
-      ;
+      (this.profileDetailsForm.controls.id.value == undefined) ?
+        this.eventService.openSnackBar('biller profile is added', 'OK') : this.eventService.openSnackBar('biller profile is edited', 'OK');
+
 
     }
   }

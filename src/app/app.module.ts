@@ -49,10 +49,9 @@ import 'zone.js/dist/zone';
 import {
   CalenderComponent,
   EventDialog
-} from "./component/protect-component/AdviserComponent/Email/calender/calender.component";
+} from './component/protect-component/AdviserComponent/Email/calender/calender.component';
 import {SubscriptionUpperEntry} from './component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
 // import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
-
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -109,10 +108,15 @@ import {SubscriptionUpperEntry} from './component/protect-component/AdviserCompo
     MatTableModule,
     SlimLoadingBarModule.forRoot(),
     MDBBootstrapModule.forRoot(),
+    // CloudinaryModule.forRoot(Cloudinary,
+    //   {
+    //     cloud_name: 'futurewise', upload_preset: 'ifanow_unsigned_logo', /*private_cdn: true,*/
+    //     /* cname: 'futurewise.images.com'*/
+    //   }),
     DragDropModule,
     CustomCommonModule,
     EmailEntryModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [AuthService, HttpService, DatePipe, DynamicComponentService],
   bootstrap: [AppComponent],

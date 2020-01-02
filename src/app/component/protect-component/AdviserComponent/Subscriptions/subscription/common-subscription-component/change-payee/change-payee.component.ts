@@ -1,17 +1,18 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {SubscriptionService} from '../../../subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatSliderChange} from '@angular/material';
-import {HAMMER_GESTURE_CONFIG} from "@angular/platform-browser";
-import {GestureConfig} from "@angular/material/core";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { SubscriptionService } from '../../../subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatSliderChange } from '@angular/material';
+import { HAMMER_GESTURE_CONFIG } from "@angular/platform-browser";
+import { GestureConfig } from "@angular/material/core";
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-change-payee',
   templateUrl: './change-payee.component.html',
   styleUrls: ['./change-payee.component.scss'],
   providers: [
-    {provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig},
+    { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig },
   ]
 })
 export class ChangePayeeComponent implements OnInit {
@@ -44,7 +45,7 @@ export class ChangePayeeComponent implements OnInit {
     return this._payeeData;
   }
 
-  constructor(public subInjectService: SubscriptionInject, public subService: SubscriptionService, public eventService: EventService) {
+  constructor( public utils: UtilService,public subInjectService: SubscriptionInject, public subService: SubscriptionService, public eventService: EventService) {
 
   }
 
@@ -69,8 +70,8 @@ export class ChangePayeeComponent implements OnInit {
   }
 
   Close(state) {
-    this.subInjectService.changeUpperRightSliderState({state: 'close'});
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
   getPayeeData(data) {
     this.getRowData = data;
@@ -115,11 +116,12 @@ export class ChangePayeeComponent implements OnInit {
 
   saveChangePayeeSetting() {
     const obj = [];
-    this._payeeData.forEach(element => {
+    this.payeeDataRes.forEach(element => {
       if (element.selected == 1 || element.selected == true) {
         const obj1 = {
           id: element.id,
-          subscriptionId: this.getRowData.id
+          subscriptionId: this.getRowData.id,
+          share: element.share
         };
         obj.push(obj1);
       }

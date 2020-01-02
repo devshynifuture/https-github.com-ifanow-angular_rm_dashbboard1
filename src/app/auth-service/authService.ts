@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 // import {Router} from '@angular/router';
 
@@ -41,12 +41,15 @@ export class AuthService {
   }
 
   isLoggedIn() {
-
     return this.getToken() !== null;
   }
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('userInfo');
+    localStorage.removeItem('clientData');
+    sessionStorage.removeItem('clientData');
+
     // this.myRoute.navigate(['login']);
   }
 

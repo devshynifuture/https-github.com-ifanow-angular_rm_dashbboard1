@@ -90,7 +90,6 @@ export class OverviewComponent implements OnInit {
           data => {
             this.deletedData(data);
             dialogRef.close();
-
           }
         );
 

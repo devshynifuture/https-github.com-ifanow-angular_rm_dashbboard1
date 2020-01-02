@@ -1,0 +1,62 @@
+<!--<div (fileOver)="fileOverBase($event)" [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" [uploader]="uploader"-->
+<!--     id="direct_upload" ng2FileDrop>-->
+<!--  <h1>New Photo</h1>-->
+<!--  <h2>Direct upload from the browser with Angular File Upload</h2>-->
+<!--  <p>You can also drag and drop an image file into the dashed area.</p>-->
+<!--  <form>-->
+<!--    <div class="form_line">-->
+<!--      <label path="title">Title:</label>-->
+<!--      <div class="form_controls">-->
+<!--        <input #title (blur)="updateTitle(title.value)" (keyup.enter)="updateTitle(title.value)" class="form-control"-->
+<!--               placeholder="Title" type="text"-->
+<!--        />-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="form_line">-->
+<!--      <label>Image:</label>-->
+<!--      <div class="form_controls">-->
+<!--        <div class="upload_button_holder">-->
+<!--          <label class="upload_button" for="fileupload">Upload</label>-->
+<!--          &lt;!&ndash; onChange hanlder resets the input value to get the change event when uploading the same file consecutively &ndash;&gt;-->
+<!--          <input #fileInput (change)="fileInput.value=''" [style.display]="'none'" [uploader]="uploader" id="fileupload"-->
+<!--                 multiple ng2FileSelect-->
+<!--                 type="file"/>-->
+<!--        </div>-->
+
+<!--      </div>-->
+<!--    </div>-->
+<!--  </form>-->
+<!--  <h2>Status</h2>-->
+<!--  <div *ngFor="let response of responses; let i = index" class="file">-->
+<!--    <h3>{{response.file.name}}</h3>-->
+<!--    <button (click)="deleteImage(response.data, i)" *ngIf="!!response.data.delete_token" class="delete-image">Delete-->
+<!--      image-->
+<!--    </button>-->
+<!--    <div class="status">-->
+<!--      Uploading... {{response.progress}}%-->
+<!--      <div *ngIf="!response.status">In progress</div>-->
+<!--      <div *ngIf="response.status" class="status-code">Upload completed with status code {{response.status}}</div>-->
+<!--    </div>-->
+<!--    <div class="progress-bar">-->
+<!--      <div [style.width.%]="response.progress" class="progress" role="progressbar"></div>-->
+<!--    </div>-->
+<!--    <div class="form_line">-->
+<!--      <div class="form_controls">-->
+<!--        <div class="preview">-->
+<!--          &lt;!&ndash; Consider using https://github.com/valor-software/ng2-file-upload/issues/461 for image preview &ndash;&gt;-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="info">-->
+<!--      <table>-->
+<!--        <tr *ngFor="let property of getFileProperties(response.data)">-->
+<!--          <td> {{ property.key }} </td>-->
+<!--          <td> {{ property.value | json}} </td>-->
+<!--        </tr>-->
+<!--      </table>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--</div>-->
+
+<!--<a class="back_link" routerLink="">Back to list</a>-->

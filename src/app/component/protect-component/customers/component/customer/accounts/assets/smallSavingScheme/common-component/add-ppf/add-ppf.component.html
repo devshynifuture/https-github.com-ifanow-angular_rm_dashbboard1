@@ -33,7 +33,7 @@
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input #accBal (utils.keypress)="utils.keyPress($event)" autocomplete="off" class="form-control rupess br-0"
+                        <input #accBal (keypress)="utils.keyPress($event)" autocomplete="off" class="form-control rupess br-0"
                             formControlName="accountBalance" matInput type="number">
                         <mat-error *ngIf="ppfSchemeForm.get('accountBalance').errors?.required" class="f-12 pt-4">
                             Account balance is required
@@ -89,7 +89,7 @@
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" (utils.keypress)="utils.keyPress($event)" #futureContribution class="form-control rupess br-0"
+                        <input autocomplete="off" (keypress)="utils.keyPress($event)" #futureContribution class="form-control rupess br-0"
                             formControlName="futureContribution" matInput maxlength="" type="number">
                         <mat-error class="f-12 pt-4">
                             Loan amount is required
@@ -154,7 +154,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input autocomplete="off" #bankACNo class="form-control br-0" formControlName="bankName"
-                            matInput maxlength="15" type="text">
+                            matInput maxlength="15" type="text" (keypress)="utils.onlyText($event)">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -167,7 +167,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" (utils.keypress)="utils.keyPress($event)" #institution class="form-control br-0"
+                        <input autocomplete="off" (keypress)="utils.keyPress($event)" #institution class="form-control br-0"
                             formControlName="linkedBankAccount" matInput maxlength="30">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>

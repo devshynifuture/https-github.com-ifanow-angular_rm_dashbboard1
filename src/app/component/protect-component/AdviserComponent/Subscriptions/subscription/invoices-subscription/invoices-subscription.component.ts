@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { SubscriptionService } from '../../subscription.service';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { AuthService } from "../../../../../../auth-service/authService";
-import { UtilService } from "../../../../../../services/util.service";
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionService} from '../../subscription.service';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {AuthService} from "../../../../../../auth-service/authService";
+import {UtilService} from "../../../../../../services/util.service";
 import * as _ from 'lodash';
 
 export interface PeriodicElement {
@@ -26,16 +26,17 @@ export interface PeriodicElement {
   styleUrls: ['./invoices-subscription.component.scss']
 })
 export class InvoicesSubscriptionComponent implements OnInit {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  selectedStatusFilter: any;
+  selectedDateFilter: any;
   chips = [
-    { name: 'LIVE', value: 1 },
-    { name: 'PAID', value: 2 },
-    { name: 'OVERDUE', value: 3 }
+    {name: 'LIVE', value: 1},
+    {name: 'PAID', value: 2},
+    {name: 'OVERDUE', value: 3}
   ];
   dateChips = [
-    { name: 'Date', value: 1 },
-    { name: 'Due date', value: 2 },
+    {name: 'Date', value: 1},
+    {name: 'Due date', value: 2},
   ];
   invoiceDesign: string;
   noData: string;
@@ -192,6 +193,17 @@ export class InvoicesSubscriptionComponent implements OnInit {
   display(data) {
     console.log(data);
     this.ngOnInit();
+  }
+
+  showFilters(showFilter) {
+    if (showFilter == true) {
+      this.showFilter = false;
+    } else {
+      this.showFilter = true;
+    }
+    console.log('this.filterStatus: ', this.filterStatus);
+    console.log('this.filterDate: ', this.filterDate);
+
   }
 
   addFilters(addFilters) {

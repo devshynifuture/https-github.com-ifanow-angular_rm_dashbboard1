@@ -31,7 +31,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #currentValue type="number" (utils.keypress)="utils.keyPress($event)"
+                        <input matInput #currentValue type="number" (keypress)="utils.keyPress($event)"
                             maxlength="20" class="form-control br-0 rupess" formControlName="currentValue">
                         <mat-error class="f-12 pt-4"
                             [ngClass]="{'v-h':!(isCurrentValue && getFormControl().currentValue.invalid || getFormControl().currentValue.touched && getFormControl().currentValue.invalid)}">
@@ -65,7 +65,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #totalContry type="number" (utils.keypress)="utils.keyPress($event)"
+                        <input matInput #totalContry type="number" (keypress)="utils.keyPress($event)"
                             maxlength="20" class="form-control br-0 rupess" formControlName="totalContry">
                         <mat-error class="f-12 pt-4"
                             [ngClass]="{'v-h':!(isTotalContry && getFormControl().totalContry.invalid || getFormControl().totalContry.touched && getFormControl().totalContry.invalid)}">
@@ -126,7 +126,7 @@
                             <div class="form-group mb-0">
                                 <mat-form-field>
                                     <input matInput #currentValue type="number"
-                                        (utils.keypress)="utils.keyPress($event)" maxlength="20"
+                                        (keypress)="utils.keyPress($event)" maxlength="20"
                                         class="form-control br-0 rupess" formControlName="approxContribution">
                                 </mat-form-field>
                             </div>
@@ -211,7 +211,7 @@
                                 <div class="col-md-3">
                                     <mat-form-field>
                                         <input matInput #nomineePercentageShare type="number"
-                                            (utils.keypress)="utils.keyPress($event)"
+                                            (keypress)="utils.keyPress($event)"
                                             class="form-control br-0 percentage"
                                             formControlName="nomineePercentageShare">
                                     </mat-form-field>
