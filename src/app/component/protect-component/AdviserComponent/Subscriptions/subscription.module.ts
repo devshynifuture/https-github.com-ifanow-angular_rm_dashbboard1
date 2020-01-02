@@ -36,6 +36,7 @@ import { SettingsSubscriptionComponent } from './subscription/settings-subscript
 import { SubscriptionComponent } from './subscription/subscription.component';
 import { SubscriptionsSubscriptionComponent } from './subscription/subscriptions-subscription/subscriptions-subscription.component';
 
+
 export const componentList = [SubscriptionComponent,
   InvoicePdfDocumentComponent,
   ClientsDashboardComponent,
@@ -108,7 +109,7 @@ export const componentList = [SubscriptionComponent,
     CustomDirectiveModule,
     SubscriptionRoutingModule,
     SubscriptionEntry,
-    SubscriptionUpperEntry
+    SubscriptionUpperEntry,
     // CustomCommonModule
     // AppModule
   ],

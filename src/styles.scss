@@ -251,13 +251,16 @@
 }
 
 #ui-subs {
-    .custom-tags .mat-form-field-infix {
-        padding-top: 4px;
-        border-top: 0px !important
-    }
-    .custom-tags .mat-form-field-appearance-legacy .mat-form-field-underline {
-        display: none;
-    }
+position: absolute;  height: 100%; overflow: auto; display:block;
+  .wrapper-20{display: block;}
+  .custom-tags .mat-form-field-infix {
+    padding-top: 4px;
+    border-top: 0px !important
+  }
+
+  .custom-tags .mat-form-field-appearance-legacy .mat-form-field-underline {
+    display: none;
+  }
 }
 
 #mistabs1,

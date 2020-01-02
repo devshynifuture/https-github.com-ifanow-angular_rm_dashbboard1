@@ -96,7 +96,8 @@
       <div class="row">
         <div class="col-md-5 p-0">
           <div class="form-group mb-0">
-            <input type="number" (keypress)="utils.keyPress($event)"  formControlName="billEvery" class="form-control br-0">
+            <input type="number" pattern="\d*" onKeyPress="if(this.value.length==2) return false;"
+              formControlName="billEvery" class="form-control br-0">
           </div>
         </div>
         <div class="col-md-5 p-0">
@@ -167,15 +168,15 @@
           </div>
           <div class="row ui-mff">
             <div class="col-md-4 p-0 bl-0 bb-grey br-grey">
-              <input type="number" appNumberValidation [maxLength]="4" formControlName="equity" placeholder="%" minl
+              <input type="text" appNumberValidation [maxLength]="4" formControlName="equity" placeholder="%"
                 class="form-control br-0 h-39 br-grey">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
-              <input type="number" appNumberValidation [maxLength]="4" formControlName="debt" placeholder="%"
+              <input type="text" appNumberValidation [maxLength]="4" formControlName="debt" placeholder="%"
                 class="form-control br-0 h-39">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
-              <input type="number" appNumberValidation [maxLength]="4" formControlName="liquid" placeholder="%"
+              <input type="text" appNumberValidation [maxLength]="4" formControlName="liquid" placeholder="%"
                 class="form-control br-0 h-39">
             </div>
           </div>
@@ -207,8 +208,8 @@
           </div>
         </div>
         <div class="col-md-2 p-0">
-          <input type="number" minlength="4" appNumberValidation [maxLength]="4" formControlName="pricing"
-            placeholder="%" class="form-control br-0 h-39 br-grey">
+          <input type="text" appNumberValidation [maxLength]="4" formControlName="pricing" placeholder="%"
+            class="form-control br-0 h-39 br-grey">
         </div>
       </div>
       <mat-error *ngIf="pricing && getFormControl().pricing.invalid" class="f-12 pt-4">Please fill details</mat-error>

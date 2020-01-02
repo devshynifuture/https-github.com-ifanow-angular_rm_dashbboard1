@@ -6,6 +6,8 @@ import { CustomRightAnimationDirective } from './custom-right-animation.directiv
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { SkeletonLoadingDirective } from './skeleton-loading.directive';
 import { NumberValidationDirective } from './number-validation.directive';
+import { TextOnlyDirective } from './text-only.directive';
+import { AlphanumricDirective } from './alphanumric.directive';
 
 // import {AppModule} from "../app.module";
 
@@ -16,9 +18,11 @@ import { NumberValidationDirective } from './number-validation.directive';
     CustomRightAnimationDirective,
     SkeletonLoadingDirective,
     FormatNumberDirective,
-    NumberValidationDirective
+    NumberValidationDirective,
+    TextOnlyDirective,
+    AlphanumricDirective
   ],
-  exports: [RadioGroupDirectiveDirective, SkeletonLoadingDirective, FormatNumberDirective, NumberValidationDirective],
+  exports: [RadioGroupDirectiveDirective, SkeletonLoadingDirective, FormatNumberDirective, NumberValidationDirective,TextOnlyDirective,AlphanumricDirective],
   imports: [
 
     // AppModule

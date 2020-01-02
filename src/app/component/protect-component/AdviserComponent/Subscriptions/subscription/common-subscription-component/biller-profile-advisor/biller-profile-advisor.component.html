@@ -22,7 +22,7 @@
               </div>
               <div class="col-md-7">
                 <div class="form-group mb-0">
-                  <input type="text" (keypress)="utils.alphaNumric($event)" autofocus
+                  <input type="text" appAlphanumric autofocus
                     class="form-control br-0 text-left" formControlName="companyDisplayName"
                     maxlength="{{getFormControlProfile().gstinNum.maxLength}}">
                 </div>
@@ -50,7 +50,7 @@
               <div class="col-md-7">
                 <div class="form-group mb-0">
 
-                  <input type="text" (keypress)="utils.alphaNumric($event)" autofocus
+                  <input type="text" appAlphanumric autofocus
                     class="form-control br-0 text-left" formControlName="companyName"
                     maxlength="{{getFormControlProfile().gstinNum.maxLength}}">
 

@@ -22,10 +22,18 @@
     gtag('js', new Date());
 
     gtag('config', 'UA-154885656-1');
+
+    window.addEventListener('scroll', ()=>{
+      const scrolled = window.scrollY;
+      console.log(scrolled, "scrolled 123");
+      
+    });
+
+  
   </script>
 </head>
 
-<body>
+<body id="contentheightDiv">
 
   <app-root></app-root>
 </body>

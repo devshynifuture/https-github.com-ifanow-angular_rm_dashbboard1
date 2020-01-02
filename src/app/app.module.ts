@@ -116,7 +116,7 @@ import {SubscriptionUpperEntry} from './component/protect-component/AdviserCompo
     DragDropModule,
     CustomCommonModule,
     EmailEntryModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [AuthService, HttpService, DatePipe, DynamicComponentService],
   bootstrap: [AppComponent],
