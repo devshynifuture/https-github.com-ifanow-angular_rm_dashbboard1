@@ -98,7 +98,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   getInvoiceResponseData(data) {
     this.isLoading = false;
     if (data == undefined) {
-      this.dataSource=undefined;
+      this.dataSource.data = [];
       this.noData = "No Data Found";
     } else {
       console.log(data);
@@ -216,7 +216,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   filterSubscriptionRes(data) {
     console.log('filterSubscriptionRes', data);
-    this.dataSource = data;
+    this.dataSource.data = data;
     // this.getSubSummaryRes(data);
   }
 

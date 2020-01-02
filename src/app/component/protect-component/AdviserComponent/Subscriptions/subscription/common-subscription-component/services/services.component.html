@@ -6,83 +6,93 @@
         </div>
     </div>
 </div>
-<div class="bg-white pt-180">
-    <div class="wrapper-20 pb-0">
-        <div class="row">
-            <div class="col-md-10 p-0 pt-8 text-center">
-                <div class="row text-right content">
-                    <div class="col-md-11 p-0">
-                        <p class="f-16">Map services to the selected plan.</p>
-                    </div>
-                    <div class="col-md-1 text-left p-0">
-                        <img src="/assets/images/svg/info.svg" class="c-p v-baseline">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2 right text-right p-0 button-fix">
-                <button mat-stroked-button class="btn-primary mt-4" *ngIf="mappedData">{{mappedData.length}} Services
-                    mapped
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="wrapper-40">
-        <div class="row text-center padder-80">
-            <div *ngFor="let serviceData of planServiceData; index as i" class="col-md-4 c-p pl-10 pr-10 pb-28">
-                <div class="example-card">
-                    <div [ngClass]="{'ba-blue':serviceData.selected,'b-ua':serviceData.selected==false }"
-                        (click)="selectService(serviceData,i)">
 
-                        <div class="bg-grey lter text-left">
-                            <mat-checkbox class="custom-checkbox"
-                                [ngStyle]="{'pointer-events':(serviceData.selected)?'none':'all'}" checked="false"
-                                [ngClass]="{'v-h':serviceData.selected==false }"></mat-checkbox>
+<div *ngIf="planServiceData != undefined">
 
-                            <div class="pl-24 pt-20">
-                                <h3 class="f-24 p-0 mb-0">{{serviceData.serviceName}} </h3>
-                                <p class="mb-0 pb-32 pt-4">{{serviceData.serviceCode}}</p>
-                            </div>
+    <div class="bg-white pt-180">
+        <div class="wrapper-20 pb-0">
+            <div class="row">
+                <div class="col-md-10 p-0 pt-8 text-center">
+                    <div class="row text-right content">
+                        <div class="col-md-11 p-0">
+                            <p class="f-16">Map services to the selected plan.</p>
                         </div>
-                        <div class="pl-8 pt-20 pb-28">
-                            <div class="row pt-24 text-left">
-                                <div class="col-md-6">
-                                    <p class="text-primitive f-12">FEE TYPE</p>
-                                    <label *ngIf="serviceData.feeTypeId==1">Fixed</label>
-                                    <label *ngIf="serviceData.feeTypeId==2">Variable</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p class="text-primitive f-12">BILLING NATURE</p>
-                                    <p class="f-18" *ngIf="serviceData.billingNature==1">Recurring</p>
-                                    <p class="f-18" *ngIf="serviceData.billingNature==0">One Time</p>
-                                </div>
-                            </div>
-                            <div class="row pt-24 text-left">
-                                <div class="col-md-6">
-                                    <p class="text-primitive f-12">BILLING MODE</p>
-                                    <p class="f-18" *ngIf="serviceData.billingMode==1">End of period</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <p class="text-primitive f-12">FEES</p>
-                                    <p class="f-18" *ngIf="serviceData.feeTypeId==1">₹{{serviceData.averageFees}}/Year
-                                    </p>
-                                    <p class="f-18" *ngIf="serviceData.feeTypeId==2">{{serviceData.averageFees}}%year
-                                    </p>
-                                </div>
-                            </div>
+                        <div class="col-md-1 text-left p-0">
+                            <img src="/assets/images/svg/info.svg" class="c-p v-baseline">
                         </div>
                     </div>
                 </div>
+                <div class="col-md-2 right text-right p-0 button-fix">
+                    <button mat-stroked-button class="btn-primary mt-4" *ngIf="mappedData">{{mappedData.length}}
+                        Services
+                        mapped
+                    </button>
+                </div>
             </div>
-
         </div>
-    </div>
+        <div class="wrapper-40">
+            <div class="row text-center padder-80">
+                <div *ngFor="let serviceData of planServiceData; index as i" class="col-md-4 c-p pl-10 pr-10 pb-28">
+                    <div class="example-card">
+                        <div [ngClass]="{'ba-blue':serviceData.selected,'b-ua':serviceData.selected==false }" (click)="selectService(serviceData,i)">
 
+                            <div class="bg-grey lter text-left">
+                                <mat-checkbox class="custom-checkbox" [ngStyle]="{'pointer-events':(serviceData.selected)?'none':'all'}" checked="false" [ngClass]="{'v-h':serviceData.selected==false }"></mat-checkbox>
+
+                                <div class="pl-24 pt-20">
+                                    <h3 class="f-24 p-0 mb-0">{{serviceData.serviceName}} </h3>
+                                    <p class="mb-0 pb-32 pt-4">{{serviceData.serviceCode}}</p>
+                                </div>
+                            </div>
+                            <div class="pl-8 pt-20 pb-28">
+                                <div class="row pt-24 text-left">
+                                    <div class="col-md-6">
+                                        <p class="text-primitive f-12">FEE TYPE</p>
+                                        <label *ngIf="serviceData.feeTypeId==1">Fixed</label>
+                                        <label *ngIf="serviceData.feeTypeId==2">Variable</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="text-primitive f-12">BILLING NATURE</p>
+                                        <p class="f-18" *ngIf="serviceData.billingNature==1">Recurring</p>
+                                        <p class="f-18" *ngIf="serviceData.billingNature==0">One Time</p>
+                                    </div>
+                                </div>
+                                <div class="row pt-24 text-left">
+                                    <div class="col-md-6">
+                                        <p class="text-primitive f-12">BILLING MODE</p>
+                                        <p class="f-18" *ngIf="serviceData.billingMode==1">End of period</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="text-primitive f-12">FEES</p>
+                                        <p class="f-18" *ngIf="serviceData.feeTypeId==1">
+                                            ₹{{serviceData.averageFees}}/Year
+                                        </p>
+                                        <p class="f-18" *ngIf="serviceData.feeTypeId==2">
+                                            {{serviceData.averageFees}}%year
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 </div>
+
+<div class="row " *ngIf="planServiceData == undefined">
+    <div class="h-100vh col-md-12 d-flex align-items-center flex-column justify-content-center">
+        <img class="width200" src="assets/images/svg/add-services-img.svg">
+        <p class="f-18 f-600 pt-28">No Data Found</p>
+    </div>
+</div>
+
 <!-- </div> -->
 
-<!-- <div *ngIf="componentFlag!='planServices'">
-  <p>This is services in Documents</p>
-</div> -->
+
 
 
 <div class="bottom-fixed wrapper-12 w-100">
