@@ -18,7 +18,7 @@ import { UtilService } from 'src/app/services/util.service';
 export class ChangePayeeComponent implements OnInit {
   payeeDataRes: any;
   noDataMessage: string;
-
+  @Output() subStartNextBtn = new EventEmitter();
   @Input() set upperData(data) {
     if (data == undefined) {
       return;
@@ -36,6 +36,7 @@ export class ChangePayeeComponent implements OnInit {
         payeeData[0].share = 100
         payeeData[0].selected = 1
         this.payeeDataRes = payeeData;
+        this.subStartNextBtn.emit(payeeData[0].share)
       }
       else {
         this.payeeDataRes = payeeData;
@@ -52,7 +53,7 @@ export class ChangePayeeComponent implements OnInit {
     return this._payeeData;
   }
 
-  constructor( public utils: UtilService,public subInjectService: SubscriptionInject, public subService: SubscriptionService, public eventService: EventService) {
+  constructor(public utils: UtilService, public subInjectService: SubscriptionInject, public subService: SubscriptionService, public eventService: EventService) {
 
   }
 

@@ -193,8 +193,8 @@
 
         <mat-step state="done" [stepControl]="payeeSetting">
             <ng-template matStepLabel>Payee Settings</ng-template>
-            <app-change-payee (payeeFlag)="getPayeeFlagData($event)" *ngIf="isFlagPayyee" [data]="payeesData"
-                (outputData)="selectPayee($event)"></app-change-payee>
+            <app-change-payee (subStartNextBtn)="getSharesInfo($event)" (payeeFlag)="getPayeeFlagData($event)"
+                *ngIf="isFlagPayyee" [data]="payeesData" (outputData)="selectPayee($event)"></app-change-payee>
             <div class="bottom-fixed wrapper-12">
                 <div class="row">
                     <div class="col-md-4">
@@ -217,20 +217,37 @@
             <div class="wrapper-100 pt-44">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="pl-44 pr-44">
+                        <div *ngIf="clientData.feeTypeId==1" class="pl-44 pr-44">
                             <h4 class="m-0 text-success">YOU’RE ALL SET!</h4>
 
                             <p class="m-0 text-black pt-28">When you click on the Create button below, the subscription
                                 will be created.
                             </p>
 
-                            <p class="m-0 text-black pt-28">Since this is a variable fee type with quarterly frequency,
-                                the first invoice will be created on 29/11/2019. The invoice amount will be calculated
+                            <p class="m-0 text-black pt-28">Since this is a fixed fee type with {{billEveryMsg}} frequency,
+                                the first invoice will be created on {{subDateToShow | date:'dd/MM/yyyy'}}. The invoice
+                                amount will be calculated
                                 on the basis of the fee structure defined in first step.</p>
 
                             <p class="m-0 text-custom pt-28">You have an option to change the Invoice Sending Mode to
                                 auto or manual. You can do this from Subscription settings.</p>
                         </div>
+                        <div *ngIf="clientData.feeTypeId==2" class="pl-44 pr-44">
+                            <h4 class="m-0 text-success">YOU’RE ALL SET!</h4>
+
+                            <p class="m-0 text-black pt-28">When you click on the Create button below, the subscription
+                                will be created.
+                            </p>
+
+                            <p class="m-0 text-black pt-28">Since this is a variable fee type with {{billEveryMsg}} frequency,
+                                the first invoice will be created on {{subDateToShow | date:'dd/MM/yyyy'}}. The invoice
+                                amount will be calculated
+                                on the basis of the fee structure defined in first step.</p>
+
+                            <p class="m-0 text-custom pt-28">You have an option to change the Invoice Sending Mode to
+                                auto or manual. You can do this from Subscription settings.</p>
+                        </div>
+
                     </div>
                 </div>
             </div>

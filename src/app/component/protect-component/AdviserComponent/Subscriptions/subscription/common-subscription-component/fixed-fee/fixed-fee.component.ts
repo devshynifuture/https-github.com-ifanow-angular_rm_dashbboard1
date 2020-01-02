@@ -16,7 +16,7 @@ export class FixedFeeComponent implements OnInit {
   @Input() createSubData;
   @Output() outputData = new EventEmitter<Object>();
   isSave: boolean;
-  constructor( public utils: UtilService,private fb: FormBuilder, public subInjectService: SubscriptionInject, private subService: SubscriptionService) {
+  constructor(public utils: UtilService, private fb: FormBuilder, public subInjectService: SubscriptionInject, private subService: SubscriptionService) {
   }
   @Input()
   set data(data) {
@@ -80,7 +80,7 @@ export class FixedFeeComponent implements OnInit {
         billEvery: this.getFixedFee().billEvery.value,
         billingCycle: this.getFixedFee().Duration.value,
         billingMode: this.getFixedFee().billingMode.value,
-        billingNature: this.getFixedFee().billingNature.value,
+        billingNature: parseInt(this.getFixedFee().billingNature.value),
         feeTypeId: 1,
         clientId: '',
         subId: '',
