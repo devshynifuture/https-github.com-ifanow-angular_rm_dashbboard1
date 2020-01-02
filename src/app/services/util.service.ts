@@ -131,6 +131,10 @@ export class UtilService {
 
   //used for dateFormat allows numbers and / character
   dateFormat(event: any) {
+    if(event.target.value.length !== null && event.target.value.length === 2 ||event.target.value.length !== null && event.target.value.length === 4){
+      return `${event.target.value}/`;
+    }
+    console.log(")()()(()",event.target.value.length);
     var k = event.keyCode;
     return ((k == 47) || (k >= 48 && k <= 57));
   }
