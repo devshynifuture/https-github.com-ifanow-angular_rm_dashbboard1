@@ -43,6 +43,7 @@
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "ng-circle-progress": "^1.5.1",
+    "ng2-file-upload": "^1.4.0",
     "ng2-slim-loading-bar": "^4.0.0",
     "primeicons": "^2.0.0",
     "primeng": "^8.1.1",

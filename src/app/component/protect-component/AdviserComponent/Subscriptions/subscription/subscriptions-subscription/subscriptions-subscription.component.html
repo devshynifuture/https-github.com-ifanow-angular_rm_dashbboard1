@@ -135,7 +135,7 @@
             </ng-container>
             <!-- Weight Column -->
             <ng-container matColumnDef="activation">
-                <th mat-sort-header="startsOn" *matHeaderCellDef class="f-18 t-6" mat-header-cell> Activation...</th>
+                <th mat-sort-header="startsOn" *matHeaderCellDef class="f-18 t-6" mat-header-cell> Activation Date</th>
                 <td *matCellDef="let element" mat-cell>
                     <div *ngIf="element.status!=1"> {{element.startsOn | date:'dd/MM/yyyy'}}</div>
                     <div (click)="openPlanSlider('createSub','open',element)" *ngIf="element.status==1">
@@ -151,14 +151,14 @@
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="lastbilling">
-                <th mat-sort-header="prevBillingDate" *matHeaderCellDef class="f-18 t-10" mat-header-cell> Last billing...
+                <th mat-sort-header="prevBillingDate" *matHeaderCellDef class="f-18 t-10" mat-header-cell> Last billing
                 </th>
                 <td *matCellDef="let element" class="t-10" mat-cell>
                     <div class="bar"> {{element.prevBillingDate | date:'dd/MM/yyyy'}} </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="nextbilling">
-                <th mat-sort-header="nextBillingDate" *matHeaderCellDef class="f-18 text-right pr-24 t-15" mat-header-cell> Next billing...</th>
+                <th mat-sort-header="nextBillingDate" *matHeaderCellDef class="f-18 text-right pr-24 t-15" mat-header-cell> Next billing </th>
                 <td *matCellDef="let element" class="text-right pr-8 t-15" mat-cell>
                     <div class="bar"> {{element.nextBillingDate | date:'dd/MM/yyyy'}} </div>
                 </td>

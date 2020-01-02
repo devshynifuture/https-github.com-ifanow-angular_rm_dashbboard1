@@ -1,13 +1,17 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ChartModule} from 'angular-highcharts';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MaterialModule} from '../../../../../../material/material';
+import { AddProfilePlanComponent } from './profile-plan/add-profile-plan/add-profile-plan.component';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChartModule } from 'angular-highcharts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from '../../../../../../material/material';
 import { PreferencesComponent } from './goals-plan/preferences/preferences.component';
 import { AddGoalComponent } from './goals-plan/add-goal/add-goal.component';
 
 export const componentList = [
-  PreferencesComponent,AddGoalComponent]
+  PreferencesComponent,
+  AddGoalComponent,
+  AddProfilePlanComponent
+];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 
 // export const componentList = [
@@ -22,9 +26,7 @@ export const componentList = [
     MaterialModule,
     ChartModule,
     FormsModule,
-    ReactiveFormsModule,
-    
-    
+    ReactiveFormsModule
   ],
   exports: [
     FormsModule,
@@ -33,7 +35,6 @@ export const componentList = [
 })
 
 export class PlanEntryModule {
-
   static getComponentList() {
     return componentList;
   }
