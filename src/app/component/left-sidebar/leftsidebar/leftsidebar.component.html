@@ -108,7 +108,11 @@
                     <img src="assets/images/svg/earphone.svg">
                 </a>
                 <a class="sidenav-link" mat-list-item>
-                    <img src="assets/images/svg/setting.svg">
+                    <img class="c-p" [matMenuTriggerFor]="appMenu" src="assets/images/svg/setting.svg">
+
+                    <mat-menu #appMenu="matMenu">
+                        <button mat-menu-item>LogOut</button>
+                    </mat-menu>
                 </a>
             </div>
             <i (click)="openSettings()" class="material-icons tabs-right desktop-none">
