@@ -166,7 +166,9 @@ export class PreferencesSettingsComponent implements OnInit {
           data => {
             this.getProfileBillerData();
             dialogRef.close();
-          }
+            this.eventService.openSnackBar("Biller is deleted", "dismiss")
+          },
+          err => this.eventService.openSnackBar(err, "dismiss")
         );
 
       },
