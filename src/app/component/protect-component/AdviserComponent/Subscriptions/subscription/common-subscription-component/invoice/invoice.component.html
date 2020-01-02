@@ -254,8 +254,8 @@ The actual rendered columns are set as a property on the row definition" -->
               </div>
               <div class="col-md-4">
                 <div class="form-group mb-0">
-                  <input (keypress)="utils.keyPress($event)" class="form-control" formControlName="amountReceived"
-                         maxlength="{{getFormControl().amountReceived.maxLength}}" type="number">
+                  <input appNumberOnly [maxLength]="10" #amountReceivedRef class="form-control" formControlName="amountReceived"
+                        type="text">
                 </div>
                 <div class="row">
                   <div class="col-md-10 pr-0">
@@ -267,8 +267,9 @@ The actual rendered columns are set as a property on the row definition" -->
                   </div>
                   <div class="col-md-2 pl-0">
                     <p class="mb-0 f-12 text-custom text-right pt-4">
-                      {{getFormControl().amountReceived.value?.length ? getFormControl().amountReceived.value.length : 0}}
-                      /{{getFormControl().amountReceived.maxLength}}
+                        {{ amountReceivedRef.value.length }}/{{ getFormControl().amountReceived.maxLength }}
+                      <!-- {{getFormControl().amountReceived.value?.length ? getFormControl().amountReceived.value.length : 0}}
+                      /{{getFormControl().amountReceived.maxLength}} -->
                     </p>
                   </div>
                 </div>
@@ -281,8 +282,8 @@ The actual rendered columns are set as a property on the row definition" -->
               </div>
               <div class="col-md-4">
                 <div class="form-group mb-0">
-                  <input (keypress)="utils.keyPress($event)" class="form-control" formControlName="chargesIfAny"
-                         maxlength="{{getFormControl().chargesIfAny.maxLength}}" type="number">
+                  <input #chargesIfAnyRef appNumberOnly [maxLength]="10" class="form-control" formControlName="chargesIfAny"
+                        type="text">
                 </div>
                 <div class="row">
                   <div class="col-md-10 pr-0">
@@ -295,8 +296,9 @@ The actual rendered columns are set as a property on the row definition" -->
                   </div>
                   <div class="col-md-2 pl-0">
                     <p class="mb-0 f-12 text-custom text-right pt-4">
-                      {{getFormControl().chargesIfAny.value?.length ? getFormControl().chargesIfAny.value.length : 0}}
-                      /{{getFormControl().chargesIfAny.maxLength}}
+                        {{ chargesIfAnyRef.value.length }}/{{ getFormControl().chargesIfAny.maxLength }}
+                      <!-- {{getFormControl().chargesIfAny.value?.length ? getFormControl().chargesIfAny.value.length : 0}}
+                      /{{getFormControl().chargesIfAny.maxLength}} -->
                     </p>
                   </div>
                 </div>
@@ -308,7 +310,7 @@ The actual rendered columns are set as a property on the row definition" -->
               </div>
               <div class="col-md-4">
                 <div class="form-group mb-0">
-                  <input class="form-control" formControlName="tds" maxlength="{{getFormControl().tds.maxLength}}"
+                  <input class="form-control" #tdsRef formControlName="tds" maxlength="10"
                          type="text">
                 </div>
                 <div class="row">
@@ -322,8 +324,9 @@ The actual rendered columns are set as a property on the row definition" -->
                   </div>
                   <div class="col-md-2 pl-0">
                     <p class="mb-0 f-12 text-custom text-right pt-4">
-                      {{getFormControl().tds.value?.length ? getFormControl().tds.value.length : 0}}
-                      /{{getFormControl().tds.maxLength}}
+                        {{ tdsRef.value.length }}/{{ getFormControl().tds.maxLength }}
+                      <!-- {{getFormControl().tds.value?.length ? getFormControl().tds.value.length : 0}}
+                      /{{getFormControl().tds.maxLength}} -->
                     </p>
                   </div>
                 </div>
@@ -338,7 +341,7 @@ The actual rendered columns are set as a property on the row definition" -->
                   <!-- <input type="date" class="form-control" formControlName="paymentDate"> -->
 
                   <mat-form-field>
-                    <input (keypress)="utils.dateFormat($event)" [matDatepicker]="picker" class="form-control"
+                    <input appDateInputFormat [matDatepicker]="picker" class="form-control"
                            formControlName="paymentDate" matInput placeholder="mm/dd/yyyy">
                     <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>

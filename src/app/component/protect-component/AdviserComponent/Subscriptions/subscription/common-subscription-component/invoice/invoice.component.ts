@@ -159,9 +159,9 @@ export class InvoiceComponent implements OnInit {
     }
   }
 
-  onDateInput(event){
-    this.paymentDate = this.utils.dateFormat(event);
-  }
+  // onDateInput(event){
+  //   this.paymentDate += this.utils.dateFormat(event);
+  // }
 
   keyPress(event: any) {
     console.log(event.target.value.length);
