@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core/src/metadata/*';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
