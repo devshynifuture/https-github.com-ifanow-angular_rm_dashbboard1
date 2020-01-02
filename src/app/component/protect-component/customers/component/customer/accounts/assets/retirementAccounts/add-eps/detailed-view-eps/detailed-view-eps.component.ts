@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-detailed-view-eps',
@@ -10,7 +11,7 @@ export class DetailedViewEPSComponent implements OnInit {
   inputData: any;
   eps: any;
 
-  constructor(private subInjectService: SubscriptionInject) { }
+  constructor(public utils: UtilService,private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
     this.eps = this.inputData
