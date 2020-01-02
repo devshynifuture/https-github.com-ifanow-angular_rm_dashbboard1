@@ -16,12 +16,16 @@ export class NumberOnlyDirective {
 
   @HostListener('input', ['$event']) onInputChange(event) {
     let initialValue = this._el.nativeElement.value;
+    console.log('12312 initial value : ', initialValue);
+    console.log('12312 initial value : ', this.maxLength);
+
     if (this._el.nativeElement.value.length <= this.maxLength) {
-      if (initialValue > 100) {
-        initialValue = '100';
-      } else {
-        initialValue = initialValue.replace(/[^0-9.]+/g, '');
-      }
+      console.log('initial value : ', initialValue);
+      // if (initialValue > 100) {
+      //   initialValue = '100';
+      // } else {
+      initialValue = initialValue.replace(/[^0-9.]+/g, '');
+      // }
       this.renderer.setProperty(this._el.nativeElement, 'value', initialValue);
       // console.log(initialValue);
       if (initialValue !== this._el.nativeElement.value) {

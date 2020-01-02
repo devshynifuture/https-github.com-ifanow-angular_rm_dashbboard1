@@ -1,4 +1,5 @@
-import {Directive, ElementRef, HostListener, Input, Renderer2} from '@angular/core/src/metadata/*';
+import {ValidatorType} from '../../services/util.service';
+import {Directive, ElementRef, HostListener, Input, Renderer2} from '@angular/core';
 
 @Directive({
   selector: '[appInputValueValidation]',
@@ -14,7 +15,7 @@ export class InputValueValidationDirective {
   @Input() minValue;
   @Input() maxValue;
 
-  @Input() validatorType;
+  @Input() validatorType: RegExp = ValidatorType.ALPHA_NUMERIC_WITH_SPACE;
 
   constructor(
     private _el: ElementRef,
@@ -27,7 +28,7 @@ export class InputValueValidationDirective {
       if (initialValue > 100) {
         initialValue = '100';
       } else {
-        initialValue = initialValue.replace(/[^0-9.]+/g, '');
+        initialValue = initialValue.replace(this.validatorType, '');
       }
       this.renderer.setProperty(this._el.nativeElement, 'value', initialValue);
       // console.log(initialValue);
@@ -40,10 +41,5 @@ export class InputValueValidationDirective {
   }
 }
 
-/*export enum ValidatorType {
-  TEXT_ONLY = /[^0-9.]+/g,
-  NUMBER_ONLY = /[^0-9.]+/g,
-  ALPHA_NUMBERIC = /[^0-9.]+/g,
-  TEXT_WITH_SPACE = /[^0-9.]+/g,
-  ALPHA_NUMERIC_WITH_SPACE = /[^0-9.]+/g
-}*/
+
+
