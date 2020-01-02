@@ -1,14 +1,11 @@
 <!-- <div *ngIf="showLoader">
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div> -->
-<div class="bg-white pb-36">
-    <div class="wrapper-20 pr-0">
-        <div class="row">
-            <div class="col-md-12 p-0">
-                <h4 class="pt-20 pb-28 m-0">Plan</h4>
-            </div>
-        </div>
-        <div class="row">
+<div class="bg-white">
+    <div class="wrapper-20 pb-0 pr-0">
+
+
+        <div class="row" *ngIf="planSettingData != undefined">
             <div (click)="openFragment('','plan')" class="col-md-4 pr-20 pb-20 pl-0 c-p">
                 <mat-card class="example-card b-a height-470 bg-grey lter bd-1">
                     <mat-card-content>
@@ -20,7 +17,7 @@
             </div>
 
             <div class="col-md-4 pr-20 pb-20 pl-0 d-flex" *ngFor="let singlePlan of planSettingData">
-                <mat-card class="example-card bg-grey lter p-0 flex-fill skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <mat-card class="example-card bg-grey lter p-0 flex-fill">
 
                     <mat-card-header>
                         <div class="wrapper-20 pb-10 height120 ">
@@ -60,6 +57,23 @@
 
                 </mat-card>
             </div>
+
         </div>
+        <div class="row" *ngIf="planSettingData == undefined">
+            <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
+                <img class="width200" src="assets/images/svg/new-add-plan.svg">
+                <p class="f-22 f-600 pt-28">Create Plan </p>
+                <p class="f-16 text-center l-21"> You start by creating Plans first. Plans are your core offerings. You can have <br> multiple plans for different types of clients. Each plan will have sub offerings, also
+                    <br> known as Services (explained in next slide). </p>
+
+                <button (click)="openFragment('','plan')" class="btn-primary d-flex align-items-center">
+                    ADD PLAN </button>
+            </div>
+
+        </div>
+
+
+
+
     </div>
 </div>

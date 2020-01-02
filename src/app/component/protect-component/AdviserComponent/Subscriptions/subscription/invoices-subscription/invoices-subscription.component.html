@@ -1,44 +1,7 @@
-<!--<div *ngIf="showLoader">-->
-<!--    <mat-spinner class="loader" [diameter]="30"></mat-spinner>-->
-<!--</div>-->
 <div *ngIf="invoiceSubscription=='false'" class="bg-white pb-36 pt-80" id="ui-invoice">
     <div class="wrapper-20">
-        <div class="row" *ngIf="showFilter==false">
-            <div class="col-md-1 p-0">
-                <h4 class="pt-8 mb-0">Invoices</h4>
-            </div>
-            <div class="col-md-5 p-0">
-                <div class="row">
-                    <div class="col-md-3 p-0">
-                        <button mat-button [matMenuTriggerFor]="menu" class="b-a pr-0 br-0">Actions <i
-                                class="material-icons text-custom">
-                                arrow_drop_down
-                            </i></button>
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item *ngIf="dataCount == 0">Select invoice to see more actions</button>
-                            <button mat-menu-item (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0">Delete
-                                Invoices</button>
-                        </mat-menu>
-                    </div>
-                    <div class="col-md-8 p-0">
-                        <p class="m-0 text-black text-left pt-12">{{dataCount}} invoices selected</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 right text-right p-0">
-                <i class="material-icons mr-12 icon-light v-sub c-p">
-                    search
-                </i>
-                <button mat-stroked-button class="btn-default addon mr-12" (click)="showFilters(showFilter)"><i
-                        class="material-icons">filter_list</i>FILTERS
-                </button>
-                <button mat-stroked-button class="btn-primary addon" (click)="addInvoice('EditInInvoice')"><i
-                        class="material-icons">add</i>ADD NEW
-                </button>
-            </div>
-        </div>
-        <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
-            <div class="row">
+        <div *ngIf="dataSource.data.length > 0">
+            <div class="row" *ngIf="showFilter==false">
                 <div class="col-md-1 p-0">
                     <h4 class="pt-8 mb-0">Invoices</h4>
                 </div>
@@ -64,142 +27,171 @@
                     <i class="material-icons mr-12 icon-light v-sub c-p">
                         search
                     </i>
-                    <button mat-stroked-button class="btn-default addon mr-12"
-                        (click)="showFilters(showFilter)"><i class="material-icons">filter_list</i>FILTERS
+                    <button mat-stroked-button class="btn-default addon mr-12" (click)="showFilters(showFilter)"><i
+                            class="material-icons">filter_list</i>FILTERS
                     </button>
                     <button mat-stroked-button class="btn-primary addon" (click)="addInvoice('EditInInvoice')"><i
                             class="material-icons">add</i>ADD NEW
                     </button>
                 </div>
             </div>
-            <div class="row pt-12">
-                <div class="col-md-8 p-0 custom-tags">
-                    <mat-chip-list>
-                        <mat-chip class="bg-white b-a c-p f-400 p-12"
-                            *ngFor="let status of filterStatus; let ind = index">
-                            {{status.name}}<i class="material-icons text-custom ml-12" (click)="remove(ind)">
-                                cancel
-                            </i></mat-chip>
-                        <mat-chip-list>
-                            <mat-chip class="bg-white b-a c-p f-400 p-12"
-                                *ngFor="let dateFilter of filterDate; let i = index">
-                                <p>{{dateFilter.name}}</p>
-                                <input matInput placeholder="Choose a date" [satDatepicker]="picker2"
-                                    [(ngModel)]="selectedDateRange">
-                                <sat-datepicker #picker2 [rangeMode]="true">
-                                </sat-datepicker>
-                                <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
-                                <i class="material-icons text-custom ml-12" (click)="removeDate(i)">
-                                    cancel
-                                </i>
-                            </mat-chip>
-                        </mat-chip-list>
-                    </mat-chip-list>
-                </div>
-                <div class="col-md-4 right text-right p-0">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <select class="form-control br-0" id="sel11" [(ngModel)]='selectedStatusFilter'
-                                (change)="addFilters(selectedStatusFilter)">
-                                <option value="" [disabled]="true">FILTERS ONE</option>
-                                <option *ngFor="let chip of chips" [ngValue]="chip">{{chip.name}}</option>
-                            </select>
+            <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
+                <div class="row">
+                    <div class="col-md-1 p-0">
+                        <h4 class="pt-8 mb-0">Invoices</h4>
+                    </div>
+                    <div class="col-md-5 p-0">
+                        <div class="row">
+                            <div class="col-md-3 p-0">
+                                <button mat-button [matMenuTriggerFor]="menu" class="b-a pr-0 br-0">Actions <i
+                                        class="material-icons text-custom">
+                                        arrow_drop_down
+                                    </i></button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item *ngIf="dataCount == 0">Select invoice to see more
+                                        actions</button>
+                                    <button mat-menu-item (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0">Delete
+                                        Invoices</button>
+                                </mat-menu>
+                            </div>
+                            <div class="col-md-8 p-0">
+                                <p class="m-0 text-black text-left pt-12">{{dataCount}} invoices selected</p>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <select class="form-control br-0" id="sel12" [(ngModel)]='selectedDateFilter'
-                                (change)="addFiltersDate($event)">
-                                <option value="" [disabled]="true">FILTERS TWO</option>
-                                <option *ngFor="let dateAdd of dateChips" [ngValue]="dateAdd">{{dateAdd.name}}</option>
-                            </select>
+                    </div>
+                    <div class="col-md-6 right text-right p-0">
+                        <i class="material-icons mr-12 icon-light v-sub c-p">
+                            search
+                        </i>
+                        <button mat-stroked-button class="btn-default addon mr-12" (click)="showFilters(showFilter)"><i
+                                class="material-icons">filter_list</i>FILTERS
+                        </button>
+                        <button mat-stroked-button class="btn-primary addon" (click)="addInvoice('EditInInvoice')"><i
+                                class="material-icons">add</i>ADD NEW
+                        </button>
+                    </div>
+                </div>
+                <div class="row pt-12">
+                    <div class="col-md-8 p-0 custom-tags">
+                        <mat-chip-list>
+                            <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let status of filterStatus; let ind = index">
+                                {{status.name}}<i class="material-icons text-custom ml-12" (click)="remove(ind)">
+                                    cancel
+                                </i></mat-chip>
+                            <mat-chip-list>
+                                <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let dateFilter of filterDate; let i = index">
+                                    <p>{{dateFilter.name}}</p>
+                                    <input matInput placeholder="Choose a date" [satDatepicker]="picker2" [(ngModel)]="selectedDateRange">
+                                    <sat-datepicker #picker2 [rangeMode]="true">
+                                    </sat-datepicker>
+                                    <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
+                                    <i class="material-icons text-custom ml-12" (click)="removeDate(i)">
+                                        cancel
+                                    </i>
+                                </mat-chip>
+                            </mat-chip-list>
+                        </mat-chip-list>
+                    </div>
+                    <div class="col-md-4 right text-right p-0">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <select class="form-control br-0" id="sel11" [(ngModel)]='selectedStatusFilter' (change)="addFilters(selectedStatusFilter)">
+                                    <option value="" [disabled]="true">FILTERS ONE</option>
+                                    <option *ngFor="let chip of chips" [ngValue]="chip">{{chip.name}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <select class="form-control br-0" id="sel12" [(ngModel)]='selectedDateFilter' (change)="addFiltersDate($event)">
+                                    <option value="" [disabled]="true">FILTERS TWO</option>
+                                    <option *ngFor="let dateAdd of dateChips" [ngValue]="dateAdd">{{dateAdd.name}}
+                                    </option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <table matSort mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation"
-            appSkeletonLoading [appSkeletonLoading]="isLoading">
-            <ng-container matColumnDef="checkbox">
-                <th mat-header-cell *matHeaderCellDef class="f-18">
+            <table matSort mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <ng-container matColumnDef="checkbox">
+                    <th mat-header-cell *matHeaderCellDef class="f-18">
 
-                    <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0 && isAllSelected()"
-                        [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll">
-                    </mat-checkbox>
-
-                </th>
-                <td mat-cell *matCellDef="let element">
-                    <div class="bar">
-                        <mat-checkbox name="selectedData" class="c-p" [(ngModel)]="element.selected"
-                            (change)="changeSelect()">
+                        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0 && isAllSelected()" [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll">
                         </mat-checkbox>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="date">
-                <th mat-sort-header="invoiceDate" mat-header-cell *matHeaderCellDef class="f-18"> Date</th>
-                <td mat-cell *matCellDef="let element" class="c-p"
-                    (click)="openInvoice(element,'invoiceSubscription','open')">
-                    <div class="bar"> {{element.invoiceDate | date:'dd/MM/yyyy'}} </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="invoicenum">
-                <th mat-sort-header="invoiceNumber" mat-header-cell *matHeaderCellDef class="f-18"> Invoice number</th>
-                <td mat-cell *matCellDef="let element" class="c-p"
-                    (click)="openInvoice(element,'invoiceSubscription','open')">
-                    <div class="bar"> {{element.invoiceNumber}} </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="name">
-                <th mat-sort-header="clientName" mat-header-cell *matHeaderCellDef class="f-18"> Client name</th>
-                <td mat-cell *matCellDef="let element" class="c-p"
-                    (click)="openInvoice(element,'invoiceSubscription','open')">
-                    <div class="bar"> {{element.clientName}} </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="email">
-                <th mat-sort-header="email" mat-header-cell *matHeaderCellDef class="f-18"> Email</th>
-                <td mat-cell *matCellDef="let element" class="c-p"
-                    (click)="openInvoice(element,'invoiceSubscription','open')">
-                    <div class="bar"> {{element.email}} </div>
-                </td>
-            </ng-container>
 
-            <ng-container matColumnDef="status">
-                <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="f-18"> Status</th>
-                <td mat-cell *matCellDef="let element"
-                    [ngClass]="{'text-danger':element.status==0,'text-primary':element.status==1,'text-success':element.status==2}"
-                    ngcl class="c-p" (click)="openInvoice(element,'invoiceSubscription','open')">
-                    <div class="bar">
-                        {{(element.status==0)?'OVERDUE':(element.status==1)?'OVERDUE':(element.status==2)?'PAID':''}}
-                    </div>
-                </td>
-            </ng-container>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            <mat-checkbox name="selectedData" class="c-p" [(ngModel)]="element.selected" (change)="changeSelect()">
+                            </mat-checkbox>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="date">
+                    <th mat-sort-header="invoiceDate" mat-header-cell *matHeaderCellDef class="f-18"> Date</th>
+                    <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceSubscription','open')">
+                        <div class="bar"> {{element.invoiceDate | date:'dd/MM/yyyy'}} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="invoicenum">
+                    <th mat-sort-header="invoiceNumber" mat-header-cell *matHeaderCellDef class="f-18"> Invoice number
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceSubscription','open')">
+                        <div class="bar"> {{element.invoiceNumber}} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="name">
+                    <th mat-sort-header="clientName" mat-header-cell *matHeaderCellDef class="f-18"> Client name</th>
+                    <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceSubscription','open')">
+                        <div class="bar"> {{element.clientName}} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="email">
+                    <th mat-sort-header="email" mat-header-cell *matHeaderCellDef class="f-18"> Email</th>
+                    <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceSubscription','open')">
+                        <div class="bar"> {{element.email}} </div>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="duedate">
-                <th mat-sort-header="dueDate" mat-header-cell *matHeaderCellDef class="f-18"> Due date</th>
-                <td mat-cell *matCellDef="let element" (click)="openInvoice(element,'invoiceSubscription','open')">
-                    <div class="bar"> {{element.dueDate | date:'dd/MM/yyyy'}} </div>
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="status">
+                    <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="f-18"> Status</th>
+                    <td mat-cell *matCellDef="let element" [ngClass]="{'text-danger':element.status==0,'text-primary':element.status==1,'text-success':element.status==2}" ngcl class="c-p" (click)="openInvoice(element,'invoiceSubscription','open')">
+                        <div class="bar">
+                            {{(element.status==0)?'OVERDUE':(element.status==1)?'OVERDUE':(element.status==2)?'PAID':''}}
+                        </div>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="amt">
-                <th mat-sort-header="finalAmount" mat-header-cell *matHeaderCellDef class="f-18"> Amount(₹)</th>
-                <td mat-cell *matCellDef="let element" class="c-p"
-                    (click)="openInvoice(element,'invoiceSubscription','open')">
-                    <div class="bar"> {{formatter(element.finalAmount)||''}} </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="balance">
-                <th mat-sort-header="balanceDue" mat-header-cell *matHeaderCellDef class="f-18 text-right pr-24">
-                    Balance due(₹)</th>
-                <td mat-cell *matCellDef="let element" class="text-right pr-8 c-p"
-                    (click)="openInvoice(element,'invoiceSubscription','open')">
-                    <div class="bar"> {{formatter(element.balanceDue)||''}} </div>
-                </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-        <h4 *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4>
+                <ng-container matColumnDef="duedate">
+                    <th mat-sort-header="dueDate" mat-header-cell *matHeaderCellDef class="f-18"> Due date</th>
+                    <td mat-cell *matCellDef="let element" (click)="openInvoice(element,'invoiceSubscription','open')">
+                        <div class="bar"> {{element.dueDate | date:'dd/MM/yyyy'}} </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="amt">
+                    <th mat-sort-header="finalAmount" mat-header-cell *matHeaderCellDef class="f-18"> Amount(₹)</th>
+                    <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceSubscription','open')">
+                        <div class="bar"> {{formatter(element.finalAmount)||''}} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="balance">
+                    <th mat-sort-header="balanceDue" mat-header-cell *matHeaderCellDef class="f-18 text-right pr-24">
+                        Balance due(₹)</th>
+                    <td mat-cell *matCellDef="let element" class="text-right pr-8 c-p" (click)="openInvoice(element,'invoiceSubscription','open')">
+                        <div class="bar"> {{formatter(element.balanceDue)||''}} </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <!-- <h4 *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4> -->
+        </div>
+        <div class="row" *ngIf="dataSource.data.length == 0">
+            <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
+                <img class="width400" src="assets/images/svg/clients-img.svg">
+                <p class="f-22 f-600 pt-28"> No Data Found </p>
+            </div>
+        </div>
     </div>
 </div>
 <div *ngIf="invoiceSubscription =='true'">
@@ -209,222 +201,3 @@
 <div class="pt-60" *ngIf="invoiceSubscription=='EditInInvoice'">
     <app-invoice [invoiceValue]="invoiceSubscription" (valueChange)='display($event)'></app-invoice>
 </div>
-<!-- <div class="bg-white pb-44 mt-70">
-        <div class="row">
-            <div class="col-md-10">
-                <h2 class="m-0 pl-12 pt-12">Edit Invoice of INV-19-20-103201</h2>
-            </div>
-            <div class="col-md-2">
-                <i class="material-icons right pt-20 pr-20 c-p"> clear </i>
-            </div>
-        </div>
-        <div class="row pt-40">
-            <div class="col-md-3">
-                <h5 class="m-0 text-right pt-8">Client name </h5>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <input type="text" class="form-control br-0">
-                </div>
-                <div class="row">
-                    <div class="col-md-6 p-0">
-                        <p class="m-0 text-custom f-12">BILLER ADDRESS</p>
-                        <p class="m-0 text-black">#46, Street 1,
-                            <br> Lokhandwala Township
-                            <br> Borivali East
-                            <br> Mumbai 400 066
-                        </p>
-                        <p class="m-0 text-primary">CHANGE</p>
-                    </div>
-                    <div class="col-md-6 p-0">
-                        <p class="m-0 text-custom f-12">PAYEE ADDRESS</p>
-                        <p class="m-0 text-black">#46, Street 1,
-                            <br> Lokhandwala Township
-                            <br> Borivali East
-                            <br> Mumbai 400 066
-                        </p>
-                        <p class="m-0 text-primary">CHANGE</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="wrapper-28">
-            <div class="bt-grey">
-                <div class="row pt-28">
-                    <div class="col-md-4 p-0">
-                        <div class="row">
-                            <div class="col-md-4 pl-0">
-                                <h5 class="m-0 pt-8 text-left">Invoice No.</h5>
-                            </div>
-                            <div class="col-md-7 p-0">
-                                <div class="form-group mb-0">
-                                    <input type="email" class="form-control br-0">
-                                </div>
-                                <div class="col-md-12">
-                                    <p class="m-0 text-custom f-12 text-right pt-4"> 0 / 10</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 p-0">
-                        <div class="row">
-                            <div class="col-md-6 p-0">
-                                <h5 class="m-0 pt-8 text-right pr-24">Invoice Date</h5>
-                            </div>
-                            <div class="col-md-6 pr-0">
-                                <div class="form-group mb-0">
-                                    <input type="email" class="form-control br-0">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 p-0">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h5 class="m-0 pt-8 text-right pr-28">Due Date</h5>
-                            </div>
-                            <div class="col-md-6 p-0">
-                                <div class="form-group mb-0">
-                                    <input type="email" class="form-control br-0">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-28 b-a">
-                    <div class="row bg-grey lter">
-                        <div class="col-md-6 p-0">
-                            <p class="m-0 text-black wrapper-16 f-500">Service Details</p>
-                        </div>
-                        <div class="col-md-2 p-0">
-                            <p class="m-0 text-black f-500 wrapper-16 text-right">Price </p>
-                        </div>
-                        <div class="col-md-2 p-0">
-                            <p class="m-0 text-black f-500 wrapper-16">Tax</p>
-                        </div>
-                        <div class="col-md-2 p-0">
-                            <p class="m-0 text-black f-500 wrapper-16 text-right">Amount</p>
-                        </div>
-                    </div>
-                    <div class="row bg-white">
-                        <div class="col-md-5 p-0">
-                            <div class="b-a m-4 wrapper-4">
-                                <div class="row">
-                                    <div class="col-md-8 p-0">
-                                        <p class="m-0 text-black  pb-0 f-500">Investment management fees</p>
-                                        <p class="m-0 text-custom">For the period 20/08/2019 to 19/08/2020</p>
-                                    </div>
-                                    <div class="col-md-3 p-0">
-                                        <i class="material-icons text-custom text-right right f-18 pt-8">
-                                                    create
-                                                    </i>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-md-2 p-0">
-                            <p class="m-0 text-black wrapper-16 text-right">8,000 </p>
-                        </div>
-                        <div class="col-md-2 p-0">
-                            <p class="m-0 text-black wrapper-16">IGST (18%)</p>
-                        </div>
-                        <div class="col-md-2 p-0">
-                            <p class="m-0 text-black wrapper-16 text-right">9,440</p>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row pt-12">
-                    <div class="col-md-8"></div>
-                    <div class="col-md-2">
-                        <h5 class="m-0">Sub total</h5>
-                    </div>
-                    <div class="col-md-2 p-0">
-                        <h5 class="m-0 text-right pr-8">Rs.8,000</h5>
-                    </div>
-                </div>
-                <div class="row pt-20">
-                    <div class="col-md-8"></div>
-                    <div class="col-md-2">
-                        <h5 class="m-0">Discount</h5>
-                    </div>
-                    <div class="col-md-2 p-0">
-                        <h5 class="m-0 text-right pr-8">Rs.0</h5>
-                    </div>
-                </div>
-                <div class="row pt-20 pb-12">
-                    <div class="col-md-8"></div>
-                    <div class="col-md-2">
-                        <h5 class="m-0">IGST (18%)</h5>
-                    </div>
-                    <div class="col-md-2 p-0">
-                        <h5 class="m-0 text-right pr-8">Rs.1,440</h5>
-                    </div>
-                </div>
-                <div class="row pb-8">
-                    <div class="col-md-8"></div>
-                    <div class="col-md-2 bt-grey">
-                        <h5 class="m-0 text-black pt-8 f-500">Total</h5>
-                    </div>
-                    <div class="col-md-2 bt-grey p-0">
-                        <h5 class="m-0 text-right pr-8 pt-8 text-black f-500">9,440</h5>
-                    </div>
-                </div>
-                <div class="row pb-8">
-                    <div class="col-md-8"></div>
-                    <div class="col-md-2 bt-grey">
-                        <h5 class="m-0 text-black pt-8 f-500">Balance due</h5>
-                    </div>
-                    <div class="col-md-2 bt-grey p-0">
-                        <h5 class="m-0 text-right pr-8 pt-8 text-black f-500">9,440</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="bg-grey lt wrapper-28">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-md-3 p-0">
-                            <h5 class="m-0 pt-24 text-black text-center">Footnote Description</h5>
-                        </div>
-                        <div class="col-md-9 p-0">
-                                <div class="form-group mb-0">
-                                        <textarea class="form-control" rows="5"></textarea>
-                                      </div>
-                                      <div class="row">
-                                          <div class="col-md-6">
-                                              <p class="f-12 m-0 text-custom roboto">Optional</p>
-                                          </div>
-                                          <div class="col-md-6">
-                                                <p class="f-12 m-0 text-custom roboto">0 / 10</p>
-                                          </div>
-                                      </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                        <div class="row">
-                                <div class="col-md-3 p-0">
-                                        <h5 class="m-0 text-black pt-24 text-center">Terms & Conditions</h5>
-                                </div>
-                                <div class="col-md-9 p-0">
-                                        <div class="form-group mb-0">
-                                                <textarea class="form-control" rows="5"></textarea>
-                                              </div>
-                                              <div class="row">
-                                                    <div class="col-md-6">
-                                                        <p class="f-12 m-0 text-custom roboto">Optional</p>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                          <p class="f-12 text-custom m-0 roboto">0 / 10</p>
-                                                    </div>
-                                                </div>
-                                </div>
-                            </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
