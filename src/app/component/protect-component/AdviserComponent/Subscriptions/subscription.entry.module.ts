@@ -16,6 +16,7 @@ import { CommonComponentModule } from '../../common-component/common-component.m
 import { SubscriptionUpperSliderComponent } from './subscription/common-subscription-component/upper-slider/subscription-upper-slider.component';
 import { ClientUpperSubscriptionComponent } from './subscription/common-subscription-component/subscriptions-upper-slider/client-upper-subscription.component';
 import { SubscriptionUpperEntry } from './subscription-upper-entry-module';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 
 export const componentList = [
     // VariableFeeComponent,
@@ -37,7 +38,8 @@ export const componentList = [
         FormsModule,
         ReactiveFormsModule,
         CommonComponentModule,
-        SubscriptionUpperEntry
+        SubscriptionUpperEntry,
+        CustomDirectiveModule
     ],
     exports: [componentList],
     entryComponents: [componentList]

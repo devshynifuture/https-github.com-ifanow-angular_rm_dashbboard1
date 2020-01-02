@@ -12,6 +12,8 @@ export class NumberValidationDirective {
 
   @HostListener('input', ['$event']) onInputChange(event) {
     let initialValue = this._el.nativeElement.value;
+    console.log('tera wala log',initialValue)
+    console.log('####',event)
     if (this._el.nativeElement.value.length <= this.maxLength) {
       if (initialValue > 100) {
         initialValue = '100'
