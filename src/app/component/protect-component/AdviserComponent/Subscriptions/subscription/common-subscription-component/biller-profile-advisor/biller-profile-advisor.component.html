@@ -22,8 +22,7 @@
               </div>
               <div class="col-md-7">
                 <div class="form-group mb-0">
-                  <input type="text" appAlphanumric autofocus
-                    class="form-control br-0 text-left" formControlName="companyDisplayName"
+                  <input type="text" autofocus class="form-control br-0 text-left" formControlName="companyDisplayName"
                     maxlength="{{getFormControlProfile().gstinNum.maxLength}}">
                 </div>
                 <!-- <div class="row pt-0">
@@ -50,8 +49,12 @@
               <div class="col-md-7">
                 <div class="form-group mb-0">
 
+<<<<<<< HEAD
                   <input type="text" appAlphanumric autofocus
                     class="form-control br-0 text-left" formControlName="companyName"
+=======
+                  <input type="text" class="form-control br-0 text-left" formControlName="companyName"
+>>>>>>> 56dd6faf8e2e7c3a9431fd5445a1396abc2209f1
                     maxlength="{{getFormControlProfile().gstinNum.maxLength}}">
 
                 </div>
@@ -463,8 +466,8 @@
             </div>
             <div class="col-md-7">
               <div class="form-group mb-0">
-                <input class="form-control br-0 text-left" formControlName="pincode" type="number"
-                  (keypress)="utils.keyPress($event)">
+                <input class="form-control br-0 text-left" appNumberValidation [maxLength]="10"
+                  formControlName="pincode" type="number" (keypress)="utils.keyPress($event)">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
