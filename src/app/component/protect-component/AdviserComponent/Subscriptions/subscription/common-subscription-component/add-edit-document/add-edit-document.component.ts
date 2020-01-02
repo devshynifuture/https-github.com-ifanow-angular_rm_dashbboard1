@@ -33,7 +33,9 @@ export class AddEditDocumentComponent implements OnInit {
   @Input()
   set inputData(inputData) {
     this._inputData = inputData;
-    this.selectedOption = inputData ? (inputData.public ? (inputData.public === 1 ? '3' : inputData.mappingType) : '3') : '1';
+    // obj.outstandingCheck.toString();
+    this.selectedOption=(inputData.availableAt)?inputData.availableAt.toString():'3';
+    // this.selectedOption = inputData ? (inputData.public ? (inputData.public === 1 ? '3' : inputData.mappingType) : '3') : '1';
     console.log('AddEditDocumentComponent inputData: ', inputData);
     this.setFormData(inputData);
   }
@@ -95,7 +97,8 @@ export class AddEditDocumentComponent implements OnInit {
         public: true,
         quotation: this._inputData.docType == '3' ? true : false,
         availableAt: this.selectedOption ? parseInt(this.selectedOption) : 0,
-        mappingId: this._inputData.docType == '3' ? 5 : 0
+        mappingId: this._inputData.docType == '3' ? 5 : 0,
+        docType:this.blankDocumentProperties.controls.docType.value
 
       };
       // console.log(obj);

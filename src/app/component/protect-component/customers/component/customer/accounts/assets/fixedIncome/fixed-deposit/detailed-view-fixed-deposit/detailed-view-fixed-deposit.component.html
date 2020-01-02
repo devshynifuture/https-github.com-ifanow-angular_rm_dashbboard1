@@ -54,7 +54,7 @@ Description description: "this is futurewise Tech" -->
                         Amount invested
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.amountInvested}}
+                        {{utils.formatter(fixedDeposit.amountInvested)}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -127,7 +127,7 @@ Description description: "this is futurewise Tech" -->
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.currentValue}}
+                        {{utils.formatter(fixedDeposit.currentValue)}}
                     </div>
                 </div>
 
@@ -144,7 +144,7 @@ Description description: "this is futurewise Tech" -->
                         Maturity value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.maturityValue}}
+                        {{utils.formatter(fixedDeposit.maturityValue)}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

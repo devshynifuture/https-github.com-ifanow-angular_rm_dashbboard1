@@ -329,10 +329,10 @@ export class RiskProfileComponent implements OnInit {
       }
     );
   }
-  getResultData(data){
+  getResultData(data) {
     console.log(data)
 
-    if(data != undefined){
+    if (data != undefined) {
       this.showRisk = false
       this.riskAssessmentQuestionList = data.data
       this.showButton = false

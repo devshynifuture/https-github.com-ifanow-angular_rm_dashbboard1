@@ -376,9 +376,66 @@
             <div *ngIf="dataNPSList.filteredData.length == 0" class="d-flex flex-column align-items-center">
               <h4 class="text-center pt-72">{{noData}}</h4>
               <!--              [matMenuTriggerFor]="menu1"-->
-              <button class="btn-primary addon v-middle mt-20" mat-stroked-button><i
+              <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button><i
                 class="material-icons">add</i>ADD NEW
-              </button>
+        </button>
+        <mat-menu #menu1="matMenu" class="add-new">
+            <button (click)="openAddSummaryPort(null)" class="b-b" mat-menu-item>
+                <div class="row">
+                    <div class="col-md-4 p-0">
+                        <h4 class="m-0 text-black roboto pt-8">National pension system (NPS)</h4>
+                    </div>
+                    <div class="col-md-8 p-0 right text-right">
+                        <img class="c-p" src="assets/images/svg/download-bordered.svg">
+                        <mat-menu #menu5="matMenu">
+                            <button mat-menu-item>PDF</button>
+                            <button mat-menu-item (click)="ExportTOExcel('nps')">XLS</button>
+                        </mat-menu>
+                        <img class="" src="assets/images/svg/up-down.svg">
+                        <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
+                        <mat-menu #menu6="matMenu">
+                            <button mat-menu-item>Email Report</button>
+                            <button mat-menu-item>Option 2</button>
+                            <button mat-menu-item>Option 3</button>
+                        </mat-menu>
+                        <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
+                                class="material-icons">filter_list</i>FILTERS
+                        </button>
+                        <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button><i
+                                class="material-icons">add</i>ADD NEW
+                        </button>
+                        <mat-menu #menu1="matMenu" class="add-new">
+                            <button (click)="openAddSummaryPort(null)" class="b-b" mat-menu-item>
+                                <div class="row">
+                                    <div class="col-md-2 pr-8 text-right">
+                                        <img src="assets/images/svg/dark-three-dot.svg">
+                                    </div>
+                                    <div class="col-md-10">
+                                        <p class="m-0 text-black">Portfolio summary</p>
+                                        <p class="m-0 f-13 pt-4 text-custom">Add just the overall portfolio
+                                            <br> summary. Time saver!
+                                        </p>
+                                    </div>
+                                </div>
+                            </button>
+                            <button (click)="openAddSchemeHolding(null)" class="b-b" mat-menu-item>
+                                <div class="row">
+                                    <div class="col-md-2 pr-8 text-right">
+                                        <img src="assets/images/svg/scheme-icon.svg">
+                                    </div>
+                                    <div class="col-md-10">
+                                        <p class="m-0 text-black">Scheme level holdins</p>
+                                        <p class="m-0 pt-4 f-13 text-custom">Add only holding
+                                            <br> summay at a scheme level
+                                        </p>
+                                    </div>
+                                </div>
+                            </button>
+                        </mat-menu>
+                    </div>
+                </div>
+            </button>
+        </mat-menu>
             </div>
         </div>
     </div>

@@ -17,8 +17,12 @@ export class AdviceActivityComponent implements OnInit {
 
   displayedColumns1: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'status', 'date', 'adate', 'icons'];
   dataSource1 = ELEMENT_DATA1;
-  displayedColumns2: string[] = ['position', 'name', 'weight', 'symbol', 'status', 'date', 'adate', 'icons'];
+  displayedColumns2: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'status', 'date', 'adate', 'icons'];
   dataSource2 = ELEMENT_DATA2;
+  displayedColumns3: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'advice', 'astatus', 'adate', 'icon'];
+  dataSource3 = ELEMENT_DATA3;
+  displayedColumns4: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'mdate', 'advice', 'astatus', 'adate', 'icon'];
+  dataSource4 = ELEMENT_DATA4;
   viewMode: string;
 
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
@@ -26,7 +30,7 @@ export class AdviceActivityComponent implements OnInit {
   selected;
   ngOnInit() {
 
-    this.viewMode = 'tab1';
+    this.viewMode = 'tab5';
   }
   openselectAdvice(data) {
     const fragmentData = {
@@ -107,3 +111,38 @@ const ELEMENT_DATA2: PeriodicElement2[] = [
   },
 
 ]
+
+
+export interface PeriodicElement3 {
+  name: string;
+  position: string;
+  weight: number;
+  symbol: string;
+  advice: string;
+  astatus: string;
+  adate: string;
+}
+
+const ELEMENT_DATA3: PeriodicElement3[] = [
+  { position: 'Rahul Jain', name: '35,000', weight: 23 / 12 / 2019, symbol: 'ICICI FD', advice: 'Continue holding till maturity', astatus: 'Given', adate: '23/12/2019' },
+  { position: 'Rahul Jain', name: '35,000', weight: 23 / 12 / 2019, symbol: 'ICICI FD', advice: 'Continue holding till maturity', astatus: 'Given', adate: '23/12/2019' },
+  { position: 'Rahul Jain', name: '35,000', weight: 23 / 12 / 2019, symbol: 'ICICI FD', advice: 'Continue holding till maturity', astatus: 'Given', adate: '23/12/2019' },
+];
+export interface PeriodicElement4 {
+  name: string;
+  position: string;
+  weight: number;
+  symbol: string;
+  mdate: string;
+  advice: string;
+  astatus: string;
+  adate: string;
+}
+
+const ELEMENT_DATA4: PeriodicElement4[] = [
+  {
+    position: 'Rahul Jain', name: '35,000', weight: 23 / 12 / 2019, symbol: 'ICICI FD',
+    mdate: '12/08/2019', advice: 'Continue holding till maturity', astatus: 'Given', adate: '23/12/2019'
+  },
+
+];

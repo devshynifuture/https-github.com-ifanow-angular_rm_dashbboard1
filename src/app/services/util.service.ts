@@ -103,7 +103,7 @@ export class UtilService {
 
   //Allows only numbers
   keyPress(event: any) {
-    const pattern = /[0-9\+\-\ ]/;
+    const pattern = /[0-9\+\-\. ]/;
 
     const inputChar = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
@@ -131,8 +131,36 @@ export class UtilService {
 
   //used for dateFormat allows numbers and / character
   dateFormat(event: any) {
-    var k = event.keyCode;
-    return ((k == 47) || (k >= 48 && k <= 57));
+    let res: string;
+    if(this.alphaNumric(event)){
+      res = event.target.value;
+   
+      if(((event.keyCode == 47) || (event.keyCode >= 48 && event.keyCode <= 57))){
+        if(event.target.value.length && event.target.value.length !== null){
+          // console.log(event.target.value);
+          if(event.target.value.length === 2 || event.target.value === 4){
+            res += '/';
+            return res;
+          } 
+        }
+      } else {
+        return res;
+      }
+    }
+    else {
+      return '';
+    }
   }
+}
 
+export class ValidatorType {
+
+  static NUMBER_ONLY = new RegExp(/[^0-9.]+/g);
+  static TEXT_ONLY = new RegExp(/^[a-zA-Z ]/gi);
+  static TEXT_WITH_SPACE = new RegExp(/^[a-zA-Z ]/gi);
+
+  static ALPHA_NUMBERIC = new RegExp(/^[a-zA-Z0-9]*$/gi);
+  static ALPHA_NUMERIC_WITH_SPACE = new RegExp(/^[a-zA-Z0-9 ]*$/gi);
+  // static EMAIL_ONLY = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+  static EMAIL_ONLY = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 }

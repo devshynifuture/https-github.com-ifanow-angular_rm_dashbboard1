@@ -31,6 +31,7 @@ export class InvoicesComponent implements OnInit {
   noData: string;
   advisorId: any;
   _clientData: any;
+  list: any[];
 
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, private subService: SubscriptionService, public dialog: MatDialog) {
@@ -242,15 +243,29 @@ export class InvoicesComponent implements OnInit {
   }
 
   deleteModal(value) {
+    this.list = [];
+    this.dataSource.filteredData.forEach(singleElement => {
+      if (singleElement.selected) {
+        this.list.push(singleElement.id);
+      }
+    });
     const dialogData = {
       data: value,
       header: 'DELETE',
-      body: 'Are you sure you want to delete the document GD?',
+      body: 'Are you sure you want to delete?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        console.log('11111111111111111111111111111111111111111111');
+        this.subService.deleteInvoices(this.list).subscribe(
+          data => {
+            this.dataCount = 0;
+            this.eventService.openSnackBar('invoice deleted successfully.', 'dismiss');
+            dialogRef.close();
+            this.getInvoiceList();
+          },
+          err => this.eventService.openSnackBar(err)
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -263,12 +278,10 @@ export class InvoicesComponent implements OnInit {
       data: dialogData,
       autoFocus: false,
 
-
     });
 
     dialogRef.afterClosed().subscribe(result => {
 
     });
-
   }
 }

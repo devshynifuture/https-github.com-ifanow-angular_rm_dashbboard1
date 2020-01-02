@@ -6,6 +6,7 @@ import { EnumServiceService } from '../../../../../../../services/enum-service.s
 import * as _ from 'lodash';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-variable-fee',
@@ -31,7 +32,7 @@ export class AddVariableFeeComponent implements OnInit {
     this.getFeeFormUpperData(data)
   }
   @Output() outputVariableData = new EventEmitter();
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
+  constructor(public utils: UtilService,public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private subService: SubscriptionService, private enumService: EnumServiceService, private eventService: EventService) {
   }
 
@@ -194,7 +195,7 @@ export class AddVariableFeeComponent implements OnInit {
   saveVariableFeeDataResponse(data, obj) {
     this.outputVariableData.emit(data)
     this.eventService.openSnackBar('Service is Created', 'OK');
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    this.subInjectService.changeUpperRightSliderState({flag: 'added', state: 'close', data });
   }
 
   select(assetData) {
