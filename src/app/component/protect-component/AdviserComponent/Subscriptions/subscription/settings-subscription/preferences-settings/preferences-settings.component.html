@@ -1,31 +1,22 @@
 <div id="ui-perferences" class="bg-white">
     <div class="wrapper-20">
-        <div class="row">
-            <div class="col-md-12">
-                <h4 class="pt-20 pb-28">Preferences</h4>
-            </div>
-        </div>
+
         <div class="row">
             <div class="col-md-2 p-0 pt-1 preferencesMenuList">
                 <ul class="vertical-menu">
-                    <li (click)="viewMode ='tab1'" [ngClass]="{'b-outline':viewMode =='tab1','':viewMode =='tab1'}"
-                        class="c-p">
+                    <li (click)="viewMode ='tab1'" [ngClass]="{'b-outline':viewMode =='tab1','':viewMode =='tab1'}" class="c-p">
                         Biller profile
                     </li>
-                    <li (click)="viewMode ='tab2';getPrefixData(1)"
-                        [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}" class="c-p">
+                    <li (click)="viewMode ='tab2';getPrefixData(1)" [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}" class="c-p">
                         Invoice
                     </li>
-                    <li (click)="viewMode ='tab3';getPrefixData(2)"
-                        [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}" class="c-p">
+                    <li (click)="viewMode ='tab3';getPrefixData(2)" [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}" class="c-p">
                         Quotations
                     </li>
-                    <li (click)="viewMode ='tab4';getPrefixData(3)"
-                        [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}" class=" c-p">
+                    <li (click)="viewMode ='tab4';getPrefixData(3)" [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}" class=" c-p">
                         Subscriptions
                     </li>
-                    <li (click)="viewMode ='tab5'" [ngClass]="{'b-outline':viewMode =='tab5','':viewMode =='tab5'}"
-                        class=" c-p">
+                    <li (click)="viewMode ='tab5'" [ngClass]="{'b-outline':viewMode =='tab5','':viewMode =='tab5'}" class=" c-p">
                         Email settings
                     </li>
                 </ul>
@@ -33,12 +24,15 @@
             </div>
             <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode">
                 <div *ngSwitchCase="'tab1'">
-                    <div class="wrapper-12 pb-0">
-                        <div class="row" (click)="Open('Add','billerProfile')">
-                            <div class="col-md-12 right text-right pr-4">
-                                <button mat-stroked-button class="btn-primary addon"><i
-                                        class="material-icons">add</i>ADD NEW
-                                </button>
+
+                    <div *ngIf="billerProfileData != undefined">
+                        <div class="wrapper-12 pb-0">
+                            <div class="row" (click)="Open('Add','billerProfile')">
+                                <div class="col-md-12 right text-right pr-4">
+                                    <button mat-stroked-button class="btn-primary addon"><i
+                                            class="material-icons">add</i>ADD NEW
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -50,14 +44,26 @@
                                         <h3 class="mb-0">{{singleBillerProfile.companyDisplayName}}</h3>
                                     </div>
                                     <div class="col-md-4">
-                                        <button mat-stroked-button *ngIf="singleBillerProfile.isPrimary == true"
-                                            class="text-primary br-0"> PRIMARY </button>
+                                        <button mat-stroked-button *ngIf="singleBillerProfile.isPrimary == true" class="text-primary br-0"> PRIMARY </button>
                                     </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <i class="material-icons text-right right text-custom f-28 c-p" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
+                                        more_vert
+                                    </i>
+                                    <mat-menu #menu="matMenu">
+                                        <a mat-menu-item (click)="getBillerPrimary(singleBillerProfile)">Set as
+                                            Primary</a>
+                                        <a mat-menu-item (click)="Open(singleBillerProfile,'billerProfile')">Edit
+                                            Biller Profile</a>
+                                        <a mat-menu-item class="bt-1" (click)="deleteModal(singleBillerProfile)">Delete
+                                            Biller
+                                            Profile</a>
+                                    </mat-menu>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <i class="material-icons text-right right text-custom f-28 c-p"
-                                    [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
+                                <i class="material-icons text-right right text-custom f-28 c-p" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
                                     more_vert
                                 </i>
                                 <mat-menu #menu="matMenu">
@@ -98,251 +104,281 @@
                                             </div>
                                         </div>
 
-                                        <div class="row pt-24">
-                                            <div class="col-md-8 p-0">
-                                                <p>Bank name</p>
-                                                <h5>{{singleBillerProfile.bankName}}</h5>
+                                        <div class="row">
+                                            <div class="col-md-6 p-0">
+                                                <div class="wrapper-16">
+                                                    <p class="f-12">GST</p>
+                                                    <h5>{{singleBillerProfile.gstin}}</h5>
+                                                    <p class="f-12 pt-24">PAN</p>
+                                                    <h5>{{singleBillerProfile.pan}}</h5>
+                                                    <p class="f-12 pt-24">ADDRESS</p>
+                                                    <h5>{{singleBillerProfile.billerAddress}},
+                                                        <br>{{singleBillerProfile.city}}
+                                                        <br>{{singleBillerProfile.zipCode}}, {{singleBillerProfile.state}},
+                                                        <br> {{singleBillerProfile.country}}</h5>
+                                                </div>
+                                                <hr>
+                                                <div class="wrapper-16">
+                                                    <div class="row">
+                                                        <div class="col-md-8 p-0">
+                                                            <p>Name on bank A/c</p>
+                                                            <h5>{{singleBillerProfile.nameAsPerBank}}</h5>
+                                                        </div>
+                                                        <div class="col-md-4 p-0">
+                                                            <p>Account No.</p>
+                                                            <h5>{{singleBillerProfile.acNumber}}</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 p-0 pt-24">
+                                                        <p class="f-12">ADDRESS</p>
+                                                        <h5>{{singleBillerProfile.branchAddress}},<br>{{singleBillerProfile.bankCity}} {{singleBillerProfile.bankZipCode}},
+                                                            <br>{{singleBillerProfile.bankState}} ,
+                                                            <br> {{singleBillerProfile.bankCountry}}</h5>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-md-4 p-0">
-                                                <p>IFSC code</p>
-                                                <h5>{{singleBillerProfile.ifscCode}}</h5>
+                                        </div>
+                                        <div class="col-md-6 p-0 bl-1">
+                                            <div class="wrapper-16">
+                                                <p class="f-12">YOUR LOGO</p>
+                                                <img src="{{singleBillerProfile.logoUrl}}" class="img-icons">
                                             </div>
-                                            <div class="col-md-12 p-0 pt-24">
-                                                <p class="f-12">ADDRESS</p>
-                                                <h5>{{singleBillerProfile.branchAddress}},<br>{{singleBillerProfile.bankCity}}
-                                                    {{singleBillerProfile.bankZipCode}},
-                                                    <br>{{singleBillerProfile.bankState}} ,
-                                                    <br> {{singleBillerProfile.bankCountry}}</h5>
+                                            <hr>
+                                            <div class="wrapper-16">
+                                                <p class="f-12">Footnote</p>
+                                                <h5>{{singleBillerProfile.footnote}}</h5>
+                                                <p class="pt-32">Terms & Conditions</p>
+                                                <p class="f-16 notes">{{singleBillerProfile.terms}}
+                                                </p>
                                             </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" *ngIf="billerProfileData == undefined">
+                                <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
+                                    <img class="pt-20 width200" src="assets/images/svg/buiness-shop.svg">
+
+                                    <p class="f-22 f-600 pt-28 pb-16 t-dark">Plan, rinse, repeat!</p>
+                                    <p class="f-16 text-center l-21 t-dark pb-16">
+                                        With the foundation now set, it’s time to now do what you do the best - Plan
+                                        <br> for your clients’ financial freedom. We do the background work for you - create <br> invoices, bill clients, execute agreements and so on.
+                                    </p>
+
+                                    <button (click)="Open('Add','billerProfile')" class="btn-primary d-flex align-items-center">
+                                        ADD NEW</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div *ngSwitchCase="'tab2'">
+                            <div *ngIf="showLoader">
+                                <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+                            </div>
+                            <div [formGroup]="prefixData" class="wrapper-44" *ngIf="showLoader==false">
+                                <div class="row pl-44">
+                                    <div class="col-md-3 pr-0 mr-40">
+                                        <h5 class="m-0 f-14 text-black">Invoice prefix</h5>
+                                        <div class="form-group pt-12">
+                                            <input type="text" class="form-control br-0" formControlName="prefix">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3 pr-0 ">
+                                        <h5 class="m-0 f-14 text-black">Invoice next number</h5>
+                                        <div class="form-group pt-12">
+                                            <input type="text" class="form-control br-0" formControlName="nextNo">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 pt-40">
+                                        <button mat-stroked-button class="btn-primary br-0 mr-8" (click)="savePrefix(1)">SAVE
+                                        </button>
+                                        <button mat-stroked-button class="text-primary br-0">CANCEL</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div *ngSwitchCase="'tab3'">
+                            <div *ngIf="showLoader">
+                                <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+                            </div>
+                            <div [formGroup]="prefixData" class="wrapper-44" *ngIf="showLoader==false">
+                                <div class="row pl-44">
+                                    <div class="col-md-3 pr-0 mr-40">
+                                        <h5 class="m-0 f-14 text-black">Quotation prefix</h5>
+                                        <div class="form-group pt-12">
+                                            <input type="text" class="form-control br-0" formControlName="prefix">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3 pr-0">
+                                        <h5 class="m-0 f-14 text-black">Quotation next number</h5>
+                                        <div class="form-group pt-12">
+                                            <input type="text" class="form-control br-0" formControlName="nextNo">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 pt-40">
+                                        <button mat-stroked-button class="btn-primary br-0 mr-8" (click)="savePrefix(2)">SAVE
+                                        </button>
+                                        <button mat-stroked-button class="text-primary br-0">CANCEL</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngSwitchCase="'tab4'">
+                            <div *ngIf="showLoader">
+                                <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+                            </div>
+                            <div [formGroup]="prefixData" class="wrapper-44" *ngIf="showLoader==false">
+                                <div class="row pl-44">
+                                    <div class="col-md-3 pr-0 mr-40">
+                                        <h5 class="m-0 f-14 text-black">Subscription prefix</h5>
+                                        <div class="form-group pt-12">
+                                            <input type="text" class="form-control br-0" formControlName="prefix">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3 pr-0">
+                                        <h5 class="m-0 f-14 text-black">Subscription next number</h5>
+                                        <div class="form-group pt-12">
+                                            <input type="text" class="form-control br-0" formControlName="nextNo">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 pt-40">
+                                        <button mat-stroked-button class="btn-primary br-0 mr-8" (click)="savePrefix(3)">SAVE
+                                        </button>
+                                        <button mat-stroked-button class="text-primary br-0">CANCEL</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngSwitchCase="'tab5'">
+                            <div class="wrapper-12 pb-0">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <h4>Email configuration <span matBadge="4" matBadgeOverlap="false" class="text-danger ba-danger f-10">NOT CONFIGURED</span></h4>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control br-0">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 p-0 bl-1">
-                                    <div class="wrapper-16">
-                                        <p class="f-12">YOUR LOGO</p>
-                                        <img src="{{singleBillerProfile.logoUrl}}" class="img-icons">
-                                    </div>
-                                    <hr>
-                                    <div class="wrapper-16">
-                                        <p class="f-12">Footnote</p>
-                                        <h5>{{singleBillerProfile.footnote}}</h5>
-                                        <p class="pt-32">Terms & Conditions</p>
-                                        <p class="f-16 notes">{{singleBillerProfile.terms}}
-                                        </p>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4>Email templates</h4>
                                     </div>
                                 </div>
-                            </div>
 
-                        </div>
-                    </div>
-
-                </div>
-
-                <div *ngSwitchCase="'tab2'">
-                    <div *ngIf="showLoader">
-                        <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-                    </div>
-                    <div [formGroup]="prefixData" class="wrapper-44" *ngIf="showLoader==false">
-                        <div class="row pl-44">
-                            <div class="col-md-3 pr-0 mr-40">
-                                <h5 class="m-0 f-14 text-black">Invoice prefix</h5>
-                                <div class="form-group pt-12">
-                                    <input type="text" class="form-control br-0" formControlName="prefix">
-                                </div>
-
-                            </div>
-                            <div class="col-md-3 pr-0 ">
-                                <h5 class="m-0 f-14 text-black">Invoice next number</h5>
-                                <div class="form-group pt-12">
-                                    <input type="text" class="form-control br-0" formControlName="nextNo">
-                                </div>
-                            </div>
-                            <div class="col-md-12 pt-40">
-                                <button mat-stroked-button class="btn-primary br-0 mr-8" (click)="savePrefix(1)">SAVE
-                                </button>
-                                <button mat-stroked-button class="text-primary br-0">CANCEL</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div *ngSwitchCase="'tab3'">
-                    <div *ngIf="showLoader">
-                        <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-                    </div>
-                    <div [formGroup]="prefixData" class="wrapper-44" *ngIf="showLoader==false">
-                        <div class="row pl-44">
-                            <div class="col-md-3 pr-0 mr-40">
-                                <h5 class="m-0 f-14 text-black">Quotation prefix</h5>
-                                <div class="form-group pt-12">
-                                    <input type="text" class="form-control br-0" formControlName="prefix">
-                                </div>
-
-                            </div>
-                            <div class="col-md-3 pr-0">
-                                <h5 class="m-0 f-14 text-black">Quotation next number</h5>
-                                <div class="form-group pt-12">
-                                    <input type="text" class="form-control br-0" formControlName="nextNo">
-                                </div>
-                            </div>
-                            <div class="col-md-12 pt-40">
-                                <button mat-stroked-button class="btn-primary br-0 mr-8" (click)="savePrefix(2)">SAVE
-                                </button>
-                                <button mat-stroked-button class="text-primary br-0">CANCEL</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div *ngSwitchCase="'tab4'">
-                    <div *ngIf="showLoader">
-                        <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-                    </div>
-                    <div [formGroup]="prefixData" class="wrapper-44" *ngIf="showLoader==false">
-                        <div class="row pl-44">
-                            <div class="col-md-3 pr-0 mr-40">
-                                <h5 class="m-0 f-14 text-black">Subscription prefix</h5>
-                                <div class="form-group pt-12">
-                                    <input type="text" class="form-control br-0" formControlName="prefix">
-                                </div>
-
-                            </div>
-                            <div class="col-md-3 pr-0">
-                                <h5 class="m-0 f-14 text-black">Subscription next number</h5>
-                                <div class="form-group pt-12">
-                                    <input type="text" class="form-control br-0" formControlName="nextNo">
-                                </div>
-                            </div>
-                            <div class="col-md-12 pt-40">
-                                <button mat-stroked-button class="btn-primary br-0 mr-8" (click)="savePrefix(3)">SAVE
-                                </button>
-                                <button mat-stroked-button class="text-primary br-0">CANCEL</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div *ngSwitchCase="'tab5'">
-                    <div class="wrapper-12 pb-0">
-                        <div class="row">
-                            <div class="col-md-5">
-                                <h4>Email configuration <span matBadge="4" matBadgeOverlap="false"
-                                        class="text-danger ba-danger f-10">NOT CONFIGURED</span></h4>
-                                <div class="form-group">
-                                    <input type="text" class="form-control br-0">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h4>Email templates</h4>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div (click)="openEmailInvoice(this.storeData[0])" class="col-md-6 c-p">
-                                <div class="example-card">
-                                    <mat-card class="p-0 b-a">
-                                        <div class="bg-grey lter wrapper-16 pl-24">
-                                            <div class="row">
-                                                <div class="col-md-11 p-0">
-                                                    <h3 class="f-20 l-26">Invoice</h3>
+                                <div class="row">
+                                    <div (click)="openEmailInvoice(this.storeData[0])" class="col-md-6 c-p">
+                                        <div class="example-card">
+                                            <mat-card class="p-0 b-a">
+                                                <div class="bg-grey lter wrapper-16 pl-24">
+                                                    <div class="row">
+                                                        <div class="col-md-11 p-0">
+                                                            <h3 class="f-20 l-26">Invoice</h3>
+                                                        </div>
+                                                        <div class="col-md-1 p-0 text-right">
+                                                            <i class="material-icons  text-custom f-32">
+                                                                more_vert
+                                                            </i>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-1 p-0 text-right">
-                                                    <i class="material-icons  text-custom f-32">
-                                                        more_vert
-                                                    </i>
+                                                <!-- make class -->
+                                                <div class="wrapper-20 pl-24">
+                                                    <div class="row">
+                                                        <div class="col-md-12 p-0">
+                                                            <p>This template is used while sending invoice to your clients.
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </mat-card>
                                         </div>
-                                        <!-- make class -->
-                                        <div class="wrapper-20 pl-24">
-                                            <div class="row">
-                                                <div class="col-md-12 p-0">
-                                                    <p>This template is used while sending invoice to your clients.</p>
+                                    </div>
+                                    <div class="col-md-6" (click)="openEmailInvoice(this.storeData[1])">
+                                        <div class="example-card">
+                                            <mat-card class="p-0 b-a">
+                                                <div class="bg-grey lter wrapper-16 pl-24">
+                                                    <div class="row">
+                                                        <div class="col-md-11 p-0">
+                                                            <h3 class="f-20 l-26"> Quotations</h3>
+                                                        </div>
+                                                        <div class="col-md-1 p-0 text-right">
+                                                            <i class="material-icons  text-custom f-32">
+                                                                more_vert
+                                                            </i>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <div class="wrapper-20 pl-24">
+                                                    <div class="row">
+                                                        <div class="col-md-12 p-0">
+                                                            <p>This template is used while sending quotations to your clients.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </mat-card>
                                         </div>
-                                    </mat-card>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6" (click)="openEmailInvoice(this.storeData[1])">
-                                <div class="example-card">
-                                    <mat-card class="p-0 b-a">
-                                        <div class="bg-grey lter wrapper-16 pl-24">
-                                            <div class="row">
-                                                <div class="col-md-11 p-0">
-                                                    <h3 class="f-20 l-26"> Quotations</h3>
+                                <div class="row pt-20 pb-20">
+                                    <div class="col-md-6" (click)="openEmailInvoice(this.storeData[2])">
+                                        <div class="example-card">
+                                            <mat-card class="p-0 b-a">
+                                                <div class="bg-grey lter wrapper-16 pl-24">
+                                                    <div class="row">
+                                                        <div class="col-md-11 p-0">
+                                                            <h3 class="f-20 l-26"> Documents with eSign request</h3>
+                                                        </div>
+                                                        <div class="col-md-1 p-0 text-right">
+                                                            <i class="material-icons  text-custom f-32">
+                                                                more_vert
+                                                            </i>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-1 p-0 text-right">
-                                                    <i class="material-icons  text-custom f-32">
-                                                        more_vert
-                                                    </i>
+                                                <div class="wrapper-20 pl-24">
+                                                    <div class="row">
+                                                        <div class="col-md-12 p-0">
+                                                            <p>This template is used while sending documents to your clients with eSign request.</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </mat-card>
                                         </div>
-                                        <div class="wrapper-20 pl-24">
-                                            <div class="row">
-                                                <div class="col-md-12 p-0">
-                                                    <p>This template is used while sending quotations to your clients.
-                                                    </p>
+                                    </div>
+                                    <div class="col-md-6" (click)="openEmailInvoice(this.storeData[3])">
+                                        <div class="example-card">
+                                            <mat-card class="p-0 b-a">
+                                                <div class="bg-grey lter wrapper-16 pl-24">
+                                                    <div class="row">
+                                                        <div class="col-md-11 p-0">
+                                                            <h3 class="f-20 l-26"> Documents without eSign request</h3>
+                                                        </div>
+                                                        <div class="col-md-1 p-0 text-right">
+                                                            <i class="material-icons  text-custom f-32">
+                                                                more_vert
+                                                            </i>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <div class="wrapper-20 pl-24">
+                                                    <div class="row">
+                                                        <div class="col-md-12 p-0">
+                                                            <p>This template is used while sending documents to your clients without eSign.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </mat-card>
                                         </div>
-                                    </mat-card>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row pt-20 pb-20">
-                            <div class="col-md-6" (click)="openEmailInvoice(this.storeData[2])">
-                                <div class="example-card">
-                                    <mat-card class="p-0 b-a">
-                                        <div class="bg-grey lter wrapper-16 pl-24">
-                                            <div class="row">
-                                                <div class="col-md-11 p-0">
-                                                    <h3 class="f-20 l-26"> Documents with eSign request</h3>
-                                                </div>
-                                                <div class="col-md-1 p-0 text-right">
-                                                    <i class="material-icons  text-custom f-32">
-                                                        more_vert
-                                                    </i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="wrapper-20 pl-24">
-                                            <div class="row">
-                                                <div class="col-md-12 p-0">
-                                                    <p>This template is used while sending documents to your clients
-                                                        with eSign request.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </mat-card>
-                                </div>
-                            </div>
-                            <div class="col-md-6" (click)="openEmailInvoice(this.storeData[3])">
-                                <div class="example-card">
-                                    <mat-card class="p-0 b-a">
-                                        <div class="bg-grey lter wrapper-16 pl-24">
-                                            <div class="row">
-                                                <div class="col-md-11 p-0">
-                                                    <h3 class="f-20 l-26"> Documents without eSign request</h3>
-                                                </div>
-                                                <div class="col-md-1 p-0 text-right">
-                                                    <i class="material-icons  text-custom f-32">
-                                                        more_vert
-                                                    </i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="wrapper-20 pl-24">
-                                            <div class="row">
-                                                <div class="col-md-12 p-0">
-                                                    <p>This template is used while sending documents to your clients
-                                                        without eSign.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </mat-card>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -350,5 +386,3 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>

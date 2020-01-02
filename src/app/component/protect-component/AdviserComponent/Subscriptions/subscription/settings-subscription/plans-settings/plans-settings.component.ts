@@ -22,7 +22,7 @@ export class PlansSettingsComponent implements OnInit {
 
   //showLoader;
 
-  planSettingData = [{ name: ' ' }, {}, {}];
+  planSettingData = [{}, {}, {}];
   isLoading = false;
   advisorId;
 
@@ -49,7 +49,10 @@ export class PlansSettingsComponent implements OnInit {
   getSettingsPlanResponse(data) {
     this.isLoading = false;
     console.log('get plan', data);
+
     this.planSettingData = data;
+
+
     //this.showLoader = false;
   }
 
