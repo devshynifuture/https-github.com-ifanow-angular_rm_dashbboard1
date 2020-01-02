@@ -111,7 +111,7 @@
                     <img class="c-p" [matMenuTriggerFor]="appMenu" src="assets/images/svg/setting.svg">
 
                     <mat-menu #appMenu="matMenu">
-                        <button mat-menu-item>LogOut</button>
+                        <button (click)="logout()" mat-menu-item>LogOut</button>
                     </mat-menu>
                 </a>
             </div>
