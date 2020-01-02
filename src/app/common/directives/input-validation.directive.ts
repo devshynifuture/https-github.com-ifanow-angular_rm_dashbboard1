@@ -1,7 +1,7 @@
 import { Directive, Input, HostListener, ElementRef, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[appInputValidation]'
+  selector: '[NumberOnly]'
 })
 export class InputValidationDirective {
 
@@ -32,7 +32,7 @@ export class InputValidationDirective {
   }
 }
 @Directive({
-  selector: '[appAlphanumric]'
+  selector: '[Alphanumeric]'
 })
 export class AlphanumricDirective {
 
@@ -48,7 +48,7 @@ export class AlphanumricDirective {
 }
 
 @Directive({
-  selector: '[appTextOnly]'
+  selector: '[TextOnly]'
 })
 export class TextOnlyDirective {
   constructor( private _el: ElementRef,
