@@ -9,7 +9,6 @@ import {HelpComponent} from './subscription/common-subscription-component/help/h
 import {CommonComponentModule} from '../../common-component/common-component.module';
 import {SubscriptionUpperEntry} from './subscription-upper-entry-module';
 import {CustomDirectiveModule} from "../../../../common/directives/common-directive.module";
-import { InputValidationDirective } from 'src/app/common/directives/input-validation.directive';
 
 export const componentList = [
   // VariableFeeComponent,
