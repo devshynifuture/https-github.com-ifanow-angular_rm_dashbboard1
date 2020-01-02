@@ -17,7 +17,7 @@ export class NumberOnlyDirective {
   @HostListener('input', ['$event']) onInputChange(event) {
     let initialValue = this._el.nativeElement.value;
     if (this._el.nativeElement.value.length <= this.maxLength) {
-      if (initialValue > 100) {
+      if (initialValue > 100 && this.maxLength === 4) {
         initialValue = '100';
       } else {
         initialValue = initialValue.replace(/[^0-9.]+/g, '');
