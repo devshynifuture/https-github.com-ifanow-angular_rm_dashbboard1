@@ -51,7 +51,7 @@ export class RecuringDepositComponent implements OnInit {
   clientId: any;
 
   constructor(private event: EventService, private fb: FormBuilder, private custumService: CustomerService,
-              public subInjectService: SubscriptionInject, private datePipe: DatePipe, private utils: UtilService) {
+              public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
   }
 
   @Input()
