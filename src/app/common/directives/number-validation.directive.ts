@@ -5,6 +5,7 @@ import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/
 })
 export class NumberValidationDirective {
   @Input() maxLength;
+  @Input() case;
   constructor(
     private _el: ElementRef,
     private renderer: Renderer2) { }
@@ -12,9 +13,13 @@ export class NumberValidationDirective {
   @HostListener('input', ['$event']) onInputChange(event) {
     let initialValue = this._el.nativeElement.value;
     if (this._el.nativeElement.value.length <= this.maxLength) {
-      initialValue = initialValue.replace(/[^0-9.]+/g, '');
+      if (initialValue > 100) {
+        initialValue = '100'
+      } else {
+        initialValue = initialValue.replace(/[^0-9.]+/g, '');
+      }
       this.renderer.setProperty(this._el.nativeElement, 'value', initialValue);
-      console.log(initialValue);
+      // console.log(initialValue);
       if (initialValue !== this._el.nativeElement.value) {
         event.stopPropagation();
       }

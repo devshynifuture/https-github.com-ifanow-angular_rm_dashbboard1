@@ -12,6 +12,7 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [AuthGuard],
     // outlet: 'mainrouter'
   },
   {
