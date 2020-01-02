@@ -1,5 +1,5 @@
-import {Component, Input, NgZone, OnInit} from '@angular/core';
-import {FileUploader, FileUploaderOptions, ParsedResponseHeaders} from 'ng2-file-upload';
+import { Component, Input, NgZone, OnInit } from '@angular/core';
+import { FileUploader, FileUploaderOptions, ParsedResponseHeaders } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-photo-upload',
@@ -67,7 +67,7 @@ export class PhotoUploadComponent implements OnInit {
 
       // Use default "withCredentials" value for CORS requests
       fileItem.withCredentials = false;
-      return {fileItem, form};
+      return { fileItem, form };
     };
 
     // Insert or update an entry in the responses array
@@ -126,8 +126,8 @@ export class PhotoUploadComponent implements OnInit {
   // See also https://support.cloudinary.com/hc/en-us/articles/202521132-How-to-delete-an-image-from-the-client-side-
   deleteImage = function (data: any, index: number) {
     const url = `https://api.cloudinary.com/v1_1/${this.cloudinary.config().cloud_name}/delete_by_token`;
-    const headers = new Headers({'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest'});
-    const options = {headers};
+    const headers = new Headers({ 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' });
+    const options = { headers };
     const body = {
       token: data.delete_token
     };
@@ -148,6 +148,6 @@ export class PhotoUploadComponent implements OnInit {
       return null;
     }
     return Object.keys(fileProperties)
-      .map((key) => ({key, value: fileProperties[key]}));
+      .map((key) => ({ key, value: fileProperties[key] }));
   }
 }

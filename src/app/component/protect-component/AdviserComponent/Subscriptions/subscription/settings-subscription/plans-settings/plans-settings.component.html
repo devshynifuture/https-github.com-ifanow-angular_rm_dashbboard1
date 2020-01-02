@@ -8,7 +8,9 @@
                 <h4 class="pt-20 pb-28 m-0">Plan</h4>
             </div>
         </div>
-        <div class="row">
+
+
+        <div class="row" *ngIf="planSettingData != undefined">
             <div (click)="openFragment('','plan')" class="col-md-4 pr-20 pb-20 pl-0 c-p">
                 <mat-card class="example-card b-a height-470 bg-grey lter bd-1">
                     <mat-card-content>
@@ -20,7 +22,7 @@
             </div>
 
             <div class="col-md-4 pr-20 pb-20 pl-0 d-flex" *ngFor="let singlePlan of planSettingData">
-                <mat-card class="example-card bg-grey lter p-0 flex-fill skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <mat-card class="example-card bg-grey lter p-0 flex-fill">
 
                     <mat-card-header>
                         <div class="wrapper-20 pb-10 height120 ">
@@ -60,6 +62,14 @@
 
                 </mat-card>
             </div>
+
         </div>
+        <div class="row" *ngIf="planSettingData == undefined">
+            <img src="assets/images/svg/new-add-plan.svg">
+        </div>
+
+
+
+
     </div>
 </div>
