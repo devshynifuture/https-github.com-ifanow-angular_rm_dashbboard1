@@ -40,14 +40,14 @@
                                 </i>
                             </mat-chip>
                             <mat-chip-list>
-                                <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let dateFilter of filterDate; let i = index">
+                                <mat-chip class="bg-white b-a c-p f-400 p-12 w-220" *ngFor="let dateFilter of filterDate; let i = index">
                                     <!--<div class="row">-->
                                     <p>{{dateFilter.name}}</p>
-                                    <input class="pl-24" matInput placeholder="Choose a date" [satDatepicker]="picker2" [(ngModel)]="selectedDateRange" (dateChange)="orgValueChange(selectedDateRange)">
+                                    <input readonly  class="pl-24" matInput placeholder="Choose a date" [satDatepicker]="picker2" [(ngModel)]="selectedDateRange" (dateChange)="orgValueChange(selectedDateRange)">
                                     <sat-datepicker #picker2 [rangeMode]="true">
                                     </sat-datepicker>
                                     <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
-                                    <i class="material-icons text-custom ml-12" (click)="removeDate(i)">
+                                    <i class="material-icons text-custom c-p" (click)="removeDate(i)">
                                         cancel
                                     </i>
                                 </mat-chip>
@@ -60,9 +60,10 @@
                                 <div class="form-group mb-0">
                                     <mat-form-field>
                                         <!-- <mat-label>FILTERS ONE</mat-label> -->
-                                        <mat-select class="form-control" id="sel11" [(ngModel)]='selectedStatusFilter' (selectionChange)="addFilters(selectedStatusFilter)">
+                                        <mat-select class="form-control" id="sel11" [(value)]='selectedStatusFilter' (selectionChange)="addFilters(selectedStatusFilter)">
+                                            <mat-option value="status">By status</mat-option>
                                             <mat-option *ngFor="let chip of chips" [value]="chip">
-                                                {{chip.name}} 
+                                                {{chip.name}}
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
@@ -72,7 +73,8 @@
                                 <div class="form-group mb-0">
                                     <mat-form-field>
                                         <!-- <mat-label>FILTERS TWO</mat-label> -->
-                                        <mat-select class="form-control br-0" id="sel12" [(ngModel)]='selectedStatusFilter' (selectionChange)="addFiltersDate(selectedStatusFilter)">
+                                        <mat-select class="form-control br-0" id="sel12" [(ngModel)]='selectedDateFilter' (selectionChange)="addFiltersDate(selectedDateFilter)">
+                                            <mat-option value="selected">By date</mat-option>
                                             <mat-option *ngFor="let dateAdd of dateChips" [value]="dateAdd">
                                                 {{dateAdd.name}}
                                             </mat-option>

@@ -14,7 +14,9 @@
 ::ng-deep .mat-form-field {
     width: 100%;
 }
-
+::ng-deep .w-220{
+    width: 220px !important;
+}
 ::ng-deep .mat-datepicker-toggle {
     float: left;
     left: 0%;
