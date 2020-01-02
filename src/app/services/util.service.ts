@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import {Injectable} from '@angular/core';
+import {DatePipe} from '@angular/common';
 
 
 @Injectable({
@@ -11,6 +11,7 @@ export class UtilService {
   }
 
   getFamilyMemberData: any;
+
   static convertObjectToArray(inputObject: object): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
@@ -27,7 +28,7 @@ export class UtilService {
   static convertObjectToCustomArray(inputObject: object, keyNameForOutput: string, keyValueForOutput: string): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
-      const object = { selected: false };
+      const object = {selected: false};
       object[keyNameForOutput] = inputObject[key];
       object[keyValueForOutput] = key;
 
@@ -72,6 +73,7 @@ export class UtilService {
     });
     console.log('Status >>>>>>', element);
   }
+
   totalCalculator(data: number[]) {
     return data.reduce((accumulator, currentValue) => {
       accumulator = accumulator + currentValue;
@@ -98,6 +100,7 @@ export class UtilService {
     console.log('family Member with age', this.getFamilyMemberData);
     return this.getFamilyMemberData;
   }
+
   //Allows only numbers
   keyPress(event: any) {
     const pattern = /[0-9\+\-\. ]/;
@@ -107,6 +110,7 @@ export class UtilService {
       event.preventDefault();
     }
   }
+
   //Allow Only text NOT number and special character
   onlyText(event: any) {
     const pattern = /[0-9\+\-\. ]/;
@@ -118,11 +122,13 @@ export class UtilService {
     var k = event.keyCode;
     return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
   }
+
   // allows text and number NOT special character
   alphaNumric(event: any) {
     var k = event.keyCode;
     return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
   }
+
   //used for dateFormat allows numbers and / character
   dateFormat(event: any) {
     var k = event.keyCode;
