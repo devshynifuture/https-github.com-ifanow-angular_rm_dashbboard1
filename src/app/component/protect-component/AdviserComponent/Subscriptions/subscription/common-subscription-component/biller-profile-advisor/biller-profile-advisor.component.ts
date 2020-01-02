@@ -7,6 +7,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {HttpClient} from '@angular/common/http';
 import {PhotoCloudinaryUploadService} from '../../../../../../../services/photo-cloudinary-upload.service';
 import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {UtilService} from "../../../../../../../services/util.service";
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -46,7 +47,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   uploadedImage: any;
 
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
+  constructor(private utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
               private subService: SubscriptionService,
               private eventService: EventService, private http: HttpClient) {
     // this.subInjectService.singleProfileData.subscribe(
