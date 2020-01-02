@@ -49,3 +49,20 @@ export class AlphanumricDirective {
       this.renderer.setProperty(this._el.nativeElement, 'value', initialValue);
     }
 }
+
+@Directive({
+  selector: '[appTextOnly]'
+})
+export class TextOnlyDirective {
+  constructor( private _el: ElementRef,
+    private renderer: Renderer2) { }
+    @HostListener('input', ['$event']) onInputChange(event) {
+      console.log(event)
+      let initialValue = this._el.nativeElement.value;
+
+      console.log('ye toh mera wala log hai',initialValue)
+      var k = initialValue;
+      initialValue = initialValue.replace(/[^a-z]/gi,''); 
+      this.renderer.setProperty(this._el.nativeElement, 'value', initialValue);
+    }
+}
