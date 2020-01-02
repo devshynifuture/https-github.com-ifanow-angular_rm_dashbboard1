@@ -31,7 +31,14 @@ export class ChangePayeeComponent implements OnInit {
     if (payeeData == undefined) {
       return;
     } else if (payeeData.length > 0) {
-      this.payeeDataRes = payeeData;
+      if (payeeData.length == 1) {
+        payeeData[0].share = 100
+        payeeData[0].selected = 1
+        this.payeeDataRes = payeeData;
+      }
+      else {
+        this.payeeDataRes = payeeData;
+      }
       return;
     } else {
       this._payeeData = payeeData;

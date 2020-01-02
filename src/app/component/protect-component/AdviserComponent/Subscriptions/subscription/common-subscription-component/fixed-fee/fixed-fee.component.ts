@@ -78,7 +78,7 @@ export class FixedFeeComponent implements OnInit {
         autoRenew: 0,
         subscriptionId: this.singleSubscriptionData.id,
         billEvery: this.getFixedFee().billEvery.value,
-        billingCycle: 1,
+        billingCycle: this.getFixedFee().Duration.value,
         billingMode: this.getFixedFee().billingMode.value,
         billingNature: this.getFixedFee().billingNature.value,
         feeTypeId: 1,
