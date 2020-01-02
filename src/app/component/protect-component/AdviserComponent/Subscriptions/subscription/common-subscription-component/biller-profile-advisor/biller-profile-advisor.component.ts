@@ -47,7 +47,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   uploadedImage: any;
 
 
-  constructor(private utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
+  constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
               private subService: SubscriptionService,
               private eventService: EventService, private http: HttpClient) {
     // this.subInjectService.singleProfileData.subscribe(
