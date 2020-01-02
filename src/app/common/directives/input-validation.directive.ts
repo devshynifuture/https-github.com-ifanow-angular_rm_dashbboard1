@@ -61,3 +61,15 @@ export class TextOnlyDirective {
       this.renderer.setProperty(this._el.nativeElement, 'value', initialValue);
     }
 }
+@Directive({
+  selector: '[appFormatter]'
+})
+export class Formatter {
+  constructor( private _el: ElementRef,
+    private renderer: Renderer2) { }
+    @HostListener('input', ['$event']) onInputChange(event) {
+      console.log(event)
+      let initialValue = this._el.nativeElement.value;
+      return Math.round(initialValue);
+    }
+}
