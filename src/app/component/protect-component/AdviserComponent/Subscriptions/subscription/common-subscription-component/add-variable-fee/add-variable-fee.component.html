@@ -96,8 +96,8 @@
       <div class="row">
         <div class="col-md-5 p-0">
           <div class="form-group mb-0">
-            <input type="text" appNumberValidation [case]="remove-e" formControlName="billEvery"
-              class="form-control br-0">
+            <input type="number" pattern="\d*" onKeyPress="if(this.value.length==2) return false;"
+              formControlName="billEvery" class="form-control br-0">
           </div>
         </div>
         <div class="col-md-5 p-0">
@@ -168,7 +168,7 @@
           </div>
           <div class="row ui-mff">
             <div class="col-md-4 p-0 bl-0 bb-grey br-grey">
-              <input type="text" appNumberValidation [maxLength]="4" formControlName="equity" placeholder="%" minl
+              <input type="text" appNumberValidation [maxLength]="4" formControlName="equity" placeholder="%"
                 class="form-control br-0 h-39 br-grey">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
