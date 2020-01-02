@@ -4,7 +4,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from 'src/app/auth-service/authService';
-import { UtilService } from 'src/app/services/util.service';
+import {UtilService} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-payee-settings',
@@ -13,31 +13,13 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class PayeeSettingsComponent implements OnInit {
   clientId: any;
-
-  constructor( public utils: UtilService,public subInjectService: SubscriptionInject, private eventService: EventService,
-              private subService: SubscriptionService, private fb: FormBuilder) {
-  }
-
   @Input() upperData;
   @Output() totalPayeeData = new EventEmitter<Object>();
-
-  @Input()
-  set data(data) {
-    this.inputData = data;
-    this.clientId = AuthService.getClientId()
-    this.getClientPayeeSettings(data);
-  }
-
-  get data() {
-    return this.inputData;
-  }
-
   settingsModal;
   payeeSettingsForm;
   sendData;
   updatedData: any;
   inputData: any;
-
   isCustomerName = false;
   isDisplayName = false;
   isCompanyName = false;
@@ -47,9 +29,7 @@ export class PayeeSettingsComponent implements OnInit {
   isGstIn = false;
   isBillingAddress = false;
   isPincode = false;
-
   @Output() getEditData = new EventEmitter();
-
   obj = [
     {
       id: null,
@@ -89,12 +69,28 @@ export class PayeeSettingsComponent implements OnInit {
     }
   ];
 
+  constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private eventService: EventService,
+              private subService: SubscriptionService, private fb: FormBuilder) {
+  }
+
+  get data() {
+    return this.inputData;
+  }
+
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    this.clientId = AuthService.getClientId()
+    this.getClientPayeeSettings(data);
+  }
+
   OnInit() {
   }
 
   getFormControl() {
     return this.payeeSettingsForm.controls;
   }
+
   getClientPayeeSettings(data) {
     data = data.data;
     console.log('payee data', data);
@@ -136,7 +132,7 @@ export class PayeeSettingsComponent implements OnInit {
 
   getChangePayeeSetting() {
     this.subService.changePayeeSetting(this.obj).subscribe(
-      data => this.changePayeeSettingData(data)
+        data => this.changePayeeSettingData(data)
     );
   }
 
@@ -204,7 +200,7 @@ export class PayeeSettingsComponent implements OnInit {
         };
         this.sendData = obj1;
         this.subService.editPayeeSettings(obj1).subscribe(
-          data => this.editSettingResData(data)
+            data => this.editSettingResData(data)
         );
 
       } else {
@@ -228,7 +224,7 @@ export class PayeeSettingsComponent implements OnInit {
 
         };
         this.subService.addClientBillerProfile(obj).subscribe(
-          data => this.addClientBillerProfileRes(data)
+            data => this.addClientBillerProfileRes(data)
         );
 
       }
