@@ -563,12 +563,16 @@
     <div class="col-md-8 right text-right">
       <button (click)="back()" *ngIf="selected!=0" class="mr-20 br-0 text-inherit" mat-button mat-raised-button>PREVIOUS
       </button>
+      <button (click)="nextStep(selected,'Save&Next')" [hidden]="true" class="btn-bottom br-0 text-inherit"
+        mat-button>NEXT
+      </button>
       <button (click)="nextStep(selected,'Save&Next')" *ngIf="selected!=3" class="btn-bottom br-0 text-inherit"
         mat-button>NEXT
       </button>
       <button (click)="nextStep(selected,'Save&Next')" *ngIf="selected==3" class="btn-bottom br-0 text-inherit"
         mat-button>SAVE
       </button>
+      <!-- logoImg -->
     </div>
   </div>
 </div>
