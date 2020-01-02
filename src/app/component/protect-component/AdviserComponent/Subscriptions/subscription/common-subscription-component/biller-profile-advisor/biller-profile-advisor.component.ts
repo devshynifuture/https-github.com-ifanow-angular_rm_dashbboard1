@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { HttpClient } from '@angular/common/http';
-import { PhotoCloudinaryUploadService } from "../../../../../../../services/photo-cloudinary-upload.service";
-import { FileItem, ParsedResponseHeaders } from "ng2-file-upload";
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {HttpClient} from '@angular/common/http';
+import {PhotoCloudinaryUploadService} from '../../../../../../../services/photo-cloudinary-upload.service';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -47,8 +47,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private subService: SubscriptionService,
-    private eventService: EventService, private http: HttpClient) {
+              private subService: SubscriptionService,
+              private eventService: EventService, private http: HttpClient) {
     // this.subInjectService.singleProfileData.subscribe(
     //   data => this.getSingleBillerProfileData(data)
     // );
@@ -98,6 +98,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       event.preventDefault();
     }
   }
+
   uploadImage() {
     if (this.imageData.type == 'image/png' || this.imageData.type == 'image/jpeg') {
       const files = [this.imageData];
@@ -108,7 +109,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
             const responseObject = JSON.parse(response);
             console.log('onChange file upload success response url : ', responseObject.url);
             this.uploadedImage = responseObject.url;
-            this.eventService.openSnackBar("Image uploaded sucessfully", "dismiss")
+            this.eventService.openSnackBar('Image uploaded sucessfully', 'dismiss');
           }
 
         });
@@ -117,6 +118,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       console.log('asfasdas');
     }
   }
+
   onChange(fileList: FileList) {
     console.log(fileList[0].name);
     this.imageData = fileList[0];
@@ -125,9 +127,11 @@ export class BillerProfileAdvisorComponent implements OnInit {
     reader.onload = e => this.logoImg = reader.result;
     reader.readAsDataURL(this.imageData);
   }
+
   cancelImageUpload() {
     this.logoImg = undefined;
   }
+
   getSingleBillerProfileData(data) {
     if (data == '') {
       data = {};
@@ -176,7 +180,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    this.subInjectService.changeNewRightSliderState({state: 'close', data});
   }
 
   nextStep(value, eventName) {
@@ -206,12 +210,10 @@ export class BillerProfileAdvisorComponent implements OnInit {
     if (this.profileDetailsForm.controls.companyDisplayName.invalid) {
 
       return;
-    }
-    else if (this.profileDetailsForm.controls.companyName.invalid) {
+    } else if (this.profileDetailsForm.controls.companyName.invalid) {
 
       return;
-    }
-    else if (this.profileDetailsForm.controls.gstinNum.invalid) {
+    } else if (this.profileDetailsForm.controls.gstinNum.invalid) {
       this.isGstin = true;
       return;
     } else if (this.profileDetailsForm.controls.panNum.invalid) {
