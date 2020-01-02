@@ -59,6 +59,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
+    this.logoImg = data.logoUrl;
     this.getSingleBillerProfileData(data);
   }
 
@@ -107,7 +108,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
           if (status == 200) {
             const responseObject = JSON.parse(response);
             console.log('onChange file upload success response url : ', responseObject.url);
-            this.uploadedImage = responseObject.url;
+            this.logoImg = responseObject.url
+            this.uploadedImage = JSON.stringify(responseObject);
             this.eventService.openSnackBar("Image uploaded sucessfully", "dismiss")
           }
 
@@ -146,7 +148,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       id: [data.id]
     }),
       this.logUrl = this.fb.group({
-        url: [, [Validators.required]]
+        url: [data.logoUrl, [Validators.required]]
       });
     this.bankDetailsForm = this.fb.group({
       nameOnBank: [(data.nameAsPerBank), [Validators.required]],
@@ -185,7 +187,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       case (this.profileDetailsForm.valid && value == 0):
         this.selected = 1;
         break;
-      case (this.uploadedImage && value == 1):
+      case (this.logoImg && value == 1):
         this.selected = 2;
         break;
       case (this.bankDetailsForm.valid && value == 2):
@@ -277,7 +279,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
         footnote: this.MiscellaneousData.controls.footnote.value,
         gstin: this.profileDetailsForm.controls.gstinNum.value,
         ifscCode: this.bankDetailsForm.controls.ifscCode.value,
-        logoUrl: this.uploadedImage.url,
+        logoUrl: this.logoImg,
         nameAsPerBank: this.bankDetailsForm.controls.nameOnBank.value,
         pan: this.profileDetailsForm.controls.panNum.value,
         state: this.profileDetailsForm.controls.state.value,
@@ -289,12 +291,14 @@ export class BillerProfileAdvisorComponent implements OnInit {
       console.log(obj);
       if (this.profileDetailsForm.controls.id.value == undefined) {
         this.subService.saveBillerProfileSettings(obj).subscribe(
-          data => this.closeTab(data)
+          data => this.closeTab(data),
+          err => this.eventService.openSnackBar(err, "dismiss")
         );
 
       } else {
         this.subService.updateBillerProfileSettings(obj).subscribe(
-          data => this.closeTab(data)
+          data => this.closeTab(data),
+          err => this.eventService.openSnackBar(err, "dismiss")
         );
       }
 
