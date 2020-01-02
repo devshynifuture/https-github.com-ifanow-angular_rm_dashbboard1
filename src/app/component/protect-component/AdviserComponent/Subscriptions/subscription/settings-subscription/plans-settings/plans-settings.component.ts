@@ -105,6 +105,8 @@ export class PlansSettingsComponent implements OnInit {
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           // this.getClientSubscriptionList();
+          this.getSettingsPlanData();
+
           subscription.unsubscribe();
         }
       }
