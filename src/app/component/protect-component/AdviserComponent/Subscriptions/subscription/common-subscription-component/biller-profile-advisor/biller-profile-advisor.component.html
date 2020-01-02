@@ -22,7 +22,7 @@
               </div>
               <div class="col-md-7">
                 <div class="form-group mb-0">
-                  <input type="text" appAlphanumric autofocus class="form-control br-0 text-left" formControlName="companyDisplayName"
+                  <input type="text"  appAlphanumric autofocus class="form-control br-0 text-left" formControlName="companyDisplayName"
                     maxlength="{{getFormControlProfile().gstinNum.maxLength}}">
                 </div>
                 <!-- <div class="row pt-0">
@@ -106,7 +106,7 @@
               </div>
               <div class="col-md-7">
                 <div class="form-group mb-0">
-                  <input type="number" appNumberValidation [maxLength]="10" class="form-control mb-0 br-0 text-left"
+                  <input type="number" appInputValidation [maxLength]="10" class="form-control mb-0 br-0 text-left"
                     formControlName="panNum" maxlength="{{getFormControlProfile().panNum.maxLength}}">
                 </div>
                 <div class="row pt-0">

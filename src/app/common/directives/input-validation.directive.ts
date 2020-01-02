@@ -1,9 +1,10 @@
-import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
+import { Directive, Input, HostListener, ElementRef, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[appNumberValidation]'
+  selector: '[appInputValidation]'
 })
-export class NumberValidationDirective {
+export class InputValidationDirective {
+
   @Input() maxLength;
   @Input() case;
   constructor(
@@ -30,4 +31,21 @@ export class NumberValidationDirective {
       this.renderer.setProperty(this._el.nativeElement, 'value', initialValue.slice(0, this.maxLength));
     }
   }
+}
+@Directive({
+  selector: '[appAlphanumric]'
+})
+export class AlphanumricDirective {
+
+  constructor( private _el: ElementRef,
+    private renderer: Renderer2) { }
+    @HostListener('input', ['$event']) onInputChange(event) {
+      console.log(event)
+      let initialValue = this._el.nativeElement.value;
+
+      console.log('ye toh mera wala log hai',initialValue)
+      var k = initialValue;
+      initialValue = initialValue.replace(/[^a-z0-9]/gi,''); 
+      this.renderer.setProperty(this._el.nativeElement, 'value', initialValue);
+    }
 }
