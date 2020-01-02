@@ -334,7 +334,9 @@ export class SubscriptionService {
   deleteSettingsDocument(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SETTING_DOCUMENT, data);
   } 
-
+  deleteInvoices(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INVOICE, data);
+  } 
   getClientList(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENTLIST, httpParams);

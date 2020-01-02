@@ -539,7 +539,11 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = false;
     console.log('getEPFRes =', data);
     this.isLoading = false;
-    if (data.listOfEpf) {
+    if(data == undefined){
+      this.noData = "No scheme found";
+      this.dataEPFList.data = [];
+    }
+   else if (data.listOfEpf) {
       this.dataEPFList = new MatTableDataSource(data.listOfEpf);
       this.dataEPFList.sort = this.epfListTableSort;
       this.sumOfcurrentEpfBalance = data.sumOfcurrentEpfBalance;

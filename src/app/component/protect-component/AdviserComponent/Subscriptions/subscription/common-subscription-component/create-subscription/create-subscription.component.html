@@ -1,254 +1,288 @@
 <div *ngIf="isFlagPayyee">
-    <div class="row bb-1 popup-header-fix-60">
-        <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20">CREATE SUBSCRIPTION FOR {{advisorName}}</h4>
-        </div>
-        <div class="col-md-2 text-right">
-            <i class="material-icons pt-16 pr-16 c-p" (click)="Close()">
-                clear
-            </i>
-        </div>
+  <div class="row bb-1 popup-header-fix-60">
+    <div class="col-md-10 p-0">
+      <h4 class="mb-0 wrapper-20">CREATE SUBSCRIPTION FOR {{advisorName}}</h4>
     </div>
-    <mat-horizontal-stepper [@.disabled]="true" id="ui-stepper" #stepper class="pt-72">
-        <!-- TODO   <mat-step  [stepControl]="firstFormGroup">-->
-        <mat-step state="done" [stepControl]="feeStructureForm">
-            <ng-template matStepLabel>Fee Structure</ng-template>
-            <app-fixed-fee *ngIf="feeModeData.subFlag=='createSubFixed'" (outputData)="nextStep($event)"
-                [createFeeData]="feeModeData" [createSubData]='feeStructureData'></app-fixed-fee>
-            <app-variable-fee *ngIf="feeModeData.subFlag=='createSubVariable'" (outputData)="nextStep($event)"
-                [createFeeData]="feeModeData" [createSubData]='feeStructureData'></app-variable-fee>
-        </mat-step>
+    <div class="col-md-2 text-right">
+      <i (click)="Close()" class="material-icons pt-16 pr-16 c-p">
+        clear
+      </i>
+    </div>
+  </div>
+  <mat-horizontal-stepper #stepper [@.disabled]="true" class="pt-72" id="ui-stepper">
+    <!-- TODO   <mat-step  [stepControl]="firstFormGroup">-->
+    <mat-step [stepControl]="feeStructureForm" state="done">
+      <ng-template matStepLabel>Fee Structure</ng-template>
+      <app-fixed-fee (outputData)="nextStep($event)" *ngIf="feeModeData.subFlag=='createSubFixed'"
+                     [createFeeData]="feeModeData" [createSubData]='feeStructureData'></app-fixed-fee>
+      <app-variable-fee (outputData)="nextStep($event)" *ngIf="feeModeData.subFlag=='createSubVariable'"
+                        [createFeeData]="feeModeData" [createSubData]='feeStructureData'></app-variable-fee>
+    </mat-step>
 
-        <!-- TODO   <mat-step [stepControl]="secondFormGroup">-->
+    <!-- TODO   <mat-step [stepControl]="secondFormGroup">-->
 
-        <mat-step state="done" [stepControl]="subscriptionDetailsStepper">
-            <ng-template matStepLabel>Subscription details</ng-template>
-            <div [formGroup]="subscriptionDetails" class="wrapper-20 pt-36 mb-44 pb-44">
-                <div class="row pt-24">
-                    <div class="col-md-5">
-                        <h5 class="text-right m-0 pt-8">Subscription #</h5>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group mb-0">
-                            <input type="text" formControlName="subscription" class="form-control br-0"
-                                placeholder="SUB-0001">
-                        </div>
-                        <mat-error
-                            [ngClass]="{'v-h':subscriptionDetails.get('subscription').untouched || subscriptionDetails.get('subscription').valid}"
-                            class="f-12 pt-4">Subscription code is required
-                        </mat-error>
-                    </div>
-                </div>
-                <div class="row pt-24">
-                    <div class="col-md-5">
-                        <h5 class="text-right m-0 pt-8">Activation date</h5>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <input [matDatepicker]="picker" formControlName="activationDate" matInput readonly
-                                       class="form-control">
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
-                            </mat-form-field>
-                        </div>
-                        <mat-error
-                            [ngClass]="{'v-h':subscriptionDetails.get('activationDate').untouched || subscriptionDetails.get('activationDate').valid}"
-                            class="f-12 pt-4">Activation date is required
-                        </mat-error>
-                    </div>
-                </div>
-                <div class="row pt-24">
-                    <div class="col-md-5">
-                        <h5 class="text-right m-0 pt-8">Invoice sending mode</h5>
-                    </div>
-                    <div class="col-md-6">
-                        <mat-radio-group formControlName="invoiceSendingMode" aria-label="Select an option">
-                            <mat-radio-button value="1"
+    <mat-step [stepControl]="subscriptionDetailsStepper" state="done">
+      <ng-template matStepLabel>Subscription details</ng-template>
+      <div [formGroup]="subscriptionDetails" class="wrapper-20 pt-36 mb-44 pb-44">
+        <div class="row pt-24">
+          <div class="col-md-5">
+            <h5 class="text-right m-0 pt-8">Subscription #</h5>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group mb-0">
+              <input class="form-control br-0" formControlName="subscription" placeholder="SUB-0001"
+                     type="text">
+            </div>
+            <mat-error
+              [ngClass]="{'v-h':subscriptionDetails.get('subscription').untouched || subscriptionDetails.get('subscription').valid}"
+              class="f-12 pt-4">Subscription code is required
+            </mat-error>
+          </div>
+        </div>
+        <div class="row pt-24">
+          <div class="col-md-5">
+            <h5 class="text-right m-0 pt-8">Activation date</h5>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group mb-0">
+              <mat-form-field>
+                <input [matDatepicker]="picker" class="form-control" formControlName="activationDate" matInput
+                       readonly>
+                <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <mat-error
+              [ngClass]="{'v-h':subscriptionDetails.get('activationDate').untouched || subscriptionDetails.get('activationDate').valid}"
+              class="f-12 pt-4">Activation date is required
+            </mat-error>
+          </div>
+        </div>
+        <div class="row pt-24">
+          <div class="col-md-5">
+            <h5 class="text-right m-0 pt-8">Invoice sending mode</h5>
+          </div>
+          <div class="col-md-6">
+            <mat-radio-group aria-label="Select an option" formControlName="invoiceSendingMode">
+              <mat-radio-button value="1"
                                 [ngClass]="{'b-a-custom':subscriptionDetails.get('invoiceSendingMode').value==1,'text-primary':subscriptionDetails.get('invoiceSendingMode').value==1,'b-a':subscriptionDetails.get('invoiceSendingMode').value==2}"
                                 checked="true" class="pt-8 pb-8 pr-40 pl-20 custom-radio">Automatic
-                            </mat-radio-button>
-                            <mat-radio-button value="2"
+              </mat-radio-button>
+              <mat-radio-button value="2"
                                 [ngClass]="{'b-a-custom':subscriptionDetails.get('invoiceSendingMode').value==2,'text-primary':subscriptionDetails.get('invoiceSendingMode').value==2,'b-a':subscriptionDetails.get('invoiceSendingMode').value==1}"
                                 class=" pt-8 pr-40 pb-8 pl-20 custom-radio">Manual
-                            </mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                </div>
-                <div class="row pt-40">
-                    <div class="col-md-5">
-                        <h5 class="text-right m-0 pt-8">Fee collection mode</h5>
-                    </div>
-                    <div class="col-md-3 mb-0">
-                        <div class="form-group mb-0">
-                            <select class="form-control" id="Category" formControlName="feeCollectionMode" id="sel1">
-                                <option *ngFor="let feeMode of feeCollectionMode" value="{{feeMode.value}}">
-                                    {{feeMode.name}}</option>
-                            </select>
-                        </div>
-                        <mat-error
-                            [ngClass]="{'v-h':subscriptionDetails.get('feeCollectionMode').untouched || subscriptionDetails.get('feeCollectionMode').valid}"
-                            class="f-12 pt-4">Fee mode is required
-                        </mat-error>
-                    </div>
-                </div>
-                <div class="row pt-24">
-                    <div class="col-md-5">
-                        <h5 class="text-right m-0 pt-8">Due date frequency</h5>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group mb-0">
-                            <select class="form-control" formControlName="dueDateFrequency" id="sel1">
-                                <option value="5">After 5 Days</option>
-                                <option value="10">After 10 Days</option>
-                                <option value="15">After 15 Days</option>
-
-                            </select>
-                        </div>
-                        <mat-error
-                            [ngClass]="{'v-h':subscriptionDetails.get('dueDateFrequency').untouched || subscriptionDetails.get('dueDateFrequency').valid}"
-                            class="f-12 pt-4"> Due date is required
-                        </mat-error>
-                    </div>
-                </div>
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div class="row pt-40">
+          <div class="col-md-5">
+            <h5 class="text-right m-0 pt-8">Fee collection mode</h5>
+          </div>
+          <div class="col-md-3 mb-0">
+            <div class="form-group mb-0">
+              <select class="form-control" formControlName="feeCollectionMode" id="Category" id="sel1">
+                <option *ngFor="let feeMode of feeCollectionMode" value="{{feeMode.value}}">
+                  {{feeMode.name}}</option>
+              </select>
             </div>
-            <div class="bottom-fixed wrapper-12">
+            <mat-error
+              [ngClass]="{'v-h':subscriptionDetails.get('feeCollectionMode').untouched || subscriptionDetails.get('feeCollectionMode').valid}"
+              class="f-12 pt-4">Fee mode is required
+            </mat-error>
+          </div>
+        </div>
+        <div class="row pt-24">
+          <div class="col-md-5">
+            <h5 class="text-right m-0 pt-8">Due date frequency</h5>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group mb-0">
+              <select class="form-control" formControlName="dueDateFrequency" id="sel1">
+                <option value="5">After 5 Days</option>
+                <option value="10">After 10 Days</option>
+                <option value="15">After 15 Days</option>
+
+              </select>
+            </div>
+            <mat-error
+              [ngClass]="{'v-h':subscriptionDetails.get('dueDateFrequency').untouched || subscriptionDetails.get('dueDateFrequency').valid}"
+              class="f-12 pt-4"> Due date is required
+            </mat-error>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-fixed wrapper-12">
+        <div class="row">
+          <div class="col-md-4">
+            <h5 (click)="Close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+          </div>
+          <div class="col-md-8 right text-right">
+            <button (click)="goBack()" *ngIf="subscriptionDetails.valid"
+                    class="btn-default mr-12 br-0 text-inherit" mat-raised-button>PREVIOUS
+            </button>
+            <button (click)="goForward()" *ngIf="subscriptionDetails.valid" class="btn-bottom br-0 text-inherit"
+                    mat-button>NEXT STEP
+            </button>
+            <button (click)="goForward()" *ngIf="subscriptionDetails.invalid" [disabled]="subscriptionDetails.invalid"
+                    class="btn-bottom br-0 text-inherit" disabled>NEXT STEP
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="billerSetting" state="done">
+      <ng-template matStepLabel>Biller Settings</ng-template>
+      <div class="wrapper-16 pb-44 mb-44">
+        <div class="row">
+          <div class="col-md-12">
+            <p class="m-0 text-right text-custom roboto">Select a biller profile</p>
+          </div>
+        </div>
+        <div class="row pt-16">
+          <div (click)="select('biller',singleBiller)" *ngFor="let singleBiller of billersData"
+               class="col-md-6 mt-20">
+            <mat-card [ngClass]="{'ba-blue':singleBiller.selected==1,'mb-20':true ,'b-ua':singleBiller.selected==0}"
+                      class="p-0">
+              <div class="row bg-grey lter">
+                <div class="col-md-12 p-0">
+                  <mat-checkbox [ngClass]="{'v-h':singleBiller.selected==0}"
+                                checked="false" class="custom-checkbox marginTopCheckbox">
+                  </mat-checkbox>
+                </div>
+                <div class="col-md-12 p-0">
+                  <h3 class="m-0 pt-18 pl-24">{{singleBiller.companyDisplayName}}</h3>
+                  <h5 class="m-0 pt-4 pb-44 pl-24 text-custom">CLI123</h5>
+                </div>
+              </div>
+              <div class="wrapper-24">
                 <div class="row">
-                    <div class="col-md-4">
-                        <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
-                    </div>
-                    <div class="col-md-8 right text-right">
-                        <button mat-raised-button class="btn-default mr-12 br-0 text-inherit"
-                            *ngIf="subscriptionDetails.valid" (click)="goBack()">PREVIOUS
-                        </button>
-                        <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="subscriptionDetails.valid"
-                            (click)="goForward()">NEXT STEP
-                        </button>
-                        <button class="btn-bottom br-0 text-inherit" disabled *ngIf="subscriptionDetails.invalid"
-                            [disabled]="subscriptionDetails.invalid" (click)="goForward()">NEXT STEP
-                        </button>
-                    </div>
+                  <div class="col-md-12 p-0">
+                    <p class="f-12 mb-0 text-primitive">BILLER ADDRESS</p>
+                    <p class="mb-0">{{singleBiller.billerAddress}}</p>
+                    <p class="mb-0">{{singleBiller.city}}</p>
+                    <p class="mb-0">{{singleBiller.state}}</p>
+                    <p class="mb-0">{{singleBiller.zipCode}}</p>
+                    <!-- <p class="mb-0">Mumbai 400 066</p> -->
+                  </div>
+
                 </div>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-fixed wrapper-12">
+        <div class="row">
+          <div class="col-md-4">
+            <h5 (click)="Close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+          </div>
+          <div class="col-md-8 right text-right">
+            <button (click)="goBack()" *ngIf="subscriptionDetails.valid"
+                    class="btn-default mr-12 br-0 text-inherit" mat-raised-button>PREVIOUS
+            </button>
+            <button (click)="goForward()" [disabled]="!selectedBiller" class="btn-bottom br-0 text-inherit"
+                    mat-button>
+              NEXT STEP
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="payeeSetting" state="done">
+      <ng-template matStepLabel>Payee Settings</ng-template>
+      <app-change-payee (outputData)="selectPayee($event)" (payeeFlag)="getPayeeFlagData($event)"
+                        (subStartNextBtn)="getSharesInfo($event)" *ngIf="isFlagPayyee"
+                        [data]="payeesData"></app-change-payee>
+      <div class="bottom-fixed wrapper-12">
+        <div class="row">
+          <div class="col-md-4">
+            <h5 (click)="Close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+          </div>
+          <div class="col-md-8 right text-right">
+            <button (click)="goBack()" class="btn-default mr-12 br-0 text-inherit"
+                    mat-raised-button>PREVIOUS
+            </button>
+            <button (click)="goForward()" [disabled]="totalSelectedPayeeShare!=100"
+                    class="btn-bottom br-0 text-inherit" mat-button>NEXT STEP
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="create" state="done">
+      <ng-template matStepLabel>Create</ng-template>
+      <div class="wrapper-100 pt-44">
+        <div class="row">
+          <div class="col-md-12">
+            <div *ngIf="clientData.feeTypeId==1" class="pl-44 pr-44">
+              <h4 class="m-0 text-success">YOU’RE ALL SET!</h4>
+
+              <p class="m-0 text-black pt-28">When you click on the Create button below, the subscription
+                will be created.
+              </p>
+
+              <p class="m-0 text-black pt-28">Since this is a fixed fee type with {{billEveryMsg}} frequency,
+                the first invoice will be created on {{subDateToShow | date:'dd/MM/yyyy'}}. The invoice
+                amount will be calculated
+                on the basis of the fee structure defined in first step.</p>
+
+              <p class="m-0 text-custom pt-28">You have an option to change the Invoice Sending Mode to
+                auto or manual. You can do this from Subscription settings.</p>
             </div>
-        </mat-step>
+            <div *ngIf="clientData.feeTypeId==2" class="pl-44 pr-44">
+              <h4 class="m-0 text-success">YOU’RE ALL SET!</h4>
 
-        <mat-step state="done" [stepControl]="billerSetting">
-            <ng-template matStepLabel>Biller Settings</ng-template>
-            <div class="wrapper-16 pb-44 mb-44">
-                <div class="row">
-                    <div class="col-md-12">
-                        <p class="m-0 text-right text-custom roboto">Select a biller profile</p>
-                    </div>
-                </div>
-                <div class="row pt-16">
-                    <div (click)="select('biller',singleBiller)" *ngFor="let singleBiller of billersData"
-                        class="col-md-6 mt-20">
-                        <mat-card class="p-0"
-                            [ngClass]="{'ba-blue':singleBiller.selected==1,'mb-20':true ,'b-ua':singleBiller.selected==0}">
-                            <div class="row bg-grey lter">
-                                <div class="col-md-12 p-0">
-                                    <mat-checkbox class="custom-checkbox marginTopCheckbox"
-                                        [ngClass]="{'v-h':singleBiller.selected==0}" checked="false">
-                                    </mat-checkbox>
-                                </div>
-                                <div class="col-md-12 p-0">
-                                    <h3 class="m-0 pt-18 pl-24">{{singleBiller.companyDisplayName}}</h3>
-                                    <h5 class="m-0 pt-4 pb-44 pl-24 text-custom">CLI123</h5>
-                                </div>
-                            </div>
-                            <div class="wrapper-24">
-                                <div class="row">
-                                    <div class="col-md-12 p-0">
-                                        <p class="f-12 mb-0 text-primitive">BILLER ADDRESS</p>
-                                        <p class="mb-0">{{singleBiller.billerAddress}}</p>
-                                        <p class="mb-0">{{singleBiller.city}}</p>
-                                        <p class="mb-0">{{singleBiller.state}}</p>
-                                        <p class="mb-0">{{singleBiller.zipCode}}</p>
-                                        <!-- <p class="mb-0">Mumbai 400 066</p> -->
-                                    </div>
+              <p class="m-0 text-black pt-28">When you click on the Create button below, the subscription
+                will be created.
+              </p>
 
-                                </div>
-                            </div>
-                        </mat-card>
-                    </div>
-                </div>
+              <p class="m-0 text-black pt-28">Since this is a variable fee type with {{billEveryMsg}} frequency,
+                the first invoice will be created on {{subDateToShow | date:'dd/MM/yyyy'}}. The invoice
+                amount will be calculated
+                on the basis of the fee structure defined in first step.</p>
+
+              <p class="m-0 text-custom pt-28">You have an option to change the Invoice Sending Mode to
+                auto or manual. You can do this from Subscription settings.</p>
             </div>
-            <div class="bottom-fixed wrapper-12">
-                <div class="row">
-                    <div class="col-md-4">
-                        <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
-                    </div>
-                    <div class="col-md-8 right text-right">
-                        <button mat-raised-button class="btn-default mr-12 br-0 text-inherit"
-                            *ngIf="subscriptionDetails.valid" (click)="goBack()">PREVIOUS
-                        </button>
-                        <button mat-button class="btn-bottom br-0 text-inherit" [disabled]="!selectedBiller"
-                            (click)="goForward()">
-                            NEXT STEP
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </mat-step>
 
-        <mat-step state="done" [stepControl]="payeeSetting">
-            <ng-template matStepLabel>Payee Settings</ng-template>
-            <app-change-payee (payeeFlag)="getPayeeFlagData($event)" *ngIf="isFlagPayyee" [data]="payeesData"
-                (outputData)="selectPayee($event)"></app-change-payee>
-            <div class="bottom-fixed wrapper-12">
-                <div class="row">
-                    <div class="col-md-4">
-                        <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
-                    </div>
-                    <div class="col-md-8 right text-right">
-                        <button mat-raised-button class="btn-default mr-12 br-0 text-inherit"
-                            (click)="goBack()">PREVIOUS
-                        </button>
-                        <button mat-button class="btn-bottom br-0 text-inherit"
-                            [disabled]="totalSelectedPayeeShare!=100" (click)="goForward()">NEXT STEP
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </mat-step>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-fixed wrapper-12">
+        <div class="row">
+          <div class="col-md-4">
+            <h5 (click)="Close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+          </div>
+          <div class="col-md-8 right text-right">
+            <button (click)="startSubscription()" class="btn-bottom br-0 text-inherit"
+                    mat-button>SAVE
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-fixed wrapper-12">
+        <div class="row">
+          <div class="col-md-4">
+            <h5 (click)="Close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+          </div>
+          <div class="col-md-8 right text-right">
+            <button (click)="goBack()" class="btn-default mr-12 br-0 text-inherit"
+                    mat-raised-button>PREVIOUS
+            </button>
+            <button (click)="startSubscription()" [disabled]="totalSelectedPayeeShare!=100"
+                    class="btn-bottom br-0 text-inherit" mat-button>START
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-step>
 
-        <mat-step state="done" [stepControl]="create">
-            <ng-template matStepLabel>Create</ng-template>
-            <div class="wrapper-100 pt-44">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="pl-44 pr-44">
-                            <h4 class="m-0 text-success">YOU’RE ALL SET!</h4>
-
-                            <p class="m-0 text-black pt-28">When you click on the Create button below, the subscription
-                                will be created.
-                            </p>
-
-                            <p class="m-0 text-black pt-28">Since this is a variable fee type with quarterly frequency,
-                                the first invoice will be created on 29/11/2019. The invoice amount will be calculated
-                                on the basis of the fee structure defined in first step.</p>
-
-                            <p class="m-0 text-custom pt-28">You have an option to change the Invoice Sending Mode to
-                                auto or manual. You can do this from Subscription settings.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="bottom-fixed wrapper-12">
-                <div class="row">
-                    <div class="col-md-4">
-                        <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
-                    </div>
-                    <div class="col-md-8 right text-right">
-                        <button mat-button class="btn-bottom br-0 text-inherit"
-                            (click)="startSubscription()">SAVE</button>
-                    </div>
-                </div>
-            </div>
-        </mat-step>
-
-    </mat-horizontal-stepper>
+  </mat-horizontal-stepper>
 </div>
 <div *ngIf="isFlagPayyee==false">
-    <!-- <app-payee-settings [data]="payeeSettingData" (totalPayeeData)="getTotalPayeeData($event)"></app-payee-settings> -->
+  <!-- <app-payee-settings [data]="payeeSettingData" (totalPayeeData)="getTotalPayeeData($event)"></app-payee-settings> -->
 </div>

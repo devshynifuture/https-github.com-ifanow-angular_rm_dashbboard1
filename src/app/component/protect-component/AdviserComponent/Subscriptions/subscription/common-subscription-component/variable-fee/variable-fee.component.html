@@ -15,24 +15,6 @@
   <div [formGroup]="variableFeeStructureForm">
     <p class="text-primary">VARIABLE </p>
     <h4 class="mb-0 pt-16">Investment management - AUM Linked fee</h4>
-
-    <div class="row pt-44">
-      <div class="col-md-5">
-        <h5 class="text-right pt-12 mb-0">Billing nature</h5>
-      </div>
-      <div class="col-md-7">
-        <mat-radio-group formControlName="billingNature">
-          <mat-radio-button value="1"
-            [ngClass]="{'b-a-custom': variableFeeStructureForm.get('billingNature').value==1,'text-primary':variableFeeStructureForm.get('billingNature').value==1,'b-a':variableFeeStructureForm.get('billingNature').value==2}"
-            class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio">Recurring
-          </mat-radio-button>
-          <mat-radio-button value="2"
-            [ngClass]="{'b-a-custom': variableFeeStructureForm.get('billingNature').value==2,'text-primary':variableFeeStructureForm.get('billingNature').value==2,'b-a':variableFeeStructureForm.get('billingNature').value==1}"
-            class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">Once
-          </mat-radio-button>
-        </mat-radio-group>
-      </div>
-    </div>
     <div class="row pt-28">
       <div class="col-md-5">
         <h5 class="text-right pt-12 mb-0">Bill every</h5>
@@ -41,7 +23,7 @@
         <div class="row">
           <div class="col-md-5 p-0">
             <div class="form-group">
-              <input type="number"  onKeyPress="if(this.value.length==2) return false;" [disabled]="true"
+              <input type="number" onKeyPress="if(this.value.length==2) return false;" [disabled]="true"
                 class="form-control br-0" formControlName="billEvery">
             </div>
           </div>
@@ -159,7 +141,7 @@
               class="form-control br-0 h-39 br-grey">
             <mat-error *ngIf="(variableFeeStructureForm.get('pricing').errors?.max)" class="f-12 pt-4">
               Should be less than 100
-          </mat-error>
+            </mat-error>
           </div>
 
         </div>
