@@ -56,7 +56,7 @@
         <div class="row">
           <div class="col-md-5 p-0">
             <div class="form-group mb-0">
-              <input type="number" formControlName="billEvery" class="form-control br-0">
+              <input type="number" (keypress)="utils.keyPress($event)" formControlName="billEvery" class="form-control br-0">
             </div>
             <mat-error class="f-12 pt-4"
               [ngClass]="{'v-h':!(isBillValid && getFixedFee().billEvery.invalid || getFixedFee().billEvery.touched && getFixedFee().billEvery.invalid)}">

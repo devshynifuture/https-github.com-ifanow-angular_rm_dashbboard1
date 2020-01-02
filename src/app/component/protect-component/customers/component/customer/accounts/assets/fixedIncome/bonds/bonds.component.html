@@ -63,7 +63,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput type="number" (keypress)="keyPress($event)" class="form-control br-0 percentage" formControlName="interestRate">
+                        <input matInput type="number" (keypress)="utils.keyPress($event)" class="form-control br-0 percentage" formControlName="interestRate">
                         <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
                             This field is required
                         </mat-error>
@@ -78,7 +78,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #amountInvest type="text" (keypress)="keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="amountInvest">
+                        <input matInput #amountInvest type="number" (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="amountInvest">
                         <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isAmountInvest && getFormControl().amountInvest.invalid || getFormControl().amountInvest.touched && getFormControl().amountInvest.invalid)}">
                             This field is required
                         </mat-error>
@@ -110,7 +110,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput type="number" (keypress)="keyPress($event)" class="form-control br-0 percentage" formControlName="rateReturns">
+                        <input matInput type="number" (keypress)="utils.keyPress($event)" class="form-control br-0 percentage" formControlName="rateReturns">
                         <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isRateReturns && getFormControl().rateReturns.invalid || getFormControl().rateReturns.touched && getFormControl().rateReturns.invalid)}">
                             This field is required
                         </mat-error>
@@ -193,7 +193,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput #linkBankAc maxlength="30" class="form-control br-0" formControlName="linkBankAc">
+                            <input matInput type="number" matInput #linkBankAc (keypress)="utils.keyPress($event)" maxlength="30" class="form-control br-0" formControlName="linkBankAc">
                             <mat-hint align="start" class="f-12">Option</mat-hint>
                         </mat-form-field>
                     </div>
