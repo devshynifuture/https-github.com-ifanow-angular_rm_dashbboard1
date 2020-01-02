@@ -22,11 +22,11 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   ngOnInit() {
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['admin', 'subscription', 'dashboard']);
-    } else {
-      this.createForm();
-    }
+    // if (this.authService.isLoggedIn()) {
+    //   this.router.navigate(['admin', 'subscription', 'dashboard']);
+    // } else {
+    this.createForm();
+    // }
   }
 
   private createForm() {

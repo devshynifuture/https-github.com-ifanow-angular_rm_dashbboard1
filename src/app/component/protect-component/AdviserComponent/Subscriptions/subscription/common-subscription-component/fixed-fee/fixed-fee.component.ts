@@ -16,7 +16,7 @@ export class FixedFeeComponent implements OnInit {
   @Input() createSubData;
   @Output() outputData = new EventEmitter<Object>();
   isSave: boolean;
-  constructor(private fb: FormBuilder, public subInjectService: SubscriptionInject, private subService: SubscriptionService) {
+  constructor( public utils: UtilService,private fb: FormBuilder, public subInjectService: SubscriptionInject, private subService: SubscriptionService) {
   }
   @Input()
   set data(data) {

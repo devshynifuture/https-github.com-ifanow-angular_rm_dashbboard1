@@ -27,7 +27,7 @@
                         Commencement date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{eps.commencementDate}}
+                        {{eps.commencementDate  | date:'dd/MM/yyyy'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -35,7 +35,7 @@
                         Pension amount
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{eps.pensionAmount}}
+                        {{utils.formatter(eps.pensionAmount)}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
