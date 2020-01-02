@@ -3,11 +3,6 @@
 </div> -->
 <div class="bg-white pb-36">
     <div class="wrapper-20 pr-0">
-        <div class="row">
-            <div class="col-md-12 p-0">
-                <h4 class="pt-20 pb-28 m-0">Plan</h4>
-            </div>
-        </div>
 
 
         <div class="row" *ngIf="planSettingData != undefined">
@@ -65,7 +60,17 @@
 
         </div>
         <div class="row" *ngIf="planSettingData == undefined">
-            <img src="assets/images/svg/new-add-plan.svg">
+            <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
+                <img src="assets/images/svg/new-add-plan.svg">
+                <p class="f-22 f-600 pt-28">Create Plan </p>
+                <p class="f-16 text-center l-21"> You start by creating Plans first. Plans are your core offerings. You can have <br> multiple plans for different types of clients. Each plan will have sub offerings, also
+                    <br> known as Services (explained in next slide). </p>
+
+                <button (click)="openFragment('','plan')" class="btn-primary d-flex align-items-center"> <i
+                        class="material-icons">add</i> Add
+                    Plan</button>
+            </div>
+
         </div>
 
 

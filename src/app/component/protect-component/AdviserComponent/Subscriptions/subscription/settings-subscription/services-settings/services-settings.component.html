@@ -2,13 +2,9 @@
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div> -->
 <div class="wrapper-20  pr-0">
-    <div class="row">
-        <div class="col-md-12 p-0">
-            <h4 class="pt-20 pb-28 m-0">Services</h4>
-        </div>
-    </div>
 
-    <div class="row">
+
+    <div class="row" *ngIf="serviceSettingData != undefined">
         <div (click)="openFragment('','services')" class="col-md-4 pr-20 pb-20 pl-0 c-p">
             <mat-card class="example-card height-470 bg-grey lter">
 
@@ -94,4 +90,22 @@
             </mat-card>
         </div>
     </div>
+
+    <div class="row" *ngIf="serviceSettingData == undefined">
+        <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
+            <img src="assets/images/svg/add-services-img.svg">
+            <p class="f-22 f-600 pt-28">Create Services </p>
+            <p class="f-16 text-center l-21">
+                Next up, you create Services. More than one Service can be added to a Plan. E.g. <br> Plan could be Financial Planning. It’s Services could be 1) Planning fees 2) <br> Implementation services 3) Retainer services.
+            </p>
+
+            <button (click)="openFragment('','services')" class="btn-primary d-flex align-items-center"> <i
+                    class="material-icons">add</i> Add
+                services</button>
+        </div>
+    </div>
+
+
+
+
 </div>
