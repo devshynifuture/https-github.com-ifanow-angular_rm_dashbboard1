@@ -169,7 +169,7 @@
                     [ngClass]="{'text-danger':element.status==0,'text-primary':element.status==1,'text-success':element.status==2}"
                     ngcl class="c-p" (click)="openInvoice(element,'invoiceSubscription','open')">
                     <div class="bar">
-                        {{(element.status==0)?'OVERDUE':(element.status==1)?'OVERDUE':(element.status==2)?'PAID':''}}
+                        {{(element.status==5)?'OVERDUE':(element.status==1)?'NOT STARTED':(element.status==2)?'LIVE':(element.status==3)?'FUTURE':(element.status==4)?'CANCELLED':''}}
                     </div>
                 </td>
             </ng-container>
