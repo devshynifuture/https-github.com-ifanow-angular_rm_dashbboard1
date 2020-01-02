@@ -246,7 +246,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input type="number"  (keypress)="utils.keyPress($event)" class="form-control" maxlength="{{getFormControl().amountReceived.maxLength}}" formControlName="amountReceived">
+                                    <input type="text" #amountReceivedVal (keypress)="utils.keyPress($event)" class="form-control" maxlength="10" formControlName="amountReceived">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
@@ -255,7 +255,7 @@
                                     </div>
                                     <div class="col-md-2 pl-0">
                                         <p class="mb-0 f-12 text-custom text-right pt-4">
-                                            {{getFormControl().amountReceived.value?.length?getFormControl().amountReceived.value.length:0}}/{{getFormControl().amountReceived.maxLength}}
+                                            {{ amountReceivedVal.value.length }}/{{getFormControl().amountReceived.maxLength}}
                                         </p>
                                     </div>
                                 </div>
@@ -268,7 +268,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input type="number"  (keypress)="utils.keyPress($event)" class="form-control" maxlength="{{getFormControl().chargesIfAny.maxLength}}" formControlName="chargesIfAny">
+                                    <input type="text" #chargesIfAnyRef (keypress)="utils.keyPress($event)" class="form-control" maxlength="10" formControlName="chargesIfAny">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
@@ -278,7 +278,8 @@
                                     </div>
                                     <div class="col-md-2 pl-0">
                                         <p class="mb-0 f-12 text-custom text-right pt-4">
-                                            {{getFormControl().chargesIfAny.value?.length?getFormControl().chargesIfAny.value.length:0}}/{{getFormControl().chargesIfAny.maxLength}}
+                                            {{chargesIfAnyRef.value.length}}/{{getFormControl().chargesIfAny.maxLength}}
+                                            <!-- {{getFormControl().chargesIfAny.value?.length?getFormControl().chargesIfAny.value.length:0}}/{{getFormControl().chargesIfAny.maxLength}} -->
                                         </p>
                                     </div>
                                 </div>

@@ -159,10 +159,18 @@ export class InvoiceComponent implements OnInit {
   }
 
   keyPress(event: any) {
+    console.log(event.target.value.length);
     const pattern = /[0-9\+\-\ ]/;
 
     const inputChar = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+  dontAllowTyping(event, maxLength: number){
+    // console.log(this.rPayment.value());
+    if(event.target.value.length > maxLength){
       event.preventDefault();
     }
   }
@@ -300,7 +308,7 @@ export class InvoiceComponent implements OnInit {
   getRecordPayment(data) {
     console.log('payee data', data);
     this.rPayment = this.fb.group({
-      amountReceived: [data.amountReceived, [Validators.required]],
+      amountReceived: [data.amountReceived, [Validators.required ,  Validators.min(0), Validators.max(10)]],
       chargesIfAny: [data.chargesIfAny, [Validators.required]],
       tds: [data.tds, [Validators.required]],
       paymentDate: [new Date(data.paymentDate), [Validators.required]],
