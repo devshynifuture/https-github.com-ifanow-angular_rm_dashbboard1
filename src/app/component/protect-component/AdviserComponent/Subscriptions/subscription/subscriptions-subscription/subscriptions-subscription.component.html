@@ -1,6 +1,7 @@
-<div class="bg-white pb-36 pt-80 " id="ui-subs">
+<div  class="bg-white pb-36 pt-80 " id="ui-subs" (scroll)="scrollCall()"> 
+    <!-- (scroll)="scrollCall()" -->
     <!-- id="pdfDoc"  removed from above div-->
-    <div class="wrapper-20">
+    <div class="wrapper-20"  id="wrapper">
         <div class="row" *ngIf="showFilter==false">
             <div class="col-md-8 p-0">
                 <h4 class="pt-8 mb-0">Subscriptions</h4>
@@ -40,7 +41,7 @@
                             </mat-chip>
                             <mat-chip-list>
                                 <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let dateFilter of filterDate; let i = index">
-                                    <!--                  <div class="row">-->
+                                    <!--<div class="row">-->
                                     <p>{{dateFilter.name}}</p>
                                     <input class="pl-24" matInput placeholder="Choose a date" [satDatepicker]="picker2" [(ngModel)]="selectedDateRange" (dateChange)="orgValueChange(selectedDateRange)">
                                     <sat-datepicker #picker2 [rangeMode]="true">
@@ -61,7 +62,7 @@
                                         <!-- <mat-label>FILTERS ONE</mat-label> -->
                                         <mat-select class="form-control" id="sel11" [(ngModel)]='selectedStatusFilter' (selectionChange)="addFilters(selectedStatusFilter)">
                                             <mat-option *ngFor="let chip of chips" [value]="chip">
-                                                {{chip.name}}
+                                                {{chip.name}} 
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
@@ -84,14 +85,14 @@
                 </div>
             </div>
         </div>
-
-        <table matSort [dataSource]="dataSource" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low" mat-table>
+<div class="tableClass">
+        <table matSort [dataSource]="dataSource" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low" mat-table  >
 
 
             <ng-container matColumnDef="client">
                 <th mat-sort-header="planName" *matHeaderCellDef class="f-18 t-20" mat-header-cell> Client & Plan details
                 </th>
-                <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" *matCellDef="let element" class="c-p t-20" mat-cell>
+                <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" *matCellDef="let element; let i = index;" class="c-p t-20" mat-cell>
                     <div class="bar">
                         {{element.planName}} <br>
                         <small class="text-custom roboto">{{element.clientName}}</small>
@@ -190,9 +191,9 @@
             <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
             <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
         </table>
+
+    </div>
         <!-- dataSource=='' This condition will always return 'false' since the types '{}[]' and 'string' have no overlap.-->
-        <h4 *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4>
-        <!-- <button (click)="demoCall()" ></button> -->
 
     </div>
 </div>
