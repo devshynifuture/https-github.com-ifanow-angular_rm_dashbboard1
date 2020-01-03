@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { SubscriptionService } from '../../../subscription.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 export interface PeriodicElement {
@@ -56,14 +57,17 @@ export class InvoiceHistoryComponent implements OnInit {
   }
 
   displayedColumns: string[] = ['date', 'invoice', 'status', 'ddate', 'amount', 'balance'];
-  dataSource;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
   showSubscription;
   invoiceData;
+  isLoading = false;
   dataSub;
 
   invoiceHisData;
 
   ngOnInit() {
+    this.isLoading = true;
     this.showSubscription = true;
     console.log('this.dataSub', this.dataSub);
   }
@@ -96,8 +100,9 @@ export class InvoiceHistoryComponent implements OnInit {
   }
 
   getInvoiceResponseData(data) {
+    this.isLoading = false;
     console.log('getInvoiceResponseData', data);
-    this.dataSource = data;
+    this.dataSource.data = [];
   }
 
   Close(state) {
