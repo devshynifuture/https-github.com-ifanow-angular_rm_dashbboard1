@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { SubscriptionService } from '../../subscription.service';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { AuthService } from "../../../../../../auth-service/authService";
-import { UtilService } from "../../../../../../services/util.service";
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionService} from '../../subscription.service';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {AuthService} from "../../../../../../auth-service/authService";
+import {UtilService} from "../../../../../../services/util.service";
 import * as _ from 'lodash';
 
 export interface PeriodicElement {
@@ -26,17 +26,17 @@ export interface PeriodicElement {
   styleUrls: ['./invoices-subscription.component.scss']
 })
 export class InvoicesSubscriptionComponent implements OnInit {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   selectedStatusFilter: any;
   selectedDateFilter: any;
   chips = [
-    { name: 'LIVE', value: 1 },
-    { name: 'PAID', value: 2 },
-    { name: 'OVERDUE', value: 3 }
+    {name: 'LIVE', value: 1},
+    {name: 'PAID', value: 2},
+    {name: 'OVERDUE', value: 3}
   ];
   dateChips = [
-    { name: 'Date', value: 1 },
-    { name: 'Due date', value: 2 },
+    {name: 'Date', value: 1},
+    {name: 'Due date', value: 2},
   ];
   invoiceDesign: string;
   noData: string;
@@ -45,11 +45,12 @@ export class InvoicesSubscriptionComponent implements OnInit {
   statusIdList = [];
   showFilter = false;
   selectedDateRange: { begin: Date; end: Date; };
-  dataSource: any;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
   list: any[];
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject,
-    private eventService: EventService, public subscription: SubscriptionService) {
+              private eventService: EventService, public subscription: SubscriptionService) {
     this.ngOnInit();
   }
 
@@ -68,7 +69,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   @Input() invoiceValue
 
   ngOnInit() {
-    this.dataSource = [{}, {}, {}];
+    // this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
     this.getInvoiceSubData();
     this.showEdit = false;
@@ -85,6 +86,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
       // id: 2735, // pass here advisor id for Invoice advisor
       module: 1
     };
+    this.dataSource.data = [{}, {}, {}];
     this.subscription.getInvoices(obj).subscribe(
       data => this.getInvoiceResponseData(data)
     );
@@ -108,7 +110,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
       this.invoiceClientData = data;
       ELEMENT_DATA.forEach(item => item.selected = false);
       // this.dataSource = ELEMENT_DATA;
-      this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+      this.dataSource.data = ELEMENT_DATA;
       this.dataSource.sort = this.sort;
       // this.showLoader = false;
     }
@@ -168,14 +170,12 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   changeSelect() {
     this.dataCount = 0;
-    if (this.dataSource != undefined) {
-      this.dataSource.filteredData.forEach(item => {
-        console.log('item item ', item);
-        if (item.selected) {
-          this.dataCount++;
-        }
-      });
-    }
+    this.dataSource.filteredData.forEach(item => {
+      console.log('item item ', item);
+      if (item.selected) {
+        this.dataCount++;
+      }
+    });
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -188,7 +188,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
-      this.selectAll({ checked: false }) : this.selectAll({ checked: true });
+      this.selectAll({checked: false}) : this.selectAll({checked: true});
   }
 
   display(data) {
@@ -233,7 +233,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = { begin: beginDate, end: endDate };
+    this.selectedDateRange = {begin: beginDate, end: endDate};
   }
 
   removeDate(item) {
@@ -249,6 +249,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     data = Math.round(data);
     return data;
   }
+
   deleteModal(value) {
     this.list = [];
     this.dataSource.filteredData.forEach(singleElement => {
