@@ -32,15 +32,16 @@ export class CommonFroalaComponent implements OnInit {
   }
 }
 */
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { SubscriptionService } from '../../../subscription.service';
-import { UtilService } from 'src/app/services/util.service';
-import { EmailOnlyComponent } from '../email-only/email-only.component';
+import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {SubscriptionService} from '../../../subscription.service';
+import {UtilService} from 'src/app/services/util.service';
+import {EmailOnlyComponent} from '../email-only/email-only.component';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-common-froala',
@@ -59,9 +60,11 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
   storeData: any;
   inputData: any;
   templateType: number;
+  advisorId;
 
   constructor(public subscription: SubscriptionService, public subInjectService: SubscriptionInject,
               public eventService: EventService, public dialog: MatDialog) {
+    this.advisorId = AuthService.getAdvisorId();
     // this.dataSub = this.subInjectService.singleProfileData.subscribe(
     //   data=>this.getcommanFroalaData(data)
     // );
@@ -225,7 +228,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
       this.templateType = 4;
     }
     const data = {
-      advisorId: 2828,
+      advisorId: this.advisorId,
       clientData: this.storeData,
       templateType: this.templateType, // 2 is for quotation
       documentList: [this.storeData]
@@ -245,7 +248,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
       this.templateType = 2;
     }
     const data = {
-      advisorId: 2828,
+      advisorId: this.advisorId,
       clientData: this.storeData,
       templateType: this.templateType, // 2 is for quotation
       documentList: [this.storeData],
@@ -264,7 +267,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
       data,
       id: 1,
       state: 'open',
-      componentName:EmailOnlyComponent
+      componentName: EmailOnlyComponent
 
     };
     if (this.screenType) {
