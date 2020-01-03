@@ -1,3 +1,4 @@
+/*
 import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { FileUploader, FileUploaderOptions, ParsedResponseHeaders } from 'ng2-file-upload';
 
@@ -151,3 +152,4 @@ export class PhotoUploadComponent implements OnInit {
       .map((key) => ({ key, value: fileProperties[key] }));
   }
 }
+*/

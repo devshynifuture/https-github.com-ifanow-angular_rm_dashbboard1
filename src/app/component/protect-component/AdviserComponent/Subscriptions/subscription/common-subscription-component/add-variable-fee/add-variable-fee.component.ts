@@ -27,6 +27,9 @@ export class AddVariableFeeComponent implements OnInit {
   selectedOtherAssets = [];
   pricing;
   ischeckVariableData
+  serviceId: any;
+  dataToSend:any;
+  data: any;
   @Input() set variableFee(data) {
     this.ischeckVariableData = data
     this.getFeeFormUpperData(data)
@@ -88,6 +91,8 @@ export class AddVariableFeeComponent implements OnInit {
       this.createVariableFeeForm('')
       return
     } else {
+      this.data=data;
+      this.serviceId=data.id;
       this.variableFeeData = this.fb.group({
         serviceName: [data.serviceName, [Validators.required]],
         code: [data.serviceCode, [Validators.required]],
@@ -153,23 +158,26 @@ export class AddVariableFeeComponent implements OnInit {
       return;
     } else {
       const obj = {
+        serviceRepoId:this.serviceId,
         advisorId: this.advisorId,
         // advisorId: 12345,
         description: this.variableFeeData.controls.description.value,
-        global: false,
         serviceCode: this.variableFeeData.controls.code.value,
         serviceName: this.variableFeeData.controls.serviceName.value,
         servicePricing: {
+          id:this.data.servicePricing.id,
           billEvery: parseInt(this.variableFeeData.controls.billEvery.value) * parseInt(this.variableFeeData.controls.Duration.value),
           feeTypeId: parseInt(feeType),
           pricingList: [
             {
+              id:this.data.servicePricing.pricingList[0].id,
               directRegular: 1,
               assetClassId: 1,
               debtAllocation: this.variableFeeData.controls.directFees.controls.debt.value,
               equityAllocation: this.variableFeeData.controls.directFees.controls.equity.value,
               liquidAllocation: this.variableFeeData.controls.directFees.controls.liquid.value,
             }, {
+              id:this.data.servicePricing.pricingList[1].id,
               directRegular: 2,
               assetClassId: 1,
               debtAllocation: this.variableFeeData.controls.regularFees.controls.debt.value,
@@ -177,6 +185,7 @@ export class AddVariableFeeComponent implements OnInit {
               liquidAllocation: this.variableFeeData.controls.regularFees.controls.liquid.value,
             },
             {
+              id:this.data.servicePricing.pricingList[2].id,
               assetClassId: 2,
               otherAssets: this.selectedOtherAssets,
               pricing: this.variableFeeData.controls.pricing.value
@@ -184,10 +193,19 @@ export class AddVariableFeeComponent implements OnInit {
           ]
         }
       };
+      this.dataToSend=obj;
+      Object.assign(this.dataToSend, { id: this.serviceId });
       console.log('jifsdfoisd', obj);
-      this.subService.createSettingService(obj).subscribe(
-        data => this.saveVariableFeeDataResponse(data, obj)
-      );
+      if(this.serviceId==undefined){
+        this.subService.createSettingService(obj).subscribe(
+          data => this.saveVariableFeeDataResponse(data, obj)
+        );
+      }else{
+        this.subService.editSettingService(obj).subscribe(
+          data => this.saveFeeTypeDataEditResponse(data)
+        );
+      }
+   
     }
 
   }
@@ -196,6 +214,11 @@ export class AddVariableFeeComponent implements OnInit {
     this.outputVariableData.emit(data)
     this.eventService.openSnackBar('Service is Created', 'OK');
     this.subInjectService.changeUpperRightSliderState({flag: 'added', state: 'close', data });
+  }
+  saveFeeTypeDataEditResponse(data) {
+    this.outputVariableData.emit(this.dataToSend)
+    this.eventService.openSnackBar('Service is Created', 'OK');
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
   }
 
   select(assetData) {
