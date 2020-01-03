@@ -12,8 +12,8 @@
 more_vert
 </i> -->
             <button class="btn-primary br-0 my-btn mt-4" mat-stroked-button><i class="material-icons">
-              add
-            </i></button>
+                add
+              </i></button>
 
           </div>
         </div>
@@ -51,8 +51,7 @@ more_vert
               <p class="m-0 f-13 pt-12">{{strData.invoiceDate | date:'dd/MM/yyyy'}}</p>
             </div>
             <div class="col-md-5 text-right pr-8">
-              <p
-                [ngClass]="{'text-danger':strData.status==0,'text-primary':strData.status==1,'text-success':strData.status==2}"
+              <p [ngClass]="{'text-danger':strData.status==0,'text-primary':strData.status==1,'text-success':strData.status==2}"
                 class="m-0 f-13 pt-12">
                 {{(strData.status == 0) ? 'OVERDUE' : (strData.status == 1) ? 'OVERDUE' : (strData.status == 2) ? 'PAID' : ''}}
               </p>
@@ -86,7 +85,7 @@ more_vert
                 </div>
                 <div class="col-md-3 text-right">
                   <img class="pt-20"
-                       src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                    src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
                 </div>
               </div>
             </div>
@@ -109,11 +108,11 @@ more_vert
 
               <div class="row pt-44">
                 <div class="col-md-8">
-                  <p class="text-black f-400"><span
-                    class="text-custom f-16">Invoice no</span>: {{storeData.invoiceNumber}}
+                  <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>:
+                    {{storeData.invoiceNumber}}
                   </p>
-                  <p class="text-black f-400"><span
-                    class="text-custom f-16">Invoice date</span>: {{storeData.invoiceDate| date:'dd/MM/yyyy'}}</p>
+                  <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>:
+                    {{storeData.invoiceDate| date:'dd/MM/yyyy'}}</p>
                 </div>
                 <div class="col-md-4">
                   <h2
@@ -232,9 +231,9 @@ The actual rendered columns are set as a property on the row definition" -->
               <ng-container matColumnDef="icons">
                 <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
                 <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menu"
-                                                                      class="material-icons c-p iconscolors">
-                  more_vert
-                </i>
+                    class="material-icons c-p iconscolors">
+                    more_vert
+                  </i>
                   <mat-menu #menu="matMenu">
                     <a (click)="editForm(element)" mat-menu-item>Edit</a>
                   </mat-menu>
@@ -255,7 +254,7 @@ The actual rendered columns are set as a property on the row definition" -->
               <div class="col-md-4">
                 <div class="form-group mb-0">
                   <input (keypress)="utils.keyPress($event)" class="form-control" formControlName="amountReceived"
-                         maxlength="{{getFormControl().amountReceived.maxLength}}" type="number">
+                    maxlength="{{getFormControl().amountReceived.maxLength}}" type="number">
                 </div>
                 <div class="row">
                   <div class="col-md-10 pr-0">
@@ -282,7 +281,7 @@ The actual rendered columns are set as a property on the row definition" -->
               <div class="col-md-4">
                 <div class="form-group mb-0">
                   <input (keypress)="utils.keyPress($event)" class="form-control" formControlName="chargesIfAny"
-                         maxlength="{{getFormControl().chargesIfAny.maxLength}}" type="number">
+                    maxlength="{{getFormControl().chargesIfAny.maxLength}}" type="number">
                 </div>
                 <div class="row">
                   <div class="col-md-10 pr-0">
@@ -309,7 +308,7 @@ The actual rendered columns are set as a property on the row definition" -->
               <div class="col-md-4">
                 <div class="form-group mb-0">
                   <input class="form-control" formControlName="tds" maxlength="{{getFormControl().tds.maxLength}}"
-                         type="text">
+                    type="text">
                 </div>
                 <div class="row">
                   <div class="col-md-10 pr-0">
@@ -339,7 +338,7 @@ The actual rendered columns are set as a property on the row definition" -->
 
                   <mat-form-field>
                     <input (keypress)="utils.dateFormat($event)" [matDatepicker]="picker" class="form-control"
-                           formControlName="paymentDate" matInput placeholder="mm/dd/yyyy">
+                      formControlName="paymentDate" matInput placeholder="mm/dd/yyyy">
                     <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
@@ -363,8 +362,8 @@ The actual rendered columns are set as a property on the row definition" -->
                 <div class="form-group mb-0">
                   <select class="form-control" formControlName="paymentMode" id="Category">
                     <option disabled hidden selected value="0">Select payment mode</option>
-                    <option *ngFor="let feeCollectionMode of feeCollectionMode"
-                            value="{{feeCollectionMode.name}}">{{feeCollectionMode.name}}</option>
+                    <option *ngFor="let feeCollectionMode of feeCollectionMode" value="{{feeCollectionMode.name}}">
+                      {{feeCollectionMode.name}}</option>
                   </select>
                 </div>
                 <div class="row">
@@ -414,8 +413,7 @@ The actual rendered columns are set as a property on the row definition" -->
               <div class="col-md-5">
                 <div class="form-group mb-0">
                   <textarea class="form-control" formControlName="notes"
-                            maxlength="{{getFormControl().notes.maxLength}}"
-                            rows="5"></textarea>
+                    maxlength="{{getFormControl().notes.maxLength}}" rows="5"></textarea>
                 </div>
                 <div class="row ">
 
@@ -675,8 +673,8 @@ The actual rendered columns are set as a property on the row definition" -->
           <div class="col-md-8">
             <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>: {{storeData.invoiceNumber}}
             </p>
-            <p class="text-black f-400"><span
-              class="text-custom f-16">Invoice date</span>: {{storeData.invoiceDate | date:'dd/MM/yyyy'}}</p>
+            <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>:
+              {{storeData.invoiceDate | date:'dd/MM/yyyy'}}</p>
           </div>
           <div class="col-md-4">
             <h2
@@ -796,9 +794,9 @@ The actual rendered columns are set as a property on the row definition" -->
         <ng-container matColumnDef="icons">
           <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
           <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menu"
-                                                                class="material-icons c-p iconscolors">
-            more_vert
-          </i>
+              class="material-icons c-p iconscolors">
+              more_vert
+            </i>
             <mat-menu #menu="matMenu">
               <a (click)="editForm(element)" mat-menu-item>Edit</a>
             </mat-menu>
@@ -819,7 +817,7 @@ The actual rendered columns are set as a property on the row definition" -->
         <div class="col-md-4">
           <div class="form-group mb-0">
             <input (keypress)="utils.keyPress($event)" class="form-control" formControlName="amountReceived"
-                   maxlength="{{getFormControl().amountReceived.maxLength}}" type="number">
+              maxlength="{{getFormControl().amountReceived.maxLength}}" type="number">
           </div>
           <div class="row">
             <div class="col-md-10">
@@ -845,7 +843,7 @@ The actual rendered columns are set as a property on the row definition" -->
         <div class="col-md-4">
           <div class="form-group mb-0">
             <input (keypress)="utils.keyPress($event)" class="form-control" formControlName="chargesIfAny"
-                   maxlength="{{getFormControl().chargesIfAny.maxLength}}" type="number">
+              maxlength="{{getFormControl().chargesIfAny.maxLength}}" type="number">
           </div>
 
           <div class="row">
@@ -873,7 +871,7 @@ The actual rendered columns are set as a property on the row definition" -->
         <div class="col-md-4">
           <div class="form-group mb-0">
             <input class="form-control" formControlName="tds" maxlength="{{getFormControl().tds.maxLength}}"
-                   type="text">
+              type="text">
           </div>
           <div class="row">
             <div class="col-md-10 pr-0">
@@ -901,8 +899,7 @@ The actual rendered columns are set as a property on the row definition" -->
           <div class="form-group mb-0">
             <mat-form-field>
               <input (keypress)="utils.dateFormat($event)" [matDatepicker]="picker" class="form-control"
-                     formControlName="paymentDate"
-                     matInput placeholder="mm/dd/yyyy">
+                formControlName="paymentDate" matInput placeholder="mm/dd/yyyy">
               <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -926,8 +923,7 @@ The actual rendered columns are set as a property on the row definition" -->
           <div class="form-group mb-0">
             <select class="form-control" formControlName="paymentMode" id="Category" id="sel1">
               <option disabled hidden selected value="0">Select payment mode</option>
-              <option *ngFor="let feeCollectionMode of feeCollectionMode"
-                      value="{{feeCollectionMode.name}}">
+              <option *ngFor="let feeCollectionMode of feeCollectionMode" value="{{feeCollectionMode.name}}">
                 {{feeCollectionMode.name}}</option>
             </select>
           </div>
@@ -977,7 +973,7 @@ The actual rendered columns are set as a property on the row definition" -->
         <div class="col-md-5">
           <div class="form-group mb-0">
             <textarea class="form-control" formControlName="notes" maxlength="{{getFormControl().notes.maxLength}}"
-                      rows="5"></textarea>
+              rows="5"></textarea>
           </div>
           <div class="row ">
 
@@ -1185,8 +1181,8 @@ The actual rendered columns are set as a property on the row definition" -->
   </div>
 </div>
 <div *ngIf="showEdit==true" [formGroup]="editPayment"
-     [ngClass]="{'mt-70': invoiceInSub=='invoiceSubscription','mt-0':invoiceInSub!='invoiceSubscription'}"
-     class="bg-white pb-44 ">
+  [ngClass]="{'mt-70': invoiceInSub=='invoiceSubscription','mt-0':invoiceInSub!='invoiceSubscription'}"
+  class="bg-white pb-44 ">
   <div class="row  popup-header">
     <div class="col-md-10 pl-0">
       <h4 *ngIf="invoiceInSub=='invoiceSubscription'" class="f-400 wrapper-20 mb-0">Edit Invoice
@@ -1211,11 +1207,10 @@ The actual rendered columns are set as a property on the row definition" -->
             <div class="form-group">
               <mat-form-field>
                 <input [matAutocomplete]="auto1" aria-label="client" class="form-control br-0 pl-8"
-                       formControlName="clientName"
-                       matInput>
+                  formControlName="clientName" matInput>
                 <mat-autocomplete #auto1="matAutocomplete">
                   <mat-option (onSelectionChange)="selectClient($event, c)" *ngFor="let c of clientList"
-                              [value]="c.clientName">
+                    [value]="c.clientName">
                     <span>{{c.clientName}}</span>
                   </mat-option>
                 </mat-autocomplete>
@@ -1238,8 +1233,7 @@ The actual rendered columns are set as a property on the row definition" -->
           <p *ngIf="editAdd1 == false" class="m-0 text-black text-break w-90 l-21">{{storeData.billerAddress}}
           </p>
           <textarea *ngIf="editAdd1 == true" class="form-control br-0" formControlName="billerAddress"
-                    maxlength="{{getFormControledit().billerAddress.maxLength}}"
-                    rows="5"></textarea>
+            maxlength="{{getFormControledit().billerAddress.maxLength}}" rows="5"></textarea>
           <p (click)="onclickChangeAdd1(editAdd1)" class="m-0 text-primary c-p f-12">CHANGE</p>
           <p class="mb-0 f-12 text-custom text-right pt-4 pr-36">
             {{getFormControledit().billerAddress.value?.length ? getFormControledit().billerAddress.value.length : 0}}
@@ -1251,8 +1245,7 @@ The actual rendered columns are set as a property on the row definition" -->
           <p *ngIf="editAdd2 == false" class="m-0 text-black text-break l-21 w-90">
             {{storeData.billingAddress}}</p>
           <textarea *ngIf="editAdd2 == true" class="form-control br-0" formControlName="billingAddress"
-                    maxlength="{{getFormControledit().billingAddress.maxLength}}"
-                    rows="5"></textarea>
+            maxlength="{{getFormControledit().billingAddress.maxLength}}" rows="5"></textarea>
           <p (click)="onclickChangeAdd2(editAdd2)" class="m-0 text-primary c-p f-12">CHANGE</p>
           <p class="mb-0 f-12 text-custom text-right pt-4 pr-12">
             {{getFormControledit().billingAddress.value?.length ? getFormControledit().billingAddress.value.length : 0}}
@@ -1268,14 +1261,13 @@ The actual rendered columns are set as a property on the row definition" -->
         <div class="col-md-4 p-0">
           <div class="row">
             <div class="col-md-3 pl-0 pr-0 pt-8">
-              <h5 class="m-0 pt-8 text-left">Invoice No.</h5>
+              <h5 class="m-0 text-left">Invoice No.</h5>
             </div>
             <div class="col-md-7 p-0">
               <div class="form-group mb-0">
 
                 <input class="form-control br-0" formControlName="invoiceNumber"
-                       maxlength="{{getFormControledit().invoiceNumber.maxLength}}"
-                       type="email">
+                  maxlength="{{getFormControledit().invoiceNumber.maxLength}}" type="email">
 
               </div>
               <div class="col-md-12 pl-0">
@@ -1302,12 +1294,10 @@ The actual rendered columns are set as a property on the row definition" -->
             <div class="col-md-6 pr-0">
               <div class="form-group mb-0">
                 <mat-form-field>
-                  <input [matDatepicker]="picker" class="form-control" formControlName="invoiceDate" matInput
-                         readonly>
+                  <input [matDatepicker]="picker" class="form-control" formControlName="invoiceDate" matInput readonly>
                   <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
-                  <mat-error
-                    class="f-12 pt-4">Invoice date is required
+                  <mat-error class="f-12 pt-4">Invoice date is required
                   </mat-error>
                 </mat-form-field>
               </div>
@@ -1325,7 +1315,7 @@ The actual rendered columns are set as a property on the row definition" -->
               <div class="form-group mb-0">
                 <mat-form-field>
                   <input [matDatepicker]="dueDatePicker" class="form-control" formControlName="dueDate" matInput
-                         readonly>
+                    readonly>
                   <mat-datepicker-toggle [for]="dueDatePicker" matSuffix></mat-datepicker-toggle>
                   <mat-datepicker #dueDatePicker></mat-datepicker>
                 </mat-form-field>
@@ -1360,8 +1350,7 @@ The actual rendered columns are set as a property on the row definition" -->
             <div class="row">
               <div class="form-group mb-0 ml-8 w-100">
                 <input [matAutocomplete]="auto" aria-label="State" class="form-control w-100 br-0 pl-8"
-                       formControlName="serviceName"
-                       list="serviceName" matInput placeholder="You can search service">
+                  formControlName="serviceName" list="serviceName" matInput placeholder="You can search service">
                 <mat-autocomplete #auto="matAutocomplete">
                   <mat-option *ngFor="let s of serviceList" [value]="s.serviceName">
                     <span>{{s.serviceName}}</span>
@@ -1379,8 +1368,7 @@ The actual rendered columns are set as a property on the row definition" -->
           </div>
           <div class="col-md-2 pl-0">
             <input (keypress)="utils.keyPress($event)" [(ngModel)]="finalAmount" class="form-control br-0"
-                   formControlName="finalAmount"
-                   type="number">
+              formControlName="finalAmount" type="number">
             <div class="col-md-8">
               <mat-error
                 *ngIf="isPrice && getFormControledit().finalAmount.invalid || (getFormControledit().finalAmount.touched && getFormControledit().finalAmount.invalid)"
@@ -1391,7 +1379,7 @@ The actual rendered columns are set as a property on the row definition" -->
           </div>
           <div class="col-md-2 pl-0">
             <select (change)="changeTaxStatus($event.target.value)" class="form-control" formControlName="taxStatus"
-                    id="serviceName">
+              id="serviceName">
               <option value="">Select tax type</option>
               <option value="IGST(18%)">IGST(18%)</option>
               <option value="SGST(9%)|CGST(9%)">SGST(9%) | CGST(9%)</option>
@@ -1408,10 +1396,10 @@ The actual rendered columns are set as a property on the row definition" -->
           <div class="col-md-2 p-0">
             <h5 *ngIf="storeData.cgstTaxAmount == undefined || storeData.igstTaxAmount" class="m-0 text-right pr-8">
               ₹{{(18 / 100) * finalAmount + +finalAmount}}</h5>
-            <h5 *ngIf="storeData.sgst != undefined" [hidden]="finalAmount !=undefined"
-                class="m-0 text-right pr-8">{{storeData.cgstTaxAmount}}</h5>
-            <h5 *ngIf="storeData.igst != undefined" [hidden]="finalAmount !=undefined"
-                class="m-0 text-right pr-8">{{storeData.igstTaxAmount}}</h5>
+            <h5 *ngIf="storeData.sgst != undefined" [hidden]="finalAmount !=undefined" class="m-0 text-right pr-8">
+              {{storeData.cgstTaxAmount}}</h5>
+            <h5 *ngIf="storeData.igst != undefined" [hidden]="finalAmount !=undefined" class="m-0 text-right pr-8">
+              {{storeData.igstTaxAmount}}</h5>
           </div>
         </div>
       </div>
@@ -1431,7 +1419,7 @@ The actual rendered columns are set as a property on the row definition" -->
         </div>
         <div class="col-md-2 p-0 b-grey">
           <input (keypress)="utils.keyPress($event)" [(ngModel)]="discount" class="form-control br-0 text-right"
-                 formControlName="discount" type="number">
+            formControlName="discount" type="number">
         </div>
       </div>
       <div class="row pt-20 pb-12">
@@ -1480,8 +1468,7 @@ The actual rendered columns are set as a property on the row definition" -->
           <div class="col-md-9 p-0">
             <div class="form-group mb-0">
               <textarea class="form-control" formControlName="footnote"
-                        maxlength="{{getFormControledit().footnote.maxLength}}"
-                        rows="5"></textarea>
+                maxlength="{{getFormControledit().footnote.maxLength}}" rows="5"></textarea>
             </div>
             <div class="row">
               <div class="col-md-6">
@@ -1505,8 +1492,7 @@ The actual rendered columns are set as a property on the row definition" -->
           <div class="col-md-9 p-0">
             <div class="form-group mb-0">
               <textarea class="form-control" formControlName="terms"
-                        maxlength="{{getFormControledit().terms.maxLength}}"
-                        rows="5"></textarea>
+                maxlength="{{getFormControledit().terms.maxLength}}" rows="5"></textarea>
             </div>
             <div class="row">
               <div class="col-md-6">

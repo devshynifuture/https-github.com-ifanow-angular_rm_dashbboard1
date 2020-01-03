@@ -280,7 +280,7 @@ ul {
   .mat-checkbox-inner-container {
     height: 20px;
     width: 20px;
-    border: 1px solid #BCC6CA;
+    // border: 1px solid #BCC6CA;
     // margin-top: -1px;
     // position: relative;
   }
@@ -416,6 +416,8 @@ ul {
 }
 
 #ui-appcustomhtml {
+  width: 100% !important;
+
   h1 {
     font-size: 8px;
     padding: 10px 16px;

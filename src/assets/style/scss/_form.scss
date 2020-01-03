@@ -40,8 +40,13 @@ input.mat-input-element {
   margin: 0;
   line-height: 2.3;
   width: 100%;
-  padding: 6px;
+
   height: 40px;
+}
+
+input.mat-input-element,
+textarea.mat-input-element {
+  padding: 6px !important;
 }
 
 .mat-input-element {
@@ -63,7 +68,7 @@ input.mat-input-element:focus {
 
 .mat-radio-label {
   margin: 0;
-  padding: 8px;
+  padding: 0px !important;
 }
 
 .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
@@ -245,4 +250,13 @@ input.mat-input-element:focus {
 // overwrite the ripple overlay on hover and click
 .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
   background-color: #008FFF !important;
+}
+
+.mat-form-field-subscript-wrapper {
+  // top: 0 !important;
+  margin-top: 0 !important;
+}
+
+textarea.mat-input-element {
+  resize: none !important;
 }
