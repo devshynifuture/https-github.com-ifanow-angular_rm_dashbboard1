@@ -9,6 +9,7 @@ import {AlphaNumericDirective, Formatter, NumberOnlyDirective, TextOnlyDirective
 import {InputValueValidationDirective} from './input-value-validation.directive';
 
 // import {AppModule} from "../app.module";
+import { DateInputFormatDirective } from './date-input-format.directive';
 
 
 @NgModule({
@@ -21,10 +22,11 @@ import {InputValueValidationDirective} from './input-value-validation.directive'
     NumberOnlyDirective,
     AlphaNumericDirective,
     Formatter,
-    InputValueValidationDirective
+    InputValueValidationDirective,
+    DateInputFormatDirective
   ],
   exports: [RadioGroupDirectiveDirective, SkeletonLoadingDirective, FormatNumberDirective, NumberOnlyDirective,
-    AlphaNumericDirective, TextOnlyDirective, Formatter, InputValueValidationDirective],
+    AlphaNumericDirective, TextOnlyDirective, Formatter, InputValueValidationDirective, DateInputFormatDirective],
   imports: [
 
     // AppModule

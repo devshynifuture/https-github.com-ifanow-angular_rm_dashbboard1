@@ -49,7 +49,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   // advisorId = 400;
   advisorId;
   dataSourceSingCount;
-  dataSourceClientWithSub;
+  dataSourceClientWithSub = {};
   dataSourceInvoice;
   subSummaryData;
 
@@ -58,8 +58,8 @@ export class DashboardSubscriptionComponent implements OnInit {
   chart: Chart;
   subscriptionSummaryStatusFilter = '1';
   showLetsBegin = false;
-  totalSales: any;
   feeRecieved: any;
+  totalSales: any;
 
   constructor(private enumService: EnumServiceService,
     public subInjectService: SubscriptionInject,
@@ -291,7 +291,10 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   docSentSignedCountResponse(data) {
     console.log('SentSignedCountResponse', data);
-    this.dataSourceSingCount = data;
+    if (data)
+      this.dataSourceSingCount = data;
+    else
+      this.dataSourceSingCount = {};
   }
 
   // ******* Dashboard Client With Subscription *******
@@ -307,7 +310,11 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   clientWithSubscriptionRes(data) {
     console.log('clientWithSubscriptionRes', data);
-    this.dataSourceClientWithSub = data;
+    if (data)
+      this.dataSourceClientWithSub = data;
+    else
+      this.dataSourceClientWithSub = {};
+
   }
 
   // ******* Dashboard Invoice To Be Reviewed *******

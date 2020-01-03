@@ -109,7 +109,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   // sendData: any[];
   // senddataTo: any;
   showFilter = false;
-  selectedStatusFilter;
+  selectedStatusFilter:any = "status";
+  selectedDateFilter:any = "selected"
   // selectedDateFilter;
   dataTocheck: boolean;
   live: boolean;
@@ -355,6 +356,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
   addFilters(addFilters) {
+
     console.log('addFilters', addFilters);
     if (!_.includes(this.filterStatus, addFilters)) {
       this.filterStatus.push(addFilters);
@@ -364,6 +366,9 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     } else {
       // _.remove(this.filterStatus, this.senddataTo);
     }
+
+    console.log(this.filterStatus, "this.filterStatus 123");
+    
     this.callFilter();
   }
 
@@ -413,16 +418,23 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     UtilService.getStartOfTheDay(endDate);
 
     this.selectedDateRange = { begin: beginDate, end: endDate };
+    console.log(this.filterDate, "this.filterDate 123");
     this.callFilter();
   }
 
   removeDate(item) {
+    console.log(this.filterDate, "this.filterDate 123 r");
+    this.selectedDateFilter = "selected"
     this.filterDate.splice(item, 1);
-    this.lastFilterDataId = 0;
+    this.lastFilterDataId = 0;  
     this.callFilter();
   }
 
   remove(item) {
+  if(this.filterStatus[item].name == this.selectedStatusFilter.name){
+    this.selectedStatusFilter = "status";
+  }
+    
     this.filterStatus.splice(item, 1);
     this.filterDataArr = this.filterDataArr.filter((x)=>{x.status != item.value})
     this.lastFilterDataId = 0;

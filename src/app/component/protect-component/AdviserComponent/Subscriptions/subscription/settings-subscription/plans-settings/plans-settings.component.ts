@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { SubscriptionService } from '../../../subscription.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { AuthService } from "../../../../../../../auth-service/authService";
-import { UtilService } from "../../../../../../../services/util.service";
-import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material';
+import {SubscriptionService} from '../../../subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {AuthService} from "../../../../../../../auth-service/authService";
+import {UtilService} from "../../../../../../../services/util.service";
+import {SubscriptionUpperSliderComponent} from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
 
 @Component({
   selector: 'app-plans-settings',
@@ -15,14 +15,14 @@ import { SubscriptionUpperSliderComponent } from '../../common-subscription-comp
 export class PlansSettingsComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private subService: SubscriptionService,
-    private dataService: EventService, private eventService: EventService, private subinject: SubscriptionInject) {
+              private dataService: EventService, private eventService: EventService, private subinject: SubscriptionInject) {
   }
 
   button: any;
 
   //showLoader;
 
-  planSettingData = [{ name: ' ' }, {}, {}];
+  planSettingData = [{}, {}, {}];
   isLoading = false;
   advisorId;
 
@@ -40,6 +40,8 @@ export class PlansSettingsComponent implements OnInit {
       advisorId: this.advisorId,
       mapped: false
     };
+    this.planSettingData = [{}, {}, {}];
+
     this.subService.getSubscriptionPlanSettingsData(obj).subscribe(
       data => this.getSettingsPlanResponse(data),
       err => this.getFilerrorResponse(err)
@@ -49,7 +51,10 @@ export class PlansSettingsComponent implements OnInit {
   getSettingsPlanResponse(data) {
     this.isLoading = false;
     console.log('get plan', data);
+
     this.planSettingData = data;
+
+
     //this.showLoader = false;
   }
 
@@ -102,6 +107,8 @@ export class PlansSettingsComponent implements OnInit {
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           // this.getClientSubscriptionList();
+          this.getSettingsPlanData();
+
           subscription.unsubscribe();
         }
       }

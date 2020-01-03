@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { SubscriptionService } from '../../../subscription.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from "../../../../../../../auth-service/authService";
-import { UtilService } from "../../../../../../../services/util.service";
-import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material';
+import {SubscriptionService} from '../../../subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {UtilService} from '../../../../../../../services/util.service';
+import {SubscriptionUpperSliderComponent} from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
 
 @Component({
   selector: 'app-services-settings',
@@ -14,12 +14,12 @@ import { SubscriptionUpperSliderComponent } from '../../common-subscription-comp
 export class ServicesSettingsComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private subService: SubscriptionService,
-    private dataService: EventService, private eventService: EventService) {
+              private dataService: EventService, private eventService: EventService) {
   }
 
   button: any;
 
-  //showLoader;
+  // showLoader;
 
   serviceSettingData = [{}, {}, {}];
   isLoading = false;
@@ -53,7 +53,7 @@ export class ServicesSettingsComponent implements OnInit {
   // }
 
   openFragment(singleService, data) {
-    (singleService == '') ? singleService = '' : singleService.flag = data
+    (singleService == '') ? singleService = '' : singleService.flag = data;
     console.log('hello mf button clicked');
     const fragmentData = {
       flag: 'openUpper',
@@ -67,7 +67,7 @@ export class ServicesSettingsComponent implements OnInit {
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
-          // this.getClientSubscriptionList();
+          this.getServiceSettingSubData();
           subscription.unsubscribe();
         }
       }
@@ -75,12 +75,14 @@ export class ServicesSettingsComponent implements OnInit {
   }
 
   getServiceSettingSubData() {
-    //this.showLoader = true;
+    // this.showLoader = true;
     const obj = {
       // advisorId: 2808
       advisorId: this.advisorId,
 
     };
+    this.serviceSettingData = [{}, {}, {}];
+
     this.subService.getSubscriptionServiceSettingsData(obj).subscribe(
       data => this.getServiceSettingSubResponse(data),
       err => this.getFileErrorResponse(err)
@@ -90,7 +92,7 @@ export class ServicesSettingsComponent implements OnInit {
   getServiceSettingSubResponse(data) {
     console.log('service data', data);
     this.serviceSettingData = data;
-    //this.showLoader = false;
+    // this.showLoader = false;
   }
 
   getFileErrorResponse(err) {
