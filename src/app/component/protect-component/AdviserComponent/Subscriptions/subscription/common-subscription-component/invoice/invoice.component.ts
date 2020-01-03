@@ -39,6 +39,7 @@ export interface PeriodicElement {
 })
 
 export class InvoiceComponent implements OnInit {
+  highLight: boolean;
 
   [x: string]: any;
 
@@ -613,12 +614,13 @@ export class InvoiceComponent implements OnInit {
     return data;
   }
 
-  passInvoice(data, event) {
+  passInvoice(data,index,event) {
     console.log(data);
     this.storeData = data;
     const obj = {
       invoiceId: data.id
     };
+    this.highLight=index;
     this.subService.getPaymentReceive(obj).subscribe(
       data => this.getPaymentReceivedRes(data)
     );

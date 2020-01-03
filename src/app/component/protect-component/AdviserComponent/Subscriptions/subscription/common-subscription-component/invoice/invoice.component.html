@@ -34,7 +34,7 @@ more_vert
         </div>
         <div class="row ">
             <div class="col-md-4 p-0 max-height-100">
-                <div (click)="passInvoice(strData,$event)" *ngFor="let strData of dataInvoices" class="invoiceSpacing b-b">
+                <div (click)="passInvoice(strData,i,$event)"  *ngFor="let strData of dataInvoices let i=index" [ngClass]="(i==highLight)?'bg-grey lter':'b-b'"class="invoiceSpacing b-b ">
                     <div class="row">
                         <div class="col-md-8">
                             <p class="m-0 f-15">{{strData.clientName}}</p>
