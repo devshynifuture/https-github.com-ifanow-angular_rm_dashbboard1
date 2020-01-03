@@ -1,0 +1,15 @@
+<div class="example-container">
+  <mat-form-field>
+    <input [formControl]="email" matInput placeholder="Enter your email" required>
+    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input [formControl]="inputName" matInput placeholder="Enter your email" required>
+    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input [formControl]="inputNumber" matInput placeholder="Enter your email" required>
+    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+  </mat-form-field>
+</div>

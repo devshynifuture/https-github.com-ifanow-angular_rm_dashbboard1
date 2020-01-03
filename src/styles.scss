@@ -438,6 +438,7 @@ position: absolute; top:0px;  height: 100%; padding-top: 12%; overflow: auto; di
         width: auto;
         background: transparent;
         color: #008FFF;
+        opacity: 1;
     }
 }
 
@@ -1180,4 +1181,9 @@ textarea {
 
 .width200 {
     width: 200px;
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: #ffffff;
 }

@@ -12,7 +12,8 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./add-fixed-fee.component.scss']
 })
 export class AddFixedFeeComponent implements OnInit {
-
+  serviceId: any;
+  dataToSend: {};
   constructor(public utils: UtilService,public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private subService: SubscriptionService, private eventService: EventService) {
   }
@@ -80,6 +81,7 @@ export class AddFixedFeeComponent implements OnInit {
       this.createFixedFeeForm('')
       return;
     } else {
+      this.serviceId=data.id;
       // data.servicePricing.billingNature = '1';
       console.log(' this isa snd;kasljdlkajsdlkashdlaksd ', data.servicePricing.billingNature);
       console.log(' this isa snd;kasljdlkajsdlkashdlaksd ', data.servicePricing.billingNature + '');
@@ -131,6 +133,7 @@ export class AddFixedFeeComponent implements OnInit {
       this.isbillEvery = true;
       return;
     } else {
+      
       const obj = {
         advisorId: this.advisorId,
         // advisorId: 12345,
@@ -154,14 +157,28 @@ export class AddFixedFeeComponent implements OnInit {
 
         }
       };
-      this.subService.createSettingService(obj).subscribe(
-        data => this.saveFeeTypeDataResponse(data, state)
-      );
+      this.dataToSend=obj;
+      Object.assign(this.dataToSend, { id: this.serviceId });
+      if(this.serviceId==undefined){
+        this.subService.createSettingService(obj).subscribe(
+          data => this.saveFeeTypeDataResponse(data, state)
+        );
+      }else{
+        this.subService.editSettingService(obj).subscribe(
+          data => this.saveFeeTypeDataEditResponse(data, state)
+        );
+      }
+      
     }
   }
 
   saveFeeTypeDataResponse(data, state) {
     this.outputFixedData.emit(data)
+    this.eventService.openSnackBar('Service is Created', 'OK');
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+  }
+  saveFeeTypeDataEditResponse(data, state) {
+    this.outputFixedData.emit(this.dataToSend)
     this.eventService.openSnackBar('Service is Created', 'OK');
     this.subInjectService.changeUpperRightSliderState({ state: 'close' });
   }

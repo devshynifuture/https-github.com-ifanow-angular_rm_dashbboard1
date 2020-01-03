@@ -1,20 +1,20 @@
-import { Router, ActivatedRoute } from '@angular/router';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MatDialog } from '@angular/material';
-import { DeleteSubscriptionComponent } from '../common-subscription-component/delete-subscription/delete-subscription.component';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { SubscriptionService } from '../../subscription.service';
-import { EnumServiceService } from '../../../../../../services/enum-service.service';
-import { UtilService } from '../../../../../../services/util.service';
-import { AuthService } from '../../../../../../auth-service/authService';
-import { Chart } from 'angular-highcharts';
-import { VariableFeeComponent } from '../common-subscription-component/variable-fee/variable-fee.component';
-import { FixedFeeComponent } from '../common-subscription-component/fixed-fee/fixed-fee.component';
-import { BillerSettingsComponent } from '../common-subscription-component/biller-settings/biller-settings.component';
-import { ChangePayeeComponent } from '../common-subscription-component/change-payee/change-payee.component';
-import { InvoiceHistoryComponent } from '../common-subscription-component/invoice-history/invoice-history.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatDialog} from '@angular/material';
+import {DeleteSubscriptionComponent} from '../common-subscription-component/delete-subscription/delete-subscription.component';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {SubscriptionService} from '../../subscription.service';
+import {EnumServiceService} from '../../../../../../services/enum-service.service';
+import {UtilService} from '../../../../../../services/util.service';
+import {AuthService} from '../../../../../../auth-service/authService';
+import {Chart} from 'angular-highcharts';
+import {VariableFeeComponent} from '../common-subscription-component/variable-fee/variable-fee.component';
+import {FixedFeeComponent} from '../common-subscription-component/fixed-fee/fixed-fee.component';
+import {BillerSettingsComponent} from '../common-subscription-component/biller-settings/biller-settings.component';
+import {ChangePayeeComponent} from '../common-subscription-component/change-payee/change-payee.component';
+import {InvoiceHistoryComponent} from '../common-subscription-component/invoice-history/invoice-history.component';
 
 export interface PeriodicElement {
   name: string;
@@ -24,9 +24,9 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Abhishek Mane', service: 'Financial Planning', amt: 'Rs.1,00,000/Q', billing: '25/08/2019' },
-  { name: 'Ronak Hasmuk Hindocha', service: 'Investment management', amt: 'View Details', billing: '-' },
-  { name: 'Aman Jain', service: 'AUM Linked fee', amt: 'View Details', billing: '-' },
+  {name: 'Abhishek Mane', service: 'Financial Planning', amt: 'Rs.1,00,000/Q', billing: '25/08/2019'},
+  {name: 'Ronak Hasmuk Hindocha', service: 'Investment management', amt: 'View Details', billing: '-'},
+  {name: 'Aman Jain', service: 'AUM Linked fee', amt: 'View Details', billing: '-'},
 
 ];
 
@@ -49,23 +49,24 @@ export class DashboardSubscriptionComponent implements OnInit {
   // advisorId = 400;
   advisorId;
   dataSourceSingCount;
-  dataSourceClientWithSub = {};
+  dataSourceClientWithSub: any = {};
   dataSourceInvoice;
   subSummaryData;
-
   showSubStep = false;
   displayedColumns: string[] = ['name', 'service', 'amt', 'billing', 'icons'];
   chart: Chart;
   subscriptionSummaryStatusFilter = '1';
   showLetsBegin = false;
+  feeRecieved: any;
+  totalSales: any;
 
   constructor(private enumService: EnumServiceService,
-    public subInjectService: SubscriptionInject,
-    public eventService: EventService,
-    public dialog: MatDialog,
-    private subService: SubscriptionService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute) {
+              public subInjectService: SubscriptionInject,
+              public eventService: EventService,
+              public dialog: MatDialog,
+              private subService: SubscriptionService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {
 
   }
 
@@ -86,7 +87,9 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.subIndex.emit(index)
     // this.selected=index
   }
-
+  display(data){
+    this.showSubStep = false;
+  }
   getDashboardResponse() {
 
     this.subService.getDashboardSubscriptionResponse(this.advisorId).subscribe(
@@ -189,6 +192,8 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.isLoading = false;
     console.log('getTotalRecivedRes', data);
     this.totalSaleReceived = data;
+    this.totalSales = (data) ? data.totalSales : '0';
+    this.feeRecieved = (data) ? data.feeRecieved : '0';
   }
 
   showSubscriptionSteps() {
@@ -199,10 +204,10 @@ export class DashboardSubscriptionComponent implements OnInit {
     console.log("this is selected Tab:::::::::::::", selectedTab);
     this.eventService.tabData(selectedTab);
     if (selectedTab === 3) {
-      this.router.navigate(['../subscriptions'], { relativeTo: this.activatedRoute });
+      this.router.navigate(['../subscriptions'], {relativeTo: this.activatedRoute});
 
     } else if (selectedTab === 5) {
-      this.router.navigate(['../invoices'], { relativeTo: this.activatedRoute });
+      this.router.navigate(['../invoices'], {relativeTo: this.activatedRoute});
     }
   }
 

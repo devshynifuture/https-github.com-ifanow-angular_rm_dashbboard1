@@ -18,18 +18,14 @@ export class SubscriptionCompletenessComponent implements OnInit {
   completed: string;
   showLoader: boolean;
   @Output() subscriptionIndex = new EventEmitter();
+  @Output() dashboard = new EventEmitter<Object>();
   constructor(public dialog: MatDialog, private subscription: SubscriptionService, public sub: SubscriptionComponent,
     public eventService: EventService, private router: Router) {
   }
   @Input() dataObj;
   // advisorId = 2727;
   advisorId;
-  //   dataObj=[{'completed':'false','data':'Create Plans, Services & Documents','innerData':'Adding these will set up the foundation for your RIA practice','tab':6}
-  // ,{'completed':'false','data':'Set up your Biller profile','innerData':'These details show up in the invoices your clients will receive.','tab':6},
-  // {'completed':'false','data':'Add Plan to a client','innerData':'Kickstart your core workflow with a client and unfold the magic. Add a Plan to take things forward.','tab':1},
-  // {'completed':'false','data':'Send Quotation to a client','innerData':'Once you’ve added a Plan, you can send out a Quotation to the client, get their approval before the actual billing starts.','tab':3},
-  // {'completed':'false','data':'Send Document for eSign','innerData':'Email documents to client with one click. Client can review them and proceed for e-singing using Aadhaar based eSign.','tab':5},
-  // {'completed':'false','data':'Record Payment','innerData':'Email documents to client with one click. Client can review them and proceed for e-singing using Aadhaar based eSign.','tab':4}]
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     // this.getSubscriptionStagesRecord();
@@ -38,29 +34,6 @@ export class SubscriptionCompletenessComponent implements OnInit {
     this.showLoader = true;
     console.log(this.router.url);
   }
-
-  /*getSubscriptionStagesRecord() {
-    const obj = {
-      // advisorId: 2735,
-      advisorId: this.advisorId,
-      amountReceived: 1000,
-      changesIfAny: 'nothing',
-      paymentDate: '2001-01-01',
-      paymentMode: 1,
-      notes: 'notes',
-      invoiceId: 1
-    };
-    this.subscription.getSubscriptionCompleteStages(obj).subscribe(
-      data => this.getSubStagesRecordResponse(data)
-    );
-  }
-*/
-  // getDashboardResponse() {
-
-  //   this.subscription.getDashboardSubscriptionResponse(this.advisorId).subscribe(
-  //     data => this.getDashboardData(data)
-  //   );
-  // }
   getDashboardResponse() {
 
     this.subscription.getDashboardSubscriptionResponse(this.advisorId).subscribe(
@@ -119,7 +92,10 @@ export class SubscriptionCompletenessComponent implements OnInit {
         console.log("default selection")
     }
   }
-
+  close(){
+    var showSubStep = false
+    this.dashboard.emit(showSubStep);
+  }
   openPopup(data) {
     const Fragmentdata = {
       flag: data,
