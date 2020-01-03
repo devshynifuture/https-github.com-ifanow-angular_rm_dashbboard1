@@ -383,6 +383,14 @@ export class SubscriptionService {
   getImageUploadData(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_IMAGE_UPLOAD, data)
   }
+  getListOfFamilyByClient(data){
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIST_FAMILY_MEMBER, httpParams);
+  }
+  documentEsignRequest(data) {
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('type', data.type);
+    return this.http.post(apiConfig.MAIN_URL + appConfig.DOCUMENT_ESIGN_REQUEST, data);
+  }
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
   }
