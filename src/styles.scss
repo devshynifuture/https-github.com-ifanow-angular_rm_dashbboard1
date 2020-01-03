@@ -255,6 +255,8 @@
     top: 0px;
     height: 100%;
     padding-top: 12%;
+    left: 0;
+    right: 0;
     overflow: auto;
     display: block;
     .wrapper-20 {
@@ -419,6 +421,7 @@
         width: auto;
         background: transparent;
         color: #008FFF;
+        opacity: 1;
     }
 }
 
