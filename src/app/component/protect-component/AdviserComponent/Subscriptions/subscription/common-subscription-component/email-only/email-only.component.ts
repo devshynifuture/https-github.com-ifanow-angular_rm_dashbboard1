@@ -3,6 +3,7 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-email-only',
@@ -25,8 +26,11 @@ export class EmailOnlyComponent implements OnInit {
   subject;
   doc: any;
   docObj: any[];
+  advisorId;
 
-  constructor(public eventService: EventService, public subInjectService: SubscriptionInject, public subscription: SubscriptionService) {
+  constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
+              public subscription: SubscriptionService) {
+    this.advisorId = AuthService.getAdvisorId();
     // this.dataSub = this.subInjectService.singleProfileData.subscribe(
     //   data => this.getcommanFroalaData(data)
     // );
@@ -58,26 +62,26 @@ export class EmailOnlyComponent implements OnInit {
   //   return this._inputData;
   // }
   @Input() set data(inputData) {
-    let obj = []
+    const obj = [];
     this.doc = inputData.documentList;
     if (inputData.isInv == true) {
       this.doc.forEach(element => {
         if (element) {
-          let obj1 = {
+          const obj1 = {
             id: element.id,
             documentName: element.invoiceNumber
-          }
-          obj.push(obj1)
+          };
+          obj.push(obj1);
         }
       });
     } else {
       this.doc.forEach(element => {
         if (element) {
-          let obj1 = {
+          const obj1 = {
             id: element.id,
             documentName: element.documentName
-          }
-          obj.push(obj1)
+          };
+          obj.push(obj1);
         }
       });
     }
@@ -85,7 +89,7 @@ export class EmailOnlyComponent implements OnInit {
     this.docObj = obj;
     this._inputData = inputData;
     this._inputData = {
-      advisorId: 2808,
+      advisorId: this.advisorId,
       clientData: {
         id: inputData.clientData.id,
         userEmailId: inputData.clientData.userEmailId
@@ -94,7 +98,7 @@ export class EmailOnlyComponent implements OnInit {
       documentList: obj,
       templateType: inputData.templateType
     };
-    console.log("dsfgsdggggggggg", this.docObj)
+    console.log('dsfgsdggggggggg', this.docObj);
     console.log('EmailOnlyComponent inputData : ', inputData);
     this.getEmailTemplateFilterData();
   }
@@ -180,7 +184,7 @@ export class EmailOnlyComponent implements OnInit {
 
   getEmailTemplate() {
     const obj = {
-      advisorId: 2828,
+      advisorId: this.advisorId,
       templateId: 1
     };
     this.subscription.getEmailTemplateFilterData(obj).subscribe(
@@ -244,13 +248,37 @@ export class EmailOnlyComponent implements OnInit {
   }
 
   sendEmail() {
+    // const emailRequestData = {
+    //   body: this.emailBody,
+    //   subject: this.subject,
+    //   fromEmail: this.emailData.fromEmail,
+    //   toEmail: [{emailId: this._inputData.clientData.userEmailId, sendType: 'to'}],
+    //   documentList: this._inputData.documentList
+    // };
+
     const emailRequestData = {
-      body: this.emailBody,
-      subject: this.subject,
-      fromEmail: this.emailData.fromEmail,
-      toEmail: [{emailId: this._inputData.clientData.userEmailId, sendType: 'to'}],
-      documentList: this._inputData.documentList
+      invitee: [
+        {
+          name: this._inputData.clientName,
+          email: this._inputData.clientData.userEmailId,
+          webhook: {
+            success: 'http://dev.ifanow.in:8080/futurewise/api/v1/1/subscription/invoice/esignSuccessResponse/post',
+            failure: 'http://dev.ifanow.in:8080/futurewise/api/v1/1/subscription/invoice/esignSuccessResponse/post1',
+            version: 2.1
+          }
+        }
+      ],
+      sub_document_id: this._inputData.documentList[0].id,
+      file: {
+        name: this._inputData.documentList[0].documentName
+      }
     };
+
+    this.subscription.documentEsignRequest(emailRequestData).subscribe(
+      data => this.getResponseData(data)
+    );
     console.log('send email complete JSON : ', JSON.stringify(emailRequestData));
   }
+
+
 }

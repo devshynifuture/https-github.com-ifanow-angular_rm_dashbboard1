@@ -89,17 +89,17 @@ export class SettingsComponent implements OnInit {
     );
   }
 
-  deleteModal(value) {
+  deleteModal(value,data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
-      body: 'Are you sure you want to delete the document?',
+      body: 'Are you sure you want to delete?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
 
-        this.subService.deleteClientProfileSubscriptionSetting(value.id).subscribe(
+        this.subService.deleteClientProfileSubscriptionSetting(data.id).subscribe(
           data => {
             this.deletedData(data);
             this.getSettingProfileData();

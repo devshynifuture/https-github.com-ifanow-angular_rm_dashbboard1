@@ -25,7 +25,7 @@
                     <div class="col-md-10 p-0 text-center pt-16">
                         <div class="row text-right content">
                             <div class="col-md-11 p-0">
-                                <p class="m-0 pt-20">Map documents to the selected plan.11</p>
+                                <p class="m-0 pt-20">Map documents to the selected plan.</p>
                             </div>
                             <div class="col-md-1 text-left p-0">
                                 <img src="/assets/images/svg/info.svg" class="c-p pt-20">
@@ -85,8 +85,8 @@
             <p class="f-16 text-center mt-20 l-21">
                 We’ve automated the complete process of documentation (a core part of RIA compliance). <br> You create documents easily using ready made templates or upload. <br> Email to clients, get eSigned and securely store.
             </p>
-            <button (click)="OpenHelp('clientHelp','open35',Questions)" class="btn-primary  mt-12 d-flex align-items-center">
-                ADD DOCUMENTS </button>
+          <!--  <button (click)="OpenHelp('clientHelp','open35',Questions)" class="btn-primary  mt-12 d-flex align-items-center">
+                ADD DOCUMENTS </button>-->
         </div>
     </div>
 
@@ -199,7 +199,7 @@
                                 <button mat-menu-item *ngIf="dataCount == 0">Select invoice to see more
                                     actions
                                 </button>
-                                <button mat-menu-item (click)="openDocumentESign('eSignDocument','open')" *ngIf="dataCount != 0">Email
+                                <button mat-menu-item (click)="openEsignDocument()" *ngIf="dataCount != 0">Email
                                     with eSign
                                     request
                                 </button>

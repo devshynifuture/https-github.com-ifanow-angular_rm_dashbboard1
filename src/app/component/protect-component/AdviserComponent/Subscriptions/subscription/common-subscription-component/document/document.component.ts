@@ -1,14 +1,14 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
-import { SubscriptionService } from '../../../subscription.service';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
+import {SubscriptionService} from '../../../subscription.service';
 import * as _ from 'lodash';
-import { AddDocumentComponent } from '../add-document/add-document.component';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { UtilService } from 'src/app/services/util.service';
+import {AddDocumentComponent} from '../add-document/add-document.component';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {UtilService} from 'src/app/services/util.service';
 // import {element} from 'protractor';
 // import {timingSafeEqual} from 'crypto';
 
@@ -43,7 +43,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./document.component.scss']
 })
 export class DocumentComponent implements OnInit {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   quotationDesignEmail: any;
   // @Input() upperData;
@@ -64,8 +64,8 @@ export class DocumentComponent implements OnInit {
 
 
   constructor(public subInjectService: SubscriptionInject,
-    private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
-    public subscription: SubscriptionService) {
+              private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
+              public subscription: SubscriptionService) {
     // this.subInjectService.rightSliderDocument.subscribe(
     //   data => this.getDocumentsDesignData(data)
     // );
@@ -184,7 +184,7 @@ export class DocumentComponent implements OnInit {
   }
 
   dialogClose() {
-    this.eventService.changeUpperSliderState({ state: 'close' });
+    this.eventService.changeUpperSliderState({state: 'close'});
 
     // this.dialogRef.close();
   }
@@ -230,6 +230,21 @@ export class DocumentComponent implements OnInit {
       data => this.getplanDocumentDataResponse(data)
     );
 
+  }
+
+  openEsignDocument() {
+    const data = {
+      advisorId: this.advisorId,
+      clientData: this._clientData,
+      templateType: 3, // 1-Invoice, 2 is for quotation, 3 is for esign, 4 is document
+      documentList: []
+    };
+    this.dataSource.filteredData.forEach(singleElement => {
+      if (singleElement.selected) {
+        data.documentList.push(singleElement);
+      }
+    });
+    this.open('eSignDocument', data);
   }
 
   openSendEmail() {
@@ -582,7 +597,7 @@ export class DocumentComponent implements OnInit {
   }
 
   saveMappingDocumentToPlansResponse(data) {
-    this.eventService.changeUpperSliderState({ state: 'close' });
+    this.eventService.changeUpperSliderState({state: 'close'});
     if (this.mappedData.length === 0) {
       this.eventService.openSnackBar('No Document mapped', 'Dismiss');
     } else {
@@ -613,18 +628,32 @@ export class DocumentComponent implements OnInit {
 
   mapDocumentToService() {
     let obj = [];
-    this.mappedData.forEach(element => {
+    if (this.mappedData.length == 0) {
       const data = {
-        mappedType: 2,
-        mappingId: element.mappingId,
-        id: element.id,
-        documentRepositoryId: element.documentRepositoryId,
+        mappedType: 0,
+        mappingId: 0,
+        id: 0,
+        documentRepositoryId: 0,
         // advisorId: 12345
         advisorId: this.advisorId,
       };
       obj.push(data);
       // console.log(obj);
-    });
+    } else {
+      this.mappedData.forEach(element => {
+        const data = {
+          mappedType: 2,
+          mappingId: element.mappingId,
+          id: element.id,
+          documentRepositoryId: element.documentRepositoryId,
+          // advisorId: 12345
+          advisorId: this.advisorId,
+        };
+        obj.push(data);
+        // console.log(obj);
+      });
+    }
+
 
     this.subService.mapDocumentToService(obj).subscribe(
       data => this.mapDocumentToServiceResponse(data)
@@ -634,7 +663,11 @@ export class DocumentComponent implements OnInit {
 
   mapDocumentToServiceResponse(data) {
     console.log(data);
-    this.eventService.openSnackBar('Document is mapped', 'OK');
+    if (this.mappedData.length === 0) {
+      this.eventService.openSnackBar('No document mapped', 'OK');
+    } else {
+      this.eventService.openSnackBar('Document is mapped', 'OK');
+    }
 
   }
 
@@ -682,6 +715,6 @@ export class DocumentComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
-      this.selectAll({ checked: false }) : this.selectAll({ checked: true });
+      this.selectAll({checked: false}) : this.selectAll({checked: true});
   }
 }
