@@ -257,8 +257,9 @@ The actual rendered columns are set as a property on the row definition" -->
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input #amountReceiveRef appNumberOnly [maxLength]="10" class="form-control"
-                                        matInput formControlName="amountReceived" type="text">
+                                    <input #amountReceiveRef [inputValidator]="validatorType.NUMBER_ONLY"
+                                           [maxLength]="10" appInputValueValidation class="form-control"
+                                           matInput formControlName="amountReceived" type="text">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
@@ -284,8 +285,9 @@ The actual rendered columns are set as a property on the row definition" -->
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input #chargesIfAnyRef appNumberOnly class="form-control"
-                                        formControlName="chargesIfAny" [maxLength]="10" type="text">
+                                  <input #chargesIfAnyRef [inputValidator]="validatorType.NUMBER_ONLY"
+                                         appInputValueValidation class="form-control"
+                                         formControlName="chargesIfAny" [maxLength]="10" type="text">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
@@ -311,8 +313,9 @@ The actual rendered columns are set as a property on the row definition" -->
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input #tdsRef appNumberOnly class="form-control" formControlName="tds"
-                                        [maxLength]="10" type="text">
+                                  <input #tdsRef [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
+                                         class="form-control" formControlName="tds"
+                                         [maxLength]="10" type="text">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
@@ -824,8 +827,9 @@ The actual rendered columns are set as a property on the row definition" -->
                 </div>
                 <div class="col-md-4">
                     <div class="form-group mb-0">
-                        <input type="text" #amountReceivedRef appNumberOnly [maxLength]="10" class="form-control"
-                            formControlName="amountReceived">
+                      <input #amountReceivedRef [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
+                             appInputValueValidation class="form-control" type="text"
+                             formControlName="amountReceived">
                     </div>
                     <div class="row">
                         <div class="col-md-10 pr-0">
@@ -851,8 +855,9 @@ The actual rendered columns are set as a property on the row definition" -->
                 </div>
                 <div class="col-md-4">
                     <div class="form-group mb-0">
-                        <input #chargesIfAnyRef appNumberOnly [maxLength]="10" class="form-control"
-                            formControlName="chargesIfAny" type="text">
+                      <input #chargesIfAnyRef [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
+                             appInputValueValidation class="form-control"
+                             formControlName="chargesIfAny" type="text">
                     </div>
                     <div class="row">
                         <div class="col-md-10 pr-0">
