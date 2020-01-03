@@ -254,8 +254,7 @@ The actual rendered columns are set as a property on the row definition" -->
               </div>
               <div class="col-md-4">
                 <div class="form-group mb-0">
-                  <input [maxLength]="10"  class="form-control" formControlName="amountReceived"
-                        type="number">
+                  <input type="text" #amountReceivedRef appNumberOnly [maxLength]="10" class="form-control" formControlName="amountReceived">
                 </div>
                 <div class="row">
                   <div class="col-md-10 pr-0">
