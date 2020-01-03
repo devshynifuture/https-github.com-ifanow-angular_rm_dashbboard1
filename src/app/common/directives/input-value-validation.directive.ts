@@ -16,7 +16,7 @@ export class InputValueValidationDirective {
   @Input() maxValue: number;
   @Output() errorMessage = new EventEmitter<string>();
   @Output() isValid = new EventEmitter<boolean>();
-  @Input() keyValidator: RegExp = ValidatorType.ALPHA_NUMERIC_WITH_SPACE;
+  // @Input() keyValidator: RegExp = ValidatorType.ALPHA_NUMERIC_WITH_SPACE;
   @Input() inputValidator: RegExp = ValidatorType.ALPHA_NUMERIC_WITH_SPACE;
 
   constructor(
@@ -28,18 +28,21 @@ export class InputValueValidationDirective {
 
   @HostListener('keypress', ['$event']) onKeyPress(event) {
 
-    console.log('InputValueValidationDirective keypress event : ', event);
+    // console.log('InputValueValidationDirective keypress event : ', event);
     // console.log('InputValueValidationDirective onInputChange event : ', event);
     // console.log('InputValueValidationDirective onInputChange maxValue : ', this.maxValue);
     // console.log('InputValueValidationDirective onInputChange minValue : ', this.minValue);
-    console.log('event.key ', event);
-    const inputChar = event;
-    if (!this.keyValidator.test(inputChar)) {
-      console.log('event.key keyValidator failed', event.key);
-      console.log('event.key keyValidator failed', this.keyValidator);
-      event.preventDefault();
-    }
+    // console.log('event.key ', event);
+    // const inputChar = event;
+    /* if (!this.keyValidator.test(inputChar)) {
+       console.log('event.key keyValidator failed', event.key);
+       console.log('event.key keyValidator failed', this.keyValidator);
+       event.preventDefault();
+     } else {
+       this.prevValue = this._el.nativeElement.value;
+     }*/
     this.prevValue = this._el.nativeElement.value;
+
   }
 
   @HostListener('input', ['$event']) onInputChange(event) {
