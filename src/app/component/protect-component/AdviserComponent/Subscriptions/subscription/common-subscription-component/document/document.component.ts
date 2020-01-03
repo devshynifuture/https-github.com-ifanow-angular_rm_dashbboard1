@@ -1,14 +1,14 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
-import {SubscriptionService} from '../../../subscription.service';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
+import { SubscriptionService } from '../../../subscription.service';
 import * as _ from 'lodash';
-import {AddDocumentComponent} from '../add-document/add-document.component';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {UtilService} from 'src/app/services/util.service';
+import { AddDocumentComponent } from '../add-document/add-document.component';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
 // import {element} from 'protractor';
 // import {timingSafeEqual} from 'crypto';
 
@@ -64,8 +64,8 @@ export class DocumentComponent implements OnInit {
 
 
   constructor(public subInjectService: SubscriptionInject,
-              private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
-              public subscription: SubscriptionService) {
+    private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
+    public subscription: SubscriptionService) {
     // this.subInjectService.rightSliderDocument.subscribe(
     //   data => this.getDocumentsDesignData(data)
     // );
@@ -110,7 +110,7 @@ export class DocumentComponent implements OnInit {
   }
 
   displayedColumns: string[] = ['checkbox', 'document', 'plan', 'service', 'date', 'sdate', 'cdate', 'status', 'icons'];
-  dataSource :any;
+  dataSource: any;
 
   ngOnInit() {
     this.isLoading = true;
@@ -154,7 +154,7 @@ export class DocumentComponent implements OnInit {
     this.isLoading = false;
     console.log(data);
     if (data == undefined) {
-      this.dataSource=undefined;
+      this.dataSource.data = [];
       this.noData = "No Data Found";
     } else {
       data.forEach(singleData => {
@@ -184,7 +184,7 @@ export class DocumentComponent implements OnInit {
   }
 
   dialogClose() {
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
 
     // this.dialogRef.close();
   }
@@ -258,10 +258,10 @@ export class DocumentComponent implements OnInit {
       data: data,
       id: 1,
       state: 'open',
-      documentList:data
+      documentList: data
     };
-    fragmentData.data.clientName=this._clientData.name;
-    fragmentData.data.isDocument=true;
+    fragmentData.data.clientName = this._clientData.name;
+    fragmentData.data.isDocument = true;
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
@@ -566,7 +566,7 @@ export class DocumentComponent implements OnInit {
       };
       obj.push(data);
     });
-    if(obj.length === 0){
+    if (obj.length === 0) {
       obj = [
         {
           advisorId: this.advisorId,
@@ -582,8 +582,8 @@ export class DocumentComponent implements OnInit {
   }
 
   saveMappingDocumentToPlansResponse(data) {
-    this.eventService.changeUpperSliderState({state: 'close'});
-    if(this.mappedData.length === 0){
+    this.eventService.changeUpperSliderState({ state: 'close' });
+    if (this.mappedData.length === 0) {
       this.eventService.openSnackBar('No Document mapped', 'Dismiss');
     } else {
       this.eventService.openSnackBar('Document is mapped', 'OK');
@@ -625,7 +625,7 @@ export class DocumentComponent implements OnInit {
       obj.push(data);
       // console.log(obj);
     });
-    
+
     this.subService.mapDocumentToService(obj).subscribe(
       data => this.mapDocumentToServiceResponse(data)
     );
@@ -640,7 +640,7 @@ export class DocumentComponent implements OnInit {
 
   selectAll(event) {
     this.dataCount = 0;
-    if(this.dataSource!=undefined){
+    if (this.dataSource != undefined) {
       this.dataSource.filteredData.forEach(item => {
         item.selected = event.checked;
         if (item.selected) {
@@ -652,14 +652,14 @@ export class DocumentComponent implements OnInit {
 
   changeSelect(element) {
     this.dataCount = 0;
-    if(this.dataSource!=undefined){
-    this.dataSource.filteredData.forEach(item => {
-      console.log('item item ', item);
-      if (item.selected) {
-        this.dataCount++;
-      }
-    });
-  }
+    if (this.dataSource != undefined) {
+      this.dataSource.filteredData.forEach(item => {
+        console.log('item item ', item);
+        if (item.selected) {
+          this.dataCount++;
+        }
+      });
+    }
     // if(data.selected==false)
     // {
     //   data.selected = true;
@@ -674,14 +674,14 @@ export class DocumentComponent implements OnInit {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    if(this.dataSource!=undefined){
-    return this.dataCount === this.dataSource.filteredData.length;
+    if (this.dataSource != undefined) {
+      return this.dataCount === this.dataSource.filteredData.length;
     }
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
-      this.selectAll({checked: false}) : this.selectAll({checked: true});
+      this.selectAll({ checked: false }) : this.selectAll({ checked: true });
   }
 }
