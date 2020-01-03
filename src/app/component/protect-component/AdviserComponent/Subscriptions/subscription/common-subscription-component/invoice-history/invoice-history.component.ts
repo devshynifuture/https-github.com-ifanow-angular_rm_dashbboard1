@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { SubscriptionService } from '../../../subscription.service';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatSort } from '@angular/material';
 
 
 export interface PeriodicElement {
@@ -47,6 +47,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./invoice-history.component.scss']
 })
 export class InvoiceHistoryComponent implements OnInit {
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(public subInjectService: SubscriptionInject, private subService: SubscriptionService) {
 
@@ -57,17 +58,14 @@ export class InvoiceHistoryComponent implements OnInit {
   }
 
   displayedColumns: string[] = ['date', 'invoice', 'status', 'ddate', 'amount', 'balance'];
-  data: Array<any> = [{}, {}, {}];
-  dataSource = new MatTableDataSource(this.data);
   showSubscription;
   invoiceData;
-  isLoading = false;
   dataSub;
-
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
   invoiceHisData;
 
   ngOnInit() {
-    this.isLoading = true;
     this.showSubscription = true;
     console.log('this.dataSub', this.dataSub);
   }
@@ -100,9 +98,11 @@ export class InvoiceHistoryComponent implements OnInit {
   }
 
   getInvoiceResponseData(data) {
-    this.isLoading = false;
     console.log('getInvoiceResponseData', data);
-    this.dataSource.data = [];
+    this.dataSource = new MatTableDataSource(data);
+    this.dataSource.sort = this.sort;
+
+    // this.dataSource = data;
   }
 
   Close(state) {
