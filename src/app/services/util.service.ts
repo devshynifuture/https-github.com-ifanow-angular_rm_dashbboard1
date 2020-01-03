@@ -155,8 +155,8 @@ export class UtilService {
 export class ValidatorType {
 
     // static NUMBER_ONLY = new RegExp(/^\d{1,6}(\.\d{1,2})?$/);
-    static NUMBER_ONLY = new RegExp(/^\d+(\.\d{0,2})?$/);
-
+    static NUMBER_ONLY = new RegExp(/^\d+(\.\d{0,4})?$/);
+    static PERSON_NAME = new RegExp(/^[A-Za-z]+([\ A-Za-z]+)*/);
     static NUMBER_KEY_ONLY = new RegExp(/[^0-9.]+/g);
     static TEXT_ONLY = new RegExp(/^[a-zA-Z ]/gi);
     static TEXT_WITH_SPACE = new RegExp(/^[a-zA-Z ]/gi);

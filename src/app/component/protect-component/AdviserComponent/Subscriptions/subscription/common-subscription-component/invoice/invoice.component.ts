@@ -1,3 +1,4 @@
+import { ValidatorType } from './../../../../../../../services/util.service';
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -7,7 +8,7 @@ import {EnumServiceService} from '../../../../../../../services/enum-service.ser
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {UtilService} from 'src/app/services/util.service';
 import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 import {EmailOnlyComponent} from '../email-only/email-only.component';
 
@@ -40,6 +41,7 @@ export interface PeriodicElement {
 
 export class InvoiceComponent implements OnInit {
   highLight: boolean;
+  maxDate = new Date();
 
   [x: string]: any;
 

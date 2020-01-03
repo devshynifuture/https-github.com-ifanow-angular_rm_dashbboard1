@@ -8,7 +8,8 @@ import { SubscriptionService } from '../../../subscription.service';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
 import { MatTableDataSource } from '@angular/material/table';
-
+import * as _ from 'lodash';
+import { element } from 'protractor';
 export interface PeriodicElement {
   service: string;
   amt: string;
@@ -33,9 +34,11 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   isLoading = false;
   clientData: any = [];
   data: Array<any> = [{}, {}, {}];
-  dataSource = new MatTableDataSource(this.data);
+  dataSource : any;
   noData: string;
   planName: any;
+  subcr: any[];
+  newArray: any[];
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, public subscription: SubscriptionService) {
   }
@@ -142,11 +145,11 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     this.isLoading = false;
     console.log(data, "hi client");
     // this.dataSource = data;
-    if(data==undefined){
-      this.clientData.length==0;
-      this.dataSource=undefined;
-    }else{
-      this.clientData = data;
+    if (data == undefined) {
+      this.clientData.length == 0;
+      this.dataSource = undefined;
+    } else {
+
       for (let d of data) {
         if (d.subscriptionPricing.feeTypeId == 1) {
           d['feeTypeId'] = "FIXED"
@@ -154,13 +157,26 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         else {
           d['feeTypeId'] = "VARIABLE"
         }
-  
+
       }
+      this.clientData = data;
+      this.subcr = []
+      this.newArray = []
+      this.subcr = _.map(_.groupBy(this.clientData, function (n) {
+        return n.planName
+      }));
+      this.subcr.forEach(element => {
+        element.forEach(n => {
+          element.plan = (n.planName);
+        });
+      });
+      console.log('**********',this.subcr)
       this.dataSource = new MatTableDataSource(data);
-  
+
       this.dataSource.sort = this.sort;
+      console.log('getSummary response', this.dataSource)
     }
- 
+
 
   }
 
