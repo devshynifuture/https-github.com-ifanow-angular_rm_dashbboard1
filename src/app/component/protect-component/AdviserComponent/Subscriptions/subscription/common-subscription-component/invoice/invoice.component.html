@@ -788,9 +788,7 @@ The actual rendered columns are set as a property on the row definition" -->
               </div>
               <div class="col-md-4">
                 <div class="form-group mb-0">
-                  <input #amountReceivedRef [maxLength]="10" class="form-control" formControlName="amountReceived"
-                         matInput
-                         type="number">
+                  <input type="text" #amountReceivedRef appNumberOnly [maxLength]="10" class="form-control" formControlName="amountReceived">
                 </div>
                 <div class="row">
                   <div class="col-md-10 pr-0">
@@ -873,7 +871,7 @@ The actual rendered columns are set as a property on the row definition" -->
 
                   <mat-form-field>
                     <input appDateInputFormat [matDatepicker]="picker" class="form-control"
-                           formControlName="paymentDate" matInput placeholder="mm/dd/yyyy">
+                           formControlName="paymentDate" matInput (focus)="picker.open()" placeholder="mm/dd/yyyy">
                     <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>

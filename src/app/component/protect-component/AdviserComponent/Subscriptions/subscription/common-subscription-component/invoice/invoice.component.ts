@@ -102,7 +102,7 @@ export class InvoiceComponent implements OnInit {
   @Output() valueChange = new EventEmitter();
 
   @Input() invoiceTab;
-  rPayment;
+  // rPayment;
   advisorId;
   editAdd1;
   editAdd2;
@@ -123,6 +123,7 @@ export class InvoiceComponent implements OnInit {
   finalAmount: any;
   editFormData: boolean;
   paymentDate: string;
+  rPayment;
 
   @Input()
   set data(data) {
