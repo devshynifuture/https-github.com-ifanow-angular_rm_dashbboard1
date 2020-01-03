@@ -340,8 +340,8 @@ The actual rendered columns are set as a property on the row definition" -->
                   <!-- <input type="date" class="form-control" formControlName="paymentDate"> -->
 
                   <mat-form-field>
-                    <input (keypress)="utils.dateFormat($event)" (click)="picker.open()" [matDatepicker]="picker" class="form-control"
-                      formControlName="paymentDate" matInput placeholder="mm/dd/yyyy">
+                    <input (click)="picker.open()" [max]="maxDate" [matDatepicker]="picker" class="form-control"
+                      formControlName="paymentDate" matInput>
                     <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
@@ -899,13 +899,19 @@ The actual rendered columns are set as a property on the row definition" -->
               <div class="col-md-4">
                 <div class="form-group">
                   <!-- <input type="date" class="form-control" formControlName="paymentDate"> -->
-
                   <mat-form-field>
-                    <input appDateInputFormat [matDatepicker]="picker" class="form-control"
-                      formControlName="paymentDate" matInput (focus)="picker.open()" placeholder="mm/dd/yyyy">
-                    <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+                    <input matInput class="form-control" [max]="maxDate" (focus)="picker.open()" 
+                    formControlName="paymentDate" [matDatepicker]="picker" 
+                    placeholder="mm/dd/yyyy">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
+                  <!-- <mat-form-field>
+                    <input matInput [max]="maxDate" [matDatepicker]="picker" class="form-control"
+                      formControlName="paymentDate" (focus)="picker.open()" placeholder="mm/dd/yyyy">
+                    <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field> -->
                   <div class="row">
                     <div class="col-md-10 pr-0">
                       <mat-error

@@ -43,6 +43,8 @@ export class InvoiceComponent implements OnInit {
 
   [x: string]: any;
 
+  maxDate = new Date();
+
   gstTreatment = [
     {name: 'Registered Business - Regular', value: 0},
     {name: 'Registered Business - Composition', value: 1},
