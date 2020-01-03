@@ -10,14 +10,18 @@
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="form-group pt-50">
-    <input #custName formControlName="inputName" matInput placeholder="Enter your Name" required>
+    <input #custName [inputValidator]="validatorType.PERSON_NAME" appInputValueValidation formControlName="inputName"
+           matInput placeholder="Enter your Name" required>
     <mat-error>{{getErrorMessage()}}</mat-error>
     <mat-hint align="end">{{custName.value.length}}/20</mat-hint>
 
   </mat-form-field>
   <mat-form-field appearance="outline" class="form-group pt-50">
+    <!-- <input #dueAmount
+             formControlName="inputNumber" matInput placeholder="Enter Amount" required>
+ -->
     <input #dueAmount
-           [inputValidator]="numValidator" appInputValueValidation formControlName="inputNumber" matInput
+           [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation formControlName="inputNumber" matInput
            placeholder="Enter Amount" required>
     <mat-error>{{getErrorMessage()}}</mat-error>
     <mat-hint align="end">{{dueAmount.value.length}}/20</mat-hint>

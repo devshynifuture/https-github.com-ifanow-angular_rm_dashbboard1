@@ -49,7 +49,9 @@ export class InputValueValidationDirective {
     let currValue = this._el.nativeElement.value;
     console.log('InputValueValidationDirective input event : ', event);
     console.log('InputValueValidationDirective input currValue : ', currValue);
-
+    if (currValue == '') {
+      return;
+    }
     if (this.maxLength && currValue.length > this.maxLength) {
       this.renderer.setProperty(this._el.nativeElement, 'value', currValue.slice(0, this.maxLength));
     }
