@@ -178,16 +178,28 @@ export class ServicesComponent implements OnInit {
   }
   saveServicePlanMapping() {
     const obj = [];
-    this.mappedData.forEach(element => {
+    if(this.mappedData.length==0){
       const data = {
         // advisorId: 12345,
         advisorId: this.advisorId,
-        global: element.global,
-        id: element.id,
+        global: 'false',
+        id: 0,
         planId: this.planData ? this.planData.id : null
       };
       obj.push(data);
-    });
+    }else{
+      this.mappedData.forEach(element => {
+        const data = {
+          // advisorId: 12345,
+          advisorId: this.advisorId,
+          global: element.global,
+          id: element.id,
+          planId: this.planData ? this.planData.id : null
+        };
+        obj.push(data);
+      });
+    }
+  
     console.log(obj);
     this.subService.mapServiceToPlanData(obj).subscribe(
       data => this.savePlanMapToServiceResponse(data)
