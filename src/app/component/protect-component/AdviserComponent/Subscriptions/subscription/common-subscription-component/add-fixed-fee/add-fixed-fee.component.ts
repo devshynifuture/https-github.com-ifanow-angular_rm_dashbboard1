@@ -4,7 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionService } from '../../../subscription.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from '../../../../../../../auth-service/authService';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-fixed-fee',
@@ -15,6 +15,7 @@ export class AddFixedFeeComponent implements OnInit {
   serviceId: any;
   dataToSend: {};
   data: any;
+  validatorType = ValidatorType;
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private subService: SubscriptionService, private eventService: EventService) {
   }
