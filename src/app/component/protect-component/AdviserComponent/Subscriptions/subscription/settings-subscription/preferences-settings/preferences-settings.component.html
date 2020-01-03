@@ -47,20 +47,6 @@
                                         <button mat-stroked-button *ngIf="singleBillerProfile.isPrimary == true" class="text-primary br-0"> PRIMARY </button>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <i class="material-icons text-right right text-custom f-28 c-p" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
-                                        more_vert
-                                    </i>
-                                    <mat-menu #menu="matMenu">
-                                        <a mat-menu-item (click)="getBillerPrimary(singleBillerProfile)">Set as
-                                            Primary</a>
-                                        <a mat-menu-item (click)="Open(singleBillerProfile,'billerProfile')">Edit
-                                            Biller Profile</a>
-                                        <a mat-menu-item class="bt-1" (click)="deleteModal(singleBillerProfile)">Delete
-                                            Biller
-                                            Profile</a>
-                                    </mat-menu>
-                                </div>
                             </div>
                             <div class="col-md-4">
                                 <i class="material-icons text-right right text-custom f-28 c-p" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">

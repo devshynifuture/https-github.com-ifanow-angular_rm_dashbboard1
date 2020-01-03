@@ -68,6 +68,9 @@ export class PayeeSettingsComponent implements OnInit {
       isActive: 1
     }
   ];
+  advisorId: any;
+  family: any;
+  familyMemberId: any;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private eventService: EventService,
               private subService: SubscriptionService, private fb: FormBuilder) {
@@ -85,8 +88,27 @@ export class PayeeSettingsComponent implements OnInit {
   }
 
   OnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
   }
-
+  getListFamilyMem() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.upperData.id
+    };
+    this.subService.getListOfFamilyByClient(obj).subscribe(
+      data => this.getListOfFamilyByClientRes(data)
+    );
+  }
+  getListOfFamilyByClientRes(data) {
+    console.log('family Memebers', data)
+    this.family = data.familyMembersList
+  }
+  getOwnerName(data){
+    this.familyMemberId = data.id
+  }
   getFormControl() {
     return this.payeeSettingsForm.controls;
   }
@@ -120,6 +142,7 @@ export class PayeeSettingsComponent implements OnInit {
     this.getFormControl().gstIn.maxLength = 16;
     this.getFormControl().billingAddress.maxLength = 150;
     this.getFormControl().pincode.maxLength = 6;
+    this.getListFamilyMem();
   }
 
   getRightSliderData(data) {
@@ -181,6 +204,7 @@ export class PayeeSettingsComponent implements OnInit {
           customerName: this.getFormControl().customerName.value,
           city: this.payeeSettingsForm.controls.city.value,
           clientBillerId: 1,
+          familyMemberId :  this.familyMemberId ,
           companyDisplayName: this.payeeSettingsForm.controls.displayName.value,
           companyName: this.payeeSettingsForm.controls.companyName.value,
           country: this.payeeSettingsForm.controls.country.value,
@@ -208,6 +232,7 @@ export class PayeeSettingsComponent implements OnInit {
         const obj = {
           customerName: this.getFormControl().customerName.value,
           gstin: this.getFormControl().gstIn.value,
+          familyMemberId :  this.familyMemberId ,
           gstTreatmentId: (this.getFormControl().gstTreatment.value == 'Registered Business - Regular') ? 1 : (this.payeeSettingsForm.controls.gstTreatment.value == 'Registered Business - Composition') ? 2 : 3,
           email: this.getFormControl().emailId.value,
           customerTypeId: (this.getFormControl().customerType.value == 'Bussiness') ? '1' : '2',
@@ -240,17 +265,20 @@ export class PayeeSettingsComponent implements OnInit {
         flag: true
       }
       this.subInjectService.addEvent(obj)
+      this.subInjectService.changeUpperRightSliderState({state: 'close', data});
       this.eventService.openSnackBar('Client profile added Successfully', 'OK');
     } else {
       console.log('addClientBillerProfileRes', data);
       this.updatedData = data;
       this.closeTab(data);
+      this.subInjectService.changeUpperRightSliderState({state: 'close', data});
       this.eventService.openSnackBar('Client profile added Successfully', 'OK');
     }
   }
 
   editSettingResData(data) {
     if (data.status == 1) {
+      this.subInjectService.changeUpperRightSliderState({state: 'close', data});
       this.eventService.openSnackBar('Client profile update Successfully', 'OK');
       this.getEditData.emit(this.sendData);
       this.closeTab(data);

@@ -1,6 +1,6 @@
 <div class="row bb-1 popup-header-fix-60">
   <div class="col-md-10 p-0">
-    <h4 *ngIf="display=='Add'" class="mb-0 l-22 wrapper-20">ADDA BILLER PROFILE</h4>
+    <h4 *ngIf="display=='Add'" class="mb-0 l-22 wrapper-20">ADD BILLER PROFILE</h4>
     <h4 *ngIf="display!='Add'" class="mb-0 l-22 wrapper-20">EDIT BILLER PROFILE</h4>
   </div>
   <div class="col-md-2 text-right">
@@ -23,8 +23,7 @@
               <div class="col-md-7">
                 <div class="form-group mb-0">
                   <input appTextOnly autofocus class="form-control br-0 text-left" formControlName="companyDisplayName"
-                         maxlength="{{getFormControlProfile().gstinNum.maxLength}}"
-                         type="text">
+                    maxlength="{{getFormControlProfile().gstinNum.maxLength}}" type="text">
                 </div>
                 <!-- <div class="row pt-0">
                   <div class="col-md-8">
@@ -43,35 +42,17 @@
                 </div> -->
               </div>
             </div>
-            <div class="row pt-28">
+            <!-- <div class="row pt-28">
               <div class="col-md-5 pr-0">
                 <h5 class="text-right m-0 pt-8">Company Name</h5>
               </div>
               <div class="col-md-7">
                 <div class="form-group mb-0">
-
-                  <input appTextOnly autofocus class="form-control br-0 text-left"
-                         formControlName="companyName" maxlength="{{getFormControlProfile().gstinNum.maxLength}}"
-                         type="text">
-
+                  <input appTextOnly autofocus class="form-control br-0 text-left" formControlName="companyName"
+                    maxlength="{{getFormControlProfile().gstinNum.maxLength}}" type="text">
                 </div>
-                <!-- <div class="row pt-0">
-                  <div class="col-md-8">
-                    <mat-error
-                      [ngClass]="{'v-h':!(isGstin && getFormControlProfile().gstinNum.invalid || (getFormControlProfile().gstinNum.touched && getFormControlProfile().gstinNum.invalid))}"
-                      class="f-12 pt-4">
-                      GSTIN number is required
-                    </mat-error>
-                  </div>
-                  <div class="col-md-4">
-                    <p class="mb-0 f-12 text-custom text-right pt-4">
-                      {{getFormControlProfile().gstinNum.value?.length ? getFormControlProfile().gstinNum.value.length : 0}}
-                      /{{getFormControlProfile().gstinNum.maxLength}}
-                    </p>
-                  </div>
-                </div> -->
               </div>
-            </div>
+            </div> -->
             <div class="row pt-28">
               <div class="col-md-5 pr-0">
                 <h5 class="text-right m-0 pt-8">GSTIN Number</h5>
@@ -79,9 +60,8 @@
               <div class="col-md-7">
                 <div class="form-group mb-0">
 
-                  <input appAlphaNumeric autofocus class="form-control br-0 text-left"
-                         formControlName="gstinNum" maxlength="{{getFormControlProfile().gstinNum.maxLength}}"
-                         type="text">
+                  <input appAlphaNumeric autofocus class="form-control br-0 text-left" formControlName="gstinNum"
+                    maxlength="{{getFormControlProfile().gstinNum.maxLength}}" type="text">
 
                 </div>
                 <div class="row pt-0">
@@ -108,8 +88,8 @@
               <div class="col-md-7">
                 <div class="form-group mb-0">
                   <mat-form-field>
-                    <input #panNum [maxlength]="10" appNumberOnly class="form-control br-0"
-                           formControlName="panNum" matInput type="text">
+                    <input #panNum [maxlength]="10" appNumberOnly class="form-control br-0" formControlName="panNum"
+                      matInput type="text">
                     <mat-error class="f-12 pt-4">this field is required</mat-error>
                     <mat-hint align="end" class="f-12">{{panNum.value.length}}/10</mat-hint>
 
@@ -144,7 +124,7 @@
               <div class="col-md-7">
                 <div class="form-group mb-0">
                   <textarea class="form-control br-0" formControlName='Address'
-                            maxlength="{{getFormControlProfile().Address.maxLength}}" rows="5"></textarea>
+                    maxlength="{{getFormControlProfile().Address.maxLength}}" rows="5"></textarea>
                 </div>
                 <div class="row pt-0">
                   <div class="col-md-8">
@@ -169,8 +149,8 @@
               </div>
               <div class="col-md-7">
                 <div class="form-group mb-0">
-                  <input appTextOnly class="form-control br-0 text-left" formControlName="state"
-                         maxlength="50" type="text">
+                  <input appTextOnly class="form-control br-0 text-left" formControlName="state" maxlength="50"
+                    type="text">
                 </div>
                 <div class="row pt-0">
                   <div class="col-md-8">
@@ -190,7 +170,7 @@
               <div class="col-md-7">
                 <div class="form-group mb-0">
                   <input class="form-control br-0 text-left" formControlName="pincode" maxlength="20" type="number"
-                         type="text">
+                    type="text">
                 </div>
                 <div class="row pt-0">
                   <div class="col-md-8">
@@ -209,8 +189,8 @@
               </div>
               <div class="col-md-7">
                 <div class="form-group mb-0">
-                  <input appTextOnly class="form-control br-0 text-left" formControlName="country"
-                         maxlength="50" type="text">
+                  <input appTextOnly class="form-control br-0 text-left" formControlName="country" maxlength="50"
+                    type="text">
                 </div>
                 <div class="row pt-0">
                   <div class="col-md-8">
@@ -229,8 +209,8 @@
               </div>
               <div class="col-md-7">
                 <div class="form-group mb-0">
-                  <input appTextOnly class="form-control br-0 text-left" formControlName="city"
-                         maxlength="50" type="text">
+                  <input appTextOnly class="form-control br-0 text-left" formControlName="city" maxlength="50"
+                    type="text">
                 </div>
                 <div class="row pt-0">
                   <div class="col-md-8">
@@ -278,14 +258,14 @@
                   <div class="col-md-12 p-0">
                     <!--                                      (click)="file.click()"-->
                     <button [disabled]="logoImg==undefined" (click)="uploadImage()" class="br-0 btn-primary mr-12"
-                            mat-stroked-button>UPLOAD
+                      mat-stroked-button>UPLOAD
                       LOGO
                     </button>
                     <button *ngIf="logoImg" (click)="cancelImageUpload()" class="br-0 mr-12" mat-stroked-button>CANCEL
                     </button>
                   </div>
                   <input #file (change)="onChange($event.target.files)" [ngClass]="{'v-h': true}" accept='image/*'
-                         formControlName="url" type="file">
+                    formControlName="url" type="file">
                 </div>
               </div>
 
@@ -304,7 +284,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input autofocus class="form-control br-0 text-left" formControlName="nameOnBank"
-                       maxlength="{{getFrormControlBank().nameOnBank.maxLength}}" type="text">
+                  maxlength="{{getFrormControlBank().nameOnBank.maxLength}}" type="text">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -330,7 +310,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input class="form-control br-0 text-left" formControlName="bankName"
-                       maxlength="{{getFrormControlBank().bankName.maxLength}}" type="text">
+                  maxlength="{{getFrormControlBank().bankName.maxLength}}" type="text">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -356,7 +336,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input (keypress)="utils.keyPress($event)" class="form-control br-0 text-left" formControlName="acNo"
-                       maxlength="{{getFrormControlBank().acNo.maxLength}}" type="number">
+                  maxlength="{{getFrormControlBank().acNo.maxLength}}" type="number">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -382,7 +362,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input type="text" (keypress)="utils.alphaNumric($event)" class="form-control br-0 text-left"
-                       formControlName="ifscCode" maxlength="{{getFrormControlBank().ifscCode.maxLength}}">
+                  formControlName="ifscCode" maxlength="{{getFrormControlBank().ifscCode.maxLength}}">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -408,7 +388,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <textarea class="form-control br-0" formControlName="address"
-                          maxlength="{{getFrormControlBank().address.maxLength}}" rows="5"></textarea>
+                  maxlength="{{getFrormControlBank().address.maxLength}}" rows="5"></textarea>
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -434,7 +414,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input type="text" (keypress)="utils.onlyText($event)" class="form-control br-0 text-left"
-                       formControlName="city">
+                  formControlName="city">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -454,7 +434,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input type="text" (keypress)="utils.onlyText($event)" class="form-control br-0 text-left"
-                       formControlName="state">
+                  formControlName="state">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -474,7 +454,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input class="form-control br-0 text-left" appNumberValidation [maxLength]="10"
-                       (keypress)="utils.keyPress($event)" formControlName="pincode" type="number">
+                  (keypress)="utils.keyPress($event)" formControlName="pincode" type="number">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -495,7 +475,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input type="text" (keypress)="utils.onlyText($event)" class="form-control br-0 text-left"
-                       formControlName="country">
+                  formControlName="country">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -522,7 +502,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <textarea class="form-control br-0" formControlName="footnote"
-                          maxlength="{{getFrormControlMisc().footnote.maxLength}}" rows="5"></textarea>
+                  maxlength="{{getFrormControlMisc().footnote.maxLength}}" rows="5"></textarea>
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -545,7 +525,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <textarea class="form-control br-0" formControlName="terms"
-                          maxlength="{{getFrormControlMisc().terms.maxLength}}" rows="5"></textarea>
+                  maxlength="{{getFrormControlMisc().terms.maxLength}}" rows="5"></textarea>
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -575,13 +555,13 @@
       <button (click)="back()" *ngIf="selected!=0" class="mr-20 br-0 text-inherit" mat-button mat-raised-button>PREVIOUS
       </button>
       <button (click)="nextStep(selected,'Save&Next')" [hidden]="true" class="btn-bottom br-0 text-inherit"
-              mat-button>NEXT
+        mat-button>NEXT
       </button>
       <button (click)="nextStep(selected,'Save&Next')" *ngIf="selected!=3" class="btn-bottom br-0 text-inherit"
-              mat-button>NEXT
+        mat-button>NEXT
       </button>
       <button (click)="nextStep(selected,'Save&Next')" *ngIf="selected==3" class="btn-bottom br-0 text-inherit"
-              mat-button>SAVE
+        mat-button>SAVE
       </button>
       <!-- logoImg -->
     </div>
