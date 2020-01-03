@@ -28,7 +28,8 @@ export class PreferencesSettingsComponent implements OnInit {
   }
   prefixData;
   showLoader = false;
-  billerProfileData;
+  billerProfileData = [];
+  isLoading = false;
   PrefixData;
   selected;
 

@@ -22,10 +22,11 @@ import { DateInputFormatDirective } from './date-input-format.directive';
     NumberOnlyDirective,
     AlphaNumericDirective,
     Formatter,
-    InputValueValidationDirective
+    InputValueValidationDirective,
+    DateInputFormatDirective
   ],
   exports: [RadioGroupDirectiveDirective, SkeletonLoadingDirective, FormatNumberDirective, NumberOnlyDirective,
-    AlphaNumericDirective, TextOnlyDirective, Formatter, InputValueValidationDirective],
+    AlphaNumericDirective, TextOnlyDirective, Formatter, InputValueValidationDirective, DateInputFormatDirective],
   imports: [
 
     // AppModule

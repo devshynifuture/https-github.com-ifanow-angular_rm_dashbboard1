@@ -29,25 +29,20 @@
                         <div class="wrapper-12 pb-0">
                             <div class="row" (click)="Open('Add','billerProfile')">
                                 <div class="col-md-12 right text-right pr-4">
-                                    <button mat-stroked-button class="btn-primary addon"><i
-                                            class="material-icons">add</i>ADD NEW
+                                    <button mat-stroked-button class="btn-primary addon">ADD NEW
                                     </button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="wrapper-16 pt-8" *ngFor="let singleBillerProfile of billerProfileData">
-                        <div class="row b-a bg-grey lter pt-20 pb-16">
-                            <div class="col-md-8">
-                                <div class="row">
-                                    <div class="col-md-8 p-0">
-                                        <h3 class="mb-0">{{singleBillerProfile.companyDisplayName}}</h3>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button mat-stroked-button *ngIf="singleBillerProfile.isPrimary == true" class="text-primary br-0"> PRIMARY </button>
-                                    </div>
+
+                        <div class="wrapper-16 pt-8" *ngFor="let singleBillerProfile of billerProfileData">
+                            <div class="row b-a bg-grey lter pt-20 pb-16">
+                                <div class="col-md-11">
+                                    <h3 class="mb-0 d-inline-block">{{singleBillerProfile.companyDisplayName}}</h3>
+                                    <button mat-stroked-button *ngIf="singleBillerProfile.isPrimary == true" class="text-primary br-0  ml-12"> PRIMARY </button>
                                 </div>
-                                <div class="col-md-4">
+
+                                <div class="col-md-1">
                                     <i class="material-icons text-right right text-custom f-28 c-p" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
                                         more_vert
                                     </i>
@@ -62,51 +57,35 @@
                                     </mat-menu>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <i class="material-icons text-right right text-custom f-28 c-p" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
-                                    more_vert
-                                </i>
-                                <mat-menu #menu="matMenu">
-                                    <a mat-menu-item (click)="getBillerPrimary(singleBillerProfile)">Set as Primary</a>
-                                    <a mat-menu-item (click)="Open(singleBillerProfile,'billerProfile')">Edit
-                                        Biller Profile</a>
-                                    <a mat-menu-item class="bt-1" (click)="deleteModal(singleBillerProfile)">Delete
-                                        Biller
-                                        Profile</a>
-                                </mat-menu>
-                            </div>
-                        </div>
-                        <div class="b-a bt-none">
-
-                            <div class="row">
-                                <div class="col-md-6 p-0">
-                                    <div class="wrapper-16">
-                                        <p class="f-12">GST</p>
-                                        <h5>{{singleBillerProfile.gstin}}</h5>
-                                        <p class="f-12 pt-24">PAN</p>
-                                        <h5>{{singleBillerProfile.pan}}</h5>
-                                        <p class="f-12 pt-24">ADDRESS</p>
-                                        <h5>{{singleBillerProfile.billerAddress}},
-                                            <br>{{singleBillerProfile.city}}
-                                            <br>{{singleBillerProfile.zipCode}}, {{singleBillerProfile.state}},
-                                            <br> {{singleBillerProfile.country}}</h5>
-                                    </div>
-                                    <hr>
-                                    <div class="wrapper-16">
-                                        <div class="row">
-                                            <div class="col-md-8 p-0">
-                                                <p>Name on bank A/c</p>
-                                                <h5>{{singleBillerProfile.nameAsPerBank}}</h5>
-                                            </div>
-                                            <div class="col-md-4 p-0">
-                                                <p>Account No.</p>
-                                                <h5>{{singleBillerProfile.acNumber}}</h5>
-                                            </div>
+                            <div class="b-a bt-none">
+                                <div class="row">
+                                    <div class="col-md-6 p-0">
+                                        <div class="wrapper-16">
+                                            <p class="f-12">GST</p>
+                                            <h5>{{singleBillerProfile.gstin}}</h5>
+                                            <p class="f-12 pt-24">PAN</p>
+                                            <h5>{{singleBillerProfile.pan}}</h5>
+                                            <p class="f-12 pt-24">ADDRESS</p>
+                                            <h5>{{singleBillerProfile.billerAddress}},
+                                                <br>{{singleBillerProfile.city}}
+                                                <br>{{singleBillerProfile.zipCode}}, {{singleBillerProfile.state}},
+                                                <br> {{singleBillerProfile.country}}</h5>
                                         </div>
+                                        <hr>
+                                        <div class="wrapper-16">
+                                            <div class="row">
+                                                <div class="col-md-8 p-0">
+                                                    <p>Name on bank A/c</p>
+                                                    <h5>{{singleBillerProfile.nameAsPerBank}}</h5>
+                                                </div>
+                                                <div class="col-md-4 p-0">
+                                                    <p>Account No.</p>
+                                                    <h5>{{singleBillerProfile.acNumber}}</h5>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 p-0">
 
-                                        <div class="row">
-                                            <div class="col-md-6 p-0">
-                                                <div class="wrapper-16">
                                                     <p class="f-12">GST</p>
                                                     <h5>{{singleBillerProfile.gstin}}</h5>
                                                     <p class="f-12 pt-24">PAN</p>
@@ -116,65 +95,52 @@
                                                         <br>{{singleBillerProfile.city}}
                                                         <br>{{singleBillerProfile.zipCode}}, {{singleBillerProfile.state}},
                                                         <br> {{singleBillerProfile.country}}</h5>
-                                                </div>
-                                                <hr>
-                                                <div class="wrapper-16">
-                                                    <div class="row">
-                                                        <div class="col-md-8 p-0">
-                                                            <p>Name on bank A/c</p>
-                                                            <h5>{{singleBillerProfile.nameAsPerBank}}</h5>
-                                                        </div>
-                                                        <div class="col-md-4 p-0">
-                                                            <p>Account No.</p>
-                                                            <h5>{{singleBillerProfile.acNumber}}</h5>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12 p-0 pt-24">
-                                                        <p class="f-12">ADDRESS</p>
-                                                        <h5>{{singleBillerProfile.branchAddress}},<br>{{singleBillerProfile.bankCity}} {{singleBillerProfile.bankZipCode}},
-                                                            <br>{{singleBillerProfile.bankState}} ,
-                                                            <br> {{singleBillerProfile.bankCountry}}</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 p-0 bl-1">
-                                            <div class="wrapper-16">
-                                                <p class="f-12">YOUR LOGO</p>
-                                                <img src="{{singleBillerProfile.logoUrl}}" class="img-icons">
-                                            </div>
-                                            <hr>
-                                            <div class="wrapper-16">
-                                                <p class="f-12">Footnote</p>
-                                                <h5>{{singleBillerProfile.footnote}}</h5>
-                                                <p class="pt-32">Terms & Conditions</p>
-                                                <p class="f-16 notes">{{singleBillerProfile.terms}}
-                                                </p>
-                                            </div>
-                                        </div>
 
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 p-0 bl-1">
+                                        <div class="wrapper-16">
+                                            <p class="f-12">YOUR LOGO</p>
+                                            <img src="{{singleBillerProfile.logoUrl}}" class="img-icons">
+                                        </div>
+                                        <hr>
+                                        <div class="wrapper-16">
+                                            <p class="f-12">Footnote</p>
+                                            <h5>{{singleBillerProfile.footnote}}</h5>
+                                            <p class="pt-32">Terms & Conditions</p>
+                                            <p class="f-16 notes">{{singleBillerProfile.terms}}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
+
+
+
+                                <!-- <button (click)="Open('Add','billerProfile')" class="btn-primary d-flex align-items-center">
+                                ADD NEW</button> -->
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="row" *ngIf="billerProfileData == undefined">
-                                <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
-                                    <img class="pt-20 width200" src="assets/images/svg/buiness-shop.svg">
+                    <div class="row" *ngIf="billerProfileData == undefined">
+                        <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
+                            <img class="pt-20 width200" src="assets/images/svg/buiness-shop.svg">
 
-                                    <p class="f-22 f-600 pt-28 pb-16 t-dark">Plan, rinse, repeat!</p>
-                                    <p class="f-16 text-center l-21 t-dark pb-16">
-                                        With the foundation now set, it’s time to now do what you do the best - Plan
-                                        <br> for your clients’ financial freedom. We do the background work for you - create <br> invoices, bill clients, execute agreements and so on.
-                                    </p>
-                                    <button (click)="Open('Add','billerProfile')" class="btn-primary d-flex align-items-center">
-                                        ADD NEW</button>
-                                </div>
-                            </div>
-
+                            <p class="f-22 f-600 pt-28 pb-16 t-dark">Set up biller profile</p>
+                            <p class="f-16 text-center l-21 t-dark pb-16">
+                                With the foundation now set, it’s time to now do what you do the best - Plan
+                                <br> for your clients’ financial freedom. We do the background work for you - create
+                                <br> invoices, bill clients, execute agreements and so on.
+                            </p>
                             <button (click)="Open('Add','billerProfile')" class="btn-primary d-flex align-items-center">
                                 ADD NEW</button>
                         </div>
                     </div>
+
 
                 </div>
 
