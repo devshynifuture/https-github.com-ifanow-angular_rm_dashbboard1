@@ -3,8 +3,6 @@
 </div> -->
 <div class="bg-white">
     <div class="wrapper-20 pb-0 pr-0">
-
-
         <div class="row" *ngIf="planSettingData != undefined">
             <div (click)="openFragment('','plan')" class="col-md-4 pr-20 pb-20 pl-0 c-p">
                 <mat-card class="example-card b-a height-470 bg-grey lter bd-1">
@@ -51,7 +49,8 @@
                         </div>
                     </mat-card-content>
                     <mat-card-actions class="block text-center pt-20 pb-20 mb-0">
-                        <button mat-stroked-button class="btn-header addon mb-12 mt-12 br-0" (click)="openFragment(singlePlan,'plan')">INFO
+                        <button mat-stroked-button class="btn-header addon mb-12 mt-12 br-0"
+                            (click)="openFragment(singlePlan,'plan')">INFO
                         </button>
                     </mat-card-actions>
 
@@ -63,7 +62,8 @@
             <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
                 <img class="width200" src="assets/images/svg/new-add-plan.svg">
                 <p class="f-22 f-600 pt-28">Create Plan </p>
-                <p class="f-16 text-center l-21"> You start by creating Plans first. Plans are your core offerings. You can have <br> multiple plans for different types of clients. Each plan will have sub offerings, also
+                <p class="f-16 text-center l-21"> You start by creating Plans first. Plans are your core offerings. You
+                    can have <br> multiple plans for different types of clients. Each plan will have sub offerings, also
                     <br> known as Services (explained in next slide). </p>
 
                 <button (click)="openFragment('','plan')" class="btn-primary d-flex align-items-center">

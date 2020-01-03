@@ -46,385 +46,389 @@ $text-header-lt:#006297;
 $text-header-bg:#006297;
 $text-header-lter:#0083CA;
 $light:#757575;
+
 body {
-    font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .bg-custom {
-    background: $light !important;
+  background: $light !important;
 }
 
 .text-custom {
-    color: $light !important;
+  color: $light !important;
 }
-.text-lighter{
-    color: #3F3F3F !important;
+
+.text-lighter {
+  color: #3F3F3F !important;
 }
+
 .full-lights {
-    background-color: #F7F8F9;
+  background-color: #F7F8F9;
 }
 
 .bg-grey {
-    background-color: $grey !important;
+  background-color: $grey !important;
 }
 
 .bg-grey.dker {
-    background-color: $grey-dker !important;
+  background-color: $grey-dker !important;
 }
 
 .bg-grey.dk {
-    background-color: $grey-dk !important;
+  background-color: $grey-dk !important;
 }
 
 .bg-grey.bg {
-    background-color: $grey-bg !important;
+  background-color: $grey-bg !important;
 }
 
 .bg-grey.lt {
-    background-color: $grey-lt !important
+  background-color: $grey-lt !important
 }
 
 .bg-grey.lter {
-    background-color: $grey-lter !important;
+  background-color: $grey-lter !important;
 }
 
 .bg-primary {
-    background-color: $primary !important;
+  background-color: $primary !important;
 }
 
 .bg-primary.dker {
-    background-color: $primary-dker !important;
+  background-color: $primary-dker !important;
 }
 
 .bg-primary.dk {
-    background-color: $primary-dk !important;
+  background-color: $primary-dk !important;
 }
 
 .bg-primary.bg {
-    background-color: $primary-bg !important;
+  background-color: $primary-bg !important;
 }
 
 .bg-primary.lt {
-    background-color: $primary-lt !important;
+  background-color: $primary-lt !important;
 }
 
 .bg-primary.lter {
-    background-color: $primary-lter !important;
+  background-color: $primary-lter !important;
 }
 
 .bg-info {
-    background-color: $info !important;
+  background-color: $info !important;
 }
 
 .bg-info.dker {
-    background-color: $info-dker !important;
+  background-color: $info-dker !important;
 }
 
 .bg-info.dk {
-    background-color: $info-dk !important;
+  background-color: $info-dk !important;
 }
 
 .bg-info.bg {
-    background-color: $info-bg !important;
+  background-color: $info-bg !important;
 }
 
 .bg-info.lt {
-    background-color: $info-lt !important;
+  background-color: $info-lt !important;
 }
 
 .bg-info.lter {
-    background-color: $info-lter !important;
+  background-color: $info-lter !important;
 }
 
 .bg-success {
-    background-color: $success !important;
+  background-color: $success !important;
 }
 
 .bg-success.dker {
-    background-color: $success-dker !important;
+  background-color: $success-dker !important;
 }
 
 .bg-success.dk {
-    background-color: $success-dk !important;
+  background-color: $success-dk !important;
 }
 
 .bg-success.bg {
-    background-color: $success-bg !important;
+  background-color: $success-bg !important;
 }
 
 .bg-success.lt {
-    background-color: $success-lt !important;
+  background-color: $success-lt !important;
 }
 
 .bg-success.lter {
-    background-color: $success-lter !important;
+  background-color: $success-lter !important;
 }
 
 .bg-warning {
-    background-color: $warning !important;
+  background-color: $warning !important;
 }
 
 .bg-warning.dker {
-    background-color: $warning-dker !important;
+  background-color: $warning-dker !important;
 }
 
 .bg-warning.dk {
-    background-color: $warning-dk !important;
+  background-color: $warning-dk !important;
 }
 
 .bg-warning.bg {
-    background-color: $warning-bg !important;
+  background-color: $warning-bg !important;
 }
 
 .bg-warning.lt {
-    background-color: $warning-lt !important;
+  background-color: $warning-lt !important;
 }
 
 .bg-warning.lter {
-    background-color: $warning-lter !important;
+  background-color: $warning-lter !important;
 }
 
 .bg-danger {
-    background-color: $danger !important;
+  background-color: $danger !important;
 }
 
 .bg-danger.dker {
-    background-color: $danger-dker !important;
+  background-color: $danger-dker !important;
 }
 
 .bg-danger.dk {
-    background-color: $danger-dk !important;
+  background-color: $danger-dk !important;
 }
 
 .bg-danger.bg {
-    background-color: $danger-bg !important;
+  background-color: $danger-bg !important;
 }
 
 .bg-danger.lt {
-    background-color: $danger-lt !important;
+  background-color: $danger-lt !important;
 }
 
 .bg-danger.lter {
-    background-color: $danger-lter !important;
+  background-color: $danger-lter !important;
 }
 
 .bg-header {
-    background-color: $text-header !important;
+  background-color: $text-header !important;
 }
 
 .bg-header.dker {
-    background-color: $text-header-dker !important;
+  background-color: $text-header-dker !important;
 }
 
 .bg-header.dk {
-    background-color: $text-header-dk !important;
+  background-color: $text-header-dk !important;
 }
 
 .bg-header.bg {
-    background-color: $text-header-bg !important;
+  background-color: $text-header-bg !important;
 }
 
 .bg-header.lt {
-    background-color: $text-header-lt !important;
+  background-color: $text-header-lt !important;
 }
 
 .bg-header.lter {
-    background-color: $text-header-lter !important;
+  background-color: $text-header-lter !important;
 }
 
 .bg-dark {
-    background-color: #1F1F1F !important;
+  background-color: #1F1F1F !important;
 }
 
 .text-black {
-    color: $black !important;
+  color: $black !important;
 }
 
 .text-primary {
-    color: $primary !important;
+  color: $primary !important;
 }
 
 .text-success {
-    color: $success !important;
+  color: $success !important;
 }
 
 .text-info {
-    color: $info !important;
+  color: $info !important;
 }
 
 .text-warning {
-    color: $warning !important;
+  color: $warning !important;
 }
 
 .text-danger {
-    color: $danger !important;
+  color: $danger !important;
 }
 
 .text-grey {
-    color: $grey !important;
+  color: $grey !important;
 }
 
 .text-header {
-    color: $text-header !important;
+  color: $text-header !important;
 }
 
 .text-muted {
-    font-size: $textlg - 16 !important;
-    color: $muted !important;
-    font-weight: $normal !important;
+  font-size: $textlg - 16 !important;
+  color: $muted !important;
+  font-weight: $normal !important;
 }
 
 .text-light {
-    font-size: $textlg - 16 !important;
-    color: #1B1E24 !important;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 16px;
+  font-size: $textlg - 16 !important;
+  color: #1B1E24 !important;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 16px;
 }
 
 .text-link {
-    font-size: $textlg - 16 !important;
-    color: $pracolor !important;
-    line-height: 16px !important;
-    font-weight: $font300 + 200 !important;
+  font-size: $textlg - 16 !important;
+  color: $pracolor !important;
+  line-height: 16px !important;
+  font-weight: $font300 + 200 !important;
 }
 
 .text-primitive {
-    color: $primitive !important;
+  color: $primitive !important;
 }
 
 button {
-    padding: 6px 12px;
-    text-align: center;
-    outline: none;
-    border: none;
-    text-transform: capitalize;
-    cursor: pointer;
-    // border-radius: 4px;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1.42857143;
-    text-align: center;
-    letter-spacing: 0.8px;
-    text-transform: capitalize;
-    white-space: nowrap;
-    vertical-align: middle;
-    height: 36px;
+  padding: 6px 12px;
+  text-align: center;
+  outline: none;
+  border: none;
+  text-transform: capitalize;
+  cursor: pointer;
+  // border-radius: 4px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  letter-spacing: 0.8px;
+  text-transform: capitalize;
+  white-space: nowrap;
+  vertical-align: middle;
+  height: 36px;
 }
 
 button.btn-lg {
-    padding: 10px 16px !important;
-    font-size: 18px !important;
-    border-radius: 6px !important;
+  padding: 10px 16px !important;
+  font-size: 18px !important;
+  border-radius: 6px !important;
 }
 
 button.btn-sm {
-    padding: 0px 8px !important;
-    font-size: 12px !important;
-    border-radius: 3px;
+  padding: 0px 8px !important;
+  font-size: 12px !important;
+  border-radius: 3px;
 }
 
 button.btn-xs {
-    padding: 1px 5px !important;
-    font-size: 12px !important;
-    line-height: .9 !important;
-    border-radius: 3px;
-    min-width: 40px;
+  padding: 1px 5px !important;
+  font-size: 12px !important;
+  line-height: .9 !important;
+  border-radius: 3px;
+  min-width: 40px;
 }
 
 button.btn-rounded {
-    border-radius: 26px !important;
+  border-radius: 26px !important;
 }
 
 .addon {
-    font-size: 14px !important;
-    text-align: center !important;
-    color: #757575 !important;
-    border-radius: 0px !important;
-    position: absolute;
-    cursor: pointer;
-    .material-icons {
-        position: relative;
-        float: left;
-        width: 36px;
-        height: 36px;
-        margin: 0px 0px 0px -15px;
-        line-height: 32px;
-    }
+  font-size: 14px !important;
+  text-align: center !important;
+  color: #757575 !important;
+  border-radius: 0px !important;
+  position: absolute;
+  cursor: pointer;
+
+  .material-icons {
+    position: relative;
+    float: left;
+    width: 36px;
+    height: 36px;
+    margin: 0px 0px 0px -15px;
+    line-height: 32px;
+  }
 }
 
 button:active {
-    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
 }
 
 .btn-success {
-    background-color: $success !important;
-    color: $white !important;
-    border-color: $success !important;
+  background-color: $success !important;
+  color: $white !important;
+  border-color: $success !important;
 }
 
 .btn-danger {
-    background-color: $danger !important;
-    color: $black !important;
-    border-color: $danger !important;
+  background-color: $danger !important;
+  color: $black !important;
+  border-color: $danger !important;
 }
 
 .btn-primary {
-    color: $white !important;
-    border-color: $primary !important;
-    background-color: $primary !important;
+  color: $white !important;
+  border-color: $primary !important;
+  background-color: $primary !important;
 }
 
 .btn-black {
-    color: #1F1F1F !important;
-    border-color: #1F1F1F !important;
-    background-color: #1F1F1F !important;
-    color: #fff !important;
+  color: #1F1F1F !important;
+  border-color: #1F1F1F !important;
+  background-color: #1F1F1F !important;
+  color: #fff !important;
 }
 
 .bg-white {
-    background-color: $white !important;
+  background-color: $white !important;
 }
 
 .text-white {
-    color: $white !important;
+  color: $white !important;
 }
 
 .btn-info {
-    color: $white !important;
-    border-color: $info !important;
-    background-color: $info !important;
+  color: $white !important;
+  border-color: $info !important;
+  background-color: $info !important;
 }
 
 .btn-warning {
-    color: $black !important;
-    border-color: $warning !important;
-    background-color: $warning !important;
+  color: $black !important;
+  border-color: $warning !important;
+  background-color: $warning !important;
 }
 
 .btn-primitive {
-    color: $white !important;
-    border-color: $primitive !important;
-    background-color: $primitive !important;
+  color: $white !important;
+  border-color: $primitive !important;
+  background-color: $primitive !important;
 }
 
 .btn-grey {
-    color: $white !important;
-    border-color: $grey !important;
-    background-color: $grey !important;
+  color: $white !important;
+  border-color: $grey !important;
+  background-color: $grey !important;
 }
 
 .btn-header {
-    color: $white !important;
-    border-color: $text-header-bg !important;
-    background-color: $text-header !important;
+  color: $white !important;
+  border-color: $text-header-bg !important;
+  background-color: $text-header !important;
 }
 
 .btn-bottom {
-    background: #02B875 !important;
-    border-color: #02B875 !important;
-    color: #fff !important;
+  background: #008FFF !important;
+  border-color: #008FFF !important;
+  color: #fff !important;
 }
 
 .btn-primary:not(:disabled):not(.disabled).active:focus,
@@ -454,22 +458,22 @@ button:active {
 .btn-success:focus,
 .btn-info.focus,
 .btn-info:focus {
-    box-shadow: 0 0 0 0em !important;
+  box-shadow: 0 0 0 0em !important;
 }
 
 .icon-light {
-    color: $light;
+  color: $light;
 }
 
 .text-light {
-    color: #757575 !important;
+  color: #757575 !important;
 }
 
 button:focus {
-    outline: none;
+  outline: none;
 }
 
 .btn-lt {
-    background-color: #D9DEE1;
-    color: #757575;
+  background-color: #D9DEE1;
+  color: #757575;
 }

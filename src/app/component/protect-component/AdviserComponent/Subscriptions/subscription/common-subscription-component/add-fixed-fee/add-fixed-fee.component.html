@@ -44,7 +44,7 @@
       <div class="row">
         <div class="col-md-5 p-0">
           <div class="form-group mb-0">
-            <input type="text" appNumberOnly [maxLength]="10" formControlName="code"
+            <input type="text" appCodeText [maxLength]="10" formControlName="code"
               class="form-control br-0">
           </div>
 
@@ -97,7 +97,7 @@
       <div class="form-group mb-0">
         <!-- <input type="number" (keypress)="utils.keyPress($event)" maxlength="10" formControlName="fees"
           class="form-control br-0"> -->
-          <input type="text" class="form-control br-0" appNumberOnly [maxLength]="10" formControlName="fees">
+        <input type="text" class="form-control br-0" appNumberOnly [maxLength]="10" formControlName="fees">
       </div>
       <div class="row">
         <div class="col-md-8">
@@ -134,7 +134,8 @@
           <div class="form-group mb-0">
             <!-- <input type="number" pattern="\d*" onKeyPress="if(this.value.length==2) return false;"
               formControlName="billEvery" class="form-control br-0"> -->
-              <input type="text" appNumberOnly [maxLength]="2" formControlName="billEvery" class="form-control br-0">
+            <input type="text" appNumberOnly [maxLength]="2" formControlName="billEvery"
+              class="form-control br-0 br-none">
           </div>
         </div>
 

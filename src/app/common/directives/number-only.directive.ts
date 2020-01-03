@@ -73,6 +73,23 @@ export class TextOnlyDirective {
 }
 
 @Directive({
+  selector: '[appCodeText]'
+})
+export class CodeTextDirective {
+  constructor(private _el: ElementRef,
+              private renderer: Renderer2) {
+  }
+
+  @HostListener('input', ['$event']) onInputChange(event) {
+    console.log(event);
+    let initialValue = this._el.nativeElement.value;
+    // const k = initialValue;
+    initialValue = initialValue.replace(/[^a-z0-9-/]/gi, '');
+    this.renderer.setProperty(this._el.nativeElement, 'value', initialValue);
+  }
+}
+
+@Directive({
   selector: '[appFormatter]'
 })
 export class Formatter {

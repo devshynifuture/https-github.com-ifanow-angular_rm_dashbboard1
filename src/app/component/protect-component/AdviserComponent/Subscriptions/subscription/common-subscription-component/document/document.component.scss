@@ -107,6 +107,9 @@ label {
         box-shadow: none;
         padding: 0;
     }
+    .mat-card {
+        height: 300px !important;
+    }
     // img{
     //     width: 400px !important;
     // }
@@ -118,7 +121,7 @@ label {
 }
 
 // overwrite the ripple overlay on hover and click
- ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
     background-color: #008FFF !important;
 }
 
@@ -126,3 +129,7 @@ label {
 //     margin-top: -3px;
 //     position: relative;
 //   }
+.width200 {
+    width: 200px;
+    margin-top: 220px;
+}

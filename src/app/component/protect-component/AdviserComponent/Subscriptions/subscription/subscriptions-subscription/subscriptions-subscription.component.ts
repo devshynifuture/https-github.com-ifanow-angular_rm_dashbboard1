@@ -141,7 +141,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     // console.log("feeeee...",this.feeCollectionMode);
-    this.getSummaryDataAdvisor();
+    this.getSummaryDataAdvisor(false);
     console.log('upperData', this.upperData);
   
   }
@@ -150,7 +150,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
     
   
-  scrollCall(){
+  scrollCall(scrollLoader){
     let uisubs = document.getElementById('ui-subs');
     let wrapper = document.getElementById('wrapper');
     
@@ -169,9 +169,12 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         this.scrollPosition = contentheight - window.innerHeight;
       }
 
+      console.log(this.scrollPosition, "this.scrollPosition 123");
+      
+
       if(this.statusIdList.length <= 0){
 
-        this.getSummaryDataAdvisor();
+        this.getSummaryDataAdvisor(scrollLoader);
       }else{
         this.callFilter();
       }
@@ -179,11 +182,9 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     }
   }
 
-  demoCall(){
-    this.getSummaryDataAdvisor();
-  }
+  
 
-  getSummaryDataAdvisor() {
+  getSummaryDataAdvisor(scrollLoader) {
     
     let obj = {
       advisorId: this.advisorId,
@@ -194,13 +195,16 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       offset: this.lastDataId > 0 ? this.lastDataId : 0,
       order: 0,
     };
-    this.isLoading = true;
-    this.dataSource.data = [{}, {}, {}];
+
+    if(!scrollLoader){
+      this.isLoading = true;
+    }
+    // this.dataSource.data = [{}, {}, {}];
 
 
     const getSubSummarySubscription = this.subService.getSubSummary(obj).subscribe(
       (data) => {
-        this.getData = data
+        this.getData = data;
         if(data != undefined){
           this.lastDataId = data[data.length - 1].id;
           obj.offset = this.lastDataId;
@@ -230,16 +234,16 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
   getSubSummaryRes(data) {
     let uisubs = document.getElementById('ui-subs');
-    uisubs.scrollTo(0, this.scrollPosition);
     this.isLoading = false;
-    console.log(uisubs.scrollTop, this.scrollPosition, "this.yoffset" );
-    
     console.log('  : ', data);
-
+    
     if (data && data.length > 0) {
       this.data = data;
       this.dataSource.data = data;
       this.dataSource.sort = this.sort;
+      uisubs.scrollTo(0, this.scrollPosition);
+      console.log(uisubs.scrollTop, this.scrollPosition, "this.yoffset" );
+      
       this.scrollCallData = true;
       // this.DataToSend = data;
     } else {
@@ -277,7 +281,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-          this.getSummaryDataAdvisor();
+          this.getSummaryDataAdvisor(false);
         }
       }
     );
@@ -301,7 +305,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-          this.getSummaryDataAdvisor();
+          this.getSummaryDataAdvisor(false);
         }
       }
     );
@@ -487,7 +491,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     };
     console.log('this.callFilter req obj : ', obj);
     if (obj.statusIdList.length == 0 && obj.fromDate == null) {
-      this.getSummaryDataAdvisor();
+      this.getSummaryDataAdvisor(false);
     } else {
       this.subService.filterSubscription(obj).subscribe(
         (data) =>{

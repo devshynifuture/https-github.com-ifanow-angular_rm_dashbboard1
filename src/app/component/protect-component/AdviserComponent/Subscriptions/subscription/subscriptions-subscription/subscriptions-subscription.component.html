@@ -1,5 +1,5 @@
-<div class="bg-white" id="ui-subs" (scroll)="scrollCall()">
-    <div class="bg-white p-20" style="position:sticky; top:0px; width: 100% !important;">
+<div *ngIf="dataSource.data.length > 0" class="bg-white" id="ui-subs" (scroll)="scrollCall(true)">
+    <div class="bg-white p-20 filterBox" >
         <div class="row">
             <div class="col-md-8 p-0">
                 <h4 class="pt-8 mb-0">Subscriptions</h4>
@@ -8,7 +8,7 @@
                 <i class="material-icons mr-12 icon-light c-p v-sub">
                     search
                 </i>
-                <button (click)="showFilters(showFilter)" class="btn-default addon mr-12" mat-stroked-button><i
+                <button (click)="showFilters(showFilter)" class="btn-default addon" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
                 </button>
             </div>
@@ -82,7 +82,7 @@
     <div class="wrapper-20 pt-0 bg-white" id="wrapper">
 
         <div class="tableClass">
-            <table matSort [dataSource]="dataSource" class=" skeletonAnimation" appSkeletonLoading
+            <table matSort [dataSource]="dataSource" class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading" id="table-low" mat-table>
                 <ng-container matColumnDef="client">
                     <th mat-sort-header="planName" *matHeaderCellDef class="f-18 t-20" mat-header-cell> Client & Plan
@@ -195,7 +195,7 @@
                         </mat-menu>
                     </td>
                 </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;" class="stickyHeader"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;" [ngClass]="!showFilter ? 'stickyHeader1' : 'stickyHeader2'"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
 

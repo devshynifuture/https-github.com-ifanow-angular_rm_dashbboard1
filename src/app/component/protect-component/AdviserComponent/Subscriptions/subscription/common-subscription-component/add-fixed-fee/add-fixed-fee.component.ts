@@ -14,7 +14,8 @@ import { UtilService } from 'src/app/services/util.service';
 export class AddFixedFeeComponent implements OnInit {
   serviceId: any;
   dataToSend: {};
-  constructor(public utils: UtilService,public subInjectService: SubscriptionInject, private fb: FormBuilder,
+  data: any;
+  constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private subService: SubscriptionService, private eventService: EventService) {
   }
 
@@ -35,25 +36,24 @@ export class AddFixedFeeComponent implements OnInit {
     billEvery: [, [Validators.required]],
     billingMode: [1]
   });
-  @Input() set fixedFee(data)
-  {
-    this.ischeckFixedData=data
-   this.getFeeFormData(data)
+  @Input() set fixedFee(data) {
+    this.ischeckFixedData = data
+    this.getFeeFormData(data)
   }
   @Output() outputFixedData = new EventEmitter();
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.setValidation(false);
-    (this.ischeckFixedData)?console.log("fixed fee Data"):this.createFixedFeeForm('');
+    (this.ischeckFixedData) ? console.log("fixed fee Data") : this.createFixedFeeForm('');
   }
 
   createFixedFeeForm(data) {
     this.fixedFeeData = this.fb.group({
-      serviceName: [data, [Validators.required,Validators.maxLength(40)]],
+      serviceName: [data, [Validators.required, Validators.maxLength(40)]],
       code: [data, [Validators.required]],
       description: [data, [Validators.required]],
       Duration: [1],
-      fees:[data, [Validators.required]],
+      fees: [data, [Validators.required]],
       billingNature: [1],
       billEvery: [data, [Validators.required]],
       billingMode: [1]
@@ -72,7 +72,7 @@ export class AddFixedFeeComponent implements OnInit {
     this.isbillEvery = flag;
   }
 
-  getFormControl():any {
+  getFormControl(): any {
     return this.fixedFeeData.controls;
   }
 
@@ -81,7 +81,8 @@ export class AddFixedFeeComponent implements OnInit {
       this.createFixedFeeForm('')
       return;
     } else {
-      this.serviceId=data.id;
+      this.data = data;
+      this.serviceId = data.id;
       // data.servicePricing.billingNature = '1';
       console.log(' this isa snd;kasljdlkajsdlkashdlaksd ', data.servicePricing.billingNature);
       console.log(' this isa snd;kasljdlkajsdlkashdlaksd ', data.servicePricing.billingNature + '');
@@ -133,23 +134,26 @@ export class AddFixedFeeComponent implements OnInit {
       this.isbillEvery = true;
       return;
     } else {
-      
+
       const obj = {
+        serviceRepoId: this.serviceId,
         advisorId: this.advisorId,
         // advisorId: 12345,
         description: this.fixedFeeData.controls.description.value,
-        global: false,
+        // global: false,
         serviceCode: this.fixedFeeData.controls.code.value,
         serviceName: this.fixedFeeData.controls.serviceName.value,
         servicePricing: {
-          autoRenew: 0,
+          id: this.data.servicePricing.id,
+          // autoRenew: 0,
           billEvery: this.fixedFeeData.controls.billEvery.value,
-          billingCycle: 1,
+          // billingCycle: 1,
           billingMode: parseInt(this.fixedFeeData.controls.billingMode.value),
           billingNature: parseInt(this.fixedFeeData.controls.billingNature.value),
           feeTypeId: parseInt(feeType),
           pricingList: [
             {
+              id: this.data.servicePricing.pricingList[0].id,
               pricing: this.fixedFeeData.controls.fees.value,
               assetClassId: 1
             }
@@ -157,18 +161,18 @@ export class AddFixedFeeComponent implements OnInit {
 
         }
       };
-      this.dataToSend=obj;
+      this.dataToSend = obj;
       Object.assign(this.dataToSend, { id: this.serviceId });
-      if(this.serviceId==undefined){
+      if (this.serviceId == undefined) {
         this.subService.createSettingService(obj).subscribe(
           data => this.saveFeeTypeDataResponse(data, state)
         );
-      }else{
+      } else {
         this.subService.editSettingService(obj).subscribe(
           data => this.saveFeeTypeDataEditResponse(data, state)
         );
       }
-      
+
     }
   }
 
