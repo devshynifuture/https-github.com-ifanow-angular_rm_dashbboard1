@@ -1,3 +1,4 @@
+import { ValidatorType } from './../../../../../../../services/util.service';
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -49,7 +50,8 @@ export class InvoiceComponent implements OnInit {
     {name: 'Registered Business - Composition', value: 1},
     {name: 'Unregistered Business', value: 2}
   ];
-  // numValidator = ValidatorType.NUMBER_ONLY;
+  numValidator = ValidatorType.NUMBER_ONLY;
+  numKeyValidator = ValidatorType.NUMBER_KEY_ONLY;
 
   constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
               private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
