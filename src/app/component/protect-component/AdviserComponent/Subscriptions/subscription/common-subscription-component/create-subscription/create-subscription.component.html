@@ -46,7 +46,7 @@
           <div class="col-md-3">
             <div class="form-group mb-0">
               <mat-form-field>
-                <input [matDatepicker]="picker" class="form-control" formControlName="activationDate" matInput
+                <input (focus)="picker.open()" [max]="maxDate" [matDatepicker]="picker" class="form-control" formControlName="activationDate" matInput
                        readonly>
                 <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>

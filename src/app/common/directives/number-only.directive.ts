@@ -16,11 +16,9 @@ export class NumberOnlyDirective {
 
   @HostListener('input', ['$event']) onInputChange(event) {
     let initialValue = this._el.nativeElement.value;
-    console.log('12312 initial value : ', initialValue);
-    console.log('12312 initial value : ', this.maxLength);
 
     if (this._el.nativeElement.value.length <= this.maxLength) {
-      console.log('initial value : ', initialValue);
+      // console.log('initial value : ', initialValue);
       // if (initialValue > 100) {
       //   initialValue = '100';
       // } else {
