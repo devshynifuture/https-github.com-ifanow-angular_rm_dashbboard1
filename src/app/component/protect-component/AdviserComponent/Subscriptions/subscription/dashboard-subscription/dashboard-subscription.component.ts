@@ -52,8 +52,6 @@ export class DashboardSubscriptionComponent implements OnInit {
   dataSourceClientWithSub: any = {};
   dataSourceInvoice;
   subSummaryData;
-  totalSales = 0;
-  feeRecieved = 0;
   showSubStep = false;
   displayedColumns: string[] = ['name', 'service', 'amt', 'billing', 'icons'];
   chart: Chart;
