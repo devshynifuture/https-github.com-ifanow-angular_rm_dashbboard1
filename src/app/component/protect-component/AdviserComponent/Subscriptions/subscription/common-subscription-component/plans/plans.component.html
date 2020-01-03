@@ -59,8 +59,8 @@
       </div> -->
       <div class="col-md-4 pb-40 c-p" *ngFor="let singleServicePlan of servicePlanData">
         <div class="example-card">
-          <mat-card class="p-0 b-a" (click)="selectServicePlan(singleServicePlan)"
-            [ngClass]="{'p-0': singleServicePlan.selected==false,'b-a':singleServicePlan.selected==false,'ba-blue':singleServicePlan.selected==true}">
+          <mat-card class="p-0 b-ua" (click)="selectServicePlan(singleServicePlan)"
+            [ngClass]="{'p-0': singleServicePlan.selected==false,'b-ua':singleServicePlan.selected==false,'ba-blue':singleServicePlan.selected==true}">
             <div class="row bg-grey lter">
               <div class="col-md-12 p-0">
                 <mat-checkbox [ngStyle]="{'pointer-events':(singleServicePlan.selected)?'none':'all'}"
