@@ -59,6 +59,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   showFilter = false;
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
+  maxDate = new Date();
   private clientId: any;
   constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public eventService: EventService,
     public subscription: SubscriptionService, private datePipe: DatePipe) {

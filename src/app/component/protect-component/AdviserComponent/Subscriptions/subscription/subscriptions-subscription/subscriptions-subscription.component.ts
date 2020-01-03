@@ -87,6 +87,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   advisorId;
   lastFilterDataId;
   Oposition;
+  maxDate = new Date()
   getData:any = "";
   filterDataArr = [];
   // DataToSend;
