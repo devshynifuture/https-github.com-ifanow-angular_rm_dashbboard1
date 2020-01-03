@@ -48,6 +48,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   list: any[];
+  maxDate = new Date()
 
   numValidator = ValidatorType.NUMBER_ONLY;
 

@@ -1164,7 +1164,7 @@ The actual rendered columns are set as a property on the row definition" -->
                     <div class="col-md-12 p-0">
                         <div class="form-group">
                             <mat-form-field>
-                                <input [matAutocomplete]="auto1" aria-label="client" class="form-control br-0 pl-8" formControlName="clientName" matInput>
+                                <input readonly [matAutocomplete]="auto1" aria-label="client" class="form-control br-0 pl-8" formControlName="clientName" matInput>
                                 <mat-autocomplete #auto1="matAutocomplete">
                                     <mat-option (onSelectionChange)="selectClient($event, c)" *ngFor="let c of clientList" [value]="c.clientName">
                                         <span>{{c.clientName}}</span>
@@ -1260,18 +1260,13 @@ The actual rendered columns are set as a property on the row definition" -->
                         <div class="col-md-6 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input [matDatepicker]="dueDatePicker" class="form-control" formControlName="dueDate" matInput readonly>
+                                    <input [min]="maxDate" [matDatepicker]="dueDatePicker" class="form-control" formControlName="dueDate" matInput readonly>
                                     <mat-datepicker-toggle [for]="dueDatePicker" matSuffix></mat-datepicker-toggle>
                                     <mat-datepicker #dueDatePicker></mat-datepicker>
                                 </mat-form-field>
                             </div>
                         </div>
-                        <!-- <div class="col-md-8">
-               <mat-error class="f-12 pt-4"
-            *ngIf="isDueDate && getFormControledit().dueDate.invalid || (getFormControledit().dueDate.touched && getFormControledit().dueDate.invalid)">
-            Due date is required
-         </mat-error>
-          </div> -->
+
                     </div>
                 </div>
             </div>
@@ -1294,7 +1289,7 @@ The actual rendered columns are set as a property on the row definition" -->
                     <div class="col-md-6 pl-0">
                         <div class="row">
                             <div class="form-group mb-0 ml-8 w-100">
-                                <input [matAutocomplete]="auto" aria-label="State" class="form-control w-100 br-0 pl-8" formControlName="serviceName" list="serviceName" matInput placeholder="You can search service">
+                                <input readonly [matAutocomplete]="auto" aria-label="State" class="form-control w-100 br-0 pl-8" formControlName="serviceName" list="serviceName" matInput placeholder="You can search service">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option *ngFor="let s of serviceList" [value]="s.serviceName">
                                         <span>{{s.serviceName}}</span>
@@ -1309,7 +1304,7 @@ The actual rendered columns are set as a property on the row definition" -->
                         </div>
                     </div>
                     <div class="col-md-2 pl-0">
-                        <input (keypress)="utils.keyPress($event)" [(ngModel)]="finalAmount" class="form-control br-0" formControlName="finalAmount" type="number">
+                        <input (keypress)="utils.keyPress($event)" class="form-control br-0" formControlName="finalAmount" type="number">
                         <div class="col-md-8">
                             <mat-error *ngIf="isPrice && getFormControledit().finalAmount.invalid || (getFormControledit().finalAmount.touched && getFormControledit().finalAmount.invalid)" class="f-12 pt-4">
                                 Price is required
@@ -1360,7 +1355,7 @@ The actual rendered columns are set as a property on the row definition" -->
             <h5 class="m-0">Discount ₹</h5>
         </div>
         <div class="col-md-2 pr-24">
-            <input (keypress)="utils.keyPress($event)" [(ngModel)]="discount" class="form-control br-0 text-right" formControlName="discount" type="number" pattern="\d*" onKeyPress="if(this.value.length==2) return false;">
+            <input (keypress)="utils.keyPress($event)" class="form-control br-0 text-right" formControlName="discount" type="number" pattern="\d*" onKeyPress="if(this.value.length==2) return false;">
         </div>
     </div>
     <div class="row pt-20 pb-12">

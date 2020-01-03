@@ -674,7 +674,7 @@ export class InvoiceComponent implements OnInit {
   openSendEmail(input) {
 
     const data = {
-      advisorId: 2828,
+      advisorId: this.advisorId,
       clientData: this.storeData,
       templateType: 1, // 2 is for quotation
       documentList: [this.storeData],

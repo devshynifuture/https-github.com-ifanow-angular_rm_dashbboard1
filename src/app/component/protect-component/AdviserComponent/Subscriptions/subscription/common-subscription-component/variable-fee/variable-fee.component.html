@@ -23,7 +23,7 @@
         <div class="row">
           <div class="col-md-5 p-0">
             <div class="form-group">
-              <input type="number" onKeyPress="if(this.value.length==2) return false;" [disabled]="true"
+              <input type="text" appNumberOnly [maxLength]="2" [disabled]="true"
                 class="form-control br-0 br-none" formControlName="billEvery">
             </div>
           </div>
@@ -67,15 +67,15 @@
             </div>
             <div class="row ui-mff">
               <div class="col-md-4 p-0 bl-0 br-grey">
-                <input type="number" onKeyPress="if(this.value.length==4) return false;" placeholder="%"
+                <input type="text" appNumberOnly [maxLength]="4" placeholder="%"
                   class="form-control br-0 h-39" formControlName="equity">
               </div>
               <div class="col-md-4 p-0 br-grey">
-                <input type="number" onKeyPress="if(this.value.length==4) return false;" placeholder="%"
+                <input type="text" appNumberOnly [maxLength]="4" placeholder="%"
                   class="form-control br-0 h-39" formControlName="debt">
               </div>
               <div class="col-md-4 p-0">
-                <input type="number" onKeyPress="if(this.value.length==4) return false;" placeholder="%"
+                <input type="number" appNumberOnly [maxLength]="4" placeholder="%"
                   class="form-control br-0 h-39" formControlName="liquid">
               </div>
             </div>
@@ -96,15 +96,15 @@
             </div>
             <div class="row ui-mff">
               <div class="col-md-4 br-grey p-0 bl-0 bb-grey">
-                <input type="number" onKeyPress="if(this.value.length==4) return false;" placeholder="%"
+                <input type="text" appNumberOnly [maxLength]="4" placeholder="%"
                   class="form-control br-0 h-39 br-grey" formControlName="equity">
               </div>
               <div class="col-md-4 br-grey bb-grey p-0">
-                <input type="number" onKeyPress="if(this.value.length==4) return false;" placeholder="%"
+                <input type="number" appNumberOnly [maxLength]="4" placeholder="%"
                   class="form-control br-0 h-39 br-grey" formControlName="debt">
               </div>
               <div class="col-md-4 br-grey bb-grey p-0">
-                <input type="number" onKeyPress="if(this.value.length==4) return false;" placeholder="%"
+                <input type="number" appNumberOnly [maxLength]="4" placeholder="%"
                   class="form-control br-0 h-39 br-grey" formControlName="liquid">
               </div>
             </div>

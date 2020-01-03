@@ -81,7 +81,9 @@ export class AddRealEstateComponent implements OnInit {
   }
   lisNominee(value) {
     console.log(value)
-    this.nomineesListFM = Object.assign([], value.familyMembersList);
+    if(value != undefined){
+      this.nomineesListFM = Object.assign([], value.familyMembersList);
+    }
   }
   nomineesList() {
     this.dataFM = this.nomineesListFM
@@ -121,7 +123,9 @@ export class AddRealEstateComponent implements OnInit {
   }
   getListOfFamilyByClientRes(data) {
     console.log('family Memebers', data)
-    this.family = data.familyMembersList
+    if(data != undefined){
+      this.family = data.familyMembersList
+    }
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
@@ -326,6 +330,7 @@ export class AddRealEstateComponent implements OnInit {
 
   }
   saveFormData() {
+
     this.getValue = this.getDateYMD()
     console.log(this.getValue);
     if (this.addrealEstateForm.controls.type.invalid) {
@@ -337,12 +342,13 @@ export class AddRealEstateComponent implements OnInit {
       this.isOwnerPercent = true;
       return;
     } else {
+      
       const obj = {
         ownerName: this.ownerName,
         ownerPercent: this.addrealEstateForm.controls.ownerPercent.value,
         clientId: this.clientId,
         advisorId: this.advisorId,
-        id: this._inputData.id,
+        id: this._inputData== undefined ? 0 : this._inputData.id,
         typeId: this.addrealEstateForm.controls.type.value,
         marketValue: this.addrealEstateForm.controls.marketValue.value,
         purchasePeriod: this.purchasePeriod,
@@ -386,7 +392,7 @@ export class AddRealEstateComponent implements OnInit {
         'isOwner': true
       }
       obj.realEstateOwners.push(obj1)
-      if (this._inputData.id == undefined) {
+      if (this._inputData == undefined) {
         console.log(obj);
         delete obj.id;
         this.custumService.addRealEstate(obj).subscribe(
