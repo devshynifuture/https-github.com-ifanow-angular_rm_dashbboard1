@@ -187,15 +187,27 @@ export class PlansComponent implements OnInit {
     console.log('Mapped Plan', this.mappedPlan);
     console.log('clientId', this.upperData);
     const obj = [];
-    this.mappedPlan.forEach(planData => {
+    if(this.mappedPlan.length==0){
       const data = {
+        // advisorId: 12345,
         advisorId: this.advisorId,
-
-        planId: planData.id,
-        serviceId: this.upperData ? this.upperData.id : null
+        global: 'false',
+        id: 0,
+        planId: this.upperData ? this.upperData.id : null
       };
       obj.push(data);
-    });
+    }else{
+      this.mappedPlan.forEach(planData => {
+        const data = {
+          advisorId: this.advisorId,
+  
+          planId: planData.id,
+          serviceId: this.upperData ? this.upperData.id : null
+        };
+        obj.push(data);
+      });
+    }
+   
     console.log('Mapped Plans', obj);
 
     this.subService.mapPlanToServiceSettings(obj).subscribe(
@@ -204,6 +216,10 @@ export class PlansComponent implements OnInit {
   }
 
   saveMappedPlansResponse(data) {
-    this.eventService.openSnackBar('Plan is mapped', 'OK');
+    if (this.mappedPlan.length === 0) {
+      this.eventService.openSnackBar('No plan mapped', 'OK');
+    } else{
+      this.eventService.openSnackBar('Plan is mapped', 'OK');
+    }
   }
 }

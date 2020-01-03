@@ -29,7 +29,7 @@
                                 <a (click)="setPrimaryField(profileData)" mat-menu-item>Set as Primary</a>
                                 <a (click)="openPayeeSettings(profileData,'payeeSettings','open')" mat-menu-item>Edit
                   Client Profile</a>
-                                <a (click)="deleteModal(profileData)" class="bt-1" mat-menu-item>Delete Client
+                                <a (click)="deleteModal('PROFILE',profileData)" class="bt-1" mat-menu-item>Delete Client
                   Profile</a>
                             </mat-menu>
                             <button *ngIf="profileData.isPrimary == true && SettingProfileData.length > 1" class="text-primary br-0 right text-right" mat-stroked-button>
