@@ -247,7 +247,9 @@ The actual rendered columns are set as a property on the row definition" -->
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input (keypress)="utils.keyPress($event)" class="form-control" formControlName="amountReceived" maxlength="{{getFormControl().amountReceived.maxLength}}" type="number">
+                                    <input [validatorType]="numValidator" appInputValueValidation class="form-control"
+                                           formControlName="amountReceived"
+                                           maxlength="{{getFormControl().amountReceived.maxLength}}" type="number">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">

@@ -1,17 +1,17 @@
 <div class="wrapper-20 bg-grey lter heading-fix">
-    <h3 class="m-0 text-center f-24">{{clientSubscriptionData.name}}</h3>
+  <h3 class="m-0 text-center f-24">{{clientSubscriptionData.name}}</h3>
 </div>
-<div class="bg-white" *ngIf="dataSource==undefined">
-    <div class="align-center">
-        <div class="row">
-            <div class="col-md-12 pt-150">
-                <h5 class="pt-44">Hey, it seems{{clientSubscriptionData.name}} hasn’t been subscribed to any Services
-                    yet. You need
-                    to add a Plan to get going. </h5>
-                <h5>Once a Plan is added, all the associated Services (along with the fee structure) will be added. If
-                    you want, you can customize the fee structure for this client. Each Service will have it’s own
-                    Subscription attached to it.
-                </h5>
+<div *ngIf="dataSource.data.length==0" class="bg-white">
+  <div class="align-center">
+    <div class="row">
+      <div class="col-md-12 pt-150">
+        <h5 class="pt-44">Hey, it seems{{clientSubscriptionData.name}} hasn’t been subscribed to any Services
+          yet. You need
+          to add a Plan to get going. </h5>
+        <h5>Once a Plan is added, all the associated Services (along with the fee structure) will be added. If
+          you want, you can customize the fee structure for this client. Each Service will have it’s own
+          Subscription attached to it.
+        </h5>
                 <h5>Next, you will be able to send Quotations, sign Documents etc.</h5>
                 <h5>Let’s get started!</h5>
                 <button mat-stroked-button class="btn-primary br-0 mt-44"
