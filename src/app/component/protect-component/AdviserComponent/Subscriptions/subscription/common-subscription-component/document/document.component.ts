@@ -613,18 +613,32 @@ export class DocumentComponent implements OnInit {
 
   mapDocumentToService() {
     let obj = [];
-    this.mappedData.forEach(element => {
+    if(this.mappedData.length==0){
       const data = {
-        mappedType: 2,
-        mappingId: element.mappingId,
-        id: element.id,
-        documentRepositoryId: element.documentRepositoryId,
+        mappedType: 0,
+        mappingId: 0,
+        id: 0,
+        documentRepositoryId: 0,
         // advisorId: 12345
         advisorId: this.advisorId,
       };
       obj.push(data);
       // console.log(obj);
-    });
+    }else{
+      this.mappedData.forEach(element => {
+        const data = {
+          mappedType: 2,
+          mappingId: element.mappingId,
+          id: element.id,
+          documentRepositoryId: element.documentRepositoryId,
+          // advisorId: 12345
+          advisorId: this.advisorId,
+        };
+        obj.push(data);
+        // console.log(obj);
+      });
+    }
+    
 
     this.subService.mapDocumentToService(obj).subscribe(
       data => this.mapDocumentToServiceResponse(data)
@@ -634,7 +648,11 @@ export class DocumentComponent implements OnInit {
 
   mapDocumentToServiceResponse(data) {
     console.log(data);
-    this.eventService.openSnackBar('Document is mapped', 'OK');
+    if(this.mappedData.length===0){
+      this.eventService.openSnackBar('No document mapped', 'OK');
+    }else{
+      this.eventService.openSnackBar('Document is mapped', 'OK');
+    }
 
   }
 
