@@ -556,7 +556,7 @@ export class DocumentComponent implements OnInit {
 
   saveMappingDocumentToPlans() {
 
-    const obj = [];
+    let obj = [];
     this.mappedData.forEach(element => {
       const data = {
         // advisorId: 12345,
@@ -566,6 +566,15 @@ export class DocumentComponent implements OnInit {
       };
       obj.push(data);
     });
+    if(obj.length === 0){
+      obj = [
+        {
+          advisorId: this.advisorId,
+          documentRepositoryId: 0,
+          mappingId: this.upperData.id
+        }
+      ]
+    }
     this.subService.mapDocumentsToPlanData(obj).subscribe(
       data => this.saveMappingDocumentToPlansResponse(data)
     );
@@ -574,11 +583,15 @@ export class DocumentComponent implements OnInit {
 
   saveMappingDocumentToPlansResponse(data) {
     this.eventService.changeUpperSliderState({state: 'close'});
-    this.eventService.openSnackBar('Document is mapped', 'OK');
+    if(this.mappedData.length === 0){
+      this.eventService.openSnackBar('No Document mapped', 'Dismiss');
+    } else {
+      this.eventService.openSnackBar('Document is mapped', 'OK');
+    }
   }
 
   savePlanMapToDocument() {
-    const obj = [];
+    let obj = [];
     this.mappedData.forEach(element => {
       const data = {
         // advisorId: 12345,
@@ -599,8 +612,7 @@ export class DocumentComponent implements OnInit {
   }
 
   mapDocumentToService() {
-
-    const obj = [];
+    let obj = [];
     this.mappedData.forEach(element => {
       const data = {
         mappedType: 2,
@@ -611,7 +623,9 @@ export class DocumentComponent implements OnInit {
         advisorId: this.advisorId,
       };
       obj.push(data);
+      // console.log(obj);
     });
+    
     this.subService.mapDocumentToService(obj).subscribe(
       data => this.mapDocumentToServiceResponse(data)
     );

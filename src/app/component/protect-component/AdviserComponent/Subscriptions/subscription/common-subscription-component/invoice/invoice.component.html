@@ -34,7 +34,7 @@ more_vert
         </div>
         <div class="row ">
             <div class="col-md-4 p-0 max-height-100">
-                <div (click)="passInvoice(strData,$event)" *ngFor="let strData of dataInvoices" class="invoiceSpacing b-b">
+                <div (click)="passInvoice(strData,i,$event)"  *ngFor="let strData of dataInvoices let i=index" [ngClass]="(i==highLight)?'bg-grey lter':'b-b'"class="invoiceSpacing b-b ">
                     <div class="row">
                         <div class="col-md-8">
                             <p class="m-0 f-15">{{strData.clientName}}</p>
@@ -247,7 +247,10 @@ The actual rendered columns are set as a property on the row definition" -->
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input (keypress)="utils.keyPress($event)" class="form-control" formControlName="amountReceived" maxlength="{{getFormControl().amountReceived.maxLength}}" type="number">
+                                    <input [inputValidator]="numValidator" [keyValidator]="numKeyValidator"
+                                           appInputValueValidation class="form-control" matInput
+                                           formControlName="amountReceived"
+                                           maxlength="{{getFormControl().amountReceived.maxLength}}" type="number">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
@@ -786,9 +789,7 @@ The actual rendered columns are set as a property on the row definition" -->
               </div>
               <div class="col-md-4">
                 <div class="form-group mb-0">
-                  <input #amountReceivedRef [maxLength]="10" class="form-control" formControlName="amountReceived"
-                         matInput
-                         type="number">
+                  <input type="text" #amountReceivedRef appNumberOnly [maxLength]="10" class="form-control" formControlName="amountReceived">
                 </div>
                 <div class="row">
                   <div class="col-md-10 pr-0">
@@ -871,7 +872,7 @@ The actual rendered columns are set as a property on the row definition" -->
 
                   <mat-form-field>
                     <input appDateInputFormat [matDatepicker]="picker" class="form-control"
-                           formControlName="paymentDate" matInput placeholder="mm/dd/yyyy">
+                           formControlName="paymentDate" matInput (focus)="picker.open()" placeholder="mm/dd/yyyy">
                     <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
@@ -1350,10 +1351,10 @@ The actual rendered columns are set as a property on the row definition" -->
           <div class="col-md-2 p-0">
             <h5 *ngIf="storeData.cgstTaxAmount == undefined || storeData.igstTaxAmount" class="m-0 text-right pr-8">
               ₹{{(18 / 100) * finalAmount + +finalAmount}}</h5>
-            <h5 *ngIf="storeData.sgst != undefined" [hidden]="finalAmount !=undefined"
-                class="m-0 text-right pr-8">{{storeData.cgstTaxAmount}}</h5>
-            <h5 *ngIf="storeData.igst != undefined" [hidden]="finalAmount !=undefined"
-                class="m-0 text-right pr-8">{{storeData.igstTaxAmount}}</h5>
+            <h5 *ngIf="storeData.sgst != undefined" [hidden]="finalAmount !=undefined" class="m-0 text-right pr-8">
+              {{storeData.cgstTaxAmount}}</h5>
+            <h5 *ngIf="storeData.igst != undefined" [hidden]="finalAmount !=undefined" class="m-0 text-right pr-8">
+              {{storeData.igstTaxAmount}}</h5>
           </div>
         </div>
       </div>
@@ -1422,8 +1423,7 @@ The actual rendered columns are set as a property on the row definition" -->
           <div class="col-md-9 p-0">
             <div class="form-group mb-0">
               <textarea class="form-control" formControlName="footnote"
-                        maxlength="{{getFormControledit().footnote.maxLength}}"
-                        rows="5"></textarea>
+                maxlength="{{getFormControledit().footnote.maxLength}}" rows="5"></textarea>
             </div>
             <div class="row pt-20">
                 <div class="col-md-8"></div>

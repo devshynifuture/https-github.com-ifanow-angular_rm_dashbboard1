@@ -7,7 +7,7 @@ import {EnumServiceService} from '../../../../../../../services/enum-service.ser
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
-import {UtilService} from 'src/app/services/util.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
 import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 import {EmailOnlyComponent} from '../email-only/email-only.component';
 
@@ -33,22 +33,26 @@ export interface PeriodicElement {
     //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     // },
     // { provide: MAT_DATE_LOCALE, useValue: 'en' },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 
 })
 
 export class InvoiceComponent implements OnInit {
+  highLight: boolean;
 
   [x: string]: any;
 
   gstTreatment = [
-    { name: 'Registered Business - Regular', value: 0 },
-    { name: 'Registered Business - Composition', value: 1 },
-    { name: 'Unregistered Business', value: 2 }
+    {name: 'Registered Business - Regular', value: 0},
+    {name: 'Registered Business - Composition', value: 1},
+    {name: 'Unregistered Business', value: 2}
   ];
+  numValidator = ValidatorType.NUMBER_ONLY;
+  numKeyValidator = ValidatorType.NUMBER_KEY_ONLY;
 
-  constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject, private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
+  constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
+              private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getInvoiceData(data)
     );
@@ -99,7 +103,7 @@ export class InvoiceComponent implements OnInit {
   @Output() valueChange = new EventEmitter();
 
   @Input() invoiceTab;
-  rPayment;
+  // rPayment;
   advisorId;
   editAdd1;
   editAdd2;
@@ -120,6 +124,7 @@ export class InvoiceComponent implements OnInit {
   finalAmount: any;
   editFormData: boolean;
   paymentDate: string;
+  rPayment;
 
   @Input()
   set data(data) {
@@ -163,6 +168,7 @@ export class InvoiceComponent implements OnInit {
   //   this.paymentDate += this.utils.dateFormat(event);
   // }
 
+
   keyPress(event: any) {
     console.log(event.target.value.length);
     const pattern = /[0-9\+\-\ ]/;
@@ -173,9 +179,9 @@ export class InvoiceComponent implements OnInit {
     }
   }
 
-  dontAllowTyping(event, maxLength: number){
+  dontAllowTyping(event, maxLength: number) {
     // console.log(this.rPayment.value());
-    if(event.target.value.length > maxLength){
+    if (event.target.value.length > maxLength) {
       event.preventDefault();
     }
   }
@@ -313,7 +319,7 @@ export class InvoiceComponent implements OnInit {
   getRecordPayment(data) {
     console.log('payee data', data);
     this.rPayment = this.fb.group({
-      amountReceived: [data.amountReceived, [Validators.required ,  Validators.min(0), Validators.max(10)]],
+      amountReceived: [data.amountReceived, [Validators.required, Validators.min(0), Validators.max(10)]],
       chargesIfAny: [data.chargesIfAny, [Validators.required]],
       tds: [data.tds, [Validators.required]],
       paymentDate: [new Date(data.paymentDate), [Validators.required]],
@@ -613,12 +619,13 @@ export class InvoiceComponent implements OnInit {
     return data;
   }
 
-  passInvoice(data, event) {
+  passInvoice(data,index,event) {
     console.log(data);
     this.storeData = data;
     const obj = {
       invoiceId: data.id
     };
+    this.highLight=index;
     this.subService.getPaymentReceive(obj).subscribe(
       data => this.getPaymentReceivedRes(data)
     );
