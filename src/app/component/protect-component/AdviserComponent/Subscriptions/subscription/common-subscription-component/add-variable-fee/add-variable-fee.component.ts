@@ -27,6 +27,8 @@ export class AddVariableFeeComponent implements OnInit {
   selectedOtherAssets = [];
   pricing;
   ischeckVariableData
+  serviceId: any;
+  dataToSend:any;
   @Input() set variableFee(data) {
     this.ischeckVariableData = data
     this.getFeeFormUpperData(data)
@@ -88,6 +90,7 @@ export class AddVariableFeeComponent implements OnInit {
       this.createVariableFeeForm('')
       return
     } else {
+      this.serviceId=data.id;
       this.variableFeeData = this.fb.group({
         serviceName: [data.serviceName, [Validators.required]],
         code: [data.serviceCode, [Validators.required]],
@@ -156,7 +159,6 @@ export class AddVariableFeeComponent implements OnInit {
         advisorId: this.advisorId,
         // advisorId: 12345,
         description: this.variableFeeData.controls.description.value,
-        global: false,
         serviceCode: this.variableFeeData.controls.code.value,
         serviceName: this.variableFeeData.controls.serviceName.value,
         servicePricing: {
@@ -184,10 +186,19 @@ export class AddVariableFeeComponent implements OnInit {
           ]
         }
       };
+      // this.dataToSend=obj;
+      // Object.assign(this.dataToSend, { id: this.serviceId });
       console.log('jifsdfoisd', obj);
-      this.subService.createSettingService(obj).subscribe(
-        data => this.saveVariableFeeDataResponse(data, obj)
-      );
+      if(this.serviceId==undefined){
+        this.subService.createSettingService(obj).subscribe(
+          data => this.saveVariableFeeDataResponse(data, obj)
+        );
+      }else{
+        this.subService.editSettingService(obj).subscribe(
+          data => this.saveFeeTypeDataEditResponse(data)
+        );
+      }
+   
     }
 
   }
@@ -196,6 +207,11 @@ export class AddVariableFeeComponent implements OnInit {
     this.outputVariableData.emit(data)
     this.eventService.openSnackBar('Service is Created', 'OK');
     this.subInjectService.changeUpperRightSliderState({flag: 'added', state: 'close', data });
+  }
+  saveFeeTypeDataEditResponse(data) {
+    this.outputVariableData.emit(this.dataToSend)
+    this.eventService.openSnackBar('Service is Created', 'OK');
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
   }
 
   select(assetData) {
