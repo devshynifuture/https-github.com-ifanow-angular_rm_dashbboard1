@@ -7,7 +7,7 @@ import {EnumServiceService} from '../../../../../../../services/enum-service.ser
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material';
 import {MAT_DATE_FORMATS} from '@angular/material/core';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {UtilService} from 'src/app/services/util.service';
 import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 import {EmailOnlyComponent} from '../email-only/email-only.component';
 
@@ -48,7 +48,7 @@ export class InvoiceComponent implements OnInit {
     {name: 'Registered Business - Composition', value: 1},
     {name: 'Unregistered Business', value: 2}
   ];
-  numValidator = ValidatorType.NUMBER_ONLY;
+  // numValidator = ValidatorType.NUMBER_ONLY;
 
   constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
               private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
