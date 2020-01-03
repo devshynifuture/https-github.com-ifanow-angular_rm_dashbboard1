@@ -156,13 +156,14 @@ export class ValidatorType {
 
     // static NUMBER_ONLY = new RegExp(/^\d{1,6}(\.\d{1,2})?$/);
     static NUMBER_ONLY = new RegExp(/^\d+(\.\d{0,4})?$/);
-    static PERSON_NAME = new RegExp(/^[A-Za-z]+([\ A-Za-z]+)*/);
+    static PERSON_NAME = new RegExp(/^[a-zA-Z]*[a-zA-Z]+[a-zA-Z ]*$/);
+    // static PERSON_NAME = new RegExp(/^[a-zA-Z0-9]*[ a-zA-Z]+[a-zA-Z0-9]*$/);/*With Number*/
     static NUMBER_KEY_ONLY = new RegExp(/[^0-9.]+/g);
     static TEXT_ONLY = new RegExp(/^[a-zA-Z ]/gi);
     static TEXT_WITH_SPACE = new RegExp(/^[a-zA-Z ]/gi);
 
     static ALPHA_NUMBERIC = new RegExp(/^[a-zA-Z0-9]*$/gi);
     static ALPHA_NUMERIC_WITH_SPACE = new RegExp(/^[a-zA-Z0-9 ]*$/gi);
-    // static EMAIL_ONLY = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
-    static EMAIL_ONLY = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    static EMAIL_ONLY = new RegExp(/\b[\w.!#$%&’*+\/=?^`{|}~-]+@[\w-]+(?:\.[\w-]+)*\b/);
+    // static EMAIL_ONLY = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 }
