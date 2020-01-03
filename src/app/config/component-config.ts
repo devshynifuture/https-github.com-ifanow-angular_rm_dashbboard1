@@ -279,6 +279,7 @@ export const appConfig = {
   DELETE_SETTING_DOCUMENT: 'subscription/setting/document/delete',
   DELETE_INVOICE: 'subscription/invoice/delete',
   DOCUMENT_ESIGN_REQUEST: 'subscription/invoice/esignDocumentSend',
+  EMAIL_DOCUMENT: 'pdfAndEmail/send/docId',
   GET_BASE_64: 'api/v1/test/base64/decode',
 
 
