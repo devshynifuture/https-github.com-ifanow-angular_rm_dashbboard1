@@ -84,7 +84,7 @@ export class AddVariableFeeComponent implements OnInit {
         liquid: [, [Validators.required]]
       }),
       otherAssetClassFees: [],
-      pricing: [, [Validators.required]]
+      pricing: [, [Validators.required, Validators.min(0.01), Validators.max(99)]]
     });
     this.getFormControl().serviceName.maxLength = 40;
     this.getFormControl().code.maxLength = 10;
@@ -94,7 +94,7 @@ export class AddVariableFeeComponent implements OnInit {
   getFeeFormUpperData(data) {
     if (data == '') {
       this.createVariableFeeForm('')
-      return
+      return;
     } else {
       this.data = data;
       this.serviceId = data.id;
