@@ -781,92 +781,107 @@ The actual rendered columns are set as a property on the row definition" -->
         <h4 class="mb-0 pt-40 pl-20">Record Payment</h4>
         <div [formGroup]="rPayment" class="pt-40">
             <div class="row">
-                <div class="col-md-5">
-                    <h5 class="m-0 text-right pt-8">Amount received</h5>
+              <div class="col-md-5">
+                <h5 class="m-0 text-right pt-8">Amount received</h5>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group mb-0">
+                  <input #amountReceivedRef [maxLength]="10" class="form-control" formControlName="amountReceived"
+                         matInput
+                         type="number">
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group mb-0">
-                        <input (keypress)="utils.keyPress($event)" class="form-control" formControlName="amountReceived" maxlength="{{getFormControl().amountReceived.maxLength}}" type="number">
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <mat-error *ngIf="isamountValid && getFormControl().amountReceived.invalid || (getFormControl().amountReceived.touched && getFormControl().amountReceived.invalid)" class="f-12 pt-4">
-                                amount received is required
-                            </mat-error>
-                        </div>
-                        <div class="col-md-2 pl-0">
-                            <p class="mb-0 f-12 text-custom text-right pt-4">
-                                {{getFormControl().amountReceived.value?.length ? getFormControl().amountReceived.value.length : 0}} /{{getFormControl().amountReceived.maxLength}}
-                            </p>
-                        </div>
-                    </div>
+                <div class="row">
+                  <div class="col-md-10 pr-0">
+                    <mat-error
+                      *ngIf="isamountValid && getFormControl().amountReceived.invalid || (getFormControl().amountReceived.touched && getFormControl().amountReceived.invalid)"
+                      class="f-12 pt-4">
+                      amount received is required
+                    </mat-error>
+                  </div>
+                  <div class="col-md-2 pl-0">
+                    <p class="mb-0 f-12 text-custom text-right pt-4">
+                        {{ amountReceivedRef.value.length }}/{{ getFormControl().amountReceived.maxLength }}
+                      <!-- {{getFormControl().amountReceived.value?.length ? getFormControl().amountReceived.value.length : 0}}
+                      /{{getFormControl().amountReceived.maxLength}} -->
+                    </p>
+                  </div>
                 </div>
             </div>
             <div class="row pt-24">
-                <div class="col-md-5">
-                    <h5 class="m-0 text-right pt-8">Charges,if any</h5>
+              <div class="col-md-5">
+                <h5 class="m-0 text-right pt-8">Charges,if any</h5>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group mb-0">
+                  <input #chargesIfAnyRef appNumberOnly [maxLength]="10" class="form-control" formControlName="chargesIfAny"
+                        type="text">
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group mb-0">
-                        <input (keypress)="utils.keyPress($event)" class="form-control" formControlName="chargesIfAny" maxlength="{{getFormControl().chargesIfAny.maxLength}}" type="number">
-                    </div>
+                <div class="row">
+                  <div class="col-md-10 pr-0">
+                    <!-- <p class="f-12 m-0 text-left text-custom pt-4" *ngIf="getFormControl().chargesIfAny.untouched">Assistive text</p> -->
+                    <mat-error
+                      *ngIf="ischargeValid && getFormControl().chargesIfAny.invalid || (getFormControl().chargesIfAny.touched && getFormControl().chargesIfAny.invalid)"
+                      class="f-12 pt-4">
+                      chargesIfAny is required
+                    </mat-error>
+                  </div>
+                  <div class="col-md-2 pl-0">
+                    <p class="mb-0 f-12 text-custom text-right pt-4">
+                        {{ chargesIfAnyRef.value.length }}/{{ getFormControl().chargesIfAny.maxLength }}
+                      <!-- {{getFormControl().chargesIfAny.value?.length ? getFormControl().chargesIfAny.value.length : 0}}
+                      /{{getFormControl().chargesIfAny.maxLength}} -->
+                    </p>
+                  </div>
+                </div>
+            </div>
+            <div class="row pt-24">
+              <div class="col-md-5">
+                <h5 class="m-0 text-right pt-8">TDS</h5>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group mb-0">
+                  <input class="form-control" #tdsRef formControlName="tds" maxlength="10"
+                         type="text">
+                </div>
+                <div class="row">
+                  <div class="col-md-10 pr-0">
+                    <!-- <p class="f-12 m-0 text-left text-custom pt-4" *ngIf="getFormControl().tds.untouched">Assistive text</p> -->
+                    <mat-error
+                      *ngIf="istdsValid && getFormControl().tds.invalid || (getFormControl().tds.touched && getFormControl().tds.invalid)"
+                      class="f-12 pt-4">
+                      TDS is required
+                    </mat-error>
+                  </div>
+                  <div class="col-md-2 pl-0">
+                    <p class="mb-0 f-12 text-custom text-right pt-4">
+                        {{ tdsRef.value.length }}/{{ getFormControl().tds.maxLength }}
+                      <!-- {{getFormControl().tds.value?.length ? getFormControl().tds.value.length : 0}}
+                      /{{getFormControl().tds.maxLength}} -->
+                    </p>
+                  </div>
+                </div>
+            </div>
+            <div class="row pt-24">
+              <div class="col-md-5">
+                <h5 class="m-0 text-right pt-8">Payment date</h5>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <!-- <input type="date" class="form-control" formControlName="paymentDate"> -->
 
-                    <div class="row">
-                        <div class="col-md-10 pr-0">
-                            <!-- <p class="f-12 m-0 text-left text-custom pt-4" *ngIf="getFormControl().chargesIfAny.untouched">Assistive text</p> -->
-                            <mat-error *ngIf="ischargeValid && getFormControl().chargesIfAny.invalid || (getFormControl().chargesIfAny.touched && getFormControl().chargesIfAny.invalid)" class="f-12 pt-4">
-                                chargesIfAny is required
-                            </mat-error>
-                        </div>
-                        <div class="col-md-2 pl-0">
-                            <p class="mb-0 f-12 text-custom text-right pt-4">
-                                {{getFormControl().chargesIfAny.value?.length ? getFormControl().chargesIfAny.value.length : 0}} /{{getFormControl().chargesIfAny.maxLength}}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row pt-24">
-                <div class="col-md-5">
-                    <h5 class="m-0 text-right pt-8">TDS</h5>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mb-0">
-                        <input class="form-control" formControlName="tds" maxlength="{{getFormControl().tds.maxLength}}" type="text">
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10 pr-0">
-                            <!-- <p class="f-12 m-0 text-left text-custom pt-4" *ngIf="getFormControl().tds.untouched">Assistive text</p> -->
-                            <mat-error *ngIf="istdsValid && getFormControl().tds.invalid || (getFormControl().tds.touched && getFormControl().tds.invalid)" class="f-12 pt-4">
-                                TDS is required
-                            </mat-error>
-                        </div>
-                        <div class="col-md-2 pl-0">
-                            <p class="mb-0 f-12 text-custom text-right pt-4">
-                                {{getFormControl().tds.value?.length ? getFormControl().tds.value.length : 0}} /{{getFormControl().tds.maxLength}}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row pt-24">
-                <div class="col-md-5">
-                    <h5 class="m-0 text-right pt-8">Payment date</h5>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mb-0">
-                        <mat-form-field>
-                            <input (keypress)="utils.dateFormat($event)" [matDatepicker]="picker" class="form-control" formControlName="paymentDate" matInput placeholder="mm/dd/yyyy">
-                            <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
-                        <div class="row">
-                            <div class="col-md-10 pr-0">
-                                <mat-error *ngIf="isdateValid && getFormControl().paymentDate.invalid || (getFormControl().paymentDate.touched && getFormControl().paymentDate.invalid)" class="f-12 pt-4">
-                                    payment date is required
-                                </mat-error>
-                            </div>
-                        </div>
+                  <mat-form-field>
+                    <input appDateInputFormat [matDatepicker]="picker" class="form-control"
+                           formControlName="paymentDate" matInput placeholder="mm/dd/yyyy">
+                    <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                  <div class="row">
+                    <div class="col-md-10 pr-0">
+                      <mat-error
+                        *ngIf="isdateValid && getFormControl().paymentDate.invalid || (getFormControl().paymentDate.touched && getFormControl().paymentDate.invalid)"
+                        class="f-12 pt-4">
+                        payment date is required
+                      </mat-error>
                     </div>
                 </div>
             </div>
@@ -1129,18 +1144,21 @@ The actual rendered columns are set as a property on the row definition" -->
         </div>
     </div>
 </div>
-<div *ngIf="showEdit==true" [formGroup]="editPayment" [ngClass]="{'pt-72': invoiceInSub=='invoiceSubscription','mt-0':invoiceInSub!='invoiceSubscription'}" class="bg-white pb-44 ">
-    <div class="row  popup-header">
-        <div class="col-md-10 pl-0">
-            <h4 *ngIf="invoiceInSub=='invoiceSubscription'" class="f-400 wrapper-20 mb-0">Edit Invoice of {{storeData.invoiceNumber}}
-            </h4>
-            <h4 *ngIf="invoiceInSub!='invoiceSubscription'" class="f-400 wrapper-20 mb-0">Add Invoice</h4>
-        </div>
-        <!-- <div class="col-md-2">
-       <i class="material-icons text-right pt-16 pr-16 c-p right" (click)="closeEditInv()">
-       clear
-       </i>
-    </div> -->
+<div *ngIf="showEdit" [formGroup]="editPayment"
+     [ngClass]="{'pt-72': invoiceInSub=='invoiceSubscription','mt-0':invoiceInSub!='invoiceSubscription'}"
+     class="bg-white pb-44 ">
+  <div class="row  popup-header">
+    <div class="col-md-10 pl-0">
+      <h4 *ngIf="invoiceInSub=='invoiceSubscription'" class="f-400 wrapper-20 mb-0">Edit Invoice
+        of {{storeData.invoiceNumber}}
+      </h4>
+      <h4 *ngIf="invoiceInSub!='invoiceSubscription'" class="f-400 wrapper-20 mb-0">Add Invoice</h4>
+    </div>
+    <!-- <div class="col-md-2">
+   <i class="material-icons text-right pt-16 pr-16 c-p right" (click)="closeEditInv()">
+   clear
+   </i>
+</div> -->
     </div>
     <div class="row pt-40">
         <div class="col-md-3 pr-0">
@@ -1327,14 +1345,85 @@ The actual rendered columns are set as a property on the row definition" -->
                     </div>
                 </div>
             </div>
-            <div class="row pt-12">
-                <div class="col-md-8"></div>
-                <div class="col-md-2">
-                    <h5 class="m-0">Sub total ₹</h5>
-                </div>
-                <div class="col-md-2 p-0">
-                    <h5 class="m-0 text-right pr-8">{{finalAmount}} </h5>
-                </div>
+          </div>
+          {{storeData.taxStatus}}
+          <div class="col-md-2 p-0">
+            <h5 *ngIf="storeData.cgstTaxAmount == undefined || storeData.igstTaxAmount" class="m-0 text-right pr-8">
+              ₹{{(18 / 100) * finalAmount + +finalAmount}}</h5>
+            <h5 *ngIf="storeData.sgst != undefined" [hidden]="finalAmount !=undefined"
+                class="m-0 text-right pr-8">{{storeData.cgstTaxAmount}}</h5>
+            <h5 *ngIf="storeData.igst != undefined" [hidden]="finalAmount !=undefined"
+                class="m-0 text-right pr-8">{{storeData.igstTaxAmount}}</h5>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-12">
+        <div class="col-md-8"></div>
+        <div class="col-md-2">
+          <h5 class="m-0">Sub total ₹</h5>
+        </div>
+        <div class="col-md-2 p-0">
+          <h5 class="m-0 text-right pr-8">{{finalAmount}} </h5>
+        </div>
+      </div>
+      <div class="row pt-20">
+        <div class="col-md-8"></div>
+        <div class="col-md-2">
+          <h5 class="m-0">Discount ₹</h5>
+        </div>
+        <div class="col-md-2 p-0 b-grey">
+          <input (keypress)="utils.keyPress($event)" [(ngModel)]="discount" class="form-control br-0 text-right"
+                 formControlName="discount" type="number" pattern="\d*" onKeyPress="if(this.value.length==2) return false;">
+        </div>
+      </div>
+      <div class="row pt-20 pb-12">
+        <div class="col-md-8"></div>
+        <div *ngIf="taxStatus == 'IGST(18%)'" class="col-md-2">
+          <h5 class="m-0">IGST(18%)</h5>
+        </div>
+        <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2">
+          <h5 class="m-0">SGST(9%)</h5>
+        </div>
+        <div *ngIf="taxStatus == 'IGST(18%)'" class="col-md-2 p-0">
+          <h5 class="m-0 text-right pr-8">₹{{18 / 100 * (finalAmount - discount) || '0'}}</h5>
+        </div>
+        <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 p-0">
+          <h5 class="m-0 text-right pr-8">₹{{9 / 100 * (finalAmount - discount) || '0'}}</h5>
+        </div>
+      </div>
+      <div class="row pt-20 pb-12">
+        <div class="col-md-8"></div>
+        <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2">
+          <h5 class="m-0">CGST(9%)</h5>
+        </div>
+        <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 p-0">
+          <h5 class="m-0 text-right pr-8">₹{{9 / 100 * (finalAmount - discount) || '0'}}</h5>
+        </div>
+      </div>
+      <div class="row pb-8">
+        <div class="col-md-8"></div>
+        <div class="col-md-2 bt-grey">
+          <h5 class="m-0 text-black pt-8 f-500">Total</h5>
+        </div>
+        <div class="col-md-2 bt-grey p-0">
+          <h5 class="m-0 text-right pr-8 pt-8 text-black f-500">
+            {{(finalAmount - discount) + +(18 / 100 * (finalAmount - discount)) || '0'}}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bg-grey lt wrapper-28">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-3 p-0">
+            <h5 class="m-0 pt-24 text-black text-center">Footnote Description</h5>
+          </div>
+          <div class="col-md-9 p-0">
+            <div class="form-group mb-0">
+              <textarea class="form-control" formControlName="footnote"
+                        maxlength="{{getFormControledit().footnote.maxLength}}"
+                        rows="5"></textarea>
             </div>
             <div class="row pt-20">
                 <div class="col-md-8"></div>
