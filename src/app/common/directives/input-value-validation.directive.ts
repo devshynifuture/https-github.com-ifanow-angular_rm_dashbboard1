@@ -59,7 +59,7 @@ export class InputValueValidationDirective {
       // this.renderer.setProperty(this._el.nativeElement, 'value', currValue.slice(0, this.maxLength));
     }
     if (!isNaN(currValue)) {
-      console.log('InputValueValidationDirective onInputChange isNaN : ', currValue);
+      // console.log('InputValueValidationDirective onInputChange isNaN : ', currValue);
       if (this.maxValue && this.maxValue < currValue) {
         currValue = this.maxValue;
       } else if (this.minValue && this.minValue > currValue) {
@@ -67,13 +67,13 @@ export class InputValueValidationDirective {
       }
     }
     if (!this.inputValidator.test(currValue)) {
-      console.log('InputValueValidationDirective onInputChange inputValidator failed : ', this.inputValidator);
-
-      console.log('InputValueValidationDirective onInputChange inputValidator failed : ', currValue);
+      // console.log('InputValueValidationDirective onInputChange inputValidator failed : ', this.inputValidator);
+      //
+      // console.log('InputValueValidationDirective onInputChange inputValidator failed : ', currValue);
       currValue = this.prevValue;
     }
     if (currValue !== this._el.nativeElement.value) {
-      console.log('InputValueValidationDirective onInputChange inputValidator replacing with : ', currValue);
+      // console.log('InputValueValidationDirective onInputChange inputValidator replacing with : ', currValue);
 
       this.renderer.setProperty(this._el.nativeElement, 'value', currValue);
     }
