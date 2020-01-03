@@ -1,72 +1,75 @@
 .example-chip-list {
-    width: 100%;
+  width: 100%;
 }
 
 .btn-header.btn-xs {
-    height: 28px;
-    min-width: 62px;
+  height: 22px;
+  min-width: 62px;
 }
 
 .none {
-    display: none !important;
+  display: none !important;
 }
 
 ::ng-deep .mat-form-field {
-    width: 100%;
+  width: 100%;
 }
 
 ::ng-deep .w-220 {
-    width: 220px !important;
+  width: 220px !important;
 }
 
 ::ng-deep .mat-datepicker-toggle {
-    float: left;
-    left: 0%;
-    right: auto;
-    top: auto !important;
+  float: left;
+  left: 0%;
+  right: auto;
+  top: auto !important;
 }
 
 // ::ng-deep .mat-select {
 //     border: 1px solid rgba(0, 0, 0, .12) !important;
 // }
 ::ng-deep .sub_input .mat-form-field-appearance-legacy .mat-form-field-infix {
-    padding: 0px !important;
-    border: 1px solid #BCC6CA !important;
+  padding: 0px !important;
+  border: 1px solid #BCC6CA !important;
 }
 
 #table-low {
-    border-collapse: initial !important;
-    border: solid 1px #ccc !important;
-    border-top: none !important;
-    .mat-header-cell {
-        border-top: solid 1px #ccc !important;
-    }
-    .mat-cell {
-        border-bottom: solid 1px #ccc !important;
-    }
+  border-collapse: initial !important;
+  border: solid 1px #ccc !important;
+  border-top: none !important;
+
+  .mat-header-cell {
+    border-top: solid 1px #ccc !important;
+  }
+
+  .mat-cell {
+    border-bottom: solid 1px #ccc !important;
+  }
 }
 
 #table-low th {
-    padding: 7px 8px !important;
-    font-weight: 600;
-    font-size: 13px !important;
+  padding: 7px 8px !important;
+  font-weight: 600;
+  font-size: 13px !important;
 }
 
 .stickyHeader {
+  position: sticky;
+  top: 76px !important;
+
+  th {
     position: sticky;
     top: 76px !important;
-    th {
-        position: sticky;
-        top: 76px !important;
-    }
+  }
 }
 
 .example-container {
-    height: 270px;
-    overflow: auto;
+  height: 270px;
+  overflow: auto;
 }
 
 .width400 {
-    width: 400px;
-    margin-top: 120px;
+  width: 400px;
+  margin-top: 120px;
 }

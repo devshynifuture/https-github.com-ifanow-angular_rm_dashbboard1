@@ -6,7 +6,7 @@
 <div *ngIf="quotationDesign=='true'" class="bg-white">
 
   <div class="wrapper-40 pr-20">
-    <div class="pt-150 pr-0">
+    <div class="pt-180 pr-0">
       <div class="row">
         <div class="col-md-12 p-0">
           <!-- <button (click)="openPopup('QuotationHelpPopup')" class="right text-right mt-20 br-0" mat-button>HELP</button> -->
@@ -16,10 +16,9 @@
     <div class="row">
       <div class="col-md-1 p-0">
         <button [matMenuTriggerFor]="menu" class="b-a pr-0" mat-button>Actions <i [matMenuTriggerFor]="menu"
-                                                                                  [matMenuTriggerFor]="belowMenu"
-                                                                                  class="material-icons c-p iconscolors">
-          arrow_drop_down
-        </i>
+            [matMenuTriggerFor]="belowMenu" class="material-icons c-p iconscolors">
+            arrow_drop_down
+          </i>
           <!-- <mat-menu #menu="matMenu">
             <a mat-menu-item>Select Quotation to see more actions</a>
           </mat-menu> -->
@@ -43,12 +42,11 @@
         </div> -->
     <div class="col-md-12 overflow-hidden">
       <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-8"
-             class="mt-8 skeletonAnimation" id="table-low"
-             mat-table matSort>
+        class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
         <ng-container matColumnDef="checkbox">
           <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;">
             <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0 && isAllSelected()"
-                          [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll"></mat-checkbox>
+              [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll"></mat-checkbox>
           </th>
           <td *matCellDef="let element" mat-cell>
             <mat-checkbox (change)="selectedInvoice()" [(ngModel)]="element.selected" class="c-p" name="selectedData">
@@ -123,10 +121,9 @@
         <ng-container matColumnDef="icons">
           <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;"></th>
           <td *matCellDef="let element" mat-cell style="width: 2%;"><i [matMenuTriggerFor]="menu"
-                                                                       [matMenuTriggerFor]="belowMenu"
-                                                                       class="material-icons c-p iconscolors">
-            more_vert
-          </i>
+              [matMenuTriggerFor]="belowMenu" class="material-icons c-p iconscolors">
+              more_vert
+            </i>
             <mat-menu #menu="matMenu">
               <a (click)="Open('viewQuotation','open',element)" mat-menu-item>View & edit quotation</a>
               <a (click)="deleteModal('QUOTATION')" class="bt-1" mat-menu-item>Delete quotation</a>
@@ -154,5 +151,5 @@
 </div>
 <div>
   <app-terms-agreement (valueChange)='display($event)' *ngIf="quotationDesign=='email'"
-                       [quotationDesignE]="quotationDesignEmail"></app-terms-agreement>
+    [quotationDesignE]="quotationDesignEmail"></app-terms-agreement>
 </div>

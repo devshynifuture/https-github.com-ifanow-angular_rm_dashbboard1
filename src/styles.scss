@@ -287,7 +287,7 @@
   position: absolute;
   top: 0px;
   height: 100%;
-  padding-top: 12%;
+  padding-top: 11%;
   overflow: auto;
   display: block;
 
@@ -790,6 +790,17 @@ mat-tab-group[vertical] {
     display: none !important;
   }
 
+  .mat-tab-header {
+    border-bottom: 0px !important;
+  }
+
+  .hide-now {
+    .mat-tab-label-content {
+      visibility: hidden !important;
+      cursor: default !important;
+    }
+  }
+
   .mat-ink-bar {
     display: none !important;
   }
@@ -799,7 +810,7 @@ mat-tab-group[vertical] {
     // border-bottom-color: transparent !important;
     height: 50px !important;
     min-width: 75px;
-    // border-bottom: 1px solid #DADCE0;
+    border-bottom: 1px solid #DADCE0;
   }
 
   // .mat-tab-label-container{
@@ -811,7 +822,7 @@ mat-tab-group[vertical] {
   }
 
   .mat-tab-label-active {
-    border: 1px solid #DADCE0;
+    border: 1px solid #dadce0;
     border-bottom: 0px !important;
   }
 }
