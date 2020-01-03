@@ -164,6 +164,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.filterStatus.splice(item, 1);
   }
 
+
   getdocumentResponseData(data) {
     this.isLoading = false;
 

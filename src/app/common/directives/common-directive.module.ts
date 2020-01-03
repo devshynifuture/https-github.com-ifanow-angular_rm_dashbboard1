@@ -5,7 +5,7 @@ import {RadioGroupDirectiveDirective} from './radio-group-directive.directive';
 import {CustomRightAnimationDirective} from './custom-right-animation.directive';
 import {FormatNumberDirective} from 'src/app/format-number.directive';
 import {SkeletonLoadingDirective} from './skeleton-loading.directive';
-import {AlphaNumericDirective, Formatter, NumberOnlyDirective, TextOnlyDirective} from './number-only.directive';
+import {AlphaNumericDirective, CodeTextDirective, Formatter, NumberOnlyDirective, TextOnlyDirective} from './number-only.directive';
 import {InputValueValidationDirective} from './input-value-validation.directive';
 
 // import {AppModule} from "../app.module";
@@ -21,12 +21,13 @@ import { DateInputFormatDirective } from './date-input-format.directive';
     TextOnlyDirective,
     NumberOnlyDirective,
     AlphaNumericDirective,
+    CodeTextDirective,
     Formatter,
     InputValueValidationDirective,
     DateInputFormatDirective
   ],
   exports: [RadioGroupDirectiveDirective, SkeletonLoadingDirective, FormatNumberDirective, NumberOnlyDirective,
-    AlphaNumericDirective, TextOnlyDirective, Formatter, InputValueValidationDirective, DateInputFormatDirective],
+    AlphaNumericDirective, CodeTextDirective, TextOnlyDirective, Formatter, InputValueValidationDirective, DateInputFormatDirective],
   imports: [
 
     // AppModule

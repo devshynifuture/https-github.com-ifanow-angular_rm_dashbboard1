@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { HttpService } from 'src/app/http-service/http-service';
-import { apiConfig } from 'src/app/config/main-config';
-import { appConfig } from 'src/app/config/component-config';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpService} from 'src/app/http-service/http-service';
+import {apiConfig} from 'src/app/config/main-config';
+import {appConfig} from 'src/app/config/component-config';
 
 // import {THIS_EXPR} from '@angular/compiler/src/output/output_ast';
 
@@ -85,7 +85,8 @@ export class SubscriptionService {
   }
 
   getSubscriptionQuotationData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('toDate', data.toDate).set('quotaionFlag', data.quotaionFlag).set('dateType', data.dateType).set('fromDate', data.fromDate);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('toDate', data.toDate)
+      .set('quotaionFlag', data.quotaionFlag).set('dateType', data.dateType).set('fromDate', data.fromDate);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBSCRIPTION_QUOTATIONS, httpParams);
   }
 
@@ -292,13 +293,17 @@ export class SubscriptionService {
   }
 
   getDocumentData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('flag', data.flag).set('limit', data.limit).set('offset', data.offset).set('dateType', data.dateType).set('fromDate', data.fromDate).set('toDate', data.toDate).set('statusIdList', data.statusIdList);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId)
+      .set('flag', data.flag).set('limit', data.limit).set('offset', data.offset).set('dateType', data.dateType)
+      .set('fromDate', data.fromDate).set('toDate', data.toDate).set('statusIdList', data.statusIdList);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_GET, httpParams);
   }
+
   getClientDocumentData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('flag', data.flag)
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_GET, httpParams)
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('flag', data.flag);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_GET, httpParams);
   }
+
   updateDocumentData(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_UPDATE, data);
   }
@@ -317,7 +322,7 @@ export class SubscriptionService {
   }
 
   startSubscription(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.START_SUBSCRIPTION, data)
+    return this.http.post(apiConfig.MAIN_URL + appConfig.START_SUBSCRIPTION, data);
   }
 
   filterSubscription(data) {
@@ -333,10 +338,12 @@ export class SubscriptionService {
 
   deleteSettingsDocument(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SETTING_DOCUMENT, data);
-  } 
+  }
+
   deleteInvoices(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INVOICE, data);
-  } 
+  }
+
   getClientList(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENTLIST, httpParams);
@@ -361,28 +368,46 @@ export class SubscriptionService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_TEMPLATE_FILTER, httpParams);
 
   }
+
   plansMapped(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('docRepoId', data.docRepoId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_MAPPED_PLAN, httpParams);
   }
+
   servicesMapped(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('docRepoId', data.docRepoId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_MAPPED_SERVICE, httpParams);
   }
+
   deleteSubSettingBillerProfile(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SUB_SETTING_BILLER_PROFILE, data)
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SUB_SETTING_BILLER_PROFILE, data);
   }
+
   getTotalRecived(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('period', data.period);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TOTAL_SALE_RECIVED, httpParams);
   }
+
   uploadFile(data) {
-    // let httpParams=new HttpParams().set("advisorId",data.advisorId).set("clientId",data.clientId).set('folderId',data.folderId).set('fileName',data.fileName)
-    return this.http.get(apiConfig.MAIN_URL + appConfig.UPLOAD_FILE, data)
+    // let httpParams=new HttpParams().set("advisorId",data.advisorId).set("clientId",data.clientId)
+    // .set('folderId',data.folderId).set('fileName',data.fileName)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.UPLOAD_FILE, data);
   }
+
   getImageUploadData(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_IMAGE_UPLOAD, data)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_IMAGE_UPLOAD, data);
   }
+
+  getListOfFamilyByClient(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIST_FAMILY_MEMBER, httpParams);
+  }
+
+  documentEsignRequest(data) {
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('type', data.type);
+    return this.http.post(apiConfig.MAIN_URL + appConfig.DOCUMENT_ESIGN_REQUEST, data);
+  }
+
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
   }

@@ -127,7 +127,7 @@ export class QuotationsComponent implements OnInit {
   getQuotationsListResponse(data) {
     this.isLoading = false;
     if (data == undefined) {
-      this.dataSource = undefined;
+      this.dataSource.data = [];
       this.noData = 'No Data Found';
     } else {
       data.forEach(singleData => {
