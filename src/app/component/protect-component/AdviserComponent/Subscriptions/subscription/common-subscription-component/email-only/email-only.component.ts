@@ -244,13 +244,37 @@ export class EmailOnlyComponent implements OnInit {
   }
 
   sendEmail() {
-    const emailRequestData = {
-      body: this.emailBody,
-      subject: this.subject,
-      fromEmail: this.emailData.fromEmail,
-      toEmail: [{emailId: this._inputData.clientData.userEmailId, sendType: 'to'}],
-      documentList: this._inputData.documentList
-    };
+    // const emailRequestData = {
+    //   body: this.emailBody,
+    //   subject: this.subject,
+    //   fromEmail: this.emailData.fromEmail,
+    //   toEmail: [{emailId: this._inputData.clientData.userEmailId, sendType: 'to'}],
+    //   documentList: this._inputData.documentList
+    // };
+
+    const emailRequestData={
+      "invitee": [
+          {
+              "name": this.emailData.fromEmail,
+              "email":  this._inputData.clientData.userEmailId,
+              "webhook": {
+                  "success": "http://dev.ifanow.in:8080/futurewise/api/v1/1/subscription/invoice/esignSuccessResponse/post",
+                  "failure": "http://dev.ifanow.in:8080/futurewise/api/v1/1/subscription/invoice/esignSuccessResponse/post1",
+                  "version": 2.1
+              }
+          }
+      ],
+      "sub_document_id":this._inputData.documentList.documentRepositoryId,
+      "file": {
+          "name": "name1.png"
+      }
+  }
+
+  this.subscription.documentEsignRequest(emailRequestData).subscribe(
+    data => this.getResponseData(data)
+  );
     console.log('send email complete JSON : ', JSON.stringify(emailRequestData));
   }
+
+  
 }
