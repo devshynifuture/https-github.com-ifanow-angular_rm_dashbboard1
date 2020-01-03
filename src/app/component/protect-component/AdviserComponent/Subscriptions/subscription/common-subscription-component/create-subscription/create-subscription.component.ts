@@ -51,6 +51,7 @@ export class CreateSubscriptionComponent implements OnInit {
 
   @Input()
   set data(data) {
+    this.totalSelectedPayeeShare = 0;
     this.getSubStartDetails(data);
   }
 
@@ -112,9 +113,31 @@ export class CreateSubscriptionComponent implements OnInit {
     }
     if (this.stepper.selectedIndex == 4) {
       let date = this.subscriptionDetails.controls.activationDate.value;
-      if (this.clientData.billingNature == "2" || this.clientData.billingMode == '1') {
-        this.subDateToShow = this.subscriptionDetails.controls.activationDate.value;
-        (this.clientData.billingCycle == 1) ? this.billEveryMsg = "monthly" : this.billEveryMsg = "yearly"
+      if (this.clientData.feeTypeId == 1) {
+        if (this.clientData.billingNature == "2" || this.clientData.billingMode == '1') {
+          this.subDateToShow = this.subscriptionDetails.controls.activationDate.value;
+          (this.clientData.billingCycle == 1) ? this.billEveryMsg = "monthly" : this.billEveryMsg = "yearly"
+          date = null;
+          return;
+        }
+        else {
+          if (this.clientData.billingCycle == 1) {
+            console.log(new Date(date))
+            date = date.setMonth(date.getMonth() + this.clientData.billEvery)
+            console.log(new Date(date))
+            this.subDateToShow = date;
+            this.billEveryMsg = "monthly"
+            date = null;
+          }
+          else {
+            console.log(new Date(date))
+            date = date.setMonth(date.getMonth() + this.clientData.billEvery * 12)
+            console.log(new Date(date))
+            this.subDateToShow = date;
+            this.billEveryMsg = "yearly"
+            date = null;
+          }
+        }
       }
       else {
         if (this.clientData.billingCycle == 1) {
@@ -134,6 +157,7 @@ export class CreateSubscriptionComponent implements OnInit {
           date = null;
         }
       }
+
       console.log(new Date(date))
     }
     console.log(this.subscriptionDetails);
@@ -245,16 +269,15 @@ export class CreateSubscriptionComponent implements OnInit {
         clientId: this.clientData.clientId,
         dueDateFrequency: this.subscriptionDetails.get('dueDateFrequency').value,
         startsOn: UtilService.convertDateObjectToDateString(this.datepipe, this.subscriptionDetails.get('activationDate').value),
-        // fromDate: '2019-10-16',
         subscriptionNumber: this.feeStructureData.subscriptionNo,
         feeMode: this.subscriptionDetails.get('invoiceSendingMode').value,
         Status: 1,
         subscriptionPricing: {
           autoRenew: 0,
-          billEvery: this.clientData.billEvery,
-          billingCycle: 1,
+          billEvery: (this.clientData.billingNature == '2') ? 0 : this.clientData.billEvery,
+          billingCycle: (this.clientData.billingNature == '2') ? 0 : this.clientData.billingCycle,
           billingMode: this.clientData.billingMode,
-          billingNature: this.clientData.billingNature,
+          billingNature: (this.clientData.billingNature == '2') ? 0 : this.clientData.billingNature,
           feeTypeId: this.clientData.feeTypeId,
           subscriptionAssetPricingList: [
             {

@@ -47,7 +47,7 @@
                                         (change)="matSliderOnChange(0,singlePlan,$event.value)"></mat-slider>
                                 </div>
                                 <div class="col-md-4 pr-0 pt-8">
-                                    <input [(ngModel)]="singlePlan.share" type="number" (keypress)="utils.keyPress($event)"
+                                    <input [(ngModel)]="singlePlan.share"type="number" pattern="\d*" onKeyPress="if(this.value == 2) return false;"
                                         (change)="matSliderOnChange(0,singlePlan,0)" min="0" max="100"
                                         class="m-0 f-13 form-control text-black b-a p-4 text-center" />
                                 </div>

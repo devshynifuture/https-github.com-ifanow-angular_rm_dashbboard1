@@ -1,18 +1,18 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort} from '@angular/material';
-import {MatTableDataSource} from '@angular/material/table';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionService} from '../../subscription.service';
-import {AuthService} from "../../../../../../auth-service/authService";
-import {UtilService} from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionService } from '../../subscription.service';
+import { AuthService } from "../../../../../../auth-service/authService";
+import { UtilService } from 'src/app/services/util.service';
 import * as _ from 'lodash';
-import {DatePipe} from '@angular/common';
-import {MAT_DATE_FORMATS} from 'saturn-datepicker';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {CommonFroalaComponent} from '../common-subscription-component/common-froala/common-froala.component';
+import { DatePipe } from '@angular/common';
+import { MAT_DATE_FORMATS } from 'saturn-datepicker';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
 
 export interface PeriodicElement {
   name: string;
@@ -57,15 +57,14 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   selectedDateRange: { begin: Date; end: Date; };
   selectedStatusFilter: any;
   showFilter = false;
-  dataSource: any;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
   private clientId: any;
   constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public eventService: EventService,
     public subscription: SubscriptionService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
-    this.dataSource = [{}, {}, {}];
-
     this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -137,7 +136,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
 
     console.log('filterSubscriptionRes', data);
-    this.dataSource = data;
+    this.dataSource.data = data;
     // this.getSubSummaryRes(data);
   }
 
@@ -169,7 +168,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.isLoading = false;
 
     if (data == undefined) {
-      this.dataSource=undefined;
+      this.dataSource.data = [];
       this.noData = "No Data Found";
     } else {
       console.log(data);
@@ -177,7 +176,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
         singleData.documentText = singleData.docText;
       });
       // this.dataSource = data;
-      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.data = data;
       this.dataSource.sort = this.sort;
     }
   }

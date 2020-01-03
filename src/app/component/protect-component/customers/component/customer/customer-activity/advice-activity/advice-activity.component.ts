@@ -23,6 +23,10 @@ export class AdviceActivityComponent implements OnInit {
   dataSource3 = ELEMENT_DATA3;
   displayedColumns4: string[] = ['checkbox', 'position', 'name', 'weight', 'symbol', 'mdate', 'advice', 'astatus', 'adate', 'icon'];
   dataSource4 = ELEMENT_DATA4;
+  displayedColumns5: string[] = ['checkbox', 'position', 'name', 'cvalue', 'symbol', 'advice', 'astatus', 'icon'];
+  dataSource5 = ELEMENT_DATA5;
+  displayedColumns6: string[] = ['checkbox', 'position', 'name', 'cvalue', 'symbol', 'advice', 'astatus', 'icon'];
+  dataSource6 = ELEMENT_DATA6;
   viewMode: string;
 
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
@@ -30,7 +34,7 @@ export class AdviceActivityComponent implements OnInit {
   selected;
   ngOnInit() {
 
-    this.viewMode = 'tab5';
+    this.viewMode = 'tab6';
   }
   openselectAdvice(data) {
     const fragmentData = {
@@ -145,4 +149,37 @@ const ELEMENT_DATA4: PeriodicElement4[] = [
     mdate: '12/08/2019', advice: 'Continue holding till maturity', astatus: 'Given', adate: '23/12/2019'
   },
 
+];
+export interface PeriodicElement5 {
+  name: string;
+  position: string;
+  cvalue: string;
+  symbol: string;
+  advice: string;
+  astatus: string;
+
+}
+
+const ELEMENT_DATA5: PeriodicElement5[] = [
+  {
+    position: 'Rahul Jain', name: 'Bond', cvalue: '35, 000', symbol: '23/12/2019',
+    advice: 'Continue holding till maturity', astatus: 'Given'
+  },
+
+];
+
+export interface PeriodicElement6 {
+  name: string;
+  position: string;
+  cvalue: string;
+  symbol: string;
+  advice: string;
+  astatus: string;
+}
+
+const ELEMENT_DATA6: PeriodicElement6[] = [
+  {
+    position: 'Rahul Jain', name: 'Bond', cvalue: '35, 000', symbol: '23/12/2019',
+    advice: 'Continue holding till maturity', astatus: 'Given'
+  },
 ];

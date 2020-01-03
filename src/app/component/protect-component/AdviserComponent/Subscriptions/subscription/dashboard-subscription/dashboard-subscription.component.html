@@ -14,12 +14,11 @@
                     <i class="material-icons right text-right"> arrow_forward </i></button>
             </div>
         </div>
-        <div [ngClass]="showLetsBegin==true ? 'pt-40': 'pt-100'  " class=" subscription-summary">
-            <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="row skeletonAnimation">
+        <div [ngClass]="showLetsBegin==true ? 'pt-40': 'pt-40' " class=" subscription-summary">
+            <div class="row">
                 <div class="col-md-4 pl-0 relClass">
                     <div class="bar">
-                        <div *ngIf="dataSourceClientWithSub !=undefined" class="bg-white pt-20 pb-16 text-center">
-
+                        <div *ngIf="dataSourceClientWithSub != undefined" class="bg-white pt-20 pb-16 text-center">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -57,7 +56,8 @@
                                 <h4 class="f-300 roboto pl-16 pt-16 mb-16">Invoices to be reviewed</h4>
                             </div>
                             <div *ngIf="!dataSourceInvoice" class="noDataFound">
-                                <img src="assets/images/svg/void.svg">
+                                <i class="material-icons font100">receipt</i>
+                                <p> No Data Found </p>
                             </div>
                             <div *ngIf="dataSourceInvoice">
                                 <div *ngFor="let invoice of dataSourceInvoice" class="col-md-12 ">
@@ -93,7 +93,7 @@
                                 <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-6 skeletonAnimation">
                                     <div class="pl-10 pr-20">
                                         <p class="f-300 f-18 pt-28 mb-0">Total sales</p>
-                                        <h2  [value]="totalSales" appFormatNumber class="text-primary mb-0 pb-28 pt-8 relClass">
+                                        <h2 [value]="totalSales" appFormatNumber class="text-primary mb-0 pb-28 pt-8 relClass">
                                             <div class="bar"> {{totalSales}} </div>
                                         </h2>
                                     </div>
@@ -101,7 +101,7 @@
                                 <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-6 p-0 skeletonAnimation">
                                     <div class="pr-20 pl-10">
                                         <p class="f-300 f-18 pt-28  mb-0">Fee received</p>
-                                        <h2  [value]="feeRecieved" appFormatNumber class="text-primary mb-0 pb-28 pt-8 relClass">
+                                        <h2 [value]="feeRecieved" appFormatNumber class="text-primary mb-0 pb-28 pt-8 relClass">
                                             <div class="bar"> {{feeRecieved}} </div>
                                         </h2>
                                     </div>
@@ -113,16 +113,16 @@
 
                                 <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-6 skeletonAnimation">
                                     <div class="pl-10 pr-20 c-p">
-                                        <p class="f-300 f-18 pt-28 mb-0">Docs sent </p>
-                                        <h2 class="f-26 text-primary mb-0 pb-28 pt-8 relClass">
+                                        <p class="f-300 f-18 pt-28 text-center mb-0">Docs sent </p>
+                                        <h2 class="f-26 text-primary mb-0 text-center pb-28 pt-8 relClass">
                                             <div class="bar"> {{dataSourceSingCount.sentCount}} </div>
                                         </h2>
                                     </div>
                                 </div>
                                 <div [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-6 pr-0 skeletonAnimation">
                                     <div class="pl-10 pr-20 c-p">
-                                        <p class="f-300 f-18 pt-28 mb-0">Docs signed </p>
-                                        <h2 class="f-26 text-primary mb-0 pb-28 pt-8 relClass">
+                                        <p class="f-300 f-18 text-center pt-28 mb-0">Docs signed </p>
+                                        <h2 class="f-26 text-primary text-center mb-0 pb-28 pt-8 relClass">
                                             <div class="bar"> {{dataSourceSingCount.signedCount}}
                                             </div>
                                         </h2>
