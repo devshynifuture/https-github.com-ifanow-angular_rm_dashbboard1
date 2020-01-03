@@ -33,17 +33,17 @@
                             <div class="btl-1">
                                 <p class="text-center pt-16 f-300 f-18 mb-0">Subscription summary</p>
                                 <div class="row pt-16 pb-8">
-                                    <div class="col-md-4 c-p">
+                                    <div class="col-md-3 c-p">
                                         <p class="f-300 f-18">Total</p>
-                                        <h4 class="text-left pl-20">{{dataSourceClientWithSub.activeClient}}</h4>
+                                        <h4 class="text-center ">{{dataSourceClientWithSub.activeClient}}</h4>
                                     </div>
-                                    <div class="col-md-5 c-p">
+                                    <div class="col-md-6 c-p">
                                         <p class="f-300 f-18">This month</p>
-                                        <h4 class="text-left pl-12">{{dataSourceClientWithSub.monthSubscription}}</h4>
+                                        <h4 class="text-center ">{{dataSourceClientWithSub.monthSubscription}}</h4>
                                     </div>
                                     <div class="col-md-3 c-p">
                                         <p class="f-300 f-18"> Today</p>
-                                        <h4 class="text-left pl-4">{{dataSourceClientWithSub.todayActive}}</h4>
+                                        <h4 class="text-center ">{{dataSourceClientWithSub.todayActive}}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +57,7 @@
                             </div>
                             <div *ngIf="!dataSourceInvoice" class="noDataFound">
                                 <i class="material-icons font100">receipt</i>
-                                <p> No Data Found </p>
+                                <p class="m-0"> No Data Found </p>
                             </div>
                             <div *ngIf="dataSourceInvoice">
                                 <div *ngFor="let invoice of dataSourceInvoice" class="col-md-12 ">
@@ -221,5 +221,5 @@
         </div>
     </div>
 </div>
-<app-subscription-completeness  (dashboard)='display($event)' (subscriptionIndex)="getIndex($event)" *ngIf="showSubStep">
+<app-subscription-completeness (dashboard)='display($event)' (subscriptionIndex)="getIndex($event)" *ngIf="showSubStep">
 </app-subscription-completeness>
