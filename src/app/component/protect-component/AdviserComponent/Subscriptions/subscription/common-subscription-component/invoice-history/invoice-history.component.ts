@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { SubscriptionService } from '../../../subscription.service';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {SubscriptionService} from '../../../subscription.service';
+import {MatSort, MatTableDataSource} from '@angular/material';
 
 
 export interface PeriodicElement {
@@ -46,20 +47,23 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./invoice-history.component.scss']
 })
 export class InvoiceHistoryComponent implements OnInit {
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(public subInjectService: SubscriptionInject, private subService: SubscriptionService) {
 
   }
 
-  @Input() set subData(data) {
-    this.invoiceDataGet(data);
-  }
+  dataArray: Array<any> = [{}, {}, {}];
 
   displayedColumns: string[] = ['date', 'invoice', 'status', 'ddate', 'amount', 'balance'];
-  dataSource;
   showSubscription;
   invoiceData;
   dataSub;
+  dataSource = new MatTableDataSource(this.dataArray);
+
+  @Input() set data(data) {
+    this.invoiceDataGet(data);
+  }
 
   invoiceHisData;
 
@@ -82,13 +86,17 @@ export class InvoiceHistoryComponent implements OnInit {
   }
 
   invoiceDataGet(data) {
+    console.log('InvoiceHistory invoiceDataGet data : ', data);
+
     if (data === undefined) {
+      console.log('InvoiceHistory invoiceDataGet data : ', data);
       return;
     } else {
       const obj = {
         module: 3,
         id: data.id
       };
+      this.dataSource.data = [{}, {}, {}];
       this.subService.getInvoices(obj).subscribe(
         responseData => this.getInvoiceResponseData(responseData)
       );
@@ -97,12 +105,19 @@ export class InvoiceHistoryComponent implements OnInit {
 
   getInvoiceResponseData(data) {
     console.log('getInvoiceResponseData', data);
-    this.dataSource = data;
+    if (data) {
+      this.dataSource.data = data;
+    } else {
+      this.dataSource.data = [];
+    }
+    this.dataSource.sort = this.sort;
+
+    // this.dataSource = data;
   }
 
   Close(state) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeUpperRightSliderState({state: 'close'});
   }
 }
 

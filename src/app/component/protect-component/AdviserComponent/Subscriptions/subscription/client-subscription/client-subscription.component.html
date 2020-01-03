@@ -8,12 +8,14 @@
                 </div>
                 <div class="col-md-4 right text-right p-0">
 
-                    <button mat-stroked-button class="btn-default br-0 help-btn" (click)="Open('clientHelp','open35',Questions)">HELP</button>
+                    <button mat-stroked-button class="btn-default br-0 help-btn"
+                        (click)="Open('clientHelp','open35',Questions)">HELP</button>
                 </div>
             </div>
 
             <div class="clientTable">
-                <table matSort mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <table matSort mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation"
+                    appSkeletonLoading [appSkeletonLoading]="isLoading">
                     <ng-container matColumnDef="name">
                         <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="f-18"> Clients name </th>
                         <td mat-cell *matCellDef="let element" (click)="openFragment('clients',element)" class="c-p">
@@ -40,9 +42,10 @@
 
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="balance">
-                        <th mat-sort-header="balanceDue" mat-header-cell *matHeaderCellDef class="f-18 text-right">
+                        <th mat-sort-header="balanceDue" mat-header-cell *matHeaderCellDef class="f-18 right bb-0">
                             Balance due (₹)</th>
-                        <td mat-cell *matCellDef="let element" (click)="openFragment('clients',element)" class="c-p text-right">
+                        <td mat-cell *matCellDef="let element" (click)="openFragment('clients',element)"
+                            class="c-p text-right">
                             <div class="bar"> {{element.balanceDue}} </div>
                         </td>
                     </ng-container>

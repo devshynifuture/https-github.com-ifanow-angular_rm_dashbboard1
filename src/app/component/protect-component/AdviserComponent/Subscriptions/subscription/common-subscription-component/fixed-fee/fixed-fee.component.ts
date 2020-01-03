@@ -46,6 +46,7 @@ export class FixedFeeComponent implements OnInit {
     }
     else {
       this.singleSubscriptionData = fixedData
+      console.log('singleSubscriptionData',this.singleSubscriptionData)
       this.getFixedFee().fees.setValue(fixedData.subscriptionPricing.pricing);
       this.getFixedFee().billingNature.setValue(String(fixedData.subscriptionPricing.billingNature));
       this.getFixedFee().billEvery.setValue(fixedData.subscriptionPricing.billEvery);

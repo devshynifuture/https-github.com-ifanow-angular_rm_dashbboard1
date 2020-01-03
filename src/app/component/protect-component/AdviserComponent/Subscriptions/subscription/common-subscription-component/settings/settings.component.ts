@@ -6,6 +6,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-settings',
@@ -13,6 +14,9 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
+  advisorId: any;
+  clientId: any;
+  family: any;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, public subInjectService: SubscriptionInject,
     private eventService: EventService, private subService: SubscriptionService) {
@@ -26,7 +30,6 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
     this.getSettingProfileData();
   }
-
   setPrimaryField(profileData) {
     const obj = {
       clientId: this.upperData.id,
