@@ -85,13 +85,14 @@ export class VariableFeeComponent implements OnInit {
   }
 
   getSubscribeData(data) {
-    console.log(data);
+    console.log(data, "createVariableForm 123");
     (data.isCreateSub) ? this.isSave = true : this.isSave = false;
     if (data == undefined) {
       this.createVariableForm('');
       return;
     } else {
       this.singleSubscriptionData = data;
+      this.outputData.emit(this.singleSubscriptionData);
       console.log('getSubscribeData : ', this.singleSubscriptionData);
       this.getVariableFee().billEvery.setValue(this.singleSubscriptionData.subscriptionPricing.billEvery);
       (this.singleSubscriptionData.subscriptionPricing.billingCycle == 0) ?
@@ -198,7 +199,7 @@ export class VariableFeeComponent implements OnInit {
         obj.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId;
         obj.clientId = this.singleSubscriptionData.clientId;
         obj.subId = this.singleSubscriptionData.id;
-        console.log(obj);
+        console.log(obj, "this.outputData 123");
         this.outputData.emit(obj);
 
         // const rightSideDataSub = this.subInjectService.addSingleProfile(fragmentData).subscribe(
