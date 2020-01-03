@@ -24,7 +24,7 @@ export class FormTestComponent implements OnInit {
   ngOnInit() {
     this.testForm = this.fb.group({
       id: [],
-      email: [, [Validators.required, Validators.email]],
+      email: [, [Validators.required]],
       inputName: [, [Validators.required]],
       inputNumber: [, [Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY)]],
     });

@@ -45,7 +45,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   @Output() subIndex = new EventEmitter()
 
   advisorName;
-
+  greeting;
   // advisorId = 400;
   advisorId;
   dataSourceSingCount;
@@ -67,6 +67,16 @@ export class DashboardSubscriptionComponent implements OnInit {
               private subService: SubscriptionService,
               private router: Router,
               private activatedRoute: ActivatedRoute) {
+    const date = new Date();
+    const hourOfDay = date.getHours();
+    console.log('DashboardSubscriptionComponent constructor hourOfDay : ', hourOfDay);
+    if (hourOfDay < 12) {
+      this.greeting = 'Good morning';
+    } else if (hourOfDay < 16) {
+      this.greeting = 'Good afternoon';
+    } else {
+      this.greeting = 'Good evening';
+    }
 
   }
 
@@ -87,9 +97,11 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.subIndex.emit(index)
     // this.selected=index
   }
-  display(data){
+
+  display(data) {
     this.showSubStep = false;
   }
+
   getDashboardResponse() {
 
     this.subService.getDashboardSubscriptionResponse(this.advisorId).subscribe(

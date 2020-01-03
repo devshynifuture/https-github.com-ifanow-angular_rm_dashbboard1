@@ -408,6 +408,11 @@ export class SubscriptionService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.DOCUMENT_ESIGN_REQUEST, data);
   }
 
+  sendDocumentViaEmailInPdfFormat(data) {
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('type', data.type);
+    return this.http.post(apiConfig.MAIN_URL + appConfig.EMAIL_DOCUMENT, data);
+  }
+
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
   }
