@@ -86,7 +86,9 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.subIndex.emit(index)
     // this.selected=index
   }
-
+  display(data){
+    this.showSubStep = false;
+  }
   getDashboardResponse() {
 
     this.subService.getDashboardSubscriptionResponse(this.advisorId).subscribe(

@@ -1431,7 +1431,7 @@ The actual rendered columns are set as a property on the row definition" -->
         </div>
         <div class="col-md-2 p-0 b-grey">
           <input (keypress)="utils.keyPress($event)" [(ngModel)]="discount" class="form-control br-0 text-right"
-                 formControlName="discount" type="number">
+                 formControlName="discount" type="number" pattern="\d*" onKeyPress="if(this.value.length==2) return false;">
         </div>
       </div>
       <div class="row pt-20 pb-12">

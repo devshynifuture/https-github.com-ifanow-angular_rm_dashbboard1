@@ -221,5 +221,5 @@
         </div>
     </div>
 </div>
-<app-subscription-completeness (subscriptionIndex)="getIndex($event)" *ngIf="showSubStep">
+<app-subscription-completeness  (dashboard)='display($event)' (subscriptionIndex)="getIndex($event)" *ngIf="showSubStep">
 </app-subscription-completeness>
