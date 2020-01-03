@@ -1,3 +1,4 @@
+import { ValidatorType } from './../../../../../../../services/util.service';
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -99,7 +100,7 @@ export class InvoiceComponent implements OnInit {
   @Output() valueChange = new EventEmitter();
 
   @Input() invoiceTab;
-  rPayment;
+  // rPayment;
   advisorId;
   editAdd1;
   editAdd2;
@@ -120,7 +121,17 @@ export class InvoiceComponent implements OnInit {
   finalAmount: any;
   editFormData: boolean;
   paymentDate: string;
-
+  rPayment = this.fb.group({
+    amountReceived: [0, [Validators.required ,  Validators.min(0), Validators.max(10), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
+    chargesIfAny: [0, [Validators.required]],
+    tds: [0, [Validators.required]],
+    paymentDate: [new Date(), [Validators.required]],
+    paymentMode: [0, [Validators.required]],
+    gstTreatment: [0, [Validators.required]],
+    notes: [],
+    id: [],
+    editFormData: []
+  });
   @Input()
   set data(data) {
     this.inputData = data;
@@ -312,22 +323,22 @@ export class InvoiceComponent implements OnInit {
 
   getRecordPayment(data) {
     console.log('payee data', data);
-    this.rPayment = this.fb.group({
-      amountReceived: [data.amountReceived, [Validators.required ,  Validators.min(0), Validators.max(10)]],
-      chargesIfAny: [data.chargesIfAny, [Validators.required]],
-      tds: [data.tds, [Validators.required]],
-      paymentDate: [new Date(data.paymentDate), [Validators.required]],
-      paymentMode: [data.paymentMode, [Validators.required]],
-      gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business', [Validators.required]],
-      notes: [data.notes],
-      id: [data.id],
-      editFormData: [true]
-    });
+    // this.rPayment = this.fb.group({
+    //   amountReceived: [data.amountReceived, [Validators.required ,  Validators.min(0), Validators.max(10), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
+    //   chargesIfAny: [data.chargesIfAny, [Validators.required]],
+    //   tds: [data.tds, [Validators.required]],
+    //   paymentDate: [new Date(data.paymentDate), [Validators.required]],
+    //   paymentMode: [data.paymentMode, [Validators.required]],
+    //   gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business', [Validators.required]],
+    //   notes: [data.notes],
+    //   id: [data.id],
+    //   editFormData: [true]
+    // });
 
-    this.getFormControl().amountReceived.maxLength = 10;
-    this.getFormControl().chargesIfAny.maxLength = 10;
-    this.getFormControl().tds.maxLength = 10;
-    this.getFormControl().notes.maxLength = 40;
+    // this.getFormControl().amountReceived.maxLength = 10;
+    // this.getFormControl().chargesIfAny.maxLength = 10;
+    // this.getFormControl().tds.maxLength = 10;
+    // this.getFormControl().notes.maxLength = 40;
     this.getPayReceive(data.id);
 
   }
