@@ -40,7 +40,7 @@
                                 <mat-checkbox class="custom-checkbox" [ngStyle]="{'pointer-events':(serviceData.selected)?'none':'all'}" checked="false" [ngClass]="{'v-h':serviceData.selected==false }"></mat-checkbox>
 
                                 <div class="pl-24 pt-20 height130">
-                                    <h3 class="f-24 p-0 mb-0">{{serviceData.serviceName}} </h3>
+                                    <h3 class="f-24 p-0 mb-10">{{serviceData.serviceName}} </h3>
                                     <p class="mb-0 pb-32 pt-4">{{serviceData.serviceCode}}</p>
                                 </div>
                             </div>
@@ -89,7 +89,7 @@
         <p class="f-16 text-center mt-20 l-21">
             Next up, you create Services. More than one Service can be added to a Plan. E.g. <br> Plan could be Financial Planning. It’s Services could be 1) Planning fees 2) <br> Implementation services 3) Retainer services.
         </p>
-       <!-- <button (click)="openFragment('','services')" class="btn-primary mt-12 d-flex align-items-center">
+        <!-- <button (click)="openFragment('','services')" class="btn-primary mt-12 d-flex align-items-center">
             ADD SERVICES
         </button>-->
     </div>
