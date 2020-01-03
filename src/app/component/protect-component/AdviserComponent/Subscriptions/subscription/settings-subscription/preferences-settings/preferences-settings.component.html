@@ -42,13 +42,14 @@
 
                         <div class="wrapper-16 pt-20" *ngFor="let singleBillerProfile of billerProfileData">
                             <div class="row b-a bg-grey lter pt-20 pb-16">
-                                <div class="col-md-11">
+                                <div class="col-md-9">
                                     <h3 class="mb-0 d-inline-block">{{singleBillerProfile.companyDisplayName}}</h3>
-                                    <button mat-stroked-button *ngIf="singleBillerProfile.isPrimary == true"
-                                        class="text-primary br-0  ml-12"> PRIMARY </button>
+
                                 </div>
 
-                                <div class="col-md-1">
+                                <div class="col-md-3 d-flex justify-content-end align-items-center">
+                                    <button mat-stroked-button *ngIf="singleBillerProfile.isPrimary == true"
+                                        class="text-primary br-0  ml-12"> PRIMARY </button>
                                     <i class="material-icons text-right right text-custom f-28 c-p"
                                         [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
                                         more_vert
