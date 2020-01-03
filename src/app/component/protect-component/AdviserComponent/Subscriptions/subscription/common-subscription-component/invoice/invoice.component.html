@@ -35,7 +35,7 @@ more_vert
         <div class="row ">
             <div class="col-md-4 p-0 max-height-100">
                 <div (click)="passInvoice(strData,i,$event)" *ngFor="let strData of dataInvoices let i=index"
-                    [ngClass]="(i==highLight)?'bg-grey lter':'b-b'" class="invoiceSpacing b-b ">
+                    [ngClass]="(i==highLight)?'bg-grey lter':'b-b'" class="invoiceSpacing b-b c-p">
                     <div class="row">
                         <div class="col-md-8">
                             <p class="m-0 f-15">{{strData.clientName}}</p>
@@ -257,10 +257,8 @@ The actual rendered columns are set as a property on the row definition" -->
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input #amountReceiveRef
-                                           appNumberOnly [maxLength]="10" class="form-control" matInput
-                                           formControlName="amountReceived" 
-                                           type="text">
+                                    <input #amountReceiveRef appNumberOnly [maxLength]="10" class="form-control"
+                                        matInput formControlName="amountReceived" type="text">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
@@ -272,8 +270,8 @@ The actual rendered columns are set as a property on the row definition" -->
                                     </div>
                                     <div class="col-md-2 pl-0">
                                         <p class="mb-0 f-12 text-custom text-right pt-4">
-                                            <!-- {{getFormControl().amountReceived.value?.length ? getFormControl().amountReceived.value.length : 0}} -->
-                                            {{ amountReceiveRef.value.length }}/{{getFormControl().amountReceived.maxLength}}
+                                            {{ amountReceiveRef.value.length }}/{{ getFormControl().amountReceived.maxLength }}
+                                            <!-- {{getFormControl().amountReceived.value?.length ? getFormControl().amountReceived.value.length : 0}}/{{getFormControl().amountReceived.maxLength}} -->
                                         </p>
                                     </div>
                                 </div>
@@ -286,9 +284,8 @@ The actual rendered columns are set as a property on the row definition" -->
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input (keypress)="utils.keyPress($event)" class="form-control"
-                                        formControlName="chargesIfAny"
-                                        maxlength="{{getFormControl().chargesIfAny.maxLength}}" type="number">
+                                    <input #chargesIfAnyRef appNumberOnly class="form-control"
+                                        formControlName="chargesIfAny" [maxLength]="10" type="text">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
@@ -301,8 +298,8 @@ The actual rendered columns are set as a property on the row definition" -->
                                     </div>
                                     <div class="col-md-2 pl-0">
                                         <p class="mb-0 f-12 text-custom text-right pt-4">
-                                            {{getFormControl().chargesIfAny.value?.length ? getFormControl().chargesIfAny.value.length : 0}}
-                                            /{{getFormControl().chargesIfAny.maxLength}}
+                                            <!-- {{getFormControl().chargesIfAny.value?.length ? getFormControl().chargesIfAny.value.length : 0}} -->
+                                            {{ chargesIfAnyRef.value.length }}/{{getFormControl().chargesIfAny.maxLength}}
                                         </p>
                                     </div>
                                 </div>
@@ -314,8 +311,8 @@ The actual rendered columns are set as a property on the row definition" -->
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input class="form-control" formControlName="tds"
-                                        maxlength="{{getFormControl().tds.maxLength}}" type="text">
+                                    <input #tdsRef appNumberOnly class="form-control" formControlName="tds"
+                                        [maxLength]="10" type="text">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
@@ -328,8 +325,8 @@ The actual rendered columns are set as a property on the row definition" -->
                                     </div>
                                     <div class="col-md-2 pl-0">
                                         <p class="mb-0 f-12 text-custom text-right pt-4">
-                                            {{getFormControl().tds.value?.length ? getFormControl().tds.value.length : 0}}
-                                            /{{getFormControl().tds.maxLength}}
+                                            <!-- {{getFormControl().tds.value?.length ? getFormControl().tds.value.length : 0}} -->
+                                            {{ chargesIfAnyRef.value.length }}/{{getFormControl().tds.maxLength}}
                                         </p>
                                     </div>
                                 </div>
@@ -344,9 +341,8 @@ The actual rendered columns are set as a property on the row definition" -->
                                     <!-- <input type="date" class="form-control" formControlName="paymentDate"> -->
 
                                     <mat-form-field>
-                                        <input (focus)="picker.open()" [max]="maxDate" [matDatepicker]="picker"
-                                            class="form-control" formControlName="paymentDate" matInput
-                                            >
+                                        <input [matDatepicker]="picker" (focus)="picker.open()" class="form-control"
+                                            formControlName="paymentDate" matInput [max]="maxDate">
                                         <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                     </mat-form-field>
@@ -431,8 +427,7 @@ The actual rendered columns are set as a property on the row definition" -->
                                     </div>
                                     <div class="col-md-2">
                                         <p class="mb-0 f-12 text-custom text-right pt-4">
-                                            {{getFormControl().notes.value?.length ? getFormControl().notes.value.length : 0}}
-                                            /{{getFormControl().notes.maxLength}}
+                                            {{getFormControl().notes.value?.length ? getFormControl().notes.value.length : 0}}/{{getFormControl().notes.maxLength}}
                                         </p>
                                     </div>
                                 </div>
@@ -779,7 +774,7 @@ The actual rendered columns are set as a property on the row definition" -->
             <table [dataSource]="dataSource" class="mt-8" id="table-low" mat-table>
 
                 <!--- Note that these columns can be defined in any order.
-    The actual rendered columns are set as a property on the row definition" -->
+  The actual rendered columns are set as a property on the row definition" -->
 
                 <!-- Position Column -->
                 <ng-container matColumnDef="date">
@@ -844,7 +839,7 @@ The actual rendered columns are set as a property on the row definition" -->
                             <p class="mb-0 f-12 text-custom text-right pt-4">
                                 {{ amountReceivedRef.value.length }}/{{ getFormControl().amountReceived.maxLength }}
                                 <!-- {{getFormControl().amountReceived.value?.length ? getFormControl().amountReceived.value.length : 0}}
-                      /{{getFormControl().amountReceived.maxLength}} -->
+                    /{{getFormControl().amountReceived.maxLength}} -->
                             </p>
                         </div>
                     </div>
@@ -872,7 +867,7 @@ The actual rendered columns are set as a property on the row definition" -->
                             <p class="mb-0 f-12 text-custom text-right pt-4">
                                 {{ chargesIfAnyRef.value.length }}/{{ getFormControl().chargesIfAny.maxLength }}
                                 <!-- {{getFormControl().chargesIfAny.value?.length ? getFormControl().chargesIfAny.value.length : 0}}
-                      /{{getFormControl().chargesIfAny.maxLength}} -->
+                    /{{getFormControl().chargesIfAny.maxLength}} -->
                             </p>
                         </div>
                     </div>
@@ -899,7 +894,7 @@ The actual rendered columns are set as a property on the row definition" -->
                             <p class="mb-0 f-12 text-custom text-right pt-4">
                                 {{ tdsRef.value.length }}/{{ getFormControl().tds.maxLength }}
                                 <!-- {{getFormControl().tds.value?.length ? getFormControl().tds.value.length : 0}}
-                      /{{getFormControl().tds.maxLength}} -->
+                    /{{getFormControl().tds.maxLength}} -->
                             </p>
                         </div>
                     </div>
@@ -915,7 +910,7 @@ The actual rendered columns are set as a property on the row definition" -->
 
                         <mat-form-field>
                             <input [matDatepicker]="picker" class="form-control" [max]="maxDate"
-                                formControlName="paymentDate" matInput (focus)="picker.open()">
+                                formControlName="paymentDate" matInput (focus)="picker.open()" placeholder="mm/dd/yyyy">
                             <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
@@ -999,8 +994,7 @@ The actual rendered columns are set as a property on the row definition" -->
                         </div>
                         <div class="col-md-2">
                             <p class="mb-0 f-12 text-custom text-right pt-4">
-                                {{getFormControl().notes.value?.length ? getFormControl().notes.value.length : 0}}
-                                /{{getFormControl().notes.maxLength}}
+                                {{getFormControl().notes.value?.length ? getFormControl().notes.value.length : 0}}/{{getFormControl().notes.maxLength}}
                             </p>
                         </div>
                     </div>
@@ -1202,15 +1196,15 @@ The actual rendered columns are set as a property on the row definition" -->
     class="bg-white pb-44 ">
     <div class="row  popup-header">
         <div class="col-md-10 pl-0">
-            <h4 *ngIf="invoiceInSub=='invoiceSubscription'" class="f-400 wrapper-20 mb-0">Edit Invoice
+            <h2 *ngIf="invoiceInSub=='invoiceSubscription'" class="f-400 wrapper-20 mb-0">Edit Invoice
                 of {{storeData.invoiceNumber}}
-            </h4>
+            </h2>
             <h4 *ngIf="invoiceInSub!='invoiceSubscription'" class="f-400 wrapper-20 mb-0">Add Invoice</h4>
         </div>
         <!-- <div class="col-md-2">
-   <i class="material-icons text-right pt-16 pr-16 c-p right" (click)="closeEditInv()">
-   clear
-   </i>
+ <i class="material-icons text-right pt-16 pr-16 c-p right" (click)="closeEditInv()">
+ clear
+ </i>
 </div> -->
     </div>
     <div class="row pt-40">
@@ -1242,8 +1236,8 @@ The actual rendered columns are set as a property on the row definition" -->
                 </div>
             </div>
             <!-- <div class="col-md-12">
-          <p class="mb-0 f-12 text-custom text-right pt-4"></p>
-      </div> -->
+        <p class="mb-0 f-12 text-custom text-right pt-4"></p>
+    </div> -->
             <div class="row pt-10">
                 <div class="col-md-6 pl-0">
                     <p class="m-0 text-custom f-12">BILLER ADDRESS</p>
@@ -1264,8 +1258,7 @@ The actual rendered columns are set as a property on the row definition" -->
                         maxlength="{{getFormControledit().billingAddress.maxLength}}" rows="5"></textarea>
                     <p (click)="onclickChangeAdd2(editAdd2)" class="m-0 text-primary c-p f-12">CHANGE</p>
                     <p class="mb-0 f-12 text-custom text-right pt-4 pr-12">
-                        {{getFormControledit().billingAddress.value?.length ? getFormControledit().billingAddress.value.length : 0}}
-                        /{{getFormControledit().billingAddress.maxLength}}
+                        {{getFormControledit().billingAddress.value?.length ? getFormControledit().billingAddress.value.length : 0}}/{{getFormControledit().billingAddress.maxLength}}
                     </p>
                 </div>
             </div>
@@ -1282,7 +1275,7 @@ The actual rendered columns are set as a property on the row definition" -->
                         <div class="col-md-7 p-0">
                             <div class="form-group mb-0">
 
-                                <input class="form-control br-0" #invoiceNumberRef formControlName="invoiceNumber"
+                                <input class="form-control br-0" formControlName="invoiceNumber"
                                     maxlength="{{getFormControledit().invoiceNumber.maxLength}}" type="email">
 
                             </div>
@@ -1295,8 +1288,7 @@ The actual rendered columns are set as a property on the row definition" -->
                             </div>
                             <div class="col-md-12">
                                 <p class="mb-0 f-12 text-custom text-right pt-4">
-                                    {{ invoiceNumberRef.value.length }}/{{getFormControledit().invoiceNumber.maxLength}}
-                                    <!-- {{getFormControledit().invoiceNumber.value?.length ? getFormControledit().invoiceNumber.value.length : 0}}/{{getFormControledit().invoiceNumber.maxLength}} -->
+                                    {{getFormControledit().invoiceNumber.value?.length ? getFormControledit().invoiceNumber.value.length : 0}}/{{getFormControledit().invoiceNumber.maxLength}}
                                 </p>
                             </div>
                         </div>
@@ -1339,11 +1331,11 @@ The actual rendered columns are set as a property on the row definition" -->
                             </div>
                         </div>
                         <!-- <div class="col-md-8">
-                 <mat-error class="f-12 pt-4"
-              *ngIf="isDueDate && getFormControledit().dueDate.invalid || (getFormControledit().dueDate.touched && getFormControledit().dueDate.invalid)">
-              Due date is required
-           </mat-error>
-            </div> -->
+               <mat-error class="f-12 pt-4"
+            *ngIf="isDueDate && getFormControledit().dueDate.invalid || (getFormControledit().dueDate.touched && getFormControledit().dueDate.invalid)">
+            Due date is required
+         </mat-error>
+          </div> -->
                     </div>
                 </div>
             </div>
@@ -1425,7 +1417,7 @@ The actual rendered columns are set as a property on the row definition" -->
                 </div>
             </div>
         </div>
-      
+
     </div>
     <!-- </div> -->
     <div class="row pt-12">
@@ -1547,4 +1539,3 @@ The actual rendered columns are set as a property on the row definition" -->
         </div>
     </div>
 </div>
-   

@@ -165,6 +165,11 @@ export class ClientUpperSubscriptionComponent implements OnInit {
       this.subcr = _.map(_.groupBy(this.clientData, function (n) {
         return n.planName
       }));
+      this.subcr.forEach(element => {
+        element.forEach(n => {
+          element.plan = (n.planName);
+        });
+      });
       console.log('**********',this.subcr)
       this.dataSource = new MatTableDataSource(data);
 

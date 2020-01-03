@@ -13,7 +13,9 @@ export class FormTestComponent implements OnInit {
   // inputName = new FormControl('', [Validators.required, Validators.email]);
   // inputNumber = new FormControl('', [Validators.required, Validators.email]);
   testForm;
-  numValidator = ValidatorType.NUMBER_ONLY;
+  // numValidator = ValidatorType.NUMBER_ONLY;
+  // personNameValidator = ValidatorType.PERSON_NAME;
+  validatorType = ValidatorType;
 
   constructor(private fb: FormBuilder) {
   }
@@ -24,7 +26,7 @@ export class FormTestComponent implements OnInit {
       id: [],
       email: [, [Validators.required, Validators.email]],
       inputName: [, [Validators.required]],
-      inputNumber: [, [Validators.required]],
+      inputNumber: [, [Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY)]],
     });
 
   }

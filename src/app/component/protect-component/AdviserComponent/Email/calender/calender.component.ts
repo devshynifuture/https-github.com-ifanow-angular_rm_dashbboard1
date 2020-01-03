@@ -342,7 +342,5 @@ export class EventDialog implements OnInit{
     this.dialogRef.close();
   }
 
-  
-
 }
 

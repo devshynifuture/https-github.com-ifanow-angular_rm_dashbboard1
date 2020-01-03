@@ -5,12 +5,16 @@
     <div class="align-center">
         <div class="row">
             <div class="col-md-12 pt-150">
-                <h5 class="pt-44">Hey, it seems{{clientSubscriptionData.name}} hasn’t been subscribed to any Services yet. You need to add a Plan to get going. </h5>
-                <h5>Once a Plan is added, all the associated Services (along with the fee structure) will be added. If you want, you can customize the fee structure for this client. Each Service will have it’s own Subscription attached to it.
+                <h5 class="pt-44">Hey, it seems{{clientSubscriptionData.name}} hasn’t been subscribed to any Services
+                    yet. You need to add a Plan to get going. </h5>
+                <h5>Once a Plan is added, all the associated Services (along with the fee structure) will be added. If
+                    you want, you can customize the fee structure for this client. Each Service will have it’s own
+                    Subscription attached to it.
                 </h5>
                 <h5>Next, you will be able to send Quotations, sign Documents etc.</h5>
                 <h5>Let’s get started!</h5>
-                <button mat-stroked-button class="btn-primary br-0 mt-44" (click)="openPlanSlider('planRightSlider','open',null)">Add
+                <button mat-stroked-button class="btn-primary br-0 mt-44"
+                    (click)="openPlanSlider('planRightSlider','open',null)">Add
                     Plan
                 </button>
             </div>
@@ -22,7 +26,8 @@
     <div class="wrapper-20 pb-0 pt-150 mt-44" *ngIf="clientData.length > 0">
         <div class="row">
             <div class="col-md-12 p-0 pt-16">
-                <button mat-stroked-button class="btn-primary br-0 right text-right addon" (click)="openPlanSlider('planRightSlider','open',null)"><i class="material-icons">
+                <button mat-stroked-button class="btn-primary br-0 right text-right addon"
+                    (click)="openPlanSlider('planRightSlider','open',null)"><i class="material-icons">
                         add
                     </i> ADD PLAN
                 </button>
@@ -32,11 +37,11 @@
     </div>
 
     <div class="wrapper-40 pt-0 mt-12 col-md-12 overflow-hidden" *ngFor="let sub of subcr">
-        <h4 class="pb-8 text-black" *ngIf="clientData.length > 0">{{sub.planName}}</h4>
+        <h4 class="pb-8 text-black" *ngIf="clientData.length > 0">{{sub.plan}}</h4>
 
 
-        <table matSort mat-table [dataSource]="sub" id="table-low" class="mt-8 skeletonAnimation"
-            appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="dataSource!=undefined">
+        <table matSort mat-table [dataSource]="sub" id="table-low" class="mt-8 skeletonAnimation" appSkeletonLoading
+            [appSkeletonLoading]="isLoading" *ngIf="dataSource!=undefined">
             <ng-container matColumnDef="service">
                 <th mat-sort-header="serviceName" mat-header-cell *matHeaderCellDef class="f-18"> Service name</th>
                 <td mat-cell *matCellDef="let element">
@@ -47,7 +52,8 @@
             </ng-container>
             <ng-container matColumnDef="amt">
                 <th mat-header-cell *matHeaderCellDef class="f-18"> Fee amount</th>
-                <td mat-cell *matCellDef="let element" (click)="Open('open',element)" class="c-p text-primary text-underline">
+                <td mat-cell *matCellDef="let element" (click)="Open('open',element)"
+                    class="c-p text-primary text-underline">
                     View details
                 </td>
             </ng-container>
@@ -123,7 +129,8 @@
                 <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"></th>
                 <td mat-cell *matCellDef="let element" style="width: 2%;">
 
-                    <i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
+                    <i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu"
+                        [matMenuTriggerFor]="belowMenu">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
@@ -132,7 +139,8 @@
                             Biller</a>
                         <a mat-menu-item class="bt-1" (click)="openPlanSlider('changePayee','open',element)">Change
                             Payee</a>
-                        <a *ngIf="element.status!=1" mat-menu-item class="bt-1" (click)="delete('cancelSubscription',element)">Cancel subscription</a>
+                        <a *ngIf="element.status!=1" mat-menu-item class="bt-1"
+                            (click)="delete('cancelSubscription',element)">Cancel subscription</a>
                         <a mat-menu-item class="bt-1" (click)="deleteModal('SUBSCRIPTION',element)">Delete
                             subscription</a>
                     </mat-menu>

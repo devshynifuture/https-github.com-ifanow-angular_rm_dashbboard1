@@ -1,29 +1,41 @@
     h5 {
-        color: #212121;
+      color: #212121;
     }
-    
+
     span {
-        font-size: 12px;
-        float: right;
-        color: #A0AEB4;
+      font-size: 12px;
+      float: right;
+      color: #A0AEB4;
     }
-    
+
     .bottom-fixed {
-        z-index: 1 !important;
+      z-index: 1 !important;
     }
-    
+
     .form-control.is-invalid {
-        background-image: none !important;
-        border-color: red !important;
+      background-image: none !important;
+      border-color: red !important;
     }
-    
-     ::ng-deep.event-none {
-        .mat-tab-header {
-            pointer-events: none !important;
-        }
+
+    ::ng-deep.event-none {
+      .mat-tab-header {
+        pointer-events: none !important;
+      }
     }
-    
+
     .imgBox {
-        width: 230px;
-        height: 130px;
+      width: 230px;
+      height: 130px;
     }
+
+    // ::ng-deep .rightside-border {
+    //   margin-right: 40px;
+    //   margin-top: 89px;
+    //   height: 1px;
+    //   background-color: #dadce0;
+    //   width: 37.24%;
+    //   right: 0;
+    //   position: absolute;
+    //   padding-right: 20px;
+
+    // }
