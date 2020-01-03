@@ -1,13 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { HttpClient } from '@angular/common/http';
-import { PhotoCloudinaryUploadService } from '../../../../../../../services/photo-cloudinary-upload.service';
-import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-import { UtilService } from "../../../../../../../services/util.service";
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {HttpClient} from '@angular/common/http';
+import {PhotoCloudinaryUploadService} from '../../../../../../../services/photo-cloudinary-upload.service';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {UtilService, ValidatorType} from "../../../../../../../services/util.service";
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -17,7 +17,7 @@ import { UtilService } from "../../../../../../../services/util.service";
 })
 export class BillerProfileAdvisorComponent implements OnInit {
 
-
+  validatorType = ValidatorType;
   billerProfileForm: any;
   isGstin = false;
   isPanNum = false;
@@ -48,8 +48,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private subService: SubscriptionService,
-    private eventService: EventService, private http: HttpClient) {
+              private subService: SubscriptionService,
+              private eventService: EventService, private http: HttpClient) {
     // this.subInjectService.singleProfileData.subscribe(
     //   data => this.getSingleBillerProfileData(data)
     // );
@@ -185,7 +185,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    this.subInjectService.changeNewRightSliderState({state: 'close', data});
   }
 
   nextStep(value, eventName) {
@@ -239,8 +239,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     } else if (this.profileDetailsForm.controls.pincode.invalid) {
       this.isZipCode = true;
       return;
-    }
-    else if (this.logUrl.controls.url.invalid) {
+    } else if (this.logUrl.controls.url.invalid) {
       return;
     } else if (this.bankDetailsForm.controls.acNo.invalid) {
       this.isAcNo = true;

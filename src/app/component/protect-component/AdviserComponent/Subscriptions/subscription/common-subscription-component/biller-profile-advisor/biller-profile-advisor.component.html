@@ -116,8 +116,9 @@
               <div class="col-md-7">
                 <div class="form-group mb-0">
                   <mat-form-field>
-                    <input #panNum [maxlength]="10" appNumberOnly class="form-control br-0" formControlName="panNum"
-                      matInput type="text">
+                    <input #panNum [inputValidator]="validatorType.NUMBER_ONLY" [maxlength]="10" appInputValueValidation
+                           class="form-control br-0" formControlName="panNum"
+                           matInput type="text">
                     <mat-error class="f-12 pt-4">PAN is required</mat-error>
                     <mat-hint align="end" class="f-12">{{panNum.value.length}}/10</mat-hint>
 

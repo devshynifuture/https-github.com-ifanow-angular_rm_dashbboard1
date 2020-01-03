@@ -1,4 +1,4 @@
-import { ValidatorType } from './../../../../../../../services/util.service';
+import {ValidatorType} from './../../../../../../../services/util.service';
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -42,6 +42,7 @@ export interface PeriodicElement {
 export class InvoiceComponent implements OnInit {
   highLight: boolean;
   maxDate = new Date();
+  validatorType = ValidatorType;
 
   [x: string]: any;
 
