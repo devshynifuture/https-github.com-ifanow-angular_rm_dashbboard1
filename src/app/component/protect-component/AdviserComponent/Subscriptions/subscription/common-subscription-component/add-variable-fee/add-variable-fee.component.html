@@ -217,9 +217,13 @@
           </div>
         </div>
         <div class="col-md-2 p-0">
+          <!--          [minValue]="0.001" [maxValue]="99"-->
           <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation
-                 formControlName="pricing" placeholder="%" type="text"
+                 formControlName="pricing" placeholder="%" type="number"
                  class="form-control br-0 h-39 br-grey">
+          <mat-error *ngIf="(variableFeeData.get('pricing').errors)" class="f-12 pt-4">
+            Should be between than 0.01 to 99
+          </mat-error>
         </div>
       </div>
       <mat-error *ngIf="pricing && getFormControl().pricing.invalid" class="f-12 pt-4">Please fill details</mat-error>
