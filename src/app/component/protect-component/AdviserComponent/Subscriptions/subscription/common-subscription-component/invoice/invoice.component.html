@@ -34,8 +34,7 @@ more_vert
         </div>
         <div class="row ">
             <div class="col-md-4 p-0 max-height-100">
-                <div (click)="passInvoice(strData,i,$event)" *ngFor="let strData of dataInvoices let i=index"
-                    [ngClass]="(i==highLight)?'bg-grey lter':'b-b'" class="invoiceSpacing b-b c-p">
+                <div (click)="passInvoice(strData,i,$event)" *ngFor="let strData of dataInvoices let i=index" [ngClass]="(i==highLight)?'bg-grey lter':'b-b'" class="invoiceSpacing b-b c-p">
                     <div class="row">
                         <div class="col-md-8">
                             <p class="m-0 f-15">{{strData.clientName}}</p>
@@ -52,8 +51,7 @@ more_vert
                             <p class="m-0 f-13 pt-12">{{strData.invoiceDate | date:'dd/MM/yyyy'}}</p>
                         </div>
                         <div class="col-md-5 text-right pr-8">
-                            <p [ngClass]="{'text-danger':strData.status==0,'text-primary':strData.status==1,'text-success':strData.status==2}"
-                                class="m-0 f-13 pt-12">
+                            <p [ngClass]="{'text-danger':strData.status==0,'text-primary':strData.status==1,'text-success':strData.status==2}" class="m-0 f-13 pt-12">
                                 {{(strData.status == 0) ? 'OVERDUE' : (strData.status == 1) ? 'OVERDUE' : (strData.status == 2) ? 'PAID' : ''}}
                             </p>
                         </div>
@@ -68,8 +66,7 @@ more_vert
                         <img (click)="openSendEmail(null)" class="b-a" src="assets/images/svg/mail-light.svg">
                         <img class="b-a " src="assets/images/svg/pdf-icons.svg">
                         <img (click)="printPage(invoiceTemplate)" class="b-a " src="assets/images/svg/printer.svg">
-                        <img (click)="deleteModal('INVOICE',element)" class="b-a wrapper-9 ml-8"
-                            src="assets/images/svg/delete.svg">
+                        <img (click)="deleteModal('INVOICE',element)" class="b-a wrapper-9 ml-8" src="assets/images/svg/delete.svg">
                     </div>
                     <div class="col-md-4 right text-right">
                         <button (click)="recordPayment()" class="btn-primary br-0 mb-12" mat-stroked-button>RECORD
@@ -86,8 +83,7 @@ more_vert
                                     <h1 class="f-42 text-custom pt-48 f-700">INVOICE</h1>
                                 </div>
                                 <div class="col-md-3 text-right">
-                                    <img class="pt-20"
-                                        src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                                    <img class="pt-20" src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
                                 </div>
                             </div>
                         </div>
@@ -110,15 +106,12 @@ more_vert
 
                             <div class="row pt-44">
                                 <div class="col-md-8">
-                                    <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>:
-                                        {{storeData.invoiceNumber}}
+                                    <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>: {{storeData.invoiceNumber}}
                                     </p>
-                                    <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>:
-                                        {{storeData.invoiceDate| date:'dd/MM/yyyy'}}</p>
+                                    <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>: {{storeData.invoiceDate| date:'dd/MM/yyyy'}}</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <h2
-                                        [ngClass]="{'text-danger':storeData.status==0,'text-primary':storeData.status==1,'text-success':storeData.status==2}">
+                                    <h2 [ngClass]="{'text-danger':storeData.status==0,'text-primary':storeData.status==1,'text-success':storeData.status==2}">
                                         {{(storeData.status == 0) ? 'OVERDUE' : (storeData.status == 1) ? 'OVERDUE' : (storeData.status == 2) ? 'PAID' : ''}}
                                     </h2>
                                 </div>
@@ -165,8 +158,7 @@ more_vert
                                         <div class="col-md-8">
                                             <p class="f-500 roboto pt-8">Total</p>
                                         </div>
-                                        <div *ngIf="storeData.cgst!=undefined && storeData.sgst!=undefined"
-                                            class="col-md-4 text-right">
+                                        <div *ngIf="storeData.cgst!=undefined && storeData.sgst!=undefined" class="col-md-4 text-right">
                                             <p class="f-500 roboto pt-8">₹{{formatter(storeData.finalAmount)}}</p>
                                         </div>
                                         <div *ngIf="storeData.igst!=undefined" class="col-md-4 text-right">
@@ -193,8 +185,7 @@ more_vert
                                 <p class="m-0 text-black f-500 pt-12">Fee calculation - Attachment</p>
                             </div>
                             <div class="col-md-2 wrapper-9 right">
-                                <button (click)="OpenFeeCalc()" class="btn-primary br-0"
-                                    mat-stroked-button>View</button>
+                                <button (click)="OpenFeeCalc()" class="btn-primary br-0" mat-stroked-button>View</button>
                             </div>
                         </div>
                         <div class="row pt-32">
@@ -234,8 +225,7 @@ The actual rendered columns are set as a property on the row definition" -->
                             </ng-container>
                             <ng-container matColumnDef="icons">
                                 <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
-                                <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menu"
-                                        class="material-icons c-p iconscolors">
+                                <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
                                         more_vert
                                     </i>
                                     <mat-menu #menu="matMenu">
@@ -257,15 +247,11 @@ The actual rendered columns are set as a property on the row definition" -->
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input #amountReceiveRef [inputValidator]="validatorType.NUMBER_ONLY"
-                                           [maxLength]="10" appInputValueValidation class="form-control"
-                                           matInput formControlName="amountReceived" type="text">
+                                    <input #amountReceiveRef [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation class="form-control" matInput formControlName="amountReceived" type="text">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
-                                        <mat-error
-                                            *ngIf="isamountValid && getFormControl().amountReceived.invalid || (getFormControl().amountReceived.touched && getFormControl().amountReceived.invalid)"
-                                            class="f-12 pt-4">
+                                        <mat-error *ngIf="isamountValid && getFormControl().amountReceived.invalid || (getFormControl().amountReceived.touched && getFormControl().amountReceived.invalid)" class="f-12 pt-4">
                                             amount received is required
                                         </mat-error>
                                     </div>
@@ -285,16 +271,12 @@ The actual rendered columns are set as a property on the row definition" -->
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                  <input #chargesIfAnyRef [inputValidator]="validatorType.NUMBER_ONLY"
-                                         appInputValueValidation class="form-control"
-                                         formControlName="chargesIfAny" [maxLength]="10" type="text">
+                                    <input #chargesIfAnyRef [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation class="form-control" formControlName="chargesIfAny" [maxLength]="10" type="text">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
                                         <!-- <p class="f-12 m-0 text-left text-custom pt-4" *ngIf="getFormControl().chargesIfAny.untouched">Assistive text</p> -->
-                                        <mat-error
-                                            *ngIf="ischargeValid && getFormControl().chargesIfAny.invalid || (getFormControl().chargesIfAny.touched && getFormControl().chargesIfAny.invalid)"
-                                            class="f-12 pt-4">
+                                        <mat-error *ngIf="ischargeValid && getFormControl().chargesIfAny.invalid || (getFormControl().chargesIfAny.touched && getFormControl().chargesIfAny.invalid)" class="f-12 pt-4">
                                             chargesIfAny is required
                                         </mat-error>
                                     </div>
@@ -313,16 +295,12 @@ The actual rendered columns are set as a property on the row definition" -->
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                  <input #tdsRef [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                                         class="form-control" formControlName="tds"
-                                         [maxLength]="10" type="text">
+                                    <input #tdsRef [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation class="form-control" formControlName="tds" [maxLength]="10" type="text">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
                                         <!-- <p class="f-12 m-0 text-left text-custom pt-4" *ngIf="getFormControl().tds.untouched">Assistive text</p> -->
-                                        <mat-error
-                                            *ngIf="istdsValid && getFormControl().tds.invalid || (getFormControl().tds.touched && getFormControl().tds.invalid)"
-                                            class="f-12 pt-4">
+                                        <mat-error *ngIf="istdsValid && getFormControl().tds.invalid || (getFormControl().tds.touched && getFormControl().tds.invalid)" class="f-12 pt-4">
                                             TDS is required
                                         </mat-error>
                                     </div>
@@ -344,16 +322,13 @@ The actual rendered columns are set as a property on the row definition" -->
                                     <!-- <input type="date" class="form-control" formControlName="paymentDate"> -->
 
                                     <mat-form-field>
-                                        <input [matDatepicker]="picker" (focus)="picker.open()" class="form-control"
-                                            formControlName="paymentDate" matInput [max]="maxDate">
+                                        <input [matDatepicker]="picker" (focus)="picker.open()" class="form-control" formControlName="paymentDate" matInput [max]="maxDate">
                                         <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                     </mat-form-field>
                                     <div class="row">
                                         <div class="col-md-10 pr-0">
-                                            <mat-error
-                                                *ngIf="isdateValid && getFormControl().paymentDate.invalid || (getFormControl().paymentDate.touched && getFormControl().paymentDate.invalid)"
-                                                class="f-12 pt-4">
+                                            <mat-error *ngIf="isdateValid && getFormControl().paymentDate.invalid || (getFormControl().paymentDate.touched && getFormControl().paymentDate.invalid)" class="f-12 pt-4">
                                                 payment date is required
                                             </mat-error>
                                         </div>
@@ -376,9 +351,7 @@ The actual rendered columns are set as a property on the row definition" -->
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
-                                        <mat-error
-                                            *ngIf="ismodeValid && getFormControl().paymentMode.invalid || (getFormControl().paymentMode.touched && getFormControl().paymentMode.invalid)"
-                                            class="f-12 pt-4">
+                                        <mat-error *ngIf="ismodeValid && getFormControl().paymentMode.invalid || (getFormControl().paymentMode.touched && getFormControl().paymentMode.invalid)" class="f-12 pt-4">
                                             paymentMode is required
                                         </mat-error>
                                     </div>
@@ -405,9 +378,7 @@ The actual rendered columns are set as a property on the row definition" -->
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
-                                        <mat-error
-                                            *ngIf="isgstValid && getFormControl().gstTreatment.invalid || (getFormControl().gstTreatment.touched && getFormControl().gstTreatment.invalid)"
-                                            class="f-12 pt-4">
+                                        <mat-error *ngIf="isgstValid && getFormControl().gstTreatment.invalid || (getFormControl().gstTreatment.touched && getFormControl().gstTreatment.invalid)" class="f-12 pt-4">
                                             gst treatment is required
                                         </mat-error>
                                     </div>
@@ -420,8 +391,7 @@ The actual rendered columns are set as a property on the row definition" -->
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group mb-0">
-                                    <textarea class="form-control" formControlName="notes"
-                                        maxlength="{{getFormControl().notes.maxLength}}" rows="5"></textarea>
+                                    <textarea class="form-control" formControlName="notes" maxlength="{{getFormControl().notes.maxLength}}" rows="5"></textarea>
                                 </div>
                                 <div class="row ">
 
@@ -442,8 +412,7 @@ The actual rendered columns are set as a property on the row definition" -->
                             <div class="col-md-12 right text-right">
                                 <h5 (click)="cancel()" class="mat-stroked-button br-0 text-light mr-20">CANCEL</h5>
 
-                                <button (click)="saveFormData()" class="btn-bottom br-0 text-inherit"
-                                    mat-button>SAVE</button>
+                                <button (click)="saveFormData()" class="btn-bottom br-0 text-inherit" mat-button>SAVE</button>
                             </div>
                         </div>
                     </div>
@@ -657,8 +626,7 @@ The actual rendered columns are set as a property on the row definition" -->
                         <h1 class="f-42 text-custom pt-48 f-700">INVOICE</h1>
                     </div>
                     <div class="col-md-3 text-right">
-                        <img class="pt-20"
-                            src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                        <img class="pt-20" src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
                     </div>
                 </div>
             </div>
@@ -680,15 +648,12 @@ The actual rendered columns are set as a property on the row definition" -->
 
                 <div class="row pt-44">
                     <div class="col-md-8">
-                        <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>:
-                            {{storeData.invoiceNumber}}
+                        <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>: {{storeData.invoiceNumber}}
                         </p>
-                        <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>:
-                            {{storeData.invoiceDate | date:'dd/MM/yyyy'}}</p>
+                        <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>: {{storeData.invoiceDate | date:'dd/MM/yyyy'}}</p>
                     </div>
                     <div class="col-md-4">
-                        <h2
-                            [ngClass]="{'text-danger':storeData.status==0,'text-primary':storeData.status==1,'text-success':storeData.status==2}">
+                        <h2 [ngClass]="{'text-danger':storeData.status==0,'text-primary':storeData.status==1,'text-success':storeData.status==2}">
                             {{(storeData.status == 0) ? 'OVERDUE' : (storeData.status == 1) ? 'OVERDUE' : (storeData.status == 2) ? 'PAID' : ''}}
                         </h2>
                     </div>
@@ -735,8 +700,7 @@ The actual rendered columns are set as a property on the row definition" -->
                                 <div class="col-md-8">
                                     <p class="f-500 roboto pt-8">Total</p>
                                 </div>
-                                <div *ngIf="storeData.cgst!=undefined && storeData.sgst!=undefined"
-                                    class="col-md-4 text-right">
+                                <div *ngIf="storeData.cgst!=undefined && storeData.sgst!=undefined" class="col-md-4 text-right">
                                     <p class="f-500 roboto pt-8">{{formatter(storeData.finalAmount)}}</p>
                                 </div>
                                 <div *ngIf="storeData.igst!=undefined" class="col-md-4 text-right">
@@ -804,8 +768,7 @@ The actual rendered columns are set as a property on the row definition" -->
                 </ng-container>
                 <ng-container matColumnDef="icons">
                     <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
-                    <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menu"
-                            class="material-icons c-p iconscolors">
+                    <td *matCellDef="let element" class="t-2" mat-cell><i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
                             more_vert
                         </i>
                         <mat-menu #menu="matMenu">
@@ -827,15 +790,11 @@ The actual rendered columns are set as a property on the row definition" -->
                 </div>
                 <div class="col-md-4">
                     <div class="form-group mb-0">
-                      <input #amountReceivedRef [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
-                             appInputValueValidation class="form-control" type="text"
-                             formControlName="amountReceived">
+                        <input #amountReceivedRef [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation class="form-control" type="text" formControlName="amountReceived">
                     </div>
                     <div class="row">
                         <div class="col-md-10 pr-0">
-                            <mat-error
-                                *ngIf="isamountValid && getFormControl().amountReceived.invalid || (getFormControl().amountReceived.touched && getFormControl().amountReceived.invalid)"
-                                class="f-12 pt-4">
+                            <mat-error *ngIf="isamountValid && getFormControl().amountReceived.invalid || (getFormControl().amountReceived.touched && getFormControl().amountReceived.invalid)" class="f-12 pt-4">
                                 amount received is required
                             </mat-error>
                         </div>
@@ -855,16 +814,12 @@ The actual rendered columns are set as a property on the row definition" -->
                 </div>
                 <div class="col-md-4">
                     <div class="form-group mb-0">
-                      <input #chargesIfAnyRef [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
-                             appInputValueValidation class="form-control"
-                             formControlName="chargesIfAny" type="text">
+                        <input #chargesIfAnyRef [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation class="form-control" formControlName="chargesIfAny" type="text">
                     </div>
                     <div class="row">
                         <div class="col-md-10 pr-0">
                             <!-- <p class="f-12 m-0 text-left text-custom pt-4" *ngIf="getFormControl().chargesIfAny.untouched">Assistive text</p> -->
-                            <mat-error
-                                *ngIf="ischargeValid && getFormControl().chargesIfAny.invalid || (getFormControl().chargesIfAny.touched && getFormControl().chargesIfAny.invalid)"
-                                class="f-12 pt-4">
+                            <mat-error *ngIf="ischargeValid && getFormControl().chargesIfAny.invalid || (getFormControl().chargesIfAny.touched && getFormControl().chargesIfAny.invalid)" class="f-12 pt-4">
                                 chargesIfAny is required
                             </mat-error>
                         </div>
@@ -889,9 +844,7 @@ The actual rendered columns are set as a property on the row definition" -->
                     <div class="row">
                         <div class="col-md-10 pr-0">
                             <!-- <p class="f-12 m-0 text-left text-custom pt-4" *ngIf="getFormControl().tds.untouched">Assistive text</p> -->
-                            <mat-error
-                                *ngIf="istdsValid && getFormControl().tds.invalid || (getFormControl().tds.touched && getFormControl().tds.invalid)"
-                                class="f-12 pt-4">
+                            <mat-error *ngIf="istdsValid && getFormControl().tds.invalid || (getFormControl().tds.touched && getFormControl().tds.invalid)" class="f-12 pt-4">
                                 TDS is required
                             </mat-error>
                         </div>
@@ -914,16 +867,13 @@ The actual rendered columns are set as a property on the row definition" -->
                         <!-- <input type="date" class="form-control" formControlName="paymentDate"> -->
 
                         <mat-form-field>
-                            <input [matDatepicker]="picker" class="form-control" [max]="maxDate"
-                                formControlName="paymentDate" matInput (focus)="picker.open()" placeholder="mm/dd/yyyy">
+                            <input [matDatepicker]="picker" class="form-control" [max]="maxDate" formControlName="paymentDate" matInput (focus)="picker.open()" placeholder="mm/dd/yyyy">
                             <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
                         <div class="row">
                             <div class="col-md-10 pr-0">
-                                <mat-error
-                                    *ngIf="isdateValid && getFormControl().paymentDate.invalid || (getFormControl().paymentDate.touched && getFormControl().paymentDate.invalid)"
-                                    class="f-12 pt-4">
+                                <mat-error *ngIf="isdateValid && getFormControl().paymentDate.invalid || (getFormControl().paymentDate.touched && getFormControl().paymentDate.invalid)" class="f-12 pt-4">
                                     payment date is required
                                 </mat-error>
                             </div>
@@ -946,9 +896,7 @@ The actual rendered columns are set as a property on the row definition" -->
                     </div>
                     <div class="row">
                         <div class="col-md-10 pr-0">
-                            <mat-error
-                                *ngIf="ismodeValid && getFormControl().paymentMode.invalid || (getFormControl().paymentMode.touched && getFormControl().paymentMode.invalid)"
-                                class="f-12 pt-4">
+                            <mat-error *ngIf="ismodeValid && getFormControl().paymentMode.invalid || (getFormControl().paymentMode.touched && getFormControl().paymentMode.invalid)" class="f-12 pt-4">
                                 paymentMode is required
                             </mat-error>
                         </div>
@@ -974,9 +922,7 @@ The actual rendered columns are set as a property on the row definition" -->
                     </div>
                     <div class="row">
                         <div class="col-md-10 pr-0">
-                            <mat-error
-                                *ngIf="isgstValid && getFormControl().gstTreatment.invalid || (getFormControl().gstTreatment.touched && getFormControl().gstTreatment.invalid)"
-                                class="f-12 pt-4">
+                            <mat-error *ngIf="isgstValid && getFormControl().gstTreatment.invalid || (getFormControl().gstTreatment.touched && getFormControl().gstTreatment.invalid)" class="f-12 pt-4">
                                 gst treatment is required
                             </mat-error>
                         </div>
@@ -989,8 +935,7 @@ The actual rendered columns are set as a property on the row definition" -->
                 </div>
                 <div class="col-md-5">
                     <div class="form-group mb-0">
-                        <textarea class="form-control" formControlName="notes"
-                            maxlength="{{getFormControl().notes.maxLength}}" rows="5"></textarea>
+                        <textarea class="form-control" formControlName="notes" maxlength="{{getFormControl().notes.maxLength}}" rows="5"></textarea>
                     </div>
                     <div class="row ">
 
@@ -1196,13 +1141,10 @@ The actual rendered columns are set as a property on the row definition" -->
         </div>
     </div>
 </div>
-<div *ngIf="showEdit" [formGroup]="editPayment"
-    [ngClass]="{'pt-72': invoiceInSub=='invoiceSubscription','mt-0':invoiceInSub!='invoiceSubscription'}"
-    class="bg-white pb-44 ">
+<div *ngIf="showEdit" [formGroup]="editPayment" [ngClass]="{'pt-72': invoiceInSub=='invoiceSubscription','mt-0':invoiceInSub!='invoiceSubscription'}" class="bg-white pb-44 ">
     <div class="row  popup-header">
         <div class="col-md-10 pl-0">
-            <h2 *ngIf="invoiceInSub=='invoiceSubscription'" class="f-400 wrapper-20 mb-0">Edit Invoice
-                of {{storeData.invoiceNumber}}
+            <h2 *ngIf="invoiceInSub=='invoiceSubscription'" class="f-400 wrapper-20 mb-0">Edit Invoice of {{storeData.invoiceNumber}}
             </h2>
             <h4 *ngIf="invoiceInSub!='invoiceSubscription'" class="f-400 wrapper-20 mb-0">Add Invoice</h4>
         </div>
@@ -1222,17 +1164,13 @@ The actual rendered columns are set as a property on the row definition" -->
                     <div class="col-md-12 p-0">
                         <div class="form-group">
                             <mat-form-field>
-                                <input [matAutocomplete]="auto1" aria-label="client" class="form-control br-0 pl-8"
-                                    formControlName="clientName" matInput>
+                                <input [matAutocomplete]="auto1" aria-label="client" class="form-control br-0 pl-8" formControlName="clientName" matInput>
                                 <mat-autocomplete #auto1="matAutocomplete">
-                                    <mat-option (onSelectionChange)="selectClient($event, c)"
-                                        *ngFor="let c of clientList" [value]="c.clientName">
+                                    <mat-option (onSelectionChange)="selectClient($event, c)" *ngFor="let c of clientList" [value]="c.clientName">
                                         <span>{{c.clientName}}</span>
                                     </mat-option>
                                 </mat-autocomplete>
-                                <mat-error
-                                    *ngIf="isClientName && getFormControledit().clientName.invalid || (getFormControledit().clientName.touched && getFormControledit().clientName.invalid)"
-                                    class="f-12 pt-4">
+                                <mat-error *ngIf="isClientName && getFormControledit().clientName.invalid || (getFormControledit().clientName.touched && getFormControledit().clientName.invalid)" class="f-12 pt-4">
                                     Client name is required
                                 </mat-error>
                             </mat-form-field>
@@ -1248,8 +1186,7 @@ The actual rendered columns are set as a property on the row definition" -->
                     <p class="m-0 text-custom f-12">BILLER ADDRESS</p>
                     <p *ngIf="editAdd1 == false" class="m-0 text-black text-break w-90 l-21">{{storeData.billerAddress}}
                     </p>
-                    <textarea *ngIf="editAdd1 == true" class="form-control br-0" formControlName="billerAddress"
-                        maxlength="{{getFormControledit().billerAddress.maxLength}}" rows="5"></textarea>
+                    <textarea *ngIf="editAdd1 == true" class="form-control br-0" formControlName="billerAddress" maxlength="{{getFormControledit().billerAddress.maxLength}}" rows="5"></textarea>
                     <p (click)="onclickChangeAdd1(editAdd1)" class="m-0 text-primary c-p f-12">CHANGE</p>
                     <p class="mb-0 f-12 text-custom text-right pt-4 pr-36">
                         {{getFormControledit().billerAddress.value?.length ? getFormControledit().billerAddress.value.length : 0}}/{{getFormControledit().billerAddress.maxLength}}
@@ -1259,8 +1196,7 @@ The actual rendered columns are set as a property on the row definition" -->
                     <p class="m-0 text-custom f-12">PAYEE ADDRESS</p>
                     <p *ngIf="editAdd2 == false" class="m-0 text-black text-break l-21 w-90">
                         {{storeData.billingAddress}}</p>
-                    <textarea *ngIf="editAdd2 == true" class="form-control br-0" formControlName="billingAddress"
-                        maxlength="{{getFormControledit().billingAddress.maxLength}}" rows="5"></textarea>
+                    <textarea *ngIf="editAdd2 == true" class="form-control br-0" formControlName="billingAddress" maxlength="{{getFormControledit().billingAddress.maxLength}}" rows="5"></textarea>
                     <p (click)="onclickChangeAdd2(editAdd2)" class="m-0 text-primary c-p f-12">CHANGE</p>
                     <p class="mb-0 f-12 text-custom text-right pt-4 pr-12">
                         {{getFormControledit().billingAddress.value?.length ? getFormControledit().billingAddress.value.length : 0}}/{{getFormControledit().billingAddress.maxLength}}
@@ -1269,7 +1205,7 @@ The actual rendered columns are set as a property on the row definition" -->
             </div>
         </div>
     </div>
-    <div class="wrapper-28">
+    <div class="wrapper-20 pb-0">
         <div class="bt-grey">
             <div class="row pt-28">
                 <div class="col-md-4 p-0">
@@ -1280,14 +1216,11 @@ The actual rendered columns are set as a property on the row definition" -->
                         <div class="col-md-7 p-0">
                             <div class="form-group mb-0">
 
-                                <input class="form-control br-0" formControlName="invoiceNumber"
-                                    maxlength="{{getFormControledit().invoiceNumber.maxLength}}" type="email">
+                                <input class="form-control br-0" formControlName="invoiceNumber" maxlength="{{getFormControledit().invoiceNumber.maxLength}}" type="email">
 
                             </div>
                             <div class="col-md-12 pl-0">
-                                <mat-error
-                                    *ngIf="isInvoiceNumber && getFormControledit().invoiceNumber.invalid || (getFormControledit().invoiceNumber.touched && getFormControledit().invoiceNumber.invalid)"
-                                    class="f-12 pt-4">
+                                <mat-error *ngIf="isInvoiceNumber && getFormControledit().invoiceNumber.invalid || (getFormControledit().invoiceNumber.touched && getFormControledit().invoiceNumber.invalid)" class="f-12 pt-4">
                                     Invoice no. is required
                                 </mat-error>
                             </div>
@@ -1307,8 +1240,7 @@ The actual rendered columns are set as a property on the row definition" -->
                         <div class="col-md-6 pr-0">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input [matDatepicker]="picker" class="form-control" formControlName="invoiceDate"
-                                        matInput readonly>
+                                    <input [matDatepicker]="picker" class="form-control" formControlName="invoiceDate" matInput readonly>
                                     <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
                                     <mat-error class="f-12 pt-4">Invoice date is required
@@ -1328,8 +1260,7 @@ The actual rendered columns are set as a property on the row definition" -->
                         <div class="col-md-6 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input [matDatepicker]="dueDatePicker" class="form-control"
-                                        formControlName="dueDate" matInput readonly>
+                                    <input [matDatepicker]="dueDatePicker" class="form-control" formControlName="dueDate" matInput readonly>
                                     <mat-datepicker-toggle [for]="dueDatePicker" matSuffix></mat-datepicker-toggle>
                                     <mat-datepicker #dueDatePicker></mat-datepicker>
                                 </mat-form-field>
@@ -1363,9 +1294,7 @@ The actual rendered columns are set as a property on the row definition" -->
                     <div class="col-md-6 pl-0">
                         <div class="row">
                             <div class="form-group mb-0 ml-8 w-100">
-                                <input [matAutocomplete]="auto" aria-label="State" class="form-control w-100 br-0 pl-8"
-                                    formControlName="serviceName" list="serviceName" matInput
-                                    placeholder="You can search service">
+                                <input [matAutocomplete]="auto" aria-label="State" class="form-control w-100 br-0 pl-8" formControlName="serviceName" list="serviceName" matInput placeholder="You can search service">
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option *ngFor="let s of serviceList" [value]="s.serviceName">
                                         <span>{{s.serviceName}}</span>
@@ -1373,50 +1302,39 @@ The actual rendered columns are set as a property on the row definition" -->
                                 </mat-autocomplete>
                             </div>
                             <div class="col-md-8">
-                                <mat-error
-                                    *ngIf="isServiceName && getFormControledit().serviceName.invalid || (getFormControledit().serviceName.touched && getFormControledit().serviceName.invalid)"
-                                    class="f-12 pt-4">
+                                <mat-error *ngIf="isServiceName && getFormControledit().serviceName.invalid || (getFormControledit().serviceName.touched && getFormControledit().serviceName.invalid)" class="f-12 pt-4">
                                     Service name is required
                                 </mat-error>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2 pl-0">
-                        <input (keypress)="utils.keyPress($event)" [(ngModel)]="finalAmount" class="form-control br-0"
-                            formControlName="finalAmount" type="number">
+                        <input (keypress)="utils.keyPress($event)" [(ngModel)]="finalAmount" class="form-control br-0" formControlName="finalAmount" type="number">
                         <div class="col-md-8">
-                            <mat-error
-                                *ngIf="isPrice && getFormControledit().finalAmount.invalid || (getFormControledit().finalAmount.touched && getFormControledit().finalAmount.invalid)"
-                                class="f-12 pt-4">
+                            <mat-error *ngIf="isPrice && getFormControledit().finalAmount.invalid || (getFormControledit().finalAmount.touched && getFormControledit().finalAmount.invalid)" class="f-12 pt-4">
                                 Price is required
                             </mat-error>
                         </div>
                     </div>
                     <div class="col-md-2 pl-0">
-                        <select (change)="changeTaxStatus($event.target.value)" class="form-control"
-                            formControlName="taxStatus" id="serviceName">
+                        <select (change)="changeTaxStatus($event.target.value)" class="form-control" formControlName="taxStatus" id="serviceName">
                             <option value="">Select tax type</option>
                             <option value="IGST(18%)">IGST(18%)</option>
                             <option value="SGST(9%)|CGST(9%)">SGST(9%) | CGST(9%)</option>
                         </select>
                         <div class="col-md-8">
-                            <mat-error
-                                *ngIf="isTaxstatus && getFormControledit().taxStatus.invalid || (getFormControledit().taxStatus.touched && getFormControledit().taxStatus.invalid)"
-                                class="f-12 pt-4">
+                            <mat-error *ngIf="isTaxstatus && getFormControledit().taxStatus.invalid || (getFormControledit().taxStatus.touched && getFormControledit().taxStatus.invalid)" class="f-12 pt-4">
                                 Tax status is required
                             </mat-error>
                         </div>
                     </div>
                     {{storeData.taxStatus}}
-                    <div class="col-md-2 p-0">
-                        <h5 *ngIf="storeData.cgstTaxAmount == undefined || storeData.igstTaxAmount"
-                            class="m-0 text-right pr-8">
+                    <div class="col-md-2 d-flex align-items-center justify-content-end">
+                        <h5 *ngIf="storeData.cgstTaxAmount == undefined || storeData.igstTaxAmount" class="m-0 text-right ">
                             ₹{{(18 / 100) * finalAmount + +finalAmount}}</h5>
-                        <h5 *ngIf="storeData.sgst != undefined" [hidden]="finalAmount !=undefined"
-                            class="m-0 text-right pr-8">
+                        <h5 *ngIf="storeData.sgst != undefined" [hidden]="finalAmount !=undefined" class="m-0 text-right ">
                             {{storeData.cgstTaxAmount}}</h5>
-                        <h5 *ngIf="storeData.igst != undefined" [hidden]="finalAmount !=undefined"
-                            class="m-0 text-right pr-8">
+                        <h5 *ngIf="storeData.igst != undefined" [hidden]="finalAmount !=undefined" class="m-0 text-right ">
                             {{storeData.igstTaxAmount}}</h5>
                     </div>
                 </div>
@@ -1426,110 +1344,104 @@ The actual rendered columns are set as a property on the row definition" -->
     </div>
     <!-- </div> -->
     <div class="row pt-12">
+
         <div class="col-md-8"></div>
         <div class="col-md-2">
             <h5 class="m-0">Sub total ₹</h5>
         </div>
-        <div class="col-md-2 p-0">
+        <div class="col-md-2 pr-24">
             <h5 class="m-0 text-right pr-8">{{finalAmount}} </h5>
         </div>
+
     </div>
     <div class="row pt-20">
         <div class="col-md-8"></div>
         <div class="col-md-2">
             <h5 class="m-0">Discount ₹</h5>
         </div>
-        <div class="col-md-2 p-0 b-grey">
-            <input (keypress)="utils.keyPress($event)" [(ngModel)]="discount" class="form-control br-0 text-right"
-                formControlName="discount" type="number" pattern="\d*"
-                onKeyPress="if(this.value.length==2) return false;">
+        <div class="col-md-2 pr-24">
+            <input (keypress)="utils.keyPress($event)" [(ngModel)]="discount" class="form-control br-0 text-right" formControlName="discount" type="number" pattern="\d*" onKeyPress="if(this.value.length==2) return false;">
         </div>
     </div>
     <div class="row pt-20 pb-12">
         <div class="col-md-8"></div>
-        <div *ngIf="taxStatus == 'IGST(18%)'" class="col-md-2">
+        <div *ngIf="taxStatus == 'IGST(18%)'" class="col-md-2 pr-24">
             <h5 class="m-0">IGST(18%)</h5>
         </div>
-        <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2">
+        <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 pr-24">
             <h5 class="m-0">SGST(9%)</h5>
         </div>
-        <div *ngIf="taxStatus == 'IGST(18%)'" class="col-md-2 p-0">
+        <div *ngIf="taxStatus == 'IGST(18%)'" class="col-md-2 pr-24">
             <h5 class="m-0 text-right pr-8">₹{{18 / 100 * (finalAmount - discount) || '0'}}</h5>
         </div>
-        <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 p-0">
+        <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 pr-24">
             <h5 class="m-0 text-right pr-8">₹{{9 / 100 * (finalAmount - discount) || '0'}}</h5>
         </div>
     </div>
     <div class="row pt-20 pb-12">
         <div class="col-md-8"></div>
-        <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2">
+        <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 pr-24">
             <h5 class="m-0">CGST(9%)</h5>
         </div>
-        <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 p-0">
+        <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 pr-24">
             <h5 class="m-0 text-right pr-8">₹{{9 / 100 * (finalAmount - discount) || '0'}}</h5>
         </div>
     </div>
-    <div class="row pb-8">
+    <div class="row pb-12 ">
         <div class="col-md-8"></div>
-        <div class="col-md-2 bt-grey">
+        <div class="col-md-2 pt-4 bt-grey">
             <h5 class="m-0 text-black pt-8 f-500">Total</h5>
         </div>
-        <div class="col-md-2 bt-grey p-0">
+        <div class="col-md-2 pt-4 bt-grey pr-24">
             <h5 class="m-0 text-right pr-8 pt-8 text-black f-500">
                 {{(finalAmount - discount) + +(18 / 100 * (finalAmount - discount)) || '0'}}</h5>
         </div>
     </div>
     <!-- </div> -->
     <!-- </div> -->
+
+
     <div class="bg-grey lt wrapper-28">
         <div class="row">
             <div class="col-md-6">
-                <div class="bg-grey lt wrapper-28">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-3 p-0">
-                                    <h5 class="m-0 pt-24 text-black text-center">Footnote Description</h5>
-                                </div>
-                                <div class="col-md-9 p-0">
-                                    <div class="form-group mb-0">
-                                        <textarea class="form-control" formControlName="footnote"
-                                            maxlength="{{getFormControledit().footnote.maxLength}}" rows="5"></textarea>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <p class="f-12 m-0 text-custom roboto">Optional</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p class="mb-0 f-12 text-custom text-right pt-4">
-                                                {{getFormControledit().footnote.value?.length ? getFormControledit().footnote.value.length : 0}}/{{getFormControledit().footnote.maxLength}}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
+                <div class="row">
+                    <div class="col-md-3 pl-0">
+                        <h5 class="m-0 pt-24 text-black text-right">Footnote Description</h5>
+                    </div>
+                    <div class="col-md-9 p-0">
+                        <div class="form-group mb-0">
+                            <textarea class="form-control" formControlName="footnote" maxlength="{{getFormControledit().footnote.maxLength}}" rows="5"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="f-12 m-0 text-custom roboto">Optional</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-0 f-12 text-custom text-right pt-4">
+                                    {{getFormControledit().footnote.value?.length ? getFormControledit().footnote.value.length : 0}}/{{getFormControledit().footnote.maxLength}}
+                                </p>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-3 p-0">
-                                    <h5 class="m-0 text-black pt-24 text-center">Terms & Conditions</h5>
-                                </div>
-                                <div class="col-md-9 p-0">
-                                    <div class="form-group mb-0">
-                                        <textarea class="form-control" formControlName="terms"
-                                            maxlength="{{getFormControledit().terms.maxLength}}" rows="5"></textarea>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <p class="f-12 m-0 text-custom roboto">Optional</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p class="mb-0 f-12 text-custom text-right pt-4">
-                                                {{getFormControledit().terms.value?.length ? getFormControledit().terms.value.length : 0}}/{{getFormControledit().terms.maxLength}}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-3 pl-0">
+                        <h5 class="m-0 text-black pt-24 text-right">Terms & Conditions</h5>
+                    </div>
+                    <div class="col-md-9 p-0">
+                        <div class="form-group mb-0">
+                            <textarea class="form-control" formControlName="terms" maxlength="{{getFormControledit().terms.maxLength}}" rows="5"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="f-12 m-0 text-custom roboto">Optional</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-0 f-12 text-custom text-right pt-4">
+                                    {{getFormControledit().terms.value?.length ? getFormControledit().terms.value.length : 0}}/{{getFormControledit().terms.maxLength}}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -1537,6 +1449,8 @@ The actual rendered columns are set as a property on the row definition" -->
             </div>
         </div>
     </div>
+
+
     <div class="row pt-44 mt-44">
         <div class="col-md-12 right text-right">
             <h5 (click)="closeEditInv()" class="mat-stroked-button br-0 text-light mr-20">CANCEL</h5>
