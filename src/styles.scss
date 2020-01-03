@@ -257,28 +257,6 @@
     padding-top: 11%;
     overflow: auto;
     display: block;
-}
-
-.wrapper-20 {
-    display: block;
-}
-
-.custom-tags .mat-form-field-infix {
-    padding-top: 4px;
-    border-top: 0px !important
-}
-
-.custom-tags .mat-form-field-appearance-legacy .mat-form-field-underline {
-    display: none;
-}
-
-.filterBox {
-    position: sticky;
-    top: 0px;
-    height: 100%;
-    padding-top: 12%;
-    overflow: auto;
-    display: block;
     .wrapper-20 {
         display: block;
     }
@@ -385,9 +363,9 @@
         color: #3F3F3F;
     }
     // .custom-checkbox .mat-checkbox-inner-container{
-    //     top:0;
-    //     right: 0;
-    //     position: absolute;
+    // top:0;
+    // right: 0;
+    // position: absolute;
     // }
 }
 
@@ -463,7 +441,6 @@
         width: auto;
         background: transparent;
         color: #008FFF;
-        opacity: 1;
     }
 }
 
@@ -750,7 +727,7 @@ mat-tab-group[vertical] {
         border-bottom: 1px solid #DADCE0;
     }
     // .mat-tab-label-container{
-    //     border-color: #DADCE0 #DADCE0 #fff;
+    // border-color: #DADCE0 #DADCE0 #fff;
     // }
     .mat-tab-body-wrapper {
         border: 1px solid #DADCE0;
@@ -798,7 +775,7 @@ mat-tab-group[vertical] {
         // border-bottom: 1px solid transparent !important;
     }
     // .mat-ink-bar {
-    //     height: 6px !important;
+    // height: 6px !important;
     // }
 }
 
@@ -830,16 +807,16 @@ mat-tab-group[vertical] {
 }
 
 // .headerClassNav {
-//     border-bottom: 0px !important;
-//     position: fixed !important;
-//     width: 100%;
-//     top: 0px;
-//     background: #ffffff;
-//     z-index: 9;
-//     .mat-tab-links {
-//         justify-content: center;
-//         height: 65px;
-//     }
+// border-bottom: 0px !important;
+// position: fixed !important;
+// width: 100%;
+// top: 0px;
+// background: #ffffff;
+// z-index: 9;
+// .mat-tab-links {
+// justify-content: center;
+// height: 65px;
+// }
 // }
 #ui-customer-secondhead {
     border-bottom: 0px !important;
@@ -884,8 +861,8 @@ mat-tab-group[vertical] {
 }
 
 // #plan-home .mat-stroked-button {
-//     padding-left: 5px !important;
-//     padding-right: 10px !important;
+// padding-left: 5px !important;
+// padding-right: 10px !important;
 // }
 #ui-customer .mat-tab-label {
     text-transform: uppercase;
@@ -972,8 +949,8 @@ mat-tab-group[vertical] {
         padding: 10px 6px !important;
     }
     //.mat-row:last-child {
-    //    font-weight: bold !important;
-    //    text-align: right !important;
+    // font-weight: bold !important;
+    // text-align: right !important;
     //}
 }
 
