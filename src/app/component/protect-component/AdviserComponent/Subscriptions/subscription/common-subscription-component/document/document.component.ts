@@ -231,7 +231,20 @@ export class DocumentComponent implements OnInit {
     );
 
   }
-
+  openEsignDocument() {
+    const data = {
+      advisorId: this.advisorId,
+      clientData: this._clientData,
+      templateType: 3, // 2 is for quotation
+      documentList: []
+    };
+    this.dataSource.filteredData.forEach(singleElement => {
+      if (singleElement.selected) {
+        data.documentList.push(singleElement);
+      }
+    });
+    this.open('eSignDocument', data);
+  }
   openSendEmail() {
     const data = {
       advisorId: this.advisorId,
