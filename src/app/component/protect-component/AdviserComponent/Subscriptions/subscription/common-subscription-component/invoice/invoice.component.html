@@ -1214,7 +1214,7 @@ The actual rendered columns are set as a property on the row definition" -->
     </div>
     <div class="row pt-40">
         <div class="col-md-3 pr-0">
-            <h5 class="m-0 text-right pt-8">Client name </h5>
+            <h5 class="m-0 text-right pt-8">Client name {{invoiceInSub =='invoiceSubscription'}}</h5>
         </div>
         <div class="col-md-6">
             <div class="form-group">
@@ -1222,7 +1222,7 @@ The actual rendered columns are set as a property on the row definition" -->
                     <div class="col-md-12 p-0">
                         <div class="form-group">
                             <mat-form-field>
-                                <input readonly [matAutocomplete]="auto1" aria-label="client" class="form-control br-0 pl-8"
+                                <input [readonly]="invoiceInSub =='invoiceSubscription'"  [matAutocomplete]="auto1" aria-label="client" class="form-control br-0 pl-8"
                                     formControlName="clientName" matInput>
                                 <mat-autocomplete #auto1="matAutocomplete">
                                     <mat-option (onSelectionChange)="selectClient($event, c)"
@@ -1363,7 +1363,7 @@ The actual rendered columns are set as a property on the row definition" -->
                     <div class="col-md-6 pl-0">
                         <div class="row">
                             <div class="form-group mb-0 ml-8 w-100">
-                                <input readonly [matAutocomplete]="auto" aria-label="State" class="form-control w-100 br-0 pl-8"
+                                <input [readonly]="invoiceInSub =='invoiceSubscription'"  [matAutocomplete]="auto" aria-label="State" class="form-control w-100 br-0 pl-8"
                                     formControlName="serviceName" list="serviceName" matInput
                                     placeholder="You can search service">
                                 <mat-autocomplete #auto="matAutocomplete">
