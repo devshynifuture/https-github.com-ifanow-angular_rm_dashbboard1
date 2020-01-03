@@ -40,6 +40,7 @@ export interface PeriodicElement {
 
 export class InvoiceComponent implements OnInit {
   highLight: boolean;
+  maxDate = new Date();
 
   [x: string]: any;
 

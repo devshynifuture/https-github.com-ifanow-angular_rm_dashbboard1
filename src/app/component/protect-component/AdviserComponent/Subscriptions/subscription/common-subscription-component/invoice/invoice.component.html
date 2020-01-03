@@ -257,10 +257,10 @@ The actual rendered columns are set as a property on the row definition" -->
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
-                                    <input [inputValidator]="numValidator"
-                                           appInputValueValidation class="form-control" matInput
-                                           formControlName="amountReceived"
-                                           maxlength="{{getFormControl().amountReceived.maxLength}}" type="number">
+                                    <input #amountReceiveRef
+                                           appNumberOnly [maxLength]="10" class="form-control" matInput
+                                           formControlName="amountReceived" 
+                                           type="text">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 pr-0">
@@ -272,8 +272,8 @@ The actual rendered columns are set as a property on the row definition" -->
                                     </div>
                                     <div class="col-md-2 pl-0">
                                         <p class="mb-0 f-12 text-custom text-right pt-4">
-                                            {{getFormControl().amountReceived.value?.length ? getFormControl().amountReceived.value.length : 0}}
-                                            /{{getFormControl().amountReceived.maxLength}}
+                                            <!-- {{getFormControl().amountReceived.value?.length ? getFormControl().amountReceived.value.length : 0}} -->
+                                            {{ amountReceiveRef.value.length }}/{{getFormControl().amountReceived.maxLength}}
                                         </p>
                                     </div>
                                 </div>
@@ -344,9 +344,9 @@ The actual rendered columns are set as a property on the row definition" -->
                                     <!-- <input type="date" class="form-control" formControlName="paymentDate"> -->
 
                                     <mat-form-field>
-                                        <input (keypress)="utils.dateFormat($event)" [matDatepicker]="picker"
+                                        <input (focus)="picker.open()" [max]="maxDate" [matDatepicker]="picker"
                                             class="form-control" formControlName="paymentDate" matInput
-                                            placeholder="mm/dd/yyyy">
+                                            >
                                         <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                     </mat-form-field>
@@ -914,8 +914,8 @@ The actual rendered columns are set as a property on the row definition" -->
                         <!-- <input type="date" class="form-control" formControlName="paymentDate"> -->
 
                         <mat-form-field>
-                            <input appDateInputFormat [matDatepicker]="picker" class="form-control"
-                                formControlName="paymentDate" matInput (focus)="picker.open()" placeholder="mm/dd/yyyy">
+                            <input [matDatepicker]="picker" class="form-control" [max]="maxDate"
+                                formControlName="paymentDate" matInput (focus)="picker.open()">
                             <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
@@ -1253,8 +1253,7 @@ The actual rendered columns are set as a property on the row definition" -->
                         maxlength="{{getFormControledit().billerAddress.maxLength}}" rows="5"></textarea>
                     <p (click)="onclickChangeAdd1(editAdd1)" class="m-0 text-primary c-p f-12">CHANGE</p>
                     <p class="mb-0 f-12 text-custom text-right pt-4 pr-36">
-                        {{getFormControledit().billerAddress.value?.length ? getFormControledit().billerAddress.value.length : 0}}
-                        /{{getFormControledit().billerAddress.maxLength}}
+                        {{getFormControledit().billerAddress.value?.length ? getFormControledit().billerAddress.value.length : 0}}/{{getFormControledit().billerAddress.maxLength}}
                     </p>
                 </div>
                 <div class="col-md-6 pl-0">
@@ -1283,7 +1282,7 @@ The actual rendered columns are set as a property on the row definition" -->
                         <div class="col-md-7 p-0">
                             <div class="form-group mb-0">
 
-                                <input class="form-control br-0" formControlName="invoiceNumber"
+                                <input class="form-control br-0" #invoiceNumberRef formControlName="invoiceNumber"
                                     maxlength="{{getFormControledit().invoiceNumber.maxLength}}" type="email">
 
                             </div>
@@ -1296,8 +1295,8 @@ The actual rendered columns are set as a property on the row definition" -->
                             </div>
                             <div class="col-md-12">
                                 <p class="mb-0 f-12 text-custom text-right pt-4">
-                                    {{getFormControledit().invoiceNumber.value?.length ? getFormControledit().invoiceNumber.value.length : 0}}
-                                    /{{getFormControledit().invoiceNumber.maxLength}}
+                                    {{ invoiceNumberRef.value.length }}/{{getFormControledit().invoiceNumber.maxLength}}
+                                    <!-- {{getFormControledit().invoiceNumber.value?.length ? getFormControledit().invoiceNumber.value.length : 0}}/{{getFormControledit().invoiceNumber.maxLength}} -->
                                 </p>
                             </div>
                         </div>
@@ -1506,8 +1505,7 @@ The actual rendered columns are set as a property on the row definition" -->
                                         </div>
                                         <div class="col-md-6">
                                             <p class="mb-0 f-12 text-custom text-right pt-4">
-                                                {{getFormControledit().footnote.value?.length ? getFormControledit().footnote.value.length : 0}}
-                                                /{{getFormControledit().footnote.maxLength}}
+                                                {{getFormControledit().footnote.value?.length ? getFormControledit().footnote.value.length : 0}}/{{getFormControledit().footnote.maxLength}}
                                             </p>
                                         </div>
                                     </div>
@@ -1530,8 +1528,7 @@ The actual rendered columns are set as a property on the row definition" -->
                                         </div>
                                         <div class="col-md-6">
                                             <p class="mb-0 f-12 text-custom text-right pt-4">
-                                                {{getFormControledit().terms.value?.length ? getFormControledit().terms.value.length : 0}}
-                                                /{{getFormControledit().terms.maxLength}}
+                                                {{getFormControledit().terms.value?.length ? getFormControledit().terms.value.length : 0}}/{{getFormControledit().terms.maxLength}}
                                             </p>
                                         </div>
                                     </div>
