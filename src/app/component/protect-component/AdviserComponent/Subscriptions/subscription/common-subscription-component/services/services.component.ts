@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionService} from '../../../subscription.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionService } from '../../../subscription.service';
 import * as _ from 'lodash';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from '../../../../../../../Data-service/event.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from '../../../../../../../Data-service/event.service';
+import { AuthService } from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-services',
@@ -16,13 +16,12 @@ export class ServicesComponent implements OnInit {
   advisorId;
 
   @Input() componentFlag: string;
-  planServiceData = [{selected: false}];
+  planServiceData = [{ selected: false }];
   mappedData = [];
   mappedPlan = [];
   @Input() planData;
   _upperData: any;
   isLoading = false;
-
   @Input()
   set upperData(upperData) {
     console.log('FeeStructureComponent upperData set : ', this.upperData);
@@ -38,20 +37,20 @@ export class ServicesComponent implements OnInit {
   }
 
   constructor(private eventService: EventService,
-              private subService: SubscriptionService, private subinject: SubscriptionInject) {
+    private subService: SubscriptionService, private subinject: SubscriptionInject) {
   }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     // this.getPlanServiceData();
     if (this.componentFlag === 'services') {
-      this.getServicesMapped();
+      this.getServicesMapped()
     } else {
       this.getPlanServiceData();
     }
 
     this.mappedData = [];
-    console.log('upperdata', this.planData);
+    console.log('upperdata', this.planData)
   }
 
   getPlanServiceData() {
@@ -85,7 +84,6 @@ export class ServicesComponent implements OnInit {
       this.planServiceData = [];
     }
   }
-
   getServicesMapped() {
 
     const obj = {
@@ -93,12 +91,11 @@ export class ServicesComponent implements OnInit {
       advisorId: this.advisorId,
       docRepoId: this.upperData ? this.upperData.documentData.documentRepositoryId : null
     };
-    this.planServiceData = [{selected: false}];
+    this.planServiceData = [{ selected: false }];
     this.subService.servicesMapped(obj).subscribe(
       data => this.servicesMappedRes(data)
     );
   }
-
   servicesMappedRes(data) {
     console.log(data);
     this.isLoading = false;
@@ -115,7 +112,6 @@ export class ServicesComponent implements OnInit {
 
     }
   }
-
   selectService(data, index) {
     if (!this.isLoading) {
       (data.selected) ? this.unmapPlanToService(data) : this.mapPlanToService(data, index);
@@ -124,7 +120,7 @@ export class ServicesComponent implements OnInit {
   }
 
   dialogClose() {
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
   }
 
   mapPlanToService(data, index) {
@@ -148,13 +144,12 @@ export class ServicesComponent implements OnInit {
 
   savePlanMapToService() {
     if (this.componentFlag === 'services') {
-      this.mapDocumentToPlan();
+      this.mapDocumentToPlan()
     } else {
       this.saveServicePlanMapping();
     }
 
   }
-
   mapDocumentToPlan() {
     const obj = [];
     this.mappedData.forEach(planData => {
@@ -171,31 +166,46 @@ export class ServicesComponent implements OnInit {
       data => this.mapPlanToServiceRes(data)
     );
   }
-
   mapPlanToServiceRes(data) {
-    console.log(data);
+    console.log(data)
     this.eventService.openSnackBar('Service is mapped', 'OK');
-    this.dialogClose();
+    this.dialogClose()
 
   }
-
   savePlanMapToServiceResponse(data) {
-    console.log('map plan to service Data', data);
-    this.eventService.openSnackBar('Service is mapped', 'OK');
-  }
+    console.log("map plan to service Data", data)
+    if (this.mappedData.length === 0) {
+      this.eventService.openSnackBar('No service mapped', 'OK');
 
+    } else {
+      this.eventService.openSnackBar('Service is mapped', 'OK');
+
+    }
+  }
   saveServicePlanMapping() {
     const obj = [];
-    this.mappedData.forEach(element => {
+    if (this.mappedData.length == 0) {
       const data = {
         // advisorId: 12345,
         advisorId: this.advisorId,
-        global: element.global,
-        id: element.id,
+        global: 'false',
+        id: 0,
         planId: this.planData ? this.planData.id : null
       };
       obj.push(data);
-    });
+    } else {
+      this.mappedData.forEach(element => {
+        const data = {
+          // advisorId: 12345,
+          advisorId: this.advisorId,
+          global: element.global,
+          id: element.id,
+          planId: this.planData ? this.planData.id : null
+        };
+        obj.push(data);
+      });
+    }
+
     console.log(obj);
     this.subService.mapServiceToPlanData(obj).subscribe(
       data => this.savePlanMapToServiceResponse(data)
