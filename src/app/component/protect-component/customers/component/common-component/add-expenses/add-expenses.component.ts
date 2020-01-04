@@ -256,6 +256,10 @@ export class AddExpensesComponent implements OnInit {
     ]
     this.getdataForm('')
   }
+
+  preventDefault(e){
+    e.preventDefault();
+  }
   getdataForm(data) {
     if (data == undefined) {
       data = {}

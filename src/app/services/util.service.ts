@@ -74,6 +74,7 @@ export class UtilService {
         console.log('Status >>>>>>', element);
     }
 
+
     totalCalculator(data: number[]) {
         return data.reduce((accumulator, currentValue) => {
             accumulator = accumulator + currentValue;

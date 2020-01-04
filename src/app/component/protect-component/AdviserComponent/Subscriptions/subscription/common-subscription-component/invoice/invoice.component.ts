@@ -189,6 +189,10 @@ export class InvoiceComponent implements OnInit {
     }
   }
 
+  preventDefault(e){
+    e.preventDefault();
+  }
+
   getPayReceive(data) {
     const obj = {
       invoiceId: data

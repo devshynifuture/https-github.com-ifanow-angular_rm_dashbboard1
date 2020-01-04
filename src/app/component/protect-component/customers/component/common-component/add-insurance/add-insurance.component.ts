@@ -154,6 +154,9 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       approxAmt: null
     }));
   }
+  preventDefault(e){
+    e.preventDefault();
+  }
 
   removeTransaction(item) {
     this.cashFlowEntries.removeAt(item);

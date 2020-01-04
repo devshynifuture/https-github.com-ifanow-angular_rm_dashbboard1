@@ -45,7 +45,7 @@
           <div class="col-md-3">
             <div class="form-group mb-0">
               <mat-form-field>
-                <input (focus)="picker.open()" [matDatepicker]="picker" (input)="this.preventDefault()" class="form-control br-0"
+                <input (focus)="picker.open()" [matDatepicker]="picker" (input)="preventDefault($event)" class="form-control br-0"
                   formControlName="activationDate" matInput readonly>
                 <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
