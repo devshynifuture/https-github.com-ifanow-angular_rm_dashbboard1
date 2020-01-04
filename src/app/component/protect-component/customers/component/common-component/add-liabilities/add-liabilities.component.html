@@ -102,7 +102,7 @@
       <div class="form-group mb-0">
         <label>Outstanding as on</label>
         <mat-form-field>
-          <input class="form-control br-0" matInput (focus)="picker.open()" (input)="e.preventDefault()" [matDatepicker]="picker" formControlName="poDate">
+          <input class="form-control br-0" matInput (focus)="picker.open()" (input)="this.preventDefault()" [matDatepicker]="picker" formControlName="poDate">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           <mat-error class="f-12 pt-4"
@@ -133,7 +133,7 @@
     </div>
     <div class="col-md-3 ">
       <mat-form-field>
-        <input class="form-control br-0" (focus)="picker.open()" (input)="e.prevent.Default()" matInput [matDatepicker]="picker" formControlName="CommencementDate">
+        <input class="form-control br-0" (focus)="picker.open()" (input)="this.prevent.Default()" matInput [matDatepicker]="picker" formControlName="CommencementDate">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
         <mat-error class="f-12 pt-4"
@@ -276,7 +276,7 @@
           [formGroupName]="pointIndex">
           <div class="col-md-4">
             <mat-form-field>
-              <input class="form-control br-0" matInput (focus)="picker.open()" (input)="e.preventDefault()" [matDatepicker]="picker" formControlName="partPaymentDate">
+              <input class="form-control br-0" matInput (focus)="picker.open()" (input)="this.preventDefault()" [matDatepicker]="picker" formControlName="partPaymentDate">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
               <mat-error class="f-12 pt-4">

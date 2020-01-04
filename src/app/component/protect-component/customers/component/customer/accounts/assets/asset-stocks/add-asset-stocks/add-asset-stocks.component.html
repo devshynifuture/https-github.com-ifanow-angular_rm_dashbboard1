@@ -42,7 +42,7 @@
         <div class="col-md-3">
             <div class="form-group form-group_one mb-0">
                 <mat-form-field>
-                    <input matInput autocomplete="off" formControlName="valueAsOn" class="form-control br-0" [matDatepicker]="balanceAsOn">
+                    <input matInput (focus)="balanceAsOn.open()" (input)="this.preventDefault()" autocomplete="off" formControlName="valueAsOn" class="form-control br-0" [matDatepicker]="balanceAsOn">
                     <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                     <mat-datepicker #balanceAsOn></mat-datepicker>
                     <mat-error>This field is required

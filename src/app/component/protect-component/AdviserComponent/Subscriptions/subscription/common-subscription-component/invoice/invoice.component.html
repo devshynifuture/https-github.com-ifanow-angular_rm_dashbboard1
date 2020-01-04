@@ -224,7 +224,7 @@ more_vert
                                     <!-- <input type="date" class="form-control" formControlName="paymentDate"> -->
 
                                     <mat-form-field>
-                                        <input [matDatepicker]="picker" (focus)="picker.open()" (input)="e.preventDefault()" class="form-control"
+                                        <input [matDatepicker]="picker" (focus)="picker.open()" (input)="this.preventDefault()" class="form-control"
                                             formControlName="paymentDate" matInput [max]="maxDate">
                                         <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
@@ -538,7 +538,7 @@ The actual rendered columns are set as a property on the row definition" -->
                   <!-- <input type="date" class="form-control" formControlName="paymentDate"> -->
 
                   <mat-form-field>
-                    <input (focus)="picker.open()" (input)="e.preventDefault()" [matDatepicker]="picker" [max]="maxDate"
+                    <input (focus)="picker.open()" (input)="this.preventDefault()" [matDatepicker]="picker" [max]="maxDate"
                            class="form-control" formControlName="paymentDate" matInput>
                     <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
@@ -1105,7 +1105,7 @@ The actual rendered columns are set as a property on the row definition" -->
             <!-- <input type="date" class="form-control" formControlName="paymentDate"> -->
 
             <mat-form-field>
-              <input (focus)="picker.open()" (input)="e.preventDefault()" [matDatepicker]="picker" [max]="maxDate" class="form-control"
+              <input (focus)="picker.open()" (input)="this.preventDefault()" [matDatepicker]="picker" [max]="maxDate" class="form-control"
                      formControlName="paymentDate" matInput placeholder="mm/dd/yyyy">
               <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>

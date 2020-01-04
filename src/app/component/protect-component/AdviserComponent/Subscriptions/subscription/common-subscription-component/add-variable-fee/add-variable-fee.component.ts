@@ -30,6 +30,7 @@ export class AddVariableFeeComponent implements OnInit {
   serviceId: any;
   dataToSend: any;
   data: any;
+  restrictMoreThan100Val;
 
   @Input() set variableFee(data) {
     this.ischeckVariableData = data
