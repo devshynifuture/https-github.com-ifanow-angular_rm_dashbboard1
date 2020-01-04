@@ -344,7 +344,7 @@ The actual rendered columns are set as a property on the row definition" -->
                                     <!-- <input type="date" class="form-control" formControlName="paymentDate"> -->
 
                                     <mat-form-field>
-                                        <input [matDatepicker]="picker" (focus)="picker.open()" class="form-control"
+                                        <input [matDatepicker]="picker" (focus)="picker.open()" (input)="e.preventDefault()" class="form-control"
                                             formControlName="paymentDate" matInput [max]="maxDate">
                                         <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
