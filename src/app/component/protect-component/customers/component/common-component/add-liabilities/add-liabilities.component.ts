@@ -78,6 +78,9 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     this.getLiability(this.data);
 
   }
+  preventDefault(e){
+    e.preventDefault();
+  }
 
   showMore() {
     this.show = true;
