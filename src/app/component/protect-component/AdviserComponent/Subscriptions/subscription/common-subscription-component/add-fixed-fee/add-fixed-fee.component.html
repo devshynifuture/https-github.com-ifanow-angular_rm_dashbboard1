@@ -44,8 +44,7 @@
       <div class="row">
         <div class="col-md-5 p-0">
           <div class="form-group mb-0">
-            <input #codeRef type="text" appCodeText [maxLength]="10" formControlName="code"
-              class="form-control br-0">
+            <input #codeRef type="text" appCodeText [maxLength]="10" formControlName="code" class="form-control br-0">
           </div>
 
           <div class="row">
@@ -77,7 +76,7 @@
       </div>
       <div class="row">
         <div class="col-md-8">
-          <p class="mb-0 f-12 text-custom">optional</p>
+          <p class="mb-0 f-12 text-custom">Optional</p>
         </div>
         <div class="col-md-4">
           <p class="mb-0 f-12 text-custom text-right">
@@ -97,7 +96,8 @@
       <div class="form-group mb-0">
         <!-- <input type="number" (keypress)="utils.keyPress($event)" maxlength="10" formControlName="fees"
           class="form-control br-0"> -->
-        <input #feesRef type="text" class="form-control br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" formControlName="fees">
+        <input #feesRef type="text" class="form-control br-0" appInputValueValidation
+          [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" formControlName="fees">
       </div>
       <div class="row">
         <div class="col-md-8">
@@ -120,7 +120,14 @@
     </div>
     <div class="col-md-6">
       <mat-radio-group formControlName="billingNature">
-
+        <mat-radio-button value="1"
+            [ngClass]="{'b-a-custom': fixedFeeData.get('billingNature').value==1,'text-primary':fixedFeeData.get('billingNature').value==1,'b-a':fixedFeeData.get('billingNature').value==2}"
+            class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio" checked="true">Recurring
+          </mat-radio-button>
+          <mat-radio-button value="2"
+            [ngClass]="{'b-a-custom': fixedFeeData.get('billingNature').value==2,'text-primary':fixedFeeData.get('billingNature').value==2,'b-a':fixedFeeData.get('billingNature').value==1}"
+            class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">Once
+          </mat-radio-button>
       </mat-radio-group>
     </div>
   </div>
@@ -132,8 +139,6 @@
       <div class="row">
         <div class="col-md-5 p-0">
           <div class="form-group mb-0">
-            <!-- <input type="number" pattern="\d*" onKeyPress="if(this.value.length==2) return false;"
-              formControlName="billEvery" class="form-control br-0"> -->
             <input type="text" appNumberOnly [maxLength]="2" formControlName="billEvery"
               class="form-control br-0 br-none">
           </div>
@@ -175,8 +180,8 @@
 </div>
 <div class="bottom-fixed wrapper-12 pt-16">
   <div class="row">
-    <div class="col-md-4">
-      <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>
+    <div class="col-md-4 pt-8">
+      <h5 class="mb-0  text-white c-p" (click)="Close('close')">Cancel</h5>
     </div>
     <div class="col-md-8 right text-right">
       <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFeeTypeData('1','close')">Save</button>

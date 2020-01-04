@@ -18,11 +18,13 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group mb-0">
-                            <input type="email" #planName formControlName="planName" maxlength="40" class="form-control br-2">
+                            <input type="email" #planName formControlName="planName" maxlength="40"
+                                class="form-control br-2">
                         </div>
                         <div class="row">
                             <div class="col-md-8">
-                                <mat-error class="f-12 pt-4" [ngClass]="{'v-h': !(isPlanValid && getFormControl().planName.invalid || getFormControl().planName.touched && getFormControl().planName.invalid)}">
+                                <mat-error class="f-12 pt-4"
+                                    [ngClass]="{'v-h': !(isPlanValid && getFormControl().planName.invalid || getFormControl().planName.touched && getFormControl().planName.invalid)}">
                                     Plan name is required</mat-error>
                             </div>
                             <div class="col-md-4">
@@ -37,14 +39,16 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group mb-0">
-                            <input type="text" #code formControlName="code" appAlphaNumeric class="form-control br-2">
+                            <input type="text" #code formControlName="code" appNumberOnly [maxLength]="10"
+                                class="form-control br-2">
                         </div>
                         <div class="row">
-                            <div class="col-md-8">
-                                <mat-error class="f-12" [ngClass]="{'v-h': !(isCodeValid && getFormControl().code.invalid || getFormControl().code.touched && getFormControl().code.invalid)}">
+                            <div class="col-md-9">
+                                <mat-error class="f-12"
+                                    [ngClass]="{'v-h': !(isCodeValid && getFormControl().code.invalid || getFormControl().code.touched && getFormControl().code.invalid)}">
                                     Code is required</mat-error>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <p class="mb-0 f-12 text-custom text-right pt-4">{{code.value.length}}/10</p>
                             </div>
                         </div>
@@ -56,11 +60,13 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group mb-0">
-                            <textarea class="form-control br-2" #description maxlength="160" formControlName="description" rows="5"></textarea>
+                            <textarea class="form-control br-2" #description maxlength="160"
+                                formControlName="description" rows="5"></textarea>
                         </div>
                         <div class="row">
                             <div class="col-md-8">
-                                <mat-error class="f-12" [ngClass]="{'d-n': !(isDescValid && getFormControl().description.invalid || getFormControl().description.touched && getFormControl().description.invalid)}">
+                                <mat-error class="f-12"
+                                    [ngClass]="{'d-n': !(isDescValid && getFormControl().description.invalid || getFormControl().description.touched && getFormControl().description.invalid)}">
                                     Description is required</mat-error>
                             </div>
                             <div class="col-md-4">

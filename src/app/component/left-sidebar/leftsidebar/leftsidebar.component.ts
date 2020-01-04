@@ -1,11 +1,11 @@
-import {Component, ElementRef, NgZone, OnInit} from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit } from '@angular/core';
 import $ from 'jquery';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from '../../../Data-service/event.service';
-import {SubscriptionInject} from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormControl} from '@angular/forms';
-import {SubscriptionService} from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {Router} from '@angular/router';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from '../../../Data-service/event.service';
+import { SubscriptionInject } from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormControl } from '@angular/forms';
+import { SubscriptionService } from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-leftsidebar',
@@ -28,8 +28,8 @@ export class LeftsidebarComponent implements OnInit {
   loginType: number = 1;
 
   constructor(private authService: AuthService, private _eref: ElementRef,
-              private eventService: EventService, private subinject: SubscriptionInject,
-              private subService: SubscriptionService, private router: Router, private ngZone: NgZone) {
+    private eventService: EventService, private subinject: SubscriptionInject,
+    private subService: SubscriptionService, private router: Router, private ngZone: NgZone) {
     // this.eventService.sideNavContainerClassData.subscribe(
     //   data => this.sideNavContainerClass = data
     // );
@@ -63,7 +63,7 @@ export class LeftsidebarComponent implements OnInit {
   selectClient(singleClientData) {
     console.log(singleClientData);
     this.ngZone.run(() => {
-      this.router.navigate(["customer", "detail", "account", "assets"], {state: {...singleClientData}});
+      this.router.navigate(["customer", "detail", "account", "assets"], { state: { ...singleClientData } });
     });
   }
 
@@ -96,7 +96,7 @@ export class LeftsidebarComponent implements OnInit {
 
   showsmallNavWrapper() {
     $('#d').removeClass('width-230');
-    $('#left').css('margin-left', '65px');
+    $('#left').css('margin-left', '60px');
     $('#left').css('transition', 'margin-left 0.3s');
     $('#d').css('transition', 'width 0.2s');
     this.showTabs = false;
@@ -109,7 +109,7 @@ export class LeftsidebarComponent implements OnInit {
     }
     if (window.innerWidth <= 600) {
       this.showTabs = false;
-      $('#left').css('margin-left', '65px');
+      $('#left').css('margin-left', '60px');
       $('#d').addClass('width,60px');
       $('#d').removeClass('width-230');
     } else {
