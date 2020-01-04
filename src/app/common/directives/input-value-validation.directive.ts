@@ -1,6 +1,5 @@
 import {ValidatorType} from '../../services/util.service';
 import {Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2} from '@angular/core';
-
 @Directive({
   selector: '[appInputValueValidation]',
   // animations: [
@@ -47,9 +46,9 @@ export class InputValueValidationDirective {
 
   @HostListener('input', ['$event']) onInputChange(event) {
     let currValue = this._el.nativeElement.value;
-    // console.log('InputValueValidationDirective input event : ', event);
-    // console.log('InputValueValidationDirective input currValue : ', currValue);
-    // console.log('InputValueValidationDirective input this.maxLength : ', this.maxLength);
+    console.log('InputValueValidationDirective input event : ', event);
+    console.log('InputValueValidationDirective input currValue : ', currValue);
+    console.log('InputValueValidationDirective input this.maxLength : ', this.maxLength);
 
     if (currValue == '') {
       return;
@@ -67,8 +66,9 @@ export class InputValueValidationDirective {
       }
     }
     if (!this.inputValidator.test(currValue)) {
-      console.log('InputValueValidationDirective onInputChange inputValidator failed : ', this.inputValidator);
-      console.log('InputValueValidationDirective onInputChange inputValidator failed : ', currValue);
+      // console.log('InputValueValidationDirective onInputChange inputValidator failed : ', this.inputValidator);
+      //
+      // console.log('InputValueValidationDirective onInputChange inputValidator failed : ', currValue);
       currValue = this.prevValue;
     }
     if (currValue !== this._el.nativeElement.value) {

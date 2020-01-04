@@ -228,9 +228,6 @@ export class BillerProfileAdvisorComponent implements OnInit {
   submitBillerForm() {
     if (this.profileDetailsForm.controls.companyDisplayName.invalid) {
       return;
-    } else if (this.profileDetailsForm.controls.companyName.invalid) {
-
-      return;
     } else if (this.profileDetailsForm.controls.gstinNum.invalid) {
       this.isGstin = true;
       return;

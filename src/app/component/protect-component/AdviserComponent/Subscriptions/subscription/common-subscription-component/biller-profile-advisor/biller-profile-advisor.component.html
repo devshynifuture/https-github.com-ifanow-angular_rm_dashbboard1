@@ -143,7 +143,7 @@
                     <input #country [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
                       class="form-control br-0 text-left" formControlName="country" matInput maxLength="50" type="text">
                     <mat-error class="f-12 pt-4">Country is required</mat-error>
-                    <mat-hint align="end" class="f-12">{{country.value.length}}/50</mat-hint>
+                    <mat-hint align="end" class="f-12">{{country.value.length}}/30</mat-hint>
                   </mat-form-field>
                 </div>
               </div>
@@ -158,7 +158,7 @@
                     <input #city [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
                       class="form-control br-0 text-left" formControlName="city" matInput maxLength="50" type="text">
                     <mat-error class="f-12 pt-4">City is required</mat-error>
-                    <mat-hint align="end" class="f-12">{{city.value.length}}/50</mat-hint>
+                    <mat-hint align="end" class="f-12">{{city.value.length}}/30</mat-hint>
                   </mat-form-field>
                 </div>
               </div>
@@ -340,7 +340,7 @@
           </div>
           <div class="row pt-28">
             <div class="col-md-5">
-              <h5 class="text-right m-0 pt-8">city </h5>
+              <h5 class="text-right m-0 pt-8">City </h5>
             </div>
             <div class="col-md-7">
               <div class="form-group mb-0">
