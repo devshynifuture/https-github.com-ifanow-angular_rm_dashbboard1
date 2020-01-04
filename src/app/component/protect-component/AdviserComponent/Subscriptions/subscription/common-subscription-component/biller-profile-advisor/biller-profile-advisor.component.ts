@@ -34,7 +34,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   isaddress = false;
   isTerms = false;
   isBankName = false;
-  selected = 1;
+  selected = 0;
   advisorId;
   billerProfileData: any;
   inputData: any;

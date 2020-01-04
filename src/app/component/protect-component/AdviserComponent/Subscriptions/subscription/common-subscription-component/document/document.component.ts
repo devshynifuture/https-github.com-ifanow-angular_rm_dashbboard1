@@ -643,7 +643,7 @@ export class DocumentComponent implements OnInit {
     if (this.mappedData.length == 0) {
       const data = {
         mappedType: 0,
-        serviceId: 0,
+        serviceId: this.upperData.id,
         id: 0,
         documentRepositoryId: 0,
         // advisorId: 12345
