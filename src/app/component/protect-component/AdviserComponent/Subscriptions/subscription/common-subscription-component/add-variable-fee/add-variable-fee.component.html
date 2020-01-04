@@ -44,7 +44,7 @@
       <div class="row">
         <div class="col-md-5 p-0">
           <div class="form-group mb-0">
-            <input #codeRef [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation
+            <input #codeRef appAlphaNumeric appInputValueValidation
                    class="form-control br-0" formControlName="code" type="text">
           </div>
           <div class="row">
