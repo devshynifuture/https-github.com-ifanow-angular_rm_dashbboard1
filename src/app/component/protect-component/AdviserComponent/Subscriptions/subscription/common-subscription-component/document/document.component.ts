@@ -553,7 +553,19 @@ export class DocumentComponent implements OnInit {
       body: 'Are you sure you want to delete the document?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
-      btnNo: 'DELETE'
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        const deleteFromTrashSubscription = this.subService.deleteSettingsDocument(null)
+          .subscribe(response => {
+            console.log(response);
+            deleteFromTrashSubscription.unsubscribe();
+            this.ngOnInit();
+          }, error => console.error(error));
+
+      },
+      negativeMethod: () => {
+        console.log('aborted');
+      }
     };
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {

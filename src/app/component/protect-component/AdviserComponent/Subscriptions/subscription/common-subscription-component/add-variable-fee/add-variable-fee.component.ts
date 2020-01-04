@@ -84,7 +84,7 @@ export class AddVariableFeeComponent implements OnInit {
         liquid: [, [Validators.required]]
       }),
       otherAssetClassFees: [],
-      pricing: [, [Validators.required]]
+      pricing: [, [Validators.required, Validators.min(0.01), Validators.max(99)]]
     });
     this.getFormControl().serviceName.maxLength = 40;
     this.getFormControl().code.maxLength = 10;
@@ -94,7 +94,7 @@ export class AddVariableFeeComponent implements OnInit {
   getFeeFormUpperData(data) {
     if (data == '') {
       this.createVariableFeeForm('')
-      return
+      return;
     } else {
       this.data = data;
       this.serviceId = data.id;
@@ -170,19 +170,19 @@ export class AddVariableFeeComponent implements OnInit {
         serviceCode: this.variableFeeData.controls.code.value,
         serviceName: this.variableFeeData.controls.serviceName.value,
         servicePricing: {
-          id: this.data.servicePricing.id,
+          id:(this.data!=undefined)?this.data.servicePricing.id:'',
           billEvery: parseInt(this.variableFeeData.controls.billEvery.value) * parseInt(this.variableFeeData.controls.Duration.value),
           feeTypeId: parseInt(feeType),
           pricingList: [
             {
-              id: this.data.servicePricing.pricingList[0].id,
+              id: (this.data!=undefined)?this.data.servicePricing.id:'',
               directRegular: 1,
               assetClassId: 1,
               debtAllocation: this.variableFeeData.controls.directFees.controls.debt.value,
               equityAllocation: this.variableFeeData.controls.directFees.controls.equity.value,
               liquidAllocation: this.variableFeeData.controls.directFees.controls.liquid.value,
             }, {
-              id: this.data.servicePricing.pricingList[1].id,
+              id: (this.data!=undefined)?this.data.servicePricing.pricingList[1].id:'',
               directRegular: 2,
               assetClassId: 1,
               debtAllocation: this.variableFeeData.controls.regularFees.controls.debt.value,
@@ -190,7 +190,7 @@ export class AddVariableFeeComponent implements OnInit {
               liquidAllocation: this.variableFeeData.controls.regularFees.controls.liquid.value,
             },
             {
-              id: this.data.servicePricing.pricingList[2].id,
+              id: (this.data!=undefined)?this.data.servicePricing.pricingList[2].id:'',
               assetClassId: 2,
               otherAssets: this.selectedOtherAssets,
               pricing: this.variableFeeData.controls.pricing.value

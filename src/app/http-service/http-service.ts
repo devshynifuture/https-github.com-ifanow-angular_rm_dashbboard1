@@ -228,7 +228,7 @@ export class HttpService {
   changeBase64ToString(res) {
     const encodedata = res.payLoad;
     try {
-      const datavalue = (Buffer.from(encodedata, 'base64').toString('ascii'));
+      const datavalue = (Buffer.from(encodedata, 'base64').toString('utf-8'));
       console.log('datavalue helo: ', datavalue);
       // console.log('encodedata: ', encodedata);
 
@@ -236,6 +236,7 @@ export class HttpService {
         const responseData = JSON.parse(datavalue);
         return responseData;
       } catch (e) {
+        console.log('changeBase64ToString exception in parsing e: ', e);
         return JSON.parse(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(encodedata));
       }
     } catch (e) {

@@ -57,6 +57,13 @@ label {
   margin: 0 !important;
 }
 
+.text-sl {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 p {
   font-size: $textlg - 16;
   color: $pracolor;
@@ -588,4 +595,8 @@ button.primary-sm {
   height: 20px !important;
   padding: 0 2px !important;
   line-height: 0 !important;
+}
+
+.playairFont {
+  font-family: "Playfair Display" !important;
 }

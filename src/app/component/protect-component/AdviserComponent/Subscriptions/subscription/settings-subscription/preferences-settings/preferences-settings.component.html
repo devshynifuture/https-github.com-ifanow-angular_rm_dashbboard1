@@ -1,6 +1,6 @@
 <div id="ui-perferences" class="bg-white">
     <div class="wrapper-20">
-        <div class="pb-20">
+        <div class="pb-20" *ngIf="billerProfileData != undefined || billerProfileData != null || billerProfileData">
             <div class="row" (click)="Open('Add','billerProfile')">
                 <div class="col-md-12 right text-right pr-0">
                     <button mat-stroked-button class="btn-primary addon">ADD NEW
@@ -142,7 +142,7 @@
                             <p class="f-22 f-600 pt-28 pb-16 t-dark">Set up biller profile</p>
                             <p class="f-16 text-center l-21 t-dark pb-16">
                                 With the foundation now set, it’s time to now do what you do the best - Plan
-                                <br> for your clients’ financial freedom. We do the background work for you - create
+                                <br> for your client's financial freedom. We do the background work for you - create
                                 <br> invoices, bill clients, execute agreements and so on.
                             </p>
                             <button (click)="Open('Add','billerProfile')" class="btn-primary d-flex align-items-center">

@@ -4,6 +4,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from "../../../../../../../auth-service/authService";
+import {ValidatorType} from "../../../../../../../services/util.service";
 
 @Component({
   selector: 'app-email-only',
@@ -27,14 +28,8 @@ export class EmailOnlyComponent implements OnInit {
   doc: any;
   docObj: any[];
   advisorId;
-
-  constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-              public subscription: SubscriptionService) {
-    this.advisorId = AuthService.getAdvisorId();
-    // this.dataSub = this.subInjectService.singleProfileData.subscribe(
-    //   data => this.getcommanFroalaData(data)
-    // );
-  }
+  validatorType = ValidatorType;
+  emailIdList = [];
 
   @Input() emailSend;
   @Input() emailSendfooter;
@@ -44,6 +39,16 @@ export class EmailOnlyComponent implements OnInit {
   @Input() quotationData;
   _inputData;
   emailData;
+
+  constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
+              public subscription: SubscriptionService) {
+    this.advisorId = AuthService.getAdvisorId();
+
+    // this.dataSub = this.subInjectService.singleProfileData.subscribe(
+    //   data => this.getcommanFroalaData(data)
+    // );
+  }
+
   // @Input()
   // set data(data) {
   //   this._inputData = data;
@@ -248,37 +253,72 @@ export class EmailOnlyComponent implements OnInit {
   }
 
   sendEmail() {
-    // const emailRequestData = {
-    //   body: this.emailBody,
-    //   subject: this.subject,
-    //   fromEmail: this.emailData.fromEmail,
-    //   toEmail: [{emailId: this._inputData.clientData.userEmailId, sendType: 'to'}],
-    //   documentList: this._inputData.documentList
-    // };
+    if (this.emailIdList.length == 0) {
+      this.eventService.openSnackBar('Please enter To email');
+      return;
+    }
+    if (this._inputData && this._inputData.documentList.length > 0) {
+    } else {
+      this.eventService.openSnackBar('Please select a document to send email.');
+      return;
+    }
+    if (this._inputData.templateType == 3) {
 
-    const emailRequestData = {
-      invitee: [
-        {
-          name: this._inputData.clientName,
-          email: this._inputData.clientData.userEmailId,
+      const inviteeList = [];
+      this.emailIdList.forEach(singleEmail => {
+        inviteeList.push({
+          // name: this._inputData.clientName,
+          email: singleEmail.emailAddress,
           webhook: {
             success: 'http://dev.ifanow.in:8080/futurewise/api/v1/1/subscription/invoice/esignSuccessResponse/post',
             failure: 'http://dev.ifanow.in:8080/futurewise/api/v1/1/subscription/invoice/esignSuccessResponse/post1',
             version: 2.1
-          }
-        }
-      ],
-      sub_document_id: this._inputData.documentList[0].id,
-      file: {
-        name: this._inputData.documentList[0].documentName
-      }
-    };
+          },
+        });
+      });
+      const emailRequestData = {
+        invitee: inviteeList,
+        sub_document_id: this._inputData.documentList[0].id,
+        file: {
+          name: this._inputData.documentList[0].documentName
+        },
+        documentList: this._inputData.documentList,
+        messageBody: this.emailBody,
+        emailSubject: this.subject,
+      };
 
-    this.subscription.documentEsignRequest(emailRequestData).subscribe(
-      data => this.getResponseData(data)
-    );
-    console.log('send email complete JSON : ', JSON.stringify(emailRequestData));
+      this.subscription.documentEsignRequest(emailRequestData).subscribe(
+        data => this.getResponseData(data)
+      );
+      console.log('send email complete JSON : ', JSON.stringify(emailRequestData));
+    } else {
+
+      const emailRequestData = {
+        messageBody: this.emailBody,
+        emailSubject: this.subject,
+        fromEmail: this.emailData.fromEmail,
+        toEmail: this.emailIdList,
+        documentList: this._inputData.documentList,
+        document_id: this._inputData.documentList[0].id,
+      };
+      this.subscription.sendDocumentViaEmailInPdfFormat(emailRequestData).subscribe(
+        data => this.getResponseData(data)
+      );
+    }
   }
 
+  removeEmailId(item) {
+    this.emailIdList.splice(item, 1);
+  }
+
+  onEmailIdEntryKeyPress(event) {
+    const inputChar = event.key;
+    if (inputChar == ',') {
+      event.preventDefault();
+      const emailId = this._inputData.clientData.userEmailId;
+      this.emailIdList.push({emailAddress: emailId});
+      this._inputData.clientData.userEmailId = '';
+    }
+  }
 
 }

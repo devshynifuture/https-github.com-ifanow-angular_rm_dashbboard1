@@ -1,21 +1,21 @@
-<div *ngIf="showSubStep==false" [ngClass]="showLetsBegin==true ? 'pt-130': 'pt-0'  " class="full-lights pb-36 "
+<div *ngIf="showSubStep==false" [ngClass]="showLetsBegin==false ? 'pt-130': 'pt-40' "  class="full-lights pb-36 "
     id="ui-dashboard">
     <div class="wrapper-20">
         <!-- <div *ngIf="showLetsBegin" class="row bg-red mt-20 mb-36"> -->
 
-        <div class="row bg-red mt-20 mb-36">
+        <div class="row bg-red mt-20 mb-36"  *ngIf="showLetsBegin==false">
             <div class="col-md-5">
                 <img class="dashboard-img" src="assets/images/svg/Dashboard.svg">
             </div>
             <div class="col-md-7">
-                <h1>Welcome {{advisorName}}</h1>
+                <h1>Hi {{advisorName}}, {{greeting}}</h1>
                 <p class="mb-0 pt-12">We’re excited to see you here! The dashboard currently looks barren. </p>
                 <p> Fret not. We’ll help you in this journey. We’re in this together. </p>
                 <button (click)="showSubscriptionSteps()" class="btn-red addon mb-28 mt-16" mat-flat-button>Let's begin
                     <i class="material-icons right text-right"> arrow_forward </i></button>
             </div>
         </div>
-        <div [ngClass]="showLetsBegin==true ? 'pt-40': 'pt-40' " class=" subscription-summary">
+        <div [ngClass]="showLetsBegin==true ? 'pt-40': 'pt-40' " class=" subscription-summary" >
             <div class="row">
                 <div class="col-md-4 pl-0 relClass">
                     <div class="bar">
