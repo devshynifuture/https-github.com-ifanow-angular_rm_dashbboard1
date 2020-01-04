@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { SubscriptionService } from '../../../subscription.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {SubscriptionService} from '../../../subscription.service';
 import * as _ from 'lodash';
+import {ValidatorType} from "../../../../../../../services/util.service";
 
 @Component({
   selector: 'app-variable-fee',
@@ -37,11 +38,12 @@ export class VariableFeeComponent implements OnInit {
       liquid: [, [Validators.required]]
     }),
     otherAssetClassFees: [],
-    pricing: [, [Validators.required, Validators.min(0), Validators.max(100)]]
+    pricing: [, [Validators.required, Validators.min(0.001), Validators.max(99)]]
   });
+  validatorType = ValidatorType;
 
   constructor(private subService: SubscriptionService, private fb: FormBuilder,
-    public subInjectService: SubscriptionInject) {
+              public subInjectService: SubscriptionInject) {
   }
 
   @Input()
@@ -59,14 +61,14 @@ export class VariableFeeComponent implements OnInit {
       billEvery: [data, [Validators.required]],
       Duration: [1],
       directFees: this.fb.group({
-        equity: [data, [Validators.required]],
-        debt: [data, [Validators.required]],
-        liquid: [data, [Validators.required]]
+        equity: [data, [Validators.required, Validators.max(100)]],
+        debt: [data, [Validators.required, Validators.max(100)]],
+        liquid: [data, [Validators.required, Validators.max(100)]]
       }),
       regularFees: this.fb.group({
-        equity: [data, [Validators.required]],
-        debt: [data, [Validators.required]],
-        liquid: [data, [Validators.required]]
+        equity: [data, [Validators.required, Validators.max(100)]],
+        debt: [data, [Validators.required, Validators.max(100)]],
+        liquid: [data, [Validators.required, Validators.max(100)]]
       }),
       otherAssetClassFees: [],
       pricing: [data, [Validators.required, Validators.min(0), Validators.max(100)]]
@@ -83,13 +85,14 @@ export class VariableFeeComponent implements OnInit {
   }
 
   getSubscribeData(data) {
-    console.log(data);
+    console.log(data, "createVariableForm 123");
     (data.isCreateSub) ? this.isSave = true : this.isSave = false;
     if (data == undefined) {
       this.createVariableForm('');
       return;
     } else {
       this.singleSubscriptionData = data;
+      this.outputData.emit(this.singleSubscriptionData);
       console.log('getSubscribeData : ', this.singleSubscriptionData);
       this.getVariableFee().billEvery.setValue(this.singleSubscriptionData.subscriptionPricing.billEvery);
       (this.singleSubscriptionData.subscriptionPricing.billingCycle == 0) ?
@@ -120,8 +123,8 @@ export class VariableFeeComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeUpperRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
   select(assetData) {
@@ -196,7 +199,7 @@ export class VariableFeeComponent implements OnInit {
         obj.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId;
         obj.clientId = this.singleSubscriptionData.clientId;
         obj.subId = this.singleSubscriptionData.id;
-        console.log(obj);
+        console.log(obj, "this.outputData 123");
         this.outputData.emit(obj);
 
         // const rightSideDataSub = this.subInjectService.addSingleProfile(fragmentData).subscribe(

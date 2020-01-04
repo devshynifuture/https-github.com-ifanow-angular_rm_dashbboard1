@@ -1,9 +1,21 @@
-.content{
+.content {
     position: relative;
     right: 20%;
 }
-.mat-card:not([class*=mat-elevation-z]){
+
+.mat-card:not([class*=mat-elevation-z]) {
     box-shadow: none !important;
     // border: 1px solid rgba(0, 0, 0, 0.12);
     padding: 0;
+}
+
+.positionAbsulate {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.heightplan {
+    height: 120px;
+    padding: 15px 20px 30px 20px;
 }

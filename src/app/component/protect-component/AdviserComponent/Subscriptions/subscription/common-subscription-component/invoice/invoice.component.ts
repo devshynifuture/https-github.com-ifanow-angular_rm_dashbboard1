@@ -238,6 +238,7 @@ export class InvoiceComponent implements OnInit {
       balanceDue: [(data.balanceDue == undefined) ? '' : data.balanceDue],
       serviceName: [(data.services == undefined) ? '' : data.services[0].serviceName, [Validators.required]],
       subTotal: [(data.subTotal == undefined) ? '' : data.subTotal],
+      dueDate: [new Date(data.dueDate), [Validators.required]],
       footnote: [(data.footnote == undefined) ? '' : data.footnote, [Validators.required]],
       terms: [(data.terms == undefined) ? '' : data.terms, [Validators.required]],
       igstTaxAmount: [data.igstTaxAmount],

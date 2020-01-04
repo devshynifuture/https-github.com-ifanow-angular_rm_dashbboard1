@@ -43,14 +43,16 @@
                                 <mat-chip class="bg-white b-a c-p f-400 p-12"
                                     *ngFor="let dateFilter of filterDate; let i = index">
                                     <!--                  <div class="row">-->
-                                    <p>{{dateFilter.name}}</p>
-                                    <input class="pl-24" matInput placeholder="Choose a date" [satDatepicker]="picker2"
+                                    <p>
+                                        {{ dateFilter.name }}
+                                    </p>
+                                    <input class="pl-24" (click)="picker2.open()" [max]="maxDate" matInput placeholder="Choose a date" [satDatepicker]="picker2"
                                         [(ngModel)]="selectedDateRange"
                                         (dateChange)="orgValueChange(selectedDateRange)">
-                                    <sat-datepicker #picker2 [rangeMode]="true">
+                                    <sat-datepicker #picker2 [rangeMode]="true" [closeAfterSelection]="false">
                                     </sat-datepicker>
                                     <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
-                                    <i class="material-icons text-custom ml-12" (click)="removeDate(i)">
+                                    <i class="material-icons text-custom c-p" (click)="removeDate(i)">
                                         cancel
                                     </i>
                                 </mat-chip>

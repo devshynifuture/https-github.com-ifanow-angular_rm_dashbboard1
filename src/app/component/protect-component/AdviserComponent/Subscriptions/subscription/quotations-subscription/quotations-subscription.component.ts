@@ -45,6 +45,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   displayedColumns: string[] = ['name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
   advisorId;
+  maxDate = new Date();
   noData: string;
   isLoading = false;
   filterStatus = [];
@@ -243,7 +244,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     );
   }
-
+ 
   // Open(value)
   // {
   //   this.subInjectService.rightSideData(value);

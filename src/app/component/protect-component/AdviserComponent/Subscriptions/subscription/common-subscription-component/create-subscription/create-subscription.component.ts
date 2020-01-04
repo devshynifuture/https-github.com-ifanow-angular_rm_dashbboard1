@@ -29,6 +29,7 @@ export class CreateSubscriptionComponent implements OnInit {
   dateToShow: any;
   subDateToShow: any;
   billEveryMsg: any;
+  maxDate = new Date();
 
   constructor(private enumService: EnumServiceService, public subInjectService: SubscriptionInject,
     private eventService: EventService, private fb: FormBuilder,
@@ -97,6 +98,8 @@ export class CreateSubscriptionComponent implements OnInit {
 
   ngOnInit() {
     // this.stepper.selectedIndex = 0;
+    console.log(AuthService.getClientData(), "123 AuthService.getUserInfo()");
+    
     this.advisorName = AuthService.getUserInfo().fullName;
     this.isFlagPayyee = true;
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
@@ -174,7 +177,7 @@ export class CreateSubscriptionComponent implements OnInit {
   }
 
   nextStep(data) {
-    console.log(data);
+    console.log(data, "clientData 123");
     this.clientData = data;
     this.goForward();
   }

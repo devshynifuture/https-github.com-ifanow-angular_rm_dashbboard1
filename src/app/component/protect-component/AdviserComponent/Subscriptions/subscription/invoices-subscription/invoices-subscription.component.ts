@@ -4,8 +4,8 @@ import {SubscriptionInject} from '../../subscription-inject.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {AuthService} from "../../../../../../auth-service/authService";
-import {UtilService, ValidatorType} from "../../../../../../services/util.service";
+import {AuthService} from '../../../../../../auth-service/authService';
+import {UtilService, ValidatorType} from '../../../../../../services/util.service';
 import * as _ from 'lodash';
 
 export interface PeriodicElement {
@@ -48,6 +48,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   list: any[];
+  maxDate = new Date();
 
   numValidator = ValidatorType.NUMBER_ONLY;
 
@@ -65,10 +66,10 @@ export class InvoicesSubscriptionComponent implements OnInit {
   showEdit: boolean;
   showPdfInvoice;
   singleInvoiceData;
-  //showLoader = true;
+  // showLoader = true;
   advisorId;
   displayedColumns: string[] = ['checkbox', 'date', 'invoicenum', 'name', 'status', 'email', 'duedate', 'amt', 'balance'];
-  @Input() invoiceValue
+  @Input() invoiceValue;
 
   ngOnInit() {
     // this.dataSource = [{}, {}, {}];
@@ -98,14 +99,14 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
     this.invoiceSubscription = edit;
     // this.invoiceDesign = edit;
-    console.log("edit", edit)
+    console.log('edit', edit);
   }
 
   getInvoiceResponseData(data) {
     this.isLoading = false;
     if (data == undefined) {
       this.dataSource.data = [];
-      this.noData = "No Data Found";
+      this.noData = 'No Data Found';
     } else {
       console.log(data);
       const ELEMENT_DATA = data;
@@ -128,7 +129,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   openInvoice(data, value, state) {
     this.invoiceSub = value;
     this.invoiceSubscription = 'true';
-    this.eventService.sidebarData(value)
+    this.eventService.sidebarData(value);
     // this.subscriptionValue = value
     // this.subInjectService.rightSideData(state);
     this.subInjectService.addSingleProfile(data);
@@ -226,7 +227,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   addFiltersDate(dateFilter) {
     console.log('addFilters', dateFilter);
-    //this.filterDate = [dateFilter];
+    // this.filterDate = [dateFilter];
     this.filterDate.push(dateFilter);
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);

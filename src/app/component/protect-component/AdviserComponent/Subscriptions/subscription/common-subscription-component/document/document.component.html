@@ -85,7 +85,7 @@
             <p class="f-16 text-center mt-20 l-21">
                 We’ve automated the complete process of documentation (a core part of RIA compliance). <br> You create documents easily using ready made templates or upload. <br> Email to clients, get eSigned and securely store.
             </p>
-          <!--  <button (click)="OpenHelp('clientHelp','open35',Questions)" class="btn-primary  mt-12 d-flex align-items-center">
+            <!--  <button (click)="OpenHelp('clientHelp','open35',Questions)" class="btn-primary  mt-12 d-flex align-items-center">
                 ADD DOCUMENTS </button>-->
         </div>
     </div>
@@ -118,14 +118,14 @@
                 <div class="col-md-10 p-0 pt-8 text-center">
                     <div class="row text-right content">
                         <div class="col-md-11 p-0">
-                            <p class="pt-4">Map documents to the selected plan.</p>
+                            <p class="pt-4">Map documents to the selected plan. </p>
                         </div>
                         <div class="col-md-1 text-left p-0">
                             <img src="/assets/images/svg/info.svg" class="c-p">
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2 right text-right p-0 button-fix">
+                <div class="col-md-2 right text-right p-0 ">
                     <button mat-stroked-button class="btn-primary mt-12">{{mappedData.length}}
                         Document mapped
 
@@ -203,10 +203,10 @@
                                     with eSign
                                     request
                                 </button>
-                                <button mat-menu-item (click)="openSendEmail()" *ngIf="dataCount != 0">Email
+                                <button (click)="openSendEmail()" *ngIf="dataCount > 0" mat-menu-item>Email
                                     only
                                 </button>
-                                <button mat-menu-item class="b-t" (click)="deleteModal('DOCUMENT')" *ngIf="dataCount != 0">Delete
+                                <button (click)="deleteModal('DOCUMENT')" *ngIf="dataCount >0" class="b-t" mat-menu-item>Delete
                                     documents
                                 </button>
                             </mat-menu>
