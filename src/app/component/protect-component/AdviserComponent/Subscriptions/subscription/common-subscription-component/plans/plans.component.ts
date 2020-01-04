@@ -191,9 +191,8 @@ export class PlansComponent implements OnInit {
       const data = {
         // advisorId: 12345,
         advisorId: this.advisorId,
-        global: 'false',
-        id: 0,
-        planId: this.upperData ? this.upperData.id : null
+        planId: 0,
+        serviceId: this.upperData ? this.upperData.id : null
       };
       obj.push(data);
     }else{
