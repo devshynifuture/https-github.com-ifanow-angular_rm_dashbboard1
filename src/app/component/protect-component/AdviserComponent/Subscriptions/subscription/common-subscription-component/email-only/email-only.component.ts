@@ -3,6 +3,8 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from "../../../../../../../auth-service/authService";
+import {ValidatorType} from "../../../../../../../services/util.service";
 
 @Component({
   selector: 'app-email-only',
@@ -25,12 +27,9 @@ export class EmailOnlyComponent implements OnInit {
   subject;
   doc: any;
   docObj: any[];
-
-  constructor(public eventService: EventService, public subInjectService: SubscriptionInject, public subscription: SubscriptionService) {
-    // this.dataSub = this.subInjectService.singleProfileData.subscribe(
-    //   data => this.getcommanFroalaData(data)
-    // );
-  }
+  advisorId;
+  validatorType = ValidatorType;
+  emailIdList = [];
 
   @Input() emailSend;
   @Input() emailSendfooter;
@@ -40,6 +39,16 @@ export class EmailOnlyComponent implements OnInit {
   @Input() quotationData;
   _inputData;
   emailData;
+
+  constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
+              public subscription: SubscriptionService) {
+    this.advisorId = AuthService.getAdvisorId();
+
+    // this.dataSub = this.subInjectService.singleProfileData.subscribe(
+    //   data => this.getcommanFroalaData(data)
+    // );
+  }
+
   // @Input()
   // set data(data) {
   //   this._inputData = data;
@@ -58,26 +67,26 @@ export class EmailOnlyComponent implements OnInit {
   //   return this._inputData;
   // }
   @Input() set data(inputData) {
-    let obj = []
+    const obj = [];
     this.doc = inputData.documentList;
     if (inputData.isInv == true) {
       this.doc.forEach(element => {
         if (element) {
-          let obj1 = {
+          const obj1 = {
             id: element.id,
             documentName: element.invoiceNumber
-          }
-          obj.push(obj1)
+          };
+          obj.push(obj1);
         }
       });
     } else {
       this.doc.forEach(element => {
         if (element) {
-          let obj1 = {
+          const obj1 = {
             id: element.id,
             documentName: element.documentName
-          }
-          obj.push(obj1)
+          };
+          obj.push(obj1);
         }
       });
     }
@@ -85,7 +94,7 @@ export class EmailOnlyComponent implements OnInit {
     this.docObj = obj;
     this._inputData = inputData;
     this._inputData = {
-      advisorId: 2808,
+      advisorId: this.advisorId,
       clientData: {
         id: inputData.clientData.id,
         userEmailId: inputData.clientData.userEmailId
@@ -94,7 +103,7 @@ export class EmailOnlyComponent implements OnInit {
       documentList: obj,
       templateType: inputData.templateType
     };
-    console.log("dsfgsdggggggggg", this.docObj)
+    console.log('dsfgsdggggggggg', this.docObj);
     console.log('EmailOnlyComponent inputData : ', inputData);
     this.getEmailTemplateFilterData();
   }
@@ -180,7 +189,7 @@ export class EmailOnlyComponent implements OnInit {
 
   getEmailTemplate() {
     const obj = {
-      advisorId: 2828,
+      advisorId: this.advisorId,
       templateId: 1
     };
     this.subscription.getEmailTemplateFilterData(obj).subscribe(
@@ -244,13 +253,72 @@ export class EmailOnlyComponent implements OnInit {
   }
 
   sendEmail() {
-    const emailRequestData = {
-      body: this.emailBody,
-      subject: this.subject,
-      fromEmail: this.emailData.fromEmail,
-      toEmail: [{emailId: this._inputData.clientData.userEmailId, sendType: 'to'}],
-      documentList: this._inputData.documentList
-    };
-    console.log('send email complete JSON : ', JSON.stringify(emailRequestData));
+    if (this.emailIdList.length == 0) {
+      this.eventService.openSnackBar('Please enter To email');
+      return;
+    }
+    if (this._inputData && this._inputData.documentList.length > 0) {
+    } else {
+      this.eventService.openSnackBar('Please select a document to send email.');
+      return;
+    }
+    if (this._inputData.templateType == 3) {
+
+      const inviteeList = [];
+      this.emailIdList.forEach(singleEmail => {
+        inviteeList.push({
+          // name: this._inputData.clientName,
+          email: singleEmail.emailAddress,
+          webhook: {
+            success: 'http://dev.ifanow.in:8080/futurewise/api/v1/1/subscription/invoice/esignSuccessResponse/post',
+            failure: 'http://dev.ifanow.in:8080/futurewise/api/v1/1/subscription/invoice/esignSuccessResponse/post1',
+            version: 2.1
+          },
+        });
+      });
+      const emailRequestData = {
+        invitee: inviteeList,
+        sub_document_id: this._inputData.documentList[0].id,
+        file: {
+          name: this._inputData.documentList[0].documentName
+        },
+        documentList: this._inputData.documentList,
+        messageBody: this.emailBody,
+        emailSubject: this.subject,
+      };
+
+      this.subscription.documentEsignRequest(emailRequestData).subscribe(
+        data => this.getResponseData(data)
+      );
+      console.log('send email complete JSON : ', JSON.stringify(emailRequestData));
+    } else {
+
+      const emailRequestData = {
+        messageBody: this.emailBody,
+        emailSubject: this.subject,
+        fromEmail: this.emailData.fromEmail,
+        toEmail: this.emailIdList,
+        documentList: this._inputData.documentList,
+        document_id: this._inputData.documentList[0].id,
+      };
+      this.subscription.sendDocumentViaEmailInPdfFormat(emailRequestData).subscribe(
+        data => this.getResponseData(data)
+      );
+    }
   }
+
+  removeEmailId(item) {
+    this.emailIdList.splice(item, 1);
+  }
+
+  onEmailIdEntryKeyPress(event) {
+    const inputChar = event.key;
+    if (inputChar == ',') {
+      event.preventDefault();
+      const emailId = this._inputData.clientData.userEmailId;
+      this.emailIdList.push({emailAddress: emailId});
+      this._inputData.clientData.userEmailId = '';
+    }
+  }
+
 }

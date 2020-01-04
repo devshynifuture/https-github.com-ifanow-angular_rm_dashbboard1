@@ -5,17 +5,17 @@
                 <img class="w-100" src="{{userInfo.imgUrl}}">
 
             </mat-toolbar>
-            <div *ngIf="showTabs" class="pt-16">
+            <!-- <div *ngIf="showTabs" class="pt-16">
                 <img class="header-img pt-0 pb-0" src="assets/images/img1.jpg">
-            </div>
+            </div> -->
             <div *ngIf="showTabs" class="main-details">
-                <mat-form-field class="width215">
+                <!-- <mat-form-field class="width215">
                     <mat-select [(ngModel)]="loginType" class="form-control b-0 f-500 ">
                         <mat-option [value]=1 class="f-500">Advisor Login</mat-option>
                         <mat-option [value]=2 class="f-500">Client Login</mat-option>
                     </mat-select>
-                </mat-form-field>
-                <p class="f-14 f-500 mb-0">{{advisorName}}</p>
+                </mat-form-field> -->
+                <p class="f-16 f-600 mb-0">{{advisorName}}</p>
             </div>
             <div class="pt-12 scorllable ">
                 <!-- dashboard not created so removing routerLink -->
@@ -100,17 +100,21 @@
                     </mat-autocomplete>
                 </div>
             </mat-form-field>
-            <div class="hide-on-800 flex right-fixed tablate-none">
+            <div class="hide-on-800 d-flex align-items-center justify-content-center right-fixed tablate-none">
                 <a class="sidenav-link" mat-list-item>
                     <img class="t-15" src="assets/images/svg/bell.svg">
                 </a>
                 <a class="sidenav-link" mat-list-item>
                     <img src="assets/images/svg/earphone.svg">
                 </a>
+
+
+
                 <a class="sidenav-link" mat-list-item>
-                    <img class="c-p" [matMenuTriggerFor]="appMenu" src="assets/images/svg/setting.svg">
+                    <img class="c-p header-img" [matMenuTriggerFor]="appMenu" src="assets/images/img1.jpg">
 
                     <mat-menu #appMenu="matMenu">
+
                         <button (click)="logout()" mat-menu-item>LogOut</button>
                     </mat-menu>
                 </a>

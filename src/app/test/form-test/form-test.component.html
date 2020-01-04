@@ -1,7 +1,8 @@
 <div [formGroup]="testForm" class="example-container">
   <mat-form-field appearance="outline" class="form-group pt-50">
 
-    <input #emailId formControlName="email" matInput placeholder="Enter your email" required>
+    <input #emailId [inputValidator]="validatorType.EMAIL" appInputValueValidation formControlName="email" matInput
+           placeholder="Enter your email" required>
 
     <!--    <input [formControl]="email" matInput placeholder="Enter your email" required>-->
     <mat-error>{{getErrorMessage()}}</mat-error>
@@ -10,7 +11,8 @@
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="form-group pt-50">
-    <input #custName [inputValidator]="validatorType.PERSON_NAME" appInputValueValidation formControlName="inputName"
+    <input #custName [inputValidator]="validatorType.PERSON_NAME" [maxLength]="20"
+           appInputValueValidation formControlName="inputName"
            matInput placeholder="Enter your Name" required>
     <mat-error>{{getErrorMessage()}}</mat-error>
     <mat-hint align="end">{{custName.value.length}}/20</mat-hint>

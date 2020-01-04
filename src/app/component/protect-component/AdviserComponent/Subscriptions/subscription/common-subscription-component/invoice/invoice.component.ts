@@ -1,4 +1,4 @@
-import { ValidatorType } from './../../../../../../../services/util.service';
+import {ValidatorType} from './../../../../../../../services/util.service';
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -42,6 +42,7 @@ export interface PeriodicElement {
 export class InvoiceComponent implements OnInit {
   highLight: boolean;
   maxDate = new Date();
+  validatorType = ValidatorType;
 
   [x: string]: any;
 
@@ -237,6 +238,7 @@ export class InvoiceComponent implements OnInit {
       balanceDue: [(data.balanceDue == undefined) ? '' : data.balanceDue],
       serviceName: [(data.services == undefined) ? '' : data.services[0].serviceName, [Validators.required]],
       subTotal: [(data.subTotal == undefined) ? '' : data.subTotal],
+      dueDate: [new Date(data.dueDate), [Validators.required]],
       footnote: [(data.footnote == undefined) ? '' : data.footnote, [Validators.required]],
       terms: [(data.terms == undefined) ? '' : data.terms, [Validators.required]],
       igstTaxAmount: [data.igstTaxAmount],

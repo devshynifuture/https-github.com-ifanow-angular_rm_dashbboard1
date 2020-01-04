@@ -174,20 +174,38 @@ export class ServicesComponent implements OnInit {
   }
   savePlanMapToServiceResponse(data) {
     console.log("map plan to service Data", data)
-    this.eventService.openSnackBar('Service is mapped', 'OK');
+    if (this.mappedData.length === 0) {
+      this.eventService.openSnackBar('No service mapped', 'OK');
+
+    } else {
+      this.eventService.openSnackBar('Service is mapped', 'OK');
+
+    }
   }
   saveServicePlanMapping() {
     const obj = [];
-    this.mappedData.forEach(element => {
+    if (this.mappedData.length == 0) {
       const data = {
         // advisorId: 12345,
         advisorId: this.advisorId,
-        global: element.global,
-        id: element.id,
+        global: 'false',
+        id: 0,
         planId: this.planData ? this.planData.id : null
       };
       obj.push(data);
-    });
+    } else {
+      this.mappedData.forEach(element => {
+        const data = {
+          // advisorId: 12345,
+          advisorId: this.advisorId,
+          global: element.global,
+          id: element.id,
+          planId: this.planData ? this.planData.id : null
+        };
+        obj.push(data);
+      });
+    }
+
     console.log(obj);
     this.subService.mapServiceToPlanData(obj).subscribe(
       data => this.savePlanMapToServiceResponse(data)

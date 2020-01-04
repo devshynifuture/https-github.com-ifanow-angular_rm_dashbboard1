@@ -44,7 +44,7 @@
       <div class="row">
         <div class="col-md-5 p-0">
           <div class="form-group mb-0">
-            <input type="text" appCodeText [maxLength]="10" formControlName="code"
+            <input #codeRef type="text" appCodeText [maxLength]="10" formControlName="code"
               class="form-control br-0">
           </div>
 
@@ -57,7 +57,7 @@
             </div>
             <div class="col-md-4 pl-0">
               <p class="mb-0 f-12 text-custom text-right pt-4">
-                {{getFormControl().code.value?.length ? getFormControl().code.value.length : 0}}
+                {{codeRef.value.length}}
                 /{{getFormControl().code.maxLength}}</p>
             </div>
           </div>
@@ -97,7 +97,7 @@
       <div class="form-group mb-0">
         <!-- <input type="number" (keypress)="utils.keyPress($event)" maxlength="10" formControlName="fees"
           class="form-control br-0"> -->
-        <input type="text" class="form-control br-0" appNumberOnly [maxLength]="10" formControlName="fees">
+        <input #feesRef type="text" class="form-control br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" formControlName="fees">
       </div>
       <div class="row">
         <div class="col-md-8">
@@ -108,8 +108,8 @@
         </div>
         <div class="col-md-4">
           <p class="mb-0 f-12 text-custom text-right pt-4">
-            {{getFormControl().fees.value?.length ? getFormControl().fees.value.length : 0}}
-            /{{getFormControl().fees.maxLength}}</p>
+            {{feesRef.value.length}}
+            /{{getFormControl().fees.maxLength}} </p>
         </div>
       </div>
     </div>

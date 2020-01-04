@@ -1,7 +1,7 @@
 <div *ngIf="isFlagPayyee">
   <div class="row bb-1 popup-header-fix-60">
     <div class="col-md-10 p-0">
-      <h4 class="mb-0 wrapper-20">CREATE SUBSCRIPTION FOR {{advisorName}}</h4>
+      <h4 class="mb-0 wrapper-20">CREATE SUBSCRIPTION FOR {{clientData.clientName}}</h4>
     </div>
     <div class="col-md-2 text-right">
       <i (click)="Close()" class="material-icons pt-16 pr-16 c-p">
@@ -45,8 +45,8 @@
           <div class="col-md-3">
             <div class="form-group mb-0">
               <mat-form-field>
-                <input [matDatepicker]="picker" class="form-control br-0" formControlName="activationDate" matInput
-                  readonly>
+                <input (focus)="picker.open()" [max]="maxDate" [matDatepicker]="picker" class="form-control" formControlName="activationDate" matInput
+                       readonly>
                 <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
