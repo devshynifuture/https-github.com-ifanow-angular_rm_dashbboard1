@@ -106,50 +106,18 @@ export class InvoicesComponent implements OnInit {
         }
       });
     }
-    // if(data.selected==false)
-    // {
-    //   data.selected = true;
-    //   this.dataCount++;
-    //   data.dataCountd =this.dataCount;
-    // }else{
-    //   data.selected = false;
-    //   this.dataCount--;
-    //   data.dataCountd =this.dataCount;
-    // }
   }
 
   selectAll(event) {
-    // const checked = event.target.checked;
-    // this.dataSource.forEach(item => item.selected = 'checked');
     this.dataCount = 0;
     if (this.dataSource != undefined) {
       this.dataSource.filteredData.forEach(item => {
-        //   if(item.selected==false)
-        //   {
-        //     item.selected = true;
-        //     this.dataCount++;
-        //   }else{
-        //     item.selected = false;
-        //     this.dataCount--;
-        //   }
-        // });
         item.selected = event.checked;
         if (item.selected) {
           this.dataCount++;
         }
-        // if(item.dataCountd>=1){
-        //   this.dataCount=1
-        // }else{
-        //   this.dataCount++
-        // }
       });
     }
-    // if(item.selected=="true"){
-    //   this.dataCount++;
-    // }else{
-    //   this.dataCount--;
-    // }
-
   }
   openSendEmail() {
     const data = {
@@ -168,10 +136,6 @@ export class InvoicesComponent implements OnInit {
   }
 
   open(data, value) {
-
-    // this.eventService.sliderData(value);
-    // this.subInjectService.rightSliderData(state);
-    // this.subInjectService.addSingleProfile(data);
 
     const fragmentData = {
       flag: value,
@@ -205,9 +169,6 @@ export class InvoicesComponent implements OnInit {
 
   openInvoice(data, value, state) {
 
-    // this.eventService.sliderData(value);
-    // this.subInjectService.rightSliderData(state);
-    // this.subInjectService.addSingleProfile(data);
     const fragmentData = {
       flag: value,
       data: data,

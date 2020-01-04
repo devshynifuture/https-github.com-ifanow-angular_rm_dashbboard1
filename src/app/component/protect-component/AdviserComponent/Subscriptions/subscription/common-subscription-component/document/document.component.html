@@ -199,14 +199,14 @@
                                 <button mat-menu-item *ngIf="dataCount == 0">Select invoice to see more
                                     actions
                                 </button>
-                                <button (click)="openEsignDocument()" *ngIf="dataCount == 1" mat-menu-item>Email
+                                <button mat-menu-item *ngIf="dataCount == 1" (click)="openEsignDocument()" >Email
                                     with eSign
                                     request
                                 </button>
-                                <button (click)="openSendEmail()" *ngIf="dataCount == 1" mat-menu-item>Email
+                                <button (click)="openSendEmail()" *ngIf="dataCount > 0" mat-menu-item>Email
                                     only
                                 </button>
-                                <button (click)="deleteModal('DOCUMENT')" *ngIf="dataCount == 1" class="b-t" mat-menu-item>Delete
+                                <button (click)="deleteModal('DOCUMENT')" *ngIf="dataCount >0" class="b-t" mat-menu-item>Delete
                                     documents
                                 </button>
                             </mat-menu>

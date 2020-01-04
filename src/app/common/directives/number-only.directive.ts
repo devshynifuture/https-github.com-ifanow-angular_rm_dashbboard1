@@ -48,7 +48,7 @@ export class AlphaNumericDirective {
     console.log(event);
     let initialValue = this._el.nativeElement.value;
     // const k = initialValue;
-    initialValue = initialValue.replace(/[^a-z0-9]/gi, '');
+    initialValue = initialValue.replace(/[^a-z0-9]-/gi, '');
     this.renderer.setProperty(this._el.nativeElement, 'value', initialValue);
   }
 }
