@@ -24,34 +24,16 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #companyDisplayName [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE"
-                           appInputValueValidation
-                           autofocus class="form-control br-0 text-left"
-                           formControlName="companyDisplayName"
-                           matInput
-                           maxLength="{{getFormControlProfile().gstinNum.maxLength}}"
-                           type="text">
+                      appInputValueValidation autofocus class="form-control br-0 text-left"
+                      formControlName="companyDisplayName" matInput
+                      maxLength="{{getFormControlProfile().companyDisplayName.maxLength}}" type="text">
                     <mat-error class="f-12 pt-4">Company Display Name is required</mat-error>
-                    <mat-hint align="end" class="f-12">{{companyDisplayName.value.length}}/15</mat-hint>
+                    <mat-hint align="end" class="f-12">{{companyDisplayName.value.length}}/50</mat-hint>
                   </mat-form-field>
                 </div>
-                <!-- <div class="row pt-0">
-  <div class="col-md-8">
-  <mat-error
-  [ngClass]="{'v-h':!(isGstin && getFormControlProfile().gstinNum.invalid || (getFormControlProfile().gstinNum.touched && getFormControlProfile().gstinNum.invalid))}"
-  class="f-12 pt-4">
-  GSTIN number is required
-  </mat-error>
-  </div>
-  <div class="col-md-4">
-  <p class="mb-0 f-12 text-custom text-right pt-4">
-  {{getFormControlProfile().gstinNum.value?.length ? getFormControlProfile().gstinNum.value.length : 0}}
-  /{{getFormControlProfile().gstinNum.maxLength}}
-  </p>
-  </div>
-  </div> -->
               </div>
             </div>
-            <div class="row pt-44">
+            <!-- <div class="row pt-44">
               <div class="col-md-5 pr-0">
                 <h5 class="text-right m-0 pt-16">Company Name</h5>
               </div>
@@ -60,32 +42,15 @@
                   <mat-form-field>
 
                     <input #companyName [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE"
-                           appInputValueValidation
-                           autofocus class="form-control br-0 text-left"
-                           formControlName="companyName"
-                           matInput maxLength="{{getFormControlProfile().gstinNum.maxLength}}"
-                           type="text">
+                      appInputValueValidation autofocus class="form-control br-0 text-left"
+                      formControlName="companyName" matInput maxLength="{{getFormControlProfile().gstinNum.maxLength}}"
+                      type="text">
                     <mat-error class="f-12 pt-4">Company Name is required</mat-error>
                     <mat-hint align="end" class="f-12">{{companyName.value.length}}/15</mat-hint>
                   </mat-form-field>
                 </div>
-                <!-- <div class="row pt-0">
-  <div class="col-md-8">
-  <mat-error
-  [ngClass]="{'v-h':!(isGstin && getFormControlProfile().gstinNum.invalid || (getFormControlProfile().gstinNum.touched && getFormControlProfile().gstinNum.invalid))}"
-  class="f-12 pt-4">
-  GSTIN number is required
-  </mat-error>
-  </div>
-  <div class="col-md-4">
-  <p class="mb-0 f-12 text-custom text-right pt-4">
-  {{getFormControlProfile().gstinNum.value?.length ? getFormControlProfile().gstinNum.value.length : 0}}
-  /{{getFormControlProfile().gstinNum.maxLength}}
-  </p>
-  </div>
-  </div> -->
               </div>
-            </div>
+            </div> -->
             <div class="row pt-44">
               <div class="col-md-5 pr-0">
                 <h5 class="text-right m-0 pt-16">GSTIN Number</h5>
@@ -94,27 +59,15 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #gstinNum [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation autofocus
-                           class="form-control br-0 text-left" formControlName="gstinNum"
-                           matInput maxLength="{{getFormControlProfile().gstinNum.maxLength}}"
-                           type="text">
+                      class="form-control br-0 text-left" formControlName="gstinNum" matInput
+                      maxLength="{{getFormControlProfile().gstinNum.maxLength}}" type="text">
                     <mat-error class="f-12 pt-4">GSTIN number is required</mat-error>
                     <mat-hint align="end" class="f-12">{{gstinNum.value.length}}/15</mat-hint>
                   </mat-form-field>
                 </div>
                 <div class="row pt-0">
                   <div class="col-md-8">
-                    <!-- <mat-error
-  [ngClass]="{'v-h':!(isGstin && getFormControlProfile().gstinNum.invalid || (getFormControlProfile().gstinNum.touched && getFormControlProfile().gstinNum.invalid))}"
-  class="f-12 pt-4">
-  GSTIN number is required
-  </mat-error> -->
                   </div>
-                  <!-- <div class="col-md-4">
-  <p class="mb-0 f-12 text-custom text-right pt-4">
-  {{getFormControlProfile().gstinNum.value?.length ? getFormControlProfile().gstinNum.value.length : 0}}
-  /{{getFormControlProfile().gstinNum.maxLength}}
-  </p>
-  </div> -->
                 </div>
               </div>
             </div>
@@ -126,34 +79,12 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #panNum [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
-                           appInputValueValidation
-                           class="form-control br-0" formControlName="panNum"
-                           matInput type="text">
+                      appInputValueValidation class="form-control br-0" formControlName="panNum" matInput type="text">
                     <mat-error class="f-12 pt-4">PAN is required</mat-error>
                     <mat-hint align="end" class="f-12">{{panNum.value.length}}/10</mat-hint>
 
                   </mat-form-field>
                 </div>
-                <!-- <div class="form-group mb-0">
-  <input [maxLength]="10" appNumberOnly class="form-control mb-0 br-0 text-left"
-  formControlName="panNum"
-  maxLength="{{getFormControlProfile().panNum.maxLength}}" type="text">
-  </div>-->
-                <!-- <div class="row pt-0">
-  <div class="col-md-8">
-  <mat-error
-  [ngClass]="{'v-h':!(isPanNum && getFormControlProfile().panNum.invalid || (getFormControlProfile().panNum.touched && getFormControlProfile().panNum.invalid))}"
-  class="f-12 pt-4">
-  PAN is required
-  </mat-error>
-  </div>
-  <div class="col-md-4">
-  <p class="mb-0 f-12 text-custom text-right pt-4">
-  {{getFormControlProfile().panNum.value?.length ? getFormControlProfile().panNum.value.length : 0}}
-  /{{getFormControlProfile().panNum.maxLength}}
-  </p>
-  </div>
-  </div>-->
               </div>
             </div>
             <div class="row pt-44 pb-44">
@@ -164,26 +95,11 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <textarea #Address matInput class="form-control br-0" formControlName='Address'
-                              maxLength="{{getFormControlProfile().Address.maxLength}}" rows="5"></textarea>
+                      maxLength="{{getFormControlProfile().Address.maxLength}}" rows="5"></textarea>
                     <mat-error class="f-12 pt-4">Address is required</mat-error>
                     <mat-hint align="end" class="f-12">{{Address.value.length}}/160</mat-hint>
                   </mat-form-field>
                 </div>
-                <!-- <div class="row pt-0">
-  <div class="col-md-8">
-  <mat-error
-  [ngClass]="{'v-h':!(isAddress && getFormControlProfile().Address.invalid || (getFormControlProfile().Address.touched && getFormControlProfile().Address.invalid))}"
-  class="f-12 pt-4">
-  Address is required
-  </mat-error>
-  </div>
-  <div class="col-md-4">
-  <p class="mb-0 f-12 text-custom text-right pt-4">
-  {{getFormControlProfile().Address.value?.length ? getFormControlProfile().Address.value.length : 0}}
-  /{{getFormControlProfile().Address.maxLength}}
-  </p>
-  </div>
-  </div> -->
               </div>
             </div>
             <div class="row pt-44">
@@ -194,22 +110,11 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #state [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                           class="form-control br-0 text-left"
-                           formControlName="state" matInput
-                           maxLength="50" type="text">
+                      class="form-control br-0 text-left" formControlName="state" matInput maxLength="50" type="text">
                     <mat-error class="f-12 pt-4">State is required</mat-error>
-                    <mat-hint align="end" class="f-12">{{state.value.length}}/50</mat-hint>
+                    <mat-hint align="end" class="f-12">{{state.value.length}}/30</mat-hint>
                   </mat-form-field>
                 </div>
-                <!-- <div class="row pt-0">
-  <div class="col-md-8">
-  <mat-error
-  [ngClass]="{'v-h':!(isState && getFormControlProfile().state.invalid || (getFormControlProfile().state.touched && getFormControlProfile().state.invalid))}"
-  class="f-12 pt-4">
-  State is required
-  </mat-error>
-  </div>
-  </div> -->
               </div>
             </div>
             <div class="row pt-44">
@@ -220,22 +125,12 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                           class="form-control br-0 text-left"
-                           formControlName="pincode" matInput
-                           maxLength="20" type="number">
+                      class="form-control br-0 text-left" formControlName="pincode" matInput maxLength="20"
+                      type="number">
                     <mat-error class="f-12 pt-4">Pincode is required</mat-error>
-                    <mat-hint align="end" class="f-12">{{pincode.value.length}}/20</mat-hint>
+                    <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>
                   </mat-form-field>
                 </div>
-                <!-- <div class="row pt-0">
-  <div class="col-md-8">
-  <mat-error
-  [ngClass]="{'v-h':!(isZipCode && getFormControlProfile().pincode.invalid || (getFormControlProfile().pincode.touched && getFormControlProfile().pincode.invalid))}"
-  class="f-12 pt-4">
-  Pincode is required
-  </mat-error>
-  </div>
-  </div> -->
               </div>
             </div>
             <div class="row pt-44">
@@ -246,22 +141,11 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #country [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                           class="form-control br-0 text-left"
-                           formControlName="country" matInput
-                           maxLength="50" type="text">
+                      class="form-control br-0 text-left" formControlName="country" matInput maxLength="50" type="text">
                     <mat-error class="f-12 pt-4">Country is required</mat-error>
                     <mat-hint align="end" class="f-12">{{country.value.length}}/50</mat-hint>
                   </mat-form-field>
                 </div>
-                <!-- <div class="row pt-0">
-  <div class="col-md-8">
-  <mat-error
-  [ngClass]="{'v-h':!(isCountry && getFormControlProfile().country.invalid || (getFormControlProfile().country.touched && getFormControlProfile().country.invalid))}"
-  class="f-12 pt-4">
-  Country is required
-  </mat-error>
-  </div>
-  </div> -->
               </div>
             </div>
             <div class="row pt-44">
@@ -272,26 +156,13 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #city [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                           class="form-control br-0 text-left"
-                           formControlName="city" matInput
-                           maxLength="50" type="text">
+                      class="form-control br-0 text-left" formControlName="city" matInput maxLength="50" type="text">
                     <mat-error class="f-12 pt-4">City is required</mat-error>
                     <mat-hint align="end" class="f-12">{{city.value.length}}/50</mat-hint>
                   </mat-form-field>
                 </div>
               </div>
             </div>
-            <!-- <div class="row">
- <div class="col-md-5">
- <h5 class="text-right m-0 pt-4">Taxable</h5>
- </div>
- <div class="col-md-7">
- <mat-radio-group aria-label="Select an option">
- <mat-radio-button value="1" color="primary">Yes</mat-radio-button>
- <mat-radio-button value="2" color="primary">No</mat-radio-button>
- </mat-radio-group>
- </div>
- </div> -->
           </div>
         </div>
       </div>
@@ -316,14 +187,14 @@
                   <div class="col-md-12 p-0">
                     <!-- (click)="file.click()"-->
                     <button [disabled]="logoImg==undefined" (click)="uploadImage()" class="br-0 btn-primary mr-12"
-                            mat-stroked-button>UPLOAD
+                      mat-stroked-button>UPLOAD
                       LOGO
                     </button>
                     <button *ngIf="logoImg" (click)="cancelImageUpload()" class="br-0 mr-12" mat-stroked-button>CANCEL
                     </button>
                   </div>
                   <input #file (change)="onChange($event)" [ngClass]="{'v-h': true}" accept='image/*'
-                         formControlName="url" type="file">
+                    formControlName="url" type="file">
                 </div>
               </div>
 
@@ -342,7 +213,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input autofocus class="form-control br-0 text-left" formControlName="nameOnBank"
-                       maxLength="{{getFrormControlBank().nameOnBank.maxLength}}" type="text">
+                  maxLength="{{getFrormControlBank().nameOnBank.maxLength}}" type="text">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -368,7 +239,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input class="form-control br-0 text-left" formControlName="bankName"
-                       maxLength="{{getFrormControlBank().bankName.maxLength}}" type="text">
+                  maxLength="{{getFrormControlBank().bankName.maxLength}}" type="text">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -394,9 +265,8 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input #accNo [inputValidator]="validatorType.NUMBER_ONLY"
-                       [maxLength]="getFrormControlBank().acNo.maxLength" appInputValueValidation
-                       class="form-control br-0 text-left" formControlName="acNo"
-                       matInput type="number">
+                  [maxLength]="getFrormControlBank().acNo.maxLength" appInputValueValidation
+                  class="form-control br-0 text-left" formControlName="acNo" matInput type="number">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -422,9 +292,8 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input #ifscCode [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
-                       class="form-control br-0 text-left"
-                       formControlName="ifscCode"
-                       matInput maxLength="{{getFrormControlBank().ifscCode.maxLength}}" type="text">
+                  class="form-control br-0 text-left" formControlName="ifscCode" matInput
+                  maxLength="{{getFrormControlBank().ifscCode.maxLength}}" type="text">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -450,7 +319,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <textarea #bankAddress class="form-control br-0" formControlName="address" matInput
-                          maxLength="{{getFrormControlBank().address.maxLength}}" rows="5"></textarea>
+                  maxLength="{{getFrormControlBank().address.maxLength}}" rows="5"></textarea>
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -476,9 +345,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                       class="form-control br-0 text-left" formControlName="city"
-                       matInput
-                       type="text">
+                  class="form-control br-0 text-left" formControlName="city" matInput type="text">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -498,9 +365,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input [inputValidator]="validatorType.TEXT_WITH_SPACE" appInputValueValidation
-                       class="form-control br-0 text-left" formControlName="state"
-                       matInput
-                       type="text">
+                  class="form-control br-0 text-left" formControlName="state" matInput type="text">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -520,8 +385,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation
-                       class="form-control br-0 text-left" formControlName="pincode"
-                       matInput type="number">
+                  class="form-control br-0 text-left" formControlName="pincode" matInput type="number">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -542,9 +406,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input [inputValidator]="validatorType.TEXT_WITH_SPACE" appInputValueValidation
-                       class="form-control br-0 text-left" formControlName="country"
-                       matInput
-                       type="text">
+                  class="form-control br-0 text-left" formControlName="country" matInput type="text">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -571,7 +433,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <textarea class="form-control br-0" formControlName="footnote"
-                          maxLength="{{getFrormControlMisc().footnote.maxLength}}" rows="5"></textarea>
+                  maxLength="{{getFrormControlMisc().footnote.maxLength}}" rows="5"></textarea>
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -594,7 +456,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <textarea class="form-control br-0" formControlName="terms"
-                          maxLength="{{getFrormControlMisc().terms.maxLength}}" rows="5"></textarea>
+                  maxLength="{{getFrormControlMisc().terms.maxLength}}" rows="5"></textarea>
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -624,13 +486,13 @@
       <button (click)="back()" *ngIf="selected!=0" class="mr-20 br-0 text-inherit" mat-button mat-raised-button>PREVIOUS
       </button>
       <button (click)="nextStep(selected,'Save&Next')" [hidden]="true" class="btn-bottom br-0 text-inherit"
-              mat-button>NEXT
+        mat-button>NEXT
       </button>
       <button (click)="nextStep(selected,'Save&Next')" *ngIf="selected!=3" class="btn-bottom br-0 text-inherit"
-              mat-button>NEXT
+        mat-button>SAVE & NEXT
       </button>
       <button (click)="nextStep(selected,'Save&Next')" *ngIf="selected==3" class="btn-bottom br-0 text-inherit"
-              mat-button>SAVE
+        mat-button>SAVE
       </button>
       <!-- logoImg -->
     </div>
