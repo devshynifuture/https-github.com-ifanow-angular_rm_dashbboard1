@@ -112,13 +112,13 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      flag: 4,
+      flag: 3,
       limit: 10,
       offset: 0,
       dateType: 0,
       fromDate: '2019-01-01',
       toDate: '2019-11-01',
-      statusIdList: '[0,1]',
+      statusIdList: '1,2',
     };
     this.subscription.getDocumentData(obj).subscribe(
       data => this.getdocumentResponseData(data), (error) => {

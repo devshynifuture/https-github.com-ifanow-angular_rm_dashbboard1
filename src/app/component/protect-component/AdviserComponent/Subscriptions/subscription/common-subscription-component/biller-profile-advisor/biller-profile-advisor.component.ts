@@ -51,9 +51,6 @@ export class BillerProfileAdvisorComponent implements OnInit {
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
               private subService: SubscriptionService,
               private eventService: EventService, private http: HttpClient) {
-    // this.subInjectService.singleProfileData.subscribe(
-    //   data => this.getSingleBillerProfileData(data)
-    // );
   }
 
   @Input() Selected;
@@ -188,6 +185,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
         terms: [(data.terms), [Validators.required]]
       });
     this.getFormControlProfile().gstinNum.maxLength = 15;
+    this.getFormControlProfile().companyDisplayName.maxLength = 50;
     this.getFormControlProfile().panNum.maxLength = 10;
     this.getFormControlProfile().Address.maxLength = 150;
     this.getFrormControlBank().nameOnBank.maxLength = 25;
