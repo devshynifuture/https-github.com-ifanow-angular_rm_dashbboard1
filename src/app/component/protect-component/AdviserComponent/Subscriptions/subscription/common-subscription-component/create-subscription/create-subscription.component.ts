@@ -29,7 +29,6 @@ export class CreateSubscriptionComponent implements OnInit {
   dateToShow: any;
   subDateToShow: any;
   billEveryMsg: any;
-  maxDate = new Date();
 
   constructor(private enumService: EnumServiceService, public subInjectService: SubscriptionInject,
     private eventService: EventService, private fb: FormBuilder,
