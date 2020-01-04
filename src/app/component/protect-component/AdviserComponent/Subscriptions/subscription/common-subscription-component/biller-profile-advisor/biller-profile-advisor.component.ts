@@ -204,7 +204,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   nextStep(value, eventName) {
     console.log(value);
     switch (true) {
-      case (this.profileDetailsForm.valid && value == 0):
+      case (this.profileDetailsForm.touched && value == 0):
         this.selected = 1;
         break;
       case (/*this.logUrl.valid &&*/ value == 1):
@@ -291,7 +291,6 @@ export class BillerProfileAdvisorComponent implements OnInit {
         branchAddress: this.bankDetailsForm.controls.address.value,
         city: this.profileDetailsForm.controls.city.value,
         companyDisplayName: this.profileDetailsForm.controls.companyDisplayName.value,
-        companyName: this.profileDetailsForm.controls.companyName.value,
         country: this.profileDetailsForm.controls.country.value,
         footnote: this.MiscellaneousData.controls.footnote.value,
         gstin: this.profileDetailsForm.controls.gstinNum.value,
