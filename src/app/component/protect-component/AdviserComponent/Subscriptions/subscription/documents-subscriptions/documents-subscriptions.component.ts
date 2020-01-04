@@ -121,7 +121,11 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       statusIdList: '1,2',
     };
     this.subscription.getDocumentData(obj).subscribe(
-      data => this.getdocumentResponseData(data)
+      data => this.getdocumentResponseData(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
     );
   }
   addFilters(addFilters) {
