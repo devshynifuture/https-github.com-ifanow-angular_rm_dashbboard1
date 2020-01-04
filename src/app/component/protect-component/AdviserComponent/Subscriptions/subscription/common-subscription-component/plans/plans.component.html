@@ -20,10 +20,13 @@
         <div class="row">
             <div class="col-md-4 pb-40 c-p" *ngFor="let singleServicePlan of servicePlanData">
                 <div class="example-card">
-                    <mat-card class="p-0 b-a" (click)="selectServicePlan(singleServicePlan)" [ngClass]="{'p-0': singleServicePlan.selected==false,'b-a':singleServicePlan.selected==false,'ba-blue':singleServicePlan.selected==true}">
+                    <mat-card class="p-0 b-a" (click)="selectServicePlan(singleServicePlan)"
+                        [ngClass]="{'p-0': singleServicePlan.selected==false,'b-a':singleServicePlan.selected==false,'ba-blue':singleServicePlan.selected==true}">
                         <div class="row bg-grey lter">
                             <div class="col-md-12 heightplan">
-                                <mat-checkbox [ngStyle]="{'pointer-events':(singleServicePlan.selected)?'none':'all'}" class="custom-checkbox positionAbsulate" checked="false" [ngClass]="{'v-h': singleServicePlan.selected==false}">
+                                <mat-checkbox [ngStyle]="{'pointer-events':(singleServicePlan.selected)?'none':'all'}"
+                                    class="custom-checkbox positionAbsulate" checked="false"
+                                    [ngClass]="{'v-h': singleServicePlan.selected==false}">
                                 </mat-checkbox>
                                 <h3 class="mb-10 l-26 playairFont f-24">{{singleServicePlan.name}}</h3>
                                 <h5 class="m-0">{{singleServicePlan.code}}</h5>
