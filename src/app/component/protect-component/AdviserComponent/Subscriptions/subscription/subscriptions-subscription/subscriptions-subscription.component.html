@@ -27,9 +27,7 @@
                             <mat-chip class="bg-white b-a c-p f-400 p-12 w-220" *ngFor="let dateFilter of filterDate; let i = index">
                                 <!--<div class="row">-->
                                 <p>{{dateFilter.name}}</p>
-                                <input readonly class="pl-24" (click)="picker2.open()" [max]="maxDate" matInput placeholder="Choose a date"
-                                    [satDatepicker]="picker2" [(ngModel)]="selectedDateRange"
-                                    (dateChange)="orgValueChange(selectedDateRange)">
+                                <input readonly class="pl-24" (click)="picker2.open()" [max]="maxDate" matInput placeholder="Choose a date" [satDatepicker]="picker2" [(ngModel)]="selectedDateRange" (dateChange)="orgValueChange(selectedDateRange)">
                                 <sat-datepicker #picker2 [rangeMode]="true" [closeAfterSelection]="false">
                                 </sat-datepicker>
                                 <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
@@ -126,7 +124,7 @@
                 </ng-container>
                 <!-- Weight Column -->
                 <ng-container matColumnDef="activation">
-                    <th mat-sort-header="startsOn" *matHeaderCellDef class="f-18 t-6" mat-header-cell> Activation Date
+                    <th mat-sort-header="startsOn" *matHeaderCellDef class="f-20 t-6" mat-header-cell> Activation Date
                     </th>
                     <td *matCellDef="let element" mat-cell>
                         <div *ngIf="element.status!=1"> {{element.startsOn | date:'dd/MM/yyyy'}}</div>
@@ -143,15 +141,15 @@
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="lastbilling">
-                    <th mat-sort-header="prevBillingDate" *matHeaderCellDef class="f-18 t-10" mat-header-cell> Last billing
+                    <th mat-sort-header="prevBillingDate" *matHeaderCellDef class="f-18 t-12" mat-header-cell> Last billing date
                     </th>
-                    <td *matCellDef="let element" class="t-10" mat-cell>
+                    <td *matCellDef="let element" class="t-18" mat-cell>
                         <div class="bar"> {{element.prevBillingDate | date:'dd/MM/yyyy'}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="nextbilling">
                     <th mat-sort-header="nextBillingDate" *matHeaderCellDef class="f-18 text-right pr-24 t-15" mat-header-cell> Next billing </th>
-                    <td *matCellDef="let element" class="text-right pr-8 t-15" mat-cell>
+                    <td *matCellDef="let element" class=" pr-8 t-15" mat-cell>
                         <div class="bar"> {{element.nextBillingDate | date:'dd/MM/yyyy'}} </div>
                     </td>
                 </ng-container>

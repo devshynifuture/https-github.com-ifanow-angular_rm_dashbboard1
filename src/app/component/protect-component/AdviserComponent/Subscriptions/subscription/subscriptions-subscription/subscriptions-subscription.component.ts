@@ -377,6 +377,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.callFilter();
   }
 
+
   filterSubscriptionRes(data) {
     console.log('filterSubscriptionRes', data);
     if (data == undefined) {

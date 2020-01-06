@@ -110,7 +110,6 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
 
-
   getQuotationsDataResponse(data) {
     this.isLoading = false;
     if (data && data.length > 0) {
@@ -155,6 +154,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     });
 
+
     dialogRef.afterClosed().subscribe(result => {
 
     });
@@ -168,8 +168,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
     }
     console.log('this.filterStatus: ', this.filterStatus);
     console.log('this.filterDate: ', this.filterDate);
-
   }
+
+
   addFilters(addFilters) {
     console.log('addFilters', addFilters);
     if (!_.includes(this.filterStatus, addFilters)) {
@@ -179,6 +180,8 @@ export class QuotationsSubscriptionComponent implements OnInit {
       // _.remove(this.filterStatus, this.senddataTo);
     }
   }
+
+
 
   filterSubscriptionRes(data) {
     console.log('filterSubscriptionRes', data);
@@ -244,7 +247,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     );
   }
- 
+
   // Open(value)
   // {
   //   this.subInjectService.rightSideData(value);
