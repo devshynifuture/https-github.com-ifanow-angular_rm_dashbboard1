@@ -146,9 +146,14 @@ li {
   overflow: hidden !important;
 }
 
+.mat-sort-header-button {
+  text-transform: initial !important;
+
+}
+
 .mat-header-cell {
   color: rgba(0, 0, 0, .54);
-  text-transform: capitalize;
+  text-transform: initial;
 }
 
 .pab {
