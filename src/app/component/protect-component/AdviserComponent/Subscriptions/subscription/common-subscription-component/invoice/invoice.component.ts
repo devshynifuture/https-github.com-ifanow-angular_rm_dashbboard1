@@ -265,6 +265,7 @@ export class InvoiceComponent implements OnInit {
     }
     this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.finalAmount.value;
     this.discount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.discount.value;
+    console.log('finalAmount',this.finalAmount)
   }
 
   getInvoiceDataRes(data) {
@@ -398,7 +399,7 @@ export class InvoiceComponent implements OnInit {
     }
     this.storeData.subToatal = this.editPayment.controls.finalAmount.value;
     this.taxStatus = changeTaxStatus;
-
+console.log('finAmount',this.finAmount)
   }
 
   updateInvoice() {

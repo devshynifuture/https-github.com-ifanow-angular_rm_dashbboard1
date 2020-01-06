@@ -24,12 +24,10 @@
                             </i>
                         </mat-chip>
                         <mat-chip-list>
-                            <mat-chip class="bg-white b-a c-p f-400 p-12 w-220" *ngFor="let dateFilter of filterDate; let i = index">
+                            <mat-chip class="bg-white newDateClass b-a c-p f-400 p-12 w-220" *ngFor="let dateFilter of filterDate; let i = index">
                                 <!--<div class="row">-->
                                 <p>{{dateFilter.name}}</p>
-                                <input readonly class="pl-24" (click)="picker2.open()" [max]="maxDate" matInput placeholder="Choose a date"
-                                    [satDatepicker]="picker2" [(ngModel)]="selectedDateRange"
-                                    (dateChange)="orgValueChange(selectedDateRange)">
+                                <input readonly class="pL20" (click)="picker2.open()" [max]="maxDate" matInput placeholder="Choose a date" [satDatepicker]="picker2" [(ngModel)]="selectedDateRange" (dateChange)="orgValueChange(selectedDateRange)">
                                 <sat-datepicker #picker2 [rangeMode]="true" [closeAfterSelection]="false">
                                 </sat-datepicker>
                                 <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
@@ -78,77 +76,75 @@
     <div class="wrapper-20 pt-0 bg-white" id="wrapper">
 
         <div class="tableClass">
-            <table matSort mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation"
-            appSkeletonLoading [appSkeletonLoading]="isLoading">
-            <ng-container matColumnDef="name">
-                <th mat-sort-header="clientName" mat-header-cell *matHeaderCellDef class="f-18"> Client name </th>
-                <td mat-cell *matCellDef="let element" (click)="Open('viewQuotation',element)" class="c-p">
-                    <div class="bar"> {{element.clientName}} </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="docname">
-                <th mat-sort-header="documentName" mat-header-cell *matHeaderCellDef class="f-18"> Document name
-                </th>
-                <td mat-cell *matCellDef="let element">
-                    <div class="bar"> {{element.documentName}} </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="plan">
-                <th mat-sort-header="planName" mat-header-cell *matHeaderCellDef class="f-18"> Plan name </th>
-                <td mat-cell *matCellDef="let element">
-                    <div class="bar"> {{element.planName}} </div>
-                </td>
-            </ng-container>
+            <table matSort mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <ng-container matColumnDef="name">
+                    <th mat-sort-header="clientName" mat-header-cell *matHeaderCellDef class="f-18"> Client name </th>
+                    <td mat-cell *matCellDef="let element" (click)="Open('viewQuotation',element)" class="c-p">
+                        <div class="bar"> {{element.clientName}} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="docname">
+                    <th mat-sort-header="documentName" mat-header-cell *matHeaderCellDef class="f-18"> Document name
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.documentName}} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="plan">
+                    <th mat-sort-header="planName" mat-header-cell *matHeaderCellDef class="f-18"> Plan name </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.planName}} </div>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="cdate">
-                <th mat-sort-header="createdDate" mat-header-cell *matHeaderCellDef class="f-18"> Created date </th>
-                <td mat-cell *matCellDef="let element">
-                    <div class="bar"> {{element.createdDate | date:'dd/MM/yyyy'}} </div>
-                </td>
-            </ng-container>
-            <!-- Weight Column -->
-            <ng-container matColumnDef="sdate">
-                <th mat-sort-header="sentDate" mat-header-cell *matHeaderCellDef class="f-18"> Sent date </th>
-                <td mat-cell *matCellDef="let element">
-                    <div class="bar"> {{element.sentDate | date:'dd/MM/yyyy'}} </div>
-                </td>
-            </ng-container>
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="clientsign">
-                <th mat-sort-header="signedDate" mat-header-cell *matHeaderCellDef class="f-18"> Client consent
-                </th>
-                <td mat-cell *matCellDef="let element">
-                    <div class="bar"> {{element.signedDate | date:'dd/MM/yyyy'}} </div>
-                </td>
-            </ng-container>
-            <!-- <ng-container matColumnDef="status">
+                <ng-container matColumnDef="cdate">
+                    <th mat-sort-header="createdDate" mat-header-cell *matHeaderCellDef class="f-18"> Created date </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.createdDate | date:'dd/MM/yyyy'}} </div>
+                    </td>
+                </ng-container>
+                <!-- Weight Column -->
+                <ng-container matColumnDef="sdate">
+                    <th mat-sort-header="sentDate" mat-header-cell *matHeaderCellDef class="f-18"> Sent date </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.sentDate | date:'dd/MM/yyyy'}} </div>
+                    </td>
+                </ng-container>
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="clientsign">
+                    <th mat-sort-header="signedDate" mat-header-cell *matHeaderCellDef class="f-18"> Client consent
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.signedDate | date:'dd/MM/yyyy'}} </div>
+                    </td>
+                </ng-container>
+                <!-- <ng-container matColumnDef="status">
     <th mat-header-cell *matHeaderCellDef class="f-18 pr-24"> Status </th>
     <td mat-cell *matCellDef="let element" class="greentext"> {{element.status}} </td>
   </ng-container> -->
-            <ng-container matColumnDef="status">
-                <th mat-sort-header="status" *matHeaderCellDef class=" t-10" mat-header-cell> Status</th>
-                <td *matCellDef="let element" mat-cell>
-                    <span>
-                        <span class="text-success t-10 f-500 c-p" *ngIf="element.status==1">READY TO SEND</span>
+                <ng-container matColumnDef="status">
+                    <th mat-sort-header="status" *matHeaderCellDef class=" t-10" mat-header-cell> Status</th>
+                    <td *matCellDef="let element" mat-cell>
+                        <span>
+                            <span class="text-success t-10 f-500 c-p" *ngIf="element.status==1">READY TO SEND</span>
                         <span class="text-success t-10 f-500 c-p" *ngIf="element.status==0">NOT STARTED</span>
-                    </span>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="icons">
-                <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"> </th>
-                <td mat-cell *matCellDef="let element" style="width: 2%;"><i class="material-icons c-p iconscolors"
-                        [matMenuTriggerFor]="menu">
-                        more_vert
-                    </i>
-                    <mat-menu #menu="matMenu">
-                        <a mat-menu-item (click)="Open('emailQuotation',element)">View & Edit Quotation</a>
-                        <a mat-menu-item (click)="deleteModal('QUOTATION')">Delete document</a>
-                    </mat-menu>
-                </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:ture;" [ngClass]="!showFilter ? 'stickyHeader1' : 'stickyHeader2'" ></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+                        </span>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="icons">
+                    <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"> </th>
+                    <td mat-cell *matCellDef="let element" style="width: 2%;"><i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu">
+                            more_vert
+                        </i>
+                        <mat-menu #menu="matMenu">
+                            <a mat-menu-item (click)="Open('emailQuotation',element)">View & Edit Quotation</a>
+                            <a mat-menu-item (click)="deleteModal('QUOTATION')">Delete document</a>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:ture;" [ngClass]="!showFilter ? 'stickyHeader1' : 'stickyHeader2'"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
 
         </div>
     </div>

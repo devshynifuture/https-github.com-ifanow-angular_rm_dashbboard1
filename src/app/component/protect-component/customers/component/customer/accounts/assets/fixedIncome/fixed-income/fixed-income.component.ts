@@ -273,8 +273,11 @@ export class FixedIncomeComponent implements OnInit {
     }
     this.isLoading = false;
     console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
-
-    if (data.recurringDeposits) {
+    if(data == undefined){
+      this.noData = 'No scheme found';
+      this.dataSourceRecurring.data = [];
+    }
+    else if (data.recurringDeposits) {
       this.dataSourceRecurring = new MatTableDataSource(data.recurringDeposits);
       this.dataSourceRecurring.sort = this.recurringDepositTableSort;
       UtilService.checkStatusId(this.dataSourceRecurring.filteredData);
