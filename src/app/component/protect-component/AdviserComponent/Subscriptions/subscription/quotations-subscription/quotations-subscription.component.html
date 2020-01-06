@@ -3,7 +3,7 @@
     <div class="bg-white p-20 filterBox">
         <div class="row">
             <div class="col-md-8 p-0">
-                <h4 class="pt-8 mb-0">Subscriptions</h4>
+                <h4 class="pt-8 mb-0">Quatations</h4>
             </div>
             <div class="col-md-4 right text-right p-0">
                 <i class="material-icons mr-12 icon-light c-p v-sub">
@@ -42,9 +42,9 @@
                 <div class="col-md-4 right text-right p-0">
                     <div class="row">
                         <div class="col-md-6 sub_input">
-                            <div class="form-group mb-0">
+                            <!-- <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <!-- <mat-label>FILTERS ONE</mat-label> -->
+                                     <mat-label>FILTERS ONE</mat-label> 
                                     <mat-select class="form-control" id="sel11" [(value)]='selectedStatusFilter' (selectionChange)="addFilters(selectedStatusFilter)">
                                         <mat-option value="status">By status</mat-option>
                                         <mat-option *ngFor="let chip of chips" [value]="chip">
@@ -52,14 +52,14 @@
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col-md-6 sub_input">
                             <div class="form-group mb-0">
                                 <mat-form-field>
                                     <!-- <mat-label>FILTERS TWO</mat-label> -->
                                     <mat-select class="form-control br-0" id="sel12" [(ngModel)]='selectedDateFilter' (selectionChange)="addFiltersDate(selectedDateFilter)">
-                                        <mat-option value="selected">By date</mat-option>
+                                        <mat-option value="selected" [disabled]= "true" >By date</mat-option>
                                         <mat-option *ngFor="let dateAdd of dateChips" [value]="dateAdd">
                                             {{dateAdd.name}}
                                         </mat-option>

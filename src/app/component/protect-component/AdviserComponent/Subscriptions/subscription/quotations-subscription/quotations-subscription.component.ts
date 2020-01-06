@@ -56,7 +56,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   statusIdList = [];
   filterDataArr = [];
   selectedStatusFilter: any = 'statusFilter';
-  selectedDateFilter: any = 'dateFilter';
+  selectedDateFilter: any = 'selected';
   lastFilterDataId;
   statusIdLength = 0;
   showFilter = false;

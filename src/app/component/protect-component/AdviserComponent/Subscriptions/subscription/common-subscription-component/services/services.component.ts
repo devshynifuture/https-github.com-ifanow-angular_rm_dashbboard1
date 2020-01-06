@@ -16,7 +16,7 @@ export class ServicesComponent implements OnInit {
   advisorId;
 
   @Input() componentFlag: string;
-  planServiceData = [{ selected: false }];
+  planServiceData:Array<any> = [{ selected: false }];
   mappedData = [];
   mappedPlan = [];
   @Input() planData;
@@ -42,6 +42,8 @@ export class ServicesComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    console.log('plan ngOnInit', this.componentFlag);
+
     // this.getPlanServiceData();
     if (this.componentFlag === 'services') {
       this.getServicesMapped()
@@ -76,10 +78,16 @@ export class ServicesComponent implements OnInit {
     if (data) {
       this.planServiceData = data;
       this.planServiceData.forEach(element => {
+       const newElement = {
+          ...element,
+          ...element.servicePricing
+        };
         if (element.selected == true) {
           this.mappedData.push(element);
         }
       });
+
+
     } else {
       this.planServiceData = [];
     }
@@ -100,13 +108,22 @@ export class ServicesComponent implements OnInit {
     console.log(data);
     this.isLoading = false;
     if (data) {
-
       this.planServiceData = data;
+      const modifiedArray = []
       this.planServiceData.forEach(element => {
+       const newElement = {
+          ...element,
+          ...element.servicePricing
+        };
         if (element.selected == true) {
           this.mappedData.push(element);
         }
+        modifiedArray.push(newElement);
       });
+
+      this.planServiceData = modifiedArray;
+      console.log('plan service getPlanServiceDataResponse : ', modifiedArray);
+
     } else {
       this.planServiceData = [];
 
