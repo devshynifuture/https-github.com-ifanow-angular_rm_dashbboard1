@@ -198,6 +198,15 @@ export class PayeeSettingsComponent implements OnInit {
     } else if (this.payeeSettingsForm.controls.billingAddress.invalid) {
       this.isCustomerName = true;
       return;
+    } else if (this.payeeSettingsForm.get('city').invalid) {
+      this.payeeSettingsForm.get('city').markAsTouched();
+      return
+    } else if (this.payeeSettingsForm.get('country').invalid) {
+      this.payeeSettingsForm.get('country').markAsTouched();
+      return
+    } else if (this.payeeSettingsForm.get('state').invalid) {
+      this.payeeSettingsForm.get('state').markAsTouched();
+      return
     } else {
       if (this.payeeSettingsForm.controls.id.value != undefined) {
         const obj1 = {
