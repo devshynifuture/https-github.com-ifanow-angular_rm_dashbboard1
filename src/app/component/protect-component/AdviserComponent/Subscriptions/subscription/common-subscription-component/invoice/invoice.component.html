@@ -1264,7 +1264,7 @@
                         </div>
                     </div>
                     <div class="col-md-2 pl-0">
-                        <input (keypress)="utils.keyPress($event)" class="form-control br-0" formControlName="finalAmount" type="number">
+                        <input (keypress)="utils.keyPress($event)"  [(ngModel)]="finalAmount" class="form-control br-0"  formControlName="finalAmount" type="number">
                         <div class="col-md-8">
                             <mat-error *ngIf="isPrice && getFormControledit().finalAmount.invalid || (getFormControledit().finalAmount.touched && getFormControledit().finalAmount.invalid)" class="f-12 pt-4">
                                 Price is required
