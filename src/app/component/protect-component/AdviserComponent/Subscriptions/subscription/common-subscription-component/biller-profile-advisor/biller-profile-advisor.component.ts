@@ -1,13 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {HttpClient} from '@angular/common/http';
-import {PhotoCloudinaryUploadService} from '../../../../../../../services/photo-cloudinary-upload.service';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { HttpClient } from '@angular/common/http';
+import { PhotoCloudinaryUploadService } from '../../../../../../../services/photo-cloudinary-upload.service';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -49,8 +49,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
   // validatorType = ValidatorType;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private subService: SubscriptionService,
-              private eventService: EventService, private http: HttpClient) {
+    private subService: SubscriptionService,
+    private eventService: EventService, private http: HttpClient) {
   }
 
   @Input() Selected;
@@ -167,7 +167,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       id: [data.id]
     }),
       this.logUrl = this.fb.group({
-        url: [data.logoUrl, [Validators.required]]
+        url: [, [Validators.required]]
       });
     this.bankDetailsForm = this.fb.group({
       nameOnBank: [(data.nameAsPerBank), [Validators.required]],
@@ -195,10 +195,11 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.getFrormControlBank().address.maxLength = 150;
     this.getFrormControlMisc().footnote.maxLength = 150;
     this.getFrormControlMisc().terms.maxLength = 150;
+    this.logoImg = data.logoUrl;
   }
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 
   nextStep(value, eventName) {
@@ -227,27 +228,28 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
   submitBillerForm() {
     if (this.profileDetailsForm.controls.companyDisplayName.invalid) {
+      this.profileDetailsForm.controls.companyDisplayName.markAsTouched();
       return;
     } else if (this.profileDetailsForm.controls.gstinNum.invalid) {
-      this.isGstin = true;
+      this.profileDetailsForm.controls.gstinNum.markAsTouched();
       return;
     } else if (this.profileDetailsForm.controls.panNum.invalid) {
-      this.isPanNum = true;
+      this.profileDetailsForm.controls.panNum.markAsTouched();
       return;
     } else if (this.profileDetailsForm.controls.Address.invalid) {
-      this.isAddress = true;
+      this.profileDetailsForm.controls.Address.markAsTouched();
       return;
     } else if (this.profileDetailsForm.controls.city.invalid) {
-      this.isCity = true;
+      this.profileDetailsForm.controls.city.markAsTouched();
       return;
     } else if (this.profileDetailsForm.controls.state.invalid) {
-      this.isState = true;
+      this.profileDetailsForm.controls.state.markAsTouched();
       return;
     } else if (this.profileDetailsForm.controls.country.invalid) {
-      this.isCountry = true;
+      this.profileDetailsForm.controls.country.markAsTouched();
       return;
     } else if (this.profileDetailsForm.controls.pincode.invalid) {
-      this.isZipCode = true;
+      this.profileDetailsForm.controls.pincode.markAsTouched();
       return;
     } /*else if (this.logUrl.controls.url.invalid) {
       return;
