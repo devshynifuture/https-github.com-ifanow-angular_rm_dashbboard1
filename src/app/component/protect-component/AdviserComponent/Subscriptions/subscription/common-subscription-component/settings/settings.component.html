@@ -2,17 +2,17 @@
     <h3 class="m-0 text-center head-common">{{upperData.name}} </h3>
 </div>
 <div class="bg-white">
-    <div class="row" *ngIf="SettingProfileData != undefined">
-        <div class="wrapper-20 pt-32">
-            <div class="row pt-180">
-                <div class="col-md-12 p-0">
-                    <button (click)="openPayeeSettings('Add','payeeSettings','open')" class="btn-primary br-0 right text-right addon" mat-stroked-button>
-            ADD MORE </button>
-                    <!-- <button class="text-black right br-0 mr-12 text-right" mat-button>HELP</button> -->
+    <div *ngIf="SettingProfileData != undefined">
 
-                </div>
+        <div class="row pt-180">
+            <div class="col-md-12 mt-36">
+                <button (click)="openPayeeSettings('Add','payeeSettings','open')" class="btn-primary br-0 right text-right addon" mat-stroked-button>
+                    ADD MORE </button>
+                <!-- <button class="text-black right br-0 mr-12 text-right" mat-button>HELP</button> -->
+
             </div>
         </div>
+
 
         <div *ngFor="let profileData of SettingProfileData" class="d-flex justify-content-center">
             <div class="row wrapper-100 pb-72 pt-8 pb-10">
@@ -23,18 +23,18 @@
                         </div>
                         <div class="col-md-4 pt-16">
                             <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu" class="material-icons text-right right text-custom f-28 c-p">
-                more_vert
-              </i>
+                                more_vert
+                            </i>
                             <mat-menu #menu="matMenu">
                                 <a (click)="setPrimaryField(profileData)" mat-menu-item>Set as Primary</a>
                                 <a (click)="openPayeeSettings(profileData,'payeeSettings','open')" mat-menu-item>Edit
-                  Client Profile</a>
+                                    Client Profile</a>
                                 <a (click)="deleteModal('PROFILE',profileData)" class="bt-1" mat-menu-item>Delete Client
-                  Profile</a>
+                                    Profile</a>
                             </mat-menu>
                             <button *ngIf="profileData.isPrimary == true && SettingProfileData.length > 1" class="text-primary br-0 right text-right" mat-stroked-button>
-                PRIMARY
-              </button>
+                                PRIMARY
+                            </button>
                         </div>
                     </div>
                     <div class="b-a bt-none">
@@ -111,7 +111,7 @@
             <p class="f-22 f-600 pt-28"> No Data Found </p>
 
             <button (click)="openPayeeSettings('Add','payeeSettings','open')" class="btn-primary mt-20 br-0 right text-right addon" mat-stroked-button>
-        ADD MORE </button>
+                ADD MORE </button>
 
         </div>
     </div>
