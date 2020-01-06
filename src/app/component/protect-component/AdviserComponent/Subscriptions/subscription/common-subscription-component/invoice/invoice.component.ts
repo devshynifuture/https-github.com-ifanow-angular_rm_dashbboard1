@@ -402,76 +402,85 @@ export class InvoiceComponent implements OnInit {
   }
 
   updateInvoice() {
-    if (this.editPayment.value.id == 0) {
-      const service = [{
-        serviceName: this.editPayment.value.serviceName
-      }];
-      const obj = {
-        clientName: this.editPayment.value.clientName,
-        advisorBillerProfileId: this.editPayment.value.advisorBillerProfileId,
-        billerName: this.editPayment.value.billerName,
-        advisorId: this.editPayment.value.advisorId,
-        clientBillerId: this.editPayment.value.clientBillerId,
-        billerAddress: this.editPayment.value.billerAddress,
-        billingAddress: this.editPayment.value.billingAddress,
-        invoiceNumber: this.editPayment.value.invoiceNumber,
-        subTotal: this.editPayment.value.finalAmount,
-        total: (parseInt(this.editPayment.value.finalAmount) - parseInt(this.editPayment.value.discount)) + parseInt(this.finAmount),
-        discount: this.editPayment.value.discount,
-        finalAmount: this.editPayment.value.finalAmount,
-        invoiceDate: this.editPayment.value.invoiceDate,
-        dueDate: this.editPayment.value.dueDate,
-        igst: (this.editPayment.value.taxStatus == 'IGST(18%)') ? 18 : null,
-        cgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
-        sgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
-        igstTaxAmount: (this.editPayment.value.taxStatus == 'IGST(18%)') ? this.finAmount : null,
-        cgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountC : null,
-        sgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountS : null,
-        footnote: this.editPayment.value.footnote,
-        terms: this.editPayment.value.terms,
-        clientId: this.editPayment.value.clientId,
-        services: service,
-      };
-      console.log('this.editPayment', obj);
-      this.subService.addInvoice(obj).subscribe(
-        data => this.addInvoiceRes(data)
-      );
-    } else {
-      const service = [{
-        serviceName: this.editPayment.value.serviceName,
-        averageFees: this.storeData.services[0].averageFees,
-        description: this.storeData.services[0].description,
-        fromDate: this.storeData.services[0].fromDate,
-        toDate: this.storeData.services[0].toDate,
-      }];
-      const obj = {
-        id: this.editPayment.value.id,
-        clientName: this.editPayment.value.clientName,
-        auto: this.editPayment.value.auto,
-        billerAddress: this.editPayment.value.billerAddress,
-        billingAddress: this.editPayment.value.billingAddress,
-        finalAmount: this.editPayment.value.finalAmount,
-        invoiceNumber: this.editPayment.value.invoiceNumber,
-        subTotal: this.editPayment.value.finalAmount,
-        total: (parseInt(this.editPayment.value.finalAmount) - parseInt(this.editPayment.value.discount)) + parseInt(this.finAmount),
-        discount: this.editPayment.value.discount,
-        invoiceDate: this.editPayment.value.invoiceDate,
-        dueDate: this.editPayment.value.dueDate,
-        igst: (this.editPayment.value.taxStatus == 'IGST(18%)') ? 18 : null,
-        cgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
-        sgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
-        igstTaxAmount: (this.editPayment.value.taxStatus == 'IGST(18%)') ? this.finAmount : null,
-        cgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountC : null,
-        sgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountS : null,
-        footnote: this.editPayment.value.footnote,
-        terms: this.editPayment.value.terms,
-        services: service,
-      };
-      console.log('this.editPayment', obj);
-      this.subService.updateInvoiceInfo(obj).subscribe(
-        data => this.updateInvoiceInfoRes(data)
-      );
+    if (this.editPayment.get('dueDate').invalid) {
+      this.editPayment.get('dueDate').markAsTouched();
+      return
+    } else if (this.editPayment.get('invoiceDate').invalid) {
+      this.editPayment.get('invoiceDate').markAsTouched();
+      return
+    }else{
+      if (this.editPayment.value.id == 0) {
+        const service = [{
+          serviceName: this.editPayment.value.serviceName
+        }];
+        const obj = {
+          clientName: this.editPayment.value.clientName,
+          advisorBillerProfileId: this.editPayment.value.advisorBillerProfileId,
+          billerName: this.editPayment.value.billerName,
+          advisorId: this.editPayment.value.advisorId,
+          clientBillerId: this.editPayment.value.clientBillerId,
+          billerAddress: this.editPayment.value.billerAddress,
+          billingAddress: this.editPayment.value.billingAddress,
+          invoiceNumber: this.editPayment.value.invoiceNumber,
+          subTotal: this.editPayment.value.finalAmount,
+          total: (parseInt(this.editPayment.value.finalAmount) - parseInt(this.editPayment.value.discount)) + parseInt(this.finAmount),
+          discount: this.editPayment.value.discount,
+          finalAmount: this.editPayment.value.finalAmount,
+          invoiceDate: this.editPayment.value.invoiceDate,
+          dueDate: this.editPayment.value.dueDate,
+          igst: (this.editPayment.value.taxStatus == 'IGST(18%)') ? 18 : null,
+          cgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
+          sgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
+          igstTaxAmount: (this.editPayment.value.taxStatus == 'IGST(18%)') ? this.finAmount : null,
+          cgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountC : null,
+          sgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountS : null,
+          footnote: this.editPayment.value.footnote,
+          terms: this.editPayment.value.terms,
+          clientId: this.editPayment.value.clientId,
+          services: service,
+        };
+        console.log('this.editPayment', obj);
+        this.subService.addInvoice(obj).subscribe(
+          data => this.addInvoiceRes(data)
+        );
+      } else {
+        const service = [{
+          serviceName: this.editPayment.value.serviceName,
+          averageFees: this.storeData.services[0].averageFees,
+          description: this.storeData.services[0].description,
+          fromDate: this.storeData.services[0].fromDate,
+          toDate: this.storeData.services[0].toDate,
+        }];
+        const obj = {
+          id: this.editPayment.value.id,
+          clientName: this.editPayment.value.clientName,
+          auto: this.editPayment.value.auto,
+          billerAddress: this.editPayment.value.billerAddress,
+          billingAddress: this.editPayment.value.billingAddress,
+          finalAmount: this.editPayment.value.finalAmount,
+          invoiceNumber: this.editPayment.value.invoiceNumber,
+          subTotal: this.editPayment.value.finalAmount,
+          total: (parseInt(this.editPayment.value.finalAmount) - parseInt(this.editPayment.value.discount)) + parseInt(this.finAmount),
+          discount: this.editPayment.value.discount,
+          invoiceDate: this.editPayment.value.invoiceDate,
+          dueDate: this.editPayment.value.dueDate,
+          igst: (this.editPayment.value.taxStatus == 'IGST(18%)') ? 18 : null,
+          cgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
+          sgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
+          igstTaxAmount: (this.editPayment.value.taxStatus == 'IGST(18%)') ? this.finAmount : null,
+          cgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountC : null,
+          sgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountS : null,
+          footnote: this.editPayment.value.footnote,
+          terms: this.editPayment.value.terms,
+          services: service,
+        };
+        console.log('this.editPayment', obj);
+        this.subService.updateInvoiceInfo(obj).subscribe(
+          data => this.updateInvoiceInfoRes(data)
+        );
+      }
     }
+
   }
 
   updateInvoiceInfoRes(data) {

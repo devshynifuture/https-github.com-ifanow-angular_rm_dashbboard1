@@ -12,6 +12,7 @@ import { MAT_DATE_FORMATS } from 'saturn-datepicker';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AddQuotationComponent } from '../common-subscription-component/add-quotation/add-quotation.component';
 import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
+
 export interface PeriodicElement {
   name: string;
   docname: string;
@@ -73,10 +74,10 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
   ngOnInit() {
     //this.dataSource = [{}, {}, {}];
-    this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
     this.getQuotationsData();
   }
+
   orgValueChange(selectedDateRange) {
 
     const beginDate = new Date();
@@ -88,6 +89,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     this.selectedDateRange = { begin: selectedDateRange.begin, end: selectedDateRange.end };
     this.getQuotationsData()
   }
+
   getQuotationsData() {
     const obj = {
       // advisorId: 12345
@@ -98,7 +100,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
       dateType: (this.filterDate.length == 0) ? 0 : this.filterDate,
     };
 
-
+    this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     this.subService.getSubscriptionQuotationData(obj).subscribe(
       data => this.getQuotationsDataResponse(data), (error) => {
@@ -131,6 +133,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
       //this.dataSource.sort = this.sort;
     }
   }
+
   deleteModal(value) {
     const dialogData = {
       data: value,
@@ -160,6 +163,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     });
 
   }
+
   showFilters(showFilter) {
     if (showFilter == true) {
       this.showFilter = false;
@@ -169,7 +173,6 @@ export class QuotationsSubscriptionComponent implements OnInit {
     console.log('this.filterStatus: ', this.filterStatus);
     console.log('this.filterDate: ', this.filterDate);
   }
-
 
   addFilters(addFilters) {
     console.log('addFilters', addFilters);
@@ -204,6 +207,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     this.selectedDateRange = { begin: beginDate, end: endDate };
   }
+
   openPopup(data) {
     const Fragmentdata = {
       flag: data,
@@ -218,6 +222,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     });
   }
+
   removeDate(item) {
     this.filterDate.splice(item, 1);
     this.getQuotationsData()
@@ -229,6 +234,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   Open(value, data) {
+    if (this.isLoading) {
+      return;
+    }
     const fragmentData = {
       flag: value,
       data: data,
@@ -240,11 +248,11 @@ export class QuotationsSubscriptionComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getQuotationsData();
           console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }
       }
-
     );
   }
 
