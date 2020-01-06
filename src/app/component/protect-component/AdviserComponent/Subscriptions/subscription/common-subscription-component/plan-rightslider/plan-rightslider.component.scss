@@ -1,19 +1,32 @@
-.mat-card:not([class*=mat-elevation-z]){
+.mat-card:not([class*=mat-elevation-z]) {
     box-shadow: none !important;
     border: 0px;
     padding: 0;
 }
-h3{
+
+h3 {
     font-family: "Playfair Display";
     font-size: 24px;
     letter-spacing: 0.2px;
 }
-h5{
+
+h5 {
     color: #3F3F3F;
 }
-p.f-12,h5{
-    font-family: "Proxima Nova",sans-serif;
+
+p.f-12,
+h5 {
+    font-family: "Proxima Nova", sans-serif;
 }
-::ng-deep .mat-checkbox-layout{
+
+::ng-deep .mat-checkbox-layout {
     vertical-align: top !important;
+}
+
+.height115 {
+    height: 115px;
+}
+
+.height110 {
+    height: 110px;
 }

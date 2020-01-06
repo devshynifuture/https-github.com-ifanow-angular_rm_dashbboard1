@@ -90,7 +90,6 @@ import { CustomDirectiveModule } from './common/directives/common-directive.modu
 export const componentList = [
   AddLiabilitiesComponent,
   AddInsuranceComponent,
-  FixedDepositComponent,
   AddRealEstateComponent,
   GoldComponent,
   AddNPSComponent,
@@ -150,19 +149,7 @@ export const componentList = [
   OthersComponent,
   CashInHandComponent,
   BankAccountsComponent,
-
   NpsSchemeHoldingComponent,
-  LiabilitiesDetailComponent,
-  DetailedViewFixedDepositComponent,
-  DetailedViewRecuringDepositComponent,
-  DetailedViewBondsComponent,
-  DetailedViewGoldComponent,
-  DetailedViewOthersComponent,
-  DetailedViewBankAccountComponent,
-  DetailedViewCashInHandComponent,
-  DetailedPoSavingsComponent,
-  DetailedPoTdComponent,
-  DetailedPoMisComponent,
   DetailedViewEPFComponent,
   AddScssComponent,
   AddKvpComponent,
@@ -189,7 +176,6 @@ export const componentList = [
   OthersComponent,
   CashInHandComponent,
   BankAccountsComponent,
-
   NpsSchemeHoldingComponent,
   LiabilitiesDetailComponent,
   DetailedViewFixedDepositComponent,
@@ -205,7 +191,6 @@ export const componentList = [
   DetailedViewRealEstateComponent,
   DetaildedViewSuperannuationComponent,
   CopyDocumentsComponent,
-
   DetailedPoRdComponent,
   AddPlaninsuranceComponent,
   DetailedPoRdComponent,

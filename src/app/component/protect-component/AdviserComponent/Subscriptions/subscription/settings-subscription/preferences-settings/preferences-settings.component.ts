@@ -28,12 +28,14 @@ export class PreferencesSettingsComponent implements OnInit {
   }
   prefixData;
   showLoader = false;
-  billerProfileData = [];
+  billerProfileData: Array<any> = [{ isPrimary: false }];
   isLoading = false;
   PrefixData;
+
   selected;
 
   ngOnInit() {
+
     this.viewMode = 'tab1';
     this.advisorId = AuthService.getAdvisorId();
     this.getProfileBillerData();
@@ -41,6 +43,7 @@ export class PreferencesSettingsComponent implements OnInit {
   }
 
   getTemplate() {
+
     const obj = {
       // advisorId: 2727
       advisorId: this.advisorId
@@ -56,8 +59,15 @@ export class PreferencesSettingsComponent implements OnInit {
   }
 
   getProfileBillerData() {
+    this.isLoading = true;
+    this.billerProfileData = [{ isPrimary: false }];
     this.subscription.getPreferenceBillerProfile(this.advisorId).subscribe(
-      data => this.getProfileBillerDataResponse(data)
+      data => this.getProfileBillerDataResponse(data), error => {
+        this.isLoading = false;
+        this.billerProfileData = [];
+
+      }
+
     );
   }
   getBillerPrimary(data) {
@@ -70,6 +80,7 @@ export class PreferencesSettingsComponent implements OnInit {
     );
   }
   setBillerPrimaryRes(data) {
+
     console.log(data)
     this.billerProfileData.forEach(element => {
       if (element.id == data) {
@@ -117,6 +128,7 @@ export class PreferencesSettingsComponent implements OnInit {
   }
 
   getProfileBillerDataResponse(data) {
+    this.isLoading = false;
     console.log('getProfileBillerDataResponse', data);
     this.billerProfileData = data;
   }
@@ -133,7 +145,6 @@ export class PreferencesSettingsComponent implements OnInit {
 
   Open(singleProfile, value) {
     this.selected = 0;
-
     const fragmentData = {
       flag: value,
       data: singleProfile,

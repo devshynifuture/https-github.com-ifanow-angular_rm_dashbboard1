@@ -118,6 +118,8 @@ export class ClientSubscriptionComponent implements OnInit {
       state: 'open'
     };
 
+
+
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
