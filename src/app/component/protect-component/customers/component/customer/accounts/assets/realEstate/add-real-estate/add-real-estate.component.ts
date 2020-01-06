@@ -226,7 +226,6 @@ export class AddRealEstateComponent implements OnInit {
       // this.nexNomineePer = _.sumBy(this.getCoOwner.value, function (o) {
       //   return o.ownershipPerc;
       // });
-      this.nexNomineePer=0;
       this.getCoOwner.value.forEach(element => {
         this.nexNomineePer+=element.ownershipPerc
       });
@@ -242,6 +241,8 @@ export class AddRealEstateComponent implements OnInit {
       // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
       //   return o.ownershipPer;
       // });
+      this.nexNomineePer=0;
+
       this.getNominee.value.forEach(element => {
         this.nexNomineePer+=element.ownershipPer
       });
@@ -289,7 +290,7 @@ export class AddRealEstateComponent implements OnInit {
     } else {
       if (data.realEstateOwners.length != 0) {
         var ownerName = _.reject(data.realEstateOwners, function (n) {
-          return n.owner == true;
+          return n.owner == false;
         });
         if (ownerName.length != 0) {
           this.addrealEstateForm.controls.ownerName.setValue(ownerName[0].ownerName);
@@ -310,7 +311,10 @@ export class AddRealEstateComponent implements OnInit {
         console.log(this.addrealEstateForm.controls.getNomineeName.value)
       }
       if (data.realEstateOwners.length != 0) {
-        data.realEstateOwners.forEach(element => {
+        const ownerName = _.reject(data.realEstateOwners, function (n) {
+          return n.owner == true;
+        });
+        ownerName.forEach(element => {
           this.addrealEstateForm.controls.getCoOwnerName.push(this.fb.group({
             ownerName: [(element.ownerName) + "", [Validators.required]],
             ownershipPerc: [(element.ownershipPerc + ""), Validators.required]
