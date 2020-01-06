@@ -290,6 +290,15 @@
             top: 143px !important;
         }
     }
+
+    .stickyHeader3 {
+        position: sticky;
+        top: 179px !important;
+        th {
+            position: sticky;
+            top: 179px !important;
+        }
+    }
 }
 
 #mistabs1,

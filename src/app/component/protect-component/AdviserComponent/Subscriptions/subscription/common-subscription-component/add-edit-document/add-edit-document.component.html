@@ -17,7 +17,13 @@
     <div class="col-md-5">
       <div class="form-group mb-0">
 
-        <input type="email" formControlName="docType" class="form-control br-0">
+        <!-- <input type="email" formControlName="docType" class="form-control br-0"> -->
+        <mat-select class="form-control br-0" formControlName="docType" id="sel1">
+          <mat-option value="1">Terms of Agreement</mat-option>
+          <mat-option value="2">Scope of work</mat-option>
+          <mat-option value="3">Quotation</mat-option>
+
+      </mat-select>
         <div
           [ngClass]="{'v-h':!(isDocType && getFormControl().docType.invalid || getFormControl().docType.touched && getFormControl().docType.invalid)}"
           class="col-md-12">

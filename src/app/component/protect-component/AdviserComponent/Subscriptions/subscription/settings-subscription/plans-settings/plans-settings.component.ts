@@ -43,8 +43,11 @@ export class PlansSettingsComponent implements OnInit {
     this.planSettingData = [{}, {}, {}];
 
     this.subService.getSubscriptionPlanSettingsData(obj).subscribe(
-      data => this.getSettingsPlanResponse(data),
-      err => this.getFilerrorResponse(err)
+      data => this.getSettingsPlanResponse(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        // this.planSettingData = [];
+        this.isLoading = false;
+      }
     );
   }
 

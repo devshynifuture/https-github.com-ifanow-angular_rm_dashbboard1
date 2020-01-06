@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {SubscriptionService} from '../../../subscription.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { SubscriptionService } from '../../../subscription.service';
 import * as _ from 'lodash';
-import {ValidatorType} from "../../../../../../../services/util.service";
+import { ValidatorType } from "../../../../../../../services/util.service";
 
 @Component({
   selector: 'app-variable-fee',
@@ -43,7 +43,7 @@ export class VariableFeeComponent implements OnInit {
   validatorType = ValidatorType;
 
   constructor(private subService: SubscriptionService, private fb: FormBuilder,
-              public subInjectService: SubscriptionInject) {
+    public subInjectService: SubscriptionInject) {
   }
 
   @Input()
@@ -123,8 +123,8 @@ export class VariableFeeComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeUpperRightSliderState({state: 'close'});
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   select(assetData) {
@@ -172,9 +172,6 @@ export class VariableFeeComponent implements OnInit {
         billingNature: this.getVariableFee().billingNature.value,
         billingMode: 1,
         billEvery: this.getVariableFee().billEvery.value,
-        feeTypeId: '',
-        clientId: '',
-        subId: '',
         subscriptionAssetPricingList: [
           {
             directRegular: 1,
@@ -196,9 +193,9 @@ export class VariableFeeComponent implements OnInit {
         ]
       };
       if (this.singleSubscriptionData.isCreateSub == false) {
-        obj.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId;
-        obj.clientId = this.singleSubscriptionData.clientId;
-        obj.subId = this.singleSubscriptionData.id;
+        obj['feeTypeId'] = this.singleSubscriptionData.subscriptionPricing.feeTypeId;
+        obj['clientId'] = this.singleSubscriptionData.clientId;
+        obj['subId'] = this.singleSubscriptionData.id;
         console.log(obj, "this.outputData 123");
         this.outputData.emit(obj);
 

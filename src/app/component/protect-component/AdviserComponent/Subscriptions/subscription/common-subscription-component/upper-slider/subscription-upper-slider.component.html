@@ -15,8 +15,8 @@
       <p class="f-16 mb-0 pt-24 text-center"
         *ngIf="fragmentData.data.flag=='documents' || fragmentData.data==='documents'">Add documents, map them to
         services/plans</p>
-      <p class="f-16 mb-0 pt-24 text-center" *ngIf="fragmentData.data.flag=='clients' || fragmentData.data==='clients'"
-      >Add fee structure, send
+      <p class="f-16 mb-0 pt-24 text-center" *ngIf="fragmentData.data.flag=='clients' || fragmentData.data==='clients'">
+        Add fee structure, send
         quotations/invoices, execute documents for the selected client</p>
     </div>
     <div class="col-md-2 text-right">
@@ -115,20 +115,20 @@
         <!--                  </div>-->
         <!--                  <app-quotations-subscription [upperData]="fragmentData.clientData" [screenType]="1"-->
         <!--                                               *ngIf="subscriptionTab=='QUOTATIONS'"></app-quotations-subscription>-->
-        <app-quotations *ngIf="subscriptionTab=='QUOTATIONS'" [clientData]="fragmentData.data">
+        <app-quotations [clientData]="fragmentData.data">
         </app-quotations>
       </mat-tab>
       <mat-tab label="INVOICES">
-        <app-invoices *ngIf="subscriptionTab=='INVOICES'" [upperData]="fragmentData.data">
+        <app-invoices [upperData]="fragmentData.data">
         </app-invoices>
       </mat-tab>
       <mat-tab label="DOCUMENTS">
-        <app-document *ngIf="subscriptionTab=='DOCUMENTS'" [clientData]="fragmentData.data"
-          [componentFlag1]='clientDocuments' [upperData]="fragmentData.data">
+        <app-document [clientData]="fragmentData.data" [componentFlag1]='clientDocuments'
+          [upperData]="fragmentData.data">
         </app-document>
       </mat-tab>
       <mat-tab label="SETTINGS">
-        <app-settings *ngIf="subscriptionTab=='SETTINGS'" [upperData]="fragmentData.data">
+        <app-settings [upperData]="fragmentData.data">
         </app-settings>
       </mat-tab>
     </mat-tab-group>
@@ -154,9 +154,9 @@
   <app-create-subscription [data]="upperRightSideInputData.data"
     *ngIf="rightSliderFlag=='createSubFixed' || rightSliderFlag=='createSubVariable'"></app-create-subscription>
   <app-add-variable-fee [variableFee]="upperRightSideInputData.data" (outputVariableData)="upperData=$event"
-                        *ngIf="rightSliderFlag=='varibleFee'"></app-add-variable-fee>
+    *ngIf="rightSliderFlag=='varibleFee'"></app-add-variable-fee>
   <app-add-fixed-fee [fixedFee]="upperRightSideInputData.data" (outputFixedData)="upperData=$event"
-    *ngIf="rightSliderFlag=='fixedFee'" ></app-add-fixed-fee>
+    *ngIf="rightSliderFlag=='fixedFee'"></app-add-fixed-fee>
   <app-add-edit-document [inputData]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='addEditDocument'"
     [fragmentData]="fragmentData"></app-add-edit-document>
 
@@ -182,12 +182,11 @@
 
 
   <app-common-froala *ngIf="rightSliderFlag=='viewQuotation'" [data]="upperRightSideInputData.data"
-                     [screenType]="'selector'"
-    [changeFooter]='rightSliderFlag'></app-common-froala>
+    [screenType]="'selector'" [changeFooter]='rightSliderFlag'></app-common-froala>
 
   <!--  <app-common-froala [data]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='viewQuotation'"></app-common-froala>-->
   <app-common-froala *ngIf="rightSliderFlag=='viewDocuments'" [data]="upperRightSideInputData.data"
-                     [screenType]="'selector'"></app-common-froala>
+    [screenType]="'selector'"></app-common-froala>
   <!--  (valueChange)='display($event)'-->
   <!--</div>-->
 </app-custom-dialog-container>
