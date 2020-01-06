@@ -42,6 +42,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   totalSaleReceived: any;
   dataSource = [{}, {}, {}];
   isLoading = false;
+  isLoadingSubSummary = false;
   @Output() subIndex = new EventEmitter()
 
   advisorName;
@@ -88,7 +89,7 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.docSentSignedCountData();
     this.clientWithSubscription();
     this.invoiceToBeReviewed();
-    this.getSummaryDataDashboard(null);
+    this.getSummaryDataDashboard();
     this.getTotalRecivedByDash();
   }
 
@@ -107,7 +108,7 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.subService.getDashboardSubscriptionResponse(this.advisorId).subscribe(
       data => {
         this.showLetsBegin = data.show;
-          this.showLetsBeginData = data.advisorAccomplishedSubscriptionFinalList;
+        this.showLetsBeginData = data.advisorAccomplishedSubscriptionFinalList;
       }
     );
   }
@@ -240,7 +241,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   }
 
   // ******* Dashboard Subscription Summary *******
-  getSummaryDataDashboard(eventValue) {
+  getSummaryDataDashboard() {
     /* const obj = {
        // 'id':2735, //pass here advisor id for Invoice advisor
        // 'module':1,
@@ -271,16 +272,21 @@ export class DashboardSubscriptionComponent implements OnInit {
       toDate: null
 
     };
-    console.log('filterSubscription eventValue ', eventValue);
     console.log('filterSubscription this.subscriptionSummaryStatusFilter ', this.subscriptionSummaryStatusFilter);
-    this.dataSource = [];
+    this.dataSource = [{}, {}, {}];
     console.log('filterSubscription reqObj ', obj);
+    this.isLoadingSubSummary = true;
     this.subService.filterSubscription(obj).subscribe(
-      data => this.getSubSummaryRes(data)
+      data => this.getSubSummaryRes(data), error => {
+        this.isLoadingSubSummary = false;
+        this.dataSource = [];
+
+      }
     );
   }
 
   getSubSummaryRes(data) {
+    this.isLoadingSubSummary = false;
     console.log('Summary Data', data);
     // data.forEach(element => {
     //   element.feeMode = (element.feeMode == 1) ? 'FIXED' : 'VARIABLE';
@@ -288,7 +294,11 @@ export class DashboardSubscriptionComponent implements OnInit {
     //   element.status = (element.status == 1) ? 'NOT STARTED' : (element.status == 2) ?
     //   'LIVE' : (element.status == 3) ? 'FUTURE' : 'CANCELLED';
     // });
-    this.dataSource = data;
+    if (data) {
+      this.dataSource = data;
+    } else {
+      this.dataSource = [];
+    }
   }
 
   // ******* Dashboard Sent And Signed Count *******
