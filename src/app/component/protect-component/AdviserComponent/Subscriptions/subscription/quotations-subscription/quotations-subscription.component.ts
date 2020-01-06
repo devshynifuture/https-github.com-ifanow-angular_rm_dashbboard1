@@ -226,6 +226,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   Open(value, data) {
+    if (this.isLoading) {
+      return
+    }
     const fragmentData = {
       flag: value,
       data: data,
@@ -244,7 +247,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     );
   }
- 
+
   // Open(value)
   // {
   //   this.subInjectService.rightSideData(value);
