@@ -145,7 +145,6 @@ export class PreferencesSettingsComponent implements OnInit {
 
   Open(singleProfile, value) {
     this.selected = 0;
-
     const fragmentData = {
       flag: value,
       data: singleProfile,
