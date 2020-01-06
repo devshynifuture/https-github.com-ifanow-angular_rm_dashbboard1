@@ -1,13 +1,13 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { SubscriptionService } from '../../subscription.service';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { AuthService } from '../../../../../../auth-service/authService';
-import { UtilService, ValidatorType } from '../../../../../../services/util.service';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionService} from '../../subscription.service';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {AuthService} from '../../../../../../auth-service/authService';
+import {UtilService, ValidatorType} from '../../../../../../services/util.service';
 import * as _ from 'lodash';
-import { DatePipe } from '@angular/common';
+import {DatePipe} from '@angular/common';
 
 export interface PeriodicElement {
   date: string;
@@ -18,7 +18,7 @@ export interface PeriodicElement {
   duedate: string;
   amt: string;
   balance: string;
-  
+
 }
 
 @Component({
@@ -28,8 +28,7 @@ export interface PeriodicElement {
 })
 export class InvoicesSubscriptionComponent implements OnInit {
   @ViewChild(MatSort, {static: false}) sort: MatSort;
-  
-  
+
 
   chips = [
     {name: 'UNPAID', value: 0},
@@ -37,8 +36,8 @@ export class InvoicesSubscriptionComponent implements OnInit {
     {name: 'OVERDUE', value: 2}
   ];
   dateChips = [
-    { name: 'Date', value: 1 },
-    { name: 'Due date', value: 2 },
+    {name: 'Date', value: 1},
+    {name: 'Due date', value: 2},
   ];
   invoiceDesign: string;
   noData: string;
@@ -112,8 +111,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
       this.scrollCallData = false;
       if (this.scrollPosition == undefined) {
         this.scrollPosition = contentheight - yoffset;
-      }
-      else if (this.scrollPosition < contentheight) {
+      } else if (this.scrollPosition < contentheight) {
         this.scrollPosition = contentheight - window.innerHeight;
       }
 
@@ -131,35 +129,36 @@ export class InvoicesSubscriptionComponent implements OnInit {
   }
 
   getInvoiceSubData(scrollLoader) {
-    this.isLoading = true;
     const obj = {
       id: this.advisorId,
       // id: 2735, // pass here advisor id for Invoice advisor
       module: 1
     };
     this.dataSource.data = [{}, {}, {}];
+    this.isLoading = true;
     this.subscription.getInvoices(obj).subscribe(
       data => {
         this.getData = data;
+        this.isLoading = false;
+
         if (data != undefined) {
           this.lastDataId = data[data.length - 1].id;
           // obj.offset = this.lastDataId;
           // console.log(this.lastDataId, obj, "data check");
           if (this.tableData.length <= 0) {
             this.tableData = data;
-          }
-          else {
+          } else {
             this.tableData = this.tableData.concat(data);
             console.log(this.tableData, "this.tableData 123");
           }
         } else {
-          this.isLoading = false;        }
+        }
         this.getInvoiceResponseData(this.tableData);
       }, (error) => {
         this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
         this.dataSource.data = [];
         this.isLoading = false;
-      } 
+      }
     );
   }
 
@@ -221,8 +220,14 @@ export class InvoicesSubscriptionComponent implements OnInit {
   // this.showPdfInvoice=true;
   // }
   openInvoice(data, value, state) {
+    console.log(' openInvoice this.loading : ', this.isLoading);
+    console.log(' openInvoice data : ', data);
+    console.log(' openInvoice value : ', value);
+    console.log(' openInvoice state : ', state);
+
     if (this.isLoading) {
-      return
+      console.log(' openInvoice this.loading : ', this.isLoading);
+      return;
     }
     this.invoiceSub = value;
     this.invoiceSubscription = 'true';
@@ -288,7 +293,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
-      this.selectAll({ checked: false }) : this.selectAll({ checked: true });
+      this.selectAll({checked: false}) : this.selectAll({checked: true});
   }
 
   display(data) {
@@ -377,8 +382,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
       console.log(this.lastFilterDataId, "this.lastFilterDataId");
       if (this.filterDataArr.length <= 0) {
         this.filterDataArr = data;
-      }
-      else {
+      } else {
         this.filterDataArr = this.filterDataArr.concat(data);
         console.log(this.filterDataArr, "this.filterDataArr 123");
       }
@@ -405,7 +409,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = { begin: beginDate, end: endDate };
+    this.selectedDateRange = {begin: beginDate, end: endDate};
     console.log(this.filterDate, "this.filterDate 123");
     this.callFilter();
   }
@@ -420,13 +424,15 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   remove(item) {
     console.log(item, "item123");
-    
+
     if (this.filterStatus[item].name == this.selectedStatusFilter.name) {
       this.selectedStatusFilter = "statusFilter";
     }
 
     this.filterStatus.splice(item, 1);
-    this.filterDataArr = this.filterDataArr.filter((x) => { x.status != item.value })
+    this.filterDataArr = this.filterDataArr.filter((x) => {
+      x.status != item.value
+    })
     this.lastFilterDataId = 0;
     this.callFilter();
 
