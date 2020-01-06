@@ -335,8 +335,9 @@ export class InvoicesSubscriptionComponent implements OnInit {
     console.log(this.lastFilterDataId, this.statusIdLength < this.statusIdList.length, "aaaa");
 
     const obj = {
-      advisorId: this.advisorId,
+      Id: this.advisorId,
       limit: 10,
+      module: 1,
       offset: this.lastFilterDataId,
       fromDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.begin, 'yyyy-MM-dd') : null,
       toDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.end, 'yyyy-MM-dd') : null,
@@ -347,7 +348,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     if (obj.statusIdList.length == 0 && obj.fromDate == null) {
       this.getInvoiceSubData(false);
     } else {
-      this.subService.filterSubscription(obj).subscribe(
+      this.subService.filterInvoices(obj).subscribe(
         (data) => {
           this.filterSubscriptionRes(data)
         }
