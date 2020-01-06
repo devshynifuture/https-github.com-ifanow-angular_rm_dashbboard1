@@ -120,11 +120,11 @@
 
                                     <div class="row p-16 pr-0 pl-0">
                                       <div class="col-md-9">
-                                        <h4 class="m-0 f-14"> Investment management fees </h4>
-                                        <span class="m-0 f-14 text-custom"> For the peroid 20/08/2019 to 19/08/2020</span>
+                                        <h4 class="m-0 f-14">{{storeData.services[0].serviceName}}</h4>
+                                        <span class="m-0 f-14 text-custom"> {{storeData.services[0].description}}</span>
                                       </div>
                                       <div class="col-md-3 d-flex align-items-center justify-content-end">
-                                        <h4 class="m-0 f-14  text-right"> 8,000 </h4>
+                                        <h4 class="m-0 f-14  text-right"> ₹{{formatter(storeData.subTotal)}}</h4>
                                       </div>
                                    </div>
                                </div>
@@ -132,7 +132,12 @@
 
                              <div class="row">
                                 <div class="col-md-7 mt-70">
+                                    <h4 class="m-0 f-14 f-500 text-left"> Footnote description </h4>
                                     <p class="f-12 text-black f-400 roboto"> {{storeData.footnote}}</p>
+                                </div>
+                                <div class="col-md-7 mt-70">
+                                    <h4 class="m-0 f-14 f-500 text-left">Terms & conditions </h4>
+                                    <p class="f-12 text-black f-400 roboto"> {{storeData.terms}}</p>
                                 </div>
                                 <div class="col-md-5">
                                     <div class="row pt-44">
