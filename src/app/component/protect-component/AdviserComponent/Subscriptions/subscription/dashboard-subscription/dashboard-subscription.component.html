@@ -1,248 +1,247 @@
-<div *ngIf="showSubStep==false" [ngClass]="showLetsBegin==false ? 'pt-130': 'pt-40' "  class="full-lights pb-36 "
-    id="ui-dashboard">
-    <div class="wrapper-20">
-        <!-- <div *ngIf="showLetsBegin" class="row bg-red mt-20 mb-36"> -->
+<div *ngIf="showSubStep==false" [ngClass]="showLetsBegin==false ? 'pt-130': 'pt-40' " class="full-lights pb-36 "
+     id="ui-dashboard">
+  <div class="wrapper-20">
+    <!-- <div *ngIf="showLetsBegin" class="row bg-red mt-20 mb-36"> -->
 
-        <div class="row bg-red mt-20 mb-36"  *ngIf="showLetsBegin==false">
-            <div class="col-md-5">
-                <img class="dashboard-img" src="assets/images/svg/Dashboard.svg">
-            </div>
-            <div class="col-md-7">
-                <h1>Hi {{advisorName}}, {{greeting}}</h1>
-                <p class="mb-0 pt-12">We’re excited to see you here! The dashboard currently looks barren. </p>
-                <p> Fret not. We’ll help you in this journey. We’re in this together. </p>
-                <button (click)="showSubscriptionSteps()" class="btn-red addon mb-28 mt-16" mat-flat-button>Let's begin
-                    <i class="material-icons right text-right"> arrow_forward </i></button>
-            </div>
-        </div>
-        <div [ngClass]="showLetsBegin==true ? 'pt-40': 'pt-40' " class=" subscription-summary" >
-            <div class="row">
-                <div class="col-md-4 pl-0 relClass">
-                    <div class="bar">
-                        <div *ngIf="dataSourceClientWithSub != undefined" class="bg-white pt-20 pb-16 text-center">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <circle-progress [animationDuration]="1000" [animation]="true"
-                                            [innerStrokeColor]="'#e7e8ea'" [innerStrokeWidth]="10"
-                                            [outerStrokeColor]="'#008FFF'" [outerStrokeWidth]="10"
-                                            [percent]="dataSourceClientWithSub.activeClientPer" [radius]="100"
-                                            [responsive]="true" [showSubtitle]="false" [space]="-10"
-                                            [startFromZero]="false" [titleFontSize]="35" [unitsFontSize]="35"
-                                            class="progress">
-                                        </circle-progress>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="text-center f-300 pt-12 pb-24 f-18 mb-0">Clients with subscription</p>
-                            <div class="btl-1">
-                                <p class="text-center pt-16 f-300 f-18 mb-0">Subscription summary</p>
-                                <div class="row pt-16 pb-8">
-                                    <div class="col-md-3 c-p">
-                                        <p class="f-300 f-18">Total</p>
-                                        <h4 class="text-center ">{{dataSourceClientWithSub.activeClient}}</h4>
-                                    </div>
-                                    <div class="col-md-6 c-p">
-                                        <p class="f-300 f-18">This month</p>
-                                        <h4 class="text-center ">{{dataSourceClientWithSub.monthSubscription}}</h4>
-                                    </div>
-                                    <div class="col-md-3 c-p">
-                                        <p class="f-300 f-18"> Today</p>
-                                        <h4 class="text-center ">{{dataSourceClientWithSub.todayActive}}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 p-0 mt-28">
-                        <div class="row bg-white  ">
-                            <div class="col-md-12 p-0 b-b">
-                                <h4 class="f-300 roboto pl-16 pt-16 mb-16">Invoices to be reviewed</h4>
-                            </div>
-                            <div *ngIf="!dataSourceInvoice" class="noDataFound">
-                                <i class="material-icons font100">receipt</i>
-                                <p class="m-0"> No Data Found </p>
-                            </div>
-                            <div *ngIf="dataSourceInvoice">
-                                <div *ngFor="let invoice of dataSourceInvoice" class="col-md-12 ">
-
-                                    <div class="row pt-16 b-b">
-                                        <div class="col-md-8 pl-8">
-                                            <p class="f-15 mb-28">{{invoice.clientName}}</p>
-                                            <p class="f-13 mb-12">{{invoice.invoiceNumber}}</p>
-                                        </div>
-                                        <div class="col-md-4 pr-0">
-                                            <p class="f-15 mb-28">₹{{invoice.finalAmount}}</p>
-                                            <p class="f-13 mb-12">{{invoice.invoiceDate | date:'dd/MM/yyyy'}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div *ngIf="dataSourceInvoice" class="col-md-12 text-right pt-8 11">
-                                <div (click)="changeParentsTab(5)" class="c-p">View all
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-                <div class="col-md-8 pr-0">
-                    <div class="row">
-                        <div class="col-md-6 pl-0">
-                            <div class="row bg-white">
-
-                                <div [appSkeletonLoading]="isLoading" appSkeletonLoading
-                                    class="col-md-6 skeletonAnimation">
-                                    <div class="pl-10 pr-20">
-                                        <p class="f-300 f-18 pt-28 text-center mb-0">Total sales</p>
-                                        <h2 [value]="totalSales" appFormatNumber
-                                            class="text-primary text-center mb-0 pb-28 pt-8 relClass">
-                                            <div class="bar"> {{totalSales}} </div>
-                                        </h2>
-                                    </div>
-                                </div>
-                                <div [appSkeletonLoading]="isLoading" appSkeletonLoading
-                                    class="col-md-6 p-0 skeletonAnimation">
-                                    <div class="pr-20 pl-10">
-                                        <p class="f-300 f-18 pt-28 text-center mb-0">Fee received</p>
-                                        <h2 [value]="feeRecieved" appFormatNumber
-                                            class="text-primary text-center mb-0 pb-28 pt-8 relClass">
-                                            <div class="bar"> {{feeRecieved}} </div>
-                                        </h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 pr-0">
-                            <div *ngIf="dataSourceSingCount !=undefined" class="row bg-white">
-
-                                <div [appSkeletonLoading]="isLoading" appSkeletonLoading
-                                    class="col-md-6 skeletonAnimation">
-                                    <div class="pl-10 pr-20 c-p">
-                                        <p class="f-300 f-18 pt-28 text-center mb-0">Docs sent </p>
-                                        <h2 class="f-26 text-primary mb-0 text-center pb-28 pt-8 relClass">
-                                            <div class="bar"> {{dataSourceSingCount.sentCount}} </div>
-                                        </h2>
-                                    </div>
-                                </div>
-                                <div [appSkeletonLoading]="isLoading" appSkeletonLoading
-                                    class="col-md-6 pr-0 skeletonAnimation">
-                                    <div class="pl-10 pr-20 c-p">
-                                        <p class="f-300 f-18 text-center pt-28 mb-0">Docs signed </p>
-                                        <h2 class="f-26 text-primary text-center mb-0 pb-28 pt-8 relClass">
-                                            <div class="bar"> {{dataSourceSingCount.signedCount}}
-                                            </div>
-                                        </h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 p-0">
-                        <div class="wrapper-16 pt-24 bg-white mt-28 pb-20">
-                            <div class="pl-20 pr-2">
-                                <div class="row">
-                                    <div class="col-md-6 pl-0">
-                                        <h4 class="f-300 mb-0 pt-8">Subscription summary</h4>
-                                    </div>
-                                    <div class="col-md-6 right text-right pr-0">
-                                        <mat-button-toggle-group (change)="getSummaryDataDashboard($event.value)"
-                                            [(ngModel)]="subscriptionSummaryStatusFilter" class="subscription-summary"
-                                            id="custom-toggle" multiple=false>
-                                            <mat-button-toggle class="f-14" value=1>NOT STARTED</mat-button-toggle>
-                                            <mat-button-toggle class="f-14" value=3>UPCOMING</mat-button-toggle>
-                                        </mat-button-toggle-group>
-
-                                    </div>
-                                </div>
-                                <div class=" overflow-hidden" *ngIf="dataSource!=undefined">
-
-
-
-                                    <table [dataSource]="dataSource" id="table-low" mat-table
-                                        class=" skeletonAnimation mt-12" appSkeletonLoading
-                                        [appSkeletonLoading]="isLoading">
-                                        <tbody>
-                                            <ng-container matColumnDef="name">
-                                                <th *matHeaderCellDef mat-header-cell> Client name</th>
-                                                <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)"
-                                                    *matCellDef="let element" class="c-p" mat-cell>
-                                                    <div class="bar"> {{element.clientName}} </div>
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="service">
-                                                <th *matHeaderCellDef mat-header-cell> Service name</th>
-                                                <td *matCellDef="let element" class="c-p" mat-cell>
-                                                    <div class="bar"> {{element.serviceName}} </div>
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="amt">
-                                                <th *matHeaderCellDef mat-header-cell> Fee amount</th>
-                                                <td (click)="Open(element)" *matCellDef="let element"
-                                                    class="c-p text-primary text-underline" mat-cell> View details
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="billing">
-                                                <th *matHeaderCellDef mat-header-cell> Next billing date</th>
-                                                <td *matCellDef="let element" mat-cell>
-                                                    <div class="bar"> {{element.nextBillingDate | date:'dd/MM/yyyy'}}
-                                                    </div>
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="icons">
-                                                <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;">
-                                                </th>
-                                                <td *matCellDef="let element" mat-cell style="width: 2%;"><i
-                                                        [matMenuTriggerFor]="menu"
-                                                        class="material-icons c-p iconscolors">
-                                                        more_vert
-                                                    </i>
-                                                    <mat-menu #menu="matMenu">
-                                                        <a (click)="Open(element)" mat-menu-item>View & Modify fee
-                                                            structure</a>
-                                                        <a (click)="openPlanSlider('billerSettings','open',element)"
-                                                            class="bt-1" mat-menu-item>Change
-                                                            Biller</a>
-                                                        <a (click)="openPlanSlider('changePayee','open',element)"
-                                                            mat-menu-item>Change
-                                                            Payee</a>
-                                                        <a (click)="delete('cancelSubscription')" class="bt-1"
-                                                            mat-menu-item>Cancel
-                                                            subscription</a>
-                                                        <a (click)="deleteModal('SUBSCRIPTION')" mat-menu-item>Delete
-                                                            subscription</a>
-                                                    </mat-menu>
-                                                </td>
-                                            </ng-container>
-                                            <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-                                            <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="noDataFound" *ngIf="dataSource==undefined">
-                                    <img src="assets/images/svg/run.svg">
-                                </div>
-                            </div>
-
-                            <div *ngIf="dataSource" class="col-md-12 text-right pt-8">
-                                <div (click)="changeParentsTab(3)" class="c-p">View all</div>
-
-                                <!--              <a href="#" class="text-black f-14">View all</a>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
+    <div *ngIf="showLetsBegin==false" class="row bg-red mt-20 mb-36">
+      <div class="col-md-5">
+        <img class="dashboard-img" src="assets/images/svg/Dashboard.svg">
+      </div>
+      <div class="col-md-7">
+        <h1>Hi {{advisorName}}, {{greeting}}</h1>
+        <p class="mb-0 pt-12">We’re excited to see you here! The dashboard currently looks barren. </p>
+        <p> Fret not. We’ll help you in this journey. We’re in this together. </p>
+        <button (click)="showSubscriptionSteps()" class="btn-red addon mb-28 mt-16" mat-flat-button>Let's begin
+          <i class="material-icons right text-right"> arrow_forward </i></button>
+      </div>
     </div>
+    <div [ngClass]="showLetsBegin==true ? 'pt-40': 'pt-40' " class=" subscription-summary">
+      <div class="row">
+        <div class="col-md-4 pl-0 relClass">
+          <div class="bar">
+            <div *ngIf="dataSourceClientWithSub != undefined" class="bg-white pt-20 pb-16 text-center">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-12">
+                    <circle-progress [animationDuration]="1000" [animation]="true"
+                                     [innerStrokeColor]="'#e7e8ea'" [innerStrokeWidth]="10"
+                                     [outerStrokeColor]="'#008FFF'" [outerStrokeWidth]="10"
+                                     [percent]="dataSourceClientWithSub.activeClientPer" [radius]="100"
+                                     [responsive]="true" [showSubtitle]="false" [space]="-10"
+                                     [startFromZero]="false" [titleFontSize]="35" [unitsFontSize]="35"
+                                     class="progress">
+                    </circle-progress>
+
+                  </div>
+                </div>
+              </div>
+              <p class="text-center f-300 pt-12 pb-24 f-18 mb-0">Clients with subscription</p>
+              <div class="btl-1">
+                <p class="text-center pt-16 f-300 f-18 mb-0">Subscription summary</p>
+                <div class="row pt-16 pb-8">
+                  <div class="col-md-3 c-p">
+                    <p class="f-300 f-18">Total</p>
+                    <h4 class="text-center ">{{dataSourceClientWithSub.activeClient}}</h4>
+                  </div>
+                  <div class="col-md-6 c-p">
+                    <p class="f-300 f-18">This month</p>
+                    <h4 class="text-center ">{{dataSourceClientWithSub.monthSubscription}}</h4>
+                  </div>
+                  <div class="col-md-3 c-p">
+                    <p class="f-300 f-18"> Today</p>
+                    <h4 class="text-center ">{{dataSourceClientWithSub.todayActive}}</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 p-0 mt-28">
+            <div class="row bg-white  ">
+              <div class="col-md-12 p-0 b-b">
+                <h4 class="f-300 roboto pl-16 pt-16 mb-16">Invoices to be reviewed</h4>
+              </div>
+              <div *ngIf="!dataSourceInvoice" class="noDataFound">
+                <i class="material-icons font100">receipt</i>
+                <p class="m-0"> No Data Found </p>
+              </div>
+              <div *ngIf="dataSourceInvoice">
+                <div *ngFor="let invoice of dataSourceInvoice" class="col-md-12 ">
+
+                  <div class="row pt-16 b-b">
+                    <div class="col-md-8 pl-8">
+                      <p class="f-15 mb-28">{{invoice.clientName}}</p>
+                      <p class="f-13 mb-12">{{invoice.invoiceNumber}}</p>
+                    </div>
+                    <div class="col-md-4 pr-0">
+                      <p class="f-15 mb-28">₹{{invoice.finalAmount}}</p>
+                      <p class="f-13 mb-12">{{invoice.invoiceDate | date:'dd/MM/yyyy'}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="dataSourceInvoice" class="col-md-12 text-right pt-8 11">
+                <div (click)="changeParentsTab(5)" class="c-p">View all
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="col-md-8 pr-0">
+          <div class="row">
+            <div class="col-md-6 pl-0">
+              <div class="row bg-white">
+
+                <div [appSkeletonLoading]="isLoading" appSkeletonLoading
+                     class="col-md-6 skeletonAnimation">
+                  <div class="pl-10 pr-20">
+                    <p class="f-300 f-18 pt-28 text-center mb-0">Total sales</p>
+                    <h2 [value]="totalSales" appFormatNumber
+                        class="text-primary text-center mb-0 pb-28 pt-8 relClass">
+                      <div class="bar"> {{totalSales}} </div>
+                    </h2>
+                  </div>
+                </div>
+                <div [appSkeletonLoading]="isLoading" appSkeletonLoading
+                     class="col-md-6 p-0 skeletonAnimation">
+                  <div class="pr-20 pl-10">
+                    <p class="f-300 f-18 pt-28 text-center mb-0">Fee received</p>
+                    <h2 [value]="feeRecieved" appFormatNumber
+                        class="text-primary text-center mb-0 pb-28 pt-8 relClass">
+                      <div class="bar"> {{feeRecieved}} </div>
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 pr-0">
+              <div *ngIf="dataSourceSingCount !=undefined" class="row bg-white">
+
+                <div [appSkeletonLoading]="isLoading" appSkeletonLoading
+                     class="col-md-6 skeletonAnimation">
+                  <div class="pl-10 pr-20 c-p">
+                    <p class="f-300 f-18 pt-28 text-center mb-0">Docs sent </p>
+                    <h2 class="f-26 text-primary mb-0 text-center pb-28 pt-8 relClass">
+                      <div class="bar"> {{dataSourceSingCount.sentCount}} </div>
+                    </h2>
+                  </div>
+                </div>
+                <div [appSkeletonLoading]="isLoading" appSkeletonLoading
+                     class="col-md-6 pr-0 skeletonAnimation">
+                  <div class="pl-10 pr-20 c-p">
+                    <p class="f-300 f-18 text-center pt-28 mb-0">Docs signed </p>
+                    <h2 class="f-26 text-primary text-center mb-0 pb-28 pt-8 relClass">
+                      <div class="bar"> {{dataSourceSingCount.signedCount}}
+                      </div>
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 p-0">
+            <div class="wrapper-16 pt-24 bg-white mt-28 pb-20">
+              <div class="pl-20 pr-2">
+                <div class="row">
+                  <div class="col-md-6 pl-0">
+                    <h4 class="f-300 mb-0 pt-8">Subscription summary</h4>
+                  </div>
+                  <div class="col-md-6 right text-right pr-0">
+                    <mat-button-toggle-group (change)="getSummaryDataDashboard()"
+                                             [(ngModel)]="subscriptionSummaryStatusFilter" class="subscription-summary"
+                                             id="custom-toggle" multiple=false>
+                      <mat-button-toggle class="f-14" value=1>NOT STARTED</mat-button-toggle>
+                      <mat-button-toggle class="f-14" value=3>UPCOMING</mat-button-toggle>
+                    </mat-button-toggle-group>
+
+                  </div>
+                </div>
+                <div *ngIf="dataSource.length >0" class=" overflow-hidden">
+
+
+                  <table [appSkeletonLoading]="isLoadingSubSummary" [dataSource]="dataSource" appSkeletonLoading
+                         class=" skeletonAnimation mt-12" id="table-low"
+                         mat-table>
+                    <tbody>
+                    <ng-container matColumnDef="name">
+                      <th *matHeaderCellDef mat-header-cell> Client name</th>
+                      <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)"
+                          *matCellDef="let element" class="c-p" mat-cell>
+                        <div class="bar"> {{element.clientName}} </div>
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="service">
+                      <th *matHeaderCellDef mat-header-cell> Service name</th>
+                      <td *matCellDef="let element" class="c-p" mat-cell>
+                        <div class="bar"> {{element.serviceName}} </div>
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="amt">
+                      <th *matHeaderCellDef mat-header-cell> Fee amount</th>
+                      <td (click)="Open(element)" *matCellDef="let element"
+                          class="c-p text-primary text-underline" mat-cell> View details
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="billing">
+                      <th *matHeaderCellDef mat-header-cell> Next billing date</th>
+                      <td *matCellDef="let element" mat-cell>
+                        <div class="bar"> {{element.nextBillingDate | date:'dd/MM/yyyy'}}
+                        </div>
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="icons">
+                      <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;">
+                      </th>
+                      <td *matCellDef="let element" mat-cell style="width: 2%;"><i
+                        [matMenuTriggerFor]="menu"
+                        class="material-icons c-p iconscolors">
+                        more_vert
+                      </i>
+                        <mat-menu #menu="matMenu">
+                          <a (click)="Open(element)" mat-menu-item>View & Modify fee
+                            structure</a>
+                          <a (click)="openPlanSlider('billerSettings','open',element)"
+                             class="bt-1" mat-menu-item>Change
+                            Biller</a>
+                          <a (click)="openPlanSlider('changePayee','open',element)"
+                             mat-menu-item>Change
+                            Payee</a>
+                          <a (click)="delete('cancelSubscription')" class="bt-1"
+                             mat-menu-item>Cancel
+                            subscription</a>
+                          <a (click)="deleteModal('SUBSCRIPTION')" mat-menu-item>Delete
+                            subscription</a>
+                        </mat-menu>
+                      </td>
+                    </ng-container>
+                    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div *ngIf="dataSource.length ==0" class="noDataFound">
+                  <img src="assets/images/svg/run.svg">
+                </div>
+              </div>
+
+              <div *ngIf="dataSource" class="col-md-12 text-right pt-8">
+                <div (click)="changeParentsTab(3)" class="c-p">View all</div>
+
+                <!--              <a href="#" class="text-black f-14">View all</a>-->
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
 </div>
 <app-subscription-completeness (dashboard)='display($event)' (subscriptionIndex)="getIndex($event)" *ngIf="showSubStep">
 </app-subscription-completeness>
