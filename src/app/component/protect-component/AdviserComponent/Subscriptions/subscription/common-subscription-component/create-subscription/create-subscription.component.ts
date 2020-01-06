@@ -98,7 +98,7 @@ export class CreateSubscriptionComponent implements OnInit {
   ngOnInit() {
     // this.stepper.selectedIndex = 0;
     console.log(AuthService.getClientData(), "123 AuthService.getUserInfo()");
-    
+
     this.advisorName = AuthService.getUserInfo().fullName;
     this.isFlagPayyee = true;
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
@@ -110,7 +110,7 @@ export class CreateSubscriptionComponent implements OnInit {
     this.payeeSettingData = data
   }
 
-  preventDefault(e){
+  preventDefault(e) {
     e.preventDefault();
   }
 
@@ -171,10 +171,12 @@ export class CreateSubscriptionComponent implements OnInit {
   }
   getSharesInfo(data) {
     if (data == 100) {
-      this.totalSelectedPayeeShare = data;
+      this.totalSelectedPayeeShare = data.share;
+      this.selectedPayee.push({
+        id: data.id,
+        share: data.share
+      })
     }
-    // const dateToShow =
-
   }
   goBack() {
     this.stepper.previous();

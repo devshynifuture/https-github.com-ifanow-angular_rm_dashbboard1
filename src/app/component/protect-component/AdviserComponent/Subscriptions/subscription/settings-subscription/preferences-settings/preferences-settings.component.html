@@ -1,9 +1,9 @@
 <div id="ui-perferences" class="bg-white">
     <div class="wrapper-20">
         <div class="pb-20" *ngIf="billerProfileData != undefined || billerProfileData != null || billerProfileData">
-            <div class="row" (click)="Open('Add','billerProfile')">
+            <div class="row">
                 <div class="col-md-12 right text-right pr-0">
-                    <button mat-stroked-button class="btn-primary addon">ADD NEW
+                    <button (click)="Open('Add','billerProfile')" mat-stroked-button class="btn-primary addon">ADD NEW
                     </button>
                 </div>
             </div>
@@ -56,12 +56,12 @@
                                     </i>
                                     <mat-menu #menu="matMenu">
                                         <a mat-menu-item (click)="getBillerPrimary(singleBillerProfile)">Set as
-                                            Primary</a>
+                                            primary</a>
                                         <a mat-menu-item (click)="Open(singleBillerProfile,'billerProfile')">Edit
-                                            Biller Profile</a>
+                                            biller profile</a>
                                         <a mat-menu-item class="bt-1" (click)="deleteModal(singleBillerProfile)">Delete
-                                            Biller
-                                            Profile</a>
+                                            biller
+                                            profile</a>
                                     </mat-menu>
                                 </div>
                             </div>
