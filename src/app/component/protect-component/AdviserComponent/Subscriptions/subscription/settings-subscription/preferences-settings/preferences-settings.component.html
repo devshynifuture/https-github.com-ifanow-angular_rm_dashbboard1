@@ -3,7 +3,8 @@
         <div class="pb-20" *ngIf="billerProfileData != undefined || billerProfileData != null || billerProfileData">
             <div class="row">
                 <div class="col-md-12 right text-right pr-0">
-                    <button (click)="Open('Add','billerProfile')" mat-stroked-button class="btn-primary addon">ADD NEW
+                    <button (click)="Open('Add','addbillerProfile')" mat-stroked-button class="btn-primary addon">ADD
+                        NEW
                     </button>
                 </div>
             </div>
@@ -57,7 +58,7 @@
                                     <mat-menu #menu="matMenu">
                                         <a mat-menu-item (click)="getBillerPrimary(singleBillerProfile)">Set as
                                             primary</a>
-                                        <a mat-menu-item (click)="Open(singleBillerProfile,'billerProfile')">Edit
+                                        <a mat-menu-item (click)="Open(singleBillerProfile,'editbillerProfile')">Edit
                                             biller profile</a>
                                         <a mat-menu-item class="bt-1" (click)="deleteModal(singleBillerProfile)">Delete
                                             biller
