@@ -44,8 +44,8 @@
       <div class="row">
         <div class="col-md-5 p-0">
           <div class="form-group mb-0">
-            <input #codeRef appAlphaNumeric appInputValueValidation
-                   class="form-control br-0" formControlName="code" type="text">
+            <input #codeRef type="text" appCodeText [maxLength]="10" formControlName="code" class="form-control br-0">
+
           </div>
           <div class="row">
             <div class="col-md-9 pr-0">
@@ -99,8 +99,7 @@
         <div class="col-md-5 p-0">
           <div class="form-group mb-0">
             <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="2" appInputValueValidation
-                   formControlName="billEvery" type="text"
-                   class="form-control br-0 br-none">
+              formControlName="billEvery" type="text" class="form-control br-0 br-none">
           </div>
         </div>
         <div class="col-md-5 p-0">
@@ -142,18 +141,15 @@
           <div class="row ui-mff">
             <div class="col-md-4 p-0 bl-0 br-grey bb-grey">
               <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation
-                     formControlName="equity" placeholder="%" type="text"
-                     class="form-control br-0 h-39">
+                formControlName="equity" placeholder="%" type="text" class="form-control br-0 h-39">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
               <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation
-                     formControlName="debt" placeholder="%" type="text"
-                     class="form-control br-0 h-39">
+                formControlName="debt" placeholder="%" type="text" class="form-control br-0 h-39">
             </div>
             <div class="col-md-4 p-0 bb-grey br-grey">
               <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation
-                     formControlName="liquid" placeholder="%" type="text"
-                     class="form-control br-0 h-39">
+                formControlName="liquid" placeholder="%" type="text" class="form-control br-0 h-39">
             </div>
           </div>
         </div>
@@ -175,18 +171,15 @@
           <div class="row ui-mff">
             <div class="col-md-4 p-0 bl-0 bb-grey br-grey">
               <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation
-                     formControlName="equity" placeholder="%" type="text"
-                     class="form-control br-0 h-39 br-grey">
+                formControlName="equity" placeholder="%" type="text" class="form-control br-0 h-39 br-grey">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
               <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation
-                     formControlName="debt" placeholder="%" type="text"
-                     class="form-control br-0 h-39">
+                formControlName="debt" placeholder="%" type="text" class="form-control br-0 h-39">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
               <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation
-                     formControlName="liquid" placeholder="%" type="text"
-                     class="form-control br-0 h-39">
+                formControlName="liquid" placeholder="%" type="text" class="form-control br-0 h-39">
             </div>
           </div>
         </div>
@@ -219,14 +212,14 @@
         <div class="col-md-2 p-0">
           <!--          [minValue]="0.001" [maxValue]="99"-->
           <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation
-                 formControlName="pricing" placeholder="%" type="text"
-                 class="form-control bl-0 br-0 h-39 br-grey">
+            formControlName="pricing" placeholder="%" type="text" class="form-control bl-0 br-0 h-39 br-grey">
           <mat-error *ngIf="(variableFeeData.get('pricing').errors)" class="f-12 pt-4">
             Should be between than 0.01 to 99
           </mat-error>
         </div>
       </div>
-      <mat-error *ngIf="pricing && getFormControl().pricing.invalid" class="f-12 pt-4 pr-10">Please fill details</mat-error>
+      <mat-error *ngIf="pricing && getFormControl().pricing.invalid" class="f-12 pt-4 pr-10">Please fill details
+      </mat-error>
     </div>
   </div>
 </div>
