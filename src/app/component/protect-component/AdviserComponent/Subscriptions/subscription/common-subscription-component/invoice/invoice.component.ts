@@ -1,5 +1,5 @@
 import {ValidatorType} from './../../../../../../../services/util.service';
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubscriptionService} from '../../../subscription.service';
@@ -46,13 +46,15 @@ export class InvoiceComponent implements OnInit {
 
   [x: string]: any;
 
+  // invoiceTemplate
   gstTreatment = [
     {name: 'Registered Business - Regular', value: 0},
     {name: 'Registered Business - Composition', value: 1},
     {name: 'Unregistered Business', value: 2}
   ];
-  numValidator = ValidatorType.NUMBER_ONLY;
-  numKeyValidator = ValidatorType.NUMBER_KEY_ONLY;
+  // numValidator = ValidatorType.NUMBER_ONLY;
+  // numKeyValidator = ValidatorType.NUMBER_KEY_ONLY;
+  @ViewChild('invoiceTemplate', {static: false}) invoiceTemplate: ElementRef;
 
   constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
               private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
@@ -627,13 +629,13 @@ export class InvoiceComponent implements OnInit {
     return data;
   }
 
-  passInvoice(data,index,event) {
+  passInvoice(data, index, event) {
     console.log(data);
     this.storeData = data;
     const obj = {
       invoiceId: data.id
     };
-    this.highLight=index;
+    this.highLight = index;
     this.subService.getPaymentReceive(obj).subscribe(
       data => this.getPaymentReceivedRes(data)
     );
@@ -677,14 +679,19 @@ export class InvoiceComponent implements OnInit {
   }
 
   openSendEmail(input) {
-
+    console.log('invoiceComponent openSendEmail this.invoiceTemplate.nativeElement.innerHTML : ', this.invoiceTemplate.nativeElement.innerHTML);
     const data = {
-      advisorId: 2828,
-      clientData: this.storeData,
-      templateType: 1, // 2 is for quotation
-      documentList: [this.storeData],
-      isInv: true
-    };
+        advisorId: this.advisorId,
+        clientData: this.storeData,
+        templateType: 1, // 2 is for quotation
+        documentList: [{
+          ...this.storeData,
+          documentName: this.storeData.invoiceNumber,
+          docText: this.invoiceTemplate.nativeElement.innerHTML
+        }],
+        isInv: true
+      }
+    ;
     // this.dataSource.forEach(singleElement => {
     //   if (singleElement.selected) {
     //     data.documentList.push(singleElement);

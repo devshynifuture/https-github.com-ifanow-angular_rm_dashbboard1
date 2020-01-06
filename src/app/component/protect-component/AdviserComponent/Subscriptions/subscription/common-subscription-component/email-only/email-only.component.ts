@@ -93,16 +93,16 @@ export class EmailOnlyComponent implements OnInit {
 
     this.docObj = obj;
     this._inputData = inputData;
-    this._inputData = {
-      advisorId: this.advisorId,
-      clientData: {
-        id: inputData.clientData.id,
-        userEmailId: inputData.clientData.userEmailId
-      },
-      // documentList: [{id: inputData.documentList.id, documentName: inputData.documentList.documentName}],
-      documentList: obj,
-      templateType: inputData.templateType
-    };
+    // this._inputData = {
+    //   advisorId: this.advisorId,
+    //   clientData: {
+    //     id: inputData.clientData.id,
+    //     userEmailId: inputData.clientData.userEmailId
+    //   },
+    //   // documentList: [{id: inputData.documentList.id, documentName: inputData.documentList.documentName}],
+    //   documentList: obj,
+    //   templateType: inputData.templateType
+    // };
     console.log('dsfgsdggggggggg', this.docObj);
     console.log('EmailOnlyComponent inputData : ', inputData);
     this.getEmailTemplateFilterData();
