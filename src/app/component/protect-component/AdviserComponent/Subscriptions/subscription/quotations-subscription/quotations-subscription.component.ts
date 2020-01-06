@@ -1,17 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { SubscriptionService } from '../../subscription.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from "../../../../../../auth-service/authService";
-import { UtilService } from 'src/app/services/util.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {SubscriptionService} from '../../subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from "../../../../../../auth-service/authService";
+import {UtilService} from 'src/app/services/util.service';
 import * as _ from 'lodash';
-import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from 'saturn-datepicker';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { AddQuotationComponent } from '../common-subscription-component/add-quotation/add-quotation.component';
-import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
+import {DatePipe} from '@angular/common';
+import {MAT_DATE_FORMATS} from 'saturn-datepicker';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {AddQuotationComponent} from '../common-subscription-component/add-quotation/add-quotation.component';
+import {CommonFroalaComponent} from '../common-subscription-component/common-froala/common-froala.component';
+
 export interface PeriodicElement {
   name: string;
   docname: string;
@@ -38,11 +39,11 @@ export interface PeriodicElement {
     // },
     // { provide: MAT_DATE_LOCALE, useValue: 'en' },
     [DatePipe],
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 })
 export class QuotationsSubscriptionComponent implements OnInit {
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   displayedColumns: string[] = ['name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
   advisorId;
   maxDate = new Date();
@@ -52,14 +53,14 @@ export class QuotationsSubscriptionComponent implements OnInit {
   filterDate = [];
   statusIdList = [];
   chips = [
-    { name: 'LIVE', value: 1 },
-    { name: 'PAID', value: 2 },
-    { name: 'OVERDUE', value: 3 }
+    {name: 'LIVE', value: 1},
+    {name: 'PAID', value: 2},
+    {name: 'OVERDUE', value: 3}
   ];
   dateChips = [
-    { name: 'Created date', value: 1 },
-    { name: 'Sent date', value: 2 },
-    { name: 'Client consent', value: 3 }
+    {name: 'Created date', value: 1},
+    {name: 'Sent date', value: 2},
+    {name: 'Client consent', value: 3}
   ];
   selectedDateRange: { begin: Date; end: Date; };
   selectedStatusFilter: any;
@@ -68,15 +69,15 @@ export class QuotationsSubscriptionComponent implements OnInit {
   dataSource = new MatTableDataSource(this.data);
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-    public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
+              public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
     //this.dataSource = [{}, {}, {}];
-    this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
     this.getQuotationsData();
   }
+
   orgValueChange(selectedDateRange) {
 
     const beginDate = new Date();
@@ -85,9 +86,10 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate)
-    this.selectedDateRange = { begin: selectedDateRange.begin, end: selectedDateRange.end };
+    this.selectedDateRange = {begin: selectedDateRange.begin, end: selectedDateRange.end};
     this.getQuotationsData()
   }
+
   getQuotationsData() {
     const obj = {
       // advisorId: 12345
@@ -98,7 +100,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
       dateType: (this.filterDate.length == 0) ? 0 : this.filterDate,
     };
 
-
+    this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     this.subService.getSubscriptionQuotationData(obj).subscribe(
       data => this.getQuotationsDataResponse(data), (error) => {
@@ -108,7 +110,6 @@ export class QuotationsSubscriptionComponent implements OnInit {
       }
     );
   }
-
 
 
   getQuotationsDataResponse(data) {
@@ -132,6 +133,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
       //this.dataSource.sort = this.sort;
     }
   }
+
   deleteModal(value) {
     const dialogData = {
       data: value,
@@ -160,6 +162,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     });
 
   }
+
   showFilters(showFilter) {
     if (showFilter == true) {
       this.showFilter = false;
@@ -170,6 +173,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     console.log('this.filterDate: ', this.filterDate);
 
   }
+
   addFilters(addFilters) {
     console.log('addFilters', addFilters);
     if (!_.includes(this.filterStatus, addFilters)) {
@@ -199,8 +203,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = { begin: beginDate, end: endDate };
+    this.selectedDateRange = {begin: beginDate, end: endDate};
   }
+
   openPopup(data) {
     const Fragmentdata = {
       flag: data,
@@ -215,6 +220,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     });
   }
+
   removeDate(item) {
     this.filterDate.splice(item, 1);
     this.getQuotationsData()
@@ -227,7 +233,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
   Open(value, data) {
     if (this.isLoading) {
-      return
+      return;
     }
     const fragmentData = {
       flag: value,
@@ -240,11 +246,11 @@ export class QuotationsSubscriptionComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getQuotationsData();
           console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }
       }
-
     );
   }
 
