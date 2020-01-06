@@ -1219,10 +1219,11 @@
                                     <input [matDatepicker]="dueDatePicker" [min]="maxDate" class="form-control" formControlName="dueDate" matInput readonly>
                                     <mat-datepicker-toggle [for]="dueDatePicker" matSuffix></mat-datepicker-toggle>
                                     <mat-datepicker #dueDatePicker></mat-datepicker>
+                                      <mat-error class="f-12 pt-4">Invoice date is required
+                                      </mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -1269,10 +1270,10 @@
                     </div>
                     <div class="col-md-2 pl-0">
                         <select (change)="changeTaxStatus($event.target.value)" class="form-control" formControlName="taxStatus" id="serviceName">
-              <option value="">Select tax type</option>
-              <option value="IGST(18%)">IGST(18%)</option>
-              <option value="SGST(9%)|CGST(9%)">SGST(9%) | CGST(9%)</option>
-            </select>
+                        <option value="">Select tax type</option>
+                        <option value="IGST(18%)">IGST(18%)</option>
+                        <option value="SGST(9%)|CGST(9%)">SGST(9%) | CGST(9%)</option>
+                      </select>
                         <div class="col-md-8">
                             <mat-error *ngIf="isTaxstatus && getFormControledit().taxStatus.invalid || (getFormControledit().taxStatus.touched && getFormControledit().taxStatus.invalid)" class="f-12 pt-4">
                                 Tax status is required
