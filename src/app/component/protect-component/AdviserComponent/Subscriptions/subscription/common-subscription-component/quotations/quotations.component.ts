@@ -34,9 +34,9 @@ export class QuotationsComponent implements OnInit {
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog,
     private subAService: SubscriptionService) {
-    this.subInjectService.closeRightSlider.subscribe(
-      data => this.getQuotationDesignData(data)
-    );
+    // this.subInjectService.closeRightSlider.subscribe(
+    //   data => this.getQuotationDesignData(data)
+    // );
   }
 
   isLoading = false;

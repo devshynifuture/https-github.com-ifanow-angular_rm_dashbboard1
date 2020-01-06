@@ -80,7 +80,8 @@
         <div class="tableClass">
             <table matSort [dataSource]="dataSource" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low" mat-table>
                 <ng-container matColumnDef="client">
-                    <th mat-sort-header="planName" *matHeaderCellDef class="f-18 t-20" mat-header-cell> Client & Plan details
+                    <th *matHeaderCellDef class="f-18 t-20" mat-header-cell mat-sort-header="planName"> Client & plan
+                      details
                     </th>
                     <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" *matCellDef="let element; let i = index;" class="c-p t-20" mat-cell>
                         <div class="bar">
@@ -89,6 +90,7 @@
                         </div>
                     </td>
                 </ng-container>
+
                 <ng-container matColumnDef="service">
                     <th mat-sort-header="serviceName" *matHeaderCellDef class="f-18 t-12" mat-header-cell> Service name
                     </th>
@@ -126,8 +128,8 @@
                 </ng-container>
                 <!-- Weight Column -->
                 <ng-container matColumnDef="activation">
-                    <th mat-sort-header="startsOn" *matHeaderCellDef class="f-18 t-6" mat-header-cell> Activation Date
-                    </th>
+                  <th *matHeaderCellDef class="f-18 t-6" mat-header-cell mat-sort-header="startsOn"> Activation date
+                  </th>
                     <td *matCellDef="let element" mat-cell>
                         <div *ngIf="element.status!=1"> {{element.startsOn | date:'dd/MM/yyyy'}}</div>
                         <div (click)="openPlanSlider('createSub','open',element)" *ngIf="element.status==1">
@@ -143,14 +145,17 @@
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="lastbilling">
-                    <th mat-sort-header="prevBillingDate" *matHeaderCellDef class="f-18 t-10" mat-header-cell> Last billing
-                    </th>
+                  <th *matHeaderCellDef class="f-18 t-10" mat-header-cell mat-sort-header="prevBillingDate"> Last
+                    billing date
+                  </th>
                     <td *matCellDef="let element" class="t-10" mat-cell>
                         <div class="bar"> {{element.prevBillingDate | date:'dd/MM/yyyy'}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="nextbilling">
-                    <th mat-sort-header="nextBillingDate" *matHeaderCellDef class="f-18 text-right pr-24 t-15" mat-header-cell> Next billing </th>
+                  <th *matHeaderCellDef class="f-18 text-right pr-24 t-15" mat-header-cell
+                      mat-sort-header="nextBillingDate"> Next billing date
+                  </th>
                     <td *matCellDef="let element" class="text-right pr-8 t-15" mat-cell>
                         <div class="bar"> {{element.nextBillingDate | date:'dd/MM/yyyy'}} </div>
                     </td>

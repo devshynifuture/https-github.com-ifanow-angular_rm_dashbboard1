@@ -55,10 +55,16 @@ export class AddEditDocumentComponent implements OnInit {
   }
 
   setFormData(inputData) {
-    this.blankDocumentProperties.controls.docType.setValue(inputData.docType);
+    let data=(inputData.documentTypeId)?inputData.documentTypeId.toString():inputData;
+    this.blankDocumentProperties.controls.docType.setValue(data);
+    if(inputData==""){
+
+    }
+    (inputData.documentTypeId)?this.blankDocumentProperties.controls.docType.enable():(inputData=="")?this.blankDocumentProperties.controls.docType.enable():this.blankDocumentProperties.controls.docType.disable();
+    
     this.blankDocumentProperties.controls.docName.setValue(inputData.name);
     this.blankDocumentProperties.controls.docAvailability.setValue(this.selectedOption);
-
+    
   }
 
   setValidation(flag) {
@@ -86,12 +92,12 @@ export class AddEditDocumentComponent implements OnInit {
   }
 
   saveDocuments() {
-    if (this._inputData == "") {
+    if (this._inputData.documentRepositoryId==undefined) {
       const obj = {
         advisorId: this.advisorId,
         name: this.blankDocumentProperties.controls.docName.value,
         // documentTypeId: parseInt(this.blankDocumentProperties.controls.docType.value),
-        documentTypeId: 1,
+        documentTypeId:this.blankDocumentProperties.controls.docType.value.toString(),
         docText: 'docText',
         description: this.blankDocumentProperties.controls.docName.value,
         public: true,
@@ -118,7 +124,7 @@ export class AddEditDocumentComponent implements OnInit {
         description: this.blankDocumentProperties.controls.docName.value,
         docText: this._inputData.docText,
         documentRepositoryId: this._inputData.documentRepositoryId, // pass here advisor id for Invoice advisor
-        documentTypeId: this._inputData.documentTypeId,
+        documentTypeId:this.blankDocumentProperties.controls.docType.value.toString(),
         name: this.blankDocumentProperties.controls.docName.value,
       };
       this.subService.updateDocumentData(obj).subscribe(

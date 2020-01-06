@@ -46,7 +46,7 @@ export class FixedFeeComponent implements OnInit {
     }
     else {
       this.singleSubscriptionData = fixedData
-      console.log('singleSubscriptionData',this.singleSubscriptionData)
+      console.log('singleSubscriptionData', this.singleSubscriptionData)
       this.getFixedFee().fees.setValue(fixedData.subscriptionPricing.pricing);
       this.getFixedFee().billingNature.setValue(String(fixedData.subscriptionPricing.billingNature));
       this.getFixedFee().billEvery.setValue(fixedData.subscriptionPricing.billEvery);
@@ -83,8 +83,6 @@ export class FixedFeeComponent implements OnInit {
         billingMode: this.getFixedFee().billingMode.value,
         billingNature: parseInt(this.getFixedFee().billingNature.value),
         feeTypeId: 1,
-        clientId: '',
-        subId: '',
         subscriptionAssetPricingList: [
           {
             pricing: this.getFixedFee().fees.value,
@@ -95,8 +93,8 @@ export class FixedFeeComponent implements OnInit {
       console.log(obj)
       if (this.singleSubscriptionData.isCreateSub == false) {
         obj.feeTypeId = this.singleSubscriptionData.subscriptionPricing.feeTypeId;
-        obj.clientId = this.singleSubscriptionData.clientId;
-        obj.subId = this.singleSubscriptionData.id;
+        obj['clientId'] = this.singleSubscriptionData.clientId;
+        obj['subId'] = this.singleSubscriptionData.id;
         this.outputData.emit(obj);
       } else {
         this.subService.editModifyFeeStructure(obj).subscribe(
