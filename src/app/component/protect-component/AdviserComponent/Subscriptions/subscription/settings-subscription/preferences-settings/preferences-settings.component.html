@@ -12,24 +12,19 @@
         <div class="row">
             <div class="col-md-2 p-0 pt-1 preferencesMenuList">
                 <ul class="vertical-menu">
-                    <li (click)="viewMode ='tab1'" [ngClass]="{'b-outline':viewMode =='tab1','':viewMode =='tab1'}"
-                        class="c-p">
+                    <li (click)="viewMode ='tab1'" [ngClass]="{'b-outline':viewMode =='tab1','':viewMode =='tab1'}" class="c-p">
                         Biller profile
                     </li>
-                    <li (click)="viewMode ='tab2';getPrefixData(1)"
-                        [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}" class="c-p">
+                    <li (click)="viewMode ='tab2';getPrefixData(1)" [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}" class="c-p">
                         Invoice
                     </li>
-                    <li (click)="viewMode ='tab3';getPrefixData(2)"
-                        [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}" class="c-p">
+                    <li (click)="viewMode ='tab3';getPrefixData(2)" [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}" class="c-p">
                         Quotations
                     </li>
-                    <li (click)="viewMode ='tab4';getPrefixData(3)"
-                        [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}" class=" c-p">
+                    <li (click)="viewMode ='tab4';getPrefixData(3)" [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}" class=" c-p">
                         Subscriptions
                     </li>
-                    <li (click)="viewMode ='tab5'" [ngClass]="{'b-outline':viewMode =='tab5','':viewMode =='tab5'}"
-                        class=" c-p">
+                    <li (click)="viewMode ='tab5'" [ngClass]="{'b-outline':viewMode =='tab5','':viewMode =='tab5'}" class=" c-p">
                         Email settings
                     </li>
                 </ul>
@@ -41,18 +36,17 @@
                     <div *ngIf="billerProfileData != undefined">
 
 
-                        <div class="wrapper-16 pt-20" *ngFor="let singleBillerProfile of billerProfileData">
+                        <div class="wrapper-16 pt-20 skeletonAnimation" *ngFor="let singleBillerProfile of billerProfileData" appSkeletonLoading [appSkeletonLoading]="isLoading">
                             <div class="row b-a bg-grey lter pt-20 pb-16">
-                                <div class="col-md-9">
-                                    <h3 class="mb-0 d-inline-block">{{singleBillerProfile.companyDisplayName}}</h3>
-
+                                <div class="col-md-9 relClass">
+                                    <div class="bar">
+                                        <h3 class="mb-0 d-inline-block">{{singleBillerProfile.companyDisplayName}}</h3>
+                                    </div>
                                 </div>
 
                                 <div class="col-md-3 d-flex justify-content-end align-items-center">
-                                    <button mat-stroked-button *ngIf="singleBillerProfile.isPrimary == true"
-                                        class="text-primary br-0  ml-12"> PRIMARY </button>
-                                    <i class="material-icons text-right right text-custom f-28 c-p"
-                                        [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
+                                    <button mat-stroked-button *ngIf="singleBillerProfile.isPrimary == true" class="text-primary br-0  ml-12"> PRIMARY </button>
+                                    <i class="material-icons text-right right text-custom f-28 c-p" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
                                         more_vert
                                     </i>
                                     <mat-menu #menu="matMenu">
@@ -69,42 +63,57 @@
                             <div class="b-a bt-none">
                                 <div class="row">
                                     <div class="col-md-6 p-0">
-                                        <div class="wrapper-16">
+                                        <div class="wrapper-16 relClass">
                                             <p class="f-12">GST</p>
-                                            <h5>{{singleBillerProfile.gstin}}</h5>
+                                            <div class="bar">
+                                                <h5 class="height20">{{singleBillerProfile.gstin}}</h5>
+                                            </div>
                                             <p class="f-12 pt-24">PAN</p>
-                                            <h5>{{singleBillerProfile.pan}}</h5>
+                                            <div class="bar">
+                                                <h5 class="height20">{{singleBillerProfile.pan}}</h5>
+                                            </div>
                                             <p class="f-12 pt-24">ADDRESS</p>
-                                            <h5>{{singleBillerProfile.billerAddress}},
-                                                <br>{{singleBillerProfile.city}}
-                                                <br>{{singleBillerProfile.zipCode}}, {{singleBillerProfile.state}},
-                                                <br> {{singleBillerProfile.country}}</h5>
+                                            <div class="bar">
+                                                <h5>{{singleBillerProfile.billerAddress}},
+                                                    <br>{{singleBillerProfile.city}}
+                                                    <br>{{singleBillerProfile.zipCode}}, {{singleBillerProfile.state}},
+                                                    <br> {{singleBillerProfile.country}}</h5>
+                                            </div>
                                         </div>
                                         <hr>
                                         <div class="wrapper-16">
                                             <div class="row">
-                                                <div class="col-md-8 p-0">
+                                                <div class="col-md-8 p-0 relClass">
                                                     <p>Name on bank A/c</p>
-                                                    <h5>{{singleBillerProfile.nameAsPerBank}}</h5>
+                                                    <div class="bar">
+                                                        <h5 class="height20">{{singleBillerProfile.nameAsPerBank}}</h5>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-4 p-0">
+                                                <div class="col-md-4 p-0 relClass">
                                                     <p>Account No.</p>
-                                                    <h5>{{singleBillerProfile.acNumber}}</h5>
+                                                    <div class="bar">
+                                                        <h5 class="height20">{{singleBillerProfile.acNumber}}</h5>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6 p-0">
+                                                <div class="col-md-6 p-0 relClass">
 
                                                     <p class="f-12">GST</p>
-                                                    <h5>{{singleBillerProfile.gstin}}</h5>
+                                                    <div class="bar">
+                                                        <h5 class="height20">{{singleBillerProfile.gstin}}</h5>
+                                                    </div>
                                                     <p class="f-12 pt-24">PAN</p>
-                                                    <h5>{{singleBillerProfile.pan}}</h5>
+                                                    <div class="bar">
+                                                        <h5 class="height20">{{singleBillerProfile.pan}}</h5>
+                                                    </div>
                                                     <p class="f-12 pt-24">ADDRESS</p>
-                                                    <h5>{{singleBillerProfile.billerAddress}},
-                                                        <br>{{singleBillerProfile.city}}
-                                                        <br>{{singleBillerProfile.zipCode}},
-                                                        {{singleBillerProfile.state}},
-                                                        <br> {{singleBillerProfile.country}}</h5>
+                                                    <div class="bar">
+                                                        <h5>{{singleBillerProfile.billerAddress}},
+                                                            <br>{{singleBillerProfile.city}}
+                                                            <br>{{singleBillerProfile.zipCode}}, {{singleBillerProfile.state}},
+                                                            <br> {{singleBillerProfile.country}}</h5>
+                                                    </div>
 
 
                                                 </div>
@@ -118,20 +127,20 @@
                                             <img src="{{singleBillerProfile.logoUrl}}" class="img-icons">
                                         </div>
                                         <hr>
-                                        <div class="wrapper-16">
+                                        <div class="wrapper-16 relClass">
                                             <p class="f-12">Footnote</p>
-                                            <h5>{{singleBillerProfile.footnote}}</h5>
+                                            <div class="bar">
+                                                <h5 class="height20">{{singleBillerProfile.footnote}}</h5>
+                                            </div>
                                             <p class="pt-32">Terms & Conditions</p>
-                                            <p class="f-16 notes">{{singleBillerProfile.terms}}
-                                            </p>
+                                            <div class="bar">
+                                                <p class="f-16 notes">{{singleBillerProfile.terms}} </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
 
-
-                                <!-- <button (click)="Open('Add','billerProfile')" class="btn-primary d-flex align-items-center">
-                                ADD NEW</button> -->
                             </div>
                         </div>
                     </div>
@@ -240,8 +249,7 @@
                     <div class="wrapper-12 pb-0">
                         <div class="row">
                             <div class="col-md-5">
-                                <h4>Email configuration <span matBadge="4" matBadgeOverlap="false"
-                                        class="text-danger ba-danger f-10">NOT CONFIGURED</span></h4>
+                                <h4>Email configuration <span matBadge="4" matBadgeOverlap="false" class="text-danger ba-danger f-10">NOT CONFIGURED</span></h4>
                                 <div class="form-group">
                                     <input type="text" class="form-control br-0">
                                 </div>
@@ -327,8 +335,7 @@
                                         <div class="wrapper-20 pl-24">
                                             <div class="row">
                                                 <div class="col-md-12 p-0">
-                                                    <p>This template is used while sending documents to your clients
-                                                        with eSign request.</p>
+                                                    <p>This template is used while sending documents to your clients with eSign request.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -353,8 +360,7 @@
                                         <div class="wrapper-20 pl-24">
                                             <div class="row">
                                                 <div class="col-md-12 p-0">
-                                                    <p>This template is used while sending documents to your clients
-                                                        without eSign.
+                                                    <p>This template is used while sending documents to your clients without eSign.
                                                     </p>
                                                 </div>
                                             </div>
