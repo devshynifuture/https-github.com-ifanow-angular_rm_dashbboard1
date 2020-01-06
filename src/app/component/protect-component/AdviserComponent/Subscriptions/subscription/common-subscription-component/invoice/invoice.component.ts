@@ -1,16 +1,16 @@
-import {ValidatorType} from './../../../../../../../services/util.service';
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EnumServiceService} from '../../../../../../../services/enum-service.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {MAT_DATE_FORMATS} from '@angular/material/core';
-import {UtilService} from 'src/app/services/util.service';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {EmailOnlyComponent} from '../email-only/email-only.component';
+import { ValidatorType } from './../../../../../../../services/util.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EnumServiceService } from '../../../../../../../services/enum-service.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { UtilService } from 'src/app/services/util.service';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { EmailOnlyComponent } from '../email-only/email-only.component';
 
 
 export interface PeriodicElement {
@@ -34,7 +34,7 @@ export interface PeriodicElement {
     //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     // },
     // { provide: MAT_DATE_LOCALE, useValue: 'en' },
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 
 })
@@ -47,15 +47,15 @@ export class InvoiceComponent implements OnInit {
   [x: string]: any;
 
   gstTreatment = [
-    {name: 'Registered Business - Regular', value: 0},
-    {name: 'Registered Business - Composition', value: 1},
-    {name: 'Unregistered Business', value: 2}
+    { name: 'Registered Business - Regular', value: 0 },
+    { name: 'Registered Business - Composition', value: 1 },
+    { name: 'Unregistered Business', value: 2 }
   ];
   numValidator = ValidatorType.NUMBER_ONLY;
   numKeyValidator = ValidatorType.NUMBER_KEY_ONLY;
 
   constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
-              private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
+    private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getInvoiceData(data)
     );
@@ -189,7 +189,7 @@ export class InvoiceComponent implements OnInit {
     }
   }
 
-  preventDefault(e){
+  preventDefault(e) {
     e.preventDefault();
   }
 
@@ -627,13 +627,13 @@ export class InvoiceComponent implements OnInit {
     return data;
   }
 
-  passInvoice(data,index,event) {
+  passInvoice(data, index, event) {
     console.log(data);
     this.storeData = data;
     const obj = {
       invoiceId: data.id
     };
-    this.highLight=index;
+    this.highLight = index;
     this.subService.getPaymentReceive(obj).subscribe(
       data => this.getPaymentReceivedRes(data)
     );
