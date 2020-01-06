@@ -70,7 +70,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject, private subService: SubscriptionService,
               private eventService: EventService, public subscription: SubscriptionService, private datePipe: DatePipe) {
-    this.ngOnInit();
+    // this.ngOnInit();
   }
 
   isLoading = false;
@@ -137,7 +137,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
       // id: 2735, // pass here advisor id for Invoice advisor
       module: 1
     };
-    this.dataSource.data = [{}, {}, {}];
+    // this.dataSource.data = [{}, {}, {}];
     this.subscription.getInvoices(obj).subscribe(
       data => {
         this.getData = data;
@@ -149,6 +149,8 @@ export class InvoicesSubscriptionComponent implements OnInit {
             this.tableData = data;
           }
           else {
+            console.log(this.tableData, "this.tableData 123");
+
             this.tableData = this.tableData.concat(data);
             console.log(this.tableData, "this.tableData 123");
           }
@@ -188,10 +190,11 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
     let uisubs = document.getElementById('ui-subs');
     this.isLoading = false;
-    console.log('  : ', data);
+    console.log('  ho ho: ', data);
 
     if (data && data.length > 0) {
       this.data = data;
+      this.invoiceClientData = data;
       this.dataSource.data = data;
       this.dataSource.sort = this.sort;
       uisubs.scrollTo(0, this.scrollPosition);
@@ -292,8 +295,12 @@ export class InvoicesSubscriptionComponent implements OnInit {
   }
 
   display(data) {
-    console.log(data);
-    this.ngOnInit();
+    console.log(data , "edited data invoice");
+    
+    this.tableData = [];
+    this.getInvoiceSubData(false);
+    this.invoiceSubscription = 'false'
+    // this.ngOnInit();
   }
 
   showFilters(showFilter) {

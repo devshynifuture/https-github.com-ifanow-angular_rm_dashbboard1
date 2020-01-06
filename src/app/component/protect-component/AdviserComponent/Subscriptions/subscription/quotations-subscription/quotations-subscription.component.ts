@@ -52,14 +52,13 @@ export class QuotationsSubscriptionComponent implements OnInit {
   filterDate = [];
   statusIdList = [];
   chips = [
-    { name: 'LIVE', value: 1 },
-    { name: 'PAID', value: 2 },
-    { name: 'OVERDUE', value: 3 }
+    { name: 'DEFAULT', value: 1 },
+    { name: 'FILTER', value: 2 }
   ];
   dateChips = [
     { name: 'Created date', value: 1 },
     { name: 'Sent date', value: 2 },
-    { name: 'Client consent', value: 3 }
+    { name: 'Signed date', value: 3 }
   ];
   selectedDateRange: { begin: Date; end: Date; };
   selectedStatusFilter: any;

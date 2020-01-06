@@ -1,24 +1,8 @@
-<div *ngIf="dataSource.data.length > 0" class="bg-white" id="ui-subs" >
+<div *ngIf="dataSource.data.length > 0 && invoiceSubscription !='true' && invoiceSubscription !='EditInInvoice'" class="bg-white" id="ui-subs" >
   <!-- (scroll)="scrollCall(true)" -->
   <div class="bg-white p-20 filterBox">
       <div class="row">
-          <div class="col-md-8 p-0">
-              <h4 class="pt-8 mb-0">Invoices</h4>
-          </div>
-          <div class="col-md-4 right text-right p-0">
-              <i class="material-icons mr-12 icon-light c-p v-sub">
-                  search
-              </i>
-              <button (click)="showFilters(showFilter)" class="btn-default addon" mat-stroked-button><i
-                      class="material-icons">filter_list</i>FILTERS
-              </button>
-              <button (click)="addInvoice('EditInInvoice')" class="btn-primary addon" mat-stroked-button><i
-                class="material-icons">add</i>ADD NEW
-              </button>
-          </div>
-      </div>
-      <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
-        <div class="row">
+         
           <div class="col-md-1 p-0">
             <h4 class="pt-8 mb-0">Invoices</h4>
           </div>
@@ -43,6 +27,22 @@
               </div>
             </div>
           </div>
+          <div class="col-md-6 right text-right p-0">
+              <i class="material-icons mr-12 icon-light c-p v-sub">
+                  search
+              </i>
+              <button (click)="showFilters(showFilter)" class="btn-default addon mr-12" mat-stroked-button><i
+                      class="material-icons">filter_list</i>FILTERS
+              </button>
+              <button (click)="addInvoice('EditInInvoice')" class="btn-primary addon" mat-stroked-button><i
+                class="material-icons">add</i>ADD NEW
+              </button>
+          </div>
+      </div>
+      <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
+        <div class="row">
+         
+          
         </div>
         <div class="row pt-12">
           <div class="col-md-8 p-0 custom-tags">
@@ -54,7 +54,7 @@
               <mat-chip-list>
                 <mat-chip *ngFor="let dateFilter of filterDate; let i = index" class="bg-white b-a c-p f-400 p-12">
                   <p>{{dateFilter.name}}</p>
-                  <input (click)="picker2.open()" [(ngModel)]="selectedDateRange" [max]="maxDate"
+                  <input readonly (click)="picker2.open()" [(ngModel)]="selectedDateRange" [max]="maxDate"
                          [satDatepicker]="picker2" class="pl-24"
                          matInput placeholder="Choose a date">
                   <sat-datepicker #picker2 [closeAfterSelection]="false" [rangeMode]="true">
@@ -74,7 +74,7 @@
                   <mat-select (selectionChange)="addFilters(selectedStatusFilter)" [(ngModel)]='selectedStatusFilter'
                               class="form-control br-0"
                               id="sel11">
-                    <mat-option [disabled]="true" value="statusFilter">FILTERS ONE</mat-option>
+                    <mat-option [disabled]="true" value="statusFilter">FILTER ONE</mat-option>
                     <mat-option *ngFor="let chip of chips" [value]="chip">{{chip.name}}</mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -84,7 +84,7 @@
                   <mat-select (selectionChange)="addFiltersDate($event)" [(ngModel)]='selectedDateFilter'
                               class="form-control br-0"
                               id="sel12">
-                    <mat-option [disabled]="true" value="dateFilter">FILTERS TWO</mat-option>
+                    <mat-option [disabled]="true" value="dateFilter">FILTER TWO</mat-option>
                     <mat-option *ngFor="let dateAdd of dateChips" [value]="dateAdd">{{dateAdd.name}}
                     </mat-option>
                   </mat-select>
@@ -183,7 +183,7 @@
        <div class="bar"> {{formatter(element.balanceDue) || ''}} </div>
      </td>
    </ng-container>
-   <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+   <tr *matHeaderRowDef="displayedColumns; sticky: true;" mat-header-row [ngClass]="!showFilter ? 'stickyHeader1' : 'stickyHeader2'"></tr>
    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
  </table>
 
@@ -192,6 +192,13 @@
 
 
 </div>
+<div *ngIf="invoiceSubscription =='true'" >
+  <app-invoice (valueChange)='display($event)' [clientData]='invoiceClientData' [invoiceInSub]='invoiceSub'>
+  </app-invoice>
+</div>
+<div class="pt-60" *ngIf="invoiceSubscription=='EditInInvoice'">
+  <app-invoice (valueChange)='display($event)' [invoiceValue]="invoiceSubscription"></app-invoice>
+</div>
 
 <div class="row" *ngIf="dataSource.data.length == 0">
   <div class="col-md-12  d-flex align-items-center flex-column justify-content-center">
@@ -199,6 +206,7 @@
       <p class="f-22 f-600 pt-28"> No Data Found </p>
   </div>
 </div>
+
 
 <!-- ********** -->
 
