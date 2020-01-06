@@ -109,6 +109,11 @@ export class CreateSubscriptionComponent implements OnInit {
     this.isFlagPayyee = data.flag
     this.payeeSettingData = data
   }
+
+  preventDefault(e){
+    e.preventDefault();
+  }
+
   goForward(/*stepper: MatStepper*/) {
     if (this.stepper) {
       this.stepper.next();

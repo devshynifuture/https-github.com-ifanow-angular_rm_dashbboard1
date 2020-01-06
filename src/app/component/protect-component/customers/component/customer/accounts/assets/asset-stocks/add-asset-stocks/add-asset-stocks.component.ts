@@ -48,6 +48,10 @@ export class AddAssetStocksComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
+
+  preventDefault(e){
+    e.preventDefault();
+  }
   submitStockData() {
     switch (true) {
       // case (this.assetForm.get('ownerName').invalid):

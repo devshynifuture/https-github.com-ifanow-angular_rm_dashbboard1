@@ -259,7 +259,7 @@
             <h5 class="m-0 pt-8">Choose a date</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput class="form-control br-0" (focus)="picker.open()" (input)="this.preventDefault()" [matDatepicker]="picker" formControlName="date">
+                    <input matInput class="form-control br-0" (focus)="picker.open()" (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="date">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>

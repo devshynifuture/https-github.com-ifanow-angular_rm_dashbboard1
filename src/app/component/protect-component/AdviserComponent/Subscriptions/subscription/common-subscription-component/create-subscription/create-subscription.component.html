@@ -21,7 +21,7 @@
 
     <!-- TODO   <mat-step [stepControl]="secondFormGroup">-->
 
-    <mat-step [stepControl]="subscriptionDetailsStepper" state="done">
+    <mat-step state="done">
       <ng-template matStepLabel>Subscription details</ng-template>
       <div [formGroup]="subscriptionDetails" class="wrapper-20 pt-36 mb-44 pb-44">
         <div class="row pt-24">
@@ -45,8 +45,8 @@
           <div class="col-md-3">
             <div class="form-group mb-0">
               <mat-form-field>
-                <input (focus)="picker.open()" [matDatepicker]="picker" (input)="this.preventDefault()" class="form-control br-0"
-                  formControlName="activationDate" matInput readonly>
+                <input (focus)="picker.open()" [matDatepicker]="picker" (input)="preventDefault($event)"
+                  class="form-control br-0" formControlName="activationDate" matInput readonly>
                 <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
