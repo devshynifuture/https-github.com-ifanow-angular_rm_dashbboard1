@@ -84,8 +84,11 @@ export class ServicesSettingsComponent implements OnInit {
     this.serviceSettingData = [{}, {}, {}];
 
     this.subService.getSubscriptionServiceSettingsData(obj).subscribe(
-      data => this.getServiceSettingSubResponse(data),
-      err => this.getFileErrorResponse(err)
+      data => this.getServiceSettingSubResponse(data),(error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        // this.dataSource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 

@@ -48,8 +48,12 @@ export class DocumentsSettingsComponent implements OnInit {
     // const data = [{}, {}, {}];
     // this.getDocumentsSettingResponse(data);
     this.subService.getSubscriptionDocumentSetting(obj).subscribe(
-      data => this.getDocumentsSettingResponse(data)
-    )
+      data => this.getDocumentsSettingResponse(data),(error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        // this.dataSource.data = [];
+        this.isLoading = false;
+      }
+    );
   }
   /**this function is used for calling get api in documentSetting component */
   display(data) {

@@ -2,7 +2,7 @@
     <mat-sidenav #sidenav mode="side" opened role="navigation">
         <mat-nav-list class="width-230 pt-0" id="d">
             <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0">
-                <img class="w-100" src="{{userInfo.imgUrl}}">
+                <img class="w-100" src="{{userInfo.profilePic}}">
 
             </mat-toolbar>
             <!-- <div *ngIf="showTabs" class="pt-16">
@@ -142,15 +142,12 @@
                 </div>
             </div>
         </div>
-        <div class="wrapperauto">
-            <!--          <div [@routeAnimations]="prepareRoute(outlet)" >-->
-            <!--            <router-outlet #outlet="outlet"></router-outlet>-->
-            <!--          </div>-->
-            <router-outlet id="left1">
-                <ng-template>
-                    <router-outlet id="left2"></router-outlet>
-                </ng-template>
-            </router-outlet>
+        <div>
+          <!--          <div [@routeAnimations]="prepareRoute(outlet)" >-->
+          <!--            <router-outlet #outlet="outlet"></router-outlet>-->
+          <!--          </div>-->
+          <router-outlet id="left1">
+          </router-outlet>
 
 
         </div>
