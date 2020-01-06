@@ -31,9 +31,6 @@ export class LeftsidebarComponent implements OnInit {
   constructor(private authService: AuthService, private _eref: ElementRef,
     private eventService: EventService, private subinject: SubscriptionInject,
     private subService: SubscriptionService, private router: Router, private ngZone: NgZone) {
-    // this.eventService.sideNavContainerClassData.subscribe(
-    //   data => this.sideNavContainerClass = data
-    // );
   }
 
   serachClientData(data) {
@@ -54,7 +51,11 @@ export class LeftsidebarComponent implements OnInit {
     console.log(data)
     this.clientList = data;
     this.myControl.setValue(data)
-
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => typeof value == 'string' ? value : value.name),
+      map(name => name ? this._filter(name) : this.clientList.slice())
+    )
   }
 
   selectClient(singleClientData) {
@@ -71,13 +72,6 @@ export class LeftsidebarComponent implements OnInit {
     this.userInfo = AuthService.getUserInfo();
     this.myControl = new FormControl();
     this.getClientSubscriptionList();
-    setTimeout(() => {
-      this.filteredOptions = this.myControl.valueChanges.pipe(
-        startWith(''),
-        map(value => typeof value == 'string' ? value : value.name),
-        map(name => name ? this._filter(name) : this.clientList.slice())
-      )
-    }, 2000);
   }
 
   private _filter(name: string): Client[] {

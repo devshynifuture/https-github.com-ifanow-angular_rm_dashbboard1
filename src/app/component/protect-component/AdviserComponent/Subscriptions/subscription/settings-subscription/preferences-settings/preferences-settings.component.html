@@ -1,9 +1,9 @@
 <div id="ui-perferences" class="bg-white">
     <div class="wrapper-20">
         <div class="pb-20" *ngIf="billerProfileData != undefined || billerProfileData != null || billerProfileData">
-            <div class="row" (click)="Open('Add','billerProfile')">
+            <div class="row">
                 <div class="col-md-12 right text-right pr-0">
-                    <button mat-stroked-button class="btn-primary addon">ADD NEW
+                    <button (click)="Open('Add','billerProfile')" mat-stroked-button class="btn-primary addon">ADD NEW
                     </button>
                 </div>
             </div>
