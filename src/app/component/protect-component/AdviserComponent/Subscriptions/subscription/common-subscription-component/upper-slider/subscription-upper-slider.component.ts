@@ -38,7 +38,7 @@ export class SubscriptionUpperSliderComponent implements OnInit {
     );
     this.eventService.upperSliderDataObs.subscribe(
       data => {
-        
+
         console.log('DialogContainerComponent constructor upperSliderDataObs: ', data);
 
         this.fragmentData = data;
@@ -107,6 +107,7 @@ export class SubscriptionUpperSliderComponent implements OnInit {
   tabClick(event) {
     console.log(event);
     this.subscriptionTab = event.tab.textLabel;
+    this.selectedServiceTab = event.index;
   }
 
   // openClientDetails() {

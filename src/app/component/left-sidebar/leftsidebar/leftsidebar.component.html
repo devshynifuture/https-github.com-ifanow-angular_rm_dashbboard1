@@ -67,36 +67,30 @@
     </mat-sidenav>
     <mat-sidenav-content id="left">
         <mat-toolbar class="bg-white bl-1" class="fix-top pl-0">
-            <button (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav" mat-icon-button
-                type="button">
+            <button (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav" mat-icon-button type="button">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
-            <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav"
-                mat-icon-button type="button">
+            <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav" mat-icon-button type="button">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
 
 
             <mat-form-field class="width40 serachbox">
                 <div class="form-group searchBoxHeader">
-                    <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control" matInput
-                        type="text">
+                    <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control" matInput type="text">
                     <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
                         <!-- <mat-option>
                 <p>Start typing to search clients,leads otr team members</p>
             </mat-option> -->
-                        <mat-option (click)="selectClient(singleClient)"
-                            *ngFor="let singleClient of filteredOptions | async" [value]="singleClient">
+                        <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of filteredOptions | async" [value]="singleClient">
                             <div class="row">
                                 <div class="col-md-1">
 
                                 </div>
-                                <div class="col-md-8">
-                                    <a>
-                                        <p class="t-left">{{singleClient.name}}</p>
-                                    </a>
+                                <div class="col-md-7 d-flex align-items-center">
+                                    <p class="t-left m-0">{{singleClient.name}}</p>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4 text-right">
                                     <button class="small-primitive" mat-stroked-button>FAMILY MEMBER</button>
                                 </div>
                             </div>
@@ -148,15 +142,12 @@
                 </div>
             </div>
         </div>
-        <div class="wrapperauto">
-            <!--          <div [@routeAnimations]="prepareRoute(outlet)" >-->
-            <!--            <router-outlet #outlet="outlet"></router-outlet>-->
-            <!--          </div>-->
-            <router-outlet id="left1">
-                <ng-template>
-                    <router-outlet id="left2"></router-outlet>
-                </ng-template>
-            </router-outlet>
+        <div>
+          <!--          <div [@routeAnimations]="prepareRoute(outlet)" >-->
+          <!--            <router-outlet #outlet="outlet"></router-outlet>-->
+          <!--          </div>-->
+          <router-outlet id="left1">
+          </router-outlet>
 
 
         </div>

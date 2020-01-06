@@ -1,4 +1,166 @@
-<div class="bg-white pb-36 pt-80" id="ui-invoice">
+<div *ngIf="dataSource.data.length > 0" class="bg-white" id="ui-subs" (scroll)="scrollCall(true)">
+    <div class="bg-white p-20 filterBox">
+        <div class="row">
+            <div class="col-md-8 p-0">
+                <h4 class="pt-8 mb-0">Subscriptions</h4>
+            </div>
+            <div class="col-md-4 right text-right p-0">
+                <i class="material-icons mr-12 icon-light c-p v-sub">
+                    search
+                </i>
+                <button (click)="showFilters(showFilter)" class="btn-default addon" mat-stroked-button><i
+                        class="material-icons">filter_list</i>FILTERS
+                </button>
+            </div>
+        </div>
+        <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
+            <div class="row pt-12">
+                <div class="col-md-8 p-0 custom-tags">
+                    <mat-chip-list>
+                        <mat-chip class="bg-white b-a c-p f-400 p-12" *ngFor="let status of filterStatus; let ind = index">
+                            {{status.name}}
+                            <i class="material-icons text-custom ml-12" (click)="remove(ind)">
+                                cancel
+                            </i>
+                        </mat-chip>
+                        <mat-chip-list>
+                            <mat-chip class="bg-white newDateClass b-a c-p f-400 p-12 w-220" *ngFor="let dateFilter of filterDate; let i = index">
+                                <!--<div class="row">-->
+                                <p>{{dateFilter.name}}</p>
+                                <input readonly class="pL20" (click)="picker2.open()" [max]="maxDate" matInput placeholder="Choose a date" [satDatepicker]="picker2" [(ngModel)]="selectedDateRange" (dateChange)="orgValueChange(selectedDateRange)">
+                                <sat-datepicker #picker2 [rangeMode]="true" [closeAfterSelection]="false">
+                                </sat-datepicker>
+                                <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
+                                <i class="material-icons text-custom c-p" (click)="removeDate(i)">
+                                    cancel
+                                </i>
+                            </mat-chip>
+                        </mat-chip-list>
+                    </mat-chip-list>
+                </div>
+                <div class="col-md-4 right text-right p-0">
+                    <div class="row">
+                        <div class="col-md-6 sub_input">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <!-- <mat-label>FILTERS ONE</mat-label> -->
+                                    <mat-select class="form-control" id="sel11" [(value)]='selectedStatusFilter' (selectionChange)="addFilters(selectedStatusFilter)">
+                                        <mat-option value="status">By status</mat-option>
+                                        <mat-option *ngFor="let chip of chips" [value]="chip">
+                                            {{chip.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6 sub_input">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <!-- <mat-label>FILTERS TWO</mat-label> -->
+                                    <mat-select class="form-control br-0" id="sel12" [(ngModel)]='selectedDateFilter' (selectionChange)="addFiltersDate(selectedDateFilter)">
+                                        <mat-option value="selected">By date</mat-option>
+                                        <mat-option *ngFor="let dateAdd of dateChips" [value]="dateAdd">
+                                            {{dateAdd.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- (scroll)="scrollCall()" -->
+    <!-- id="pdfDoc"  removed from above div-->
+    <div class="wrapper-20 pt-0 bg-white" id="wrapper">
+
+        <div class="tableClass">
+            <table matSort mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <ng-container matColumnDef="name">
+                    <th mat-sort-header="clientName" mat-header-cell *matHeaderCellDef class="f-18"> Client name </th>
+                    <td mat-cell *matCellDef="let element" (click)="Open('viewQuotation',element)" class="c-p">
+                        <div class="bar"> {{element.clientName}} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="docname">
+                    <th mat-sort-header="documentName" mat-header-cell *matHeaderCellDef class="f-18"> Document name
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.documentName}} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="plan">
+                    <th mat-sort-header="planName" mat-header-cell *matHeaderCellDef class="f-18"> Plan name </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.planName}} </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cdate">
+                    <th mat-sort-header="createdDate" mat-header-cell *matHeaderCellDef class="f-18"> Created date </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.createdDate | date:'dd/MM/yyyy'}} </div>
+                    </td>
+                </ng-container>
+                <!-- Weight Column -->
+                <ng-container matColumnDef="sdate">
+                    <th mat-sort-header="sentDate" mat-header-cell *matHeaderCellDef class="f-18"> Sent date </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.sentDate | date:'dd/MM/yyyy'}} </div>
+                    </td>
+                </ng-container>
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="clientsign">
+                    <th mat-sort-header="signedDate" mat-header-cell *matHeaderCellDef class="f-18"> Client consent
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.signedDate | date:'dd/MM/yyyy'}} </div>
+                    </td>
+                </ng-container>
+                <!-- <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef class="f-18 pr-24"> Status </th>
+    <td mat-cell *matCellDef="let element" class="greentext"> {{element.status}} </td>
+  </ng-container> -->
+                <ng-container matColumnDef="status">
+                    <th mat-sort-header="status" *matHeaderCellDef class=" t-10" mat-header-cell> Status</th>
+                    <td *matCellDef="let element" mat-cell>
+                        <span>
+                            <span class="text-success t-10 f-500 c-p" *ngIf="element.status==1">READY TO SEND</span>
+                        <span class="text-success t-10 f-500 c-p" *ngIf="element.status==0">NOT STARTED</span>
+                        </span>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="icons">
+                    <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"> </th>
+                    <td mat-cell *matCellDef="let element" style="width: 2%;"><i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu">
+                            more_vert
+                        </i>
+                        <mat-menu #menu="matMenu">
+                            <a mat-menu-item (click)="Open('emailQuotation',element)">View & Edit Quotation</a>
+                            <a mat-menu-item (click)="deleteModal('QUOTATION')">Delete document</a>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:ture;" [ngClass]="!showFilter ? 'stickyHeader1' : 'stickyHeader2'"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+        </div>
+    </div>
+
+
+</div>
+
+<div class="row" *ngIf="dataSource.data.length == 0">
+    <div class="col-md-12  d-flex align-items-center flex-column justify-content-center">
+        <img class="width400" src="assets/images/svg/clients-img.svg">
+        <p class="f-22 f-600 pt-28"> No Data Found </p>
+    </div>
+</div>
+
+<!-- ***************** -->
+<!-- <div class="bg-white pb-36 pt-80" id="ui-invoice">
     <div class="wrapper-20">
 
         <div *ngIf="dataSource.data.length > 0">
@@ -13,7 +175,7 @@
                     <button (click)="showFilters(showFilter)" class="btn-default addon" mat-stroked-button><i
                             class="material-icons">filter_list</i>FILTERS
                     </button>
-                    <!-- <button class="btn-primary addon" mat-stroked-button><i class="material-icons">add</i>ADD NEW</button> -->
+                   
                 </div>
             </div>
             <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
@@ -28,7 +190,7 @@
                         <button mat-stroked-button class="btn-default addon mr-12" (click)="showFilters(showFilter)"><i
                                 class="material-icons">filter_list</i>FILTERS
                         </button>
-                        <!-- <button mat-stroked-button class="btn-primary addon"><i class="material-icons">add</i>ADD NEW</button> -->
+                        <button mat-stroked-button class="btn-primary addon"><i class="material-icons">add</i>ADD NEW</button>
                     </div>
                 </div>
                 <div class="row pt-12">
@@ -42,11 +204,10 @@
                             <mat-chip-list>
                                 <mat-chip class="bg-white b-a c-p f-400 p-12"
                                     *ngFor="let dateFilter of filterDate; let i = index">
-                                    <!--                  <div class="row">-->
                                     <p>
                                         {{ dateFilter.name }}
                                     </p>
-                                    <input class="pl-24" (click)="picker2.open()" [max]="maxDate" matInput placeholder="Choose a date" [satDatepicker]="picker2"
+                                    <input readonly class="pl-24" (click)="picker2.open()" [max]="maxDate" matInput placeholder="Choose a date" [satDatepicker]="picker2"
                                         [(ngModel)]="selectedDateRange"
                                         (dateChange)="orgValueChange(selectedDateRange)">
                                     <sat-datepicker #picker2 [rangeMode]="true" [closeAfterSelection]="false">
@@ -121,14 +282,12 @@
                         <div class="bar"> {{element.createdDate | date:'dd/MM/yyyy'}} </div>
                     </td>
                 </ng-container>
-                <!-- Weight Column -->
                 <ng-container matColumnDef="sdate">
                     <th mat-sort-header="sentDate" mat-header-cell *matHeaderCellDef class="f-18"> Sent date </th>
                     <td mat-cell *matCellDef="let element">
                         <div class="bar"> {{element.sentDate | date:'dd/MM/yyyy'}} </div>
                     </td>
                 </ng-container>
-                <!-- Symbol Column -->
                 <ng-container matColumnDef="clientsign">
                     <th mat-sort-header="signedDate" mat-header-cell *matHeaderCellDef class="f-18"> Client consent
                     </th>
@@ -136,10 +295,7 @@
                         <div class="bar"> {{element.signedDate | date:'dd/MM/yyyy'}} </div>
                     </td>
                 </ng-container>
-                <!-- <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef class="f-18 pr-24"> Status </th>
-        <td mat-cell *matCellDef="let element" class="greentext"> {{element.status}} </td>
-      </ng-container> -->
+               
                 <ng-container matColumnDef="status">
                     <th mat-sort-header="status" *matHeaderCellDef class=" t-10" mat-header-cell> Status</th>
                     <td *matCellDef="let element" mat-cell>
@@ -164,7 +320,6 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-            <!-- <h4 *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4> -->
         </div>
         <div class="row" *ngIf="dataSource.data.length == 0">
             <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
@@ -173,4 +328,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
