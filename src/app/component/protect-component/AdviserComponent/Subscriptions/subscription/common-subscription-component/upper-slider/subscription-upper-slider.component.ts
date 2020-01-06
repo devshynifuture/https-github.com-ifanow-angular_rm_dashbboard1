@@ -38,6 +38,7 @@ export class SubscriptionUpperSliderComponent implements OnInit {
     );
     this.eventService.upperSliderDataObs.subscribe(
       data => {
+        
         console.log('DialogContainerComponent constructor upperSliderDataObs: ', data);
 
         this.fragmentData = data;

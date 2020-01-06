@@ -9,7 +9,7 @@ import { AuthService } from '../../../../../../../auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
 import { MatTableDataSource } from '@angular/material/table';
 import * as _ from 'lodash';
-import { element } from 'protractor';
+// import { element } from 'protractor';
 export interface PeriodicElement {
   service: string;
   amt: string;
