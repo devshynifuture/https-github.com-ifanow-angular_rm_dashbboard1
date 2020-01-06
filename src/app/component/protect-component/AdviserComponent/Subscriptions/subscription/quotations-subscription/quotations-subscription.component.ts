@@ -49,9 +49,18 @@ export class QuotationsSubscriptionComponent implements OnInit {
   maxDate = new Date();
   noData: string;
   isLoading = false;
+  
+
   filterStatus = [];
   filterDate = [];
   statusIdList = [];
+  filterDataArr = [];
+  selectedStatusFilter: any = 'statusFilter';
+  selectedDateFilter: any = 'dateFilter';
+  lastFilterDataId;
+  statusIdLength = 0;
+  showFilter = false;
+  selectedDateRange: { begin: Date; end: Date; };
   chips = [
     { name: 'LIVE', value: 1 },
     { name: 'PAID', value: 2 },
@@ -62,9 +71,6 @@ export class QuotationsSubscriptionComponent implements OnInit {
     { name: 'Sent date', value: 2 },
     { name: 'Client consent', value: 3 }
   ];
-  selectedDateRange: { begin: Date; end: Date; };
-  selectedStatusFilter: any;
-  showFilter = false;
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
 
