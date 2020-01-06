@@ -485,8 +485,8 @@
     <div class="col-md-8 right text-right">
       <button (click)="back()" *ngIf="selected!=0" class="mr-20 br-0 text-inherit" mat-button mat-raised-button>PREVIOUS
       </button>
-      <button (click)="nextStep(selected,'Save&Next')" [disabled]="logoImg==undefined" *ngIf="selected!=3"
-        class="btn-bottom br-0 text-inherit" mat-button>SAVE & NEXT
+      <button (click)="nextStep(selected,'Save&Next')" [disabled]="logoImg==undefined && selected==1"
+        *ngIf="selected!=3" class="btn-bottom br-0 text-inherit" mat-button>SAVE & NEXT
       </button>
       <button (click)="nextStep(selected,'Save&Next')" *ngIf="selected==3" class="btn-bottom br-0 text-inherit"
         mat-button>SAVE
