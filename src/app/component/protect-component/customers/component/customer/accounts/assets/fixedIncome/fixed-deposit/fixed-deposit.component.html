@@ -30,7 +30,7 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select formControlName="FDType" class="form-control br-0">
+                    <mat-select #FDType formControlName="FDType" class="form-control br-0">
                         <mat-option value="">Select option</mat-option>
                         <mat-option value="1">Bank FD</mat-option>
                         <mat-option value="2">Corporate FD</mat-option>
@@ -53,8 +53,7 @@
                 <mat-form-field>
                     <input matInput #amountInvest type="number"(keypress)="utils.keyPress($event)" maxlength="20"
                         class="form-control br-0 rupess" formControlName="amountInvest">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isAmountInvest && getFormControl().amountInvest.invalid || getFormControl().amountInvest.touched && getFormControl().amountInvest.invalid)}">
+                    <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -70,8 +69,7 @@
                 <input matInput formControlName="commencementDate" [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isCommencementDate && getFormControl().commencementDate.invalid || getFormControl().commencementDate.touched && getFormControl().commencementDate.invalid)}">
+                <mat-error class="f-12 pt-4">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -85,10 +83,9 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="number"  (keypress)="utils.keyPress($event)" class="form-control br-0 percentage"
+                    <input #interestRate matInput type="number"  (keypress)="utils.keyPress($event)" class="form-control br-0 percentage"
                         formControlName="interestRate">
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
+                    <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -102,7 +99,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select formControlName="compound" class="form-control br-0">
+                    <mat-select #compound formControlName="compound" class="form-control br-0">
                         <mat-option value="">Select option</mat-option>
                         <mat-option value="1">Daily</mat-option>
                         <mat-option value="2">Monthly</mat-option>
@@ -110,8 +107,7 @@
                         <mat-option value="4">Semi annually</mat-option>
                         <mat-option value="5">Annually</mat-option>
                     </mat-select>
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isCompound && getFormControl().compound.invalid || getFormControl().compound.touched && getFormControl().compound.invalid)}">
+                    <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -193,8 +189,7 @@
                     <input matInput formControlName="maturityDate" [matDatepicker]="picker1">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isMaturityDate && getFormControl().maturityDate.invalid || getFormControl().maturityDate.touched && getFormControl().maturityDate.invalid)}">
+                    <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -223,13 +218,12 @@
         </div>
         <div class="col-md-3 pr-0">
             <mat-form-field>
-                <mat-select formControlName="payOpt" class="form-control br-0">
+                <mat-select #payOpt formControlName="payOpt" class="form-control br-0">
                     <mat-option value="payOpt"> Select option</mat-option>
                     <mat-option value="1"> Cumulative payout</mat-option>
                     <mat-option value="2" (click)="intrestPayout(2)">Interest payout</mat-option>
                 </mat-select>
-                <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isPayOpt && getFormControl().payOpt.invalid || getFormControl().payOpt.touched && getFormControl().payOpt.invalid)}">
+                <mat-error class="f-12 pt-4">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -241,14 +235,13 @@
         </div>
         <div class="col-md-3 pr-0">
             <mat-form-field>
-                <mat-select formControlName="frequencyOfPayoutPerYear" class="form-control br-0">
+                <mat-select #frequencyOfPayoutPerYear formControlName="frequencyOfPayoutPerYear" class="form-control br-0">
                     <mat-option value="frequencyOfPayoutPerYear"> Select option</mat-option>
                     <mat-option value="1"> Monthly</mat-option>
                     <mat-option value="2">quarterly</mat-option>
                     <mat-option value="2">semi-annually</mat-option>
                 </mat-select>
-                <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isFrequencyOfPayoutPerYear && getFormControl().frequencyOfPayoutPerYear.invalid || getFormControl().frequencyOfPayoutPerYear.touched && getFormControl().frequencyOfPayoutPerYear.invalid)}">
+                <mat-error class="f-12 pt-4">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -262,14 +255,12 @@
         </div>
         <div class="col-md-5">
             <mat-form-field>
-                <mat-select class="form-control br-0" formControlName="ownerType">
+                <mat-select #ownerType class="form-control br-0" formControlName="ownerType">
                     <mat-option value=""> Select option</mat-option>
                     <mat-option value="1"> Joint</mat-option>
                     <mat-option value="2">Single</mat-option>
                 </mat-select>
-                <mat-error
-                    [ngClass]="{'v-h':!(isOwnerType && getFormControl().ownerType.invalid || getFormControl().ownerType.touched && getFormControl().ownerType.invalid)}"
-                    class="f-12 pt-4">
+                <mat-error class="f-12 pt-4">
                     This field is required
                 </mat-error>
             </mat-form-field>

@@ -226,28 +226,33 @@ export class FixedDepositComponent implements OnInit {
     } else {
       this.maturityDate = this.fixedDeposit.controls.maturityDate.value;
     }
-
-    if (this.fixedDeposit.controls.amountInvest.invalid) {
-      this.isAmountInvest = true;
-      return;
-    } else if (this.fixedDeposit.controls.ownerType.invalid) {
-      this.isOwnerType = true;
-      return;
-    } else if (this.fixedDeposit.controls.commencementDate.invalid) {
-      this.isCommencementDate = true;
-      return;
-    } else if (this.fixedDeposit.controls.interestRate.invalid) {
-      this.isInterestRate = true;
-      return;
-    } else if (this.fixedDeposit.controls.compound.invalid) {
-      this.isCompound = true;
-      return;
-    } else if (this.fixedDeposit.controls.payOpt.invalid) {
-      this.isPayOpt = true;
-      return;
-    } else if (this.fixedDeposit.controls.FDType.invalid) {
-      this.isFDType = true;
-      return;
+    if (this.fixedDeposit.get('amountInvest').invalid) {
+      this.fixedDeposit.get('amountInvest').markAsTouched();
+      return
+    }
+    else if (this.fixedDeposit.get('ownerType').invalid) {
+      this.fixedDeposit.get('ownerType').markAsTouched();
+      return
+    } 
+    else if (this.fixedDeposit.get('commencementDate').invalid) {
+      this.fixedDeposit.get('commencementDate').markAsTouched();
+      return
+    } 
+    else if (this.fixedDeposit.get('interestRate').invalid) {
+      this.fixedDeposit.get('interestRate').markAsTouched();
+      return
+    } 
+    else if (this.fixedDeposit.get('payOpt').invalid) {
+      this.fixedDeposit.get('payOpt').markAsTouched();
+      return
+    } 
+    else if (this.fixedDeposit.get('compound').invalid) {
+      this.fixedDeposit.get('compound').markAsTouched();
+      return
+    }
+    else if (this.fixedDeposit.get('FDType').invalid) {
+      this.fixedDeposit.get('FDType').markAsTouched();
+      return
     } else {
       const obj = {
         advisorId: this.advisorId,
