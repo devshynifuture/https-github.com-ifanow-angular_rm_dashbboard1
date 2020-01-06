@@ -6,6 +6,7 @@ import { SubscriptionInject } from '../../protect-component/AdviserComponent/Sub
 import { FormControl } from '@angular/forms';
 import { SubscriptionService } from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
 import { Router } from '@angular/router';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-leftsidebar',
@@ -52,12 +53,8 @@ export class LeftsidebarComponent implements OnInit {
   getClientListResponse(data) {
     console.log(data)
     this.clientList = data;
-    // this.myControl.setValue(searchData)
-    // this.filteredOptions = this.myControl.valueChanges.pipe(
-    //   startWith(''),
-    //   map(value => typeof value == 'string' ? value : value.name),
-    //   map(name => name ? this._filter(name) : this.clientList.slice())
-    // )
+    this.myControl.setValue(data)
+
   }
 
   selectClient(singleClientData) {
@@ -74,17 +71,24 @@ export class LeftsidebarComponent implements OnInit {
     this.userInfo = AuthService.getUserInfo();
     this.myControl = new FormControl();
     this.getClientSubscriptionList();
+    setTimeout(() => {
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map(value => typeof value == 'string' ? value : value.name),
+        map(name => name ? this._filter(name) : this.clientList.slice())
+      )
+    }, 2000);
   }
 
-  // private _filter(name: string): Client[] {
-  //   const filterValue = name.toLowerCase();
+  private _filter(name: string): Client[] {
+    const filterValue = name.toLowerCase();
 
-  //   return this.clientList.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
-  // }
+    return this.clientList.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+  }
 
-  // displayFn(client?: Client): string | undefined {
-  //   return client ? client.name : undefined;
-  // }
+  displayFn(client?: Client): string | undefined {
+    return client ? client.name : undefined;
+  }
 
   showMainNavWrapper() {
     $('#d').addClass('width-230');
