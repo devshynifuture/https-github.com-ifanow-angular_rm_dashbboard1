@@ -156,7 +156,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.display = data;
     this.profileDetailsForm = this.fb.group({
       companyDisplayName: [data.companyDisplayName, [Validators.required]],
-      companyName: [data.companyName, [Validators.required]],
+      // companyName: [data.companyName, [Validators.required]],
       gstinNum: [(data.gstin), [Validators.required]],
       panNum: [(data.pan), [Validators.required]],
       Address: [(data.billerAddress), [Validators.required]],
@@ -204,7 +204,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   nextStep(value, eventName) {
     console.log(value);
     switch (true) {
-      case (this.profileDetailsForm.touched && value == 0):
+      case (this.profileDetailsForm.valid && value == 0):
         this.selected = 1;
         break;
       case (/*this.logUrl.valid &&*/ value == 1):

@@ -171,33 +171,33 @@ export class PayeeSettingsComponent implements OnInit {
 
   savePayeeSettings() {
     this.inputData
-    if (this.payeeSettingsForm.controls.customerName.invalid) {
-      this.isCustomerName = true;
-      return;
-    } else if (this.payeeSettingsForm.controls.displayName.invalid) {
-      this.isCustomerName = true;
-      return;
-    } else if (this.payeeSettingsForm.controls.companyName.invalid) {
-      this.isCustomerName = true;
-      return;
-    } else if (this.payeeSettingsForm.controls.emailId.invalid) {
-      this.isCustomerName = true;
-      return;
-    } else if (this.payeeSettingsForm.controls.pan.invalid) {
-      this.isCustomerName = true;
-      return;
-    } else if (this.payeeSettingsForm.controls.pincode.invalid) {
-      this.isCustomerName = true;
-      return;
-    } else if (this.payeeSettingsForm.controls.gstIn.invalid) {
-      this.isCustomerName = true;
-      return;
-    } else if (this.payeeSettingsForm.controls.primaryContact.invalid) {
-      this.isCustomerName = true;
-      return;
-    } else if (this.payeeSettingsForm.controls.billingAddress.invalid) {
-      this.isCustomerName = true;
-      return;
+    if (this.payeeSettingsForm.get('customerName').invalid) {
+      this.payeeSettingsForm.get('customerName').markAsTouched();
+      return
+    } else if (this.payeeSettingsForm.get('displayName').invalid) {
+      this.payeeSettingsForm.get('displayName').markAsTouched();
+      return
+    } else if (this.payeeSettingsForm.get('companyName').invalid) {
+      this.payeeSettingsForm.get('companyName').markAsTouched();
+      return
+    }  else if(this.payeeSettingsForm.get('emailId').invalid) {
+      this.payeeSettingsForm.get('emailId').markAsTouched();
+      return
+    }else if (this.payeeSettingsForm.get('pan').invalid) {
+      this.payeeSettingsForm.get('pan').markAsTouched();
+      return
+    } else if (this.payeeSettingsForm.get('pincode').invalid) {
+      this.payeeSettingsForm.get('pincode').markAsTouched();
+      return
+    } else if (this.payeeSettingsForm.get('gstIn').invalid) {
+      this.payeeSettingsForm.get('gstIn').markAsTouched();
+      return
+    } else if (this.payeeSettingsForm.get('primaryContact').invalid) {
+      this.payeeSettingsForm.get('primaryContact').markAsTouched();
+      return
+    }else if (this.payeeSettingsForm.get('billingAddress').invalid) {
+      this.payeeSettingsForm.get('billingAddress').markAsTouched();
+      return
     } else if (this.payeeSettingsForm.get('city').invalid) {
       this.payeeSettingsForm.get('city').markAsTouched();
       return

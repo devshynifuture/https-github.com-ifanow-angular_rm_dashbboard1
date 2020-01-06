@@ -70,6 +70,9 @@ export class QuotationsComponent implements OnInit {
   }
 
   Open(value, state, data) {
+    if (this.isLoading) {
+      return
+    }
     const fragmentData = {
       flag: value,
       data: data,

@@ -1,20 +1,20 @@
-import {ActivatedRoute, Router} from '@angular/router';
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatDialog} from '@angular/material';
-import {DeleteSubscriptionComponent} from '../common-subscription-component/delete-subscription/delete-subscription.component';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {SubscriptionService} from '../../subscription.service';
-import {EnumServiceService} from '../../../../../../services/enum-service.service';
-import {UtilService} from '../../../../../../services/util.service';
-import {AuthService} from '../../../../../../auth-service/authService';
-import {Chart} from 'angular-highcharts';
-import {VariableFeeComponent} from '../common-subscription-component/variable-fee/variable-fee.component';
-import {FixedFeeComponent} from '../common-subscription-component/fixed-fee/fixed-fee.component';
-import {BillerSettingsComponent} from '../common-subscription-component/biller-settings/biller-settings.component';
-import {ChangePayeeComponent} from '../common-subscription-component/change-payee/change-payee.component';
-import {InvoiceHistoryComponent} from '../common-subscription-component/invoice-history/invoice-history.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatDialog } from '@angular/material';
+import { DeleteSubscriptionComponent } from '../common-subscription-component/delete-subscription/delete-subscription.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { SubscriptionService } from '../../subscription.service';
+import { EnumServiceService } from '../../../../../../services/enum-service.service';
+import { UtilService } from '../../../../../../services/util.service';
+import { AuthService } from '../../../../../../auth-service/authService';
+import { Chart } from 'angular-highcharts';
+import { VariableFeeComponent } from '../common-subscription-component/variable-fee/variable-fee.component';
+import { FixedFeeComponent } from '../common-subscription-component/fixed-fee/fixed-fee.component';
+import { BillerSettingsComponent } from '../common-subscription-component/biller-settings/biller-settings.component';
+import { ChangePayeeComponent } from '../common-subscription-component/change-payee/change-payee.component';
+import { InvoiceHistoryComponent } from '../common-subscription-component/invoice-history/invoice-history.component';
 
 export interface PeriodicElement {
   name: string;
@@ -24,9 +24,9 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {name: 'Abhishek Mane', service: 'Financial Planning', amt: 'Rs.1,00,000/Q', billing: '25/08/2019'},
-  {name: 'Ronak Hasmuk Hindocha', service: 'Investment management', amt: 'View Details', billing: '-'},
-  {name: 'Aman Jain', service: 'AUM Linked fee', amt: 'View Details', billing: '-'},
+  { name: 'Abhishek Mane', service: 'Financial Planning', amt: 'Rs.1,00,000/Q', billing: '25/08/2019' },
+  { name: 'Ronak Hasmuk Hindocha', service: 'Investment management', amt: 'View Details', billing: '-' },
+  { name: 'Aman Jain', service: 'AUM Linked fee', amt: 'View Details', billing: '-' },
 
 ];
 
@@ -42,6 +42,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   totalSaleReceived: any;
   dataSource = [{}, {}, {}];
   isLoading = false;
+  isLoadingSubSummary = false;
   @Output() subIndex = new EventEmitter()
 
   advisorName;
@@ -61,12 +62,12 @@ export class DashboardSubscriptionComponent implements OnInit {
   totalSales: any;
 
   constructor(private enumService: EnumServiceService,
-              public subInjectService: SubscriptionInject,
-              public eventService: EventService,
-              public dialog: MatDialog,
-              private subService: SubscriptionService,
-              private router: Router,
-              private activatedRoute: ActivatedRoute) {
+    public subInjectService: SubscriptionInject,
+    public eventService: EventService,
+    public dialog: MatDialog,
+    private subService: SubscriptionService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) {
     const date = new Date();
     const hourOfDay = date.getHours();
     console.log('DashboardSubscriptionComponent constructor hourOfDay : ', hourOfDay);
@@ -88,7 +89,7 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.docSentSignedCountData();
     this.clientWithSubscription();
     this.invoiceToBeReviewed();
-    this.getSummaryDataDashboard(null);
+    this.getSummaryDataDashboard();
     this.getTotalRecivedByDash();
   }
 
@@ -107,7 +108,7 @@ export class DashboardSubscriptionComponent implements OnInit {
     this.subService.getDashboardSubscriptionResponse(this.advisorId).subscribe(
       data => {
         this.showLetsBegin = data.show;
-          this.showLetsBeginData = data.advisorAccomplishedSubscriptionFinalList;
+        this.showLetsBeginData = data.advisorAccomplishedSubscriptionFinalList;
       }
     );
   }
@@ -167,6 +168,9 @@ export class DashboardSubscriptionComponent implements OnInit {
   // || value == 'changePayee' || value == 'SUBSCRIPTIONS'
   openPlanSlider(value, state, data) {
     let componentName;
+    if (this.isLoading) {
+      return
+    }
     (value == 'billerSettings') ? componentName = BillerSettingsComponent : (value == 'changePayee') ? componentName = ChangePayeeComponent :
       (value == "SUBSCRIPTIONS") ? componentName = InvoiceHistoryComponent : (data.subscriptionPricing.feeTypeId == 1) ?
         value = 'createSubFixed' : value = 'createSubVariable';
@@ -216,10 +220,10 @@ export class DashboardSubscriptionComponent implements OnInit {
     console.log("this is selected Tab:::::::::::::", selectedTab);
     this.eventService.tabData(selectedTab);
     if (selectedTab === 3) {
-      this.router.navigate(['../subscriptions'], {relativeTo: this.activatedRoute});
+      this.router.navigate(['../subscriptions'], { relativeTo: this.activatedRoute });
 
     } else if (selectedTab === 5) {
-      this.router.navigate(['../invoices'], {relativeTo: this.activatedRoute});
+      this.router.navigate(['../invoices'], { relativeTo: this.activatedRoute });
     }
   }
 
@@ -240,7 +244,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   }
 
   // ******* Dashboard Subscription Summary *******
-  getSummaryDataDashboard(eventValue) {
+  getSummaryDataDashboard() {
     /* const obj = {
        // 'id':2735, //pass here advisor id for Invoice advisor
        // 'module':1,
@@ -271,16 +275,21 @@ export class DashboardSubscriptionComponent implements OnInit {
       toDate: null
 
     };
-    console.log('filterSubscription eventValue ', eventValue);
     console.log('filterSubscription this.subscriptionSummaryStatusFilter ', this.subscriptionSummaryStatusFilter);
-    this.dataSource = [];
+    this.dataSource = [{}, {}, {}];
     console.log('filterSubscription reqObj ', obj);
+    this.isLoadingSubSummary = true;
     this.subService.filterSubscription(obj).subscribe(
-      data => this.getSubSummaryRes(data)
+      data => this.getSubSummaryRes(data), error => {
+        this.isLoadingSubSummary = false;
+        this.dataSource = [];
+
+      }
     );
   }
 
   getSubSummaryRes(data) {
+    this.isLoadingSubSummary = false;
     console.log('Summary Data', data);
     // data.forEach(element => {
     //   element.feeMode = (element.feeMode == 1) ? 'FIXED' : 'VARIABLE';
@@ -288,7 +297,11 @@ export class DashboardSubscriptionComponent implements OnInit {
     //   element.status = (element.status == 1) ? 'NOT STARTED' : (element.status == 2) ?
     //   'LIVE' : (element.status == 3) ? 'FUTURE' : 'CANCELLED';
     // });
-    this.dataSource = data;
+    if (data) {
+      this.dataSource = data;
+    } else {
+      this.dataSource = [];
+    }
   }
 
   // ******* Dashboard Sent And Signed Count *******

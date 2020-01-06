@@ -36,7 +36,7 @@ export class ChangePayeeComponent implements OnInit {
         payeeData[0].share = 100
         payeeData[0].selected = 1
         this.payeeDataRes = payeeData;
-        this.subStartNextBtn.emit(payeeData[0].share)
+        this.subStartNextBtn.emit(payeeData[0])
       }
       else {
         this.payeeDataRes = payeeData;
@@ -48,10 +48,10 @@ export class ChangePayeeComponent implements OnInit {
       this.getPayeeData(payeeData)
     }
   }
-  restrictAfter100(event){
-    if(parseInt(event.target.value) > 100){
+  restrictAfter100(event) {
+    if (parseInt(event.target.value) > 100) {
       event.target.value = "100";
-    // console.log(typeof (event.target.value), event.target.value);
+      // console.log(typeof (event.target.value), event.target.value);
     }
   }
 

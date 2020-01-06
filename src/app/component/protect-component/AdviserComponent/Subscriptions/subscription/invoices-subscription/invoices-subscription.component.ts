@@ -1,11 +1,11 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionService} from '../../subscription.service';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {AuthService} from '../../../../../../auth-service/authService';
-import {UtilService, ValidatorType} from '../../../../../../services/util.service';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionService } from '../../subscription.service';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { AuthService } from '../../../../../../auth-service/authService';
+import { UtilService, ValidatorType } from '../../../../../../services/util.service';
 import * as _ from 'lodash';
 import { DatePipe } from '@angular/common';
 
@@ -37,8 +37,8 @@ export class InvoicesSubscriptionComponent implements OnInit {
     {name: 'OVERDUE', value: 2}
   ];
   dateChips = [
-    {name: 'Date', value: 1},
-    {name: 'Due date', value: 2},
+    { name: 'Date', value: 1 },
+    { name: 'Due date', value: 2 },
   ];
   invoiceDesign: string;
   noData: string;
@@ -221,6 +221,9 @@ export class InvoicesSubscriptionComponent implements OnInit {
   // this.showPdfInvoice=true;
   // }
   openInvoice(data, value, state) {
+    if (this.isLoading) {
+      return
+    }
     this.invoiceSub = value;
     this.invoiceSubscription = 'true';
     this.eventService.sidebarData(value);
@@ -285,7 +288,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
-      this.selectAll({checked: false}) : this.selectAll({checked: true});
+      this.selectAll({ checked: false }) : this.selectAll({ checked: true });
   }
 
   display(data) {
