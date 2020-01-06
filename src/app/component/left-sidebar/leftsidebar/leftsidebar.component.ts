@@ -1,12 +1,12 @@
-import { Component, ElementRef, NgZone, OnInit } from '@angular/core';
+import {Component, ElementRef, NgZone, OnInit} from '@angular/core';
 import $ from 'jquery';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from '../../../Data-service/event.service';
-import { SubscriptionInject } from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormControl } from '@angular/forms';
-import { SubscriptionService } from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { Router } from '@angular/router';
-import { startWith, map } from 'rxjs/operators';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from '../../../Data-service/event.service';
+import {SubscriptionInject} from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {FormControl} from '@angular/forms';
+import {SubscriptionService} from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
+import {Router} from '@angular/router';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-leftsidebar',
@@ -26,15 +26,15 @@ export class LeftsidebarComponent implements OnInit {
   clientList: any;
   myControl: FormControl;
   advisorName;
-  loginType: number = 1;
+  loginType = 1;
 
   constructor(private authService: AuthService, private _eref: ElementRef,
-    private eventService: EventService, private subinject: SubscriptionInject,
-    private subService: SubscriptionService, private router: Router, private ngZone: NgZone) {
+              private eventService: EventService, private subinject: SubscriptionInject,
+              private subService: SubscriptionService, private router: Router, private ngZone: NgZone) {
   }
 
   serachClientData(data) {
-    console.log(data)
+    console.log(data);
     this.getClientSubscriptionList();
   }
 
@@ -48,20 +48,20 @@ export class LeftsidebarComponent implements OnInit {
   }
 
   getClientListResponse(data) {
-    console.log(data)
+    console.log(data);
     this.clientList = data;
-    this.myControl.setValue(data)
+    this.myControl.setValue(data);
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => typeof value == 'string' ? value : value.name),
       map(name => name ? this._filter(name) : this.clientList.slice())
-    )
+    );
   }
 
   selectClient(singleClientData) {
     console.log(singleClientData);
     this.ngZone.run(() => {
-      this.router.navigate(["customer", "detail", "account", "assets"], { state: { ...singleClientData } });
+      this.router.navigate(['customer', 'detail', 'account', 'assets'], {state: {...singleClientData}});
     });
   }
 
