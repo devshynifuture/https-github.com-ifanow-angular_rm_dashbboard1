@@ -170,7 +170,7 @@ export class CreateSubscriptionComponent implements OnInit {
     console.log(this.subscriptionDetails);
   }
   getSharesInfo(data) {
-    if (data == 100) {
+    if (data) {
       this.totalSelectedPayeeShare = data.share;
       this.selectedPayee.push({
         id: data.id,

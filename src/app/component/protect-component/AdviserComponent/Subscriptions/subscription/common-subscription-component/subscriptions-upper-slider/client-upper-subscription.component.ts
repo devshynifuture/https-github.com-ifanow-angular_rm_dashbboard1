@@ -9,7 +9,7 @@ import { AuthService } from '../../../../../../../auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
 import { MatTableDataSource } from '@angular/material/table';
 import * as _ from 'lodash';
-import { element } from 'protractor';
+// import { element } from 'protractor';
 export interface PeriodicElement {
   service: string;
   amt: string;
@@ -34,7 +34,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   isLoading = false;
   clientData: any = [];
   data: Array<any> = [{}, {}, {}];
-  dataSource : any;
+  dataSource: any;
   noData: string;
   planName: any;
   subcr: any[];
@@ -63,6 +63,9 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   }
 
   openPlanSlider(value, state, data) {
+    if (this.isLoading) {
+      return
+    }
     if (data) {
       if (value == 'billerSettings' || value == 'changePayee' || value == null) {
 
@@ -170,7 +173,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
           element.plan = (n.planName);
         });
       });
-      console.log('**********',this.subcr)
+      console.log('**********', this.subcr)
       this.dataSource = new MatTableDataSource(data);
 
       this.dataSource.sort = this.sort;

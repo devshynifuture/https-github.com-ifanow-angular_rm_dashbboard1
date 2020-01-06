@@ -235,6 +235,17 @@ export class SubscriptionService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PLAN_INVOICE, httpParams);
   }
 
+  filterInvoices(data) {
+    // const httpParams = new HttpParams().set('id', data.id).set('module', data.module);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PLAN_INVOICE, httpParams);
+    console.log(data, "invoices data header");
+    
+    const httpParams = new HttpParams().set('id', data.Id).set('fromDate', data.fromDate).set('module', data.module)
+      .set('toDate', data.toDate).set('dateType', data.dateType).set('limit', data.limit)
+      .set('statusIdList', data.statusIdList).set('offset', data.offset);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.FILTER_INVOICES, httpParams);
+  }
+
   editPlanSettings(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_PLAN_SETTING, data);
   }

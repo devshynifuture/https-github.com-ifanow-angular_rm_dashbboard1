@@ -111,7 +111,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   // senddataTo: any;
   showFilter = false;
   selectedStatusFilter: any = "status";
-  selectedDateFilter: any = "selected"
+  selectedDateFilter: any = "selected";
   // selectedDateFilter;
   dataTocheck: boolean;
   live: boolean;
@@ -487,7 +487,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       statusIdList: this.statusIdList,
       dateType: (this.filterDate.length == 0) ? 0 : this.filterDate,
     };
-    console.log('this.callFilter req obj : ', obj);
+    console.log('this.callFilter req obj : ', obj, this.statusIdList);
     if (obj.statusIdList.length == 0 && obj.fromDate == null) {
       this.getSummaryDataAdvisor(false);
     } else {
