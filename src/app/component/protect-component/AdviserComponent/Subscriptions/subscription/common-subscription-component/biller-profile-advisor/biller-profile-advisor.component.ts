@@ -167,7 +167,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       id: [data.id]
     }),
       this.logUrl = this.fb.group({
-        url: [data.logoUrl, [Validators.required]]
+        url: [, [Validators.required]]
       });
     this.bankDetailsForm = this.fb.group({
       nameOnBank: [(data.nameAsPerBank), [Validators.required]],
@@ -195,6 +195,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.getFrormControlBank().address.maxLength = 150;
     this.getFrormControlMisc().footnote.maxLength = 150;
     this.getFrormControlMisc().terms.maxLength = 150;
+    this.logoImg = data.logoUrl;
   }
 
   Close(data) {
