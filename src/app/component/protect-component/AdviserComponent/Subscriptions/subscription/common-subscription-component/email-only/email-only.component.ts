@@ -1,10 +1,10 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from "../../../../../../../auth-service/authService";
-import {ValidatorType} from "../../../../../../../services/util.service";
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from "../../../../../../../auth-service/authService";
+import { ValidatorType } from "../../../../../../../services/util.service";
 
 @Component({
   selector: 'app-email-only',
@@ -39,9 +39,10 @@ export class EmailOnlyComponent implements OnInit {
   @Input() quotationData;
   _inputData;
   emailData;
+  advisorData: any;
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-              public subscription: SubscriptionService) {
+    public subscription: SubscriptionService) {
     this.advisorId = AuthService.getAdvisorId();
 
     // this.dataSub = this.subInjectService.singleProfileData.subscribe(
@@ -105,7 +106,7 @@ export class EmailOnlyComponent implements OnInit {
     // };
     console.log('dsfgsdggggggggg', this.docObj);
     console.log('EmailOnlyComponent inputData : ', inputData);
-    this.getEmailTemplateFilterData();
+    this.getEmailTemplateFilterData(inputData);
   }
 
   get data() {
@@ -139,7 +140,7 @@ export class EmailOnlyComponent implements OnInit {
     this.onTouched = fn;
   }
 
-  getEmailTemplateFilterData() {
+  getEmailTemplateFilterData(invoiceData) {
 
     const data = {
       advisorId: this._inputData.advisorId,
@@ -150,6 +151,9 @@ export class EmailOnlyComponent implements OnInit {
       this.emailData = responseData;
       this.subject = this.emailData.subject;
       this.emailBody = this.emailData.body;
+      console.log("Invoice Data", invoiceData.clientData.clientName)
+      this.emailBody.replace("$client_name", invoiceData.clientData.clientName);
+      this.emailBody.replace("$advisor_name", AuthService.getUserInfo().fullName)
     }, error => {
       this.eventService.openSnackBar(error, 'dismiss', () => {
         console.log('dismiss was clicked');
@@ -175,8 +179,8 @@ export class EmailOnlyComponent implements OnInit {
   //   });
   // }
   close() {
-    this.subInjectService.changeUpperRightSliderState({state: 'close'});
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
 
     // this.valueChange.emit(this.emailSend);
   }
@@ -316,7 +320,7 @@ export class EmailOnlyComponent implements OnInit {
     if (inputChar == ',') {
       event.preventDefault();
       const emailId = this._inputData.clientData.userEmailId;
-      this.emailIdList.push({emailAddress: emailId});
+      this.emailIdList.push({ emailAddress: emailId });
       this._inputData.clientData.userEmailId = '';
     }
   }
