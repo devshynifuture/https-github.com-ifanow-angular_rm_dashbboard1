@@ -118,6 +118,9 @@ export class CreateSubscriptionComponent implements OnInit {
     if (this.stepper) {
       this.stepper.next();
     }
+    if (this.stepper == undefined) {
+      return;
+    }
     if (this.stepper.selectedIndex == 4) {
       let date = this.subscriptionDetails.controls.activationDate.value;
       if (this.clientData.feeTypeId == 1) {
