@@ -156,6 +156,10 @@ export class PreferencesSettingsComponent implements OnInit {
   }
 
   deleteModal(singleBillerProfile) {
+    if (singleBillerProfile.isPrimary == true) {
+      this.eventService.openSnackBar("You cannot delete primary biller profile", "dismiss")
+      return;
+    }
     const dialogData = {
       header: 'DELETE',
       body: 'Are you sure you want to delete the biller profile?',

@@ -39,8 +39,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group mb-0">
-                            <input type="text" #code formControlName="code" appAlphaNumeric
-                                class="form-control br-2">
+                                <input #code type="text" appCodeText [maxLength]="10" formControlName="code" class="form-control br-2">
                         </div>
                         <div class="row">
                             <div class="col-md-9">

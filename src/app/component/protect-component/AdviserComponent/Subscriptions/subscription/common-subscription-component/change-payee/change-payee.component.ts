@@ -48,6 +48,12 @@ export class ChangePayeeComponent implements OnInit {
       this.getPayeeData(payeeData)
     }
   }
+  restrictAfter100(event){
+    if(parseInt(event.target.value) > 100){
+      event.target.value = "100";
+    // console.log(typeof (event.target.value), event.target.value);
+    }
+  }
 
   get payeeData() {
     return this._payeeData;
