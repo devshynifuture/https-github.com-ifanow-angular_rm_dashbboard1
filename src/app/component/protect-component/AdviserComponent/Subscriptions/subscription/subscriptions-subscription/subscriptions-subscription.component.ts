@@ -378,10 +378,12 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
   filterSubscriptionRes(data) {
+    this.isLoading = false;
+
     console.log('filterSubscriptionRes', data);
-    if (data == undefined) {
+    if (data == undefined && this.statusIdLength < 1) {
       this.noData = 'No Data Found';
-      // this.dataSource.data = [];
+      this.dataSource.data = [];
     } else {
       console.log(this.statusIdList.length, this.statusIdLength < this.statusIdList.length, this.statusIdLength, "this.statusIdList.length123");
       // if(this.statusIdLength < this.statusIdList.length || this.statusIdList.length <= 0){
@@ -468,6 +470,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   callFilter() {
     if (this.filterStatus && this.filterStatus.length > 0) {
       this.statusIdList = [];
+      this.dataSource.data = [{}, {}, {}]
+      this.isLoading = true;
       this.filterStatus.forEach(singleFilter => {
         this.statusIdList.push(singleFilter.value);
         console.log(this.statusIdList, "this.statusIdList 1233");
@@ -477,7 +481,6 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     }
     // this.statusIdList = (this.sendData == undefined) ? [] : this.sendData;
     console.log(this.lastFilterDataId, this.statusIdLength < this.statusIdList.length, "aaaa");
-
     const obj = {
       advisorId: this.advisorId,
       limit: 10,

@@ -135,6 +135,8 @@ export class InvoicesSubscriptionComponent implements OnInit {
       module: 1
     };
     // this.dataSource.data = [{}, {}, {}];
+    this.isLoading = true;
+
     this.subscription.getInvoices(obj).subscribe(
       data => {
         this.getData = data;
@@ -301,7 +303,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   display(data) {
     console.log(data , "edited data invoice");
-    
+    this.dataSource.data =[{},{},{}]
     this.tableData = [];
     this.getInvoiceSubData(false);
     this.invoiceSubscription = 'false'
@@ -337,6 +339,8 @@ export class InvoicesSubscriptionComponent implements OnInit {
   }
 
   callFilter() {
+    this.dataSource.data = [{}, {}, {}]
+      this.isLoading = true;
     if (this.filterStatus && this.filterStatus.length > 0) {
       this.statusIdList = [];
       this.filterStatus.forEach(singleFilter => {
@@ -374,9 +378,11 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   filterSubscriptionRes(data) {
     console.log('filterSubscriptionRes', data);
-    if (data == undefined) {
+    this.isLoading = false;
+
+    if (data == undefined && this.statusIdLength < 1) {
       this.noData = 'No Data Found';
-      // this.dataSource.data = [];
+      this.dataSource.data = [];
     } else {
       console.log(this.statusIdList.length, this.statusIdLength < this.statusIdList.length, this.statusIdLength, "this.statusIdList.length123");
       // if(this.statusIdLength < this.statusIdList.length || this.statusIdList.length <= 0){
