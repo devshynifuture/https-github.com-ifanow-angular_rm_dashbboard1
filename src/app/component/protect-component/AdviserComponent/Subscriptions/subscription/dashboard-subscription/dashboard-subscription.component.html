@@ -181,14 +181,18 @@
                       <ng-container matColumnDef="billing">
                         <th *matHeaderCellDef mat-header-cell> Next billing date</th>
                         <td *matCellDef="let element" mat-cell>
-                          <div class="bar"> {{ doesNextBillingDatePresent(element) | date:'dd/MM/yyyy'}}
+                          <div class="bar" *ngIf="element.nextBillingDate"> 
+                            {{ element.nextBillingDate | date: 'dd/MM/YYYY' }}
+                          </div>
+                          <div class="bar" *ngIf="!element.nextBillingDate">
+                            {{ isLoading ? '' : 'Not Started' }} 
                           </div>
                         </td>
                       </ng-container>
                       <ng-container matColumnDef="icons">
                         <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;">
                         </th>
-                        <td *matCellDef="let element" mat-cell style="width: 2%;"><i [matMenuTriggerFor]="menu"
+                        <td *matCellDef="let element" mat-cell style="width: 2%"><i [matMenuTriggerFor]="menu"
                             class="material-icons c-p iconscolors">
                             more_vert
                           </i>

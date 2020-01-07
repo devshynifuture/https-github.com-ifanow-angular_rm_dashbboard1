@@ -323,9 +323,6 @@ export class DashboardSubscriptionComponent implements OnInit {
       this.dataSourceSingCount = {};
   }
 
-  doesNextBillingDatePresent(element){
-    return element.nextBillingDate ? element.nextBillingDate : 'Not Started';
-  }
 
   // ******* Dashboard Client With Subscription *******
 
