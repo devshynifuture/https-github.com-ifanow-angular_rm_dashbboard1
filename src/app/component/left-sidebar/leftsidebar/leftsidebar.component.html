@@ -1,8 +1,8 @@
 <mat-sidenav-container (window:resize)="onResize()" class="sidenav-container">
     <mat-sidenav #sidenav mode="side" opened role="navigation">
         <mat-nav-list class="width-230 pt-0" id="d">
-            <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0">
-                <img class="logo" src="{{userInfo.profilePic}}">
+            <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0 logoWrap">
+                <img class="logo" src="{{userInfo.profilePic}}"> <h5>{{logoText | uppercase}}</h5>
             </mat-toolbar>
             <!-- <div *ngIf="showTabs" class="pt-16">
                 <img class="header-img pt-0 pb-0" src="assets/images/img1.jpg">
@@ -66,22 +66,26 @@
     </mat-sidenav>
     <mat-sidenav-content id="left">
         <mat-toolbar class="bg-white bl-1" class="fix-top pl-0">
-            <button (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav" mat-icon-button type="button">
+            <button (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav" mat-icon-button
+                type="button">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
-            <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav" mat-icon-button type="button">
+            <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav"
+                mat-icon-button type="button">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
 
 
             <mat-form-field class="width40 serachbox">
                 <div class="form-group searchBoxHeader">
-                    <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control" matInput type="text">
+                    <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control" matInput
+                        type="text">
                     <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
                         <!-- <mat-option>
                 <p>Start typing to search clients,leads otr team members</p>
             </mat-option> -->
-                        <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of filteredOptions | async" [value]="singleClient">
+                        <mat-option (click)="selectClient(singleClient)"
+                            *ngFor="let singleClient of filteredOptions | async" [value]="singleClient">
                             <div class="row">
                                 <div class="col-md-1">
 
@@ -107,7 +111,7 @@
 
 
 
-                <a class="sidenav-link" mat-list-item>
+                <a class="sidenav-link pr-28" mat-list-item>
                     <img class="c-p header-img" [matMenuTriggerFor]="appMenu" src="assets/images/img1.jpg">
 
                     <mat-menu #appMenu="matMenu">
@@ -142,11 +146,11 @@
             </div>
         </div>
         <div>
-          <!--          <div [@routeAnimations]="prepareRoute(outlet)" >-->
-          <!--            <router-outlet #outlet="outlet"></router-outlet>-->
-          <!--          </div>-->
-          <router-outlet id="left1">
-          </router-outlet>
+            <!--          <div [@routeAnimations]="prepareRoute(outlet)" >-->
+            <!--            <router-outlet #outlet="outlet"></router-outlet>-->
+            <!--          </div>-->
+            <router-outlet id="left1">
+            </router-outlet>
 
 
         </div>

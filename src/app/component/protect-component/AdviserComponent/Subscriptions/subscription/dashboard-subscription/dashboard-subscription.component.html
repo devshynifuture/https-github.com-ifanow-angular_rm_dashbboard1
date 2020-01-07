@@ -63,7 +63,7 @@
                 <i class="material-icons font100">receipt</i>
                 <p class="m-0"> No Data Found </p>
               </div>
-              <div *ngIf="dataSourceInvoice">
+              <div class="row" *ngIf="dataSourceInvoice">
                 <div *ngFor="let invoice of dataSourceInvoice" class="col-md-12 ">
 
                   <div class="row pt-16 b-b">
@@ -79,7 +79,7 @@
                 </div>
               </div>
 
-              <div *ngIf="dataSourceInvoice" class="col-md-12 text-right pt-8 11">
+              <div *ngIf="dataSourceInvoice" class="col-md-12 text-right pt-8 pb-16">
                 <div (click)="changeParentsTab(5)" class="c-p">View all
                 </div>
 
@@ -181,14 +181,18 @@
                       <ng-container matColumnDef="billing">
                         <th *matHeaderCellDef mat-header-cell> Next billing date</th>
                         <td *matCellDef="let element" mat-cell>
-                          <div class="bar"> {{element.nextBillingDate | date:'dd/MM/yyyy'}}
+                          <div class="bar" *ngIf="element.nextBillingDate"> 
+                            {{ element.nextBillingDate | date: 'dd/MM/YYYY' }}
+                          </div>
+                          <div class="bar" *ngIf="!element.nextBillingDate">
+                            {{ isLoading ? '' : 'Not Started' }} 
                           </div>
                         </td>
                       </ng-container>
                       <ng-container matColumnDef="icons">
                         <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;">
                         </th>
-                        <td *matCellDef="let element" mat-cell style="width: 2%;"><i [matMenuTriggerFor]="menu"
+                        <td *matCellDef="let element" mat-cell style="width: 2%"><i [matMenuTriggerFor]="menu"
                             class="material-icons c-p iconscolors">
                             more_vert
                           </i>

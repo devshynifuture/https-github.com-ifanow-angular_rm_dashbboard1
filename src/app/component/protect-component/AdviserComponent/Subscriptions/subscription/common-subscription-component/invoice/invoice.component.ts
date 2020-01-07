@@ -507,13 +507,10 @@ console.log('finAmount',this.finAmount)
   }
 
   saveFormData() {
-    if (this.rPayment.controls.amountReceived.invalid) {
-      this.isamountValid = true;
-      return;
-    } else if (this.rPayment.controls.chargesIfAny.invalid) {
+    if (this.rPayment.controls.chargesIfAny.invalid) {
       this.ischargeValid = true;
       return;
-    } else if (this.rPayment.controls.tds.invalid) {
+    }else if (this.rPayment.controls.tds.invalid) {
       this.istdsValid = true;
       return;
     } else if (this.rPayment.controls.paymentMode.invalid) {

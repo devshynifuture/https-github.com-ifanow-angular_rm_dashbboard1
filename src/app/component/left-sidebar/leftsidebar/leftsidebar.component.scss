@@ -17,10 +17,17 @@
 .sidenav .mat-toolbar {
     background: #3f51b5;
 }
-.logo{
-    width: 66px !important;
-    height: auto ;
-    margin: 0px auto;
+.logoWrap{
+
+    .logo{
+        width: 63px !important;
+        height: auto ;
+    }
+
+    h5{
+        color:#267538;
+        font-size: 90%;
+    }
 }
 
 .none {

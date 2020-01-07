@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-add-variable-fee',
@@ -33,8 +34,15 @@ export class AddVariableFeeComponent implements OnInit {
   restrictMoreThan100Val;
 
   @Input() set variableFee(data) {
-    this.ischeckVariableData = data
-    this.getFeeFormUpperData(data)
+    if (data == "") {
+      // this.otherAssetData=UtilService.
+      this.otherAssetData = this.enumService.getOtherAssetData();
+      return;
+    }
+    else {
+      this.ischeckVariableData = data
+      this.getFeeFormUpperData(data)
+    }
   }
 
   @Output() outputVariableData = new EventEmitter();
@@ -46,12 +54,13 @@ export class AddVariableFeeComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.setValidation(false);
-    this.otherAssetData = [];
-    this.enumService.getOtherAssetData().forEach(element => {
-      this.otherAssetData.push(Object.assign({}, element));
-    });
     (this.ischeckVariableData) ? console.log("fixed fee Data") : this.createVariableFeeForm('');
-    console.log(this.otherAssetData);
+  }
+
+  restrictFrom100(event){
+    if(parseInt(event.target.value) > 100){
+      event.target.value = 100;
+    }
   }
 
   setValidation(flag) {
@@ -124,6 +133,7 @@ export class AddVariableFeeComponent implements OnInit {
           this.selectedOtherAssets.push(element.subAssetClassId)
         }
       })
+      console.log(this.otherAssetData)
       this.getFormControl().serviceName.maxLength = 40;
       this.getFormControl().code.maxLength = 10;
       this.getFormControl().description.maxLength = 160;
@@ -163,7 +173,7 @@ export class AddVariableFeeComponent implements OnInit {
       this.pricing = true;
       return;
     } else {
-      const obj = {
+      let obj = {
         serviceRepoId: this.serviceId,
         advisorId: this.advisorId,
         // advisorId: 12345,
@@ -224,8 +234,9 @@ export class AddVariableFeeComponent implements OnInit {
   }
 
   saveFeeTypeDataEditResponse(data) {
-    this.outputVariableData.emit(this.dataToSend)
-    this.eventService.openSnackBar('Service is Created', 'OK');
+    this.dataToSend.servicePricing.pricingList[2].serviceSubAssets = this.otherAssetData;
+    this.outputVariableData.emit(this.dataToSend);
+    this.eventService.openSnackBar('Service is Edited', 'OK');
     this.subInjectService.changeUpperRightSliderState({ state: 'close' });
   }
 

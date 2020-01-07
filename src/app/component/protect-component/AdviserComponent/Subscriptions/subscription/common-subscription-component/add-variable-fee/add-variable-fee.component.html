@@ -104,10 +104,12 @@
         </div>
         <div class="col-md-5 p-0">
           <div class="form-group">
-            <select class="form-control br-0" formControlName="Duration" id="sel1">
-              <option value="1">Months</option>
-              <option value="2">Years</option>
-            </select>
+            <mat-form-field>
+            <mat-select class="form-control br-0" formControlName="Duration" id="sel1">
+              <mat-option value="1">Months</mat-option>
+              <mat-option value="2">Years</mat-option>
+            </mat-select>
+          </mat-form-field>
           </div>
         </div>
         <mat-error class="f-12 pt-4"
@@ -140,15 +142,15 @@
           </div>
           <div class="row ui-mff">
             <div class="col-md-4 p-0 bl-0 br-grey bb-grey">
-              <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation
+              <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4" appInputValueValidation
                 formControlName="equity" placeholder="%" type="text" class="form-control br-0 h-39">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
-              <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation
+              <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4" appInputValueValidation
                 formControlName="debt" placeholder="%" type="text" class="form-control br-0 h-39">
             </div>
             <div class="col-md-4 p-0 bb-grey br-grey">
-              <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation
+              <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4" appInputValueValidation
                 formControlName="liquid" placeholder="%" type="text" class="form-control br-0 h-39">
             </div>
           </div>
@@ -170,15 +172,15 @@
           </div>
           <div class="row ui-mff">
             <div class="col-md-4 p-0 bl-0 bb-grey br-grey">
-              <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation
+              <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4" appInputValueValidation
                 formControlName="equity" placeholder="%" type="text" class="form-control br-0 h-39 br-grey">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
-              <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation
+              <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4" appInputValueValidation
                 formControlName="debt" placeholder="%" type="text" class="form-control br-0 h-39">
             </div>
             <div class="col-md-4 p-0 br-grey bb-grey">
-              <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation
+              <input [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4" appInputValueValidation
                 formControlName="liquid" placeholder="%" type="text" class="form-control br-0 h-39">
             </div>
           </div>
@@ -211,10 +213,10 @@
         </div>
         <div class="col-md-2 p-0">
           <!--          [minValue]="0.001" [maxValue]="99"-->
-          <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation
+          <input [inputValidator]="validatorType.NUMBER_ONLY"  (input)="restrictFrom100($event)" [maxLength]="4" appInputValueValidation
             formControlName="pricing" placeholder="%" type="text" class="form-control bl-0 br-0 h-39 br-grey">
           <mat-error *ngIf="(variableFeeData.get('pricing').errors)" class="f-12 pt-4">
-            Should be between than 0.01 to 99
+            Should be between than 0 to 99
           </mat-error>
         </div>
       </div>

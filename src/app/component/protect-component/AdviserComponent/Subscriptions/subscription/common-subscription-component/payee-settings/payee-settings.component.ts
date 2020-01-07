@@ -174,8 +174,8 @@ export class PayeeSettingsComponent implements OnInit {
     if (this.payeeSettingsForm.get('customerName').invalid) {
       this.payeeSettingsForm.get('customerName').markAsTouched();
       return
-    } else if (this.payeeSettingsForm.get('displayName').invalid) {
-      this.payeeSettingsForm.get('displayName').markAsTouched();
+    } else if (this.payeeSettingsForm.get('customerName').invalid) {
+      this.payeeSettingsForm.get('customerName').markAsTouched();
       return
     } else if (this.payeeSettingsForm.get('companyName').invalid) {
       this.payeeSettingsForm.get('companyName').markAsTouched();
@@ -210,11 +210,11 @@ export class PayeeSettingsComponent implements OnInit {
     } else {
       if (this.payeeSettingsForm.controls.id.value != undefined) {
         const obj1 = {
-          customerName: this.getFormControl().customerName.value,
+          customerName: this.payeeSettingsForm.controls.customerName.value,
           city: this.payeeSettingsForm.controls.city.value,
           clientBillerId: 1,
-          familyMemberId :  this.familyMemberId ,
           companyDisplayName: this.payeeSettingsForm.controls.displayName.value,
+          familyMemberId :  this.familyMemberId,
           companyName: this.payeeSettingsForm.controls.companyName.value,
           country: this.payeeSettingsForm.controls.country.value,
           currency: 'string',

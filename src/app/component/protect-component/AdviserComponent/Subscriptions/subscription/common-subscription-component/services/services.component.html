@@ -44,7 +44,10 @@
 
                                 <div class="pl-24 pt-20 height130">
                                     <h3 class="f-24 p-0 l-26 mb-8">{{serviceData.serviceName}} </h3>
-                                    <p class="mb-0 pb-32 pt-4">{{serviceData.serviceCode}}</p>
+                                    {{serviceData.serviceCode}}
+                                    <p class="mb-0 pb-32 pt-4" matTooltip="{{serviceData.description}}"
+                                        aria-label="Button that displays a tooltip when focused or hovered over">
+                                        {{serviceData.description}}</p>
                                 </div>
                             </div>
                             <div class="pl-8 pt-20 pb-28">
@@ -77,7 +80,7 @@
                                     <div class="col-md-6">
                                         <p class="text-primitive f-12">FEES</p>
                                         <p class="f-18" *ngIf="serviceData&&serviceData.feeTypeId==1">
-                                            ₹{{serviceData.averageFees}}/Year
+                                            ₹{{serviceData.averageFees}}
                                         </p>
                                         <p class="f-18" *ngIf="serviceData&&serviceData.feeTypeId==2">
                                             {{serviceData.averageFees}}%year

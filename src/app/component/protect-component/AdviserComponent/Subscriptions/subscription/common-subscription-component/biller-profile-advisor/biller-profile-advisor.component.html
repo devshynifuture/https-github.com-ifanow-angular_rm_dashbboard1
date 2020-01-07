@@ -27,7 +27,7 @@
                       appInputValueValidation autofocus class="form-control br-0 text-left"
                       formControlName="companyDisplayName" matInput
                       maxLength="{{getFormControlProfile().companyDisplayName.maxLength}}" type="text">
-                    <mat-error class="f-12 pt-4">Company Display Name is required</mat-error>
+                    <mat-error class="f-12">Company Display Name is required</mat-error>
                     <mat-hint align="end" class="f-12">{{companyDisplayName.value.length}}/50</mat-hint>
                   </mat-form-field>
                 </div>
@@ -45,7 +45,7 @@
                       appInputValueValidation autofocus class="form-control br-0 text-left"
                       formControlName="companyName" matInput maxLength="{{getFormControlProfile().gstinNum.maxLength}}"
                       type="text">
-                    <mat-error class="f-12 pt-4">Company Name is required</mat-error>
+                   <mat-error class="f-12">Company Name is required</mat-error>
                     <mat-hint align="end" class="f-12">{{companyName.value.length}}/15</mat-hint>
                   </mat-form-field>
                 </div>
@@ -61,7 +61,7 @@
                     <input #gstinNum [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation autofocus
                       class="form-control br-0 text-left" formControlName="gstinNum" matInput
                       maxLength="{{getFormControlProfile().gstinNum.maxLength}}" type="text">
-                    <mat-error class="f-12 pt-4">GSTIN number is required</mat-error>
+                    <mat-error class="f-12">GSTIN number is required</mat-error>
                     <mat-hint align="end" class="f-12">{{gstinNum.value.length}}/15</mat-hint>
                   </mat-form-field>
                 </div>
@@ -80,7 +80,7 @@
                   <mat-form-field>
                     <input #panNum [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
                       appInputValueValidation class="form-control br-0" formControlName="panNum" matInput type="text">
-                    <mat-error class="f-12 pt-4">PAN is required</mat-error>
+                    <mat-error class="f-12">PAN is required</mat-error>
                     <mat-hint align="end" class="f-12">{{panNum.value.length}}/10</mat-hint>
 
                   </mat-form-field>
@@ -96,7 +96,7 @@
                   <mat-form-field>
                     <textarea #Address matInput class="form-control br-0" formControlName='Address'
                       maxLength="{{getFormControlProfile().Address.maxLength}}" rows="5"></textarea>
-                    <mat-error class="f-12 pt-4">Address is required</mat-error>
+                    <mat-error class="f-12">Address is required</mat-error>
                     <mat-hint align="end" class="f-12">{{Address.value.length}}/160</mat-hint>
                   </mat-form-field>
                 </div>
@@ -111,7 +111,7 @@
                   <mat-form-field>
                     <input #state [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
                       class="form-control br-0 text-left" formControlName="state" matInput maxLength="50" type="text">
-                    <mat-error class="f-12 pt-4">State is required</mat-error>
+                    <mat-error class="f-12">State is required</mat-error>
                     <mat-hint align="end" class="f-12">{{state.value.length}}/30</mat-hint>
                   </mat-form-field>
                 </div>
@@ -127,7 +127,7 @@
                     <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
                       class="form-control br-0 text-left" formControlName="pincode" matInput maxLength="20"
                       type="number">
-                    <mat-error class="f-12 pt-4">Pincode is required</mat-error>
+                    <mat-error class="f-12">Pincode is required</mat-error>
                     <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>
                   </mat-form-field>
                 </div>
@@ -142,7 +142,7 @@
                   <mat-form-field>
                     <input #country [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
                       class="form-control br-0 text-left" formControlName="country" matInput maxLength="50" type="text">
-                    <mat-error class="f-12 pt-4">Country is required</mat-error>
+                    <mat-error class="f-12">Country is required</mat-error>
                     <mat-hint align="end" class="f-12">{{country.value.length}}/30</mat-hint>
                   </mat-form-field>
                 </div>
@@ -157,7 +157,7 @@
                   <mat-form-field>
                     <input #city [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
                       class="form-control br-0 text-left" formControlName="city" matInput maxLength="50" type="text">
-                    <mat-error class="f-12 pt-4">City is required</mat-error>
+                    <mat-error class="f-12">City is required</mat-error>
                     <mat-hint align="end" class="f-12">{{city.value.length}}/30</mat-hint>
                   </mat-form-field>
                 </div>
@@ -384,7 +384,7 @@
             </div>
             <div class="col-md-7">
               <div class="form-group mb-0">
-                <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation
+                <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" appInputValueValidation
                   class="form-control br-0 text-left" formControlName="pincode" matInput type="number">
               </div>
               <div class="row pt-0">
