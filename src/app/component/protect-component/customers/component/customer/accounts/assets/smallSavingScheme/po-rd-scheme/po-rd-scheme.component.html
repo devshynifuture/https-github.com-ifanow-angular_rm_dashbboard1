@@ -2,7 +2,7 @@
     <div class="col-md-4 p-0">
         <h4 class="m-0 text-black roboto pt-8">Post office recurring deposit (PO RD)</h4>
     </div>
-    <div *ngIf="datasource.filteredData.length == 0" class="col-md-8 p-0 right text-right">
+    <div *ngIf="dataSource.filteredData.length == 0" class="col-md-8 p-0 right text-right">
         <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
         <mat-menu #menu5="matMenu">
             <button mat-menu-item>PDF</button>
@@ -23,7 +23,7 @@
 </div>
 <div class="example-container mt-8 real-estate">
     <!-- "dataSource" Property 'dataSource' does not exist on type 'PoTdSchemeComponent'. Did you mean 'dataSource'?-->
-    <table class="skeletonAnimation" *ngIf="datasource.filteredData.length == 0" matSort mat-table [dataSource]="dataSource" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
+    <table class="skeletonAnimation" *ngIf="dataSource.filteredData.length == 0" matSort mat-table [dataSource]="dataSource" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -120,10 +120,10 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns21;"></tr>
         <tr mat-footer-row *matFooterRowDef="displayedColumns21;sticky: true" [hidden]="isLoading"></tr>
     </table>
-    <div *ngIf="datasource.filteredData.length == 0" class="d-flex flex-column align-items-center">
+    <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
         <img class="width400" src="assets/images/svg/clients-img.svg">
         <h4 class="text-center pt-12">No Scheme Found</h4>
-        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddSCSS(null,'addScss')">
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPORD(null)">
             ADD NEW</button>
     </div>
 </div>

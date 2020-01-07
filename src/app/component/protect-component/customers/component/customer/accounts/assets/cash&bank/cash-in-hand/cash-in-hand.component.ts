@@ -21,7 +21,7 @@ export class CashInHandComponent implements OnInit {
   inputData: any;
   ownerName: any;
   familyMemberId: any;
-  isCahsBalance = false;
+  isCashBalance = false;
   isBalanceAsOn = false;
   ownerData: any;
   cashInHand: any;
@@ -96,7 +96,7 @@ export class CashInHandComponent implements OnInit {
       this.isBalanceAsOn = true;
       return;
     } else if (this.cashInHand.controls.cashBalance.invalid) {
-      this.isCahsBalance = true;
+      this.isCashBalance = true;
       return;
     } else {
       const obj = {
