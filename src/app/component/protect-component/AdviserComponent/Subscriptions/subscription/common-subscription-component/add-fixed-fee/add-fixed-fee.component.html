@@ -121,13 +121,13 @@
     <div class="col-md-6">
       <mat-radio-group formControlName="billingNature">
         <mat-radio-button value="1"
-            [ngClass]="{'b-a-custom': fixedFeeData.get('billingNature').value==1,'text-primary':fixedFeeData.get('billingNature').value==1,'b-a':fixedFeeData.get('billingNature').value==2}"
-            class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio" checked="true">Recurring
-          </mat-radio-button>
-          <mat-radio-button value="2"
-            [ngClass]="{'b-a-custom': fixedFeeData.get('billingNature').value==2,'text-primary':fixedFeeData.get('billingNature').value==2,'b-a':fixedFeeData.get('billingNature').value==1}"
-            class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">Once
-          </mat-radio-button>
+          [ngClass]="{'b-a-custom': fixedFeeData.get('billingNature').value==1,'text-primary':fixedFeeData.get('billingNature').value==1,'b-a':fixedFeeData.get('billingNature').value==2}"
+          class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio" checked="true">Recurring
+        </mat-radio-button>
+        <mat-radio-button value="2"
+          [ngClass]="{'b-a-custom': fixedFeeData.get('billingNature').value==2,'text-primary':fixedFeeData.get('billingNature').value==2,'b-a':fixedFeeData.get('billingNature').value==1}"
+          class="b-a pt-8 pr-40 pl-20 pr-76 pb-8">Once
+        </mat-radio-button>
       </mat-radio-group>
     </div>
   </div>
@@ -148,7 +148,7 @@
           <div class="form-group mb-0">
             <select class="form-control br-0" formControlName="Duration" id="sel1">
               <option value="1">Monthly</option>
-              <option value="12">Yearly</option>
+              <option value="2">Yearly</option>
             </select>
           </div>
         </div>
@@ -168,7 +168,7 @@
       <mat-radio-group formControlName="billingMode">
         <mat-radio-button value="1"
           [ngClass]="{'b-a-custom text-primary':fixedFeeData.get('billingMode').value==1,'b-a':fixedFeeData.get('billingMode').value==2}"
-          class="text-custom wrapper-8" checked="true">Start of period
+          class="text-custom wrapper-8">Start of period
         </mat-radio-button>
         <mat-radio-button value="2"
           [ngClass]="{'b-a-custom text-primary':fixedFeeData.get('billingMode').value==2,'b-a':fixedFeeData.get('billingMode').value==1}"
