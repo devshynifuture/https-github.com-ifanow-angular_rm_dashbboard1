@@ -50,17 +50,30 @@ export class QuotationsSubscriptionComponent implements OnInit {
   noData: string;
   isLoading = false;
   
-
   filterStatus = [];
   filterDate = [];
   statusIdList = [];
   filterDataArr = [];
   selectedStatusFilter: any = 'statusFilter';
-  selectedDateFilter: any = 'selected';
+  selectedDateFilter: any = 'dateFilter';
   lastFilterDataId;
   statusIdLength = 0;
   showFilter = false;
   selectedDateRange: { begin: Date; end: Date; };
+
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
+  list: any[];
+  
+
+  getData: any = '';
+  scrollCallData = true;
+  scrollPosition;
+  lastDataId;
+  tableData = [];
+
+
+  
   chips = [
     { name: 'LIVE', value: 1 },
     { name: 'PAID', value: 2 },
@@ -71,8 +84,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     { name: 'Sent date', value: 2 },
     { name: 'Client consent', value: 3 }
   ];
-  data: Array<any> = [{}, {}, {}];
-  dataSource = new MatTableDataSource(this.data);
+  
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
     public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
@@ -81,7 +93,38 @@ export class QuotationsSubscriptionComponent implements OnInit {
   ngOnInit() {
     //this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
-    this.getQuotationsData();
+    this.getQuotationsData(false);
+  }
+
+  scrollCall(scrollLoader) {
+    const uisubs = document.getElementById('ui-subs');
+    const wrapper = document.getElementById('wrapper');
+
+    const contentheight = wrapper.offsetHeight;
+    const yoffset = uisubs.scrollTop;
+    const y = yoffset + window.innerHeight;
+    // console.log(y >= contentheight && this.getData != undefined && this.scrollCallData, this.scrollCallData, "this.scrollCallData 123");
+    console.log(this.getData != undefined, this.scrollCallData, '|| this.statusIdList.length > 0');
+
+    if ((y >= contentheight && this.getData != undefined && this.scrollCallData)) {
+      this.scrollCallData = false;
+      if (this.scrollPosition == undefined) {
+        this.scrollPosition = contentheight - yoffset;
+      } else if (this.scrollPosition < contentheight) {
+        this.scrollPosition = contentheight - window.innerHeight;
+      }
+
+      console.log(this.scrollPosition, 'this.scrollPosition 123');
+
+
+      if (this.statusIdList.length <= 0) {
+
+        this.getQuotationsData(scrollLoader);
+      } else {
+        // this.callFilter(scrollLoader);
+      }
+
+    }
   }
 
   orgValueChange(selectedDateRange) {
@@ -93,10 +136,10 @@ export class QuotationsSubscriptionComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate)
     this.selectedDateRange = { begin: selectedDateRange.begin, end: selectedDateRange.end };
-    this.getQuotationsData()
+    this.getQuotationsData(false)
   }
 
-  getQuotationsData() {
+  getQuotationsData(scrollLoader) {
     const obj = {
       // advisorId: 12345
       advisorId: this.advisorId,
@@ -184,7 +227,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     console.log('addFilters', addFilters);
     if (!_.includes(this.filterStatus, addFilters)) {
       this.filterStatus.push(addFilters);
-      this.getQuotationsData()
+      this.getQuotationsData(false)
     } else {
       // _.remove(this.filterStatus, this.senddataTo);
     }
@@ -231,7 +274,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
   removeDate(item) {
     this.filterDate.splice(item, 1);
-    this.getQuotationsData()
+    this.getQuotationsData(false)
 
   }
 
@@ -254,7 +297,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getQuotationsData();
+          this.getQuotationsData(false);
           console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }

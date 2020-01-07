@@ -190,8 +190,8 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     const dialogData = {
       data: value,
       header: 'DELETE',
-      body: 'Are you sure you want to delete ?',
-      body2: 'This cannot be undone',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {

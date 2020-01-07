@@ -126,7 +126,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   statusIdLength = 0;
   tableData = [];
   data: Array<any> = [{}, {}, {}];
-  dataSource:any = [];
+  dataSource = new MatTableDataSource(this.data);
 
   scrollPosition;
 
@@ -237,9 +237,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
     if (data && data.length > 0) {
       this.data = data;
-      this.dataSource = new MatTableDataSource(this.data);
 
-      // this.dataSource.data = data;
+      this.dataSource.data = data;
       this.dataSource.sort = this.sort;
       uisubs.scrollTo(0, this.scrollPosition);
       console.log(uisubs.scrollTop, this.scrollPosition, "this.yoffset");
