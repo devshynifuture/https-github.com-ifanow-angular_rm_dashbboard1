@@ -3,25 +3,29 @@
 //     height: 310px;
 // }
 .bottom-tops {
-    bottom: -50%;
-    position: relative;
+  bottom: -50%;
+  position: relative;
 }
 
 .green {
-    background: #02B875;
-    padding: 4px 5px;
+  background: #02B875;
+  padding: 4px 5px;
 }
 
 .blue {
-    background: #008FFF;
-    color: #fff;
-    padding: 4px 7px;
+  background: #008FFF;
+  color: #fff;
+  padding: 4px 7px;
 }
 
 .btn-success {
-    background-color: #02B875;
+  background-color: #02B875;
 }
 
 #ui-document-settings {
-    margin-top: 20px !important;
+  margin-top: 20px !important;
+}
+
+::ng-deep .mat-card-header .mat-card-subtitle:not(:first-child) {
+  margin-top: -4px !important;
 }

@@ -19,7 +19,7 @@
                         <span>{{f.userName}}</span>
                     </mat-option>
                 </mat-select>
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -34,7 +34,7 @@
             <mat-form-field class="w-100">
                 <input #displayName class="form-control br-0" formControlName="displayName" matInput maxlength="40"
                     type="text">
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
                 <mat-hint align="end" class="f-12">{{displayName.value.length}}/40</mat-hint>
@@ -51,7 +51,7 @@
                     <mat-option [value]=1>Bussiness</mat-option>
                     <mat-option [value]=2> Individual</mat-option>
                 </mat-select>
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -65,7 +65,7 @@
             <mat-form-field class="w-100">
                 <input #companyName class="form-control br-0" formControlName="companyName" matInput maxlength="50"
                     type="text">
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
                 <mat-hint align="end" class="f-12">{{companyName.value.length}}/50</mat-hint>
@@ -79,7 +79,7 @@
         <div class="col-md-6">
             <mat-form-field class="w-100">
                 <input #emailId class="form-control br-0" formControlName="emailId" matInput maxlength="40" type="text">
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
                 <mat-hint align="end" class="f-12">{{emailId.value.length}}/40</mat-hint>
@@ -92,9 +92,9 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #primaryContact class="form-control br-0" formControlName="primaryContact" matInput maxlength="10"
-                    type="text">
-                <mat-error class="f-12 pt-4">
+                <input #primaryContact class="form-control br-0" formControlName="primaryContact" matInput
+                    maxlength="10" type="text">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
                 <mat-hint align="end" class="f-12">{{primaryContact.value.length}}/10</mat-hint>
@@ -111,7 +111,7 @@
             <mat-form-field class="w-100">
                 <input #pan class="form-control br-0" (keypress)="utils.alphaNumric($event)" formControlName="pan"
                     matInput maxlength="10" type="text">
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
                 <mat-hint align="end" class="f-12">{{pan.value.length}}/10</mat-hint>
@@ -129,7 +129,7 @@
                     <mat-option [value]=2>Registered Business - Composition</mat-option>
                     <mat-option [value]=3>Unregistered Business</mat-option>
                 </mat-select>
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -143,10 +143,11 @@
             <mat-form-field class="w-100">
                 <input #gstIn class="form-control br-0" (keypress)="utils.alphaNumric($event)" formControlName="gstIn"
                     matInput maxlength="16" type="text">
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
-                <mat-hint align="end" class="f-12">{{(gstIn.value.length)}}/{{getFormControl().gstIn.maxLength}}</mat-hint>
+                <mat-hint align="end" class="f-12">{{(gstIn.value.length)}}/{{getFormControl().gstIn.maxLength}}
+                </mat-hint>
             </mat-form-field>
         </div>
     </div>
@@ -158,25 +159,31 @@
                 <mat-form-field class="w-100">
                     <textarea #billingAddress class="form-control br-0" formControlName="billingAddress"
                         matInput maxlength="" type="text"></textarea>
-                    <mat-error class="f-12 pt-4">
+                    <mat-error class="f-12">
                         This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{billingAddress.value.length}}/150</mat-hint>
                 </mat-form-field>
             </div>
         </div> -->
-    <div class="row">
+    <div class="row pb-40">
         <div class="col-md-6 pr-0">
             <h5 class="m-0">Billing Address</h5>
         </div>
         <div class="col-md-6">
             <div class="form-group mb-0">
-                <textarea class="form-control" formControlName="billingAddress" rows="5"
-                    maxlength="{{getFormControl().billingAddress.maxLength}}"></textarea>
+                <mat-form-field class="w-100">
+                    <textarea matInput class="form-control" formControlName="billingAddress" rows="5"
+                        maxlength="{{getFormControl().billingAddress.maxLength}}"></textarea>
+                    <mat-error class="f-12">
+                        This field is required
+                    </mat-error>
+                    <!-- <mat-hint align="end" class="f-12">{{billingAddress.value.length}}/150</mat-hint> -->
+                </mat-form-field>
             </div>
-            <div class="row pt-0">
+            <!-- <div class="row pt-0">
                 <div class="col-md-8">
-                    <mat-error class="f-12 pt-4">
+                    <mat-error class="f-12">
                         This field is required</mat-error>
                 </div>
                 <div class="col-md-4">
@@ -184,10 +191,10 @@
                         {{getFormControl().billingAddress.value?.length?getFormControl().billingAddress.value.length:0}}/{{getFormControl().billingAddress.maxLength}}
                     </p>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
-    <div class="row">
+    <div class="row pt-44">
         <div class="col-md-6 pr-0">
             <h5 class="m-0">Pin Code</h5>
         </div>
@@ -195,7 +202,7 @@
             <mat-form-field class="w-100">
                 <input #pincode class="form-control br-0" (keypress)="utils.alphaNumric($event)"
                     formControlName="pincode" matInput maxlength="10" type="text">
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
                 <mat-hint align="end" class="f-12">{{pincode.value.length}}/10</mat-hint>
@@ -210,7 +217,7 @@
             <mat-form-field class="w-100">
                 <input #city class="form-control br-0" (keypress)="utils.onlyText($event)" formControlName="city"
                     matInput maxlength="30" type="text">
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
                 <mat-hint align="end" class="f-12">{{city.value.length}}/30</mat-hint>
@@ -225,7 +232,7 @@
             <mat-form-field class="w-100">
                 <input #state class="form-control br-0" (keypress)="utils.onlyText($event)" formControlName="state"
                     matInput maxlength="30" type="text">
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
                 <mat-hint align="end" class="f-12">{{state.value.length}}/30</mat-hint>
@@ -240,7 +247,7 @@
             <mat-form-field class="w-100">
                 <input #country class="form-control br-0" (keypress)="utils.onlyText($event)" formControlName="country"
                     matInput maxlength="30" type="text">
-                <mat-error class="f-12 pt-4">
+                <mat-error class="f-12">
                     This field is required
                 </mat-error>
                 <mat-hint align="end" class="f-12">{{country.value.length}}/30</mat-hint>

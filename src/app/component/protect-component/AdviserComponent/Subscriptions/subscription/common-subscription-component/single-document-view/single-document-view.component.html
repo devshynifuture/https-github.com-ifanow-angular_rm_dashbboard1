@@ -14,19 +14,20 @@
                     </mat-card-subtitle>
                 </mat-card-header>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 pt-8">
                 <p class="green text-white f-16">G</p>
             </div>
             <div class="col-md-10 text-center" (click)="editDocument()">
                 <button mat-stroked-button class="btn-header addon ml-44 br-0">VIEW</button>
             </div>
-            <div class="col-md-2 green">
+            <div class="col-md-2">
                 <i class="material-icons f-40 c-p text-primitive" [matMenuTriggerFor]="menu">
                     more_vert
                 </i>
                 <mat-menu #menu="matMenu">
                     <a mat-menu-item (click)="editDocument()">Edit Document</a>
-                    <a mat-menu-item class="bt-1" (click)="deleteModal('DOCUMENT',singleDocument.documentRepositoryId)">Delete Document</a>
+                    <a mat-menu-item class="bt-1"
+                        (click)="deleteModal('DOCUMENT',singleDocument.documentRepositoryId)">Delete Document</a>
                 </mat-menu>
             </div>
         </div>
