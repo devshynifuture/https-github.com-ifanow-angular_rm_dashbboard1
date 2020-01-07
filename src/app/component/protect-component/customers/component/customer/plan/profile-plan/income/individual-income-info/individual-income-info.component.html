@@ -23,11 +23,16 @@
             <div class="incomeSourcesBox d-flex">
                 <div class="ml-12">
                     <div class="memberBorderBox">
-                        <img src="assets/images/svg/rupessIcon.svg" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==1">
-                        <img src="assets/images/svg/businessIcon.svg" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==2">
-                        <img src="assets/images/svg/professionIcon.svg" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==3">
-                        <img src="assets/images/svg/rentalIcon.svg" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==4">
-                        <img src="assets/images/svg/pensionIcon.svg" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==5">
+                        <img src="assets/images/svg/rupessIcon.svg"
+                            *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==1">
+                        <img src="assets/images/svg/businessIcon.svg"
+                            *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==2">
+                        <img src="assets/images/svg/professionIcon.svg"
+                            *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==3">
+                        <img src="assets/images/svg/rentalIcon.svg"
+                            *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==4">
+                        <img src="assets/images/svg/pensionIcon.svg"
+                            *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==5">
                     </div>
                     <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==1">
                         Salaried</p>
@@ -49,15 +54,18 @@
                         <h5 class="m-0 pt-8">Income option</h5>
                     </div>
                     <div class="col-md-7 pr-0">
-                        <mat-radio-group (change)="chngIncomeOption($event)" class="d-flex " aria-label="Select an option">
-                            <mat-radio-button color="primary" class="b-ua p-8 " value="1">With breakup</mat-radio-button>
-                            <mat-radio-button color="primary" checked="true" class="b-ua p-8 ml-8 b-a-custom" value="2">Net (In hand)
+                        <mat-radio-group (change)="chngIncomeOption($event)" formControlName="incomeOption"
+                            class="d-flex " aria-label="Select an option">
+                            <mat-radio-button color="primary" class="b-ua p-8 " value="1">With breakup
+                            </mat-radio-button>
+                            <mat-radio-button color="primary" class="b-ua p-8 ml-8 b-a-custom" value="2">
+                                Net (In hand)
                             </mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
 
-                <div *ngIf="incomeOption=='2'" class="row pt-40">
+                <div [hidden]="incomeOption=='1'" class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Monthly amount</h5>
                         <p class="m-0 f-12 text-custom">Enter the net income you get in hand</p>
@@ -73,7 +81,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="incomeOption=='1'" class="row pt-40">
+                <div [hidden]="incomeOption=='2'" class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Basic Income</h5>
                         <p class="m-0 f-12 text-custom">Enter the net income you get in hand</p>
@@ -88,7 +96,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="incomeOption=='1'" class="row pt-40">
+                <div [hidden]="incomeOption=='2'" class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Standard deductions</h5>
                     </div>
@@ -102,7 +110,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="incomeOption=='1'" class="row pt-40">
+                <div [hidden]="incomeOption=='2'" class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Dearness allowance</h5>
                     </div>
@@ -116,7 +124,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="incomeOption=='1'" class="row pt-40">
+                <div [hidden]="incomeOption=='2'" class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">HRA recieved</h5>
                     </div>
@@ -130,7 +138,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="incomeOption=='1'" class="row pt-40">
+                <div [hidden]="incomeOption=='2'" class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Total rent paid</h5>
                     </div>
@@ -194,7 +202,8 @@
                 <div class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Income growth rate</h5>
-                        <p class="m-0 f-12 text-custom">This is the long term growth rate rather than just the next year’s
+                        <p class="m-0 f-12 text-custom">This is the long term growth rate rather than just the next
+                            year’s
                         </p>
                     </div>
                     <div class="col-md-7 pr-0">
