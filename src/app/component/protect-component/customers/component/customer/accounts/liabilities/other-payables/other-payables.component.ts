@@ -112,7 +112,7 @@ export class OtherPayablesComponent implements OnInit {
 
   getOtherPayablesRes(data) {
     console.log(data);
-    this.dataSource = data;
+    this.dataSource = new MatTableDataSource(data);
     this.OtherDataChange.emit(this.dataSource);
 
   }

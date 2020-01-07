@@ -85,6 +85,12 @@ export class BankAccountsComponent implements OnInit {
     this.familyMemberId = this.bankAccounts.controls.familyMemberId.value
     this.familyMemberId = this.familyMemberId[0]
   }
+  onChange(event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = "100";
+      this.bankAccounts.get('interestRate').setValue(event.target.value);
+    }
+  }
   getFormControl(): any {
     return this.bankAccounts.controls;
   }

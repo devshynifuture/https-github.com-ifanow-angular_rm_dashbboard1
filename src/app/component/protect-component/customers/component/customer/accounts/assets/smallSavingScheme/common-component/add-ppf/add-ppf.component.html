@@ -34,14 +34,14 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input #accBal (keypress)="utils.keyPress($event)" autocomplete="off"
-                            class="form-control rupess br-0" formControlName="accountBalance" matInput type="number">
+                            class="form-control rupess br-0" formControlName="accountBalance" matInput type="text" maxlength="10">
                         <mat-error *ngIf="ppfSchemeForm.get('accountBalance').errors?.required" class="f-12 pt-4">
                             Account balance is required
                         </mat-error>
                         <mat-error *ngIf="(ppfSchemeForm.get('accountBalance').errors?.min)" class="f-12 pt-4">
                             Should be greater than 500
                         </mat-error>
-                        <mat-hint align="end" class="f-12">{{accBal.value.length}}/20</mat-hint>
+                        <mat-hint align="end" class="f-12">{{accBal.value.length}}/10</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
                         <input [matDatepicker]="balanceAsOn" class="form-control br-0" formControlName="balanceAsOn"
-                            matInput>
+                            matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
                         <mat-error class="f-12 pt-4">This field is required
@@ -73,7 +73,7 @@
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
                         <input autocomplete="off" [matDatepicker]="CommencementPicker" class="form-control br-0"
-                            formControlName="commencementDate" matInput>
+                            formControlName="commencementDate" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
                         <mat-datepicker #CommencementPicker></mat-datepicker>
                         <mat-error class="f-12 pt-4">This field is required
@@ -91,7 +91,7 @@
                     <mat-form-field>
                         <input autocomplete="off" (keypress)="utils.keyPress($event)" #futureContribution
                             class="form-control rupess br-0" formControlName="futureContribution" matInput
-                            maxlength="20" type="number">
+                            maxlength="20" type="text">
                         <mat-error class="f-12 pt-4">
                             Loan amount is required
                         </mat-error>
@@ -141,9 +141,9 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input autocomplete="off" #fdNo class="form-control br-0" #description
-                            formControlName="description" matInput maxlength="10" type="text">
+                            formControlName="description" matInput maxlength="60" type="text">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{description.value.length}}/20</mat-hint>
+                        <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -156,10 +156,10 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input autocomplete="off" #bankACNo class="form-control br-0" #bankName
-                            formControlName="bankName" matInput maxlength="15" type="text"
+                            formControlName="bankName" matInput maxlength="40" type="text"
                             (keypress)="utils.onlyText($event)">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{bankName.value.length}}/20</mat-hint>
+                        <mat-hint align="end" class="f-12">{{bankName.value.length}}/40</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -172,7 +172,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input autocomplete="off" (keypress)="utils.keyPress($event)" #linkedBankAccount
-                            class="form-control br-0" formControlName="linkedBankAccount" matInput maxlength="30">
+                            class="form-control br-0" formControlName="linkedBankAccount" matInput maxlength="20">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{linkedBankAccount.value.length}}/20</mat-hint>
                     </mat-form-field>
