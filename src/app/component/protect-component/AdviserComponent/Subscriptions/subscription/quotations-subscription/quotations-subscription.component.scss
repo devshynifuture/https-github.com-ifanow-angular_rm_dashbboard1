@@ -1,21 +1,53 @@
-::ng-deep .mat-checkbox-checked .mat-checkbox-background,
-.mat-checkbox-indeterminate .mat-checkbox-background {
-    background-color: #008FFF !important;
+.example-chip-list {
+    width: 100%;
 }
 
-// overwrite the ripple overlay on hover and click
-::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
-    background-color: #008FFF !important;
+.btn-header.btn-xs {
+    height: 22px;
+    min-width: 55px;
+    .mat-stroked-button {
+        padding: 0 5px;
+    }
 }
 
-// ::ng-deep .mat-datepicker-toggle {
-//     float: left;
-//     left: 0%;
-//     right: auto;
+.none {
+    display: none !important;
+}
+
+::ng-deep .mat-form-field {
+    width: 100%;
+}
+
+::ng-deep .w-220 {
+    width: 220px !important;
+}
+
+::ng-deep .mat-datepicker-toggle {
+    float: left;
+    left: 0%;
+    right: auto;
+    top: auto !important;
+}
+
+// ::ng-deep .mat-select {
+//     border: 1px solid rgba(0, 0, 0, .12) !important;
 // }
 ::ng-deep .sub_input .mat-form-field-appearance-legacy .mat-form-field-infix {
     padding: 0px !important;
     border: 1px solid #BCC6CA !important;
+}
+
+#table-low {
+    border-collapse: initial !important;
+    border: solid 1px #ccc !important;
+    border-top: none !important;
+    .mat-header-cell {
+        border-top: solid 1px #ccc !important;
+        text-transform: initial;
+    }
+    .mat-cell {
+        border-bottom: solid 1px #ccc !important;
+    }
 }
 
 #table-low th {
@@ -24,16 +56,23 @@
     font-size: 13px !important;
 }
 
-.width400 {
-    width: 400px;
-    margin-top: 50px;
+.stickyHeader {
+    position: sticky;
+    top: 76px !important;
+    th {
+        position: sticky;
+        top: 76px !important;
+    }
 }
 
-.mat-datepicker-toggle {
-    position: absolute;
-    float: none;
-    right: auto;
-    left: 0;
+.example-container {
+    height: 270px;
+    overflow: auto;
+}
+
+.width400 {
+  width: 400px;
+  margin-top: 207px;
 }
 
 .newDateClass .pL20 {
