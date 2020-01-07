@@ -1,6 +1,6 @@
 <div class="bg-white pb-36 pt-80" id="ui-invoice">
     <div class="wrapper-20">
-        <div *ngIf="dataSource.data.length > 0">
+        <div [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
             <div class="row" *ngIf="showFilter==false">
                 <div class="col-md-8 p-0">
                     <h4 class="pt-8 mb-0">Documents</h4>

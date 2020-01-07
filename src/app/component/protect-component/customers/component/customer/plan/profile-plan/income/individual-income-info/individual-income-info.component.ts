@@ -34,6 +34,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     this.clientId = AuthService.getClientId();
   }
   incomeNetForm = this.fb.group({
+    incomeOption: [, [Validators.required]],
     monthlyAmount: [, [Validators.required]],
     incomeStyle: [, [Validators.required]],
     continousTill: [String(1), [Validators.required]],
@@ -53,6 +54,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
   @Output() previousStep = new EventEmitter();
   @Input() set FinalIncomeList(data) {
     if (data == undefined) {
+      this.incomeNetForm.controls.inc
       return;
     }
     this.addMoreFlag = false;
@@ -76,6 +78,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
   }
   @Input() set editIncomeData(data) {
     if (data == undefined) {
+      this.incomeNetForm.controls.incomeOption.setValue('2')
       return;
     }
     else {
@@ -84,7 +87,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.singleIndividualIncome['userName'] = data.ownerName;
       this.singleIndividualIncome["finalIncomeList"] = { incomeTypeId: data.incomeTypeId }
       this.addMoreFlag = false;
-      this.incomeOption++;
+      this.incomeOption = String(data.incomeTypeId);
+      this.incomeNetForm.controls.incomeOption.setValue((data.incomeTypeId) ? String(data.incomeTypeId) : '2');
       this.incomeNetForm.controls.monthlyAmount.setValue(data.monthlyIncome);
       this.incomeNetForm.controls.incomeStyle.setValue(data.incomeStyleId);
       this.incomeNetForm.controls.continousTill.setValue(String(data.continueTill));
@@ -131,8 +135,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
   chngIncomeOption(data) {
     this.incomeOption = data.value;
     this.addMoreFlag = false;
-    this.incomeNetForm.reset();
     this.incomeNetForm.controls.continousTill.setValue('1');
+    console.log(data.value)
   }
   submitIncomeForm() {
     if (this.getBonusList) {
@@ -269,8 +273,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
   removeExpectedBonus(index) {
     // this.expectedBonusForm.controls.bonusList.remove
   }
-  close()
-  {
+  close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 }

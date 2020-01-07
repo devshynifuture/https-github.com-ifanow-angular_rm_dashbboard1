@@ -126,7 +126,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   statusIdLength = 0;
   tableData = [];
   data: Array<any> = [{}, {}, {}];
-  dataSource = new MatTableDataSource(this.data);
+  dataSource:any = [];
 
   scrollPosition;
 
@@ -174,7 +174,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
         this.getSummaryDataAdvisor(scrollLoader);
       } else {
-        this.callFilter();
+        this.callFilter(scrollLoader);
       }
 
     }
@@ -233,11 +233,13 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   getSubSummaryRes(data) {
     let uisubs = document.getElementById('ui-subs');
     this.isLoading = false;
-    console.log('  : ', data);
+    console.log('  aaa: ', data);
 
     if (data && data.length > 0) {
       this.data = data;
-      this.dataSource.data = data;
+      this.dataSource = new MatTableDataSource(this.data);
+
+      // this.dataSource.data = data;
       this.dataSource.sort = this.sort;
       uisubs.scrollTo(0, this.scrollPosition);
       console.log(uisubs.scrollTop, this.scrollPosition, "this.yoffset");
@@ -389,27 +391,33 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
     console.log('addFilters', addFilters);
     if (!_.includes(this.filterStatus, addFilters)) {
-      this.filterStatus.push(addFilters);
       this.lastFilterDataId = 0;
+      this.filterStatus.push(addFilters);
       this.filterDataArr = [];
       console.log(this.filterStatus);
     } else {
+      this.lastFilterDataId = 0;
       // _.remove(this.filterStatus, this.senddataTo);
     }
 
     console.log(this.filterStatus, "this.filterStatus 123");
 
-    this.callFilter();
+    this.callFilter(false);
   }
 
 
-  filterSubscriptionRes(data) {
+  filterSubscriptionRes(data, scrollLoader) {
     this.isLoading = false;
 
     console.log('filterSubscriptionRes', data);
     if (data == undefined && this.statusIdLength < 1) {
       this.noData = 'No Data Found';
-      this.dataSource.data = [];
+      if(!scrollLoader){
+        this.dataSource.data = [];
+      }
+      else{
+        this.dataSource.data = this.filterDataArr;
+      }
     } else {
       console.log(this.statusIdList.length, this.statusIdLength < this.statusIdList.length, this.statusIdLength, "this.statusIdList.length123");
       // if(this.statusIdLength < this.statusIdList.length || this.statusIdList.length <= 0){
@@ -452,7 +460,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
 
     this.selectedDateRange = { begin: beginDate, end: endDate };
     console.log(this.filterDate, "this.filterDate 123");
-    this.callFilter();
+    this.callFilter(false);
   }
 
   removeDate(item) {
@@ -460,7 +468,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.selectedDateFilter = "selected"
     this.filterDate.splice(item, 1);
     this.lastFilterDataId = 0;
-    this.callFilter();
+    this.callFilter(false);
   }
 
   remove(item) {
@@ -471,7 +479,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     this.filterStatus.splice(item, 1);
     this.filterDataArr = this.filterDataArr.filter((x) => { x.status != item.value })
     this.lastFilterDataId = 0;
-    this.callFilter();
+    this.callFilter(false);
 
   }
 
@@ -483,17 +491,17 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
     this.selectedDateRange = { begin: selectedDateRange.begin, end: selectedDateRange.end };
-    this.callFilter();
+    this.callFilter(false);
   }
 
   orgValueChange2(value) {
     console.log(value);
     this.getDate2 = this.datePipe.transform(value, 'yyyy-MM-dd');
-    this.callFilter();
+    this.callFilter(false);
 
   }
 
-  callFilter() {
+  callFilter(scrollLoader) {
     if (this.filterStatus && this.filterStatus.length > 0) {
       this.statusIdList = [];
       this.dataSource.data = [{}, {}, {}]
@@ -522,7 +530,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     } else {
       this.subService.filterSubscription(obj).subscribe(
         (data) => {
-          this.filterSubscriptionRes(data)
+          this.filterSubscriptionRes(data, scrollLoader)
         }
       );
     }

@@ -46,10 +46,6 @@ export class AddVariableFeeComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.setValidation(false);
-    this.otherAssetData = [];
-    this.enumService.getOtherAssetData().forEach(element => {
-      this.otherAssetData.push(Object.assign({}, element));
-    });
     (this.ischeckVariableData) ? console.log("fixed fee Data") : this.createVariableFeeForm('');
     console.log(this.otherAssetData);
   }
@@ -130,6 +126,7 @@ export class AddVariableFeeComponent implements OnInit {
           this.selectedOtherAssets.push(element.subAssetClassId)
         }
       })
+      console.log(this.otherAssetData)
       this.getFormControl().serviceName.maxLength = 40;
       this.getFormControl().code.maxLength = 10;
       this.getFormControl().description.maxLength = 160;
@@ -169,7 +166,7 @@ export class AddVariableFeeComponent implements OnInit {
       this.pricing = true;
       return;
     } else {
-      const obj = {
+      let obj = {
         serviceRepoId: this.serviceId,
         advisorId: this.advisorId,
         // advisorId: 12345,
@@ -230,8 +227,9 @@ export class AddVariableFeeComponent implements OnInit {
   }
 
   saveFeeTypeDataEditResponse(data) {
-    this.outputVariableData.emit(this.dataToSend)
-    this.eventService.openSnackBar('Service is Created', 'OK');
+    this.dataToSend.servicePricing.pricingList[2].serviceSubAssets = this.otherAssetData;
+    this.outputVariableData.emit(this.dataToSend);
+    this.eventService.openSnackBar('Service is Edited', 'OK');
     this.subInjectService.changeUpperRightSliderState({ state: 'close' });
   }
 

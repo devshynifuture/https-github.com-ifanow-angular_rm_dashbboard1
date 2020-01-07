@@ -71,9 +71,7 @@
             </div>
         </div>
     </div>
-    <!-- (scroll)="scrollCall()" -->
-    <!-- id="pdfDoc"  removed from above div-->
-    <div class="wrapper-20 pt-0 bg-white" id="wrapper" *ngIf="dataSource.data.length > 0">
+    <div class="wrapper-20 pt-0 bg-white" id="wrapper" [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'" >
 
         <div class="tableClass">
             <table matSort [dataSource]="dataSource" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low" mat-table>
@@ -128,7 +126,7 @@
                     <th *matHeaderCellDef class="f-18 t-6" mat-header-cell mat-sort-header="startsOn"> Activation date
                     </th>
                     <td *matCellDef="let element" mat-cell>
-                        <div *ngIf="element.status!=1"> {{element.startsOn | date:'dd/MM/yyyy'}}</div>
+                        <div *ngIf="element.status!=1" class="text-left"> {{element.startsOn | date:'dd/MM/yyyy'}}</div>
                         <div (click)="openPlanSlider('createSub','open',element)" *ngIf="element.status==1">
                             <button class="btn-header btn-xs ml-8 br-0 btn-sm c-p" mat-stroked-button>START
                             </button>

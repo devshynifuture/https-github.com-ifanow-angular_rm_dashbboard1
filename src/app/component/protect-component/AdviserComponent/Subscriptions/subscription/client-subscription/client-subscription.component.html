@@ -1,7 +1,7 @@
 <div class="bg-white pb-36 pt-72">
     <div class="wrapper-20">
 
-        <div *ngIf="dataSource.data.length > 0">
+        <div [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
             <div class="row">
                 <div class="col-md-8 p-0">
                     <h4 class="pt-8 mb-0"></h4>

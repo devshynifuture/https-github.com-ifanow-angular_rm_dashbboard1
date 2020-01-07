@@ -216,7 +216,7 @@
           <input [inputValidator]="validatorType.NUMBER_ONLY"  (input)="restrictFrom100($event)" [maxLength]="4" appInputValueValidation
             formControlName="pricing" placeholder="%" type="text" class="form-control bl-0 br-0 h-39 br-grey">
           <mat-error *ngIf="(variableFeeData.get('pricing').errors)" class="f-12 pt-4">
-            Should be between than 0.01 to 99
+            Should be between than 0 to 99
           </mat-error>
         </div>
       </div>
