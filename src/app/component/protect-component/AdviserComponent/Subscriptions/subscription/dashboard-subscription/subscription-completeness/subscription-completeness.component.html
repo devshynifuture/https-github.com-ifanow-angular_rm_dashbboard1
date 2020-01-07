@@ -20,9 +20,10 @@
                         <mat-card class="mt-12" *ngFor="let obj of dataObj;let i = index">
                             <div class="row c-p" (click)="currentTabs(obj,i)">
                                 <div class="col-md-2">
-                                    <i [ngClass]="obj.completed ? 'material-icons done-icons': 'material-icons default-icons'  ">
-                    {{ obj.completed ? 'done' : 'more_horiz' }}
-                  </i>
+                                    <i
+                                        [ngClass]="obj.completed ? 'material-icons done-icons': 'material-icons default-icons'  ">
+                                        {{ obj.completed ? 'done' : 'more_horiz' }}
+                                    </i>
                                 </div>
                                 <div class="col-md-10 p-0" (click)="goToSelectivePage()">
                                     <h4 class="mb-0 c-p">{{obj.stepType}}</h4>
@@ -104,7 +105,7 @@
                     <div class="col-md-6 pt-12">
                         <mat-card class="b-a p-0">
                             <div class="bg-grey lter c-p" (click)="openPopup('subscriptionPopup')">
-                                <img src="assets/images/svg/mainslide.svg" class="w-100">
+                                <img src="/assets/images/Whatis subscription.png" class="w-100">
                             </div>
                             <!-- <div class="text-center text-black">
               <p class="f-22 pt-12">What is Subscriptions ?</p>
@@ -112,7 +113,8 @@
           </div> -->
                         </mat-card>
                         <div class="pt-72 text-center">
-                            <p class="m-0 pb-20 f-16 roboto">For more help, checkout our complete <br>FAQ on how Subscriptions work.
+                            <p class="m-0 pb-20 f-16 roboto">For more help, checkout our complete <br>FAQ on how
+                                Subscriptions work.
                             </p>
                             <button mat-stroked-button class="text-primary br-0">READ ON</button>
                         </div>

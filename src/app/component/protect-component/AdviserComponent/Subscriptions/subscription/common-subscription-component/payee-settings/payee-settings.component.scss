@@ -1,29 +1,36 @@
-.form-control{
-    border-radius: 0px !important;
+.form-control {
+  border-radius: 0px !important;
 }
-h5{
-    text-align: right;
+
+h5 {
+  text-align: right;
 
 }
-#ui-payee-setting{
-    padding-right: 150px;
-    padding-bottom: 60px;
-    padding-top: 60px;
-.row{
+
+#ui-payee-setting {
+  padding-right: 150px;
+  padding-bottom: 110px;
+  padding-top: 60px;
+
+  .row {
     padding-top: 40px;
-}
-p{
+  }
+
+  p {
     text-align: right;
-}
-h5{
+  }
+
+  h5 {
     padding-top: 8px;
+  }
 }
+
+::ng-deep .customer-btn {
+  min-width: 320px;
+  border: 1px solid #ced4da !important;
+  height: 38px;
 }
-::ng-deep .customer-btn{
-    min-width: 320px;
-    border: 1px solid #ced4da !important;
-    height: 38px;
-}
+
 // #ui-payee-setting{
 //    display: flex;
 //    justify-content: center;
