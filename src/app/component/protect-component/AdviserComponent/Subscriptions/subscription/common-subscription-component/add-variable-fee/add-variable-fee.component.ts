@@ -57,6 +57,12 @@ export class AddVariableFeeComponent implements OnInit {
     (this.ischeckVariableData) ? console.log("fixed fee Data") : this.createVariableFeeForm('');
   }
 
+  restrictFrom100(event){
+    if(parseInt(event.target.value) > 100){
+      event.target.value = 100;
+    }
+  }
+
   setValidation(flag) {
     this.isServiceValid = flag;
     this.isCodeValid = flag;
