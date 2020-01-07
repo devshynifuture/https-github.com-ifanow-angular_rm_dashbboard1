@@ -290,7 +290,6 @@
             top: 143px !important;
         }
     }
-
     .stickyHeader3 {
         position: sticky;
         top: 179px !important;
@@ -1215,4 +1214,8 @@ textarea {
 .form-control:disabled,
 .form-control[readonly] {
     background-color: #ffffff;
+}
+
+.width400 {
+    width: 400px;
 }
