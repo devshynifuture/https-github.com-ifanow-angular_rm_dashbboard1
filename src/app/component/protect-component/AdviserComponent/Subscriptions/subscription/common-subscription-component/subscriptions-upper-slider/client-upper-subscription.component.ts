@@ -138,7 +138,9 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          this.getSummaryDataClient();
           rightSideDataSub.unsubscribe();
+          
         }
       }
     );

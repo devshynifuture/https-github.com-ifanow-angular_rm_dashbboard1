@@ -286,6 +286,31 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     );
 
   }
+  
+  getFeeTypeName(ch){
+    let feeModeName = '';
+    switch(ch){
+      case 1: feeModeName = 'Cheque';
+        break;
+      case 2: feeModeName = 'NEFT';
+        break;
+      case 3: feeModeName = 'Cash';
+        break;
+      case 4: feeModeName = 'ECS mandate';
+        break;
+      case 5: feeModeName = 'Bank Transfer';
+        break;
+      case 6: feeModeName = 'Debit Card';
+        break;
+      case 7: feeModeName = 'Credit Card';
+        break;
+      case 8: feeModeName = 'NACH Mandate';
+        break;
+      default: feeModeName = '';
+    }
+
+    return feeModeName;
+  }
 
   openFeeEditor(data) {
     let feeMode;

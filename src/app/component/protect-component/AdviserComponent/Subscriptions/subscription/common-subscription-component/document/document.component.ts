@@ -584,15 +584,17 @@ export class DocumentComponent implements OnInit {
   saveMappingDocumentToPlans() {
 
     let obj = [];
-    this.mappedData.forEach(element => {
-      const data = {
-        // advisorId: 12345,
-        advisorId: this.advisorId,
-        documentRepositoryId: element.documentRepositoryId,
-        mappingId: this.upperData.id
-      };
-      obj.push(data);
-    });
+    if(this.mappedData.length !== 0){
+      this.mappedData.forEach(element => {
+        const data = {
+          // advisorId: 12345,
+          advisorId: this.advisorId,
+          documentRepositoryId: element.documentRepositoryId,
+          mappingId: this.upperData.id
+        };
+        obj.push(data);
+      });
+    }
     if (obj.length === 0) {
       obj = [
         {
