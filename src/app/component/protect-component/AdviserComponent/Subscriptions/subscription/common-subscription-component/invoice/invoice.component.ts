@@ -768,7 +768,9 @@ console.log('finAmount',this.finAmount)
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log('this is template result delete::', result);
 
+      this.Close(result);
     });
 
   }
