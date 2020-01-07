@@ -210,7 +210,7 @@ export class PayeeSettingsComponent implements OnInit {
     } else {
       if (this.payeeSettingsForm.controls.id.value != undefined) {
         const obj1 = {
-          customerName: this.getFormControl().customerName.value,
+          customerName: this.payeeSettingsForm.controls.customerName.value,
           city: this.payeeSettingsForm.controls.city.value,
           clientBillerId: 1,
           familyMemberId :  this.familyMemberId,
