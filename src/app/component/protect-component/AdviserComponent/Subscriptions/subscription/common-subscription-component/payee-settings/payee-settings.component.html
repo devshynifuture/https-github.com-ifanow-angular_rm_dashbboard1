@@ -32,12 +32,12 @@
         </div>
         <div class="col-md-6">
             <mat-form-field class="w-100">
-                <input #customerName class="form-control br-0" formControlName="customerName" matInput maxlength="40"
+                <input #displayName class="form-control br-0" formControlName="displayName" matInput maxlength="40"
                     type="text">
                 <mat-error class="f-12 pt-4">
                     This field is required
                 </mat-error>
-                <mat-hint align="end" class="f-12">{{customerName.value.length}}/40</mat-hint>
+                <mat-hint align="end" class="f-12">{{displayName.value.length}}/40</mat-hint>
             </mat-form-field>
         </div>
     </div>
