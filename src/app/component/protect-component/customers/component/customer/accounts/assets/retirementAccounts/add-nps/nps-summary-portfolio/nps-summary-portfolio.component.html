@@ -19,7 +19,8 @@
                 <p class="m-0 f-12 text-custom">In whose name is this asset</p>
             </div>
             <div class="col-md-5">
-              <app-owner-column (valueChange)='display($event)' [data]='ownerData'></app-owner-column>
+                <app-owner-column (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData'>
+                </app-owner-column>
             </div>
         </div>
 
