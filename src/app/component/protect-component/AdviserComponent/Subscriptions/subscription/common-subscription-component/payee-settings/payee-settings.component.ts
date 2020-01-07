@@ -213,6 +213,7 @@ export class PayeeSettingsComponent implements OnInit {
           customerName: this.payeeSettingsForm.controls.customerName.value,
           city: this.payeeSettingsForm.controls.city.value,
           clientBillerId: 1,
+          companyDisplayName: this.payeeSettingsForm.controls.displayName.value,
           familyMemberId :  this.familyMemberId,
           companyName: this.payeeSettingsForm.controls.companyName.value,
           country: this.payeeSettingsForm.controls.country.value,

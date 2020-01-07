@@ -58,7 +58,7 @@ export class InvoicesComponent implements OnInit {
 
   getInvoiceList() {
     const obj = {
-      id: 2970, // pass here client ID as id
+      id: this.upperData.id, // pass here client ID as id
       module: 2,
       // 'clientId':this.clientData.id
     };
