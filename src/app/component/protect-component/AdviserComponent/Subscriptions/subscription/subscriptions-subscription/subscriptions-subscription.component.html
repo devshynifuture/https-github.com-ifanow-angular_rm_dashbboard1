@@ -139,7 +139,7 @@
                     <th *matHeaderCellDef class="f-18 t-6" mat-header-cell mat-sort-header="startsOn"> Activation date
                     </th>
                     <td *matCellDef="let element" mat-cell>
-                        <div *ngIf="element.status!=1"> {{element.startsOn | date:'dd/MM/yyyy'}}</div>
+                        <div *ngIf="element.status!=1" class="text-left"> {{element.startsOn | date:'dd/MM/yyyy'}}</div>
                         <div (click)="openPlanSlider('createSub','open',element)" *ngIf="element.status==1">
                             <button class="btn-header btn-xs ml-8 br-0 btn-sm c-p" mat-stroked-button>START
                             </button>
@@ -173,8 +173,11 @@
                         class="f-18 text-right pr-24 t-12" mat-header-cell> Fee mode</th>
                     <td *matCellDef="let element" class="text-right pr-8 t-12" mat-cell>
                         <span *ngIf="element.subscriptionPricing">
-                            <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==1">FIXED</span>
-                            <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==2">VARIABLE</span>
+                            <span class="t-10">
+                                {{ getFeeTypeName(element.subscriptionPricing.feeTypeId) }}
+                            </span>
+                            <!-- <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==1">FIXED</span>
+                        <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==2">VARIABLE</span> -->
                         </span>
                     </td>
                 </ng-container>

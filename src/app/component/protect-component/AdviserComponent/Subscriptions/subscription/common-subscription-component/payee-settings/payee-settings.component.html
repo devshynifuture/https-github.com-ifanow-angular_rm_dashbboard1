@@ -48,8 +48,8 @@
         <div class="col-md-6">
             <mat-form-field class="w-100">
                 <mat-select formControlName="customerType" class="form-control br-0" id="sel1">
-                    <mat-option>Bussiness</mat-option>
-                    <mat-option> Individual</mat-option>
+                    <mat-option [value]=1>Bussiness</mat-option>
+                    <mat-option [value]=2> Individual</mat-option>
                 </mat-select>
                 <mat-error class="f-12">
                     This field is required
@@ -125,9 +125,9 @@
         <div class="col-md-6">
             <mat-form-field class="w-100">
                 <mat-select formControlName="customerType" class="form-control br-0" id="sel1">
-                    <mat-option>Registered Business - Regular</mat-option>
-                    <mat-option>Registered Business - Composition</mat-option>
-                    <mat-option>Unregistered Business</mat-option>
+                    <mat-option [value]=1>Registered Business - Regular</mat-option>
+                    <mat-option [value]=2>Registered Business - Composition</mat-option>
+                    <mat-option [value]=3>Unregistered Business</mat-option>
                 </mat-select>
                 <mat-error class="f-12">
                     This field is required

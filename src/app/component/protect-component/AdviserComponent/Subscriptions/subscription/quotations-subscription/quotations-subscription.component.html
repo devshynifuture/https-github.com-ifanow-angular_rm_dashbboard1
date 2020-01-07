@@ -1,9 +1,9 @@
-<div *ngIf="dataSource.data.length > 0" class="bg-white" id="ui-subs">
+<div class="bg-white" id="ui-subs">
     <!-- (scroll)="scrollCall(true)" -->
     <div class="bg-white p-20 pb-0 filterBox">
         <div class="row">
             <div class="col-md-8 p-0">
-                <h4 class="pt-8 mb-0">Quatations</h4>
+                <h4 class="pt-8 mb-0">Quotations</h4>
             </div>
             <div class="col-md-4 right text-right p-0">
                 <i class="material-icons mr-12 icon-light c-p v-sub">
@@ -64,7 +64,7 @@
                                     <!-- <mat-label>FILTERS TWO</mat-label> -->
                                     <mat-select class="form-control br-0" id="sel12" [(ngModel)]='selectedDateFilter'
                                         (selectionChange)="addFiltersDate(selectedDateFilter)">
-                                        <mat-option value="selected" [disabled]="true">By date</mat-option>
+                                        <mat-option value="dateFilter" [disabled]="true">By date</mat-option>
                                         <mat-option *ngFor="let dateAdd of dateChips" [value]="dateAdd">
                                             {{dateAdd.name}}
                                         </mat-option>
@@ -81,8 +81,8 @@
     <!-- id="pdfDoc"  removed from above div-->
     <div class="wrapper-20 bg-white" id="wrapper">
 
-        <div class="tableClass">
-            <table matSort mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation"
+        <div class="tableClass" [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
+            <table matSort mat-table [dataSource]="dataSource" id="table-low" class="skeletonAnimation"
                 appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="name">
                     <th mat-sort-header="clientName" mat-header-cell *matHeaderCellDef class="f-18"> Client name </th>
@@ -94,13 +94,13 @@
                     <th mat-sort-header="documentName" mat-header-cell *matHeaderCellDef class="f-18"> Document name
                     </th>
                     <td mat-cell *matCellDef="let element">
-                        <div class="bar"> {{element.documentName}} </div>
+                        <div class="bar"> {{element.documentName || '-'}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="plan">
                     <th mat-sort-header="planName" mat-header-cell *matHeaderCellDef class="f-18"> Plan name </th>
                     <td mat-cell *matCellDef="let element">
-                        <div class="bar"> {{element.planName}} </div>
+                        <div class="bar"> {{element.planName || '-'}} </div>
                     </td>
                 </ng-container>
 
