@@ -108,7 +108,7 @@ export class VariableFeeComponent implements OnInit {
         debt: this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[1].debtAllocation,
         liquid: this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[1].liquidAllocation
       });
-      this.getVariableFee().pricing.setValue(this.singleSubscriptionData.subscriptionPricing.pricing);
+      this.getVariableFee().pricing.setValue(this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[2].pricing);
       this.getVariableFee().otherAssetClassFees.setValue(this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[0].subscriptionSubAssets);
       this.otherAssetData = [];
       this.otherAssetData = this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[2].subscriptionSubAssets;

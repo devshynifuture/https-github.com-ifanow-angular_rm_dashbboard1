@@ -45,8 +45,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="number" (keypress)="utils.keyPress($event)" autocomplete="off" #amtInvested maxlength="20"
-                        class="form-control br-0 rupess" formControlName="amtInvested">
+                    <input matInput type="number" (keypress)="utils.keyPress($event)" autocomplete="off" #amtInvested
+                        maxlength="20" class="form-control br-0 rupess" formControlName="amtInvested">
                     <mat-error
                         *ngIf="pomisForm.get('amtInvested').errors?.required && pomisForm.get('amtInvested').touched"
                         class="f-12 pt-4">
@@ -109,9 +109,10 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #fdNo type="text" maxlength="10" class="form-control br-0"
+                        <input matInput #poBranch type="text" maxlength="10" class="form-control br-0"
                             formControlName="poBranch">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -123,9 +124,10 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankACNo type="text" maxlength="15" class="form-control br-0"
+                        <input matInput #nominee type="text" maxlength="15" class="form-control br-0"
                             formControlName="nominee">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{nominee.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -137,9 +139,10 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input type="number" (keypress)="utils.keyPress($event)" matInput #institution maxlength="30" class="form-control br-0"
-                            formControlName="accNumber">
+                        <input type="number" (keypress)="utils.keyPress($event)" matInput #accNumber maxlength="30"
+                            class="form-control br-0" formControlName="accNumber">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{accNumber.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -154,6 +157,7 @@
                         <input matInput #description maxlength="60" class="form-control br-0"
                             formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{description.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
