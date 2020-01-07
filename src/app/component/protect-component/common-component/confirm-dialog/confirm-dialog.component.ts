@@ -30,7 +30,7 @@ export class ConfirmDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.dialogData);
+    console.log(this.dialogData, 'invoice deleted successfully.');
     this.headerData = this.dialogData.header;
     this.bodyData = this.dialogData.body;
     this.bodyData2 = this.dialogData.body2;
@@ -42,7 +42,17 @@ export class ConfirmDialogComponent implements OnInit {
   }
 
   clickButton2() {
-    if (this.dialogData.positiveMethod) {
+    console.log('invoice deleted successfully.', this.dialogData);
+    
+    if(this.dialogData.dataToShow != undefined){
+      let list = [this.dialogData.dataToShow];
+      this.subscription.deleteInvoices(list).subscribe((data)=>{
+        this.dialogRef.close('close');
+        this.eventService.openSnackBar('invoice deleted successfully.', 'dismiss');
+      },
+      err => this.eventService.openSnackBar(err));
+    }
+    if (this.dialogData.positiveMethod() != undefined) {
       this.dialogData.positiveMethod();
     } else {
       console.log('positive not defined 11111111111111111111111111111111111111111111');
