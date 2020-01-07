@@ -100,7 +100,7 @@
                 </ng-container>
                 <ng-container matColumnDef="Amount">
                     <th mat-sort-header="finalAmount" mat-header-cell *matHeaderCellDef> Amount(₹)</th>
-                    <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceUpperSlider','open')">
+                    <td mat-cell *matCellDef="let element" class="c-p text-right" (click)="openInvoice(element,'invoiceUpperSlider','open')">
                         <div class="bar">
                             {{(formatter(element.finalAmount))?formatter(element.finalAmount):""}}
                         </div>
