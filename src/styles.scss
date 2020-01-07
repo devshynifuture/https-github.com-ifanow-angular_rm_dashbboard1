@@ -504,6 +504,7 @@
 
   .mat-tab-label {
     color: #595252;
+    opacity: 1 !important;
   }
 
   .mat-tab-label.mat-tab-label-active {
@@ -1365,4 +1366,11 @@ textarea {
 
 .width400 {
   width: 400px;
+}
+
+#ui-account-container,
+#ui-plan {
+  .mat-tab-link-container {
+    background-color: #1F1F1F !important;
+  }
 }
