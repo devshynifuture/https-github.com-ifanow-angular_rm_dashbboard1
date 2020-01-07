@@ -28,9 +28,9 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input type="number" #amountInvest autocomplete="off"
-                                (keypress)="utils.keyPress($event)" class="form-control br-0 rupess"
-                                formControlName="amountInvested" matInput maxlength="20" type="text">
+                            <input type="number" #amountInvest autocomplete="off" (keypress)="utils.keyPress($event)"
+                                class="form-control br-0 rupess" formControlName="amountInvested" matInput
+                                maxlength="20" type="text">
                             <mat-error *ngIf="nscFormField.get('amountInvested').errors?.required" class="f-12 pt-4">
                                 Amount balance is required
                             </mat-error>
@@ -114,9 +114,10 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group mb-0">
-                            <mat-form-field><input #fdNo class="form-control br-0" formControlName="cNo" matInput
+                            <mat-form-field><input #fdNo class="form-control br-0" formControlName="cNo" #cNo matInput
                                     maxlength="10" type="text">
                                 <mat-hint align="start" class="f-12">Optional</mat-hint>
+                                <mat-hint align="end" class="f-12">{{cNo.value.length}}/20</mat-hint>
                             </mat-form-field>
                         </div>
                     </div>
@@ -127,9 +128,10 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group mb-0">
-                            <mat-form-field><input #bankACNo class="form-control br-0" formControlName="poBranch"
-                                    matInput maxlength="15" type="text">
+                            <mat-form-field><input #bankACNo class="form-control br-0" #poBranch
+                                    formControlName="poBranch" matInput maxlength="15" type="text">
                                 <mat-hint align="start" class="f-12">Optional</mat-hint>
+                                <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint>
                             </mat-form-field>
                         </div>
                     </div>
@@ -140,9 +142,10 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group mb-0">
-                            <mat-form-field><input #description class="form-control br-0" formControlName="nominee"
-                                    matInput maxlength="60">
+                            <mat-form-field><input class="form-control br-0" #nominee formControlName="nominee" matInput
+                                    maxlength="60">
                                 <mat-hint align="start" class="f-12">Optional</mat-hint>
+                                <mat-hint align="end" class="f-12">{{nominee.value.length}}/20</mat-hint>
                             </mat-form-field>
                         </div>
                     </div>
@@ -153,10 +156,11 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group mb-0">
-                            <mat-form-field><input type="number" #institution (keypress)="utils.keyPress($event)"
+                            <mat-form-field><input type="number" #linkedBankAccount (keypress)="utils.keyPress($event)"
                                     class="form-control br-0" formControlName="linkedBankAccount" matInput
                                     maxlength="30">
                                 <mat-hint align="start" class="f-12">Optional</mat-hint>
+                                <mat-hint align="end" class="f-12">{{linkedBankAccount.value.length}}/20</mat-hint>
                             </mat-form-field>
                         </div>
                     </div>
@@ -170,6 +174,7 @@
                             <mat-form-field><input #description class="form-control br-0" formControlName="description"
                                     matInput maxlength="60">
                                 <mat-hint align="start" class="f-12">Optional</mat-hint>
+                                <mat-hint align="end" class="f-12">{{description.value.length}}/20</mat-hint>
                             </mat-form-field>
                         </div>
                     </div>

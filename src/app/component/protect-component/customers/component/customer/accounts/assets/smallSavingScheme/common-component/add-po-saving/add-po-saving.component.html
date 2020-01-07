@@ -15,7 +15,7 @@
             <p class="m-0 f-12 text-custom">In whose name is this asset</p>
         </div>
         <div class="col-md-5">
-          <app-owner-column (valueChange)='display($event)' [data]='ownerData'></app-owner-column>
+            <app-owner-column (valueChange)='display($event)' [data]='ownerData'></app-owner-column>
         </div>
     </div>
     <div [formGroup]="poSavingForm">
@@ -25,8 +25,12 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input autocomplete="off" (keypress)="utils.keyPress($event)" formControlName="accBal" type="number" matInput #accountBalance class="form-control rupess br-0" maxlength="">
-                        <mat-error *ngIf="poSavingForm.get('accBal').errors?.required && poSavingForm.get('accBal').touched" class="f-12 pt-4">
+                    <mat-form-field> <input autocomplete="off" (keypress)="utils.keyPress($event)"
+                            formControlName="accBal" type="number" matInput #accountBalance
+                            class="form-control rupess br-0" maxlength="">
+                        <mat-error
+                            *ngIf="poSavingForm.get('accBal').errors?.required && poSavingForm.get('accBal').touched"
+                            class="f-12 pt-4">
                             Amount invested is required
                         </mat-error>
                         <mat-error *ngIf="(poSavingForm.get('accBal').errors?.min)" class="f-12 pt-4">
@@ -48,7 +52,8 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
-                    <mat-form-field> <input formControlName="balAsOn" matInput class="form-control br-0" [matDatepicker]="balanceAsOn">
+                    <mat-form-field> <input formControlName="balAsOn" matInput class="form-control br-0"
+                            [matDatepicker]="balanceAsOn">
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
                         <mat-error class="f-12 pt-4"> This field is required </mat-error>
@@ -62,7 +67,8 @@
             </div>
             <div class="col-md-5">
                 <mat-form-field>
-                    <mat-select (change)="changeAccountBalance($event)" formControlName="ownershipType" class="form-control br-0">
+                    <mat-select (change)="changeAccountBalance($event)" formControlName="ownershipType"
+                        class="form-control br-0">
                         <mat-option value="1"> Joint </mat-option>
                         <mat-option value="2">Single </mat-option>
                     </mat-select>
@@ -90,8 +96,10 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput formControlName="poBranch" #fdNo type="text" maxlength="10" class="form-control br-0">
+                    <mat-form-field> <input matInput formControlName="poBranch" #poBranch type="text" maxlength="10"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -102,8 +110,10 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput formControlName="nominee" #bankACNo type="text" maxlength="15" class="form-control br-0">
+                    <mat-form-field> <input matInput formControlName="nominee" #nominee type="text" maxlength="15"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{nominee.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -114,8 +124,10 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input type="number" matInput (keypress)="utils.keyPress($event)" formControlName="bankAccNo" #institution maxlength="30" class="form-control br-0">
+                    <mat-form-field> <input type="number" matInput (keypress)="utils.keyPress($event)"
+                            formControlName="bankAccNo" #bankAccNo maxlength="30" class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{bankAccNo.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -126,8 +138,10 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input matInput formControlName="description" #description maxlength="60" class="form-control br-0">
+                    <mat-form-field> <input matInput formControlName="description" #description maxlength="60"
+                            class="form-control br-0">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{description.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -142,7 +156,8 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
-        <div (click)="addPOSaving()" class="col-md-8 right text-right"> <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+        <div (click)="addPOSaving()" class="col-md-8 right text-right"> <button mat-button
+                class="btn-bottom br-0 text-inherit">Save</button>
         </div>
     </div>
 </div>

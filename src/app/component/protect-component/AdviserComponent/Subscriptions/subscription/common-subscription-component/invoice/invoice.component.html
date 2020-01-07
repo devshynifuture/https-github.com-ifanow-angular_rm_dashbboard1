@@ -1312,7 +1312,7 @@
             <h5 class="m-0">Discount ₹</h5>
         </div>
         <div class="col-md-2 pr-24">
-            <input (keypress)="utils.keyPress($event)" class="form-control br-0 text-right" formControlName="discount" onKeyPress="if(this.value.length==2) return false;" pattern="\d*" type="number">
+            <input (keypress)="utils.keyPress($event)" [(ngModel)]="discount" class="form-control br-0 text-right" formControlName="discount" onKeyPress="if(this.value.length==2) return false;" pattern="\d*" type="number">
         </div>
     </div>
     <div class="row pt-20 pb-12">
