@@ -68,7 +68,13 @@
                             </div>
 
                             <div class="col-md-5 p-0">
-                                <p class="f-12 mb-0 text-primitive">FEES</p>
+                                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==1"
+                                   class="f-12 mb-0 text-primitive">
+                                    Fees
+                                </p>
+                                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2"
+                                   class="f-12 mb-0 text-primitive">Other asset class fees</p>
+                                
                                 <h4 *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2"
                                     class="m-0 p-0 text-lighter lh-16 f-16">
                                     {{singleService.averageFees}}%/ Year</h4>
@@ -107,7 +113,7 @@
         </div>
     </div>
 
-    <div class="row" *ngIf="serviceSettingData == undefined">
+    <div class="row" *ngIf="serviceSettingData == undefined || !serviceSettingData">
         <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
             <img class="width200" src="assets/images/svg/add-services-img.svg">
             <p class="f-22 f-600 pt-28">Create Services </p>
@@ -122,8 +128,4 @@
             </button>
         </div>
     </div>
-
-
-
-
 </div>

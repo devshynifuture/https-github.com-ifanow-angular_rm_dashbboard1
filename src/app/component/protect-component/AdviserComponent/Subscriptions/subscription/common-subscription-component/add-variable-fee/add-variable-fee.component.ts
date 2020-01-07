@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-add-variable-fee',
@@ -33,8 +34,15 @@ export class AddVariableFeeComponent implements OnInit {
   restrictMoreThan100Val;
 
   @Input() set variableFee(data) {
-    this.ischeckVariableData = data
-    this.getFeeFormUpperData(data)
+    if (data == "") {
+      // this.otherAssetData=UtilService.
+      this.otherAssetData = this.enumService.getOtherAssetData();
+      return;
+    }
+    else {
+      this.ischeckVariableData = data
+      this.getFeeFormUpperData(data)
+    }
   }
 
   @Output() outputVariableData = new EventEmitter();
@@ -47,7 +55,12 @@ export class AddVariableFeeComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.setValidation(false);
     (this.ischeckVariableData) ? console.log("fixed fee Data") : this.createVariableFeeForm('');
-    console.log(this.otherAssetData);
+  }
+
+  restrictFrom100(event){
+    if(parseInt(event.target.value) > 100){
+      event.target.value = 100;
+    }
   }
 
   setValidation(flag) {

@@ -99,13 +99,13 @@
                                             <div class="row">
                                                 <div class="col-md-6 p-0 relClass">
 
-                                                    <p class="f-12">GST</p>
+                                                    <p class="f-12">Bank name</p>
                                                     <div class="bar">
-                                                        <h5 class="height20">{{singleBillerProfile.gstin}}</h5>
+                                                        <h5 class="height20">{{singleBillerProfile.bankName}}</h5>
                                                     </div>
-                                                    <p class="f-12 pt-24">PAN</p>
+                                                    <p class="f-12 pt-24">IFSC code</p>
                                                     <div class="bar">
-                                                        <h5 class="height20">{{singleBillerProfile.pan}}</h5>
+                                                        <h5 class="height20">{{singleBillerProfile.ifscCode}}</h5>
                                                     </div>
                                                     <p class="f-12 pt-24">ADDRESS</p>
                                                     <div class="bar">
@@ -114,10 +114,7 @@
                                                             <br>{{singleBillerProfile.zipCode}}, {{singleBillerProfile.state}},
                                                             <br> {{singleBillerProfile.country}}</h5>
                                                     </div>
-
-
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -139,8 +136,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
@@ -159,10 +154,7 @@
                                 ADD NEW</button>
                         </div>
                     </div>
-
-
                 </div>
-
                 <div *ngSwitchCase="'tab2'">
                     <div *ngIf="showLoader">
                         <mat-spinner class="loader" [diameter]="30"></mat-spinner>
@@ -174,7 +166,6 @@
                                 <div class="form-group pt-12">
                                     <input type="text" class="form-control br-0" formControlName="prefix">
                                 </div>
-
                             </div>
                             <div class="col-md-3 pr-0 ">
                                 <h5 class="m-0 f-14 text-black">Invoice next number</h5>
@@ -189,7 +180,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div *ngSwitchCase="'tab3'">
                     <div *ngIf="showLoader">
@@ -229,7 +219,6 @@
                                 <div class="form-group pt-12">
                                     <input type="text" class="form-control br-0" formControlName="prefix">
                                 </div>
-
                             </div>
                             <div class="col-md-3 pr-0">
                                 <h5 class="m-0 f-14 text-black">Subscription next number</h5>
@@ -260,7 +249,6 @@
                                 <h4>Email templates</h4>
                             </div>
                         </div>
-
                         <div class="row">
                             <div (click)="openEmailInvoice(this.storeData[0])" class="col-md-6 c-p">
                                 <div class="example-card">

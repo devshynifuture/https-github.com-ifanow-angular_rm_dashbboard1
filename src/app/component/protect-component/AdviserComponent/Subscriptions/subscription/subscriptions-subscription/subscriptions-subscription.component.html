@@ -72,9 +72,9 @@
         </div>
     </div>
     <div class="wrapper-20 pt-0 bg-white" id="wrapper" [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'" >
-
+        <!-- {{isLoading}}{{dataSource.data.length}} -->
         <div class="tableClass">
-            <table matSort [dataSource]="dataSource" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low" mat-table>
+            <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" class="skeletonAnimation" appSkeletonLoading  id="table-low" mat-table matSort>
                 <ng-container matColumnDef="client">
                     <th *matHeaderCellDef class="f-18 t-20" mat-header-cell mat-sort-header="planName"> Client & plan details
                     </th>
@@ -157,8 +157,11 @@
                     <th mat-sort-header="subscriptionPricing.feeTypeId" *matHeaderCellDef class="f-18 text-right pr-24 t-12" mat-header-cell> Fee mode</th>
                     <td *matCellDef="let element" class="text-right pr-8 t-12" mat-cell>
                         <span *ngIf="element.subscriptionPricing">
-                            <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==1">FIXED</span>
-                        <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==2">VARIABLE</span>
+                            <span class="t-10">
+                                {{ getFeeTypeName(element.subscriptionPricing.feeTypeId) }}
+                            </span>
+                            <!-- <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==1">FIXED</span>
+                        <span class="t-10" *ngIf="element.subscriptionPricing.feeTypeId==2">VARIABLE</span> -->
                         </span>
                     </td>
                 </ng-container>

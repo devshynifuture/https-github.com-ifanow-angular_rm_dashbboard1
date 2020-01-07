@@ -122,7 +122,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
         this.getInvoiceSubData(scrollLoader);
       } else {
-        this.callFilter();
+        this.callFilter(scrollLoader);
       }
 
     }
@@ -324,20 +324,21 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
     console.log('addFilters', addFilters);
     if (!_.includes(this.filterStatus, addFilters)) {
-      this.filterStatus.push(addFilters);
       this.lastFilterDataId = 0;
+      this.filterStatus.push(addFilters);
       this.filterDataArr = [];
       console.log(this.filterStatus);
     } else {
+      this.lastFilterDataId = 0;
       // _.remove(this.filterStatus, this.senddataTo);
     }
 
     console.log(this.filterStatus, 'this.filterStatus 123');
 
-    this.callFilter();
+    this.callFilter(false);
   }
 
-  callFilter() {
+  callFilter(scrollLoader) {
     this.dataSource.data = [{}, {}, {}]
       this.isLoading = true;
     if (this.filterStatus && this.filterStatus.length > 0) {
@@ -368,22 +369,27 @@ export class InvoicesSubscriptionComponent implements OnInit {
     } else {
       this.subService.filterInvoices(obj).subscribe(
         (data) => {
-          this.filterSubscriptionRes(data);
+          this.filterSubscriptionRes(data, scrollLoader);
         }
       );
     }
   }
 
 
-  filterSubscriptionRes(data) {
+  filterSubscriptionRes(data, scrollLoader) {
     console.log('filterSubscriptionRes', data);
     this.isLoading = false;
 
     if (data == undefined && this.statusIdLength < 1) {
       this.noData = 'No Data Found';
-      this.dataSource.data = [];
+      if(!scrollLoader){
+        this.dataSource.data = [];
+      }
+      else{
+        this.dataSource.data = this.filterDataArr;
+      }
     } else {
-      console.log(this.statusIdList.length, this.statusIdLength < this.statusIdList.length, this.statusIdLength, 'this.statusIdList.length123');
+      console.log(this.statusIdList.length, this.statusIdLength < this.statusIdList.length, this.statusIdLength, "this.statusIdList.length123");
       // if(this.statusIdLength < this.statusIdList.length || this.statusIdList.length <= 0){
       //   this.statusIdLength = this.statusIdList.length;
       //   this.lastFilterDataId = 0;
@@ -391,12 +397,13 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
       this.lastFilterDataId = data[data.length - 1].id;
       // }
-      console.log(this.lastFilterDataId, 'this.lastFilterDataId');
+      console.log(this.lastFilterDataId, "this.lastFilterDataId");
       if (this.filterDataArr.length <= 0) {
         this.filterDataArr = data;
-      } else {
+      }
+      else {
         this.filterDataArr = this.filterDataArr.concat(data);
-        console.log(this.filterDataArr, 'this.filterDataArr 123');
+        console.log(this.filterDataArr, "this.filterDataArr 123");
       }
       this.scrollCallData = true;
 
@@ -423,7 +430,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
     this.selectedDateRange = {begin: beginDate, end: endDate};
     console.log(this.filterDate, 'this.filterDate 123');
-    this.callFilter();
+    this.callFilter(false);
   }
 
   removeDate(item) {
@@ -431,7 +438,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.selectedDateFilter = 'dateFilter';
     this.filterDate.splice(item, 1);
     this.lastFilterDataId = 0;
-    this.callFilter();
+    this.callFilter(false);
   }
 
   remove(item) {
@@ -446,7 +453,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
       x.status != item.value;
     });
     this.lastFilterDataId = 0;
-    this.callFilter();
+    this.callFilter(false);
 
   }
 
