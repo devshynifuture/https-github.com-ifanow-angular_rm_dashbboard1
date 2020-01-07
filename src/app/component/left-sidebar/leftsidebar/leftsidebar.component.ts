@@ -27,7 +27,7 @@ export class LeftsidebarComponent implements OnInit {
   myControl: FormControl;
   advisorName;
   loginType = 1;
-
+  logoText:string = "Your Logo here"
   constructor(private authService: AuthService, private _eref: ElementRef,
               private eventService: EventService, private subinject: SubscriptionInject,
               private subService: SubscriptionService, private router: Router, private ngZone: NgZone) {
