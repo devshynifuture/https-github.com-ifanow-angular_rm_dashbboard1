@@ -3,7 +3,7 @@
         <h4 class="m-0 text-black roboto pt-8">Senior citizen savings scheme (SCSS)</h4>
     </div>
     <!-- *ngIf="datasource.filteredData > 0" -->
-    <div class="col-md-8 p-0 right text-right">
+    <div class="col-md-8 p-0 right text-right" *ngIf="datasource.filteredData.length > 0">
         <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
         <mat-menu #menu5="matMenu">
             <button mat-menu-item>PDF</button>
@@ -18,18 +18,17 @@
         </mat-menu>
         <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS</button>
-        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddSCSS(null,'addScss')"><i
-                class="material-icons">add</i>ADD NEW</button>
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddSCSS(null,'addScss')">ADD
+            NEW</button>
     </div>
 </div>
 <div class="example-container col-md-12 p-0 mt-8 real-estate">
-    <table *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="table-low"
-        class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+    <table *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
             <td mat-cell *matCellDef="let element;index as i" class="br">
-                <div class="bar"> {{i+1}} </div>
+                <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
             </td>
             <td mat-footer-cell class="text-left f-500 pl-4 t-2" *matFooterCellDef> Total </td>
         </ng-container>
@@ -46,8 +45,7 @@
             <td mat-cell *matCellDef="let element" class="br t-14 text-right" appFormatNumber>
                 <div class="bar"> {{element.quarterlyPayout}} </div>
             </td>
-            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber
-                [value]="sumOfQuarterlyPayout">{{sumOfQuarterlyPayout}}</td>
+            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber [value]="sumOfQuarterlyPayout">{{sumOfQuarterlyPayout}}</td>
         </ng-container>
         <ng-container matColumnDef="pdate">
             <th mat-sort-header="pdate" mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Payout date </th>
@@ -64,13 +62,11 @@
             <td mat-footer-cell class="br text-left t-7" *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="tamt">
-            <th mat-sort-header="totalAmountReceived" mat-header-cell *matHeaderCellDef class="br text-right"> Amount
-                recieved </th>
+            <th mat-sort-header="totalAmountReceived" mat-header-cell *matHeaderCellDef class="br text-right"> Amount recieved </th>
             <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
                 <div class="bar"> {{element.totalAmountReceived}} </div>
             </td>
-            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber
-                [value]="sumOfTotalAmountReceived">{{sumOfTotalAmountReceived}}</td>
+            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber [value]="sumOfTotalAmountReceived">{{sumOfTotalAmountReceived}}</td>
         </ng-container>
         <ng-container matColumnDef="amt">
             <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br text-right">Amount invested
@@ -78,12 +74,12 @@
             <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
                 <div class="bar"> {{element.amountInvested}} </div>
             </td>
-            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber
-                [value]="sumOfAmountInvested">{{sumOfAmountInvested}}</td>
+            <td mat-footer-cell class="br text-right p-8 f-500 t-7" *matFooterCellDef appFormatNumber [value]="sumOfAmountInvested">
+                <div class="bar"> {{sumOfAmountInvested}} </div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="mdate">
-            <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br t-12 text-left"> Maturity
-                date </th>
+            <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br t-12 text-left"> Maturity date </th>
             <td mat-cell *matCellDef="let element" class="br t-12 text-left">
                 <div class="bar"> {{element.maturityDate | date: 'dd/MM/yyyy'}} </div>
             </td>
@@ -106,8 +102,7 @@
         </ng-container>
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-            <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black"
-                    [matMenuTriggerFor]="menubank">
+            <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
                     more_vert
                 </i>
                 <mat-menu #menubank="matMenu">
@@ -123,9 +118,14 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns19;"></tr>
         <tr mat-footer-row *matFooterRowDef="displayedColumns19;sticky: true" [hidden]="isLoading"></tr>
     </table>
+
+
+
     <div *ngIf="datasource.filteredData.length == 0" class="d-flex flex-column align-items-center">
-        <h4 class="text-center pt-72">No Scheme Found</h4>
-        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddSCSS(null,'addScss')"><i
-                class="material-icons">add</i>ADD NEW</button>
+        <img class="width400" src="assets/images/svg/clients-img.svg">
+        <h4 class="text-center pt-12">No Scheme Found</h4>
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddSCSS(null,'addScss')">
+            ADD NEW</button>
     </div>
+
 </div>

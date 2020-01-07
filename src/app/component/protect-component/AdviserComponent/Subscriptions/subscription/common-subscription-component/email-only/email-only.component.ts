@@ -249,6 +249,7 @@ export class EmailOnlyComponent implements OnInit {
 
   getResponseData(data) {
     console.log(data);
+    this.close();
   }
 
   saveData(data) {
