@@ -181,7 +181,7 @@
                       <ng-container matColumnDef="billing">
                         <th *matHeaderCellDef mat-header-cell> Next billing date</th>
                         <td *matCellDef="let element" mat-cell>
-                          <div class="bar"> {{element.nextBillingDate | date:'dd/MM/yyyy'}}
+                          <div class="bar"> {{ doesNextBillingDatePresent(element) | date:'dd/MM/yyyy'}}
                           </div>
                         </td>
                       </ng-container>

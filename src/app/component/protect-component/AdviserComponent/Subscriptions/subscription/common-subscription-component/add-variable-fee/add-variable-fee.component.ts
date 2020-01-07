@@ -54,6 +54,12 @@ export class AddVariableFeeComponent implements OnInit {
     console.log(this.otherAssetData);
   }
 
+  restrictFrom100(event){
+    if(parseInt(event.target.value) > 100){
+      event.target.value = 100;
+    }
+  }
+
   setValidation(flag) {
     this.isServiceValid = flag;
     this.isCodeValid = flag;

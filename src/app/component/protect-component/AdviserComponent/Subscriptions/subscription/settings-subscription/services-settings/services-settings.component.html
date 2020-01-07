@@ -67,7 +67,13 @@
                             </div>
 
                             <div class="col-md-5 p-0">
-                                <p class="f-12 mb-0 text-primitive">FEES</p>
+                                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==1"
+                                   class="f-12 mb-0 text-primitive">
+                                    Fees
+                                </p>
+                                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2"
+                                   class="f-12 mb-0 text-primitive">Other asset class fees</p>
+                                
                                 <h4 *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2"
                                     class="m-0 p-0 text-lighter lh-16 f-16">
                                     {{singleService.servicePricing.pricingList[2].pricing}}%/ Year</h4>
