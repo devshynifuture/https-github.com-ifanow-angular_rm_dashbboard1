@@ -92,50 +92,59 @@ export class AddEditDocumentComponent implements OnInit {
   }
 
   saveDocuments() {
-    if (this._inputData.documentRepositoryId==undefined) {
-      const obj = {
-        advisorId: this.advisorId,
-        name: this.blankDocumentProperties.controls.docName.value,
-        // documentTypeId: parseInt(this.blankDocumentProperties.controls.docType.value),
-        documentTypeId:this.blankDocumentProperties.controls.docType.value.toString(),
-        docText: 'docText',
-        description: this.blankDocumentProperties.controls.docName.value,
-        public: true,
-        quotation: this._inputData.docType == '3' ? true : false,
-        availableAt: this.selectedOption ? parseInt(this.selectedOption) : 0,
-        mappingId: this._inputData.docType == '3' ? 5 : 0,
-        docType:this.blankDocumentProperties.controls.docType.value
-
-      };
-      // console.log(obj);
-      // console.log(obj);
-
-      this.subService.addSettingDocument(obj).subscribe(
-        data => {
-          console.log(data);
-          this.subInjectService.changeUpperRightSliderState({ state: 'close', data });
-          this.sendDataToParentUpperFrag(data);
-        }
-      );
-    } else {
-      const obj = {
-        advisorId: this._inputData.advisorId,
-        availableAt: this.selectedOption ? parseInt(this.selectedOption) : 0,
-        description: this.blankDocumentProperties.controls.docName.value,
-        docText: this._inputData.docText,
-        documentRepositoryId: this._inputData.documentRepositoryId, // pass here advisor id for Invoice advisor
-        documentTypeId:this.blankDocumentProperties.controls.docType.value.toString(),
-        name: this.blankDocumentProperties.controls.docName.value,
-      };
-      this.subService.updateDocumentData(obj).subscribe(
-        data => {
-          console.log(data);
-          data = obj;
-          this.subInjectService.changeUpperRightSliderState({ state: 'close', data });
-          this.sendDataToParentUpperFrag(data);
-        }
-      );
+    if (this.blankDocumentProperties.controls.docType.invalid) {
+      this.isDocType = true;
+      return;
+    } else if (this.blankDocumentProperties.controls.docName.invalid) {
+      this.isDocName = true;
+      return;
+    }  else{
+      if (this._inputData.documentRepositoryId==undefined) {
+        const obj = {
+          advisorId: this.advisorId,
+          name: this.blankDocumentProperties.controls.docName.value,
+          // documentTypeId: parseInt(this.blankDocumentProperties.controls.docType.value),
+          documentTypeId:this.blankDocumentProperties.controls.docType.value.toString(),
+          docText: 'docText',
+          description: this.blankDocumentProperties.controls.docName.value,
+          public: true,
+          quotation: this._inputData.docType == '3' ? true : false,
+          availableAt: this.selectedOption ? parseInt(this.selectedOption) : 0,
+          mappingId: this._inputData.docType == '3' ? 5 : 0,
+          docType:this.blankDocumentProperties.controls.docType.value
+  
+        };
+        // console.log(obj);
+        // console.log(obj);
+  
+        this.subService.addSettingDocument(obj).subscribe(
+          data => {
+            console.log(data);
+            this.subInjectService.changeUpperRightSliderState({ state: 'close', data });
+            this.sendDataToParentUpperFrag(data);
+          }
+        );
+      } else {
+        const obj = {
+          advisorId: this._inputData.advisorId,
+          availableAt: this.selectedOption ? parseInt(this.selectedOption) : 0,
+          description: this.blankDocumentProperties.controls.docName.value,
+          docText: this._inputData.docText,
+          documentRepositoryId: this._inputData.documentRepositoryId, // pass here advisor id for Invoice advisor
+          documentTypeId:this.blankDocumentProperties.controls.docType.value.toString(),
+          name: this.blankDocumentProperties.controls.docName.value,
+        };
+        this.subService.updateDocumentData(obj).subscribe(
+          data => {
+            console.log(data);
+            data = obj;
+            this.subInjectService.changeUpperRightSliderState({ state: 'close', data });
+            this.sendDataToParentUpperFrag(data);
+          }
+        );
+      }
     }
+
     // }else{
     //   const obj = {
     //     advisorId: this.advisorId,

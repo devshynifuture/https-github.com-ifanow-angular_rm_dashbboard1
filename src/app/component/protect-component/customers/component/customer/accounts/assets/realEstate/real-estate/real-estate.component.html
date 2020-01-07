@@ -22,7 +22,7 @@
         <div class="col-md-7 p-0">
             <h4 class="m-0 text-black roboto">Real estate </h4>
         </div>
-        <div class="col-md-5 p-0 text-right right "  *ngIf="datasource3.filteredData.length > 0" >
+        <div class="col-md-5 p-0 text-right right " *ngIf="datasource3.filteredData.length > 0">
 
             <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
             <mat-menu #menu5="matMenu">
@@ -46,12 +46,11 @@
         </div>
     </div>
     <div class="example-container mt-8 p-0 col-md-12 real-estate">
-        <table  *ngIf="datasource3.filteredData.length > 0"  matSort mat-table [dataSource]="datasource3" id="table-low"
-            class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+        <table *ngIf="datasource3.filteredData.length > 0" matSort mat-table [dataSource]="datasource3" id="table-low" class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="no">
                 <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br w-2"> No </th>
                 <td mat-cell *matCellDef="let element; let i = index;" class="br w-2">
-                    <div class="bar"> {{i+1}} </div>
+                    <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                 </td>
                 <td mat-footer-cell *matFooterCellDef class=" text-left pl-4 f-600"> Total</td>
 
@@ -67,14 +66,13 @@
                 <th mat-sort-header="typeId" mat-header-cell *matHeaderCellDef class="br text-right w-15"> Type </th>
                 <td mat-cell *matCellDef="let element" class="br w-15">
                     <div class="bar">
-                        {{(element.typeId == 1)?'Residential':(element.typeId == 2)?'Secondary':(element.typeId == 3)?'Commercial':'-'}}
+                        {{(element.typeId == 1)?'Residential':(element.typeId == 2)?'Secondary':(element.typeId == 3)?'Commercial':''}}
                     </div>
                 </td>
                 <td mat-footer-cell *matFooterCellDef class="br text-right w-15"> </td>
             </ng-container>
             <ng-container matColumnDef="value">
-                <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef
-                    class="br w-15 rightText text-right"> Market value
+                <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br w-15 rightText text-right"> Market value
                 </th>
                 <td mat-cell *matCellDef="let element" class="br w-15 text-right" appFormatNumber>
                     <div class="bar"> {{element.marketValue}} </div>
@@ -84,8 +82,7 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="pvalue">
-                <th mat-sort-header="purchaseValue" mat-header-cell *matHeaderCellDef
-                    class="br w-20 rightText text-right">
+                <th mat-sort-header="purchaseValue" mat-header-cell *matHeaderCellDef class="br w-20 rightText text-right">
                     Purchase value
                 </th>
                 <td mat-cell *matCellDef="let element" class="br w-20 text-right" appFormatNumber>
@@ -129,12 +126,9 @@
             <tr mat-footer-row *matFooterRowDef="displayedColumns3;sticky: true" [hidden]="isLoading"></tr>
         </table>
         <div *ngIf="datasource3.filteredData.length == 0" class="d-flex flex-column align-items-center">
+            <img class="width400" src="assets/images/svg/clients-img.svg">
             <h4 class="text-center pt-72">{{noData}}</h4>
-            <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('realEstate','')"><i
-                    class="material-icons">add</i>ADD NEW</button>
+            <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('realEstate','')">
+                ADD NEW</button>
         </div>
     </div>
-
-    <!--  <div *ngIf="isLoading">-->
-    <!--    <mat-spinner class="loader" [diameter]="30"></mat-spinner>-->
-    <!--  </div>-->
