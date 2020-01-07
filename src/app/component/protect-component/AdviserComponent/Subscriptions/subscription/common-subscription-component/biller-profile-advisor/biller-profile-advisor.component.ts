@@ -187,12 +187,12 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.getFormControlProfile().gstinNum.maxLength = 15;
     this.getFormControlProfile().companyDisplayName.maxLength = 50;
     this.getFormControlProfile().panNum.maxLength = 10;
-    this.getFormControlProfile().Address.maxLength = 150;
+    this.getFormControlProfile().Address.maxLength = 160;
     this.getFrormControlBank().nameOnBank.maxLength = 25;
     this.getFrormControlBank().bankName.maxLength = 35;
     this.getFrormControlBank().acNo.maxLength = 16;
     this.getFrormControlBank().ifscCode.maxLength = 11;
-    this.getFrormControlBank().address.maxLength = 150;
+    this.getFrormControlBank().address.maxLength = 160;
     this.getFrormControlMisc().footnote.maxLength = 150;
     this.getFrormControlMisc().terms.maxLength = 150;
     this.logoImg = data.logoUrl;

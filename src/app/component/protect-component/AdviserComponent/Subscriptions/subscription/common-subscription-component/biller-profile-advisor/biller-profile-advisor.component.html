@@ -110,7 +110,7 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #state [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                      class="form-control br-0 text-left" formControlName="state" matInput maxLength="50" type="text">
+                      class="form-control br-0 text-left" formControlName="state" matInput maxLength="30" type="text">
                     <mat-error class="f-12 pt-4">State is required</mat-error>
                     <mat-hint align="end" class="f-12">{{state.value.length}}/30</mat-hint>
                   </mat-form-field>
@@ -141,7 +141,7 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #country [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                      class="form-control br-0 text-left" formControlName="country" matInput maxLength="50" type="text">
+                      class="form-control br-0 text-left" formControlName="country" matInput maxLength="30" type="text">
                     <mat-error class="f-12 pt-4">Country is required</mat-error>
                     <mat-hint align="end" class="f-12">{{country.value.length}}/30</mat-hint>
                   </mat-form-field>
@@ -156,7 +156,7 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #city [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                      class="form-control br-0 text-left" formControlName="city" matInput maxLength="50" type="text">
+                      class="form-control br-0 text-left" formControlName="city" matInput maxLength="30" type="text">
                     <mat-error class="f-12 pt-4">City is required</mat-error>
                     <mat-hint align="end" class="f-12">{{city.value.length}}/30</mat-hint>
                   </mat-form-field>
@@ -384,7 +384,7 @@
             </div>
             <div class="col-md-7">
               <div class="form-group mb-0">
-                <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation
+                <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" appInputValueValidation
                   class="form-control br-0 text-left" formControlName="pincode" matInput type="number">
               </div>
               <div class="row pt-0">
