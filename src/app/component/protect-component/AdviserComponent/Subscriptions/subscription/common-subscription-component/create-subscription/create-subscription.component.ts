@@ -78,7 +78,7 @@ export class CreateSubscriptionComponent implements OnInit {
     dueDateFrequency: [5, [Validators.required]]
   });
   subscriptionDetailsStepper = this.fb.group({
-    subscriptionDetailsStepper: [, [Validators.required]]
+    subscriptionDetailsStepper: ['', [Validators.required]]
   });
   feeStructureForm = this.fb.group({
     feeStructure: ['', [Validators.required]]
