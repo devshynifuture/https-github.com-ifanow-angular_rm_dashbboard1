@@ -128,7 +128,6 @@ export const componentList = [
   AddPoSavingComponent,
   AddPoMisComponent,
   AddSsyComponent,
-  AddNscComponent,
   AddTransactionComponent,
   AddPpfComponent,
   AddEPSComponent,
