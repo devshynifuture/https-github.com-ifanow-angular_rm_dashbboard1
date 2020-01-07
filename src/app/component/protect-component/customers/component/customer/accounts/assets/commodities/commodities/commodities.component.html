@@ -1,13 +1,9 @@
 <div class="wrapper-8">
     <div class="row pt-28 pb-28">
         <div class="col-md-8 pl-0" id="custom-toggle">
-            <button mat-button value='1' (click)="getfixedIncomeData('1')"
-                [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}"
-                class="br-0 text-custom">
+            <button mat-button value='1' (click)="getfixedIncomeData('1')" [ngClass]="{'mat-stroked-button': showRequring == '1','text-primary':showRequring == '1'}" class="br-0 text-custom">
                 Gold</button>
-            <button mat-button value='2' (click)="getfixedIncomeData('2')"
-                [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}"
-                class="br-0 text-custom">
+            <button mat-button value='2' (click)="getfixedIncomeData('2')" [ngClass]="{'mat-stroked-button': showRequring == '2','text-primary':showRequring == '2'}" class="br-0 text-custom">
                 Others </button>
         </div>
     </div>
@@ -31,17 +27,15 @@
                 </mat-menu>
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                         class="material-icons">filter_list</i>FILTERS</button>
-                <button mat-stroked-button class="btn-primary addon v-middle"
-                    (click)="openCommodities('addGold','open',null)"><i class="material-icons">add</i>ADD NEW</button>
+                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openCommodities('addGold','open',null)"><i class="material-icons">add</i>ADD NEW</button>
             </div>
         </div>
         <div class="example-container col-md-12 p-0 mt-8 real-estate">
-            <table *ngIf="goldList.filteredData.length > 0" matSort #goldListTable="matSort" mat-table [dataSource]="goldList" id="table-low"
-                class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table *ngIf="goldList.filteredData.length > 0" matSort #goldListTable="matSort" mat-table [dataSource]="goldList" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
                     <td mat-cell *matCellDef="let element let i = index" class="br">
-                        <div class="bar"> {{i+1}} </div>
+                        <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="t-7 f-500 pl-4 text-left"> Total </td>
                 </ng-container>
@@ -68,8 +62,7 @@
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
                 </ng-container>
                 <ng-container matColumnDef="price">
-                    <th mat-sort-header="caratGoldPrice" mat-header-cell *matHeaderCellDef class="br text-right"> Carat
-                        gold price (10 gram)
+                    <th mat-sort-header="caratGoldPrice" mat-header-cell *matHeaderCellDef class="br text-right"> Carat gold price (10 gram)
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right">
                         <div class="bar"> {{element.caratGoldPrice}} </div>
@@ -77,26 +70,22 @@
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
                 </ng-container>
                 <ng-container matColumnDef="mvalue">
-                    <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br text-right"> Market
-                        value </th>
+                    <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br text-right"> Market value </th>
                     <td mat-cell *matCellDef="let element" class="br text-right " appFormatNumber>
                         <div class="bar"> {{element.marketValue}} </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" appFormatNumber
-                        [value]="sumOfMarketValue">
-                        <div class="bar"> {{sumOfMarketValue || '-'}} </div>
+                    <td mat-footer-cell *matFooterCellDef class="br t-20 text-right" appFormatNumber [value]="sumOfMarketValue">
+                        <div class="bar"> {{sumOfMarketValue || ' '}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="pvalue">
-                    <th mat-sort-header="approximatePurchaseValue" mat-header-cell *matHeaderCellDef
-                        class="br text-right"> Purchase value
+                    <th mat-sort-header="approximatePurchaseValue" mat-header-cell *matHeaderCellDef class="br text-right"> Purchase value
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
                         <div class="bar"> {{element.approximatePurchaseValue}} </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br t-20 p-8 f-500 text-right" appFormatNumber
-                        [value]="sumOfPurchaseValue">
-                        <div class="bar"> {{sumOfPurchaseValue || '-'}} </div>
+                    <td mat-footer-cell *matFooterCellDef class="br t-20 p-8 f-500 text-right" appFormatNumber [value]="sumOfPurchaseValue">
+                        <div class="bar"> {{sumOfPurchaseValue || ' '}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="desc">
@@ -131,9 +120,9 @@
                 <tr mat-footer-row *matFooterRowDef="displayedColumns9;sticky: true" [hidden]="isLoading"></tr>
             </table>
             <div *ngIf="goldList.filteredData.length == 0" class="d-flex flex-column align-items-center">
-                <h4 class="text-center pt-72">{{noData}}</h4>
-                <button mat-stroked-button class="btn-primary addon v-middle mt-20"
-                    (click)="openCommodities('addGold','open',null)"><i class="material-icons">add</i>ADD NEW</button>
+                <img class="width400" src="assets/images/svg/clients-img.svg">
+                <h4 class="text-center pt-12">{{noData}}</h4>
+                <button mat-stroked-button class="btn-primary addon v-middle mt-20" (click)="openCommodities('addGold','open',null)"> ADD NEW</button>
             </div>
         </div>
     </div>
@@ -142,7 +131,7 @@
             <div class="col-md-4 p-0">
                 <h4 class="m-0 text-black roboto pt-8">Others</h4>
             </div>
-            <div class="col-md-8 p-0 right text-right"  *ngIf="otherCommodityList.filteredData.length > 0" >
+            <div class="col-md-8 p-0 right text-right" *ngIf="otherCommodityList.filteredData.length > 0">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button mat-menu-item>PDF</button>
@@ -158,18 +147,16 @@
 
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                         class="material-icons">filter_list</i>FILTERS</button>
-                <button mat-stroked-button class="btn-primary addon v-middle"
-                    (click)="openOthers('addOthers','open',null)"><i class="material-icons">add</i>ADD
-                    NEW</button>
+                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openOthers('addOthers','open',null)">
+                    ADD NEW</button>
             </div>
         </div>
         <div class="example-container mt-8 col-md-12 p-0 real-estate">
-            <table  *ngIf="otherCommodityList.filteredData.length > 0"  matSort #otherListTable="matSort" mat-table [dataSource]="otherCommodityList" id="table-low"
-                class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table *ngIf="otherCommodityList.filteredData.length > 0" matSort #otherListTable="matSort" mat-table [dataSource]="otherCommodityList" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
                     <td mat-cell *matCellDef="let element let i = index" class="br">
-                        <div class="bar"> {{i+1}} </div>
+                        <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="t-2 text-left pl-4 f-500"> Total</td>
                 </ng-container>
@@ -181,8 +168,7 @@
                     <td mat-footer-cell *matFooterCellDef class="br t-20 text-right"> </td>
                 </ng-container>
                 <ng-container matColumnDef="type">
-                    <th mat-sort-header="commodityTypeId" mat-header-cell *matHeaderCellDef class="br text-right"> Type
-                        of commodity
+                    <th mat-sort-header="commodityTypeId" mat-header-cell *matHeaderCellDef class="br text-right"> Type of commodity
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right">
                         <div class="bar"> {{(element.commodityTypeId == 1)?'Art':(element.commodityTypeId == 2)?'Antiques':(element.commodityTypeId == 3)?'Liquor':(element.commodityTypeId == 4)?'Stamps':(element.commodityTypeId == 5)?'Coins':(element.commodityTypeId ==
@@ -192,13 +178,12 @@
                 </ng-container>
 
                 <ng-container matColumnDef="mvalue">
-                    <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br text-right"> Market
-                        value </th>
+                    <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br text-right"> Market value </th>
                     <td mat-cell *matCellDef="let element" class="br text-right ">
                         <div class="bar"> {{utils.formatter(element.marketValue)}} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br p-8 f-500 t-20 text-right">
-                        <div class="bar"> {{utils.formatter(sumOfMarketValueOther) || '-'}} </div>
+                        <div class="bar"> {{utils.formatter(sumOfMarketValueOther) || ' '}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="pvalue">
@@ -209,7 +194,7 @@
                         <div class="bar"> {{utils.formatter(element.purchaseValue)}} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br p-8 f-500 t-20 text-right">
-                        <div class="bar"> {{utils.formatter(sumOfPurchaseValueOther) || '-'}} </div>
+                        <div class="bar"> {{utils.formatter(sumOfPurchaseValueOther) || ' '}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="pur">
@@ -221,8 +206,7 @@
                     <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
                 <ng-container matColumnDef="rate">
-                    <th mat-sort-header="growthRate" mat-header-cell *matHeaderCellDef class="br text-right t-8"> Growth
-                        rate
+                    <th mat-sort-header="growthRate" mat-header-cell *matHeaderCellDef class="br text-right t-8"> Growth rate
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right t-8">
                         <div class="bar"> {{element.growthRate}} </div>
@@ -245,13 +229,13 @@
 
                 <ng-container matColumnDef="icons">
                     <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                    <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black"
-                            [matMenuTriggerFor]="menubank">
+                    <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
                             more_vert
                         </i>
                         <mat-menu #menubank="matMenu">
                             <button mat-menu-item (click)="openOthers('addOthers','open',element)">Edit</button>
-                            <button mat-menu-item (click)="detailedViewOthers('addOthers',element)">Detailed view</button>
+                            <button mat-menu-item (click)="detailedViewOthers('addOthers',element)">Detailed
+                                view</button>
                             <button mat-menu-item>Activity</button>
                             <button (click)="deleteModal('OTHERS',element)" mat-menu-item>Delete</button>
                         </mat-menu>
@@ -262,10 +246,10 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns10;"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns10;sticky: true" [hidden]="isLoading"></tr>
             </table>
-            <div  *ngIf="otherCommodityList.filteredData.length == 0" class="d-flex flex-column align-items-center">
-                <h4 class="text-center pt-72">{{noData}}</h4>
-                <button mat-stroked-button class="btn-primary addon v-middle mt-20"
-                    (click)="openOthers('addOthers','open',null)"><i class="material-icons">add</i>ADD
+            <div *ngIf="otherCommodityList.filteredData.length == 0" class="d-flex flex-column align-items-center">
+                <img class="width400" src="assets/images/svg/clients-img.svg">
+                <h4 class="text-center pt-12">{{noData}}</h4>
+                <button mat-stroked-button class="btn-primary addon v-middle mt-20" (click)="openOthers('addOthers','open',null)"> ADD
                     NEW</button>
             </div>
         </div>

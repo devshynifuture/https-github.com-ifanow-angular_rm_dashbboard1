@@ -2,7 +2,7 @@
     <div class="col-md-4 p-0">
         <h4 class="m-0 text-black roboto pt-8">Post office time deposit (PO TD)</h4>
     </div>
-    <div class="col-md-8 p-0 right text-right" *ngIf="dataSource!=undefined">
+    <div class="col-md-8 p-0 right text-right" *ngIf="datasource.filteredData.length > 0">
         <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
         <mat-menu #menu5="matMenu">
             <button mat-menu-item>PDF</button>
@@ -18,8 +18,7 @@
 
         <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS</button>
-        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOTD(null)"><i
-                class="material-icons">add</i>ADD NEW</button>
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOTD(null)">ADD NEW</button>
         <mat-menu #menu1="matMenu" class="add-new">
             <button mat-menu-item class="b-b">
                 <div class="row">
@@ -61,47 +60,56 @@
     </div>
 </div>
 <div class="example-container mt-8 real-estate">
-    <table *ngIf="dataSource" matSort mat-table [dataSource]="dataSource" id="table-low">
+    <table *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="dataSource" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
 
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
-            <td mat-cell *matCellDef="let element;index as i" class="br"> {{i+1}} </td>
+            <td mat-cell *matCellDef="let element;index as i" class="br">
+                <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
+            </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="owner">
             <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br t-20"> Owner </th>
-            <td mat-cell *matCellDef="let element" class="br t-20"> {{element.ownerName}} </td>
+            <td mat-cell *matCellDef="let element" class="br t-20">
+                <div class="bar"> {{element.ownerName}} </div>
+            </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Current
-                value </th>
-            <td mat-cell *matCellDef="let element" class="br t-14 text-right" appFormatNumber> {{element.currentValue}}
+            <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Current value </th>
+            <td mat-cell *matCellDef="let element" class="br t-14 text-right" appFormatNumber>
+                <div class="bar"> {{element.currentValue}} </div>
             </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
 
         <ng-container matColumnDef="rate">
             <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br text-right"> Rate </th>
-            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.rate}} </td>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"> {{element.rate}} </div>
+            </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="amt">
-            <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br text-right t-10">Amount
-                invested</th>
+            <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br text-right t-10">Amount invested
+            </th>
             <td mat-cell *matCellDef="let element" class="br text-right t-10" appFormatNumber>
-                {{element.amountInvested}} </td>
+                <div class="bar"> {{element.amountInvested}} </div>
+            </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="tenure">
             <th mat-sort-header="tenure" mat-header-cell *matHeaderCellDef class="br text-right">Tenure</th>
-            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.tenure}} </td>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"> {{element.tenure}} </div>
+            </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
-            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br text-right t-10">Maturity
-                value </th>
-            <td mat-cell *matCellDef="let element" class="br text-right t-10" appFormatNumber> {{element.maturityValue}}
+            <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br text-right t-10">Maturity value </th>
+            <td mat-cell *matCellDef="let element" class="br text-right t-10" appFormatNumber>
+                <div class="bar"> {{element.maturityValue}} </div>
             </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
@@ -109,28 +117,34 @@
             <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br text-left t-10">Maturity date
             </th>
             <td mat-cell *matCellDef="let element" class="br text-left t-10">
-                {{element.maturityDate |date:'dd/MM/yyyy'}} </td>
+                <div class="bar"> {{element.maturityDate |date:'dd/MM/yyyy'}} </div>
+            </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="number">
             <th mat-sort-header="tdNumber" mat-header-cell *matHeaderCellDef class="br text-right">TD number </th>
-            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.tdNumber}} </td>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar"> {{element.tdNumber}} </div>
+            </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="desc">
             <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br t-10"> Description </th>
-            <td mat-cell *matCellDef="let element" class="br t-10"> {{element.description}} </td>
+            <td mat-cell *matCellDef="let element" class="br t-10">
+                <div class="bar"> {{element.description}} </div>
+            </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="status">
             <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br"> Status </th>
-            <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.status}} </td>
+            <td mat-cell *matCellDef="let element" class="br text-primary">
+                <div class="bar"> {{element.status}} </div>
+            </td>
             <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="icons">
             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-            <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black"
-                    [matMenuTriggerFor]="menubank">
+            <td mat-cell *matCellDef="let element" class="t-2"> <i class="material-icons c-p text-black" [matMenuTriggerFor]="menubank">
                     more_vert
                 </i>
                 <mat-menu #menubank="matMenu">
@@ -147,8 +161,8 @@
         <tr mat-footer-row *matFooterRowDef="displayedColumns22;sticky: true" [hidden]="isLoading"></tr>
     </table>
     <div *ngIf="dataSource==undefined" class="d-flex flex-column align-items-center">
-        <h4 class="text-center pt-72">No Scheme Found</h4>
-        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOTD(null)"><i
-                class="material-icons">add</i>ADD NEW</button>
+        <img class="width400" src="assets/images/svg/clients-img.svg">
+        <h4 class="text-center pt-12">No Scheme Found</h4>
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOTD(null)">ADD NEW</button>
     </div>
 </div>
