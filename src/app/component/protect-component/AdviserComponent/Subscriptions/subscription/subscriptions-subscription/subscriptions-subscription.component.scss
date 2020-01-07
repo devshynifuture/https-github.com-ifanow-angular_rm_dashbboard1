@@ -38,20 +38,20 @@
   border: 1px solid #BCC6CA !important;
 }
 
-#table-low {
-  border-collapse: initial !important;
-  border: solid 1px #ccc !important;
-  border-top: none !important;
+// #table-low {
+//   border-collapse: initial !important;
+//   border: solid 1px #ccc !important;
+//   border-top: none !important;
 
-  .mat-header-cell {
-    border-top: solid 1px #ccc !important;
-    text-transform: initial;
-  }
+//   .mat-header-cell {
+//     border-top: solid 1px #ccc !important;
+//     text-transform: initial;
+//   }
 
-  // .mat-cell {
-  //     border-bottom: solid 1px #ccc !important;
-  // }
-}
+//   .mat-cell {
+//       border-bottom: solid 1px #ccc !important;
+//   }
+// }
 
 #table-low th {
   padding: 7px 8px !important;
