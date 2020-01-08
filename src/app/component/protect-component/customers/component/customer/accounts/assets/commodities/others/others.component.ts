@@ -78,7 +78,7 @@ export class OthersComponent implements OnInit {
     }
     this.others = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      typeOfCommodity: [(data == undefined) ? '' : (data.commodityTypeId) + '', [Validators.required]],
+      typeOfCommodity: [(data.commodityTypeId == undefined) ? '' : (data.commodityTypeId) + '', [Validators.required]],
       marketValue: [(data == undefined) ? '' : (data.marketValue), [Validators.required]],
       purchaseValue: [(data == undefined) ? '' : (data.purchaseValue), [Validators.required]],
       interestRate: [(data == undefined) ? '' : data.interestRate, [Validators.required]],

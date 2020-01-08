@@ -70,9 +70,9 @@ export class BankAccountsComponent implements OnInit {
     }
     this.bankAccounts = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      accountType: [(data == undefined) ? '' : (data.accountType) + "", [Validators.required]],
+      accountType: [(data.accountType == undefined) ? '' : (data.accountType) + "", [Validators.required]],
       bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
-      compound: [(data == undefined) ? '' : (data.interestCompounding) + "", [Validators.required]],
+      compound: [(data.interestCompounding == undefined) ? '' : (data.interestCompounding) + "", [Validators.required]],
       interestRate: [(data == undefined) ? '' : data.interestRate, [Validators.required]],
       balanceAsOn: [(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       accountBalance: [(data == undefined) ? '' : data.accountBalance, [Validators.required]],
