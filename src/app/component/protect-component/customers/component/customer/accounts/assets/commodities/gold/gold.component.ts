@@ -74,11 +74,11 @@ export class GoldComponent implements OnInit {
     }
     this.gold = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      appPurValue: [(data == undefined) ? '' : (data.approximatePurchaseValue) + "", [Validators.required]],
+      appPurValue: [data.approximatePurchaseValue,[Validators.required]],
       totalsGrams: [(data == undefined) ? '' : (data.gramsOrTola) + "", [Validators.required]],
       noTolasGramsPur: [(data == undefined) ? '' : (data.purchasedGramsOrTola), [Validators.required]],
       tenure: [(data == undefined) ? '' : (data.purchaseYear), [Validators.required]],
-      carats: [(data == undefined) ? '' : data.carat, [Validators.required]],
+      carats: [(data == undefined) ? '' : (data.carat)+"", [Validators.required]],
       balanceAsOn:[(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       marketValue: [(data == undefined) ? '' : data.marketValue, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],

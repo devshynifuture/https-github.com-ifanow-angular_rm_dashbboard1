@@ -116,6 +116,13 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     }
   }
 
+  onChange(event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = "100";
+      this.addLiabilityForm.get('interest').setValue(event.target.value);
+    }
+  }
+
   select(data) {
     this.showSelect = data.checked;
   }

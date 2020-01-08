@@ -54,12 +54,13 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #marketValue type="number" (keypress)="utils.keyPress($event)" maxlength="20"
+                    <input matInput #marketValue type="text" (keypress)="utils.keyPress($event)" maxlength="10"
                         class="form-control br-0" formControlName="marketValue">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isMarketValue && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}">
                         this field is required
                     </mat-error>
+                    <mat-hint align="end" class="f-12">{{marketValue.value.length}}/10</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -84,9 +85,10 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #purchaseValue type="number" (keypress)="utils.keyPress($event)"
-                            maxlength="20" class="form-control br-0" formControlName="purchaseValue">
+                        <input matInput #purchaseValue type="text" (keypress)="utils.keyPress($event)"
+                            maxlength="10" class="form-control br-0" formControlName="purchaseValue">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{purchaseValue.value.length}}/10</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -97,7 +99,7 @@
             </div>
             <div class="col-md-3">
                 <mat-form-field>
-                    <input matInput formControlName="dateOfPurchase" class="form-control br-0" [matDatepicker]="picker">
+                    <input matInput formControlName="dateOfPurchase" class="form-control br-0" [matDatepicker]="picker" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-hint align="start" class="f-12">Optional</mat-hint>
@@ -112,7 +114,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #growthRate type="number" (keypress)="utils.keyPress($event)"
+                        <input matInput #growthRate type="number" (keyup)="onChange($event)" (keypress)="utils.keyPress($event)"
                             maxlength="30" class="form-control br-0" formControlName="growthRate">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                     </mat-form-field>
@@ -129,6 +131,7 @@
                         <input matInput #description maxlength="60" class="form-control br-0"
                             formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
                 </div>
             </div>

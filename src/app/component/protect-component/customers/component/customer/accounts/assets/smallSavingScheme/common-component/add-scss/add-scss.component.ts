@@ -6,6 +6,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {MAT_DATE_FORMATS} from '@angular/material';
 import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-scss',
@@ -28,7 +29,7 @@ export class AddScssComponent implements OnInit {
   editApi: any;
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private cusService: CustomerService, private eventService: EventService) {
+              private cusService: CustomerService, private eventService: EventService,public utils: UtilService) {
   }
 
   ngOnInit() {
