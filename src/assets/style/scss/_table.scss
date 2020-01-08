@@ -1,3 +1,7 @@
+// table {
+//   border: 1px solid #DADCE0;
+// }
+
 #table-low {
   .mat-sort-header-button {
     white-space: normal !important;
@@ -27,7 +31,7 @@
     color: #202020;
     background-color: #F5F7F7 !important;
     letter-spacing: 0.2px;
-    z-index: 99 !important;
+    z-index: 9 !important;
   }
 
   tbody td {
@@ -36,7 +40,7 @@
     font-size: 14px;
     align-items: center;
     color: #212121;
-    border: 0px;
+    // border: 0px;
   }
 
   .greentext {
@@ -68,7 +72,7 @@
     align-items: center;
     letter-spacing: -0.41px;
     color: #212121;
-    border: 0px !important;
+    // border: 0px !important;
     background-color: #fff;
   }
 }

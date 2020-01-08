@@ -154,7 +154,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       approxAmt: null
     }));
   }
-  preventDefault(e){
+  preventDefault(e) {
     e.preventDefault();
   }
 
@@ -306,82 +306,94 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     })
     this.lifeInsuranceForm.get('policyName').value
     if (this.lifeInsuranceForm.get('lifeAssured').invalid) {
+      this.lifeInsuranceForm.get('lifeAssured').markAsTouched();
       return
     }
     else if (this.lifeInsuranceForm.get('proposer').invalid) {
+      this.lifeInsuranceForm.get('proposer').markAsTouched();
       return
     }
     else if (this.lifeInsuranceForm.get('policyName').invalid) {
+      this.lifeInsuranceForm.get('policyName').markAsTouched();
       return
     }
     else if (this.lifeInsuranceForm.get('policyNum').invalid) {
+      this.lifeInsuranceForm.get('policyNum').markAsTouched();
       return
     }
     else if (this.lifeInsuranceForm.get('commencementDate').invalid) {
+      this.lifeInsuranceForm.get('commencementDate').markAsTouched();
       return
     }
     else if (this.lifeInsuranceForm.get('sumAssured').invalid) {
+      this.lifeInsuranceForm.get('sumAssured').markAsTouched();
       return
     }
     else if (this.lifeInsuranceForm.get('premiumDetailsAmount').invalid) {
+      this.lifeInsuranceForm.get('premiumDetailsAmount').markAsTouched();
       return
     }
     else if (this.lifeInsuranceForm.get('premiumDetailsFrequency').invalid) {
+      this.lifeInsuranceForm.get('premiumDetailsFrequency').markAsTouched();
       return
     }
     else if (this.lifeInsuranceForm.get('tenureDetailsPolicy').invalid) {
+      this.lifeInsuranceForm.get('tenureDetailsPolicy').markAsTouched();
       return
     }
     else if (this.lifeInsuranceForm.get('premiumPayingTerm').invalid) {
+      this.lifeInsuranceForm.get('premiumPayingTerm').markAsTouched();
       return
     }
     else if (this.lifeInsuranceForm.get('policyStatus').invalid) {
+      this.lifeInsuranceForm.get('policyStatus').markAsTouched();
       return
     }
     else if (this.lifeInsuranceForm.get('policyStatusLastUnpaid').invalid) {
+      this.lifeInsuranceForm.get('policyStatusLastUnpaid').markAsTouched();
       return
     }
     else {
 
       this.insuranceFormFilledData =
-        {
-          "familyMemberIdLifeAssured": this.familyMemberLifeData.id,
-          "familyMemberIdProposer": this.selectedProposerData.id,
-          "clientId": this.clientId,
-          "advisorId": this.advisorId,
-          "ownerName": "",
-          "commencementDate": this.lifeInsuranceForm.get('commencementDate').value._d,
-          "sumAssured": this.lifeInsuranceForm.get('sumAssured').value,
-          "policyStatusId": this.lifeInsuranceForm.get('policyStatus').value,
-          "lastUnpaidPremium": this.lifeInsuranceForm.get('policyStatusLastUnpaid').value,
-          "premiumAmount": this.lifeInsuranceForm.get('premiumDetailsAmount').value,
-          "frequency": this.lifeInsuranceForm.get('premiumDetailsFrequency').value,
-          "policyTenure": this.lifeInsuranceForm.get('tenureDetailsPolicy').value,
-          "premiumPayingTerm": this.lifeInsuranceForm.get('premiumPayingTerm').value,
-          "riskCover": this.keyDetailsForm.get('riskCover').value,
-          "surrenderValue": this.keyDetailsForm.get('surrenderName').value,
-          "nominee": this.keyDetailsForm.get('nomineeName').value,
-          "vestedBonus": this.keyDetailsForm.get('vestedBonus').value,
-          "assumedRate": this.keyDetailsForm.get('assumedRate').value,
-          "loanAvailable": this.loanDetailsForm.get('loanAvailable').value,
-          "loanTaken": this.loanDetailsForm.get('loanTaken').value,
-          "loanTakenOn": this.loanDetailsForm.get('loanTakenOn').value,
-          "premiumPaymentMode": this.Miscellaneous.get('permiumPaymentMode').value,
-          "advisorName": this.Miscellaneous.get('advisorName').value,
-          "serviceBranch": this.Miscellaneous.get('serviceBranch').value,
-          "policyId": this.policyData.id,
-          "policyTypeId": this.policyData.policyTypeId,
-          "description": "test data life insurance 22",
-          "insuranceTypeId": this.insuranceTypeId,
-          "insuranceSubTypeId": this.insuranceSubTypeId,
-          "ridersAccidentalBenifits": this.ridersForm.get('accidentalBenefit').value,
-          "ridersDoubleAccidentalBenefit": this.ridersForm.get('doubleAccidental').value,
-          "ridersTermWaiver": this.ridersForm.get('termWaiver').value,
-          "ridersCriticalIllness": this.ridersForm.get('criticalIlleness').value,
-          "ridersPremiumWaiver": this.ridersForm.get('premiumWaiver').value,
-          "ridersFemaleCriticalIllness": this.ridersForm.get('femaleCriticalIlleness').value,
-          "insuranceCashflowList": finalCashFlowList
-        }
+      {
+        "familyMemberIdLifeAssured": this.familyMemberLifeData.id,
+        "familyMemberIdProposer": this.selectedProposerData.id,
+        "clientId": this.clientId,
+        "advisorId": this.advisorId,
+        "ownerName": "",
+        "commencementDate": this.lifeInsuranceForm.get('commencementDate').value._d,
+        "sumAssured": this.lifeInsuranceForm.get('sumAssured').value,
+        "policyStatusId": this.lifeInsuranceForm.get('policyStatus').value,
+        "lastUnpaidPremium": this.lifeInsuranceForm.get('policyStatusLastUnpaid').value,
+        "premiumAmount": this.lifeInsuranceForm.get('premiumDetailsAmount').value,
+        "frequency": this.lifeInsuranceForm.get('premiumDetailsFrequency').value,
+        "policyTenure": this.lifeInsuranceForm.get('tenureDetailsPolicy').value,
+        "premiumPayingTerm": this.lifeInsuranceForm.get('premiumPayingTerm').value,
+        "riskCover": this.keyDetailsForm.get('riskCover').value,
+        "surrenderValue": this.keyDetailsForm.get('surrenderName').value,
+        "nominee": this.keyDetailsForm.get('nomineeName').value,
+        "vestedBonus": this.keyDetailsForm.get('vestedBonus').value,
+        "assumedRate": this.keyDetailsForm.get('assumedRate').value,
+        "loanAvailable": this.loanDetailsForm.get('loanAvailable').value,
+        "loanTaken": this.loanDetailsForm.get('loanTaken').value,
+        "loanTakenOn": this.loanDetailsForm.get('loanTakenOn').value,
+        "premiumPaymentMode": this.Miscellaneous.get('permiumPaymentMode').value,
+        "advisorName": this.Miscellaneous.get('advisorName').value,
+        "serviceBranch": this.Miscellaneous.get('serviceBranch').value,
+        "policyId": this.policyData.id,
+        "policyTypeId": this.policyData.policyTypeId,
+        "description": "test data life insurance 22",
+        "insuranceTypeId": this.insuranceTypeId,
+        "insuranceSubTypeId": this.insuranceSubTypeId,
+        "ridersAccidentalBenifits": this.ridersForm.get('accidentalBenefit').value,
+        "ridersDoubleAccidentalBenefit": this.ridersForm.get('doubleAccidental').value,
+        "ridersTermWaiver": this.ridersForm.get('termWaiver').value,
+        "ridersCriticalIllness": this.ridersForm.get('criticalIlleness').value,
+        "ridersPremiumWaiver": this.ridersForm.get('premiumWaiver').value,
+        "ridersFemaleCriticalIllness": this.ridersForm.get('femaleCriticalIlleness').value,
+        "insuranceCashflowList": finalCashFlowList
+      }
       console.log(this.insuranceFormFilledData)
       const insuranceData =
       {

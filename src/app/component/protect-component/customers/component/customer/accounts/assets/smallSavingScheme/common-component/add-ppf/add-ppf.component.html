@@ -34,7 +34,8 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input #accBal (keypress)="utils.keyPress($event)" autocomplete="off"
-                            class="form-control rupess br-0" formControlName="accountBalance" matInput type="text" maxlength="10">
+                            class="form-control rupess br-0" formControlName="accountBalance" matInput type="text"
+                            maxlength="10">
                         <mat-error *ngIf="ppfSchemeForm.get('accountBalance').errors?.required" class="f-12 pt-4">
                             Account balance is required
                         </mat-error>
@@ -179,20 +180,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Nominee</h5>
-            </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input autocomplete="off" #fdNo class="form-control br-0" formControlName="nominee" matInput
-                            maxlength="10" type="text">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
+        <app-add-nominee></app-add-nominee>
     </div>
     <app-add-transaction (outputEvent)="getFormData($event)"></app-add-transaction>
 </div>
