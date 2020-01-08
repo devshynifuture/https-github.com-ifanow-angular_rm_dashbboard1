@@ -23,7 +23,7 @@
 </div>
 <div class="example-container mt-8 real-estate">
     <!-- "dataSource" Property 'dataSource' does not exist on type 'PoTdSchemeComponent'. Did you mean 'dataSource'?-->
-    <table class="skeletonAnimation" *ngIf="dataSource.filteredData.length == 0" matSort mat-table [dataSource]="dataSource" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
+    <table class="skeletonAnimation" *ngIf="dataSource.filteredData.length > 0" matSort mat-table [dataSource]="dataSource" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
         <ng-container matColumnDef="no">
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
