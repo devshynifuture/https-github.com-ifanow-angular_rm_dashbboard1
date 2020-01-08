@@ -46,8 +46,8 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="commDate" [matDatepicker]="KVPpicker"
-                            class="form-control br-0" readonly>
+                        <input matInput formControlName="commDate" [matDatepicker]="KVPpicker" class="form-control br-0"
+                            readonly>
                         <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                         <mat-datepicker #KVPpicker></mat-datepicker>
                         <mat-error class="f-12 pt-4">
@@ -99,28 +99,15 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Nominee</h5>
-            </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field> <input matInput formControlName="nominee" #nominee type="text" maxlength="15"
-                            class="form-control br-0">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <!-- <mat-hint align="end" class="f-12">{{nominee.value.length}}/20</mat-hint> -->
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
+        <app-add-nominee></app-add-nominee>
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Bank account number</h5>
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field> <input type="text" matInput formControlName="bankAccNum" #bankAccNum
-                            maxlength="16" class="form-control br-0" (keypress)="utils.keyPress($event)">
+                    <mat-form-field> <input type="text" matInput formControlName="bankAccNum" #bankAccNum maxlength="16"
+                            class="form-control br-0" (keypress)="utils.keyPress($event)">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankAccNum.value.length}}/16</mat-hint>
                     </mat-form-field>
