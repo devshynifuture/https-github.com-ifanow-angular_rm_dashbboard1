@@ -121,54 +121,14 @@ export class CreateSubscriptionComponent implements OnInit {
     if (this.stepper == undefined) {
       return;
     }
-    if (this.stepper.selectedIndex == 4) {
+    if (this.stepper.selectedIndex == 2) {
+      this.subDateToShow = undefined;
       let date = this.subscriptionDetails.controls.activationDate.value;
-      if (this.clientData.feeTypeId == 1) {
-        if (this.clientData.billingNature == "2" || this.clientData.billingMode == '1') {
-          this.subDateToShow = this.subscriptionDetails.controls.activationDate.value;
-          (this.clientData.billingCycle == 1) ? this.billEveryMsg = "monthly" : this.billEveryMsg = "yearly"
-          date = null;
-          return;
-        }
-        else {
-          if (this.clientData.billingCycle == 1) {
-            console.log(new Date(date))
-            date = date.setMonth(date.getMonth() + this.clientData.billEvery)
-            console.log(new Date(date))
-            this.subDateToShow = date;
-            this.billEveryMsg = "monthly"
-            date = null;
-          }
-          else {
-            console.log(new Date(date))
-            date = date.setMonth(date.getMonth() + this.clientData.billEvery * 12)
-            console.log(new Date(date))
-            this.subDateToShow = date;
-            this.billEveryMsg = "yearly"
-            date = null;
-          }
-        }
-      }
-      else {
-        if (this.clientData.billingCycle == 1) {
-          console.log(new Date(date))
-          date = date.setMonth(date.getMonth() + this.clientData.billEvery)
-          console.log(new Date(date))
-          this.subDateToShow = date;
-          this.billEveryMsg = "monthly"
-          date = null;
-        }
-        else {
-          console.log(new Date(date))
-          date = date.setMonth(date.getMonth() + this.clientData.billEvery * 12)
-          console.log(new Date(date))
-          this.subDateToShow = date;
-          this.billEveryMsg = "yearly"
-          date = null;
-        }
-      }
-
+      (this.clientData.billingCycle == 1) ? date = date.setMonth(date.getMonth() + this.clientData.billEvery) : date = date.setFullYear(date.getFullYear() + this.clientData.billEvery);
+      (this.clientData.billingCycle == 1) ? this.billEveryMsg = "monthly" : this.billEveryMsg = "yearly";
       console.log(new Date(date))
+      this.subDateToShow = date;
+      date = null;
     }
     console.log(this.subscriptionDetails);
   }
