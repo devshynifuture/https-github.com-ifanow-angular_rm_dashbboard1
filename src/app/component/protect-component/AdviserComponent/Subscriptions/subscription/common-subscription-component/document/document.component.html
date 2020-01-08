@@ -199,7 +199,7 @@
                                 <button mat-menu-item *ngIf="dataCount == 0">Select invoice to see more
                                     actions
                                 </button>
-                                <button mat-menu-item *ngIf="dataCount == 1" (click)="openEsignDocument()">Email
+                                <button mat-menu-item *ngIf="dataCount == 1" (click)="openEsignDocument(null)">Email
                                     with eSign
                                     request
                                 </button>
@@ -282,10 +282,12 @@
                                 </th>
                                 <td *matCellDef="let element" mat-cell>
                                     <span>
-                                        <span class="text-success t-10 f-500 c-p" *ngIf="element.status==1">READY TO
+                                        <span class="text-success t-10 f-500 c-p" *ngIf="element.status==1 && !element.signed">READY TO
                                             SEND</span>
-                                    <span class="text-success t-10 f-500 c-p" *ngIf="element.status==0">NOT
+                                    <span class="text-success t-10 f-500 c-p" *ngIf="element.status==0 && !element.signed">NOT
                                             STARTED</span>
+                                    <span class="text-success t-10 f-500 c-p" *ngIf="element.signed">SIGNED
+                                        </span>
                                     </span>
                                 </td>
                             </ng-container>
@@ -301,6 +303,11 @@
                                             document</a>
                                         <a mat-menu-item class="bt-1" (click)="deleteModal('DOCUMENT')">Delete
                                             document</a>
+                                        <a mat-menu-item *ngIf="element.signed"class="bt-1" (click)="downloadEsign(element)">Download eSigned
+                                            document</a>
+                                        <a mat-menu-item class="bt-1" (click)="openEsignDocument(element)">Email
+                                            with eSign
+                                            request</a>
                                     </mat-menu>
                                 </td>
                             </ng-container>
