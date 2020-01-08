@@ -404,13 +404,23 @@ export class InvoiceComponent implements OnInit {
   }
 
   updateInvoice() {
+    if (this.taxStatus[0] == 'SGST(9%)|CGST(9%)') {
+      this.finAmountC = (9 / 100) * this.editPayment.controls.finalAmount.value;
+      this.finAmountS = (9 / 100) * this.editPayment.controls.finalAmount.value;
+      this.finAmount = this.finAmountC + this.finAmountS + parseInt(this.editPayment.controls.finalAmount.value);
+    } else {
+      this.finAmount = (18 / 100) * this.editPayment.controls.finalAmount.value + parseInt(this.editPayment.controls.finalAmount.value);
+    }
     if (this.editPayment.get('dueDate').invalid) {
       this.editPayment.get('dueDate').markAsTouched();
       return
     } else if (this.editPayment.get('invoiceDate').invalid) {
       this.editPayment.get('invoiceDate').markAsTouched();
       return
-    } else {
+    }else if (this.editPayment.get('taxStatus').invalid) {
+      this.editPayment.get('taxStatus').markAsTouched();
+      return
+    }else{
       if (this.editPayment.value.id == 0) {
         const service = [{
           serviceName: this.editPayment.value.serviceName
