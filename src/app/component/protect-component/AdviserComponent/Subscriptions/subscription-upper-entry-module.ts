@@ -69,7 +69,7 @@ export const componentList = [
     EmailOnlyComponent,
     AddVariableFeeComponent,
     SubscriptionPopupComponent,
-    AddDocumentComponent
+    AddDocumentComponent,
 ]
 @NgModule({
     declarations: componentList,

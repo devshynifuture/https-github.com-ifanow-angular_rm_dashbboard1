@@ -35,7 +35,8 @@ export class PoRdSchemeComponent implements OnInit {
   }
 
   displayedColumns21 = ['no', 'owner', 'cvalue', 'rate', 'deposit', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
-  dataSource;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();

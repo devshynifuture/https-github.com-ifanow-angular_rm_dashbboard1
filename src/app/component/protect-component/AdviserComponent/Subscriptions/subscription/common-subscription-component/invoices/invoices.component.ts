@@ -51,7 +51,7 @@ export class InvoicesComponent implements OnInit {
     this.dataSource = [{}, {}, {}];
     this.getInvoiceList();
     this.advisorId = AuthService.getAdvisorId();
-    console.log('CLIENT INVOICE ');
+    console.log('CLIENT INVOICE ',this.upperData);
     this.invoiceDesign = 'true';
     this.dataCount = 0;
   }

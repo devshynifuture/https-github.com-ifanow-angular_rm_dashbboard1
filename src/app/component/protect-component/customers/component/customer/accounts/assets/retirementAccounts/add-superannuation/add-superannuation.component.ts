@@ -65,6 +65,12 @@ export class AddSuperannuationComponent implements OnInit {
       this.showHide = true;
     }
   }
+  onChange(event,value) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = "100";
+      this.superannuation.get(value).setValue(event.target.value);
+    }
+  }
   // getDateYMD(){
   //   let now = moment();
   //   this.tenure =moment(this.recuringDeposit.controls.commencementDate.value).add(this.recuringDeposit.controls.tenure.value, 'months');
