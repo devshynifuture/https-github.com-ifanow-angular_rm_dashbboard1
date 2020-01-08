@@ -82,12 +82,14 @@ export class PlansComponent implements OnInit {
 
   getPlansMappedResponse(data){
     console.log(data)
-    this.servicePlanData = data;
-    this.servicePlanData.forEach(element => {
-      if (element.selected == true) {
-        this.mappedPlan.push(element);
-      }
-    });
+    if(this.servicePlanData && this.servicePlanData !== null && this.servicePlanData !== undefined){
+      this.servicePlanData = data;
+      this.servicePlanData.forEach(element => {
+        if (element.selected == true) {
+          this.mappedPlan.push(element);
+        }
+      });
+    }
   }
   getPlansMappedToDocument() {
     const obj = {
@@ -147,17 +149,29 @@ export class PlansComponent implements OnInit {
     }
   }
   mapDocumentToPlan(){
-    const obj = [];
-    this.mappedPlan.forEach(planData => {
-      const data = {
-        // advisorId: 12345,
-        advisorId: this.advisorId,
-        documentRepositoryId:this.upperData.documentData.documentRepositoryId,
-        mappedType:this.upperData.documentData.mappedType,
-        mappingId: planData.id
-      };
-      obj.push(data);
-    });
+    let obj = [];
+    if(this.mappedPlan && this.mappedPlan !== null && this.mappedPlan !== undefined){
+      this.mappedPlan.forEach(planData => {
+        const data = {
+          // advisorId: 12345,
+          advisorId: this.advisorId,
+          documentRepositoryId:this.upperData.documentData.documentRepositoryId,
+          mappedType:this.upperData.documentData.mappedType,
+          mappingId: planData.id
+        };
+        obj.push(data);
+      });
+    }
+    if(obj.length === 0){
+      obj = [
+        {
+          advisorId: this.advisorId,
+          documentRepositoryId: 0,
+          mappedType: this.upperData ? this.upperData.documentData.mappedType: null,
+          mappingId: null
+        }
+      ]
+    }
     this.subService.mapDocumentToService(obj).subscribe(
       data => this.mapPlanToServiceRes(data)
     );
@@ -168,17 +182,26 @@ export class PlansComponent implements OnInit {
     this.eventService.openSnackBar('Service is mapped', 'OK');
   }
   saveDocumentPlanMapping() {
-    const obj = [];
-    this.mappedPlan.forEach(planData => {
-      const data = {
-        // advisorId: 12345,
-        advisorId: this.advisorId,
-
-        planId: planData.id,
-        // serviceId: this.upperData ? this.upperData.id : null
-      };
-      obj.push(data);
-    });
+    let obj = [];
+    if(this.mappedPlan && this.mappedPlan !== undefined && this.mappedPlan !== null){
+      this.mappedPlan.forEach(planData => {
+        const data = {
+          // advisorId: 12345,
+          advisorId: this.advisorId,
+          planId: planData.id,
+          // serviceId: this.upperData ? this.upperData.id : null
+        };
+        obj.push(data);
+      });
+    }
+    if(obj.length===0){
+      obj = [
+        {
+           advisorId: this.advisorId,
+           planId: 0,
+        }
+      ]
+    }
     this.subService.mapPlanToServiceSettings(obj).subscribe(
       data => this.saveMappedPlansResponse(data)
     );
