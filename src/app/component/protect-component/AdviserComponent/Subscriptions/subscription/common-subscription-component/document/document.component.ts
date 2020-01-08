@@ -287,129 +287,133 @@ export class DocumentComponent implements OnInit {
   }
 
   getplanDocumentDataResponse(data) {
-    data.forEach(singleData => {
-      singleData.isChecked = false;
-      // singleData.docText = '<h1>One morning, when Gregor Samsa woke from troubled \n' +
-      //   'dreams.</h1>\n' +
-      //   '\n' +
-      //   '\n' +
-      //   '<p>One morning, when Gregor Samsa woke from troubled \n' +
-      //   'dreams, he found himself transformed in his bed into \n' +
-      //   'a horrible vermin. He lay on his armour-like back, \n' +
-      //   'and if he lifted his head a little he could see his \n' +
-      //   'brown belly, slightly domed and divided by arches into \n' +
-      //   'stiff sections. The bedding was hardly able to cover \n' +
-      //   '<strong>strong</strong> it and seemed ready to slide \n' +
-      //   'off any moment. His many legs, pitifully thin \n' +
-      //   'compared with the size of the rest of him, \n' +
-      //   '<a class="external ext" href="#">link</a> waved about \n' +
-      //   'helplessly as he looked. "What\'s happened to me? " he \n' +
-      //   'thought. It wasn\'t a dream. His room, a proper human \n' +
-      //   'room although a little too small, lay peacefully \n' +
-      //   'between its four familiar walls.</p>\n' +
-      //   '\n' +
-      //   '\n' +
-      //   '<h1>One morning, when Gregor Samsa woke from troubled \n' +
-      //   'dreams.</h1>\n' +
-      //   '\n' +
-      //   '\n' +
-      //   '<h2>The bedding was hardly able to cover it.</h2>\n' +
-      //   '\n' +
-      //   '\n' +
-      //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
-      //   'boa who sat upright, raising a heavy fur muff that \n' +
-      //   'covered the whole of her lower arm towards the \n' +
-      //   'viewer.</p>\n' +
-      //   '\n' +
-      //   '\n' +
-      //   '<h2>The bedding was hardly able to cover it.</h2>\n' +
-      //   '\n' +
-      //   '\n' +
-      //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
-      //   'boa who sat upright, raising a heavy fur muff that \n' +
-      //   'covered the whole of her lower arm towards the \n' +
-      //   'viewer.</p>\n' +
-      //   '\n' +
-      //   '\n' +
-      //   '<ul>\n' +
-      //   '  <li>Lorem ipsum dolor sit amet consectetuer.</li>\n' +
-      //   '  <li>Aenean commodo ligula eget dolor.</li>\n' +
-      //   '  <li>Aenean massa cum sociis natoque penatibus.</li>\n' +
-      //   '</ul>\n' +
-      //   '\n' +
-      //   '\n' +
-      //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
-      //   'boa who sat upright, raising a heavy fur muff that \n' +
-      //   'covered the whole of her lower arm towards the \n' +
-      //   'viewer.</p>\n' +
-      //   '\n' +
-      //   '\n' +
-      //   '<form action="#" method="post">\n' +
-      //   '  <fieldset>\n' +
-      //   '    <label for="name">Name:</label>\n' +
-      //   '    <input type="text" id="name" placeholder="Enter your \n' +
-      //   'full name" />\n' +
-      //   '\n' +
-      //   '    <label for="email">Email:</label>\n' +
-      //   '    <input type="email" id="email" placeholder="Enter \n' +
-      //   'your email address" />\n' +
-      //   '\n' +
-      //   '    <label for="message">Message:</label>\n' +
-      //   '    <textarea id="message" placeholder="What\'s on your \n' +
-      //   'mind?"></textarea>\n' +
-      //   '\n' +
-      //   '    <input type="submit" value="Send message" />\n' +
-      //   '\n' +
-      //   '  </fieldset>\n' +
-      //   '</form>\n' +
-      //   '\n' +
-      //   '\n' +
-      //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
-      //   'boa who sat upright, raising a heavy fur muff that \n' +
-      //   'covered the whole of her lower arm towards the \n' +
-      //   'viewer.</p>\n' +
-      //   '\n' +
-      //   '\n' +
-      //   '<table class="data">\n' +
-      //   '  <tr>\n' +
-      //   '    <th>Entry Header 1</th>\n' +
-      //   '    <th>Entry Header 2</th>\n' +
-      //   '    <th>Entry Header 3</th>\n' +
-      //   '    <th>Entry Header 4</th>\n' +
-      //   '  </tr>\n' +
-      //   '  <tr>\n' +
-      //   '    <td>Entry First Line 1</td>\n' +
-      //   '    <td>Entry First Line 2</td>\n' +
-      //   '    <td>Entry First Line 3</td>\n' +
-      //   '    <td>Entry First Line 4</td>\n' +
-      //   '  </tr>\n' +
-      //   '  <tr>\n' +
-      //   '    <td>Entry Line 1</td>\n' +
-      //   '    <td>Entry Line 2</td>\n' +
-      //   '    <td>Entry Line 3</td>\n' +
-      //   '    <td>Entry Line 4</td>\n' +
-      //   '  </tr>\n' +
-      //   '  <tr>\n' +
-      //   '    <td>Entry Last Line 1</td>\n' +
-      //   '    <td>Entry Last Line 2</td>\n' +
-      //   '    <td>Entry Last Line 3</td>\n' +
-      //   '    <td>Entry Last Line 4</td>\n' +
-      //   '  </tr>\n' +
-      //   '</table>\n' +
-      //   '\n' +
-      //   '\n' +
-      //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
-      //   'boa who sat upright, raising a heavy fur muff that \n' +
-      //   'covered the whole of her lower arm towards the \n' +
-      //   'viewer.</p>\n';
-    });
-    console.log('document Data', data);
-    this.planDocumentData = data;
-    this.planDocumentData.forEach(element => {
-      if (element.selected == true) {
-        this.mappedData.push(element);
-      }
-    });
+    if(data !== undefined){
+      data.forEach(singleData => {
+        singleData.isChecked = false;
+        // singleData.docText = '<h1>One morning, when Gregor Samsa woke from troubled \n' +
+        //   'dreams.</h1>\n' +
+        //   '\n' +
+        //   '\n' +
+        //   '<p>One morning, when Gregor Samsa woke from troubled \n' +
+        //   'dreams, he found himself transformed in his bed into \n' +
+        //   'a horrible vermin. He lay on his armour-like back, \n' +
+        //   'and if he lifted his head a little he could see his \n' +
+        //   'brown belly, slightly domed and divided by arches into \n' +
+        //   'stiff sections. The bedding was hardly able to cover \n' +
+        //   '<strong>strong</strong> it and seemed ready to slide \n' +
+        //   'off any moment. His many legs, pitifully thin \n' +
+        //   'compared with the size of the rest of him, \n' +
+        //   '<a class="external ext" href="#">link</a> waved about \n' +
+        //   'helplessly as he looked. "What\'s happened to me? " he \n' +
+        //   'thought. It wasn\'t a dream. His room, a proper human \n' +
+        //   'room although a little too small, lay peacefully \n' +
+        //   'between its four familiar walls.</p>\n' +
+        //   '\n' +
+        //   '\n' +
+        //   '<h1>One morning, when Gregor Samsa woke from troubled \n' +
+        //   'dreams.</h1>\n' +
+        //   '\n' +
+        //   '\n' +
+        //   '<h2>The bedding was hardly able to cover it.</h2>\n' +
+        //   '\n' +
+        //   '\n' +
+        //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
+        //   'boa who sat upright, raising a heavy fur muff that \n' +
+        //   'covered the whole of her lower arm towards the \n' +
+        //   'viewer.</p>\n' +
+        //   '\n' +
+        //   '\n' +
+        //   '<h2>The bedding was hardly able to cover it.</h2>\n' +
+        //   '\n' +
+        //   '\n' +
+        //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
+        //   'boa who sat upright, raising a heavy fur muff that \n' +
+        //   'covered the whole of her lower arm towards the \n' +
+        //   'viewer.</p>\n' +
+        //   '\n' +
+        //   '\n' +
+        //   '<ul>\n' +
+        //   '  <li>Lorem ipsum dolor sit amet consectetuer.</li>\n' +
+        //   '  <li>Aenean commodo ligula eget dolor.</li>\n' +
+        //   '  <li>Aenean massa cum sociis natoque penatibus.</li>\n' +
+        //   '</ul>\n' +
+        //   '\n' +
+        //   '\n' +
+        //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
+        //   'boa who sat upright, raising a heavy fur muff that \n' +
+        //   'covered the whole of her lower arm towards the \n' +
+        //   'viewer.</p>\n' +
+        //   '\n' +
+        //   '\n' +
+        //   '<form action="#" method="post">\n' +
+        //   '  <fieldset>\n' +
+        //   '    <label for="name">Name:</label>\n' +
+        //   '    <input type="text" id="name" placeholder="Enter your \n' +
+        //   'full name" />\n' +
+        //   '\n' +
+        //   '    <label for="email">Email:</label>\n' +
+        //   '    <input type="email" id="email" placeholder="Enter \n' +
+        //   'your email address" />\n' +
+        //   '\n' +
+        //   '    <label for="message">Message:</label>\n' +
+        //   '    <textarea id="message" placeholder="What\'s on your \n' +
+        //   'mind?"></textarea>\n' +
+        //   '\n' +
+        //   '    <input type="submit" value="Send message" />\n' +
+        //   '\n' +
+        //   '  </fieldset>\n' +
+        //   '</form>\n' +
+        //   '\n' +
+        //   '\n' +
+        //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
+        //   'boa who sat upright, raising a heavy fur muff that \n' +
+        //   'covered the whole of her lower arm towards the \n' +
+        //   'viewer.</p>\n' +
+        //   '\n' +
+        //   '\n' +
+        //   '<table class="data">\n' +
+        //   '  <tr>\n' +
+        //   '    <th>Entry Header 1</th>\n' +
+        //   '    <th>Entry Header 2</th>\n' +
+        //   '    <th>Entry Header 3</th>\n' +
+        //   '    <th>Entry Header 4</th>\n' +
+        //   '  </tr>\n' +
+        //   '  <tr>\n' +
+        //   '    <td>Entry First Line 1</td>\n' +
+        //   '    <td>Entry First Line 2</td>\n' +
+        //   '    <td>Entry First Line 3</td>\n' +
+        //   '    <td>Entry First Line 4</td>\n' +
+        //   '  </tr>\n' +
+        //   '  <tr>\n' +
+        //   '    <td>Entry Line 1</td>\n' +
+        //   '    <td>Entry Line 2</td>\n' +
+        //   '    <td>Entry Line 3</td>\n' +
+        //   '    <td>Entry Line 4</td>\n' +
+        //   '  </tr>\n' +
+        //   '  <tr>\n' +
+        //   '    <td>Entry Last Line 1</td>\n' +
+        //   '    <td>Entry Last Line 2</td>\n' +
+        //   '    <td>Entry Last Line 3</td>\n' +
+        //   '    <td>Entry Last Line 4</td>\n' +
+        //   '  </tr>\n' +
+        //   '</table>\n' +
+        //   '\n' +
+        //   '\n' +
+        //   '<p>It showed a lady fitted out with a fur hat and fur \n' +
+        //   'boa who sat upright, raising a heavy fur muff that \n' +
+        //   'covered the whole of her lower arm towards the \n' +
+        //   'viewer.</p>\n';
+      });
+
+      console.log('document Data', data);
+      this.planDocumentData = data;
+      this.planDocumentData.forEach(element => {
+        if (element.selected == true) {
+          this.mappedData.push(element);
+        }
+      });
+
+    }
 
   }
 
@@ -584,7 +588,7 @@ export class DocumentComponent implements OnInit {
   saveMappingDocumentToPlans() {
 
     let obj = [];
-    if(this.mappedData.length !== 0){
+    if(this.mappedData){
       this.mappedData.forEach(element => {
         const data = {
           // advisorId: 12345,
@@ -600,19 +604,28 @@ export class DocumentComponent implements OnInit {
         {
           advisorId: this.advisorId,
           documentRepositoryId: 0,
-          mappingId: this.upperData.id
+          mappingId: 0
         }
       ]
     }
     this.subService.mapDocumentsToPlanData(obj).subscribe(
-      data => this.saveMappingDocumentToPlansResponse(data)
+      data => {
+        console.log("error status:::::::::::::", data);
+        if(data !== 304){
+          this.saveMappingDocumentToPlansResponse(data);
+        }
+        else if(data === 304){
+          this.eventService.openSnackBar('No Documents Created', 'dismiss');
+        }
+      }  
     );
 
   }
 
   saveMappingDocumentToPlansResponse(data) {
+    console.log("response status:::::::::::::::", data);
     this.eventService.changeUpperSliderState({state: 'close'});
-    if (this.mappedData.length === 0) {
+    if (this.mappedData) {
       this.eventService.openSnackBar('No Document mapped', 'Dismiss');
     } else {
       this.eventService.openSnackBar('Document is mapped', 'OK');
@@ -621,18 +634,21 @@ export class DocumentComponent implements OnInit {
 
   savePlanMapToDocument() {
     let obj = [];
-    this.mappedData.forEach(element => {
-      const data = {
-        // advisorId: 12345,
-        advisorId: this.advisorId,
-        documentRepositoryId: element.documentRepositoryId,
-        planId: 10
-      };
-      obj.push(data);
-    });
-    this.subService.mapDocumentsToPlanData(obj).subscribe(
-      data => console.log(data)
-    );
+    if(this.mappedData){
+      this.mappedData.forEach(element => {
+        const data = {
+          // advisorId: 12345,
+          advisorId: this.advisorId,
+          documentRepositoryId: element.documentRepositoryId,
+          planId: 10
+        };
+        obj.push(data);
+      });
+      this.subService.mapDocumentsToPlanData(obj).subscribe(
+        data => console.log(data)
+      );
+
+    }
   }
 
   display(data) {

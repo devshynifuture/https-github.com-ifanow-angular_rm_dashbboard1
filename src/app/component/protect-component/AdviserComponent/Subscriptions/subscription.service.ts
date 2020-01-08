@@ -109,6 +109,7 @@ export class SubscriptionService {
   }
 
   mapDocumentsToPlanData(data) {
+    console.log("this is something which im looking for :::::::::::", data);
     return this.http.post(apiConfig.MAIN_URL + appConfig.MAP_DOCUMENTS_TO_PLAN, data);
   }
 
