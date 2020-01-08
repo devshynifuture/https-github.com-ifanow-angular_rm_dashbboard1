@@ -17,6 +17,7 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.routingState.setMainRouter(this.mainrouter);
+
   }
 
   constructor(

@@ -48,7 +48,7 @@
                         <div class="col-md-6 sub_input">
                             <!-- <div class="form-group mb-0">
                                 <mat-form-field>
-                                     <mat-label>FILTERS ONE</mat-label> 
+                                     <mat-label>FILTERS ONE</mat-label>
                                     <mat-select class="form-control" id="sel11" [(value)]='selectedStatusFilter' (selectionChange)="addFilters(selectedStatusFilter)">
                                         <mat-option value="status">By status</mat-option>
                                         <mat-option *ngFor="let chip of chips" [value]="chip">
@@ -184,7 +184,7 @@
                     <button (click)="showFilters(showFilter)" class="btn-default addon" mat-stroked-button><i
                             class="material-icons">filter_list</i>FILTERS
                     </button>
-                   
+
                 </div>
             </div>
             <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
@@ -304,7 +304,7 @@
                         <div class="bar"> {{element.signedDate | date:'dd/MM/yyyy'}} </div>
                     </td>
                 </ng-container>
-               
+
                 <ng-container matColumnDef="status">
                     <th mat-sort-header="status" *matHeaderCellDef class=" t-10" mat-header-cell> Status</th>
                     <td *matCellDef="let element" mat-cell>

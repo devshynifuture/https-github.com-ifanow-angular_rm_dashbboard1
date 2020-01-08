@@ -10,11 +10,13 @@
   <div class="row pt-72 bb-1">
     <div class="col-md-8 pt-4 pb-12">
       <img src="assets/images/svg/mail-light.svg" class="b-a c-p" (click)="openSendEmail()">
-      <img src="assets/images/svg/pdf-icons.svg" class="b-a">
+      <img (click)="generatePdf()" class="b-a" src="assets/images/svg/pdf-icons.svg">
       <img src="assets/images/svg/printer.svg" class="b-a">
       <img src="assets/images/svg/attech-light.svg" class="wrapper-9 b-a">
       <img src="assets/images/svg/delete.svg" (click)="deleteModal('DOCUMENT')" class="b-a wrapper-9 ml-8">
     </div>
+    <!--    <ng-template *ngIf="true" #renderElement></ng-template>-->
+
     <div class="col-md-4 pt-4 pb-12">
       <p class="m-0 text-black text-right c-p pr-16 pt-8" (click)="openFroala()">Activity log</p>
     </div>
@@ -24,7 +26,7 @@
       <div class="col-md-9 p-0">
         <h3 class="mb-8 mt-20">{{storeData.documentName}}</h3>
         <!-- <textarea [froalaEditor]="config" (froalaModelChange)="onChange($event)" [(froalaModel)]="model"></textarea> -->
-        <app-froala [(model)]="storeData.documentText" modelChange="saveData($event)"></app-froala>
+        <app-froala (modelChange)="saveData($event)" [(model)]="storeData.documentText"></app-froala>
         <!-- <div id="ui-froala">
                 <div [froalaEditor] formControlName="mail_body">Hello, Froala!</div>
           <button type="submit" (click)="onSubmit()" [disabled]="!mailForm.valid" mat-stroked-button
@@ -100,11 +102,12 @@
           arrow_drop_up
         </i></button> -->
         <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="changeFooter=='viewQuotation' "
-          (click)="save()">SAVE</button>
+                (click)="save()">SAVE
+        </button>
         <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="changeFooter!='viewQuotation'"
-          (click)="Open('eSignRequestDocuments','open',null)">Email with eSign Request <i class="material-icons">
-            arrow_drop_up
-          </i></button>
+                (click)="Open('eSignRequestDocuments','open',null)">Email with eSign Request <i class="material-icons">
+          arrow_drop_up
+        </i></button>
 
       </div>
     </div>
@@ -121,3 +124,5 @@
     </div>
   </div>
 </div>
+
+<div #renderElement *ngIf="true" [hidden]="true"></div>
