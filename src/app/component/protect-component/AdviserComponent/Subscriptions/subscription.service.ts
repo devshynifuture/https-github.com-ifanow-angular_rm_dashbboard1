@@ -316,6 +316,11 @@ export class SubscriptionService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_GET, httpParams);
   }
 
+  getEsignedDocument(data) {
+    const httpParams = new HttpParams().set('id', data.id);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ESIGNED_DOCUMENT_GET, httpParams);
+  }
+
   updateDocumentData(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_UPDATE, data);
   }

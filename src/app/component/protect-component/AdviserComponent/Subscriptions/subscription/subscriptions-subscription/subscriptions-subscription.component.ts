@@ -255,6 +255,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
   }
 
   openPlanSlider(value, state, data) {
+    console.log("call get 123");
     if (this.isLoading) {
       return
     }
@@ -280,7 +281,9 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-          this.getSummaryDataAdvisor(false);
+          setTimeout(() => {
+            this.getSummaryDataAdvisor(false);
+          }, 1000);
         }
       }
     );

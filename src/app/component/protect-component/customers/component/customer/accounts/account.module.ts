@@ -14,6 +14,7 @@ import { AccountRoutingModule } from './account-routing.module';
 import { AccountsComponent } from './accounts.component';
 import { LibilitiesRightComponent } from './liabilities/libilities-right/libilities-right.component';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { AddNomineeComponent } from './assets/smallSavingScheme/common-component/add-nominee/add-nominee.component';
 @NgModule({
   declarations: [
     SchemeLevelTransactionComponent,

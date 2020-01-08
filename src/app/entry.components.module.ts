@@ -85,6 +85,7 @@ import { MultiYearGoalComponent } from './component/protect-component/customers/
 import { SelectAdviceComponent } from './component/protect-component/customers/component/customer/customer-activity/advice-activity/select-advice/select-advice.component';
 import { HistoryRiskProfileComponent } from './component/protect-component/customers/component/customer/plan/profile-plan/history-risk-profile/history-risk-profile.component';
 import { CustomDirectiveModule } from './common/directives/common-directive.module';
+import { AddNomineeComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/add-nominee/add-nominee.component';
 
 
 export const componentList = [
@@ -219,7 +220,9 @@ export const componentList = [
   CurrentPolicyComponent,
   SingleGoalYearComponent,
   MultiYearGoalComponent,
-  SelectAdviceComponent
+  SelectAdviceComponent,
+  AddNomineeComponent,
+
   // ComposeEmailComponent
 ];
 

@@ -1,10 +1,12 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from "../../../../../../../auth-service/authService";
-import {ValidatorType} from "../../../../../../../services/util.service";
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from "../../../../../../../auth-service/authService";
+import { ValidatorType } from "../../../../../../../services/util.service";
+import { MatChipInputEvent } from '@angular/material';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-email-only',
@@ -42,12 +44,13 @@ export class EmailOnlyComponent implements OnInit {
   advisorData: any;
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-              public subscription: SubscriptionService) {
+    public subscription: SubscriptionService) {
     this.advisorId = AuthService.getAdvisorId();
 
     // this.dataSub = this.subInjectService.singleProfileData.subscribe(
     //   data => this.getcommanFroalaData(data)
     // );
+
   }
 
   // @Input()
@@ -179,17 +182,16 @@ export class EmailOnlyComponent implements OnInit {
   //   });
   // }
   close() {
-    this.subInjectService.changeUpperRightSliderState({state: 'close'});
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
 
     // this.valueChange.emit(this.emailSend);
   }
 
-  remove(item) {
-    this.docObj.splice(item, 1);
-    // this.callFilter();
+  // remove(item) {
+  //   this.docObj.splice(item, 1);
 
-  }
+  // }
 
   getEmailTemplate() {
     const obj = {
@@ -321,9 +323,43 @@ export class EmailOnlyComponent implements OnInit {
     if (inputChar == ',') {
       event.preventDefault();
       const emailId = this._inputData.clientData.userEmailId;
-      this.emailIdList.push({emailAddress: emailId});
+      this.emailIdList.push({ emailAddress: emailId });
       this._inputData.clientData.userEmailId = '';
     }
   }
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  fruits: Fruit[] = [
+    { name: 'Abc@mail.com' },
 
+  ];
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.fruits.push({ name: value.trim() });
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(fruit: Fruit): void {
+    const index = this.fruits.indexOf(fruit);
+
+    if (index >= 0) {
+      this.fruits.splice(index, 1);
+    }
+  }
+}
+export interface Fruit {
+  name: string;
 }

@@ -23,12 +23,6 @@
   width: 220px !important;
 }
 
-::ng-deep .mat-datepicker-toggle {
-  float: left;
-  left: 0%;
-  right: auto;
-  top: auto !important;
-}
 
 // ::ng-deep .mat-select {
 //     border: 1px solid rgba(0, 0, 0, .12) !important;
@@ -53,25 +47,26 @@
 //   }
 // }
 
-#table-low th {
-  padding: 7px 8px !important;
-  font-weight: 600;
-  font-size: 13px !important;
-}
+// #table-low th {
+//   padding: 7px 8px !important;
+//   font-weight: 600;
+//   font-size: 13px !important;
+// }
 
-.stickyHeader {
-  position: sticky;
-  top: 76px !important;
+// .stickyHeader {
+//   position: sticky;
+//   top: 76px !important;
 
-  th {
-    position: sticky;
-    top: 76px !important;
-  }
-}
+//   th {
+//     position: sticky;
+//     top: 76px !important;
+//   }
+// }
 
-.example-container {
-  height: 270px;
-  overflow: auto;
+.tableClass {
+  // height: 270px;
+  // overflow: auto;
+  // border: 1px solid #DADCE0;
 }
 
 .width400 {

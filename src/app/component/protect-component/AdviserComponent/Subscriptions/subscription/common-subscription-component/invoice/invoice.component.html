@@ -1314,7 +1314,7 @@
                     </div>
                  </div>
                  <div class="col-md-2 pl-0">
-                    <input (keypress)="utils.keyPress($event)" [(ngModel)]="finalAmount" class="form-control br-0"
+                    <input #finalAmountInput (keypress)="utils.keyPress($event)" [(ngModel)]="finalAmount" class="form-control br-0"
                     formControlName="finalAmount" type="number">
                     <div class="col-md-8">
                        <mat-error
@@ -1341,9 +1341,9 @@
                  </div>
                  {{storeData.taxStatus}}
                  <div class="col-md-2 d-flex align-items-center justify-content-end">
-                    <h5 *ngIf="storeData.cgstTaxAmount == undefined || storeData.igstTaxAmount"
+                    <h5 
                        class="m-0 text-right ">
-                       ₹{{(18 / 100) * finalAmount + +finalAmount}}
+                      {{finalAmount}}
                     </h5>
                     <h5 *ngIf="storeData.sgst != undefined" [hidden]="finalAmount !=undefined"
                     class="m-0 text-right ">
@@ -1367,12 +1367,12 @@
      </div>
      <div class="row pt-20">
         <div class="col-md-8"></div>
-        <div class="col-md-2">
-           <h5 class="m-0">Discount ₹</h5>
+        <div class="col-md-2 pt-12">
+            <h5 class="m-0">Discount ₹</h5>
         </div>
         <div class="col-md-2 pr-24">
-           <input (keypress)="utils.keyPress($event)" [(ngModel)]="discount" class="form-control br-0 text-right"
-           formControlName="discount" onKeyPress="if(this.value.length==2) return false;" pattern="\d*"
+           <input appInputValueValidation  [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="finalAmountInput.value" [(ngModel)]="discount" class="form-control br-0 text-right"
+           formControlName="discount" 
            type="number">
         </div>
      </div>
