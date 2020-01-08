@@ -12,6 +12,8 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { DatePipe } from '@angular/common';
 import { UtilService } from "../../../../../../../services/util.service";
 
+
+
 @Component({
   selector: 'app-create-subscription',
   templateUrl: './create-subscription.component.html',
@@ -78,7 +80,7 @@ export class CreateSubscriptionComponent implements OnInit {
     dueDateFrequency: [5, [Validators.required]]
   });
   subscriptionDetailsStepper = this.fb.group({
-    subscriptionDetailsStepper: [, [Validators.required]]
+    subscriptionDetailsStepper: ['', [Validators.required]]
   });
   feeStructureForm = this.fb.group({
     feeStructure: ['', [Validators.required]]
@@ -121,55 +123,43 @@ export class CreateSubscriptionComponent implements OnInit {
     if (this.stepper == undefined) {
       return;
     }
-    if (this.stepper.selectedIndex == 4) {
-      let date = this.subscriptionDetails.controls.activationDate.value;
+    if (this.stepper.selectedIndex == 2) {
+      let date = new Date(this.subscriptionDetails.controls.activationDate.value)
+      console.log(date, "sub DAte");
+      (this.clientData.billingCycle == 1) ? this.billEveryMsg = "monthly" : this.billEveryMsg = "yearly";
       if (this.clientData.feeTypeId == 1) {
-        if (this.clientData.billingNature == "2" || this.clientData.billingMode == '1') {
-          this.subDateToShow = this.subscriptionDetails.controls.activationDate.value;
-          (this.clientData.billingCycle == 1) ? this.billEveryMsg = "monthly" : this.billEveryMsg = "yearly"
-          date = null;
-          return;
+        if (this.clientData.billingNature == "2") {
+
         }
         else {
-          if (this.clientData.billingCycle == 1) {
-            console.log(new Date(date))
-            date = date.setMonth(date.getMonth() + this.clientData.billEvery)
-            console.log(new Date(date))
-            this.subDateToShow = date;
-            this.billEveryMsg = "monthly"
-            date = null;
+          if (this.clientData.billingMode == '1') {
+            console.log("start of period")
           }
           else {
-            console.log(new Date(date))
-            date = date.setMonth(date.getMonth() + this.clientData.billEvery * 12)
-            console.log(new Date(date))
-            this.subDateToShow = date;
-            this.billEveryMsg = "yearly"
-            date = null;
+            if (this.clientData.billingCycle == 1) {
+              console.log("1")
+              date.setMonth(date.getMonth() + this.clientData.billEvery)
+            }
+            else {
+              console.log("2")
+              date.setFullYear(date.getFullYear() + parseInt(this.clientData.billEvery));
+            }
           }
         }
       }
       else {
         if (this.clientData.billingCycle == 1) {
-          console.log(new Date(date))
-          date = date.setMonth(date.getMonth() + this.clientData.billEvery)
-          console.log(new Date(date))
-          this.subDateToShow = date;
-          this.billEveryMsg = "monthly"
-          date = null;
+          console.log("1")
+          date.setMonth(date.getMonth() + this.clientData.billEvery)
         }
         else {
-          console.log(new Date(date))
-          date = date.setMonth(date.getMonth() + this.clientData.billEvery * 12)
-          console.log(new Date(date))
-          this.subDateToShow = date;
-          this.billEveryMsg = "yearly"
-          date = null;
+          console.log("2")
+          date.setFullYear(date.getFullYear() + parseInt(this.clientData.billEvery));
         }
       }
-
-      console.log(new Date(date))
+      this.subDateToShow = date;
     }
+
     console.log(this.subscriptionDetails);
   }
   getSharesInfo(data) {

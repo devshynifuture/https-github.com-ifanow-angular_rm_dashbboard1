@@ -1,10 +1,10 @@
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from "../../../../../../../auth-service/authService";
-import { ValidatorType } from "../../../../../../../services/util.service";
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from "../../../../../../../auth-service/authService";
+import {ValidatorType} from "../../../../../../../services/util.service";
 
 @Component({
   selector: 'app-email-only',
@@ -42,7 +42,7 @@ export class EmailOnlyComponent implements OnInit {
   advisorData: any;
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-    public subscription: SubscriptionService) {
+              public subscription: SubscriptionService) {
     this.advisorId = AuthService.getAdvisorId();
 
     // this.dataSub = this.subInjectService.singleProfileData.subscribe(
@@ -179,8 +179,8 @@ export class EmailOnlyComponent implements OnInit {
   //   });
   // }
   close() {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeUpperRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
 
     // this.valueChange.emit(this.emailSend);
   }
@@ -272,7 +272,7 @@ export class EmailOnlyComponent implements OnInit {
       const inviteeList = [];
       this.emailIdList.forEach(singleEmail => {
         inviteeList.push({
-          // name: this._inputData.clientName,
+          name: this._inputData.clientName ? this._inputData.clientName : singleEmail.emailAddress,
           email: singleEmail.emailAddress,
           webhook: {
             success: 'http://dev.ifanow.in:8080/futurewise/api/v1/1/subscription/invoice/esignSuccessResponse/post',
@@ -321,7 +321,7 @@ export class EmailOnlyComponent implements OnInit {
     if (inputChar == ',') {
       event.preventDefault();
       const emailId = this._inputData.clientData.userEmailId;
-      this.emailIdList.push({ emailAddress: emailId });
+      this.emailIdList.push({emailAddress: emailId});
       this._inputData.clientData.userEmailId = '';
     }
   }

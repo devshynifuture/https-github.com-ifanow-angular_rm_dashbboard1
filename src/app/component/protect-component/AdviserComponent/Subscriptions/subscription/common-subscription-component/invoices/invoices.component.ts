@@ -32,6 +32,7 @@ export class InvoicesComponent implements OnInit {
   advisorId: any;
   _clientData: any;
   list: any[];
+  uperDataToClient: any;
 
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, private subService: SubscriptionService, public dialog: MatDialog) {
@@ -51,7 +52,7 @@ export class InvoicesComponent implements OnInit {
     this.dataSource = [{}, {}, {}];
     this.getInvoiceList();
     this.advisorId = AuthService.getAdvisorId();
-    console.log('CLIENT INVOICE ');
+    console.log('CLIENT INVOICE ',this.upperData);
     this.invoiceDesign = 'true';
     this.dataCount = 0;
   }
@@ -83,6 +84,7 @@ export class InvoicesComponent implements OnInit {
   }
   openEdit(edit) {
     this.invoiceDesign = edit;
+    this.uperDataToClient = this.upperData.id
     console.log('edit', edit);
   }
 

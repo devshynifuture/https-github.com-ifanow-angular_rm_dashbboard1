@@ -168,6 +168,6 @@
         (valueChange)='display($event)'></app-terms-agreement>
 </div>
 <div class="pt-180">
-    <app-invoice [invoiceValue]="invoiceDesign" *ngIf="invoiceDesign=='edit'" (valueChange)='display($event)'>
+    <app-invoice [invoiceValue]="invoiceDesign" [upperData]="uperDataToClient"*ngIf="invoiceDesign=='edit'" (valueChange)='display($event)'>
     </app-invoice>
 </div>

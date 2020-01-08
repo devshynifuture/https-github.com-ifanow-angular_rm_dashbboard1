@@ -44,7 +44,7 @@
         </div>
         <div class="col-md-3 pl-0">
             <mat-form-field>
-                <input class="form-control br-0" matInput [matDatepicker]="picker" formControlName="dateOfReceipt">
+                <input class="form-control br-0" matInput [matDatepicker]="picker" formControlName="dateOfReceipt" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12 pt-4" *ngIf="isdateValid && getFormControl().dateOfReceipt.invalid || (getFormControl().dateOfReceipt.touched && getFormControl().dateOfReceipt.invalid)">
@@ -92,14 +92,14 @@
         <div class="col-md-3 pl-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #interest class="form-control br-0 percentage" (keypress)="keyPress($event)" formControlName="interest" maxlength="{{getFormControl().interest.maxLength}}">
-                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isinterestRate && getFormControl().interest.invalid || getFormControl().interest.touched && getFormControl().interest.invalid)}">
+                    <input matInput #interest class="form-control br-0 percentage"   (keyup)="onChange($event)" (keypress)="keyPress($event)" formControlName="interest">
+                    <mat-error class="f-12 pt-4" >
                         Interest rate is required
                     </mat-error>
-                    <mat-hint align="end" class="f-12">{{interest.value.length}}/20</mat-hint>
                 </mat-form-field>
             </div>
         </div>
+
     </div>
     <div class="row pt-40">
         <div class="col-md-5 text-right">
@@ -107,11 +107,11 @@
         </div>
         <div class="col-md-3 pl-0">
             <mat-form-field>
-                <input class="form-control br-0" matInput [matDatepicker]="picker2" formControlName="dateOfRepayment">
-                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                <mat-datepicker #picker2></mat-datepicker>
-                <mat-error class="f-12 pt-4" *ngIf="isDateOfRepayment && getFormControl().dateOfRepayment.invalid || (getFormControl().dateOfRepayment.touched && getFormControl().dateOfRepayment.invalid)">
-                    Date of repayment is required</mat-error>
+                    <input [matDatepicker]="picker2" class="form-control br-0" formControlName="dateOfRepayment" matInput readonly>
+                                    <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                    <mat-error class="f-12 pt-4">Date of repayment is required
+                                    </mat-error>
             </mat-form-field>
 
         </div>
@@ -156,7 +156,7 @@
             <div class="col-md-3 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #collateral class="form-control br-0" formControlName="collateral">
+                        <input matInput #collateral class="form-control br-0" formControlName="collateral" maxlength="{{getFormControl().collateral.maxLength}}">
                         <mat-hint align="start" class="f-12">Option</mat-hint>
                         <mat-hint align="end" class="f-12">{{collateral.value.length}}/20</mat-hint>
                     </mat-form-field>

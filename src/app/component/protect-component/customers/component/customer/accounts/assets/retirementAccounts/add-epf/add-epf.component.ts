@@ -64,6 +64,12 @@ export class AddEPFComponent implements OnInit {
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' })
   }
+  onChange(event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = "100";
+      this.epf.get('annualSalGrowth').setValue(event.target.value);
+    }
+  }
   getdataForm(data) {
     if (data == undefined) {
       data = {}

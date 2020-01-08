@@ -45,12 +45,12 @@
                                 </div>
 
                                 <div class="col-md-3 d-flex justify-content-end align-items-center">
-                                    <button mat-stroked-button *ngIf="singleBillerProfile.isPrimary == true" class="text-primary br-0  ml-12"> PRIMARY </button>
+                                    <button mat-stroked-button *ngIf="singleBillerProfile.isPrimary == true && billerProfileData.length > 1" class="text-primary br-0  ml-12"> PRIMARY </button>
                                     <i class="material-icons text-right right text-custom f-28 c-p" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
                                         more_vert
                                     </i>
                                     <mat-menu #menu="matMenu">
-                                        <a mat-menu-item (click)="getBillerPrimary(singleBillerProfile)">Set as
+                                        <a mat-menu-item *ngIf="billerProfileData.length > 1" (click)="getBillerPrimary(singleBillerProfile)">Set as
                                             primary</a>
                                         <a mat-menu-item (click)="Open(singleBillerProfile,'editbillerProfile')">Edit
                                             biller profile</a>
@@ -74,10 +74,7 @@
                                             </div>
                                             <p class="f-12 pt-24">ADDRESS</p>
                                             <div class="bar">
-                                                <h5>{{singleBillerProfile.billerAddress}},
-                                                    <br>{{singleBillerProfile.city}}
-                                                    <br>{{singleBillerProfile.zipCode}}, {{singleBillerProfile.state}},
-                                                    <br> {{singleBillerProfile.country}}</h5>
+                                                <h5>{{singleBillerProfile.billerAddress}}</h5>
                                             </div>
                                         </div>
                                         <hr>
@@ -109,10 +106,7 @@
                                                     </div>
                                                     <p class="f-12 pt-24">ADDRESS</p>
                                                     <div class="bar">
-                                                        <h5>{{singleBillerProfile.billerAddress}},
-                                                            <br>{{singleBillerProfile.city}}
-                                                            <br>{{singleBillerProfile.zipCode}}, {{singleBillerProfile.state}},
-                                                            <br> {{singleBillerProfile.country}}</h5>
+                                                        <h5>{{singleBillerProfile.branchAddress}}</h5>
                                                     </div>
                                                 </div>
                                             </div>

@@ -482,7 +482,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
             this.dataCount = 0;
             this.eventService.openSnackBar('invoice deleted successfully.', 'dismiss');
             dialogRef.close();
-            this.getInvoiceSubData(false);
+            
           },
           err => this.eventService.openSnackBar(err)
         );
@@ -501,7 +501,10 @@ export class InvoicesSubscriptionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
+      console.log(result,"");
+      this.dataSource.data = [{}, {}, {}];
+      this.tableData = [];
+      this.getInvoiceSubData(false);
     });
   }
 }

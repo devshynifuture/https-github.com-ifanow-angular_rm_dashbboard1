@@ -32,7 +32,7 @@ export class CommonFroalaComponent implements OnInit {
   }
 }
 */
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {EventService} from 'src/app/Data-service/event.service';
@@ -41,7 +41,10 @@ import {MatDialog} from '@angular/material';
 import {SubscriptionService} from '../../../subscription.service';
 import {UtilService} from 'src/app/services/util.service';
 import {EmailOnlyComponent} from '../email-only/email-only.component';
-import {AuthService} from "../../../../../../../auth-service/authService";
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {PdfService} from '../../../../../../../services/pdf.service';
+
+// import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-common-froala',
@@ -55,12 +58,21 @@ import {AuthService} from "../../../../../../../auth-service/authService";
     }
   ]
 })
-export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
+export class CommonFroalaComponent implements ControlValueAccessor, OnInit, AfterViewInit {
+
+
   dataSub: any;
   storeData: any;
   inputData: any;
   templateType: number;
   advisorId;
+  /*@ViewChild('renderElement', {
+    static: true
+  }) renderElement;*/
+  @ViewChild('renderElement', {
+    read: ElementRef,
+    static: false
+  }) renderElement: ElementRef;
 
   constructor(public subscription: SubscriptionService, public subInjectService: SubscriptionInject,
               public eventService: EventService, public dialog: MatDialog) {
@@ -98,6 +110,12 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
     this.showActivityLog = false;
     console.log('CommonFroalaComponent ngOnInit screenType: ', this.screenType);
     console.log(this.changeFooter);
+  }
+
+  ngAfterViewInit(): void {
+    if (this.renderElement && this.renderElement.nativeElement && this.storeData) {
+      this.renderElement.nativeElement.innerHTML = this.storeData.documentText;
+    }
   }
 
   getcommanFroalaData(data) {
@@ -153,6 +171,8 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
   saveData(data) {
     console.log(data);
     this.storeData.documentText = data;
+    this.storeData.docText = data;
+    this.renderElement.nativeElement.innerHTML = data;
   }
 
   save() {
@@ -239,6 +259,62 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit {
     //   }
     // });
     this.OpenEmail(data, 'email');
+  }
+
+  generatePdf() {
+    // console.log('ViewContainerRef generatePDF : ', this.renderElement);
+    // console.log('ViewContainerRef generatePDF : ', this.renderElement.nativeElement);
+    this.renderElement.nativeElement.innerHTML = this.storeData.documentText;
+
+    // PdfService.generateTestDocument();
+    let docName: string = this.storeData.docName;
+    if (docName) {
+      if (!docName.includes('.pdf')) {
+        docName += '.pdf';
+      }
+    } else {
+      docName = 'documnent.pdf';
+    }
+    const opt = {
+      margin: 1,
+      filename: docName,
+      // image: {type: 'jpeg', quality: 0.98},
+      html2canvas: {scale: 2},
+      jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}
+    };
+
+    // html2pdf().from(this.renderElement.nativeElement).save();
+    // html2pdf().from(this.renderElement.nativeElement).toContainer().toCanvas().toImg().toPdf().save();
+    // if (!window.html2canvas) {
+    //   window.html2canvas = html2canvas;
+    // }
+    /* html2canvas(this.renderElement.nativeElement).then(canvas => {
+       console.log('html2canvas canvas : ', canvas);
+
+       PdfService.generatePdfFromCanvas(canvas, docName);
+     }).catch(error => {
+       console.info('html2canvas renderElement error : ', error);
+     });*/
+    /*html2canvas(document.querySelector("#renderElement")).then(canvas => {
+      console.log('html2canvas querySelector canvas : ', canvas);
+
+      // document.body.appendChild(canvas);
+    }).catch(error => {
+      console.info('html2canvas querySelector error : ', error);
+
+    });*/
+    try {
+      PdfService.generatePdfFromHtmlText(this.storeData.documentText, opt);
+
+    } catch (e) {
+      console.log('    PdfService.generatePdfFromElement(this.renderElement, docName); e : ', e);
+    }
+    /*  try {
+        PdfService.generatePdfFromHtmlText(this.storeData.documentText, docName);
+      } catch (e) {
+        console.log('    PdfService.generatePdfFromHtmlText(this.storeData.documentText, docName) e : ', e);
+      }
+  */
   }
 
   openSendEmail() {

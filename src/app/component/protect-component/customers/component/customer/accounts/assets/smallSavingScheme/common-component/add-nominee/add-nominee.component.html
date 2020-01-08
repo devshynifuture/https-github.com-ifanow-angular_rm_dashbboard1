@@ -1,0 +1,31 @@
+<div [formGroup]="nomineeForm">
+    <div *ngFor="let singleNominee of getNomineeList.controls;index as i" [formGroup]="singleNominee" class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Nominee</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select formControlName="name" class="form-control br-0">
+                        <mat-option *ngFor="let f of familyList" [value]="f.userName">
+                            <span>{{f.userName}}</span>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input autocomplete="off" formControlName="share" class="form-control br-0" matInput maxlength="10"
+                        type="text">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="pt-8">
+            <i class="material-icons text-primitive c-p float-left" *ngIf="i==getNomineeList.controls.length-1"
+                (click)="addNominee()">add</i>
+            <i class="material-icons text-primitive c-p " (click)="removeNominee(i)">remove</i>
+        </div>
+    </div>
+</div>
