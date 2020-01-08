@@ -232,6 +232,7 @@ export class QuotationsComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
+
         }
       }
     );

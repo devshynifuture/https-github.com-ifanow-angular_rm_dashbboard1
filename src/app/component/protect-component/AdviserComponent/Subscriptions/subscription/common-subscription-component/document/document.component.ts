@@ -1,14 +1,14 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
-import {SubscriptionService} from '../../../subscription.service';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
+import { SubscriptionService } from '../../../subscription.service';
 import * as _ from 'lodash';
-import {AddDocumentComponent} from '../add-document/add-document.component';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {UtilService} from 'src/app/services/util.service';
+import { AddDocumentComponent } from '../add-document/add-document.component';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
 // import {element} from 'protractor';
 // import {timingSafeEqual} from 'crypto';
 
@@ -43,7 +43,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./document.component.scss']
 })
 export class DocumentComponent implements OnInit {
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   quotationDesignEmail: any;
   // @Input() upperData;
@@ -61,11 +61,13 @@ export class DocumentComponent implements OnInit {
   noData: string;
   componentFlag: any;
   isLoading = false;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
 
 
   constructor(public subInjectService: SubscriptionInject,
-              private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
-              public subscription: SubscriptionService) {
+    private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
+    public subscription: SubscriptionService) {
     // this.subInjectService.rightSliderDocument.subscribe(
     //   data => this.getDocumentsDesignData(data)
     // );
@@ -110,11 +112,11 @@ export class DocumentComponent implements OnInit {
   }
 
   displayedColumns: string[] = ['checkbox', 'document', 'plan', 'service', 'date', 'sdate', 'cdate', 'status', 'icons'];
-  dataSource: any;
+
 
   ngOnInit() {
     this.isLoading = true;
-    this.dataSource = [{}, {}, {}];
+
     this.documentDesign = 'true';
     console.log('upperData', this.upperData);
     this.dataCount = 0;
@@ -184,7 +186,7 @@ export class DocumentComponent implements OnInit {
   }
 
   dialogClose() {
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
 
     // this.dialogRef.close();
   }
@@ -254,7 +256,7 @@ export class DocumentComponent implements OnInit {
       templateType: 4, // 2 is for quotation
       documentList: []
     };
-    this.dataSource.forEach(singleElement => {
+    this.dataSource.filteredData.forEach(singleElement => {
       if (singleElement.selected) {
         data.documentList.push(singleElement);
       }
@@ -584,7 +586,7 @@ export class DocumentComponent implements OnInit {
   saveMappingDocumentToPlans() {
 
     let obj = [];
-    if(this.mappedData.length !== 0){
+    if (this.mappedData.length !== 0) {
       this.mappedData.forEach(element => {
         const data = {
           // advisorId: 12345,
@@ -611,7 +613,7 @@ export class DocumentComponent implements OnInit {
   }
 
   saveMappingDocumentToPlansResponse(data) {
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
     if (this.mappedData.length === 0) {
       this.eventService.openSnackBar('No Document mapped', 'Dismiss');
     } else {
@@ -729,6 +731,6 @@ export class DocumentComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
-      this.selectAll({checked: false}) : this.selectAll({checked: true});
+      this.selectAll({ checked: false }) : this.selectAll({ checked: true });
   }
 }
