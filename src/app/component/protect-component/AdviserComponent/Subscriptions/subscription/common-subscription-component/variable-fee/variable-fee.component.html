@@ -23,8 +23,8 @@
         <div class="row">
           <div class="col-md-5 p-0">
             <div class="form-group">
-              <input type="text" appNumberOnly [maxLength]="2" [disabled]="true"
-                     class="form-control br-0 br-none" formControlName="billEvery">
+              <input type="text" appNumberOnly [maxLength]="2" [disabled]="true" class="form-control br-0 br-none"
+                formControlName="billEvery">
             </div>
           </div>
 
@@ -32,7 +32,7 @@
             <div class="form-group">
               <select class="form-control br-0" formControlName="Duration" id="sel1">
                 <option value="1">Monthly</option>
-                <option value="12">Yearly</option>
+                <option value="2">Yearly</option>
               </select>
             </div>
           </div>
@@ -68,21 +68,18 @@
             <div class="row ui-mff">
               <div class="col-md-4 p-0 bl-0 br-grey">
                 <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100"
-                       appInputValueValidation
-                       class="form-control br-0 h-39" formControlName="equity"
-                       placeholder="%" type="text">
+                  appInputValueValidation class="form-control br-0 h-39" formControlName="equity" placeholder="%"
+                  type="text">
               </div>
               <div class="col-md-4 p-0 br-grey">
                 <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100"
-                       appInputValueValidation
-                       class="form-control br-0 h-39" formControlName="debt"
-                       placeholder="%" type="text">
+                  appInputValueValidation class="form-control br-0 h-39" formControlName="debt" placeholder="%"
+                  type="text">
               </div>
               <div class="col-md-4 p-0">
                 <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100"
-                       appInputValueValidation
-                       class="form-control br-0 h-39" formControlName="liquid"
-                       placeholder="%" type="number">
+                  appInputValueValidation class="form-control br-0 h-39" formControlName="liquid" placeholder="%"
+                  type="number">
               </div>
             </div>
           </div>
@@ -102,16 +99,16 @@
             </div>
             <div class="row ui-mff">
               <div class="col-md-4 br-grey p-0 bl-0 bb-grey">
-                <input type="text" appNumberOnly [maxLength]="4" placeholder="%"
-                       class="form-control br-0 h-39 br-grey" formControlName="equity">
+                <input type="text" appNumberOnly [maxLength]="4" placeholder="%" class="form-control br-0 h-39 br-grey"
+                  formControlName="equity">
               </div>
               <div class="col-md-4 br-grey bb-grey p-0">
                 <input type="number" appNumberOnly [maxLength]="4" placeholder="%"
-                       class="form-control br-0 h-39 br-grey" formControlName="debt">
+                  class="form-control br-0 h-39 br-grey" formControlName="debt">
               </div>
               <div class="col-md-4 br-grey bb-grey p-0">
                 <input type="number" appNumberOnly [maxLength]="4" placeholder="%"
-                       class="form-control br-0 h-39 br-grey" formControlName="liquid">
+                  class="form-control br-0 h-39 br-grey" formControlName="liquid">
               </div>
             </div>
           </div>
@@ -131,12 +128,12 @@
           <div class="col-md-10 p-0">
             <div class="b-a wrapper-12">
               <mat-chip-list *ngIf="otherAssetData" [disabled]="!variableFeeStructureForm.enabled"
-                             aria-label="Fish selection">
+                aria-label="Fish selection">
                 <mat-chip (click)="select(assets)" *ngFor="let assets of otherAssetData"
-                          [ngClass]="{'btn-primary':assets.selected}" class="f-13 f-400 wrapper-16"><i
-                  class="material-icons mr-8 text-grey f-16">
-                  check
-                </i>
+                  [ngClass]="{'btn-primary':assets.selected}" class="f-13 f-400 wrapper-16"><i
+                    class="material-icons mr-8 text-grey f-16">
+                    check
+                  </i>
                   <div *ngIf="assets">{{assets.subAssetClassName}}</div>
                 </mat-chip>
               </mat-chip-list>
@@ -145,9 +142,8 @@
           <div class="col-md-2 p-0">
             <!--            [minValue]="0.001" [maxValue]="99"-->
             <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" appInputValueValidation
-                   class="form-control br-0 h-39 br-grey"
-                   formControlName="pricing" matInput maxlength="3" placeholder="%"
-                   type="number">
+              class="form-control br-0 h-39 br-grey" formControlName="pricing" matInput maxlength="3" placeholder="%"
+              type="number">
             <mat-error *ngIf="(variableFeeStructureForm.get('pricing').errors)" class="f-12 pt-4 ml-8">
               Should be between than 0.01 to 99
             </mat-error>
@@ -166,10 +162,10 @@
     </div>
     <div class="col-md-8 right text-right">
       <button *ngIf="singleSubscriptionData.isCreateSub && isSave==false" mat-button [disabled]="isLoading"
-              (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">Save
+        (click)="saveVariableModifyFees()" class="btn-bottom br-0 text-inherit">Save
       </button>
       <button *ngIf="singleSubscriptionData.isCreateSub==false" mat-button (click)="saveVariableModifyFees()"
-              class="btn-bottom br-0 text-inherit">NEXT STEP
+        class="btn-bottom br-0 text-inherit">NEXT STEP
       </button>
       <!-- <mat-spinner *ngIf="isLoading"></mat-spinner> -->
     </div>

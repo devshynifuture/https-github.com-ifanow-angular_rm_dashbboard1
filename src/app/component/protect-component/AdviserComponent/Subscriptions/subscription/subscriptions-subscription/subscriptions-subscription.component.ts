@@ -286,10 +286,10 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     );
 
   }
-  
-  getFeeTypeName(ch){
+
+  getFeeTypeName(ch) {
     let feeModeName = '';
-    switch(ch){
+    switch (ch) {
       case 1: feeModeName = 'Cheque';
         break;
       case 2: feeModeName = 'NEFT';
@@ -411,10 +411,10 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     console.log('filterSubscriptionRes', data);
     if (data == undefined && this.statusIdLength < 1) {
       this.noData = 'No Data Found';
-      if(!scrollLoader){
+      if (!scrollLoader) {
         this.dataSource.data = [];
       }
-      else{
+      else {
         this.dataSource.data = this.filterDataArr;
       }
     } else {
