@@ -16,13 +16,12 @@
 
 
         <div *ngFor="let profileData of SettingProfileData" class="d-flex justify-content-center">
-
             <div class="row wrapper-100 pb-72 pt-8 pb-10 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <div class="hoverable">
                     <div class="row b-a bg-grey lter">
                         <div class="col-md-8 p-0 relClass">
                             <div class="bar">
-                                <h3 class="mb-0 p-24 height20 fontPlayfair">{{profileData.name}}</h3>
+                                <h3 class="mb-0 p-24 fontPlayfair">{{profileData.name}}111</h3>
                             </div>
                         </div>
                         <div class="col-md-4 pt-16">
@@ -36,7 +35,7 @@
                                 <a (click)="deleteModal('PROFILE',profileData)" class="bt-1" mat-menu-item>Delete client
                   profile</a>
                             </mat-menu>
-                            <button *ngIf="profileData.isPrimary == true && SettingProfileData.length > 1" class="text-primary br-0 right text-right" mat-stroked-button>
+                            <button *ngIf="profileData.isPrimary" class="text-primary br-0 right text-right" mat-stroked-button>
                 PRIMARY
               </button>
                         </div>
@@ -49,8 +48,7 @@
                                         <div class="col-md-3 relClass">
                                             <p>CUSTOMER TYPE</p>
                                             <div class="bar">
-                                                <h5>{{(profileData.customerTypeId == 1) ? 'Bussiness' : 'Individual'}}
-                                                </h5>
+                                                <h5>{{(profileData.customerTypeId == 1) ? 'Bussiness' : 'Individual'}}</h5>
                                             </div>
                                         </div>
                                         <div class="col-md-3 relClass">
@@ -99,9 +97,7 @@
                                                         <h5>{{profileData.primaryContact}}</h5>
                                                     </div>
                                                 </div>
-
                                             </div>
-
                                         </div>
                                         <div class="col-md-3 p-0 relClass">
                                             <p>COMPANY NAME</p>
@@ -124,24 +120,18 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
-</div>
-</div>
-</div>
-</div>
 
-</div>
-</div>
+    <div *ngIf="SettingProfileData == undefined" class="row">
+        <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
+            <img class="width200" src="assets/images/svg/no-data-found.svg">
+            <p class="f-22 f-600 pt-28"> No Data Found </p>
 
-<div *ngIf="SettingProfileData == undefined" class="row">
-    <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
-        <img class="width200" src="assets/images/svg/no-data-found.svg">
-        <p class="f-22 f-600 pt-28"> No Data Found </p>
+            <button (click)="openPayeeSettings('Add','payeeSettings','open')" class="btn-primary mt-20 br-0 right text-right addon" mat-stroked-button>
+        ADD MORE
+      </button>
 
-        <button (click)="openPayeeSettings('Add','payeeSettings','open')" class="btn-primary mt-20 br-0 right text-right addon" mat-stroked-button>
-      ADD MORE
-    </button>
-
+        </div>
     </div>
-</div>
