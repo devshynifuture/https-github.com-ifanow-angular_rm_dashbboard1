@@ -71,7 +71,7 @@ export class HttpService {
           console.log('resData: decoded ', resData);
           return resData;
         } 
-        else if(res.status === 304){
+        else if(res.status === 304 || 204){
           return res.status;
         }
         else {
@@ -213,7 +213,11 @@ export class HttpService {
           const resData = this.changeBase64ToString(res);
           console.log('decoded resData', resData);
           return resData;
-        } else {
+        }
+        else if(res.status === 304){
+          return res.status;
+        }
+         else {
           // this._router.navigate(['login']);
           return;
         }
