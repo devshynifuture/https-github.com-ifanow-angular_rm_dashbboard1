@@ -45,9 +45,10 @@ export class QuotationsComponent implements OnInit {
   dataCount;
   _clientData;
   displayedColumns: string[] = ['checkbox', 'document', 'plan', 'date', 'sdate', 'cdate', 'status', 'send', 'icons'];
-  dataSource: any;
   changeEmail = 'footerChange';
   advisorId;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
 
   @Input()
   set clientData(clientData) {
@@ -60,8 +61,8 @@ export class QuotationsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isLoading = true;
-    this.dataSource = [{}, {}, {}];
+
+
     this.advisorId = AuthService.getAdvisorId();
     this.quotationDesign = 'true';
     console.log('quotation');
@@ -93,12 +94,17 @@ export class QuotationsComponent implements OnInit {
   }
 
   getQuotationsList() {
+    this.isLoading = true;
     const obj = {
       // clientId: 2970
       clientId: this._clientData.id
     };
     this.subAService.getSubscriptionClientsQuotations(obj).subscribe(
-      data => this.getQuotationsListResponse(data)
+      data => this.getQuotationsListResponse(data), (error) => {
+        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
@@ -226,6 +232,7 @@ export class QuotationsComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
+
         }
       }
     );

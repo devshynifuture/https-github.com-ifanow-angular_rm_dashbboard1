@@ -97,7 +97,7 @@ export class AddFixedFeeComponent implements OnInit {
       this.fixedFeeData.controls.billingNature.setValue(data.servicePricing.billingNature);
       // this.fixedFeeData.controls.billingNature.setValue('2');
 
-      this.fixedFeeData.controls.billingMode.setValue(data.servicePricing.billingMode);
+      this.fixedFeeData.controls.billingMode.setValue(String(data.servicePricing.billingMode));
       this.fixedFeeData.controls.billEvery.setValue(data.servicePricing.billEvery);
 
       this.getFormControl().serviceName.maxLength = 40;

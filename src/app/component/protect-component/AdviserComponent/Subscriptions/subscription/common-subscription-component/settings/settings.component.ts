@@ -1,12 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionService } from '../../../subscription.service';
-import { FormBuilder } from '@angular/forms';
-import { MatDialog } from '@angular/material';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { UtilService } from 'src/app/services/util.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionService} from '../../../subscription.service';
+import {FormBuilder} from '@angular/forms';
+import {MatDialog} from '@angular/material';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {UtilService} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-settings',
@@ -19,7 +18,7 @@ export class SettingsComponent implements OnInit {
   family: any;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, public subInjectService: SubscriptionInject,
-    private eventService: EventService, private subService: SubscriptionService) {
+              private eventService: EventService, private subService: SubscriptionService) {
   }
 
   SettingProfileData: any;
@@ -30,6 +29,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
     this.getSettingProfileData();
   }
+
   setPrimaryField(profileData) {
     const obj = {
       clientId: this.upperData.id,
