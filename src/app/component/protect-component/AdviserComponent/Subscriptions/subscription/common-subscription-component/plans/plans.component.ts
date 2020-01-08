@@ -102,13 +102,14 @@ export class PlansComponent implements OnInit {
 
   getPlansMappedToAdvisorResponse(data) {
     console.log('service plan data', data);
-
-    this.servicePlanData = data;
-    this.servicePlanData.forEach(element => {
-      if (element.selected == true) {
-        this.mappedPlan.push(element);
-      }
-    });
+    if(data && data !== undefined && data !== null){
+      this.servicePlanData = data;
+      this.servicePlanData.forEach(element => {
+        if (element.selected == true) {
+          this.mappedPlan.push(element);
+        }
+      });
+    }
   }
 
   dialogClose() {
