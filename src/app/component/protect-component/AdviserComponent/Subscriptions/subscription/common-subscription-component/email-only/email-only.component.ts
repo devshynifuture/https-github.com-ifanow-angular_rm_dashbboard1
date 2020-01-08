@@ -1,12 +1,12 @@
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from "../../../../../../../auth-service/authService";
-import { ValidatorType } from "../../../../../../../services/util.service";
-import { MatChipInputEvent } from '@angular/material';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from "../../../../../../../auth-service/authService";
+import {ValidatorType} from "../../../../../../../services/util.service";
+import {MatChipInputEvent} from '@angular/material';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-email-only',
@@ -156,7 +156,7 @@ export class EmailOnlyComponent implements OnInit {
       this.emailBody = this.emailData.body;
       console.log("Invoice Data", invoiceData.clientData.clientName)
       this.emailBody.replace("$client_name", invoiceData.clientData.clientName);
-      this.emailBody.replace("$advisor_name", AuthService.getUserInfo().fullName)
+      this.emailBody.replace("$advisor_name", AuthService.getUserInfo().fullName);
     }, error => {
       this.eventService.openSnackBar(error, 'dismiss', () => {
         console.log('dismiss was clicked');
