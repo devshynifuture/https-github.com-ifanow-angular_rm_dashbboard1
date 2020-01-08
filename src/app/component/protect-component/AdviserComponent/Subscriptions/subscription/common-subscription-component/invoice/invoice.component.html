@@ -1341,9 +1341,9 @@
                  </div>
                  {{storeData.taxStatus}}
                  <div class="col-md-2 d-flex align-items-center justify-content-end">
-                    <h5 *ngIf="storeData.cgstTaxAmount == undefined || storeData.igstTaxAmount"
+                    <h5 
                        class="m-0 text-right ">
-                       ₹{{(18 / 100) * finalAmount + +finalAmount}}
+                      {{finalAmount}}
                     </h5>
                     <h5 *ngIf="storeData.sgst != undefined" [hidden]="finalAmount !=undefined"
                     class="m-0 text-right ">
