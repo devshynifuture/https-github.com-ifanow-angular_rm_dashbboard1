@@ -205,7 +205,7 @@
                                 <div class="col-md-10 d-flex  align-items-center">
                                     <p class="m-0 text-black f-500  ">Fee calculation - Attachment</p>
                                 </div>
-                                <div class="col-md-2 wrapper-9 text-right">
+                                <div class="col-md-2 wrapper-9 text-right" *ngIf="storeData.paymentMode == 1">
                                     <button (click)="OpenFeeCalc()" class="btn-primary br-0"
                                         mat-stroked-button>View</button>
                                 </div>
