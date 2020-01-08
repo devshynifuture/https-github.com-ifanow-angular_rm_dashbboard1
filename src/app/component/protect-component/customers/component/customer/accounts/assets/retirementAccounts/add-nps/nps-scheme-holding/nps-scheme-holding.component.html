@@ -24,11 +24,12 @@
             <h5 class="m-0 pb-8">PRAN</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #pran type="number" (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="pran">
+                    <input matInput #pran type="text" (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="pran">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isPran && getFormControl().pran.invalid || getFormControl().pran.touched && getFormControl().pran.invalid)}">
                         This field is required
                     </mat-error>
                     <mat-hint align="start" class="f-12">Permanent Retirement Account Number</mat-hint>
+                    <mat-hint align="end" class="f-12">{{pran.value.length}}/20</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -36,8 +37,9 @@
             <h5 class="m-0 pb-8">Description</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #description maxlength="30" class="form-control br-0" formControlName="description">
+                    <input matInput #description maxlength="60" type="text" class="form-control br-0" formControlName="description">
                     <mat-hint align="start" class="f-12">Optional</mat-hint>
+                    <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -80,15 +82,16 @@
             <div class="col-md-2 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #totalUnits type="number" (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="totalUnits">
+                        <input matInput #totalUnits type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="totalUnits">
                         <mat-hint align="start" class="m-0 f-11 text-custom pt-4">As in statement</mat-hint>
+                        <mat-hint align="end" class="f-12">{{totalUnits.value.length}}/10</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput formControlName="holdingAsOn" [matDatepicker]="picker" class="form-control br-0">
+                        <input matInput formControlName="holdingAsOn" [matDatepicker]="picker" class="form-control br-0" readonly>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -97,7 +100,8 @@
             <div class="col-md-2 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #totalNetContribution type="number" (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="totalNetContribution">
+                        <input matInput #totalNetContribution type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="totalNetContribution">
+                        <mat-hint align="end" class="f-12">{{totalNetContribution.value.length}}/10</mat-hint>
                     </mat-form-field>
 
                 </div>
@@ -128,7 +132,8 @@
                 <div class="col-md-4">
                     <h5 class="m-0 pb-8">Account preference</h5>
                 </div>
-                <div class="col-md-3 pr-0">
+                <div class="col-md-3 pr-0">                       
+
                     <h5 class="m-0 pb-8">Frequency</h5>
                 </div>
                 <div class="col-md-4 pr-0">
@@ -167,7 +172,8 @@
                     <div class="col-md-3 pr-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput #currentValue type="number" (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="approxContribution">
+                                <input matInput #currentValue type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="approxContribution">
+                                <mat-hint align="end" class="f-12">{{currentValue.value.length}}/10</mat-hint>
                             </mat-form-field>
                         </div>
                     </div>
@@ -235,7 +241,7 @@
     </div>
 
 </div>
-<div class="bottom-fixed-70 wrapper-12 pt-16">
+<div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
