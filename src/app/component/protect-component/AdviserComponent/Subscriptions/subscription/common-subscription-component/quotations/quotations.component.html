@@ -1,145 +1,137 @@
-<!--<div class="wrapper-20 bg-grey lter heading-fix b-a">
-  <h3 class="m-0 text-center head-common">{{_clientData.name}}</h3>
-</div>-->
-
 <div *ngIf="dataSource.data.length > 0">
-  <div *ngIf="quotationDesign=='true'" class="bg-white">
-    <div class="wrapper-40  pr-20">
-      <div class="row pt-180">
-        <div class="col-md-1 p-0">
-          <button [matMenuTriggerFor]="menu" class="b-a pr-0" mat-button>Actions <i [matMenuTriggerFor]="menu"
+    <div *ngIf="quotationDesign=='true'" class="bg-white">
+        <div class="wrapper-40  pr-20">
+            <div class="row pt-180">
+                <div class="col-md-1 p-0">
+                    <button [matMenuTriggerFor]="menu" class="b-a pr-0" mat-button>Actions <i [matMenuTriggerFor]="menu"
               [matMenuTriggerFor]="belowMenu" class="material-icons c-p iconscolors">
               arrow_drop_down
             </i>
           </button>
-          <mat-menu #menu="matMenu">
-            <button *ngIf="dataCount == 0" mat-menu-item>Select Quotation to see more actions</button>
-            <button *ngIf="dataCount != 0" (click)="openSendEmail('')" mat-menu-item>Email
+                    <mat-menu #menu="matMenu">
+                        <button *ngIf="dataCount == 0" mat-menu-item>Select Quotation to see more actions</button>
+                        <button *ngIf="dataCount != 0" (click)="openSendEmail('')" mat-menu-item>Email
               only
             </button>
-            <button (click)="deleteModal('QUOTATION')" *ngIf="dataCount != 0" class="b-t" mat-menu-item>Delete
+                        <button (click)="deleteModal('QUOTATION')" *ngIf="dataCount != 0" class="b-t" mat-menu-item>Delete
               Quotations
             </button>
-          </mat-menu>
-        </div>
-        <div class="col-md-9 p-0 ml-8">
-          <p class="m-0 text-black text-left pt-10">{{dataCount}} quotations selected</p>
-        </div>
-      </div>
+                    </mat-menu>
+                </div>
+                <div class="col-md-9 p-0 ml-8">
+                    <p class="m-0 text-black text-left pt-10">{{dataCount}} quotations selected</p>
+                </div>
+            </div>
 
-      <div class="col-md-12">
-        <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-8"
-          class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
-          <ng-container matColumnDef="checkbox">
-            <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;">
-              <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0 && isAllSelected()"
-                [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll"></mat-checkbox>
-            </th>
-            <td *matCellDef="let element" mat-cell>
-              <mat-checkbox (change)="selectedInvoice()" [(ngModel)]="element.selected" class="c-p" name="selectedData">
-              </mat-checkbox>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="document">
-            <th *matHeaderCellDef mat-header-cell mat-sort-header="documentName"> Document name</th>
-            <td (click)="Open('viewQuotation','open',element)" *matCellDef="let element" class="c-p" mat-cell>
+            <div class="col-md-12 overflow-hidden">
+                <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-8" class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
+                    <ng-container matColumnDef="checkbox">
+                        <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;">
+                            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0 && isAllSelected()" [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll"></mat-checkbox>
+                        </th>
+                        <td *matCellDef="let element" mat-cell>
+                            <mat-checkbox (change)="selectedInvoice()" [(ngModel)]="element.selected" class="c-p" name="selectedData">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="document">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header="documentName"> Document1 name</th>
+                        <td (click)="Open('viewQuotation','open',element)" *matCellDef="let element" class="c-p" mat-cell>
 
-              <div class="bar">
-                {{element.documentName}}
-              </div>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="plan">
-            <th *matHeaderCellDef mat-header-cell mat-sort-header="planName"> Plan name</th>
-            <td *matCellDef="let element" mat-cell>
-              <div class="bar">
-                {{element.planName}}
-              </div>
-            </td>
-          </ng-container>
+                            <div class="bar">
+                                {{element.documentName}}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="plan">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header="planName"> Plan name</th>
+                        <td *matCellDef="let element" mat-cell>
+                            <div class="bar">
+                                {{element.planName}}
+                            </div>
+                        </td>
+                    </ng-container>
 
-          <ng-container matColumnDef="date">
-            <th *matHeaderCellDef mat-header-cell mat-sort-header="createdDate"> Created date</th>
-            <td *matCellDef="let element" mat-cell>
-              <div class="bar">
-                {{element.createdDate | date:'dd/MM/yyyy'}}
-              </div>
-            </td>
-          </ng-container>
+                    <ng-container matColumnDef="date">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header="createdDate"> Created date</th>
+                        <td *matCellDef="let element" mat-cell>
+                            <div class="bar">
+                                {{element.createdDate | date:'dd/MM/yyyy'}}
+                            </div>
+                        </td>
+                    </ng-container>
 
-          <ng-container matColumnDef="sdate">
-            <th *matHeaderCellDef mat-header-cell mat-sort-header="sentDate"> Sent date</th>
-            <td *matCellDef="let element" mat-cell>
-              <div class="bar">
-                {{element.sentDate | date:'dd/MM/yyyy'}}
-              </div>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="cdate">
-            <th *matHeaderCellDef mat-header-cell mat-sort-header="signedDate"> Client consent date</th>
-            <td *matCellDef="let element" mat-cell>
-              <div class="bar">
-                {{element.signedDate | date:'dd/MM/yyyy'}}
-              </div>
-            </td>
-          </ng-container>
+                    <ng-container matColumnDef="sdate">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header="sentDate"> Sent date</th>
+                        <td *matCellDef="let element" mat-cell>
+                            <div class="bar">
+                                {{element.sentDate | date:'dd/MM/yyyy'}}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="cdate">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header="signedDate"> Client consent date</th>
+                        <td *matCellDef="let element" mat-cell>
+                            <div class="bar">
+                                {{element.signedDate | date:'dd/MM/yyyy'}}
+                            </div>
+                        </td>
+                    </ng-container>
 
-          <ng-container matColumnDef="status">
-            <th *matHeaderCellDef class=" t-10" mat-header-cell mat-sort-header="status"> Status</th>
-            <td *matCellDef="let element" mat-cell>
-              <div class="bar">
-                <span *ngIf="element.status==1" class="text-success t-10 f-500 c-p ">READY TO SEND</span>
-                <span *ngIf="element.status==0" class="text-success t-10 f-500 c-p ">NOT STARTED</span>
-              </div>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="send">
-            <th *matHeaderCellDef mat-header-cell></th>
-            <td *matCellDef="let element" mat-cell>
-              <div *ngIf="isLoading==false" class="bar">
-                <button (click)="openSendEmail(element)" class="btn-header btn-xs br-0 " mat-stroked-button>SEND
+                    <ng-container matColumnDef="status">
+                        <th *matHeaderCellDef class=" t-10" mat-header-cell mat-sort-header="status"> Status</th>
+                        <td *matCellDef="let element" mat-cell>
+                            <div class="bar">
+                                <span *ngIf="element.status==1" class="text-success t-10 f-500 c-p ">READY TO SEND</span>
+                                <span *ngIf="element.status==0" class="text-success t-10 f-500 c-p ">NOT STARTED</span>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="send">
+                        <th *matHeaderCellDef mat-header-cell></th>
+                        <td *matCellDef="let element" mat-cell>
+                            <div *ngIf="isLoading==false" class="bar">
+                                <button (click)="openSendEmail(element)" class="btn-header btn-xs br-0 " mat-stroked-button>SEND
                 </button>
-              </div>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="icons">
-            <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;"></th>
-            <td *matCellDef="let element" mat-cell style="width: 2%;"><i [matMenuTriggerFor]="menu"
-                [matMenuTriggerFor]="belowMenu" class="material-icons c-p iconscolors">
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="icons">
+                        <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;"></th>
+                        <td *matCellDef="let element" mat-cell style="width: 2%;"><i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu" class="material-icons c-p iconscolors">
                 more_vert
               </i>
-              <mat-menu #menu="matMenu">
-                <a (click)="Open('viewQuotation','open',element)" mat-menu-item>View & edit quotation</a>
-                <a (click)="deleteModal('QUOTATION')" class="bt-1" mat-menu-item>Delete quotation</a>
-              </mat-menu>
-            </td>
-          </ng-container>
-          <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-          <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-        </table>
-      </div>
-      <h4 *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4>
+                            <mat-menu #menu="matMenu">
+                                <a (click)="Open('viewQuotation','open',element)" mat-menu-item>View & edit quotation</a>
+                                <a (click)="deleteModal('QUOTATION')" class="bt-1" mat-menu-item>Delete quotation</a>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+                    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+                </table>
+            </div>
+            <!-- <h4 *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4> -->
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="row" *ngIf="dataSource.data.length == 0">
-  <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
-    <img class="width200" src="assets/images/svg/no-data-found.svg">
-    <p class="f-22 f-600 pt-28"> No Data Found </p>
-  </div>
+    <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
+        <img class="width200" src="assets/images/svg/no-data-found.svg">
+        <p class="f-22 f-600 pt-28"> No Data Found </p>
+    </div>
 </div>
 
 
 <div class="pt-130 pr-0" *ngIf="quotationDesign=='emailQuotation'">
-  <app-email-only (valueChange)='display($event)' [emailSend]="quotationDesign" [quotationData]="this.dataSource">
-  </app-email-only>
+    <app-email-only (valueChange)='display($event)' [emailSend]="quotationDesign" [quotationData]="this.dataSource">
+    </app-email-only>
 </div>
 
 <div class="pt-14 pr-0">
-  <app-terms-agreement *ngIf="quotationDesign=='termsAgreement'"></app-terms-agreement>
+    <app-terms-agreement *ngIf="quotationDesign=='termsAgreement'"></app-terms-agreement>
 </div>
 <div>
-  <app-terms-agreement (valueChange)='display($event)' *ngIf="quotationDesign=='email'"
-    [quotationDesignE]="quotationDesignEmail"></app-terms-agreement>
+    <app-terms-agreement (valueChange)='display($event)' *ngIf="quotationDesign=='email'" [quotationDesignE]="quotationDesignEmail"></app-terms-agreement>
 </div>
