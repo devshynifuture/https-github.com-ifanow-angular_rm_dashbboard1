@@ -2,7 +2,7 @@
     <div class="col-md-4 p-0">
         <h4 class="m-0 text-black roboto pt-8">Post office recurring deposit (PO RD)</h4>
     </div>
-    <div *ngIf="dataSource.filteredData.length == 0" class="col-md-8 p-0 right text-right">
+    <div *ngIf="dataSource.filteredData.length > 0" class="col-md-8 p-0 right text-right">
         <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
         <mat-menu #menu5="matMenu">
             <button mat-menu-item>PDF</button>
@@ -127,7 +127,3 @@
             ADD NEW</button>
     </div>
 </div>
-<!-- 
-<div *ngIf="isLoading">
-    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div> -->

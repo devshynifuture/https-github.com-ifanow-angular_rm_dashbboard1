@@ -84,7 +84,7 @@ export class ModulesComponent implements OnInit {
       serviceModuleMappingList: []
     };
     if (this.mappedData.length == 0) {
-      return;
+      this.eventService.openSnackBar("No Modules selected", "DISMISS");
     } else {
       this.mappedData.forEach(element => {
         const obj = {
