@@ -20,6 +20,8 @@ export class PoMisSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
   isLoading = false;
+  data: Array<any> = [{}, {}, {}];
+  datasource = new MatTableDataSource(this.data);
   noData: string;
   pomisData: any;
   sumOfCurrentValue: number;
@@ -38,7 +40,7 @@ export class PoMisSchemeComponent implements OnInit {
   }
 
   displayedColumns = ['no', 'owner', 'cvalue', 'mpayout', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
-  datasource: any = [{}, {}, {}];
+
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -82,8 +84,13 @@ export class PoMisSchemeComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId
     };
+    this.datasource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemePOMISData(obj).subscribe(
-      data => this.getPoMisSchemedataResponse(data)
+      data => this.getPoMisSchemedataResponse(data), (error) => {
+        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.datasource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
@@ -91,7 +98,7 @@ export class PoMisSchemeComponent implements OnInit {
     console.log(data);
     this.isLoading = false;
     if (data.poMisList.length != 0) {
-      this.datasource = new MatTableDataSource(data.poMisList);
+      this.datasource.data = data.poMisList;
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);
       this.sumOfMaturityValue = data.sumOfMaturityValue;

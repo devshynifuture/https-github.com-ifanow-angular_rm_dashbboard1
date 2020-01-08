@@ -1,15 +1,15 @@
-import {AddSsyComponent} from './../common-component/add-ssy/add-ssy.component';
-import {Component, OnInit, ViewChild, ViewChildren, ViewEncapsulation} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../../../customer.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {DetailedSsyComponent} from './detailed-ssy/detailed-ssy.component';
-import {FormatNumberDirective} from 'src/app/format-number.directive';
-import {ExcelService} from '../../../../excel.service';
+import { AddSsyComponent } from './../common-component/add-ssy/add-ssy.component';
+import { Component, OnInit, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../customer.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { DetailedSsyComponent } from './detailed-ssy/detailed-ssy.component';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../../excel.service';
 
 @Component({
   selector: 'app-ssy-scheme',
@@ -28,11 +28,13 @@ export class SsySchemeComponent implements OnInit {
   clientId: number;
   noData: string;
   isLoading = false;
+  data: Array<any> = [{}, {}, {}];
+  datasource = new MatTableDataSource(this.data);
   ssyData: any;
   sumOfCurrentValue: number;
   sumOfAmountInvested: number;
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   footer = [];
@@ -41,8 +43,7 @@ export class SsySchemeComponent implements OnInit {
   }
 
   displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
-  data: Array<any> = [{}, {}, {}];
-  datasource = new MatTableDataSource(this.data);
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -52,19 +53,19 @@ export class SsySchemeComponent implements OnInit {
   async ExportTOExcel(value) {
     this.excelData = [];
     let data = [];
-    const headerData = [{width: 20, key: 'Owner'},
-      {width: 20, key: 'Current Value'},
-      {width: 10, key: 'Rate'},
-      {width: 25, key: 'Total Amount Invested'},
-      {width: 20, key: 'Account Number'},
-      {width: 15, key: 'Maturity Date'},
-      {width: 15, key: 'Description'},
-      {width: 10, key: 'Status'},];
+    const headerData = [{ width: 20, key: 'Owner' },
+    { width: 20, key: 'Current Value' },
+    { width: 10, key: 'Rate' },
+    { width: 25, key: 'Total Amount Invested' },
+    { width: 20, key: 'Account Number' },
+    { width: 15, key: 'Maturity Date' },
+    { width: 15, key: 'Description' },
+    { width: 10, key: 'Status' },];
     const header = ['Owner', 'Current Value', 'Rate', 'Total Amount Invested',
       'Account Number', 'Maturity Date', 'Description', 'Status'];
     this.datasource.filteredData.forEach(element => {
       data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue), (element.rate),
-        this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested), (element.number), new Date(element.maturityDate), element.description, element.status];
+      this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested), (element.number), new Date(element.maturityDate), element.description, element.status];
       this.excelData.push(Object.assign(data));
     });
     const footerData = ['Total',
@@ -80,9 +81,10 @@ export class SsySchemeComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId
     };
+    this.datasource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemeSSYData(obj).subscribe(
-      data => this.getSsySchemedataResponse(data),(error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+      data => this.getSsySchemedataResponse(data), (error) => {
+        this.eventService.openSnackBar('Something went worng!', 'dismiss');
         this.datasource.data = [];
         this.isLoading = false;
       }
@@ -94,7 +96,7 @@ export class SsySchemeComponent implements OnInit {
 
     this.isLoading = false;
     if (data.SSYList.length != 0) {
-      this.datasource = new MatTableDataSource(data.SSYList);
+      this.datasource.data = data.SSYList;
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);
       this.sumOfCurrentValue = data.SumOfCurrentValue;
