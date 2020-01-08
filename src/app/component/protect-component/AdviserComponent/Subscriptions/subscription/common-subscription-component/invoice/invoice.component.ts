@@ -253,6 +253,7 @@ export class InvoiceComponent implements OnInit {
     this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.finalAmount.value;
     this.discount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.discount.value;
     console.log('finalAmount', this.finalAmount);
+    this.taxStatus = this.editPayment.value.taxStatus
   }
 
   getInvoiceDataRes(data) {
@@ -349,7 +350,7 @@ export class InvoiceComponent implements OnInit {
       billingAddress: [(data.billingAddress == undefined) ? '' : data.billingAddress, [Validators.required]],
       invoiceNumber: [data.invoiceNumber, [Validators.required]],
       invoiceDate: [new Date(data.invoiceDate), [Validators.required]],
-      finalAmount: [(data.finalAmount == undefined) ? 0 : parseInt(data.finalAmount), [Validators.required]],
+      finalAmount: [(data.subTotal == undefined) ? 0 : parseInt(data.subTotal), [Validators.required]],
       discount: [(data.discount == undefined) ? 0 : data.discount, [Validators.required]],
       dueDate: [new Date(data.dueDate), [Validators.required]],
       footnote: [data.footnote, [Validators.required]],
@@ -378,12 +379,13 @@ export class InvoiceComponent implements OnInit {
 
   changeTaxStatus(changeTaxStatus) {
     console.log('changeTaxStatus', changeTaxStatus);
-    if (changeTaxStatus == 'SGST(9%)|CGST(9%)') {
-      this.finAmountC = (9 / 100) * this.editPayment.controls.finalAmount.value;
-      this.finAmountS = (9 / 100) * this.editPayment.controls.finalAmount.value;
+    if (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') {
+      this.finAmountC = this.finalAmount*9 / 100;
+      this.finAmountS = this.finalAmount*9 / 100;
       this.finAmount = this.finAmountC + this.finAmountS + parseInt(this.editPayment.controls.finalAmount.value);
     } else {
-      this.finAmount = (18 / 100) * this.editPayment.controls.finalAmount.value + parseInt(this.editPayment.controls.finalAmount.value);
+      this.finAmount = (this.editPayment.controls.finalAmount.value -  parseInt(this.editPayment.value.discount));
+      this.finAmount = (this.finAmount)*18/100
     }
     this.storeData.subToatal = this.editPayment.controls.finalAmount.value;
     this.taxStatus = changeTaxStatus;
@@ -392,11 +394,14 @@ export class InvoiceComponent implements OnInit {
 
   updateInvoice() {
     if (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') {
-      this.finAmountC = (9 / 100) * this.editPayment.controls.finalAmount.value;
-      this.finAmountS = (9 / 100) * this.editPayment.controls.finalAmount.value;
-      this.finAmount = this.finAmountC + this.finAmountS + parseInt(this.editPayment.controls.finalAmount.value);
+      this.finAmountC = this.editPayment.controls.finalAmount.value -parseInt(this.editPayment.value.discount);
+      this.finAmountC = this.finAmountC*9 / 100;
+      this.finAmountS = this.editPayment.controls.finalAmount.value -parseInt(this.editPayment.value.discount);
+      this.finAmountS = this.finAmountS*9 / 100
+      this.finAmount = this.finAmountC+this.finAmountS
     } else {
-      this.finAmount = (18 / 100) * this.editPayment.controls.finalAmount.value + parseInt(this.editPayment.controls.finalAmount.value);
+      this.finAmount = (this.editPayment.controls.finalAmount.value -  parseInt(this.editPayment.value.discount));
+      this.finAmount = (this.finAmount)*18/100
     }
     if (this.editPayment.get('dueDate').invalid) {
       this.editPayment.get('dueDate').markAsTouched();
@@ -422,9 +427,8 @@ export class InvoiceComponent implements OnInit {
           billingAddress: this.editPayment.value.billingAddress,
           invoiceNumber: this.editPayment.value.invoiceNumber,
           subTotal: this.editPayment.value.finalAmount,
-          total: (parseInt(this.editPayment.value.finalAmount) - parseInt(this.editPayment.value.discount)) + parseInt(this.finAmount),
           discount: this.editPayment.value.discount,
-          finalAmount: this.editPayment.value.finalAmount,
+          finalAmount:(parseInt(this.editPayment.value.finalAmount) - parseInt(this.editPayment.value.discount)) + parseInt(this.finAmount),
           invoiceDate: this.editPayment.value.invoiceDate,
           dueDate: this.editPayment.value.dueDate,
           igst: (this.editPayment.value.taxStatus == 'IGST(18%)') ? 18 : null,
