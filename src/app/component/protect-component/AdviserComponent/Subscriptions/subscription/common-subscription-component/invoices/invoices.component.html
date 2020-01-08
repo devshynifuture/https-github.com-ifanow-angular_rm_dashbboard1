@@ -7,7 +7,8 @@
         <div class="wrapper-20 pb-0 mt-32 pt-180">
             <div class="row">
                 <div class="col-md-12 p-0">
-                    <button mat-stroked-button class="btn-primary br-0 right text-right addon" (click)="openEdit('edit')"><i class="material-icons">
+                    <button mat-stroked-button class="btn-primary br-0 right text-right addon"
+                        (click)="openEdit('edit')"><i class="material-icons">
                             add</i> ADD INVOICE</button>
                     <!-- <button mat-button class="m-0 text-black text-right mr-12 right br-0">HELP</button> -->
 
@@ -24,7 +25,8 @@
                         </i></button>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item *ngIf="dataCount == 0">Select invoice to see more actions</button>
-                        <button mat-menu-item (click)="openInvoicesESign('eSignInvoices','open')" *ngIf="dataCount != 0">Email with eSign request</button>
+                        <button mat-menu-item (click)="openInvoicesESign('eSignInvoices','open')"
+                            *ngIf="dataCount != 0">Email with eSign request</button>
                         <button mat-menu-item class="b-t" (click)="openSendEmail()" *ngIf="dataCount != 0">Email
                             only</button>
                         <button mat-menu-item class="b-t" (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0">Delete
@@ -35,19 +37,22 @@
                     <p class="m-0 text-black text-left pt-12">{{dataCount}} invoices selected</p>
                 </div>
             </div>
-            <table matSort mat-table [dataSource]="dataSource" class="mt-8" id="table-low" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table matSort mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation"
+                appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="checkbox">
                     <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;">
                         <mat-checkbox (change)="selectAll($event)" name="selectAll"></mat-checkbox>
                     </th>
                     <td mat-cell *matCellDef="let element" style="width: 2%;" class="c-p">
-                        <mat-checkbox name="selectedData" [(ngModel)]="element.selected" (change)="changeSelect(element)">
+                        <mat-checkbox name="selectedData" [(ngModel)]="element.selected"
+                            (change)="changeSelect(element)">
                         </mat-checkbox>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="date">
                     <th mat-sort-header="invoiceDate" mat-header-cell *matHeaderCellDef> Date</th>
-                    <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceUpperSlider','open')">
+                    <td mat-cell *matCellDef="let element" class="c-p"
+                        (click)="openInvoice(element,'invoiceUpperSlider','open')">
                         <div class="bar">
                             {{element.invoiceDate | date:'dd/MM/yyyy'}}
                         </div>
@@ -55,7 +60,8 @@
                 </ng-container>
                 <ng-container matColumnDef="Invoice number">
                     <th mat-sort-header="invoiceNumber" mat-header-cell *matHeaderCellDef> Invoice number</th>
-                    <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceUpperSlider','open')">
+                    <td mat-cell *matCellDef="let element" class="c-p"
+                        (click)="openInvoice(element,'invoiceUpperSlider','open')">
                         <div class="bar">
                             {{element.invoiceNumber}}
                         </div>
@@ -64,7 +70,8 @@
 
                 <ng-container matColumnDef="Service name">
                     <th mat-sort-header="serviceName" mat-header-cell *matHeaderCellDef> Service name </th>
-                    <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceUpperSlider','open')">
+                    <td mat-cell *matCellDef="let element" class="c-p"
+                        (click)="openInvoice(element,'invoiceUpperSlider','open')">
                         <div class="bar">
                             {{(element.services)?((element.services.length > 0)?element.services[0].serviceName:'-'):''}}
                             <!-- {{(element.services && element.services.length > 0)? element.services[0].serviceName : '-'}} -->
@@ -74,7 +81,8 @@
 
                 <ng-container matColumnDef="Billed to">
                     <th mat-sort-header="clientName" mat-header-cell *matHeaderCellDef> Billed to </th>
-                    <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceUpperSlider','open')">
+                    <td mat-cell *matCellDef="let element" class="c-p"
+                        (click)="openInvoice(element,'invoiceUpperSlider','open')">
                         <div class="bar">
                             {{element.clientName}}
                         </div>
@@ -82,7 +90,9 @@
                 </ng-container>
                 <ng-container matColumnDef="status">
                     <th mat-sort-header="status" mat-header-cell *matHeaderCellDef> Status</th>
-                    <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceUpperSlider','open')" [ngClass]="{'text-danger':element.status==0,'text-primary':element.status==1,'text-success':element.status==2}">
+                    <td mat-cell *matCellDef="let element" class="c-p"
+                        (click)="openInvoice(element,'invoiceUpperSlider','open')"
+                        [ngClass]="{'text-danger':element.status==0,'text-primary':element.status==1,'text-success':element.status==2}">
                         <div class="bar">
                             {{(element.status==0)?'OVERDUE':(element.status==1)?'OVERDUE':(element.status==2)?'PAID':''}}
                         </div>
@@ -91,7 +101,8 @@
 
                 <ng-container matColumnDef="Duedate">
                     <th mat-sort-header="dueDate" mat-header-cell *matHeaderCellDef>Due date</th>
-                    <td mat-cell *matCellDef="let element" class="c-p" (click)="openInvoice(element,'invoiceUpperSlider','open')">
+                    <td mat-cell *matCellDef="let element" class="c-p"
+                        (click)="openInvoice(element,'invoiceUpperSlider','open')">
                         <div class="bar">
                             {{element.dueDate | date:'dd/MM/yyyy'}}
                         </div>
@@ -100,14 +111,16 @@
                 </ng-container>
                 <ng-container matColumnDef="Amount">
                     <th mat-sort-header="finalAmount" mat-header-cell *matHeaderCellDef> Amount(₹)</th>
-                    <td mat-cell *matCellDef="let element" class="c-p text-right" (click)="openInvoice(element,'invoiceUpperSlider','open')">
+                    <td mat-cell *matCellDef="let element" class="c-p text-right"
+                        (click)="openInvoice(element,'invoiceUpperSlider','open')">
                         <div class="bar">
                             {{(formatter(element.finalAmount))?formatter(element.finalAmount):""}}
                         </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="Balance due">
-                    <th mat-sort-header="balanceDue" mat-header-cell *matHeaderCellDef class="text-right"> Balance due(₹)
+                    <th mat-sort-header="balanceDue" mat-header-cell *matHeaderCellDef class="text-right"> Balance
+                        due(₹)
                     </th>
                     <td mat-cell *matCellDef="let element" class="c-p text-right">
                         <div class="bar">
@@ -143,14 +156,16 @@
     <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
         <img class="width200" src="assets/images/svg/no-data-found.svg">
         <p class="f-22 f-600 pt-28"> No Data Found </p>
-        <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon" (click)="openEdit('edit')"> ADD INVOICE
+        <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon" (click)="openEdit('edit')"> ADD
+            INVOICE
         </button>
     </div>
 </div>
 
 
 <div class="pt-14 pr-0">
-    <app-terms-agreement [quotationDesignE]="quotationDesignEmail" *ngIf="invoiceDesign=='emailInvoices'" (valueChange)='display($event)'></app-terms-agreement>
+    <app-terms-agreement [quotationDesignE]="quotationDesignEmail" *ngIf="invoiceDesign=='emailInvoices'"
+        (valueChange)='display($event)'></app-terms-agreement>
 </div>
 <div class="pt-180">
     <app-invoice [invoiceValue]="invoiceDesign" *ngIf="invoiceDesign=='edit'" (valueChange)='display($event)'>

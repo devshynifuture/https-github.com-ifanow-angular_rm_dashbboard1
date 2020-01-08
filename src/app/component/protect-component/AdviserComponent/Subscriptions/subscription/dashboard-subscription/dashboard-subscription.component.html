@@ -79,14 +79,14 @@
                 </div>
               </div>
 
-              <div *ngIf="dataSourceInvoice" class="col-md-12 text-right pt-8 pb-16">
-                <div (click)="changeParentsTab(5)" class="c-p">View all
-                </div>
 
-              </div>
             </div>
           </div>
+          <div *ngIf="dataSourceInvoice" class="bg-white col-md-12 text-right pt-8 pb-8">
+            <div (click)="changeParentsTab(5)" class="c-p">View all
+            </div>
 
+          </div>
 
         </div>
         <div class="col-md-8 pr-0">
@@ -181,11 +181,11 @@
                       <ng-container matColumnDef="billing">
                         <th *matHeaderCellDef mat-header-cell> Next billing date</th>
                         <td *matCellDef="let element" mat-cell>
-                          <div class="bar" *ngIf="element.nextBillingDate"> 
+                          <div class="bar" *ngIf="element.nextBillingDate">
                             {{ element.nextBillingDate | date: 'dd/MM/YYYY' }}
                           </div>
                           <div class="bar" *ngIf="!element.nextBillingDate">
-                            {{ isLoading ? '' : 'Not Started' }} 
+                            {{ isLoading ? '' : 'Not Started' }}
                           </div>
                         </td>
                       </ng-container>

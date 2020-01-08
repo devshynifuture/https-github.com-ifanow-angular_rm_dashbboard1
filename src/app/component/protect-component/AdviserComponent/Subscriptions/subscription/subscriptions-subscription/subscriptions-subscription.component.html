@@ -79,7 +79,7 @@
     </div>
     <!-- (scroll)="scrollCall()" -->
     <!-- id="pdfDoc"  removed from above div-->
-    <div class="wrapper-20 bg-white" id="wrapper" *ngIf="dataSource.data.length > 0">
+    <div class="wrapper-20 pt-8 bg-white" id="wrapper" *ngIf="dataSource.data.length > 0">
 
         <div class="tableClass">
             <table matSort [dataSource]="dataSource" class="skeletonAnimation" appSkeletonLoading
@@ -200,9 +200,8 @@
                         </mat-menu>
                     </td>
                 </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;"
-                    [ngClass]="!showFilter ? 'stickyHeader1' : 'stickyHeader2'"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                <tr mat-row *matRowDef=" let row; columns: displayedColumns;"></tr>
             </table>
 
         </div>

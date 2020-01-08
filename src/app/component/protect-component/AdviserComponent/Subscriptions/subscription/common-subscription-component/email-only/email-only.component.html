@@ -4,7 +4,7 @@
       <div class="col-md-11">
         <p class="m-0 text-white pt-4">New email</p>
       </div>
-      <div class="col-md-1 p-0">
+      <div class="col-md-1 p-0 text-center">
         <!--        <i class="material-icons text-white pr-4 c-p">-->
         <!--          remove-->
         <!--        </i>-->
@@ -20,8 +20,8 @@
         <p class="m-0 text-custom">From</p>
       </div>
       <div class="col-md-9">
-        <p *ngIf="this.emailData"
-           class="m-0 text-black">{{(this.emailData) ? this.emailData.fromEmail : 'support@futurewise.co.in'}}</p>
+        <p *ngIf="this.emailData" class="m-0 text-black">
+          {{(this.emailData) ? this.emailData.fromEmail : 'support@futurewise.co.in'}}</p>
       </div>
       <!-- <div class="col-md-2 pr-0">
          <ul class="text-custom right f-14 pr-8 f-500">
@@ -36,30 +36,33 @@
       <div class="col-md-1">
         <p class="m-0 text-custom">To</p>
       </div>
-      <mat-chip-list>
-        <mat-chip *ngFor="let emailId of emailIdList; let ind = index" class="bg-white b-a c-p f-400 p-12">
-          {{emailId.emailAddress}}
-          <i (click)="removeEmailId(ind)" class="material-icons text-custom ml-12">
-            cancel
-          </i>
-        </mat-chip>
-      </mat-chip-list>
+
       <div class="col-md-11">
+        <mat-chip-list>
+          <mat-chip *ngFor="let emailId of emailIdList; let ind = index" class="bg-white b-a c-p f-400 p-12">
+            {{emailId.emailAddress}}
+            <i (click)="removeEmailId(ind)" class="material-icons text-custom ml-12">
+              cancel
+            </i>
+          </mat-chip>
+        </mat-chip-list>
         <!-- <p class="m-0 text-black">{{this._inputData.clientData.userEmailId}}</p> -->
         <!--        appInputValueValidation-->
         <!--        [inputValidator]="validatorType.EMAIL"-->
         <input (keypress)="onEmailIdEntryKeyPress($event)" [(ngModel)]="this._inputData.clientData.userEmailId"
-               type="text"/>
+          type="text" />
       </div>
     </div>
   </div>
   <div class="wrapper-16 pt-0 pb-0">
     <div class="btl-1 bb-1">
       <div class="row">
-
-        <p class="m-0 text-custom pt-8 pb-8 pl-8">Subject</p>
-        <input [(ngModel)]="subject" class="form-control br-0"
-               type="text">
+        <div class="col-md-1">
+          <p class="m-0 text-custom pt-8 pb-8 pl-8">Subject</p>
+        </div>
+        <div class="col-md-11">
+          <input [(ngModel)]="subject" class="form-control br-0" type="text">
+        </div>
       </div>
     </div>
     <div class="form-group mb-0 mt-8">
@@ -70,8 +73,7 @@
   <div class="row btl-1 pt-16">
     <div class="col-md-9">
       <mat-chip-list #chipList aria-label="docName selection">
-        <mat-chip (removed)="remove(i)"
-                  *ngFor="let doc of docObj ; let i = index">
+        <mat-chip (removed)="remove(i)" *ngFor="let doc of docObj ; let i = index">
           {{doc.documentName}}
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
