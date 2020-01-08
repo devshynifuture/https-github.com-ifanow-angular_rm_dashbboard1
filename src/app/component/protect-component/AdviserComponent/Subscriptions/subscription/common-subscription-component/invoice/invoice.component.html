@@ -205,7 +205,7 @@
                                 <div class="col-md-10 d-flex  align-items-center">
                                     <p class="m-0 text-black f-500  ">Fee calculation - Attachment</p>
                                 </div>
-                                <div class="col-md-2 wrapper-9 text-right" *ngIf="storeData.paymentMode == 1">
+                                <div class="col-md-2 wrapper-9 text-right">
                                     <button (click)="OpenFeeCalc()" class="btn-primary br-0"
                                         mat-stroked-button>View</button>
                                 </div>
@@ -686,10 +686,35 @@
                         </h2>
                     </div>
                 </div>
+                <div class="p-9">
+                    <div class="b-a">
+                        <div class="row bg-grey lter b-b p-16 pr-0 pl-0">
+                            <div class="col-md-9">
+                                <h4 class="m-0 f-14 f-500"> Description </h4>
+                            </div>
+                            <div class="col-md-3 ">
+                                <h4 class="m-0 f-14 f-500 text-right"> Amount </h4>
+                            </div>
+                        </div>
+
+                        <div class="row p-16 pr-0 pl-0">
+                            <div class="col-md-9">
+                                <h4 class="m-0 f-14">{{storeData.services[0].serviceName}}</h4>
+                                <span class="m-0 f-14 text-custom"> {{storeData.services[0].description}}</span>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-center justify-content-end">
+                                <h4 class="m-0 f-14  text-right"> ₹{{formatter(storeData.subTotal)}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div>
                     <div class="row">
                         <div class="col-md-7 mt-70">
-                            <p class="f-12 text-black f-400 roboto"> {{storeData.footnote}}
+                            <h4 class="m-0 f-14 f-500 text-left"> Footnote description </h4>
+                            <p class="f-12 text-black f-400 roboto"> {{storeData.footnote}}</p>
+                            <h4 class="m-0 f-14 f-500 text-left">Terms & conditions </h4>
+                            <p class="f-12 text-black f-400 roboto"> {{storeData.terms}}</p>
                         </div>
                         <div class="col-md-5">
                             <div class="row pt-44">
@@ -1355,19 +1380,19 @@
                         </div>
                     </div>
                     <div class="col-md-2 pl-0">
-                        <select (change)="changeTaxStatus($event.target.value)" class="form-control"
-                            formControlName="taxStatus" id="serviceName">
-                            <option value="">Select tax type</option>
-                            <option value="IGST(18%)">IGST(18%)</option>
-                            <option value="SGST(9%)|CGST(9%)">SGST(9%) | CGST(9%)</option>
-                        </select>
-                        <div class="col-md-8">
-                            <mat-error
-                                *ngIf="isTaxstatus && getFormControledit().taxStatus.invalid || (getFormControledit().taxStatus.touched && getFormControledit().taxStatus.invalid)"
-                                class="f-12 pt-4">
+                        <mat-form-field>
+                            <mat-label>Select tax status</mat-label>
+                            <mat-select (change)="changeTaxStatus($event.target.value)" [(ngModel)]="finAmount" class="form-control"
+                                formControlName="taxStatus" id="serviceName">
+                                <mat-option value="IGST(18%)">IGST(18%)
+                                </mat-option>
+                                <mat-option value="SGST(9%)|CGST(9%)">SGST(9%) | CGST(9%)
+                                </mat-option>
+                            </mat-select>
+                            <mat-error class="f-12 pt-4">
                                 Tax status is required
                             </mat-error>
-                        </div>
+                        </mat-form-field>
                     </div>
                     {{storeData.taxStatus}}
                     <div class="col-md-2 d-flex align-items-center justify-content-end">
