@@ -14,8 +14,14 @@
                     </mat-card-subtitle>
                 </mat-card-header>
             </div>
-            <div class="col-md-2 pt-8">
+            <div class="col-md-2 pt-8" *ngIf="singleDocument.mappedType == 1">
+                <p class="blue text-white f-16">P</p>
+            </div>
+            <div class="col-md-2 pt-8" *ngIf="singleDocument.mappedType == 3">
                 <p class="green text-white f-16">G</p>
+            </div>
+            <div class="col-md-2 pt-8" *ngIf="singleDocument.mappedType == 2">
+                <p class="green text-white f-16">S</p>
             </div>
             <div class="col-md-10 text-center" (click)="editDocument()">
                 <button mat-stroked-button class="btn-header addon ml-44 br-0">VIEW</button>
