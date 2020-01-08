@@ -95,22 +95,23 @@ export class BankAccountsComponent implements OnInit {
     return this.bankAccounts.controls;
   }
   saveCashInHand() {
-    if (this.bankAccounts.controls.balanceAsOn.invalid) {
-      this.isBalanceAsOn = true;
+
+    if (this.bankAccounts.get('accountType').invalid) {
+      this.bankAccounts.get('accountType').markAsTouched();
       return;
-    } else if (this.bankAccounts.controls.compound.invalid) {
-      this.isCompound = true;
+    } else if (this.bankAccounts.get('accountBalance').invalid) {
+      this.bankAccounts.get('accountBalance').markAsTouched();
       return;
-    } else if (this.bankAccounts.controls.accountType.invalid) {
-      this.isAccountType = true;
+    } else if (this.bankAccounts.get('balanceAsOn').invalid) {
+      this.bankAccounts.get('balanceAsOn').markAsTouched();
       return;
-    } else if (this.bankAccounts.controls.interestRate.invalid) {
-      this.isInterestRate = true;
+    } else if (this.bankAccounts.get('interestRate').invalid) {
+      this.bankAccounts.get('interestRate').markAsTouched();
       return;
-    } else if (this.bankAccounts.controls.accountBalance.invalid) {
-      this.isAccountBalance = true;
+    } else if (this.bankAccounts.get('compound').invalid) {
+      this.bankAccounts.get('compound').markAsTouched();
       return;
-    } else {
+    }  else {
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,

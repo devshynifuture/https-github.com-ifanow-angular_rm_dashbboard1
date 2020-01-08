@@ -1,14 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {MAT_DATE_FORMATS} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {DatePipe} from '@angular/common';
-import {FormBuilder, Validators} from '@angular/forms';
-import {CustomerService} from '../../../../customer.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { DatePipe } from '@angular/common';
+import { FormBuilder, Validators } from '@angular/forms';
+import { CustomerService } from '../../../../customer.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import * as moment from 'moment';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from "../../../../../../../../../services/util.service";
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from "../../../../../../../../../services/util.service";
 
 
 @Component({
@@ -17,7 +17,7 @@ import {UtilService} from "../../../../../../../../../services/util.service";
   styleUrls: ['./recuring-deposit.component.scss'],
   providers: [
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class RecuringDepositComponent implements OnInit {
@@ -51,7 +51,7 @@ export class RecuringDepositComponent implements OnInit {
   clientId: any;
 
   constructor(private event: EventService, private fb: FormBuilder, private custumService: CustomerService,
-              public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
+    public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
   }
 
   @Input()
@@ -82,7 +82,7 @@ export class RecuringDepositComponent implements OnInit {
   }
 
   Close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'})
+    this.subInjectService.changeNewRightSliderState({ state: 'close' })
   }
 
   display(value) {
@@ -122,7 +122,7 @@ export class RecuringDepositComponent implements OnInit {
       interestRate: [(data == undefined) ? '' : data.interestRate, [Validators.required]],
       compound: [(data == undefined) ? '' : (data.interestCompounding) + "", [Validators.required]],
       linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount, [Validators.required]],
-      tenure: [(data == undefined) ? '' : data.tenure, [Validators.required]],
+      tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(0), Validators.max(120)]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
       ownerType: [(data == undefined) ? '' : (data.ownershipType) + "", [Validators.required]],
@@ -148,24 +148,34 @@ export class RecuringDepositComponent implements OnInit {
   }
 
   saveRecuringDeposit() {
-    this.tenure = this.getDateYMD()
-    this.maturityDate = this.tenure
-    if (this.recuringDeposit.controls.monthlyContribution.invalid) {
+
+    if (this.recuringDeposit.get('monthlyContribution').invalid) {
+      this.recuringDeposit.get('monthlyContribution').markAsTouched();
       this.isMonthlyContribution = true;
       return;
-    } else if (this.recuringDeposit.controls.ownerType.invalid) {
-      this.isOwnerType = true;
-      return;
-    } else if (this.recuringDeposit.controls.commencementDate.invalid) {
-      this.isCommencementDate = true;
-      return;
-    } else if (this.recuringDeposit.controls.interestRate.invalid) {
+    } else if (this.recuringDeposit.get('interestRate').invalid) {
+      this.recuringDeposit.get('interestRate').markAsTouched();
       this.isInterestRate = true;
       return;
-    } else if (this.recuringDeposit.controls.compound.invalid) {
+    } else if (this.recuringDeposit.get('compound').invalid) {
+      this.recuringDeposit.get('compound').markAsTouched();
       this.isCompound = true;
       return;
-    } else {
+    } else if (this.recuringDeposit.get('commencementDate').invalid) {
+      this.recuringDeposit.get('commencementDate').markAsTouched();
+      // this.isCommencementDate = true;
+      return;
+    } else if (this.recuringDeposit.get('tenure').invalid) {
+      this.recuringDeposit.get('tenure').markAsTouched();
+      this.tenure = this.getDateYMD()
+      this.maturityDate = this.tenure
+      return;
+    } else if (this.recuringDeposit.get('ownerType').invalid) {
+      this.recuringDeposit.get('ownerType').markAsTouched();
+      this.isOwnerType = true;
+      return;
+    }
+    else {
 
       let obj = {
         advisorId: this.advisorId,
@@ -200,15 +210,20 @@ export class RecuringDepositComponent implements OnInit {
 
     }
   }
-
+  onChange(event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = "100";
+      this.recuringDeposit.get('interestRate').setValue(event.target.value);
+    }
+  }
   addrecuringDepositRes(data) {
     console.log('addrecuringDepositRes', data)
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({state: 'close', data})
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
   }
 
   editrecuringDepositRes(data) {
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({state: 'close', data})
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
   }
 }
