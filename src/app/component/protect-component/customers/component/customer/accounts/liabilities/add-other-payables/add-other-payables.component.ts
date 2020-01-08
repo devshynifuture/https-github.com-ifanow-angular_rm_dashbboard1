@@ -99,6 +99,12 @@ export class AddOtherPayablesComponent implements OnInit {
       this.otherLiabilityForm.get('interest').setValue(event.target.value);
     }
   }
+  onChangeGrowthRate(event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = "100";
+      this.otherLiabilityForm.get('growthEmployer').setValue(event.target.value);
+    }
+  }
   getFormControl() {
     return this.otherLiabilityForm.controls;
   }
