@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { EmailUtilService } from 'src/app/services/email-util.service';
 import { UtilService } from './../../../../services/util.service';
 import { SubscriptionInject } from './../Subscriptions/subscription-inject.service';
 import { appConfig } from 'src/app/config/component-config';
@@ -9,8 +8,6 @@ import { AuthService } from './../../../../auth-service/authService';
 import { BehaviorSubject } from 'rxjs';
 import { apiConfig } from './../../../../config/main-config';
 import { HttpService } from './../../../../http-service/http-service';
-import { userInfo } from 'os';
-
 
 @Injectable({
   providedIn: 'root'
