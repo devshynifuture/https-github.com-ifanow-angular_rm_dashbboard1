@@ -261,6 +261,7 @@ export const appConfig = {
   EDIT_FEE_MODIFY_STRUCTURE: 'subscription/client/subscription/fees/edit',
   GET_SUBSCRIPTION_START_DATA: 'subscription/start/subscription/detail/get',
   GET_DOCUMENT_GET: 'subscription/document/get',
+  GET_ESIGNED_DOCUMENT_GET: 'subscription/esigned/pdf/get',
   GET_DOCUMENT_UPDATE: 'subscription/document/edit',
   GET_EMAIL_TEMPLATE: 'subscription/email-template/list/get',
   EDIT_EMAIL_TEMPLATE: 'subscription/email-template/edit',

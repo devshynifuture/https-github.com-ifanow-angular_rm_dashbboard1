@@ -9,9 +9,11 @@ import * as _ from 'lodash';
 import { AddDocumentComponent } from '../add-document/add-document.component';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
+// import { window } from 'rxjs/operators';
+
 // import {element} from 'protractor';
 // import {timingSafeEqual} from 'crypto';
-
+// declare var window;
 export interface PeriodicElement {
   selected: any;
   document: string;
@@ -137,6 +139,25 @@ export class DocumentComponent implements OnInit {
     );
   }
 
+  downloadEsign(element){
+    const obj = {
+      id: element.id,
+    };
+
+    this.subscription.getEsignedDocument(obj).subscribe(
+      data => this.downloadEsignResponseData(data),
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  downloadEsignResponseData(data){
+    console.log(data, "downloadEsign 123");
+    console.log(data, "downloadEsign 123");
+    window.open(data.presginedUrl);
+  }
+
   openDocument(data) {
     const Fragmentdata = {
       flag: data,
@@ -234,18 +255,25 @@ export class DocumentComponent implements OnInit {
 
   }
 
-  openEsignDocument() {
+  openEsignDocument(element) {
     const data = {
       advisorId: this.advisorId,
       clientData: this._clientData,
       templateType: 3, // 1-Invoice, 2 is for quotation, 3 is for esign, 4 is document
       documentList: []
     };
-    this.dataSource.filteredData.forEach(singleElement => {
-      if (singleElement.selected) {
-        data.documentList.push(singleElement);
-      }
-    });
+    if (element) {
+      data.documentList.push(element);
+
+    } else {
+
+
+      this.dataSource.filteredData.forEach(singleElement => {
+        if (singleElement.selected) {
+          data.documentList.push(singleElement);
+        }
+      });
+    }
     this.open('eSignDocument', data);
   }
 
@@ -289,7 +317,7 @@ export class DocumentComponent implements OnInit {
   }
 
   getplanDocumentDataResponse(data) {
-    if(data !== undefined){
+    if (data !== undefined) {
       data.forEach(singleData => {
         singleData.isChecked = false;
         // singleData.docText = '<h1>One morning, when Gregor Samsa woke from troubled \n' +
@@ -433,7 +461,7 @@ export class DocumentComponent implements OnInit {
   }
 
   getServiceDocumentDataResponse(data) {
-    if(data && data !== undefined){
+    if (data && data !== undefined) {
       console.log('service Documents', data.documentList);
       this.serviceDocumentData = data.documentList;
       this.serviceDocumentData.forEach(element => {
@@ -596,7 +624,7 @@ export class DocumentComponent implements OnInit {
   saveMappingDocumentToPlans() {
 
     let obj = [];
-    if(this.mappedData){
+    if (this.mappedData) {
       this.mappedData.forEach(element => {
         const data = {
           // advisorId: 12345,
@@ -619,20 +647,20 @@ export class DocumentComponent implements OnInit {
     this.subService.mapDocumentsToPlanData(obj).subscribe(
       data => {
         console.log("error status:::::::::::::", data);
-        if(data !== 204){
+        if (data !== 204) {
           this.saveMappingDocumentToPlansResponse(data);
         }
-        else if(data === 204){
+        else if (data === 204) {
           this.eventService.openSnackBar('No Documents Created', 'dismiss');
         }
-      }  
+      }
     );
 
   }
 
   saveMappingDocumentToPlansResponse(data) {
     console.log("response status:::::::::::::::", data);
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
     if (this.mappedData) {
       this.eventService.openSnackBar('No Document mapped', 'Dismiss');
     } else {
@@ -642,7 +670,7 @@ export class DocumentComponent implements OnInit {
 
   savePlanMapToDocument() {
     let obj = [];
-    if(this.mappedData){
+    if (this.mappedData) {
       this.mappedData.forEach(element => {
         const data = {
           // advisorId: 12345,
