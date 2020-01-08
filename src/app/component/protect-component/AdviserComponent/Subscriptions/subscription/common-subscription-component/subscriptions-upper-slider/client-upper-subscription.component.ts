@@ -34,11 +34,12 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   isLoading = false;
   clientData: any = [];
   data: Array<any> = [{}, {}, {}];
-  dataSource: any;
+  sub = new MatTableDataSource(this.data);
   noData: string;
   planName: any;
   subcr: any[];
   newArray: any[];
+
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, public subscription: SubscriptionService) {
   }
@@ -51,15 +52,16 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   displayedColumns: string[] = ['service', 'amt', 'type', 'subs', 'status', 'date', 'bdate', 'ndate', 'mode', 'icons'];
 
   @Input() set upperData(data) {
+
     console.log(data)
     this.advisorId = AuthService.getAdvisorId();
     this.clientSubscriptionData = data;
     this.getSummaryDataClient();
-    this.isLoading = true;
   };
   clientSubscriptionData;
   advisorId;
   ngOnInit() {
+
   }
 
   openPlanSlider(value, state, data) {
@@ -100,10 +102,9 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   }
 
   getSummaryDataClient() {
+    this.isLoading = true;
     const obj = {
-      // 'id':2735, //pass here advisor id for Invoice advisor
-      // 'module':1,
-      // advisorId: 12345,
+
       advisorId: this.advisorId,
       clientId: this.clientSubscriptionData.id,
       flag: 4,
@@ -112,12 +113,13 @@ export class ClientUpperSubscriptionComponent implements OnInit {
       offset: 0,
       order: 0,
     };
-
+    this.sub.data = [{}, {}, {}];
+    this.subcr = [this.sub];
+    this.clientData = [{}];
     this.subscription.getSubSummary(obj).subscribe(
-      data => this.getSubSummaryRes(data),
-      (error) => {
+      data => this.getSubSummaryRes(data), (error) => {
         this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
-        this.dataSource.data = [];
+        this.sub.data = [];
         this.isLoading = false;
       }
     );
@@ -140,7 +142,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           this.getSummaryDataClient();
           rightSideDataSub.unsubscribe();
-          
+
         }
       }
     );
@@ -149,11 +151,11 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   getSubSummaryRes(data) {
     this.isLoading = false;
     console.log(data, "hi client");
-    // this.dataSource = data;
     if (data == undefined) {
       this.clientData.length == 0;
-      this.dataSource = undefined;
-    } else {
+      this.sub = undefined;
+
+    } else if (data.length > 0) {
 
       for (let d of data) {
         if (d.subscriptionPricing.feeTypeId == 1) {
@@ -176,10 +178,14 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         });
       });
       console.log('**********', this.subcr)
-      this.dataSource = new MatTableDataSource(data);
+      this.sub = new MatTableDataSource(data);
 
-      this.dataSource.sort = this.sort;
-      console.log('getSummary response', this.dataSource)
+      this.sub.sort = this.sort;
+      console.log('getSummary response', this.sub)
+    } else {
+      this.clientData.length == 0;
+      this.sub = undefined;
+      this.isLoading = false;
     }
 
 

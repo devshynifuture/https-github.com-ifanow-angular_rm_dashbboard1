@@ -54,7 +54,15 @@ export class LeftsidebarComponent implements OnInit {
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => typeof value == 'string' ? value : value.name),
-      map(name => name ? this._filter(name) : this.clientList.slice())
+      map(name => {
+        if(name){
+          this._filter(name)
+        } else {
+          if(this.clientList){
+            this.clientList.slice()
+          }
+        } 
+      })
     );
   }
 
