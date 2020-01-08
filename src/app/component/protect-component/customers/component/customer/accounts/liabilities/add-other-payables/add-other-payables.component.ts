@@ -1,18 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {MAT_DATE_FORMATS} from '@angular/material/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from '../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-other-payables',
   templateUrl: './add-other-payables.component.html',
   styleUrls: ['./add-other-payables.component.scss'],
   providers: [
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class AddOtherPayablesComponent implements OnInit {
@@ -31,6 +31,8 @@ export class AddOtherPayablesComponent implements OnInit {
   advisorId: any;
   clientId: number;
   _data: any;
+  interestRate: number;
+  showError: boolean;
 
   constructor(private fb: FormBuilder, public subInjectService: SubscriptionInject, public custumService: CustomerService, public eventService: EventService) {
   }
@@ -63,7 +65,7 @@ export class AddOtherPayablesComponent implements OnInit {
 
   close() {
     // let data=this._inputData.loanTypeId;
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   getOtherPayable(data) {
@@ -75,7 +77,8 @@ export class AddOtherPayablesComponent implements OnInit {
       dateOfReceipt: [new Date(data.dateOfReceived), [Validators.required]],
       creditorName: [data.creditorName, [Validators.required]],
       amtBorrowed: [data.amountBorrowed, [Validators.required]],
-      interest: [data.interest, [Validators.required]],
+      interest: [data.interest, [Validators.required, Validators.min(1), Validators.max(100)]],
+
       dateOfRepayment: [new Date(data.dateOfRepayment), [Validators.required]],
       balance: [data.outstandingBalance, [Validators.required]],
       collateral: [data.collateral],
@@ -85,10 +88,17 @@ export class AddOtherPayablesComponent implements OnInit {
     this.getFormControl().amtBorrowed.maxLength = 20;
     this.getFormControl().interest.maxLength = 20;
     this.getFormControl().balance.maxLength = 20;
+    this.getFormControl().collateral.maxLength = 20;
     this.ownerData = this.otherLiabilityForm.controls;
 
   }
 
+  onChange(event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = "100";
+      this.otherLiabilityForm.get('interest').setValue(event.target.value);
+    }
+  }
   getFormControl() {
     return this.otherLiabilityForm.controls;
   }
@@ -144,7 +154,7 @@ export class AddOtherPayablesComponent implements OnInit {
       obj.dateOfRepayment = obj.dateOfRepayment.toISOString().slice(0, 10);
       obj.interest = parseInt(obj.interest);
 
-      if (this._inputData == 'Add') {
+      if (this._data == 'Add') {
         const objToSend = {
           advisorId: this.advisorId,
           clientId: this.clientId,
@@ -188,7 +198,7 @@ export class AddOtherPayablesComponent implements OnInit {
     console.log(data);
     if (data) {
       console.log(data);
-      this.subInjectService.changeNewRightSliderState({state: 'close'});
+      this.subInjectService.changeNewRightSliderState({ state: 'close' });
       this.eventService.openSnackBar('Liabilities added successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
@@ -200,7 +210,7 @@ export class AddOtherPayablesComponent implements OnInit {
     console.log(data);
     if (data) {
       console.log(data);
-      this.subInjectService.changeNewRightSliderState({state: 'close'});
+      this.subInjectService.changeNewRightSliderState({ state: 'close' });
       this.eventService.openSnackBar('Liabilities edited successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');

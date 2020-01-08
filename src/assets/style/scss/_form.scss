@@ -88,6 +88,7 @@ input.mat-input-element:focus {
 .mat-form-field-infix {
   border-top: 0px !important;
   width: 100% !important;
+  padding: 0 !important;
 }
 
 .mat-form-field {
@@ -252,10 +253,7 @@ input.mat-input-element:focus {
   background-color: #008FFF !important;
 }
 
-.mat-form-field-subscript-wrapper {
-  // top: 0 !important;
-  margin-top: 0 !important;
-}
+
 
 textarea.mat-input-element {
   resize: none !important;
@@ -263,4 +261,14 @@ textarea.mat-input-element {
 
 .mat-sort-header-arrow {
   margin: 0 !important;
+}
+
+.form-control {
+  border-radius: 0px !important;
+}
+
+.mat-accent .mat-slider-thumb,
+.mat-accent .mat-slider-thumb-label,
+.mat-accent .mat-slider-track-fill {
+  background-color: #008FFF !important;
 }

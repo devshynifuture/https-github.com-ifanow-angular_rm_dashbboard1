@@ -5,22 +5,23 @@
 //     background-color: #02B875 !important;
 // }
 .example-card {
-    border: 1px solid rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 ::ng-deep #ui-settingsHeaders .mat-tab-header {
-    background: transparent !important;
-    box-shadow: none;
-    position: inherit;
-    z-index: 0;
+  background: transparent !important;
+  box-shadow: none;
+  position: inherit;
+  z-index: 0;
 }
 
 ::ng-deep #ui-settingsHeaders .mat-tab-group {
-    margin-top: auto !important;
-    padding-top: 80px !important;
+  margin-top: auto !important;
+  padding-top: 80px !important;
 }
 
 ::ng-deep #ui-settingsHeaders .mat-tab-labels {
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 20px;
 }

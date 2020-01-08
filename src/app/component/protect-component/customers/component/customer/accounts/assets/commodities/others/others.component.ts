@@ -58,7 +58,12 @@ export class OthersComponent implements OnInit {
   Close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
-
+  onChange(event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = "100";
+      this.others.get('growthRate').setValue(event.target.value);
+    }
+  }
   showLess(value) {
     if (value == true) {
       this.showHide = false;
@@ -110,7 +115,7 @@ export class OthersComponent implements OnInit {
         marketValue: this.others.controls.marketValue.value,
         purchaseValue: this.others.controls.purchaseValue.value,
         growthRate: this.others.controls.growthRate.value,
-        dateOfPurchase: this.datePipe.transform(this.others.controls.dateOfPurchase.value, 'yyyy-MM-dd'),
+        dateOfPurchase: (this.others.controls.dateOfPurchase.touched)?this.datePipe.transform(this.others.controls.dateOfPurchase.value, 'yyyy-MM-dd'):this.others.controls.dateOfPurchase.value,
         description: this.others.controls.description.value,
         id: this.others.controls.id.value
       };

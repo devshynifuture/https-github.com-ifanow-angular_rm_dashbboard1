@@ -26,7 +26,7 @@
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field><input #guradian class="form-control br-0" formControlName="guardian" matInput
-                            maxlength="" type="text">
+                            maxlength="20" type="text">
                         <mat-error class="f-12 pt-4"> This field is required</mat-error>
                         <mat-hint align="end" class="f-12">{{guradian.value.length}}/20</mat-hint>
                     </mat-form-field>
@@ -42,10 +42,10 @@
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field><input #accountBalance class="form-control rupess br-0"
-                            (keypress)="utils.keyPress($event)" formControlName="accBalance" matInput maxlength=""
-                            type="number">
+                            (keypress)="utils.keyPress($event)" formControlName="accBalance" matInput maxlength="10"
+                            type="text">
                         <mat-error class="f-12 pt-4"> This field is required</mat-error>
-                        <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/20</mat-hint>
+                        <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/10</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -59,7 +59,7 @@
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field><input [matDatepicker]="balanceAsOn" class="form-control br-0"
-                            formControlName="balanceAsOn" matInput>
+                            formControlName="balanceAsOn" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
                         <mat-error class="f-12 pt-4">This field is required </mat-error>
@@ -75,7 +75,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input [matDatepicker]="SSYpicker" class="form-control br-0" formControlName="commDate"
-                            matInput>
+                            matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="SSYpicker"></mat-datepicker-toggle>
                         <mat-datepicker #SSYpicker></mat-datepicker>
                         <mat-error class="f-12 pt-4">
@@ -93,11 +93,11 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input #futureContribution class="form-control rupess br-0" (keypress)="utils.keyPress($event)"
-                            formControlName="futureAppx" matInput maxlength="" type="number">
+                            formControlName="futureAppx" matInput maxlength="10" type="text">
                         <mat-error class="f-12 pt-4">
                             This field is required
                         </mat-error>
-                        <mat-hint align="end" class="f-12">{{futureContribution.value.length}}/20</mat-hint>
+                        <mat-hint align="end" class="f-12">{{futureContribution.value.length}}/10</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -139,9 +139,9 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field><input #fdNo class="form-control br-0" #description formControlName="description"
-                            matInput maxlength="10" type="text">
+                            matInput maxlength="60" type="text">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{description.value.length}}/20</mat-hint>
+                        <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -152,10 +152,10 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field><input type="number" #linkedAcc class="form-control br-0"
-                            (keypress)="utils.keyPress($event)" formControlName="linkedAcc" matInput maxlength="30">
+                    <mat-form-field><input type="text" #linkedAcc class="form-control br-0"
+                            (keypress)="utils.keyPress($event)" formControlName="linkedAcc" matInput maxlength="16">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{linkedAcc.value.length}}/20</mat-hint>
+                        <mat-hint align="end" class="f-12">{{linkedAcc.value.length}}/16</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -167,9 +167,9 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field><input #bankACNo class="form-control br-0" formControlName="bankName" matInput
-                            maxlength="15" type="text">
+                            maxlength="40" type="text">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{bankACNo.value.length}}/20</mat-hint>
+                        <mat-hint align="end" class="f-12">{{bankACNo.value.length}}/40</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -183,7 +183,7 @@
                     <mat-form-field><input #nominee class="form-control br-0" formControlName="nominee" matInput
                             maxlength="60">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{nominee.value.length}}/20</mat-hint>
+                        <!-- <mat-hint align="end" class="f-12">{{nominee.value.length}}/20</mat-hint> -->
                     </mat-form-field>
                 </div>
             </div>
@@ -195,7 +195,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field><input #agentName class="form-control br-0" formControlName="agentName" matInput
-                            maxlength="60">
+                            maxlength="20">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{agentName.value.length}}/20</mat-hint>
                     </mat-form-field>

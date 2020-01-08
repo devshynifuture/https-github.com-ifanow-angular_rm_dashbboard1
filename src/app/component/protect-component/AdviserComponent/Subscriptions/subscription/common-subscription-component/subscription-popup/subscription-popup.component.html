@@ -1,341 +1,353 @@
 <div id="ui-silder" *ngIf="fragmentData.flag=='subscriptionPopup'">
-<div style="display: none">
-  <img src="assets/images/svg/slider1.svg" class="w-100 center block">
+  <div style="display: none">
+    <img src="assets/images/svg/slider1.svg" class="w-100 center block">
     <img src="assets/images/svg/slider2.svg" class="w-100 center block">
     <img src="assets/images/svg/slider3.svg" class="w-100 center block">
     <img src="assets/images/svg/slider4.svg" class="w-100 center block">
     <img src="assets/images/svg/slider5.svg" class="w-100 center block">
     <img src="assets/images/svg/slider6.svg" class="w-100 center block">
-</div>
-<div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==1">
+  </div>
+  <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==1">
     <div class="">
-        <img src="assets/images/svg/slider1.svg" >
-    </div>
-
-
-   
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <h3 class="pt-20 m-0 f-500 f-22">What is Subscriptions?</h3>
-            <h5 class="mb-20 pt-20 pl-44 pr-44">Subscriptions is carefully designed for RIAs. You can define your core offerings,<br> fee structure, deliverables, agreements and automate the whole process around it.<br> This  will act as a foundation for your RIA practice.</h5>
-                <mat-radio-group class="mt-16" aria-label="Select an option" >
-                    <mat-radio-button value='1' (click)="getData(1)" checked></mat-radio-button>
-                    <mat-radio-button value='2' (click)="getData(2)"></mat-radio-button>
-                    <mat-radio-button value='3' (click)="getData(3)"></mat-radio-button>
-                    <mat-radio-button value='4' (click)="getData(4)"></mat-radio-button>
-                    <mat-radio-button value='5' (click)="getData(5)"></mat-radio-button>
-                    <mat-radio-button value='6' (click)="getData(6)"></mat-radio-button>
-                  </mat-radio-group>
-           
-                </div>
+      <img src="assets/images/svg/slider1.svg">
     </div>
     <div class="row">
-        <div class="col-md-12 pr-0 right text-right pt-16">
-            <button mat-button mat-dialog-close  class="text-custom f-500 c-p" >SKIP</button>
-            <button mat-button class="f-500 c-p text-primary"  (click)="getData(2)">NEXT</button>
+      <div class="col-md-12 text-center">
+        <h3 class="pt-20 m-0 f-500 f-22">What is Subscriptions?</h3>
+        <h5 class="mb-20 pt-20 pl-44 pr-44">Subscriptions is carefully designed for RIAs. You can define your core
+          offerings,<br> fee structure, deliverables, agreements and automate the whole process around it.<br> This will
+          act as a foundation for your RIA practice.</h5>
+        <mat-radio-group class="mt-16" aria-label="Select an option">
+          <mat-radio-button value='1' (click)="getData(1)" checked></mat-radio-button>
+          <mat-radio-button value='2' (click)="getData(2)"></mat-radio-button>
+          <mat-radio-button value='3' (click)="getData(3)"></mat-radio-button>
+          <mat-radio-button value='4' (click)="getData(4)"></mat-radio-button>
+          <mat-radio-button value='5' (click)="getData(5)"></mat-radio-button>
+          <mat-radio-button value='6' (click)="getData(6)"></mat-radio-button>
+        </mat-radio-group>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 pr-0 right text-right pt-16">
+        <button mat-button mat-dialog-close class="text-custom f-500 c-p">SKIP</button>
+        <button mat-button class="f-500 c-p text-primary" (click)="getData(2)">NEXT</button>
       </div>
     </div>
 
-</div>
-<div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==2">
+  </div>
+  <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==2">
     <div class="">
-        <img src="assets/images/svg/slider2.svg" >
+      <img src="assets/images/svg/slider2.svg">
     </div>
-    
-   
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h3 class="pt-20 m-0 f-500 f-22">Create Plans</h3>
-                <h5 class="mb-20 pt-20 pl-44 pr-44">You start by creating Plans first.Plans are you core offering. You can have<br>  multiple plans for different type of clients Each plan will have sub offerings,alse<br>known as Services(Explain in next slide)</h5>
-                    <mat-radio-group class="mt-16" aria-label="Select an option">
-                        <mat-radio-button value='1' (click)="getData(1)" ></mat-radio-button>
-                        <mat-radio-button  value='2' checked (click)="getData(2)"></mat-radio-button>
-                        <mat-radio-button value='3' (click)="getData(3)"></mat-radio-button>
-                        <mat-radio-button value='4' (click)="getData(4)"></mat-radio-button>
-                        <mat-radio-button value='5' (click)="getData(5)"></mat-radio-button>
-                        <mat-radio-button  value='6' (click)="getData(6)"></mat-radio-button>
-                      </mat-radio-group>
-               
-                    </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 pr-0 right text-right pt-16">
-                <button mat-button mat-dialog-close  class="text-custom f-500 c-p" >SKIP</button>
-                <button mat-button class="f-500 c-p text-primary" (click)="getData(3)">NEXT</button>
-          </div>
-        </div>
-    
- </div>
- <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==3">
+
+
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h3 class="pt-20 m-0 f-500 f-22">Create Plans</h3>
+        <h5 class="mb-20 pt-20 pl-44 pr-44">You start by creating Plans first.Plans are you core offering. You can
+          have<br> multiple plans for different type of clients Each plan will have sub offerings,alse<br>known as
+          Services(Explain in next slide)</h5>
+        <mat-radio-group class="mt-16" aria-label="Select an option">
+          <mat-radio-button value='1' (click)="getData(1)"></mat-radio-button>
+          <mat-radio-button value='2' checked (click)="getData(2)"></mat-radio-button>
+          <mat-radio-button value='3' (click)="getData(3)"></mat-radio-button>
+          <mat-radio-button value='4' (click)="getData(4)"></mat-radio-button>
+          <mat-radio-button value='5' (click)="getData(5)"></mat-radio-button>
+          <mat-radio-button value='6' (click)="getData(6)"></mat-radio-button>
+        </mat-radio-group>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 pr-0 right text-right pt-16">
+        <button mat-button mat-dialog-close class="text-custom f-500 c-p">SKIP</button>
+        <button mat-button class="f-500 c-p text-primary" (click)="getData(3)">NEXT</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==3">
     <div class="">
-        <img src="assets/images/svg/slider3.svg">
+      <img src="assets/images/svg/slider3.svg">
     </div>
-    
-   
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h3 class="pt-20 m-0 f-500 f-22">Create Services</h3>
-                <h5 class="mb-20 pt-20 pl-44 pr-44">Next up, you create Services. More than one Service can be added to a Plan. E.g.<br> Plan could be Financial Planning. It’s Services could be 1) Planning fees 2) Implementation services 3) Retainer services.</h5>
-                    <mat-radio-group class="mt-16" aria-label="Select an option">
-                        <mat-radio-button value='1' (click)="getData(1)"></mat-radio-button>
-                        <mat-radio-button value='2' (click)="getData(2)"></mat-radio-button>
-                        <mat-radio-button value='3' checked (click)="getData(3)"></mat-radio-button>
-                        <mat-radio-button value='4' (click)="getData(4)"></mat-radio-button>
-                        <mat-radio-button value='5' (click)="getData(5)"></mat-radio-button>
-                        <mat-radio-button value='6' (click)="getData(6)"></mat-radio-button>
-                      </mat-radio-group>
-               
-                    </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 pr-0 right text-right pt-16">
-                <button mat-button mat-dialog-close  class="text-custom f-500 c-p"  >SKIP</button>
-                <button mat-button class="f-500 c-p text-primary" (click)="getData(4)">NEXT</button>
-          </div>
-        </div>
-   
- </div>
- <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==4">
+
+
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h3 class="pt-20 m-0 f-500 f-22">Create Services</h3>
+        <h5 class="mb-20 pt-20 pl-44 pr-44">Next up, you create Services. More than one Service can be added to a Plan.
+          E.g.<br> Plan could be Financial Planning. It’s Services could be 1) Planning fees 2) Implementation services
+          3) Retainer services.</h5>
+        <mat-radio-group class="mt-16" aria-label="Select an option">
+          <mat-radio-button value='1' (click)="getData(1)"></mat-radio-button>
+          <mat-radio-button value='2' (click)="getData(2)"></mat-radio-button>
+          <mat-radio-button value='3' checked (click)="getData(3)"></mat-radio-button>
+          <mat-radio-button value='4' (click)="getData(4)"></mat-radio-button>
+          <mat-radio-button value='5' (click)="getData(5)"></mat-radio-button>
+          <mat-radio-button value='6' (click)="getData(6)"></mat-radio-button>
+        </mat-radio-group>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 pr-0 right text-right pt-16">
+        <button mat-button mat-dialog-close class="text-custom f-500 c-p">SKIP</button>
+        <button mat-button class="f-500 c-p text-primary" (click)="getData(4)">NEXT</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==4">
     <div class="">
-        <img src="assets/images/svg/slider4.svg">
+      <img src="assets/images/svg/slider4.svg">
     </div>
- 
-   
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h3 class="pt-20 m-0 f-500 f-22">Create Documents</h3>
-                <h5 class="mb-20 pt-20 pl-44 pr-44">We’ve automated the complete process of documentation (a core part of RIA<br> compliance). You create documents easily using ready made templates or upload. Email to clients, get eSigned and securely store.</h5>
-                    <mat-radio-group class="mt-16" aria-label="Select an option">
-                        <mat-radio-button  value='1' (click)="getData(1)"></mat-radio-button>
-                        <mat-radio-button value='2'  (click)="getData(2)"></mat-radio-button>
-                        <mat-radio-button value='3' (click)="getData(3)"></mat-radio-button>
-                        <mat-radio-button value='4' checked (click)="getData(4)"></mat-radio-button>
-                        <mat-radio-button value='5' (click)="getData(5)"></mat-radio-button>
-                        <mat-radio-button value='6' (click)="getData(6)"></mat-radio-button>
-                      </mat-radio-group>
-               
-                    </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 pr-0 right text-right pt-16">
-                <button mat-button mat-dialog-close  class="text-custom f-500 c-p" >SKIP</button>
-                <button mat-button class="f-500 c-p text-primary" (click)="getData(5)" >NEXT</button>
-          </div>
-        </div>
-  
- </div>  
- <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==5">
+
+
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h3 class="pt-20 m-0 f-500 f-22">Create Documents</h3>
+        <h5 class="mb-20 pt-20 pl-44 pr-44">We’ve automated the complete process of documentation (a core part of
+          RIA<br> compliance). You create documents easily using ready made templates or upload. Email to clients, get
+          eSigned and securely store.</h5>
+        <mat-radio-group class="mt-16" aria-label="Select an option">
+          <mat-radio-button value='1' (click)="getData(1)"></mat-radio-button>
+          <mat-radio-button value='2' (click)="getData(2)"></mat-radio-button>
+          <mat-radio-button value='3' (click)="getData(3)"></mat-radio-button>
+          <mat-radio-button value='4' checked (click)="getData(4)"></mat-radio-button>
+          <mat-radio-button value='5' (click)="getData(5)"></mat-radio-button>
+          <mat-radio-button value='6' (click)="getData(6)"></mat-radio-button>
+        </mat-radio-group>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 pr-0 right text-right pt-16">
+        <button mat-button mat-dialog-close class="text-custom f-500 c-p">SKIP</button>
+        <button mat-button class="f-500 c-p text-primary" (click)="getData(5)">NEXT</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==5">
     <div class="">
-        <img src="assets/images/svg/slider5.svg">
+      <img src="assets/images/svg/slider5.svg">
     </div>
-  
-   
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h3 class="pt-20 m-0 f-500 f-22">Map Plans, Services & Documents</h3>
-                <h5 class="mb-20 pt-20 pl-44 pr-44">Once you’ve created the above, you simply map Plans, Services & Documents to <br>each other. This will result in a cohesive product offering which is unique to your practice and ensures stability and consistency.</h5>
-                    <mat-radio-group class="mt-16" aria-label="Select an option">
-                        <mat-radio-button value='1' (click)="getData(1)"></mat-radio-button>
-                        <mat-radio-button  value='2' (click)="getData(2)"></mat-radio-button>
-                        <mat-radio-button value='3' (click)="getData(3)"></mat-radio-button>
-                        <mat-radio-button value='4' (click)="getData(4)"></mat-radio-button>
-                        <mat-radio-button value='5' checked (click)="getData(5)"></mat-radio-button>
-                        <mat-radio-button value='6' (click)="getData(6)"></mat-radio-button>
-                      </mat-radio-group>
-               
-                    </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 pr-0 right text-right pt-16">
-                <button mat-button mat-dialog-close  class="text-custom f-500 c-p" >SKIP</button>
-                <button mat-button class="f-500 c-p text-primary" (click)="getData(6)" >NEXT</button>
-          </div>
-        </div>
-    
- </div>
- <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==6">
+
+
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h3 class="pt-20 m-0 f-500 f-22">Map Plans, Services & Documents</h3>
+        <h5 class="mb-20 pt-20 pl-44 pr-44">Once you’ve created the above, you simply map Plans, Services & Documents to
+          <br>each other. This will result in a cohesive product offering which is unique to your practice and ensures
+          stability and consistency.</h5>
+        <mat-radio-group class="mt-16" aria-label="Select an option">
+          <mat-radio-button value='1' (click)="getData(1)"></mat-radio-button>
+          <mat-radio-button value='2' (click)="getData(2)"></mat-radio-button>
+          <mat-radio-button value='3' (click)="getData(3)"></mat-radio-button>
+          <mat-radio-button value='4' (click)="getData(4)"></mat-radio-button>
+          <mat-radio-button value='5' checked (click)="getData(5)"></mat-radio-button>
+          <mat-radio-button value='6' (click)="getData(6)"></mat-radio-button>
+        </mat-radio-group>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 pr-0 right text-right pt-16">
+        <button mat-button mat-dialog-close class="text-custom f-500 c-p">SKIP</button>
+        <button mat-button class="f-500 c-p text-primary" (click)="getData(6)">NEXT</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==6">
     <div class="">
-        <img src="assets/images/svg/slider6.svg" >
+      <img src="assets/images/svg/slider6.svg">
     </div>
-  
-   
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h3 class="pt-20 m-0 f-500 f-22">Plan, rinse, repeat!</h3>
-                <h5 class="mb-20 pt-20 pl-44 pr-44">With the foundation now set, it’s time to now do what you do the best - Plan for <br>your clients’ financial freedom. We do the background work for you - create invoices, bill clients, execute agreements and so on.</h5>
-                    <mat-radio-group class="mt-20" aria-label="Select an option">
-                        <mat-radio-button value='1'  (click)="getData(1)"></mat-radio-button>
-                        <mat-radio-button value='2' (click)="getData(2)"></mat-radio-button>
-                        <mat-radio-button value='3'(click)="getData(3)"></mat-radio-button>
-                        <mat-radio-button value='4' (click)="getData(4)"></mat-radio-button>
-                        <mat-radio-button value='5' (click)="getData(5)"></mat-radio-button>
-                        <mat-radio-button value='6' checked (click)="getData(6)"></mat-radio-button>
-                      </mat-radio-group>
-               
-                    </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 pr-0 right text-right pt-16">
-                <button mat-button mat-dialog-close  class="text-custom f-500 c-p" >SKIP</button>
-                <button mat-button mat-dialog-close class="f-500 c-p text-primary">START</button>
-          </div>
-        </div>
-    
- </div>    
+
+
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h3 class="pt-20 m-0 f-500 f-22">Plan, rinse, repeat!</h3>
+        <h5 class="mb-20 pt-20 pl-44 pr-44">With the foundation now set, it’s time to now do what you do the best - Plan
+          for <br>your clients’ financial freedom. We do the background work for you - create invoices, bill clients,
+          execute agreements and so on.</h5>
+        <mat-radio-group class="mt-20" aria-label="Select an option">
+          <mat-radio-button value='1' (click)="getData(1)"></mat-radio-button>
+          <mat-radio-button value='2' (click)="getData(2)"></mat-radio-button>
+          <mat-radio-button value='3' (click)="getData(3)"></mat-radio-button>
+          <mat-radio-button value='4' (click)="getData(4)"></mat-radio-button>
+          <mat-radio-button value='5' (click)="getData(5)"></mat-radio-button>
+          <mat-radio-button value='6' checked (click)="getData(6)"></mat-radio-button>
+        </mat-radio-group>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 pr-0 right text-right pt-16">
+        <button mat-button mat-dialog-close class="text-custom f-500 c-p">SKIP</button>
+        <button mat-button mat-dialog-close class="f-500 c-p text-primary">START</button>
+      </div>
+    </div>
+
+  </div>
 </div>
 <div id="ui-silder" *ngIf="fragmentData.flag!='subscriptionPopup'">
   <div style="display: none">
     <img src="assets/images/svg/dialogs1.svg" class="w-100 center block">
-      <img src="assets/images/svg/dialogs2.svg" class="w-100 center block">
-      <img src="assets/images/svg/dialogs3.svg" class="w-100 center block">
-      <img src="assets/images/svg/dialogs4.svg" class="w-100 center block">
-      <img src="assets/images/svg/dialogs5.svg" class="w-100 center block">
+    <img src="assets/images/svg/dialogs2.svg" class="w-100 center block">
+    <img src="assets/images/svg/dialogs3.svg" class="w-100 center block">
+    <img src="assets/images/svg/dialogs4.svg" class="w-100 center block">
+    <img src="assets/images/svg/dialogs5.svg" class="w-100 center block">
   </div>
   <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==1">
-      <div class="">
-          <img src="assets/images/svg/dialogs1.svg" >
+    <div class="">
+      <img src="assets/images/svg/dialogs1.svg">
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h3 class="pt-20 m-0 f-500 f-22">Create document</h3>
+        <h5 class="mb-20 pt-20 pl-44 pr-44">Start by creating documents easily using ready made templates, create your
+          own or upload</h5>
+        <mat-radio-group class="mt-16" aria-label="Select an option">
+          <mat-radio-button value='1' checked (click)="getData(1)"></mat-radio-button>
+          <mat-radio-button value='2' (click)="getData(2)"></mat-radio-button>
+          <mat-radio-button value='3' (click)="getData(3)"></mat-radio-button>
+          <mat-radio-button value='4' (click)="getData(4)"></mat-radio-button>
+          <mat-radio-button value='5' (click)="getData(5)"></mat-radio-button>
+        </mat-radio-group>
+
       </div>
-      
-     
-          <div class="row">
-              <div class="col-md-12 text-center">
-                  <h3 class="pt-20 m-0 f-500 f-22">Create document</h3>
-                  <h5 class="mb-20 pt-20 pl-44 pr-44">Start by creating documents easily using ready made templates, create your own or upload</h5>
-                      <mat-radio-group class="mt-16" aria-label="Select an option">
-                          <mat-radio-button value='1' checked (click)="getData(1)" ></mat-radio-button>
-                          <mat-radio-button  value='2'  (click)="getData(2)"></mat-radio-button>
-                          <mat-radio-button value='3' (click)="getData(3)"></mat-radio-button>
-                          <mat-radio-button value='4' (click)="getData(4)"></mat-radio-button>
-                          <mat-radio-button value='5' (click)="getData(5)"></mat-radio-button>
-                        </mat-radio-group>
-                 
-                      </div>
-          </div>
-          <div class="row">
-              <div class="col-md-12 pr-0 right text-right pt-16">
-                  <button mat-button mat-dialog-close  class="text-custom f-500 c-p" >SKIP</button>
-                  <button mat-button class="f-500 c-p text-primary" (click)="getData(2)">NEXT</button>
-            </div>
-          </div>
-      
-   </div>
-   <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==2">
-      <div class="">
-          <img src="assets/images/svg/dialogs2.svg">
+    </div>
+    <div class="row">
+      <div class="col-md-12 pr-0 right text-right pt-16">
+        <button mat-button mat-dialog-close class="text-custom f-500 c-p">SKIP</button>
+        <button mat-button class="f-500 c-p text-primary" (click)="getData(2)">NEXT</button>
       </div>
-      
-     
-          <div class="row">
-              <div class="col-md-12 text-center">
-                  <h3 class="pt-20 m-0 f-500 f-22">Send to client</h3>
-                  <h5 class="mb-20 pt-20 pl-44 pr-44">Once you create the document, email it to client 
-                    with one click</h5>
-                      <mat-radio-group class="mt-16" aria-label="Select an option">
-                          <mat-radio-button value='1' (click)="getData(1)"></mat-radio-button>
-                          <mat-radio-button value='2' checked (click)="getData(2)"></mat-radio-button>
-                          <mat-radio-button value='3'  (click)="getData(3)"></mat-radio-button>
-                          <mat-radio-button value='4' (click)="getData(4)"></mat-radio-button>
-                          <mat-radio-button value='5' (click)="getData(5)"></mat-radio-button>
-                        </mat-radio-group>
-                 
-                      </div>
-          </div>
-          <div class="row">
-              <div class="col-md-12 pr-0 right text-right pt-16">
-                  <button mat-button mat-dialog-close  class="text-custom f-500 c-p"  >SKIP</button>
-                  <button mat-button class="f-500 c-p text-primary" (click)="getData(3)">NEXT</button>
-            </div>
-          </div>
-     
-   </div>
-   <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==3">
-      <div class="">
-          <img src="assets/images/svg/dialogs3.svg">
-      </div>
-   
-     
-          <div class="row">
-              <div class="col-md-12 text-center">
-                  <h3 class="pt-20 m-0 f-500 f-22">Client inspects document</h3>
-                  <h5 class="mb-20 pt-20 pl-44 pr-44">Client can review the document and 
-                    proceed for eSigning</h5>
-                      <mat-radio-group class="mt-16" aria-label="Select an option">
-                          <mat-radio-button  value='1' (click)="getData(1)"></mat-radio-button>
-                          <mat-radio-button value='2'  (click)="getData(2)"></mat-radio-button>
-                          <mat-radio-button value='3' checked (click)="getData(3)"></mat-radio-button>
-                          <mat-radio-button value='4'  (click)="getData(4)"></mat-radio-button>
-                          <mat-radio-button value='5' (click)="getData(5)"></mat-radio-button>
-                        </mat-radio-group>
-                 
-                      </div>
-          </div>
-          <div class="row">
-              <div class="col-md-12 pr-0 right text-right pt-16">
-                  <button mat-button mat-dialog-close  class="text-custom f-500 c-p" >SKIP</button>
-                  <button mat-button class="f-500 c-p text-primary"  (click)="getData(4)" >NEXT</button>
-            </div>
-          </div>
-    
-   </div>  
-   <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==4">
-      <div class="">
-          <img src="assets/images/svg/dialogs4.svg">
-      </div>
-    
-     
-          <div class="row">
-              <div class="col-md-12 text-center">
-                  <h3 class="pt-20 m-0 f-500 f-22">Client performs Aadhaar eSign</h3>
-                  <h5 class="mb-20 pt-20 pl-44 pr-44">Using Aadhaar based eSign client signs the document which is legally valid in court of law</h5>
-                      <mat-radio-group class="mt-16" aria-label="Select an option">
-                          <mat-radio-button value='1' (click)="getData(1)"></mat-radio-button>
-                          <mat-radio-button  value='2' (click)="getData(2)"></mat-radio-button>
-                          <mat-radio-button value='3' (click)="getData(3)"></mat-radio-button>
-                          <mat-radio-button value='4' checked (click)="getData(4)"></mat-radio-button>
-                          <mat-radio-button value='5'  (click)="getData(5)"></mat-radio-button>
-                        </mat-radio-group>
-                 
-                      </div>
-          </div>
-          <div class="row">
-              <div class="col-md-12 pr-0 right text-right pt-16">
-                  <button mat-button mat-dialog-close  class="text-custom f-500 c-p" >SKIP</button>
-                  <button mat-button class="f-500 c-p text-primary"  (click)="getData(5)" >NEXT</button>
-            </div>
-          </div>
-      
-   </div>
-   <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==5">
-      <div class="">
-          <img src="assets/images/svg/dialogs5.svg" >
-      </div>
-    
-     
-          <div class="row">
-              <div class="col-md-12 text-center">
-                  <h3 class="pt-20 m-0 f-500 f-22">Securely store</h3>
-                  <h5 class="mb-20 pt-20 pl-44 pr-44">All documents are securely stored, giving you audit trail for future compliance</h5>
-                      <mat-radio-group class="mt-20" aria-label="Select an option">
-                          <mat-radio-button value='1'  (click)="getData(1)"></mat-radio-button>
-                          <mat-radio-button value='2' (click)="getData(2)"></mat-radio-button>
-                          <mat-radio-button value='3'(click)="getData(3)"></mat-radio-button>
-                          <mat-radio-button value='4' (click)="getData(4)"></mat-radio-button>
-                          <mat-radio-button value='5' checked (click)="getData(5)"></mat-radio-button>
-                        </mat-radio-group>
-                 
-                      </div>
-          </div>
-          <div class="row">
-              <div class="col-md-12 pr-0 right text-right pt-16">
-                  <button mat-button mat-dialog-close  class="text-custom f-500 c-p" >SKIP</button>
-                  <button mat-button mat-dialog-close class="f-500 c-p text-primary">START</button>
-            </div>
-          </div>
-      
-   </div>    
+    </div>
+
   </div>
-     <!-- silder-2 -->
-     <!-- <div class="wrapper-24 bg-grey lter">
+  <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==2">
+    <div class="">
+      <img src="assets/images/svg/dialogs2.svg">
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h3 class="pt-20 m-0 f-500 f-22">Send to client</h3>
+        <h5 class="mb-20 pt-20 pl-44 pr-44">Once you create the document, email it to client
+          with one click</h5>
+        <mat-radio-group class="mt-16" aria-label="Select an option">
+          <mat-radio-button value='1' (click)="getData(1)"></mat-radio-button>
+          <mat-radio-button value='2' checked (click)="getData(2)"></mat-radio-button>
+          <mat-radio-button value='3' (click)="getData(3)"></mat-radio-button>
+          <mat-radio-button value='4' (click)="getData(4)"></mat-radio-button>
+          <mat-radio-button value='5' (click)="getData(5)"></mat-radio-button>
+        </mat-radio-group>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 pr-0 right text-right pt-16">
+        <button mat-button mat-dialog-close class="text-custom f-500 c-p">SKIP</button>
+        <button mat-button class="f-500 c-p text-primary" (click)="getData(3)">NEXT</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==3">
+    <div class="">
+      <img src="assets/images/svg/dialogs3.svg">
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h3 class="pt-20 m-0 f-500 f-22">Client inspects document</h3>
+        <h5 class="mb-20 pt-20 pl-44 pr-44">Client can review the document and
+          proceed for eSigning</h5>
+        <mat-radio-group class="mt-16" aria-label="Select an option">
+          <mat-radio-button value='1' (click)="getData(1)"></mat-radio-button>
+          <mat-radio-button value='2' (click)="getData(2)"></mat-radio-button>
+          <mat-radio-button value='3' checked (click)="getData(3)"></mat-radio-button>
+          <mat-radio-button value='4' (click)="getData(4)"></mat-radio-button>
+          <mat-radio-button value='5' (click)="getData(5)"></mat-radio-button>
+        </mat-radio-group>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 pr-0 right text-right pt-16">
+        <button mat-button mat-dialog-close class="text-custom f-500 c-p">SKIP</button>
+        <button mat-button class="f-500 c-p text-primary" (click)="getData(4)">NEXT</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==4">
+    <div class="">
+      <img src="assets/images/svg/dialogs4.svg">
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h3 class="pt-20 m-0 f-500 f-22">Client performs Aadhaar eSign</h3>
+        <h5 class="mb-20 pt-20 pl-44 pr-44">Using Aadhaar based eSign client signs the document which is legally valid
+          in court of law</h5>
+        <mat-radio-group class="mt-16" aria-label="Select an option">
+          <mat-radio-button value='1' (click)="getData(1)"></mat-radio-button>
+          <mat-radio-button value='2' (click)="getData(2)"></mat-radio-button>
+          <mat-radio-button value='3' (click)="getData(3)"></mat-radio-button>
+          <mat-radio-button value='4' checked (click)="getData(4)"></mat-radio-button>
+          <mat-radio-button value='5' (click)="getData(5)"></mat-radio-button>
+        </mat-radio-group>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 pr-0 right text-right pt-16">
+        <button mat-button mat-dialog-close class="text-custom f-500 c-p">SKIP</button>
+        <button mat-button class="f-500 c-p text-primary" (click)="getData(5)">NEXT</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="wrapper-24 bg-grey lter pb-12 pr-12" *ngIf="display==5">
+    <div class="">
+      <img src="assets/images/svg/dialogs5.svg">
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h3 class="pt-20 m-0 f-500 f-22">Securely store</h3>
+        <h5 class="mb-20 pt-20 pl-44 pr-44">All documents are securely stored, giving you audit trail for future
+          compliance</h5>
+        <mat-radio-group class="mt-20" aria-label="Select an option">
+          <mat-radio-button value='1' (click)="getData(1)"></mat-radio-button>
+          <mat-radio-button value='2' (click)="getData(2)"></mat-radio-button>
+          <mat-radio-button value='3' (click)="getData(3)"></mat-radio-button>
+          <mat-radio-button value='4' (click)="getData(4)"></mat-radio-button>
+          <mat-radio-button value='5' checked (click)="getData(5)"></mat-radio-button>
+        </mat-radio-group>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 pr-0 right text-right pt-16">
+        <button mat-button mat-dialog-close class="text-custom f-500 c-p">SKIP</button>
+        <button mat-button mat-dialog-close class="f-500 c-p text-primary">START</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- silder-2 -->
+<!-- <div class="wrapper-24 bg-grey lter">
             <div class="">
                 <img src="assets/images/svg/slider2.svg" class="w-100 center block">
             </div>
@@ -358,7 +370,7 @@
                         </div>
             </div>
         </div> -->
-             <!-- silder-3 -->
+<!-- silder-3 -->
 <!-- <div class="wrapper-24 bg-grey lter">
         <div class="">
             <img src="assets/images/svg/slider3.svg" class="w-100 center block">
@@ -382,7 +394,7 @@
                     </div>
         </div>
     </div> -->
-         <!-- silder-4 -->
+<!-- silder-4 -->
 <!-- <div class="wrapper-24 bg-grey lter">
         <div class="">
             <img src="assets/images/svg/slider4.svg" class="w-100 center block">
@@ -407,7 +419,7 @@
         </div>
          
     </div> -->
-         <!-- silder-5 -->
+<!-- silder-5 -->
 <!-- <div class="wrapper-24 bg-grey lter">
         <div class="">
             <img src="assets/images/svg/slider5.svg" class="w-100 center block">
@@ -431,7 +443,7 @@
                     </div>
         </div>
     </div> -->
-         <!-- silder-6 -->
+<!-- silder-6 -->
 <!-- <div class="wrapper-24 bg-grey lter">
         <div class="">
             <img src="assets/images/svg/slider6.svg" class="w-100 center block">
@@ -513,8 +525,7 @@
       </div>
     </mdb-carousel-item>
   </mdb-carousel> -->
-  <!-- <div class="col-md-12 pr-0 right text-right pb-16 pt-16">
+<!-- <div class="col-md-12 pr-0 right text-right pb-16 pt-16">
       <button mat-button mat-dialog-close  class="text-custom f-500 c-p" >SKIP</button>
       <button mat-button class="f-500 c-p" color="primary" >NEXT</button>
 </div> -->
- 

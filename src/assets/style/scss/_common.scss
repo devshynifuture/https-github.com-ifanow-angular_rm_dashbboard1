@@ -199,6 +199,7 @@ ul {
 .mat-raised-button,
 .mat-stroked-button {
   font-weight: normal;
+  border-radius: 0px !important;
 }
 
 .pl-50 {
@@ -332,7 +333,7 @@ ul {
   }
 
   .mat-stepper-horizontal-line {
-    margin: 0 -60px;
+    margin: 0 -80px;
   }
 
   .mat-step-header .mat-step-icon-selected {
@@ -380,6 +381,8 @@ ul {
 }
 
 #ui-silder {
+
+
   .mat-radio-button {
     min-width: auto !important;
     // height: 10px;
