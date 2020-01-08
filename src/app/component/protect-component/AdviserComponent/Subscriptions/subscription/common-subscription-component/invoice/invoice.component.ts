@@ -1,16 +1,17 @@
-import { ValidatorType } from './../../../../../../../services/util.service';
-import { Component, EventEmitter, Input, OnInit, Output, ElementRef, ViewChild } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EnumServiceService } from '../../../../../../../services/enum-service.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { UtilService } from 'src/app/services/util.service';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { EmailOnlyComponent } from '../email-only/email-only.component';
+import {ValidatorType} from './../../../../../../../services/util.service';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EnumServiceService} from '../../../../../../../services/enum-service.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {MAT_DATE_FORMATS} from '@angular/material/core';
+import {UtilService} from 'src/app/services/util.service';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {EmailOnlyComponent} from '../email-only/email-only.component';
+import {PdfService} from "../../../../../../../services/pdf.service";
 
 
 export interface PeriodicElement {
@@ -34,7 +35,7 @@ export interface PeriodicElement {
     //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     // },
     // { provide: MAT_DATE_LOCALE, useValue: 'en' },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 
 })
@@ -48,16 +49,16 @@ export class InvoiceComponent implements OnInit {
 
   // invoiceTemplate
   gstTreatment = [
-    { name: 'Registered Business - Regular', value: 0 },
-    { name: 'Registered Business - Composition', value: 1 },
-    { name: 'Unregistered Business', value: 2 }
+    {name: 'Registered Business - Regular', value: 0},
+    {name: 'Registered Business - Composition', value: 1},
+    {name: 'Unregistered Business', value: 2}
   ];
   // numValidator = ValidatorType.NUMBER_ONLY;
   // numKeyValidator = ValidatorType.NUMBER_KEY_ONLY;
-  @ViewChild('invoiceTemplate', { static: false }) invoiceTemplate: ElementRef;
+  @ViewChild('invoiceTemplate', {static: false}) invoiceTemplate: ElementRef;
 
   constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
-    private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
+              private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getInvoiceData(data)
     );
@@ -265,7 +266,7 @@ export class InvoiceComponent implements OnInit {
     }
     this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.finalAmount.value;
     this.discount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.discount.value;
-    console.log('finalAmount',this.finalAmount)
+    console.log('finalAmount', this.finalAmount)
   }
 
   getInvoiceDataRes(data) {
@@ -399,7 +400,7 @@ export class InvoiceComponent implements OnInit {
     }
     this.storeData.subToatal = this.editPayment.controls.finalAmount.value;
     this.taxStatus = changeTaxStatus;
-console.log('finAmount',this.finAmount)
+    console.log('finAmount', this.finAmount)
   }
 
   updateInvoice() {
@@ -520,7 +521,7 @@ console.log('finAmount',this.finAmount)
     if (this.rPayment.controls.chargesIfAny.invalid) {
       this.ischargeValid = true;
       return;
-    }else if (this.rPayment.controls.tds.invalid) {
+    } else if (this.rPayment.controls.tds.invalid) {
       this.istdsValid = true;
       return;
     } else if (this.rPayment.controls.paymentMode.invalid) {
@@ -698,17 +699,17 @@ console.log('finAmount',this.finAmount)
   openSendEmail(input) {
     console.log('invoiceComponent openSendEmail this.invoiceTemplate.nativeElement.innerHTML : ', this.invoiceTemplate.nativeElement.innerHTML);
     const data = {
-      advisorId: this.advisorId,
-      clientData: this.storeData,
-      templateType: 1, // 2 is for quotation
-      documentList: [{
-        ...this.storeData,
-        documentName: this.storeData.invoiceNumber,
-        docText: this.invoiceTemplate.nativeElement.innerHTML
-      }],
-      isInv: true
-    }
-      ;
+        advisorId: this.advisorId,
+        clientData: this.storeData,
+        templateType: 1, // 2 is for quotation
+        documentList: [{
+          ...this.storeData,
+          documentName: this.storeData.invoiceNumber,
+          docText: this.invoiceTemplate.nativeElement.innerHTML
+        }],
+        isInv: true
+      }
+    ;
     // this.dataSource.forEach(singleElement => {
     //   if (singleElement.selected) {
     //     data.documentList.push(singleElement);
@@ -789,5 +790,24 @@ console.log('finAmount',this.finAmount)
     console.log('this is template html::', templateRef);
     // window.print();
   }
+
+  generatePdf() {
+    const opt = {
+      margin: 1,
+      filename: this.storeData.invoiceNumber + '.pdf',
+      // image: {type: 'jpeg', quality: 0.98},
+      html2canvas: {scale: 2},
+      // jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}
+    };
+
+    try {
+      console.log('generatepdf invoice this.invoiceTemplate.nativeElement : ', this.invoiceTemplate.nativeElement.innerHTML);
+      PdfService.generatePdfFromHtmlText(this.invoiceTemplate.nativeElement.innerHTML, opt);
+
+    } catch (e) {
+      console.log('    PdfService.generatePdfFromElement(this.renderElement, docName); e : ', e);
+    }
+  }
+
 
 }
