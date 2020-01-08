@@ -51,11 +51,12 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #amountInvest type="number"(keypress)="utils.keyPress($event)" maxlength="20"
+                    <input matInput #amountInvest type="text"(keypress)="utils.keyPress($event)" maxlength="10"
                         class="form-control br-0 rupess" formControlName="amountInvest">
                     <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
+                    <mat-hint align="end" class="f-12">{{amountInvest.value.length}}/10</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -66,7 +67,7 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input matInput formControlName="commencementDate" [matDatepicker]="picker">
+                <input matInput formControlName="commencementDate" [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12 pt-4">
@@ -83,7 +84,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input #interestRate matInput type="number"  (keypress)="utils.keyPress($event)" class="form-control br-0 percentage"
+                    <input #interestRate matInput type="number"  (keyup)="onChange($event)" (keypress)="utils.keyPress($event)" class="form-control br-0 percentage"
                         formControlName="interestRate">
                     <mat-error class="f-12 pt-4">
                         This field is required
@@ -186,7 +187,7 @@
         <div class="col-md-3 pr-0">
             <div class="form-group mb-0 d-flex">
                 <mat-form-field>
-                    <input matInput formControlName="maturityDate" [matDatepicker]="picker1">
+                    <input matInput formControlName="maturityDate" [matDatepicker]="picker1" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                     <mat-error class="f-12 pt-4">
@@ -287,9 +288,10 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput #fdNo type="text" (keypress)="keyPress($event)" maxlength="10"
+                            <input matInput #fdNo type="text" (keypress)="keyPress($event)" maxlength="20"
                                 class="form-control br-0" formControlName="fdNo">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{fdNo.value.length}}/20</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
@@ -301,9 +303,10 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput #bankACNo type="number"  (keypress)="utils.keyPress($event)" maxlength="15"
+                            <input matInput #bankACNo type="text"  (keypress)="utils.keyPress($event)" maxlength="16"
                                 class="form-control br-0" formControlName="bankACNo">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{bankACNo.value.length}}/16</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
@@ -315,9 +318,10 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input type="text" (keypress)="utils.onlyText($event)" matInput #institution maxlength="30" class="form-control br-0"
+                            <input type="text" (keypress)="utils.onlyText($event)" matInput #institution maxlength="20" class="form-control br-0"
                                 formControlName="institution">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{institution.value.length}}/20</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
@@ -330,8 +334,9 @@
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <input matInput #description maxlength="60" class="form-control br-0"
-                                formControlName="description">
+                                formControlName="description" type="text">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>

@@ -95,7 +95,7 @@ export class BondsComponent implements OnInit {
       interestRate: [(data == undefined) ? '' : data.couponRate, [Validators.required]],
       compound: [(data == undefined) ? '' : (data.compounding) + "", [Validators.required]],
       linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount, [Validators.required]],
-      tenure: [(data == undefined) ? '' : (data.tenure) + "", [Validators.required]],
+      tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(0), Validators.max(120)]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
@@ -107,7 +107,12 @@ export class BondsComponent implements OnInit {
     this.familyMemberId = this.bonds.controls.familyMemberId.value
     this.familyMemberId = this.familyMemberId[0]
   }
-
+  onChange(event,value) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = "100";
+      this.bonds.get(value).setValue(event.target.value);
+    }
+  }
   getFormControl(): any {
     return this.bonds.controls;
   }
@@ -121,11 +126,38 @@ export class BondsComponent implements OnInit {
   isTenure;
 
   saveBonds() {
-    this.tenure = this.getDateYMD()
-    this.maturityDate = this.tenure
-
-
-    let obj = {
+    // this.tenure = this.getDateYMD()
+    // this.maturityDate = this.tenure
+    if (this.bonds.get('bondName').invalid) {
+      this.bonds.get('bondName').markAsTouched();
+      return;
+    } else if (this.bonds.get('couponOption').invalid) {
+      this.bonds.get('couponOption').markAsTouched();
+      return;
+    } else if (this.bonds.get('interestRate').invalid) {
+      this.bonds.get('interestRate').markAsTouched();
+      return;
+    } else if (this.bonds.get('amountInvest').invalid) {
+      this.bonds.get('amountInvest').markAsTouched();
+      return;
+    }else if (this.bonds.get('commencementDate').invalid) {
+      this.bonds.get('commencementDate').markAsTouched();
+      return;
+    } else if (this.bonds.get('rateReturns').invalid) {
+      this.bonds.get('rateReturns').markAsTouched();
+      return;
+    } else if (this.bonds.get('compound').invalid) {
+      this.bonds.get('compound').markAsTouched();
+      return;
+    }else if (this.bonds.get('tenure').invalid) {
+      this.bonds.get('tenure').markAsTouched();
+      this.tenure = this.getDateYMD()
+      return;
+    } else if (this.bonds.get('type').invalid) {
+      this.bonds.get('type').markAsTouched();
+      return;
+    } else{
+      let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
       familyMemberId: this.familyMemberId,
@@ -161,6 +193,7 @@ export class BondsComponent implements OnInit {
       );
     }
   }
+}
   addBondsRes(data) {
     console.log('addrecuringDepositRes', data)
     this.subInjectService.changeNewRightSliderState({ state: 'close', data })
