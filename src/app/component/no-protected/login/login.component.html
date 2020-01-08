@@ -19,27 +19,29 @@
                     <div class="form-group1">
                         <mat-form-field>
                             <h5>Password</h5>
-                            <input type="password" (keypress)="enterEvent($event)" class="form-control br-0" formControlName="password" matInput>
+                            <input type="password" (keypress)="enterEvent($event)" class="form-control br-0"
+                                formControlName="password" matInput>
                         </mat-form-field>
                     </div>
                 </div>
             </div>
-          <div class="br">
+            <div class="br">
 
-          </div>
-            <div class="row">
-                <div class="col-md-12 text-center blue">
-                    <button type="submit" [disabled]="!loginForm.valid" (click)="onSubmit();enterEvent($event)" mat-stroked-button color="primary"> Login
+            </div>
+            <div class="row right pt-16">
+                <div class="col-md-12 blue">
+                    <button type="submit" [disabled]="!loginForm.valid" (click)="onSubmit();enterEvent($event)"
+                        mat-stroked-button color="primary"> Login
                     </button>
                 </div>
             </div>
 
-<!--            <div class="row w-100">-->
-<!--                <div class="col-md-12">-->
-<!--                    <div class="register_text" routerLinkActive="active" routerLink="/register"> Create Your account?-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
+            <!--            <div class="row w-100">-->
+            <!--                <div class="col-md-12">-->
+            <!--                    <div class="register_text" routerLinkActive="active" routerLink="/register"> Create Your account?-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
 
 
         </div>

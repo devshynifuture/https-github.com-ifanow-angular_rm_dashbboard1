@@ -31,6 +31,19 @@
   height: 160px;
 }
 
+.h-auto-300 {
+  height: 300px;
+  overflow: auto;
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    margin-top: 0px !important;
+  }
+}
+
 .h-460 {
   height: 460px !important;
 }

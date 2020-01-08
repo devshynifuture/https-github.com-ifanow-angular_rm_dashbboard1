@@ -75,10 +75,10 @@ export class GoldComponent implements OnInit {
     this.gold = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       appPurValue: [data.approximatePurchaseValue,[Validators.required]],
-      totalsGrams: [(data == undefined) ? '' : (data.gramsOrTola) + "", [Validators.required]],
+      totalsGrams: [(data.gramsOrTola == undefined) ? '' : (data.gramsOrTola) + "", [Validators.required]],
       noTolasGramsPur: [(data == undefined) ? '' : (data.purchasedGramsOrTola), [Validators.required]],
       tenure: [(data == undefined) ? '' : (data.purchaseYear), [Validators.required]],
-      carats: [(data == undefined) ? '' : (data.carat)+"", [Validators.required]],
+      carats: [(data.carat == undefined) ? '' : (data.carat)+"", [Validators.required]],
       balanceAsOn:[(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       marketValue: [(data == undefined) ? '' : data.marketValue, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
@@ -94,23 +94,23 @@ export class GoldComponent implements OnInit {
     return this.gold.controls;
   }
   saveGold() {
-    if (this.gold.controls.totalsGrams.invalid) {
-      this.isTotalsGrams = true;
+    if (this.gold.get('appPurValue').invalid) {
+      this.gold.get('appPurValue').markAsTouched();
       return;
-    } else if (this.gold.controls.appPurValue.invalid) {
-      this.iAppPurValue = true;
+    } else if (this.gold.get('totalsGrams').invalid) {
+      this.gold.get('totalsGrams').markAsTouched();
       return;
-    } else if (this.gold.controls.noTolasGramsPur.invalid) {
-      this.isNoTolasGramsPur = true;
+    } else if (this.gold.get('noTolasGramsPur').invalid) {
+      this.gold.get('noTolasGramsPur').markAsTouched();
       return;
-    } else if (this.gold.controls.tenure.invalid) {
-      this.isPurchaseYear = true;
+    } else if (this.gold.get('balanceAsOn').invalid) {
+      this.gold.get('balanceAsOn').markAsTouched();
       return;
-    } else if (this.gold.controls.balanceAsOn.invalid) {
-      this.isBalanceAsOn = true;
+    } else if (this.gold.get('tenure').invalid) {
+      this.gold.get('tenure').markAsTouched();
       return;
-    } else if (this.gold.controls.carats.invalid) {
-      this.isCarats = true;
+    } else if (this.gold.get('carats').invalid) {
+      this.gold.get('carats').markAsTouched();
       return;
     } else {
       let obj = {

@@ -7,7 +7,8 @@
         <div class="row pt-180">
             <div class="col-md-12 mt-36">
                 <button (click)="openPayeeSettings('Add','payeeSettings','open')" class="btn-primary br-0 right text-right addon" mat-stroked-button>
-                    ADD MORE </button>
+          ADD MORE
+        </button>
                 <!-- <button class="text-black right br-0 mr-12 text-right" mat-button>HELP</button> -->
 
             </div>
@@ -26,18 +27,18 @@
                         </div>
                         <div class="col-md-4 pt-16">
                             <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu" class="material-icons text-right right text-custom f-28 c-p">
-                                more_vert
-                            </i>
+                more_vert
+              </i>
                             <mat-menu #menu="matMenu">
                                 <a (click)="setPrimaryField(profileData)" mat-menu-item>Set as primary</a>
                                 <a (click)="openPayeeSettings(profileData,'payeeSettings','open')" mat-menu-item>Edit
-                                    client profile</a>
+                  client profile</a>
                                 <a (click)="deleteModal('PROFILE',profileData)" class="bt-1" mat-menu-item>Delete client
-                                    profile</a>
+                  profile</a>
                             </mat-menu>
                             <button *ngIf="profileData.isPrimary == true && SettingProfileData.length > 1" class="text-primary br-0 right text-right" mat-stroked-button>
-                                PRIMARY
-                            </button>
+                PRIMARY
+              </button>
                         </div>
                     </div>
                     <div class="b-a bt-none">
@@ -123,17 +124,24 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+</div>
+</div>
+</div>
+</div>
 
-    <div class="row" *ngIf="SettingProfileData == undefined">
-        <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
-            <img class="width200" src="assets/images/svg/no-data-found.svg">
-            <p class="f-22 f-600 pt-28"> No Data Found </p>
+</div>
+</div>
 
-            <button (click)="openPayeeSettings('Add','payeeSettings','open')" class="btn-primary mt-20 br-0 right text-right addon" mat-stroked-button>
-                ADD MORE </button>
+<div *ngIf="SettingProfileData == undefined" class="row">
+    <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
+        <img class="width200" src="assets/images/svg/no-data-found.svg">
+        <p class="f-22 f-600 pt-28"> No Data Found </p>
 
-        </div>
+        <button (click)="openPayeeSettings('Add','payeeSettings','open')" class="btn-primary mt-20 br-0 right text-right addon" mat-stroked-button>
+      ADD MORE
+    </button>
+
     </div>
+</div>

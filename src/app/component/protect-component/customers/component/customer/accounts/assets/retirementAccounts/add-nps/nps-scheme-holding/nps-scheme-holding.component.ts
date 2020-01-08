@@ -116,12 +116,12 @@ export class NpsSchemeHoldingComponent implements OnInit {
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       holdingList: this.fb.array([this.fb.group({
-        schemeName: null, holdingAsOn: null,
-        totalUnits: null, totalNetContribution: null
+        schemeName:  [null, [Validators.required]], holdingAsOn:  [null, [Validators.required]],
+        totalUnits:  [null, [Validators.required]], totalNetContribution:  [null, [Validators.required]]
       })]),
       futureContributionList: this.fb.array([this.fb.group({
-        frequencyId: null,
-        accountPreferenceId: null, approxContribution: null
+        frequencyId:  [null, [Validators.required]],
+        accountPreferenceId:  [null, [Validators.required]], approxContribution:  [null, [Validators.required]]
       })]),
       npsNomineesList: this.fb.array([this.fb.group({
         nomineeName: null,nomineePercentageShare:null,
@@ -167,8 +167,8 @@ export class NpsSchemeHoldingComponent implements OnInit {
   }
   addHoldings() {
     this.holdings.push(this.fb.group({
-      schemeName: null, holdingAsOn: null,
-      totalUnits: null, totalNetContribution: null
+      schemeName:  [null, [Validators.required]], holdingAsOn:  [null, [Validators.required]],
+      totalUnits:  [null, [Validators.required]], totalNetContribution:  [null, [Validators.required]]
     }));
 
   }
@@ -182,8 +182,8 @@ export class NpsSchemeHoldingComponent implements OnInit {
   }
   addFutureContry() {
     this.futureContry.push(this.fb.group({
-      frequencyId: null,
-      accountPreferenceId: null, approxContribution: null
+      frequencyId:  [null, [Validators.required]],
+      accountPreferenceId:  [null, [Validators.required]], approxContribution:  [null, [Validators.required]]
     }));
 
   }
@@ -210,7 +210,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
     }
     if (this.showError == false) {
       this.nominee.push(this.fb.group({
-        nomineeName: null, nomineePercentageShare: null,
+        nomineeName:  null, nomineePercentageShare:null,
       }));
     }
    
@@ -239,10 +239,19 @@ export class NpsSchemeHoldingComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({ state: 'close' })
   }
   saveSchemeHolding() {
-    if (this.schemeHoldingsNPS.controls.pran.invalid) {
-      this.isPran = true;
+    console.log(this.schemeHoldingsNPS.get('holdingList').invalid)
+    console.log(this.schemeHoldingsNPS.get('futureContributionList').invalid)
+    console.log(this.schemeHoldingsNPS.get('npsNomineesList').invalid)
+    if (this.schemeHoldingsNPS.get('pran').invalid) {
+      this.schemeHoldingsNPS.get('pran').markAsTouched();
       return;
-    } else {
+    }  else if (this.schemeHoldingsNPS.get('holdingList').invalid) {
+      this.schemeHoldingsNPS.get('holdingList').markAsTouched();
+      return
+    }  else if (this.schemeHoldingsNPS.get('futureContributionList').invalid) {
+      this.schemeHoldingsNPS.get('futureContributionList').markAsTouched();
+      return
+    }else {
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,

@@ -58,7 +58,7 @@
                         class="form-control br-0" formControlName="marketValue">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isMarketValue && getFormControl().marketValue.invalid || getFormControl().marketValue.touched && getFormControl().marketValue.invalid)}">
-                        this field is required
+                        This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{marketValue.value.length}}/10</mat-hint>
                 </mat-form-field>

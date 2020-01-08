@@ -26,7 +26,7 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input matInput formControlName="commencementDate" class="form-control br-0" [matDatepicker]="picker">
+                <input matInput formControlName="commencementDate" class="form-control br-0" [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isDate && getFormControl().commencementDate.invalid || getFormControl().commencementDate.touched && getFormControl().commencementDate.invalid)}">
@@ -43,10 +43,11 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #pensionAmount type="number" appNumberValidation [maxLength]="20" class="form-control br-0 rupess" formControlName="pensionAmount">
+                    <input matInput #pensionAmount type="text" (keypress)="utils.keyPress($event)" appNumberValidation [maxLength]="10" class="form-control br-0 rupess" formControlName="pensionAmount">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isPensionAmount && getFormControl().pensionAmount.invalid || getFormControl().pensionAmount.touched && getFormControl().pensionAmount.invalid)}">
-                        Pension amount is required
-                    </mat-error>
+                            This field is required
+                        </mat-error>
+                    <mat-hint align="end" class="f-12">{{pensionAmount.value.length}}/10</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -93,8 +94,9 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankAcNo type="number" (keypress)="utils.keyPress($event)" maxlength="30" class="form-control br-0" formControlName="bankAcNo">
+                        <input matInput #bankAcNo type="text" (keypress)="utils.keyPress($event)" maxlength="16" class="form-control br-0" formControlName="bankAcNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{bankAcNo.value.length}}/16</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -106,8 +108,10 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #description maxlength="60" class="form-control br-0" formControlName="description">
+                        <input matInput #description maxlength="60" type="text" class="form-control br-0" formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
+                                                <mat-hint align="start" class="f-12">Optional</mat-hint>
+                                                <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
                 </div>
             </div>

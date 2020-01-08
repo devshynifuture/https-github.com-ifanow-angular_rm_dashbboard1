@@ -425,6 +425,12 @@ button:active {
   background-color: $text-header !important;
 }
 
+.btn-header.btn-xs {
+  height: 22px !important;
+  min-width: 54px !important;
+
+}
+
 .btn-bottom {
   background: #008FFF !important;
   border-color: #008FFF !important;

@@ -169,9 +169,10 @@ export class VariableFeeComponent implements OnInit {
       const obj = {
         subscriptionId: this.singleSubscriptionData.id,
         // subscriptionId: 12,
-        billingNature: this.getVariableFee().billingNature.value,
-        billingMode: 1,
+        billingNature: this.singleSubscriptionData.subscriptionPricing.billingNature,
+        billingMode: this.singleSubscriptionData.subscriptionPricing.billingMode,
         billEvery: this.getVariableFee().billEvery.value,
+        billingCycle: this.getVariableFee().Duration.value,
         subscriptionAssetPricingList: [
           {
             directRegular: 1,

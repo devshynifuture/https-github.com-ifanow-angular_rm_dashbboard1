@@ -94,8 +94,8 @@
                 <mat-form-field>
                     <input matInput #interest class="form-control br-0 percentage"   (keyup)="onChange($event)" (keypress)="keyPress($event)" formControlName="interest">
                     <mat-error class="f-12 pt-4" >
-                        Interest rate is required
-                    </mat-error>
+                            This field is required
+                        </mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -110,7 +110,8 @@
                     <input [matDatepicker]="picker2" class="form-control br-0" formControlName="dateOfRepayment" matInput readonly>
                                     <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
                                     <mat-datepicker #picker2></mat-datepicker>
-                                    <mat-error class="f-12 pt-4">Date of repayment is required
+                                    <mat-error class="f-12 pt-4">This field is required
+
                                     </mat-error>
             </mat-form-field>
 
@@ -125,7 +126,7 @@
                 <mat-form-field>
                     <input matInput #balance class="form-control br-0" (keypress)="keyPress($event)" formControlName="balance" maxlength="{{getFormControl().balance.maxLength}}">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isBalance && getFormControl().balance.invalid || getFormControl().balance.touched && getFormControl().balance.invalid)}">
-                        Outstanding balance is required
+                            This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{balance.value.length}}/20</mat-hint>
                 </mat-form-field>

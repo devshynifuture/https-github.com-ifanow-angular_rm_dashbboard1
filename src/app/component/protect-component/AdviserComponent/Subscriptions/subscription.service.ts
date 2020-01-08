@@ -109,6 +109,7 @@ export class SubscriptionService {
   }
 
   mapDocumentsToPlanData(data) {
+    console.log("this is something which im looking for :::::::::::", data);
     return this.http.post(apiConfig.MAIN_URL + appConfig.MAP_DOCUMENTS_TO_PLAN, data);
   }
 
@@ -313,6 +314,11 @@ export class SubscriptionService {
   getClientDocumentData(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('flag', data.flag);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_GET, httpParams);
+  }
+
+  getEsignedDocument(data) {
+    const httpParams = new HttpParams().set('id', data.id);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ESIGNED_DOCUMENT_GET, httpParams);
   }
 
   updateDocumentData(data) {

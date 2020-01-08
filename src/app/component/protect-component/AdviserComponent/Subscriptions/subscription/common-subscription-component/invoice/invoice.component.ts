@@ -1,16 +1,17 @@
-import { ValidatorType } from './../../../../../../../services/util.service';
-import { Component, EventEmitter, Input, OnInit, Output, ElementRef, ViewChild } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EnumServiceService } from '../../../../../../../services/enum-service.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { UtilService } from 'src/app/services/util.service';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { EmailOnlyComponent } from '../email-only/email-only.component';
+import {ValidatorType} from './../../../../../../../services/util.service';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EnumServiceService} from '../../../../../../../services/enum-service.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {MAT_DATE_FORMATS} from '@angular/material/core';
+import {UtilService} from 'src/app/services/util.service';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {EmailOnlyComponent} from '../email-only/email-only.component';
+import {PdfService} from '../../../../../../../services/pdf.service';
 
 
 export interface PeriodicElement {
@@ -25,16 +26,7 @@ export interface PeriodicElement {
   templateUrl: './invoice.component.html',
   styleUrls: ['./invoice.component.scss'],
   providers: [
-    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
-    // application's root module. We provide it at the component level here, due to limitations of
-    // our example generation script.
-    // {
-    //   provide: DateAdapter,
-    //   useClass: MomentDateAdapter,
-    //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    // },
-    // { provide: MAT_DATE_LOCALE, useValue: 'en' },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 
 })
@@ -48,16 +40,15 @@ export class InvoiceComponent implements OnInit {
 
   // invoiceTemplate
   gstTreatment = [
-    { name: 'Registered Business - Regular', value: 0 },
-    { name: 'Registered Business - Composition', value: 1 },
-    { name: 'Unregistered Business', value: 2 }
+    {name: 'Registered Business - Regular', value: 0},
+    {name: 'Registered Business - Composition', value: 1},
+    {name: 'Unregistered Business', value: 2}
   ];
-  // numValidator = ValidatorType.NUMBER_ONLY;
-  // numKeyValidator = ValidatorType.NUMBER_KEY_ONLY;
-  @ViewChild('invoiceTemplate', { static: false }) invoiceTemplate: ElementRef;
+
+  @ViewChild('invoiceTemplate', {static: false}) invoiceTemplate: ElementRef;
 
   constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
-    private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
+              private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getInvoiceData(data)
     );
@@ -104,6 +95,8 @@ export class InvoiceComponent implements OnInit {
   @Input() invoiceData;
   @Input() invoiceInSub;
   @Input() clientData;
+  @Input() invoiceDesign;
+  @Input() upperData;
   editPayment;
   @Output() valueChange = new EventEmitter();
 
@@ -138,7 +131,6 @@ export class InvoiceComponent implements OnInit {
     this.getInvoiceData(data);
     this.getRecordPayment(data);
   }
-
   ngOnInit() {
 
     this.advisorId = AuthService.getAdvisorId();
@@ -149,6 +141,7 @@ export class InvoiceComponent implements OnInit {
     // this.getPayReceive(data);
     console.log('this.invoiceSubscription', this.invoiceInSub);
     console.log('###########', this.clientData);
+    console.log('@@@@@@@@',this.upperData)
     this.dataInvoices = this.clientData;
     this.showRecord = false;
     this.showEdit = false;
@@ -169,11 +162,6 @@ export class InvoiceComponent implements OnInit {
     }
   }
 
-  // onDateInput(event){
-  //   this.paymentDate += this.utils.dateFormat(event);
-  // }
-
-
   keyPress(event: any) {
     console.log(event.target.value.length);
     const pattern = /[0-9\+\-\ ]/;
@@ -185,7 +173,6 @@ export class InvoiceComponent implements OnInit {
   }
 
   dontAllowTyping(event, maxLength: number) {
-    // console.log(this.rPayment.value());
     if (event.target.value.length > maxLength) {
       event.preventDefault();
     }
@@ -265,7 +252,8 @@ export class InvoiceComponent implements OnInit {
     }
     this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.finalAmount.value;
     this.discount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.discount.value;
-    console.log('finalAmount',this.finalAmount)
+    console.log('finalAmount', this.finalAmount);
+    this.taxStatus = this.editPayment.value.taxStatus
   }
 
   getInvoiceDataRes(data) {
@@ -350,6 +338,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   getInvoiceData(data) {
+    console.log('@@@@@@@@',this.upperData)
     this.copyStoreData = data;
     this.storeData = data;
     this.auto = this.storeData.auto;
@@ -361,7 +350,7 @@ export class InvoiceComponent implements OnInit {
       billingAddress: [(data.billingAddress == undefined) ? '' : data.billingAddress, [Validators.required]],
       invoiceNumber: [data.invoiceNumber, [Validators.required]],
       invoiceDate: [new Date(data.invoiceDate), [Validators.required]],
-      finalAmount: [(data.finalAmount == undefined) ? 0 : parseInt(data.finalAmount), [Validators.required]],
+      finalAmount: [(data.subTotal == undefined) ? 0 : parseInt(data.subTotal), [Validators.required]],
       discount: [(data.discount == undefined) ? 0 : data.discount, [Validators.required]],
       dueDate: [new Date(data.dueDate), [Validators.required]],
       footnote: [data.footnote, [Validators.required]],
@@ -390,26 +379,40 @@ export class InvoiceComponent implements OnInit {
 
   changeTaxStatus(changeTaxStatus) {
     console.log('changeTaxStatus', changeTaxStatus);
-    if (changeTaxStatus == 'SGST(9%)|CGST(9%)') {
-      this.finAmountC = (9 / 100) * this.editPayment.controls.finalAmount.value;
-      this.finAmountS = (9 / 100) * this.editPayment.controls.finalAmount.value;
+    if (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') {
+      this.finAmountC = this.finalAmount*9 / 100;
+      this.finAmountS = this.finalAmount*9 / 100;
       this.finAmount = this.finAmountC + this.finAmountS + parseInt(this.editPayment.controls.finalAmount.value);
     } else {
-      this.finAmount = (18 / 100) * this.editPayment.controls.finalAmount.value + parseInt(this.editPayment.controls.finalAmount.value);
+      this.finAmount = (this.editPayment.controls.finalAmount.value -  parseInt(this.editPayment.value.discount));
+      this.finAmount = (this.finAmount)*18/100
     }
     this.storeData.subToatal = this.editPayment.controls.finalAmount.value;
     this.taxStatus = changeTaxStatus;
-console.log('finAmount',this.finAmount)
+    console.log('finAmount', this.finAmount);
   }
 
   updateInvoice() {
+    if (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') {
+      this.finAmountC = this.editPayment.controls.finalAmount.value -parseInt(this.editPayment.value.discount);
+      this.finAmountC = this.finAmountC*9 / 100;
+      this.finAmountS = this.editPayment.controls.finalAmount.value -parseInt(this.editPayment.value.discount);
+      this.finAmountS = this.finAmountS*9 / 100
+      this.finAmount = this.finAmountC+this.finAmountS
+    } else {
+      this.finAmount = (this.editPayment.controls.finalAmount.value -  parseInt(this.editPayment.value.discount));
+      this.finAmount = (this.finAmount)*18/100
+    }
     if (this.editPayment.get('dueDate').invalid) {
       this.editPayment.get('dueDate').markAsTouched();
-      return
+      return;
     } else if (this.editPayment.get('invoiceDate').invalid) {
       this.editPayment.get('invoiceDate').markAsTouched();
-      return
-    }else{
+      return;
+    } else if (this.editPayment.get('taxStatus').invalid) {
+      this.editPayment.get('taxStatus').markAsTouched();
+      return;
+    } else {
       if (this.editPayment.value.id == 0) {
         const service = [{
           serviceName: this.editPayment.value.serviceName
@@ -418,15 +421,14 @@ console.log('finAmount',this.finAmount)
           clientName: this.editPayment.value.clientName,
           advisorBillerProfileId: this.editPayment.value.advisorBillerProfileId,
           billerName: this.editPayment.value.billerName,
-          advisorId: this.editPayment.value.advisorId,
+          advisorId: this.advisorId,
           clientBillerId: this.editPayment.value.clientBillerId,
           billerAddress: this.editPayment.value.billerAddress,
           billingAddress: this.editPayment.value.billingAddress,
           invoiceNumber: this.editPayment.value.invoiceNumber,
           subTotal: this.editPayment.value.finalAmount,
-          total: (parseInt(this.editPayment.value.finalAmount) - parseInt(this.editPayment.value.discount)) + parseInt(this.finAmount),
           discount: this.editPayment.value.discount,
-          finalAmount: this.editPayment.value.finalAmount,
+          finalAmount:(parseInt(this.editPayment.value.finalAmount) - parseInt(this.editPayment.value.discount)) + parseInt(this.finAmount),
           invoiceDate: this.editPayment.value.invoiceDate,
           dueDate: this.editPayment.value.dueDate,
           igst: (this.editPayment.value.taxStatus == 'IGST(18%)') ? 18 : null,
@@ -437,7 +439,7 @@ console.log('finAmount',this.finAmount)
           sgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountS : null,
           footnote: this.editPayment.value.footnote,
           terms: this.editPayment.value.terms,
-          clientId: this.editPayment.value.clientId,
+          clientId: this.upperData,
           services: service,
         };
         console.log('this.editPayment', obj);
@@ -510,7 +512,7 @@ console.log('finAmount',this.finAmount)
     if (this.rPayment.controls.chargesIfAny.invalid) {
       this.ischargeValid = true;
       return;
-    }else if (this.rPayment.controls.tds.invalid) {
+    } else if (this.rPayment.controls.tds.invalid) {
       this.istdsValid = true;
       return;
     } else if (this.rPayment.controls.paymentMode.invalid) {
@@ -688,17 +690,17 @@ console.log('finAmount',this.finAmount)
   openSendEmail(input) {
     console.log('invoiceComponent openSendEmail this.invoiceTemplate.nativeElement.innerHTML : ', this.invoiceTemplate.nativeElement.innerHTML);
     const data = {
-      advisorId: this.advisorId,
-      clientData: this.storeData,
-      templateType: 1, // 2 is for quotation
-      documentList: [{
-        ...this.storeData,
-        documentName: this.storeData.invoiceNumber,
-        docText: this.invoiceTemplate.nativeElement.innerHTML
-      }],
-      isInv: true
-    }
-      ;
+        advisorId: this.advisorId,
+        clientData: this.storeData,
+        templateType: 1, // 2 is for quotation
+        documentList: [{
+          ...this.storeData,
+          documentName: this.storeData.invoiceNumber,
+          docText: this.invoiceTemplate.nativeElement.innerHTML
+        }],
+        isInv: true
+      }
+    ;
     // this.dataSource.forEach(singleElement => {
     //   if (singleElement.selected) {
     //     data.documentList.push(singleElement);
@@ -779,5 +781,24 @@ console.log('finAmount',this.finAmount)
     console.log('this is template html::', templateRef);
     // window.print();
   }
+
+  generatePdf() {
+    const opt = {
+      margin: 1,
+      filename: this.storeData.invoiceNumber + '.pdf',
+      // image: {type: 'jpeg', quality: 0.98},
+      html2canvas: {scale: 2},
+      // jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}
+    };
+
+    try {
+      console.log('generatepdf invoice this.invoiceTemplate.nativeElement : ', this.invoiceTemplate.nativeElement.innerHTML);
+      PdfService.generatePdfFromHtmlText(this.invoiceTemplate.nativeElement.innerHTML, opt);
+
+    } catch (e) {
+      console.log('    PdfService.generatePdfFromElement(this.renderElement, docName); e : ', e);
+    }
+  }
+
 
 }

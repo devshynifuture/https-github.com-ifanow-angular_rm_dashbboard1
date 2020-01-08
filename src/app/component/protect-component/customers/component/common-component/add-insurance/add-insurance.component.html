@@ -41,9 +41,7 @@
                                 *ngFor="let option of FamilyMember;index as i" [value]="option.userName">
                                 {{option.userName}}</mat-option>
                         </mat-select>
-                        <mat-error
-                            [ngClass]="{'v-h':!(ispremiumDetailsFrequency && lifeInsuranceForm.get('premiumDetailsFrequency').invalid || (lifeInsuranceForm.get('premiumDetailsFrequency').touched && lifeInsuranceForm.get('premiumDetailsFrequency').invalid))}"
-                            class="f-12 pt-4">This field is required
+                        <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -64,9 +62,7 @@
                                 *ngFor="let option of ProposerData;index as i" [value]="option.userName">
                                 {{option.userName}}</mat-option>
                         </mat-select>
-                        <mat-error
-                            [ngClass]="{'v-h':!(ispremiumDetailsFrequency && lifeInsuranceForm.get('lifeAssured').invalid || (lifeInsuranceForm.get('lifeAssured').touched && lifeInsuranceForm.get('lifeAssured').invalid))}"
-                            class="f-12 pt-4">This field is required
+                        <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -89,6 +85,8 @@
                                 {{option.policyName}}
                             </mat-option>
                         </mat-autocomplete>
+                        <mat-error>This field is required
+                        </mat-error>
                     </mat-form-field>
                     <!-- <mat-form-field>
                         <input matInput (keyup)="findPolicyName($event)" formControlName="policyName" #policyname
@@ -112,9 +110,7 @@
                     <mat-form-field>
                         <input matInput type="text" formControlName="policyNum" #policynumber autocomplete="off"
                             class="form-control br-0">
-                        <mat-error
-                            [ngClass]="{'v-h':!(ispolicyNum && lifeInsuranceForm.get('policyNum').invalid || (lifeInsuranceForm.get('policyNum').touched && lifeInsuranceForm.get('policyNum').invalid))}"
-                            class="f-12 pt-4">This field is required
+                        <mat-error>This field is required
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{policynumber.value.length}}/40</mat-hint>
                     </mat-form-field>
@@ -130,12 +126,11 @@
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field>
                         <input matInput formControlName="commencementDate" class="form-control br-0"
-                            [matDatepicker]="CommencementPicker" (focus)="CommencementPicker.open()" (input)="preventDefault($event)">
+                            [matDatepicker]="CommencementPicker" (focus)="CommencementPicker.open()"
+                            (input)="preventDefault($event)">
                         <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
                         <mat-datepicker #CommencementPicker></mat-datepicker>
-                        <mat-error class="f-12 pt-4"
-                            [ngClass]="{'v-h':!(iscommencementDate && lifeInsuranceForm.get('commencementDate').invalid || (lifeInsuranceForm.get('commencementDate').touched && lifeInsuranceForm.get('commencementDate').invalid))}">
-                            This field is required
+                        <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -151,9 +146,7 @@
                     <mat-form-field>
                         <input matInput type="number" formControlName="sumAssured" #sumassured autocomplete="off"
                             class="form-control br-0">
-                        <mat-error
-                            [ngClass]="{'v-h':!(issumAssured && lifeInsuranceForm.get('sumAssured').invalid || (lifeInsuranceForm.get('sumAssured').touched && lifeInsuranceForm.get('sumAssured').invalid))}"
-                            class="f-12 pt-4">This field is required
+                        <mat-error>This field is required
                         </mat-error>
                         <mat-hint align="end" class="f-12">{{sumassured.value.length}}/40</mat-hint>
                     </mat-form-field>
@@ -171,9 +164,7 @@
                     <mat-form-field>
                         <input matInput type="number" formControlName="premiumDetailsAmount" #premiumdetails
                             autocomplete="true" class="form-control rupess br-0">
-                        <mat-error
-                            [ngClass]="{'v-h':!(ispremiumDetailsAmount && lifeInsuranceForm.get('premiumDetailsAmount').invalid || (lifeInsuranceForm.get('premiumDetailsAmount').touched && lifeInsuranceForm.get('premiumDetailsAmount').invalid))}"
-                            class="f-12 pt-4">This field is required
+                        <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -189,9 +180,7 @@
                             <mat-option value='3'>Semi annually</mat-option>
                             <mat-option value='4'>Annually</mat-option>
                         </mat-select>
-                        <mat-error
-                            [ngClass]="{'v-h':!(ispremiumDetailsFrequency && lifeInsuranceForm.get('premiumDetailsFrequency').invalid || (lifeInsuranceForm.get('premiumDetailsFrequency').touched && lifeInsuranceForm.get('premiumDetailsFrequency').invalid))}"
-                            class="f-12 pt-4">This field is required
+                        <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -222,9 +211,7 @@
                             <mat-option value="15">15 Years</mat-option>
                             <mat-option value="20">20 Years</mat-option>
                         </mat-select>
-                        <mat-error
-                            [ngClass]="{'v-h':!(ispolicyStatus && lifeInsuranceForm.get('policyStatus').invalid || (lifeInsuranceForm.get('policyStatus').touched && lifeInsuranceForm.get('policyStatus').invalid))}"
-                            class="f-12 pt-4">This field is required
+                        <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
 
@@ -236,9 +223,7 @@
                     <mat-form-field>
                         <input matInput type="number" formControlName="premiumPayingTerm" #premiumterm
                             autocomplete="off" class="form-control br-0">
-                        <mat-error
-                            [ngClass]="{'v-h':!(ispremiumPayingTerm && lifeInsuranceForm.get('premiumPayingTerm').invalid || (lifeInsuranceForm.get('premiumPayingTerm').touched && lifeInsuranceForm.get('premiumPayingTerm').invalid))}"
-                            class="f-12 pt-4">This field is required
+                        <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -260,9 +245,7 @@
                             <mat-option value="3">Paid up</mat-option>
                             <mat-option value="4">Fully paid up</mat-option>
                         </mat-select>
-                        <mat-error
-                            [ngClass]="{'v-h':!(ispolicyStatus && lifeInsuranceForm.get('policyStatus').invalid || (lifeInsuranceForm.get('policyStatus').touched && lifeInsuranceForm.get('policyStatus').invalid))}"
-                            class="f-12 pt-4">This field is required
+                        <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -273,9 +256,7 @@
                     <mat-form-field>
                         <input matInput type="number" formControlName="policyStatusLastUnpaid" #lastunpaid
                             autocomplete="off" class="form-control br-0">
-                        <mat-error
-                            [ngClass]="{'v-h':!(ispolicyStatusLastUnpaid && lifeInsuranceForm.get('policyStatusLastUnpaid').invalid || (lifeInsuranceForm.get('policyStatusLastUnpaid').touched && lifeInsuranceForm.get('policyStatusLastUnpaid').invalid))}"
-                            class="f-12 pt-4">This field is required
+                        <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -531,8 +512,9 @@
                             <div class="form-group mb-0">
                                 <label class="f-16 roboto">Loan taken on</label>
                                 <mat-form-field>
-                                    <input formControlName="loanTakenOn" (input)="preventDefault($event)" (focus)="loanTakenOn.open()" autocomplete="off"
-                                        [matDatepicker]="loanTakenOn" matInput class="form-control br-0">
+                                    <input formControlName="loanTakenOn" (input)="preventDefault($event)"
+                                        (focus)="loanTakenOn.open()" autocomplete="off" [matDatepicker]="loanTakenOn"
+                                        matInput class="form-control br-0">
                                     <mat-datepicker-toggle matSuffix [for]="loanTakenOn"></mat-datepicker-toggle>
                                     <mat-datepicker #loanTakenOn></mat-datepicker>
                                 </mat-form-field>

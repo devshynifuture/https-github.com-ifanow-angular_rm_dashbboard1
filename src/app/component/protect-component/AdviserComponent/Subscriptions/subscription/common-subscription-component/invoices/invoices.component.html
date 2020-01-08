@@ -7,7 +7,7 @@
         <div class="wrapper-20 pb-0 mt-32 pt-180">
             <div class="row">
                 <div class="col-md-12 p-0">
-                    <button mat-stroked-button class="btn-primary br-0 right text-right addon" (click)="openEdit('edit')"> ADD INVOICE</button>
+                    <button mat-stroked-button class="btn-primary br-0 right text-right addon" (click)="openEdit('edit')">ADD INVOICE</button>
                     <!-- <button mat-button class="m-0 text-black text-right mr-12 right br-0">HELP</button> -->
 
 
@@ -34,7 +34,7 @@
                     <p class="m-0 text-black text-left pt-12">{{dataCount}} invoices selected</p>
                 </div>
             </div>
-            <table matSort mat-table [dataSource]="dataSource" class="mt-8" id="table-low" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table matSort mat-table [dataSource]="dataSource" id="table-low" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="checkbox">
                     <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;">
                         <mat-checkbox (change)="selectAll($event)" name="selectAll"></mat-checkbox>
@@ -153,6 +153,6 @@
     <app-terms-agreement [quotationDesignE]="quotationDesignEmail" *ngIf="invoiceDesign=='emailInvoices'" (valueChange)='display($event)'></app-terms-agreement>
 </div>
 <div class="pt-180">
-    <app-invoice [invoiceValue]="invoiceDesign" *ngIf="invoiceDesign=='edit'" (valueChange)='display($event)'>
+    <app-invoice [invoiceValue]="invoiceDesign" [upperData]="uperDataToClient" *ngIf="invoiceDesign=='edit'" (valueChange)='display($event)'>
     </app-invoice>
 </div>

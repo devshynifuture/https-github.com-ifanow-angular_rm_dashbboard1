@@ -5,6 +5,8 @@ import { SubscriptionInject } from '../../../subscription-inject.service';
 import { SubscriptionService } from '../../../subscription.service';
 import { AuthService } from "../../../../../../../auth-service/authService";
 import { ValidatorType } from "../../../../../../../services/util.service";
+import { MatChipInputEvent } from '@angular/material';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-email-only',
@@ -48,6 +50,7 @@ export class EmailOnlyComponent implements OnInit {
     // this.dataSub = this.subInjectService.singleProfileData.subscribe(
     //   data => this.getcommanFroalaData(data)
     // );
+
   }
 
   // @Input()
@@ -185,11 +188,10 @@ export class EmailOnlyComponent implements OnInit {
     // this.valueChange.emit(this.emailSend);
   }
 
-  remove(item) {
-    this.docObj.splice(item, 1);
-    // this.callFilter();
+  // remove(item) {
+  //   this.docObj.splice(item, 1);
 
-  }
+  // }
 
   getEmailTemplate() {
     const obj = {
@@ -272,7 +274,7 @@ export class EmailOnlyComponent implements OnInit {
       const inviteeList = [];
       this.emailIdList.forEach(singleEmail => {
         inviteeList.push({
-          // name: this._inputData.clientName,
+          name: this._inputData.clientName ? this._inputData.clientName : singleEmail.emailAddress,
           email: singleEmail.emailAddress,
           webhook: {
             success: 'http://dev.ifanow.in:8080/futurewise/api/v1/1/subscription/invoice/esignSuccessResponse/post',
@@ -325,5 +327,39 @@ export class EmailOnlyComponent implements OnInit {
       this._inputData.clientData.userEmailId = '';
     }
   }
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  fruits: Fruit[] = [
+    { name: 'Abc@mail.com' },
 
+  ];
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    this.emailIdList.push({ emailAddress: value })
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.fruits.push({ name: value.trim() });
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(fruit: Fruit): void {
+    const index = this.fruits.indexOf(fruit);
+
+    if (index >= 0) {
+      this.fruits.splice(index, 1);
+    }
+  }
+}
+export interface Fruit {
+  name: string;
 }

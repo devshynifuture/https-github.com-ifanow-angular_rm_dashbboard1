@@ -99,6 +99,12 @@ export class AddOtherPayablesComponent implements OnInit {
       this.otherLiabilityForm.get('interest').setValue(event.target.value);
     }
   }
+  onChangeGrowthRate(event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = "100";
+      this.otherLiabilityForm.get('growthEmployer').setValue(event.target.value);
+    }
+  }
   getFormControl() {
     return this.otherLiabilityForm.controls;
   }
@@ -119,23 +125,23 @@ export class AddOtherPayablesComponent implements OnInit {
   }
 
   saveFormData(state) {
-    if (this.otherLiabilityForm.controls.dateOfReceipt.invalid) {
-      this.isdateValid = true;
+    if (this.otherLiabilityForm.get('dateOfReceipt').invalid) {
+      this.otherLiabilityForm.get('dateOfReceipt').markAsTouched();
       return;
-    } else if (this.otherLiabilityForm.controls.creditorName.invalid) {
-      this.isCreditorName = true;
+    } else if (this.otherLiabilityForm.get('creditorName').invalid) {
+      this.otherLiabilityForm.get('creditorName').markAsTouched();
       return;
-    } else if (this.otherLiabilityForm.controls.amtBorrowed.invalid) {
-      this.isAmtBorrowed = true;
+    } else if (this.otherLiabilityForm.get('amtBorrowed').invalid) {
+      this.otherLiabilityForm.get('amtBorrowed').markAsTouched();
       return;
-    } else if (this.otherLiabilityForm.controls.interest.invalid) {
-      this.isinterestRate = true;
+    } else if (this.otherLiabilityForm.get('interest').invalid) {
+      this.otherLiabilityForm.get('interest').markAsTouched();
       return;
-    } else if (this.otherLiabilityForm.controls.dateOfRepayment.invalid) {
-      this.isDateOfRepayment = true;
+    } else if (this.otherLiabilityForm.get('dateOfRepayment').invalid) {
+      this.otherLiabilityForm.get('dateOfRepayment').markAsTouched();
       return;
-    } else if (this.otherLiabilityForm.controls.balance.invalid) {
-      this.isBalance = true;
+    } else if (this.otherLiabilityForm.get('balance').invalid) {
+      this.otherLiabilityForm.get('balance').markAsTouched();
       return;
     } else {
       const obj = {

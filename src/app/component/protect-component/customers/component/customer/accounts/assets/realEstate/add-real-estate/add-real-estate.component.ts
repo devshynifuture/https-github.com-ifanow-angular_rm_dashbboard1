@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import * as _ from 'lodash';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-real-estate',
@@ -47,7 +48,7 @@ export class AddRealEstateComponent implements OnInit {
   showErrorCoOwner = false;
   familyMemId: any;
   _data: any;
-  constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService) { }
+  constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService ,public utils:UtilService) { }
   // set inputData(inputData) {
   //   this._inputData = inputData;
   //   this.getRealEstate(inputData);
@@ -337,15 +338,17 @@ export class AddRealEstateComponent implements OnInit {
 
     this.getValue = this.getDateYMD()
     console.log(this.getValue);
-    if (this.addrealEstateForm.controls.type.invalid) {
-      this.isTypeValid = true;
-      return;
-    } else if (this.addrealEstateForm.controls.marketValue.invalid) {
-      this.isMvValid = true;
-    } if (this.addrealEstateForm.controls.ownerPercent.invalid) {
-      this.isOwnerPercent = true;
-      return;
-    } else {
+    if(this.addrealEstateForm.get('type').invalid) {
+        this.addrealEstateForm.get('type').markAsTouched();
+        return
+    } else if (this.addrealEstateForm.get('marketValue').invalid) {
+        this.addrealEstateForm.get('marketValue').markAsTouched();
+        return
+      
+    } else if(this.addrealEstateForm.get('ownerPercent').invalid) {
+        this.addrealEstateForm.get('ownerPercent').markAsTouched();
+        return
+    }  else {
       
       const obj = {
         ownerName: this.ownerName,
