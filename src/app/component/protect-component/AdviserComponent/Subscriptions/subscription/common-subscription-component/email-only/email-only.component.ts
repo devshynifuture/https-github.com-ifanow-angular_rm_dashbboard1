@@ -188,11 +188,10 @@ export class EmailOnlyComponent implements OnInit {
     // this.valueChange.emit(this.emailSend);
   }
 
-  remove(item) {
-    this.docObj.splice(item, 1);
-    // this.callFilter();
+  // remove(item) {
+  //   this.docObj.splice(item, 1);
 
-  }
+  // }
 
   getEmailTemplate() {
     const obj = {
@@ -360,4 +359,7 @@ export class EmailOnlyComponent implements OnInit {
       this.fruits.splice(index, 1);
     }
   }
+}
+export interface Fruit {
+  name: string;
 }
