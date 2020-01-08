@@ -122,14 +122,42 @@ export class CreateSubscriptionComponent implements OnInit {
       return;
     }
     if (this.stepper.selectedIndex == 2) {
-      this.subDateToShow = undefined;
-      let date = this.subscriptionDetails.controls.activationDate.value;
-      (this.clientData.billingCycle == 1) ? date = date.setMonth(date.getMonth() + this.clientData.billEvery) : date = date.setFullYear(date.getFullYear() + this.clientData.billEvery);
+      let date = new Date(this.subscriptionDetails.controls.activationDate.value)
+      console.log(date, "sub DAte");
       (this.clientData.billingCycle == 1) ? this.billEveryMsg = "monthly" : this.billEveryMsg = "yearly";
-      console.log(new Date(date))
+      if (this.clientData.feeTypeId == 1) {
+        if (this.clientData.billingNature == "2") {
+
+        }
+        else {
+          if (this.clientData.billingMode == '1') {
+            console.log("start of period")
+          }
+          else {
+            if (this.clientData.billingCycle == 1) {
+              console.log("1")
+              date.setMonth(date.getMonth() + this.clientData.billEvery)
+            }
+            else {
+              console.log("2")
+              date.setFullYear(date.getFullYear() + parseInt(this.clientData.billEvery));
+            }
+          }
+        }
+      }
+      else {
+        if (this.clientData.billingCycle == 1) {
+          console.log("1")
+          date.setMonth(date.getMonth() + this.clientData.billEvery)
+        }
+        else {
+          console.log("2")
+          date.setFullYear(date.getFullYear() + parseInt(this.clientData.billEvery));
+        }
+      }
       this.subDateToShow = date;
-      date = null;
     }
+
     console.log(this.subscriptionDetails);
   }
   getSharesInfo(data) {
