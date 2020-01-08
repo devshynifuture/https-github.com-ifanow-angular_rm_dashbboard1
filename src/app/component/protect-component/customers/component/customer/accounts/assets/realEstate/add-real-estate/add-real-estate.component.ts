@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import * as _ from 'lodash';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-real-estate',
@@ -47,7 +48,7 @@ export class AddRealEstateComponent implements OnInit {
   showErrorCoOwner = false;
   familyMemId: any;
   _data: any;
-  constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService) { }
+  constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService ,public utils:UtilService) { }
   // set inputData(inputData) {
   //   this._inputData = inputData;
   //   this.getRealEstate(inputData);

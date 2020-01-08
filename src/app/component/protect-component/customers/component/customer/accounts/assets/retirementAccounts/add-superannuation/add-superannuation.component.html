@@ -27,10 +27,11 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #employeeContry type="text" (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="employeeContry">
+                    <input matInput #employeeContry type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="employeeContry">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isEmployeeContry && getFormControl().employeeContry.invalid || getFormControl().employeeContry.touched && getFormControl().employeeContry.invalid)}">
                         This field is required
                     </mat-error>
+                    <mat-hint align="end" class="f-12">{{employeeContry.value.length}}/10</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -43,10 +44,11 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #employerContry type="number" (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="employerContry">
+                    <input matInput #employerContry type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="employerContry">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isEmployerContry && getFormControl().employerContry.invalid || getFormControl().employerContry.touched && getFormControl().employerContry.invalid)}">
                         This field is required
                     </mat-error>
+                    <mat-hint align="end" class="f-12">{{employerContry.value.length}}/10</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -58,7 +60,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #assumedRateReturn type="number" (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="assumedRateReturn">
+                    <input matInput #assumedRateReturn type="text" (keyup)="onChange($event,'assumedRateReturn')"  (keypress)="utils.keyPress($event)" maxlength="20" class="form-control br-0 rupess" formControlName="assumedRateReturn">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isAssumedRateReturn && getFormControl().assumedRateReturn.invalid || getFormControl().assumedRateReturn.touched && getFormControl().assumedRateReturn.invalid)}">
                         This field is required
                     </mat-error>
@@ -73,7 +75,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="number" (keypress)="utils.keyPress($event)" class="form-control br-0 percentage" formControlName="growthEmployer">
+                    <input matInput type="text"  (keyup)="onChange($event,'growthEmployer')" (keypress)="utils.keyPress($event)" class="form-control br-0 percentage" formControlName="growthEmployer">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isGrowthEmployer && getFormControl().growthEmployer.invalid || getFormControl().growthEmployer.touched && getFormControl().growthEmployer.invalid)}">
                         This field is required
                     </mat-error>
@@ -88,7 +90,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="text" type="number" (keypress)="utils.keyPress($event)" class="form-control br-0 percentage" formControlName="growthEmployee">
+                    <input matInput type="text" (keyup)="onChange($event,'growthEmployee')" (keypress)="utils.keyPress($event)" class="form-control br-0 percentage" formControlName="growthEmployee">
                     <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isGrowthEmployee && getFormControl().growthEmployee.invalid || getFormControl().growthEmployee.touched && getFormControl().growthEmployee.invalid)}">
                         This field is required
                     </mat-error>
@@ -102,7 +104,7 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <input matInput formControlName="firstDateContry" class="form-control br-0" [matDatepicker]="picker">
+                <input matInput formControlName="firstDateContry" class="form-control br-0" [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isFirstDateContry && getFormControl().firstDateContry.invalid || getFormControl().firstDateContry.touched && getFormControl().firstDateContry.invalid)}">
@@ -131,8 +133,9 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #linkBankAc type="number" (keypress)="utils.keyPress($event)" maxlength="30" class="form-control br-0" formControlName="linkBankAc">
+                        <input matInput #linkBankAc type="text" (keypress)="utils.keyPress($event)" maxlength="16" class="form-control br-0" formControlName="linkBankAc">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{linkBankAc.value.length}}/16</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -146,6 +149,7 @@
                     <mat-form-field>
                         <input matInput #description maxlength="60" class="form-control br-0" formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
