@@ -238,6 +238,9 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     } else if (this.addLiabilityForm.get('interest').invalid) {
       this.addLiabilityForm.get('interest').markAsTouched();
       return;
+    }else if (this.addLiabilityForm.get('transact').invalid) {
+      this.addLiabilityForm.get('transact').markAsTouched();
+      return 
     } else {
       const obj = {
         ownerName: (this.ownerName == null) ? this.addLiabilityForm.controls.ownerName.value : this.ownerName,

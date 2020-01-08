@@ -98,12 +98,11 @@ export class OthersComponent implements OnInit {
   }
 
   saveOthers() {
-
-    if (this.others.controls.typeOfCommodity.invalid) {
-      this.isTypeOfCommodity = true;
+    if (this.others.get('typeOfCommodity').invalid) {
+      this.others.get('typeOfCommodity').markAsTouched();
       return;
-    } else if (this.others.controls.marketValue.invalid) {
-      this.isMarketValue = true;
+    } else if (this.others.get('marketValue').invalid) {
+      this.others.get('marketValue').markAsTouched();
       return;
     } else {
       const obj = {

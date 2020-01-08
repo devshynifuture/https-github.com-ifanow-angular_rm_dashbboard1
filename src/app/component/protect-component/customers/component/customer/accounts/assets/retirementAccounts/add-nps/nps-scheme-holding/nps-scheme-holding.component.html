@@ -76,6 +76,9 @@
                             <mat-option *ngFor="let s of schemeList" [value]="s.id">{{ s.name }}
                             </mat-option>
                         </mat-autocomplete>
+                        <mat-error class="f-12 pt-4">
+                                This field is required
+                            </mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -85,6 +88,9 @@
                         <input matInput #totalUnits type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="totalUnits">
                         <mat-hint align="start" class="m-0 f-11 text-custom pt-4">As in statement</mat-hint>
                         <mat-hint align="end" class="f-12">{{totalUnits.value.length}}/10</mat-hint>
+                        <mat-error class="f-12 pt-4">
+                                This field is required
+                            </mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -94,6 +100,9 @@
                         <input matInput formControlName="holdingAsOn" [matDatepicker]="picker" class="form-control br-0" readonly>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
+                        <mat-error class="f-12 pt-4">
+                                This field is required
+                            </mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -102,6 +111,9 @@
                     <mat-form-field>
                         <input matInput #totalNetContribution type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="totalNetContribution">
                         <mat-hint align="end" class="f-12">{{totalNetContribution.value.length}}/10</mat-hint>
+                        <mat-error class="f-12 pt-4">
+                                This field is required
+                            </mat-error>
                     </mat-form-field>
 
                 </div>
@@ -153,6 +165,9 @@
                                     <mat-option value="3">NPS Lite</mat-option>
                                     <mat-option value="3">Atal pension yojna</mat-option>
                                 </mat-select>
+                                <mat-error class="f-12 pt-4">
+                                        This field is required
+                                    </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -166,6 +181,9 @@
                                     <mat-option value="3">Semi annually</mat-option>
                                     <mat-option value="3">Annually</mat-option>
                                 </mat-select>
+                                <mat-error class="f-12 pt-4">
+                                        This field is required
+                                    </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -174,6 +192,9 @@
                             <mat-form-field>
                                 <input matInput #currentValue type="text" (keypress)="utils.keyPress($event)" maxlength="10" class="form-control br-0 rupess" formControlName="approxContribution">
                                 <mat-hint align="end" class="f-12">{{currentValue.value.length}}/10</mat-hint>
+                                <mat-error class="f-12 pt-4">
+                                        This field is required
+                                    </mat-error>
                             </mat-form-field>
                         </div>
                     </div>
