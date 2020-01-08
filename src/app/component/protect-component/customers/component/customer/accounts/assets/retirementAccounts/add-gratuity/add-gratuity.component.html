@@ -116,9 +116,9 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankAcNo type="text" (keypress)="utils.keyPress($event)" maxlength="40" class="form-control br-0" formControlName="bankAcNo">
+                        <input matInput #bankAcNo type="text" (keypress)="utils.keyPress($event)" maxlength="16" class="form-control br-0" formControlName="bankAcNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{bankAcNo.value.length}}/40</mat-hint>
+                        <mat-hint align="end" class="f-12">{{bankAcNo.value.length}}/16</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
