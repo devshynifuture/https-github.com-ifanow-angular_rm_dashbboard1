@@ -6,9 +6,10 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
 import {SubscriptionService} from '../../../subscription.service';
 import * as _ from 'lodash';
-import {AddDocumentComponent} from '../add-document/add-document.component';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {UtilService} from 'src/app/services/util.service';
+import { AddDocumentComponent } from '../add-document/add-document.component';
+// import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
 // import { window } from 'rxjs/operators';
 
 // import {element} from 'protractor';
@@ -158,20 +159,42 @@ export class DocumentComponent implements OnInit {
     window.open(data.presginedUrl);
   }
 
-  openDocument(data) {
-    const Fragmentdata = {
-      flag: data,
-    };
-    const dialogRef = this.dialog.open(AddDocumentComponent, {
-      width: '70%',
-      data: Fragmentdata,
-      autoFocus: false,
+  // openFragment(data, singleDocument) {
+  //   (singleDocument == null) ? singleDocument = data : singleDocument.flag = data
+  //   console.log('hello mf button clicked');
+  //   const fragmentData = {
+  //     flag: 'openUpper',
+  //     id: 1,
+  //     data: singleDocument,
+  //     direction: 'top',
+  //     componentName: SubscriptionUpperSliderComponent,
+  //     state: 'open'
+  //   };
 
-    });
-    dialogRef.afterClosed().subscribe(result => {
+  //   const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+  //     upperSliderData => {
+  //       if (UtilService.isDialogClose(upperSliderData)) {
+  //         this.getdocumentSubData();
+  //         subscription.unsubscribe();
+  //       }
+  //     }
+  //   );
+  // }
 
-    });
-  }
+  // openDocument(data) {
+  //   const Fragmentdata = {
+  //     flag: data,
+  //   };
+  //   const dialogRef = this.dialog.open(AddDocumentComponent, {
+  //     width: '70%',
+  //     data: Fragmentdata,
+  //     autoFocus: false,
+
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+
+  //   });
+  // }
 
   getDocumentResponseData(data) {
     this.isLoading = false;

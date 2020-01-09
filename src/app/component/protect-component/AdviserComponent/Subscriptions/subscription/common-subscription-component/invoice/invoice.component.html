@@ -146,6 +146,14 @@
                                 <p class="text-black f-400">₹{{formatter(storeData.subTotal)}}</p>
                              </div>
                           </div>
+                          <div class="row">
+                              <div class="col-md-8">
+                                 <p class="text-black f-400">Discount</p>
+                              </div>
+                              <div class="col-md-4 pr-4 text-right">
+                                 <p class="text-black f-400">₹{{formatter(storeData.discount)}}</p>
+                              </div>
+                           </div>
                           <div *ngIf="storeData.igst!=undefined" class="row">
                              <div class="col-md-8">
                                 <p>IGST ({{storeData.igst}}%)</p>
@@ -194,22 +202,22 @@
                        </div>
                     </div>
                     <div class="wrapper-9">
-                       <div *ngIf="storeData.services!=undefined" class="row b-a bg-grey lter ">
+                       <div *ngIf="storeData.services[0].id != undefined" class="row b-a bg-grey lter ">
                           <div class="col-md-10 d-flex  align-items-center">
                              <p class="m-0 text-black f-500  ">Fee calculation - Attachment</p>
                           </div>
-                          <div *ngIf="storeData.paymentMode == 1" class="col-md-2 wrapper-9 text-right">
+                          <div class="col-md-2 wrapper-9 text-right">
                              <button (click)="OpenFeeCalc()" class="btn-primary br-0"
                                 mat-stroked-button>View
                              </button>
                           </div>
                        </div>
-                       <div class="row p-24 pl-0 pr-0 ">
+                       <div class="row p-24 pl-0 pr-0 " *ngIf="showPaymentRecive == true">
                           <div class="col-md-12 p-0">
                              <h5 class="m-0 text-black">Payments recieved</h5>
                           </div>
                        </div>
-                       <table [dataSource]="dataSource" class="" id="table-low" mat-table>
+                       <table  *ngIf="showPaymentRecive == true" [dataSource]="dataSource" class="" id="table-low" mat-table>
                           <ng-container matColumnDef="date">
                              <th *matHeaderCellDef mat-header-cell>Date</th>
                              <td *matCellDef="let element" mat-cell> {{element.paymentDate | date:'dd/MM/yyyy'}}
@@ -607,6 +615,7 @@
         </div>
         <div *ngIf="showRecord==false && feeCalc==false" class="row bb-1 pt-72">
            <div class="col-md-8 text-custom">
+               <img (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
               <img (click)="openSendEmail('upper')" class="b-a" src="assets/images/svg/mail-light.svg">
               <img class="b-a " src="assets/images/svg/pdf-icons.svg">
               <img (click)="printPage(invoiceTemplate)" class="b-a " src="assets/images/svg/printer.svg">
@@ -692,6 +701,14 @@
                                 <p class="text-black f-400">₹{{formatter(storeData.subTotal)}}</p>
                              </div>
                           </div>
+                          <div class="row">
+                              <div class="col-md-8">
+                                 <p class="text-black f-400">Discount</p>
+                              </div>
+                              <div class="col-md-4 pr-4 text-right">
+                                 <p class="text-black f-400">₹{{formatter(storeData.discount)}}</p>
+                              </div>
+                           </div>
                           <div *ngIf="storeData.igst!=undefined" class="row">
                              <div class="col-md-8">
                                 <p>IGST ({{storeData.igst}}%)</p>
@@ -737,15 +754,15 @@
                              </div>
                           </div>
                        </div>
-                       <div class="col-md-7 mt-70">
+                       <!-- <div class="col-md-7 mt-70">
                           <p class="f-14 text-black f-500 roboto"> Terms & Conditions</p>
-                       </div>
+                       </div> -->
                     </div>
                  </div>
               </div>
            </div>
            <div class="wrapper-20">
-              <div *ngIf="storeData.services!=undefined" class="row bg-grey lter ">
+              <div *ngIf="storeData.services[0].id != undefined" class="row bg-grey lter ">
                  <div class="col-md-10">
                     <p class="m-0 text-black f-500 pt-12">Fee calculation - Attachment</p>
                  </div>
@@ -753,12 +770,12 @@
                     <button (click)="OpenFeeCalc()" class="btn-primary br-0" mat-stroked-button>View</button>
                  </div>
               </div>
-              <div class="row pt-32">
+              <div class="row pt-32"  *ngIf="showPaymentRecive == true">
                  <div class="col-md-12 p-0">
                     <h5 class="m-0 text-black wrapper-20">Payments recieved</h5>
                  </div>
               </div>
-              <table [dataSource]="dataSource" class="mt-8" id="table-low" mat-table>
+              <table  *ngIf="showPaymentRecive == true" [dataSource]="dataSource" class="mt-8" id="table-low" mat-table>
                  <ng-container matColumnDef="date">
                     <th *matHeaderCellDef mat-header-cell>Date</th>
                     <td *matCellDef="let element" mat-cell> {{element.paymentDate | date:'dd/MM/yyyy'}} </td>
@@ -1211,8 +1228,8 @@
            <div class="row pt-28">
               <div class="col-md-4 p-0">
                  <div class="row">
-                    <div class="col-md-3 pl-0 pr-0 pt-8">
-                       <h5 class="m-0 text-left">Invoice No.</h5>
+                    <div class="col-md-5 pl-0 pt-8">
+                       <h5 class="m-0 text-right">Invoice No.</h5>
                     </div>
                     <div class="col-md-7 p-0">
                        <div class="form-group mb-0">
@@ -1237,10 +1254,10 @@
               </div>
               <div class="col-md-4 p-0">
                  <div class="row">
-                    <div class="col-md-6 p-0">
+                    <div class="col-md-6">
                        <h5 class="m-0 pt-8 text-right">Invoice Date</h5>
                     </div>
-                    <div class="col-md-6 pr-0">
+                    <div class="col-md-6 p-0">
                        <div class="form-group mb-0">
                           <mat-form-field>
                              <input [matDatepicker]="picker" class="form-control" formControlName="invoiceDate"

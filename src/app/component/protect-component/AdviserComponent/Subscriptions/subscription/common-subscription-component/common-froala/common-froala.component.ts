@@ -32,17 +32,17 @@ export class CommonFroalaComponent implements OnInit {
   }
 }
 */
-import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnInit, ViewChild} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {SubscriptionService} from '../../../subscription.service';
-import {UtilService} from 'src/app/services/util.service';
-import {EmailOnlyComponent} from '../email-only/email-only.component';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {PdfService} from '../../../../../../../services/pdf.service';
+import { AfterViewInit, Component, ElementRef, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { SubscriptionService } from '../../../subscription.service';
+import { UtilService } from 'src/app/services/util.service';
+import { EmailOnlyComponent } from '../email-only/email-only.component';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { PdfService } from '../../../../../../../services/pdf.service';
 
 // import html2canvas from 'html2canvas';
 
@@ -75,7 +75,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
   }) renderElement: ElementRef;
 
   constructor(public subscription: SubscriptionService, public subInjectService: SubscriptionInject,
-              public eventService: EventService, public dialog: MatDialog) {
+    public eventService: EventService, public dialog: MatDialog) {
     this.advisorId = AuthService.getAdvisorId();
     // this.dataSub = this.subInjectService.singleProfileData.subscribe(
     //   data=>this.getcommanFroalaData(data)
@@ -128,8 +128,8 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     // } else {
     //   this.subInjectService.rightSideData(value);
     // }
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
-    this.subInjectService.changeUpperRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    this.subInjectService.changeUpperRightSliderState({ state: 'close', data });
 
     // this.subInjectService.changeUpperRightSliderState({value:'close'})
     // this.subInjectService.changeUpperRightSliderState({value:'close'})
@@ -174,7 +174,10 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     this.storeData.docText = data;
     this.renderElement.nativeElement.innerHTML = data;
   }
-
+  saveSendEsign() {
+    this.inputData['sendEsign'] = true
+    this.save();
+  }
   save() {
     console.log('here is saved data', this.storeData);
     if (this.storeData.quotation == true) {
@@ -182,7 +185,6 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     } else {
       this.updateData(this.storeData);
     }
-    this.Close('close');
   }
 
   updateDataQuot(data) {
@@ -216,6 +218,14 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
 
   getResponseData(data) {
     console.log(data);
+    // this.Close('close');
+    if (this.inputData.sendEsign) {
+      this.openSendEmail();
+      this.inputData.sendEsign = false;
+    }
+    else {
+      this.Close('close');
+    }
   }
 
   deleteModal(value) {
@@ -279,8 +289,8 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
       margin: 1,
       filename: docName,
       // image: {type: 'jpeg', quality: 0.98},
-      html2canvas: {scale: 2},
-      jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
     };
 
     // html2pdf().from(this.renderElement.nativeElement).save();
