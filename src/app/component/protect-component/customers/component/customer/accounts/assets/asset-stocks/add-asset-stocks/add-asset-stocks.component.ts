@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../../customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../../customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-asset-stocks',
@@ -88,7 +88,7 @@ export class AddAssetStocksComponent implements OnInit {
           }
           this.cusService.editStockData(obj).subscribe(
             data => this.submitStockDataRes(data),
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           )
         }
         else {
@@ -109,7 +109,7 @@ export class AddAssetStocksComponent implements OnInit {
           }
           this.cusService.addAssetStocks(obj).subscribe(
             data => this.submitStockDataRes(data),
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           )
         }
       // stock type portfolio summary

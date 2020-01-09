@@ -1,20 +1,20 @@
-import { RecuringDepositComponent } from './../recuring-deposit/recuring-deposit.component';
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../../customer.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { DetailedViewFixedDepositComponent } from '../fixed-deposit/detailed-view-fixed-deposit/detailed-view-fixed-deposit.component';
-import { FixedDepositComponent } from '../fixed-deposit/fixed-deposit.component';
-import { DetailedViewRecuringDepositComponent } from '../recuring-deposit/detailed-view-recuring-deposit/detailed-view-recuring-deposit.component';
-import { DetailedViewBondsComponent } from '../bonds/detailed-view-bonds/detailed-view-bonds.component';
-import { BondsComponent } from '../bonds/bonds.component';
-import { UtilService } from 'src/app/services/util.service';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelService } from '../../../../excel.service';
-import { MathUtilService } from "../../../../../../../../../services/math-util.service";
+import {RecuringDepositComponent} from './../recuring-deposit/recuring-deposit.component';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../../customer.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {DetailedViewFixedDepositComponent} from '../fixed-deposit/detailed-view-fixed-deposit/detailed-view-fixed-deposit.component';
+import {FixedDepositComponent} from '../fixed-deposit/fixed-deposit.component';
+import {DetailedViewRecuringDepositComponent} from '../recuring-deposit/detailed-view-recuring-deposit/detailed-view-recuring-deposit.component';
+import {DetailedViewBondsComponent} from '../bonds/detailed-view-bonds/detailed-view-bonds.component';
+import {BondsComponent} from '../bonds/bonds.component';
+import {UtilService} from 'src/app/services/util.service';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelService} from '../../../../excel.service';
+import {MathUtilService} from "../../../../../../../../../services/math-util.service";
 
 
 @Component({
@@ -221,7 +221,7 @@ export class FixedIncomeComponent implements OnInit {
     this.dataSourceFixed.data = [{}, {}, {}];
     this.customerService.getFixedDeposit(obj).subscribe(
       data => this.getFixedDepositRes(data), (error) => {
-        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataSourceFixed.data = [];
         this.isLoading = false;
       }
@@ -266,7 +266,7 @@ export class FixedIncomeComponent implements OnInit {
     this.dataSourceRecurring.data = [{}, {}, {}];
     this.customerService.getRecurringDeposit(obj).subscribe(
       data => this.getRecurringDepositRes(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataSourceRecurring.data = [];
         this.isLoading = false;
       }
@@ -306,7 +306,7 @@ export class FixedIncomeComponent implements OnInit {
     this.dataSourceBond.data = [{}, {}, {}];
     this.customerService.getBonds(obj).subscribe(
       data => this.getBondsRes(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataSourceBond.data = [];
         this.isLoading = false;
       }
@@ -346,7 +346,7 @@ export class FixedIncomeComponent implements OnInit {
               dialogRef.close();
               this.getFixedDepositList();
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           );
         } else if (value == 'RECURRING DEPOSITE') {
           this.customerService.deleteRecurringDeposite(data.id).subscribe(
@@ -355,7 +355,7 @@ export class FixedIncomeComponent implements OnInit {
               dialogRef.close();
               this.getRecurringDepositList();
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           );
         } else {
           this.customerService.deleteBond(data.id).subscribe(
@@ -364,7 +364,7 @@ export class FixedIncomeComponent implements OnInit {
               dialogRef.close();
               this.getBondsList();
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           );
         }
       },

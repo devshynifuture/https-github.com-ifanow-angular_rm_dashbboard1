@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormArray, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from '../../../../customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MatDialog } from '@angular/material';
-import { AddScripComponent } from '../add-scrip/add-scrip.component';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from '../../../../customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatDialog} from '@angular/material';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-stock-scrip-level-holding',
@@ -148,7 +147,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
           console.log(data);
           this.Close();
         },
-        err => this.eventService.openSnackBar(err, "dismiss")
+        error => this.eventService.showErrorMessage(error)
       )
 
     }
@@ -186,7 +185,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
           console.log(data);
           this.Close();
         },
-        err => this.eventService.openSnackBar(err, "dismiss")
+        error => this.eventService.showErrorMessage(error)
       )
     }
   }

@@ -1,19 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { CustomerService } from '../../../../../customer.service';
-import { MAT_DATE_FORMATS } from '@angular/material';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { UtilService } from 'src/app/services/util.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {CustomerService} from '../../../../../customer.service';
+import {MAT_DATE_FORMATS} from '@angular/material';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {UtilService} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-kvp',
   templateUrl: './add-kvp.component.html',
   styleUrls: ['./add-kvp.component.scss'],
   providers: [
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ]
 })
 export class AddKvpComponent implements OnInit {
@@ -73,7 +73,7 @@ export class AddKvpComponent implements OnInit {
   }
 
   addKVP() {
-     
+
     if (this.KVPFormScheme.get('amtInvested').invalid) {
       this.KVPFormScheme.get('amtInvested').markAsTouched();
       return
@@ -105,13 +105,13 @@ export class AddKvpComponent implements OnInit {
         obj['id']=this.editApi.id
         this.cusService.editKVP(obj).subscribe(
           data => this.addKVPResponse(data),
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         )
       }
       else {
         this.cusService.addKVP(obj).subscribe(
           data => this.addKVPResponse(data),
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         )
       }
     }

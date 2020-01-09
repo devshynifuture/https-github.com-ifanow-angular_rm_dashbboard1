@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { PlanService } from '../plan.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {PlanService} from '../plan.service';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-add-goals',
@@ -20,29 +20,29 @@ export class AddGoalsComponent implements OnInit {
   // goalTypeFirstRowListData = [
   //   { id: 1, name: "Retirement", imageUrl: "GlobalRetirementGoalImage", isActive: 0 },
   //   {
-  //     id: 2, name: "House", imageUrl: "GlobalHouseGoalImage", isActive: 0, 
+  //     id: 2, name: "House", imageUrl: "GlobalHouseGoalImage", isActive: 0,
   //   },
   //   {
-  //     id: 3, name: "Car", imageUrl: "GlobalCarGoalImage", isActive: 0, questions: 
+  //     id: 3, name: "Car", imageUrl: "GlobalCarGoalImage", isActive: 0, questions:
   //   },
   //   {
-  //     id: 4, name: "Marriage", imageUrl: "GlobalMarriageGoalImage", isActive: 0, questions: 
+  //     id: 4, name: "Marriage", imageUrl: "GlobalMarriageGoalImage", isActive: 0, questions:
   //   },
   //   { id: 5, name: "Vacation", imageUrl: "GlobalVacationGoalImage", isActive: 0 }
   // ];
   // goalTypeSecondRowListData = [
   //   { id: 6, name: "Education", imageUrl: "GlobalEducationGoalImage", isActive: 0 },
   //   {
-  //     id: 7, name: "Emergency", imageUrl: "GlobalEmergencyGoalImage", isActive: 0, questions: 
+  //     id: 7, name: "Emergency", imageUrl: "GlobalEmergencyGoalImage", isActive: 0, questions:
   //   },
   //   {
-  //     id: 8, name: "Wealth creation", imageUrl: "GlobalWealthCreationGoalImage", isActive: 0, questions: 
+  //     id: 8, name: "Wealth creation", imageUrl: "GlobalWealthCreationGoalImage", isActive: 0, questions:
   //   },
   //   {
-  //     id: 9, name: "Big spends", imageUrl: "GlobalBigSpendGoalImage", isActive: 0, questions: 
+  //     id: 9, name: "Big spends", imageUrl: "GlobalBigSpendGoalImage", isActive: 0, questions:
   //   },
   //   {
-  //     id: 10, name: "Others", imageUrl: "GlobalOthersGoalImage", isActive: 0, questions: 
+  //     id: 10, name: "Others", imageUrl: "GlobalOthersGoalImage", isActive: 0, questions:
   //   }
   // ];
   ngOnInit() {
@@ -64,7 +64,7 @@ export class AddGoalsComponent implements OnInit {
     }
     this.planService.getGoalGlobalData(obj).subscribe(
       data => this.getGoalGlobalDataRes(data),
-      err => this.eventService.openSnackBar(err)
+      error => this.eventService.showErrorMessage(error)
     )
 
   }

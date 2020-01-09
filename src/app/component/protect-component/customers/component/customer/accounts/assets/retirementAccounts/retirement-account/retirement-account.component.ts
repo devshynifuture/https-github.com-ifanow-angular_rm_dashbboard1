@@ -1,24 +1,24 @@
-import { AddEPSComponent } from './../add-eps/add-eps.component';
-import { AddSuperannuationComponent } from './../add-superannuation/add-superannuation.component';
-import { AddGratuityComponent } from './../add-gratuity/add-gratuity.component';
-import { NpsSummaryPortfolioComponent } from './../add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
-import { AddEPFComponent } from './../add-epf/add-epf.component';
-import { Component, OnInit, ViewChild, ElementRef, ViewChildren } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from '../../../../customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { MatTableDataSource } from '@angular/material/table';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort } from '@angular/material';
-import { NpsSchemeHoldingComponent } from '../add-nps/nps-scheme-holding/nps-scheme-holding.component';
-import { DetailedViewEPFComponent } from '../add-epf/detailed-view-epf/detailed-view-epf.component';
-import { DetailedViewEPSComponent } from '../add-eps/detailed-view-eps/detailed-view-eps.component';
-import { DetailedViewGratuityComponent } from '../add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
-import { DetaildedViewSuperannuationComponent } from '../add-superannuation/detailded-view-superannuation/detailded-view-superannuation.component';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelService } from '../../../../excel.service';
+import {AddEPSComponent} from './../add-eps/add-eps.component';
+import {AddSuperannuationComponent} from './../add-superannuation/add-superannuation.component';
+import {AddGratuityComponent} from './../add-gratuity/add-gratuity.component';
+import {NpsSummaryPortfolioComponent} from './../add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
+import {AddEPFComponent} from './../add-epf/add-epf.component';
+import {Component, ElementRef, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from '../../../../customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {UtilService} from 'src/app/services/util.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {MatTableDataSource} from '@angular/material/table';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort} from '@angular/material';
+import {NpsSchemeHoldingComponent} from '../add-nps/nps-scheme-holding/nps-scheme-holding.component';
+import {DetailedViewEPFComponent} from '../add-epf/detailed-view-epf/detailed-view-epf.component';
+import {DetailedViewEPSComponent} from '../add-eps/detailed-view-eps/detailed-view-eps.component';
+import {DetailedViewGratuityComponent} from '../add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
+import {DetaildedViewSuperannuationComponent} from '../add-superannuation/detailded-view-superannuation/detailded-view-superannuation.component';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelService} from '../../../../excel.service';
 
 
 @Component({
@@ -472,7 +472,7 @@ export class RetirementAccountComponent implements OnInit {
               dialogRef.close();
               this.getListEPF();
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           );
         } else if (value == 'NPS') {
           this.custumService.deleteNPS(data.id).subscribe(
@@ -481,7 +481,7 @@ export class RetirementAccountComponent implements OnInit {
               dialogRef.close();
               this.getListNPS();
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           );
         } else if (value == 'GRATUITY') {
           this.custumService.deleteGratuity(data.id).subscribe(
@@ -490,7 +490,7 @@ export class RetirementAccountComponent implements OnInit {
               dialogRef.close();
               this.getListGratuity();
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           );
         } else if (value == 'SUPERANNUATION') {
           this.custumService.deleteSuperAnnuation(data.id).subscribe(
@@ -499,7 +499,7 @@ export class RetirementAccountComponent implements OnInit {
               dialogRef.close();
               this.getListSuperannuation();
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           );
         } else {
           this.custumService.deleteEPS(data.id).subscribe(
@@ -508,7 +508,7 @@ export class RetirementAccountComponent implements OnInit {
               dialogRef.close();
               this.getListEPS();
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           );
         }
       },
@@ -530,7 +530,7 @@ export class RetirementAccountComponent implements OnInit {
     this.dataEPFList.data = [{}, {}, {}];
     this.custumService.getEPF(obj).subscribe(
       data => this.getEPFRes(data), (error) => {
-        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataEPFList.data = [];
         this.isLoading = false;
       }
@@ -564,7 +564,7 @@ export class RetirementAccountComponent implements OnInit {
     this.dataGratuityList.data = [{}, {}, {}];
     this.custumService.getGrauity(obj).subscribe(
       data => this.getGrauityRes(data), (error) => {
-        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataGratuityList.data = [];
         this.isLoading = false;
       }
@@ -591,7 +591,7 @@ export class RetirementAccountComponent implements OnInit {
     this.dataNPSList.data = [{}, {}, {}];
     this.custumService.getNPS(obj).subscribe(
       data => this.getNPSRes(data), (error) => {
-        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataNPSList.data = [];
         this.isLoading = false;
       }
@@ -619,7 +619,7 @@ export class RetirementAccountComponent implements OnInit {
     this.dataSuperannuationList.data = [{}, {}, {}];
     this.custumService.getSuperannuation(obj).subscribe(
       data => this.getSuperannuationRes(data), (error) => {
-        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataSuperannuationList.data = [];
         this.isLoading = false;
       }
@@ -646,7 +646,7 @@ export class RetirementAccountComponent implements OnInit {
     this.EPSList.data = [{}, {}, {}];
     this.custumService.getEPS(obj).subscribe(
       data => this.getEPSRes(data), (error) => {
-        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.EPSList.data = [];
         this.isLoading = false;
       }
