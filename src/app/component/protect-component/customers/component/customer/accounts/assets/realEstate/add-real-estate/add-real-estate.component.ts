@@ -49,6 +49,7 @@ export class AddRealEstateComponent implements OnInit {
   familyMemId: any;
   _data: any;
   autoIncrement:number = 100;
+  id: any;
   constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService ,public utils:UtilService) { }
   // set inputData(inputData) {
   //   this._inputData = inputData;
@@ -315,6 +316,7 @@ export class AddRealEstateComponent implements OnInit {
           this.ownerName = ownerName[0].ownerName;
           this.addrealEstateForm.controls.ownerPercent.setValue(ownerName[0].ownershipPerc);
           this.familyMemId = ownerName[0].familyMemberId
+          this.id=ownerName[0].id;
         }
       }
 
@@ -374,7 +376,7 @@ export class AddRealEstateComponent implements OnInit {
         ownerPercent: this.addrealEstateForm.controls.ownerPercent.value,
         clientId: this.clientId,
         advisorId: this.advisorId,
-        id: this._inputData== undefined ? 0 : this._inputData.id,
+        id: this._data== undefined ? 0 : this._data.id,
         typeId: this.addrealEstateForm.controls.type.value,
         marketValue: this.addrealEstateForm.controls.marketValue.value,
         purchasePeriod: this.purchasePeriod,
@@ -404,7 +406,7 @@ export class AddRealEstateComponent implements OnInit {
         }
       });
       this.addrealEstateForm.value.getCoOwnerName.forEach(element => {
-        if (element) {
+        if (element.ownerName) {
           let obj1 = {
             'id':element.id,
             'ownerName': element.ownerName,
@@ -416,6 +418,7 @@ export class AddRealEstateComponent implements OnInit {
         }
       });
       let obj1 = {
+        'id':this.id,
         'ownerName': this.ownerName,
         'familyMemberId': this.familyMemId,
         'ownershipPerc': parseInt(this.addrealEstateForm.controls.ownerPercent.value),
@@ -424,14 +427,12 @@ export class AddRealEstateComponent implements OnInit {
       obj.realEstateOwners.push(obj1)
       if (obj.unitId == null) {
         console.log(obj);
-        delete obj.id;
         this.custumService.addRealEstate(obj).subscribe(
           data => this.addRealEstateRes(data)
         );
       } else {
 
         console.log(obj);
-        delete obj.id;
         this.custumService.editRealEstate(obj).subscribe(
           data => this.editRealEstateRes(data)
         );
