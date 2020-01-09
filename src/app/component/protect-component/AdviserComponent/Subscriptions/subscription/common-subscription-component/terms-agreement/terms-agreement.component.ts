@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { SubscriptionService } from '../../../subscription.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-terms-agreement',
@@ -25,6 +26,8 @@ export class TermsAgreementComponent implements OnInit {
   storeData: any;
   _upperData: any;
   dataTerms: any;
+  advisorId: () => any;
+  serviceData: any;
 
   constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public subService: SubscriptionService, private eventService: EventService) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
@@ -47,6 +50,7 @@ export class TermsAgreementComponent implements OnInit {
     if (upperData && upperData.documentData) {
       // this.changeDisplay();
     }
+    this.advisorId = AuthService.getAdvisorId();
   };
 
   get upperData() {
@@ -71,6 +75,7 @@ export class TermsAgreementComponent implements OnInit {
 
   ngOnInit() {
     console.log('quotationDesign', this._upperData);
+    this.getPlanServiceData();
   }
 
   Close() {
@@ -78,6 +83,18 @@ export class TermsAgreementComponent implements OnInit {
     // this.valueChange.emit(this.quotationDesignE);
     this.eventService.changeUpperSliderState({ state: 'close' });
 
+  }
+  getPlanServiceData() {
+    const obj = {
+      // advisorId: 12345,
+      advisorId: this.advisorId,
+      planId: 2
+      // this.planData ? this.planData.id : null
+    };
+    this.subService.getSettingPlanServiceData(obj).subscribe(
+      data => this.serviceData = data,
+      err => this.eventService.openSnackBar("Something went wrong", "dismiss")
+    )
   }
   onSubmit() {
     // TODO: Use EventEmitter with form value
@@ -126,7 +143,7 @@ export class TermsAgreementComponent implements OnInit {
       description: data.description,
       docText: data.docText,
       documentRepositoryId: data.documentRepositoryId, // pass here advisor id for Invoice advisor
-      documentTypeId:data.documentTypeId,
+      documentTypeId: data.documentTypeId,
       name: data.name,
     };
     this.subService.updateDocumentData(obj).subscribe(

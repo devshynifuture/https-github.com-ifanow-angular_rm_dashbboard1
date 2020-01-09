@@ -62,19 +62,18 @@
         </div>
         <div class="wrapper-16 pt-0 pb-0">
           <h5 class="m-0 pt-20 pb-12 text-black">Services - Fee details</h5>
-          <div class="row b-a">
+          <div *ngFor="let singleService of serviceData" class="row b-a">
             <div class="col-md-12 p-0">
-
               <div class="bg-grey lter wrapper-12 pt-16">
-                <p class="m-0 text-black">Investment management & financial planning</p>
+                <p class="m-0 text-black">{{singleService.serviceName}}</p>
               </div>
               <div class="bg-white wrapper-12">
-                <p class="m-0 text-black">IMA124-fee</p>
+                <p class="m-0 text-black">{{'$(service_'+singleService.id+')'}}</p>
               </div>
             </div>
           </div>
         </div>
-        <div class="wrapper-16 pb-28">
+        <!-- <div class="wrapper-16 pb-28">
           <div class="row b-a">
             <div class="col-md-12 p-0">
               <div class="bg-grey lter wrapper-12 pt-16">
@@ -85,7 +84,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
