@@ -29,12 +29,14 @@ export class AddEditDocumentComponent implements OnInit {
     docAvailability: [this.selectedOption, [Validators.required]],
     selectPlan: []
   });
-
+  @Input() documentType;
   @Input()
   set inputData(inputData) {
     this._inputData = inputData;
+    this.documentType;
     // obj.outstandingCheck.toString();
-    this.selectedOption=(inputData.availableAt)?inputData.availableAt.toString():'3';
+    // availableAt
+    this.selectedOption = (inputData) ? inputData.toString() : '3';
     // this.selectedOption = inputData ? (inputData.public ? (inputData.public === 1 ? '3' : inputData.mappingType) : '3') : '1';
     console.log('AddEditDocumentComponent inputData: ', inputData);
     this.setFormData(inputData);
@@ -55,16 +57,16 @@ export class AddEditDocumentComponent implements OnInit {
   }
 
   setFormData(inputData) {
-    let data=(inputData.documentTypeId)?inputData.documentTypeId.toString():inputData;
+    let data = (inputData.documentTypeId) ? inputData.documentTypeId.toString() : inputData;
     this.blankDocumentProperties.controls.docType.setValue(data);
-    if(inputData==""){
+    if (inputData == "") {
 
     }
-    (inputData.documentTypeId)?this.blankDocumentProperties.controls.docType.enable():(inputData=="")?this.blankDocumentProperties.controls.docType.enable():this.blankDocumentProperties.controls.docType.disable();
-    
+    (inputData.documentTypeId) ? this.blankDocumentProperties.controls.docType.enable() : (inputData == "") ? this.blankDocumentProperties.controls.docType.enable() : this.blankDocumentProperties.controls.docType.disable();
+
     this.blankDocumentProperties.controls.docName.setValue(inputData.name);
     this.blankDocumentProperties.controls.docAvailability.setValue(this.selectedOption);
-    
+
   }
 
   setValidation(flag) {
@@ -98,25 +100,25 @@ export class AddEditDocumentComponent implements OnInit {
     } else if (this.blankDocumentProperties.controls.docName.invalid) {
       this.isDocName = true;
       return;
-    }  else{
-      if (this._inputData.documentRepositoryId==undefined) {
+    } else {
+      if (this._inputData.documentRepositoryId == undefined) {
         const obj = {
           advisorId: this.advisorId,
           name: this.blankDocumentProperties.controls.docName.value,
           // documentTypeId: parseInt(this.blankDocumentProperties.controls.docType.value),
-          documentTypeId:this.blankDocumentProperties.controls.docType.value.toString(),
+          documentTypeId: this.blankDocumentProperties.controls.docType.value.toString(),
           docText: 'docText',
           description: this.blankDocumentProperties.controls.docName.value,
           public: true,
           quotation: this._inputData.docType == '3' ? true : false,
           availableAt: this.selectedOption ? parseInt(this.selectedOption) : 0,
           mappingId: this._inputData.docType == '3' ? 5 : 0,
-          docType:this.blankDocumentProperties.controls.docType.value
-  
+          docType: this.blankDocumentProperties.controls.docType.value
+
         };
         // console.log(obj);
         // console.log(obj);
-  
+
         this.subService.addSettingDocument(obj).subscribe(
           data => {
             console.log(data);
@@ -131,7 +133,7 @@ export class AddEditDocumentComponent implements OnInit {
           description: this.blankDocumentProperties.controls.docName.value,
           docText: this._inputData.docText,
           documentRepositoryId: this._inputData.documentRepositoryId, // pass here advisor id for Invoice advisor
-          documentTypeId:this.blankDocumentProperties.controls.docType.value.toString(),
+          documentTypeId: this.blankDocumentProperties.controls.docType.value.toString(),
           name: this.blankDocumentProperties.controls.docName.value,
         };
         this.subService.updateDocumentData(obj).subscribe(
