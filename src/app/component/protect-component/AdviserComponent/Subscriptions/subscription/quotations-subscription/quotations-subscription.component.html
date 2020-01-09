@@ -5,13 +5,13 @@
       <div class="col-md-1 p-0">
         <h4 class="pt-8 mb-0">Quotations</h4>
       </div>
-      <div class="col-md-5 p-0">
+      <div class="col-md-5 pl-0">
         <div class="row">
-          <div class="col-md-3 p-0" *ngIf="dataSource.data.length > 0">
+          <div class="col-md-3" *ngIf="dataSource.data.length > 0">
             <button [matMenuTriggerFor]="menu" class="b-a pr-0 br-0" mat-button>Actions <i
-              class="material-icons text-custom">
-              arrow_drop_down
-            </i></button>
+                class="material-icons text-custom">
+                arrow_drop_down
+              </i></button>
             <mat-menu #menu="matMenu">
               <button *ngIf="dataCount == 0" mat-menu-item>Select quotation to see more
                 actions
@@ -21,12 +21,12 @@
               </button>
             </mat-menu>
           </div>
-          <div class="col-md-8 p-0" *ngIf="dataSource.data.length > 0">
+          <div class="col-md-8" *ngIf="dataSource.data.length > 0">
             <p class="m-0 text-black text-left pt-12">{{dataCount}} quotations selected</p>
           </div>
         </div>
       </div>
-      <div class="col-md-4 right text-right p-0">
+      <div class="col-md-6 right text-right p-0">
         <i class="material-icons mr-12 icon-light c-p v-sub">
           search
         </i>
