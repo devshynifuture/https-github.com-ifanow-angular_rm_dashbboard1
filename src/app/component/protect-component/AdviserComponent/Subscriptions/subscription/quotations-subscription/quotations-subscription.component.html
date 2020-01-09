@@ -2,10 +2,31 @@
   <!-- (scroll)="scrollCall(true)" -->
   <div class="bg-white p-20 pb-0 filterBox">
     <div class="row">
-      <div class="col-md-8 p-0">
+      <div class="col-md-1 p-0">
         <h4 class="pt-8 mb-0">Quotations</h4>
       </div>
-      <div class="col-md-4 right text-right p-0">
+      <div class="col-md-5 pl-0">
+        <div class="row">
+          <div class="col-md-3" *ngIf="dataSource.data.length > 0">
+            <button [matMenuTriggerFor]="menu" class="b-a pr-0 br-0" mat-button>Actions <i
+                class="material-icons text-custom">
+                arrow_drop_down
+              </i></button>
+            <mat-menu #menu="matMenu">
+              <button *ngIf="dataCount == 0" mat-menu-item>Select quotation to see more
+                actions
+              </button>
+              <button (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0" mat-menu-item>Delete
+                Quotation
+              </button>
+            </mat-menu>
+          </div>
+          <div class="col-md-8" *ngIf="dataSource.data.length > 0">
+            <p class="m-0 text-black text-left pt-12">{{dataCount}} quotations selected</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 right text-right p-0">
         <i class="material-icons mr-12 icon-light c-p v-sub">
           search
         </i>
@@ -82,6 +103,17 @@
       <div [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'" class="tableClass">
         <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation"
           id="table-low" mat-table matSort>
+          <ng-container matColumnDef="checkbox">
+            <th *matHeaderCellDef class="f-18" mat-header-cell>
+              <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0 && isAllSelected()"
+                [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll">
+              </mat-checkbox>
+            </th>
+            <td *matCellDef="let element" mat-cell>
+              <mat-checkbox (change)="changeSelect()" [(ngModel)]="element.selected" class="c-p" name="selectedData">
+              </mat-checkbox>
+            </td>
+          </ng-container>
           <ng-container matColumnDef="name">
             <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="clientName"> Client name</th>
             <td (click)="Open('viewQuotation',element)" *matCellDef="let element" class="c-p" mat-cell>

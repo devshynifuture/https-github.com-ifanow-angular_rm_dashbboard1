@@ -32,7 +32,7 @@
                         <mat-error
                             *ngIf="POTDForm.get('amtInvested').errors?.required && POTDForm.get('amtInvested').touched"
                             class="f-12 pt-4">
-                            Amount invested is required
+                            This field is required
                         </mat-error>
                         <mat-error *ngIf="(POTDForm.get('amtInvested').errors?.min)" class="f-12 pt-4">
                             Should be greater than 200

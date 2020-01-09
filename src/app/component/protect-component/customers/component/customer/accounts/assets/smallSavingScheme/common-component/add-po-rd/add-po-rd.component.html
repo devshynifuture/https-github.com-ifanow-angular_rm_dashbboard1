@@ -32,7 +32,7 @@
                         <mat-error
                             *ngIf="PORDForm.get('monthlyContribution').errors?.required && PORDForm.get('monthlyContribution').touched"
                             class="f-12 pt-4">
-                            Amount invested is required
+                            This field is required
                         </mat-error>
                         <mat-error *ngIf="(PORDForm.get('monthlyContribution').errors?.min)" class="f-12 pt-4">
                             Should be greater than 10

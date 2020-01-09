@@ -48,6 +48,7 @@ export class AddRealEstateComponent implements OnInit {
   showErrorCoOwner = false;
   familyMemId: any;
   _data: any;
+  autoIncrement:number = 100;
   constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService ,public utils:UtilService) { }
   // set inputData(inputData) {
   //   this._inputData = inputData;
@@ -178,6 +179,22 @@ export class AddRealEstateComponent implements OnInit {
       }));
     }
   }
+  // demo:boolean = true;
+  // demoDraft(){
+  //   if(this.demo){
+  //     this.demo = false;
+  //     console.log(this.demo,"call");
+  //     setTimeout(() => {
+  //     this.demo = true;
+       
+  //       console.log(this.autoIncrement, "this.autoIncrement 123" );
+  //     }, 10000);
+  //   }
+  //   else{
+  //     return;
+  //   }
+  // }
+
   removeNominee(item) {
     if (this.getNominee.value.length > 1) {
       this.getNominee.removeAt(item);
@@ -267,7 +284,7 @@ export class AddRealEstateComponent implements OnInit {
         ownershipPerc: null,
       })]),
       ownerPercent: [data.ownerPerc, [Validators.required]],
-      type: [(data.typeId) + "", [Validators.required]],
+      type: [(data.typeId == undefined) ? '' : (data.typeId)+"", [Validators.required]],
       marketValue: [data.marketValue, [Validators.required]],
       year: [data.year],
       month: [data.month, [Validators.required]],
@@ -360,11 +377,11 @@ export class AddRealEstateComponent implements OnInit {
         marketValue: this.addrealEstateForm.controls.marketValue.value,
         purchasePeriod: this.purchasePeriod,
         purchaseValue: this.addrealEstateForm.controls.purchaseValue.value,
-        unit: this.addrealEstateForm.controls.unit.value,
+        unitId: this.addrealEstateForm.controls.unit.value,
         ratePerUnit: this.addrealEstateForm.controls.ratePerUnit.value,
-        stampDuty: this.addrealEstateForm.controls.stampDuty.value,
-        registration: this.addrealEstateForm.controls.registration.value,
-        gst: this.addrealEstateForm.controls.gst.value,
+        stampDutyCharge: this.addrealEstateForm.controls.stampDuty.value,
+        registrationCharge: this.addrealEstateForm.controls.registration.value,
+        gstCharge: this.addrealEstateForm.controls.gst.value,
         location: this.addrealEstateForm.controls.location.value,
         description: this.addrealEstateForm.controls.description.value,
         // nominee: this.addrealEstateForm.controls.nominee.value,
@@ -399,7 +416,7 @@ export class AddRealEstateComponent implements OnInit {
         'isOwner': true
       }
       obj.realEstateOwners.push(obj1)
-      if (this._inputData == undefined) {
+      if (obj.unitId == null) {
         console.log(obj);
         delete obj.id;
         this.custumService.addRealEstate(obj).subscribe(
@@ -408,6 +425,7 @@ export class AddRealEstateComponent implements OnInit {
       } else {
 
         console.log(obj);
+        delete obj.id;
         this.custumService.editRealEstate(obj).subscribe(
           data => this.editRealEstateRes(data)
         );

@@ -236,27 +236,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.invoiceSub = value;
     this.invoiceSubscription = 'true';
     this.eventService.sidebarData(value);
-    // this.subscriptionValue = value
-    // this.subInjectService.rightSideData(state);
     this.subInjectService.addSingleProfile(data);
-    // const fragmentData = {
-    //   flag: value,
-    //   data:data,
-    //   id: 1,
-    //   state: 'open'
-    // };
-    // const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-    //   sideBarData => {
-    //     console.log('this is sidebardata in subs subs : ', sideBarData);
-    //     this.dataTOget = sideBarData;
-
-    //     if (UtilService.isDialogClose(sideBarData)) {
-    //       console.log('this is sidebardata in subs subs 2: ', sideBarData);
-    //       rightSideDataSub.unsubscribe();
-    //       this.getSummaryDataAdvisor();
-    //     }
-    //   }
-    // );
   }
 
   getSingleResponseInvoicePdf(data) {
@@ -264,8 +244,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
   }
 
   selectAll(event) {
-    // const checked = event.target.checked;
-    // this.dataSource.forEach(item => item.selected = 'checked');
     this.dataCount = 0;
     if (this.dataSource != undefined) {
       this.dataSource.filteredData.forEach(item => {

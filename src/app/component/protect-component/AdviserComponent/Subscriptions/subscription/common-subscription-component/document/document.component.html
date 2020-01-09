@@ -46,7 +46,7 @@
                         <div (click)="selectDocument(documentData)">
                             <mat-card
                                 [ngClass]="{'ba-blue': documentData.selected,'active': documentData.selected,'b-ua':documentData.selected==false}"
-                                class="example-card bg-grey lter p-0">
+                                class="example-card bg-grey lter p-0 b-a c-p">
                                 <mat-card-header class="m-0 hide-card-text">
                                     <!-- [isChecked]="documentData.selected" -->
                                     <app-custom-html [isChecked]="documentData.selected" [data]="documentData.docText"
@@ -144,7 +144,7 @@
                     <div (click)="selectDocument(document)">
                         <mat-card
                             [ngClass]="{'ba-blue': document.selected,'active': document.selected,'b-ua':document.selected==false}"
-                            class="example-card bg-grey lter p-0">
+                            class="example-card bg-grey lter p-0 c-p">
                             <mat-card-header class="m-0">
                                 <!-- [isChecked]="document.selected"  -->
                                 <app-custom-html [isChecked]="document.selected" [data]="document.docText"
@@ -188,10 +188,10 @@
                 <div class="wrapper-20 pt-150">
                     <div class="row">
                         <div class="col-md-12 p-0">
-                            <button mat-stroked-button class="btn-primary br-0 right text-right addon"
-                                (click)="openDocument('addDocument')">
+                            <!-- <button mat-stroked-button class="btn-primary br-0 right text-right addon"
+                                (click)="openFragment('documents', null)">
                                 ADD DOCUMENT
-                            </button>
+                            </button> -->
                             <button mat-button class="mr-8 right text-right"
                                 (click)="openPopup('documentHelpPopup')">HELP
                             </button>
@@ -209,7 +209,7 @@
                                 <button mat-menu-item *ngIf="dataCount == 0">Select invoice to see more
                                     actions
                                 </button>
-                                <button mat-menu-item *ngIf="dataCount == 1" (click)="openEsignDocument(null)">Email
+                                <button mat-menu-item *ngIf="dataCount == 1 && sendESign" (click)="openEsignDocument(null)">Email
                                     with eSign
                                     request
                                 </button>
@@ -301,14 +301,24 @@
                                 </th>
                                 <td *matCellDef="let element" mat-cell>
                                     <span>
-                                        <span class="text-success t-10 f-500 c-p"
+                                         <!-- <span class="text-success t-10 f-500 c-p"
                                             *ngIf="element.status==1 && !element.signed">READY TO
                                             SEND</span>
                                         <span class="text-success t-10 f-500 c-p"
                                             *ngIf="element.status==0 && !element.signed">NOT
                                             STARTED</span>
                                         <span class="text-success t-10 f-500 c-p" *ngIf="element.signed">SIGNED
-                                        </span>
+                                        </span>-->
+                                      <span *ngIf="element.status==0"
+                                            class="text-success t-10 f-500 c-p">NOT
+                                            STARTED</span>
+                                        <span *ngIf="element.status==1"
+                                              class="text-success t-10 f-500 c-p">READY TO
+                                            SEND</span>
+                                        <span *ngIf="element.status==2"
+                                              class="text-success t-10 f-500 c-p">SENT</span>
+                                      <span *ngIf="element.status==3"
+                                            class="text-success t-10 f-500 c-p">ESIGNED</span>
                                     </span>
                                 </td>
                             </ng-container>
@@ -329,7 +339,7 @@
                                         <a mat-menu-item *ngIf="element.signed" class="bt-1"
                                             (click)="downloadEsign(element)">Download eSigned
                                             document</a>
-                                        <a mat-menu-item class="bt-1" (click)="openEsignDocument(element)">Email
+                                        <a mat-menu-item *ngIf="!element.signed" class="bt-1" (click)="openEsignDocument(element)">Email
                                             with eSign
                                             request</a>
                                     </mat-menu>

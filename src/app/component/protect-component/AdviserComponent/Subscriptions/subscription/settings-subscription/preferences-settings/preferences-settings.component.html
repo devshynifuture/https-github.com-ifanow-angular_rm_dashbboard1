@@ -54,7 +54,7 @@
                                             primary</a>
                                         <a mat-menu-item (click)="Open(singleBillerProfile,'editbillerProfile')">Edit
                                             biller profile</a>
-                                        <a mat-menu-item class="bt-1" (click)="deleteModal(singleBillerProfile)">Delete
+                                        <a mat-menu-item *ngIf="billerProfileData.length > 1" class="bt-1" (click)="deleteModal(singleBillerProfile)">Delete
                                             biller
                                             profile</a>
                                     </mat-menu>

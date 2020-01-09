@@ -44,7 +44,7 @@ export interface PeriodicElement {
 })
 export class QuotationsSubscriptionComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  displayedColumns: string[] = ['name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
+  displayedColumns: string[] = ['checkbox','name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
   advisorId;
   maxDate = new Date();
   noData: string;
@@ -84,6 +84,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     { name: 'Sent date', value: 2 },
     { name: 'Client consent', value: 3 }
   ];
+  dataCount: number;
   
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
@@ -94,8 +95,40 @@ export class QuotationsSubscriptionComponent implements OnInit {
     //this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
     this.getQuotationsData(false);
+    this.dataCount = 0;
+  }
+  changeSelect() {
+    this.dataCount = 0;
+    this.dataSource.filteredData.forEach(item => {
+      console.log('item item ', item);
+      if (item.selected) {
+        this.dataCount++;
+      }
+    });
+  }
+  selectAll(event) {
+    this.dataCount = 0;
+    if (this.dataSource != undefined) {
+      this.dataSource.filteredData.forEach(item => {
+        item.selected = event.checked;
+        if (item.selected) {
+          this.dataCount++;
+        }
+      });
+    }
+  }
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    if (this.dataSource != undefined) {
+      return this.dataCount === this.dataSource.filteredData.length;
+    }
   }
 
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selectAll({checked: false}) : this.selectAll({checked: true});
+  }
   scrollCall(scrollLoader) {
     const uisubs = document.getElementById('ui-subs');
     const wrapper = document.getElementById('wrapper');
