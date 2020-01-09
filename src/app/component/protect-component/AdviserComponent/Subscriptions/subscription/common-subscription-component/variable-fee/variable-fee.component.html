@@ -51,27 +51,27 @@
           quarterly.<br> We will calculate accordingly.</p>
       </div>
       <div class="col-md-7">
-        <div class="row bg-grey lter">
-          <div formGroupName="directFees" class="col-md-6 p-0 bt-grey bl-1 b">
-            <h5 class="m-0 wrapper-12 text-center text-black bb-grey bb-grey">Direct (per annum)</h5>
+        <div class="row bg-grey lter b">
+          <div formGroupName="directFees" class="col-md-6 p-0 border-right-1">
+            <h5 class="m-0 wrapper-12 text-center text-black bb">Direct (per annum)</h5>
             <div class="row">
-              <div class="col-md-4 p-0 br-grey bl-0">
-                <h5 class="m-0 wrapper-8 bb-grey">Equity</h5>
+              <div class="col-md-4 p-0 border-right-1 bb bl-0">
+                <h5 class="m-0 wrapper-8">Equity</h5>
               </div>
-              <div class="col-md-4 p-0 br-grey">
-                <h5 class="m-0 wrapper-8 bb-grey">Debt</h5>
+              <div class="col-md-4 p-0 border-right-1 bb">
+                <h5 class="m-0 wrapper-8">Debt</h5>
               </div>
-              <div class="col-md-4 p-0">
-                <h5 class="m-0 wrapper-8 bb-grey">Liquid</h5>
+              <div class="col-md-4 p-0 bb">
+                <h5 class="m-0 wrapper-8">Liquid</h5>
               </div>
             </div>
             <div class="row ui-mff">
-              <div class="col-md-4 p-0 bl-0 br-grey">
+              <div class="col-md-4 p-0 bl-0 border-right-1">
                 <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100"
                   appInputValueValidation class="form-control br-0 h-39" formControlName="equity" placeholder="%"
                   type="text">
               </div>
-              <div class="col-md-4 p-0 br-grey">
+              <div class="col-md-4 p-0 border-right-1">
                 <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100"
                   appInputValueValidation class="form-control br-0 h-39" formControlName="debt" placeholder="%"
                   type="text">
@@ -83,32 +83,32 @@
               </div>
             </div>
           </div>
-          <div formGroupName="regularFees" class="col-md-6 p-0">
-            <h5 class="m-0 wrapper-12 text-center text-black bb-grey bt-grey br-grey">Regular (per annum)
+          <div formGroupName="regularFees" class="col-md-6 p-0 bl-0">
+            <h5 class="m-0 wrapper-12 text-center text-black bb">Regular (per annum)
             </h5>
             <div class="row">
-              <div class="col-md-4 p-0 br-grey bl-0">
-                <h5 class="m-0 wrapper-8 bb-grey">Equity</h5>
+              <div class="col-md-4 p-0 bl-0 border-right-1">
+                <h5 class="m-0 wrapper-8 bb">Equity</h5>
               </div>
-              <div class="col-md-4 p-0 br-grey">
-                <h5 class="m-0 wrapper-8 bb-grey">Debt</h5>
+              <div class="col-md-4 p-0 border-right-1">
+                <h5 class="m-0 wrapper-8 bb">Debt</h5>
               </div>
               <div class="col-md-4 p-0">
-                <h5 class="m-0 wrapper-8 bb-grey br-grey">Liquid</h5>
+                <h5 class="m-0 wrapper-8 bb">Liquid</h5>
               </div>
             </div>
             <div class="row ui-mff">
-              <div class="col-md-4 br-grey p-0 bl-0 bb-grey">
-                <input type="text" appNumberOnly [maxLength]="4" placeholder="%" class="form-control br-0 h-39 br-grey"
+              <div class="col-md-4 p-0 bl-0 border-right-1">
+                <input type="text" appNumberOnly [maxLength]="4" placeholder="%" class="form-control br-0 h-39"
                   formControlName="equity">
               </div>
-              <div class="col-md-4 br-grey bb-grey p-0">
-                <input type="number" appNumberOnly [maxLength]="4" placeholder="%"
-                  class="form-control br-0 h-39 br-grey" formControlName="debt">
+              <div class="col-md-4 p-0 border-right-1 ">
+                <input type="number" appNumberOnly [maxLength]="4" placeholder="%" class="form-control br-0 h-39"
+                  formControlName="debt">
               </div>
-              <div class="col-md-4 br-grey bb-grey p-0">
-                <input type="number" appNumberOnly [maxLength]="4" placeholder="%"
-                  class="form-control br-0 h-39 br-grey" formControlName="liquid">
+              <div class="col-md-4 p-0">
+                <input type="number" appNumberOnly [maxLength]="4" placeholder="%" class="form-control br-0 h-39 "
+                  formControlName="liquid">
               </div>
             </div>
           </div>
