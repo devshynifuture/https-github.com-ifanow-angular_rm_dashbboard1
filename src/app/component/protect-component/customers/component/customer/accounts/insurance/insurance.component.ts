@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../customer.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AddInsuranceComponent} from '../../../common-component/add-insurance/add-insurance.component';
-import {DetailedViewComponent} from "../../../common-component/detailed-view/detailed-view.component";
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../customer.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatTableDataSource } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AddInsuranceComponent } from '../../../common-component/add-insurance/add-insurance.component';
+import { DetailedViewComponent } from "../../../common-component/detailed-view/detailed-view.component";
 
 @Component({
   selector: 'app-insurance',
@@ -17,22 +17,25 @@ import {DetailedViewComponent} from "../../../common-component/detailed-view/det
 
 export class InsuranceComponent implements OnInit {
   displayedColumns = ['no', 'life', 'name', 'number', 'sum', 'cvalue', 'premium', 'term', 'pterm', 'desc', 'status', 'icons'];
-  dataSource;
+
   displayedColumns1 = ['no', 'owner', 'cvalue', 'amt', 'mvalue', 'rate', 'mdate', 'type', 'ppf', 'desc', 'status', 'icons'];
   dataSource1;
+  isLoading = false;
   advisorId: any;
   insuranceSubTypeId: any;
   clientId: any;
   noData: string;
   lifeInsuranceFlag: boolean;
   generalInsuranceFlag: boolean;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
 
-  lifeInsuranceList = [{name: 'Term', id: 1}, {name: 'Traditional', id: 2}, {name: 'ULIP', id: 3}];
+  lifeInsuranceList = [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }];
 
   viewMode;
 
   constructor(private eventService: EventService, public dialog: MatDialog,
-              private subInjectService: SubscriptionInject, private cusService: CustomerService) {
+    private subInjectService: SubscriptionInject, private cusService: CustomerService) {
   }
 
   generalLifeInsuranceList = [/*"Health", "Car/2 Wheeler", "Travel", "Personal accident", "Critical illness", "Cancer", "Home", "Others"*/];
@@ -72,13 +75,20 @@ export class InsuranceComponent implements OnInit {
   }
 
   getInsuranceData(typeId) {
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
       insuranceTypeId: typeId
     };
+    // this.dataSource.data = [{}, {}, {}];
     this.cusService.getInsuranceData(obj).subscribe(
       data => this.getInsuranceDataRes(data)
+      // , (error) => {
+      //   this.eventService.openSnackBar('Something went worng!', 'dismiss');
+      //   this.dataSource.data = [];
+      //   this.isLoading = false;
+      // }
     );
   }
 
@@ -148,7 +158,7 @@ export class InsuranceComponent implements OnInit {
       this.insuranceSubTypeId = 0;
       this.generalLifeInsuranceList = [];
       this.lifeInsuranceList = [];
-      [{name: 'Term', id: 1}, {name: 'Traditional', id: 2}, {name: 'ULIP', id: 3}].map((i) => {
+      [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }].map((i) => {
         this.lifeInsuranceList.push(i);
       });
     } else {
@@ -156,10 +166,10 @@ export class InsuranceComponent implements OnInit {
       this.lifeInsuranceFlag = false;
       this.generalInsuranceFlag = true;
       this.generalLifeInsuranceList = [];
-      [{name: 'Health', id: 4}, {name: 'Car/2 Wheeler', id: 5}, {name: 'Travel', id: 6}, {
+      [{ name: 'Health', id: 4 }, { name: 'Car/2 Wheeler', id: 5 }, { name: 'Travel', id: 6 }, {
         name: 'Personal accident',
         id: 7
-      }, {name: 'Critical illness', id: 8}, {name: 'Cancer', id: 9}, {name: 'Home', id: 10}, {
+      }, { name: 'Critical illness', id: 8 }, { name: 'Cancer', id: 9 }, { name: 'Home', id: 10 }, {
         name: 'Others',
         id: 11
       }].map((i) => {

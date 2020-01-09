@@ -1,12 +1,12 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {AddIncomeComponent} from './add-income/add-income.component';
-import {AuthService} from 'src/app/auth-service/authService';
-import {PlanService} from '../../plan.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { AddIncomeComponent } from './add-income/add-income.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PlanService } from '../../plan.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-income',
@@ -14,12 +14,15 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
   styleUrls: ['./income.component.scss']
 })
 export class IncomeComponent implements OnInit {
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   displayedColumns = ['no', 'owner', 'type', 'amt', 'income', 'till', 'rate', 'status', 'icons'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  // dataSource = new MatTableDataSource(ELEMENT_DATA);
   advisorId: any;
   clientId: any;
+  isLoading = false;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
 
   constructor(public dialog: MatDialog, private eventService: EventService, private subInjectService: SubscriptionInject, private planService: PlanService) {
   }
@@ -35,21 +38,30 @@ export class IncomeComponent implements OnInit {
   }
 
   getIncomeList() {
+    this.isLoading = true;
     const obj =
-      {
-        advisorId: this.advisorId,
-        clientId: this.clientId
-      }
+    {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    }
+    this.dataSource.data = [{}, {}, {}];
     this.planService.getIncomeData(obj).subscribe(
       data => this.getIncomeListRes(data),
-      err => this.eventService.openSnackBar(err)
-    )
-
+      // err => this.eventService.openSnackBar(err)
+      (error) => {
+        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
+    );
   }
 
   getIncomeListRes(data) {
+    this.isLoading = false;
     if (data) {
-      this.dataSource = data;
+      this.dataSource.data = data;
+      this.dataSource.sort = this.sort;
+
     }
   }
 
@@ -161,5 +173,5 @@ const ELEMENT_DATA: PeriodicElement[] = [
     rate: "8.40%",
     status: "LIVE"
   },
-  {no: "", owner: 'Total', type: "", amt: '1,60,000', income: "", till: "", rate: "", status: ""},
+  { no: "", owner: 'Total', type: "", amt: '1,60,000', income: "", till: "", rate: "", status: "" },
 ];

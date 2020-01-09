@@ -24,7 +24,7 @@ export class LiabilitiesComponent implements OnInit {
 
   displayedColumns: string[] = ['no', 'name', 'type', 'loan', 'ldate', 'today', 'ten', 'rate', 'emi', 'fin', 'status', 'icons'];
   // dataSource = ELEMENT_DATA;
-  advisorId: any;  
+  advisorId: any;
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   storeData: any;
@@ -50,7 +50,7 @@ export class LiabilitiesComponent implements OnInit {
   footer = [];
 
 
-  constructor(private excel : ExcelService,private eventService: EventService, private subInjectService: SubscriptionInject,
+  constructor(private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
     public customerService: CustomerService, public util: UtilService, public dialog: MatDialog) {
   }
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -65,7 +65,7 @@ export class LiabilitiesComponent implements OnInit {
     //this.showLoader = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-  
+
     this.getLiability('');
     this.getPayables();
     this.getGlobalLiabilities();
@@ -121,11 +121,11 @@ export class LiabilitiesComponent implements OnInit {
   getOtherPayablesRes(data) {
 
     console.log(data);
-    if(data!=undefined){
+    if (data != undefined) {
       this.OtherPayableData = data;
       this.OtherData = data.length;
     }
-    
+
   }
 
   sortTable(data) {
@@ -142,7 +142,7 @@ export class LiabilitiesComponent implements OnInit {
     } else {
       this.dataSource = new MatTableDataSource(this.dataStore);
       this.dataSource.sort = this.sort;
-      if(this.dataStore){
+      if (this.dataStore) {
         this.dataStore.forEach(element => {
           if (element.loanTypeId == data) {
             filterData.push(element);
@@ -271,16 +271,17 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   getLiability(data) {
-    this.isLoading=true;
+    this.isLoading = true;
 
     this.dataToShow = data.data;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
     };
+    this.dataSource.data = [{}, {}, {}];
     this.customerService.getLiabilty(obj).subscribe(
-      data => this.getLiabiltyRes(data),(error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+      data => this.getLiabiltyRes(data), (error) => {
+        this.eventService.openSnackBar('Something went worng!', 'dismiss');
         this.dataSource.data = [];
         this.isLoading = false;
       }
@@ -288,9 +289,9 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   getLiabiltyRes(data) {
-    this.isLoading=false;
+    this.isLoading = false;
     // this.showLoader = false;
-    if (data.loans.length ==0) {
+    if (data.loans.length == 0) {
       this.noData = "No Data Found";
       this.dataSource.data = []
 

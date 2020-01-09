@@ -23,7 +23,7 @@ import { MathUtilService } from "../../../../../../../../../services/math-util.s
   styleUrls: ['./fixed-income.component.scss']
 })
 export class FixedIncomeComponent implements OnInit {
-  isLoading = true;
+  isLoading = false;
   showRequring: any;
   advisorId: any;
   dataSourceRecurring: any;
@@ -306,7 +306,7 @@ export class FixedIncomeComponent implements OnInit {
     this.dataSourceBond.data = [{}, {}, {}];
     this.customerService.getBonds(obj).subscribe(
       data => this.getBondsRes(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.openSnackBar('Something went worng!', 'dismiss');
         this.dataSourceBond.data = [];
         this.isLoading = false;
       }
