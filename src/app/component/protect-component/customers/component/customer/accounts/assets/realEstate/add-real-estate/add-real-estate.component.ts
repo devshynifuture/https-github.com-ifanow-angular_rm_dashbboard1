@@ -321,7 +321,8 @@ export class AddRealEstateComponent implements OnInit {
       if (data.realEstateNominees.length != 0) {
         data.realEstateNominees.forEach(element => {
           this.addrealEstateForm.controls.getNomineeName.push(this.fb.group({
-            name: [(element.name) + "", [Validators.required]],
+            id:element.id,
+            name: [(element.name)?(element.name) + "":'', [Validators.required]],
             ownershipPer: [(element.ownershipPer + ""), Validators.required]
           }))
         })
@@ -334,6 +335,7 @@ export class AddRealEstateComponent implements OnInit {
         });
         ownerName.forEach(element => {
           this.addrealEstateForm.controls.getCoOwnerName.push(this.fb.group({
+            id:element.id,
             ownerName: [(element.ownerName) + "", [Validators.required]],
             ownershipPerc: [(element.ownershipPerc + ""), Validators.required]
           }))
@@ -389,18 +391,22 @@ export class AddRealEstateComponent implements OnInit {
         realEstateOwners: [],
       }
       this.addrealEstateForm.value.getNomineeName.forEach(element => {
-        if (element) {
+        if (element.name) {
           let obj1 = {
+            'id':element.id,
             'name': element.name,
             'familyMemberId': element.familyMemberId,
             'ownershipPer': parseInt(element.ownershipPer)
           }
           obj.realEstateNominees.push(obj1)
+        }else{
+          obj.realEstateNominees=[];
         }
       });
       this.addrealEstateForm.value.getCoOwnerName.forEach(element => {
         if (element) {
           let obj1 = {
+            'id':element.id,
             'ownerName': element.ownerName,
             'familyMemberId': element.familyMemberId,
             'ownershipPerc': parseInt(element.ownershipPerc),
