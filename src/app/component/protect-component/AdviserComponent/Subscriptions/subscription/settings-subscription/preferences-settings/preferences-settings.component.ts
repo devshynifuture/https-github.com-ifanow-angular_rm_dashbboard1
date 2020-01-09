@@ -62,7 +62,7 @@ export class PreferencesSettingsComponent implements OnInit {
     this.isLoading = true;
     this.billerProfileData = [{ isPrimary: false }];
     this.subscription.getPreferenceBillerProfile(this.advisorId).subscribe(
-      data => this.getProfileBillerDataResponse(data),(error) => {
+      data => this.getProfileBillerDataResponse(data), (error) => {
         this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
         // this.dataSource.data = [];
         this.billerProfileData = [];
@@ -155,8 +155,8 @@ export class PreferencesSettingsComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        this.getProfileBillerData()
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getProfileBillerData()
           console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }

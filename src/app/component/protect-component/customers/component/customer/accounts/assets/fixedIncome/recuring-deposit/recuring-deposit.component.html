@@ -28,12 +28,13 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #monthlyContribution type="text" (keypress)="keyPress($event)" maxlength="20"
+                    <input matInput #monthlyContribution type="text" (keypress)="keyPress($event)" maxlength="10"
                         class="form-control rupess br-0" formControlName="monthlyContribution">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isMonthlyContribution && getFormControl().monthlyContribution.invalid || getFormControl().monthlyContribution.touched && getFormControl().monthlyContribution.invalid)}">
                         This field is required
                     </mat-error>
+                    <mat-hint align="end" class="f-12">{{monthlyContribution.value.length}}/10</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -45,7 +46,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="text" (keypress)="keyPress($event)" class="form-control br-0 percentage"
+                    <input matInput type="text" (keypress)="keyPress($event)" (keyup)="onChange($event)" class="form-control br-0 percentage"
                         formControlName="interestRate">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
@@ -62,6 +63,7 @@
         <div class="col-md-3">
             <mat-form-field>
                 <mat-select formControlName="compound" class="form-control br-0">
+                    <mat-option value="">Select option</mat-option>
                     <mat-option value="1">Daily</mat-option>
                     <mat-option value="2">Monthly</mat-option>
                     <mat-option value="3">Quarterly</mat-option>
@@ -84,7 +86,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input matInput formControlName="commencementDate" class="form-control br-0"
-                        [matDatepicker]="picker">
+                        [matDatepicker]="picker" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error class="f-12 pt-4"
@@ -102,15 +104,21 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select formControlName="tenure" class="form-control br-0 ">
+                        <input matInput autocomplete="off" formControlName="tenure" (keypress)="utils.keyPress($event)" #tenure type="text"
+                        maxlength="" class="form-control br-0">
+                    <!-- <mat-select formControlName="tenure" class="form-control br-0 ">
                         <mat-option [value]="">Months</mat-option>
                         <mat-option *ngFor="let M of fdMonths" [value]="M">
                             <span>{{M}}</span>
                         </mat-option>
-                    </mat-select>
-                    <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isTenure && getFormControl().tenure.invalid || getFormControl().interestRate.touched && getFormControl().tenure.invalid)}">
-                        This field is required
+                    </mat-select> -->
+                    <mat-error
+                    *ngIf="recuringDeposit.get('tenure').errors?.required && recuringDeposit.get('tenure').touched"
+                    class="f-12 pt-4">
+                    This field is required
+                </mat-error>
+                <mat-error *ngIf="(recuringDeposit.get('tenure').errors?.max)"  class="f-12 pt-4">
+                        Should be between than 0 to 120
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -135,9 +143,10 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #rdNo type="text" (keypress)="keyPressRdNumber($event)" maxlength="10"
+                        <input matInput #rdNo type="text" (keypress)="keyPressRdNumber($event)" maxlength="20"
                             class="form-control br-0" formControlName="rdNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{rdNo.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -149,9 +158,10 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankName type="text" (keypress)="utils.onlyText($event)" maxlength="15"
+                        <input matInput #bankName type="text" (keypress)="utils.onlyText($event)" maxlength="20"
                             class="form-control br-0" formControlName="bankName">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{bankName.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
 
@@ -164,9 +174,10 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input type="number" matInput #linkBankAc (keypress)="keyPress($event)" maxlength="30" class="form-control br-0"
+                        <input type="text" matInput #linkBankAc (keypress)="keyPress($event)" maxlength="16" class="form-control br-0"
                             formControlName="linkBankAc">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{linkBankAc.value.length}}/16</mat-hint>
                     </mat-form-field>
                 </div>
 
@@ -182,6 +193,7 @@
                         <input matInput #description maxlength="60" class="form-control br-0"
                             formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
                 </div>
 

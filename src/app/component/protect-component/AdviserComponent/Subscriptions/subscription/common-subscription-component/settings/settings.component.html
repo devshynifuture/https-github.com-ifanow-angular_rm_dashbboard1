@@ -2,123 +2,136 @@
     <h3 class="m-0 text-center head-common">{{upperData.name}} </h3>
 </div>-->
 <div class="bg-white">
-  <div *ngIf="SettingProfileData != undefined">
+    <div *ngIf="SettingProfileData != undefined">
 
-    <div class="row pt-180">
-      <div class="col-md-12 mt-36">
-        <button (click)="openPayeeSettings('Add','payeeSettings','open')"
-                class="btn-primary br-0 right text-right addon" mat-stroked-button>
+        <div class="row pt-180">
+            <div class="col-md-12 mt-36">
+                <button (click)="openPayeeSettings('Add','payeeSettings','open')" class="btn-primary br-0 right text-right addon" mat-stroked-button>
           ADD MORE
         </button>
-        <!-- <button class="text-black right br-0 mr-12 text-right" mat-button>HELP</button> -->
+                <!-- <button class="text-black right br-0 mr-12 text-right" mat-button>HELP</button> -->
 
-      </div>
-    </div>
-
-
-    <div *ngFor="let profileData of SettingProfileData" class="d-flex justify-content-center">
-      <div class="row wrapper-100 pb-72 pt-8 pb-10">
-        <div class="hoverable">
-          <div class="row b-a bg-grey lter">
-            <div class="col-md-8 p-0">
-              <h3 class="mb-0 p-24 fontPlayfair">{{profileData.name}}</h3>
             </div>
-            <div class="col-md-4 pt-16">
-              <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu"
-                 class="material-icons text-right right text-custom f-28 c-p">
+        </div>
+
+
+        <div *ngFor="let profileData of SettingProfileData" class="d-flex justify-content-center">
+            <div class="row wrapper-100 pb-72 pt-8 pb-10 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <div class="hoverable">
+                    <div class="row b-a bg-grey lter">
+                        <div class="col-md-8 p-0 relClass">
+                            <div class="bar">
+                                <h3 class="mb-0 p-24 fontPlayfair">{{profileData.name}}</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-4 pt-16">
+                            <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu" class="material-icons text-right right text-custom f-28 c-p">
                 more_vert
               </i>
-              <mat-menu #menu="matMenu">
-                <a (click)="setPrimaryField(profileData)" mat-menu-item>Set as primary</a>
-                <a (click)="openPayeeSettings(profileData,'payeeSettings','open')" mat-menu-item>Edit
+                            <mat-menu #menu="matMenu">
+                                <a (click)="setPrimaryField(profileData)" mat-menu-item>Set as primary</a>
+                                <a (click)="openPayeeSettings(profileData,'payeeSettings','open')" mat-menu-item>Edit
                   client profile</a>
-                <a (click)="deleteModal('PROFILE',profileData)" class="bt-1" mat-menu-item>Delete client
+                                <a (click)="deleteModal('PROFILE',profileData)" class="bt-1" mat-menu-item>Delete client
                   profile</a>
-              </mat-menu>
-              <button *ngIf="profileData.isPrimary"
-                      class="text-primary br-0 right text-right" mat-stroked-button>
+                            </mat-menu>
+                            <button *ngIf="profileData.isPrimary" class="text-primary br-0 right text-right" mat-stroked-button>
                 PRIMARY
               </button>
-            </div>
-          </div>
-          <div class="b-a bt-none">
-            <div class="row">
-              <div class="col-md-12 p-0">
-                <div class="wrapper-20">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <p>CUSTOMER TYPE</p>
-                      <h5>{{(profileData.customerTypeId == 1) ? 'Bussiness' : 'Individual'}}</h5>
-                    </div>
-                    <div class="col-md-3">
-                      <p>PAN</p>
-                      <h5>{{profileData.pan}}</h5>
-                    </div>
-                    <div class="col-md-3">
-                      <p>GST TREATMENT</p>
-                      <h5>
-                        {{(profileData.gstTreatmentId == 1) ? 'Registered Business - Regular' : (profileData.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business'}}
-                      </h5>
-                    </div>
-                    <div class="col-md-3">
-                      <p>GST</p>
-                      <h5>{{profileData.gstin}}</h5>
-                    </div>
-                  </div>
-                </div>
-                <div class="wrapper-20 pl-36 bt-1">
-                  <div class="row ">
-                    <div class="col-md-6 p-0">
-                      <p>BILLING ADDRESS</p>
-                      <h5 style="word-break: break-all;">{{profileData.billerAddress}},<br>
-                        {{profileData.city}},
-                        <br> {{profileData.state}}
-                        <br> {{profileData.country}}
-                        <br> {{profileData.zipCode}}
-                      </h5>
-                    </div>
-                    <div class="col-md-3 p-0">
-                      <p>DISPLAY NAME</p>
-                      <h5>{{profileData.companyDisplayName}}</h5>
-                      <div class="row">
-                        <div class="col-md-12 block p-0 pt-24">
-                          <p>MOBILE NO</p>
-                          <h5>{{profileData.primaryContact}}</h5>
                         </div>
-
-                      </div>
-
                     </div>
-                    <div class="col-md-3 p-0">
-                      <p>COMPANY NAME</p>
-                      <h5>{{profileData.companyName}}</h5>
-                      <div class="row">
-                        <div class="col-md-12 block p-0 pt-24">
-                          <p>EMAIL</p>
-                          <h5 style="word-break: break-all;">{{profileData.email}}</h5>
+                    <div class="b-a bt-none">
+                        <div class="row">
+                            <div class="col-md-12 p-0">
+                                <div class="wrapper-20">
+                                    <div class="row">
+                                        <div class="col-md-3 relClass">
+                                            <p>CUSTOMER TYPE</p>
+                                            <div class="bar">
+                                                <h5>{{(profileData.customerTypeId == 1) ? 'Bussiness' : 'Individual'}}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 relClass">
+                                            <p>PAN</p>
+                                            <div class="bar">
+                                                <h5>{{profileData.pan}}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 relClass">
+                                            <p>GST TREATMENT</p>
+                                            <div class="bar">
+                                                <h5>
+                                                    {{(profileData.gstTreatmentId == 1) ? 'Registered Business - Regular' : (profileData.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business'}}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 relClass">
+                                            <p>GST</p>
+                                            <div class="bar">
+                                                <h5>{{profileData.gstin}}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="wrapper-20 pl-36 bt-1">
+                                    <div class="row ">
+                                        <div class="col-md-6 p-0 relClass">
+                                            <p>BILLING ADDRESS</p>
+                                            <div class="bar">
+                                                <h5 style="word-break: break-all;">{{profileData.billerAddress}},<br> {{profileData.city}},
+                                                    <br> {{profileData.state}}
+                                                    <br> {{profileData.country}}
+                                                    <br> {{profileData.zipCode}}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 p-0 relClass">
+                                            <p>DISPLAY NAME</p>
+                                            <div class="bar">
+                                                <h5>{{profileData.companyDisplayName}}</h5>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 block p-0 pt-24 relClass">
+                                                    <p>MOBILE NO</p>
+                                                    <div class="bar">
+                                                        <h5>{{profileData.primaryContact}}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 p-0 relClass">
+                                            <p>COMPANY NAME</p>
+                                            <div class="bar">
+                                                <h5>{{profileData.companyName}}</h5>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 block p-0 pt-24 relClass">
+                                                    <p>EMAIL</p>
+                                                    <div class="bar">
+                                                        <h5 style="word-break: break-all;">{{profileData.email}}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
-          </div>
+
         </div>
-      </div>
-
     </div>
-  </div>
 
-  <div *ngIf="SettingProfileData == undefined" class="row">
-    <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
-      <img class="width200" src="assets/images/svg/no-data-found.svg">
-      <p class="f-22 f-600 pt-28"> No Data Found </p>
+    <div *ngIf="SettingProfileData == undefined" class="row">
+        <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
+            <img class="width200" src="assets/images/svg/no-data-found.svg">
+            <p class="f-22 f-600 pt-28"> No Data Found </p>
 
-      <button (click)="openPayeeSettings('Add','payeeSettings','open')"
-              class="btn-primary mt-20 br-0 right text-right addon" mat-stroked-button>
+            <button (click)="openPayeeSettings('Add','payeeSettings','open')" class="btn-primary mt-20 br-0 right text-right addon" mat-stroked-button>
         ADD MORE
       </button>
 
+        </div>
     </div>
-  </div>

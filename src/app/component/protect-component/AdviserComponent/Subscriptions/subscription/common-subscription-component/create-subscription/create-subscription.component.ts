@@ -1,17 +1,16 @@
-import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { MatStepper } from '@angular/material';
-import { EnumServiceService } from '../../../../../../../services/enum-service.service';
-import { AuthService } from '../../../../../../../auth-service/authService';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {MatStepper} from '@angular/material';
+import {EnumServiceService} from '../../../../../../../services/enum-service.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
 // import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { DatePipe } from '@angular/common';
-import { UtilService } from "../../../../../../../services/util.service";
-
+import {MAT_DATE_FORMATS} from '@angular/material/core';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {DatePipe} from '@angular/common';
+import {UtilService} from '../../../../../../../services/util.service';
 
 
 @Component({
@@ -19,7 +18,7 @@ import { UtilService } from "../../../../../../../services/util.service";
   templateUrl: './create-subscription.component.html',
   styleUrls: ['./create-subscription.component.scss'],
   providers: [
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 })
 export class CreateSubscriptionComponent implements OnInit {

@@ -8,7 +8,7 @@
       </div>
       <div class="col-md-5 p-0">
         <div class="row">
-          <div class="col-md-3 p-0">
+          <div class="col-md-3 p-0" *ngIf="dataSource.data.length > 0">
             <button [matMenuTriggerFor]="menu" class="b-a pr-0 br-0" mat-button>Actions <i
               class="material-icons text-custom">
               arrow_drop_down
@@ -22,12 +22,12 @@
               </button>
             </mat-menu>
           </div>
-          <div class="col-md-8 p-0">
+          <div class="col-md-8 p-0" *ngIf="dataSource.data.length > 0">
             <p class="m-0 text-black text-left pt-12">{{dataCount}} invoices selected</p>
           </div>
         </div>
       </div>
-      <div class="col-md-6 right text-right p-0">
+      <div class="col-md-6 right text-right p-0" *ngIf="dataSource.data.length > 0">
         <i class="material-icons mr-12 icon-light c-p v-sub">
           search
         </i>
@@ -102,17 +102,13 @@
              class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
         <ng-container matColumnDef="checkbox">
           <th *matHeaderCellDef class="f-18" mat-header-cell>
-
             <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0 && isAllSelected()"
                           [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll">
             </mat-checkbox>
-
           </th>
           <td *matCellDef="let element" mat-cell>
-            <!--            <div class="bar" *ngIf="!isLoading">-->
             <mat-checkbox (change)="changeSelect()" [(ngModel)]="element.selected" class="c-p" name="selectedData">
             </mat-checkbox>
-            <!--            </div>-->
           </td>
         </ng-container>
         <ng-container matColumnDef="date">
@@ -201,6 +197,9 @@
   <div class="col-md-12  d-flex align-items-center flex-column justify-content-center">
     <img class="width400" src="assets/images/svg/clients-img.svg">
     <p class="f-22 f-600 pt-28"> No Data Found </p>
+    <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon" (click)="addInvoice('EditInInvoice')"> ADD
+        INVOICE
+    </button>
   </div>
 </div>
 

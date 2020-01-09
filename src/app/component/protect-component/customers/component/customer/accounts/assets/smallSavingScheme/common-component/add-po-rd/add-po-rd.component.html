@@ -32,7 +32,7 @@
                         <mat-error
                             *ngIf="PORDForm.get('monthlyContribution').errors?.required && PORDForm.get('monthlyContribution').touched"
                             class="f-12 pt-4">
-                            Amount invested is required
+                            This field is required
                         </mat-error>
                         <mat-error *ngIf="(PORDForm.get('monthlyContribution').errors?.min)" class="f-12 pt-4">
                             Should be greater than 10
@@ -116,7 +116,7 @@
                 </div>
             </div>
         </div>
-        <app-add-nominee></app-add-nominee>
+        <app-add-nominee [ownerName]="ownerName"></app-add-nominee>
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Linked bank number</h5>

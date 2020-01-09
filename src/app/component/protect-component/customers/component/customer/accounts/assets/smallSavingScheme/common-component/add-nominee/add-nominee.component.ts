@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../../customer.service';
-
+import { remove } from 'lodash'
+import { from } from 'rxjs';
 @Component({
   selector: 'app-add-nominee',
   templateUrl: './add-nominee.component.html',
@@ -13,7 +14,7 @@ export class AddNomineeComponent implements OnInit {
   advisorId: any;
   clientId: any;
   familyList: any;
-
+  @Input() ownerName;
   constructor(private fb: FormBuilder, private custumService: CustomerService) { }
 
   ngOnInit() {
@@ -54,8 +55,11 @@ export class AddNomineeComponent implements OnInit {
   getListOfFamilyByClientRes(data) {
     console.log(data)
     this.familyList = data.familyMembersList;
+    const singleFamilyMember = this.ownerName
+    remove(this.familyList, function (n) {
+      return n.userName == singleFamilyMember;
+    });
+    console.log(this.familyList)
   }
-  deleteFamilyMember(data) {
 
-  }
 }

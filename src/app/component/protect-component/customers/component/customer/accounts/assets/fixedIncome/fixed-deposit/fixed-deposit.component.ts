@@ -189,19 +189,19 @@ export class FixedDepositComponent implements OnInit {
       commencementDate: [(!data) ? '' : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(!data) ? '' : data.interestRate, [Validators.required]],
       maturity: [(!data) ? '' : data.maturity, [Validators.required]],
-      compound: [(!data) ? '' : (data.interestCompoundingId) + '', [Validators.required]],
+      compound: [(!data.interestCompoundingId) ? '' : (data.interestCompoundingId) + '', [Validators.required]],
       institution: [(!data) ? '' : data.institutionName, [Validators.required]],
       description: [(!data) ? '' : data.description, [Validators.required]],
       tenureY: [(!data) ? '' : data.tenureY, [Validators.required]],
       tenureM: [(!data) ? '' : data.tenureM, [Validators.required]],
       tenureD: [(!data) ? '' : data.tenureD, [Validators.required]],
-      frequencyOfPayoutPerYear: [(!data) ? '' : data.frequencyOfPayoutPerYear, [Validators.required]],
+      frequencyOfPayoutPerYear: [(!data.frequencyOfPayoutPerYear) ? '' : data.frequencyOfPayoutPerYear, [Validators.required]],
       maturityDate: [(!data) ? '' : new Date(data.maturityDate), [Validators.required]],
-      payOpt: [(!data) ? '' : (data.interestPayoutOption) + '', [Validators.required]],
+      payOpt: [(!data.interestPayoutOption) ? '' : (data.interestPayoutOption) + '', [Validators.required]],
       bankACNo: [(!data) ? '' : data.bankAcNumber, [Validators.required]],
-      ownerType: [(!data) ? '' : (data.ownershipType) + '', [Validators.required]],
+      ownerType: [(!data.ownershipType) ? '' : (data.ownershipType) + '', [Validators.required]],
       fdNo: [(!data) ? '' : data.fdNumber, [Validators.required]],
-      FDType: [(!data) ? '' : (data.fdType) + '', [Validators.required]],
+      FDType: [(!data.fdType) ? '' : (data.fdType) + '', [Validators.required]],
       id: [(!data) ? '' : data.id, [Validators.required]],
       familyMemberId: [[(!data) ? '' : data.familyMemberId], [Validators.required]]
     });
@@ -226,12 +226,12 @@ export class FixedDepositComponent implements OnInit {
     } else {
       this.maturityDate = this.fixedDeposit.controls.maturityDate.value;
     }
-    if (this.fixedDeposit.get('amountInvest').invalid) {
-      this.fixedDeposit.get('amountInvest').markAsTouched();
+    if (this.fixedDeposit.get('FDType').invalid) {
+      this.fixedDeposit.get('FDType').markAsTouched();
       return
     }
-    else if (this.fixedDeposit.get('ownerType').invalid) {
-      this.fixedDeposit.get('ownerType').markAsTouched();
+    else if (this.fixedDeposit.get('amountInvest').invalid) {
+      this.fixedDeposit.get('amountInvest').markAsTouched();
       return
     } 
     else if (this.fixedDeposit.get('commencementDate').invalid) {
@@ -242,16 +242,15 @@ export class FixedDepositComponent implements OnInit {
       this.fixedDeposit.get('interestRate').markAsTouched();
       return
     } 
-    else if (this.fixedDeposit.get('payOpt').invalid) {
-      this.fixedDeposit.get('payOpt').markAsTouched();
-      return
-    } 
     else if (this.fixedDeposit.get('compound').invalid) {
       this.fixedDeposit.get('compound').markAsTouched();
       return
-    }
-    else if (this.fixedDeposit.get('FDType').invalid) {
-      this.fixedDeposit.get('FDType').markAsTouched();
+    } else if (this.fixedDeposit.get('compound').invalid) {
+      this.fixedDeposit.get('compound').markAsTouched();
+      return
+    } 
+    else if (this.fixedDeposit.get('frequencyOfPayoutPerYear').invalid) {
+      this.fixedDeposit.get('frequencyOfPayoutPerYear').markAsTouched();
       return
     } else {
       const obj = {
@@ -292,7 +291,12 @@ export class FixedDepositComponent implements OnInit {
 
     }
   }
-
+  onChange(event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = "100";
+      this.fixedDeposit.get('interestRate').setValue(event.target.value);
+    }
+  }
   addFixedDepositRes(data) {
     console.log('addFixedDepositRes', data);
     this.event.openSnackBar('Added successfully!', 'dismiss');
