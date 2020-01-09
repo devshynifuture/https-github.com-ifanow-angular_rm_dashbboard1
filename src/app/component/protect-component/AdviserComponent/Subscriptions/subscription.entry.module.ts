@@ -8,7 +8,10 @@ import {BillerProfileAdvisorComponent} from './subscription/common-subscription-
 import {HelpComponent} from './subscription/common-subscription-component/help/help.component';
 import {CommonComponentModule} from '../../common-component/common-component.module';
 import {SubscriptionUpperEntry} from './subscription-upper-entry-module';
-import {CustomDirectiveModule} from "../../../../common/directives/common-directive.module";
+import {CustomDirectiveModule} from '../../../../common/directives/common-directive.module';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import {MY_FORMATS2} from '../../../../constants/date-format.constant';
 
 export const componentList = [
   // VariableFeeComponent,
@@ -20,7 +23,7 @@ export const componentList = [
   // CommonFroalaComponent,
   BillerProfileAdvisorComponent,
   HelpComponent,
-]
+];
 
 @NgModule({
   declarations: componentList,
@@ -35,7 +38,12 @@ export const componentList = [
     SubscriptionUpperEntry
   ],
   exports: [componentList],
-  entryComponents: [componentList]
+  entryComponents: [componentList],
+  providers: [
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+  ],
 })
 
 export class SubscriptionEntry {
