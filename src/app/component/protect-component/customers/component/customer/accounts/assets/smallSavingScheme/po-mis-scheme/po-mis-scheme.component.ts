@@ -1,15 +1,15 @@
-import { AddPoMisComponent } from './../common-component/add-po-mis/add-po-mis.component';
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../../customer.service';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { DetailedPoMisComponent } from './detailed-po-mis/detailed-po-mis.component';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelService } from '../../../../excel.service';
+import {AddPoMisComponent} from './../common-component/add-po-mis/add-po-mis.component';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../../customer.service';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {DetailedPoMisComponent} from './detailed-po-mis/detailed-po-mis.component';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelService} from '../../../../excel.service';
 
 @Component({
   selector: 'app-po-mis-scheme',
@@ -87,7 +87,7 @@ export class PoMisSchemeComponent implements OnInit {
     this.datasource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemePOMISData(obj).subscribe(
       data => this.getPoMisSchemedataResponse(data), (error) => {
-        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.datasource.data = [];
         this.isLoading = false;
       }
@@ -127,7 +127,7 @@ export class PoMisSchemeComponent implements OnInit {
             dialogRef.close();
             this.getPoMisSchemedata();
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       },
       negativeMethod: () => {

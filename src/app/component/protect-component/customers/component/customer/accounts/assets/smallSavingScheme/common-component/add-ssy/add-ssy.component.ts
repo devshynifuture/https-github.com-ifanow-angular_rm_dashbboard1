@@ -1,19 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { MAT_DATE_FORMATS } from '@angular/material';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../../../customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {MAT_DATE_FORMATS} from '@angular/material';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../../../customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {UtilService} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-ssy',
   templateUrl: './add-ssy.component.html',
   styleUrls: ['./add-ssy.component.scss'],
   providers: [
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ]
 })
 export class AddSsyComponent implements OnInit {
@@ -136,7 +136,7 @@ export class AddSsyComponent implements OnInit {
         }
         this.cusService.editSSYData(obj).subscribe(
           data => this.addSSYSchemeResponse(data),
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         )
       }
       else {
@@ -163,7 +163,7 @@ export class AddSsyComponent implements OnInit {
         }
         this.cusService.addSSYScheme(obj).subscribe(
           data => this.addSSYSchemeResponse(data),
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         )
       }
     }

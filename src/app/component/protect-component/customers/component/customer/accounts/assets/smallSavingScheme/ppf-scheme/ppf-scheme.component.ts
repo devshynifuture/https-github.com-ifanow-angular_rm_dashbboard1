@@ -1,13 +1,13 @@
-import { AddPpfComponent } from './../common-component/add-ppf/add-ppf.component';
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../../customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatTableDataSource } from '@angular/material';
-import { ExcelService } from '../../../../excel.service';
+import {AddPpfComponent} from './../common-component/add-ppf/add-ppf.component';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../../customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatTableDataSource} from '@angular/material';
+import {ExcelService} from '../../../../excel.service';
 
 @Component({
   selector: 'app-ppf-scheme',
@@ -41,7 +41,7 @@ export class PPFSchemeComponent implements OnInit {
     this.cusService.getSmallSavingSchemePPFData(obj).subscribe(
       data => this.getPpfSchemeDataResponse(data),
       (error) => {
-        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataSource.data = [];
         this.isLoading = false;
       });
@@ -73,7 +73,7 @@ export class PPFSchemeComponent implements OnInit {
             dialogRef.close();
             this.getPpfSchemeData();
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         )
       },
       negativeMethod: () => {

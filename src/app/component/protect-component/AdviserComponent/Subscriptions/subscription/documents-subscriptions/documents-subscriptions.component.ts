@@ -207,7 +207,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.dataSource.data = [{}, {}, {}];
     this.subscription.getDocumentData(obj).subscribe(
         data => this.getdocumentResponseData(data), (error) => {
-          this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+          this.eventService.showErrorMessage(error);
           this.dataSource.data = [];
           this.isLoading = false;
         }
