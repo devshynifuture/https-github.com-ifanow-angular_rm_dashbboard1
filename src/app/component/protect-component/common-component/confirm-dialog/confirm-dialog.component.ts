@@ -43,14 +43,14 @@ export class ConfirmDialogComponent implements OnInit {
 
   clickButton2() {
     console.log('invoice deleted successfully.', this.dialogData);
-    
+
     if(this.dialogData.dataToShow != undefined){
       let list = [this.dialogData.dataToShow];
-      this.subscription.deleteInvoices(list).subscribe((data)=>{
-        this.dialogRef.close('close');
-        this.eventService.openSnackBar('invoice deleted successfully.', 'dismiss');
-      },
-      err => this.eventService.openSnackBar(err));
+      this.subscription.deleteInvoices(list).subscribe((data) => {
+          this.dialogRef.close('close');
+          this.eventService.openSnackBar('invoice deleted successfully.', 'dismiss');
+        },
+        error => this.eventService.showErrorMessage(error));
     }
     if (this.dialogData.positiveMethod() != undefined) {
       this.dialogData.positiveMethod();

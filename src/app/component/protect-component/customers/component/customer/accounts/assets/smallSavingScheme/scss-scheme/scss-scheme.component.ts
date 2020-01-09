@@ -1,23 +1,23 @@
-import { AddScssComponent } from './../common-component/add-scss/add-scss.component';
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../../customer.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { EventService } from 'src/app/Data-service/event.service';
-import { DetailedScssComponent } from './detailed-scss/detailed-scss.component';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelService } from '../../../../excel.service';
+import {AddScssComponent} from './../common-component/add-scss/add-scss.component';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../../customer.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {EventService} from 'src/app/Data-service/event.service';
+import {DetailedScssComponent} from './detailed-scss/detailed-scss.component';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelService} from '../../../../excel.service';
 
 @Component({
   selector: 'app-scss-scheme',
   templateUrl: './scss-scheme.component.html',
   styleUrls: ['./scss-scheme.component.scss'],
   providers: [
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ]
 })
 export class ScssSchemeComponent implements OnInit {
@@ -85,7 +85,7 @@ export class ScssSchemeComponent implements OnInit {
     this.datasource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemeSCSSData(obj).subscribe(
       data => this.getKvpSchemedataResponse(data), (error) => {
-        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.datasource.data = [];
         this.isLoading = false;
       }
@@ -107,7 +107,7 @@ export class ScssSchemeComponent implements OnInit {
             dialogRef.close();
             this.getScssSchemedata();
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       },
       negativeMethod: () => {

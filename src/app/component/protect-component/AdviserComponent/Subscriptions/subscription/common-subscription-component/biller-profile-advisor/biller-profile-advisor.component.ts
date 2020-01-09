@@ -1,13 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { HttpClient } from '@angular/common/http';
-import { PhotoCloudinaryUploadService } from '../../../../../../../services/photo-cloudinary-upload.service';
-import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {HttpClient} from '@angular/common/http';
+import {PhotoCloudinaryUploadService} from '../../../../../../../services/photo-cloudinary-upload.service';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -310,13 +310,13 @@ export class BillerProfileAdvisorComponent implements OnInit {
       if (this.profileDetailsForm.controls.id.value == undefined) {
         this.subService.saveBillerProfileSettings(obj).subscribe(
           data => this.closeTab(data),
-          err => this.eventService.openSnackBar(err, 'dismiss')
+          error => this.eventService.showErrorMessage(error)
         );
 
       } else {
         this.subService.updateBillerProfileSettings(obj).subscribe(
           data => this.closeTab(data),
-          err => this.eventService.openSnackBar(err, 'dismiss')
+          error => this.eventService.showErrorMessage(error)
         );
       }
 

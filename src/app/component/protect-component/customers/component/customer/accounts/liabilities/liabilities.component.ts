@@ -1,17 +1,17 @@
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
 // import {UtilService} from '../../../../../../../services/util.service';
-import { EventService } from '../../../../../../../Data-service/event.service';
-import { SubscriptionInject } from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { CustomerService } from '../../customer.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {EventService} from '../../../../../../../Data-service/event.service';
+import {SubscriptionInject} from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {CustomerService} from '../../customer.service';
+import {AuthService} from 'src/app/auth-service/authService';
 import * as _ from 'lodash';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { AddLiabilitiesComponent } from "../../../common-component/add-liabilities/add-liabilities.component";
-import { LiabilitiesDetailComponent } from '../../../common-component/liabilities-detail/liabilities-detail.component';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelService } from '../../excel.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {AddLiabilitiesComponent} from "../../../common-component/add-liabilities/add-liabilities.component";
+import {LiabilitiesDetailComponent} from '../../../common-component/liabilities-detail/liabilities-detail.component';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelService} from '../../excel.service';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class LiabilitiesComponent implements OnInit {
 
   displayedColumns: string[] = ['no', 'name', 'type', 'loan', 'ldate', 'today', 'ten', 'rate', 'emi', 'fin', 'status', 'icons'];
   // dataSource = ELEMENT_DATA;
-  advisorId: any;  
+  advisorId: any;
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   storeData: any;
@@ -65,7 +65,7 @@ export class LiabilitiesComponent implements OnInit {
     //this.showLoader = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-  
+
     this.getLiability('');
     this.getPayables();
     this.getGlobalLiabilities();
@@ -125,7 +125,7 @@ export class LiabilitiesComponent implements OnInit {
       this.OtherPayableData = data;
       this.OtherData = data.length;
     }
-    
+
   }
 
   sortTable(data) {
@@ -184,7 +184,7 @@ export class LiabilitiesComponent implements OnInit {
             dialogRef.close();
             this.getLiability('');
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         )
       },
       negativeMethod: () => {
@@ -280,7 +280,7 @@ export class LiabilitiesComponent implements OnInit {
     };
     this.customerService.getLiabilty(obj).subscribe(
       data => this.getLiabiltyRes(data),(error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataSource.data = [];
         this.isLoading = false;
       }

@@ -40,10 +40,10 @@
       <div class="col-md-11">
         <mat-form-field class="example-chip-list">
           <mat-chip-list #chipList>
-            <mat-chip *ngFor="let singleEmailId of emailList" [selectable]="selectable" [removable]="removable"
-              (removed)="remove(singleEmailId)">
-              {{singleEmailId.name}}
-              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            <mat-chip *ngFor="let singleEmailId of emailIdList" [selectable]="selectable"
+                      (removed)="remove(singleEmailId)">
+              {{singleEmailId.emailAddress}}
+              <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
           </mat-chip-list>
         </mat-form-field>
