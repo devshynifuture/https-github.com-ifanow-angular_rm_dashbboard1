@@ -1,5 +1,6 @@
-import {Injectable} from '@angular/core';
-import {DatePipe} from '@angular/common';
+import { Injectable } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { EventService } from '../Data-service/event.service';
 
 
 @Injectable({
@@ -9,7 +10,7 @@ export class UtilService {
 
     getFamilyMemberData: any;
 
-    constructor() {
+    constructor(private eventService: EventService) {
     }
 
     static convertObjectToArray(inputObject: object): object[] {
@@ -28,7 +29,7 @@ export class UtilService {
     static convertObjectToCustomArray(inputObject: object, keyNameForOutput: string, keyValueForOutput: string): object[] {
         const outputArray = [];
         Object.keys(inputObject).map(key => {
-            const object = {selected: false};
+            const object = { selected: false };
             object[keyNameForOutput] = inputObject[key];
             object[keyValueForOutput] = key;
 
@@ -150,6 +151,9 @@ export class UtilService {
         } else {
             return '';
         }
+    }
+    showErrorMessage(data) {
+        this.eventService.openSnackBar("Something went wrong", "dismiss")
     }
 }
 
