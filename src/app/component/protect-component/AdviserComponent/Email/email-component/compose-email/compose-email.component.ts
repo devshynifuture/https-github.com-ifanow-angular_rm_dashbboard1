@@ -7,7 +7,7 @@ import { SubscriptionInject } from './../../../Subscriptions/subscription-inject
 import { EmailServiceService } from './../../email-service.service';
 import { EventService } from './../../../../../../Data-service/event.service';
 import { Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-compose-email',
@@ -42,11 +42,22 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   toCreateOrUpdate: string = '';
   emailFormChangeSubscription: Subscription;
   didFormChanged: boolean = false;
-
   emailForm: FormGroup;
+  cc: string = '';
+  bcc: string = '';
+
+  subjectObs = new Subject<any>();
 
   ngOnInit() {
     this.createEmailForm();
+    this.prevStateOfForm = this.emailForm.value;
+
+    this.emailForm.valueChanges.subscribe(res => {
+      if(!this.areTwoObjectsEquivalent(this.prevStateOfForm, res)){
+        this.autoSaveDraft(res);
+        this.prevStateOfForm = res;
+      }
+    });
   }
 
   createEmailForm() {
@@ -62,7 +73,6 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     });
 
     if (this.data) {
-      console.log("hello this is data ->>>>>>>>>>>>>>>", this.data);
       const { dataObj, idArray } = this.data;
       const { idsOfThread: { id } } = dataObj;
       this.idOfMessage = id;
@@ -74,6 +84,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
       this.subject = subject;
       this.emailBody = message;
       const { parsedData: { headers } } = dataObj;
+
       headers.forEach(element => {
         if (element.name === "From") {
           this.from = element.value.split('<')[1].split('>')[0];
@@ -81,8 +92,53 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
         if (element.name === "To") {
           this.to = element.value.split('<')[1].split('>')[0];
         }
+        if (element.name === "Cc") {
+          this.cc = element.value.split('<')[1].split('>')[0];
+          this.isCcSelected = true;
+        }
+        if (element.name === "Bcc") {
+          this.bcc = element.value.split('<')[1].split('>')[0];
+          this.isBccSelected = true;
+        }
+      });
+      this.emailForm.setValue({
+        sender: this.from ? this.from : '',
+        receiver: this.to ? this.to : '',
+        carbonCopy: this.cc ? this.cc : '',
+        blindCarbonCopy: this.bcc ? this.bcc : '',
+        subject: this.subject ? this.subject : '',
+        messageBody: this.emailBody ? this.emailBody : '',
+        attachments: ['']
       });
     }
+  }
+  
+  areTwoObjectsEquivalent(a: {}, b: {}): boolean {
+
+    let aProps = Object.getOwnPropertyNames(a);
+    let bProps = Object.getOwnPropertyNames(b);
+
+    if (aProps.length != bProps.length) {
+        return false;
+    }
+
+    for (let i = 0; i < aProps.length; i++) {
+        let propName = aProps[i];
+
+        if (a[propName] !== b[propName]) {
+            return false;
+        }
+    }
+    return true;
+  }
+
+  autoSaveDraft(res){
+    
+    console.log("auto saved");
+    
+    // setTimeout(()=>{ 
+    //   console.log("auto save");
+    // }, 4000);
   }
 
   toggleCC(): void {
