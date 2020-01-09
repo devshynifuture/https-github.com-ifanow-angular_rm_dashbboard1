@@ -150,7 +150,7 @@
                               <div class="col-md-8">
                                  <p class="text-black f-400">Discount</p>
                               </div>
-                              <div class="col-md-4 pr-8 text-right">
+                              <div class="col-md-4 pr-4 text-right">
                                  <p class="text-black f-400">₹{{formatter(storeData.discount)}}</p>
                               </div>
                            </div>
@@ -705,7 +705,7 @@
                               <div class="col-md-8">
                                  <p class="text-black f-400">Discount</p>
                               </div>
-                              <div class="col-md-4 pr-8 text-right">
+                              <div class="col-md-4 pr-4 text-right">
                                  <p class="text-black f-400">₹{{formatter(storeData.discount)}}</p>
                               </div>
                            </div>
@@ -1228,8 +1228,8 @@
            <div class="row pt-28">
               <div class="col-md-4 p-0">
                  <div class="row">
-                    <div class="col-md-3 pl-0 pr-0 pt-8">
-                       <h5 class="m-0 text-left">Invoice No.</h5>
+                    <div class="col-md-5 pl-0 pt-8">
+                       <h5 class="m-0 text-right">Invoice No.</h5>
                     </div>
                     <div class="col-md-7 p-0">
                        <div class="form-group mb-0">
@@ -1254,10 +1254,10 @@
               </div>
               <div class="col-md-4 p-0">
                  <div class="row">
-                    <div class="col-md-6 p-0">
+                    <div class="col-md-6">
                        <h5 class="m-0 pt-8 text-right">Invoice Date</h5>
                     </div>
-                    <div class="col-md-6 pr-0">
+                    <div class="col-md-6 p-0">
                        <div class="form-group mb-0">
                           <mat-form-field>
                              <input [matDatepicker]="picker" class="form-control" formControlName="invoiceDate"
@@ -1405,7 +1405,7 @@
            <h5 class="m-0 text-right pr-8">₹{{18 / 100 * (finalAmount - discount) || '0'}}</h5>
         </div>
         <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 pr-24">
-           <h5 class="m-0 text-right pr-8">₹{{9 / 100 * (finalAmount - discount) || '0'}}</h5>
+           <h5 class="m-0 text-right pr-8">₹{{(9 / 100 * (finalAmount - discount)) || '0'}}</h5>
         </div>
      </div>
      <div class="row pt-20 pb-12">
