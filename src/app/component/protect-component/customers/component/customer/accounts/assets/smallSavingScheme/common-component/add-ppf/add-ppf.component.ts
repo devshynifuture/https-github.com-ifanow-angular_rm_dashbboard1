@@ -1,20 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { MAT_DATE_FORMATS } from '@angular/material';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from '../../../../../customer.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import * as _ from 'lodash';
-import { UtilService } from 'src/app/services/util.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {MAT_DATE_FORMATS} from '@angular/material';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {FormArray, FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from '../../../../../customer.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {UtilService} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-ppf',
   templateUrl: './add-ppf.component.html',
   styleUrls: ['./add-ppf.component.scss'],
   providers: [
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ]
 })
 export class AddPpfComponent implements OnInit {
@@ -155,13 +154,13 @@ export class AddPpfComponent implements OnInit {
         obj['id'] = this.editApi.id
         this.cusService.editPPF(obj).subscribe(
           data => this.addPPFResponse(data),
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         )
       }
       else {
         this.cusService.addPPFScheme(obj).subscribe(
           data => this.addPPFResponse(data),
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         )
       }
     }

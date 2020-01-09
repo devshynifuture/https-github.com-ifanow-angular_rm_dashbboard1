@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { SubscriptionService } from '../../../subscription.service';
-import { ModifyFeeDialogComponent } from '../../common-subscription-component/modify-fee-dialog/modify-fee-dialog.component';
-import { AuthService } from "../../../../../../../auth-service/authService";
-import { UtilService } from "../../../../../../../services/util.service";
-import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
-import { HelpComponent } from '../../common-subscription-component/help/help.component';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from "../../../../../../../auth-service/authService";
+import {UtilService} from "../../../../../../../services/util.service";
+import {SubscriptionUpperSliderComponent} from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
+import {HelpComponent} from '../../common-subscription-component/help/help.component';
 
 // import {CustomHtmlComponent} from "../../../../../../../common/customhtml.component";
 
@@ -49,7 +48,7 @@ export class DocumentsSettingsComponent implements OnInit {
     // this.getDocumentsSettingResponse(data);
     this.subService.getSubscriptionDocumentSetting(obj).subscribe(
       data => this.getDocumentsSettingResponse(data),(error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         // this.dataSource.data = [];
         this.isLoading = false;
       }

@@ -119,10 +119,10 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="name">
-          <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="serviceName"> Client name</th>
+          <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="clientName"> Client name</th>
           <td (click)="openViewDocument('viewDocuments',element)" *matCellDef="let element" class="c-p" mat-cell>
             <div class="bar">
-              {{element.serviceName}}
+              {{element.clientName}}
             </div>
           </td>
         </ng-container>

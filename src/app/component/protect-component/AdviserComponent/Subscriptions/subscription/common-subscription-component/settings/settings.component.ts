@@ -41,7 +41,7 @@ export class SettingsComponent implements OnInit {
     };
     this.subService.setAsPrimary(obj).subscribe(
       data => this.setAsPrimaryRes(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         // this.dataSource.data = [];
         this.SettingProfileData = [];
         this.isLoading = false;

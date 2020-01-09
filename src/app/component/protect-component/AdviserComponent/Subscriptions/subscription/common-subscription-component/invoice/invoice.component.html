@@ -79,8 +79,8 @@
                  <h1 class="f-42 text-custom pt-48 f-700">INVOICE</h1>
                </div>
                <div class="col-md-3 text-right">
-                 <img class="pt-20"
-                      src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                 <img class="pt-20 w-100"
+                      src={{storeData.logoUrl}}>
                </div>
              </div>
              <div class="row">
@@ -202,7 +202,7 @@
                </div>
              </div>
              <div class="wrapper-9">
-               <div *ngIf="storeData.services[0].id != undefined" class="row b-a bg-grey lter ">
+               <div *ngIf="storeData.services[0].id != undefined && storeData.auto == true" class="row b-a bg-grey lter ">
                  <div class="col-md-10 d-flex  align-items-center">
                    <p class="m-0 text-black f-500  ">Fee calculation - Attachment</p>
                  </div>
@@ -631,8 +631,8 @@
          <h1 class="f-42 text-custom pt-48 f-700">INVOICE</h1>
        </div>
        <div class="col-md-3 text-right">
-         <img class="pt-20"
-              src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+         <img class="pt-20 w-100"
+              src={{storeData.logoUrl}}>
        </div>
      </div>
      <div class="row">
@@ -762,7 +762,7 @@
        </div>
      </div>
      <div class="wrapper-20">
-       <div *ngIf="storeData.services[0].id != undefined" class="row bg-grey lter ">
+       <div *ngIf="storeData.services[0].id != undefined && storeData.auto == true" class="row bg-grey lter ">
          <div class="col-md-10">
            <p class="m-0 text-black f-500 pt-12">Fee calculation - Attachment</p>
          </div>

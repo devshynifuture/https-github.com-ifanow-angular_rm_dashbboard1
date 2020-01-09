@@ -85,7 +85,7 @@ export class ServicesSettingsComponent implements OnInit {
 
     this.subService.getSubscriptionServiceSettingsData(obj).subscribe(
       data => this.getServiceSettingSubResponse(data),(error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         // this.dataSource.data = [];
         this.isLoading = false;
       }

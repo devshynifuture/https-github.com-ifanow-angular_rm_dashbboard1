@@ -6,7 +6,7 @@ import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 import {CustomerService} from '../../../../../customer.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
+import {UtilService} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-po-saving',
@@ -121,7 +121,7 @@ export class AddPoSavingComponent implements OnInit {
         };
         this.cusService.editPOSAVINGData(obj).subscribe(
           data => this.addPOSavingResponse(data),
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       } else {
         const obj = {
@@ -139,7 +139,7 @@ export class AddPoSavingComponent implements OnInit {
         };
         this.cusService.addPOSAVINGScheme(obj).subscribe(
           data => this.addPOSavingResponse(data),
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       }
     }

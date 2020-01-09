@@ -1,15 +1,15 @@
-import { AddPoSavingComponent } from './../common-component/add-po-saving/add-po-saving.component';
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../../customer.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { DetailedPoSavingsComponent } from './detailed-po-savings/detailed-po-savings.component';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelService } from '../../../../excel.service';
+import {AddPoSavingComponent} from './../common-component/add-po-saving/add-po-saving.component';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../../customer.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {DetailedPoSavingsComponent} from './detailed-po-savings/detailed-po-savings.component';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelService} from '../../../../excel.service';
 
 @Component({
   selector: 'app-po-savings',
@@ -78,7 +78,7 @@ export class PoSavingsComponent implements OnInit {
     this.datasource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemePOSAVINGData(obj).subscribe(
       data => this.getPoSavingSchemedataResponse(data), (error) => {
-        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.datasource.data = [];
         this.isLoading = false;
       }
@@ -116,7 +116,7 @@ export class PoSavingsComponent implements OnInit {
             dialogRef.close();
             this.getPoSavingSchemedata();
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       },
       negativeMethod: () => {

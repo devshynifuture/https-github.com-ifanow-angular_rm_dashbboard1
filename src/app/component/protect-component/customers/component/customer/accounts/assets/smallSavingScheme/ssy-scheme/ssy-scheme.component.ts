@@ -1,15 +1,15 @@
-import { AddSsyComponent } from './../common-component/add-ssy/add-ssy.component';
-import { Component, OnInit, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../../customer.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { DetailedSsyComponent } from './detailed-ssy/detailed-ssy.component';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelService } from '../../../../excel.service';
+import {AddSsyComponent} from './../common-component/add-ssy/add-ssy.component';
+import {Component, OnInit, ViewChild, ViewChildren, ViewEncapsulation} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../../customer.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {DetailedSsyComponent} from './detailed-ssy/detailed-ssy.component';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelService} from '../../../../excel.service';
 
 @Component({
   selector: 'app-ssy-scheme',
@@ -84,7 +84,7 @@ export class SsySchemeComponent implements OnInit {
     this.datasource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemeSSYData(obj).subscribe(
       data => this.getSsySchemedataResponse(data), (error) => {
-        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.datasource.data = [];
         this.isLoading = false;
       }
@@ -124,7 +124,7 @@ export class SsySchemeComponent implements OnInit {
             dialogRef.close();
             this.getSsySchemedata();
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       },
       negativeMethod: () => {
