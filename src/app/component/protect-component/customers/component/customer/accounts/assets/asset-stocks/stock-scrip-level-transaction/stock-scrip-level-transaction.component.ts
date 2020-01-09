@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormArray, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from '../../../../customer.service';
-import { MatDialog } from '@angular/material';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, Validators} from '@angular/forms';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from '../../../../customer.service';
+import {MatDialog} from '@angular/material';
 
 
 @Component({
@@ -95,7 +95,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
     }
     this.cusService.getPortfolioList(obj).subscribe(
       data => this.getPortfolioListRes(data),
-      err => this.eventService.openSnackBar(err)
+      error => this.eventService.showErrorMessage(error)
     )
   }
   getPortfolioListRes(data) {
@@ -163,7 +163,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
           console.log(data);
           this.Close();
         },
-        err => this.eventService.openSnackBar(err)
+        error => this.eventService.showErrorMessage(error)
       )
     }
     else {
@@ -202,7 +202,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
           console.log(data);
           this.Close();
         },
-        err => this.eventService.openSnackBar(err, "dismiss")
+        error => this.eventService.showErrorMessage(error)
       )
     }
   }

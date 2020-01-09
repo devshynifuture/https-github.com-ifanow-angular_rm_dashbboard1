@@ -1,3 +1,4 @@
+import { EventService } from './../../../../../../../Data-service/event.service';
 import { ComposeEmailComponent } from './../../compose-email/compose-email.component';
 import { ConfirmDialogComponent } from './../../../../../common-component/confirm-dialog/confirm-dialog.component';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -22,7 +23,8 @@ export class EmailListingComponent implements OnInit, OnDestroy {
     private emailService: EmailServiceService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private eventService: EventService) { }
 
   paginatorLength;
   paginatorSubscription;
@@ -56,6 +58,17 @@ export class EmailListingComponent implements OnInit, OnDestroy {
     this.getPaginatorLengthRes();
   }
 
+  redirectMessages(element){
+    element.labelIdsfromMessages.forEach(labelArr => {
+      labelArr.labelIds.forEach(label => {
+        if(label === 'DRAFT'){
+          this.showDraftView = true;
+        }
+      })
+    });
+    this.showDraftView ? this.openDraftView(element): this.gotoEmailView(element);
+  }
+
   ngOnDestroy() {
     this.paginatorSubscription.unsubscribe();
     this.listSubscription.unsubscribe();
@@ -73,7 +86,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
     console.log("this is selected threads array");
     console.log(this.selectedThreadsArray);
     const ids: string[] = [];
-    if (this.selectedThreadsArray !== []) {
+    if (this.selectedThreadsArray.length !== 0) {
       this.selectedThreadsArray.forEach((selectedThread) => {
         const { idsOfThread: { id } } = selectedThread;
         ids.push(id);
@@ -143,6 +156,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
     })
     this.emailService.sendNextData({ dataObj, idArray });
     this.emailService.openComposeEmail({ dataObj, idArray }, ComposeEmailComponent);
+    this.showDraftView = false;
   }
 
   // move single thread to trash
@@ -375,7 +389,6 @@ export class EmailListingComponent implements OnInit, OnDestroy {
       this.selectedThreadsArray.push(row);
       console.log('added row -> ', row);
     }
-
     console.log(this.selectedThreadsArray);
   }
 
@@ -388,7 +401,12 @@ export class EmailListingComponent implements OnInit, OnDestroy {
       ids.push(id);
     });
 
-    this.threadsToTrashService(ids);
+    if(ids.length === 0){
+      this.eventService.openSnackBar("Please select email or emails to Delete!", "DISMISS");
+    } else {
+      this.threadsToTrashService(ids);
+    }
+
   }
 
 

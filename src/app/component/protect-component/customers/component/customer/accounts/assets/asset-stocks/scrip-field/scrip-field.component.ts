@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { AddScripComponent } from '../add-scrip/add-scrip.component';
-import { MatDialog } from '@angular/material';
-import { EventService } from 'src/app/Data-service/event.service';
-import { CustomerService } from '../../../../customer.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {AddScripComponent} from '../add-scrip/add-scrip.component';
+import {MatDialog} from '@angular/material';
+import {EventService} from 'src/app/Data-service/event.service';
+import {CustomerService} from '../../../../customer.service';
 
 @Component({
   selector: 'app-scrip-field',
@@ -43,7 +43,7 @@ export class ScripFieldComponent implements OnInit {
     let obj = {}
     this.cusService.getScripList(obj).subscribe(
       data => this.getScripListRes(data),
-      err => this.eventService.openSnackBar(err)
+      error => this.eventService.showErrorMessage(error)
     )
   }
   getScripListRes(data) {

@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
-import { EventService } from 'src/app/Data-service/event.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/auth-service/authService';
-import { PlanService } from '../../plan.service';
-import { UtilService } from 'src/app/services/util.service';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {EventService} from 'src/app/Data-service/event.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {AuthService} from 'src/app/auth-service/authService';
+import {PlanService} from '../../plan.service';
+import {UtilService} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-single-goal-year',
@@ -137,7 +137,7 @@ export class SingleGoalYearComponent implements OnInit {
         )
         this.familyData = data.familyMembersList;
       },
-      err => this.eventService.openSnackBar(err, "dismiss")
+      error => this.eventService.showErrorMessage(error)
     )
   }
   addSingleYearGoal() {
@@ -175,7 +175,7 @@ export class SingleGoalYearComponent implements OnInit {
               this.close('close');
               this.eventService.openSnackBar("House goal is added")
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           )
         }
         else if (this.goalTypeData.id == 3) {
@@ -194,7 +194,7 @@ export class SingleGoalYearComponent implements OnInit {
               this.eventService.openSnackBar("Car goal is added", "dismiss");
               this.close('close');
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           )
         }
         else if (this.goalTypeData.id == 4) {
@@ -217,7 +217,7 @@ export class SingleGoalYearComponent implements OnInit {
               this.eventService.openSnackBar("Marriage goal is added", "dismiss");
               this.close('close');
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           )
         }
         else if (this.goalTypeData.id == 7) {
@@ -236,7 +236,7 @@ export class SingleGoalYearComponent implements OnInit {
               this.eventService.openSnackBar("Emergency goal is added", "dismiss");
               this.close('close');
             },
-            err => this.eventService.openSnackBar(err, "dismiss")
+            error => this.eventService.showErrorMessage(error)
           )
         }
         else if (this.goalTypeData.id == 8) {
@@ -259,7 +259,7 @@ export class SingleGoalYearComponent implements OnInit {
               this.eventService.openSnackBar("Wealth creation goal is added", "dismiss"),
                 this.close('close');
             },
-            err => this.eventService.openSnackBar(err, "dismiss")
+            error => this.eventService.showErrorMessage(error)
           )
         }
         else if (this.goalTypeData.id == 9) {
@@ -278,7 +278,7 @@ export class SingleGoalYearComponent implements OnInit {
                 this.eventService.openSnackBar("Big spends is added", 'dismiss'),
                 this.close('close')
             },
-            err => this.eventService.openSnackBar(err, "dismiss")
+            error => this.eventService.showErrorMessage(error)
           )
         }
         else {
@@ -297,7 +297,7 @@ export class SingleGoalYearComponent implements OnInit {
                 this.eventService.openSnackBar("Others spends is added", 'dismiss'),
                 this.close('close')
             },
-            err => this.eventService.openSnackBar(err, "dismiss")
+            error => this.eventService.showErrorMessage(error)
           )
         }
     }

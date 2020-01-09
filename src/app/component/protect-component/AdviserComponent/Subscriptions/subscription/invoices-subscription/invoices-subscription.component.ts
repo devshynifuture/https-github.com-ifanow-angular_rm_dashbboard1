@@ -158,7 +158,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
         }
         this.getInvoiceResponseData(this.tableData);
       }, (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataSource.data = [];
         this.isLoading = false;
       }
@@ -460,9 +460,9 @@ export class InvoicesSubscriptionComponent implements OnInit {
             this.dataCount = 0;
             this.eventService.openSnackBar('invoice deleted successfully.', 'dismiss');
             dialogRef.close();
-            
+
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       },
       negativeMethod: () => {

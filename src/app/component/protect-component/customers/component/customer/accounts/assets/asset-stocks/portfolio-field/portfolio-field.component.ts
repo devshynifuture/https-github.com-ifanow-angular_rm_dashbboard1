@@ -1,11 +1,10 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../../customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AddPortfolioComponent } from '../add-portfolio/add-portfolio.component';
-import { MatDialog } from '@angular/material';
-import { FormControl, FormBuilder, Validators } from '@angular/forms';
-import { isObject } from 'util';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../../customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AddPortfolioComponent} from '../add-portfolio/add-portfolio.component';
+import {MatDialog} from '@angular/material';
+import {FormBuilder, FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-portfolio-field',
@@ -45,7 +44,7 @@ export class PortfolioFieldComponent implements OnInit {
     }
     this.cusService.getPortfolioList(obj).subscribe(
       data => this.getPortfolioListRes(data),
-      err => this.eventService.openSnackBar(err)
+      error => this.eventService.showErrorMessage(error)
     )
   }
   getPortfolioListRes(data) {
@@ -83,7 +82,7 @@ export class PortfolioFieldComponent implements OnInit {
             this.eventService.openSnackBar("portfolio is added", "dismiss");
             this.getPortfolioList();
           },
-          err => this.eventService.openSnackBar(err, "dismiss")
+          error => this.eventService.showErrorMessage(error)
         )
       },
 

@@ -1,11 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ModifyFeeDialogComponent } from '../modify-fee-dialog/modify-fee-dialog.component';
-import { MatDialog } from '@angular/material';
-import { UtilService } from "../../../../../../../services/util.service";
-import { EventService } from "../../../../../../../Data-service/event.service";
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { SubscriptionUpperSliderComponent } from '../upper-slider/subscription-upper-slider.component';
-import { SubscriptionService } from '../../../subscription.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {MatDialog} from '@angular/material';
+import {UtilService} from "../../../../../../../services/util.service";
+import {EventService} from "../../../../../../../Data-service/event.service";
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {SubscriptionUpperSliderComponent} from '../upper-slider/subscription-upper-slider.component';
+import {SubscriptionService} from '../../../subscription.service';
 
 
 @Component({
@@ -124,7 +123,7 @@ export class SingleDocumentViewComponent implements OnInit {
             dialogRef.close();
             // this.getRealEstate();
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       },
       negativeMethod: () => {

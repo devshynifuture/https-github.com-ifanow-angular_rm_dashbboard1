@@ -1,7 +1,7 @@
 import {EmailComponent} from './email-component/email.component';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {EmailArchiveComponent} from './email-component/email-archive/email-archive.component';
+// import {EmailArchiveComponent} from './email-component/email-archive/email-archive.component';
 
 
 const routes: Routes = [
@@ -25,10 +25,10 @@ const routes: Routes = [
           .then(m => m.EmailListModule)
         // component: EmailDraftComponent
       },
-      {
-        path: 'archive',
-        component: EmailArchiveComponent
-      },
+      // {
+      //   path: 'archive',
+      //   component: EmailArchiveComponent
+      // },
       {
         path: 'trash',
         loadChildren: () => import('./email-component/email-list/email-list.module')

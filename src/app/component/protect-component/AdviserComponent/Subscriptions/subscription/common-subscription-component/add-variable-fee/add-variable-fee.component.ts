@@ -57,8 +57,8 @@ export class AddVariableFeeComponent implements OnInit {
     (this.ischeckVariableData) ? console.log("fixed fee Data") : this.createVariableFeeForm('');
   }
 
-  restrictFrom100(event){
-    if(parseInt(event.target.value) > 100){
+  restrictFrom100(event) {
+    if (parseInt(event.target.value) > 100) {
       event.target.value = 100;
     }
   }
@@ -113,7 +113,7 @@ export class AddVariableFeeComponent implements OnInit {
         code: [data.serviceCode, [Validators.required]],
         description: [data.description, [Validators.required]],
         billEvery: [data.servicePricing.billEvery, [Validators.required]],
-        Duration: [data.servicePricing.billingCycle],
+        Duration: [String(data.servicePricing.billingCycle)],
         directFees: this.fb.group({
           equity: [data.servicePricing.pricingList[0].equityAllocation, [Validators.required]],
           debt: [data.servicePricing.pricingList[0].debtAllocation, [Validators.required]],
