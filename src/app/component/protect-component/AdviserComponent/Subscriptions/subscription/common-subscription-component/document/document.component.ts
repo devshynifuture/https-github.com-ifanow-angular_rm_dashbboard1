@@ -1,14 +1,14 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
-import { SubscriptionService } from '../../../subscription.service';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
+import {SubscriptionService} from '../../../subscription.service';
 import * as _ from 'lodash';
-import { AddDocumentComponent } from '../add-document/add-document.component';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { UtilService } from 'src/app/services/util.service';
+import {AddDocumentComponent} from '../add-document/add-document.component';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {UtilService} from 'src/app/services/util.service';
 // import { window } from 'rxjs/operators';
 
 // import {element} from 'protractor';
@@ -58,6 +58,7 @@ export class DocumentComponent implements OnInit {
   serviceDocumentData;
   mappedData = [];
   dataCount;
+  sendESign:boolean = true;
   _clientData: any;
   _upperData: any;
   noData: string;
@@ -153,7 +154,6 @@ export class DocumentComponent implements OnInit {
   }
 
   downloadEsignResponseData(data){
-    console.log(data, "downloadEsign 123");
     console.log(data, "downloadEsign 123");
     window.open(data.presginedUrl);
   }
@@ -270,6 +270,9 @@ export class DocumentComponent implements OnInit {
 
       this.dataSource.filteredData.forEach(singleElement => {
         if (singleElement.selected) {
+          if(singleElement.signed){
+            this.sendESign = false;
+          }
           data.documentList.push(singleElement);
         }
       });

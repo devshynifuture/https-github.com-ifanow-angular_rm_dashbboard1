@@ -1,12 +1,12 @@
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from "../../../../../../../auth-service/authService";
-import { ValidatorType } from "../../../../../../../services/util.service";
-import { MatChipInputEvent } from '@angular/material';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {ValidatorType} from '../../../../../../../services/util.service';
+import {MatChipInputEvent} from '@angular/material';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-email-only',
@@ -23,35 +23,8 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
   ]
 })
 export class EmailOnlyComponent implements OnInit {
+
   model: any;
-  dataSub: any;
-  emailBody: any;
-  subject;
-  doc: any;
-  docObj: any[];
-  advisorId;
-  validatorType = ValidatorType;
-  emailIdList = [];
-
-  @Input() emailSend;
-  @Input() emailSendfooter;
-  @Input() emailDocumentSend;
-  @Input() emailDocument;
-  @Output() valueChange = new EventEmitter();
-  @Input() quotationData;
-  _inputData;
-  emailData;
-  advisorData: any;
-
-  constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-    public subscription: SubscriptionService) {
-    this.advisorId = AuthService.getAdvisorId();
-
-    // this.dataSub = this.subInjectService.singleProfileData.subscribe(
-    //   data => this.getcommanFroalaData(data)
-    // );
-
-  }
 
   // @Input()
   // set data(data) {
@@ -116,9 +89,46 @@ export class EmailOnlyComponent implements OnInit {
     return this._inputData;
   }
 
+  dataSub: any;
+  emailBody: any;
+  subject;
+  doc: any;
+  docObj: any[];
+  advisorId;
+  validatorType = ValidatorType;
+  emailIdList = [];
+  @Input() emailSend;
+  @Input() emailSendfooter;
+  @Input() emailDocumentSend;
+  @Input() emailDocument;
+  @Output() valueChange = new EventEmitter();
+  @Input() quotationData;
+  _inputData;
+  emailData;
+  advisorData: any;
+  visible = true;
+
   config = {
     charCounterCount: false
   };
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  fruits: Fruit[] = [
+    {name: 'Abc@mail.com'},
+
+  ];
+
+  constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
+              public subscription: SubscriptionService) {
+    this.advisorId = AuthService.getAdvisorId();
+
+    // this.dataSub = this.subInjectService.singleProfileData.subscribe(
+    //   data => this.getcommanFroalaData(data)
+    // );
+
+  }
 
   ngOnInit() {
     // this.getEmailTemplate();
@@ -154,9 +164,9 @@ export class EmailOnlyComponent implements OnInit {
       this.emailData = responseData;
       this.subject = this.emailData.subject;
       this.emailBody = this.emailData.body;
-      console.log("Invoice Data", invoiceData.clientData.clientName)
-      this.emailBody.replace("$client_name", invoiceData.clientData.clientName);
-      this.emailBody.replace("$advisor_name", AuthService.getUserInfo().fullName)
+      console.log('Invoice Data', invoiceData.clientData.clientName);
+      this.emailBody.replace('$client_name', invoiceData.clientData.clientName);
+      this.emailBody.replace('$advisor_name', AuthService.getUserInfo().fullName);
     }, error => {
       this.eventService.openSnackBar(error, 'dismiss', () => {
         console.log('dismiss was clicked');
@@ -327,15 +337,6 @@ export class EmailOnlyComponent implements OnInit {
       this._inputData.clientData.userEmailId = '';
     }
   }
-  visible = true;
-  selectable = true;
-  removable = true;
-  addOnBlur = true;
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruits: Fruit[] = [
-    { name: 'Abc@mail.com' },
-
-  ];
 
   add(event: MatChipInputEvent): void {
     const input = event.input;

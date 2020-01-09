@@ -75,7 +75,7 @@ export class AddEPSComponent implements OnInit {
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       commencementDate: [(data == undefined) ? '' :new Date(data.commencementDate), [Validators.required]],
       pensionAmount: [(data == undefined) ? '' : data.pensionAmount, [Validators.required]],
-      pensionPayFreq: [(data == undefined) ? '' : (data.pensionPayoutFrequencyId)+"", [Validators.required]],
+      pensionPayFreq: [(data.pensionPayoutFrequencyId == undefined) ? '' : (data.pensionPayoutFrequencyId)+"", [Validators.required]],
       bankAcNo: [(data == undefined) ? '' : data.linkedBankAccount, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],

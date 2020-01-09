@@ -37,8 +37,8 @@
                             class="form-control rupess br-0" formControlName="accountBalance" matInput type="text"
                             maxlength="10">
                         <mat-error *ngIf="ppfSchemeForm.get('accountBalance').errors?.required" class="f-12 pt-4">
-                            Account balance is required
-                        </mat-error>
+                                This field is required
+                            </mat-error>
                         <mat-error *ngIf="(ppfSchemeForm.get('accountBalance').errors?.min)" class="f-12 pt-4">
                             Should be greater than 500
                         </mat-error>
@@ -94,8 +94,8 @@
                             class="form-control rupess br-0" formControlName="futureContribution" matInput
                             maxlength="20" type="text">
                         <mat-error class="f-12 pt-4">
-                            Loan amount is required
-                        </mat-error>
+                                This field is required
+                            </mat-error>
                         <mat-hint align="end" class="f-12">{{futureContribution.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
