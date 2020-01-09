@@ -340,11 +340,13 @@ export class EmailOnlyComponent implements OnInit {
 
   add(event: MatChipInputEvent): void {
     const input = event.input;
-    const value = event.value;
-    if (value && this.validatorType.EMAIL.test(value)) {
-      this.emailIdList.push({emailAddress: value});
-    } else {
-      this.eventService.openSnackBar('Enter valid email address');
+    const value = event.value.trim();
+    if (value && value.length > 0) {
+      if (this.validatorType.EMAIL.test(value)) {
+        this.emailIdList.push({emailAddress: value});
+      } else {
+        this.eventService.openSnackBar('Enter valid email address');
+      }
     }
     // Reset the input value
     if (input) {
