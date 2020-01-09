@@ -155,8 +155,8 @@ export class PreferencesSettingsComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        this.getProfileBillerData()
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getProfileBillerData()
           console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }
