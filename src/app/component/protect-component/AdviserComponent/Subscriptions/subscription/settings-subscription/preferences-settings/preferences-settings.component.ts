@@ -62,7 +62,7 @@ export class PreferencesSettingsComponent implements OnInit {
     this.isLoading = true;
     this.billerProfileData = [{ isPrimary: false }];
     this.subscription.getPreferenceBillerProfile(this.advisorId).subscribe(
-      data => this.getProfileBillerDataResponse(data),(error) => {
+      data => this.getProfileBillerDataResponse(data), (error) => {
         this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
         // this.dataSource.data = [];
         this.billerProfileData = [];

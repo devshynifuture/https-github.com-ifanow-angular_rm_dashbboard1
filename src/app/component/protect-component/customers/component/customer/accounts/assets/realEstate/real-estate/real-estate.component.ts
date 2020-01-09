@@ -19,10 +19,10 @@ import { ExcelService } from '../../../../excel.service';
 })
 export class RealEstateComponent implements OnInit {
 
-  isLoading = true;
+  isLoading = false;
   advisorId: any;
-  datasource3: any;
   data: Array<any> = [{}, {}, {}];
+  datasource3 = new MatTableDataSource(this.data);
   clientId: any;
   ownerName: any;
   sumOfMarketValue: any;
@@ -42,13 +42,13 @@ export class RealEstateComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.isLoading = true;
+
     this.getRealEstate();
-    this.datasource3 = new MatTableDataSource(this.data);
+
   }
 
   async ExportTOExcel(value) {
-    this.isLoading = true;
+
     this.excelData = [];
     let data = [];
     let headerData = [{ width: 20, key: 'Owner' },
@@ -74,13 +74,15 @@ export class RealEstateComponent implements OnInit {
   // datasource3 = ELEMENT_DATA3;
 
   getRealEstate() {
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
     };
+    this.datasource3.data = [{}, {}, {}];
     this.custmService.getRealEstate(obj).subscribe(
       data => this.getRealEstateRes(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.openSnackBar('Something went worng!', 'dismiss');
         this.datasource3.data = [];
         this.isLoading = false;
       });
@@ -89,8 +91,8 @@ export class RealEstateComponent implements OnInit {
   getRealEstateRes(data) {
     this.isLoading = false;
     console.log(data);
-    this.isLoading = false;
-    if(data == undefined){
+
+    if (data == undefined) {
       this.noData = 'No data found';
       this.datasource3.data = [];
     }
@@ -107,7 +109,7 @@ export class RealEstateComponent implements OnInit {
           }
         }
       });
-      this.datasource3 = new MatTableDataSource(data.realEstateList);
+      this.datasource3.data = data.realEstateList;
       this.datasource3.sort = this.sort;
       this.sumOfMarketValue = data.sumOfMarketValue;
       this.sumOfpurchasedValue = data.sumOfpurchasedValue;

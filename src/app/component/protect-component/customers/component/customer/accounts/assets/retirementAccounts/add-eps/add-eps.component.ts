@@ -91,14 +91,14 @@ export class AddEPSComponent implements OnInit {
   }
   
   saveEPF() {
-    if (this.eps.controls.commencementDate.invalid) {
-      this.isDate = true;
+    if (this.eps.get('commencementDate').invalid) {
+      this.eps.get('commencementDate').markAsTouched();
       return;
-    } else if (this.eps.controls.pensionAmount.invalid) {
-      this.isPensionAmount = true;
+    } else if (this.eps.get('pensionAmount').invalid) {
+      this.eps.get('pensionAmount').markAsTouched();
       return;
-    }else if (this.eps.controls.pensionPayFreq.invalid) {
-      this.isPensionPayFreq = true;
+    } else if (this.eps.get('pensionPayFreq').invalid) {
+      this.eps.get('pensionPayFreq').markAsTouched();
       return;
     } else {
       let obj = {

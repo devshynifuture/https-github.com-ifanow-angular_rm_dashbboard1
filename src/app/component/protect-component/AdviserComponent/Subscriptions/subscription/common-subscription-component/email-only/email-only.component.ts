@@ -340,7 +340,7 @@ export class EmailOnlyComponent implements OnInit {
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
-
+    this.emailIdList.push({ emailAddress: value })
     // Add our fruit
     if ((value || '').trim()) {
       this.fruits.push({ name: value.trim() });

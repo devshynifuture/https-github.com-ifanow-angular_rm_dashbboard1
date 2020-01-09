@@ -338,15 +338,17 @@ export class AddRealEstateComponent implements OnInit {
 
     this.getValue = this.getDateYMD()
     console.log(this.getValue);
-    if (this.addrealEstateForm.controls.type.invalid) {
-      this.isTypeValid = true;
-      return;
-    } else if (this.addrealEstateForm.controls.marketValue.invalid) {
-      this.isMvValid = true;
-    } if (this.addrealEstateForm.controls.ownerPercent.invalid) {
-      this.isOwnerPercent = true;
-      return;
-    } else {
+    if(this.addrealEstateForm.get('type').invalid) {
+        this.addrealEstateForm.get('type').markAsTouched();
+        return
+    } else if (this.addrealEstateForm.get('marketValue').invalid) {
+        this.addrealEstateForm.get('marketValue').markAsTouched();
+        return
+      
+    } else if(this.addrealEstateForm.get('ownerPercent').invalid) {
+        this.addrealEstateForm.get('ownerPercent').markAsTouched();
+        return
+    }  else {
       
       const obj = {
         ownerName: this.ownerName,

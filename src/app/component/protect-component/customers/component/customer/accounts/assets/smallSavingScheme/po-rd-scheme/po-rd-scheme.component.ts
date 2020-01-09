@@ -20,7 +20,9 @@ export class PoRdSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
   noData: string;
-  isLoading = true;
+  isLoading = false;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
   pordData: any;
   sumOfCurrentValue: number;
   sumOfMonthlyDeposit: number;
@@ -35,8 +37,7 @@ export class PoRdSchemeComponent implements OnInit {
   }
 
   displayedColumns21 = ['no', 'owner', 'cvalue', 'rate', 'deposit', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
-  data: Array<any> = [{}, {}, {}];
-  dataSource = new MatTableDataSource(this.data);
+
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -73,12 +74,18 @@ export class PoRdSchemeComponent implements OnInit {
   }
 
   getPoRdSchemedata() {
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
     };
+    this.dataSource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemePORDData(obj).subscribe(
-      data => this.getPoRdSchemedataResponse(data)
+      data => this.getPoRdSchemedataResponse(data), (error) => {
+        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
@@ -86,7 +93,7 @@ export class PoRdSchemeComponent implements OnInit {
     console.log(data);
     this.isLoading = false;
     if (data) {
-      this.dataSource = new MatTableDataSource(data.postOfficeRDList);
+      this.dataSource.data = data.postOfficeRDList;
       this.dataSource.sort = this.sort;
       UtilService.checkStatusId(this.dataSource.filteredData);
       this.sumOfCurrentValue = data.sumOfCurrentValue;

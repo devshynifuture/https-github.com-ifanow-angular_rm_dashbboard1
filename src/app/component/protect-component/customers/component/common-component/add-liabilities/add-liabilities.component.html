@@ -38,8 +38,8 @@
               <mat-option value="6">Mortgage</mat-option>
         </mat-select>
           <mat-error class="f-12 pt-4">
-            Loan type is required
-          </mat-error>
+              This field is required
+            </mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -55,8 +55,8 @@
           <input type="text" matInput #loanAmountRef class="form-control rupess br-0" (keypress)="utils.keyPress($event)"
             formControlName="loanAmount" maxlength="{{getFormControl().loanAmount.maxLength}}">
           <mat-error class="f-12 pt-4">
-            Loan amount is required
-          </mat-error>
+              This field is required
+            </mat-error>
           <mat-hint align="end" class="f-12">{{loanAmountRef.value.length}}/20</mat-hint>
         </mat-form-field>
       </div>
@@ -73,8 +73,8 @@
           <input type="text" matInput #loanTenure class="form-control br-0"  (keypress)="utils.keyPress($event)"
             formControlName="loanTenure" maxlength="{{getFormControl().loanTenure.maxLength}}">
           <mat-error class="f-12 pt-4">
-            Loan tenure is required
-          </mat-error>
+              This field is required
+            </mat-error>
           <mat-hint align="end" class="f-12">{{loanTenure.value.length}}/20</mat-hint>
         </mat-form-field>
       </div>
@@ -105,7 +105,7 @@
           <mat-datepicker #picker></mat-datepicker>
           <mat-error class="f-12 pt-4"
             *ngIf="isPoValid && getFormControl().poDate.invalid || (getFormControl().poDate.touched && getFormControl().poDate.invalid)">
-            As on date is required
+            This field is required
           </mat-error>
         </mat-form-field>
       </div>
@@ -117,8 +117,8 @@
           <input type="text" matInput #loanTenure class="form-control br-0" (keypress)="utils.keyPress($event)"
             formControlName="outstandingAmt" maxlength="{{getFormControl().outstandingAmt.maxLength}}">
           <mat-error class="f-12 pt-4">
-            Outstanding amount is required
-          </mat-error>
+              This field is required
+            </mat-error>
           <mat-hint align="end" class="f-12">{{loanTenure.value.length}}/20</mat-hint>
         </mat-form-field>
       </div>
@@ -136,7 +136,7 @@
         <mat-datepicker #picker></mat-datepicker>
         <mat-error class="f-12 pt-4"
           *ngIf="isdateValid && getFormControl().CommencementDate.invalid || (getFormControl().CommencementDate.touched && getFormControl().CommencementDate.invalid)">
-          commencement date is required
+          This field is required
         </mat-error>
       </mat-form-field>
 
@@ -157,8 +157,8 @@
             <mat-option value="12">Monthly</mat-option>
           </mat-select>
           <mat-error class="f-12 pt-4">
-            Emi frequency is required
-          </mat-error>
+              This field is required
+            </mat-error>
         </mat-form-field>
 
       </div>
@@ -174,8 +174,8 @@
           <input type="number" matInput #interest class="form-control br-0 percentage" (keyup)="onChange($event)" (keypress)="utils.keyPress($event)"
             formControlName="interest" maxlength="{{getFormControl().interest.maxLength}}">
           <mat-error class="f-12 pt-4">
-            Annual interest rate is required
-          </mat-error>
+              This field is required
+            </mat-error>
           <!-- <mat-hint align="end" class="f-12">{{interest.value.length}}/20</mat-hint> -->
         </mat-form-field>
       </div>
@@ -279,8 +279,8 @@
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
               <mat-error class="f-12 pt-4">
-                Part Payment date is required
-              </mat-error>
+                  This field is required
+                </mat-error>
             </mat-form-field>
           </div>
           <div class="col-md-4">
@@ -289,8 +289,8 @@
                 <input type="text" matInput #partPayment class="form-control br-0" maxlength="20"  (keypress)="utils.keyPress($event)"
                   formControlName="partPayment">
                 <mat-error class="f-12 pt-4">
-                  payment Amount is required
-                </mat-error>
+                    This field is required
+                  </mat-error>
                 <mat-hint align="end" class="f-12">{{partPayment.value.length}}/20</mat-hint>
               </mat-form-field>
             </div>
@@ -305,8 +305,8 @@
                     and reduce the EMI</mat-option>
                 </mat-select>
                 <mat-error class="f-12 pt-4">
-                  option is required
-                </mat-error>
+                    This field is required
+                  </mat-error>
               </mat-form-field>
 
             </div>

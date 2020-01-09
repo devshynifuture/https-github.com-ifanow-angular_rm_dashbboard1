@@ -226,12 +226,12 @@ export class FixedDepositComponent implements OnInit {
     } else {
       this.maturityDate = this.fixedDeposit.controls.maturityDate.value;
     }
-    if (this.fixedDeposit.get('amountInvest').invalid) {
-      this.fixedDeposit.get('amountInvest').markAsTouched();
+    if (this.fixedDeposit.get('FDType').invalid) {
+      this.fixedDeposit.get('FDType').markAsTouched();
       return
     }
-    else if (this.fixedDeposit.get('ownerType').invalid) {
-      this.fixedDeposit.get('ownerType').markAsTouched();
+    else if (this.fixedDeposit.get('amountInvest').invalid) {
+      this.fixedDeposit.get('amountInvest').markAsTouched();
       return
     } 
     else if (this.fixedDeposit.get('commencementDate').invalid) {
@@ -242,16 +242,15 @@ export class FixedDepositComponent implements OnInit {
       this.fixedDeposit.get('interestRate').markAsTouched();
       return
     } 
-    else if (this.fixedDeposit.get('payOpt').invalid) {
-      this.fixedDeposit.get('payOpt').markAsTouched();
-      return
-    } 
     else if (this.fixedDeposit.get('compound').invalid) {
       this.fixedDeposit.get('compound').markAsTouched();
       return
-    }
-    else if (this.fixedDeposit.get('FDType').invalid) {
-      this.fixedDeposit.get('FDType').markAsTouched();
+    } else if (this.fixedDeposit.get('compound').invalid) {
+      this.fixedDeposit.get('compound').markAsTouched();
+      return
+    } 
+    else if (this.fixedDeposit.get('frequencyOfPayoutPerYear').invalid) {
+      this.fixedDeposit.get('frequencyOfPayoutPerYear').markAsTouched();
       return
     } else {
       const obj = {
@@ -292,7 +291,12 @@ export class FixedDepositComponent implements OnInit {
 
     }
   }
-
+  onChange(event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = "100";
+      this.fixedDeposit.get('interestRate').setValue(event.target.value);
+    }
+  }
   addFixedDepositRes(data) {
     console.log('addFixedDepositRes', data);
     this.event.openSnackBar('Added successfully!', 'dismiss');
