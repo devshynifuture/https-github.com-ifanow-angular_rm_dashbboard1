@@ -7,12 +7,12 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {EnumServiceService} from '../../../../../../../services/enum-service.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material';
-import {MAT_DATE_FORMATS} from '@angular/material/core';
 import {UtilService} from 'src/app/services/util.service';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 import {EmailOnlyComponent} from '../email-only/email-only.component';
 import {PdfService} from '../../../../../../../services/pdf.service';
+// import {default as _rollupMoment} from 'moment';
 
+// const moment = _rollupMoment || _moment;
 
 export interface PeriodicElement {
   date: string;
@@ -25,9 +25,7 @@ export interface PeriodicElement {
   selector: 'app-invoice',
   templateUrl: './invoice.component.html',
   styleUrls: ['./invoice.component.scss'],
-  providers: [
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
-  ],
+
 
 })
 
@@ -76,8 +74,8 @@ export class InvoiceComponent implements OnInit {
   dataSub: any;
   storeData;
   showRecord: any;
-  clientInvoice: any;
-  invData: any;
+  // clientInvoice: any;
+  // invData: any;
   showEdit: boolean;
   isamountValid: boolean;
   ischargeValid: boolean;
@@ -87,8 +85,8 @@ export class InvoiceComponent implements OnInit {
   isClientName = false;
   isServiceName = false;
   isInvoiceNumber = false;
-  isDueDate = false;
-  isInvoiceDate = false;
+  // isDueDate = false;
+  // isInvoiceDate = false;
   isTaxstatus = false;
   isPrice = false;
 
@@ -131,6 +129,7 @@ export class InvoiceComponent implements OnInit {
     this.getInvoiceData(data);
     this.getRecordPayment(data);
   }
+
   ngOnInit() {
 
     this.advisorId = AuthService.getAdvisorId();
@@ -141,7 +140,7 @@ export class InvoiceComponent implements OnInit {
     // this.getPayReceive(data);
     console.log('this.invoiceSubscription', this.invoiceInSub);
     console.log('###########', this.clientData);
-    console.log('@@@@@@@@',this.upperData)
+    console.log('@@@@@@@@', this.upperData);
     this.dataInvoices = this.clientData;
     this.showRecord = false;
     this.showEdit = false;
@@ -253,7 +252,7 @@ export class InvoiceComponent implements OnInit {
     this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.finalAmount.value;
     this.discount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.discount.value;
     console.log('finalAmount', this.finalAmount);
-    this.taxStatus = this.editPayment.value.taxStatus
+    this.taxStatus = this.editPayment.value.taxStatus;
   }
 
   getInvoiceDataRes(data) {
@@ -338,7 +337,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   getInvoiceData(data) {
-    console.log('@@@@@@@@',this.upperData)
+    console.log('@@@@@@@@', this.upperData);
     this.copyStoreData = data;
     this.storeData = data;
     this.auto = this.storeData.auto;
@@ -380,12 +379,12 @@ export class InvoiceComponent implements OnInit {
   changeTaxStatus(changeTaxStatus) {
     console.log('changeTaxStatus', changeTaxStatus);
     if (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') {
-      this.finAmountC = this.finalAmount*9 / 100;
-      this.finAmountS = this.finalAmount*9 / 100;
+      this.finAmountC = this.finalAmount * 9 / 100;
+      this.finAmountS = this.finalAmount * 9 / 100;
       this.finAmount = this.finAmountC + this.finAmountS + parseInt(this.editPayment.controls.finalAmount.value);
     } else {
-      this.finAmount = (this.editPayment.controls.finalAmount.value -  parseInt(this.editPayment.value.discount));
-      this.finAmount = (this.finAmount)*18/100
+      this.finAmount = (this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount));
+      this.finAmount = (this.finAmount) * 18 / 100;
     }
     this.storeData.subToatal = this.editPayment.controls.finalAmount.value;
     this.taxStatus = changeTaxStatus;
@@ -394,14 +393,14 @@ export class InvoiceComponent implements OnInit {
 
   updateInvoice() {
     if (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') {
-      this.finAmountC = this.editPayment.controls.finalAmount.value -parseInt(this.editPayment.value.discount);
-      this.finAmountC = this.finAmountC*9 / 100;
-      this.finAmountS = this.editPayment.controls.finalAmount.value -parseInt(this.editPayment.value.discount);
-      this.finAmountS = this.finAmountS*9 / 100
-      this.finAmount = this.finAmountC+this.finAmountS
+      this.finAmountC = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
+      this.finAmountC = this.finAmountC * 9 / 100;
+      this.finAmountS = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
+      this.finAmountS = this.finAmountS * 9 / 100;
+      this.finAmount = this.finAmountC + this.finAmountS;
     } else {
-      this.finAmount = (this.editPayment.controls.finalAmount.value -  parseInt(this.editPayment.value.discount));
-      this.finAmount = (this.finAmount)*18/100
+      this.finAmount = (this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount));
+      this.finAmount = (this.finAmount) * 18 / 100;
     }
     if (this.editPayment.get('dueDate').invalid) {
       this.editPayment.get('dueDate').markAsTouched();
@@ -428,7 +427,7 @@ export class InvoiceComponent implements OnInit {
           invoiceNumber: this.editPayment.value.invoiceNumber,
           subTotal: this.editPayment.value.finalAmount,
           discount: this.editPayment.value.discount,
-          finalAmount:(parseInt(this.editPayment.value.finalAmount) - parseInt(this.editPayment.value.discount)) + parseInt(this.finAmount),
+          finalAmount: (parseInt(this.editPayment.value.finalAmount) - parseInt(this.editPayment.value.discount)) + parseInt(this.finAmount),
           invoiceDate: this.editPayment.value.invoiceDate,
           dueDate: this.editPayment.value.dueDate,
           igst: (this.editPayment.value.taxStatus == 'IGST(18%)') ? 18 : null,
