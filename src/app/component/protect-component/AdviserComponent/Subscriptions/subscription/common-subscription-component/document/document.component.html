@@ -301,14 +301,24 @@
                                 </th>
                                 <td *matCellDef="let element" mat-cell>
                                     <span>
-                                        <span class="text-success t-10 f-500 c-p"
+                                         <!-- <span class="text-success t-10 f-500 c-p"
                                             *ngIf="element.status==1 && !element.signed">READY TO
                                             SEND</span>
                                         <span class="text-success t-10 f-500 c-p"
                                             *ngIf="element.status==0 && !element.signed">NOT
                                             STARTED</span>
                                         <span class="text-success t-10 f-500 c-p" *ngIf="element.signed">SIGNED
-                                        </span>
+                                        </span>-->
+                                      <span *ngIf="element.status==0"
+                                            class="text-success t-10 f-500 c-p">NOT
+                                            STARTED</span>
+                                        <span *ngIf="element.status==1"
+                                              class="text-success t-10 f-500 c-p">READY TO
+                                            SEND</span>
+                                        <span *ngIf="element.status==2"
+                                              class="text-success t-10 f-500 c-p">SENT</span>
+                                      <span *ngIf="element.status==3"
+                                            class="text-success t-10 f-500 c-p">ESIGNED</span>
                                     </span>
                                 </td>
                             </ng-container>
