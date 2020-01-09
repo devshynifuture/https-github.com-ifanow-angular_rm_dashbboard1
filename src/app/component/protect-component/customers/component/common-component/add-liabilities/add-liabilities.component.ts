@@ -156,7 +156,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       loanAmount: [data.loanAmount, [Validators.required]],
       loanTenure: [data.loanTenure, [Validators.required]],
       outstandingCheck: [data.principalOutstanding],
-      poDate: [(data.principalOutstandingAsOn) ? new Date(data.principalOutstandingAsOn) : '-', [Validators.required]],
+      poDate: [(data.principalOutstandingAsOn) ? new Date(data.principalOutstandingAsOn) : '', [Validators.required]],
       outstandingAmt: [data.principalOutStandingAmount, [Validators.required]],
       CommencementDate: [new Date(data.commencementDate), [Validators.required]],
       emiFrequency: [(data.frequencyOfPayments == undefined) ? '' : (data.frequencyOfPayments) + '', [Validators.required]],
@@ -223,12 +223,11 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     } else if (this.addLiabilityForm.get('loanTenure').invalid) {
       this.addLiabilityForm.get('loanTenure').markAsTouched();
       return;
-    } else if (this.addLiabilityForm.get('poDate').invalid) {
-      this.addLiabilityForm.get('poDate').markAsTouched();
-      return;
-    } else if (this.addLiabilityForm.get('outstandingAmt').invalid) {
-      this.addLiabilityForm.get('outstandingAmt').markAsTouched();
-      return;
+    }else if (this.addLiabilityForm.controls.outstandingCheck.touched==true && this.addLiabilityForm.get('poDate').invalid &&  this.addLiabilityForm.get('outstandingAmt').invalid) {
+        this.addLiabilityForm.get('poDate').markAsTouched();
+        
+        this.addLiabilityForm.get('outstandingAmt').markAsTouched();
+
     } else if (this.addLiabilityForm.get('CommencementDate').invalid) {
       this.addLiabilityForm.get('CommencementDate').markAsTouched();
       return;
@@ -237,9 +236,6 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       return;
     } else if (this.addLiabilityForm.get('interest').invalid) {
       this.addLiabilityForm.get('interest').markAsTouched();
-      return;
-    } else if (this.addLiabilityForm.get('transact').invalid) {
-      this.addLiabilityForm.get('transact').markAsTouched();
       return;
     } else {
       const obj = {
@@ -266,19 +262,19 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       obj.loanType = parseInt(obj.loanType);
       this.loanTypeView = obj.loanType;
       obj.emiFrequency = parseInt(obj.emiFrequency);
-      obj.outstandingCheck = obj.outstandingCheck.toString();
+      obj.outstandingCheck = (obj.outstandingCheck)?obj.outstandingCheck.toString():null;
       obj.CommencementDate = obj.CommencementDate.toISOString().slice(0, 10);
-      obj.poDate = obj.poDate.toISOString().slice(0, 10);
+      obj.poDate = (obj.poDate)?obj.poDate.toISOString().slice(0, 10):'';
       obj.interest = parseInt(obj.interest);
       this.addLiabilityForm.value.transact.forEach(element => {
         if (element) {
-          const obj1 = {
-            partPaymentDate: element.partPaymentDate.toISOString().slice(0, 10),
-            partPayment: parseInt(element.partPayment),
-            option: parseInt(element.option),
-            id: element.id,
-            delete: true
-          };
+          let obj1 = {
+            'partPaymentDate':(element.partPaymentDate)?element.partPaymentDate.toISOString().slice(0, 10):'',
+            'partPayment': parseInt(element.partPayment),
+            'option': parseInt(element.option),
+            'id': element.id,
+            'delete': true
+          }
           if (this._data.id != undefined) {
             if (this._data.loanPartPayments.length == this.addLiabilityForm.value.transact.length) {
               delete obj1.delete;

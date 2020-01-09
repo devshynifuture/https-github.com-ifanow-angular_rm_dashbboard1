@@ -667,6 +667,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   editInvoice() {
+    this.showEditIn = true
     this.showEdit = true;
   }
 
