@@ -110,6 +110,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getdocumentSubData();
           console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }
@@ -166,6 +167,8 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       toDate: '2019-11-01',
       statusIdList: '1,2',
     };
+    this.isLoading = true;
+    this.dataSource.data = [{}, {}, {}];
     this.subscription.getDocumentData(obj).subscribe(
       data => this.getdocumentResponseData(data), (error) => {
         this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
