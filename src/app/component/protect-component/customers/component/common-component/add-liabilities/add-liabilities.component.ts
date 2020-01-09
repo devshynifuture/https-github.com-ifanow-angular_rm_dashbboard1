@@ -1,12 +1,12 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {Validators, FormBuilder, FormArray, FormGroup} from '@angular/forms';
-import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {CustomerService} from '../../customer/customer.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {DataComponent} from "../../../../../../interfaces/data.component";
+import { Component, OnInit, Input } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { Validators, FormBuilder, FormArray, FormGroup } from '@angular/forms';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { CustomerService } from '../../customer/customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { DataComponent } from "../../../../../../interfaces/data.component";
 import { UtilService } from 'src/app/services/util.service';
 
 @Component({
@@ -14,7 +14,7 @@ import { UtilService } from 'src/app/services/util.service';
   templateUrl: './add-liabilities.component.html',
   styleUrls: ['./add-liabilities.component.scss'],
   providers: [
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 
 })
@@ -51,12 +51,12 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   clientId: any;
 
 
-  constructor(public utils: UtilService,private subInjectService: SubscriptionInject, private fb: FormBuilder,
-              public custumService: CustomerService, public eventService: EventService) {
+  constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private fb: FormBuilder,
+    public custumService: CustomerService, public eventService: EventService) {
   }
 
-// data;
-//   @Input() data;
+  // data;
+  //   @Input() data;
   @Input()
   set data(inputData) {
     this._data = inputData;
@@ -78,7 +78,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     this.getLiability(this.data);
 
   }
-  preventDefault(e){
+  preventDefault(e) {
     e.preventDefault();
   }
 
@@ -94,9 +94,9 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     this.showTransact = true;
     if (this.transactEntries.length == 0) {
       this.transactEntries.push(this.fb.group({
-        partPaymentDate:  ["", [Validators.required]],
-        partPayment:  ["", [Validators.required]],
-        option:  ["", [Validators.required]]
+        partPaymentDate: ["", [Validators.required]],
+        partPayment: ["", [Validators.required]],
+        option: ["", [Validators.required]]
       }));
     }
   }
@@ -105,13 +105,13 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     if (this.data) {
       if (this._data.loanTypeId == undefined) {
         let data = this._data
-        this.subInjectService.changeNewRightSliderState({state: 'close', data});
+        this.subInjectService.changeNewRightSliderState({ state: 'close', data });
       } else {
         let data = this._data.showFilter;
-        this.subInjectService.changeNewRightSliderState({state: 'close', data});
+        this.subInjectService.changeNewRightSliderState({ state: 'close', data });
       }
     } else {
-      this.subInjectService.changeNewRightSliderState({state: 'close'});
+      this.subInjectService.changeNewRightSliderState({ state: 'close' });
 
     }
   }
@@ -152,14 +152,14 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     }
     this.addLiabilityForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
-      loanType: [(data.loanTypeId) + "", [Validators.required]],
+      loanType: [(data.loanTypeId == undefined) ? '' : (data.loanTypeId) + "", [Validators.required]],
       loanAmount: [data.loanAmount, [Validators.required]],
       loanTenure: [data.loanTenure, [Validators.required]],
       outstandingCheck: [data.principalOutstanding],
-      poDate: [(data.principalOutstandingAsOn)?new Date(data.principalOutstandingAsOn):'-', [Validators.required]],
+      poDate: [(data.principalOutstandingAsOn) ? new Date(data.principalOutstandingAsOn) : '-', [Validators.required]],
       outstandingAmt: [data.principalOutStandingAmount, [Validators.required]],
       CommencementDate: [new Date(data.commencementDate), [Validators.required]],
-      emiFrequency: [(data.frequencyOfPayments) + "", [Validators.required]],
+      emiFrequency: [(data.frequencyOfPayments == undefined) ? '' : (data.frequencyOfPayments) + "", [Validators.required]],
       interest: [data.annualInterestRate, [Validators.required]],
       emi: [data.emi],
       finInstitution: [data.financialInstitution],
@@ -183,8 +183,8 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       this.transactEntries.removeAt(0);
 
     }
-    if(this.addLiabilityForm.controls.outstandingCheck.value==true){
-      this.showSelect=true;
+    if (this.addLiabilityForm.controls.outstandingCheck.value == true) {
+      this.showSelect = true;
     }
     this.getFormControl().loanAmount.maxLength = 20;
     this.getFormControl().loanTenure.maxLength = 20;
@@ -200,17 +200,17 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
 
   addTransaction() {
     this.transactEntries.push(this.fb.group({
-      partPaymentDate:  ["", [Validators.required]],
-      partPayment:  ["", [Validators.required]],
-      option:  ["", [Validators.required]]
+      partPaymentDate: ["", [Validators.required]],
+      partPayment: ["", [Validators.required]],
+      option: ["", [Validators.required]]
     }));
   }
 
   removeTransaction(item) {
-    if(this.transactEntries.length > 1){
+    if (this.transactEntries.length > 1) {
       this.transactEntries.removeAt(item);
     }
-    
+
   }
 
   saveFormData(state) {
@@ -222,7 +222,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       return;
     } else if (this.addLiabilityForm.get('loanTenure').invalid) {
       this.addLiabilityForm.get('loanTenure').markAsTouched();
-       return;
+      return;
     } else if (this.addLiabilityForm.get('poDate').invalid) {
       this.addLiabilityForm.get('poDate').markAsTouched();
       return;
@@ -238,9 +238,9 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     } else if (this.addLiabilityForm.get('interest').invalid) {
       this.addLiabilityForm.get('interest').markAsTouched();
       return;
-    }else if (this.addLiabilityForm.get('transact').invalid) {
+    } else if (this.addLiabilityForm.get('transact').invalid) {
       this.addLiabilityForm.get('transact').markAsTouched();
-      return 
+      return
     } else {
       const obj = {
         ownerName: (this.ownerName == null) ? this.addLiabilityForm.controls.ownerName.value : this.ownerName,
@@ -342,7 +342,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     if (data == 1) {
       console.log(data);
       data = this.loanTypeView
-      this.subInjectService.changeNewRightSliderState({state: 'close', data})
+      this.subInjectService.changeNewRightSliderState({ state: 'close', data })
       this.eventService.openSnackBar('Liabilities added successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
@@ -355,7 +355,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     if (data == 1) {
       console.log(data);
       data = this.loanTypeView
-      this.subInjectService.changeNewRightSliderState({state: 'close', data})
+      this.subInjectService.changeNewRightSliderState({ state: 'close', data })
       this.eventService.openSnackBar('Liabilities edited successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
@@ -370,11 +370,11 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {name: 'Loan amount', amountTable: '40,00,000'},
-  {name: 'Interest %', amountTable: '8.75%'},
-  {name: 'Loan period', amountTable: '20 years'},
-  {name: 'Payment frequency', amountTable: 'Monthly'},
-  {name: 'Commencement date', amountTable: '16/08/2014'},
+  { name: 'Loan amount', amountTable: '40,00,000' },
+  { name: 'Interest %', amountTable: '8.75%' },
+  { name: 'Loan period', amountTable: '20 years' },
+  { name: 'Payment frequency', amountTable: 'Monthly' },
+  { name: 'Commencement date', amountTable: '16/08/2014' },
 ];
 
 
@@ -389,9 +389,9 @@ export interface PeriodicElement1 {
 
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  {year: '2019', principal: '1,868.07', interest: '8,736.45', totalPaid: '10,604.52', balance: '3,98,131.93'},
-  {year: '2020', principal: '7,893.09', interest: '34,524.99', totalPaid: '42,418.08', balance: '3,90,238.84'},
-  {year: '2021', principal: '7,893.09', interest: '34,524.99', totalPaid: '42,418.08', balance: '3,90,238.84'},
-  {year: '2022', principal: '7,893.09', interest: '34,524.99', totalPaid: '42,418.08', balance: '3,90,238.84'},
-  {year: '2023', principal: '7,893.09', interest: '34,524.99', totalPaid: '42,418.08', balance: '3,90,238.84'},
+  { year: '2019', principal: '1,868.07', interest: '8,736.45', totalPaid: '10,604.52', balance: '3,98,131.93' },
+  { year: '2020', principal: '7,893.09', interest: '34,524.99', totalPaid: '42,418.08', balance: '3,90,238.84' },
+  { year: '2021', principal: '7,893.09', interest: '34,524.99', totalPaid: '42,418.08', balance: '3,90,238.84' },
+  { year: '2022', principal: '7,893.09', interest: '34,524.99', totalPaid: '42,418.08', balance: '3,90,238.84' },
+  { year: '2023', principal: '7,893.09', interest: '34,524.99', totalPaid: '42,418.08', balance: '3,90,238.84' },
 ];

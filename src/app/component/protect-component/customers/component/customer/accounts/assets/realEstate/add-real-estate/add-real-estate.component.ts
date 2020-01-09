@@ -267,7 +267,7 @@ export class AddRealEstateComponent implements OnInit {
         ownershipPerc: null,
       })]),
       ownerPercent: [data.ownerPerc, [Validators.required]],
-      type: [(data.typeId) + "", [Validators.required]],
+      type: [(data.typeId == undefined) ? '' : (data.typeId)+"", [Validators.required]],
       marketValue: [data.marketValue, [Validators.required]],
       year: [data.year],
       month: [data.month, [Validators.required]],
