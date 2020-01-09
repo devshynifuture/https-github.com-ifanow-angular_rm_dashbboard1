@@ -8,6 +8,7 @@ import { EmailServiceService } from './../../email-service.service';
 import { EventService } from './../../../../../../Data-service/event.service';
 import { Validators } from '@angular/forms';
 import { Subscription, Subject } from 'rxjs';
+import { count } from 'rxjs/operators';
 
 @Component({
   selector: 'app-compose-email',
@@ -46,18 +47,20 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   cc: string = '';
   bcc: string = '';
 
-  subjectObs = new Subject<any>();
+  interval;
+  emailFormValueChange;
 
   ngOnInit() {
     this.createEmailForm();
     this.prevStateOfForm = this.emailForm.value;
+    this.emailForm.valueChanges.subscribe(res => this.emailFormValueChange = res);
 
-    this.emailForm.valueChanges.subscribe(res => {
-      if(!this.areTwoObjectsEquivalent(this.prevStateOfForm, res)){
-        this.autoSaveDraft(res);
-        this.prevStateOfForm = res;
+    this.interval = setInterval(() => {
+      if(!this.areTwoObjectsEquivalent(this.prevStateOfForm, this.emailFormValueChange)){  
+        console.log("auto saved!!")
+        this.prevStateOfForm = this.emailFormValueChange;
       }
-    });
+    }, 4000);
   }
 
   createEmailForm() {
@@ -132,15 +135,6 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     return true;
   }
 
-  autoSaveDraft(res){
-    
-    console.log("auto saved");
-    
-    // setTimeout(()=>{ 
-    //   console.log("auto save");
-    // }, 4000);
-  }
-
   toggleCC(): void {
     this.isCcSelected = !this.isCcSelected;
     this.emailForm.get('carbonCopy').setValue("");
@@ -163,6 +157,8 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   // }
 
   close(): void {
+    clearInterval(this.interval);
+    console.log("cleared");
     if ((!this.data && this.data === null) && this.didFormChanged) {
       // call create api from compose
 
