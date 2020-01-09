@@ -56,10 +56,6 @@ export class InvoiceComponent implements OnInit {
     return this.inputData;
   }
 
-  changedValue(event) {
-    console.log('invoice changedValue event : ', event);
-  }
-
   discount: any;
   inputData: any;
   templateType: number;
@@ -122,7 +118,7 @@ export class InvoiceComponent implements OnInit {
   editFormData: boolean;
   paymentDate: string;
   rPayment;
-  showPaymentRecive = false
+  showPaymentRecive = false;
 
   @Input()
   set data(data) {
@@ -133,7 +129,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.showPaymentRecive = false
+    this.showPaymentRecive = false;
     this.advisorId = AuthService.getAdvisorId();
     this.getClients();
     this.getServicesList();
@@ -142,7 +138,7 @@ export class InvoiceComponent implements OnInit {
     // this.getPayReceive(data);
     console.log('this.invoiceSubscription', this.invoiceInSub);
     console.log('###########', this.clientData);
-    console.log('@@@@@@@@', this.upperData)
+    console.log('@@@@@@@@', this.upperData);
     this.dataInvoices = this.clientData;
     this.showRecord = false;
     this.showEdit = false;
@@ -195,9 +191,9 @@ export class InvoiceComponent implements OnInit {
   getPaymentReceivedRes(data) {
     this.dataSource = data;
     if (data == undefined) {
-      this.showPaymentRecive = false
+      this.showPaymentRecive = false;
     } else {
-      this.showPaymentRecive = true
+      this.showPaymentRecive = true;
     }
     if (data) {
       this.feeCollectionMode.forEach(o => {
@@ -257,7 +253,7 @@ export class InvoiceComponent implements OnInit {
     this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.finalAmount.value;
     this.discount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.discount.value;
     console.log('finalAmount', this.finalAmount);
-    this.taxStatus = this.editPayment.value.taxStatus
+    this.taxStatus = this.editPayment.value.taxStatus;
   }
 
   getInvoiceDataRes(data) {
@@ -277,7 +273,7 @@ export class InvoiceComponent implements OnInit {
     console.log('getClientListRes', data.payees);
     this.clientList = data.payees;
     this.defaultVal = data;
-    this.advisorBillerProfileId = data.biller.id
+    this.advisorBillerProfileId = data.biller.id;
     this.editPayment.controls.billerAddress.setValue(data.biller.billerAddress);
     this.editPayment.controls.footnote.setValue(data.biller.footnote);
     this.editPayment.controls.terms.setValue(data.biller.terms);
@@ -343,10 +339,10 @@ export class InvoiceComponent implements OnInit {
   }
 
   getInvoiceData(data) {
-    console.log('@@@@@@@@', this.upperData)
+    console.log('@@@@@@@@', this.upperData);
     this.copyStoreData = data;
     this.storeData = data;
-    this.clientId = AuthService.getClientId()
+    this.clientId = AuthService.getClientId();
     this.auto = this.storeData.auto;
     console.log(this.storeData);
     this.editPayment = this.fb.group({
@@ -391,7 +387,7 @@ export class InvoiceComponent implements OnInit {
       this.finAmount = this.finAmountC + this.finAmountS + parseInt(this.editPayment.controls.finalAmount.value);
     } else {
       this.finAmount = (this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount));
-      this.finAmount = (this.finAmount) * 18 / 100
+      this.finAmount = (this.finAmount) * 18 / 100;
     }
     this.storeData.subToatal = this.editPayment.controls.finalAmount.value;
     this.taxStatus = changeTaxStatus;
@@ -403,11 +399,11 @@ export class InvoiceComponent implements OnInit {
       this.finAmountC = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
       this.finAmountC = this.finAmountC * 9 / 100;
       this.finAmountS = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
-      this.finAmountS = this.finAmountS * 9 / 100
-      this.finAmount = this.finAmountC + this.finAmountS
+      this.finAmountS = this.finAmountS * 9 / 100;
+      this.finAmount = this.finAmountC + this.finAmountS;
     } else {
       this.finAmount = (this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount));
-      this.finAmount = (this.finAmount) * 18 / 100
+      this.finAmount = (this.finAmount) * 18 / 100;
     }
     if (this.editPayment.get('dueDate').invalid) {
       this.editPayment.get('dueDate').markAsTouched();
@@ -667,7 +663,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   editInvoice() {
-    this.showEditIn = true
+    this.showEditIn = true;
     this.showEdit = true;
   }
 
