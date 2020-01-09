@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { Validators, FormArray, FormBuilder } from '@angular/forms';
-import { AuthService } from 'src/app/auth-service/authService';
-import { MatDialog } from '@angular/material';
-import { EventService } from 'src/app/Data-service/event.service';
-import { CustomerService } from '../../../../../customer.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {FormArray, FormBuilder, Validators} from '@angular/forms';
+import {AuthService} from 'src/app/auth-service/authService';
+import {MatDialog} from '@angular/material';
+import {EventService} from 'src/app/Data-service/event.service';
+import {CustomerService} from '../../../../../customer.service';
 
 @Component({
   selector: 'app-mfscheme-level-transactions',
@@ -94,7 +94,7 @@ export class MFSchemeLevelTransactionsComponent implements OnInit {
     }
     this.cusService.getPortfolioList(obj).subscribe(
       data => this.getPortfolioListRes(data),
-      err => this.eventService.openSnackBar(err)
+      error => this.eventService.showErrorMessage(error)
     )
   }
   getPortfolioListRes(data) {
@@ -162,7 +162,7 @@ export class MFSchemeLevelTransactionsComponent implements OnInit {
           console.log(data);
           this.Close();
         },
-        err => this.eventService.openSnackBar(err)
+        error => this.eventService.showErrorMessage(error)
       )
     }
     else {
@@ -201,7 +201,7 @@ export class MFSchemeLevelTransactionsComponent implements OnInit {
           console.log(data);
           this.Close();
         },
-        err => this.eventService.openSnackBar(err, "dismiss")
+        error => this.eventService.showErrorMessage(error)
       )
     }
   }

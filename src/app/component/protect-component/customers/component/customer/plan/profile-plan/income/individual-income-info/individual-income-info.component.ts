@@ -1,18 +1,18 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MAT_DATE_FORMATS } from '@angular/material';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { AuthService } from 'src/app/auth-service/authService';
-import { PlanService } from '../../../plan.service';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormArray, FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {MAT_DATE_FORMATS} from '@angular/material';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {AuthService} from 'src/app/auth-service/authService';
+import {PlanService} from '../../../plan.service';
+import {EventService} from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-individual-income-info',
   templateUrl: './individual-income-info.component.html',
   styleUrls: ['./individual-income-info.component.scss'],
   providers: [
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ]
 })
 export class IndividualIncomeInfoComponent implements OnInit {
@@ -233,13 +233,13 @@ export class IndividualIncomeInfoComponent implements OnInit {
       obj['id'] = this.editApiData.id;
       this.planService.editIncomeData(obj).subscribe(
         data => this.submitIncomeFormRes(data),
-        err => this.eventService.openSnackBar(err, 'dismiss')
+        error => this.eventService.showErrorMessage(error)
       )
     }
     else {
       this.planService.addIncomeData(obj).subscribe(
         data => this.submitIncomeFormRes(data),
-        err => this.eventService.openSnackBar(err, "dismiss")
+        error => this.eventService.showErrorMessage(error)
       )
     }
   }

@@ -130,7 +130,7 @@ export class InsuranceComponent implements OnInit {
             dialogRef.close();
             this.getInsuranceData(this.insuranceTypeId)
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       },
       negativeMethod: () => {

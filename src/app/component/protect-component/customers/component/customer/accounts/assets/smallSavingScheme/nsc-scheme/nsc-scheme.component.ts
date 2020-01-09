@@ -1,15 +1,15 @@
-import { AddNscComponent } from './../common-component/add-nsc/add-nsc.component';
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../../customer.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { EventService } from 'src/app/Data-service/event.service';
-import { DetailedNscComponent } from './detailed-nsc/detailed-nsc.component';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelService } from '../../../../excel.service';
+import {AddNscComponent} from './../common-component/add-nsc/add-nsc.component';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../../customer.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {EventService} from 'src/app/Data-service/event.service';
+import {DetailedNscComponent} from './detailed-nsc/detailed-nsc.component';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelService} from '../../../../excel.service';
 
 @Component({
   selector: 'app-nsc-scheme',
@@ -83,7 +83,7 @@ export class NscSchemeComponent implements OnInit {
     this.datasource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemeNSCData(obj).subscribe(
       data => this.getNscSchemedataResponse(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.datasource.data = [];
         this.isLoading = false;
       }
@@ -121,7 +121,7 @@ export class NscSchemeComponent implements OnInit {
             dialogRef.close();
             this.getNscSchemedata();
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       },
       negativeMethod: () => {

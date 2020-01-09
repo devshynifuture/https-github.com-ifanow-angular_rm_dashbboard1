@@ -47,13 +47,9 @@ export class IncomeComponent implements OnInit {
     this.dataSource.data = [{}, {}, {}];
     this.planService.getIncomeData(obj).subscribe(
       data => this.getIncomeListRes(data),
-      // err => this.eventService.openSnackBar(err)
-      (error) => {
-        this.eventService.openSnackBar('Something went worng!', 'dismiss');
-        this.dataSource.data = [];
-        this.isLoading = false;
-      }
-    );
+      error => this.eventService.showErrorMessage(error)
+    )
+
   }
 
   getIncomeListRes(data) {
@@ -98,7 +94,7 @@ export class IncomeComponent implements OnInit {
             this.getIncomeList();
             dialogRef.close();
           },
-          err => this.eventService.openSnackBar(err, "dismiss")
+          error => this.eventService.showErrorMessage(error)
         )
       },
       negativeMethod: () => {

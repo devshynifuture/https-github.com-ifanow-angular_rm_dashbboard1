@@ -184,7 +184,7 @@ export class LiabilitiesComponent implements OnInit {
             dialogRef.close();
             this.getLiability('');
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         )
       },
       negativeMethod: () => {
@@ -281,7 +281,7 @@ export class LiabilitiesComponent implements OnInit {
     this.dataSource.data = [{}, {}, {}];
     this.customerService.getLiabilty(obj).subscribe(
       data => this.getLiabiltyRes(data), (error) => {
-        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataSource.data = [];
         this.isLoading = false;
       }

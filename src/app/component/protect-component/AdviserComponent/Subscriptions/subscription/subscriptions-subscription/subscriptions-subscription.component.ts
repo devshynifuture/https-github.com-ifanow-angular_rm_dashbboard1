@@ -1,23 +1,22 @@
-import { Component, Input, OnInit, ViewChild, HostListener } from '@angular/core';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { DeleteSubscriptionComponent } from '../common-subscription-component/delete-subscription/delete-subscription.component';
-import { SubscriptionService } from '../../subscription.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { AuthService } from '../../../../../../auth-service/authService';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {DeleteSubscriptionComponent} from '../common-subscription-component/delete-subscription/delete-subscription.component';
+import {SubscriptionService} from '../../subscription.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {AuthService} from '../../../../../../auth-service/authService';
 import * as _ from 'lodash';
-import { EnumServiceService } from '../../../../../../services/enum-service.service';
-import { UtilService } from '../../../../../../services/util.service';
-import { DatePipe } from '@angular/common';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { FixedFeeComponent } from '../common-subscription-component/fixed-fee/fixed-fee.component';
-import { VariableFeeComponent } from '../common-subscription-component/variable-fee/variable-fee.component';
-import { CreateSubscriptionComponent } from '../common-subscription-component/create-subscription/create-subscription.component';
-import { BillerSettingsComponent } from '../common-subscription-component/biller-settings/biller-settings.component';
-import { InvoiceHistoryComponent } from '../common-subscription-component/invoice-history/invoice-history.component';
-import { ChangePayeeComponent } from '../common-subscription-component/change-payee/change-payee.component';
-import { log } from 'util';
+import {EnumServiceService} from '../../../../../../services/enum-service.service';
+import {UtilService} from '../../../../../../services/util.service';
+import {DatePipe} from '@angular/common';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {FixedFeeComponent} from '../common-subscription-component/fixed-fee/fixed-fee.component';
+import {VariableFeeComponent} from '../common-subscription-component/variable-fee/variable-fee.component';
+import {CreateSubscriptionComponent} from '../common-subscription-component/create-subscription/create-subscription.component';
+import {BillerSettingsComponent} from '../common-subscription-component/biller-settings/biller-settings.component';
+import {InvoiceHistoryComponent} from '../common-subscription-component/invoice-history/invoice-history.component';
+import {ChangePayeeComponent} from '../common-subscription-component/change-payee/change-payee.component';
 
 // declare var window
 // export const MY_FORMATS = {
@@ -220,7 +219,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         }
         this.getSubSummaryRes(this.tableData);
       }, (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataSource.data = [];
         this.isLoading = false;
       }

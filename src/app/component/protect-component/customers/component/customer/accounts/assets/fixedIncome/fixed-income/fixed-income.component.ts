@@ -221,7 +221,7 @@ export class FixedIncomeComponent implements OnInit {
     this.dataSourceFixed.data = [{}, {}, {}];
     this.customerService.getFixedDeposit(obj).subscribe(
       data => this.getFixedDepositRes(data), (error) => {
-        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataSourceFixed.data = [];
         this.isLoading = false;
       }
@@ -266,7 +266,7 @@ export class FixedIncomeComponent implements OnInit {
     this.dataSourceRecurring.data = [{}, {}, {}];
     this.customerService.getRecurringDeposit(obj).subscribe(
       data => this.getRecurringDepositRes(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataSourceRecurring.data = [];
         this.isLoading = false;
       }
@@ -306,7 +306,7 @@ export class FixedIncomeComponent implements OnInit {
     this.dataSourceBond.data = [{}, {}, {}];
     this.customerService.getBonds(obj).subscribe(
       data => this.getBondsRes(data), (error) => {
-        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataSourceBond.data = [];
         this.isLoading = false;
       }
@@ -346,7 +346,7 @@ export class FixedIncomeComponent implements OnInit {
               dialogRef.close();
               this.getFixedDepositList();
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           );
         } else if (value == 'RECURRING DEPOSITE') {
           this.customerService.deleteRecurringDeposite(data.id).subscribe(
@@ -355,7 +355,7 @@ export class FixedIncomeComponent implements OnInit {
               dialogRef.close();
               this.getRecurringDepositList();
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           );
         } else {
           this.customerService.deleteBond(data.id).subscribe(
@@ -364,7 +364,7 @@ export class FixedIncomeComponent implements OnInit {
               dialogRef.close();
               this.getBondsList();
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           );
         }
       },
