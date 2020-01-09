@@ -71,7 +71,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-
+    this.dataCount = 0;
     this.getdocumentSubData();
   }
   changeSelect() {
