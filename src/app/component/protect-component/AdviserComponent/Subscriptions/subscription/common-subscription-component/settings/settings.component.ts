@@ -17,11 +17,14 @@ export class SettingsComponent implements OnInit {
   clientId: any;
   family: any;
 
+
   constructor(public dialog: MatDialog, private fb: FormBuilder, public subInjectService: SubscriptionInject,
               private eventService: EventService, private subService: SubscriptionService) {
   }
 
-  SettingProfileData: any;
+
+  SettingProfileData: Array<any> = [{ isPrimary: false }];
+  isLoading = false;
   noData: string;
 
   @Input() upperData;
@@ -31,12 +34,18 @@ export class SettingsComponent implements OnInit {
   }
 
   setPrimaryField(profileData) {
+    this.isLoading = true;
     const obj = {
       clientId: this.upperData.id,
       id: profileData.id
     };
     this.subService.setAsPrimary(obj).subscribe(
-      data => this.setAsPrimaryRes(data)
+      data => this.setAsPrimaryRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+        // this.dataSource.data = [];
+        this.SettingProfileData = [];
+        this.isLoading = false;
+      }
     );
   }
 
@@ -53,6 +62,7 @@ export class SettingsComponent implements OnInit {
   }
 
   getSettingProfileData() {
+    this.isLoading = false;
     const obj = {
       clientId: this.upperData.id,
     };

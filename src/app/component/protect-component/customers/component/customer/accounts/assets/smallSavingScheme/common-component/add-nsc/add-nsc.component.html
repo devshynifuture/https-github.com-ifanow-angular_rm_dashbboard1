@@ -32,8 +32,8 @@
                                 class="form-control br-0 rupess" formControlName="amountInvested" matInput
                                 maxlength="10" type="text">
                             <mat-error *ngIf="nscFormField.get('amountInvested').errors?.required" class="f-12 pt-4">
-                                Amount balance is required
-                            </mat-error>
+                                    This field is required
+                                </mat-error>
                             <mat-error *ngIf="(nscFormField.get('amountInvested').errors?.min)" class="f-12 pt-4">
                                 Should be greater than 100
                             </mat-error>
@@ -54,8 +54,8 @@
                             <mat-datepicker-toggle matSuffix [for]="commpicker"></mat-datepicker-toggle>
                             <mat-datepicker #commpicker></mat-datepicker>
                             <mat-error *ngIf="nscFormField.get('commDate').errors?.required" class="f-12 pt-4">
-                                Commencement date is required
-                            </mat-error>
+                                    This field is required
+                                </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -72,8 +72,8 @@
                                 <mat-option value="10">10 Months</mat-option>
                             </mat-select>
                             <mat-error class="f-12 pt-4">
-                                Tenure is required
-                            </mat-error>
+                                    This field is required
+                                </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -137,20 +137,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row pt-40">
-                    <div class="col-md-5 pr-0 text-right">
-                        <h5 class="m-0 pt-8">Nominee</h5>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="form-group mb-0">
-                            <mat-form-field><input class="form-control br-0" #nominee formControlName="nominee" matInput
-                                    maxlength="60">
-                                <mat-hint align="start" class="f-12">Optional</mat-hint>
-                                <!-- <mat-hint align="end" class="f-12">{{nominee.value.length}}/20</mat-hint> -->
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </div>
+                <app-add-nominee [ownerName]="ownerName"></app-add-nominee>
                 <div class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Linked bank account</h5>

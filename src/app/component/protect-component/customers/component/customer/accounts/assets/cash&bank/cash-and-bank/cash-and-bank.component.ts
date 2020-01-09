@@ -21,28 +21,30 @@ import {ExcelService} from '../../../../excel.service';
 export class CashAndBankComponent implements OnInit {
   showRequring: string;
   advisorId: any;
-  bankAccountList: any;
-  cashInHandList: any;
+
+
   clientId: any;
   totalAccountBalance: any;
   sumOfCashValue: any;
   isLoading = false;
   data: Array<any> = [{}, {}, {}];
+  bankAccountList = new MatTableDataSource(this.data);
+  cashInHandList = new MatTableDataSource(this.data);
   noData: string;
   excelData: any[];
   footer = [];
 
-  @ViewChild('bankAccountListTable', {static: false}) bankAccountListTableSort: MatSort;
+  @ViewChild('bankAccountListTable', { static: false }) bankAccountListTableSort: MatSort;
 
   displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc', 'status', 'icons'];
   datasource7 = ELEMENT_DATA7;
   displayedColumns8 = ['no', 'owner', 'cash', 'bal', 'desc', 'status', 'icons'];
   datasource8 = ELEMENT_DATA8;
-  @ViewChild('cashInHandListTable', {static: false}) cashInHandListTableSort: MatSort;
+  @ViewChild('cashInHandListTable', { static: false }) cashInHandListTableSort: MatSort;
 
   constructor(private excel: ExcelService, private subInjectService: SubscriptionInject,
-              private custumService: CustomerService, private eventService: EventService,
-              public utils: UtilService, public dialog: MatDialog) {
+    private custumService: CustomerService, private eventService: EventService,
+    public utils: UtilService, public dialog: MatDialog) {
   }
 
   @ViewChildren(FormatNumberDirective) formatNumber;
@@ -58,26 +60,26 @@ export class CashAndBankComponent implements OnInit {
   async ExportTOExcel(value) {
     this.excelData = [];
     let data = [];
-    var headerData = [{width: 20, key: 'Owner'},
-      {width: 20, key: 'Account type'},
-      {width: 25, key: 'Balance as on'},
-      {width: 18, key: 'Rate'},
-      {width: 18, key: 'Balance mentioned'},
-      {width: 18, key: 'Account number'},
-      {width: 18, key: 'Bank name'},
-      {width: 15, key: 'Description'},
-      {width: 10, key: 'Status'}];
+    var headerData = [{ width: 20, key: 'Owner' },
+    { width: 20, key: 'Account type' },
+    { width: 25, key: 'Balance as on' },
+    { width: 18, key: 'Rate' },
+    { width: 18, key: 'Balance mentioned' },
+    { width: 18, key: 'Account number' },
+    { width: 18, key: 'Bank name' },
+    { width: 15, key: 'Description' },
+    { width: 10, key: 'Status' }];
     var header = ['Owner', 'Account type', ' Balance as on', 'Description', 'Status'];
 
     if (value == 'Cash in hand') {
-      headerData = [{width: 20, key: 'Owner'},
-        {width: 20, key: 'Account type'},
-        {width: 25, key: ' Balance as on'},
-        {width: 15, key: 'Description'},
-        {width: 10, key: 'Status'},];
+      headerData = [{ width: 20, key: 'Owner' },
+      { width: 20, key: 'Account type' },
+      { width: 25, key: ' Balance as on' },
+      { width: 15, key: 'Description' },
+      { width: 10, key: 'Status' },];
       this.cashInHandList.filteredData.forEach(element => {
         data = [element.ownerName, (element.accountType), (element.balanceAsOn),
-          element.description, element.status];
+        element.description, element.status];
         this.excelData.push(Object.assign(data));
       });
       const footerData = ['Total',
@@ -89,8 +91,8 @@ export class CashAndBankComponent implements OnInit {
         'Balance mentioned', 'Account number', 'Bank name', 'Description', 'Status'];
       this.bankAccountList.filteredData.forEach(element => {
         data = [element.ownerName, (element.accountType == 1) ? 'Current' : 'Savings', new Date(element.balanceAsOn),
-          (element.interestRate), this.formatNumber.first.formatAndRoundOffNumber(element.accountBalance),
-          (element.account), element.bankName, element.description, element.status];
+        (element.interestRate), this.formatNumber.first.formatAndRoundOffNumber(element.accountBalance),
+        (element.account), element.bankName, element.description, element.status];
         this.excelData.push(Object.assign(data));
       });
       const footerData = ['Total', '', '', '', this.formatNumber.first.formatAndRoundOffNumber(this.totalAccountBalance), '', '', '', ''];
@@ -108,7 +110,7 @@ export class CashAndBankComponent implements OnInit {
       this.cashInHandList = new MatTableDataSource(this.data);
     } else {
       this.getBankAccountList();
-       this.bankAccountList = new MatTableDataSource(this.data);
+      this.bankAccountList = new MatTableDataSource(this.data);
     }
   }
 
@@ -128,7 +130,7 @@ export class CashAndBankComponent implements OnInit {
               dialogRef.close();
               this.getBankAccountList();
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           );
         } else {
           this.custumService.deleteCashInHand(data.id).subscribe(
@@ -137,7 +139,7 @@ export class CashAndBankComponent implements OnInit {
               dialogRef.close();
               this.getCashInHandList();
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           );
         }
 
@@ -167,9 +169,10 @@ export class CashAndBankComponent implements OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId
     };
+    this.bankAccountList.data = [{}, {}, {}];
     this.custumService.getBankAccounts(obj).subscribe(
       data => this.getBankAccountsRes(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.bankAccountList.data = [];
         this.isLoading = false;
       });
@@ -180,7 +183,7 @@ export class CashAndBankComponent implements OnInit {
     console.log('getBankAccountsRes ####', data);
     this.isLoading = false;
     if (data.cashInBankAccounts.length != 0) {
-      this.bankAccountList = new MatTableDataSource(data.cashInBankAccounts);
+      this.bankAccountList.data = data.cashInBankAccounts;
       this.bankAccountList.sort = this.bankAccountListTableSort;
       this.totalAccountBalance = data.totalAccountBalance;
     } else {
@@ -195,9 +198,10 @@ export class CashAndBankComponent implements OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId
     };
+    this.cashInHandList.data = [{}, {}, {}];
     this.custumService.getCashInHand(obj).subscribe(
       data => this.getCashInHandRes(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.cashInHandList.data = [];
         this.isLoading = false;
       }
@@ -207,12 +211,12 @@ export class CashAndBankComponent implements OnInit {
   getCashInHandRes(data) {
     console.log('getCashInHandRes ###', data);
     this.isLoading = false;
-    if(data == undefined){
+    if (data == undefined) {
       this.noData = 'No data found';
       this.cashInHandList.data = [];
     }
     else if (data.cashInHands.length != 0) {
-      this.cashInHandList = new MatTableDataSource(data.cashInHands);
+      this.cashInHandList.data = data.cashInHands;
       this.cashInHandList.sort = this.cashInHandListTableSort;
       this.sumOfCashValue = data.sumOfCashValue;
     } else {

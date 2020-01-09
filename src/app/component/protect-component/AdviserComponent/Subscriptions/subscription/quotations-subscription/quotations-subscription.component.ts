@@ -1,17 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { SubscriptionService } from '../../subscription.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from "../../../../../../auth-service/authService";
-import { UtilService } from 'src/app/services/util.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {SubscriptionService} from '../../subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from "../../../../../../auth-service/authService";
+import {UtilService} from 'src/app/services/util.service';
 import * as _ from 'lodash';
-import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from 'saturn-datepicker';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { AddQuotationComponent } from '../common-subscription-component/add-quotation/add-quotation.component';
-import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
+import {DatePipe} from '@angular/common';
+import {MAT_DATE_FORMATS} from 'saturn-datepicker';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {AddQuotationComponent} from '../common-subscription-component/add-quotation/add-quotation.component';
+import {CommonFroalaComponent} from '../common-subscription-component/common-froala/common-froala.component';
 
 export interface PeriodicElement {
   name: string;
@@ -44,12 +44,12 @@ export interface PeriodicElement {
 })
 export class QuotationsSubscriptionComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  displayedColumns: string[] = ['name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
+  displayedColumns: string[] = ['checkbox','name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
   advisorId;
   maxDate = new Date();
   noData: string;
   isLoading = false;
-  
+
   filterStatus = [];
   filterDate = [];
   statusIdList = [];
@@ -64,7 +64,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   list: any[];
-  
+
 
   getData: any = '';
   scrollCallData = true;
@@ -73,7 +73,6 @@ export class QuotationsSubscriptionComponent implements OnInit {
   tableData = [];
 
 
-  
   chips = [
     { name: 'LIVE', value: 1 },
     { name: 'PAID', value: 2 },
@@ -84,7 +83,8 @@ export class QuotationsSubscriptionComponent implements OnInit {
     { name: 'Sent date', value: 2 },
     { name: 'Client consent', value: 3 }
   ];
-  
+  dataCount: number;
+
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
     public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
@@ -94,8 +94,40 @@ export class QuotationsSubscriptionComponent implements OnInit {
     //this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
     this.getQuotationsData(false);
+    this.dataCount = 0;
+  }
+  changeSelect() {
+    this.dataCount = 0;
+    this.dataSource.filteredData.forEach(item => {
+      console.log('item item ', item);
+      if (item.selected) {
+        this.dataCount++;
+      }
+    });
+  }
+  selectAll(event) {
+    this.dataCount = 0;
+    if (this.dataSource != undefined) {
+      this.dataSource.filteredData.forEach(item => {
+        item.selected = event.checked;
+        if (item.selected) {
+          this.dataCount++;
+        }
+      });
+    }
+  }
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    if (this.dataSource != undefined) {
+      return this.dataCount === this.dataSource.filteredData.length;
+    }
   }
 
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selectAll({checked: false}) : this.selectAll({checked: true});
+  }
   scrollCall(scrollLoader) {
     const uisubs = document.getElementById('ui-subs');
     const wrapper = document.getElementById('wrapper');
@@ -153,7 +185,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     this.dataSource.data = [{}, {}, {}];
     this.subService.getSubscriptionQuotationData(obj).subscribe(
       data => this.getQuotationsDataResponse(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataSource.data = [];
         this.isLoading = false;
       }

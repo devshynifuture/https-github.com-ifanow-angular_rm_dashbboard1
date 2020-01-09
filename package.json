@@ -1,6 +1,14 @@
 {
   "name": "my-planner2",
   "version": "0.0.0",
+  "bundlewatch": {
+    "files": [
+      {
+        "path": "./src/*.js",
+        "maxSize": "100kB"
+      }
+    ]
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4200 --poll=2000",
@@ -9,6 +17,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "bundlewatch": "bundlewatch",
     "compress": "npx gzipper --verbose ./dist/myplanner ./gzipped",
     "stats": "webpack-bundle-analyzer dist/myplanner/stats-es5.json"
   },
@@ -40,7 +49,7 @@
     "hammerjs": "^2.0.8",
     "highcharts": "^7.2.1",
     "highcharts-angular": "^2.4.0",
-    "html2pdf.js": "^0.9.0",
+    "html2pdf.js": "^0.9.1",
     "jquery": "^3.4.1",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
@@ -65,6 +74,7 @@
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "^2.0.8",
     "@types/node": "^12.12.21",
+    "bundlewatch": "^0.2.5",
     "codelyzer": "^5.2.1",
     "gzipper": "^3.4.2",
     "jasmine-core": "~3.4.0",

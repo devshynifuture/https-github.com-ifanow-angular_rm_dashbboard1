@@ -1,14 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { CustomerService } from '../../../../customer.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from '@angular/material';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {CustomerService} from '../../../../customer.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {DatePipe} from '@angular/common';
+import {MAT_DATE_FORMATS} from '@angular/material';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 import * as moment from 'moment';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {UtilService} from 'src/app/services/util.service';
 
 
 @Component({
@@ -17,7 +17,7 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./bonds.component.scss'],
   providers: [
     [DatePipe],
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 })
 export class BondsComponent implements OnInit {
@@ -87,15 +87,15 @@ export class BondsComponent implements OnInit {
     this.bonds = this.fb.group({
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       bondName: [(data == undefined) ? '' : data.bondName, [Validators.required]],
-      type: [(data == undefined) ? '' : (data.type) + "", [Validators.required]],
+      type: [(data.type == undefined) ? '' : (data.type) + "", [Validators.required]],
       amountInvest: [(data == undefined) ? '' : data.amountInvested, [Validators.required]],
       rateReturns: [(data == undefined) ? '' : data.rateOfReturn, [Validators.required]],
-      couponOption: [(data == undefined) ? '' : (data.couponPayoutFrequencyId) + "", [Validators.required]],
+      couponOption: [(data.couponPayoutFrequencyId == undefined) ? '' : (data.couponPayoutFrequencyId) + "", [Validators.required]],
       commencementDate: [(data == undefined) ? '' : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(data == undefined) ? '' : data.couponRate, [Validators.required]],
-      compound: [(data == undefined) ? '' : (data.compounding) + "", [Validators.required]],
+      compound: [(data.compounding == undefined) ? '' : (data.compounding) + "", [Validators.required]],
       linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount, [Validators.required]],
-      tenure: [(data == undefined) ? '' : (data.tenure) + "", [Validators.required]],
+      tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(0), Validators.max(120)]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
@@ -107,7 +107,12 @@ export class BondsComponent implements OnInit {
     this.familyMemberId = this.bonds.controls.familyMemberId.value
     this.familyMemberId = this.familyMemberId[0]
   }
-
+  onChange(event,value) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = "100";
+      this.bonds.get(value).setValue(event.target.value);
+    }
+  }
   getFormControl(): any {
     return this.bonds.controls;
   }
@@ -121,11 +126,38 @@ export class BondsComponent implements OnInit {
   isTenure;
 
   saveBonds() {
-    this.tenure = this.getDateYMD()
-    this.maturityDate = this.tenure
-
-
-    let obj = {
+    // this.tenure = this.getDateYMD()
+    // this.maturityDate = this.tenure
+    if (this.bonds.get('bondName').invalid) {
+      this.bonds.get('bondName').markAsTouched();
+      return;
+    } else if (this.bonds.get('couponOption').invalid) {
+      this.bonds.get('couponOption').markAsTouched();
+      return;
+    } else if (this.bonds.get('interestRate').invalid) {
+      this.bonds.get('interestRate').markAsTouched();
+      return;
+    } else if (this.bonds.get('amountInvest').invalid) {
+      this.bonds.get('amountInvest').markAsTouched();
+      return;
+    }else if (this.bonds.get('commencementDate').invalid) {
+      this.bonds.get('commencementDate').markAsTouched();
+      return;
+    } else if (this.bonds.get('rateReturns').invalid) {
+      this.bonds.get('rateReturns').markAsTouched();
+      return;
+    } else if (this.bonds.get('compound').invalid) {
+      this.bonds.get('compound').markAsTouched();
+      return;
+    }else if (this.bonds.get('tenure').invalid) {
+      this.bonds.get('tenure').markAsTouched();
+      this.tenure = this.getDateYMD()
+      return;
+    } else if (this.bonds.get('type').invalid) {
+      this.bonds.get('type').markAsTouched();
+      return;
+    } else{
+      let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
       familyMemberId: this.familyMemberId,
@@ -151,16 +183,17 @@ export class BondsComponent implements OnInit {
     if (this.bonds.controls.id.value == undefined) {
       this.custumService.addBonds(obj).subscribe(
         data => this.addBondsRes(data),
-        err => this.eventService.openSnackBar(err, "dismiss")
+        error => this.eventService.showErrorMessage(error)
       );
     } else {
       //edit call
       this.custumService.editBonds(obj).subscribe(
         data => this.editBondsRes(data),
-        err => this.eventService.openSnackBar(err)
+        error => this.eventService.showErrorMessage(error)
       );
     }
   }
+}
   addBondsRes(data) {
     console.log('addrecuringDepositRes', data)
     this.subInjectService.changeNewRightSliderState({ state: 'close', data })

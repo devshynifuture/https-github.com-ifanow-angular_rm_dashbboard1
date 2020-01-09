@@ -1,15 +1,15 @@
-import { DetailedPoRdComponent } from './detailed-po-rd/detailed-po-rd.component';
-import { AddPoRdComponent } from './../common-component/add-po-rd/add-po-rd.component';
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../../customer.service';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelService } from '../../../../excel.service';
+import {DetailedPoRdComponent} from './detailed-po-rd/detailed-po-rd.component';
+import {AddPoRdComponent} from './../common-component/add-po-rd/add-po-rd.component';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../../customer.service';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelService} from '../../../../excel.service';
 
 @Component({
   selector: 'app-po-rd-scheme',
@@ -20,7 +20,9 @@ export class PoRdSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
   noData: string;
-  isLoading = true;
+  isLoading = false;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
   pordData: any;
   sumOfCurrentValue: number;
   sumOfMonthlyDeposit: number;
@@ -35,8 +37,7 @@ export class PoRdSchemeComponent implements OnInit {
   }
 
   displayedColumns21 = ['no', 'owner', 'cvalue', 'rate', 'deposit', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
-  data: Array<any> = [{}, {}, {}];
-  dataSource = new MatTableDataSource(this.data);
+
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -73,12 +74,18 @@ export class PoRdSchemeComponent implements OnInit {
   }
 
   getPoRdSchemedata() {
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
     };
+    this.dataSource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemePORDData(obj).subscribe(
-      data => this.getPoRdSchemedataResponse(data)
+      data => this.getPoRdSchemedataResponse(data), (error) => {
+        this.eventService.showErrorMessage(error);
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
@@ -86,7 +93,7 @@ export class PoRdSchemeComponent implements OnInit {
     console.log(data);
     this.isLoading = false;
     if (data) {
-      this.dataSource = new MatTableDataSource(data.postOfficeRDList);
+      this.dataSource.data = data.postOfficeRDList;
       this.dataSource.sort = this.sort;
       UtilService.checkStatusId(this.dataSource.filteredData);
       this.sumOfCurrentValue = data.sumOfCurrentValue;
@@ -114,7 +121,7 @@ export class PoRdSchemeComponent implements OnInit {
             dialogRef.close();
             this.getPoRdSchemedata();
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       },
       negativeMethod: () => {

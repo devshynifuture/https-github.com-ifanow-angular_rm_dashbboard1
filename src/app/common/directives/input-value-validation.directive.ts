@@ -1,5 +1,6 @@
 import {ValidatorType} from '../../services/util.service';
 import {Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2} from '@angular/core';
+
 @Directive({
   selector: '[appInputValueValidation]',
   // animations: [
@@ -12,7 +13,22 @@ export class InputValueValidationDirective {
   @Input() maxLength;
 
   @Input() minValue: number;
-  @Input() maxValue: number;
+  @Output() changedValue = new EventEmitter();
+
+  _maxValue: number;
+
+  get maxValue() {
+    return this._maxValue;
+  }
+
+  @Input() set maxValue(maxValue) {
+    if (maxValue) {
+      this._maxValue = parseFloat(String(maxValue));
+    } else {
+      this._maxValue = null;
+    }
+  }
+
   @Output() errorMessage = new EventEmitter<string>();
   @Output() isValid = new EventEmitter<boolean>();
   // @Input() keyValidator: RegExp = ValidatorType.ALPHA_NUMERIC_WITH_SPACE;
@@ -48,7 +64,8 @@ export class InputValueValidationDirective {
     let currValue = this._el.nativeElement.value;
     console.log('InputValueValidationDirective input event : ', event);
     console.log('InputValueValidationDirective input currValue : ', currValue);
-    console.log('InputValueValidationDirective input this.maxLength : ', this.maxLength);
+    // console.log('InputValueValidationDirective input this.maxLength : ', this.maxLength);
+    console.log('InputValueValidationDirective input this.maxValue : ', this.maxValue);
 
     if (currValue == '') {
       return;
@@ -59,10 +76,13 @@ export class InputValueValidationDirective {
     }
     if (!isNaN(currValue)) {
       // console.log('InputValueValidationDirective onInputChange isNaN : ', currValue);
-      if (this.maxValue && this.maxValue < currValue) {
-        currValue = this.maxValue;
+      if (this._maxValue && this._maxValue < currValue) {
+        console.log('InputValueValidationDirective input this.maxValue  : ', this._maxValue, ' currentValue : ', currValue);
+        currValue = this._maxValue;
       } else if (this.minValue && this.minValue > currValue) {
         currValue = this.minValue;
+        console.log('InputValueValidationDirective input this.minValue  : ', this.minValue, ' currentValue : ', currValue);
+
       }
     }
     if (!this.inputValidator.test(currValue)) {
@@ -73,8 +93,9 @@ export class InputValueValidationDirective {
     }
     if (currValue !== this._el.nativeElement.value) {
       // console.log('InputValueValidationDirective onInputChange inputValidator replacing with : ', currValue);
-
+      // this._el.nativeElement.value = currValue;
       this.renderer.setProperty(this._el.nativeElement, 'value', currValue);
+      this.changedValue.emit(currValue);
     }
 
     /*Validator */

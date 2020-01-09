@@ -7,9 +7,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {EnumServiceService} from '../../../../../../../services/enum-service.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material';
-import {MAT_DATE_FORMATS} from '@angular/material/core';
 import {UtilService} from 'src/app/services/util.service';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 import {EmailOnlyComponent} from '../email-only/email-only.component';
 import {PdfService} from '../../../../../../../services/pdf.service';
 
@@ -25,18 +23,6 @@ export interface PeriodicElement {
   selector: 'app-invoice',
   templateUrl: './invoice.component.html',
   styleUrls: ['./invoice.component.scss'],
-  providers: [
-    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
-    // application's root module. We provide it at the component level here, due to limitations of
-    // our example generation script.
-    // {
-    //   provide: DateAdapter,
-    //   useClass: MomentDateAdapter,
-    //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    // },
-    // { provide: MAT_DATE_LOCALE, useValue: 'en' },
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
-  ],
 
 })
 
@@ -53,8 +39,7 @@ export class InvoiceComponent implements OnInit {
     {name: 'Registered Business - Composition', value: 1},
     {name: 'Unregistered Business', value: 2}
   ];
-  // numValidator = ValidatorType.NUMBER_ONLY;
-  // numKeyValidator = ValidatorType.NUMBER_KEY_ONLY;
+
   @ViewChild('invoiceTemplate', {static: false}) invoiceTemplate: ElementRef;
 
   constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
@@ -105,6 +90,8 @@ export class InvoiceComponent implements OnInit {
   @Input() invoiceData;
   @Input() invoiceInSub;
   @Input() clientData;
+  @Input() invoiceDesign;
+  @Input() upperData;
   editPayment;
   @Output() valueChange = new EventEmitter();
 
@@ -131,6 +118,7 @@ export class InvoiceComponent implements OnInit {
   editFormData: boolean;
   paymentDate: string;
   rPayment;
+  showPaymentRecive = false;
 
   @Input()
   set data(data) {
@@ -141,7 +129,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.showPaymentRecive = false;
     this.advisorId = AuthService.getAdvisorId();
     this.getClients();
     this.getServicesList();
@@ -150,6 +138,7 @@ export class InvoiceComponent implements OnInit {
     // this.getPayReceive(data);
     console.log('this.invoiceSubscription', this.invoiceInSub);
     console.log('###########', this.clientData);
+    console.log('@@@@@@@@', this.upperData);
     this.dataInvoices = this.clientData;
     this.showRecord = false;
     this.showEdit = false;
@@ -170,11 +159,6 @@ export class InvoiceComponent implements OnInit {
     }
   }
 
-  // onDateInput(event){
-  //   this.paymentDate += this.utils.dateFormat(event);
-  // }
-
-
   keyPress(event: any) {
     console.log(event.target.value.length);
     const pattern = /[0-9\+\-\ ]/;
@@ -186,7 +170,6 @@ export class InvoiceComponent implements OnInit {
   }
 
   dontAllowTyping(event, maxLength: number) {
-    // console.log(this.rPayment.value());
     if (event.target.value.length > maxLength) {
       event.preventDefault();
     }
@@ -206,8 +189,12 @@ export class InvoiceComponent implements OnInit {
   }
 
   getPaymentReceivedRes(data) {
-
     this.dataSource = data;
+    if (data == undefined) {
+      this.showPaymentRecive = false;
+    } else {
+      this.showPaymentRecive = true;
+    }
     if (data) {
       this.feeCollectionMode.forEach(o => {
         o.value = parseInt(o.value);
@@ -223,7 +210,6 @@ export class InvoiceComponent implements OnInit {
   selectClient(c, data) {
     console.log(c);
     console.log('ssss', data);
-
     console.log('getInvoiceDataRes', data);
     this.storeData = data;
     this.storeData.billerAddress = this.defaultVal.biller.billerAddress;
@@ -267,6 +253,7 @@ export class InvoiceComponent implements OnInit {
     this.finalAmount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.finalAmount.value;
     this.discount = (isNaN(this.editPayment.controls.finalAmount.value)) ? 0 : this.editPayment.controls.discount.value;
     console.log('finalAmount', this.finalAmount);
+    this.taxStatus = this.editPayment.value.taxStatus;
   }
 
   getInvoiceDataRes(data) {
@@ -286,6 +273,7 @@ export class InvoiceComponent implements OnInit {
     console.log('getClientListRes', data.payees);
     this.clientList = data.payees;
     this.defaultVal = data;
+    this.advisorBillerProfileId = data.biller.id;
     this.editPayment.controls.billerAddress.setValue(data.biller.billerAddress);
     this.editPayment.controls.footnote.setValue(data.biller.footnote);
     this.editPayment.controls.terms.setValue(data.biller.terms);
@@ -351,8 +339,10 @@ export class InvoiceComponent implements OnInit {
   }
 
   getInvoiceData(data) {
+    console.log('@@@@@@@@', this.upperData);
     this.copyStoreData = data;
     this.storeData = data;
+    this.clientId = AuthService.getClientId();
     this.auto = this.storeData.auto;
     console.log(this.storeData);
     this.editPayment = this.fb.group({
@@ -362,7 +352,7 @@ export class InvoiceComponent implements OnInit {
       billingAddress: [(data.billingAddress == undefined) ? '' : data.billingAddress, [Validators.required]],
       invoiceNumber: [data.invoiceNumber, [Validators.required]],
       invoiceDate: [new Date(data.invoiceDate), [Validators.required]],
-      finalAmount: [(data.finalAmount == undefined) ? 0 : parseInt(data.finalAmount), [Validators.required]],
+      finalAmount: [(data.subTotal == undefined) ? 0 : parseInt(data.subTotal), [Validators.required]],
       discount: [(data.discount == undefined) ? 0 : data.discount, [Validators.required]],
       dueDate: [new Date(data.dueDate), [Validators.required]],
       footnote: [data.footnote, [Validators.required]],
@@ -391,12 +381,13 @@ export class InvoiceComponent implements OnInit {
 
   changeTaxStatus(changeTaxStatus) {
     console.log('changeTaxStatus', changeTaxStatus);
-    if (changeTaxStatus == 'SGST(9%)|CGST(9%)') {
-      this.finAmountC = (9 / 100) * this.editPayment.controls.finalAmount.value;
-      this.finAmountS = (9 / 100) * this.editPayment.controls.finalAmount.value;
+    if (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') {
+      this.finAmountC = this.finalAmount * 9 / 100;
+      this.finAmountS = this.finalAmount * 9 / 100;
       this.finAmount = this.finAmountC + this.finAmountS + parseInt(this.editPayment.controls.finalAmount.value);
     } else {
-      this.finAmount = (18 / 100) * this.editPayment.controls.finalAmount.value + parseInt(this.editPayment.controls.finalAmount.value);
+      this.finAmount = (this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount));
+      this.finAmount = (this.finAmount) * 18 / 100;
     }
     this.storeData.subToatal = this.editPayment.controls.finalAmount.value;
     this.taxStatus = changeTaxStatus;
@@ -404,12 +395,15 @@ export class InvoiceComponent implements OnInit {
   }
 
   updateInvoice() {
-    if (this.taxStatus[0] == 'SGST(9%)|CGST(9%)') {
-      this.finAmountC = (9 / 100) * this.editPayment.controls.finalAmount.value;
-      this.finAmountS = (9 / 100) * this.editPayment.controls.finalAmount.value;
-      this.finAmount = this.finAmountC + this.finAmountS + parseInt(this.editPayment.controls.finalAmount.value);
+    if (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') {
+      this.finAmountC = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
+      this.finAmountC = this.finAmountC * 9 / 100;
+      this.finAmountS = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
+      this.finAmountS = this.finAmountS * 9 / 100;
+      this.finAmount = this.finAmountC + this.finAmountS;
     } else {
-      this.finAmount = (18 / 100) * this.editPayment.controls.finalAmount.value + parseInt(this.editPayment.controls.finalAmount.value);
+      this.finAmount = (this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount));
+      this.finAmount = (this.finAmount) * 18 / 100;
     }
     if (this.editPayment.get('dueDate').invalid) {
       this.editPayment.get('dueDate').markAsTouched();
@@ -421,23 +415,22 @@ export class InvoiceComponent implements OnInit {
       this.editPayment.get('taxStatus').markAsTouched();
       return;
     } else {
-      if (this.editPayment.value.id == 0) {
+      if (this.editPayment.value.id == 0 || this.editPayment.value.id == null) {
         const service = [{
           serviceName: this.editPayment.value.serviceName
         }];
         const obj = {
           clientName: this.editPayment.value.clientName,
-          advisorBillerProfileId: this.editPayment.value.advisorBillerProfileId,
+          advisorBillerProfileId: (this.editPayment.value.advisorBillerProfileId == undefined) ? this.advisorBillerProfileId : this.editPayment.value.advisorBillerProfileId,
           billerName: this.editPayment.value.billerName,
-          advisorId: this.editPayment.value.advisorId,
+          advisorId: this.advisorId,
           clientBillerId: this.editPayment.value.clientBillerId,
           billerAddress: this.editPayment.value.billerAddress,
           billingAddress: this.editPayment.value.billingAddress,
           invoiceNumber: this.editPayment.value.invoiceNumber,
           subTotal: this.editPayment.value.finalAmount,
-          total: (parseInt(this.editPayment.value.finalAmount) - parseInt(this.editPayment.value.discount)) + parseInt(this.finAmount),
           discount: this.editPayment.value.discount,
-          finalAmount: this.editPayment.value.finalAmount,
+          finalAmount: (parseInt(this.editPayment.value.finalAmount) - parseInt(this.editPayment.value.discount)) + parseInt(this.finAmount),
           invoiceDate: this.editPayment.value.invoiceDate,
           dueDate: this.editPayment.value.dueDate,
           igst: (this.editPayment.value.taxStatus == 'IGST(18%)') ? 18 : null,
@@ -448,7 +441,7 @@ export class InvoiceComponent implements OnInit {
           sgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountS : null,
           footnote: this.editPayment.value.footnote,
           terms: this.editPayment.value.terms,
-          clientId: this.editPayment.value.clientId,
+          clientId: (this.upperData == undefined) ? this.clientId : this.upperData,
           services: service,
         };
         console.log('this.editPayment', obj);
@@ -456,13 +449,23 @@ export class InvoiceComponent implements OnInit {
           data => this.addInvoiceRes(data)
         );
       } else {
-        const service = [{
-          serviceName: this.editPayment.value.serviceName,
-          averageFees: this.storeData.services[0].averageFees,
-          description: this.storeData.services[0].description,
-          fromDate: this.storeData.services[0].fromDate,
-          toDate: this.storeData.services[0].toDate,
-        }];
+        if (this.storeData.services == undefined) {
+          this.service = [{
+            serviceName: this.editPayment.value.serviceName,
+            averageFees: '',
+            description: '',
+            fromDate: '',
+            toDate: '',
+          }];
+        } else {
+          this.service = [{
+            serviceName: this.editPayment.value.serviceName,
+            averageFees: this.storeData.services[0].averageFees,
+            description: this.storeData.services[0].description,
+            fromDate: this.storeData.services[0].fromDate,
+            toDate: this.storeData.services[0].toDate,
+          }];
+        }
         const obj = {
           id: this.editPayment.value.id,
           clientName: this.editPayment.value.clientName,
@@ -484,7 +487,7 @@ export class InvoiceComponent implements OnInit {
           sgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountS : null,
           footnote: this.editPayment.value.footnote,
           terms: this.editPayment.value.terms,
-          services: service,
+          services: this.service,
         };
         console.log('this.editPayment', obj);
         this.subService.updateInvoiceInfo(obj).subscribe(
@@ -660,6 +663,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   editInvoice() {
+    this.showEditIn = true;
     this.showEdit = true;
   }
 

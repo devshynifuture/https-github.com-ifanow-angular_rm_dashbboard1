@@ -6,7 +6,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {UtilService} from 'src/app/services/util.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatTableDataSource} from '@angular/material';
 import {ExcelService} from '../../../../excel.service';
 
 @Component({
@@ -18,34 +18,41 @@ export class PPFSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
   noData: string;
-  isLoading: boolean = true;
+  isLoading = false;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
 
-  constructor(private excel : ExcelService,public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
+  constructor(private excel: ExcelService, public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   displayedColumns = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
-  dataSource;
+
   ngOnInit() {
+
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getPpfSchemeData();
   }
   getPpfSchemeData() {
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
     }
+    this.dataSource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemePPFData(obj).subscribe(
       data => this.getPpfSchemeDataResponse(data),
       (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataSource.data = [];
         this.isLoading = false;
       });
   }
   getPpfSchemeDataResponse(data) {
+
     console.log(data);
     this.isLoading = false;
     if (data.PPFList.length != 0) {
-      this.dataSource = data.PPFList;
+      this.dataSource.data = data.PPFList;
+
     } else {
       this.noData = 'No scheme found';
       //this.dataSource.data = []
@@ -66,7 +73,7 @@ export class PPFSchemeComponent implements OnInit {
             dialogRef.close();
             this.getPpfSchemeData();
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         )
       },
       negativeMethod: () => {

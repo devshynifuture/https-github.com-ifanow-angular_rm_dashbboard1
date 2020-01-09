@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { SubscriptionService } from '../../../subscription.service';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { UtilService } from 'src/app/services/util.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {SubscriptionService} from '../../../subscription.service';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {UtilService} from 'src/app/services/util.service';
+import {AuthService} from 'src/app/auth-service/authService';
 
 export interface PeriodicElement {
   Invoicenumber: string;
@@ -32,6 +32,9 @@ export class InvoicesComponent implements OnInit {
   advisorId: any;
   _clientData: any;
   list: any[];
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
+  uperDataToClient: any;
 
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, private subService: SubscriptionService, public dialog: MatDialog) {
@@ -44,26 +47,30 @@ export class InvoicesComponent implements OnInit {
 
   @Input() upperData;
   displayedColumns: string[] = ['checkbox', 'date', 'Invoice number', 'Service name', 'Billed to', 'status', 'Duedate', 'Amount', 'Balance due', 'icons'];
-  dataSource;
+
 
   ngOnInit() {
-    this.isLoading = true;
-    this.dataSource = [{}, {}, {}];
+
     this.getInvoiceList();
     this.advisorId = AuthService.getAdvisorId();
-    console.log('CLIENT INVOICE ',this.upperData);
+    console.log('CLIENT INVOICE ', this.upperData);
     this.invoiceDesign = 'true';
     this.dataCount = 0;
   }
 
   getInvoiceList() {
+    this.isLoading = true;
     const obj = {
       id: this.upperData.id, // pass here client ID as id
       module: 2,
       // 'clientId':this.clientData.id
     };
     this.subService.getInvoices(obj).subscribe(
-      data => this.getInvoiceResponseData(data)
+      data => this.getInvoiceResponseData(data), (error) => {
+        this.eventService.showErrorMessage(error);
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
     );
   }
   getInvoiceResponseData(data) {
@@ -83,6 +90,7 @@ export class InvoicesComponent implements OnInit {
   }
   openEdit(edit) {
     this.invoiceDesign = edit;
+    this.uperDataToClient = this.upperData.id
     console.log('edit', edit);
   }
 
@@ -127,7 +135,7 @@ export class InvoicesComponent implements OnInit {
       documentList: [],
       isInv: true
     };
-    this.dataSource.forEach(singleElement => {
+    this.dataSource.filteredData.forEach(singleElement => {
       if (singleElement.selected) {
         data.documentList.push(singleElement);
       }
@@ -225,7 +233,7 @@ export class InvoicesComponent implements OnInit {
             dialogRef.close();
             this.getInvoiceList();
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       },
       negativeMethod: () => {

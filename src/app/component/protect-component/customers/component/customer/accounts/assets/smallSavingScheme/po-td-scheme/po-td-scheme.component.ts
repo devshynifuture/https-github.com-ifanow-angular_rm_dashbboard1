@@ -22,9 +22,11 @@ export class PoTdSchemeComponent implements OnInit {
   clientId: number;
   noData: string;
   footer = [];
-  isLoading = true;
+  isLoading = false;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
 
@@ -32,7 +34,7 @@ export class PoTdSchemeComponent implements OnInit {
   }
 
   displayedColumns22 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'tenure', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
-  dataSource;
+
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -43,21 +45,21 @@ export class PoTdSchemeComponent implements OnInit {
   async ExportTOExcel(value) {
     this.excelData = [];
     let data = [];
-    const headerData = [{width: 20, key: 'Owner'},
-      {width: 20, key: 'Current Value'},
-      {width: 10, key: 'Rate'},
-      {width: 20, key: 'Amount Invested'},
-      {width: 20, key: 'Tenure'},
-      {width: 20, key: 'Maturity Value'},
-      {width: 20, key: 'Maturity Date'},
-      {width: 25, key: 'TD Number'},
-      {width: 15, key: 'Description'},
-      {width: 15, key: 'Status'},];
+    const headerData = [{ width: 20, key: 'Owner' },
+    { width: 20, key: 'Current Value' },
+    { width: 10, key: 'Rate' },
+    { width: 20, key: 'Amount Invested' },
+    { width: 20, key: 'Tenure' },
+    { width: 20, key: 'Maturity Value' },
+    { width: 20, key: 'Maturity Date' },
+    { width: 25, key: 'TD Number' },
+    { width: 15, key: 'Description' },
+    { width: 15, key: 'Status' },];
     const header = ['Owner', 'Current Value', 'Rate', 'Amount Invested',
       'Tenure', 'Maturity Value', 'Maturity Date', 'TD Number', 'Description', 'Status'];
     this.dataSource.filteredData.forEach(element => {
       data = [element.ownerName, (element.currentValue), (element.rate), (element.balance),
-        new Date(element.balanceAsOn), element.description, element.status];
+      new Date(element.balanceAsOn), element.description, element.status];
       this.excelData.push(Object.assign(data));
     });
     const footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(), '',
@@ -67,12 +69,18 @@ export class PoTdSchemeComponent implements OnInit {
   }
 
   getPoTdSchemedata() {
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
     };
+    this.dataSource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemePOTDData(obj).subscribe(
-      data => this.getPoTdSchemedataResponse(data)
+      data => this.getPoTdSchemedataResponse(data), (error) => {
+        this.eventService.showErrorMessage(error);
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
@@ -80,11 +88,14 @@ export class PoTdSchemeComponent implements OnInit {
     console.log(data);
     this.isLoading = false;
     if (data.postOfficeTdList.length != 0) {
-      this.dataSource = new MatTableDataSource(data.postOfficeTdList);
+      this.dataSource.data = data.postOfficeTdList;
       this.dataSource.sort = this.sort;
       UtilService.checkStatusId(this.dataSource.filteredData);
     } else {
       this.noData = 'No scheme found';
+      this.dataSource.data = [];
+
+
     }
   }
 
@@ -103,7 +114,7 @@ export class PoTdSchemeComponent implements OnInit {
             dialogRef.close();
             this.getPoTdSchemedata();
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       },
       negativeMethod: () => {

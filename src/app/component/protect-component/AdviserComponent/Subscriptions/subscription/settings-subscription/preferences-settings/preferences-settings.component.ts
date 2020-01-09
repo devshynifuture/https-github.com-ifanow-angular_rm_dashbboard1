@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionService } from '../../../subscription.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { FormBuilder } from '@angular/forms';
-import { PreferenceEmailInvoiceComponent } from '../../common-subscription-component/preference-email-invoice/preference-email-invoice.component';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { UtilService } from 'src/app/services/util.service';
-import { BillerProfileAdvisorComponent } from '../../common-subscription-component/biller-profile-advisor/biller-profile-advisor.component';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionService} from '../../../subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {FormBuilder} from '@angular/forms';
+import {PreferenceEmailInvoiceComponent} from '../../common-subscription-component/preference-email-invoice/preference-email-invoice.component';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {UtilService} from 'src/app/services/util.service';
+import {BillerProfileAdvisorComponent} from '../../common-subscription-component/biller-profile-advisor/biller-profile-advisor.component';
 
 @Component({
   selector: 'app-preferences-settings',
@@ -62,8 +62,8 @@ export class PreferencesSettingsComponent implements OnInit {
     this.isLoading = true;
     this.billerProfileData = [{ isPrimary: false }];
     this.subscription.getPreferenceBillerProfile(this.advisorId).subscribe(
-      data => this.getProfileBillerDataResponse(data),(error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+      data => this.getProfileBillerDataResponse(data), (error) => {
+        this.eventService.showErrorMessage(error);
         // this.dataSource.data = [];
         this.billerProfileData = [];
         this.isLoading = false;
@@ -155,8 +155,8 @@ export class PreferencesSettingsComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        this.getProfileBillerData()
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getProfileBillerData()
           console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }
@@ -184,7 +184,7 @@ export class PreferencesSettingsComponent implements OnInit {
             dialogRef.close();
             this.eventService.openSnackBar("Biller is deleted", "dismiss")
           },
-          err => this.eventService.openSnackBar(err, "dismiss")
+          error => this.eventService.showErrorMessage(error)
         );
 
       },

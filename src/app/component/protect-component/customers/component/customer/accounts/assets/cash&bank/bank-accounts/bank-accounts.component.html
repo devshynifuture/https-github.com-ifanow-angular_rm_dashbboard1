@@ -53,7 +53,7 @@
                         maxlength="10" class="form-control br-0 rupess" formControlName="accountBalance">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isAccountBalance && getFormControl().accountBalance.invalid || getFormControl().accountBalance.touched && getFormControl().accountBalance.invalid)}">
-                        this field is required
+                        This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/10</mat-hint>
                 </mat-form-field>
@@ -72,7 +72,7 @@
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12 pt-4"
                     [ngClass]="{'v-h':!(isBalanceAsOn && getFormControl().balanceAsOn.invalid || getFormControl().balanceAsOn.touched && getFormControl().balanceAsOn.invalid)}">
-                    Commencement date is required
+                    This field is required
                 </mat-error>
             </mat-form-field>
 

@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { AddAssetStocksComponent } from './add-asset-stocks/add-asset-stocks.component';
-import { StockScripLevelHoldingComponent } from './stock-scrip-level-holding/stock-scrip-level-holding.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { StockScripLevelTransactionComponent } from './stock-scrip-level-transaction/stock-scrip-level-transaction.component';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import {Component, OnInit} from '@angular/core';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {AddAssetStocksComponent} from './add-asset-stocks/add-asset-stocks.component';
+import {StockScripLevelHoldingComponent} from './stock-scrip-level-holding/stock-scrip-level-holding.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatTableDataSource} from '@angular/material/table';
+import {StockScripLevelTransactionComponent} from './stock-scrip-level-transaction/stock-scrip-level-transaction.component';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
 import * as Highcharts from 'highcharts';
+
 @Component({
   selector: 'app-asset-stocks',
   templateUrl: './asset-stocks.component.html',
@@ -208,7 +209,7 @@ export class AssetStocksComponent implements OnInit {
             dialogRef.close();
             this.getStocksData();
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         )
       },
       negativeMethod: () => {

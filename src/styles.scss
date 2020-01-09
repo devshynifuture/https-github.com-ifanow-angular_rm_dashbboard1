@@ -284,13 +284,8 @@
 }
 
 #ui-subs {
-  position: absolute;
-  top: 0px;
-  height: 100%;
-  padding-top: 130px;
-  overflow: auto;
-  display: block;
-  width: 100%;
+  padding-top: 80px;
+  // overflow: hidden;
 
   .wrapper-20 {
     display: block;
@@ -305,12 +300,12 @@
     display: none;
   }
 
-  .filterBox {
-    position: sticky;
-    top: 0px;
-    width: 100% !important;
-    z-index: 9;
-  }
+  // .filterBox {
+  //   position: sticky;
+  //   top: 0px;
+  //   width: 100% !important;
+  //   z-index: 9;
+  // }
 
   // .stickyHeader1 {
   //   position: sticky;
@@ -827,7 +822,7 @@ mat-tab-group[vertical] {
   // border-color: #DADCE0 #DADCE0 #fff;
   // }
   .mat-tab-body-wrapper {
-    border: 1px solid #DADCE0;
+    border: 1px solid #e9eaec;
     border-top: 0px !important;
   }
 

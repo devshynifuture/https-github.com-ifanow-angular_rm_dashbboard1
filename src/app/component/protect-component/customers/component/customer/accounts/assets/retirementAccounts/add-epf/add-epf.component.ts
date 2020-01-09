@@ -96,17 +96,21 @@ export class AddEPFComponent implements OnInit {
     return this.epf.controls;
   }
   saveEPF() {
-    if (this.epf.controls.annualSalGrowth.invalid) {
-      this.isAnnualSalGrowth = true;
+
+    if (this.epf.get('employeeContry').invalid) {
+      this.epf.get('employeeContry').markAsTouched();
       return;
-    } else if (this.epf.controls.balanceAsOn.invalid) {
-      this.isBalanceAsOn = true;
+    } else if (this.epf.get('employerContry').invalid) {
+      this.epf.get('employerContry').markAsTouched();
       return;
-    } else if (this.epf.controls.employeeContry.invalid) {
-      this.isEmployeeContry = true;
+    } else if (this.epf.get('currentEPFBal').invalid) {
+      this.epf.get('currentEPFBal').markAsTouched();
       return;
-    } else if (this.epf.controls.employerContry.invalid) {
-      this.isEmployerContry = true;
+    } else if (this.epf.get('balanceAsOn').invalid) {
+      this.epf.get('balanceAsOn').markAsTouched();
+      return;
+    } else if (this.epf.get('annualSalGrowth').invalid) {
+      this.epf.get('annualSalGrowth').markAsTouched();
       return;
     } else {
 

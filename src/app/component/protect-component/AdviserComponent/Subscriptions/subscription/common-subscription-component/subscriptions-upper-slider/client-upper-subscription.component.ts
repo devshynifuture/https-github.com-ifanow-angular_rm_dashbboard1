@@ -1,14 +1,15 @@
-import { Component, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort } from '@angular/material';
-import { DeleteSubscriptionComponent } from '../delete-subscription/delete-subscription.component';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { UtilService } from 'src/app/services/util.service';
-import { MatTableDataSource } from '@angular/material/table';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort} from '@angular/material';
+import {DeleteSubscriptionComponent} from '../delete-subscription/delete-subscription.component';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {UtilService} from 'src/app/services/util.service';
+import {MatTableDataSource} from '@angular/material/table';
 import * as _ from 'lodash';
+
 // import { element } from 'protractor';
 export interface PeriodicElement {
   service: string;
@@ -118,7 +119,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     this.clientData = [{}];
     this.subscription.getSubSummary(obj).subscribe(
       data => this.getSubSummaryRes(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.sub.data = [];
         this.isLoading = false;
       }
@@ -150,7 +151,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
 
   getSubSummaryRes(data) {
     this.isLoading = false;
-    console.log(data, "hi client");
+    console.log(data, data[0].clientName, "hi client");
     if (data == undefined) {
       this.clientData.length == 0;
       this.sub = undefined;

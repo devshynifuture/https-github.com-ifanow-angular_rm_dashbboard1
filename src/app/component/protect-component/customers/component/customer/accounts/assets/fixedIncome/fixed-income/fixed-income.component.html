@@ -30,7 +30,7 @@
     <div *ngIf="showRequring == '1'">
         <div class="row">
             <div class="col-md-7 p-0 text-left">
-                <!-- <h2 class="f-18 m-0 proximaFont ">Fixed deposit</h2> -->
+                <h2 class="f-18 m-0 proximaFont ">Fixed deposit</h2>
             </div>
             <div class="col-md-5 p-0 text-right right" *ngIf="dataSourceFixed.filteredData.length > 0">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
@@ -66,7 +66,7 @@
                     </button>
                 </mat-menu>
 
-                <button mat-stroked-button class="btn-primary proximaFont addon v-middle" (click)="openPortfolioSummary('addFixedDeposit','open')"><i class="material-icons">add</i>ADD NEW
+                <button mat-stroked-button class="btn-primary proximaFont addon v-middle" (click)="openPortfolioSummary('addFixedDeposit','open')"> ADD NEW
                 </button>
             </div>
         </div>
@@ -199,9 +199,9 @@
     <div *ngIf="showRequring == '2'">
         <div class="row">
             <div class="col-md-7 p-0">
-                <!-- <h2 class="f-18 m-0 proximaFont">
+                <h2 class="f-18 m-0 proximaFont">
                     Recurring deposits
-                </h2> -->
+                </h2>
             </div>
             <div class="col-md-5 p-0 text-right right " *ngIf="dataSourceRecurring.filteredData.length > 0">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
@@ -232,12 +232,14 @@
                         STATUS - PENDING
                     </button>
                 </mat-menu>
-                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddRecurringDeposit('open')"><i class="material-icons">add</i>ADD
+                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddRecurringDeposit('open')">
+                    ADD
                     NEW
                 </button>
             </div>
         </div>
         <div class="example-container col-md-12 p-0 mt-8 mb-44 fixed-deposite">
+
             <table *ngIf="dataSourceRecurring.filteredData.length > 0" matSort #recurringDepositTable="matSort" mat-table [dataSource]="dataSourceRecurring" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No</th>
@@ -254,7 +256,8 @@
                     <td mat-footer-cell *matFooterCellDef class="br f-500 p-8 text-left"> </td>
                 </ng-container>
                 <ng-container matColumnDef="cvalue">
-                    <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br text-right "> Current value
+                    <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br text-right ">
+                        Current value
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right " appFormatNumber>
                         <div class="bar"> {{ element.currentValue }} </div>
@@ -264,7 +267,8 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="rate">
-                    <th mat-sort-header="interestRate" mat-header-cell *matHeaderCellDef class="br text-right t-4"> Rate
+                    <th mat-sort-header="interestRate" mat-header-cell *matHeaderCellDef class="br text-right t-4">
+                        Rate
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right t-4">
                         <div class="bar"> {{element.interestRate}} </div>
@@ -283,7 +287,8 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="mdate">
-                    <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br  text-left"> Maturity date
+                    <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br  text-left">
+                        Maturity date
                     </th>
                     <td mat-cell *matCellDef="let element" class="br  text-left">
                         <div class="bar"> {{element.maturityDate | date:'dd/MM/yyyy'}} </div>
@@ -318,7 +323,8 @@
                         </i>
                         <mat-menu #menu4="matMenu">
                             <button mat-menu-item (click)="openAddRecurringDeposit(element)">Edit</button>
-                            <button mat-menu-item (click)="detailedViewRecurringDeposit(element)">Deatiled View</button>
+                            <button mat-menu-item (click)="detailedViewRecurringDeposit(element)">Deatiled
+                                View</button>
                             <button mat-menu-item>Activity</button>
                             <button mat-menu-item (click)="deleteModal('RECURRING DEPOSITE',element)">Delete</button>
                         </mat-menu>
@@ -329,6 +335,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns5;sticky: true" [hidden]="isLoading"></tr>
             </table>
+
             <div *ngIf="dataSourceRecurring.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width400" src="assets/images/svg/clients-img.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
@@ -342,7 +349,7 @@
     <div *ngIf="showRequring == '3'">
         <div class="row">
             <div class="col-md-7 p-0 text-left">
-                <!-- <h2 class="f-18 m-0 proximaFont">Bonds</h2> -->
+                <h2 class="f-18 m-0 proximaFont">Bonds</h2>
             </div>
             <div class="col-md-5 p-0 text-right right " *ngIf="dataSourceBond.filteredData.length > 0">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
@@ -360,12 +367,12 @@
                 <button mat-stroked-button class="btn-default addon mr-8 ml-8 v-middle"><i
                         class="material-icons">filter_list</i>FILTERS
                 </button>
-                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openBonds(null)"><i
-                        class="material-icons">add</i>ADD NEW
+                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openBonds(null)"> ADD NEW
                 </button>
             </div>
         </div>
         <div class="example-container p-0 col-md-12 mt-8 mb-44 fixed-deposite">
+
             <table *ngIf="dataSourceBond.filteredData.length > 0" matSort #bondListTable="matSort" mat-table [dataSource]="dataSourceBond" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br t-2"> No</th>
@@ -393,7 +400,8 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="camt">
-                    <th mat-sort-header="couponAmount" mat-header-cell *matHeaderCellDef class="br  text-right"> Coupon amount
+                    <th mat-sort-header="couponAmount" mat-header-cell *matHeaderCellDef class="br  text-right">
+                        Coupon amount
                     </th>
                     <td mat-cell *matCellDef="let element" class="br  text-right" appFormatNumber>
                         <div class="bar"> {{ element.couponAmount }} </div>
@@ -438,7 +446,8 @@
                     <td mat-footer-cell *matFooterCellDef class="br  text-right"></td>
                 </ng-container>
                 <ng-container matColumnDef="tenure">
-                    <th mat-sort-header="tenure" mat-header-cell *matHeaderCellDef class="br text-right"> Tenure...</th>
+                    <th mat-sort-header="tenure" mat-header-cell *matHeaderCellDef class="br text-right"> Tenure...
+                    </th>
                     <td mat-cell *matCellDef="let element" class="br text-right">
                         <div class="bar"> {{element.tenure}} </div>
                     </td>
@@ -483,6 +492,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns6;"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns6;sticky: true" [hidden]="isLoading"></tr>
             </table>
+
             <div *ngIf="dataSourceBond.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width400" src="assets/images/svg/clients-img.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>

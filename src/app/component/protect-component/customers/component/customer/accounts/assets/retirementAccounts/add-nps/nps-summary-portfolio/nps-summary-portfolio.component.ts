@@ -37,7 +37,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   nomineesListFM: any[];
 
   clientId: any;
-  nexNomineePer=0;
+  nexNomineePer = 0;
   getPerAllocation: number;
   sumPer: any;
   showError = false;
@@ -45,7 +45,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   familyList: any;
   dataFM: any[];
   showHide = false;
-  constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService) {
+  constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
     this.summaryNPS = this.fb.group({
       published: true,
       futureContry: this.fb.array([]),
@@ -100,7 +100,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     //   return o.nomineePercentageShare;
     // });
     this.nominee.value.forEach(element => {
-      this.nexNomineePer+=element.nomineePercentageShare
+      this.nexNomineePer += element.nomineePercentageShare
     });
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -123,11 +123,11 @@ export class NpsSummaryPortfolioComponent implements OnInit {
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       futureContributionList: this.fb.array([this.fb.group({
-        frequencyId: null,
-        accountPreferenceId: null, approxContribution: null
+        frequencyId: [null, [Validators.required]],
+        accountPreferenceId: [null, [Validators.required]], approxContribution: [null, [Validators.required]]
       })]),
       npsNomineesList: this.fb.array([this.fb.group({
-        nomineeName: null, nomineePercentageShare: [null, [Validators.required, Validators.min(1)]],
+        nomineeName: [null, [Validators.required]], nomineePercentageShare: [null, [Validators.required, Validators.min(1)]],
       })]),
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]]
     });
@@ -139,7 +139,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
           frequencyId: [(element.frequencyId) + "", [Validators.required]],
           accountPreferenceId: [(element.accountPreferenceId + ""), Validators.required],
           approxContribution: [(element.approxContribution), Validators.required],
-          id:[element.id,[Validators.required]]
+          id: [element.id, [Validators.required]]
         }))
       })
       data.npsNomineesList.forEach(element => {
@@ -147,7 +147,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
           nomineeName: [(element.nomineeName), [Validators.required]],
 
           nomineePercentageShare: [element.nomineePercentageShare, Validators.required],
-          id:[element.id,[Validators.required]]
+          id: [element.id, [Validators.required]]
         }))
       })
       this.nominee.removeAt(0);
@@ -165,8 +165,8 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   }
   addFutureContry() {
     this.futureContry.push(this.fb.group({
-      frequencyId: null,
-      accountPreferenceId: null, approxContribution: null
+      frequencyId: [null, [Validators.required]],
+      accountPreferenceId: [null, [Validators.required]], approxContribution: [null, [Validators.required]]
     }));
 
   }
@@ -183,7 +183,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     //   return o.nomineePercentageShare;
     // });
     this.nominee.value.forEach(element => {
-      this.nexNomineePer+=element.nomineePercentageShare
+      this.nexNomineePer += element.nomineePercentageShare
     });
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -193,10 +193,10 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     }
     if (this.showError == false) {
       this.nominee.push(this.fb.group({
-        nomineeName: null, nomineePercentageShare: null,
+        nomineeName: [null, [Validators.required]], nomineePercentageShare: [null, [Validators.required]],
       }));
     }
-   
+
 
   }
   removeNominee(item) {
@@ -207,7 +207,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     //   return o.nomineePercentageShare;
     // });
     this.nominee.value.forEach(element => {
-      this.nexNomineePer+=element.nomineePercentageShare
+      this.nexNomineePer += element.nomineePercentageShare
     });
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -217,15 +217,18 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     }
   }
   summaryNPSSave() {
-    if (this.summaryNPS.controls.valueAsOn.invalid) {
-      this.isValueAsOn = true;
+    if (this.summaryNPS.get('currentValue').invalid) {
+      this.summaryNPS.get('currentValue').markAsTouched();
       return;
-    } else if (this.summaryNPS.controls.totalContry.invalid) {
-      this.isTotalContry = true;
+    } else if (this.summaryNPS.get('valueAsOn').invalid) {
+      this.summaryNPS.get('valueAsOn').markAsTouched();
       return;
-    } else if (this.summaryNPS.controls.currentValue.invalid) {
-      this.isCurrentValue = true;
+    } else if (this.summaryNPS.get('totalContry').invalid) {
+      this.summaryNPS.get('totalContry').markAsTouched();
       return;
+    } else if (this.summaryNPS.get('futureContributionList').invalid) {
+      this.summaryNPS.get('futureContributionList').markAsTouched();
+      return
     } else {
       let obj = {
         advisorId: this.advisorId,

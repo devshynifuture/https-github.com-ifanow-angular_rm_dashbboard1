@@ -89,11 +89,11 @@ export class AddGratuityComponent implements OnInit {
     return this.gratuity.controls;
   }
   saveEPF() {
-    if (this.gratuity.controls.amountRecived.invalid) {
-      this.isAmountRecived = true;
+    if (this.gratuity.get('noOfcompleteYrs').invalid) {
+      this.gratuity.get('noOfcompleteYrs').markAsTouched();
       return;
-    } else if (this.gratuity.controls.noOfcompleteYrs.invalid) {
-      this.isNoOfcompleteYrs = true;
+    } else if (this.gratuity.get('amountRecived').invalid) {
+      this.gratuity.get('amountRecived').markAsTouched();
       return;
     } else {
   

@@ -1,16 +1,16 @@
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { CustomerService } from '../../../../customer.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {CustomerService} from '../../../../customer.service';
+import {AuthService} from 'src/app/auth-service/authService';
 import * as _ from 'lodash';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { AddRealEstateComponent } from '../add-real-estate/add-real-estate.component';
-import { DetailedViewRealEstateComponent } from '../detailed-view-real-estate/detailed-view-real-estate.component';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelService } from '../../../../excel.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {AddRealEstateComponent} from '../add-real-estate/add-real-estate.component';
+import {DetailedViewRealEstateComponent} from '../detailed-view-real-estate/detailed-view-real-estate.component';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelService} from '../../../../excel.service';
 
 @Component({
   selector: 'app-real-estate',
@@ -19,10 +19,10 @@ import { ExcelService } from '../../../../excel.service';
 })
 export class RealEstateComponent implements OnInit {
 
-  isLoading = true;
+  isLoading = false;
   advisorId: any;
-  datasource3: any;
   data: Array<any> = [{}, {}, {}];
+  datasource3 = new MatTableDataSource(this.data);
   clientId: any;
   ownerName: any;
   sumOfMarketValue: any;
@@ -42,13 +42,13 @@ export class RealEstateComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.isLoading = true;
+
     this.getRealEstate();
-    this.datasource3 = new MatTableDataSource(this.data);
+
   }
 
   async ExportTOExcel(value) {
-    this.isLoading = true;
+
     this.excelData = [];
     let data = [];
     let headerData = [{ width: 20, key: 'Owner' },
@@ -74,13 +74,15 @@ export class RealEstateComponent implements OnInit {
   // datasource3 = ELEMENT_DATA3;
 
   getRealEstate() {
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
     };
+    this.datasource3.data = [{}, {}, {}];
     this.custmService.getRealEstate(obj).subscribe(
       data => this.getRealEstateRes(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.datasource3.data = [];
         this.isLoading = false;
       });
@@ -89,8 +91,8 @@ export class RealEstateComponent implements OnInit {
   getRealEstateRes(data) {
     this.isLoading = false;
     console.log(data);
-    this.isLoading = false;
-    if(data == undefined){
+
+    if (data == undefined) {
       this.noData = 'No data found';
       this.datasource3.data = [];
     }
@@ -107,7 +109,7 @@ export class RealEstateComponent implements OnInit {
           }
         }
       });
-      this.datasource3 = new MatTableDataSource(data.realEstateList);
+      this.datasource3.data = data.realEstateList;
       this.datasource3.sort = this.sort;
       this.sumOfMarketValue = data.sumOfMarketValue;
       this.sumOfpurchasedValue = data.sumOfpurchasedValue;
@@ -132,7 +134,7 @@ export class RealEstateComponent implements OnInit {
             dialogRef.close();
             this.getRealEstate();
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       },
       negativeMethod: () => {

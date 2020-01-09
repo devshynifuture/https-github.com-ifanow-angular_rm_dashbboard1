@@ -25,12 +25,14 @@ export class ScssSchemeComponent implements OnInit {
   clientId: number;
   noData: string;
   isLoading = false;
+  data: Array<any> = [{}, {}, {}];
+  datasource = new MatTableDataSource(this.data);
   scssData: any;
   sumOfQuarterlyPayout: number;
   sumOfTotalAmountReceived: number;
   sumOfAmountInvested: number;
   footer = [];
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
 
@@ -38,8 +40,7 @@ export class ScssSchemeComponent implements OnInit {
   }
 
   displayedColumns19 = ['no', 'owner', 'payout', 'rate', 'tamt', 'amt', 'mdate', 'desc', 'status', 'icons'];
-  data: Array<any> = [{}, {}, {}];
-  datasource = new MatTableDataSource(this.data);
+
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -50,21 +51,21 @@ export class ScssSchemeComponent implements OnInit {
   async ExportTOExcel(value) {
     this.excelData = [];
     let data = [];
-    const headerData = [{width: 20, key: 'Owner'},
-      {width: 20, key: 'Quarterly Payout'},
-      {width: 10, key: 'Rate'},
-      {width: 20, key: 'Total Amount Recieved'},
-      {width: 25, key: 'Amount Invested'},
-      {width: 15, key: 'Maturity Date'},
-      {width: 15, key: 'Description'},
-      {width: 10, key: 'Status'},];
+    const headerData = [{ width: 20, key: 'Owner' },
+    { width: 20, key: 'Quarterly Payout' },
+    { width: 10, key: 'Rate' },
+    { width: 20, key: 'Total Amount Recieved' },
+    { width: 25, key: 'Amount Invested' },
+    { width: 15, key: 'Maturity Date' },
+    { width: 15, key: 'Description' },
+    { width: 10, key: 'Status' },];
     const header = ['Owner', 'Quarterly Payout', 'Rate', 'Total Amount Recieved', 'Amount Invested',
       'Maturity Date', 'Description', 'Status'];
     this.datasource.filteredData.forEach(element => {
       data = [element.ownerName, (element.quarterlyPayout), (element.rate),
-        this.formatNumber.first.formatAndRoundOffNumber(element.totalAmountReceived),
-        this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested),
-        (element.maturityValue), new Date(element.maturityDate), element.description, element.status];
+      this.formatNumber.first.formatAndRoundOffNumber(element.totalAmountReceived),
+      this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested),
+      (element.maturityValue), new Date(element.maturityDate), element.description, element.status];
       this.excelData.push(Object.assign(data));
     });
     const footerData = ['Total', '', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfQuarterlyPayout),
@@ -84,7 +85,7 @@ export class ScssSchemeComponent implements OnInit {
     this.datasource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemeSCSSData(obj).subscribe(
       data => this.getKvpSchemedataResponse(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.datasource.data = [];
         this.isLoading = false;
       }
@@ -106,7 +107,7 @@ export class ScssSchemeComponent implements OnInit {
             dialogRef.close();
             this.getScssSchemedata();
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       },
       negativeMethod: () => {

@@ -3,8 +3,10 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../../subscription-inject.service';
 import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from "../../../../../../../auth-service/authService";
-import {ValidatorType} from "../../../../../../../services/util.service";
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {ValidatorType} from '../../../../../../../services/util.service';
+import {MatChipInputEvent} from '@angular/material';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-email-only',
@@ -21,34 +23,8 @@ import {ValidatorType} from "../../../../../../../services/util.service";
   ]
 })
 export class EmailOnlyComponent implements OnInit {
+
   model: any;
-  dataSub: any;
-  emailBody: any;
-  subject;
-  doc: any;
-  docObj: any[];
-  advisorId;
-  validatorType = ValidatorType;
-  emailIdList = [];
-
-  @Input() emailSend;
-  @Input() emailSendfooter;
-  @Input() emailDocumentSend;
-  @Input() emailDocument;
-  @Output() valueChange = new EventEmitter();
-  @Input() quotationData;
-  _inputData;
-  emailData;
-  advisorData: any;
-
-  constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-              public subscription: SubscriptionService) {
-    this.advisorId = AuthService.getAdvisorId();
-
-    // this.dataSub = this.subInjectService.singleProfileData.subscribe(
-    //   data => this.getcommanFroalaData(data)
-    // );
-  }
 
   // @Input()
   // set data(data) {
@@ -70,7 +46,7 @@ export class EmailOnlyComponent implements OnInit {
   @Input() set data(inputData) {
     const obj = [];
     this.doc = inputData.documentList;
-    if (inputData.isInv == true) {
+    if (inputData.isInv) {
       this.doc.forEach(element => {
         if (element) {
           const obj1 = {
@@ -113,9 +89,42 @@ export class EmailOnlyComponent implements OnInit {
     return this._inputData;
   }
 
+  dataSub: any;
+  emailBody: any;
+  subject;
+  doc: any;
+  docObj: any[];
+  advisorId;
+  validatorType = ValidatorType;
+  emailIdList = [];
+  @Input() emailSend;
+  @Input() emailSendfooter;
+  @Input() emailDocumentSend;
+  @Input() emailDocument;
+  @Output() valueChange = new EventEmitter();
+  @Input() quotationData;
+  _inputData;
+  emailData;
+  advisorData: any;
+  visible = true;
+
   config = {
     charCounterCount: false
   };
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+
+  constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
+              public subscription: SubscriptionService) {
+    this.advisorId = AuthService.getAdvisorId();
+
+    // this.dataSub = this.subInjectService.singleProfileData.subscribe(
+    //   data => this.getcommanFroalaData(data)
+    // );
+
+  }
 
   ngOnInit() {
     // this.getEmailTemplate();
@@ -151,9 +160,9 @@ export class EmailOnlyComponent implements OnInit {
       this.emailData = responseData;
       this.subject = this.emailData.subject;
       this.emailBody = this.emailData.body;
-      console.log("Invoice Data", invoiceData.clientData.clientName)
-      this.emailBody.replace("$client_name", invoiceData.clientData.clientName);
-      this.emailBody.replace("$advisor_name", AuthService.getUserInfo().fullName)
+      console.log('Invoice Data', invoiceData.clientData.clientName);
+      this.emailBody.replace('$client_name', invoiceData.clientData.clientName);
+      this.emailBody.replace('$advisor_name', AuthService.getUserInfo().fullName);
     }, error => {
       this.eventService.openSnackBar(error, 'dismiss', () => {
         console.log('dismiss was clicked');
@@ -185,11 +194,10 @@ export class EmailOnlyComponent implements OnInit {
     // this.valueChange.emit(this.emailSend);
   }
 
-  remove(item) {
-    this.docObj.splice(item, 1);
-    // this.callFilter();
+  // remove(item) {
+  //   this.docObj.splice(item, 1);
 
-  }
+  // }
 
   getEmailTemplate() {
     const obj = {
@@ -243,7 +251,7 @@ export class EmailOnlyComponent implements OnInit {
     // );
 
     this.subscription.updateDocumentData(obj).subscribe(
-      data => this.getResponseData(data)
+      responseJson => this.getResponseData(responseJson)
     );
   }
 
@@ -326,4 +334,21 @@ export class EmailOnlyComponent implements OnInit {
     }
   }
 
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    this.emailIdList.push({emailAddress: value})
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(singleEmail): void {
+    const index = this.emailIdList.indexOf(singleEmail);
+
+    if (index >= 0) {
+      this.emailIdList.splice(index, 1);
+    }
+  }
 }

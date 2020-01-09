@@ -1,15 +1,15 @@
-import { AddPoMisComponent } from './../common-component/add-po-mis/add-po-mis.component';
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../../customer.service';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { DetailedPoMisComponent } from './detailed-po-mis/detailed-po-mis.component';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelService } from '../../../../excel.service';
+import {AddPoMisComponent} from './../common-component/add-po-mis/add-po-mis.component';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../../customer.service';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {DetailedPoMisComponent} from './detailed-po-mis/detailed-po-mis.component';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelService} from '../../../../excel.service';
 
 @Component({
   selector: 'app-po-mis-scheme',
@@ -20,6 +20,8 @@ export class PoMisSchemeComponent implements OnInit {
   advisorId: any;
   clientId: number;
   isLoading = false;
+  data: Array<any> = [{}, {}, {}];
+  datasource = new MatTableDataSource(this.data);
   noData: string;
   pomisData: any;
   sumOfCurrentValue: number;
@@ -38,7 +40,7 @@ export class PoMisSchemeComponent implements OnInit {
   }
 
   displayedColumns = ['no', 'owner', 'cvalue', 'mpayout', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
-  datasource: any = [{}, {}, {}];
+
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -82,8 +84,13 @@ export class PoMisSchemeComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId
     };
+    this.datasource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemePOMISData(obj).subscribe(
-      data => this.getPoMisSchemedataResponse(data)
+      data => this.getPoMisSchemedataResponse(data), (error) => {
+        this.eventService.showErrorMessage(error);
+        this.datasource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
@@ -91,7 +98,7 @@ export class PoMisSchemeComponent implements OnInit {
     console.log(data);
     this.isLoading = false;
     if (data.poMisList.length != 0) {
-      this.datasource = new MatTableDataSource(data.poMisList);
+      this.datasource.data = data.poMisList;
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);
       this.sumOfMaturityValue = data.sumOfMaturityValue;
@@ -120,7 +127,7 @@ export class PoMisSchemeComponent implements OnInit {
             dialogRef.close();
             this.getPoMisSchemedata();
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       },
       negativeMethod: () => {

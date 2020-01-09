@@ -20,16 +20,18 @@ import {ExcelService} from '../../../../excel.service';
 })
 export class CommoditiesComponent implements OnInit {
   showRequring: string;
-  isLoading = false;
+
   displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue', 'pvalue', 'desc', 'status', 'icons'];
   datasource9 = ELEMENT_DATA9;
 
   displayedColumns10 = ['no', 'owner', 'type', 'mvalue', 'pvalue', 'pur', 'rate', 'desc', 'status', 'icons'];
   datasource10 = ELEMENT_DATA10;
   advisorId: any;
+  isLoading = false;
   data: Array<any> = [{}, {}, {}];
-  goldList: any;
-  otherCommodityList: any;
+  goldList = new MatTableDataSource(this.data);
+
+  otherCommodityList = new MatTableDataSource(this.data);
   clientId: any;
   sumOfMarketValue: any;
   sumOfPurchaseValue: any;
@@ -43,13 +45,13 @@ export class CommoditiesComponent implements OnInit {
   excelData: any[];
   noData: string;
 
-  constructor(private excel : ExcelService,private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) { }
+  constructor(private excel: ExcelService, private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) { }
   ngOnInit() {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getGoldList()
-    this.goldList = new MatTableDataSource(this.data);
+
   }
   async ExportTOExcel(value) {
     this.excelData = []
@@ -130,7 +132,7 @@ export class CommoditiesComponent implements OnInit {
               dialogRef.close();
               this.getGoldList()
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           )
         } else {
           this.custumService.deleteOther(data.id).subscribe(
@@ -139,7 +141,7 @@ export class CommoditiesComponent implements OnInit {
               dialogRef.close();
               this.getOtherList()
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           )
         }
       },
@@ -166,20 +168,21 @@ export class CommoditiesComponent implements OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId
     }
+    this.goldList.data = [{}, {}, {}];
     this.custumService.getGold(obj).subscribe(
       data => this.getGoldRes(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.goldList.data = [];
         this.isLoading = false;
       }
     );
   }
   getGoldRes(data) {
-    this.isLoading = false;
-    console.log('getGoldList @@@@', data);
 
+    console.log('getGoldList @@@@', data);
+    this.isLoading = false;
     if (data.goldList.length != 0) {
-      this.goldList = new MatTableDataSource(data.goldList);
+      this.goldList.data = data.goldList;
       this.goldList.sort = this.goldListTableSort;
       this.sumOfMarketValue = data.sumOfMarketValue
       this.sumOfPurchaseValue = data.sumOfPurchaseValue
@@ -194,9 +197,10 @@ export class CommoditiesComponent implements OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId
     }
+    this.otherCommodityList.data = [{}, {}, {}];
     this.custumService.getOthers(obj).subscribe(
       data => this.getOthersRes(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.otherCommodityList.data = [];
         this.isLoading = false;
       }
@@ -207,8 +211,8 @@ export class CommoditiesComponent implements OnInit {
     console.log('getOthersRes @@@@', data);
 
     if (data.otherCommodityList.length != 0) {
-      this.otherCommodityList = new MatTableDataSource(data.otherCommodityList);
-        this.otherCommodityList.sort = this.otherListTableSort;
+      this.otherCommodityList.data = data.otherCommodityList;
+      this.otherCommodityList.sort = this.otherListTableSort;
       this.sumOfMarketValueOther = data.sumOfMarketValue
       this.sumOfPurchaseValueOther = data.sumOfPurchaseValue
     }
