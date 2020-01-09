@@ -274,6 +274,7 @@ export class InvoiceComponent implements OnInit {
     console.log('getClientListRes', data.payees);
     this.clientList = data.payees;
     this.defaultVal = data;
+    this.advisorBillerProfileId=data.biller.id
     this.editPayment.controls.billerAddress.setValue(data.biller.billerAddress);
     this.editPayment.controls.footnote.setValue(data.biller.footnote);
     this.editPayment.controls.terms.setValue(data.biller.terms);
@@ -421,7 +422,7 @@ export class InvoiceComponent implements OnInit {
         }];
         const obj = {
           clientName: this.editPayment.value.clientName,
-          advisorBillerProfileId: this.editPayment.value.advisorBillerProfileId,
+          advisorBillerProfileId: (this.editPayment.value.advisorBillerProfileId == undefined)?this.advisorBillerProfileId:this.editPayment.value.advisorBillerProfileId ,
           billerName: this.editPayment.value.billerName,
           advisorId: this.advisorId,
           clientBillerId: this.editPayment.value.clientBillerId,

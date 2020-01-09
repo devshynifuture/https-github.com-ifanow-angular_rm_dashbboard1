@@ -1405,7 +1405,7 @@
            <h5 class="m-0 text-right pr-8">₹{{18 / 100 * (finalAmount - discount) || '0'}}</h5>
         </div>
         <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 pr-24">
-           <h5 class="m-0 text-right pr-8">₹{{(9 / 100 * (finalAmount - discount)) || '0'}}</h5>
+           <h5 class="m-0 text-right pr-8">₹{{9 / 100 * (finalAmount - discount) || '0'}}</h5>
         </div>
      </div>
      <div class="row pt-20 pb-12">
