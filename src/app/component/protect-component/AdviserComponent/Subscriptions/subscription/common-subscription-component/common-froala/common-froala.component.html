@@ -102,12 +102,12 @@
           arrow_drop_up
         </i></button> -->
         <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="changeFooter=='viewQuotation' "
-                (click)="save()">SAVE
+          (click)="save()">SAVE
         </button>
         <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="changeFooter!='viewQuotation'"
-                (click)="Open('eSignRequestDocuments','open',null)">Email with eSign Request <i class="material-icons">
-          arrow_drop_up
-        </i></button>
+          (click)="Open('eSignRequestDocuments','open',null)">Email with eSign Request <i class="material-icons">
+            arrow_drop_up
+          </i></button>
 
       </div>
     </div>
@@ -120,7 +120,13 @@
     </div>
     <div class="col-md-8 right text-right">
       <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()">SAVE</button>
-
+      <button mat-button class="btn-bottom" [matMenuTriggerFor]="menu"><i class="material-icons">
+          keyboard_arrow_up
+        </i></button>
+      <mat-menu #menu="matMenu">
+        <button class="btn-bottom br-0 text-inherit" (click)="saveSendEsign()" mat-menu-item>SAVE & SEND WITH
+          ESIGN</button>
+      </mat-menu>
     </div>
   </div>
 </div>

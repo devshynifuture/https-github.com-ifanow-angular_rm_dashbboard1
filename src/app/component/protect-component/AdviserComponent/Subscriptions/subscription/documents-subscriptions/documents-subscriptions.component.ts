@@ -1,18 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort } from '@angular/material';
-import { MatTableDataSource } from '@angular/material/table';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort} from '@angular/material';
+import {MatTableDataSource} from '@angular/material/table';
 
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionService } from '../../subscription.service';
-import { AuthService } from "../../../../../../auth-service/authService";
-import { UtilService } from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionService} from '../../subscription.service';
+import {AuthService} from "../../../../../../auth-service/authService";
+import {UtilService} from 'src/app/services/util.service';
 import * as _ from 'lodash';
-import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from 'saturn-datepicker';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
+import {DatePipe} from '@angular/common';
+import {MAT_DATE_FORMATS} from 'saturn-datepicker';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {CommonFroalaComponent} from '../common-subscription-component/common-froala/common-froala.component';
 
 export interface PeriodicElement {
   name: string;
@@ -30,11 +30,11 @@ export interface PeriodicElement {
   selector: 'app-documents-subscriptions',
   templateUrl: './documents-subscriptions.component.html',
   styleUrls: ['./documents-subscriptions.component.scss'],
-  providers: [[DatePipe], { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  providers: [[DatePipe], {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 })
 export class DocumentsSubscriptionsComponent implements OnInit {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   displayedColumns: string[] = ['name', 'docname', 'plan', 'servicename', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
 
@@ -45,14 +45,14 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   filterDate = [];
   statusIdList = [];
   chips = [
-    { name: 'LIVE', value: 1 },
-    { name: 'PAID', value: 2 },
-    { name: 'OVERDUE', value: 3 }
+    {name: 'LIVE', value: 1},
+    {name: 'PAID', value: 2},
+    {name: 'OVERDUE', value: 3}
   ];
   dateChips = [
-    { name: 'Created date', value: 1 },
-    { name: 'Sent date', value: 2 },
-    { name: 'Client Signitature', value: 3 }
+    {name: 'Created date', value: 1},
+    {name: 'Sent date', value: 2},
+    {name: 'Client Signitature', value: 3}
   ];
   selectedDateRange: { begin: Date; end: Date; };
   selectedStatusFilter: any;
@@ -61,8 +61,9 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   dataSource = new MatTableDataSource(this.data);
   maxDate = new Date();
   private clientId: any;
+
   constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public eventService: EventService,
-    public subscription: SubscriptionService, private datePipe: DatePipe) {
+              public subscription: SubscriptionService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -72,7 +73,31 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
     this.getdocumentSubData();
   }
-  Open(value, data) {
+
+  openEsignDocument(element) {
+    const data = {
+      advisorId: this.advisorId,
+      // clientData: this._clientData,
+      templateType: 3, // 1-Invoice, 2 is for quotation, 3 is for esign, 4 is document
+      documentList: []
+    };
+    if (element) {
+      data.documentList.push(element);
+
+    } else {
+
+
+      this.dataSource.filteredData.forEach(singleElement => {
+        if (singleElement.selected) {
+          data.documentList.push(singleElement);
+        }
+      });
+    }
+    this.openViewDocument('eSignDocument', data);
+  }
+
+
+  openViewDocument(value, data) {
     const fragmentData = {
       flag: value,
       data,
@@ -92,6 +117,25 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       }
     );
   }
+
+  downloadEsign(element) {
+    const obj = {
+      id: element.id,
+    };
+
+    this.subscription.getEsignedDocument(obj).subscribe(
+      data => this.downloadEsignResponseData(data),
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  downloadEsignResponseData(data) {
+    console.log(data, "downloadEsign 123");
+    window.open(data.presginedUrl);
+  }
+
   showFilters(showFilter) {
     if (showFilter == true) {
       this.showFilter = false;
@@ -101,14 +145,16 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     console.log('this.filterStatus: ', this.filterStatus);
     console.log('this.filterDate: ', this.filterDate);
   }
+
   orgValueChange(selectedDateRange) {
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     UtilService.getStartOfTheDay(beginDate);
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate)
-    this.selectedDateRange = { begin: selectedDateRange.begin, end: selectedDateRange.end };
+    this.selectedDateRange = {begin: selectedDateRange.begin, end: selectedDateRange.end};
   }
+
   getdocumentSubData() {
     const obj = {
       advisorId: this.advisorId,
@@ -131,6 +177,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       }
     );
   }
+
   addFilters(addFilters) {
     console.log('addFilters', addFilters);
     if (!_.includes(this.filterStatus, addFilters)) {
@@ -161,7 +208,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = { begin: beginDate, end: endDate };
+    this.selectedDateRange = {begin: beginDate, end: endDate};
   }
 
   removeDate(item) {

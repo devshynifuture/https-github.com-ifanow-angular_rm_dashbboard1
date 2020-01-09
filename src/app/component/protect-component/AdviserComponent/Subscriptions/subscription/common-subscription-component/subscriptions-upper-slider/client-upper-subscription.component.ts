@@ -150,7 +150,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
 
   getSubSummaryRes(data) {
     this.isLoading = false;
-    console.log(data, "hi client");
+    console.log(data, data[0].clientName, "hi client");
     if (data == undefined) {
       this.clientData.length == 0;
       this.sub = undefined;
