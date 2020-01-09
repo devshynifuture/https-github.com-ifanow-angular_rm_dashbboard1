@@ -7,9 +7,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {EnumServiceService} from '../../../../../../../services/enum-service.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material';
-import {MAT_DATE_FORMATS} from '@angular/material/core';
 import {UtilService} from 'src/app/services/util.service';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 import {EmailOnlyComponent} from '../email-only/email-only.component';
 import {PdfService} from '../../../../../../../services/pdf.service';
 
@@ -25,9 +23,7 @@ export interface PeriodicElement {
   selector: 'app-invoice',
   templateUrl: './invoice.component.html',
   styleUrls: ['./invoice.component.scss'],
-  providers: [
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
-  ],
+
 })
 
 export class InvoiceComponent implements OnInit {
