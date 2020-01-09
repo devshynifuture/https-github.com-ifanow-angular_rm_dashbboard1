@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, forwardRef, Renderer2 } from '@angular/core';
 import { FormGroup, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { HowToUseDialogComponent } from '../how-to-use-dialog/how-to-use-dialog.component';
@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { SubscriptionService } from '../../../subscription.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-terms-agreement',
@@ -25,8 +26,10 @@ export class TermsAgreementComponent implements OnInit {
   storeData: any;
   _upperData: any;
   dataTerms: any;
+  advisorId: () => any;
+  serviceData: any;
 
-  constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public subService: SubscriptionService, private eventService: EventService) {
+  constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public subService: SubscriptionService, private eventService: EventService, private render: Renderer2) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getcommanFroalaData(data)
     );
@@ -47,6 +50,7 @@ export class TermsAgreementComponent implements OnInit {
     if (upperData && upperData.documentData) {
       // this.changeDisplay();
     }
+    this.advisorId = AuthService.getAdvisorId();
   };
 
   get upperData() {
@@ -71,6 +75,7 @@ export class TermsAgreementComponent implements OnInit {
 
   ngOnInit() {
     console.log('quotationDesign', this._upperData);
+    this.getPlanServiceData();
   }
 
   Close() {
@@ -78,6 +83,29 @@ export class TermsAgreementComponent implements OnInit {
     // this.valueChange.emit(this.quotationDesignE);
     this.eventService.changeUpperSliderState({ state: 'close' });
 
+  }
+  getPlanServiceData() {
+    const obj = {
+      // advisorId: 12345,
+      advisorId: this.advisorId,
+      planId: 2
+      // this.planData ? this.planData.id : null
+    };
+    this.subService.getSettingPlanServiceData(obj).subscribe(
+      data => this.serviceData = data,
+      err => this.eventService.openSnackBar("Something went wrong", "dismiss")
+    )
+  }
+  copyServiceName(data) {
+    const text = '$(service_' + data.id + ')'
+    let tag = this.render.createElement("input")
+    tag.value = text
+    document.body.appendChild(tag);
+    tag.focus();
+    tag.select();
+    document.execCommand('copy');
+    document.body.removeChild(tag);
+    this.eventService.openSnackBar("service name copied", "dismiss")
   }
   onSubmit() {
     // TODO: Use EventEmitter with form value
@@ -126,7 +154,7 @@ export class TermsAgreementComponent implements OnInit {
       description: data.description,
       docText: data.docText,
       documentRepositoryId: data.documentRepositoryId, // pass here advisor id for Invoice advisor
-      documentTypeId:data.documentTypeId,
+      documentTypeId: data.documentTypeId,
       name: data.name,
     };
     this.subService.updateDocumentData(obj).subscribe(

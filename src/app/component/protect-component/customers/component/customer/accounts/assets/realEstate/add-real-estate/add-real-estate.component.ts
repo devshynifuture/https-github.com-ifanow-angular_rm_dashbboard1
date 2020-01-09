@@ -42,14 +42,15 @@ export class AddRealEstateComponent implements OnInit {
   nomineesListFM: any;
   dataFM: any;
   familyList: any;
-  nexNomineePer:any;
+  nexNomineePer: any;
   showError = false;
   isOwnerPercent: boolean;
   showErrorCoOwner = false;
   familyMemId: any;
   _data: any;
-  autoIncrement:number = 100;
-  constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService ,public utils:UtilService) { }
+  autoIncrement: number = 100;
+  id: any;
+  constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService, public utils: UtilService) { }
   // set inputData(inputData) {
   //   this._inputData = inputData;
   //   this.getRealEstate(inputData);
@@ -83,7 +84,7 @@ export class AddRealEstateComponent implements OnInit {
   }
   lisNominee(value) {
     console.log(value)
-    if(value != undefined){
+    if (value != undefined) {
       this.nomineesListFM = Object.assign([], value.familyMembersList);
     }
   }
@@ -103,9 +104,9 @@ export class AddRealEstateComponent implements OnInit {
     // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
     //   return o.ownershipPer;
     // });
-    this.nexNomineePer=0
+    this.nexNomineePer = 0
     this.getNominee.value.forEach(element => {
-      this.nexNomineePer+=element.ownershipPer
+      this.nexNomineePer += element.ownershipPer
     });
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -125,7 +126,7 @@ export class AddRealEstateComponent implements OnInit {
   }
   getListOfFamilyByClientRes(data) {
     console.log('family Memebers', data)
-    if(data != undefined){
+    if (data != undefined) {
       this.family = data.familyMembersList
     }
   }
@@ -163,9 +164,9 @@ export class AddRealEstateComponent implements OnInit {
     // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
     //   return o.ownershipPer;
     // });
-    this.nexNomineePer=0;
+    this.nexNomineePer = 0;
     this.getNominee.value.forEach(element => {
-      this.nexNomineePer+=element.ownershipPer
+      this.nexNomineePer += element.ownershipPer
     });
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -186,7 +187,7 @@ export class AddRealEstateComponent implements OnInit {
   //     console.log(this.demo,"call");
   //     setTimeout(() => {
   //     this.demo = true;
-       
+
   //       console.log(this.autoIncrement, "this.autoIncrement 123" );
   //     }, 10000);
   //   }
@@ -202,9 +203,9 @@ export class AddRealEstateComponent implements OnInit {
     // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
     //   return o.ownershipPer;
     // });
-    this.nexNomineePer=0;
+    this.nexNomineePer = 0;
     this.getNominee.value.forEach(element => {
-      this.nexNomineePer+=element.ownershipPer
+      this.nexNomineePer += element.ownershipPer
     });
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -240,12 +241,12 @@ export class AddRealEstateComponent implements OnInit {
   }
   onChange(data) {
     if (data == 'owner') {
-      this.nexNomineePer=0;
+      this.nexNomineePer = 0;
       // this.nexNomineePer = _.sumBy(this.getCoOwner.value, function (o) {
       //   return o.ownershipPerc;
       // });
       this.getCoOwner.value.forEach(element => {
-        this.nexNomineePer+=element.ownershipPerc
+        this.nexNomineePer += element.ownershipPerc
       });
       this.nexNomineePer = this.addrealEstateForm.controls.ownerPercent.value + this.nexNomineePer
       if (this.nexNomineePer > 100) {
@@ -259,10 +260,10 @@ export class AddRealEstateComponent implements OnInit {
       // this.nexNomineePer = _.sumBy(this.getNominee.value, function (o) {
       //   return o.ownershipPer;
       // });
-      this.nexNomineePer=0;
+      this.nexNomineePer = 0;
 
       this.getNominee.value.forEach(element => {
-        this.nexNomineePer+=element.ownershipPer
+        this.nexNomineePer += element.ownershipPer
       });
       if (this.nexNomineePer > 100) {
         this.showError = true
@@ -284,7 +285,7 @@ export class AddRealEstateComponent implements OnInit {
         ownershipPerc: null,
       })]),
       ownerPercent: [data.ownerPerc, [Validators.required]],
-      type: [(data.typeId == undefined) ? '' : (data.typeId)+"", [Validators.required]],
+      type: [(data.typeId == undefined) ? '' : (data.typeId) + "", [Validators.required]],
       marketValue: [data.marketValue, [Validators.required]],
       year: [data.year],
       month: [data.month, [Validators.required]],
@@ -315,13 +316,15 @@ export class AddRealEstateComponent implements OnInit {
           this.ownerName = ownerName[0].ownerName;
           this.addrealEstateForm.controls.ownerPercent.setValue(ownerName[0].ownershipPerc);
           this.familyMemId = ownerName[0].familyMemberId
+          this.id = ownerName[0].id;
         }
       }
 
       if (data.realEstateNominees.length != 0) {
         data.realEstateNominees.forEach(element => {
           this.addrealEstateForm.controls.getNomineeName.push(this.fb.group({
-            name: [(element.name) + "", [Validators.required]],
+            id: element.id,
+            name: [(element.name) ? (element.name) + "" : '', [Validators.required]],
             ownershipPer: [(element.ownershipPer + ""), Validators.required]
           }))
         })
@@ -334,6 +337,7 @@ export class AddRealEstateComponent implements OnInit {
         });
         ownerName.forEach(element => {
           this.addrealEstateForm.controls.getCoOwnerName.push(this.fb.group({
+            id: element.id,
             ownerName: [(element.ownerName) + "", [Validators.required]],
             ownershipPerc: [(element.ownershipPerc + ""), Validators.required]
           }))
@@ -355,24 +359,24 @@ export class AddRealEstateComponent implements OnInit {
 
     this.getValue = this.getDateYMD()
     console.log(this.getValue);
-    if(this.addrealEstateForm.get('type').invalid) {
-        this.addrealEstateForm.get('type').markAsTouched();
-        return
+    if (this.addrealEstateForm.get('type').invalid) {
+      this.addrealEstateForm.get('type').markAsTouched();
+      return
     } else if (this.addrealEstateForm.get('marketValue').invalid) {
-        this.addrealEstateForm.get('marketValue').markAsTouched();
-        return
-      
-    } else if(this.addrealEstateForm.get('ownerPercent').invalid) {
-        this.addrealEstateForm.get('ownerPercent').markAsTouched();
-        return
-    }  else {
-      
+      this.addrealEstateForm.get('marketValue').markAsTouched();
+      return
+
+    } else if (this.addrealEstateForm.get('ownerPercent').invalid) {
+      this.addrealEstateForm.get('ownerPercent').markAsTouched();
+      return
+    } else {
+
       const obj = {
         ownerName: this.ownerName,
         ownerPercent: this.addrealEstateForm.controls.ownerPercent.value,
         clientId: this.clientId,
         advisorId: this.advisorId,
-        id: this._inputData== undefined ? 0 : this._inputData.id,
+        id: this._data == undefined ? 0 : this._data.id,
         typeId: this.addrealEstateForm.controls.type.value,
         marketValue: this.addrealEstateForm.controls.marketValue.value,
         purchasePeriod: this.purchasePeriod,
@@ -389,18 +393,22 @@ export class AddRealEstateComponent implements OnInit {
         realEstateOwners: [],
       }
       this.addrealEstateForm.value.getNomineeName.forEach(element => {
-        if (element) {
+        if (element.name) {
           let obj1 = {
+            'id': element.id,
             'name': element.name,
             'familyMemberId': element.familyMemberId,
             'ownershipPer': parseInt(element.ownershipPer)
           }
           obj.realEstateNominees.push(obj1)
+        } else {
+          obj.realEstateNominees = [];
         }
       });
       this.addrealEstateForm.value.getCoOwnerName.forEach(element => {
-        if (element) {
+        if (element.ownerName) {
           let obj1 = {
+            'id': element.id,
             'ownerName': element.ownerName,
             'familyMemberId': element.familyMemberId,
             'ownershipPerc': parseInt(element.ownershipPerc),
@@ -410,6 +418,7 @@ export class AddRealEstateComponent implements OnInit {
         }
       });
       let obj1 = {
+        'id': this.id,
         'ownerName': this.ownerName,
         'familyMemberId': this.familyMemId,
         'ownershipPerc': parseInt(this.addrealEstateForm.controls.ownerPercent.value),
@@ -418,14 +427,12 @@ export class AddRealEstateComponent implements OnInit {
       obj.realEstateOwners.push(obj1)
       if (obj.unitId == null) {
         console.log(obj);
-        delete obj.id;
         this.custumService.addRealEstate(obj).subscribe(
           data => this.addRealEstateRes(data)
         );
       } else {
 
         console.log(obj);
-        delete obj.id;
         this.custumService.editRealEstate(obj).subscribe(
           data => this.editRealEstateRes(data)
         );

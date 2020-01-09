@@ -320,8 +320,12 @@ export class EmailOnlyComponent implements OnInit {
     }
   }
 
-  removeEmailId(item) {
-    this.emailIdList.splice(item, 1);
+  removeEmailId(index) {
+    // const index = this.emailIdList.indexOf(singleEmail);
+
+    // if (index >= 0) {
+    this.emailIdList.splice(index, 1);
+    // }
   }
 
   onEmailIdEntryKeyPress(event) {
@@ -336,8 +340,14 @@ export class EmailOnlyComponent implements OnInit {
 
   add(event: MatChipInputEvent): void {
     const input = event.input;
-    const value = event.value;
-    this.emailIdList.push({emailAddress: value})
+    const value = event.value.trim();
+    if (value && value.length > 0) {
+      if (this.validatorType.EMAIL.test(value)) {
+        this.emailIdList.push({emailAddress: value});
+      } else {
+        this.eventService.openSnackBar('Enter valid email address');
+      }
+    }
     // Reset the input value
     if (input) {
       input.value = '';
@@ -345,10 +355,7 @@ export class EmailOnlyComponent implements OnInit {
   }
 
   remove(singleEmail): void {
-    const index = this.emailIdList.indexOf(singleEmail);
+    this.docObj.splice(singleEmail, 1);
 
-    if (index >= 0) {
-      this.emailIdList.splice(index, 1);
-    }
   }
 }
