@@ -318,10 +318,10 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input type="text" (keypress)="utils.onlyText($event)" matInput #institution maxlength="20" class="form-control br-0"
+                            <input type="text"  matInput #institution maxlength="50" class="form-control br-0"
                                 formControlName="institution">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
-                            <mat-hint align="end" class="f-12">{{institution.value.length}}/20</mat-hint>
+                            <mat-hint align="end" class="f-12">{{institution.value.length}}/50</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>

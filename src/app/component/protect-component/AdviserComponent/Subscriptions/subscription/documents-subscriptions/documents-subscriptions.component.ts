@@ -36,7 +36,7 @@ export interface PeriodicElement {
 export class DocumentsSubscriptionsComponent implements OnInit {
   @ViewChild(MatSort, {static: false}) sort: MatSort;
 
-  displayedColumns: string[] = ['name', 'docname', 'plan', 'servicename', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
+  displayedColumns: string[] = ['checkbox','name', 'docname', 'plan', 'servicename', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
 
   advisorId;
   isLoading = false;
@@ -61,6 +61,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   dataSource = new MatTableDataSource(this.data);
   maxDate = new Date();
   private clientId: any;
+  dataCount: number;
 
   constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public eventService: EventService,
               public subscription: SubscriptionService, private datePipe: DatePipe) {
@@ -70,10 +71,41 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-
+    this.dataCount = 0;
     this.getdocumentSubData();
   }
+  changeSelect() {
+    this.dataCount = 0;
+    this.dataSource.filteredData.forEach(item => {
+      console.log('item item ', item);
+      if (item.selected) {
+        this.dataCount++;
+      }
+    });
+  }
+  selectAll(event) {
+    this.dataCount = 0;
+    if (this.dataSource != undefined) {
+      this.dataSource.filteredData.forEach(item => {
+        item.selected = event.checked;
+        if (item.selected) {
+          this.dataCount++;
+        }
+      });
+    }
+  }
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    if (this.dataSource != undefined) {
+      return this.dataCount === this.dataSource.filteredData.length;
+    }
+  }
 
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selectAll({checked: false}) : this.selectAll({checked: true});
+  }
   openEsignDocument(element) {
     const data = {
       advisorId: this.advisorId,
@@ -110,6 +142,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getdocumentSubData();
           console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }
@@ -166,6 +199,8 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       toDate: '2019-11-01',
       statusIdList: '1,2',
     };
+    this.isLoading = true;
+    this.dataSource.data = [{}, {}, {}];
     this.subscription.getDocumentData(obj).subscribe(
       data => this.getdocumentResponseData(data), (error) => {
         this.eventService.openSnackBar('Somthing went worng!', 'dismiss');

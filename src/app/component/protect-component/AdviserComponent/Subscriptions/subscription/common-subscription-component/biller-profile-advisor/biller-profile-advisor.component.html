@@ -97,7 +97,7 @@
                     <textarea #Address matInput class="form-control br-0" formControlName='Address'
                       maxLength="{{getFormControlProfile().Address.maxLength}}" rows="5"></textarea>
                     <mat-error class="f-12">Address is required</mat-error>
-                    <mat-hint align="end" class="f-12">{{Address.value.length}}/160</mat-hint>
+                    <mat-hint align="end" class="f-12">{{Address.value.length}}/150</mat-hint>
                   </mat-form-field>
                 </div>
               </div>
@@ -110,7 +110,7 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #state [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                      class="form-control br-0 text-left" formControlName="state" matInput maxLength="50" type="text">
+                      class="form-control br-0 text-left" formControlName="state" matInput maxLength="30" type="text">
                     <mat-error class="f-12">State is required</mat-error>
                     <mat-hint align="end" class="f-12">{{state.value.length}}/30</mat-hint>
                   </mat-form-field>
@@ -125,7 +125,7 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                      class="form-control br-0 text-left" formControlName="pincode" matInput maxLength="20"
+                      class="form-control br-0 text-left" formControlName="pincode" matInput maxLength="6"
                       type="number">
                     <mat-error class="f-12">Pincode is required</mat-error>
                     <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>
@@ -141,7 +141,7 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #country [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                      class="form-control br-0 text-left" formControlName="country" matInput maxLength="50" type="text">
+                      class="form-control br-0 text-left" formControlName="country" matInput maxLength="30" type="text">
                     <mat-error class="f-12">Country is required</mat-error>
                     <mat-hint align="end" class="f-12">{{country.value.length}}/30</mat-hint>
                   </mat-form-field>
@@ -156,7 +156,7 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input #city [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                      class="form-control br-0 text-left" formControlName="city" matInput maxLength="50" type="text">
+                      class="form-control br-0 text-left" formControlName="city" matInput maxLength="30" type="text">
                     <mat-error class="f-12">City is required</mat-error>
                     <mat-hint align="end" class="f-12">{{city.value.length}}/30</mat-hint>
                   </mat-form-field>
@@ -344,7 +344,7 @@
             </div>
             <div class="col-md-7">
               <div class="form-group mb-0">
-                <input [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
+                <input [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation maxlength="30"
                   class="form-control br-0 text-left" formControlName="city" matInput type="text">
               </div>
               <div class="row pt-0">
@@ -365,7 +365,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input [inputValidator]="validatorType.TEXT_WITH_SPACE" appInputValueValidation
-                  class="form-control br-0 text-left" formControlName="state" matInput type="text">
+                  class="form-control br-0 text-left" maxlength="30" formControlName="state" matInput type="text">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -385,7 +385,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" appInputValueValidation
-                  class="form-control br-0 text-left" formControlName="pincode" matInput type="number">
+                  class="form-control br-0 text-left"  maxlength="6" formControlName="pincode" matInput type="number">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -406,7 +406,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input [inputValidator]="validatorType.TEXT_WITH_SPACE" appInputValueValidation
-                  class="form-control br-0 text-left" formControlName="country" matInput type="text">
+                  class="form-control br-0 text-left"  maxlength="30" formControlName="country" matInput type="text">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
