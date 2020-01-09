@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, forwardRef, Renderer2 } from '@angular/core';
 import { FormGroup, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { HowToUseDialogComponent } from '../how-to-use-dialog/how-to-use-dialog.component';
@@ -29,7 +29,7 @@ export class TermsAgreementComponent implements OnInit {
   advisorId: () => any;
   serviceData: any;
 
-  constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public subService: SubscriptionService, private eventService: EventService) {
+  constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public subService: SubscriptionService, private eventService: EventService, private render: Renderer2) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getcommanFroalaData(data)
     );
@@ -95,6 +95,17 @@ export class TermsAgreementComponent implements OnInit {
       data => this.serviceData = data,
       err => this.eventService.openSnackBar("Something went wrong", "dismiss")
     )
+  }
+  copyServiceName(data) {
+    const text = '$(service_' + data.id + ')'
+    let tag = this.render.createElement("input")
+    tag.value = text
+    document.body.appendChild(tag);
+    tag.focus();
+    tag.select();
+    document.execCommand('copy');
+    document.body.removeChild(tag);
+    this.eventService.openSnackBar("service name copied", "dismiss")
   }
   onSubmit() {
     // TODO: Use EventEmitter with form value
