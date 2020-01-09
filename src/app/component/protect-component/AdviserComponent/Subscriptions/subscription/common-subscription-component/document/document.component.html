@@ -44,13 +44,10 @@
                 <div class="row text-center padder-80">
                     <div class="col-md-4 pr-20 pb-20 pl-0" *ngFor="let documentData of planDocumentData">
                         <div (click)="selectDocument(documentData)">
-                            <mat-card
-                                [ngClass]="{'ba-blue': documentData.selected,'active': documentData.selected,'b-ua':documentData.selected==false}"
-                                class="example-card bg-grey lter p-0 b-a c-p">
+                            <mat-card [ngClass]="{'ba-blue': documentData.selected,'active': documentData.selected,'b-ua':documentData.selected==false}" class="example-card bg-grey lter p-0 b-a c-p">
                                 <mat-card-header class="m-0 hide-card-text">
                                     <!-- [isChecked]="documentData.selected" -->
-                                    <app-custom-html [isChecked]="documentData.selected" [data]="documentData.docText"
-                                        id="ui-appcustomhtml" class="bg-white">
+                                    <app-custom-html [isChecked]="documentData.selected" [data]="documentData.docText" id="ui-appcustomhtml" class="bg-white">
 
                                     </app-custom-html>
                                 </mat-card-header>
@@ -86,9 +83,7 @@
             <img class="width200 mt-80" src="assets/images/svg/add-documents-img.svg">
             <p class="f-22 f-600 pt-28"> Create Documents </p>
             <p class="f-16 text-center mt-20 l-21">
-                We’ve automated the complete process of documentation (a core part of RIA compliance). <br> You create
-                documents easily using ready made templates or upload. <br> Email to clients, get eSigned and securely
-                store.
+                We’ve automated the complete process of documentation (a core part of RIA compliance). <br> You create documents easily using ready made templates or upload. <br> Email to clients, get eSigned and securely store.
             </p>
             <!--  <button (click)="OpenHelp('clientHelp','open35',Questions)" class="btn-primary  mt-12 d-flex align-items-center">
                 ADD DOCUMENTS </button>-->
@@ -142,13 +137,10 @@
             <div class="row text-center padder-80">
                 <div class="col-md-4 pr-20 pb-20 pl-0" *ngFor="let document of serviceDocumentData">
                     <div (click)="selectDocument(document)">
-                        <mat-card
-                            [ngClass]="{'ba-blue': document.selected,'active': document.selected,'b-ua':document.selected==false}"
-                            class="example-card bg-grey lter p-0 c-p">
+                        <mat-card [ngClass]="{'ba-blue': document.selected,'active': document.selected,'b-ua':document.selected==false}" class="example-card bg-grey lter p-0 c-p">
                             <mat-card-header class="m-0">
                                 <!-- [isChecked]="document.selected"  -->
-                                <app-custom-html [isChecked]="document.selected" [data]="document.docText"
-                                    id="ui-appcustomhtml" class="bg-white">
+                                <app-custom-html [isChecked]="document.selected" [data]="document.docText" id="ui-appcustomhtml" class="bg-white">
 
                                 </app-custom-html>
                             </mat-card-header>
@@ -192,8 +184,7 @@
                                 (click)="openFragment('documents', null)">
                                 ADD DOCUMENT
                             </button> -->
-                            <button mat-button class="mr-8 right text-right"
-                                (click)="openPopup('documentHelpPopup')">HELP
+                            <button mat-button class="mr-8 right text-right" (click)="openPopup('documentHelpPopup')">HELP
                             </button>
                         </div>
                     </div>
@@ -216,8 +207,7 @@
                                 <button (click)="openSendEmail()" *ngIf="dataCount > 0" mat-menu-item>Email
                                     only
                                 </button>
-                                <button (click)="deleteModal('DOCUMENT')" *ngIf="dataCount >0" class="b-t"
-                                    mat-menu-item>Delete
+                                <button (click)="deleteModal('DOCUMENT')" *ngIf="dataCount >0" class="b-t" mat-menu-item>Delete
                                     documents
                                 </button>
                             </mat-menu>
@@ -228,26 +218,21 @@
                     </div>
 
                     <div class="col-md-12 p-0 overflow-hidden">
-                        <table matSort mat-table [dataSource]="dataSource" class="mt-8" id="table-low"
-                            class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                        <table matSort mat-table [dataSource]="dataSource" class="mt-8" id="table-low" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                             <ng-container matColumnDef="checkbox">
                                 <th mat-header-cell *matHeaderCellDef class="f-18">
-                                    <mat-checkbox (change)="$event ? masterToggle() : null"
-                                        [checked]="dataCount > 0 && isAllSelected()"
-                                        [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll">
+                                    <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0 && isAllSelected()" [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll">
                                     </mat-checkbox>
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    <mat-checkbox name="selectedData" class="c-p" [(ngModel)]="element.selected"
-                                        (change)="changeSelect(element)"></mat-checkbox>
+                                    <mat-checkbox name="selectedData" class="c-p" [(ngModel)]="element.selected" (change)="changeSelect(element)"></mat-checkbox>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="document">
                                 <th mat-sort-header="documentName" mat-header-cell *matHeaderCellDef class="f-18">
                                     Document name
                                 </th>
-                                <td mat-cell *matCellDef="let element" class="c-p"
-                                    (click)="open('viewDocuments',element)">
+                                <td mat-cell *matCellDef="let element" class="c-p" (click)="open('viewDocuments',element)">
                                     <div class="bar"> {{element.documentName}} </div>
                                 </td>
                             </ng-container>
@@ -270,24 +255,21 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="date">
-                                <th mat-sort-header="startDate" mat-header-cell *matHeaderCellDef class="text-right"
-                                    class="f-18"> Created date
+                                <th mat-sort-header="startDate" mat-header-cell *matHeaderCellDef class="text-right" class="f-18"> Created date
                                 </th>
                                 <td mat-cell *matCellDef="let element" class="text-right">
                                     <div class="bar"> {{element.startDate | date:'dd/MM/yyyy'}} </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="sdate">
-                                <th mat-sort-header="sentDate" mat-header-cell *matHeaderCellDef class="text-right"
-                                    class="f-18"> Sent date
+                                <th mat-sort-header="sentDate" mat-header-cell *matHeaderCellDef class="text-right" class="f-18"> Sent date
                                 </th>
                                 <td mat-cell *matCellDef="let element" class="text-right">
                                     <div class="bar"> {{element.sentDate | date:'dd/MM/yyyy'}} </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="cdate">
-                                <th mat-sort-header="cdate" mat-header-cell *matHeaderCellDef class="text-right"
-                                    class="f-18">
+                                <th mat-sort-header="cdate" mat-header-cell *matHeaderCellDef class="text-right" class="f-18">
                                     Client sign date
                                 </th>
                                 <td mat-cell *matCellDef="let element" class="text-right">
@@ -301,32 +283,25 @@
                                 </th>
                                 <td *matCellDef="let element" mat-cell>
                                     <span>
-                                         <!-- <span class="text-success t-10 f-500 c-p"
+                                        <!-- <span class="text-success t-10 f-500 c-p"
                                             *ngIf="element.status==1 && !element.signed">READY TO
                                             SEND</span>
-                                        <span class="text-success t-10 f-500 c-p"
-                                            *ngIf="element.status==0 && !element.signed">NOT
+                                    <span class="text-success t-10 f-500 c-p" *ngIf="element.status==0 && !element.signed">NOT
                                             STARTED</span>
-                                        <span class="text-success t-10 f-500 c-p" *ngIf="element.signed">SIGNED
+                                    <span class="text-success t-10 f-500 c-p" *ngIf="element.signed">SIGNED
                                         </span>-->
-                                      <span *ngIf="element.status==0"
-                                            class="text-success t-10 f-500 c-p">NOT
+                                    <span *ngIf="element.status==0" class="text-success t-10 f-500 c-p">NOT
                                             STARTED</span>
-                                        <span *ngIf="element.status==1"
-                                              class="text-success t-10 f-500 c-p">READY TO
+                                    <span *ngIf="element.status==1" class="text-success t-10 f-500 c-p">READY TO
                                             SEND</span>
-                                        <span *ngIf="element.status==2"
-                                              class="text-success t-10 f-500 c-p">SENT</span>
-                                      <span *ngIf="element.status==3"
-                                            class="text-success t-10 f-500 c-p">ESIGNED</span>
+                                    <span *ngIf="element.status==2" class="text-success t-10 f-500 c-p">SENT</span>
+                                    <span *ngIf="element.status==3" class="text-success t-10 f-500 c-p">ESIGNED</span>
                                     </span>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="icons">
                                 <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"></th>
-                                <td mat-cell *matCellDef="let element" style="width: 2%;"><i
-                                        class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu"
-                                        [matMenuTriggerFor]="belowMenu">
+                                <td mat-cell *matCellDef="let element" style="width: 2%;"><i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
                                         more_vert
                                     </i>
                                     <mat-menu #menu="matMenu">
@@ -336,8 +311,7 @@
                                             document</a>
                                         <a mat-menu-item class="bt-1" (click)="deleteModal('DOCUMENT')">Delete
                                             document</a>
-                                        <a mat-menu-item *ngIf="element.signed" class="bt-1"
-                                            (click)="downloadEsign(element)">Download eSigned
+                                        <a mat-menu-item *ngIf="element.signed" class="bt-1" (click)="downloadEsign(element)">Download eSigned
                                             document</a>
                                         <a mat-menu-item *ngIf="!element.signed" class="bt-1" (click)="openEsignDocument(element)">Email
                                             with eSign
@@ -358,8 +332,7 @@
             <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
                 <img class="width200" src="assets/images/svg/no-data-found.svg">
                 <p class="f-22 f-600 pt-28"> No Data Found </p>
-                <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon"
-                    (click)="openDocument('addDocument')"> ADD DOCUMENT
+                <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon" (click)="openDocument('addDocument')"> ADD DOCUMENT
                 </button>
             </div>
         </div>
@@ -374,21 +347,17 @@
             <app-terms-agreement *ngIf="documentDesign=='termsAgreement'"></app-terms-agreement>
             <div>
                 <div class="pt-140 pr-0">
-                    <app-terms-agreement [quotationDesignE]="quotationDesignEmail" *ngIf="documentDesign=='email'"
-                        (valueChange)='display($event)'></app-terms-agreement>
+                    <app-terms-agreement [quotationDesignE]="quotationDesignEmail" *ngIf="documentDesign=='email'" (valueChange)='display($event)'></app-terms-agreement>
                 </div>
             </div>
             <div class="pt-60 pr-0">
-                <app-email-only [emailDocumentSend]="documentDesign" *ngIf="documentDesign=='documentUpperSlider'"
-                    (valueChange)='display($event)'></app-email-only>
+                <app-email-only [emailDocumentSend]="documentDesign" *ngIf="documentDesign=='documentUpperSlider'" (valueChange)='display($event)'></app-email-only>
             </div>
             <div>
-                <app-email-only [emailDocument]="documentDesign" *ngIf="documentDesign=='readyToSend'"
-                    (valueChange)='display($event)'></app-email-only>
+                <app-email-only [emailDocument]="documentDesign" *ngIf="documentDesign=='readyToSend'" (valueChange)='display($event)'></app-email-only>
             </div>
             <div>
-                <app-email-only [emailDocument]="documentDesign" *ngIf="documentDesign=='documentUpper'"
-                    (valueChange)='display($event)'></app-email-only>
+                <app-email-only [emailDocument]="documentDesign" *ngIf="documentDesign=='documentUpper'" (valueChange)='display($event)'></app-email-only>
             </div>
         </div>
     </div>
