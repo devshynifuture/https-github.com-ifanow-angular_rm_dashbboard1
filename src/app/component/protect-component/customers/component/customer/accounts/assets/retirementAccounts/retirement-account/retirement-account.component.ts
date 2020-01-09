@@ -47,8 +47,8 @@ export class RetirementAccountComponent implements OnInit {
   totalContribution: any;
   totalCurrentValue: any;
   data: Array<any> = [{}, {}, {}];
-  dataEPFList: any;
-  isLoading = true;
+  dataEPFList = new MatTableDataSource(this.data);
+  isLoading = false;
 
 
   @ViewChild('epfListTable', { static: false }) epfListTableSort: MatSort;
@@ -192,7 +192,7 @@ export class RetirementAccountComponent implements OnInit {
     }
     ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   }
-  constructor(private excel : ExcelService,private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
+  constructor(private excel: ExcelService, private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
   }
 
   displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'empc', 'rate', 'bal', 'bacla', 'year', 'desc', 'status', 'icons'];
@@ -222,22 +222,22 @@ export class RetirementAccountComponent implements OnInit {
   }
   getfixedIncomeData(value) {
     this.showRecurring = value;
-   if(value == '2'){
-    this.dataNPSList = new MatTableDataSource(this.data);
-    this.getListNPS()
-   }else if(value == '3'){
-    this.dataGratuityList = new MatTableDataSource(this.data);
-    this.getListGratuity()
-   }else if(value == '4'){
-    this.dataSuperannuationList = new MatTableDataSource(this.data);
-    this.getListSuperannuation()
-   }else if(value == '5'){
-    this.EPSList = new MatTableDataSource(this.data);
-    this.getListEPS() 
-   }else{
-    this.getListEPF();
-    this.dataEPFList = new MatTableDataSource(this.data);
-   }
+    if (value == '2') {
+      this.dataNPSList = new MatTableDataSource(this.data);
+      this.getListNPS()
+    } else if (value == '3') {
+      this.dataGratuityList = new MatTableDataSource(this.data);
+      this.getListGratuity()
+    } else if (value == '4') {
+      this.dataSuperannuationList = new MatTableDataSource(this.data);
+      this.getListSuperannuation()
+    } else if (value == '5') {
+      this.EPSList = new MatTableDataSource(this.data);
+      this.getListEPS()
+    } else {
+      this.getListEPF();
+      this.dataEPFList = new MatTableDataSource(this.data);
+    }
   }
 
   openRetirement(value, state, data) {
@@ -527,9 +527,10 @@ export class RetirementAccountComponent implements OnInit {
   getListEPF() {
     this.isLoading = true;
     const obj = this.getObject;
+    this.dataEPFList.data = [{}, {}, {}];
     this.custumService.getEPF(obj).subscribe(
       data => this.getEPFRes(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.openSnackBar('Something went worng!', 'dismiss');
         this.dataEPFList.data = [];
         this.isLoading = false;
       }
@@ -539,12 +540,12 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = false;
     console.log('getEPFRes =', data);
     this.isLoading = false;
-    if(data == undefined){
+    if (data == undefined) {
       this.noData = "No scheme found";
       this.dataEPFList.data = [];
     }
-   else if (data.listOfEpf) {
-      this.dataEPFList = new MatTableDataSource(data.listOfEpf);
+    else if (data.listOfEpf) {
+      this.dataEPFList.data = data.listOfEpf;
       this.dataEPFList.sort = this.epfListTableSort;
       this.sumOfcurrentEpfBalance = data.sumOfcurrentEpfBalance;
       this.sumOfcurrentValue = data.sumOfcurrentValue;
@@ -560,20 +561,21 @@ export class RetirementAccountComponent implements OnInit {
   getListGratuity() {
     this.isLoading = true;
     const obj = this.getObject;
+    this.dataGratuityList.data = [{}, {}, {}];
     this.custumService.getGrauity(obj).subscribe(
       data => this.getGrauityRes(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.openSnackBar('Something went worng!', 'dismiss');
         this.dataGratuityList.data = [];
         this.isLoading = false;
       }
     );
-    
+
   }
   getGrauityRes(data) {
     console.log('getGrauityRes =', data);
     this.isLoading = false;
     if (data.gratuityList) {
-      this.dataGratuityList = new MatTableDataSource(data.gratuityList);
+      this.dataGratuityList.data = data.gratuityList;
       this.dataGratuityList.sort = this.gratuityListTableSort;
       this.sumOfAmountReceived = data.sumOfAmountReceived;
     }
@@ -586,9 +588,10 @@ export class RetirementAccountComponent implements OnInit {
   getListNPS() {
     this.isLoading = true;
     const obj = this.getObject;
+    this.dataNPSList.data = [{}, {}, {}];
     this.custumService.getNPS(obj).subscribe(
       data => this.getNPSRes(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.openSnackBar('Something went worng!', 'dismiss');
         this.dataNPSList.data = [];
         this.isLoading = false;
       }
@@ -599,7 +602,7 @@ export class RetirementAccountComponent implements OnInit {
     console.log('getNPSRes =', data);
     //this.isLoading = false;
     if (data.npsList) {
-      this.dataNPSList = new MatTableDataSource(data.npsList);
+      this.dataNPSList.data = data.npsList;
       this.dataNPSList.sort = this.npsListTableSort;
       this.totalContribution = data.totalContribution;
       this.totalCurrentValue = data.totalCurrentValue;
@@ -613,9 +616,10 @@ export class RetirementAccountComponent implements OnInit {
   getListSuperannuation() {
     this.isLoading = true;
     const obj = this.getObject;
+    this.dataSuperannuationList.data = [{}, {}, {}];
     this.custumService.getSuperannuation(obj).subscribe(
       data => this.getSuperannuationRes(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.openSnackBar('Something went worng!', 'dismiss');
         this.dataSuperannuationList.data = [];
         this.isLoading = false;
       }
@@ -625,7 +629,7 @@ export class RetirementAccountComponent implements OnInit {
     console.log('getSuperannuationRes =', data);
     this.isLoading = false;
     if (data.superannuationList) {
-      this.dataSuperannuationList = new MatTableDataSource(data.superannuationList);
+      this.dataSuperannuationList.data = data.superannuationList;
       this.dataSuperannuationList.sort = this.superAnnuationListTableSort;
       this.sumOfAnnualEmployeeContribution = data.sumOfAnnualEmployeeContribution;
       this.sumOfAnnualEmployerContribution = data.sumOfAnnualEmployerContribution;
@@ -639,9 +643,10 @@ export class RetirementAccountComponent implements OnInit {
   getListEPS() {
     this.isLoading = true;
     const obj = this.getObject;
+    this.EPSList.data = [{}, {}, {}];
     this.custumService.getEPS(obj).subscribe(
       data => this.getEPSRes(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.openSnackBar('Something went worng!', 'dismiss');
         this.EPSList.data = [];
         this.isLoading = false;
       }
@@ -651,7 +656,7 @@ export class RetirementAccountComponent implements OnInit {
     console.log('getEPSRes =', data);
     this.isLoading = false;
     if (data.epsList) {
-      this.EPSList = new MatTableDataSource(data.epsList);
+      this.EPSList.data = data.epsList;
       this.EPSList.sort = this.epsListTableSort;
       this.totalNotionalValue = data.totalNotionalValue;
       this.totalPensionAmount = data.totalPensionAmount;

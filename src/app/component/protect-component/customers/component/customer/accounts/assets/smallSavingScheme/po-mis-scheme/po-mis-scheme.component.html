@@ -1,8 +1,8 @@
 <div class="row">
-    <div class="col-md-4 p-0">
+    <div class="col-md-5 p-0">
         <h4 class="m-0 text-black roboto pt-8">Post office monthly income scheme (PO MIS)</h4>
     </div>
-    <div class="col-md-8 p-0 right text-right" *ngIf="datasource.filteredData.length > 0">
+    <div class="col-md-7 p-0 right text-right" *ngIf="datasource.filteredData.length > 0">
         <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
         <mat-menu #menu5="matMenu">
             <button mat-menu-item>PDF</button>
@@ -126,7 +126,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
     </table>
-    <div *ngIf="datasource==undefined" class="d-flex flex-column align-items-center">
+    <div *ngIf="datasource.filteredData.length == 0" class="d-flex flex-column align-items-center">
         <img class="width400" src="assets/images/svg/clients-img.svg">
         <h4 class="text-center pt-12">No Scheme Found</h4>
         <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOMIS('Add')"> ADD NEW</button>

@@ -209,7 +209,7 @@
                                 <button mat-menu-item *ngIf="dataCount == 0">Select invoice to see more
                                     actions
                                 </button>
-                                <button mat-menu-item *ngIf="dataCount == 1" (click)="openEsignDocument(null)">Email
+                                <button mat-menu-item *ngIf="dataCount == 1 && sendESign" (click)="openEsignDocument(null)">Email
                                     with eSign
                                     request
                                 </button>
@@ -329,7 +329,7 @@
                                         <a mat-menu-item *ngIf="element.signed" class="bt-1"
                                             (click)="downloadEsign(element)">Download eSigned
                                             document</a>
-                                        <a mat-menu-item class="bt-1" (click)="openEsignDocument(element)">Email
+                                        <a mat-menu-item *ngIf="!element.signed" class="bt-1" (click)="openEsignDocument(element)">Email
                                             with eSign
                                             request</a>
                                     </mat-menu>

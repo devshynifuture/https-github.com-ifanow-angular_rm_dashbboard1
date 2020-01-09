@@ -1,15 +1,15 @@
-import {AddKvpComponent} from './../common-component/add-kvp/add-kvp.component';
-import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../../../customer.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {DetailedKvpComponent} from './detailed-kvp/detailed-kvp.component';
-import {FormatNumberDirective} from 'src/app/format-number.directive';
-import {ExcelService} from '../../../../excel.service';
+import { AddKvpComponent } from './../common-component/add-kvp/add-kvp.component';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../customer.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { DetailedKvpComponent } from './detailed-kvp/detailed-kvp.component';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../../excel.service';
 
 @Component({
   selector: 'app-kvp-scheme',
@@ -21,11 +21,13 @@ export class KvpSchemeComponent implements OnInit {
   advisorId: any;
   noData: string;
   isLoading = false;
+  data: Array<any> = [{}, {}, {}];
+  datasource = new MatTableDataSource(this.data);
   kvpData: any;
   sumOfCurrentValue: number;
   sumOfAmountInvested: number;
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   footer = [];
@@ -34,8 +36,7 @@ export class KvpSchemeComponent implements OnInit {
   }
 
   displayedColumns18 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
-  data: Array<any> = [{}, {}, {}];
-  datasource = new MatTableDataSource(this.data);
+
   ngOnInit() {
 
     this.advisorId = AuthService.getAdvisorId();
@@ -46,19 +47,19 @@ export class KvpSchemeComponent implements OnInit {
   async ExportTOExcel(value) {
     this.excelData = [];
     let data = [];
-    let headerData = [{width: 20, key: 'Owner'},
-      {width: 20, key: 'Current Value'},
-      {width: 10, key: 'Rate'},
-      {width: 25, key: 'Amount Invested'},
-      {width: 20, key: 'Maturity Value'},
-      {width: 15, key: 'Maturity Date'},
-      {width: 15, key: 'Description'},
-      {width: 10, key: 'Status'},];
+    let headerData = [{ width: 20, key: 'Owner' },
+    { width: 20, key: 'Current Value' },
+    { width: 10, key: 'Rate' },
+    { width: 25, key: 'Amount Invested' },
+    { width: 20, key: 'Maturity Value' },
+    { width: 15, key: 'Maturity Date' },
+    { width: 15, key: 'Description' },
+    { width: 10, key: 'Status' },];
     let header = ['Owner', 'Current Value', 'Rate', 'Amount Invested',
       'Maturity Value', 'Maturity Date', 'Description', 'Status'];
     this.datasource.filteredData.forEach(element => {
       data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue), (element.rate),
-        this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested), (element.maturityValue), new Date(element.maturityDate), element.description, element.status];
+      this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested), (element.maturityValue), new Date(element.maturityDate), element.description, element.status];
       this.excelData.push(Object.assign(data));
     });
     let footerData = ['Total',
@@ -74,9 +75,10 @@ export class KvpSchemeComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId
     };
+    this.datasource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemeKVPData(obj).subscribe(
       data => this.getKvpSchemedataResponse(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.openSnackBar('Something went worng!', 'dismiss');
         this.datasource.data = [];
         this.isLoading = false;
       }
@@ -87,7 +89,7 @@ export class KvpSchemeComponent implements OnInit {
     console.log(data);
     this.isLoading = false;
     if (data && data.KVPList && data.KVPList.length != 0) {
-      this.datasource = new MatTableDataSource(data.KVPList);
+      this.datasource.data = data.KVPList;
       this.datasource.sort = this.sort;
       UtilService.checkStatusId(this.datasource.filteredData);
       this.sumOfCurrentValue = data.SumOfCurrentValue;

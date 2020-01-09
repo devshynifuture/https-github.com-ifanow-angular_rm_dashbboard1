@@ -58,6 +58,7 @@ export class DocumentComponent implements OnInit {
   serviceDocumentData;
   mappedData = [];
   dataCount;
+  sendESign:boolean = true;
   _clientData: any;
   _upperData: any;
   noData: string;
@@ -270,6 +271,9 @@ export class DocumentComponent implements OnInit {
 
       this.dataSource.filteredData.forEach(singleElement => {
         if (singleElement.selected) {
+          if(singleElement.signed){
+            this.sendESign = false;
+          }
           data.documentList.push(singleElement);
         }
       });
