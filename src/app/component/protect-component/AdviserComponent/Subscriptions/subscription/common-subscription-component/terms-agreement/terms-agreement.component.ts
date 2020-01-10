@@ -121,6 +121,8 @@ export class TermsAgreementComponent implements OnInit {
   openDocumentPreview() {
     this.serviceData.forEach(element => {
       this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp("$(service_" + element.id + ")"), 'g'), element.serviceName);
+      this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp("$(client_name)"), 'g'), "Ronak Hindocha");
+      // this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp("$(service__fee_"), 'g'), "Ronak Hindocha");
     });
     this.route.navigate(['test'], { state: { ...this.dataTerms } });
 
