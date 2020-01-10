@@ -38,18 +38,19 @@
       </div>
 
       <div class="col-md-11">
-        <mat-form-field class="example-chip-list">
-          <mat-chip-list #chipList>
-            <mat-chip *ngFor="let singleEmailId of emailList" [selectable]="selectable" [removable]="removable"
-              (removed)="remove(singleEmailId)">
-              {{singleEmailId.name}}
-              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        <mat-form-field>
+          <mat-chip-list #chipListEmail>
+            <mat-chip [removable]="true" *ngFor="let singleEmailId of emailIdList; let i = index" [selectable]="false"
+                      (removed)="removeEmailId(i)">
+              {{singleEmailId.emailAddress}}
+              <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
+            <input [matChipInputFor]="chipListEmail"
+                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+                   (matChipInputTokenEnd)="add($event)" [autofocus]="true">
           </mat-chip-list>
         </mat-form-field>
-        <input placeholder="New singleEmailId..." [matChipInputFor]="chipList"
-          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-          (matChipInputTokenEnd)="add($event)" autofocus>
+
         <!-- <p class="m-0 text-black">{{this._inputData.clientData.userEmailId}}</p> -->
         <!--        appInputValueValidation-->
         <!--        [inputValidator]="validatorType.EMAIL"-->

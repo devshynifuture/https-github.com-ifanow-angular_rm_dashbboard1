@@ -46,7 +46,7 @@ export class EmailOnlyComponent implements OnInit {
   @Input() set data(inputData) {
     const obj = [];
     this.doc = inputData.documentList;
-    if (inputData.isInv == true) {
+    if (inputData.isInv) {
       this.doc.forEach(element => {
         if (element) {
           const obj1 = {
@@ -115,10 +115,6 @@ export class EmailOnlyComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruits: Fruit[] = [
-    {name: 'Abc@mail.com'},
-
-  ];
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
               public subscription: SubscriptionService) {
@@ -192,8 +188,8 @@ export class EmailOnlyComponent implements OnInit {
   //   });
   // }
   close() {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeUpperRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
 
     // this.valueChange.emit(this.emailSend);
   }
@@ -255,7 +251,7 @@ export class EmailOnlyComponent implements OnInit {
     // );
 
     this.subscription.updateDocumentData(obj).subscribe(
-      data => this.getResponseData(data)
+      responseJson => this.getResponseData(responseJson)
     );
   }
 
@@ -324,8 +320,12 @@ export class EmailOnlyComponent implements OnInit {
     }
   }
 
-  removeEmailId(item) {
-    this.emailIdList.splice(item, 1);
+  removeEmailId(index) {
+    // const index = this.emailIdList.indexOf(singleEmail);
+
+    // if (index >= 0) {
+    this.emailIdList.splice(index, 1);
+    // }
   }
 
   onEmailIdEntryKeyPress(event) {
@@ -333,34 +333,29 @@ export class EmailOnlyComponent implements OnInit {
     if (inputChar == ',') {
       event.preventDefault();
       const emailId = this._inputData.clientData.userEmailId;
-      this.emailIdList.push({ emailAddress: emailId });
+      this.emailIdList.push({emailAddress: emailId});
       this._inputData.clientData.userEmailId = '';
     }
   }
 
   add(event: MatChipInputEvent): void {
     const input = event.input;
-    const value = event.value;
-    this.emailIdList.push({ emailAddress: value })
-    // Add our fruit
-    if ((value || '').trim()) {
-      this.fruits.push({ name: value.trim() });
+    const value = event.value.trim();
+    if (value && value.length > 0) {
+      if (this.validatorType.EMAIL.test(value)) {
+        this.emailIdList.push({emailAddress: value});
+      } else {
+        this.eventService.openSnackBar('Enter valid email address');
+      }
     }
-
     // Reset the input value
     if (input) {
       input.value = '';
     }
   }
 
-  remove(fruit: Fruit): void {
-    const index = this.fruits.indexOf(fruit);
+  remove(singleEmail): void {
+    this.docObj.splice(singleEmail, 1);
 
-    if (index >= 0) {
-      this.fruits.splice(index, 1);
-    }
   }
-}
-export interface Fruit {
-  name: string;
 }

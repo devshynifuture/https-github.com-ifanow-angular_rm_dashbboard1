@@ -1,15 +1,15 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
 
 
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
-import { SubscriptionService } from '../../../subscription.service';
-import { ConsentTandCComponent } from '../consent-tand-c/consent-tand-c.component';
-import { UtilService } from '../../../../../../../services/util.service';
-import { AuthService } from '../../../../../../../auth-service/authService';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
+import {SubscriptionService} from '../../../subscription.service';
+import {ConsentTandCComponent} from '../consent-tand-c/consent-tand-c.component';
+import {UtilService} from '../../../../../../../services/util.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
 
 export interface PeriodicElement {
   document: string;
@@ -101,7 +101,7 @@ export class QuotationsComponent implements OnInit {
     };
     this.subAService.getSubscriptionClientsQuotations(obj).subscribe(
       data => this.getQuotationsListResponse(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataSource.data = [];
         this.isLoading = false;
       }
@@ -291,7 +291,7 @@ export class QuotationsComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ');
           rightSideDataSub.unsubscribe();
         }

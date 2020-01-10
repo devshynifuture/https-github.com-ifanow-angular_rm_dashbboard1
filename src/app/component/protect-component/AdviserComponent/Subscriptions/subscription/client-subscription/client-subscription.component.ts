@@ -1,12 +1,12 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { SubscriptionService } from '../../subscription.service';
-import { UtilService } from "../../../../../../services/util.service";
-import { AuthService } from "../../../../../../auth-service/authService";
-import { HelpComponent } from '../common-subscription-component/help/help.component';
-import { SubscriptionUpperSliderComponent } from '../common-subscription-component/upper-slider/subscription-upper-slider.component';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {SubscriptionService} from '../../subscription.service';
+import {UtilService} from "../../../../../../services/util.service";
+import {AuthService} from "../../../../../../auth-service/authService";
+import {HelpComponent} from '../common-subscription-component/help/help.component';
+import {SubscriptionUpperSliderComponent} from '../common-subscription-component/upper-slider/subscription-upper-slider.component';
 
 export interface PeriodicElement {
   name: string;
@@ -54,7 +54,7 @@ export class ClientSubscriptionComponent implements OnInit {
     this.isLoading = true;
     this.subService.getSubscriptionClientsList(obj).subscribe(
       data => this.getClientListResponse(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataSource.data = [];
         this.isLoading = false;
       }

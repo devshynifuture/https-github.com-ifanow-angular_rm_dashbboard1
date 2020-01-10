@@ -6,7 +6,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {MAT_DATE_FORMATS} from '@angular/material';
 import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import { UtilService } from 'src/app/services/util.service';
+import {UtilService} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-po-rd',
@@ -108,7 +108,7 @@ export class AddPoRdComponent implements OnInit {
         };
         this.cusService.editPORD(obj).subscribe(
           data => this.addPORDResponse(data),
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       } else {
         const obj = {
@@ -127,7 +127,7 @@ export class AddPoRdComponent implements OnInit {
         };
         this.cusService.addPORDScheme(obj).subscribe(
           data => this.addPORDResponse(data),
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       }
     }

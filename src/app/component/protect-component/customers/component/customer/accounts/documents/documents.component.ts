@@ -1,21 +1,21 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatBottomSheet, MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
-import { EventService } from 'src/app/Data-service/event.service';
-import { Router } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from '../../customer.service';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {MatBottomSheet, MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {BottomSheetComponent} from '../../../common-component/bottom-sheet/bottom-sheet.component';
+import {EventService} from 'src/app/Data-service/event.service';
+import {Router} from '@angular/router';
+import {FormBuilder} from '@angular/forms';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from '../../customer.service';
 import * as _ from 'lodash';
-import { AuthService } from 'src/app/auth-service/authService';
-import { HttpHeaders } from '@angular/common/http';
-import { DocumentNewFolderComponent } from '../../../common-component/document-new-folder/document-new-folder.component';
-import { HttpService } from 'src/app/http-service/http-service';
-import { CopyDocumentsComponent } from '../../../common-component/copy-documents/copy-documents.component';
-import { ViewActivityComponent } from './view-activity/view-activity.component';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { EmailQuotationComponent } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-quotation/email-quotation.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {HttpHeaders} from '@angular/common/http';
+import {DocumentNewFolderComponent} from '../../../common-component/document-new-folder/document-new-folder.component';
+import {HttpService} from 'src/app/http-service/http-service';
+import {CopyDocumentsComponent} from '../../../common-component/copy-documents/copy-documents.component';
+import {ViewActivityComponent} from './view-activity/view-activity.component';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {EmailQuotationComponent} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-quotation/email-quotation.component';
 
 @Component({
   selector: 'app-documents',
@@ -357,7 +357,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
               dialogRef.close();
               this.getAllFileList(this.valueTab);
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           );
         } else {
           const obj1 = {
@@ -372,7 +372,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
               dialogRef.close();
               this.getAllFileList(this.valueTab);
             },
-            err => this.eventService.openSnackBar(err)
+            error => this.eventService.showErrorMessage(error)
           );
         }
       },

@@ -1,15 +1,15 @@
-import { AddPoTdComponent } from './../common-component/add-po-td/add-po-td.component';
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../../../customer.service';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { DetailedPoTdComponent } from './detailed-po-td/detailed-po-td.component';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelService } from '../../../../excel.service';
+import {AddPoTdComponent} from './../common-component/add-po-td/add-po-td.component';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../../../customer.service';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {DetailedPoTdComponent} from './detailed-po-td/detailed-po-td.component';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelService} from '../../../../excel.service';
 
 @Component({
   selector: 'app-po-td-scheme',
@@ -77,7 +77,7 @@ export class PoTdSchemeComponent implements OnInit {
     this.dataSource.data = [{}, {}, {}];
     this.cusService.getSmallSavingSchemePOTDData(obj).subscribe(
       data => this.getPoTdSchemedataResponse(data), (error) => {
-        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataSource.data = [];
         this.isLoading = false;
       }
@@ -114,7 +114,7 @@ export class PoTdSchemeComponent implements OnInit {
             dialogRef.close();
             this.getPoTdSchemedata();
           },
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         );
       },
       negativeMethod: () => {

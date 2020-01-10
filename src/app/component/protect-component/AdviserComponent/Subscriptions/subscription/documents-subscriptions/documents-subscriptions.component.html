@@ -16,13 +16,21 @@
                 <button *ngIf="dataCount == 0" mat-menu-item>Select documents to see more
                   actions
                 </button>
-                <button (click)="deleteModal('DOCUMENT')" *ngIf="dataCount != 0" mat-menu-item>Delete
+                <!-- <button mat-menu-item *ngIf="dataCount == 1 && sendESign" (click)="openEsignDocument(null)">Email
+                    with eSign
+                    request
+                </button> -->
+                <!-- <button (click)="openSendEmail()" *ngIf="dataCount > 0" mat-menu-item>Email
+                    only
+                </button> -->
+                <button (click)="deleteModal(null)" *ngIf="dataCount != 0" mat-menu-item>Delete
                   Documents
                 </button>
               </mat-menu>
             </div>
-            <div class="col-md-8 p-0" *ngIf="dataSource.data.length > 0">
-              <p class="m-0 text-black text-left pt-12">{{dataCount}} documents selected</p>
+            <div class="col-md-8 p-0" *ngIf="dataSource.data.length > 0 && dataCount > 0">
+              <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}} document selected</p>
+              <p class="m-0 text-black text-left pt-12" *ngIf="dataCount > 1">{{dataCount}} documents selected</p>
             </div>
           </div>
         </div>
@@ -81,6 +89,7 @@
                     <!-- <mat-label>FILTERS ONE</mat-label> -->
                     <mat-select (selectionChange)="addFilters(selectedStatusFilter)" [(ngModel)]='selectedStatusFilter'
                       class="form-control br-0" id="sel11">
+                      <mat-option value="statusFilter">By status</mat-option>
                       <mat-option *ngFor="let chip of chips" [value]="chip">
                         {{chip.name}}
                       </mat-option>
@@ -93,7 +102,8 @@
                   <mat-form-field>
                     <!-- <mat-label>FILTERS TWO</mat-label> -->
                     <mat-select (selectionChange)="addFiltersDate(selectedStatusFilter)"
-                      [(ngModel)]='selectedStatusFilter' class="form-control br-0" id="sel12">
+                      [(ngModel)]='selectedDateFilter' class="form-control br-0" id="sel12">
+                      <mat-option value="dateFilter">By date</mat-option>
                       <mat-option *ngFor="let dateAdd of dateChips" [value]="dateAdd">
                         {{dateAdd.name}}
                       </mat-option>
@@ -119,10 +129,10 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="name">
-          <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="serviceName"> Client name</th>
+          <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="clientName"> Client name</th>
           <td (click)="openViewDocument('viewDocuments',element)" *matCellDef="let element" class="c-p" mat-cell>
             <div class="bar">
-              {{element.serviceName}}
+              {{element.clientName}}
             </div>
           </td>
         </ng-container>
@@ -199,7 +209,7 @@
               <a (click)="openViewDocument('viewDoc',element)" mat-menu-item>View & Edit document</a>
               <a (click)="downloadEsign(element)" *ngIf="element.signed" class="bt-1" mat-menu-item>Download eSigned
                 document</a>
-              <a (click)="deleteModal('DOCUMENT')" mat-menu-item>Delete document</a>
+              <a (click)="deleteModal(element)" mat-menu-item>Delete document</a>
             </mat-menu>
           </td>
         </ng-container>

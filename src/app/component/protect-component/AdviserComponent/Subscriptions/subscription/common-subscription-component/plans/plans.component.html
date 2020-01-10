@@ -7,7 +7,7 @@
 <div class="bg-white pt-72">
     <div class="row text-right pt-130">
         <div class="col-md-7 p-0 pt-4">
-            <p>Map Plans to the selected service.</p>
+            <p>Map Plans to the isActive service.</p>
         </div>
         <div class="col-md-1 text-left">
             <img src="/assets/images/svg/info.svg" class="c-p">
@@ -21,12 +21,13 @@
             <div class="col-md-4 pb-40 c-p" *ngFor="let singleServicePlan of servicePlanData">
                 <div class="example-card">
                     <mat-card class="p-0 b-ua" (click)="selectServicePlan(singleServicePlan)"
-                        [ngClass]="{'p-0': singleServicePlan.selected==false,'b-ua':singleServicePlan.selected==false,'ba-blue':singleServicePlan.selected==true}">
+                        [ngClass]="{'p-0': singleServicePlan.isActive==0,'b-ua':singleServicePlan.isActive==0,'ba-blue':singleServicePlan.isActive==1}">
                         <div class="row bg-grey lter">
                             <div class="col-md-12 heightplan">
-                                <mat-checkbox [ngStyle]="{'pointer-events':(singleServicePlan.selected)?'none':'all'}"
+                                <mat-checkbox
+                                    [ngStyle]="{'pointer-events':(singleServicePlan.isActive==0)?'none':'all'}"
                                     class="custom-checkbox positionAbsulate" checked="false"
-                                    [ngClass]="{'v-h': singleServicePlan.selected==false}">
+                                    [ngClass]="{'v-h': singleServicePlan.isActive==0}">
                                 </mat-checkbox>
                                 <h3 class="mb-10 l-26 playairFont f-24">{{singleServicePlan.name}}</h3>
                                 <h5 class="m-0">{{singleServicePlan.code}}</h5>

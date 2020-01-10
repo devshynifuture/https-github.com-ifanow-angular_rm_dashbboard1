@@ -1,17 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { SubscriptionService } from '../../subscription.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from "../../../../../../auth-service/authService";
-import { UtilService } from 'src/app/services/util.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {SubscriptionService} from '../../subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from "../../../../../../auth-service/authService";
+import {UtilService} from 'src/app/services/util.service';
 import * as _ from 'lodash';
-import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from 'saturn-datepicker';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { AddQuotationComponent } from '../common-subscription-component/add-quotation/add-quotation.component';
-import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
+import {DatePipe} from '@angular/common';
+import {MAT_DATE_FORMATS} from 'saturn-datepicker';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {AddQuotationComponent} from '../common-subscription-component/add-quotation/add-quotation.component';
+import {CommonFroalaComponent} from '../common-subscription-component/common-froala/common-froala.component';
 
 export interface PeriodicElement {
   name: string;
@@ -49,7 +49,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   maxDate = new Date();
   noData: string;
   isLoading = false;
-  
+
   filterStatus = [];
   filterDate = [];
   statusIdList = [];
@@ -64,7 +64,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   list: any[];
-  
+
 
   getData: any = '';
   scrollCallData = true;
@@ -73,7 +73,6 @@ export class QuotationsSubscriptionComponent implements OnInit {
   tableData = [];
 
 
-  
   chips = [
     { name: 'LIVE', value: 1 },
     { name: 'PAID', value: 2 },
@@ -85,7 +84,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     { name: 'Client consent', value: 3 }
   ];
   dataCount: number;
-  
+
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
     public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
@@ -186,7 +185,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     this.dataSource.data = [{}, {}, {}];
     this.subService.getSubscriptionQuotationData(obj).subscribe(
       data => this.getQuotationsDataResponse(data), (error) => {
-        this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
+        this.eventService.showErrorMessage(error);
         this.dataSource.data = [];
         this.isLoading = false;
       }
@@ -216,16 +215,35 @@ export class QuotationsSubscriptionComponent implements OnInit {
     }
   }
 
-  deleteModal(value) {
+  deleteModal(data) {
+    let list = [];
+    if(data == null){
+      this.dataSource.filteredData.forEach(singleElement => {
+        if (singleElement.selected) {
+          list.push(singleElement.documentRepositoryId);
+        }
+      });
+    }
+    else{
+      [data.documentRepositoryId]
+    }
     const dialogData = {
-      data: value,
+      data: 'DOCUMENT',
       header: 'DELETE',
-      body: 'Are you sure you want to delete?',
+      body: 'Are you sure you want to delete the document?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        console.log('11111111111111111111111111111111111111111111');
+        this.subService.deleteSettingsDocument(list).subscribe(
+          data => {
+            this.eventService.openSnackBar('document is deleted', 'dismiss');
+            // this.valueChange.emit('close');
+            dialogRef.close();
+            // this.getRealEstate();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -239,9 +257,8 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     });
 
-
     dialogRef.afterClosed().subscribe(result => {
-
+      this.getQuotationsData(false);
     });
 
   }

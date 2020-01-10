@@ -22,8 +22,9 @@
               </button>
             </mat-menu>
           </div>
-          <div class="col-md-8 p-0" *ngIf="dataSource.data.length > 0">
-            <p class="m-0 text-black text-left pt-12">{{dataCount}} invoices selected</p>
+          <div class="col-md-8 p-0" *ngIf="dataSource.data.length > 0 && dataCount > 0">
+            <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}} invoice selected</p>
+            <p class="m-0 text-black text-left pt-12" *ngIf="dataCount > 1">{{dataCount}} invoices selected</p>
           </div>
         </div>
       </div>

@@ -1,20 +1,20 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { MAT_DATE_FORMATS } from '@angular/material';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from '../../../../../customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { UtilService } from 'src/app/services/util.service';
-import { DatePipe } from '@angular/common';
+import {Component, Input, OnInit} from '@angular/core';
+import {MAT_DATE_FORMATS} from '@angular/material';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from '../../../../../customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {UtilService} from 'src/app/services/util.service';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-add-nsc',
   templateUrl: './add-nsc.component.html',
   styleUrls: ['./add-nsc.component.scss'],
   providers: [
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
     [DatePipe],
   ]
 })
@@ -135,7 +135,7 @@ export class AddNscComponent implements OnInit {
         }
         this.cusService.editNSCData(obj).subscribe(
           data => this.addNSCResponse(data),
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         )
       }
       else {
@@ -158,7 +158,7 @@ export class AddNscComponent implements OnInit {
         console.log(obj)
         this.cusService.addNSCScheme(obj).subscribe(
           data => this.addNSCResponse(data),
-          err => this.eventService.openSnackBar(err)
+          error => this.eventService.showErrorMessage(error)
         )
       }
     }

@@ -15,7 +15,6 @@ import { PlanEntryModule } from './component/customer/plan/plan.entry.module';
 import { DynamicComponentService } from '../../../services/dynamic-component.service';
 
 
-
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
 // import { FactShitComponent } from './component/common-component/fact-shit/fact-shit.component';
 // import { TransactionsComponent } from './component/common-component/transactions/transactions.component';
