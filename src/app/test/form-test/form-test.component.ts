@@ -22,6 +22,8 @@ export class FormTestComponent implements OnInit {
   inputString;
   // numKeyValidator = ValidatorType.NUMBER_KEY_ONLY;
   ngOnInit() {
+    console.log("Document preview", window.history.state)
+    this.inputString = window.history.state
     this.testForm = this.fb.group({
       id: [],
       email: [, [Validators.required]],
