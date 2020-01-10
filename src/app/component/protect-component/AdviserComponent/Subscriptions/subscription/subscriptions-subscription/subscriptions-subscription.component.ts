@@ -354,7 +354,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         this.subService.deleteSubscriptionData(obj).subscribe(
           data => {
             this.deletedData(data);
-            dialogRef.close();
+            dialogRef.close(subData);
           }
         );
 
@@ -373,7 +373,16 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result,this.dataSource.data,"delete result");
+      const tempList = []
+      this.dataSource.data.forEach(singleElement => {
+        if (singleElement.id != result.id) {
+          tempList.push(singleElement);
+        }
+      });
+      this.dataSource.data = tempList;
 
+     
     });
   }
 

@@ -258,9 +258,16 @@ export class QuotationsSubscriptionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result!=undefined){
-      this.getQuotationsData(false);
-      }
+      console.log(result,this.dataSource.data,"delete result");
+      const tempList = []
+      this.dataSource.data.forEach(singleElement => {
+        if (!singleElement.selected) {
+          tempList.push(singleElement);
+        }
+      });
+      this.dataSource.data = tempList;
+
+     
     });
 
   }
@@ -320,7 +327,8 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     });
     dialogRef.afterClosed().subscribe(result => {
-
+      
+      
     });
   }
 
@@ -351,6 +359,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
         if (UtilService.isRefreshRequired(sideBarData)) {
           this.getQuotationsData(false);
           console.log('this is sidebardata in subs subs 2: ');
+          this.dataCount = 0;
           rightSideDataSub.unsubscribe();
         }
       }
