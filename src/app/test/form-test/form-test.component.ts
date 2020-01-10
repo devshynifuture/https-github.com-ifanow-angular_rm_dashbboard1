@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {ValidatorType} from '../../services/util.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ValidatorType } from '../../services/util.service';
 
 @Component({
   selector: 'app-form-test',
@@ -19,7 +19,7 @@ export class FormTestComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
   }
-
+  inputString;
   // numKeyValidator = ValidatorType.NUMBER_KEY_ONLY;
   ngOnInit() {
     this.testForm = this.fb.group({
