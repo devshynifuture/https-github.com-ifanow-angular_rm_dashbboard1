@@ -135,7 +135,8 @@ export class DocumentComponent implements OnInit {
       clientId: this.upperData.id,
       flag: 4
     };
-
+    this.isLoading = true;
+    this.dataSource.data = [{}, {}, {}];
     this.subscription.getClientDocumentData(obj).subscribe(
       data => this.getDocumentResponseData(data)
     );
@@ -335,7 +336,8 @@ export class DocumentComponent implements OnInit {
     fragmentData.data.isDocument = true;
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          this.getdocumentSubData();
           rightSideDataSub.unsubscribe();
         }
       }
