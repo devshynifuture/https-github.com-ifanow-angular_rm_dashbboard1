@@ -698,7 +698,7 @@ export class DocumentComponent implements OnInit {
   saveMappingDocumentToPlansResponse(data) {
     console.log("response status:::::::::::::::", data);
     this.eventService.changeUpperSliderState({ state: 'close' });
-    if (this.mappedData) {
+    if (this.mappedData.length==0) {
       this.eventService.openSnackBar('No Document mapped', 'Dismiss');
     } else {
       this.eventService.openSnackBar('Document is mapped', 'OK');
