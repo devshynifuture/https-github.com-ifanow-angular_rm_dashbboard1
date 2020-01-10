@@ -18,7 +18,7 @@
             </button>
           </mat-menu>
         </div>
-        <div class="col-md-9 p-0 ml-8" *ngIf="dataCount > 0">
+        <div class="col-md-9 p-0 ml-8" *ngIf="dataSource.data.length > 0 && dataCount > 0">
           <p class="m-0 text-black text-left pt-10" *ngIf="dataCount == 1">{{dataCount}} quotation selected</p>
           <p class="m-0 text-black text-left pt-10" *ngIf="dataCount > 1">{{dataCount}} quotations selected</p>
         </div>
