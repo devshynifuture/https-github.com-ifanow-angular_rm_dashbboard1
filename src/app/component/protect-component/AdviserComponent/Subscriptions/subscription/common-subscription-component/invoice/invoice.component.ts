@@ -1,15 +1,15 @@
-import {ValidatorType} from './../../../../../../../services/util.service';
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EnumServiceService} from '../../../../../../../services/enum-service.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {UtilService} from 'src/app/services/util.service';
-import {EmailOnlyComponent} from '../email-only/email-only.component';
-import {PdfService} from '../../../../../../../services/pdf.service';
+import { ValidatorType } from './../../../../../../../services/util.service';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EnumServiceService } from '../../../../../../../services/enum-service.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { UtilService } from 'src/app/services/util.service';
+import { EmailOnlyComponent } from '../email-only/email-only.component';
+import { PdfService } from '../../../../../../../services/pdf.service';
 
 
 export interface PeriodicElement {
@@ -30,20 +30,21 @@ export class InvoiceComponent implements OnInit {
   highLight: boolean;
   maxDate = new Date();
   validatorType = ValidatorType;
+  advisorBillerProfileId: any;
 
   [x: string]: any;
 
   // invoiceTemplate
   gstTreatment = [
-    {name: 'Registered Business - Regular', value: 0},
-    {name: 'Registered Business - Composition', value: 1},
-    {name: 'Unregistered Business', value: 2}
+    { name: 'Registered Business - Regular', value: 0 },
+    { name: 'Registered Business - Composition', value: 1 },
+    { name: 'Unregistered Business', value: 2 }
   ];
 
-  @ViewChild('invoiceTemplate', {static: false}) invoiceTemplate: ElementRef;
+  @ViewChild('invoiceTemplate', { static: false }) invoiceTemplate: ElementRef;
 
   constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
-              private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
+    private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getInvoiceData(data)
     );
@@ -703,17 +704,17 @@ export class InvoiceComponent implements OnInit {
   openSendEmail(input) {
     console.log('invoiceComponent openSendEmail this.invoiceTemplate.nativeElement.innerHTML : ', this.invoiceTemplate.nativeElement.innerHTML);
     const data = {
-        advisorId: this.advisorId,
-        clientData: this.storeData,
-        templateType: 1, // 2 is for quotation
-        documentList: [{
-          ...this.storeData,
-          documentName: this.storeData.invoiceNumber,
-          docText: this.invoiceTemplate.nativeElement.innerHTML
-        }],
-        isInv: true
-      }
-    ;
+      advisorId: this.advisorId,
+      clientData: this.storeData,
+      templateType: 1, // 2 is for quotation
+      documentList: [{
+        ...this.storeData,
+        documentName: this.storeData.invoiceNumber,
+        docText: this.invoiceTemplate.nativeElement.innerHTML
+      }],
+      isInv: true
+    }
+      ;
     // this.dataSource.forEach(singleElement => {
     //   if (singleElement.selected) {
     //     data.documentList.push(singleElement);
@@ -800,7 +801,7 @@ export class InvoiceComponent implements OnInit {
       margin: 1,
       filename: this.storeData.invoiceNumber + '.pdf',
       // image: {type: 'jpeg', quality: 0.98},
-      html2canvas: {scale: 2},
+      html2canvas: { scale: 2 },
       // jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}
     };
 

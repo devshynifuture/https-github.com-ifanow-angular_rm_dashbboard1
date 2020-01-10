@@ -1,15 +1,15 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
-import {SubscriptionService} from '../../../subscription.service';
-import {ConsentTandCComponent} from '../consent-tand-c/consent-tand-c.component';
-import {UtilService} from '../../../../../../../services/util.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
+import { SubscriptionService } from '../../../subscription.service';
+import { ConsentTandCComponent } from '../consent-tand-c/consent-tand-c.component';
+import { UtilService } from '../../../../../../../services/util.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
 
 export interface PeriodicElement {
   document: string;
@@ -95,11 +95,11 @@ export class QuotationsComponent implements OnInit {
   }
 
   getQuotationsList() {
+    this.isLoading = true;
     const obj = {
       // clientId: 2970
       clientId: this._clientData.id
     };
-    this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     this.subAService.getSubscriptionClientsQuotations(obj).subscribe(
       data => this.getQuotationsListResponse(data), (error) => {
