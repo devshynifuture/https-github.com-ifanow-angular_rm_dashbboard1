@@ -45,8 +45,8 @@
               <div class="bg-grey lter wrapper-12 pt-16">
                 <p class="m-0 text-black">Client name</p>
               </div>
-              <div class="bg-white wrapper-12">
-                <p class="m-0 text-black">client name</p>
+              <div (click)="copyName($event)" class="bg-white wrapper-12">
+                <p class="m-0 text-black">$(client_name)</p>
               </div>
             </div>
           </div>
@@ -57,8 +57,8 @@
               <div class="bg-grey lter wrapper-12 pt-16">
                 <p class="m-0 text-black">Client address</p>
               </div>
-              <div class="bg-white wrapper-12">
-                <p class="m-0 text-black">client address</p>
+              <div (click)="copyName($event)" class="bg-white wrapper-12">
+                <p class="m-0 text-black">$(client_address)</p>
               </div>
             </div>
           </div>
@@ -70,8 +70,11 @@
               <div class="bg-grey lter wrapper-12 pt-16">
                 <p class="m-0 text-black">{{singleService.serviceName}}</p>
               </div>
-              <div (click)="copyServiceName(singleService)" class="bg-white wrapper-12 c-p">
+              <div (click)="copyName($event)" class="bg-white wrapper-12 c-p copy">
                 <p class="m-0 text-black">{{'$(service_'+singleService.id+')'}}</p>
+              </div>
+              <div (click)="copyName($event)" class="bg-white wrapper-12 c-p copy">
+                <p class="m-0 text-black">{{'$(service_fee_'+singleService.id+')'}}</p>
               </div>
             </div>
           </div>
