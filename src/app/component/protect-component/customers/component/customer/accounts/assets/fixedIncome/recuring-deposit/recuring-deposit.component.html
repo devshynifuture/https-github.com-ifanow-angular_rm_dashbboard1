@@ -28,7 +28,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #monthlyContribution type="text" (keypress)="keyPress($event)" maxlength="10"
+                    <input matInput #monthlyContribution type="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"  [maxLength]="10"
                         class="form-control rupess br-0" formControlName="monthlyContribution">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isMonthlyContribution && getFormControl().monthlyContribution.invalid || getFormControl().monthlyContribution.touched && getFormControl().monthlyContribution.invalid)}">
@@ -158,10 +158,10 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #bankName type="text" (keypress)="utils.onlyText($event)" maxlength="20"
+                        <input matInput #bankName type="text"  maxlength="40"
                             class="form-control br-0" formControlName="bankName">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{bankName.value.length}}/20</mat-hint>
+                        <mat-hint align="end" class="f-12">{{bankName.value.length}}/40</mat-hint>
                     </mat-form-field>
                 </div>
 
@@ -174,7 +174,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input type="text" matInput #linkBankAc (keypress)="keyPress($event)" maxlength="16" class="form-control br-0"
+                        <input type="text" matInput #linkBankAc appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="16" class="form-control br-0"
                             formControlName="linkBankAc">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{linkBankAc.value.length}}/16</mat-hint>
