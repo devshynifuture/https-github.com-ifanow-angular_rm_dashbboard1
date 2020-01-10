@@ -172,6 +172,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   getQuotationsData(scrollLoader) {
+    this.dataCount = 0;
     const obj = {
       // advisorId: 12345
       advisorId: this.advisorId,
@@ -286,7 +287,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     console.log('addFilters', addFilters);
     if (!_.includes(this.filterStatus, addFilters)) {
       this.filterStatus.push(addFilters);
-      this.getQuotationsData(false)
+      this.getQuotationsData(false);
     } else {
       // _.remove(this.filterStatus, this.senddataTo);
     }
@@ -314,6 +315,8 @@ export class QuotationsSubscriptionComponent implements OnInit {
     UtilService.getStartOfTheDay(endDate);
 
     this.selectedDateRange = { begin: beginDate, end: endDate };
+
+    this.getQuotationsData(false);
   }
 
   openPopup(data) {

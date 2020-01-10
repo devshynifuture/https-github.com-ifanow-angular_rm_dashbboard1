@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmailListComponent } from './email-list.component';
 import { EmailViewComponent } from './email-view/email-view.component';
 import { MaterialModule } from './../../../../../../material/material';
@@ -11,6 +12,7 @@ import { EmailReplyComponent } from './email-reply/email-reply.component';
 import { GmailDatePipe } from './email-listing/gmail-date.pipe';
 import { TruncateStringPipe } from 'src/app/truncate.pipe';
 import { ShowListActionsDirective } from './email-listing/show-list-actions.directive';
+import { GoogleConnectComponent } from './email-listing/google-connect/google-connect.component';
 
 
 
@@ -22,11 +24,14 @@ import { ShowListActionsDirective } from './email-listing/show-list-actions.dire
     EmailViewComponent,
     GmailDatePipe,
     TruncateStringPipe,
-    ShowListActionsDirective
+    ShowListActionsDirective,
+    GoogleConnectComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
     EmailListRoutingModule
   ],
   exports: [
