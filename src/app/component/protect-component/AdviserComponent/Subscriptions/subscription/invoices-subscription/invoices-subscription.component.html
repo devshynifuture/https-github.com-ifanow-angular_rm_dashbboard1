@@ -97,13 +97,12 @@
   <!-- (scroll)="scrollCall()" -->
   <!-- id="pdfDoc"  removed from above div-->
   <div class="wrapper-20 pt-0 bg-white" id="wrapper" *ngIf="dataSource.data.length > 0">
-
     <div class="tableClass">
       <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
              class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
         <ng-container matColumnDef="checkbox">
           <th *matHeaderCellDef class="f-18" mat-header-cell>
-            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0 && isAllSelected()"
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0"
                           [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll">
             </mat-checkbox>
           </th>

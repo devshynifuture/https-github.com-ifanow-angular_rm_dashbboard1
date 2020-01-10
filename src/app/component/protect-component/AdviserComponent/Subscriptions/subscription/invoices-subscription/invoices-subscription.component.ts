@@ -284,6 +284,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.tableData = [];
     this.getInvoiceSubData(false);
     this.invoiceSubscription = 'false';
+    this.dataCount = 0;
     // this.ngOnInit();
   }
 
@@ -442,8 +443,10 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   deleteModal(value) {
     this.list = [];
+    let listIndex = [];
     this.dataSource.filteredData.forEach(singleElement => {
       if (singleElement.selected) {
+        listIndex.push(this.dataSource.filteredData.indexOf(singleElement));
         this.list.push(singleElement.id);
       }
     });
@@ -459,11 +462,13 @@ export class InvoicesSubscriptionComponent implements OnInit {
           data => {
             this.dataCount = 0;
             this.eventService.openSnackBar('invoice deleted successfully.', 'dismiss');
-            dialogRef.close();
+            dialogRef.close(listIndex);
 
           },
           error => this.eventService.showErrorMessage(error)
         );
+            dialogRef.close(listIndex);
+
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -479,10 +484,16 @@ export class InvoicesSubscriptionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result,"");
-      this.dataSource.data = [{}, {}, {}];
-      this.tableData = [];
-      this.getInvoiceSubData(false);
+      console.log(result,this.dataSource.data,"delete result");
+      const tempList = []
+      this.dataSource.data.forEach(singleElement => {
+        if (!singleElement.selected) {
+          tempList.push(singleElement);
+        }
+      });
+      this.dataSource.data = tempList;
+
+     
     });
   }
 }
