@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddExpensesComponent } from '../../../common-component/add-expenses/add-expenses.component';
+import { AddBudgetComponent } from '../../../common-component/add-budget/add-budget/add-budget.component';
 
 @Component({
   selector: 'app-expenses',
@@ -30,6 +31,24 @@ export class ExpensesComponent implements OnInit {
         id: 1,
         state: 'open35',
         componentName:AddExpensesComponent
+      };
+      const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+        sideBarData => {
+          console.log('this is sidebardata in subs subs : ', sideBarData);
+          if (UtilService.isDialogClose(sideBarData)) {
+            console.log('this is sidebardata in subs subs 2: ', sideBarData);
+            rightSideDataSub.unsubscribe();
+  
+          }
+        }
+      );
+    }
+    openExpensesB(value) {
+      const fragmentData = {
+        flag:value,
+        id: 1,
+        state: 'open35',
+        componentName:AddBudgetComponent
       };
       const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
         sideBarData => {
