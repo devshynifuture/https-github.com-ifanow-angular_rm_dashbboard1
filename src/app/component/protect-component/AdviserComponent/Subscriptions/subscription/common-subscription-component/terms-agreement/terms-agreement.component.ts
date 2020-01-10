@@ -51,6 +51,7 @@ export class TermsAgreementComponent implements OnInit {
       // this.changeDisplay();
     }
     this.advisorId = AuthService.getAdvisorId();
+    this.getPlanServiceData();
   };
 
   get upperData() {
@@ -75,7 +76,7 @@ export class TermsAgreementComponent implements OnInit {
 
   ngOnInit() {
     console.log('quotationDesign', this._upperData);
-    this.getPlanServiceData();
+
   }
 
   Close() {
@@ -88,7 +89,7 @@ export class TermsAgreementComponent implements OnInit {
     const obj = {
       // advisorId: 12345,
       advisorId: this.advisorId,
-      planId: 2
+      planId: this._upperData.documentData.planId
       // this.planData ? this.planData.id : null
     };
     this.subService.getSettingPlanServiceData(obj).subscribe(
