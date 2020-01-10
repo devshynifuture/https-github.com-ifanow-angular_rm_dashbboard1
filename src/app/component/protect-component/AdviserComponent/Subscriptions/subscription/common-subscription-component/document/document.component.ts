@@ -136,6 +136,7 @@ export class DocumentComponent implements OnInit {
       clientId: this.upperData.id,
       flag: 4
     };
+    this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     this.subscription.getClientDocumentData(obj).subscribe(
       data => this.getDocumentResponseData(data), (error) => {
@@ -344,7 +345,8 @@ export class DocumentComponent implements OnInit {
     fragmentData.data.isDocument = true;
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          this.getdocumentSubData();
           rightSideDataSub.unsubscribe();
         }
       }
@@ -696,7 +698,7 @@ export class DocumentComponent implements OnInit {
   saveMappingDocumentToPlansResponse(data) {
     console.log("response status:::::::::::::::", data);
     this.eventService.changeUpperSliderState({ state: 'close' });
-    if (this.mappedData) {
+    if (this.mappedData.length==0) {
       this.eventService.openSnackBar('No Document mapped', 'Dismiss');
     } else {
       this.eventService.openSnackBar('Document is mapped', 'OK');

@@ -84,7 +84,7 @@ export class QuotationsComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ');
           this.getQuotationsList();
           rightSideDataSub.unsubscribe();
@@ -231,7 +231,7 @@ export class QuotationsComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeUpperRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ');
           this.getQuotationsList();
           rightSideDataSub.unsubscribe();

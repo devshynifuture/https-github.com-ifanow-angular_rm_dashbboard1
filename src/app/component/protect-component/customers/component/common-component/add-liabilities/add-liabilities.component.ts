@@ -101,17 +101,17 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     }
   }
 
-  close() {
+  close(flag) {
     if (this.data) {
       if (this._data.loanTypeId == undefined) {
         const data = this._data;
-        this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+        this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:flag});
       } else {
         const data = this._data.showFilter;
-        this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+        this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:flag});
       }
     } else {
-      this.subInjectService.changeNewRightSliderState({ state: 'close' });
+      this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag});
 
     }
   }
@@ -213,7 +213,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
 
   }
 
-  saveFormData(state) {
+  saveFormData() {
     if (this.addLiabilityForm.get('loanType').invalid) {
       this.addLiabilityForm.get('loanType').markAsTouched();
       return;
@@ -338,7 +338,8 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     if (data == 1) {
       console.log(data);
       data = this.loanTypeView;
-      this.subInjectService.changeNewRightSliderState({state: 'close', data});
+      this.close(true);
+      // this.subInjectService.changeNewRightSliderState({state: 'close', data});
       this.eventService.openSnackBar('Liabilities added successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
@@ -351,7 +352,8 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     if (data == 1) {
       console.log(data);
       data = this.loanTypeView;
-      this.subInjectService.changeNewRightSliderState({state: 'close', data});
+      this.close(true);
+      // this.subInjectService.changeNewRightSliderState({state: 'close', data});
       this.eventService.openSnackBar('Liabilities edited successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');

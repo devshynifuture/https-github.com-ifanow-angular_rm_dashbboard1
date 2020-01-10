@@ -28,14 +28,14 @@
       height: 130px;
     }
 
-    // ::ng-deep .rightside-border {
-    //   margin-right: 40px;
-    //   margin-top: 89px;
-    //   height: 1px;
-    //   background-color: #dadce0;
-    //   width: 37.24%;
-    //   right: 0;
-    //   position: absolute;
-    //   padding-right: 20px;
+    ::ng-deep .right-line {
+      margin-right: 40px;
+      margin-top: 161px;
+      height: 0.4px;
+      background-color: rgba(233, 234, 236, 0);
+      width: 34%;
+      right: 0;
+      position: absolute;
+      padding-right: 20px;
 
-    // }
+    }

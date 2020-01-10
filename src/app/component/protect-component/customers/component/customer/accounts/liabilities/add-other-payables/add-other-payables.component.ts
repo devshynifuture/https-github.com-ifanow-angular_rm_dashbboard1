@@ -63,9 +63,9 @@ export class AddOtherPayablesComponent implements OnInit {
     this.show = false;
   }
 
-  close() {
+  close(flag) {
     // let data=this._inputData.loanTypeId;
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag});
   }
 
   getOtherPayable(data) {
@@ -124,7 +124,7 @@ export class AddOtherPayablesComponent implements OnInit {
     }
   }
 
-  saveFormData(state) {
+  saveFormData() {
     if (this.otherLiabilityForm.get('dateOfReceipt').invalid) {
       this.otherLiabilityForm.get('dateOfReceipt').markAsTouched();
       return;
@@ -204,8 +204,9 @@ export class AddOtherPayablesComponent implements OnInit {
     console.log(data);
     if (data) {
       console.log(data);
-      this.subInjectService.changeNewRightSliderState({ state: 'close' });
-      this.eventService.openSnackBar('Liabilities added successfully', 'OK');
+      this.close(true);
+      // this.subInjectService.changeNewRightSliderState({ state: 'close' });
+      this.eventService.openSnackBar('Other payables added successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
 
@@ -216,8 +217,9 @@ export class AddOtherPayablesComponent implements OnInit {
     console.log(data);
     if (data) {
       console.log(data);
-      this.subInjectService.changeNewRightSliderState({ state: 'close' });
-      this.eventService.openSnackBar('Liabilities edited successfully', 'OK');
+      this.close(true);
+      // this.subInjectService.changeNewRightSliderState({ state: 'close' });
+      this.eventService.openSnackBar('other payables edited successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
     }
