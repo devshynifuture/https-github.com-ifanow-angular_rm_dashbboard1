@@ -83,9 +83,9 @@ export class ChangePayeeComponent implements OnInit {
     console.log('change payee upperData', this.upperData);
   }
 
-  Close(state) {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  Close(flag) {
+    this.subInjectService.changeUpperRightSliderState({ state: 'close',refreshRequired:flag });
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
   }
   getPayeeData(data) {
     this.getRowData = data;
@@ -150,7 +150,7 @@ export class ChangePayeeComponent implements OnInit {
     console.log('changePayeeSettingRes', data);
     if (data == 1) {
       this.eventService.openSnackBar('Payee updated successfully', 'OK');
-      this.Close('close');
+      this.Close(true);
     }
   }
 
