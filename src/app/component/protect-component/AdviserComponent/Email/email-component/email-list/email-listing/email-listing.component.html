@@ -54,14 +54,14 @@
     <ng-container matColumnDef="emailers">
         <th mat-header-cell *matHeaderCellDef> </th>
         <td mat-cell *matCellDef="let element"> {{element.emailers | truncate:20}}
-            {{ element.messageCount === 1 ? '': element.messageCount }} </td>
+            {{ element.messageCount <= 1 ? '': element.messageCount }} </td>
     </ng-container>
 
     <!-- subject and message Column -->
     <ng-container matColumnDef="subjectMessage">
         <th mat-header-cell *matHeaderCellDef> </th>
         <td mat-cell *matCellDef="let element" class="d-flex"
-            (click)="showDraftView ? openDraftView(element): gotoEmailView(element)">
+            (click)="redirectMessages(element)">
             {{element.subjectMessage.subject | truncate:30}}
             <p class="m-0 pl-12 text-primitive">
                 {{element.subjectMessage.message | truncate:30}}
@@ -73,7 +73,7 @@
     <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef>
         </th>
-        <td mat-cell *matCellDef="let element">
+        <td mat-cell *matCellDef="let element" class="p-no">
             <span class="d-block" data-show="date">
                 {{element.date | gmailDate}}
             </span>

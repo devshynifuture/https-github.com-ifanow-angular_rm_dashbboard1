@@ -76,7 +76,7 @@ export interface PeriodicElement {
   ],
 })
 export class SubscriptionsSubscriptionComponent implements OnInit {
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   selector: string = '.wrapper-20';
   displayedColumns: string[] = ['client', 'service', 'amt', 'sub', 'status', 'activation',
     'lastbilling', 'nextbilling', 'feemode', 'icons'];

@@ -14,7 +14,7 @@
             </div>
         </div>
     </div>
-    <form [formGroup]="emailForm" (change)="didFormChanged = true" (ngSubmit)="onSendEmail()">
+    <form [formGroup]="emailForm" #formRef (change)="didFormChanged = true;" (ngSubmit)="onSendEmail()">
         <div class="wrapper-8 pt-12">
             <div class="row">
                 <div class="col-md-1">
