@@ -43,6 +43,10 @@ export class DashboardSubscriptionComponent implements OnInit {
   dataSource = [{}, {}, {}];
   isLoading = false;
   isLoadingSubSummary = false;
+  isLoadingTotal = false;
+  isLoadingFee = false;
+  isLoadingDocsSent = false;
+  isLoadingDocsSigned = false;
   @Output() subIndex = new EventEmitter()
 
   advisorName;
@@ -307,6 +311,8 @@ export class DashboardSubscriptionComponent implements OnInit {
   // ******* Dashboard Sent And Signed Count *******
 
   docSentSignedCountData() {
+    this.isLoadingDocsSent = true;
+
     const obj = {
       advisorId: this.advisorId
     };
@@ -317,10 +323,13 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   docSentSignedCountResponse(data) {
     console.log('SentSignedCountResponse', data);
-    if (data)
+    if (data){
+      this.isLoadingDocsSent = false;
       this.dataSourceSingCount = data;
-    else
+    }
+    else{
       this.dataSourceSingCount = {};
+    }
   }
 
 
