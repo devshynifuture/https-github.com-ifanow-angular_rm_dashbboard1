@@ -43,6 +43,10 @@ export class UtilService {
     return data && data.state && data.state === 'close';
   }
 
+  static isRefreshRequired(data) {
+    return data && data.state && data.state === 'close' && data.refreshRequired;
+  }
+
   static getStartOfTheDay(date: Date) {
     date.setHours(0);
     date.setMinutes(0);
