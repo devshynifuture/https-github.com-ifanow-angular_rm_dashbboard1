@@ -16,13 +16,14 @@
               <button *ngIf="dataCount == 0" mat-menu-item>Select quotation to see more
                 actions
               </button>
-              <button (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0" mat-menu-item>Delete
+              <button (click)="deleteModal(null)" *ngIf="dataCount != 0" mat-menu-item>Delete
                 Quotation
               </button>
             </mat-menu>
           </div>
-          <div class="col-md-8" *ngIf="dataSource.data.length > 0">
-            <p class="m-0 text-black text-left pt-12">{{dataCount}} quotations selected</p>
+          <div class="col-md-8" *ngIf="dataSource.data.length > 0 && dataCount > 0">
+            <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}} quotation selected</p>
+            <p class="m-0 text-black text-left pt-12" *ngIf="dataCount > 1">{{dataCount}} quotations selected</p>
           </div>
         </div>
       </div>
@@ -65,7 +66,7 @@
         </div>
         <div class="col-md-4 right text-right p-0">
           <div class="row">
-            <div class="col-md-6 sub_input">
+            <div class="col-md-6 pr-0">
               <!-- <div class="form-group mb-0">
                   <mat-form-field>
                        <mat-label>FILTERS ONE</mat-label>
@@ -78,7 +79,7 @@
                   </mat-form-field>
               </div> -->
             </div>
-            <div class="col-md-6 sub_input">
+            <div class="col-md-6 pr-0">
               <div class="form-group mb-0">
                 <mat-form-field>
                   <!-- <mat-label>FILTERS TWO</mat-label> -->
@@ -105,7 +106,7 @@
           id="table-low" mat-table matSort>
           <ng-container matColumnDef="checkbox">
             <th *matHeaderCellDef class="f-18" mat-header-cell>
-              <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0 && isAllSelected()"
+              <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0"
                 [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll">
               </mat-checkbox>
             </th>
@@ -176,7 +177,7 @@
               </i>
               <mat-menu #menu="matMenu">
                 <a (click)="Open('emailQuotation',element)" mat-menu-item>View & Edit Quotation</a>
-                <a (click)="deleteModal('QUOTATION')" mat-menu-item>Delete document</a>
+                <a (click)="deleteModal(element)" mat-menu-item>Delete document</a>
               </mat-menu>
             </td>
           </ng-container>

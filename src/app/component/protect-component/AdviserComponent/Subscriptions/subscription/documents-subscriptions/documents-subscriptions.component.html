@@ -16,20 +16,24 @@
                 <button *ngIf="dataCount == 0" mat-menu-item>Select documents to see more
                   actions
                 </button>
-                <button mat-menu-item *ngIf="dataCount == 1 && sendESign" (click)="openEsignDocument(null)">Email
+                <!-- <button mat-menu-item *ngIf="dataCount == 1 && sendESign" (click)="openEsignDocument(null)">Email
                     with eSign
                     request
-                </button>
-                <button (click)="openSendEmail()" *ngIf="dataCount > 0" mat-menu-item>Email
+                </button> -->
+                <!-- <button (click)="openSendEmail()" *ngIf="dataCount > 0" mat-menu-item>Email
                     only
-                </button>
-                <button (click)="deleteModal('DOCUMENT')" *ngIf="dataCount != 0" mat-menu-item>Delete
+                </button> -->
+                <button (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount > 1" mat-menu-item>Delete
                   Documents
+                </button>
+                <button (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount <= 1" mat-menu-item>Delete
+                  Document
                 </button>
               </mat-menu>
             </div>
-            <div class="col-md-8 p-0" *ngIf="dataSource.data.length > 0">
-              <p class="m-0 text-black text-left pt-12">{{dataCount}} documents selected</p>
+            <div class="col-md-8 p-0" *ngIf="dataSource.data.length > 0 && dataCount > 0">
+              <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}} document selected</p>
+              <p class="m-0 text-black text-left pt-12" *ngIf="dataCount > 1">{{dataCount}} documents selected</p>
             </div>
           </div>
         </div>
@@ -82,7 +86,7 @@
           </div>
           <div class="col-md-4 right text-right p-0">
             <div class="row">
-              <div class="col-md-6 sub_input">
+              <div class="col-md-6 pr-0">
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <!-- <mat-label>FILTERS ONE</mat-label> -->
@@ -96,7 +100,7 @@
                   </mat-form-field>
                 </div>
               </div>
-              <div class="col-md-6 sub_input">
+              <div class="col-md-6 pr-0">
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <!-- <mat-label>FILTERS TWO</mat-label> -->
@@ -118,7 +122,7 @@
         class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
         <ng-container matColumnDef="checkbox">
           <th *matHeaderCellDef class="f-18" mat-header-cell>
-            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0 && isAllSelected()"
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0 "
               [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll">
             </mat-checkbox>
           </th>
@@ -208,7 +212,7 @@
               <a (click)="openViewDocument('viewDoc',element)" mat-menu-item>View & Edit document</a>
               <a (click)="downloadEsign(element)" *ngIf="element.signed" class="bt-1" mat-menu-item>Download eSigned
                 document</a>
-              <a (click)="deleteModal('DOCUMENT')" mat-menu-item>Delete document</a>
+              <a (click)="deleteModal(element)" mat-menu-item>Delete document</a>
             </mat-menu>
           </td>
         </ng-container>

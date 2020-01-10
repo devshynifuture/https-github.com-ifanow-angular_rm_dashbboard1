@@ -172,6 +172,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   getQuotationsData(scrollLoader) {
+    this.dataCount = 0;
     const obj = {
       // advisorId: 12345
       advisorId: this.advisorId,
@@ -215,16 +216,35 @@ export class QuotationsSubscriptionComponent implements OnInit {
     }
   }
 
-  deleteModal(value) {
+  deleteModal(data) {
+    let list = [];
+    if(data == null){
+      this.dataSource.filteredData.forEach(singleElement => {
+        if (singleElement.selected) {
+          list.push(singleElement.documentRepositoryId);
+        }
+      });
+    }
+    else{
+      [data.documentRepositoryId]
+    }
     const dialogData = {
-      data: value,
+      data: 'DOCUMENT',
       header: 'DELETE',
-      body: 'Are you sure you want to delete?',
+      body: 'Are you sure you want to delete the document?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        console.log('11111111111111111111111111111111111111111111');
+        this.subService.deleteSettingsDocument(list).subscribe(
+          data => {
+            this.eventService.openSnackBar('document is deleted', 'dismiss');
+            // this.valueChange.emit('close');
+            dialogRef.close();
+            // this.getRealEstate();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -238,9 +258,17 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     });
 
-
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result,this.dataSource.data,"delete result");
+      const tempList = []
+      this.dataSource.data.forEach(singleElement => {
+        if (!singleElement.selected) {
+          tempList.push(singleElement);
+        }
+      });
+      this.dataSource.data = tempList;
 
+     
     });
 
   }
@@ -259,7 +287,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     console.log('addFilters', addFilters);
     if (!_.includes(this.filterStatus, addFilters)) {
       this.filterStatus.push(addFilters);
-      this.getQuotationsData(false)
+      this.getQuotationsData(false);
     } else {
       // _.remove(this.filterStatus, this.senddataTo);
     }
@@ -287,6 +315,8 @@ export class QuotationsSubscriptionComponent implements OnInit {
     UtilService.getStartOfTheDay(endDate);
 
     this.selectedDateRange = { begin: beginDate, end: endDate };
+
+    this.getQuotationsData(false);
   }
 
   openPopup(data) {
@@ -300,7 +330,8 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     });
     dialogRef.afterClosed().subscribe(result => {
-
+      
+      
     });
   }
 
@@ -328,9 +359,10 @@ export class QuotationsSubscriptionComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
           this.getQuotationsData(false);
           console.log('this is sidebardata in subs subs 2: ');
+          this.dataCount = 0;
           rightSideDataSub.unsubscribe();
         }
       }

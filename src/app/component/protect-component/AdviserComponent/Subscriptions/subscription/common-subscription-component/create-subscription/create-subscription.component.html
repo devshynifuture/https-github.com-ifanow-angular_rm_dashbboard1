@@ -4,7 +4,7 @@
       <h4 class="mb-0 wrapper-20">CREATE SUBSCRIPTION FOR {{clientData.clientName}}</h4>
     </div>
     <div class="col-md-2 text-right">
-      <i (click)="Close()" class="material-icons pt-16 pr-16 c-p">
+      <i (click)="Close(false)" class="material-icons pt-16 pr-16 c-p">
         clear
       </i>
     </div>
@@ -114,7 +114,7 @@
       <div class="bottom-fixed wrapper-12">
         <div class="row">
           <div class="col-md-4">
-            <h5 (click)="Close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+            <h5 (click)="Close(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
           </div>
           <div class="col-md-8 right text-right">
             <button (click)="goBack()" *ngIf="subscriptionDetails.valid" class="btn-default mr-12 br-0 text-inherit"
@@ -174,7 +174,7 @@
       <div class="bottom-fixed wrapper-12">
         <div class="row">
           <div class="col-md-4">
-            <h5 (click)="Close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+            <h5 (click)="Close(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
           </div>
           <div class="col-md-8 right text-right">
             <button (click)="goBack()" *ngIf="subscriptionDetails.valid" class="btn-default mr-12 br-0 text-inherit"
@@ -195,7 +195,7 @@
       <div class="bottom-fixed wrapper-12">
         <div class="row">
           <div class="col-md-4">
-            <h5 (click)="Close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+            <h5 (click)="Close(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
           </div>
           <div class="col-md-8 right text-right">
             <button (click)="goBack()" class="btn-default mr-12 br-0 text-inherit" mat-raised-button>PREVIOUS
@@ -250,7 +250,7 @@
       <div class="bottom-fixed wrapper-12">
         <div class="row">
           <div class="col-md-4">
-            <h5 (click)="Close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+            <h5 (click)="Close(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
           </div>
           <div class="col-md-8 right text-right">
             <button (click)="startSubscription()" class="btn-bottom br-0 text-inherit" mat-button>SAVE
@@ -261,7 +261,7 @@
       <div class="bottom-fixed wrapper-12">
         <div class="row">
           <div class="col-md-4 pt-8">
-            <h5 (click)="Close()" class="mb-0  text-white c-p">Cancel</h5>
+            <h5 (click)="Close(false)" class="mb-0  text-white c-p">Cancel</h5>
           </div>
           <div class="col-md-8 right text-right">
             <button (click)="goBack()" class="btn-default mr-12 br-0 text-inherit" mat-raised-button>PREVIOUS

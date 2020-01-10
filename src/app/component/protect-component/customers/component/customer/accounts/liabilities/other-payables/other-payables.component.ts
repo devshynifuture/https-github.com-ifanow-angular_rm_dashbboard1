@@ -1,16 +1,16 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewChildren} from '@angular/core';
-import {CustomerService} from '../../../customer.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {DetailedViewOtherPayablesComponent} from '../detailed-view-other-payables/detailed-view-other-payables.component';
-import {AddOtherPayablesComponent} from '../add-other-payables/add-other-payables.component';
-import {FormatNumberDirective} from 'src/app/format-number.directive';
-import {ExcelService} from '../../../excel.service';
-import {MathUtilService} from '../../../../../../../../services/math-util.service';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewChildren } from '@angular/core';
+import { CustomerService } from '../../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { DetailedViewOtherPayablesComponent } from '../detailed-view-other-payables/detailed-view-other-payables.component';
+import { AddOtherPayablesComponent } from '../add-other-payables/add-other-payables.component';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../excel.service';
+import { MathUtilService } from '../../../../../../../../services/math-util.service';
 
 @Component({
   selector: 'app-other-payables',
@@ -33,13 +33,14 @@ export class OtherPayablesComponent implements OnInit {
   excelData: any[];
   footer = [];
   noData: string;
+  isLoading = false;
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(public custmService: CustomerService, public util: UtilService,
-              public subInjectService: SubscriptionInject, public eventService: EventService,
-              public dialog: MatDialog) {
+    public subInjectService: SubscriptionInject, public eventService: EventService,
+    public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -74,23 +75,23 @@ export class OtherPayablesComponent implements OnInit {
   async ExportTOExcel(value) {
     this.excelData = [];
     let data = [];
-    const headerData = [{width: 20, key: 'Owner'},
-      {width: 20, key: 'Date of receipt'},
-      {width: 20, key: 'Creditor name'},
-      {width: 18, key: 'Amount borrowed'},
-      {width: 18, key: 'Interest'},
-      {width: 18, key: 'Date of repayment'},
-      {width: 25, key: 'Outstanding balance'},
-      {width: 18, key: 'Description'},
-      {width: 10, key: 'Status'}];
+    const headerData = [{ width: 20, key: 'Owner' },
+    { width: 20, key: 'Date of receipt' },
+    { width: 20, key: 'Creditor name' },
+    { width: 18, key: 'Amount borrowed' },
+    { width: 18, key: 'Interest' },
+    { width: 18, key: 'Date of repayment' },
+    { width: 25, key: 'Outstanding balance' },
+    { width: 18, key: 'Description' },
+    { width: 10, key: 'Status' }];
     const header = ['Owner', 'Date of receipt', 'Creditor name', 'Amount borrowed',
       'Interest', 'Date of repayment', 'Outstanding balance', 'Description', 'Status'];
     this.dataSource.filteredData.forEach(element => {
       data = [element.ownerName, new Date(element.dateOfReceived), element.creditorName,
-        MathUtilService.formatAndRoundOffNumber(element.amountBorrowed)
+      MathUtilService.formatAndRoundOffNumber(element.amountBorrowed)
         , element.interest, new Date(element.dateOfRepayment),
-        MathUtilService.formatAndRoundOffNumber(element.outstandingBalance),
-        element.description, element.status];
+      MathUtilService.formatAndRoundOffNumber(element.outstandingBalance),
+      element.description, element.status];
       this.excelData.push(Object.assign(data));
     });
     const footerData = ['Total', '', '',
@@ -101,17 +102,24 @@ export class OtherPayablesComponent implements OnInit {
   }
 
   getPayables() {
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
     };
+    this.dataSource.data = [{}, {}, {}];
     this.custmService.getOtherPayables(obj).subscribe(
-      data => this.getOtherPayablesRes(data)
+      data => this.getOtherPayablesRes(data), (error) => {
+        this.eventService.openSnackBar('Something went worng!', 'dismiss');
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
   getOtherPayablesRes(data) {
     console.log(data);
+    this.isLoading = false;
     this.dataSource = new MatTableDataSource(data);
     this.OtherDataChange.emit(this.dataSource);
 
@@ -168,7 +176,7 @@ export class OtherPayablesComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         this.getPayables();
-        if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 
@@ -188,7 +196,7 @@ export class OtherPayablesComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 

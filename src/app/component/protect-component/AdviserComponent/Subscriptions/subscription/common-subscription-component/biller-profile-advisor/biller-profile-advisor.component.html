@@ -9,7 +9,7 @@
     </i>
   </div>
 </div>
-
+<hr class="right-line">
 <div class="wrapper-40 pt-72" id="ui-biller">
   <mat-tab-group [selectedIndex]="selected" animationDuration="0ms" class="event-none" id="ui-biller-tabs">
     <mat-tab class="active " label="Profile">
@@ -23,8 +23,7 @@
               <div class="col-md-7">
                 <div class="form-group mb-0">
                   <mat-form-field>
-                    <input #companyDisplayName [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE"
-                      appInputValueValidation autofocus class="form-control br-0 text-left"
+                    <input #companyDisplayName autofocus class="form-control br-0 text-left"
                       formControlName="companyDisplayName" matInput
                       maxLength="{{getFormControlProfile().companyDisplayName.maxLength}}" type="text">
                     <mat-error class="f-12">Company Display Name is required</mat-error>
@@ -385,7 +384,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" appInputValueValidation
-                  class="form-control br-0 text-left"  maxlength="6" formControlName="pincode" matInput type="number">
+                  class="form-control br-0 text-left" maxlength="6" formControlName="pincode" matInput type="number">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
@@ -406,7 +405,7 @@
             <div class="col-md-7">
               <div class="form-group mb-0">
                 <input [inputValidator]="validatorType.TEXT_WITH_SPACE" appInputValueValidation
-                  class="form-control br-0 text-left"  maxlength="30" formControlName="country" matInput type="text">
+                  class="form-control br-0 text-left" maxlength="30" formControlName="country" matInput type="text">
               </div>
               <div class="row pt-0">
                 <div class="col-md-8">
