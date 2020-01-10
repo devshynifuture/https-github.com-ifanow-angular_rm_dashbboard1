@@ -23,7 +23,7 @@
 </div>
 
 <div class="bg-white">
-    <div class="bg-grey lter heading-fix mt-80">
+    <div class="bg-grey lter heading-fix p-20 b-a">
         <div class="row">
             <div class="col-md-12">
                 <h2 class="m-0">{{clientData[0].clientName}}</h2>
@@ -31,9 +31,9 @@
         </div>
     </div>
 
-    <div class="wrapper-20 pb-0 pt-150 mt-44" *ngIf="clientData.length > 0">
+    <div class="wrapper-20 pb-0 pt-180 mt-0" *ngIf="clientData.length > 0">
         <div class="row">
-            <div class="col-md-12 p-0 pt-16">
+            <div class="col-md-12 p-0 pt-32">
                 <button mat-stroked-button class="btn-primary br-0 right text-right addon"
                     (click)="openPlanSlider('planRightSlider','open',null)">ADD PLAN
                 </button>

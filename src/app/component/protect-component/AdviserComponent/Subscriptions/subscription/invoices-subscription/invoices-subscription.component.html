@@ -10,9 +10,9 @@
         <div class="row">
           <div class="col-md-3 p-0" *ngIf="dataSource.data.length > 0">
             <button [matMenuTriggerFor]="menu" class="b-a pr-0 br-0" mat-button>Actions <i
-              class="material-icons text-custom">
-              arrow_drop_down
-            </i></button>
+                class="material-icons text-custom">
+                arrow_drop_down
+              </i></button>
             <mat-menu #menu="matMenu">
               <button *ngIf="dataCount == 0" mat-menu-item>Select invoice to see more
                 actions
@@ -32,10 +32,10 @@
           search
         </i>
         <button (click)="showFilters(showFilter)" class="btn-default addon mr-12" mat-stroked-button><i
-          class="material-icons">filter_list</i>FILTERS
+            class="material-icons">filter_list</i>FILTERS
         </button>
         <button (click)="addInvoice('EditInInvoice')" class="btn-primary addon" mat-stroked-button><i
-          class="material-icons">add</i>ADD NEW
+            class="material-icons">add</i>ADD NEW
         </button>
       </div>
     </div>
@@ -49,13 +49,13 @@
           <mat-chip-list>
             <mat-chip *ngFor="let status of filterStatus; let ind = index" class="bg-white b-a c-p f-400 p-12">
               {{status.name}}<i (click)="remove(ind)" class="material-icons text-custom ml-12">
-              cancel
-            </i></mat-chip>
+                cancel
+              </i></mat-chip>
             <mat-chip-list class="newDateIcon">
               <mat-chip *ngFor="let dateFilter of filterDate; let i = index" class="bg-white b-a c-p f-400 p-12">
                 <p>{{dateFilter.name}}</p>
                 <input (click)="picker2.open()" [(ngModel)]="selectedDateRange" [max]="maxDate"
-                       [satDatepicker]="picker2" class="pL-20" matInput placeholder="Choose a date" readonly>
+                  [satDatepicker]="picker2" class="pL-20" matInput placeholder="Choose a date" readonly>
                 <sat-datepicker #picker2 [closeAfterSelection]="false" [rangeMode]="true">
                 </sat-datepicker>
                 <sat-datepicker-toggle [for]="picker2" matSuffix></sat-datepicker-toggle>
@@ -68,10 +68,10 @@
         </div>
         <div class="col-md-4 right text-right p-0">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 pr-0">
               <mat-form-field>
                 <mat-select (selectionChange)="addFilters(selectedStatusFilter)" [(ngModel)]='selectedStatusFilter'
-                            class="form-control br-0" id="sel11">
+                  class="form-control br-0" id="sel11">
                   <mat-option [disabled]="true" value="statusFilter">FILTER ONE</mat-option>
                   <mat-option *ngFor="let chip of chips" [value]="chip">{{chip.name}}</mat-option>
                 </mat-select>
@@ -80,7 +80,7 @@
             <div class="col-md-6">
               <mat-form-field>
                 <mat-select (selectionChange)="addFiltersDate($event)" [(ngModel)]='selectedDateFilter'
-                            class="form-control br-0" id="sel12">
+                  class="form-control br-0" id="sel12">
                   <mat-option [disabled]="true" value="dateFilter">FILTER TWO</mat-option>
                   <mat-option *ngFor="let dateAdd of dateChips" [value]="dateAdd">{{dateAdd.name}}
                   </mat-option>
@@ -99,11 +99,11 @@
 
     <div class="tableClass">
       <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
-             class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
+        class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
         <ng-container matColumnDef="checkbox">
           <th *matHeaderCellDef class="f-18" mat-header-cell>
             <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0 && isAllSelected()"
-                          [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll">
+              [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll">
             </mat-checkbox>
           </th>
           <td *matCellDef="let element" mat-cell>
@@ -114,7 +114,7 @@
         <ng-container matColumnDef="date">
           <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="invoiceDate"> Date</th>
           <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="c-p"
-              mat-cell>
+            mat-cell>
             <div class="bar"> {{element.invoiceDate | date:'dd/MM/yyyy'}} </div>
           </td>
         </ng-container>
@@ -122,21 +122,21 @@
           <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="invoiceNumber"> Invoice number
           </th>
           <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="c-p"
-              mat-cell>
+            mat-cell>
             <div class="bar"> {{element.invoiceNumber}} </div>
           </td>
         </ng-container>
         <ng-container matColumnDef="name">
           <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="clientName"> Client name</th>
           <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="c-p"
-              mat-cell>
+            mat-cell>
             <div class="bar"> {{element.clientName}} </div>
           </td>
         </ng-container>
         <ng-container matColumnDef="email">
           <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="email"> Email</th>
           <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="c-p"
-              mat-cell>
+            mat-cell>
             <div class="bar"> {{element.email}} </div>
           </td>
         </ng-container>
@@ -144,8 +144,8 @@
         <ng-container matColumnDef="status">
           <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="status"> Status</th>
           <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element"
-              [ngClass]="{'text-danger':element.status==2,'text-primary':element.status==0,'text-success':element.status==1}"
-              class="c-p" mat-cell ngcl>
+            [ngClass]="{'text-danger':element.status==2,'text-primary':element.status==0,'text-success':element.status==1}"
+            class="c-p" mat-cell ngcl>
             <div class="bar">
               {{(element.status == 0) ? 'UNPAID' : (element.status == 1) ? 'PAID' : (element.status == 2) ? 'OVERDUE' : ''}}
             </div>
@@ -162,7 +162,7 @@
         <ng-container matColumnDef="amt">
           <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="finalAmount"> Amount(₹)</th>
           <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element" class="c-p"
-              mat-cell>
+            mat-cell>
             <div class="bar"> {{formatter(element.finalAmount) || ''}} </div>
           </td>
         </ng-container>
@@ -171,12 +171,12 @@
             Balance due(₹)
           </th>
           <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element"
-              class="text-right pr-8 c-p" mat-cell>
+            class="text-right pr-8 c-p" mat-cell>
             <div class="bar"> {{formatter(element.balanceDue) || ''}} </div>
           </td>
         </ng-container>
         <tr *matHeaderRowDef="displayedColumns; sticky: true;"
-            [ngClass]="!showFilter ? 'stickyHeader1' : 'stickyHeader2'" mat-header-row></tr>
+          [ngClass]="!showFilter ? 'stickyHeader1' : 'stickyHeader2'" mat-header-row></tr>
         <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
       </table>
 
@@ -196,9 +196,10 @@
 <div class="row" *ngIf="dataSource.data.length == 0 && invoiceSubscription !='EditInInvoice'">
   <div class="col-md-12  d-flex align-items-center flex-column justify-content-center">
     <img class="width400" src="assets/images/svg/clients-img.svg">
-    <p class="f-22 f-600 pt-28"> No Data Found </p>
-    <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon" (click)="addInvoice('EditInInvoice')"> ADD
-        INVOICE
+    <p class="f-22 f-600 pt-28 mb-0"> No Data Found </p>
+    <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon"
+      (click)="addInvoice('EditInInvoice')"> ADD
+      INVOICE
     </button>
   </div>
 </div>
