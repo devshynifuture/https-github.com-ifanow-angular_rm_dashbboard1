@@ -3,6 +3,7 @@ import { EmailListingComponent } from './email-listing/email-listing.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { EmailViewComponent } from './email-view/email-view.component';
+import { GoogleConnectComponent } from './email-listing/google-connect/google-connect.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,10 @@ const routes: Routes = [
       {
         path: '',
         component: EmailListingComponent
+      },
+      {
+        path: 'google-connect',
+        component: GoogleConnectComponent
       }
     ],
   },
