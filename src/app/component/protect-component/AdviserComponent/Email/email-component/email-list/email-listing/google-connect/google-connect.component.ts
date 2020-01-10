@@ -1,11 +1,7 @@
-import { apiConfig } from 'src/app/config/main-config';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { HttpService } from 'src/app/http-service/http-service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/auth-service/authService';
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
-import { appConfig } from 'src/app/config/component-config';
 
 @Component({
   selector: 'app-google-connect',
