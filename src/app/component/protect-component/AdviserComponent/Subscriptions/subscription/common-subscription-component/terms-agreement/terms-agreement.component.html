@@ -60,8 +60,8 @@
             </div>
           </div>
         </div>
-        <div class="wrapper-16 pt-0 pb-0">
-          <h5 class="m-0 pt-20 pb-12 text-black">Services - Fee details</h5>
+        <div *ngIf="_upperData.documentData.planName!=undefined" class="wrapper-16 pt-0 pb-0">
+          <h5 class="m-0 pt-20 pb-12 text-black">{{_upperData.documentData.planName}}</h5>
           <div *ngFor="let singleService of serviceData" class="row b-a">
             <div class="col-md-12 p-0">
               <div class="bg-grey lter wrapper-12 pt-16">
