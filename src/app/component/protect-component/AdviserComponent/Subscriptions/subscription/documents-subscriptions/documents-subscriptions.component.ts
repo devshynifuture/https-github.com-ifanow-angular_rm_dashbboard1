@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild, Output } from '@angular/core';
 import {SubscriptionInject} from '../../subscription-inject.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog, MatSort} from '@angular/material';
@@ -13,6 +13,7 @@ import {DatePipe} from '@angular/common';
 import {MAT_DATE_FORMATS} from 'saturn-datepicker';
 import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 import {CommonFroalaComponent} from '../common-subscription-component/common-froala/common-froala.component';
+import { EventEmitter } from 'protractor';
 
 export interface PeriodicElement {
   name: string;
@@ -52,9 +53,9 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   selectedDateFilter:any = "dateFilter"
   selectedStatusFilter:any ="statusFilter"
   chips = [
-    {name: 'NOT STARTED', value: 1},
-    {name: 'READY TO SEND', value: 2},
-    {name: 'SENT', value: 3},
+    {name: 'NOT STARTED', value: 0},
+    {name: 'READY TO SEND', value: 1},
+    {name: 'SENT', value: 2},
     {name: 'ESIGNED', value: 3}
   ];
   dateChips = [
@@ -428,14 +429,40 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     }
   }
 
-  deleteModal(value) {
+  // @Output() valueChange = new EventEmitter();
+  deleteModal(data) {
+    let list = [];
+    if(data == null){
+      this.dataSource.filteredData.forEach(singleElement => {
+        if (singleElement.selected) {
+          list.push(singleElement.documentRepositoryId);
+        }
+      });
+    }
+    else{
+      [data.documentRepositoryId]
+    }
     const dialogData = {
-      data: value,
+      data: 'DOCUMENT',
       header: 'DELETE',
       body: 'Are you sure you want to delete the document?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
-      btnNo: 'DELETE'
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.subService.deleteSettingsDocument(list).subscribe(
+          data => {
+            this.eventService.openSnackBar('document is deleted', 'dismiss');
+            // this.valueChange.emit('close');
+            dialogRef.close();
+            // this.getRealEstate();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
     };
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -446,7 +473,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
+      this.getdocumentSubData(false);
     });
 
   }

@@ -215,16 +215,35 @@ export class QuotationsSubscriptionComponent implements OnInit {
     }
   }
 
-  deleteModal(value) {
+  deleteModal(data) {
+    let list = [];
+    if(data == null){
+      this.dataSource.filteredData.forEach(singleElement => {
+        if (singleElement.selected) {
+          list.push(singleElement.documentRepositoryId);
+        }
+      });
+    }
+    else{
+      [data.documentRepositoryId]
+    }
     const dialogData = {
-      data: value,
+      data: 'DOCUMENT',
       header: 'DELETE',
-      body: 'Are you sure you want to delete?',
+      body: 'Are you sure you want to delete the document?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        console.log('11111111111111111111111111111111111111111111');
+        this.subService.deleteSettingsDocument(list).subscribe(
+          data => {
+            this.eventService.openSnackBar('document is deleted', 'dismiss');
+            // this.valueChange.emit('close');
+            dialogRef.close();
+            // this.getRealEstate();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -238,9 +257,8 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     });
 
-
     dialogRef.afterClosed().subscribe(result => {
-
+      this.getQuotationsData(false);
     });
 
   }
