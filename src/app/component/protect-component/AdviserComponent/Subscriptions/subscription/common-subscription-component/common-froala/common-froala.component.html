@@ -5,7 +5,7 @@
       <h4 class="mb-0 wrapper-20 l-22 text-left" *ngIf="storeData.clientName!=undefined">{{storeData.clientName}}</h4>
     </div>
     <div class="col-md-2 text-right">
-      <i class="material-icons pt-16 pr-8 c-p" (click)="Close('close')"> clear</i></div>
+      <i class="material-icons pt-16 pr-8 c-p" (click)="Close('close',false)"> clear</i></div>
   </div>
   <div class="row pt-72 bb-1">
     <div class="col-md-8 pt-4 pb-12">
@@ -84,7 +84,7 @@
 <div class="bottom-fixed wrapper-12" *ngIf="changeFooter!='viewDoc'">
   <div class="row">
     <div class="col-md-4">
-      <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>
+      <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close',false)">Cancel</h5>
     </div>
     <div class="col-md-8 right text-right">
       <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()" *ngIf="changeFooter=='emailQuotation'">
@@ -116,7 +116,7 @@
 <div class="bottom-fixed wrapper-12">
   <div class="row">
     <div class="col-md-4">
-      <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>
+      <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close',false)">Cancel</h5>
     </div>
     <div class="col-md-8 right text-right">
       <button mat-button class="btn-bottom br-0 text-inherit pr-4 pl-4" (click)="save()">SAVE</button>

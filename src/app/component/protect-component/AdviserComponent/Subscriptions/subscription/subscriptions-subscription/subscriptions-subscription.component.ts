@@ -277,7 +277,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
           setTimeout(() => {
@@ -328,7 +328,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
           this.getSummaryDataAdvisor(false);
