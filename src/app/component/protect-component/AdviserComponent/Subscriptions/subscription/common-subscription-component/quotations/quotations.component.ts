@@ -86,6 +86,7 @@ export class QuotationsComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ');
+          this.getQuotationsList();
           rightSideDataSub.unsubscribe();
         }
       }
@@ -94,11 +95,12 @@ export class QuotationsComponent implements OnInit {
   }
 
   getQuotationsList() {
-    this.isLoading = true;
     const obj = {
       // clientId: 2970
       clientId: this._clientData.id
     };
+    this.isLoading = true;
+    this.dataSource.data = [{}, {}, {}];
     this.subAService.getSubscriptionClientsQuotations(obj).subscribe(
       data => this.getQuotationsListResponse(data), (error) => {
         this.eventService.showErrorMessage(error);
@@ -231,6 +233,7 @@ export class QuotationsComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ');
+          this.getQuotationsList();
           rightSideDataSub.unsubscribe();
 
         }

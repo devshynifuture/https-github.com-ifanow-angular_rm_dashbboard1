@@ -258,7 +258,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if(result!=undefined){
       this.getQuotationsData(false);
+      }
     });
 
   }
