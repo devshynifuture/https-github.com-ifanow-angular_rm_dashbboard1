@@ -121,17 +121,17 @@ export class PlansComponent implements OnInit {
 
   selectServicePlan(data) {
 
-    (data.isActive == 1) ? this.unmapPlanToService(data) : this.mapPlanToService(data);
+    (data.selected == true) ? this.unmapPlanToService(data) : this.mapPlanToService(data);
   }
 
   mapPlanToService(data) {
-    data.isActive = 1;
+    data.selected = true;
     console.log(data);
     this.mappedPlan.push(data);
   }
 
   unmapPlanToService(data) {
-    data.isActive = 0;
+    data.selected = false;
     _.remove(this.mappedPlan, function (delData) {
       return delData.id == data.id;
     });

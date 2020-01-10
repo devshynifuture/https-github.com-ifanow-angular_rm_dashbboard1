@@ -1,20 +1,20 @@
-import {RecuringDepositComponent} from './../recuring-deposit/recuring-deposit.component';
-import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../../../customer.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {DetailedViewFixedDepositComponent} from '../fixed-deposit/detailed-view-fixed-deposit/detailed-view-fixed-deposit.component';
-import {FixedDepositComponent} from '../fixed-deposit/fixed-deposit.component';
-import {DetailedViewRecuringDepositComponent} from '../recuring-deposit/detailed-view-recuring-deposit/detailed-view-recuring-deposit.component';
-import {DetailedViewBondsComponent} from '../bonds/detailed-view-bonds/detailed-view-bonds.component';
-import {BondsComponent} from '../bonds/bonds.component';
-import {UtilService} from 'src/app/services/util.service';
-import {FormatNumberDirective} from 'src/app/format-number.directive';
-import {ExcelService} from '../../../../excel.service';
-import {MathUtilService} from "../../../../../../../../../services/math-util.service";
+import { RecuringDepositComponent } from './../recuring-deposit/recuring-deposit.component';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../customer.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { DetailedViewFixedDepositComponent } from '../fixed-deposit/detailed-view-fixed-deposit/detailed-view-fixed-deposit.component';
+import { FixedDepositComponent } from '../fixed-deposit/fixed-deposit.component';
+import { DetailedViewRecuringDepositComponent } from '../recuring-deposit/detailed-view-recuring-deposit/detailed-view-recuring-deposit.component';
+import { DetailedViewBondsComponent } from '../bonds/detailed-view-bonds/detailed-view-bonds.component';
+import { BondsComponent } from '../bonds/bonds.component';
+import { UtilService } from 'src/app/services/util.service';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../../excel.service';
+import { MathUtilService } from "../../../../../../../../../services/math-util.service";
 
 
 @Component({
@@ -23,7 +23,7 @@ import {MathUtilService} from "../../../../../../../../../services/math-util.ser
   styleUrls: ['./fixed-income.component.scss']
 })
 export class FixedIncomeComponent implements OnInit {
-  isLoading = true;
+  isLoading = false;
   showRequring: any;
   advisorId: any;
   dataSourceRecurring: any;

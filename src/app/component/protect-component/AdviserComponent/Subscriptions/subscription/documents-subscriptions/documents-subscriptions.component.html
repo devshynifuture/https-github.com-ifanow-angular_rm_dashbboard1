@@ -16,14 +16,14 @@
                 <button *ngIf="dataCount == 0" mat-menu-item>Select documents to see more
                   actions
                 </button>
-                <button mat-menu-item *ngIf="dataCount == 1 && sendESign" (click)="openEsignDocument(null)">Email
+                <!-- <button mat-menu-item *ngIf="dataCount == 1 && sendESign" (click)="openEsignDocument(null)">Email
                     with eSign
                     request
-                </button>
-                <button (click)="openSendEmail()" *ngIf="dataCount > 0" mat-menu-item>Email
+                </button> -->
+                <!-- <button (click)="openSendEmail()" *ngIf="dataCount > 0" mat-menu-item>Email
                     only
-                </button>
-                <button (click)="deleteModal('DOCUMENT')" *ngIf="dataCount != 0" mat-menu-item>Delete
+                </button> -->
+                <button (click)="deleteModal(null)" *ngIf="dataCount != 0" mat-menu-item>Delete
                   Documents
                 </button>
               </mat-menu>
@@ -209,7 +209,7 @@
               <a (click)="openViewDocument('viewDoc',element)" mat-menu-item>View & Edit document</a>
               <a (click)="downloadEsign(element)" *ngIf="element.signed" class="bt-1" mat-menu-item>Download eSigned
                 document</a>
-              <a (click)="deleteModal('DOCUMENT')" mat-menu-item>Delete document</a>
+              <a (click)="deleteModal(element)" mat-menu-item>Delete document</a>
             </mat-menu>
           </td>
         </ng-container>

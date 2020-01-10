@@ -20,14 +20,17 @@
 }
 
 ::ng-deep .w-220 {
-  width: 220px !important;
+  width: 260px !important;
 }
 
+::ng-deep .newDateIcon .mat-chip-list-wrapper .mat-standard-chip {
+  padding-left: 8px !important;
+}
 
 // ::ng-deep .mat-select {
 //     border: 1px solid rgba(0, 0, 0, .12) !important;
 // }
-::ng-deep .sub_input .mat-form-field-appearance-legacy .mat-form-field-infix {
+::ng-deep .newDateIcon .sub_input .mat-form-field-appearance-legacy .mat-form-field-infix {
   padding: 0px !important;
   border: 1px solid #BCC6CA !important;
 }
@@ -74,6 +77,6 @@
   margin-top: 207px;
 }
 
-.newDateClass .pL20 {
-  padding-left: 20px !important;
-}
+// .newDateClass .pL20 {
+//   padding-left: 20px !important;
+// }

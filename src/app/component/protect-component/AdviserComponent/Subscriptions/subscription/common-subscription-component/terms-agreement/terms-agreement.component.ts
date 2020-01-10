@@ -2,11 +2,12 @@ import { Component, OnInit, Input, Output, EventEmitter, forwardRef, Renderer2 }
 import { FormGroup, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { HowToUseDialogComponent } from '../how-to-use-dialog/how-to-use-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, TooltipPosition } from '@angular/material';
 import { SubscriptionService } from '../../../subscription.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-terms-agreement',
@@ -29,12 +30,12 @@ export class TermsAgreementComponent implements OnInit {
   advisorId: () => any;
   serviceData: any;
 
-  constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public subService: SubscriptionService, private eventService: EventService, private render: Renderer2) {
+  constructor(private route: Router, public subInjectService: SubscriptionInject, public dialog: MatDialog, public subService: SubscriptionService, private eventService: EventService, private render: Renderer2) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getcommanFroalaData(data)
     );
   }
-
+  matTooltipOption: TooltipPosition[] = ['above']
   @Input() quotationDesignE;
   @Input() componentFlag: string;
   @Output() valueChange = new EventEmitter();
@@ -51,6 +52,7 @@ export class TermsAgreementComponent implements OnInit {
       // this.changeDisplay();
     }
     this.advisorId = AuthService.getAdvisorId();
+    this.getPlanServiceData();
   };
 
   get upperData() {
@@ -75,7 +77,7 @@ export class TermsAgreementComponent implements OnInit {
 
   ngOnInit() {
     console.log('quotationDesign', this._upperData);
-    this.getPlanServiceData();
+
   }
 
   Close() {
@@ -88,7 +90,7 @@ export class TermsAgreementComponent implements OnInit {
     const obj = {
       // advisorId: 12345,
       advisorId: this.advisorId,
-      planId: 2
+      planId: this._upperData.documentData.planId
       // this.planData ? this.planData.id : null
     };
     this.subService.getSettingPlanServiceData(obj).subscribe(
@@ -114,6 +116,10 @@ export class TermsAgreementComponent implements OnInit {
   getDataTerms(data) {
     this.dataTerms = data.documentData
   }
+  openDocumentPreview() {
+    this.route.navigate(['/test'])
+    // console.log(this.dataTerms)
+  }
   openDialog(data) {
     const Fragmentdata = {
       flag: data,
@@ -132,7 +138,7 @@ export class TermsAgreementComponent implements OnInit {
   }
   OpenEdit(data) {
     const fragmentData = {
-      flag: 'addEditDocument',
+      flag: 'quotations',
       data: this._upperData.documentData,
       id: 1,
       state: 'open'

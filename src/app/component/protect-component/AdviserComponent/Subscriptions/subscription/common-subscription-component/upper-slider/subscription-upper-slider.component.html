@@ -85,7 +85,8 @@
           <app-overview [upperData]="upperData"></app-overview>
         </ng-template>
       </mat-tab>
-      <mat-tab label="PLANS" *ngIf="upperData && upperData.documentData && upperData.documentData.availableAt == 1">
+      <mat-tab label="PLANS"
+        *ngIf="upperData && upperData.documentData && upperData.documentData.availableAt == 1 && upperData.documentData.planId==0">
         <ng-template matTabContent>
           <app-plans [componentFlag]='"plans"' [upperData]="upperData"></app-plans>
         </ng-template>
@@ -183,7 +184,8 @@
   <app-add-fixed-fee [fixedFee]="upperRightSideInputData.data" (outputFixedData)="upperData=$event"
     *ngIf="rightSliderFlag=='fixedFee'"></app-add-fixed-fee>
   <app-add-edit-document [inputData]="upperRightSideInputData.data" [documentType]="rightSliderFlag"
-    *ngIf="rightSliderFlag=='addEditDocument'" [fragmentData]="fragmentData"></app-add-edit-document>
+    *ngIf="rightSliderFlag=='addEditDocument' || rightSliderFlag=='quotations'" [fragmentData]="fragmentData">
+  </app-add-edit-document>
 
   <app-biller-settings [data]="upperRightSideInputData.data" *ngIf="rightSliderFlag=='billerSettings'">
   </app-biller-settings>

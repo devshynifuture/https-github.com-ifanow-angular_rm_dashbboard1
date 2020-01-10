@@ -7,7 +7,7 @@
       <button [ngClass]="{'v-h':!isSave}" mat-stroked-button class="br-0 btn-primary mr-20" (click)="enableForm()">
         EDIT
       </button>
-      <i class="material-icons c-p v-middle" (click)="Close()"> clear</i>
+      <i class="material-icons c-p v-middle" (click)="Close(false)"> clear</i>
     </div>
   </div>
 </div>
@@ -98,7 +98,7 @@
 <div class="bottom-fixed wrapper-16">
   <div class="row">
     <div class="col-md-4 pt-8 pl-8">
-      <h5 class="mb-0 text-white c-p" (click)="Close()">Cancel</h5>
+      <h5 class="mb-0 text-white c-p" (click)="Close(false)">Cancel</h5>
     </div>
     <div *ngIf="singleSubscriptionData.isCreateSub==false" class="col-md-8 right text-right">
       <button mat-button (click)="saveFixedModifyFees()" class="btn-bottom br-0 text-inherit">Next</button>
