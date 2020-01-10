@@ -473,7 +473,9 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getdocumentSubData(false);
+      if(result!=undefined){
+        this.getdocumentSubData(false);
+      }
     });
 
   }
