@@ -23,8 +23,7 @@
               <div class="col-md-7">
                 <div class="form-group mb-0">
                   <mat-form-field>
-                    <input #companyDisplayName [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE"
-                      appInputValueValidation autofocus class="form-control br-0 text-left"
+                    <input #companyDisplayName autofocus class="form-control br-0 text-left"
                       formControlName="companyDisplayName" matInput
                       maxLength="{{getFormControlProfile().companyDisplayName.maxLength}}" type="text">
                     <mat-error class="f-12">Company Display Name is required</mat-error>
