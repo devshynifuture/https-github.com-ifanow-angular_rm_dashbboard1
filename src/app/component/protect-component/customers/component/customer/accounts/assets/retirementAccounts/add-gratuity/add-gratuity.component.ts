@@ -74,6 +74,7 @@ export class AddGratuityComponent implements OnInit {
       noOfcompleteYrs: [(data == undefined) ? '' : data.yearsCompleted, [Validators.required]],
       amountRecived: [(data == undefined) ? '' : data.amountReceived, [Validators.required]],
       nameOfOrg: [(data == undefined) ? '' : data.organizationName, [Validators.required]],
+      yearOfReceipt : [(data == undefined) ? '' : data.yearReceipt, [Validators.required]],
       resonOfRecipt: [(data == undefined) ? '' : data.reasonOfReceipt, [Validators.required]],
       bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
@@ -105,7 +106,8 @@ export class AddGratuityComponent implements OnInit {
         yearsCompleted: this.gratuity.controls.noOfcompleteYrs.value,
         amountReceived: this.gratuity.controls.amountRecived.value,
         organizationName: this.gratuity.controls.nameOfOrg.value,
-        reasonOfReceipt: this.gratuity.controls.resonOfRecipt.value,
+        yearOfReceipt:this.gratuity.controls.yearOfReceipt.value,
+        yearReceipt: this.gratuity.controls.resonOfRecipt.value,
         bankAccountNumber: this.gratuity.controls.bankAcNo.value,
         description: this.gratuity.controls.description.value,
         id: this.gratuity.controls.id.value

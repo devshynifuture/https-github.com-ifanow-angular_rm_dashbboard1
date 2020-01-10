@@ -66,7 +66,7 @@
         </div>
         <div class="col-md-4 right text-right p-0">
           <div class="row">
-            <div class="col-md-6 sub_input">
+            <div class="col-md-6 pr-0">
               <!-- <div class="form-group mb-0">
                   <mat-form-field>
                        <mat-label>FILTERS ONE</mat-label>
@@ -79,7 +79,7 @@
                   </mat-form-field>
               </div> -->
             </div>
-            <div class="col-md-6 sub_input">
+            <div class="col-md-6 pr-0">
               <div class="form-group mb-0">
                 <mat-form-field>
                   <!-- <mat-label>FILTERS TWO</mat-label> -->
@@ -106,7 +106,7 @@
           id="table-low" mat-table matSort>
           <ng-container matColumnDef="checkbox">
             <th *matHeaderCellDef class="f-18" mat-header-cell>
-              <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0 && isAllSelected()"
+              <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0"
                 [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll">
               </mat-checkbox>
             </th>
