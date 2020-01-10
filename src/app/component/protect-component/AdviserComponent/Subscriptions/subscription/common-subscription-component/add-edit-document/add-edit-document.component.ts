@@ -26,7 +26,7 @@ export class AddEditDocumentComponent implements OnInit {
   blankDocumentProperties = this.fb.group({
     docType: ['', [Validators.required]],
     docName: ['', [Validators.required]],
-    docAvailability: [this.selectedOption, [Validators.required]],
+    docAvailability: [1, [Validators.required]],
     selectPlan: []
   });
   @Input() documentType;
@@ -36,7 +36,7 @@ export class AddEditDocumentComponent implements OnInit {
     this.documentType;
     // obj.outstandingCheck.toString();
     // availableAt
-    this.selectedOption = (inputData) ? inputData.toString() : '3';
+    this.selectedOption = '1';
     // this.selectedOption = inputData ? (inputData.public ? (inputData.public === 1 ? '3' : inputData.mappingType) : '3') : '1';
     console.log('AddEditDocumentComponent inputData: ', inputData);
     this.setFormData(inputData);

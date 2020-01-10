@@ -4,7 +4,7 @@
             <h4 class="wrapper-20 roboto m-0">BILLER SETTINGS</h4>
         </div>
         <div class="col-md-2 text-right">
-            <i class="material-icons pt-16 c-p pr-16" (click)="Close('close')"> clear</i>
+            <i class="material-icons pt-16 c-p pr-16" (click)="Close(false)"> clear</i>
         </div>
     </div>
     <div class="wrapper-16 pt-44 pb-44 mb-44 mt-40">
@@ -60,7 +60,7 @@
     <div class="bottom-fixed wrapper-12">
         <div class="row">
             <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close')">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
             </div>
             <div class="col-md-8 right text-right">
                 <button mat-button  class="btn-bottom br-0 text-inherit" (click)="saveChangeBillerSetting()">Save</button>

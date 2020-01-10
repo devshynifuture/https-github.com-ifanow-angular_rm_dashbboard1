@@ -182,7 +182,7 @@
                         <th *matHeaderCellDef mat-header-cell> Next billing date</th>
                         <td *matCellDef="let element" mat-cell>
                           <div class="bar" *ngIf="element.nextBillingDate">
-                            {{ element.nextBillingDate | date: 'dd/MM/YYYY' }}
+                            {{ element.nextBillingDate | date: 'dd/MM/yyyy' }}
                           </div>
                           <div class="bar" *ngIf="!element.nextBillingDate">
                             {{ isLoading ? '' : 'Not Started' }}

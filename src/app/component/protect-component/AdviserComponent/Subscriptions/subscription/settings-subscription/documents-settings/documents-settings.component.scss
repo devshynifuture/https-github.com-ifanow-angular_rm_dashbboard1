@@ -12,10 +12,10 @@
   padding: 4px 5px;
 }
 
-.blue {
+::ng-deep .blue {
   background: #008FFF;
-  color: #fff;
-  padding: 4px 7px;
+
+  padding: 4px 10px;
 }
 
 .btn-success {
@@ -29,5 +29,3 @@
 ::ng-deep .mat-card-header .mat-card-subtitle:not(:first-child) {
   margin-top: -4px !important;
 }
-
-

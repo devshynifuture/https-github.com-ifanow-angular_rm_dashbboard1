@@ -666,7 +666,7 @@ export class DocumentComponent implements OnInit {
         {
           advisorId: this.advisorId,
           documentRepositoryId: 0,
-          mappingId: 0
+          mappingId: this.upperData.id
         }
       ]
     }

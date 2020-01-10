@@ -122,14 +122,14 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     this.storeData = data;
   }
 
-  Close(data) {
+  Close(data,flag) {
     // if (this.showActivityLog == true) {
     //   this.showActivityLog = false;
     // } else {
     //   this.subInjectService.rightSideData(value);
     // }
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
-    this.subInjectService.changeUpperRightSliderState({ state: 'close', data });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data ,refreshRequired:flag});
+    this.subInjectService.changeUpperRightSliderState({ state: 'close', data,refreshRequired:flag });
 
     // this.subInjectService.changeUpperRightSliderState({value:'close'})
     // this.subInjectService.changeUpperRightSliderState({value:'close'})
@@ -224,7 +224,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
       this.inputData.sendEsign = false;
     }
     else {
-      this.Close('close');
+      this.Close('close',true);
     }
   }
 
