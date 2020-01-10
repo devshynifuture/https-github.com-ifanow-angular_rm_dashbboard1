@@ -4,24 +4,28 @@
             <div class="row pt-180">
                 <div class="col-md-1 p-0">
                     <button [matMenuTriggerFor]="menu" class="b-a pr-0" mat-button>Actions <i [matMenuTriggerFor]="menu"
-              [matMenuTriggerFor]="belowMenu" class="material-icons c-p iconscolors">
-              arrow_drop_down
-            </i>
-          </button>
+                            [matMenuTriggerFor]="belowMenu" class="material-icons c-p iconscolors">
+                            arrow_drop_down
+                        </i>
+                    </button>
                     <mat-menu #menu="matMenu">
                         <button *ngIf="dataCount == 0" mat-menu-item>Select Quotation to see more actions</button>
                         <button *ngIf="dataCount != 0" (click)="openSendEmail('')" mat-menu-item>Email
-              only
-            </button>
+                            only
+                        </button>
                         <button (click)="deleteModal('QUOTATION')" *ngIf="dataCount != 0" class="b-t" mat-menu-item>Delete
-              Quotations
-            </button>
+                            Quotations
+                        </button>
                     </mat-menu>
                 </div>
-                <div class="col-md-9 p-0 ml-8">
-                    <p class="m-0 text-black text-left pt-10">{{dataCount}} quotations selected</p>
+                <div class="col-md-9 p-0 ml-8" *ngIf="dataSource.data.length > 0 && dataCount > 0">
+                    <p class="m-0 text-black text-left pt-10" *ngIf="dataCount == 1">{{dataCount}} quotation selected
+                    </p>
+                    <p class="m-0 text-black text-left pt-10" *ngIf="dataCount > 1">{{dataCount}} quotations selected
+                    </p>
                 </div>
             </div>
+
 
             <div class="overflow-hidden">
                 <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-8" class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
@@ -82,7 +86,8 @@
                         <th *matHeaderCellDef class=" t-12" mat-header-cell mat-sort-header="status"> Status</th>
                         <td *matCellDef="let element" mat-cell>
                             <div class="bar">
-                                <span *ngIf="element.status==1" class="text-success t-12 f-500 c-p ">READY TO SEND</span>
+                                <span *ngIf="element.status==1" class="text-success t-12 f-500 c-p ">READY TO
+                                    SEND</span>
                                 <span *ngIf="element.status==0" class="text-success t-12 f-500 c-p ">NOT STARTED</span>
                             </div>
                         </td>
@@ -92,17 +97,18 @@
                         <td *matCellDef="let element" mat-cell>
                             <div *ngIf="isLoading==false" class="bar">
                                 <button (click)="openSendEmail(element)" class="btn-header btn-xs br-0 " mat-stroked-button>SEND
-                </button>
+                                </button>
                             </div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="icons">
                         <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;"></th>
                         <td *matCellDef="let element" mat-cell style="width: 2%;"><i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu" class="material-icons c-p iconscolors">
-                more_vert
-              </i>
+                                more_vert
+                            </i>
                             <mat-menu #menu="matMenu">
-                                <a (click)="Open('viewQuotation','open',element)" mat-menu-item>View & edit quotation</a>
+                                <a (click)="Open('viewQuotation','open',element)" mat-menu-item>View & edit
+                                    quotation</a>
                                 <a (click)="deleteModal('QUOTATION')" class="bt-1" mat-menu-item>Delete quotation</a>
                             </mat-menu>
                         </td>

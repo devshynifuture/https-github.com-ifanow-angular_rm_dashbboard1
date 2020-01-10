@@ -60,10 +60,10 @@ export class FixedFeeComponent implements OnInit {
     this.fixedFeeStructureForm.enable();
     this.isSave = false
   }
-  Close() {
+  Close(flag) {
     this.ngOnInit();
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
+    this.subInjectService.changeUpperRightSliderState({ state: 'close',refreshRequired:flag});
     this.fixedFeeStructureForm.reset();
     this.isSave = true
   }
@@ -106,7 +106,7 @@ export class FixedFeeComponent implements OnInit {
 
   saveFixedModifyFeesResponse(data) {
     console.log(data, 'modify fixed fee data');
-    this.Close();
+    this.Close(true);
   }
 
 }

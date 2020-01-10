@@ -122,9 +122,9 @@ export class VariableFeeComponent implements OnInit {
     this.isSave = false;
   }
 
-  close() {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  close(flag) {
+    this.subInjectService.changeUpperRightSliderState({ state: 'close',refreshRequired:flag });
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag});
   }
 
   select(assetData) {
@@ -236,6 +236,6 @@ export class VariableFeeComponent implements OnInit {
 
     }
     console.log('modify variable data', data);
-    this.close();
+    this.close(true);
   }
 }

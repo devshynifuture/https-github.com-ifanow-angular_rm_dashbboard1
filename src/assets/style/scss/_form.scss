@@ -105,15 +105,23 @@ input.mat-input-element:focus {
     font-weight: 400;
 }
 
-.mat-datepicker-toggle {
-    position: absolute;
-    float: right;
-    right: 2%;
-}
-
+// .mat-datepicker-toggle {
+//   position: absolute;
+//   float: right;
+//   right: 2%;
+// }
 // .mat-progress-bar-fill::after{
 //     background-color:#008FFF !important;
 // }
+.newDateIcon .mat-chip-list-wrapper .mat-standard-chip {
+    padding-left: 8px !important;
+}
+
+.newDateIcon .sub_input .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0px !important;
+    border: 1px solid #BCC6CA !important;
+}
+
 .mat-progress-bar-buffer {
     background-color: #F5F7F7 !important;
 }

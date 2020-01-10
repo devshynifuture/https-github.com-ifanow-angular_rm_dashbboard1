@@ -16,13 +16,14 @@
               <button *ngIf="dataCount == 0" mat-menu-item>Select quotation to see more
                 actions
               </button>
-              <button (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0" mat-menu-item>Delete
+              <button (click)="deleteModal(null)" *ngIf="dataCount != 0" mat-menu-item>Delete
                 Quotation
               </button>
             </mat-menu>
           </div>
-          <div class="col-md-8" *ngIf="dataSource.data.length > 0">
-            <p class="m-0 text-black text-left pt-12">{{dataCount}} quotations selected</p>
+          <div class="col-md-8" *ngIf="dataSource.data.length > 0 && dataCount > 0">
+            <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}} quotation selected</p>
+            <p class="m-0 text-black text-left pt-12" *ngIf="dataCount > 1">{{dataCount}} quotations selected</p>
           </div>
         </div>
       </div>
@@ -176,7 +177,7 @@
               </i>
               <mat-menu #menu="matMenu">
                 <a (click)="Open('emailQuotation',element)" mat-menu-item>View & Edit Quotation</a>
-                <a (click)="deleteModal('QUOTATION')" mat-menu-item>Delete document</a>
+                <a (click)="deleteModal(element)" mat-menu-item>Delete document</a>
               </mat-menu>
             </td>
           </ng-container>

@@ -187,9 +187,9 @@ export class EmailOnlyComponent implements OnInit {
   //     });
   //   });
   // }
-  close() {
-    this.subInjectService.changeUpperRightSliderState({state: 'close'});
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+  close(flag) {
+    this.subInjectService.changeUpperRightSliderState({state: 'close',refreshRequired:flag});
+    this.subInjectService.changeNewRightSliderState({state: 'close',refreshRequired:flag});
 
     // this.valueChange.emit(this.emailSend);
   }
@@ -238,7 +238,7 @@ export class EmailOnlyComponent implements OnInit {
   save() {
     console.log('here is saved data', this.emailBody);
     this.updateData(this.emailBody);
-    this.close();
+    this.close(true);
   }
 
   updateData(data) {
@@ -257,7 +257,7 @@ export class EmailOnlyComponent implements OnInit {
 
   getResponseData(data) {
     console.log(data);
-    this.close();
+    this.close(true);
   }
 
   saveData(data) {

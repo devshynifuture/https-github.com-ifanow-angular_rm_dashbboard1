@@ -1,6 +1,6 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {MatTabGroup} from '@angular/material';
-import {Router} from '@angular/router';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatTabGroup } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings-subscription',

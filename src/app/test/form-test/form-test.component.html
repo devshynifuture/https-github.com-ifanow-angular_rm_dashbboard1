@@ -1,9 +1,9 @@
-<div [formGroup]="testForm" class="example-container">
-  <mat-form-field appearance="outline" class="form-group pt-50">
-    <!-- <input #dueAmount
+<!-- <div [formGroup]="testForm" class="example-container">
+  <mat-form-field appearance="outline" class="form-group pt-50"> -->
+<!-- <input #dueAmount
              formControlName="inputNumber" matInput placeholder="Enter Amount" required>
  -->
-    <input #dueAmount
+<!-- <input #dueAmount
            [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="2000" appInputValueValidation
            formControlName="inputNumber" matInput
            placeholder="Enter Amount" required>
@@ -14,10 +14,10 @@
   <mat-form-field appearance="outline" class="form-group pt-50">
 
     <input #emailId [inputValidator]="validatorType.EMAIL" appInputValueValidation formControlName="email" matInput
-           placeholder="Enter your email" required>
+           placeholder="Enter your email" required> -->
 
-    <!--    <input [formControl]="email" matInput placeholder="Enter your email" required>-->
-    <mat-error>{{getErrorMessage()}}</mat-error>
+<!--    <input [formControl]="email" matInput placeholder="Enter your email" required>-->
+<!-- <mat-error>{{getErrorMessage()}}</mat-error>
     <mat-hint align="end">{{emailId.value.length}}/20</mat-hint>
 
   </mat-form-field>
@@ -31,4 +31,6 @@
 
   </mat-form-field>
 
-</div>
+</div> -->
+
+<div innerHTML="inputString"></div>

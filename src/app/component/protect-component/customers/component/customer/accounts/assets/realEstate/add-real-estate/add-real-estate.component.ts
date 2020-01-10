@@ -50,6 +50,7 @@ export class AddRealEstateComponent implements OnInit {
   _data: any;
   autoIncrement: number = 100;
   id: any;
+  showErrorOwner = false;
   constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject, private fb: FormBuilder, public custmService: CustomerService, public eventService: EventService, public utils: UtilService) { }
   // set inputData(inputData) {
   //   this._inputData = inputData;
@@ -166,7 +167,7 @@ export class AddRealEstateComponent implements OnInit {
     // });
     this.nexNomineePer = 0;
     this.getNominee.value.forEach(element => {
-      this.nexNomineePer += element.ownershipPer
+      this.nexNomineePer += parseInt(element.ownershipPer)
     });
     if (this.nexNomineePer > 100) {
       this.showError = true
@@ -220,13 +221,13 @@ export class AddRealEstateComponent implements OnInit {
   }
   addNewCoOwner(data) {
     if (this.addOwner == data) {
-      if (this.showError == false) {
+      if (this.showErrorOwner == false) {
         this.getCoOwner.push(this.fb.group({
           ownerName: null, ownershipPerc: null,
         }));
       }
     } else {
-      if (this.showError == false) {
+      if (this.showErrorOwner == false) {
         this.addOwner = data;
         if (this.getCoOwner.value.length == 0) {
           this.getCoOwner.push(this.fb.group({
@@ -246,14 +247,14 @@ export class AddRealEstateComponent implements OnInit {
       //   return o.ownershipPerc;
       // });
       this.getCoOwner.value.forEach(element => {
-        this.nexNomineePer += element.ownershipPerc
+        this.nexNomineePer += (element.ownershipPerc)?parseInt(element.ownershipPerc):null;
       });
       this.nexNomineePer = this.addrealEstateForm.controls.ownerPercent.value + this.nexNomineePer
       if (this.nexNomineePer > 100) {
-        this.showError = true;
+        this.showErrorOwner = true;
         console.log('show error Percent cannot be more than 100%')
       } else {
-        this.showError = false
+        this.showErrorOwner = false
         this.showErrorCoOwner = false;
       }
     } else {
@@ -263,7 +264,7 @@ export class AddRealEstateComponent implements OnInit {
       this.nexNomineePer = 0;
 
       this.getNominee.value.forEach(element => {
-        this.nexNomineePer += element.ownershipPer
+        this.nexNomineePer +=(element.ownershipPer)?parseInt(element.ownershipPer):null; 
       });
       if (this.nexNomineePer > 100) {
         this.showError = true
