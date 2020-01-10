@@ -1,6 +1,3 @@
-
-
-
 <div class="popup-header-fix-35">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
@@ -14,9 +11,9 @@
     </div>
 </div>
 <!-- [formGroup]="expenses"   Property 'expenses' does not exist on type 'AddExpensesComponent' -->
-<div class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="budget">
+<div class="pt-72 pl-0 pr-24 pb-48 mb-48" [formGroup]="budget">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-10">
             <h5 class="m-0 pt-8">Select a category</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
@@ -31,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="row pt-32">
+    <div class="row pt-24">
         <div class="col-md-6">
             <h5 class="m-0 pt-8">Enter amount</h5>
             <div class="form-group mb-0">
@@ -44,7 +41,105 @@
             </div>
         </div>
     </div>
-    <div class="row pt-32">
+
+    <div class="row pt-24">
+        <div class="col-md-12">
+            <h5 class="m-0 pt-8"> Repeat options </h5>
+        </div>
+    </div>
+
+
+    <div class="row pt-24">
+        <div class="col-md-6">
+            <h5 class="m-0 pt-8">Frequency</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control br-0">
+
+                        <mat-option value="1"> Frequency </mat-option>
+                    </mat-select>
+                    <mat-error class="f-12 pt-4">
+                        This is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <h5 class="m-0 pt-8">Every</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control br-0">
+
+                        <mat-option value="1"> Every</mat-option>
+                    </mat-select>
+                    <mat-error class="f-12 pt-4">
+                        This is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-24">
+        <div class="col-md-6">
+            <h5 class="m-0 pt-8">Start from </h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control br-0">
+                        <mat-option value="1"> Credit card </mat-option>
+                    </mat-select>
+                    <mat-error class="f-12 pt-4">
+                        This is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <div class="form-group mt-24 mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control br-0">
+                        <mat-option value="1"> </mat-option>
+                    </mat-select>
+                    <mat-error class="f-12 pt-4">
+                        This is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-24">
+        <div class="col-md-6">
+            <h5 class="m-0 pt-8"> Continues till </h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control br-0">
+                        <mat-option value="1"> Credit card </mat-option>
+                    </mat-select>
+                    <mat-error class="f-12 pt-4">
+                        This is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <div class="form-group mt-24 mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control br-0">
+                        <mat-option value="1"> </mat-option>
+                    </mat-select>
+                    <mat-error class="f-12 pt-4">
+                        This is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row pt-24">
         <div class="col-md-6">
             <h5 class="m-0 pt-8">Payment mode</h5>
             <div class="form-group mb-0">
@@ -60,12 +155,16 @@
             </div>
         </div>
     </div>
-    <div class="row pt-32">
+
+    <div class="row pt-24">
         <div class="col-md-6">
-            <h5 class="m-0 pt-8">Description</h5>
+            <h5 class="m-0 pt-8">Family Member</h5>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput class="form-control br-0" maxlength="20" formControlName="description">
+                    <mat-select class="form-control br-0">
+
+                        <mat-option value="1"> Credit card </mat-option>
+                    </mat-select>
                     <mat-error class="f-12 pt-4">
                         This is required
                     </mat-error>
@@ -73,6 +172,12 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+
 </div>
 <div class="bottom-fixed wrapper-16 pb-12">
     <div class="row">
