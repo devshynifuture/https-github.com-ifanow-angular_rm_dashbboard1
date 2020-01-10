@@ -60,7 +60,7 @@ export class BillerSettingsComponent implements OnInit {
     console.log('data', data);
     if (data == true) {
       this.eventService.openSnackBar('Biller is updated', 'OK');
-      this.Close('close');
+      this.Close(true);
     }
   }
 
@@ -88,9 +88,9 @@ export class BillerSettingsComponent implements OnInit {
     this.isSelectedPlan = singlePlan;
   }
 
-  Close(state) {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  Close(flag) {
+    this.subInjectService.changeUpperRightSliderState({ state: 'close',refreshRequired:flag });
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
   }
 
   editProfileData(data) {

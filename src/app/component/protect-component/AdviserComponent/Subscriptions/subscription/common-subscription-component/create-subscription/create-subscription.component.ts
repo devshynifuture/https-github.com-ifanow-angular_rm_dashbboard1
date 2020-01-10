@@ -249,9 +249,9 @@ export class CreateSubscriptionComponent implements OnInit {
     this.payeesData = data.payees;
   }
 
-  Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
+    this.subInjectService.changeUpperRightSliderState({ state: 'close',refreshRequired:flag });
     this.stepper.selectedIndex = 0;
     this.subscriptionDetails.reset();
   }
@@ -351,6 +351,6 @@ export class CreateSubscriptionComponent implements OnInit {
 
   startSubscsriptionResponse(data) {
     console.log(data);
-    this.Close();
+    this.Close(true);
   }
 }

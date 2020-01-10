@@ -277,7 +277,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
           setTimeout(() => {
@@ -328,7 +328,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
           this.getSummaryDataAdvisor(false);
@@ -354,7 +354,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         this.subService.deleteSubscriptionData(obj).subscribe(
           data => {
             this.deletedData(data);
-            dialogRef.close();
+            dialogRef.close(subData);
           }
         );
 
@@ -373,7 +373,16 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result,this.dataSource.data,"delete result");
+      const tempList = []
+      this.dataSource.data.forEach(singleElement => {
+        if (singleElement.id != result.id) {
+          tempList.push(singleElement);
+        }
+      });
+      this.dataSource.data = tempList;
 
+     
     });
   }
 

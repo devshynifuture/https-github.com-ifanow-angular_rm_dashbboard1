@@ -7,7 +7,7 @@
       <button [ngClass]="{'v-h':!isSave}" mat-stroked-button class="br-0 btn-primary mr-20" (click)="enableForm()">
         EDIT
       </button>
-      <i class="material-icons c-p v-middle" (click)="Close()"> clear</i>
+      <i class="material-icons c-p v-middle" (click)="Close(false)"> clear</i>
     </div>
   </div>
 </div>
@@ -39,7 +39,7 @@
         <mat-radio-group formControlName="billingNature">
           <mat-radio-button value="1"
             [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingNature').value==1,'text-primary':fixedFeeStructureForm.get('billingNature').value==1,'b-a':fixedFeeStructureForm.get('billingNature').value==2}"
-            class="b-a-custom text-primary pt-8 pb-8 pr-52 pl-20 custom-radio">Recurring
+            class="pt-8 pb-8 pr-52 pl-20 custom-radio">Recurring
           </mat-radio-button>
           <mat-radio-button value="2"
             [ngClass]="{'b-a-custom': fixedFeeStructureForm.get('billingNature').value==2,'text-primary':fixedFeeStructureForm.get('billingNature').value==2,'b-a':fixedFeeStructureForm.get('billingNature').value==1}"
@@ -98,7 +98,7 @@
 <div class="bottom-fixed wrapper-16">
   <div class="row">
     <div class="col-md-4 pt-8 pl-8">
-      <h5 class="mb-0 text-white c-p" (click)="Close()">Cancel</h5>
+      <h5 class="mb-0 text-white c-p" (click)="Close(false)">Cancel</h5>
     </div>
     <div *ngIf="singleSubscriptionData.isCreateSub==false" class="col-md-8 right text-right">
       <button mat-button (click)="saveFixedModifyFees()" class="btn-bottom br-0 text-inherit">Next</button>

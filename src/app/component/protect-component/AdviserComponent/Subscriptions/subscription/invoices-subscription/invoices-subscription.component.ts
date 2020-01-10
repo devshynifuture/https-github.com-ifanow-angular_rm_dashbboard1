@@ -1,13 +1,13 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionService} from '../../subscription.service';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {AuthService} from '../../../../../../auth-service/authService';
-import {UtilService, ValidatorType} from '../../../../../../services/util.service';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionService } from '../../subscription.service';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { AuthService } from '../../../../../../auth-service/authService';
+import { UtilService, ValidatorType } from '../../../../../../services/util.service';
 import * as _ from 'lodash';
-import {DatePipe} from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 export interface PeriodicElement {
   date: string;
@@ -27,17 +27,17 @@ export interface PeriodicElement {
   styleUrls: ['./invoices-subscription.component.scss']
 })
 export class InvoicesSubscriptionComponent implements OnInit {
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
 
   chips = [
-    {name: 'UNPAID', value: 0},
-    {name: 'PAID', value: 1},
-    {name: 'OVERDUE', value: 2}
+    { name: 'UNPAID', value: 0 },
+    { name: 'PAID', value: 1 },
+    { name: 'OVERDUE', value: 2 }
   ];
   dateChips = [
-    {name: 'Date', value: 1},
-    {name: 'Due date', value: 2},
+    { name: 'Date', value: 1 },
+    { name: 'Due date', value: 2 },
   ];
   invoiceDesign: string;
   noData: string;
@@ -68,7 +68,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject, private subService: SubscriptionService,
-              private eventService: EventService, public subscription: SubscriptionService, private datePipe: DatePipe) {
+    private eventService: EventService, public subscription: SubscriptionService, private datePipe: DatePipe) {
     // this.ngOnInit();
   }
 
@@ -275,15 +275,16 @@ export class InvoicesSubscriptionComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
-      this.selectAll({checked: false}) : this.selectAll({checked: true});
+      this.selectAll({ checked: false }) : this.selectAll({ checked: true });
   }
 
   display(data) {
-    console.log(data , "edited data invoice");
-    this.dataSource.data =[{},{},{}]
+    console.log(data, "edited data invoice");
+    this.dataSource.data = [{}, {}, {}]
     this.tableData = [];
     this.getInvoiceSubData(false);
     this.invoiceSubscription = 'false';
+    this.dataCount = 0;
     // this.ngOnInit();
   }
 
@@ -318,7 +319,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   callFilter(scrollLoader) {
     this.dataSource.data = [{}, {}, {}]
-      this.isLoading = true;
+    this.isLoading = true;
     if (this.filterStatus && this.filterStatus.length > 0) {
       this.statusIdList = [];
       this.filterStatus.forEach(singleFilter => {
@@ -360,10 +361,10 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
     if (data == undefined && this.statusIdLength < 1) {
       this.noData = 'No Data Found';
-      if(!scrollLoader){
+      if (!scrollLoader) {
         this.dataSource.data = [];
       }
-      else{
+      else {
         this.dataSource.data = this.filterDataArr;
       }
     } else {
@@ -406,7 +407,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = {begin: beginDate, end: endDate};
+    this.selectedDateRange = { begin: beginDate, end: endDate };
     console.log(this.filterDate, 'this.filterDate 123');
     this.callFilter(false);
   }
@@ -442,8 +443,10 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
   deleteModal(value) {
     this.list = [];
+    let listIndex = [];
     this.dataSource.filteredData.forEach(singleElement => {
       if (singleElement.selected) {
+        listIndex.push(this.dataSource.filteredData.indexOf(singleElement));
         this.list.push(singleElement.id);
       }
     });
@@ -459,11 +462,13 @@ export class InvoicesSubscriptionComponent implements OnInit {
           data => {
             this.dataCount = 0;
             this.eventService.openSnackBar('invoice deleted successfully.', 'dismiss');
-            dialogRef.close();
+            dialogRef.close(listIndex);
 
           },
           error => this.eventService.showErrorMessage(error)
         );
+            dialogRef.close(listIndex);
+
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -479,10 +484,16 @@ export class InvoicesSubscriptionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result,"");
-      this.dataSource.data = [{}, {}, {}];
-      this.tableData = [];
-      this.getInvoiceSubData(false);
+      console.log(result,this.dataSource.data,"delete result");
+      const tempList = []
+      this.dataSource.data.forEach(singleElement => {
+        if (!singleElement.selected) {
+          tempList.push(singleElement);
+        }
+      });
+      this.dataSource.data = tempList;
+
+     
     });
   }
 }

@@ -3,7 +3,10 @@
     <div class="col-md-9">
       <h3 class="mb-16 mt-20">{{dataTerms.name}}<img src="assets/images/svg/edit-pen.svg"
           (click)="OpenEdit('Terms of Agreement')" class="pl-8" />
-
+        <button matTooltip="Preview" (click)="openDocumentPreview()" [matTooltipPosition]="matTooltipOption[0]"><i
+            class="material-icons c-p">
+            visibility
+          </i></button>
       </h3>
       <!-- <form [formGroup]="mailForm" id="ui-froala"> -->
       <form [formGroup]="mailForm">
