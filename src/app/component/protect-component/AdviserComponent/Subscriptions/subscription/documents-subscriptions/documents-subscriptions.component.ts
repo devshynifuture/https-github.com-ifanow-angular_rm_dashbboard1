@@ -158,6 +158,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getdocumentSubData(false);
             console.log('this is sidebardata in subs subs 2: ');
+            this.dataCount = 0;
             rightSideDataSub.unsubscribe();
           }
         }
@@ -473,9 +474,16 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result!=undefined){
-        this.getdocumentSubData(false);
-      }
+      console.log(result,this.dataSource.data,"delete result");
+      const tempList = []
+      this.dataSource.data.forEach(singleElement => {
+        if (!singleElement.selected) {
+          tempList.push(singleElement);
+        }
+      });
+      this.dataSource.data = tempList;
+
+     
     });
 
   }
