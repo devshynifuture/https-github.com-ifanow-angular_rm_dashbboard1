@@ -132,10 +132,12 @@ export class InvoicesSubscriptionComponent implements OnInit {
     const obj = {
       id: this.advisorId,
       // id: 2735, // pass here advisor id for Invoice advisor
-      module: 1
+      module: 1,
+      
     };
     // this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
+    this.dataCount = 0;
 
     this.subscription.getInvoices(obj).subscribe(
       data => {
@@ -146,14 +148,15 @@ export class InvoicesSubscriptionComponent implements OnInit {
           this.lastDataId = data[data.length - 1].id;
           // obj.offset = this.lastDataId;
           // console.log(this.lastDataId, obj, "data check");
-          if (this.tableData.length <= 0) {
-            this.tableData = data;
-          } else {
-            console.log(this.tableData, 'this.tableData 123');
+          this.tableData = data;
+          // if (this.tableData.length <= 0) {
+          //   this.tableData = data;
+          // } else {
+          //   console.log(this.tableData, 'this.tableData 123');
 
-            this.tableData = this.tableData.concat(data);
-            console.log(this.tableData, 'this.tableData 123');
-          }
+          //   this.tableData = this.tableData.concat(data);
+          //   console.log(this.tableData, 'this.tableData 123');
+          // }
         } else {
         }
         this.getInvoiceResponseData(this.tableData);
@@ -318,9 +321,10 @@ export class InvoicesSubscriptionComponent implements OnInit {
   }
 
   callFilter(scrollLoader) {
-    this.dataSource.data = [{}, {}, {}]
-    this.isLoading = true;
+    this.dataCount = 0;
     if (this.filterStatus && this.filterStatus.length > 0) {
+      this.dataSource.data = [{}, {}, {}]
+      this.isLoading = true;
       this.statusIdList = [];
       this.filterStatus.forEach(singleFilter => {
         this.statusIdList.push(singleFilter.value);
@@ -360,7 +364,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
     this.isLoading = false;
 
     if (data == undefined && this.statusIdLength < 1) {
-      this.noData = 'No Data Found';
+      // this.noData = 'No Data Found';
       if (!scrollLoader) {
         this.dataSource.data = [];
       }

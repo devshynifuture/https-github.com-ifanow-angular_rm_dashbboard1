@@ -253,6 +253,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       toDate: '2019-11-01',
       statusIdList: '1,2',
     };
+    this.dataCount = 0;
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     this.subscription.getDocumentData(obj).subscribe(
@@ -343,6 +344,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   }
 
   callFilter(scrollLoader) {
+    this.dataCount = 0;
     if (this.filterStatus && this.filterStatus.length > 0) {
       this.statusIdList = [];
       this.dataSource.data = [{}, {}, {}]

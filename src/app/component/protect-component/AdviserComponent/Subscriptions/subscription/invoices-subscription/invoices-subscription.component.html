@@ -17,8 +17,11 @@
               <button *ngIf="dataCount == 0" mat-menu-item>Select invoice to see more
                 actions
               </button>
-              <button (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0" mat-menu-item>Delete
+              <button (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0 && dataCount > 1" mat-menu-item>Delete
                 Invoices
+              </button>
+              <button (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0 && dataCount <= 1" mat-menu-item>Delete
+                Invoice
               </button>
             </mat-menu>
           </div>
