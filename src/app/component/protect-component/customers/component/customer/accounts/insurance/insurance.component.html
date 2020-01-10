@@ -8,8 +8,7 @@
                         <div class="col-md-1 p-0 text-custom">20</div>
                     </div>
                 </li>
-                <li (click)="getInsuranceTypeData(1,item.id)" *ngFor="let item of lifeInsuranceList"
-                    [ngClass]="{'bg-grey lt':item.id==insuranceSubTypeId}" class="c-p pb-12">
+                <li (click)="getInsuranceTypeData(1,item.id)" *ngFor="let item of lifeInsuranceList" [ngClass]="{'bg-grey lt':item.id==insuranceSubTypeId}" class="c-p pb-12">
                     <div>
                         <div class="row">
                             <div class="col-md-11 p-0">{{item.name}}</div>
@@ -25,8 +24,7 @@
                         <div class="col-md-1 p-0 text-custom">1</div>
                     </div>
                 </li>
-                <li (click)="getInsuranceTypeData(2,item1.id)" *ngFor="let item1 of generalLifeInsuranceList"
-                    [ngClass]="{'bg-grey lt':item1.id==insuranceSubTypeId}" class="pb-12 c-p">
+                <li (click)="getInsuranceTypeData(2,item1.id)" *ngFor="let item1 of generalLifeInsuranceList" [ngClass]="{'bg-grey lt':item1.id==insuranceSubTypeId}" class="pb-12 c-p">
                     <div class="row">
                         <div class="col-md-11 p-0">{{item1.name}}</div>
                         <div class="col-md-1 p-0 text-custom">{{item1.id}}</div>
@@ -61,67 +59,85 @@
                         <div class="col-md-4 p-0">
                             <h4 class="m-0 text-black roboto pt-4">Life insurance</h4>
                         </div>
-                        <div class="col-md-8 p-0 right text-right">
+                        <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
                             <img src="assets/images/svg/download-bordered.svg" class="c-p">
                             <img src="assets/images/svg/up-down.svg" class="c-p">
                             <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
                             <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                                     class="material-icons">filter_list</i>FILTERS</button>
-                            <button mat-stroked-button class="btn-primary addon v-middle"
-                                (click)="openAddInsurance(null)"><i class="material-icons">add</i>ADD NEW</button>
+                            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)"> ADD NEW</button>
 
                         </div>
                     </div>
                 </div>
-                <div *ngIf="dataSource" class="liabilities wrapper-8">
+                <div class="liabilities wrapper-8">
                     <table mat-table [dataSource]="dataSource" id="table-low">
                         <ng-container matColumnDef="no">
                             <th mat-header-cell *matHeaderCellDef class="br"> No. </th>
-                            <td mat-cell *matCellDef="let element; let i = index" class="br"> {{i+1}} </td>
+                            <td mat-cell *matCellDef="let element; let i = index" class="br">
+                                <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
+                            </td>
                         </ng-container>
                         <ng-container matColumnDef="life">
                             <th mat-header-cell *matHeaderCellDef class="br t-18"> Life assured </th>
-                            <td mat-cell *matCellDef="let element" class="br t-18"> {{element.lifeAssuredName}} </td>
+                            <td mat-cell *matCellDef="let element" class="br t-18">
+                                <div class="bar"> {{element.lifeAssuredName}} </div>
+                            </td>
                         </ng-container>
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef class="br t-12"> Policy name </th>
-                            <td mat-cell *matCellDef="let element" class="br t-12"> {{element.policyName}} </td>
+                            <td mat-cell *matCellDef="let element" class="br t-12">
+                                <div class="bar"> {{element.policyName}} </div>
+                            </td>
                         </ng-container>
                         <ng-container matColumnDef="number">
                             <th mat-header-cell *matHeaderCellDef class="br t-18"> Policy number </th>
-                            <td mat-cell *matCellDef="let element" class="br t-18"> {{element.policyNumber}} </td>
+                            <td mat-cell *matCellDef="let element" class="br t-18">
+                                <div class="bar"> {{element.policyNumber}} </div>
+                            </td>
                         </ng-container>
                         <ng-container matColumnDef="sum">
                             <th mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Sum assured </th>
-                            <td mat-cell *matCellDef="let element" class="br t-14 text-right"> {{element.sumAssured}}
+                            <td mat-cell *matCellDef="let element" class="br t-14 text-right">
+                                <div class="bar"> {{element.sumAssured}} </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="cvalue">
                             <th mat-header-cell *matHeaderCellDef class="br t-14 text-right"> Current value
                             </th>
-                            <td mat-cell *matCellDef="let element" class="br t-14 text-right"> {{element.currentValue}}
+                            <td mat-cell *matCellDef="let element" class="br t-14 text-right">
+                                <div class="bar"> {{element.currentValue}} </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="premium">
                             <th mat-header-cell *matHeaderCellDef class="br text-right"> Premium </th>
-                            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.premiumAmount}}
+                            <td mat-cell *matCellDef="let element" class="br text-right">
+                                <div class="bar"> {{element.premiumAmount}} </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="term">
                             <th mat-header-cell *matHeaderCellDef class="br t-12"> Premium paying term </th>
-                            <td mat-cell *matCellDef="let element" class="br t-12"> {{element.premiumPayingTerm}} </td>
+                            <td mat-cell *matCellDef="let element" class="br t-12">
+                                <div class="bar">{{element.premiumPayingTerm}} </div>
+                            </td>
                         </ng-container>
                         <ng-container matColumnDef="pterm">
                             <th mat-header-cell *matHeaderCellDef class="br"> Policy term </th>
-                            <td mat-cell *matCellDef="let element" class="br"> {{element.term}} </td>
+                            <td mat-cell *matCellDef="let element" class="br">
+                                <div class="bar"> {{element.term}} </div>
+                            </td>
                         </ng-container>
                         <ng-container matColumnDef="desc">
                             <th mat-header-cell *matHeaderCellDef class="br t-14"> Description </th>
-                            <td mat-cell *matCellDef="let element" class="br t-14"> {{element.description}} </td>
+                            <td mat-cell *matCellDef="let element" class="br t-14">
+                                <div class="bar"> {{element.description}} </div>
+                            </td>
                         </ng-container>
                         <ng-container matColumnDef="status">
                             <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
-                            <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.status}} </td>
+                            <td mat-cell *matCellDef="let element" class="br text-primary">
+                                <div class="bar"> {{element.status}} </div>
+                            </td>
                         </ng-container>
                         <ng-container matColumnDef="icons">
                             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
@@ -141,151 +157,13 @@
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
                 </div>
-            </div>
-            <div *ngIf="dataSource==undefined">
-                <h4 class="text-center pt-72">{{noData}}</h4>
-            </div>
-            <!-- <div *ngIf="insuranceTypeId==2">
-                <div class="wrapper-8">
-                    <div class="row">
-                        <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
-                            <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
-                                Overview Report
-                                <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
-                                </mat-icon>
-                            </button>
-                            <mat-menu #menu="matMenu">
-                                <button mat-menu-item>Overview Report</button>
-                                <button mat-menu-item>Summary</button>
-                                <button mat-menu-item>All Transactions</button>
-                                <button mat-menu-item>Unrealized Transactions</button>
-                                <button mat-menu-item>Capital Gains</button>
-                                <button mat-menu-item>Goal Linkage</button>
-                            </mat-menu>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4 p-0">
-                            <h4 class="m-0 text-black roboto pt-4">General insurance</h4>
-                        </div>
-                        <div class="col-md-8 p-0 right text-right">
-                            <img src="assets/images/svg/download-bordered.svg" class="c-p">
-                            <img src="assets/images/svg/up-down.svg" class="c-p">
-                            <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
-                            <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
-                                    class="material-icons">filter_list</i>FILTERS</button>
-                            <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"><i
-                                    class="material-icons">add</i>ADD NEW</button>
-                            <mat-menu #menu1="matMenu" class="add-new">
-                                <button mat-menu-item class="b-b">
-                                    <div class="row">
-                                        <div class="col-md-2 pr-8 text-right">
-                                            <img src="assets/images/svg/dark-three-dot.svg">
-                                        </div>
-                                        <div class="col-md-10">
-                                            <p class="m-0 text-black">Portfolio summary</p>
-                                            <p class="m-0 f-13 pt-4 text-custom">Add just the overall portfolio
-                                                <br> summary. Time saver!
-                                            </p>
-                                        </div>
-                                    </div>
-                                </button>
-                                <button mat-menu-item class="b-b">
-                                    <div class="row">
-                                        <div class="col-md-2 pr-8 text-right">
-                                            <img src="assets/images/svg/scheme-icon.svg">
-                                        </div>
-                                        <div class="col-md-10">
-                                            <p class="m-0 text-black">Scheme level transactions</p>
-                                            <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
-                                                <br> scheme level for better reporting
-                                            </p>
-                                        </div>
-                                    </div>
-                                </button>
-                                <button mat-menu-item>
-                                    <div class="row">
-                                        <div class="col-md-2 pr-8 text-right">
-                                            <img src="assets/images/svg/dark-download.svg">
-                                        </div>
-                                        <div class="col-md-10">
-                                            <p class="m-0 text-black">Import data</p>
-                                            <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
-                                                <br> scheme level for better reporting
-                                            </p>
-                                        </div>
-                                    </div>
-                                </button>
-                            </mat-menu>
-                        </div>
-                    </div>
+                <div class="d-flex flex-column align-items-center">
+                    <img class="width400" src="assets/images/svg/clients-img.svg">
+                    <h4 class="text-center pt-12">{{noData}}</h4>
+                    <button mat-stroked-button class="btn-primary proximaFont addon v-middle" (click)="openAddInsurance(null)"> ADD NEW
+                    </button>
                 </div>
-                <div class="liabilities wrapper-8">
-                    <table mat-table [dataSource]="dataSource" id="table-low">
-                        <ng-container matColumnDef="no">
-                            <th mat-header-cell *matHeaderCellDef class="br"> No. </th>
-                            <td mat-cell *matCellDef="let element" class="br"> {{element.no}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="owner">
-                            <th mat-header-cell *matHeaderCellDef class="br t-25"> Owner </th>
-                            <td mat-cell *matCellDef="let element" class="br t-25"> {{element.owner}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="cvalue">
-                            <th mat-header-cell *matHeaderCellDef class="br t-8 text-right"> Current value
-                            </th>
-                            <td mat-cell *matCellDef="let element" class="br t-8 text-right"> {{element.cvalue}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="amt">
-                            <th mat-header-cell *matHeaderCellDef class="br t-18 text-right"> Amount invested </th>
-                            <td mat-cell *matCellDef="let element" class="br t-18 text-right"> {{element.amt}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="mvalue">
-                            <th mat-header-cell *matHeaderCellDef class="br t-18 text-right"> Maturity value </th>
-                            <td mat-cell *matCellDef="let element" class="br t-18 text-right"> {{element.mvalue}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="rate">
-                            <th mat-header-cell *matHeaderCellDef class="br text-right"> Rate </th>
-                            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.rate}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="mdate">
-                            <th mat-header-cell *matHeaderCellDef class="br text-left t-18"> Maturity date </th>
-                            <td mat-cell *matCellDef="let element" class="br text-left t-18"> {{element.mdate}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="type">
-                            <th mat-header-cell *matHeaderCellDef class="br t-12"> Type </th>
-                            <td mat-cell *matCellDef="let element" class="br t-12"> {{element.type}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="ppf">
-                            <th mat-header-cell *matHeaderCellDef class="br"> PPF number </th>
-                            <td mat-cell *matCellDef="let element" class="br"> {{element.ppf}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="desc">
-                            <th mat-header-cell *matHeaderCellDef class="br t-14"> Description </th>
-                            <td mat-cell *matCellDef="let element" class="br t-14"> {{element.desc}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="status">
-                            <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
-                            <td mat-cell *matCellDef="let element" class="br text-primary"> {{element.status}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="icons">
-                            <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                            <td mat-cell *matCellDef="let element" class="t-2">
-                                <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">
-                                    more_vert
-                                </i>
-                                <mat-menu #menu4="matMenu">
-                                    <button mat-menu-item>Edit</button>
-                                    <button mat-menu-item>Deatiled View</button>
-                                    <button mat-menu-item>Activity</button>
-                                    <button mat-menu-item>Delete</button>
-                                </mat-menu>
-                            </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
-                    </table>
-                </div>
-            </div> -->
+            </div>
         </div>
     </div>
 </div>
