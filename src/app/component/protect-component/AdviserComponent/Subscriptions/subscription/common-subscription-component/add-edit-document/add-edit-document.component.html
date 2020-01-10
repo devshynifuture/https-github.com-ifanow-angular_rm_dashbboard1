@@ -76,7 +76,7 @@
               for more than one plan.</h5>
           </div>
         </div>
-        <div [hidden]="fragmentData=='quotations'" class="row c-p"
+        <div class="row c-p" [hidden]="documentType=='quotations'"
           [ngClass]="{'b-ua':selectedOption!='2','ba-blue':selectedOption=='2'}" (click)="selectDocument('2')">
           <div [ngClass]="{'border-right-1':selectedOption!='2','br-blue-2':selectedOption=='2'}"
             class="col-md-3  text-center pl-12 pr-12">
@@ -90,7 +90,7 @@
               for more than one service.</h5>
           </div>
         </div>
-        <div [hidden]="fragmentData=='quotations'" class="row c-p"
+        <div class="row c-p" [hidden]="documentType=='quotations'"
           [ngClass]="{'b-ua':selectedOption!='3','ba-blue':selectedOption=='3'}" (click)="selectDocument('3')">
           <div [ngClass]="{'border-right-1':selectedOption!='3','br-blue-2':selectedOption=='3'}"
             class="col-md-3  text-center pl-12 pr-12">
