@@ -117,7 +117,7 @@ export class TermsAgreementComponent implements OnInit {
     this.dataTerms = data.documentData
   }
   openDocumentPreview() {
-    this.route.navigate(['/test'])
+    this.route.navigate(['test'], { state: { ...this.dataTerms.docText } });
     // console.log(this.dataTerms)
   }
   openDialog(data) {
