@@ -38,6 +38,8 @@ export class FormTestComponent implements OnInit {
         var file = new Blob([data], { type: 'application/pdf' });
         var fileURL = URL.createObjectURL(file);
         window.open(fileURL);
+        let a = document.createElement('a');
+        a.download = fileURL;
       }
     )
 
