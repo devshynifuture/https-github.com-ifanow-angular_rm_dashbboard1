@@ -31,6 +31,7 @@ export class InvoiceComponent implements OnInit {
   maxDate = new Date();
   validatorType = ValidatorType;
   advisorBillerProfileId: any;
+  sendRecordPaymentData: any;
 
   [x: string]: any;
 
@@ -188,7 +189,10 @@ export class InvoiceComponent implements OnInit {
       data => this.getPaymentReceivedRes(data)
     );
   }
-
+  display(value){
+    console.log(value)
+    this.cancel();
+  }
   getPaymentReceivedRes(data) {
     this.dataSource = data;
     if (data == undefined) {
@@ -318,6 +322,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   getRecordPayment(data) {
+    this.sendRecordPaymentData=data
     console.log('payee data', data);
     this.rPayment = this.fb.group({
       amountReceived: [data.amountReceived, [Validators.required, Validators.min(0), Validators.max(10)]],
@@ -625,6 +630,8 @@ export class InvoiceComponent implements OnInit {
 
   recordPayment() {
     this.showRecord = true;
+    this.sendRecordPaymentData="";
+
     this.rPayment.reset();
 
   }

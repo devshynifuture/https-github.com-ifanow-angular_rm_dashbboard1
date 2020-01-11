@@ -1,0 +1,157 @@
+<div #invoiceTemplate class="wrapper-20 max-height-100">
+    <div class="row">
+      <div class="col-md-11">
+        <h3 class="f-22 m-0 pt-4 pl-8">Fee Breakup</h3>
+      </div>
+      <div class="col-md-1">
+        <i class="material-icons text-light c-p p-8 f-24 b-a text-right right">
+          save_alt
+        </i>
+      </div>
+    </div>
+    <div class="row pt-32 pb-28 bb-1">
+      <div class="col-md-9">
+        <p class="text-custom m-0 f-16 pl-8">Invoice Peroid</p>
+        <p class="f-18 m-0 pt-4 pl-8">21-09-2018 to 20-09-2019</p>
+      </div>
+      <div class="col-md-3 pr-0">
+        <p class="text-custom m-0 f-16">Fee Amount</p>
+        <p class="f-18 m-0 pt-4">Rs. 9,640</p>
+      </div>
+    </div>
+    <div class="wrapper-20">
+      <h3 class="m-0 text-black pt-20">Mutual Funds</h3>
+      <h4 class="m-0 pt-20">Direct</h4>
+      <table [dataSource]="dataSource" class="mt-12" id="table-low" mat-table>
+        <ng-container matColumnDef="position">
+          <th *matHeaderCellDef mat-header-cell> Scheme Name.</th>
+          <td *matCellDef="let element" mat-cell> {{element.position}} </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef mat-header-cell> Type</th>
+          <td *matCellDef="let element" mat-cell> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="weight">
+          <th *matHeaderCellDef class="text-right" mat-header-cell> Average AUM</th>
+          <td *matCellDef="let element" class="text-right" mat-cell> {{element.weight}} </td>
+        </ng-container>
+        <ng-container matColumnDef="symbol">
+          <th *matHeaderCellDef class="text-right" mat-header-cell> Fee Amount</th>
+          <td *matCellDef="let element" class="text-right" mat-cell> {{element.symbol}} </td>
+        </ng-container>
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+      </table>
+      <div class="row">
+        <div class="col-md-7"></div>
+        <div class="col-md-5 b-b p-0">
+          <div class="row pt-12 pb-12 text-center">
+            <div class="col-md-7 p-0">
+              <h5 class="m-0 text-black text-right f-500">Total</h5>
+            </div>
+            <div class="col-md-5 p-0">
+              <h5 class="m-0 text-black text-right f-500 pr-8">47,000</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h4 class="m-0 pt-20">Regular</h4>
+      </div>
+      <table [dataSource]="dataSource" class="mt-12" id="table-low" mat-table>
+        <ng-container matColumnDef="position">
+          <th *matHeaderCellDef mat-header-cell> Scheme Name.</th>
+          <td *matCellDef="let element" mat-cell> {{element.position}} </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef mat-header-cell> Type</th>
+          <td *matCellDef="let element" mat-cell> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="weight">
+          <th *matHeaderCellDef class="text-right" mat-header-cell> Average AUM</th>
+          <td *matCellDef="let element" class="text-right" mat-cell> {{element.weight}} </td>
+        </ng-container>
+        <ng-container matColumnDef="symbol">
+          <th *matHeaderCellDef class="text-right" mat-header-cell> Fee Amount</th>
+          <td *matCellDef="let element" class="text-right" mat-cell> {{element.symbol}} </td>
+        </ng-container>
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+      </table>
+      <div class="row">
+        <div class="col-md-7"></div>
+        <div class="col-md-5 b-b p-0">
+          <div class="row pt-12 pb-12 text-center">
+            <div class="col-md-7 p-0">
+              <h5 class="m-0 text-black text-right f-500">Total</h5>
+            </div>
+            <div class="col-md-5 p-0">
+              <h5 class="m-0 text-black text-right f-500 pr-8">47,000</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h4 class="m-0 pt-20">Other Asset Classes</h4>
+      </div>
+      <table [dataSource]="dataSource" class="mt-12" id="table-low" mat-table>
+        <ng-container matColumnDef="position">
+          <th *matHeaderCellDef mat-header-cell> Scheme Name.</th>
+          <td *matCellDef="let element" mat-cell> {{element.position}} </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef mat-header-cell> Type</th>
+          <td *matCellDef="let element" mat-cell> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="weight">
+          <th *matHeaderCellDef class="text-right" mat-header-cell> Average AUM</th>
+          <td *matCellDef="let element" class="text-right" mat-cell> {{element.weight}} </td>
+        </ng-container>
+        <ng-container matColumnDef="symbol">
+          <th *matHeaderCellDef class="text-right" mat-header-cell> Fee Amount</th>
+          <td *matCellDef="let element" class="text-right" mat-cell> {{element.symbol}} </td>
+        </ng-container>
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+      </table>
+      <div class="row">
+        <div class="col-md-7"></div>
+        <div class="col-md-5 b-b p-0">
+          <div class="row pt-12 pb-12 text-center">
+            <div class="col-md-7 p-0">
+              <h5 class="m-0 text-black text-right f-500">Total</h5>
+            </div>
+            <div class="col-md-5 p-0">
+              <h5 class="m-0 text-black text-right f-500 pr-8">47,000</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7"></div>
+        <div class="col-md-5 b-b p-0">
+          <div class="row pt-12 pb-12 text-center">
+            <div class="col-md-7 p-0">
+              <h5 class="m-0 text-black text-right f-500">Total</h5>
+            </div>
+            <div class="col-md-5 p-0">
+              <h5 class="m-0 text-black text-right f-500 pr-8">47,000</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7"></div>
+        <div class="col-md-5 b-b p-0">
+          <div class="row pt-12 pb-12 text-center">
+            <div class="col-md-7 p-0">
+              <h5 class="m-0 text-black f-500 text-right">Split Ratio (40%)</h5>
+            </div>
+            <div class="col-md-5 p-0">
+              <h5 class="m-0 text-black f-500 pr-8 text-right">30,000</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

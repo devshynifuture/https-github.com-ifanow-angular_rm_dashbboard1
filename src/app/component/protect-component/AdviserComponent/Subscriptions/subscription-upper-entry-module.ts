@@ -36,6 +36,8 @@ import {CustomDirectiveModule} from 'src/app/common/directives/common-directive.
 import {AddVariableFeeComponent} from './subscription/common-subscription-component/add-variable-fee/add-variable-fee.component';
 import {SubscriptionPopupComponent} from './subscription/common-subscription-component/subscription-popup/subscription-popup.component';
 import {AddDocumentComponent} from './subscription/common-subscription-component/add-document/add-document.component';
+import { RecordPaymentComponent } from '../../customers/component/common-component/record-payment/record-payment.component';
+import { FeeCalculationsComponent } from '../../customers/component/common-component/fee-calculations/fee-calculations.component';
 
 export const componentList = [
   OverviewComponent,
@@ -69,6 +71,8 @@ export const componentList = [
   AddVariableFeeComponent,
   SubscriptionPopupComponent,
   AddDocumentComponent,
+  RecordPaymentComponent,
+  FeeCalculationsComponent
 ]
 
 @NgModule({
