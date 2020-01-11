@@ -13,22 +13,22 @@
                         <i class="material-icons icon-center"> add </i>
                     </p>
                 </mat-card-content>
-
             </mat-card>
         </div>
-        <div *ngFor="let singleService of serviceSettingData" class="col-md-4 pr-20 pb-20 pl-0 ">
-            <mat-card [appSkeletonLoading]="isLoading" appSkeletonLoading
-                class="example-card bg-grey lter p-0 b-a skeletonAnimation">
+        <div *ngFor="let singleService of serviceSettingData" [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-4 pr-20 pb-20 pl-0 skeletonAnimation">
+            <mat-card class="example-card bg-grey lter p-0 b-a ">
                 <div class="bar">
-                    <mat-card-header>
+                    <mat-card-header class="overflow-hidden">
                         <div class="wrapper-20 height120">
-                            <mat-card-title class="mb-10 l-26 text-break text-lighter f-24">
-                                {{singleService.serviceName}}
+                            <mat-card-title class="mb-10 l-26 text-break text-lighter relClass f-24">
+                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                    {{singleService.serviceName}} </div>
                             </mat-card-title>
-                            <mat-card-subtitle class="pt-4 pb-12">
-                                {{singleService.serviceCode}}<p class="m-0 text-sl"
-                                    matTooltip="{{singleService.description}}"
-                                    aria-label="Button that displays a tooltip when focused or hovered over">
+
+                            <mat-card-subtitle class="pt-4 pb-12 relClass">
+                                <div class="bar" [ngClass]="{'height23': isLoading}"> {{singleService.serviceCode}}
+                                </div>
+                                <p class="m-0 text-sl" matTooltip="{{singleService.description}}" aria-label="Button that displays a tooltip when focused or hovered over">
                                     {{singleService.description}}</p>
                             </mat-card-subtitle>
                         </div>
@@ -37,75 +37,90 @@
                     <mat-card-content class="bg-white mb-0">
 
                         <div class="row wrapper-20">
-                            <div class="col-md-7 p-0">
+                            <div class="col-md-7 p-0 overflow-hidden">
                                 <p class="mb-0 text-primitive f-12">FEE TYPE</p>
-                                <label *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==1"
-                                    class="bg-header mt-4 f-16">Fixed</label>
-                                <label *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2"
-                                    class="bg-header mt-4 f-16">Variable</label>
+                                <div class="relClass">
+                                    <div class="bar" [ngClass]="{'height23': isLoading}">
+                                        <label *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==1" class="bg-header mt-4  f-16">Fixed</label>
+                                        <label *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2" class="bg-header mt-4   f-16">Variable</label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-5 p-0">
+                            <div class="col-md-5 p-0 overflow-hidden">
                                 <p class="f-12 mb-0 text-primitive">BILLING NATURE</p>
-                                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.billingNature==1"
-                                    class="f-18 pt-4 text-lighter mb-0 f-16">
-                                    Recurring</p>
-                                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.billingNature==2"
-                                    class="f-18 pt-4 text-lighter mb-0 f-16">
-                                    Once</p>
+                                <div class="relClass">
+                                    <div class="bar" [ngClass]="{'height23': isLoading}">
+                                        <p *ngIf="singleService.servicePricing&&singleService.servicePricing.billingNature==1" class="f-18 pt-4 text-lighter mb-0 f-16">
+                                            Recurring</p>
+                                        <p *ngIf="singleService.servicePricing&&singleService.servicePricing.billingNature==2" class="f-18 pt-4 text-lighter mb-0 f-16">
+                                            Once</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="row wrapper-20 pt-0">
+                        <div class="row wrapper-20 pt-0 overflow-hidden">
                             <div class="col-md-7 p-0">
                                 <p class="mb-0 text-primitive f-12">BILLING MODE</p>
-                                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.billingMode==1"
-                                    class="mb-0 text-lighter f-16">
-                                    Start Of Period</p>
-                                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.billingMode==2"
-                                    class="mb-0 text-lighter f-16">
-                                    End Of Period
-                                </p>
+                                <div class="relClass">
+                                    <div class="bar" [ngClass]="{'height23': isLoading}">
+                                        <p *ngIf="singleService.servicePricing&&singleService.servicePricing.billingMode==1" class="mb-0 text-lighter f-16">
+                                            Start Of Period</p>
+                                        <p *ngIf="singleService.servicePricing&&singleService.servicePricing.billingMode==2" class="mb-0 text-lighter f-16">
+                                            End Of Period
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="col-md-5 p-0">
-                                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==1"
-                                    class="f-12 mb-0 text-primitive">
+                                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==1" class="f-12 mb-0 text-primitive">
                                     Fees
                                 </p>
-                                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2"
-                                    class="f-12 mb-0 text-primitive">Other asset class fees</p>
-
-                                <h4 *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2"
-                                    class="m-0 p-0 text-lighter lh-16 f-16">
-                                    {{singleService.averageFees}}%/ Year</h4>
-                                <h4 *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==1"
-                                    class="m-0 p-0 text-lighter lh-16 f-16">
-                                    Rs{{singleService.averageFees}}/ Year</h4>
+                                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2" class="f-12 mb-0 text-primitive">Other asset fees</p>
+                                <div class="relClass">
+                                    <div class="bar" [ngClass]="{'height23': isLoading}">
+                                        <h4 *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2" class="m-0 p-0 text-lighter lh-16 f-16">
+                                            {{singleService.averageFees}}%/ Year</h4>
+                                        <h4 *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==1" class="m-0 p-0 text-lighter lh-16 f-16">
+                                            Rs{{singleService.averageFees}}/ Year</h4>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
 
 
-                        <div class="row wrapper-20 bt-1 bb-1">
+                        <div class="row wrapper-20 bt-1 bb-1 overflow-hidden">
                             <div class="col-md-4 p-0">
                                 <p class="f-14 text-primitive">PLANS</p>
-                                <p class="f-24">{{singleService.planCount}}</p>
+                                <div class="f-24 relClass">
+                                    <div class="bar" [ngClass]="{'height23': isLoading}"> {{singleService.planCount}}
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-4 p-0">
                                 <p class="f-14 text-primitive">MODULES</p>
-                                <p class="f-24">{{singleService.moduleCount}}</p>
+                                <div class="f-24 relClass">
+                                    <div class="bar" [ngClass]="{'height23': isLoading}">
+                                        {{singleService.moduleCount}}
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-4 p-0">
                                 <p class="f-14 text-primitive">DOCUMENTS</p>
-                                <p class="f-24">{{singleService.docCount}}</p>
+                                <div class="f-24 relClass">
+                                    <div class="bar" [ngClass]="{'height23': isLoading}">
+                                        {{singleService.docCount}}
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
 
                     </mat-card-content>
 
-                    <mat-card-actions (click)="openFragment(singleService,'services')"
-                        class="block text-center pt-20 pb-20 mb-0">
+                    <mat-card-actions (click)="openFragment(singleService,'services')" class="block text-center pt-20 pb-20 mb-0">
                         <button class="btn-header addon mb-12 mt-8 br-0" mat-stroked-button>INFO</button>
                     </mat-card-actions>
                 </div>
@@ -118,9 +133,7 @@
             <img class="width200" src="assets/images/svg/add-services-img.svg">
             <p class="f-22 f-600 pt-28">Create Services </p>
             <p class="f-16 text-center l-21">
-                Next up, you create Services. More than one Service can be added to a Plan. E.g. <br> Plan could be
-                Financial Planning. It’s Services could be 1) Planning fees 2) <br> Implementation services 3) Retainer
-                services.
+                Next up, you create Services. More than one Service can be added to a Plan. E.g. <br> Plan could be Financial Planning. It’s Services could be 1) Planning fees 2) <br> Implementation services 3) Retainer services.
             </p>
 
             <button (click)="openFragment('','services')" class="btn-primary d-flex align-items-center">

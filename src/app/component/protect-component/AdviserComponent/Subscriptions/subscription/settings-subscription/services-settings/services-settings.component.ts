@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
-import {SubscriptionService} from '../../../subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {UtilService} from '../../../../../../../services/util.service';
-import {SubscriptionUpperSliderComponent} from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { SubscriptionService } from '../../../subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { UtilService } from '../../../../../../../services/util.service';
+import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
 
 @Component({
   selector: 'app-services-settings',
@@ -14,19 +14,19 @@ import {SubscriptionUpperSliderComponent} from '../../common-subscription-compon
 export class ServicesSettingsComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private subService: SubscriptionService,
-              private dataService: EventService, private eventService: EventService) {
+    private dataService: EventService, private eventService: EventService) {
   }
 
   button: any;
 
   // showLoader;
 
-  serviceSettingData = [{}, {}, {}];
+  serviceSettingData = [{}, {}];
   isLoading = false;
   advisorId;
 
   ngOnInit() {
-    this.isLoading = true;
+
     this.advisorId = AuthService.getAdvisorId();
     this.getServiceSettingSubData();
   }
@@ -75,16 +75,16 @@ export class ServicesSettingsComponent implements OnInit {
   }
 
   getServiceSettingSubData() {
-    // this.showLoader = true;
+    this.isLoading = true;
     const obj = {
       // advisorId: 2808
       advisorId: this.advisorId,
 
     };
-    this.serviceSettingData = [{}, {}, {}];
+    this.serviceSettingData = [{}, {}];
 
     this.subService.getSubscriptionServiceSettingsData(obj).subscribe(
-      data => this.getServiceSettingSubResponse(data),(error) => {
+      data => this.getServiceSettingSubResponse(data), (error) => {
         this.eventService.showErrorMessage(error);
         // this.dataSource.data = [];
         this.isLoading = false;
@@ -94,6 +94,7 @@ export class ServicesSettingsComponent implements OnInit {
 
   getServiceSettingSubResponse(data) {
     console.log('service data', data);
+    this.isLoading = false;
     this.serviceSettingData = data;
     // this.showLoader = false;
   }
