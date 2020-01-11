@@ -201,11 +201,11 @@
         <div class="col-md-6">
             <mat-form-field class="w-100">
                 <input #pincode class="form-control br-0" (keypress)="utils.alphaNumric($event)"
-                    formControlName="pincode" matInput maxlength="10" type="text">
+                    formControlName="pincode" matInput maxlength="6" type="text">
                 <mat-error class="f-12">
                     This field is required
                 </mat-error>
-                <mat-hint align="end" class="f-12">{{pincode.value.length}}/10</mat-hint>
+                <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>
             </mat-form-field>
         </div>
     </div>
