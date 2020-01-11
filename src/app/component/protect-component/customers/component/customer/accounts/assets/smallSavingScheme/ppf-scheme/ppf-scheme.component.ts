@@ -1,13 +1,13 @@
-import {AddPpfComponent} from './../common-component/add-ppf/add-ppf.component';
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatTableDataSource} from '@angular/material';
-import {ExcelService} from '../../../../excel.service';
+import { AddPpfComponent } from './../common-component/add-ppf/add-ppf.component';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatTableDataSource } from '@angular/material';
+import { ExcelService } from '../../../../excel.service';
 
 @Component({
   selector: 'app-ppf-scheme',
