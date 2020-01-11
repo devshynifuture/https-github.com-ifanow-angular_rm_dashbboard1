@@ -111,7 +111,7 @@ export class TermsAgreementComponent implements OnInit {
     tag.select();
     document.execCommand('copy');
     document.body.removeChild(tag);
-    this.eventService.openSnackBar("service name copied", "dismiss")
+    this.eventService.openSnackBar("text copied", "dismiss")
   }
   onSubmit() {
     // TODO: Use EventEmitter with form value
