@@ -59,14 +59,14 @@ export class EmailUtilService {
       const { payload: { parts } } = message;
       const { payload: { headers } } = message;
       const { snippet } = message;
-      if (parts && parts !== null) {
+      if (parts && parts.length !== 0 && parts !== null) {
         parts.forEach((part) => {
           if (part.body.data && part.body.data !== null) {
             decodedPartArray.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data));
           }
           // not perfect
           else {
-            console.log(" this is null hope so it is not :: data null");
+            console.log("this is null hope so it is not :: data null");
           }
         });
       } else {
