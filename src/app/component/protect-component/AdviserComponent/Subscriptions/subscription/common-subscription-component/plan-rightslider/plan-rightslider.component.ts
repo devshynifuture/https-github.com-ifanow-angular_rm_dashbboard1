@@ -35,12 +35,12 @@ export class PlanRightsliderComponent implements OnInit {
 
   createSubscription() {
     if (this.selectedPlan) {
-        const data = [{
-          advisorId: this.advisorId,
-          planId: this.selectedPlan.id,
-          clientId: this.clientData.id,
-          planName: this.selectedPlan.name
-        }];
+      const data = [{
+        advisorId: this.advisorId,
+        planId: this.selectedPlan.id,
+        clientId: this.clientData.id,
+        planName: this.selectedPlan.name
+      }];
       console.log(data);
       this.subService.createSubscription(data).subscribe(
         data => this.createSubscriptionResponse(data)
@@ -50,22 +50,21 @@ export class PlanRightsliderComponent implements OnInit {
     }
   }
   createSubscriptionResponse(data) {
-    this.Close();
+    this.Close(true);
   }
 
   select(data) {
-    this.planSettingData.forEach(element=>{
-      if(data.id==element.id)
-      {
-        data.selected=true
-        this.selectedPlan=data
+    this.planSettingData.forEach(element => {
+      if (data.id == element.id) {
+        data.selected = true
+        this.selectedPlan = data
       }
-      else{
-        element.selected=false;
+      else {
+        element.selected = false;
       }
     })
-     }
-  Close() {
-    this.subInjectService.changeUpperRightSliderState({state: 'close'});
+  }
+  Close(flag) {
+    this.subInjectService.changeUpperRightSliderState({ state: 'close', refreshRequired: flag });
   }
 }

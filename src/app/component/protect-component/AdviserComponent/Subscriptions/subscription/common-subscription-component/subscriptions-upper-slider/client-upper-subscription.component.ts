@@ -1,13 +1,13 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort} from '@angular/material';
-import {DeleteSubscriptionComponent} from '../delete-subscription/delete-subscription.component';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {UtilService} from 'src/app/services/util.service';
-import {MatTableDataSource} from '@angular/material/table';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort } from '@angular/material';
+import { DeleteSubscriptionComponent } from '../delete-subscription/delete-subscription.component';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
+import { MatTableDataSource } from '@angular/material/table';
 import * as _ from 'lodash';
 
 // import { element } from 'protractor';
@@ -62,7 +62,9 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   clientSubscriptionData;
   advisorId;
   ngOnInit() {
-
+    this.data = [{}, {}, {}];
+    this.sub = new MatTableDataSource(this.data);
+    this.getSummaryDataClient();
   }
 
   openPlanSlider(value, state, data) {
@@ -94,7 +96,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          this.getSummaryDataClient();
+          this.ngOnInit();
           rightSideDataSub.unsubscribe();
         }
       }
@@ -141,20 +143,23 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          this.getSummaryDataClient();
+          this.ngOnInit();
           rightSideDataSub.unsubscribe();
 
         }
       }
     );
   }
+  init() {
+    throw new Error("Method not implemented.");
+  }
 
   getSubSummaryRes(data) {
     this.isLoading = false;
-    console.log(data, data[0].clientName, "hi client");
     if (data == undefined) {
       this.clientData.length == 0;
       this.sub = undefined;
+      this.subcr = []
 
     } else if (data.length > 0) {
 
