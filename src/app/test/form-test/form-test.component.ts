@@ -20,7 +20,7 @@ export class FormTestComponent implements OnInit {
   // personNameValidator = ValidatorType.PERSON_NAME;
   validatorType = ValidatorType;
 
-  constructor(private eventService: EventService, private fb: FormBuilder, private sanitizer: DomSanitizer, private http: HttpClient) {
+  constructor(private eventService: EventService, private fb: FormBuilder, private sanitizer: DomSanitizer) {
   }
   inputString;
   // numKeyValidator = ValidatorType.NUMBER_KEY_ONLY;
@@ -28,21 +28,6 @@ export class FormTestComponent implements OnInit {
     console.log("Document preview", window.history.state)
     this.inputString = this.sanitizer.bypassSecurityTrustHtml(window.history.state.docText);
     (this.inputString.changingThisBreaksApplicationSecurity) ? this.inputString : this.inputString = { changingThisBreaksApplicationSecurity: "Go Back To documents to view Pdf" };
-    let obj =
-    {
-      "htmlInput": this.inputString.changingThisBreaksApplicationSecurity,
-      "name": "pdfTest"
-    }
-    this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, { responseType: 'blob' }).subscribe(
-      data => {
-        var file = new Blob([data], { type: 'application/pdf' });
-        var fileURL = URL.createObjectURL(file);
-        window.open(fileURL);
-        let a = document.createElement('a');
-        a.download = fileURL;
-      }
-    )
-
     console.log(this.inputString)
     this.testForm = this.fb.group({
       id: [],
