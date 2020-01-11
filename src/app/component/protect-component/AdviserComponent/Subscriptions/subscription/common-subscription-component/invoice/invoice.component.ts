@@ -31,6 +31,14 @@ export class InvoiceComponent implements OnInit {
   maxDate = new Date();
   validatorType = ValidatorType;
   advisorBillerProfileId: any;
+  sendRecordPaymentData: any;
+  recordData: any;
+  clientId: any;
+  igstTaxAmount: any;
+  cgstTaxAmount: any;
+  sgstTaxAmount: any;
+  showEditIn: boolean;
+  service: { serviceName: any; averageFees: any; description: any; fromDate: any; toDate: any; }[];
 
   [x: string]: any;
 
@@ -189,7 +197,10 @@ export class InvoiceComponent implements OnInit {
       data => this.getPaymentReceivedRes(data)
     );
   }
-
+  display(value) {
+    console.log(value)
+    this.cancel();
+  }
   getPaymentReceivedRes(data) {
     this.dataSource = data;
     if (data == undefined) {
@@ -319,24 +330,25 @@ export class InvoiceComponent implements OnInit {
   }
 
   getRecordPayment(data) {
-    console.log('payee data', data);
-    this.rPayment = this.fb.group({
-      amountReceived: [data.amountReceived, [Validators.required, Validators.min(0), Validators.max(10)]],
-      chargesIfAny: [data.chargesIfAny, [Validators.required]],
-      tds: [data.tds, [Validators.required]],
-      paymentDate: [new Date(data.paymentDate), [Validators.required]],
-      paymentMode: [data.paymentMode, [Validators.required]],
-      gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business', [Validators.required]],
-      notes: [data.notes],
-      id: [data.id],
-      editFormData: [true]
-    });
-
-    this.getFormControl().amountReceived.maxLength = 10;
-    this.getFormControl().chargesIfAny.maxLength = 10;
-    this.getFormControl().tds.maxLength = 10;
-    this.getFormControl().notes.maxLength = 40;
+    this.recordData = data
     this.getPayReceive(data.id);
+    // console.log('payee data', data);
+    // this.rPayment = this.fb.group({
+    //   amountReceived: [data.amountReceived, [Validators.required, Validators.min(0), Validators.max(10)]],
+    //   chargesIfAny: [data.chargesIfAny, [Validators.required]],
+    //   tds: [data.tds, [Validators.required]],
+    //   paymentDate: [new Date(data.paymentDate), [Validators.required]],
+    //   paymentMode: [data.paymentMode, [Validators.required]],
+    //   gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business', [Validators.required]],
+    //   notes: [data.notes],
+    //   id: [data.id],
+    //   editFormData: [true]
+    // });
+
+    // this.getFormControl().amountReceived.maxLength = 10;
+    // this.getFormControl().chargesIfAny.maxLength = 10;
+    // this.getFormControl().tds.maxLength = 10;
+    // this.getFormControl().notes.maxLength = 40;
 
   }
 
@@ -536,103 +548,6 @@ export class InvoiceComponent implements OnInit {
     return this.rPayment.controls;
   }
 
-  saveFormData() {
-    if (this.rPayment.controls.chargesIfAny.invalid) {
-      this.ischargeValid = true;
-      return;
-    } else if (this.rPayment.controls.tds.invalid) {
-      this.istdsValid = true;
-      return;
-    } else if (this.rPayment.controls.paymentMode.invalid) {
-      this.ismodeValid = true;
-      return;
-    } else if (this.rPayment.controls.paymentDate.invalid) {
-      this.isdateValid = true;
-    }
-    if (this.rPayment.controls.gstTreatment.invalid) {
-      this.isgstValid = true;
-    } else {
-      this.formObj = [{
-        advisorId: this.advisorId,
-        // advisorId: 12345,
-        amountReceived: this.rPayment.controls.amountReceived.value,
-        chargeIfAny: this.rPayment.controls.chargesIfAny.value,
-        TDS: this.rPayment.controls.tds.value,
-        paymentDate: this.rPayment.controls.paymentDate.value,
-        paymentMode: this.rPayment.controls.paymentMode.value,
-        gstTreatment: this.rPayment.controls.gstTreatment.value,
-        notes: this.rPayment.controls.notes.value
-      }];
-
-    }
-    const ELEMENT_DATA = this.formObj;
-    this.dataSource = ELEMENT_DATA;
-    this.feeCollectionMode.forEach(o => {
-      if (o.name == this.dataSource[0].paymentMode) {
-        this.dataSource[0].paymentMode = o.value;
-      }
-    });
-    this.gstTreatment.forEach(o => {
-      if (o.name == this.dataSource[0].gstTreatment) {
-        this.dataSource[0].gstTreatment = o.value;
-      }
-    });
-    this.dataSource[0].amountReceived = parseInt(this.dataSource[0].amountReceived);
-    this.dataSource[0].chargeIfAny = parseInt(this.dataSource[0].chargeIfAny);
-    this.dataSource[0].paymentMode = parseInt(this.dataSource[0].paymentMode);
-    this.dataSource[0].gstTreatment = parseInt(this.dataSource[0].gstTreatment);
-    this.dataSource[0].TDS = parseInt(this.dataSource[0].TDS);
-    this.dataSource[0].paymentDate = this.dataSource[0].paymentDate.toISOString().slice(0, 10);
-    if (this.editFormData != undefined) {
-      const obj = {
-        id: this.rPayment.controls.id.value,
-        paymentMode: this.dataSource[0].paymentMode,
-        amountReceived: this.dataSource[0].amountReceived,
-        chargesIfAny: this.dataSource[0].chargeIfAny,
-        notes: this.dataSource[0].notes,
-        tds: this.dataSource[0].TDS,
-        gstTreatmentId: this.dataSource[0].gstTreatment
-      };
-      this.subService.editPaymentReceive(obj).subscribe(
-        data => this.getSubStagesRecordResponse(data)
-      );
-    } else {
-      const obj = {
-        invoiceId: this.storeData.id,
-        paymentMode: this.dataSource[0].paymentMode,
-        amountReceived: this.dataSource[0].amountReceived,
-        paymentDate: this.dataSource[0].paymentDate,
-        tds: this.dataSource[0].TDS,
-        notes: this.dataSource[0].notes,
-        chargesIfAny: this.dataSource[0].chargeIfAny,
-        advisorId: this.dataSource[0].advisorId,
-        referenceNumber: this.storeData.invoiceNumber,
-        gstTreatmentId: this.dataSource[0].gstTreatment
-
-      };
-      this.subService.getSubscriptionCompleteStages(obj).subscribe(
-        data => this.getSubStagesRecordResponse(data)
-      );
-
-    }
-
-  }
-
-  getSubStagesRecordResponse(data) {
-    console.log('data', data);
-    this.feeCollectionMode.forEach(o => {
-      if (o.value == this.dataSource[0].paymentMode) {
-        this.dataSource[0].paymentMode = o.name;
-      }
-    });
-    const obj = {
-      invoiceId: this.storeData.id
-    };
-    this.subService.getPaymentReceive(obj).subscribe(
-      data => this.getPaymentReceivedRes(data)
-    );
-    this.cancel();
-  }
 
   OpenFeeCalc() {
     this.feeCalc = true;
@@ -640,14 +555,19 @@ export class InvoiceComponent implements OnInit {
 
   recordPayment() {
     this.showRecord = true;
-    this.rPayment.reset();
+    this.sendRecordPaymentData = this.recordData;
+    this.sendRecordPaymentData.add = true;
+
 
   }
 
   editForm(data) {
-    this.editFormData = true;
+    // this.editFormData = true;
     this.showRecord = true;
-    this.getRecordPayment(data);
+    // this.getRecordPayment(data);
+    this.sendRecordPaymentData = data;
+    this.sendRecordPaymentData.add = false;
+    // this.sendRecordPaymentData.add=false;
   }
 
   cancel() {
@@ -658,7 +578,7 @@ export class InvoiceComponent implements OnInit {
     this.subService.getPaymentReceive(obj).subscribe(
       data => this.getPaymentReceivedRes(data)
     );
-    this.rPayment.reset();
+    // this.rPayment.reset();
   }
 
   formatter(data) {
@@ -667,6 +587,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   passInvoice(data, index, event) {
+    this.recordData = data;
     console.log(data);
     this.storeData = data;
     const obj = {
@@ -702,7 +623,7 @@ export class InvoiceComponent implements OnInit {
       this.subService.getPaymentReceive(obj).subscribe(
         data => this.getPaymentReceivedRes(data)
       );
-      this.rPayment.reset();
+      // this.rPayment.reset();
     } else if (this.feeCalc == true) {
       this.feeCalc = false;
     } else {
