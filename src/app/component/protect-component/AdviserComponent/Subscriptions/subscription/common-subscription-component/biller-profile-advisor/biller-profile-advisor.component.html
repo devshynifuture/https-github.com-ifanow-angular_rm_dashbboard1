@@ -363,7 +363,7 @@
             </div>
             <div class="col-md-7">
               <div class="form-group mb-0">
-                <input [inputValidator]="validatorType.TEXT_WITH_SPACE" appInputValueValidation
+                <input [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
                   class="form-control br-0 text-left" maxlength="30" formControlName="state" matInput type="text">
               </div>
               <div class="row pt-0">
@@ -383,7 +383,7 @@
             </div>
             <div class="col-md-7">
               <div class="form-group mb-0">
-                <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" appInputValueValidation
+                <input [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation [maxLength]="6"
                   class="form-control br-0 text-left" maxlength="6" formControlName="pincode" matInput type="number">
               </div>
               <div class="row pt-0">
@@ -404,7 +404,7 @@
             </div>
             <div class="col-md-7">
               <div class="form-group mb-0">
-                <input [inputValidator]="validatorType.TEXT_WITH_SPACE" appInputValueValidation
+                <input [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
                   class="form-control br-0 text-left" maxlength="30" formControlName="country" matInput type="text">
               </div>
               <div class="row pt-0">

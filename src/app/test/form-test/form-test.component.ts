@@ -25,6 +25,7 @@ export class FormTestComponent implements OnInit {
   ngOnInit() {
     console.log("Document preview", window.history.state)
     this.inputString = this.sanitizer.bypassSecurityTrustHtml(window.history.state.docText);
+    console.log(this.inputString)
     this.testForm = this.fb.group({
       id: [],
       email: [, [Validators.required]],
