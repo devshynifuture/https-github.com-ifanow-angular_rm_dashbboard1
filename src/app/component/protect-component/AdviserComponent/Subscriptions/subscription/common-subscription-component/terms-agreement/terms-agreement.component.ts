@@ -9,7 +9,9 @@ import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { Router } from '@angular/router';
 import { escapeRegExp } from '@angular/compiler/src/util';
-
+import { HttpClient } from '@angular/common/http';
+import { tableHtml } from './document-preview'
+import { from } from 'rxjs';
 @Component({
   selector: 'app-terms-agreement',
   templateUrl: './terms-agreement.component.html',
@@ -31,7 +33,7 @@ export class TermsAgreementComponent implements OnInit {
   advisorId: () => any;
   serviceData: any;
 
-  constructor(private route: Router, public subInjectService: SubscriptionInject, public dialog: MatDialog, public subService: SubscriptionService, private eventService: EventService, private render: Renderer2) {
+  constructor(private route: Router, public subInjectService: SubscriptionInject, public dialog: MatDialog, public subService: SubscriptionService, private eventService: EventService, private render: Renderer2, private http: HttpClient) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getcommanFroalaData(data)
     );
@@ -119,10 +121,12 @@ export class TermsAgreementComponent implements OnInit {
     this.dataTerms = data.documentData
   }
   openDocumentPreview() {
+    let file = File
+    console.log(tableHtml)
     this.serviceData.forEach(element => {
       this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp("$(service_" + element.id + ")"), 'g'), element.serviceName);
       this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp("$(client_name)"), 'g'), "Ronak Hindocha");
-      // this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp("$(service__fee_"), 'g'), "Ronak Hindocha");
+      this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp("$(service_fee_" + element.id + ")"), 'g'), tableHtml);
     });
     this.route.navigate(['test'], { state: { ...this.dataTerms } });
 
