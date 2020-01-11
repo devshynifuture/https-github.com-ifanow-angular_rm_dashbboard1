@@ -1,4 +1,4 @@
-<div #invoiceTemplate class="wrapper-20 max-height-100">
+<div #invoiceTemplate class="wrapper-20 max-height-100" [ngClass]="{'pt-80': (padding==true)}">
     <div class="row">
       <div class="col-md-11">
         <h3 class="f-22 m-0 pt-4 pl-8">Fee Breakup</h3>
@@ -140,7 +140,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row pb-40">
         <div class="col-md-7"></div>
         <div class="col-md-5 b-b p-0">
           <div class="row pt-12 pb-12 text-center">

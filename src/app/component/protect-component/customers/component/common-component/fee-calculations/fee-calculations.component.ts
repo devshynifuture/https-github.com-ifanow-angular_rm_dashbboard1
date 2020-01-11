@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-fee-calculations',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./fee-calculations.component.scss']
 })
 export class FeeCalculationsComponent implements OnInit {
+  @Input() padding;
 
   constructor() { }
 

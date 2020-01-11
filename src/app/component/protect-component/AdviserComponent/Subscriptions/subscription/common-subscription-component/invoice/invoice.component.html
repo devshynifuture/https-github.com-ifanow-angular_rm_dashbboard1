@@ -251,11 +251,11 @@
         </div>
         <!--record payment div start-->
         <div *ngIf="showRecord==true">
-          <app-record-payment [InvRecordData]="sendRecordPaymentData" (outputData)='display($event)'></app-record-payment>
+          <app-record-payment [InvRecordData]="sendRecordPaymentData" [padding]="false" (outputData)='display($event)'></app-record-payment>
         </div>
         <!--Fee calculation Div start-->
         <div *ngIf="feeCalc==true">
-          <app-fee-calculations></app-fee-calculations>
+          <app-fee-calculations [padding]="false"></app-fee-calculations>
         </div>
       </div>
     </div>
@@ -467,12 +467,12 @@
     </div>
   </div>
   <!--show record in client invoice-->
-  <div *ngIf="showRecord==true">
-    <app-record-payment [InvRecordData]="sendRecordPaymentData" (outputData)='display($event)'></app-record-payment>
+  <div *ngIf="showRecord==true" class="pt-72">
+    <app-record-payment [InvRecordData]="sendRecordPaymentData" [padding]="true" (outputData)='display($event)'></app-record-payment>
   </div>
   <!--fee calc in client invoice-->
   <div *ngIf="feeCalc==true">
-    <app-fee-calculations></app-fee-calculations>
+    <app-fee-calculations [padding]="true"></app-fee-calculations>
   </div>
   <div class="bottom-fixed wrapper-12">
     <div class="row">

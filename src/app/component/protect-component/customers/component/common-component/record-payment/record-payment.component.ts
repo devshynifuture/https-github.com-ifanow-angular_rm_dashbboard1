@@ -23,6 +23,7 @@ export class RecordPaymentComponent implements OnInit {
 
   constructor(public subService: SubscriptionService, private fb: FormBuilder, public enumService: EnumServiceService,public AuthService:AuthService) { }
   @Input() InvRecordData;
+  @Input() padding;
   @Output() outputData = new EventEmitter<Object>();
 
   gstTreatment = [
@@ -31,7 +32,7 @@ export class RecordPaymentComponent implements OnInit {
     { name: 'Unregistered Business', value: 2 }
   ];
   ngOnInit() {
-    console.log(this.InvRecordData);
+    console.log(this.padding);
     this.advisorId = AuthService.getAdvisorId();
     this.getRecordPayment(this.InvRecordData);
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
@@ -57,7 +58,7 @@ export class RecordPaymentComponent implements OnInit {
     this.getFormControl().chargesIfAny.maxLength = 10;
     this.getFormControl().tds.maxLength = 10;
     this.getFormControl().notes.maxLength = 40;
-    this.getPayReceive(data.id);
+    this.getPayReceive(this.InvRecordData.id);
 
   }
   getFormControl() {

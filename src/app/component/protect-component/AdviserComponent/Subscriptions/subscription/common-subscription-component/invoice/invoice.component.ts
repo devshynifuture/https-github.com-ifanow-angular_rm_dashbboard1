@@ -324,24 +324,24 @@ export class InvoiceComponent implements OnInit {
 
   getRecordPayment(data) {
    this.recordData=data
-    console.log('payee data', data);
-    this.rPayment = this.fb.group({
-      amountReceived: [data.amountReceived, [Validators.required, Validators.min(0), Validators.max(10)]],
-      chargesIfAny: [data.chargesIfAny, [Validators.required]],
-      tds: [data.tds, [Validators.required]],
-      paymentDate: [new Date(data.paymentDate), [Validators.required]],
-      paymentMode: [data.paymentMode, [Validators.required]],
-      gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business', [Validators.required]],
-      notes: [data.notes],
-      id: [data.id],
-      editFormData: [true]
-    });
+   this.getPayReceive(data.id);
+    // console.log('payee data', data);
+    // this.rPayment = this.fb.group({
+    //   amountReceived: [data.amountReceived, [Validators.required, Validators.min(0), Validators.max(10)]],
+    //   chargesIfAny: [data.chargesIfAny, [Validators.required]],
+    //   tds: [data.tds, [Validators.required]],
+    //   paymentDate: [new Date(data.paymentDate), [Validators.required]],
+    //   paymentMode: [data.paymentMode, [Validators.required]],
+    //   gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business', [Validators.required]],
+    //   notes: [data.notes],
+    //   id: [data.id],
+    //   editFormData: [true]
+    // });
 
-    this.getFormControl().amountReceived.maxLength = 10;
-    this.getFormControl().chargesIfAny.maxLength = 10;
-    this.getFormControl().tds.maxLength = 10;
-    this.getFormControl().notes.maxLength = 40;
-    this.getPayReceive(data.id);
+    // this.getFormControl().amountReceived.maxLength = 10;
+    // this.getFormControl().chargesIfAny.maxLength = 10;
+    // this.getFormControl().tds.maxLength = 10;
+    // this.getFormControl().notes.maxLength = 40;
 
   }
 
@@ -640,15 +640,14 @@ export class InvoiceComponent implements OnInit {
     this.sendRecordPaymentData=this.recordData;
     this.sendRecordPaymentData.add=true;
 
-    this.rPayment.reset();
 
   }
 
   editForm(data) {
     // this.editFormData = true;
     this.showRecord = true;
-    this.getRecordPayment(data);
-    this.sendRecordPaymentData=this.recordData;
+    // this.getRecordPayment(data);
+    this.sendRecordPaymentData=data;
     this.sendRecordPaymentData.add=false;
     // this.sendRecordPaymentData.add=false;
   }
@@ -661,7 +660,7 @@ export class InvoiceComponent implements OnInit {
     this.subService.getPaymentReceive(obj).subscribe(
       data => this.getPaymentReceivedRes(data)
     );
-    this.rPayment.reset();
+    // this.rPayment.reset();
   }
 
   formatter(data) {
@@ -670,6 +669,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   passInvoice(data, index, event) {
+    this.recordData=data;
     console.log(data);
     this.storeData = data;
     const obj = {
@@ -705,7 +705,7 @@ export class InvoiceComponent implements OnInit {
       this.subService.getPaymentReceive(obj).subscribe(
         data => this.getPaymentReceivedRes(data)
       );
-      this.rPayment.reset();
+      // this.rPayment.reset();
     } else if (this.feeCalc == true) {
       this.feeCalc = false;
     } else {
