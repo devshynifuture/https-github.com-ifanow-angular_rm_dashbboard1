@@ -89,6 +89,7 @@ export class InvoiceComponent implements OnInit {
   ismodeValid: boolean;
   isgstValid: boolean;
   isClientName = false;
+  showErr = false
   isServiceName = false;
   isInvoiceNumber = false;
   isDueDate = false;
@@ -117,7 +118,6 @@ export class InvoiceComponent implements OnInit {
   ELEMENT_DATA: {}[];
   clientList: any;
   finAmount: any;
-  feeCalc: boolean;
   isdateValid: boolean;
   subToatal: any;
   finAmountC: number;
@@ -141,6 +141,7 @@ export class InvoiceComponent implements OnInit {
     this.showPaymentRecive = false;
     this.advisorId = AuthService.getAdvisorId();
     this.getClients();
+    this.showErr = false
     this.getServicesList();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     console.log('this.feeCollectionMode', this.feeCollectionMode);
@@ -414,6 +415,10 @@ export class InvoiceComponent implements OnInit {
   }
 
   updateInvoice() {
+    this.showErr = false
+    if (this.editPayment.value.discount == "") {
+      this.editPayment.value.discount = 0
+    }
     if (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') {
       this.finAmountC = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
       this.finAmountC = this.finAmountC * 9 / 100;
@@ -432,6 +437,9 @@ export class InvoiceComponent implements OnInit {
       return;
     } else if (this.editPayment.get('taxStatus').invalid) {
       this.editPayment.get('taxStatus').markAsTouched();
+      return;
+    } else if (isNaN(this.editPayment.controls.finalAmount.value)) {
+      this.showErr = true
       return;
     } else {
       if (this.editPayment.value.id == 0 || this.editPayment.value.id == null) {
@@ -463,6 +471,7 @@ export class InvoiceComponent implements OnInit {
           clientId: (this.upperData == undefined) ? this.clientId : this.upperData,
           services: service,
         };
+
         console.log('this.editPayment', obj);
         this.subService.addInvoice(obj).subscribe(
           data => this.addInvoiceRes(data)

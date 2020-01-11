@@ -1,6 +1,7 @@
-import {Injectable} from '@angular/core';
-import {DatePipe} from '@angular/common';
-import {EventService} from '../Data-service/event.service';
+import { Injectable } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { EventService } from '../Data-service/event.service';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
@@ -10,7 +11,7 @@ export class UtilService {
 
   getFamilyMemberData: any;
 
-  constructor(private eventService: EventService) {
+  constructor(private eventService: EventService, private http: HttpClient) {
   }
 
   static convertObjectToArray(inputObject: object): object[] {
@@ -29,7 +30,7 @@ export class UtilService {
   static convertObjectToCustomArray(inputObject: object, keyNameForOutput: string, keyValueForOutput: string): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
-      const object = {selected: false};
+      const object = { selected: false };
       object[keyNameForOutput] = inputObject[key];
       object[keyValueForOutput] = key;
 
@@ -157,6 +158,22 @@ export class UtilService {
     }
   }
 
+  htmlToPdf(inputData, pdfName) {
+    let obj =
+    {
+      "htmlInput": inputData,
+      "name": pdfName
+    }
+    this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, { responseType: 'blob' }).subscribe(
+      data => {
+        var file = new Blob([data], { type: 'application/pdf' });
+        var fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
+        let a = document.createElement('a');
+        a.download = fileURL;
+      }
+    )
+  }
 
 }
 

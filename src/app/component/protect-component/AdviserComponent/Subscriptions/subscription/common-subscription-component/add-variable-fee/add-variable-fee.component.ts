@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionService } from '../../../subscription.service';
@@ -32,7 +32,7 @@ export class AddVariableFeeComponent implements OnInit {
   dataToSend: any;
   data: any;
   restrictMoreThan100Val;
-
+  @ViewChild('htmlTag', { static: true }) htmltag: ElementRef
   @Input() set variableFee(data) {
     if (data == "") {
       // this.otherAssetData=UtilService.
@@ -56,7 +56,9 @@ export class AddVariableFeeComponent implements OnInit {
     this.setValidation(false);
     (this.ischeckVariableData) ? console.log("fixed fee Data") : this.createVariableFeeForm('');
   }
-
+  ngAfterViewInit() {
+    console.log(this.htmltag)
+  }
   restrictFrom100(event) {
     if (parseInt(event.target.value) > 100) {
       event.target.value = 100;
