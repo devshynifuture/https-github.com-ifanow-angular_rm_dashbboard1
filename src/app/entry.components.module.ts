@@ -224,7 +224,8 @@ export const componentList = [
   SelectAdviceComponent,
   AddNomineeComponent,
   AddBudgetComponent,
-  // ComposeEmailComponent
+    
+    // ComposeEmailComponent
 ];
 
 @NgModule({
