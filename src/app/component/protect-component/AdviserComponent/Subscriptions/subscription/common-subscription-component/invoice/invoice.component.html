@@ -643,8 +643,7 @@
                   class="form-control w-100 br-0 pl-8" formControlName="serviceName" list="serviceName" matInput
                   placeholder="You can search service">
                 <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option (onSelectionChange)="selectService(s)" *ngFor="let s of serviceList"
-                    [value]="s.serviceName">
+                  <mat-option *ngFor="let s of serviceList" [value]="s.serviceName">
                     <span>{{s.serviceName}}</span>
                   </mat-option>
                 </mat-autocomplete>

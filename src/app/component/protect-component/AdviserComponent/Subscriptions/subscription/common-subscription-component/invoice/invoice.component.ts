@@ -212,11 +212,7 @@ export class InvoiceComponent implements OnInit {
       });
     }
   }
-  selectService(s) {
-    console.log('s', s)
-    this.editPayment.controls.serviceName = s.serviceName
-    this.serviceName = s.serviceName
-  }
+
   selectClient(c, data) {
     console.log(c);
     console.log('ssss', data);
@@ -239,7 +235,7 @@ export class InvoiceComponent implements OnInit {
       invoiceDate: [(data.invoiceDate == undefined) ? new Date() : new Date(data.invoiceDate), [Validators.required]],
       taxStatus: [(data.igst != undefined) ? 'IGST(18%)' : 'SGST(9%)|CGST(9%)'],
       balanceDue: [(data.balanceDue == undefined) ? '' : data.balanceDue],
-      serviceName: [(data.services == undefined) ? this.serviceName : data.services[0].serviceName, [Validators.required]],
+      serviceName: [(data.services == undefined) ? this.editPayment.controls.serviceName.value : data.services[0].serviceName, [Validators.required]],
       subTotal: [(data.subTotal == undefined) ? '' : data.subTotal],
       dueDate: [new Date(data.dueDate), [Validators.required]],
       footnote: [(data.footnote == undefined) ? '' : data.footnote, [Validators.required]],
