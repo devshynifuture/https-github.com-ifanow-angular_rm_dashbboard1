@@ -156,7 +156,7 @@ export class RecordPaymentComponent implements OnInit {
     this.dataSource[0].gstTreatment = parseInt(this.dataSource[0].gstTreatment);
     this.dataSource[0].TDS = parseInt(this.dataSource[0].TDS);
     this.dataSource[0].paymentDate = this.dataSource[0].paymentDate.toISOString().slice(0, 10);
-    if (this.rPayment.controls.id.value!=undefined) {
+    if (this.InvRecordData.add!=true) {
       const obj = {
         id: this.rPayment.controls.id.value,
         paymentMode: this.dataSource[0].paymentMode,

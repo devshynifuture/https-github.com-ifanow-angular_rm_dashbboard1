@@ -32,6 +32,7 @@ export class InvoiceComponent implements OnInit {
   validatorType = ValidatorType;
   advisorBillerProfileId: any;
   sendRecordPaymentData: any;
+  recordData: any;
 
   [x: string]: any;
 
@@ -322,7 +323,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   getRecordPayment(data) {
-    this.sendRecordPaymentData=data
+   this.recordData=data
     console.log('payee data', data);
     this.rPayment = this.fb.group({
       amountReceived: [data.amountReceived, [Validators.required, Validators.min(0), Validators.max(10)]],
@@ -636,15 +637,17 @@ export class InvoiceComponent implements OnInit {
 
   recordPayment() {
     this.showRecord = true;
-    this.sendRecordPaymentData="";
+    this.sendRecordPaymentData=this.recordData;
+    this.sendRecordPaymentData.add=true;
 
     this.rPayment.reset();
 
   }
 
   editForm(data) {
-    this.editFormData = true;
+    // this.editFormData = true;
     this.showRecord = true;
+    this.sendRecordPaymentData.add=false;
     this.getRecordPayment(data);
   }
 
