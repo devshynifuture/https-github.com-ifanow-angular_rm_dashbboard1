@@ -37,6 +37,9 @@ export class RecordPaymentComponent implements OnInit {
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
   }
   getRecordPayment(data) {
+    if(data.add==true){
+      data=""
+    }
     console.log('payee data', data);
     this.rPayment = this.fb.group({
       amountReceived: [data.amountReceived, [Validators.required, Validators.min(0), Validators.max(10)]],

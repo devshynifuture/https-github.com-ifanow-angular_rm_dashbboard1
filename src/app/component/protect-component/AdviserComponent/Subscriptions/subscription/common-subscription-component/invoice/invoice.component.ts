@@ -651,8 +651,10 @@ export class InvoiceComponent implements OnInit {
   editForm(data) {
     // this.editFormData = true;
     this.showRecord = true;
-    this.sendRecordPaymentData.add=false;
     this.getRecordPayment(data);
+    this.sendRecordPaymentData=this.recordData;
+    this.sendRecordPaymentData.add=false;
+    // this.sendRecordPaymentData.add=false;
   }
 
   cancel() {
