@@ -59,9 +59,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
     (location === 'trash') ? this.trashAction = true : this.trashAction = false;
     (location === 'draft') ? this.showDraftView = true : this.showDraftView = false;
     this.getPaginatorLengthRes(location);
-
   }
-
 
   redirectMessages(element){
     element.labelIdsfromMessages.forEach(labelArr => {
