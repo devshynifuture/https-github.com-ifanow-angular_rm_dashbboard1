@@ -7,11 +7,11 @@
           <div class="col-md-5 pl-8 pt-4 pr-8">
             <h4 class="mb-0 wrapper-8 pt-12">Invoices</h4>
           </div>
-          <div class="col-md-7 text-right pt-4 right">
+          <!-- <div class="col-md-7 text-right pt-4 right">
             <button class="btn-primary br-0 my-btn mt-4" mat-stroked-button><i class="material-icons">
                 add
               </i></button>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="col-md-8 bl-1 p-0">
@@ -1300,7 +1300,8 @@
                   class="form-control w-100 br-0 pl-8" formControlName="serviceName" list="serviceName" matInput
                   placeholder="You can search service">
                 <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option *ngFor="let s of serviceList" [value]="s.serviceName">
+                  <mat-option (onSelectionChange)="selectService(s)" *ngFor="let s of serviceList"
+                    [value]="s.serviceName">
                     <span>{{s.serviceName}}</span>
                   </mat-option>
                 </mat-autocomplete>
