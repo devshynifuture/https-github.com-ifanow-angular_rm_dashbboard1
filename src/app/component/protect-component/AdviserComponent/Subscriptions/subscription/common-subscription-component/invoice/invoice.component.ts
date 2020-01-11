@@ -345,7 +345,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   getInvoiceData(data) {
-    console.log('@@@@@@@@', this.upperData);
+    console.log('@@@@@@@@', data);
     this.copyStoreData = data;
     this.storeData = data;
     this.clientId = AuthService.getClientId();
@@ -363,14 +363,20 @@ export class InvoiceComponent implements OnInit {
       dueDate: [new Date(data.dueDate), [Validators.required]],
       footnote: [data.footnote, [Validators.required]],
       terms: [data.terms, [Validators.required]],
-      taxStatus: ['IGST(18%)'],
+      taxStatus: [(data.igstTaxAmount == undefined) ? 'SGST(9%)|CGST(9%)' : 'IGST(18%)'],
       serviceName: [(data.services == undefined) ? '0' : (data.services.length == 0) ? '0' : data.services[0].serviceName, [Validators.required]],
       subTotal: [(data == undefined) ? '' : data.subTotal],
       igstTaxAmount: [data.igstTaxAmount],
+      cgstTaxAmount: [data.cgstTaxAmount],
+      sgstTaxAmount: [data.sgstTaxAmount],
       auto: [data.auto]
       // fromDate : [data.services[0].fromDate,[Validators.required]],
 
     });
+    this.igstTaxAmount = data.igstTaxAmount
+    this.cgstTaxAmount = data.cgstTaxAmount
+    this.sgstTaxAmount = data.sgstTaxAmount
+    this.taxStatus = this.editPayment.controls.taxStatus.value
     this.getFormControledit().clientName.maxLength = 10;
     this.getFormControledit().billerAddress.maxLength = 150;
     this.getFormControledit().billingAddress.maxLength = 150;

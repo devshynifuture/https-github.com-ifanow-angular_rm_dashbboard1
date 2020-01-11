@@ -16,12 +16,13 @@ export class EmailServiceService {
   private dataSourceOneMailView = new BehaviorSubject<Object>('');
   data = this.dataSourceOneMailView.asObservable();
   paginatorLength;
+  
   constructor(public https: HttpClient,
     public http: HttpService,
     private authService: AuthService,
     private subInjectService: SubscriptionInject) { }
 
-  getPaginatorLength() {
+  getProfile() {
     const userInfo = AuthService.getUserInfo();
     return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_PROFILE, {
       email: userInfo.emailId,

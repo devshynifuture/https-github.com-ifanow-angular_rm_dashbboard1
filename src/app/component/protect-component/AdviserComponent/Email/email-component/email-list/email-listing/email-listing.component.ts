@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from './../../../../../../../Data-service/event.service';
 import { ComposeEmailComponent } from './../../compose-email/compose-email.component';
 import { ConfirmDialogComponent } from './../../../../../common-component/confirm-dialog/confirm-dialog.component';
@@ -24,7 +25,8 @@ export class EmailListingComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
-    private eventService: EventService) { }
+    private eventService: EventService,
+    private authService: AuthService) { }
 
   paginatorLength;
   paginatorSubscription;
@@ -35,7 +37,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
   messageListArray;
   dataSource = null;
   selectedThreadsArray: ExtractedGmailDataI[] = [];
-  listSubscription;
+  listSubscription = null;
   trashAction: boolean = false;
   showDraftView: boolean = false;
 
@@ -47,6 +49,8 @@ export class EmailListingComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     let location;
+    console.log(this.router);
+
     if (this.router.url === '/') {
       location = 'inbox';
     } else {
@@ -54,9 +58,10 @@ export class EmailListingComponent implements OnInit, OnDestroy {
     }
     (location === 'trash') ? this.trashAction = true : this.trashAction = false;
     (location === 'draft') ? this.showDraftView = true : this.showDraftView = false;
-    this.getGmailList(location.toUpperCase());
-    this.getPaginatorLengthRes();
+    this.getPaginatorLengthRes(location);
+
   }
+
 
   redirectMessages(element){
     element.labelIdsfromMessages.forEach(labelArr => {
@@ -71,13 +76,28 @@ export class EmailListingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.paginatorSubscription.unsubscribe();
-    this.listSubscription.unsubscribe();
+    if(this.listSubscription !== null){
+      this.listSubscription.unsubscribe();
+    }
   }
 
-  getPaginatorLengthRes() {
-    this.paginatorSubscription = this.emailService.getPaginatorLength().subscribe(response => {
+  getPaginatorLengthRes(location) {
+    if(localStorage.getItem('associatedGoogleEmailId')){
+      const userInfo = AuthService.getUserInfo();
+      userInfo['emailId'] = localStorage.getItem('associatedGoogleEmailId');
+      this.authService.setUserInfo(userInfo);
+    }
+
+    this.paginatorSubscription = this.emailService.getProfile().subscribe(response => {
       console.log('paginator response=>>>>', response);
-      this.paginatorLength = response.threadsTotal;
+      if(response === undefined){
+        this.eventService.openSnackBar("You must connect your gmail account", "DISMISS");
+        this.router.navigate(['google-connect'], { relativeTo: this.activatedRoute });
+      } else {
+        
+        this.paginatorLength = response.threadsTotal;
+        this.getGmailList(location.toUpperCase());
+      }
     });
   }
 

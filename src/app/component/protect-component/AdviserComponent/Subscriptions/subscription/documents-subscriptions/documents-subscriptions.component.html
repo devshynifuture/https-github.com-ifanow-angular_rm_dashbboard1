@@ -23,8 +23,11 @@
                 <!-- <button (click)="openSendEmail()" *ngIf="dataCount > 0" mat-menu-item>Email
                     only
                 </button> -->
-                <button (click)="deleteModal(null)" *ngIf="dataCount != 0" mat-menu-item>Delete
+                <button (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount > 1" mat-menu-item>Delete
                   Documents
+                </button>
+                <button (click)="deleteModal(null)" *ngIf="dataCount != 0 && dataCount <= 1" mat-menu-item>Delete
+                  Document
                 </button>
               </mat-menu>
             </div>

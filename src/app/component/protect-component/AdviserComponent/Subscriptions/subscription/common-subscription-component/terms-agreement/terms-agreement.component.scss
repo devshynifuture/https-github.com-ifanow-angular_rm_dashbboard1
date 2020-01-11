@@ -90,3 +90,8 @@ color: #004164;
         font-family: "Roboto",sans-serif;
     }
 }
+
+::ng-deep .copy:hover
+{
+    background-color: lightgrey;
+}
