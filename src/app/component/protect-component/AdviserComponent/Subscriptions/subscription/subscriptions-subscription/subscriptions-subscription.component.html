@@ -107,8 +107,9 @@
                 <ng-container matColumnDef="amt">
                     <th *matHeaderCellDef class="f-18 t-10" mat-header-cell> Fee amount</th>
 
-                    <td (click)="openFeeEditor(element)" *matCellDef="let element" class="c-p t-10 " mat-cell>
-                        <div *ngIf="element.startsOn==undefined" class="bar text-primary text-underline">
+                    <td *matCellDef="let element" class="c-p t-10 " mat-cell>
+                        <div (click)="openFeeEditor(element)" *ngIf="element.startsOn==undefined"
+                            class="bar text-primary text-underline">
                             {{isLoading?' ': 'View details'}} </div>
                         <div *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==1">
                             {{element.subscriptionPricing.subscriptionAssetPricingList[0].pricing}}</div>
@@ -197,7 +198,8 @@
                             more_vert
                         </i>
                         <mat-menu #menu="matMenu">
-                            <a (click)="openFeeEditor(element)" mat-menu-item>View & edit fee structure</a>
+                            <a (click)="openFeeEditor(element)" *ngIf="element.startsOn==undefined" mat-menu-item>View &
+                                edit fee structure</a>
                             <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1"
                                 mat-menu-item>Change
                                 biller</a>
