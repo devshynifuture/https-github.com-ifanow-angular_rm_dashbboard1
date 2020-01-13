@@ -63,8 +63,8 @@ export class BondsComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
-  Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' })
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })
   }
   getDateYMD() {
     let now = moment();
@@ -196,9 +196,13 @@ export class BondsComponent implements OnInit {
 }
   addBondsRes(data) {
     console.log('addrecuringDepositRes', data)
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:true })
+    this.eventService.openSnackBar('Added successfully!', 'dismiss');
+
   }
   editBondsRes(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:true})
+    this.eventService.openSnackBar('Updated successfully!', 'dismiss');
+
   }
 }
