@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, Output } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {SubscriptionInject} from '../../subscription-inject.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import {MatDialog, MatSort} from '@angular/material';
@@ -6,14 +6,13 @@ import {MatTableDataSource} from '@angular/material/table';
 
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionService} from '../../subscription.service';
-import {AuthService} from "../../../../../../auth-service/authService";
+import {AuthService} from '../../../../../../auth-service/authService';
 import {UtilService} from 'src/app/services/util.service';
 import * as _ from 'lodash';
 import {DatePipe} from '@angular/common';
 import {MAT_DATE_FORMATS} from 'saturn-datepicker';
 import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 import {CommonFroalaComponent} from '../common-subscription-component/common-froala/common-froala.component';
-import { EventEmitter } from 'protractor';
 
 export interface PeriodicElement {
   name: string;
@@ -46,12 +45,12 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   filterDate = [];
   statusIdList = [];
 
-  lastFilterDataId:any;
-  filterDataArr=[];
-  statusIdLength:any;
-  scrollCallData:boolean;
-  selectedDateFilter:any = "dateFilter"
-  selectedStatusFilter:any ="statusFilter"
+  lastFilterDataId: any;
+  filterDataArr = [];
+  statusIdLength: any;
+  scrollCallData: boolean;
+  selectedDateFilter: any = 'dateFilter';
+  selectedStatusFilter: any = 'statusFilter';
   chips = [
     {name: 'NOT STARTED', value: 0},
     {name: 'READY TO SEND', value: 1},
@@ -70,7 +69,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   maxDate = new Date();
   dataCount: number;
   private clientId: any;
-  
+
 
   constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public eventService: EventService,
               public subscription: SubscriptionService, private datePipe: DatePipe, private subService: SubscriptionService) {
@@ -88,7 +87,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   changeSelect() {
     this.dataCount = 0;
     this.dataSource.filteredData.forEach(item => {
-      console.log('item item ', item);
+      // console.log('item item ', item);
       if (item.selected) {
         this.dataCount++;
       }
@@ -117,7 +116,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
-        this.selectAll({checked: false}) : this.selectAll({checked: true});
+      this.selectAll({checked: false}) : this.selectAll({checked: true});
   }
 
   openEsignDocument(element) {
@@ -153,15 +152,15 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     };
     fragmentData.data.isDocument = true;
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-        sideBarData => {
-          console.log('this is sidebardata in subs subs : ', sideBarData);
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getdocumentSubData(false);
-            console.log('this is sidebardata in subs subs 2: ');
-            this.dataCount = 0;
-            rightSideDataSub.unsubscribe();
-          }
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          this.getdocumentSubData(false);
+          console.log('this is sidebardata in subs subs 2: ');
+          this.dataCount = 0;
+          rightSideDataSub.unsubscribe();
         }
+      }
     );
   }
 
@@ -171,15 +170,15 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     };
 
     this.subscription.getEsignedDocument(obj).subscribe(
-        data => this.downloadEsignResponseData(data),
-        error => {
-          console.log(error);
-        }
+      data => this.downloadEsignResponseData(data),
+      error => {
+        console.log(error);
+      }
     );
   }
 
   downloadEsignResponseData(data) {
-    console.log(data, "downloadEsign 123");
+    console.log(data, 'downloadEsign 123');
     window.open(data.presginedUrl);
   }
 
@@ -237,7 +236,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     beginDate.setMonth(beginDate.getMonth() - 1);
     UtilService.getStartOfTheDay(beginDate);
     const endDate = new Date();
-    UtilService.getStartOfTheDay(endDate)
+    UtilService.getStartOfTheDay(endDate);
     this.selectedDateRange = {begin: selectedDateRange.begin, end: selectedDateRange.end};
   }
 
@@ -257,11 +256,11 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     this.subscription.getDocumentData(obj).subscribe(
-        data => this.getdocumentResponseData(data), (error) => {
-          this.eventService.showErrorMessage(error);
-          this.dataSource.data = [];
-          this.isLoading = false;
-        }
+      data => this.getdocumentResponseData(data), (error) => {
+        this.eventService.showErrorMessage(error);
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
@@ -271,14 +270,14 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     };
     this.isLoading = true;
     this.subService.getSubscriptionClientsList(obj).subscribe(
-      (data) =>{
-        console.log(data, "clientdata");
-        
+      (data) => {
+        console.log(data, 'clientdata');
+
       }, (error) => {
         this.eventService.openSnackBar('Somthing went worng!', 'dismiss');
       }
     );
-  }  
+  }
 
   addFilters(addFilters) {
 
@@ -293,13 +292,11 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       // _.remove(this.filterStatus, this.senddataTo);
     }
 
-    console.log(this.filterStatus, "this.filterStatus 123");
+    console.log(this.filterStatus, 'this.filterStatus 123');
 
     this.callFilter(false);
   }
 
-
-  
 
   addFiltersDate(dateFilter) {
     this.filterDate = [];
@@ -317,15 +314,15 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = { begin: beginDate, end: endDate };
-    console.log(this.filterDate, "this.filterDate 123");
+    this.selectedDateRange = {begin: beginDate, end: endDate};
+    console.log(this.filterDate, 'this.filterDate 123');
     this.callFilter(false);
   }
 
- 
+
   removeDate(item) {
-    console.log(this.filterDate, "this.filterDate 123 r");
-    this.selectedDateFilter = "dateFilter"
+    console.log(this.filterDate, 'this.filterDate 123 r');
+    this.selectedDateFilter = 'dateFilter';
     this.filterDate.splice(item, 1);
     this.lastFilterDataId = 0;
     this.callFilter(false);
@@ -333,11 +330,13 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
   remove(item) {
     if (this.filterStatus[item].name == this.selectedStatusFilter.name) {
-      this.selectedStatusFilter = "statusFilter";
+      this.selectedStatusFilter = 'statusFilter';
     }
 
     this.filterStatus.splice(item, 1);
-    this.filterDataArr = this.filterDataArr.filter((x) => { x.status != item.value })
+    this.filterDataArr = this.filterDataArr.filter((x) => {
+      x.status != item.value;
+    });
     this.lastFilterDataId = 0;
     this.callFilter(false);
 
@@ -347,17 +346,17 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.dataCount = 0;
     if (this.filterStatus && this.filterStatus.length > 0) {
       this.statusIdList = [];
-      this.dataSource.data = [{}, {}, {}]
+      this.dataSource.data = [{}, {}, {}];
       this.isLoading = true;
       this.filterStatus.forEach(singleFilter => {
         this.statusIdList.push(singleFilter.value);
-        console.log(this.statusIdList, "this.statusIdList 1233");
+        console.log(this.statusIdList, 'this.statusIdList 1233');
       });
     } else {
       this.statusIdList = [];
     }
     // this.statusIdList = (this.sendData == undefined) ? [] : this.sendData;
-    console.log(this.lastFilterDataId, this.statusIdLength < this.statusIdList.length, "aaaa");
+    console.log(this.lastFilterDataId, this.statusIdLength < this.statusIdList.length, 'aaaa');
     const obj = {
       advisorId: this.advisorId,
       limit: 10,
@@ -373,7 +372,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     } else {
       this.subService.filterSubscription(obj).subscribe(
         (data) => {
-          this.filterSubscriptionRes(data, scrollLoader)
+          this.filterSubscriptionRes(data, scrollLoader);
         }
       );
     }
@@ -387,12 +386,11 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       this.noData = 'No Data Found';
       if (!scrollLoader) {
         this.dataSource.data = [];
-      }
-      else {
+      } else {
         this.dataSource.data = this.filterDataArr;
       }
     } else {
-      console.log(this.statusIdList.length, this.statusIdLength < this.statusIdList.length, this.statusIdLength, "this.statusIdList.length123");
+      console.log(this.statusIdList.length, this.statusIdLength < this.statusIdList.length, this.statusIdLength, 'this.statusIdList.length123');
       // if(this.statusIdLength < this.statusIdList.length || this.statusIdList.length <= 0){
       //   this.statusIdLength = this.statusIdList.length;
       //   this.lastFilterDataId = 0;
@@ -400,13 +398,12 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
       this.lastFilterDataId = data[data.length - 1].id;
       // }
-      console.log(this.lastFilterDataId, "this.lastFilterDataId");
+      console.log(this.lastFilterDataId, 'this.lastFilterDataId');
       if (this.filterDataArr.length <= 0) {
         this.filterDataArr = data;
-      }
-      else {
+      } else {
         this.filterDataArr = this.filterDataArr.concat(data);
-        console.log(this.filterDataArr, "this.filterDataArr 123");
+        console.log(this.filterDataArr, 'this.filterDataArr 123');
       }
       this.scrollCallData = true;
 
@@ -420,7 +417,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
     if (data == undefined) {
       this.dataSource.data = [];
-      this.noData = "No Data Found";
+      this.noData = 'No Data Found';
     } else {
       console.log(data);
       data.forEach(singleData => {
@@ -434,18 +431,17 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
   // @Output() valueChange = new EventEmitter();
   deleteModal(data) {
-    console.log(data, "data document");
-    
+    console.log(data, 'data document');
+
     let list = [];
-    if(data == null){
+    if (data == null) {
       this.dataSource.filteredData.forEach(singleElement => {
         if (singleElement.selected) {
-          list.push(singleElement.documentRepositoryId);
+          list.push(singleElement.id);
         }
       });
-    }
-    else{
-      list =[data.documentRepositoryId];
+    } else {
+      list = [data.id];
     }
     const dialogData = {
       data: 'DOCUMENT',
@@ -455,7 +451,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.subService.deleteSettingsDocument(list).subscribe(
+        this.subService.deleteClientDocuments(list).subscribe(
           data => {
             this.eventService.openSnackBar('document is deleted', 'dismiss');
             // this.valueChange.emit('close');
@@ -478,19 +474,18 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result.length > 0){
-        const tempList = []
+      if (result.length > 0) {
+        const tempList = [];
         this.dataSource.data.forEach(singleElement => {
           if (!singleElement.selected && result.length > 1) {
             tempList.push(singleElement);
-          }
-          else if (result[0] !=  singleElement.documentRepositoryId){
+          } else if (result[0] != singleElement.documentRepositoryId) {
             tempList.push(singleElement);
           }
         });
         this.dataSource.data = tempList;
       }
-      console.log(result,this.dataSource.data,"delete result");
+      console.log(result, this.dataSource.data, 'delete result');
     });
 
   }
