@@ -104,11 +104,10 @@ export class InvoicesComponent implements OnInit {
 
   }
 
-  changeSelect(data) {
+  changeSelect() {
     this.dataCount = 0;
     if (this.dataSource != undefined) {
       this.dataSource.filteredData.forEach(item => {
-        console.log('item item ', item);
         if (item.selected) {
           this.dataCount++;
         }
