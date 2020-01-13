@@ -78,6 +78,7 @@
             <mat-form-field class="width40 serachbox">
                 <div class="form-group searchBoxHeader">
                     <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control" matInput type="text">
+                    <i class="material-icons searchIcon"> search </i>
                     <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
                         <!-- <mat-option>
                 <p>Start typing to search clients,leads otr team members</p>
