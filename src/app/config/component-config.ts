@@ -279,6 +279,8 @@ export const appConfig = {
   DELETE_SUB_SETTING_BILLER_PROFILE: 'subscription/setting/billerprofile/delete',
   GET_IMAGE_UPLOAD: 'document/account/document/all-file/file/get',
   DELETE_SETTING_DOCUMENT: 'subscription/setting/document/delete',
+  DELETE_CLIENT_DOCUMENT: 'subscription/multiple/subscription/document/delete',
+  DELETE_QUOTATIONS: 'subscription/multiple/quotation/document/delete',
   DELETE_INVOICE: 'subscription/invoice/delete',
   DOCUMENT_ESIGN_REQUEST: 'subscription/invoice/esignDocumentSend',
   GET_QUOTATION_SERVICE_DATA: 'subscription/quotation/data/get',

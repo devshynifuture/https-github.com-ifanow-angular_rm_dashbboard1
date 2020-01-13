@@ -1,15 +1,15 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
 
 
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
-import { SubscriptionService } from '../../../subscription.service';
-import { ConsentTandCComponent } from '../consent-tand-c/consent-tand-c.component';
-import { UtilService } from '../../../../../../../services/util.service';
-import { AuthService } from '../../../../../../../auth-service/authService';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
+import {SubscriptionService} from '../../../subscription.service';
+import {ConsentTandCComponent} from '../consent-tand-c/consent-tand-c.component';
+import {UtilService} from '../../../../../../../services/util.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
 
 export interface PeriodicElement {
   document: string;
@@ -114,7 +114,7 @@ export class QuotationsComponent implements OnInit {
     this.dataCount = 0;
     if (this.dataSource != undefined) {
       this.dataSource.filteredData.forEach(item => {
-        console.log('item item ', item);
+        // console.log('item item ', item);
         if (item.selected) {
           this.dataCount++;
         }
