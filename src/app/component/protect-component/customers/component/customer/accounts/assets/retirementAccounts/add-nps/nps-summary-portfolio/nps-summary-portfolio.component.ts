@@ -85,8 +85,8 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     console.log('familyList', this.familyList)
   }
 
-  Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' })
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired:flag})
   }
   showLess(value) {
     if (value == true) {
@@ -259,10 +259,10 @@ export class NpsSummaryPortfolioComponent implements OnInit {
   }
   addNPSRes(data) {
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data ,refreshRequired:true})
   }
   editNPSRes(data) {
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:true })
   }
 }

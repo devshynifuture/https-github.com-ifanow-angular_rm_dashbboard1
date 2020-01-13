@@ -235,8 +235,8 @@ export class NpsSchemeHoldingComponent implements OnInit {
   getFormControl(): any {
     return this.schemeHoldingsNPS.controls;
   }
-  Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' })
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })
   }
   saveSchemeHolding() {
     console.log(this.schemeHoldingsNPS.get('holdingList').invalid)
@@ -278,10 +278,10 @@ export class NpsSchemeHoldingComponent implements OnInit {
   }
   addNPSRes(data){
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data ,refreshRequired:true })
   }
   editNPSRes(data){
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data ,refreshRequired:true })
   }
 }

@@ -100,7 +100,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   changeSelect() {
     this.dataCount = 0;
     this.dataSource.filteredData.forEach(item => {
-      console.log('item item ', item);
+      // console.log('item item ', item);
       if (item.selected) {
         this.dataCount++;
       }

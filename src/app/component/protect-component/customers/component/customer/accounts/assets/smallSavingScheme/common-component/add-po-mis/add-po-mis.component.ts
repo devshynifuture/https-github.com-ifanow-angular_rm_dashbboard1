@@ -51,9 +51,9 @@ export class AddPoMisComponent implements OnInit {
 
   }
 
-  close() {
+  close(flag) {
     // let data=this._inputData.loanTypeId;
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
   }
 
   display(value) {
@@ -168,7 +168,7 @@ export class AddPoMisComponent implements OnInit {
     console.log(data);
     if (data) {
       console.log(data);
-      this.subInjectService.changeNewRightSliderState({ state: 'close' });
+      this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:true });
       this.eventService.openSnackBar('Pomis added successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
@@ -180,7 +180,7 @@ export class AddPoMisComponent implements OnInit {
     console.log(data);
     if (data) {
       console.log(data);
-      this.subInjectService.changeNewRightSliderState({ state: 'close' });
+      this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:true });
       this.eventService.openSnackBar('Pomis edited successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');

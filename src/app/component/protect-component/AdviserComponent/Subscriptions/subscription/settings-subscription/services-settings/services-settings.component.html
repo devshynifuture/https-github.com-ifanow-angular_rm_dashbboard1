@@ -19,15 +19,15 @@
             <mat-card class="example-card bg-grey lter p-0 b-a ">
                 <div class="bar">
                     <mat-card-header class="overflow-hidden">
-                        <div class="wrapper-20 height120">
+                        <div class="wrapper-20 height130">
                             <mat-card-title class="mb-10 l-26 text-break text-lighter relClass f-24">
                                 <div class="bar" [ngClass]="{'height23': isLoading}">
                                     {{singleService.serviceName}} </div>
                             </mat-card-title>
 
                             <mat-card-subtitle class="pt-4 pb-12 relClass">
-                                <div class="bar" [ngClass]="{'height23': isLoading}"> {{singleService.serviceCode}}
-                                </div>
+                                {{singleService.serviceCode}}
+
                                 <p class="m-0 text-sl" matTooltip="{{singleService.description}}" aria-label="Button that displays a tooltip when focused or hovered over">
                                     {{singleService.description}}</p>
                             </mat-card-subtitle>

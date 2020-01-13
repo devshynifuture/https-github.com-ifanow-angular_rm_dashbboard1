@@ -305,9 +305,17 @@ export class SubscriptionService {
   }
 
   getDocumentData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId)
-      .set('flag', data.flag).set('limit', data.limit).set('offset', data.offset).set('dateType', data.dateType)
-      .set('fromDate', data.fromDate).set('toDate', data.toDate).set('statusIdList', data.statusIdList);
+    let httpParams = new HttpParams().set('advisorId', data.advisorId)
+      .set('flag', data.flag).set('limit', data.limit).set('offset', data.offset).set('dateType', data.dateType);
+    if (data.fromDate) {
+      httpParams = httpParams.set('fromDate', data.fromDate).set('toDate', data.toDate);
+    }
+    if (data.statusIdList) {
+      httpParams = httpParams.set('statusIdList', data.statusIdList);
+    }
+    if (data.clientId) {
+      httpParams = httpParams.set('clientId', data.clientId);
+    }
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_GET, httpParams);
   }
 
@@ -437,10 +445,12 @@ export class SubscriptionService {
     // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('type', data.type);
     return this.http.post(apiConfig.MAIN_URL + appConfig.EMAIL_DOCUMENT, data);
   }
+
   getQuotationServiceData(data) {
     const httpParams = new HttpParams().set('documentRepositoryId', data.documentRepositoryId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_QUOTATION_SERVICE_DATA, httpParams);
   }
+
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
   }

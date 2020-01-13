@@ -146,14 +146,14 @@ export class AddPoSavingComponent implements OnInit {
   }
 
   addPOSavingResponse(data) {
-    this.close();
+    this.close(true);
     console.log(data);
     (this.editApi) ? this.eventService.openSnackBar('PO_SAVING is edited', 'dismiss') : this.eventService.openSnackBar('PO_SAVING is edited', 'added');
 
   }
 
-  close() {
+  close(flag) {
     this.isOptionalField = true;
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({state: 'close',refreshRequired:flag});
   }
 }

@@ -1,35 +1,18 @@
-<button [class.active]="options.active"
-        [class.fullWidth]="options.fullWidth"
-        [class.mat-flat-button]="options.flat"
-        [class.mat-raised-button]="options.raised"
-        [class.mat-stroked-button]="options.stroked"
-        [color]="options.buttonColor"
-        [disabled]="options.active || options.disabled"
-        [ngClass]="options.customClass"
-        [type]="options.type"
-        mat-button>
+<button class="boxShadowNone" [class.active]="options.active" [class.fullWidth]="options.fullWidth" [class.mat-flat-button]="options.flat" [class.mat-raised-button]="options.raised" [class.mat-stroked-button]="options.stroked" [color]="options.buttonColor"
+    [disabled]="options.active || options.disabled" [ngClass]="options.customClass" [type]="options.type" mat-button>
 
-  <ng-container
-    *ngIf="options.buttonIcon">
-    <mat-icon
-      [class.is-mat-icon]="!options.buttonIcon.fontSet"
-      [color]="options.buttonIcon.color"
-      [fontIcon]="options.buttonIcon.fontIcon"
-      [fontSet]="options.buttonIcon.fontSet"
-      [inline]="options.buttonIcon.inline"
-      [ngClass]="options.buttonIcon.customClass"
+  <ng-container *ngIf="options.buttonIcon">
+    <mat-icon [class.is-mat-icon]="!options.buttonIcon.fontSet" [color]="options.buttonIcon.color"
+      [fontIcon]="options.buttonIcon.fontIcon" [fontSet]="options.buttonIcon.fontSet"
+      [inline]="options.buttonIcon.inline" [ngClass]="options.buttonIcon.customClass"
       [svgIcon]="options.buttonIcon.svgIcon">
       {{ options.buttonIcon.fontSet ? '' : options.buttonIcon.fontIcon }}
     </mat-icon>
   </ng-container>
 
-  <span>{{ options.text }}</span>
+  <span class="textZindex">{{ options.text }}</span>
 
-  <mat-progress-bar
-    *ngIf="options.active && !options.disabled"
-    [color]="options.barColor"
-    [mode]="options.mode"
-    [value]="options.value"
-    class="bar">
+  <mat-progress-bar *ngIf="options.active && !options.disabled" [color]="options.barColor" [mode]="options.mode"
+    [value]="options.value" class="bar">
   </mat-progress-bar>
 </button>

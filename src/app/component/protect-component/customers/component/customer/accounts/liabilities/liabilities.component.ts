@@ -148,6 +148,9 @@ export class LiabilitiesComponent implements OnInit {
             filterData.push(element);
           }
         });
+        this.dataSource = new MatTableDataSource(filterData);
+        this.dataSource.sort = this.sort;
+
       }
       if (filterData.length == 0) {
         this.noData = "No Data Found";

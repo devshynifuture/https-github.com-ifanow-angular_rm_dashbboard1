@@ -7,6 +7,7 @@ import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-bank-accounts',
@@ -32,7 +33,7 @@ export class BankAccountsComponent implements OnInit {
   advisorId: any;
   clientId: any;
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService) { }
+  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService,public eventService:EventService) { }
 
   @Input()
   set data(data) {
@@ -61,8 +62,8 @@ export class BankAccountsComponent implements OnInit {
       this.showHide = true;
     }
   }
-  Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' })
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -141,9 +142,13 @@ export class BankAccountsComponent implements OnInit {
   }
   addBankAccountsRes(data) {
     console.log('addrecuringDepositRes', data)
-    this.subInjectService.changeNewRightSliderState({flag:'addedbankAc', state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedbankAc', state: 'close', data,refreshRequired:true })
+    this.eventService.openSnackBar('Bank account added successfully', 'OK');
+
   }
   editBankAcountsRes(data) {
-    this.subInjectService.changeNewRightSliderState({flag:'addedbankAc', state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedbankAc', state: 'close', data,refreshRequired:true })
+    this.eventService.openSnackBar('Bank account edited successfully', 'OK');
+
   }
 }
