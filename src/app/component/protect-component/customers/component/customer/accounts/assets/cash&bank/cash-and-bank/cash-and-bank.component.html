@@ -55,7 +55,8 @@
                 <ng-container matColumnDef="type">
                     <th mat-sort-header="accountType" *matHeaderCellDef class="br" mat-header-cell> Account type</th>
                     <td *matCellDef="let element" class="br" mat-cell>
-                        <div class="bar"> {{(element.accountType == 1) ? 'Current' : 'Savings'}} </div>
+                        <div class="bar">
+                            {{isLoading? ' ' : (element.accountType == 1) ? 'Current' : 'Savings'}} </div>
                     </td>
                     <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
                 </ng-container>
