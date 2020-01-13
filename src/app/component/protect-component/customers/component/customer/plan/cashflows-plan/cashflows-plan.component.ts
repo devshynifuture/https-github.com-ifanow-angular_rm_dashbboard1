@@ -20,7 +20,7 @@ export class CashflowsPlanComponent implements OnInit {
   }
 
   cashFlow(id) {
-    let chart1 = new Highcharts.Chart('surplus', {
+    const chart1 = new Highcharts.Chart('surplus', {
       chart: {
         type: 'bar'
       },

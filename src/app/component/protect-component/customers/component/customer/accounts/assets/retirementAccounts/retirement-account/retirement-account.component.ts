@@ -1,24 +1,24 @@
-import {AddEPSComponent} from './../add-eps/add-eps.component';
-import {AddSuperannuationComponent} from './../add-superannuation/add-superannuation.component';
-import {AddGratuityComponent} from './../add-gratuity/add-gratuity.component';
-import {NpsSummaryPortfolioComponent} from './../add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
-import {AddEPFComponent} from './../add-epf/add-epf.component';
-import {Component, ElementRef, OnInit, ViewChild, ViewChildren} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from '../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {MatTableDataSource} from '@angular/material/table';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort} from '@angular/material';
-import {NpsSchemeHoldingComponent} from '../add-nps/nps-scheme-holding/nps-scheme-holding.component';
-import {DetailedViewEPFComponent} from '../add-epf/detailed-view-epf/detailed-view-epf.component';
-import {DetailedViewEPSComponent} from '../add-eps/detailed-view-eps/detailed-view-eps.component';
-import {DetailedViewGratuityComponent} from '../add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
-import {DetaildedViewSuperannuationComponent} from '../add-superannuation/detailded-view-superannuation/detailded-view-superannuation.component';
-import {FormatNumberDirective} from 'src/app/format-number.directive';
-import {ExcelService} from '../../../../excel.service';
+import { AddEPSComponent } from './../add-eps/add-eps.component';
+import { AddSuperannuationComponent } from './../add-superannuation/add-superannuation.component';
+import { AddGratuityComponent } from './../add-gratuity/add-gratuity.component';
+import { NpsSummaryPortfolioComponent } from './../add-nps/nps-summary-portfolio/nps-summary-portfolio.component';
+import { AddEPFComponent } from './../add-epf/add-epf.component';
+import { Component, ElementRef, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatTableDataSource } from '@angular/material/table';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort } from '@angular/material';
+import { NpsSchemeHoldingComponent } from '../add-nps/nps-scheme-holding/nps-scheme-holding.component';
+import { DetailedViewEPFComponent } from '../add-epf/detailed-view-epf/detailed-view-epf.component';
+import { DetailedViewEPSComponent } from '../add-eps/detailed-view-eps/detailed-view-eps.component';
+import { DetailedViewGratuityComponent } from '../add-gratuity/detailed-view-gratuity/detailed-view-gratuity.component';
+import { DetaildedViewSuperannuationComponent } from '../add-superannuation/detailded-view-superannuation/detailded-view-superannuation.component';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../../excel.service';
 
 
 @Component({

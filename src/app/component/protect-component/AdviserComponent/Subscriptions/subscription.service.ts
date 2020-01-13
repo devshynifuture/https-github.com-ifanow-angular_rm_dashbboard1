@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { HttpService } from 'src/app/http-service/http-service';
-import { apiConfig } from 'src/app/config/main-config';
-import { appConfig } from 'src/app/config/component-config';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpService} from 'src/app/http-service/http-service';
+import {apiConfig} from 'src/app/config/main-config';
+import {appConfig} from 'src/app/config/component-config';
 
 // import {THIS_EXPR} from '@angular/compiler/src/output/output_ast';
 
@@ -351,6 +351,14 @@ export class SubscriptionService {
 
   deleteService(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SERVICE, data);
+  }
+
+  deleteQuotations(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_QUOTATIONS, data);
+  }
+
+  deleteClientDocuments(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_CLIENT_DOCUMENT, data);
   }
 
   deleteSettingsDocument(data) {

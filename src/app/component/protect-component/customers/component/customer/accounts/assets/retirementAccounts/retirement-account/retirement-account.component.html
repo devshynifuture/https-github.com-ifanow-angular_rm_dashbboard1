@@ -49,7 +49,7 @@
             </div>
         </div>
 
-        <div class="example-container col-md-12 p-0 mt-8 real-estate" id="epf" #EPF #epf>
+        <div class="example-container col-md-12   p-0 mt-8 real-estate" id="epf" #EPF #epf>
             <table *ngIf="dataEPFList.filteredData.length > 0" matSort #epfListTable="matSort" mat-table [dataSource]="dataEPFList" matSort id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="no">
@@ -70,8 +70,8 @@
                     <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-10 text-right">
                         Current value
                     </th>
-                    <td mat-cell *matCellDef="let element" class="br t-10 text-right" appFormatNumber>
-                        <div class="bar"> {{ element.currentValue }} </div>
+                    <td mat-cell *matCellDef="let element" class="br t-10 text-right">
+                        <div class="bar" appFormatNumber> {{ element.currentValue }} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 f-600 p-8 text-right" appFormatNumber [value]="sumOfcurrentValue">
                         <div class="bar"> {{ sumOfcurrentValue || '-'}} </div>
@@ -81,22 +81,22 @@
                     <th mat-sort-header="employeesMonthlyContribution" mat-header-cell *matHeaderCellDef class="br text-right">
                         Employee’s contribution
                     </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
-                        <div class="bar"> {{ element.employeesMonthlyContribution }} </div>
+                    <td mat-cell *matCellDef="let element" class="br text-right">
+                        <div class="bar" appFormatNumber> {{ element.employeesMonthlyContribution }} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20  f-600 p-8 text-right" appFormatNumber [value]="sumOfemployeesMonthlyContribution">
-                        <div class="bar"> {{ sumOfemployeesMonthlyContribution || '-'}} </div>
+                        <div class="bar"> {{ sumOfemployeesMonthlyContribution || ' '}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="empc">
                     <th mat-sort-header="employersMonthlyContribution" mat-header-cell *matHeaderCellDef class="br text-right">
                         Employer’s contribution
                     </th>
-                    <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
-                        <div class="bar"> {{ element.employersMonthlyContribution }} </div>
+                    <td mat-cell *matCellDef="let element" class="br text-right">
+                        <div class="bar" appFormatNumber> {{ element.employersMonthlyContribution }} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 f-600 p-8 text-right" appFormatNumber [value]="sumOfemployersMonthlyContribution">
-                        <div class="bar"> {{ sumOfemployersMonthlyContribution || '-'}} </div>
+                        <div class="bar"> {{ sumOfemployersMonthlyContribution || ' '}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="rate">
@@ -112,8 +112,8 @@
                     <th mat-sort-header="currentEpfBalance" mat-header-cell *matHeaderCellDef class="br t-8 text-right">
                         Balance mentioned
                     </th>
-                    <td mat-cell *matCellDef="let element" class="br t-8 text-right" appFormatNumber>
-                        <div class="bar"> {{ element.currentEpfBalance }} </div>
+                    <td mat-cell *matCellDef="let element" class="br t-8 text-right">
+                        <div class="bar" appFormatNumber> {{ element.currentEpfBalance }} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br t-20 f-600 p-8 text-right" appFormatNumber [value]="sumOfcurrentEpfBalance">
                         <div class="bar"> {{ sumOfcurrentEpfBalance || ' '}} </div>
@@ -256,7 +256,7 @@
     </button>
     </mat-menu>
 </div>
-<div class="example-container mt-8 col-md-12 p-0 real-estate" #NPS #nps>
+<div class="example-container mt-8 col-md-12 p-0 ovreflow-hidden real-estate" #NPS #nps>
     <table *ngIf="dataNPSList.filteredData.length > 0" matSort #npsListTable="matSort" mat-table [dataSource]="dataNPSList" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
         <ng-container matColumnDef="no">
             <th *matHeaderCellDef class="br t-2" mat-header-cell mat-sort-header="no"> No</th>
@@ -275,8 +275,8 @@
         <ng-container matColumnDef="cvalue">
             <th mat-sort-header="currentValuation" mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br text-right t-12"> Current value
             </th>
-            <td mat-cell *matCellDef="let element" class="br text-right t-12" appFormatNumber>
-                <div class="bar"> {{element.currentValuation || ' '}} </div>
+            <td mat-cell *matCellDef="let element" class="br text-right t-12">
+                <div class="bar" appFormatNumber> {{element.currentValuation || ' '}} </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br t-12 p-8 f-600 text-right" appFormatNumber [value]="totalCurrentValue">
                 {{totalCurrentValue}}</td>
@@ -285,8 +285,8 @@
             <th mat-sort-header="contributionAmount" mat-header-cell *matHeaderCellDef class="br t-15 text-right">
                 Total contribution
             </th>
-            <td mat-cell *matCellDef="let element" class="br t-15 text-right" appFormatNumber>
-                <div class="bar"> {{element.contributionAmount}} </div>
+            <td mat-cell *matCellDef="let element" class="br t-15 text-right">
+                <div class="bar" appFormatNumber> {{element.contributionAmount}} </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br p-8 f-600  t-15 text-right" appFormatNumber [value]="totalContribution">
                 {{totalContribution}}</td>
@@ -485,8 +485,8 @@
                 <th *matHeaderCellDef class="br text-right t-12" mat-header-cell mat-sort-header="amountReceived">
                     Amount recieved
                 </th>
-                <td *matCellDef="let element" appFormatNumber class="br text-right t-12" mat-cell>
-                    <div class="bar"> {{element.amountReceived}} </div>
+                <td *matCellDef="let element" class="br text-right t-12" mat-cell>
+                    <div class="bar" appFormatNumber> {{element.amountReceived}} </div>
                 </td>
                 <td *matFooterCellDef [value]="sumOfAmountReceived" appFormatNumber class="br f-600 p-8 t-12 text-right" mat-footer-cell>
                     <div class="bar"> {{ sumOfAmountReceived || ' '}} </div>
@@ -591,8 +591,8 @@
                 <th *matHeaderCellDef class="br text-right t-12" mat-header-cell mat-sort-header="annualEmployerContribution">
                     Annual employer...
                 </th>
-                <td *matCellDef="let element" appFormatNumber class="br text-right t-12" mat-cell>
-                    <div class="bar"> {{element.annualEmployerContribution}} </div>
+                <td *matCellDef="let element" class="br text-right t-12" mat-cell>
+                    <div class="bar" appFormatNumber> {{element.annualEmployerContribution}} </div>
                 </td>
                 <td *matFooterCellDef [value]="sumOfAnnualEmployerContribution" appFormatNumber class="br t-12 f-600 p-8 text-right" mat-footer-cell>
                     <div class="bar"> {{sumOfAnnualEmployerContribution || ' '}} </div>
@@ -602,8 +602,8 @@
                 <th *matHeaderCellDef class="br text-right t-12" mat-header-cell mat-sort-header="annualEmployeeContribution">
                     Annual employee...
                 </th>
-                <td *matCellDef="let element" appFormatNumber class="br text-right t-12" mat-cell>
-                    <div class="bar"> {{element.annualEmployeeContribution}} </div>
+                <td *matCellDef="let element" class="br text-right t-12" mat-cell>
+                    <div class="bar" appFormatNumber> {{element.annualEmployeeContribution}} </div>
                 </td>
                 <td *matFooterCellDef [value]="sumOfAnnualEmployeeContribution" appFormatNumber class="br t-12 f-600 p-8 text-right" mat-footer-cell>
                     {{sumOfAnnualEmployeeContribution || ' '}}</td>
@@ -620,8 +620,8 @@
             <ng-container matColumnDef="grate">
                 <th *matHeaderCellDef class="br text-right t-12" mat-header-cell mat-sort-header="growthRateEmployerContribution"> Growth rate employer...
                 </th>
-                <td *matCellDef="let element" appFormatNumber class="br text-right t-12" mat-cell>
-                    <div class="bar"> {{element.growthRateEmployerContribution}} </div>
+                <td *matCellDef="let element" class="br text-right t-12" mat-cell>
+                    <div class="bar" appFormatNumber> {{element.growthRateEmployerContribution}} </div>
                 </td>
                 <td *matFooterCellDef mat-footer-cell></td>
             </ng-container>
@@ -731,8 +731,8 @@
                 <th *matHeaderCellDef class="br text-right t-12" mat-header-cell mat-sort-header="notionalValue">
                     Notional value
                 </th>
-                <td *matCellDef="let element" appFormatNumber class="br text-right t-12" mat-cell>
-                    <div class="bar"> {{element.notionalValue || ' '}} </div>
+                <td *matCellDef="let element" class="br text-right t-12" mat-cell>
+                    <div class="bar" appFormatNumber> {{element.notionalValue || ' '}} </div>
                 </td>
                 <td *matFooterCellDef [value]="totalNotionalValue" appFormatNumber class="br f-600 p-8 t-12 text-right" mat-footer-cell>
                     <div class="bar"> {{totalNotionalValue}} </div>
@@ -751,8 +751,8 @@
                 <th *matHeaderCellDef class="br text-right t-18" mat-header-cell mat-sort-header="pensionAmount">
                     Pension amount
                 </th>
-                <td *matCellDef="let element" appFormatNumber class="br text-right t-18" mat-cell>
-                    <div class="bar"> {{element.pensionAmount || ' '}} </div>
+                <td *matCellDef="let element" class="br text-right t-18" mat-cell>
+                    <div class="bar" appFormatNumber> {{element.pensionAmount || ' '}} </div>
                 </td>
                 <td *matFooterCellDef [value]="totalPensionAmount" appFormatNumber class="br t-18 f-600 p-8 text-right" mat-footer-cell>
                     <div class="bar"> {{totalPensionAmount}} </div>

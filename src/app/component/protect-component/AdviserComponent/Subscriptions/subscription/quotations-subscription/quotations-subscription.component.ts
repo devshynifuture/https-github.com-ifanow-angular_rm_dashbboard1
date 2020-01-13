@@ -39,12 +39,12 @@ export interface PeriodicElement {
     // },
     // { provide: MAT_DATE_LOCALE, useValue: 'en' },
     [DatePipe],
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 })
 export class QuotationsSubscriptionComponent implements OnInit {
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  displayedColumns: string[] = ['checkbox','name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  displayedColumns: string[] = ['checkbox', 'name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
   advisorId;
   maxDate = new Date();
   noData: string;
@@ -74,20 +74,20 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
 
   chips = [
-    { name: 'LIVE', value: 1 },
-    { name: 'PAID', value: 2 },
-    { name: 'OVERDUE', value: 3 }
+    {name: 'LIVE', value: 1},
+    {name: 'PAID', value: 2},
+    {name: 'OVERDUE', value: 3}
   ];
   dateChips = [
-    { name: 'Created date', value: 1 },
-    { name: 'Sent date', value: 2 },
-    { name: 'Client consent', value: 3 }
+    {name: 'Created date', value: 1},
+    {name: 'Sent date', value: 2},
+    {name: 'Client consent', value: 3}
   ];
   dataCount: number;
 
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-    public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
+              public dialog: MatDialog, private subService: SubscriptionService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -96,6 +96,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     this.getQuotationsData(false);
     this.dataCount = 0;
   }
+
   changeSelect() {
     this.dataCount = 0;
     this.dataSource.filteredData.forEach(item => {
@@ -105,6 +106,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
       }
     });
   }
+
   selectAll(event) {
     this.dataCount = 0;
     if (this.dataSource != undefined) {
@@ -116,6 +118,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
       });
     }
   }
+
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     if (this.dataSource != undefined) {
@@ -128,6 +131,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     this.isAllSelected() ?
       this.selectAll({checked: false}) : this.selectAll({checked: true});
   }
+
   scrollCall(scrollLoader) {
     const uisubs = document.getElementById('ui-subs');
     const wrapper = document.getElementById('wrapper');
@@ -167,7 +171,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate)
-    this.selectedDateRange = { begin: selectedDateRange.begin, end: selectedDateRange.end };
+    this.selectedDateRange = {begin: selectedDateRange.begin, end: selectedDateRange.end};
     this.getQuotationsData(false)
   }
 
@@ -217,16 +221,15 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   deleteModal(data) {
-    let list = [];
-    if(data == null){
+    const list = [];
+    if (data == null) {
       this.dataSource.filteredData.forEach(singleElement => {
         if (singleElement.selected) {
-          list.push(singleElement.documentRepositoryId);
+          list.push(singleElement.id);
         }
       });
-    }
-    else{
-      [data.documentRepositoryId]
+    } else {
+      list.push(data.id);
     }
     const dialogData = {
       data: 'DOCUMENT',
@@ -236,7 +239,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.subService.deleteSettingsDocument(list).subscribe(
+        this.subService.deleteQuotations(list).subscribe(
           data => {
             this.eventService.openSnackBar('document is deleted', 'dismiss');
             // this.valueChange.emit('close');
@@ -259,7 +262,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result,this.dataSource.data,"delete result");
+      console.log(result, this.dataSource.data, "delete result");
       const tempList = []
       this.dataSource.data.forEach(singleElement => {
         if (!singleElement.selected) {
@@ -268,7 +271,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
       });
       this.dataSource.data = tempList;
 
-     
+
     });
 
   }
@@ -294,7 +297,6 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
 
-
   filterSubscriptionRes(data) {
     console.log('filterSubscriptionRes', data);
     this.dataSource = data;
@@ -314,7 +316,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
 
-    this.selectedDateRange = { begin: beginDate, end: endDate };
+    this.selectedDateRange = {begin: beginDate, end: endDate};
 
     this.getQuotationsData(false);
   }
@@ -330,8 +332,8 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     });
     dialogRef.afterClosed().subscribe(result => {
-      
-      
+
+
     });
   }
 
