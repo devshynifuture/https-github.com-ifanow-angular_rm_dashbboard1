@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, OnInit } from '@angular/core';
+import { EventService } from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
 
 @Component({
@@ -9,7 +9,7 @@ import * as Highcharts from 'highcharts';
 })
 export class SummaryComponent implements OnInit {
 
-  constructor(public eventService: EventService,) {
+  constructor(public eventService: EventService, ) {
   }
 
   ngOnInit() {
