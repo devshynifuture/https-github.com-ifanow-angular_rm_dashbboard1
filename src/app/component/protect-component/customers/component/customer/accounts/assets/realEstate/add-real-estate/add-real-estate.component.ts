@@ -131,8 +131,8 @@ export class AddRealEstateComponent implements OnInit {
       this.family = data.familyMembersList
     }
   }
-  close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag});
   }
   getFormControl() {
     return this.addrealEstateForm.controls;
@@ -444,7 +444,7 @@ export class AddRealEstateComponent implements OnInit {
     console.log(data);
     if (data) {
       console.log(data);
-      this.subInjectService.changeNewRightSliderState({ state: 'close' })
+      this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:true})
       this.eventService.openSnackBar('Real Estate added successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
