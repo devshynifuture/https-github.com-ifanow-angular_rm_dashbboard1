@@ -2,8 +2,7 @@
 
     <div class="row">
         <div class="col-md-5">
-            <img src="assets/images/svg/cash-flow-img.svg" class="c-p max100">
-
+            <div id="cashFlow"></div>
         </div>
 
         <div class="col-md-7">
@@ -28,40 +27,52 @@
                                     <!-- Position Column -->
                                     <ng-container matColumnDef="year">
                                         <th class="br-grey f-14" mat-header-cell *matHeaderCellDef> Year </th>
-                                        <td class="br-grey f-14" mat-cell *matCellDef="let element"> {{element.year}} <img src="assets/images/svg/plus-icon.svg" class="c-p ml-8"> </td>
+                                        <td class="br-grey f-14" mat-cell *matCellDef="let element"> {{element.year}}
+                                            <img src="assets/images/svg/plus-icon.svg" class="c-p ml-8"> </td>
                                     </ng-container>
 
                                     <!-- Name Column -->
                                     <ng-container matColumnDef="age">
-                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Age (H) </th>
-                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element"> {{element.age}} </td>
+                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Age (H)
+                                        </th>
+                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
+                                            {{element.age}} </td>
                                     </ng-container>
 
                                     <!-- Weight Column -->
                                     <ng-container matColumnDef="age2">
-                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Age (W) </th>
-                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element"> {{element.age2}} </td>
+                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Age (W)
+                                        </th>
+                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
+                                            {{element.age2}} </td>
                                     </ng-container>
 
                                     <!-- Symbol Column -->
                                     <ng-container matColumnDef="salary">
-                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Salary </th>
-                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element"> {{element.salary}} </td>
+                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Salary
+                                        </th>
+                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
+                                            {{element.salary}} </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="salary2">
-                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Salary 2 </th>
-                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element"> {{element.salary2}} </td>
+                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Salary 2
+                                        </th>
+                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
+                                            {{element.salary2}} </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="total">
-                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Total </th>
-                                        <td class="br-grey text-right f-14 f-bold" mat-cell *matCellDef="let element"> {{element.total}} </td>
+                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Total
+                                        </th>
+                                        <td class="br-grey text-right f-14 f-bold" mat-cell *matCellDef="let element">
+                                            {{element.total}} </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="view">
                                         <th mat-header-cell *matHeaderCellDef> </th>
-                                        <td class="c-p text-primary text-center f-14" mat-cell *matCellDef="let element"> {{element.view}} </td>
+                                        <td class="c-p text-primary text-center f-14" mat-cell
+                                            *matCellDef="let element"> {{element.view}} </td>
                                     </ng-container>
 
 
