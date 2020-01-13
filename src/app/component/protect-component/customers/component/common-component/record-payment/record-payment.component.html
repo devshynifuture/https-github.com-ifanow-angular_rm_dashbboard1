@@ -17,7 +17,7 @@
               This feild is required
             </mat-error>
             <mat-error *ngIf="(rPayment.get('amountReceived').errors?.max)" class="f-12 pt-4">
-                Should be less than {{this.balDue}}
+                Should be less than or equal to {{this.balDue}}
             </mat-error>
           </div>
           <div class="col-md-2 pl-0">
@@ -57,13 +57,16 @@
       </div>
       <div class="col-md-4">
         <div class="form-group mb-0">
-          <input #tdsRef [maxLength]="10" (keypress)="utils.keyPress($event)" appInputValueValidation class="form-control" formControlName="tds"
+          <input #tdsRef [maxLength]="10" (keypress)="utils.keyPress($event)" (keyup)="onChange()" appInputValueValidation class="form-control" formControlName="tds"
             type="text">
         </div>
         <div class="row">
           <div class="col-md-10 pr-0">
-            <mat-error class="f-12 pt-4" *ngIf="rPayment.get('tds').errors?.required && rPayment.get('tds').touched">
+            <mat-error class="f-12 pt-4" *ngIf="rPayment.get('tds').errors?.required && rPayment.get('tds').touched && showError==false">
               This feild is required
+            </mat-error>
+            <mat-error *ngIf="showError==true" class="f-12 pt-4">
+                Should be less than or equal to {{this.tdsAmt}}
             </mat-error>
           </div>
           <div class="col-md-2 pl-0">
