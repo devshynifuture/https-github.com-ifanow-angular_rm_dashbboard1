@@ -34,3 +34,7 @@
         box-shadow: none;
     }
 }
+
+::ng-deep .mat-progress-bar-buffer {
+    background-color: red !important;
+}
