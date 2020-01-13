@@ -141,7 +141,9 @@ export class RecordPaymentComponent implements OnInit {
     } else if (this.rPayment.get('gstTreatment').invalid) {
       this.rPayment.get('gstTreatment').markAsTouched();
       return
-    } else {
+    } else if(this.showError==true){
+      return false
+     }else {
       this.formObj = [{
         advisorId: this.advisorId,
         // advisorId: 12345,
