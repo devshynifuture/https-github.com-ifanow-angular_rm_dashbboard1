@@ -8,7 +8,6 @@ import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from '../../../../../../../auth-service/authService';
 import {UtilService} from 'src/app/services/util.service';
 import {MatTableDataSource} from '@angular/material/table';
-import * as _ from 'lodash';
 
 // import { element } from 'protractor';
 export interface PeriodicElement {
@@ -31,43 +30,46 @@ export interface PeriodicElement {
   styleUrls: ['./client-upper-subscription.component.scss']
 })
 export class ClientUpperSubscriptionComponent implements OnInit {
-  //data: any;
+  // data: any;
   isLoading = false;
-  clientData: any = [];
-  data: Array<any> = [{}, {}, {}];
-  sub = new MatTableDataSource(this.data);
+  // clientData: any = [];
+  // data: Array<any> = [{}, {}, {}];
+  // sub = new MatTableDataSource(this.data);
   noData: string;
-  planName: any;
-  subcr: any[];
-  newArray: any[];
+  // planName: any;
+  // subcr: any[];
+  // newArray: any[];
+  clientData;
+  advisorId;
+  subscriptionData: Array<any> = [{subscriptions: [{}, {}, {}], planName: ''}];
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
-
-  constructor(public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, public subscription: SubscriptionService) {
+  constructor(public subInjectService: SubscriptionInject, private eventService: EventService,
+              public dialog: MatDialog, public subscription: SubscriptionService) {
   }
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   ELEMENT_DATA;
-  //dataSource: any;
+  // dataSource: any;
 
 
   displayedColumns: string[] = ['service', 'amt', 'type', 'subs', 'status', 'date', 'bdate', 'ndate', 'mode', 'icons'];
 
   @Input() set upperData(data) {
 
-    console.log(data)
+    console.log(data);
     this.advisorId = AuthService.getAdvisorId();
-    this.clientSubscriptionData = data;
+    this.clientData = data;
     this.getSummaryDataClient();
-  };
-  clientSubscriptionData;
-  advisorId;
+  }
+
+
   ngOnInit() {
 
   }
 
   openPlanSlider(value, state, data) {
     if (this.isLoading) {
-      return
+      return;
     }
     if (data) {
       if (value == 'billerSettings' || value == 'changePayee' || value == null) {
@@ -79,7 +81,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         value = 'createSubVariable';
         data.subFlag = 'createSubVariable';
       }
-      data.clientId = this.clientSubscriptionData.id;
+      data.clientId = this.clientData.id;
       data.isCreateSub = false;
       data.isSaveBtn = false;
     }
@@ -107,20 +109,19 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     const obj = {
 
       advisorId: this.advisorId,
-      clientId: this.clientSubscriptionData.id,
+      clientId: this.clientData.id,
       flag: 4,
       dateType: 0,
-      limit: 10,
+      limit: -1,
       offset: 0,
       order: 0,
     };
-    this.sub.data = [{}, {}, {}];
-    this.subcr = [this.sub];
-    this.clientData = [{}];
+
+    this.subscriptionData = [{subscriptions: [{}, {}, {}], planName: ''}];
     this.subscription.getSubSummary(obj).subscribe(
       data => this.getSubSummaryRes(data), (error) => {
         this.eventService.showErrorMessage(error);
-        this.sub.data = [];
+        this.subscriptionData = [];
         this.isLoading = false;
       }
     );
@@ -151,47 +152,60 @@ export class ClientUpperSubscriptionComponent implements OnInit {
 
   getSubSummaryRes(data) {
     this.isLoading = false;
-    console.log(data, data[0].clientName, "hi client");
-    if (data == undefined) {
-      this.clientData.length == 0;
-      this.sub = undefined;
+    // console.log(data, data[0].clientName, 'hi client');
+    this.subscriptionData = [];
+    const planWiseMap = {};
 
+    if (data == undefined) {
     } else if (data.length > 0) {
 
-      for (let d of data) {
+      for (const d of data) {
         if (d.subscriptionPricing.feeTypeId == 1) {
-          d['feeTypeId'] = "FIXED"
+          d.serviceTypeName = 'FIXED';
+        } else {
+          d.serviceTypeName = 'VARIABLE';
         }
-        else {
-          d['feeTypeId'] = "VARIABLE"
+        let singlePlanWiseArray: Array<any> = planWiseMap[d.planName];
+        if (!singlePlanWiseArray) {
+          singlePlanWiseArray = [];
+          this.subscriptionData.push({planName: d.planName, subscriptions: singlePlanWiseArray});
+          planWiseMap[d.planName] = singlePlanWiseArray;
         }
-
+        singlePlanWiseArray.push(d);
       }
-      this.clientData = data;
-      this.subcr = []
-      this.newArray = []
-      this.subcr = _.map(_.groupBy(this.clientData, function (n) {
-        return n.planName
-      }));
-      this.subcr.forEach(element => {
-        element.forEach(n => {
-          element.plan = (n.planName);
-        });
-      });
-      console.log('**********', this.subcr)
-      this.sub = new MatTableDataSource(data);
+      // this.clientData = data;
 
-      this.sub.sort = this.sort;
-      console.log('getSummary response', this.sub)
+      /* this.subscriptionData = _.map(_.groupBy(data, (n) => {
+         return n.planName;
+       }));
+       this.subscriptionData.forEach(element => {
+         element.forEach(n => {
+           element.plan = (n.planName);
+         });
+       });*/
+
     } else {
-      this.clientData.length == 0;
-      this.sub = undefined;
-      this.isLoading = false;
     }
+    console.log('client Subscription planWiseMap **********', planWiseMap);
 
+    console.log('client Subscription getSubSummaryRes **********', this.subscriptionData);
 
   }
 
+  checkAndGenerateTableSource(dataArray) {
+    // console.log('checkAndGenerateTableSource dataArray : ', dataArray);
+    if (dataArray) {
+      if (dataArray instanceof MatTableDataSource) {
+        return dataArray;
+      } else {
+        const dataArraySource = new MatTableDataSource(dataArray);
+        dataArraySource.sort = this.sort;
+        return dataArray;
+      }
+    } else {
+      return null;
+    }
+  }
 
   deleteModal(value, subData) {
     const dialogData = {
