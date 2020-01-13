@@ -733,7 +733,7 @@ export class DocumentComponent implements OnInit {
     let obj = [];
     if (this.mappedData.length == 0) {
       const data = {
-        mappedType: 2,
+        mappedType: 0,
         mappingId: this.upperData.id,
         id: 0,
         documentRepositoryId: 0,
@@ -745,7 +745,7 @@ export class DocumentComponent implements OnInit {
     } else {
       this.mappedData.forEach(element => {
         const data = {
-          mappedType: 2,
+          mappedType: element.mappedType,
           mappingId: element.mappingId,
           id: element.id,
           documentRepositoryId: element.documentRepositoryId,
