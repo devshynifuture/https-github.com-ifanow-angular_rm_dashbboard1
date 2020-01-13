@@ -217,16 +217,16 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   deleteModal(data) {
-    let list = [];
+    this.list = [];
     if(data == null){
       this.dataSource.filteredData.forEach(singleElement => {
         if (singleElement.selected) {
-          list.push(singleElement.documentRepositoryId);
+          this.list.push(singleElement.documentRepositoryId);
         }
       });
     }
     else{
-      [data.documentRepositoryId]
+     this.list = [data.documentRepositoryId];
     }
     const dialogData = {
       data: 'DOCUMENT',
@@ -236,17 +236,18 @@ export class QuotationsSubscriptionComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.subService.deleteSettingsDocument(list).subscribe(
+        this.subService.deleteSettingsDocument(this.list).subscribe(
           data => {
             this.eventService.openSnackBar('document is deleted', 'dismiss');
             // this.valueChange.emit('close');
-            dialogRef.close();
+            dialogRef.close(this.list);
             // this.getRealEstate();
           },
           error => this.eventService.showErrorMessage(error)
         );
       },
       negativeMethod: () => {
+        this.list = []
         console.log('2222222222222222222222222222222222222');
       }
     };
@@ -260,17 +261,16 @@ export class QuotationsSubscriptionComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result,this.dataSource.data,"delete result");
-      const tempList = []
-      this.dataSource.data.forEach(singleElement => {
-        if (!singleElement.selected) {
-          tempList.push(singleElement);
-        }
-      });
-      this.dataSource.data = tempList;
-
-     
+      if(this.list.length > 0){
+        const tempList = []
+        this.dataSource.data.forEach(singleElement => {
+          if (!singleElement.selected) {
+            tempList.push(singleElement);
+          }
+        });
+        this.dataSource.data = tempList;
+      }
     });
-
   }
 
   showFilters(showFilter) {

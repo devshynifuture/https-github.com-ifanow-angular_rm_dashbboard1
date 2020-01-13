@@ -32,7 +32,7 @@ export class QuotationsComponent implements OnInit {
   noData: string;
   quotationData: any[];
 
-  constructor(public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog,
+  constructor(public subInjectService: SubscriptionInject, private subService: SubscriptionService, private eventService: EventService, public dialog: MatDialog,
     private subAService: SubscriptionService) {
     // this.subInjectService.closeRightSlider.subscribe(
     //   data => this.getQuotationDesignData(data)
@@ -168,35 +168,63 @@ export class QuotationsComponent implements OnInit {
     this.quotationDesignEmail = this.quotationDesign;
   }
 
-  deleteModal(value) {
+ list:any = [];
+
+  deleteModal(data) {
+    this.list = [];
+    if(data == null){
+      this.dataSource.filteredData.forEach(singleElement => {
+        if (singleElement.selected) {
+          this.list.push(singleElement.documentRepositoryId);
+        }
+      });
+    }
+    else{
+     this.list = [data.documentRepositoryId];
+    }
     const dialogData = {
-      data: value,
+      data: 'DOCUMENT',
       header: 'DELETE',
-      body: 'Are you sure you want to delete?',
+      body: 'Are you sure you want to delete the document?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        console.log('11111111111111111111111111111111111111111111');
+        this.subService.deleteSettingsDocument(this.list).subscribe(
+          data => {
+            this.eventService.openSnackBar('document is deleted', 'dismiss');
+            // this.valueChange.emit('close');
+            dialogRef.close(this.list);
+            // this.getRealEstate();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
       },
       negativeMethod: () => {
+        this.list = []
         console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
       autoFocus: false,
 
-
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
+      console.log(result,this.dataSource.data,"delete result");
+      if(this.list.length > 0){
+        const tempList = []
+        this.dataSource.data.forEach(singleElement => {
+          if (!singleElement.selected) {
+            tempList.push(singleElement);
+          }
+        });
+        this.dataSource.data = tempList;
+      }
     });
-
   }
 
   openSendEmail(element) {

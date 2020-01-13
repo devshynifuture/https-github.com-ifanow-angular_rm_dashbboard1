@@ -13,7 +13,7 @@
                         <button *ngIf="dataCount != 0" (click)="openSendEmail('')" mat-menu-item>Email
                             only
                         </button>
-                        <button (click)="deleteModal('QUOTATION')" *ngIf="dataCount != 0" class="b-t" mat-menu-item>Delete
+                        <button (click)="deleteModal(null)" *ngIf="dataCount != 0" class="b-t" mat-menu-item>Delete
                             Quotations
                         </button>
                     </mat-menu>
@@ -109,7 +109,7 @@
                             <mat-menu #menu="matMenu">
                                 <a (click)="Open('viewQuotation','open',element)" mat-menu-item>View & edit
                                     quotation</a>
-                                <a (click)="deleteModal('QUOTATION')" class="bt-1" mat-menu-item>Delete quotation</a>
+                                <a (click)="deleteModal(element)" class="bt-1" mat-menu-item>Delete quotation</a>
                             </mat-menu>
                         </td>
                     </ng-container>
