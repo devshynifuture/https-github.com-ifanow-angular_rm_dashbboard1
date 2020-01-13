@@ -10,7 +10,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {Router} from '@angular/router';
 import {escapeRegExp} from '@angular/compiler/src/util';
 import {HttpClient} from '@angular/common/http';
-import {tableHtml} from './document-preview'
+import {tableHtml} from './document-preview';
 
 @Component({
   selector: 'app-terms-agreement',
@@ -41,7 +41,7 @@ export class TermsAgreementComponent implements OnInit {
     );
   }
 
-  matTooltipOption: TooltipPosition[] = ['above']
+  matTooltipOption: TooltipPosition[] = ['above'];
   @Input() quotationDesignE;
   @Input() componentFlag: string;
   @Output() valueChange = new EventEmitter();
@@ -54,13 +54,13 @@ export class TermsAgreementComponent implements OnInit {
   set upperData(upperData) {
     this._upperData = upperData;
     console.log('Terms and agreemennt upperData: ', upperData);
-    this.getDataTerms(upperData)
+    this.getDataTerms(upperData);
     if (upperData && upperData.documentData) {
       // this.changeDisplay();
     }
     this.advisorId = AuthService.getAdvisorId();
     this.getPlanServiceData();
-  };
+  }
 
   get upperData() {
     return this._upperData;
@@ -104,21 +104,21 @@ export class TermsAgreementComponent implements OnInit {
     };
     this.subService.getSettingPlanServiceData(obj).subscribe(
       data => this.serviceData = data,
-      err => this.eventService.openSnackBar("Something went wrong", "dismiss")
-    )
+      err => this.eventService.openSnackBar('Something went wrong', 'dismiss')
+    );
   }
 
   copyName(data) {
-    console.log(data)
+    console.log(data);
     const text = data.currentTarget.childNodes[0].innerHTML;
-    let tag = this.render.createElement("input")
-    tag.value = text
+    const tag = this.render.createElement('input');
+    tag.value = text;
     document.body.appendChild(tag);
     tag.focus();
     tag.select();
     document.execCommand('copy');
     document.body.removeChild(tag);
-    this.eventService.openSnackBar("text copied", "dismiss")
+    this.eventService.openSnackBar('text copied', 'dismiss');
   }
 
   onSubmit() {
@@ -127,16 +127,23 @@ export class TermsAgreementComponent implements OnInit {
   }
 
   getDataTerms(data) {
-    this.dataTerms = data.documentData
+    this.dataTerms = data.documentData;
   }
 
   openDocumentPreview() {
-    let file = File
-    console.log(tableHtml)
+    const obj = {
+      documentRepositoryId: this._upperData.documentData.documentRepositoryId
+    };
+    this.subService.getQuotationServiceData(obj).subscribe(
+      data => console.log(data)
+    );
     this.serviceData.forEach(element => {
-      this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp("$(service_" + element.id + ")"), 'g'), element.serviceName);
-      this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp("$(client_name)"), 'g'), "Ronak Hindocha");
-      this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp("$(service_fee_" + element.id + ")"), 'g'), tableHtml);
+      this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp('$(service_' + element.id + ')'), 'g'),
+        element.serviceName);
+      this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp('$(client_name)'), 'g'),
+        'Ronak Hindocha');
+      this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp('$(service_fee_' + element.id + ')'), 'g'),
+        tableHtml);
     });
     this.route.navigate(['test'], {state: {...this.dataTerms}});
 
@@ -188,14 +195,14 @@ export class TermsAgreementComponent implements OnInit {
       name: data.name,
     };
     this.subService.updateDocumentData(obj).subscribe(
-      data => this.getResponseData(data)
+      responseData => this.getResponseData(responseData)
     );
   }
 
   getResponseData(data) {
     console.log(data);
     if (data == 1) {
-      this.eventService.openSnackBar("Document added successfully", "OK")
+      this.eventService.openSnackBar('Document added successfully', 'OK');
     }
     this.eventService.changeUpperSliderState({state: 'close'});
   }
