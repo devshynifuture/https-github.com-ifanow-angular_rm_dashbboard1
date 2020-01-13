@@ -55,7 +55,7 @@ export class PPFSchemeComponent implements OnInit {
 
     } else {
       this.noData = 'No scheme found';
-      //this.dataSource.data = []
+      this.dataSource.data = []
     }
   }
   deleteModal(value, data) {
