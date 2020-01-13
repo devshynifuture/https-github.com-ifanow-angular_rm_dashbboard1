@@ -38,7 +38,7 @@
       </div>
     </div>
   </div>
-  <div *ngFor="let sub of subscriptionData" class="pl-40 pr-40 pb-40 mt-12 col-md-12">
+  <div *ngFor="let sub of subscriptionData; let i = index" class="pl-40 pr-40 pb-40 mt-12 col-md-12">
     <!--    *ngIf="clientData.length > 0"-->
     <h4 class="pb-8 text-black">{{sub.planName}}</h4>
     <div class="overflow-hidden">
@@ -150,7 +150,7 @@
                 Payee</a>
               <a (click)="delete('cancelSubscription',element)" *ngIf="element.status!=1" class="bt-1"
                 mat-menu-item>Cancel subscription</a>
-              <a (click)="deleteModal('SUBSCRIPTION',element)" mat-menu-item>Delete
+              <a (click)="deleteModal('SUBSCRIPTION',element, sub.subscriptions, i)" mat-menu-item>Delete
                 subscription</a>
             </mat-menu>
           </td>

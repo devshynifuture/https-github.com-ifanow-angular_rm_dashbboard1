@@ -120,17 +120,17 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    if (this.dataSource != undefined) {
-      return this.dataCount === this.dataSource.filteredData.length;
-    }
-  }
+  // isAllSelected() {
+  //   if (this.dataSource != undefined) {
+  //     return this.dataCount === this.dataSource.filteredData.length;
+  //   }
+  // }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selectAll({checked: false}) : this.selectAll({checked: true});
-  }
+  // /** Selects all rows if they are not all selected; otherwise clear selection. */
+  // masterToggle() {
+  //   this.isAllSelected() ?
+  //     this.selectAll({checked: false}) : this.selectAll({checked: true});
+  // }
 
   scrollCall(scrollLoader) {
     const uisubs = document.getElementById('ui-subs');
@@ -221,15 +221,16 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   deleteModal(data) {
-    const list = [];
-    if (data == null) {
+    this.list = [];
+    if(data == null){
       this.dataSource.filteredData.forEach(singleElement => {
         if (singleElement.selected) {
-          list.push(singleElement.id);
+          this.list.push(singleElement.documentRepositoryId);
         }
       });
-    } else {
-      list.push(data.id);
+    }
+    else{
+     this.list = [data.documentRepositoryId];
     }
     const dialogData = {
       data: 'DOCUMENT',
@@ -239,17 +240,18 @@ export class QuotationsSubscriptionComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.subService.deleteClientDocuments(list).subscribe(
+        this.subService.deleteSettingsDocument(this.list).subscribe(
           data => {
             this.eventService.openSnackBar('document is deleted', 'dismiss');
             // this.valueChange.emit('close');
-            dialogRef.close();
+            dialogRef.close(this.list);
             // this.getRealEstate();
           },
           error => this.eventService.showErrorMessage(error)
         );
       },
       negativeMethod: () => {
+        this.list = []
         console.log('2222222222222222222222222222222222222');
       }
     };
@@ -262,18 +264,17 @@ export class QuotationsSubscriptionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result, this.dataSource.data, "delete result");
-      const tempList = []
-      this.dataSource.data.forEach(singleElement => {
-        if (!singleElement.selected) {
-          tempList.push(singleElement);
-        }
-      });
-      this.dataSource.data = tempList;
-
-
+      console.log(result,this.dataSource.data,"delete result");
+      if(this.list.length > 0){
+        const tempList = []
+        this.dataSource.data.forEach(singleElement => {
+          if (!singleElement.selected) {
+            tempList.push(singleElement);
+          }
+        });
+        this.dataSource.data = tempList;
+      }
     });
-
   }
 
   showFilters(showFilter) {

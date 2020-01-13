@@ -87,7 +87,6 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   changeSelect() {
     this.dataCount = 0;
     this.dataSource.filteredData.forEach(item => {
-      // console.log('item item ', item);
       if (item.selected) {
         this.dataCount++;
       }
@@ -106,18 +105,18 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     }
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    if (this.dataSource != undefined) {
-      return this.dataCount === this.dataSource.filteredData.length;
-    }
-  }
+  // /** Whether the number of selected elements matches the total number of rows. */
+  // isAllSelected() {
+  //   if (this.dataSource != undefined) {
+  //     return this.dataCount === this.dataSource.filteredData.length;
+  //   }
+  // }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selectAll({checked: false}) : this.selectAll({checked: true});
-  }
+  // /** Selects all rows if they are not all selected; otherwise clear selection. */
+  // masterToggle() {
+  //   this.isAllSelected() ?
+  //     this.selectAll({checked: false}) : this.selectAll({checked: true});
+  // }
 
   openEsignDocument(element) {
     const data = {
@@ -243,14 +242,14 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   getdocumentSubData(scrollLoader) {
     const obj = {
       advisorId: this.advisorId,
-      clientId: this.clientId,
+      // clientId: this.clientId,
       flag: 3,
       limit: -1,
       offset: 0,
       dateType: 0,
-      fromDate: '2019-01-01',
-      toDate: '2019-11-01',
-      statusIdList: '1,2',
+      // fromDate: '2019-01-01',
+      // toDate: '2019-11-01',
+      // statusIdList: '1,2',
     };
     this.dataCount = 0;
     this.isLoading = true;
@@ -414,7 +413,8 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
   getdocumentResponseData(data) {
     this.isLoading = false;
-
+    console.log(data, "document data");
+    
     if (data == undefined) {
       this.dataSource.data = [];
       this.noData = 'No Data Found';
