@@ -83,9 +83,19 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
   select(familyMember) {
     if (familyMember.selected) {
       familyMember.selected = false;
+      const obj = []
+      familyMember['incomeTypeList'] = obj
       this.ownerCount--;
     } else {
       familyMember.selected = true;
+      const obj = [
+        { name: "Salaried", checked: false, incomeTypeList: 1 },
+        { name: "Business", checked: false, incomeTypeList: 2 },
+        { name: 'Profession', checked: false, incomeTypeList: 3 },
+        { name: "Rental", checked: false, incomeTypeList: 4 },
+        { name: "Others", checked: false, incomeTypeList: 5 }
+      ]
+      familyMember['incomeTypeList'] = obj
       this.ownerCount++;
     }
   }
