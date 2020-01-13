@@ -107,10 +107,10 @@
       mat-align-tabs="center">
 
       <mat-tab label="SUBSCRIPTIONS">
-        <div class="wrapper-20 bg-grey lter heading-fix b-a">
-          <h3 class="m-0 text-center head-common">{{upperData.name}}</h3>
-        </div>
         <ng-template matTabContent>
+          <div class="wrapper-20 bg-grey lter heading-fix b-a">
+            <h3 class="m-0 text-center head-common">{{upperData.name}}</h3>
+          </div>
           <app-client-upper-subscription [upperData]="fragmentData.data">
           </app-client-upper-subscription>
         </ng-template>

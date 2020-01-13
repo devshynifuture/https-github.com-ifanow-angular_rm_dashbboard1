@@ -54,7 +54,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
 
   @Input() set upperData(data) {
 
-    console.log(data)
+    console.log(data, "client data 123")
     this.advisorId = AuthService.getAdvisorId();
     this.clientSubscriptionData = data;
     this.getSummaryDataClient();
@@ -151,10 +151,10 @@ export class ClientUpperSubscriptionComponent implements OnInit {
 
   getSubSummaryRes(data) {
     this.isLoading = false;
-    console.log(data, data[0].clientName, "hi client");
+    console.log(data, "hi client");
     if (data == undefined) {
       this.clientData.length == 0;
-      this.sub = undefined;
+      this.sub = data;
 
     } else if (data.length > 0) {
 
