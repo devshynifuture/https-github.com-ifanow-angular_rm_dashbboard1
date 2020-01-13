@@ -17,15 +17,14 @@
 .sidenav .mat-toolbar {
     background: #3f51b5;
 }
-.logoWrap{
 
-    .logo{
+.logoWrap {
+    .logo {
         width: 63px !important;
-        height: auto ;
+        height: auto;
     }
-
-    h5{
-        color:#267538;
+    h5 {
+        color: #267538;
         font-size: 90%;
     }
 }
@@ -298,4 +297,10 @@ img.header-img {
         border-radius: 4px;
         border: transparent !important;
     }
+}
+
+.searchIcon {
+    position: absolute;
+    left: 8px;
+    top: 10px;
 }

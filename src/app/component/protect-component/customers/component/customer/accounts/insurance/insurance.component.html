@@ -8,7 +8,8 @@
                         <div class="col-md-1 p-0 text-custom">20</div>
                     </div>
                 </li>
-                <li (click)="getInsuranceTypeData(1,item.id)" *ngFor="let item of lifeInsuranceList" [ngClass]="{'bg-grey lt':item.id==insuranceSubTypeId}" class="c-p pb-12">
+                <li (click)="getInsuranceTypeData(1,item.id)" *ngFor="let item of lifeInsuranceList"
+                    [ngClass]="{'bg-grey lt':item.id==insuranceSubTypeId}" class="c-p pb-12">
                     <div>
                         <div class="row">
                             <div class="col-md-11 p-0">{{item.name}}</div>
@@ -24,7 +25,8 @@
                         <div class="col-md-1 p-0 text-custom">1</div>
                     </div>
                 </li>
-                <li (click)="getInsuranceTypeData(2,item1.id)" *ngFor="let item1 of generalLifeInsuranceList" [ngClass]="{'bg-grey lt':item1.id==insuranceSubTypeId}" class="pb-12 c-p">
+                <li (click)="getInsuranceTypeData(2,item1.id)" *ngFor="let item1 of generalLifeInsuranceList"
+                    [ngClass]="{'bg-grey lt':item1.id==insuranceSubTypeId}" class="pb-12 c-p">
                     <div class="row">
                         <div class="col-md-11 p-0">{{item1.name}}</div>
                         <div class="col-md-1 p-0 text-custom">{{item1.id}}</div>
@@ -37,7 +39,7 @@
         </div> -->
         <div class="col-md-10 b-a p-0 min-height">
             <div>
-                <div class="wrapper-8">
+                <div *ngIf="dataSource" class="wrapper-8">
                     <div class="row">
                         <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
                             <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
@@ -59,18 +61,19 @@
                         <div class="col-md-4 p-0">
                             <h4 class="m-0 text-black roboto pt-4">Life insurance</h4>
                         </div>
-                        <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
+                        <div class="col-md-8 p-0 right text-right">
                             <img src="assets/images/svg/download-bordered.svg" class="c-p">
                             <img src="assets/images/svg/up-down.svg" class="c-p">
                             <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
                             <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                                     class="material-icons">filter_list</i>FILTERS</button>
-                            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)"> ADD NEW</button>
+                            <button mat-stroked-button class="btn-primary addon v-middle"
+                                (click)="openAddInsurance(null)"> ADD NEW</button>
 
                         </div>
                     </div>
                 </div>
-                <div class="liabilities wrapper-8">
+                <div *ngIf="dataSource" class="liabilities wrapper-8">
                     <table mat-table [dataSource]="dataSource" id="table-low">
                         <ng-container matColumnDef="no">
                             <th mat-header-cell *matHeaderCellDef class="br"> No. </th>
@@ -157,10 +160,11 @@
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
                 </div>
-                <div class="d-flex flex-column align-items-center">
+                <div *ngIf="dataSource==undefined" class="d-flex flex-column align-items-center">
                     <img class="width400" src="assets/images/svg/clients-img.svg">
                     <h4 class="text-center pt-12">{{noData}}</h4>
-                    <button mat-stroked-button class="btn-primary proximaFont addon v-middle" (click)="openAddInsurance(null)"> ADD NEW
+                    <button mat-stroked-button class="btn-primary proximaFont addon v-middle"
+                        (click)="openAddInsurance(null)"> ADD NEW
                     </button>
                 </div>
             </div>
