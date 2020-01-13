@@ -164,6 +164,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     console.log('client Subscription planWiseMap **********', planWiseMap);
     console.log('client Subscription getSubSummaryRes **********', this.subscriptionData);
   }
+
   checkAndGenerateTableSource(dataArray) {
     // console.log('checkAndGenerateTableSource dataArray : ', dataArray);
     if (dataArray) {
@@ -178,7 +179,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
       return null;
     }
   }
-  deleteModal(value, subData) {
+  deleteModal(value, subData, planSubArr, i) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -194,8 +195,8 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         this.subscription.deleteSubscriptionData(obj).subscribe(
           data => {
             this.deletedData(data);
-            dialogRef.close();
-            this.getSummaryDataClient();
+            dialogRef.close(subData);
+            
           }
         );
       },
@@ -210,6 +211,16 @@ export class ClientUpperSubscriptionComponent implements OnInit {
       autoFocus: false,
     });
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result,planSubArr,"delete result");
+      if(result != undefined){
+        const tempList = []
+        planSubArr.forEach(singleElement => {
+          if (singleElement.id != result.id) {
+            tempList.push(singleElement);
+          }
+        });
+        this.subscriptionData[i].subscriptions = tempList;
+      }
     });
   }
   delete(data, value) {
