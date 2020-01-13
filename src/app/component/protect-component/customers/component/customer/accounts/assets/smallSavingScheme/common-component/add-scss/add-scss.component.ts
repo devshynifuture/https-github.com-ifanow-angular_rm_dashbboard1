@@ -119,11 +119,11 @@ export class AddScssComponent implements OnInit {
 
   addScssResponse(data) {
     console.log(data);
-    this.close();
+    this.close(true);
   }
 
-  close() {
+  close(flag) {
     this.isOptionalField = true;
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({state: 'close',refreshRequired:flag});
   }
 }
