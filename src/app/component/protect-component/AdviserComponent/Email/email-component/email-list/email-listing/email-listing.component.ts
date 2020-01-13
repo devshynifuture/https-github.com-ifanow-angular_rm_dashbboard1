@@ -17,7 +17,7 @@ import { EmailUtilService } from 'src/app/services/email-util.service';
   templateUrl: './email-listing.component.html',
   styleUrls: ['./email-listing.component.scss']
 })
-export class EmailListingComponent implements OnInit, OnDestroy {
+export class EmailListingComponent implements OnInit{
 
 
   constructor(
@@ -67,7 +67,7 @@ export class EmailListingComponent implements OnInit, OnDestroy {
         if(label === 'DRAFT'){
           this.showDraftView = true;
         }
-      })
+      });
     });
     this.showDraftView ? this.openDraftView(element): this.gotoEmailView(element);
   }
@@ -233,23 +233,47 @@ export class EmailListingComponent implements OnInit, OnDestroy {
           // thread.messages.map((message) => {
           //   message.payload.body.data = btoa(message.payload.body.data);
           // });
-          console.log("this is thread -::", thread);
+          console.log("this is main thread -:::::", thread);
+
+
           thread.messages.forEach((message) => {
             const id = thread.id;
             if (message.payload.parts !== null) {
-              message.payload.parts.map((part) => {
-                if (part.body.data === null) {
-                  // get message object;
-
-                  this.emailService.gmailMessageDetail(id)
-                    .subscribe((response) => {
-                      const raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
-                      part.body.data = raw;
-                    });
+              const newParts = message.payload.parts.map((part)=>{
+                if(part.body.data === null){
+                  const res = this.getGmailDetailMessageRaw(id);
+                  console.log("this is result of async await", res);
+                  part.body.data = res;
                 }
+                return part
               });
+              message.payload.parts = newParts;
             }
-          })
+
+            // if (message.payload.parts !== null){ 
+            //   const newParts = message.payload.parts.map((part) => {
+            //     if (part.body.data == null) {
+            //       // get message object;
+            //       console.log("tghi sus to debug:::::::::::::" ,part.body.data);
+            //       this.emailService.gmailMessageDetail(id)
+            //         .subscribe((response) => {
+            //           const raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
+            //           // console.log('response of detailed gmail threadL:::::::', response);
+            //           // console.log("this is raw of detail api...::::::::::::", raw);
+            //           if(raw !== null){
+            //             part.body.data = raw;
+            //             console.log("this is raw value of detailed gmail thread::::::::::" ,raw)
+            //             console.log("tghis is part boyd data of gmail thread :::::::::::;", part.body.data);
+            //           }
+            //         });
+            //     }
+            //     return part;
+            //   });
+            //   message.payload.parts = newParts;
+            // }
+          });
+
+          console.log("modified thread::::::::::::::::::",thread);
           let parsedData: any; // object containing array of decoded parts and headers
           let idsOfThread: any; // Object of historyId and Id of thread
           let dateIdsSnippetsOfMessages: any; // array of Objects having ids, date snippets of messages
@@ -335,6 +359,21 @@ export class EmailListingComponent implements OnInit, OnDestroy {
 
   }
 
+  getGmailDetailMessageRaw(id): string{
+    let raw;
+    this.emailService.gmailMessageDetail(id)
+      .then((response) => {
+        if(raw){
+          raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
+        }
+        console.log('response of detailed gmail threadL:::::::', response);
+        console.log("this is raw of detail api...::::::::::::", raw);
+
+      });
+      return raw;
+
+  }
+
   createUpdateDraft(id: string, toAddress: Array<any>, subject: string, bodyMessage: string, fileData: Array<any>) {
     const requestJson = {
       id,
@@ -389,6 +428,9 @@ export class EmailListingComponent implements OnInit, OnDestroy {
 
   // routing to view page
   gotoEmailView(dataObj: Object) {
+    
+    console.log("this is dataObject  =>>>>>>>>>>>>>", dataObj);
+    
     this.emailService.sendNextData(dataObj);
     this.router.navigate(['view'], { relativeTo: this.activatedRoute });
   }

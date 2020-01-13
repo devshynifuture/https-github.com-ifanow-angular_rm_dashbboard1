@@ -61,8 +61,19 @@ export class EmailUtilService {
       const { snippet } = message;
       if (parts && parts.length !== 0 && parts !== null) {
         parts.forEach((part) => {
-          if (part.body.data && part.body.data !== null) {
-            decodedPartArray.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data));
+          console.log("this is the part of the body::::::::::::", part);
+          const data = part.body.data;
+
+          console.log("this is part body and data of a message :::::::::::::::::::::::: 124", part.body, data);
+
+          if (part.body.data) {
+            let decodedValue = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data)
+            // console.log("this is decoded Value:::::::::::::::", decodedValue);
+            if(decodedValue === null){
+              decodedPartArray.push(part.body.data);
+            } else if(decodedValue !== ''){
+              decodedPartArray.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data));
+            }
           }
           // not perfect
           else {

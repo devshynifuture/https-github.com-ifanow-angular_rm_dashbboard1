@@ -105,13 +105,14 @@ export class EmailServiceService {
     });
   }
 
-  gmailMessageDetail(messageId: string) {
+  async gmailMessageDetail(messageId: string) {
     const userInfo = AuthService.getUserInfo();
-    return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_MESSAGE_DETAIL, {
+    const val = await this.http.get(apiConfig.GMAIL_URL + appConfig.GET_MESSAGE_DETAIL, {
       email: userInfo.emailId,
       userId: userInfo.advisorId,
       messageId
-    })
+    }).toPromise();
+    return val;
   }
 
   getRightSideNavList() {
