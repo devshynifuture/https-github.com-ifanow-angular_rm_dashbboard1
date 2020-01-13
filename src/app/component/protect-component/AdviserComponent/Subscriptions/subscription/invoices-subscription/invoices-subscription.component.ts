@@ -466,7 +466,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
           data => {
             this.dataCount = 0;
             this.eventService.openSnackBar('invoice deleted successfully.', 'dismiss');
-            dialogRef.close(listIndex);
+            dialogRef.close(this.list);
 
           },
           error => this.eventService.showErrorMessage(error)
@@ -489,13 +489,15 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result,this.dataSource.data,"delete result");
-      const tempList = []
-      this.dataSource.data.forEach(singleElement => {
-        if (!singleElement.selected) {
-          tempList.push(singleElement);
-        }
-      });
-      this.dataSource.data = tempList;
+      if(result.length > 0 ){
+        const tempList = []
+        this.dataSource.data.forEach(singleElement => {
+          if (!singleElement.selected) {
+            tempList.push(singleElement);
+          }
+        });
+        this.dataSource.data = tempList;
+      }
 
      
     });

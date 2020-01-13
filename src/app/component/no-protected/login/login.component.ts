@@ -1,24 +1,48 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {BackOfficeService} from '../../protect-component/AdviserComponent/backOffice/back-office.service';
-
+import { Component, OnInit, Directive, HostListener, ElementRef } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { BackOfficeService } from '../../protect-component/AdviserComponent/backOffice/back-office.service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import $ from 'jquery';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  animations: [
+    trigger('btnProgress', [
+      state('state1', style({
+        width: '0%',
+        backgroundColor: 'green',
+        display: 'block'
+      })),
+      state('state2', style({
+        width: '100%',
+        backgroundColor: 'green',
+        display: 'block',
+        transition: '0.3s'
+      })),
+      transition('state1 => state2', animate('2000s')),
+      transition('state2 =>state1', animate('0s'))
+    ])
+  ]
+})
+@Directive({
+  selector: 'btnProgress'
 })
 export class LoginComponent implements OnInit {
-
+  btnProgressData: any;
   constructor(
     private formBuilder: FormBuilder, private eventService: EventService,
     public backOfficeService: BackOfficeService,
     public router: Router,
-    private authService: AuthService) {
+    private authService: AuthService, private eleRef: ElementRef) {
   }
-
+  // @HostListener('click', ['$event.target'])
+  // onclick() {
+  //   console.log("animate")
+  // }
   loginForm: FormGroup;
 
   ngOnInit() {
@@ -27,6 +51,7 @@ export class LoginComponent implements OnInit {
     // } else {
     this.createForm();
     // }
+    this.btnProgressData = "state1";
   }
 
   private createForm() {
@@ -52,11 +77,15 @@ export class LoginComponent implements OnInit {
 
   enterEvent(event) {
     if (event.keyCode === 13) {
-      this.onSubmit();
+      // this.onSubmit();
     }
   }
 
-  onSubmit() {
+  onSubmit(event) {
+    // console.log(event)
+
+    this.btnProgressData = "state2";
+    console.log(this.btnProgressData)
     // this.authService.setToken('12333nhsdhdh1233');
     // this.authService.setUserInfo('https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png');
     // this.router.navigate(['/admin/subscription']);
@@ -66,7 +95,7 @@ export class LoginComponent implements OnInit {
         password: this.loginForm.controls.password.value,
         roleId: 1
       };
-
+      $(event.toElement).animate({ width: '100%' }, '5000ms').css({ width: '0%' });
       // this.hardCodeLoginForTest();
       // console.log(loginData);
       this.backOfficeService.loginApi(loginData).subscribe(

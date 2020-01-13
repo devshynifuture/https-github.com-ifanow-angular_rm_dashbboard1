@@ -30,18 +30,16 @@
             </div>
             <div class="row right pt-16">
                 <div class="col-md-12 blue">
-                    <button type="submit" [disabled]="!loginForm.valid" (click)="onSubmit();enterEvent($event)"
-                        mat-stroked-button color="primary"> Login
+                    <button class="p-0" type="submit" [disabled]="!loginForm.valid" (click)="enterEvent($event)"
+                        mat-stroked-button color="primary">
+                        <!-- [@btnProgress]="btnProgressData" -->
+                        <span (click)="onSubmit($event)" class="animationBox"> Login
+                        </span>
                     </button>
                 </div>
             </div>
 
-            <!--            <div class="row w-100">-->
-            <!--                <div class="col-md-12">-->
-            <!--                    <div class="register_text" routerLinkActive="active" routerLink="/register"> Create Your account?-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
+
 
 
         </div>

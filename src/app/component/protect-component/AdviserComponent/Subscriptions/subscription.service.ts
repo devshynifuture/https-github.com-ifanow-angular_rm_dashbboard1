@@ -109,7 +109,7 @@ export class SubscriptionService {
   }
 
   mapDocumentsToPlanData(data) {
-    console.log("this is something which im looking for :::::::::::", data);
+    console.log('this is something which im looking for :::::::::::', data);
     return this.http.post(apiConfig.MAIN_URL + appConfig.MAP_DOCUMENTS_TO_PLAN, data);
   }
 
@@ -239,7 +239,7 @@ export class SubscriptionService {
   filterInvoices(data) {
     // const httpParams = new HttpParams().set('id', data.id).set('module', data.module);
     // return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PLAN_INVOICE, httpParams);
-    console.log(data, "invoices data header");
+    console.log(data, 'invoices data header');
 
     const httpParams = new HttpParams().set('id', data.Id).set('fromDate', data.fromDate).set('module', data.module)
       .set('toDate', data.toDate).set('dateType', data.dateType).set('limit', data.limit)
@@ -431,7 +431,7 @@ export class SubscriptionService {
   }
   getQuotationServiceData(data) {
     const httpParams = new HttpParams().set('documentRepositoryId', data.documentRepositoryId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_QUOTATION_SERVICE_DATA, httpParams)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_QUOTATION_SERVICE_DATA, httpParams);
   }
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
