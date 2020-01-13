@@ -202,7 +202,6 @@ export const componentList = [
   MfAllocationsComponent,
   DetailedPoRdComponent,
   DetailedViewSchemeHoldingComponent,
-  ViewActivityComponent,
   AddIncomeComponent,
   AddIncomeFamilyMemberComponent,
   AddIncomeSourceComponent,
@@ -224,8 +223,8 @@ export const componentList = [
   SelectAdviceComponent,
   AddNomineeComponent,
   AddBudgetComponent,
-    
-    // ComposeEmailComponent
+
+  // ComposeEmailComponent
 ];
 
 @NgModule({
