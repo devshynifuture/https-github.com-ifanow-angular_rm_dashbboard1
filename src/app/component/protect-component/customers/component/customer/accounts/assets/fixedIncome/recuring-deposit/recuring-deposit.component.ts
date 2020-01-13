@@ -76,8 +76,8 @@ export class RecuringDepositComponent implements OnInit {
 
 
 
-  Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' })
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired:flag})
   }
 
   display(value) {
@@ -214,11 +214,11 @@ export class RecuringDepositComponent implements OnInit {
   addrecuringDepositRes(data) {
     console.log('addrecuringDepositRes', data)
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data ,refreshRequired:true})
   }
 
   editrecuringDepositRes(data) {
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data ,refreshRequired:true})
   }
 }
