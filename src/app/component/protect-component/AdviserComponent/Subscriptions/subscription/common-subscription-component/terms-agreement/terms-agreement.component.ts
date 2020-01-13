@@ -1,16 +1,16 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2} from '@angular/core';
-import {FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {HowToUseDialogComponent} from '../how-to-use-dialog/how-to-use-dialog.component';
-import {MatDialog, TooltipPosition} from '@angular/material';
-import {SubscriptionService} from '../../../subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {Router} from '@angular/router';
-import {escapeRegExp} from '@angular/compiler/src/util';
-import {HttpClient} from '@angular/common/http';
-import {tableHtml} from './document-preview'
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2 } from '@angular/core';
+import { FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { HowToUseDialogComponent } from '../how-to-use-dialog/how-to-use-dialog.component';
+import { MatDialog, TooltipPosition } from '@angular/material';
+import { SubscriptionService } from '../../../subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { Router } from '@angular/router';
+import { escapeRegExp } from '@angular/compiler/src/util';
+import { HttpClient } from '@angular/common/http';
+import { tableHtml } from './document-preview'
 
 @Component({
   selector: 'app-terms-agreement',
@@ -34,8 +34,8 @@ export class TermsAgreementComponent implements OnInit {
   serviceData: any;
 
   constructor(private route: Router, public subInjectService: SubscriptionInject, public dialog: MatDialog,
-              public subService: SubscriptionService, private eventService: EventService, private render: Renderer2,
-              private http: HttpClient) {
+    public subService: SubscriptionService, private eventService: EventService, private render: Renderer2,
+    private http: HttpClient) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getcommanFroalaData(data)
     );
@@ -91,7 +91,7 @@ export class TermsAgreementComponent implements OnInit {
   Close() {
     // this.subInjectService.rightSideData(value);
     // this.valueChange.emit(this.quotationDesignE);
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
 
   }
 
@@ -131,14 +131,19 @@ export class TermsAgreementComponent implements OnInit {
   }
 
   openDocumentPreview() {
-    let file = File
-    console.log(tableHtml)
+    const obj =
+    {
+      documentRepositoryId: this._upperData.documentData.documentRepositoryId
+    }
+    this.subService.getQuotationServiceData(obj).subscribe(
+      data => console.log(data)
+    )
     this.serviceData.forEach(element => {
       this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp("$(service_" + element.id + ")"), 'g'), element.serviceName);
       this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp("$(client_name)"), 'g'), "Ronak Hindocha");
       this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp("$(service_fee_" + element.id + ")"), 'g'), tableHtml);
     });
-    this.route.navigate(['test'], {state: {...this.dataTerms}});
+    this.route.navigate(['test'], { state: { ...this.dataTerms } });
 
   }
 
@@ -197,7 +202,7 @@ export class TermsAgreementComponent implements OnInit {
     if (data == 1) {
       this.eventService.openSnackBar("Document added successfully", "OK")
     }
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
   }
 
   // Begin ControlValueAccesor methods.
