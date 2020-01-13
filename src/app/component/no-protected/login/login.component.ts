@@ -210,12 +210,14 @@ export class LoginComponent implements OnInit {
 
   progressButtonClick() {
     this.barButtonOptions.active = true;
+    // this.barButtonOptions.disabled = true;
     this.barButtonOptions.value = 0;
     this.setTimeOutRecursiveForProgressValue(0);
 
     // this.barButtonOptions.text = 'Saving Data...';
     setTimeout(() => {
       this.barButtonOptions.active = false;
+      // this.barButtonOptions.disabled = true;
       // this.barButtonOptions.text = 'Login';
     }, 3500);
   }

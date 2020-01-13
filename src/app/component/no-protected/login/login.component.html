@@ -1,51 +1,48 @@
 <div class="login_window_wrapper">
-    <mat-card class="login_window_container">
-        <div [formGroup]="loginForm" novalidate class="form_container_wrapper">
-            <div class="change_company_header">
-                <h3>Login</h3>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group1">
-                        <mat-form-field>
-                            <h5 class="pt-12">User Name</h5>
-                            <input formControlName="name" matInput class="form-control br-0">
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group1">
-                        <mat-form-field>
-                            <h5>Password</h5>
-                            <input type="password" (keypress)="enterEvent($event)" class="form-control br-0"
-                                formControlName="password" matInput>
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
-            <div class="br">
-
-            </div>
-            <div class="row right pt-16">
-                <div class="col-md-12 blue">
-                  <app-progress-button (click)="progressButtonClick()" [options]="barButtonOptions"
-                                       c></app-progress-button>
-                  <!-- <button class="p-0" type="submit" [disabled]="!loginForm.valid" (click)="onSubmit($event)"
-                       mat-stroked-button color="primary">
-                       &lt;!&ndash; [@btnProgress]="btnProgressData" &ndash;&gt;
-&lt;!&ndash;                        <span></span>&ndash;&gt;
-                       <span #animationSpan class="animationBox">
-                         Login
-                       </span>
-                   </button>-->
-                </div>
-            </div>
-
-
-
-
+  <mat-card class="login_window_container">
+    <div [formGroup]="loginForm" class="form_container_wrapper" novalidate>
+      <div class="change_company_header">
+        <h3>Login</h3>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group1">
+            <mat-form-field>
+              <h5 class="pt-12">User Name</h5>
+              <input class="form-control br-0" formControlName="name" matInput>
+            </mat-form-field>
+          </div>
         </div>
-    </mat-card>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group1">
+            <mat-form-field>
+              <h5>Password</h5>
+              <input (keypress)="enterEvent($event)" class="form-control br-0" formControlName="password"
+                     matInput type="password">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="br">
+
+      </div>
+      <div class="row right pt-16">
+        <div class="col-md-12 blue">
+          <app-progress-button (btnClick)="progressButtonClick()" [options]="barButtonOptions"></app-progress-button>
+          <!-- <button class="p-0" type="submit" [disabled]="!loginForm.valid" (click)="onSubmit($event)"
+               mat-stroked-button color="primary">
+               &lt;!&ndash; [@btnProgress]="btnProgressData" &ndash;&gt;
+&lt;!&ndash;                        <span></span>&ndash;&gt;
+               <span #animationSpan class="animationBox">
+                 Login
+               </span>
+           </button>-->
+        </div>
+      </div>
+
+
+    </div>
+  </mat-card>
 </div>
