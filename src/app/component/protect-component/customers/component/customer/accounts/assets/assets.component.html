@@ -1,45 +1,44 @@
 <div id="ui-assets-account">
-  <div class="row">
-    <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
-      <ul class="vertical-menu">
-        <li *ngFor="let singleAssetType of assetSideBarData" (click)="viewMode =singleAssetType.viewmode"
-          [ngClass]="{'activeColor lt':viewMode ==singleAssetType.viewmode}" class=" c-p">
-          <div class="row">
-            <div class="col-md-10 p-0">
-              {{ singleAssetType.name }}
+    <div class="row">
+        <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
+            <ul class="vertical-menu">
+                <li *ngFor="let singleAssetType of assetSideBarData" (click)="viewMode =singleAssetType.viewmode" [ngClass]="{'activeColor lt':viewMode ==singleAssetType.viewmode}" class=" c-p">
+                    <div class="row">
+                        <div class="col-md-10 p-0">
+                            {{ singleAssetType.name }}
+                        </div>
+                        <div class="col-md-2 p-0 text-custom">
+                            {{ singleAssetType.count }}
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode">
+            <div *ngSwitchCase="'tab1'">
+                <div>
+                    <app-mutual-fund></app-mutual-fund>
+                </div>
             </div>
-            <div class="col-md-2 p-0 text-custom">
-              {{ singleAssetType.count }}
+            <div *ngSwitchCase="'tab2'">
+                <div>
+                    <app-asset-stocks></app-asset-stocks>
+                </div>
             </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode">
-      <div *ngSwitchCase="'tab1'">
-        <div>
-            <app-mutual-fund></app-mutual-fund>
-        </div>
-       </div>
-      <div *ngSwitchCase="'tab2'">
-        <div>
-            <app-asset-stocks></app-asset-stocks>
-        </div>
-      </div>
-      <div *ngSwitchCase="'tab3'">
-        <div>
-            <app-fixed-income></app-fixed-income>
-        </div>
-      </div>
-      <div *ngSwitchCase="'tab4'">
-        <div>
-            <app-real-estate></app-real-estate>
-        </div>
-      </div>
-      <div *ngSwitchCase="'tab5'">
-        <app-retirement-account></app-retirement-account>
-      </div>
-      <!-- <div class="wrapper-8">
+            <div *ngSwitchCase="'tab3'">
+                <div>
+                    <app-fixed-income></app-fixed-income>
+                </div>
+            </div>
+            <div *ngSwitchCase="'tab4'">
+                <div>
+                    <app-real-estate></app-real-estate>
+                </div>
+            </div>
+            <div *ngSwitchCase="'tab5'">
+                <app-retirement-account></app-retirement-account>
+            </div>
+            <!-- <div class="wrapper-8">
             <div class="row pt-28 pb-28">
               <div class="col-md-8 pl-0">
                 <button mat-stroked-button class="br-0 btn-default text-primary">EPF</button>
@@ -73,7 +72,7 @@
                   <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
               
                   <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i class="material-icons">filter_list</i>FILTERS</button>
-                  <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"><i class="material-icons">add</i>ADD NEW</button>
+                  <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"> ADD NEW</button>
                   <mat-menu #menu1="matMenu" class="add-new">
                       <button mat-menu-item class="b-b">
                           <div class="row">
@@ -179,7 +178,7 @@
                   <tr mat-row *matRowDef="let row; columns: displayedColumns11;"></tr>
               </table>
               </div> -->
-      <!-- <div class="wrapper-8">
+            <!-- <div class="wrapper-8">
               <div class="row">
                 <div class="col-md-4 p-0">
                   <h4 class="m-0 text-black roboto pt-8">National pension system (NPS)</h4>
@@ -298,7 +297,7 @@
                 </table>
               </div>
             </div> -->
-      <!-- <div class="wrapper-8">
+            <!-- <div class="wrapper-8">
                 <div class="row">
                   <div class="col-md-4 p-0">
                     <h4 class="m-0 text-black roboto pt-8">Gratuity</h4>
@@ -410,7 +409,7 @@
                   </table>
                 </div>
               </div> -->
-      <!-- <div class="wrapper-8">
+            <!-- <div class="wrapper-8">
                 <div class="row">
                   <div class="col-md-4 p-0">
                     <h4 class="m-0 text-black roboto pt-8">Superannuation</h4>
@@ -527,7 +526,7 @@
                   </table>
                 </div>
               </div> -->
-      <!-- <div class="wrapper-8">
+            <!-- <div class="wrapper-8">
                 <div class="row">
                   <div class="col-md-4 p-0">
                     <h4 class="m-0 text-black roboto pt-8">EPS</h4>
@@ -634,12 +633,12 @@
                   </table>
                 </div>
               </div> -->
-      <!-- </div>
+            <!-- </div>
         </div> -->
-      <div *ngSwitchCase="'tab6'">
-        <div class="wrapper-8">
-          <app-small-saving-scheme></app-small-saving-scheme>
-          <!-- <div class="row pt-28 pb-28">
+            <div *ngSwitchCase="'tab6'">
+                <div class="wrapper-8">
+                    <app-small-saving-scheme></app-small-saving-scheme>
+                    <!-- <div class="row pt-28 pb-28">
                           <div class="col-md-8 pl-0">
                             <button mat-stroked-button class="br-0 btn-default text-primary">PPF</button>
                             <button mat-button class="br-0 text-custom">NSC</button>
@@ -667,7 +666,7 @@
                           </div>
                         </div> -->
 
-          <!-- <div class="example-container mt-8 real-estate">
+                    <!-- <div class="example-container mt-8 real-estate">
                           <table mat-table [dataSource]="datasource16" id="table-low">
                           
                               <ng-container matColumnDef="no">
@@ -725,7 +724,7 @@
                               <tr mat-row *matRowDef="let row; columns: displayedColumns16;"></tr>
                           </table>
                           </div> -->
-          <!--                       
+                    <!--                       
                               <div class="row">
                                 <div class="col-md-4 p-0">
                                     <h4 class="m-0 text-black roboto pt-8">National savings certificate (NSC)</h4>
@@ -835,7 +834,7 @@
                                 </table>
                                 </div> -->
 
-          <!-- <div class="row">
+                    <!-- <div class="row">
                                     <div class="col-md-4 p-0">
                                         <h4 class="m-0 text-black roboto pt-8">Kisan vikas patra (KVP)</h4>
                                     </div>
@@ -944,7 +943,7 @@
                                         <tr mat-row *matRowDef="let row; columns: displayedColumns18;"></tr>
                                     </table>
                                     </div> -->
-          <!-- <div class="row">
+                    <!-- <div class="row">
                                       <div class="col-md-4 p-0">
                                           <h4 class="m-0 text-black roboto pt-8">Senior citizen savings scheme (SCSS)</h4>
                                       </div>
@@ -1056,7 +1055,7 @@
                                           <tr mat-row *matRowDef="let row; columns: displayedColumns19;"></tr>
                                       </table>
                                       </div> -->
-          <!-- <div class="row">
+                    <!-- <div class="row">
                                         <div class="col-md-4 p-0">
                                             <h4 class="m-0 text-black roboto pt-8">Post office savings a/c</h4>
                                         </div>
@@ -1160,7 +1159,7 @@
                                             <tr mat-row *matRowDef="let row; columns: displayedColumns20;"></tr>
                                         </table>
                                         </div> -->
-          <!-- <div class="row">
+                    <!-- <div class="row">
                                           <div class="col-md-4 p-0">
                                               <h4 class="m-0 text-black roboto pt-8">Post office recurring deposit (PO RD)</h4>
                                           </div>
@@ -1272,7 +1271,7 @@
                                               <tr mat-row *matRowDef="let row; columns: displayedColumns21;"></tr>
                                           </table>
                                           </div> -->
-          <!-- <div class="row">
+                    <!-- <div class="row">
                                             <div class="col-md-4 p-0">
                                                 <h4 class="m-0 text-black roboto pt-8">Post office time deposit (PO TD)</h4>
                                             </div>
@@ -1388,7 +1387,7 @@
                                                 <tr mat-row *matRowDef="let row; columns: displayedColumns22;"></tr>
                                             </table>
                                             </div> -->
-          <!-- <div class="row">
+                    <!-- <div class="row">
                                               <div class="col-md-5 p-0">
                                                   <h4 class="m-0 text-black roboto pt-8">Post office monthly income scheme (PO MIS)</h4>
                                               </div>
@@ -1503,12 +1502,12 @@
                                               </table>
                                               </div>
                                           </div> -->
-        </div>
-      </div>
-      <div *ngSwitchCase="'tab7'">
-        <app-cash-and-bank></app-cash-and-bank>
-      </div>
-      <!-- <div class="wrapper-8">
+                </div>
+            </div>
+            <div *ngSwitchCase="'tab7'">
+                <app-cash-and-bank></app-cash-and-bank>
+            </div>
+            <!-- <div class="wrapper-8">
             <div class="row pt-28 pb-28">
               <div class="col-md-8 pl-0">
                 <button mat-stroked-button class="br-0 btn-default text-primary">Bank accounts</button>
@@ -1642,7 +1641,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns7;"></tr>
               </table>
             </div> -->
-      <!-- <div class="wrapper-8">
+            <!-- <div class="wrapper-8">
               <div class="row pt-28 pb-28">
               
               <div class="col-md-8 pl-0">
@@ -1761,11 +1760,11 @@
                       </table>
                   </div>
               </div> -->
-      <!-- </div> -->
-      <div *ngSwitchCase="'tab8'">
-        <app-commodities></app-commodities>
-      </div>
-      <!-- <div class="wrapper-8">
+            <!-- </div> -->
+            <div *ngSwitchCase="'tab8'">
+                <app-commodities></app-commodities>
+            </div>
+            <!-- <div class="wrapper-8">
             <div class="row pt-28 pb-28">
               <div class="col-md-8 pl-0">
                 <button mat-stroked-button class="br-0 btn-default text-primary">Gold</button>
@@ -1897,7 +1896,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns9;"></tr>
               </table>
             </div> -->
-      <!-- <div class="row">
+            <!-- <div class="row">
               <div class="col-md-4 p-0">
                   <h4 class="m-0 text-black roboto pt-8">Others </h4>
               </div>
@@ -2007,11 +2006,11 @@
                   <tr mat-row *matRowDef="let row; columns: displayedColumns10;"></tr>
               </table>
               </div> -->
-      <!-- </div> -->
+            <!-- </div> -->
 
-      <div *ngSwitchCase="'tab9'">
+            <div *ngSwitchCase="'tab9'">
 
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
