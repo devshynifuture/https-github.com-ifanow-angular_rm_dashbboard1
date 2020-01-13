@@ -31,7 +31,8 @@ export class AssetStocksComponent implements OnInit {
   isLoading = false;
   noData: string;
 
-  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private cusService: CustomerService, private eventService: EventService) {
+  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,
+              private cusService: CustomerService, private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -41,6 +42,7 @@ export class AssetStocksComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getStocksData();
   }
+
   pieChart(id) {
     Highcharts.chart('piechartStock', {
       chart: {
@@ -81,35 +83,35 @@ export class AssetStocksComponent implements OnInit {
           {
             name: 'Banking',
             y: 23,
-            color: "#008FFF",
+            color: '#008FFF',
             dataLabels: {
               enabled: false
             }
           }, {
             name: 'Information technology',
             y: 13,
-            color: "#5DC644",
+            color: '#5DC644',
             dataLabels: {
               enabled: false
             }
           }, {
             name: 'FMCG',
             y: 25.42,
-            color: "#FFC100",
+            color: '#FFC100',
             dataLabels: {
               enabled: false
             }
           }, {
             name: 'Other',
             y: 12.61,
-            color: "#A0AEB4",
+            color: '#A0AEB4',
             dataLabels: {
               enabled: false
             }
           }, {
             name: 'Auto ancillaries',
             y: 23.42,
-            color: "#FF7272",
+            color: '#FF7272',
             dataLabels: {
               enabled: false
             }
@@ -118,6 +120,7 @@ export class AssetStocksComponent implements OnInit {
       }]
     });
   }
+
   getStocksData() {
     this.isLoading = true;
     const obj = {
@@ -127,7 +130,7 @@ export class AssetStocksComponent implements OnInit {
     this.cusService.getAssetStockData(obj).subscribe(
       data => {
         this.getStocksDataRes(data);
-        this.pieChart('piechartStock')
+        this.pieChart('piechartStock');
         this.isLoading = false;
       },
       err => {
@@ -143,7 +146,7 @@ export class AssetStocksComponent implements OnInit {
       this.assetStockData = data;
       this.portfolioData = data.portfolios;
     } else {
-      this.noData = "No Data Found";
+      this.noData = 'No Data Found';
     }
   }
 
@@ -179,7 +182,7 @@ export class AssetStocksComponent implements OnInit {
 
     const customDataSource = new MatTableDataSource(customStock);
     Object.keys(categoryWiseMap).map(key => {
-      customDataSource.data.push({ groupName: key });
+      customDataSource.data.push({groupName: key});
       categoryWiseMap[key].forEach((singleData) => {
         customDataSource.data.push(singleData);
       });
@@ -194,6 +197,7 @@ export class AssetStocksComponent implements OnInit {
     // console.log('item : ', item);
     return item.groupName;
   }
+
   deleteModal(value, data) {
     const dialogData = {
       data: value,
@@ -205,12 +209,12 @@ export class AssetStocksComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deleteStockData(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar("PPF is deleted", "dismiss")
+            this.eventService.openSnackBar('PPF is deleted', 'dismiss');
             dialogRef.close();
             this.getStocksData();
           },
           error => this.eventService.showErrorMessage(error)
-        )
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -229,9 +233,10 @@ export class AssetStocksComponent implements OnInit {
 
     });
   }
+
   editStock(data, portfolioData) {
     let component;
-    console.log(data.stockType)
+    console.log(data.stockType);
     switch (true) {
       case (data.stockType == 1):
         component = AddAssetStocksComponent;
@@ -243,7 +248,7 @@ export class AssetStocksComponent implements OnInit {
       default:
         component = StockScripLevelTransactionComponent;
     }
-    data.portfolioName = portfolioData.portfolioName
+    data.portfolioName = portfolioData.portfolioName;
     const fragmentData = {
       flag: 'addStock',
       data,
@@ -258,22 +263,22 @@ export class AssetStocksComponent implements OnInit {
           this.getStocksData();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
-
         }
       }
     );
   }
+
   openAddStock(flag, data) {
     let component;
     switch (true) {
-      case (flag == "addPortfolio"):
+      case (flag == 'addPortfolio'):
         component = AddAssetStocksComponent;
         break;
-      case (flag == "holding"):
+      case (flag == 'holding'):
         component = StockScripLevelHoldingComponent;
         break;
       default:
-        component = StockScripLevelTransactionComponent
+        component = StockScripLevelTransactionComponent;
     }
     const fragmentData = {
       flag: 'editStock',
