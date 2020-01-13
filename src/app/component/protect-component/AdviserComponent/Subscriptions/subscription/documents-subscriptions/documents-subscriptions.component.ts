@@ -243,14 +243,14 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   getdocumentSubData(scrollLoader) {
     const obj = {
       advisorId: this.advisorId,
-      clientId: this.clientId,
+      // clientId: this.clientId,
       flag: 3,
       limit: -1,
       offset: 0,
       dateType: 0,
-      fromDate: '2019-01-01',
-      toDate: '2019-11-01',
-      statusIdList: '1,2',
+      // fromDate: '2019-01-01',
+      // toDate: '2019-11-01',
+      // statusIdList: '1,2',
     };
     this.dataCount = 0;
     this.isLoading = true;
