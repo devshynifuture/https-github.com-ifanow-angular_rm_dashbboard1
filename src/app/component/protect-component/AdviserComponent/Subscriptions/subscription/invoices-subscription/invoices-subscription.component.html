@@ -113,15 +113,6 @@
             <mat-checkbox name="selectedData" [(ngModel)]="element.selected" (change)="changeSelect()">
             </mat-checkbox>
         </td>
-          <!-- <th *matHeaderCellDef class="f-18" mat-header-cell>
-            <mat-checkbox (change)="$event ? masterToggle() : null" 
-                          [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll">
-            </mat-checkbox>
-          </th>
-          <td *matCellDef="let element" mat-cell>
-            <mat-checkbox (change)="changeSelect()" [(ngModel)]="element.selected" class="c-p" name="selectedData">
-            </mat-checkbox>
-          </td> -->
         </ng-container>
         <ng-container matColumnDef="date">
           <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="invoiceDate"> Date</th>
