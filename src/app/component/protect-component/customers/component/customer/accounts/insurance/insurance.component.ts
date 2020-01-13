@@ -95,6 +95,7 @@ export class InsuranceComponent implements OnInit {
   getInsuranceDataRes(data) {
     if (data) {
       this.dataSource = data.insuranceList;
+      this.isLoading = false
     } else {
       this.dataSource = undefined;
       this.noData = 'No Insurance Data';
