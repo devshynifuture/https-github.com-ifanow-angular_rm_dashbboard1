@@ -130,7 +130,7 @@ export class LoginComponent implements OnInit {
             }
             this.authService.setUserInfo(data);
             // this.eventService.openSnackBar('Login SuccessFully', 'dismiss');
-            // this.router.navigate(['admin', 'subscription', 'dashboard']);
+            this.router.navigate(['admin', 'subscription', 'dashboard']);
             // Hard coded client login for testing
             this.authService.setClientData({
               id: 2978, name: 'Aryendra Kumar Saxena'
