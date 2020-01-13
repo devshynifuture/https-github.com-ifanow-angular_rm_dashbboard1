@@ -9,13 +9,12 @@ import {DataNotFoundComponent} from './component/protect-component/common-compon
 import {AuthGuard} from "./guards/auth.guard";
 import {ProgressButtonComponent} from './common/progress-button/progress-button.component';
 import {FormTestComponent} from "./test/form-test/form-test.component";
-import { GoogleConnectComponent } from './component/protect-component/AdviserComponent/Email/email-component/email-list/email-listing/google-connect/google-connect.component';
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     // outlet: 'mainrouter'
   },
   {

@@ -30,12 +30,16 @@
             </div>
             <div class="row right pt-16">
                 <div class="col-md-12 blue">
-                    <button class="p-0" type="submit" [disabled]="!loginForm.valid" (click)="enterEvent($event)"
-                        mat-stroked-button color="primary">
-                        <!-- [@btnProgress]="btnProgressData" -->
-                        <span (click)="onSubmit($event)" class="animationBox"> Login
-                        </span>
-                    </button>
+                  <app-progress-button (click)="progressButtonClick()" [options]="barButtonOptions"
+                                       c></app-progress-button>
+                  <!-- <button class="p-0" type="submit" [disabled]="!loginForm.valid" (click)="onSubmit($event)"
+                       mat-stroked-button color="primary">
+                       &lt;!&ndash; [@btnProgress]="btnProgressData" &ndash;&gt;
+&lt;!&ndash;                        <span></span>&ndash;&gt;
+                       <span #animationSpan class="animationBox">
+                         Login
+                       </span>
+                   </button>-->
                 </div>
             </div>
 
