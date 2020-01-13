@@ -104,11 +104,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  onSubmit(event) {
+  onSubmit() {
     // console.log(event)
 
-    this.btnProgressData = "state2";
-    console.log(this.btnProgressData)
     // this.authService.setToken('12333nhsdhdh1233');
     // this.authService.setUserInfo('https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png');
     // this.router.navigate(['/admin/subscription']);
@@ -119,22 +117,11 @@ export class LoginComponent implements OnInit {
         roleId: 1
       };
       this.isLoading = true;
-      if (this.isLoading) {
-        this.setTimeOutRecursive(event, 0);
-        /* for (let i = 0; i <= 90; i++) {
-           if (this.isLoading) {
-             $(event.toElement).animate({width: i + '%'}, '1000ms').css({width: '0%'})
-             // this.animationSpan.nativeElement.animate({width: i + '%'}, '100ms');
-           }
-         }*/
-      }
-      // $(event.toElement).animate({width: '100%'}, '5000ms').css({width: '0%'});
       // this.hardCodeLoginForTest();
-      // console.log(loginData);
       this.backOfficeService.loginApi(loginData).subscribe(
         data => {
           this.isLoading = false;
-          this.setTimeOutRecursive(event, 100)
+          // this.setTimeOutRecursive(event, 100)
           if (data) {
             console.log('data: ', data);
             this.authService.setToken(data.token);
@@ -213,7 +200,7 @@ export class LoginComponent implements OnInit {
     // this.barButtonOptions.disabled = true;
     this.barButtonOptions.value = 0;
     this.setTimeOutRecursiveForProgressValue(0);
-
+    this.onSubmit();
     // this.barButtonOptions.text = 'Saving Data...';
     setTimeout(() => {
       this.barButtonOptions.active = false;
