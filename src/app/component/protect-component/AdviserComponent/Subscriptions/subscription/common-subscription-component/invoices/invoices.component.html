@@ -28,8 +28,12 @@
                             *ngIf="dataCount != 0">Email with eSign request</button>
                         <button mat-menu-item class="b-t" (click)="openSendEmail()" *ngIf="dataCount != 0">Email
                             only</button>
-                        <button mat-menu-item class="b-t" (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0">Delete
-                            Invoices</button>
+                        <button (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0 && dataCount > 1" mat-menu-item>Delete
+                        Invoices
+                        </button>
+                        <button (click)="deleteModal('INVOICE')" *ngIf="dataCount != 0 && dataCount <= 1" mat-menu-item>Delete
+                        Invoice
+                        </button>
                     </mat-menu>
                 </div>
                 <div class="col-md-9 p-0" *ngIf="dataCount > 0">
