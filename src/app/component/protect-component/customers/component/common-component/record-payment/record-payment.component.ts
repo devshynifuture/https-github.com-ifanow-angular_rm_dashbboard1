@@ -63,7 +63,7 @@ export class RecordPaymentComponent implements OnInit {
     this.getFormControl().amountReceived.maxLength = 10;
     this.getFormControl().chargesIfAny.maxLength = 10;
     this.getFormControl().tds.maxLength = 10;
-    this.getFormControl().notes.maxLength = 40;
+    this.getFormControl().notes.maxLength = 60;
     this.getPayReceive(this.InvRecordData.id);
 
   }
@@ -120,18 +120,13 @@ export class RecordPaymentComponent implements OnInit {
     }
   }
   saveFormData() {
-    if (this.rPayment.get('amountReceived').value=="" || this.rPayment.get('amountReceived').value=="") {
+    if (this.rPayment.get('amountReceived').value==null || this.rPayment.get('amountReceived').value=="") {
       this.rPayment.get('amountReceived').markAsTouched();
       return
-    } else if (this.rPayment.get('chargesIfAny').invalid) {
-      this.rPayment.get('chargesIfAny').markAsTouched();
-      return
-
     } else if (this.rPayment.get('tds').invalid) {
       this.rPayment.get('tds').markAsTouched();
       return
-    } else
-    if (this.rPayment.get('paymentDate').invalid) {
+    } else if (this.rPayment.get('paymentDate').invalid) {
       this.rPayment.get('paymentDate').markAsTouched();
       return
     } else if (this.rPayment.get('paymentMode').invalid) {
