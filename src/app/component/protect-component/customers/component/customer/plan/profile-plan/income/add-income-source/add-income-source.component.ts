@@ -12,7 +12,7 @@ export class AddIncomeSourceComponent implements OnInit {
   stepOneData: any;
   selectedFamilyIncome = [];
   countIncomeType: number = 0;
-  constructor(private eventService:EventService) { }
+  constructor(private eventService: EventService) { }
   @Output() IncomeSourceDetailsData = new EventEmitter();
   @Output() previousStep = new EventEmitter();
   @Input() set selectedFamilyList(data) {
@@ -57,9 +57,8 @@ export class AddIncomeSourceComponent implements OnInit {
   ngOnInit() {
   }
   nextStep() {
-    if(this.countIncomeType==0)
-    {
-      this.eventService.openSnackBar("Please select income mode","dismiss")
+    if (this.countIncomeType == 0) {
+      this.eventService.openSnackBar("Please select income mode", "dismiss")
       return;
     }
     const obj =

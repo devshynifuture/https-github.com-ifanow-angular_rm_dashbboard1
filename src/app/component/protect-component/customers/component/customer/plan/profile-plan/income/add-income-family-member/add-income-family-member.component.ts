@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-income-family-member',
@@ -32,7 +32,7 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
       this.clientId = AuthService.getClientId();
       this.getFamilyMemberList();
     } else {
-      (data.setFlag == 'addIncome') ? data.flag == 'editIncome' : console.log('dsdas');
+      (data.flag == 'addIncome') ? data.flag == 'editIncome' : console.log('dsdas');
       data.data.forEach(element => {
         if (element.selected) {
           this.ownerCount++;
@@ -40,6 +40,8 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
       });
       this.setFlag = data.flag;
       this.familyMemberList = data.data;
+      (this.familyMemberList == 0) ? this.checkFamList = false : this.checkFamList = true;
+
     }
   }
 
@@ -90,7 +92,7 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
 
   close() {
 
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
 }

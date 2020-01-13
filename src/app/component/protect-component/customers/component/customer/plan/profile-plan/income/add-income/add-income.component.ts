@@ -12,32 +12,29 @@ export class AddIncomeComponent implements OnInit {
   selectedFamilyList: any;
   FinalIncomeList: any;
   editIncomeData: any;
-  constructor(private subInjectService: SubscriptionInject,private planService:PlanService) { }
+  constructor(private subInjectService: SubscriptionInject, private planService: PlanService) { }
   addIncomeSteps = 1;
   familyData = null;
   data;
   ngOnInit() {
-    if(this.data)
-    {
-      this.addIncomeSteps=3;
-      this.FinalIncomeList=undefined;
-      this.editIncomeData=this.data;
+    if (this.data) {
+      this.addIncomeSteps = 3;
+      this.FinalIncomeList = undefined;
+      this.editIncomeData = this.data;
     }
     this.getGrowthRateData();
   }
-  getGrowthRateData()
-  {
-    let obj=
+  getGrowthRateData() {
+    let obj =
     {
 
     }
     this.planService.getGlobalGrowthRateData(obj).subscribe(
-      data=>this.getGrowthRateDataResp(data)
+      data => this.getGrowthRateDataResp(data)
     )
   }
-  getGrowthRateDataResp(data)
-  {
-     console.log(data)
+  getGrowthRateDataResp(data) {
+    console.log(data)
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
