@@ -42,12 +42,13 @@
   </div>
 
   <div *ngFor="let sub of subscriptionData" class="pl-40 pr-40 pb-40 mt-12 col-md-12">
-
-    <h4 *ngIf="clientData.length > 0" class="pb-8 text-black">{{sub.plan}}</h4>
+    <!--    *ngIf="clientData.length > 0"-->
+    <h4 class="pb-8 text-black">{{sub.planName}}</h4>
 
     <div class="overflow-hidden">
 
-      <table *ngIf="sub!=undefined" [appSkeletonLoading]="isLoading" [dataSource]="checkAndGenerateTableSource(sub)"
+      <table *ngIf="sub!=undefined" [appSkeletonLoading]="isLoading"
+             [dataSource]="checkAndGenerateTableSource(sub.subscriptions)"
              appSkeletonLoading
              class="mt-8 skeletonAnimation" id="table-low"
              mat-table matSort>

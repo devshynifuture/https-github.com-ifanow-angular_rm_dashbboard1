@@ -8,7 +8,6 @@ import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from '../../../../../../../auth-service/authService';
 import {UtilService} from 'src/app/services/util.service';
 import {MatTableDataSource} from '@angular/material/table';
-import * as _ from 'lodash';
 
 // import { element } from 'protractor';
 export interface PeriodicElement {
@@ -42,7 +41,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   // newArray: any[];
   clientData;
   advisorId;
-  subscriptionData: Array<any> = [[{}, {}, {}]];
+  subscriptionData: Array<any> = [{subscriptions: [{}, {}, {}], planName: ''}];
   @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService,
@@ -117,7 +116,8 @@ export class ClientUpperSubscriptionComponent implements OnInit {
       offset: 0,
       order: 0,
     };
-    this.subscriptionData = [[{}, {}, {}]];
+
+    this.subscriptionData = [{subscriptions: [{}, {}, {}], planName: ''}];
     this.subscription.getSubSummary(obj).subscribe(
       data => this.getSubSummaryRes(data), (error) => {
         this.eventService.showErrorMessage(error);
@@ -154,34 +154,39 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     this.isLoading = false;
     // console.log(data, data[0].clientName, 'hi client');
     this.subscriptionData = [];
+    const planWiseMap = {};
 
     if (data == undefined) {
     } else if (data.length > 0) {
 
-      const planWiseMap = {};
       for (const d of data) {
         if (d.subscriptionPricing.feeTypeId == 1) {
           d.serviceTypeName = 'FIXED';
         } else {
           d.serviceTypeName = 'VARIABLE';
         }
-        planWiseMap[d.planName]
-        d.planName
-
+        let singlePlanWiseArray: Array<any> = planWiseMap[d.planName];
+        if (!singlePlanWiseArray) {
+          singlePlanWiseArray = [];
+          this.subscriptionData.push({planName: d.planName, subscriptions: singlePlanWiseArray});
+          planWiseMap[d.planName] = singlePlanWiseArray;
+        }
+        singlePlanWiseArray.push(d);
       }
       // this.clientData = data;
 
-      this.subscriptionData = _.map(_.groupBy(data, (n) => {
-        return n.planName;
-      }));
-      this.subscriptionData.forEach(element => {
-        element.forEach(n => {
-          element.plan = (n.planName);
-        });
-      });
+      /* this.subscriptionData = _.map(_.groupBy(data, (n) => {
+         return n.planName;
+       }));
+       this.subscriptionData.forEach(element => {
+         element.forEach(n => {
+           element.plan = (n.planName);
+         });
+       });*/
 
     } else {
     }
+    console.log('client Subscription planWiseMap **********', planWiseMap);
 
     console.log('client Subscription getSubSummaryRes **********', this.subscriptionData);
 
