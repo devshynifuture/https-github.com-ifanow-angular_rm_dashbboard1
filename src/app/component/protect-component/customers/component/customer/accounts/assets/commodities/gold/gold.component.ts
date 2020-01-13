@@ -7,6 +7,7 @@ import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-gold',
@@ -34,7 +35,7 @@ export class GoldComponent implements OnInit {
   fdYears: string[];
   clientId: any;
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService) { }
+  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService,public eventService:EventService) { }
 
   @Input()
   set data(data) {
@@ -58,8 +59,8 @@ export class GoldComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
-  Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' })
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })
   }
   showLess(value) {
     if (value == true) {
@@ -142,10 +143,14 @@ export class GoldComponent implements OnInit {
   }
   addGoldRes(data) {
     console.log('addrecuringDepositRes', data)
-    this.subInjectService.changeNewRightSliderState({flag:'addedGold', state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedGold', state: 'close', data,refreshRequired:true })
+    this.eventService.openSnackBar('Gold added successfully', 'OK');
+
   }
   editGoldRes(data) {
-    this.subInjectService.changeNewRightSliderState({flag:'addedGold', state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedGold', state: 'close', data,refreshRequired:true })
+    this.eventService.openSnackBar('Gold edited successfully', 'OK');
+
   }
 
 }

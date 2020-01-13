@@ -7,7 +7,6 @@ import { CustomerService } from '../../customer/customer.service';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import * as _ from 'lodash';
-import { element } from 'protractor';
 import { DataComponent } from '../../../../../../interfaces/data.component';
 
 @Component({
@@ -362,7 +361,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         "clientId": this.clientId,
         "advisorId": this.advisorId,
         "ownerName": "",
-        "commencementDate": this.lifeInsuranceForm.get('commencementDate').value._d,
+        "commencementDate": this.lifeInsuranceForm.get('commencementDate').value,
         "sumAssured": this.lifeInsuranceForm.get('sumAssured').value,
         "policyStatusId": this.lifeInsuranceForm.get('policyStatus').value,
         "lastUnpaidPremium": this.lifeInsuranceForm.get('policyStatusLastUnpaid').value,

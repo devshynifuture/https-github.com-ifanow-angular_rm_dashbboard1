@@ -61,8 +61,8 @@ export class AddEPFComponent implements OnInit {
       this.showHide = true;
     }
   }
-  Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' })
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag})
   }
   onChange(event) {
     if (parseInt(event.target.value) > 100) {
@@ -145,10 +145,10 @@ export class AddEPFComponent implements OnInit {
   addEPFRes(data) {
     console.log('addrecuringDepositRes', data)
     this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data ,refreshRequired:true})
   }
   editEPFRes(data) {
     this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data ,refreshRequired:true})
   }
 }

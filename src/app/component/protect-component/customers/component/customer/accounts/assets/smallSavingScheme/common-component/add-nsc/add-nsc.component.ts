@@ -166,10 +166,10 @@ export class AddNscComponent implements OnInit {
   addNSCResponse(data) {
     (this.editApi) ? this.eventService.openSnackBar("NSC is edited", "dismiss") : this.eventService.openSnackBar("NSC is added", "dismiss")
     console.log(data)
-    this.close()
+    this.close(true)
   }
-  close() {
+  close(flag) {
     this.isOptionalField = true
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
   }
 }

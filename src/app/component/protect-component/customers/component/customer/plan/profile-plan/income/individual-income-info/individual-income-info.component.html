@@ -24,32 +24,32 @@
                 <div class="ml-12">
                     <div class="memberBorderBox">
                         <img src="assets/images/svg/rupessIcon.svg"
-                            *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==1">
+                            *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==1">
                         <img src="assets/images/svg/businessIcon.svg"
-                            *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==2">
+                            *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==2">
                         <img src="assets/images/svg/professionIcon.svg"
-                            *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==3">
+                            *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==3">
                         <img src="assets/images/svg/rentalIcon.svg"
-                            *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==4">
+                            *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==4">
                         <img src="assets/images/svg/pensionIcon.svg"
-                            *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==5">
+                            *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==5">
                     </div>
-                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==1">
+                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==1">
                         Salaried</p>
-                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==2">
+                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==2">
                         Buisness</p>
-                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==3">
+                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==3">
                         Profession</p>
-                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==4">
+                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==4">
                         Rental</p>
-                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==5">
+                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==5">
                         Others</p>
                 </div>
             </div>
         </div>
         <div class="col-md-8">
             <div [formGroup]="incomeNetForm">
-                <div *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeId==1" class="row pt-40">
+                <div *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==1" class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Income option</h5>
                     </div>

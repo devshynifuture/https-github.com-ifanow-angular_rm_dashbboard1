@@ -4,7 +4,7 @@
             <h4 class="mb-0 wrapper-20">ADD SENIOR CITIZEN SAVINGS SCHEME (SCSS)</h4>
         </div>
         <div class="col-md-4 text-right">
-            <div class="wrapper-12"> <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i> </div>
+            <div class="wrapper-12"> <i class="material-icons c-p pt-8 v-middle" (click)="close(false)"> clear</i> </div>
         </div>
     </div>
 </div>
@@ -142,7 +142,7 @@
 <div class="bottom-fixed wrapper-12 pt-16">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
         </div>
         <div (click)="addScss()" class="col-md-8 right text-right"> <button mat-button
                 class="btn-bottom br-0 text-inherit">Save</button>
