@@ -1,12 +1,12 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {BackOfficeService} from '../../protect-component/AdviserComponent/backOffice/back-office.service';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { BackOfficeService } from '../../protect-component/AdviserComponent/backOffice/back-office.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import $ from 'jquery';
-import {MatProgressButtonOptions} from "../../../common/progress-button/progress-button.component";
+import { MatProgressButtonOptions } from "../../../common/progress-button/progress-button.component";
 
 @Component({
   selector: 'app-login',
@@ -42,9 +42,9 @@ export class LoginComponent implements OnInit {
     value: 0,
     disabled: false,
     fullWidth: false,
-    buttonIcon: {
-      fontIcon: 'favorite'
-    }
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
   }
 
   constructor(
@@ -150,11 +150,11 @@ export class LoginComponent implements OnInit {
   setTimeOutRecursive(event, widthPercent) {
     setTimeout(() => {
       if (this.isLoading && widthPercent <= 90) {
-        $(event.toElement).animate({width: widthPercent + '%'}, '500ms').css({width: '0%'});
+        $(event.toElement).animate({ width: widthPercent + '%' }, '500ms').css({ width: '0%' });
         this.setTimeOutRecursive(event, widthPercent + 10);
         // this.animationSpan.nativeElement.animate({width: i + '%'}, '100ms');
       } else if (!this.isLoading) {
-        $(event.toElement).animate({width: '100%'}, '500ms').css({width: '0%'});
+        $(event.toElement).animate({ width: '100%' }, '500ms').css({ width: '0%' });
       }
     }, 500);
   }

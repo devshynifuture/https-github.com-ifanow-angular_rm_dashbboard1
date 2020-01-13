@@ -100,7 +100,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   changeSelect() {
     this.dataCount = 0;
     this.dataSource.filteredData.forEach(item => {
-      console.log('item item ', item);
+      // console.log('item item ', item);
       if (item.selected) {
         this.dataCount++;
       }
@@ -239,7 +239,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.subService.deleteSettingsDocument(list).subscribe(
+        this.subService.deleteClientDocuments(list).subscribe(
           data => {
             this.eventService.openSnackBar('document is deleted', 'dismiss');
             // this.valueChange.emit('close');

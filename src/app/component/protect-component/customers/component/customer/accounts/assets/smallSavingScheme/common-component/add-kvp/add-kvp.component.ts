@@ -119,10 +119,10 @@ export class AddKvpComponent implements OnInit {
   addKVPResponse(data) {
     (this.editApi) ? this.eventService.openSnackBar("KVP is edited", "dismiss") : this.eventService.openSnackBar("KVP is edited", "added")
    console.log(data)
-   this.close();
+   this.close(true);
   }
-  close() {
+  close(flag) {
     this.isOptionalField = true
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
   }
 }

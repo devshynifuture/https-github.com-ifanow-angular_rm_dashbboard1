@@ -1,5 +1,5 @@
-import {Component, EventEmitter, HostListener, Input, Output} from '@angular/core';
-import {ProgressSpinnerMode, ThemePalette} from '@angular/material';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { ProgressSpinnerMode, ThemePalette } from '@angular/material';
 
 // import { MatProgressButtonOptions } from '../../mat-progress-buttons.interface';
 

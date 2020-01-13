@@ -172,11 +172,11 @@ export class AddSsyComponent implements OnInit {
   addSSYSchemeResponse(data) {
     (this.editApi) ? this.eventService.openSnackBar("SSY is edited", "dismiss") : this.eventService.openSnackBar("SSY is edited", "added")
     console.log(data)
-    this.close()
+    this.close(true)
   }
 
-  close() {
+  close(flag) {
     this.isOptionalField = true
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
   }
 }

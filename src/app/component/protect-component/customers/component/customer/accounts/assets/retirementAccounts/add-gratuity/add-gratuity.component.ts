@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-gratuity',
@@ -29,7 +30,7 @@ export class AddGratuityComponent implements OnInit {
   ownerName: any;
   clientId: any;
 
-  constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe,public utils: UtilService) { }
+  constructor(private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe,public utils: UtilService,public event:EventService) { }
 
   @Input()
   set data(data) {
@@ -56,8 +57,8 @@ export class AddGratuityComponent implements OnInit {
       this.showHide = true;
     }
   }
-  Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' })
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })
   }
   // getDateYMD(){
   //   let now = moment();
@@ -126,9 +127,12 @@ export class AddGratuityComponent implements OnInit {
   }
   addGratuityRes(data){
     console.log('addrecuringDepositRes', data)
-    this.subInjectService.changeNewRightSliderState({flag:'addedGratuity', state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedGratuity', state: 'close', data,refreshRequired:true })
+    this.event.openSnackBar('Added successfully!', 'dismiss');
   }
   editGratuityRes(data){
-    this.subInjectService.changeNewRightSliderState({flag:'addedGratuity', state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedGratuity', state: 'close', data,refreshRequired:true })
+    this.event.openSnackBar('Updated successfully!', 'dismiss');
+
   }
 }

@@ -55,8 +55,8 @@ export class OthersComponent implements OnInit {
     this.familyMemberId = value.id;
   }
 
-  Close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({state: 'close',refreshRequired:flag});
   }
   onChange(event) {
     if (parseInt(event.target.value) > 100) {
@@ -135,11 +135,11 @@ export class OthersComponent implements OnInit {
 
   addOthersRes(data) {
     console.log('addrecuringDepositRes', data);
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({state: 'close', data ,refreshRequired:true});
   }
 
   editOthersRes(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({state: 'close', data ,refreshRequired:true});
   }
 
 }

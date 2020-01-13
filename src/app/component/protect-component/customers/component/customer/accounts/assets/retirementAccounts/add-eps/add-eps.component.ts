@@ -58,8 +58,8 @@ export class AddEPSComponent implements OnInit {
       this.showHide = true;
     }
   }
-  Close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' })
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })
   }
   // getDateYMD(){
   //   let now = moment();
@@ -128,10 +128,10 @@ export class AddEPSComponent implements OnInit {
   addEPSRes(data){
     console.log('addrecuringDepositRes', data)
      this.event.openSnackBar('Added successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({flag:'addedEps', state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedEps', state: 'close', data ,refreshRequired:true })
   }
   editEPSRes(data){
      this.event.openSnackBar('Updated successfully!', 'dismiss');
-    this.subInjectService.changeNewRightSliderState({flag:'addedEps', state: 'close', data })
+    this.subInjectService.changeNewRightSliderState({flag:'addedEps', state: 'close', data ,refreshRequired:true })
   }
 }
