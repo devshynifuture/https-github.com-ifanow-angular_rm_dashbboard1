@@ -434,6 +434,8 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
   // @Output() valueChange = new EventEmitter();
   deleteModal(data) {
+    console.log(data, "data document");
+    
     let list = [];
     if(data == null){
       this.dataSource.filteredData.forEach(singleElement => {
@@ -443,7 +445,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       });
     }
     else{
-      [data.documentRepositoryId]
+      list =[data.documentRepositoryId];
     }
     const dialogData = {
       data: 'DOCUMENT',
@@ -457,7 +459,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
           data => {
             this.eventService.openSnackBar('document is deleted', 'dismiss');
             // this.valueChange.emit('close');
-            dialogRef.close();
+            dialogRef.close(list);
             // this.getRealEstate();
           },
           error => this.eventService.showErrorMessage(error)
@@ -476,16 +478,19 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if(result.length > 0){
+        const tempList = []
+        this.dataSource.data.forEach(singleElement => {
+          if (!singleElement.selected && result.length > 1) {
+            tempList.push(singleElement);
+          }
+          else if (result[0] !=  singleElement.documentRepositoryId){
+            tempList.push(singleElement);
+          }
+        });
+        this.dataSource.data = tempList;
+      }
       console.log(result,this.dataSource.data,"delete result");
-      const tempList = []
-      this.dataSource.data.forEach(singleElement => {
-        if (!singleElement.selected) {
-          tempList.push(singleElement);
-        }
-      });
-      this.dataSource.data = tempList;
-
-     
     });
 
   }

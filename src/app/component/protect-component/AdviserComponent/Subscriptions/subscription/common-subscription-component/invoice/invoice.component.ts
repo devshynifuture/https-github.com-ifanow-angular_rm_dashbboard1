@@ -39,6 +39,8 @@ export class InvoiceComponent implements OnInit {
   sgstTaxAmount: any;
   showEditIn: boolean;
   service: { serviceName: any; averageFees: any; description: any; fromDate: any; toDate: any; }[];
+  feeCalc: boolean;
+  rpyment=true;
 
   [x: string]: any;
 
@@ -199,7 +201,7 @@ export class InvoiceComponent implements OnInit {
   }
   display(value) {
     console.log(value)
-    this.cancel();
+    this.cancel(value);
   }
   getPaymentReceivedRes(data) {
     this.dataSource = data;
@@ -209,6 +211,7 @@ export class InvoiceComponent implements OnInit {
       this.showPaymentRecive = true;
     }
     if (data) {
+      
       this.feeCollectionMode.forEach(o => {
         o.value = parseInt(o.value);
         this.dataSource.forEach(sub => {
@@ -356,6 +359,10 @@ export class InvoiceComponent implements OnInit {
     console.log('@@@@@@@@', data);
     this.copyStoreData = data;
     this.storeData = data;
+    if(this.storeData.balanceDue==0)
+    {
+      this.rpyment=false
+    }
     this.clientId = AuthService.getClientId();
     this.auto = this.storeData.auto;
     console.log(this.storeData);
@@ -570,7 +577,10 @@ export class InvoiceComponent implements OnInit {
     // this.sendRecordPaymentData.add=false;
   }
 
-  cancel() {
+  cancel(value) {
+    if(value!=undefined){
+      this.storeData.balanceDue=value.balanceDue;
+    }
     this.showRecord = false;
     const obj = {
       invoiceId: this.storeData.id

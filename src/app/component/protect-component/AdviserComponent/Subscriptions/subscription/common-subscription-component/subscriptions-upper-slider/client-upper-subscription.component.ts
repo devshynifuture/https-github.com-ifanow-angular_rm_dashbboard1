@@ -8,7 +8,6 @@ import {SubscriptionService} from '../../../subscription.service';
 import {AuthService} from '../../../../../../../auth-service/authService';
 import {UtilService} from 'src/app/services/util.service';
 import {MatTableDataSource} from '@angular/material/table';
-
 // import { element } from 'protractor';
 export interface PeriodicElement {
   service: string;
@@ -21,10 +20,7 @@ export interface PeriodicElement {
   ndate: string;
   mode: string;
 }
-
-
 @Component({
-
   selector: 'app-client-upper-subscription',
   templateUrl: './client-upper-subscription.component.html',
   styleUrls: ['./client-upper-subscription.component.scss']
@@ -43,37 +39,26 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   advisorId;
   subscriptionData: Array<any> = [{subscriptions: [{}, {}, {}], planName: ''}];
   @ViewChild(MatSort, {static: false}) sort: MatSort;
-
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService,
               public dialog: MatDialog, public subscription: SubscriptionService) {
   }
-
   ELEMENT_DATA;
   // dataSource: any;
-
-
   displayedColumns: string[] = ['service', 'amt', 'type', 'subs', 'status', 'date', 'bdate', 'ndate', 'mode', 'icons'];
-
   @Input() set upperData(data) {
-
     console.log(data);
     this.advisorId = AuthService.getAdvisorId();
     this.clientData = data;
     this.getSummaryDataClient();
   }
-
-
   ngOnInit() {
-
   }
-
   openPlanSlider(value, state, data) {
     if (this.isLoading) {
       return;
     }
     if (data) {
       if (value == 'billerSettings' || value == 'changePayee' || value == null) {
-
       } else if (data.subscriptionPricing.feeTypeId == 1) {
         value = 'createSubFixed';
         data.subFlag = 'createSubFixed';
@@ -96,18 +81,16 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          this.getSummaryDataClient();
+          this.ngOnInit();
           rightSideDataSub.unsubscribe();
         }
       }
     );
     // this.subInjectService.pushUpperData(data)
   }
-
   getSummaryDataClient() {
     this.isLoading = true;
     const obj = {
-
       advisorId: this.advisorId,
       clientId: this.clientData.id,
       flag: 4,
@@ -116,7 +99,6 @@ export class ClientUpperSubscriptionComponent implements OnInit {
       offset: 0,
       order: 0,
     };
-
     this.subscriptionData = [{subscriptions: [{}, {}, {}], planName: ''}];
     this.subscription.getSubSummary(obj).subscribe(
       data => this.getSubSummaryRes(data), (error) => {
@@ -126,7 +108,6 @@ export class ClientUpperSubscriptionComponent implements OnInit {
       }
     );
   }
-
   Open(state, data) {
     let feeMode;
     data.isCreateSub = true;
@@ -142,23 +123,19 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isRefreshRequired(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          this.getSummaryDataClient();
+          this.ngOnInit();
           rightSideDataSub.unsubscribe();
-
         }
       }
     );
   }
-
   getSubSummaryRes(data) {
     this.isLoading = false;
     // console.log(data, data[0].clientName, 'hi client');
     this.subscriptionData = [];
     const planWiseMap = {};
-
     if (data == undefined) {
     } else if (data.length > 0) {
-
       for (const d of data) {
         if (d.subscriptionPricing.feeTypeId == 1) {
           d.serviceTypeName = 'FIXED';
@@ -174,7 +151,6 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         singlePlanWiseArray.push(d);
       }
       // this.clientData = data;
-
       /* this.subscriptionData = _.map(_.groupBy(data, (n) => {
          return n.planName;
        }));
@@ -183,15 +159,11 @@ export class ClientUpperSubscriptionComponent implements OnInit {
            element.plan = (n.planName);
          });
        });*/
-
     } else {
     }
     console.log('client Subscription planWiseMap **********', planWiseMap);
-
     console.log('client Subscription getSubSummaryRes **********', this.subscriptionData);
-
   }
-
   checkAndGenerateTableSource(dataArray) {
     // console.log('checkAndGenerateTableSource dataArray : ', dataArray);
     if (dataArray) {
@@ -206,7 +178,6 @@ export class ClientUpperSubscriptionComponent implements OnInit {
       return null;
     }
   }
-
   deleteModal(value, subData) {
     const dialogData = {
       data: value,
@@ -227,27 +198,20 @@ export class ClientUpperSubscriptionComponent implements OnInit {
             this.getSummaryDataClient();
           }
         );
-
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
       }
     };
     console.log(dialogData + '11111111111111');
-
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
       autoFocus: false,
-
     });
-
     dialogRef.afterClosed().subscribe(result => {
-
     });
-
   }
-
   delete(data, value) {
     const Fragmentdata = {
       flag: data,
@@ -264,11 +228,9 @@ export class ClientUpperSubscriptionComponent implements OnInit {
       });
     }
   }
-
   deletedData(data) {
     if (data == true) {
       this.eventService.openSnackBar('Deleted successfully!', 'dismiss');
     }
   }
-
 }

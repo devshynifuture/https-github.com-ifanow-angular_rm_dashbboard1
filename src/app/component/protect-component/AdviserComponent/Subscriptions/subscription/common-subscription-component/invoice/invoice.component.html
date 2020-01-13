@@ -66,7 +66,7 @@
               src="assets/images/svg/delete.svg">
           </div>
           <div class="col-md-4 right text-right">
-            <button (click)="recordPayment()" class="btn-primary br-0 mb-12" mat-stroked-button>RECORD
+            <button (click)="recordPayment()" class="btn-primary br-0 mb-12" *ngIf="rpyment==true" mat-stroked-button>RECORD
               PAYMENT
             </button>
           </div>
@@ -283,7 +283,7 @@
       <img (click)="deleteModal('INVOICE',element)" class="b-a wrapper-9 ml-8" src="assets/images/svg/delete.svg">
     </div>
     <div class="col-md-4 right text-right">
-      <button (click)="recordPayment()" class="btn-primary br-0 mb-8" mat-stroked-button>RECORD PAYMENT</button>
+      <button (click)="recordPayment()" class="btn-primary br-0 mb-8" *ngIf="rpyment==true" mat-stroked-button>RECORD PAYMENT</button>
     </div>
   </div>
   <div *ngIf="showRecord==false && feeCalc==false" class="b-a m-20 mb-100 pb-28">
@@ -409,7 +409,9 @@
                   <p class="f-500 roboto pt-8">Balance due</p>
                 </div>
                 <div class="col-md-4 text-right">
+                  <!-- <p class="f-500 roboto pt-8 ">{{formatter(storeData.balanceDue)}}</p> -->
                   <p class="f-500 roboto pt-8 ">{{formatter(storeData.balanceDue)}}</p>
+                  
                 </div>
               </div>
             </div>

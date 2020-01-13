@@ -3,6 +3,7 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-record-payment',
@@ -20,8 +21,11 @@ export class RecordPaymentComponent implements OnInit {
     amountReceived: any; chargeIfAny: any; TDS: any; paymentDate: any; paymentMode: any; gstTreatment: any; notes: any;
   }[];
   advisorId: any;
+  balDue: any;
+  tdsAmt: any;
+  showError=false;
 
-  constructor(public subService: SubscriptionService, private fb: FormBuilder, public enumService: EnumServiceService,public AuthService:AuthService) { }
+  constructor(public subService: SubscriptionService, private fb: FormBuilder, public enumService: EnumServiceService,public AuthService:AuthService,public utils:UtilService) { }
   @Input() InvRecordData;
   @Input() padding;
   @Output() outputData = new EventEmitter<Object>();
@@ -38,14 +42,16 @@ export class RecordPaymentComponent implements OnInit {
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
   }
   getRecordPayment(data) {
+    this.balDue=data.balanceDue
+
     if(data.add==true){
       data=""
     }
     console.log('payee data', data);
     this.rPayment = this.fb.group({
-      amountReceived: [data.amountReceived, [Validators.required, Validators.min(0), Validators.max(10)]],
+      amountReceived: [data.amountReceived, [Validators.required, Validators.max(this.balDue)]],
       chargesIfAny: [data.chargesIfAny, [Validators.required]],
-      tds: [data.tds, [Validators.required]],
+      tds: [data.tds, [Validators.required,Validators.max(this.tdsAmt)]],
       paymentDate: [new Date(data.paymentDate), [Validators.required]],
       paymentMode: [data.paymentMode, [Validators.required]],
       gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business', [Validators.required]],
@@ -57,7 +63,7 @@ export class RecordPaymentComponent implements OnInit {
     this.getFormControl().amountReceived.maxLength = 10;
     this.getFormControl().chargesIfAny.maxLength = 10;
     this.getFormControl().tds.maxLength = 10;
-    this.getFormControl().notes.maxLength = 40;
+    this.getFormControl().notes.maxLength = 60;
     this.getPayReceive(this.InvRecordData.id);
 
   }
@@ -74,8 +80,8 @@ export class RecordPaymentComponent implements OnInit {
     );
   }
 
-  cancel() {
-    this.outputData.emit('close');
+  cancel(data) {
+    this.outputData.emit(data);
     this.rPayment.reset();
 
     // this.showRecord = false;
@@ -86,7 +92,15 @@ export class RecordPaymentComponent implements OnInit {
     //   data => this.getPaymentReceivedRes(data)
     // );
   }
-
+  onChange(){
+    this.tdsAmt=this.balDue-this.rPayment.get('amountReceived').value
+    if(this.rPayment.get('tds').value>this.tdsAmt){
+      this.showError=true
+    }else{
+      this.showError=false;
+    }
+    // this.rPayment.get('tds').errors.max=this.tdsAmt
+  }
   getPaymentReceivedRes(data) {
     this.dataSource = data;
     if (data == undefined) {
@@ -106,19 +120,13 @@ export class RecordPaymentComponent implements OnInit {
     }
   }
   saveFormData() {
-    // if (this.rPayment.get('amountReceived').invalid) {
-    //   this.rPayment.get('amountReceived').markAsTouched();
-    //   return
-    // } else 
-    if (this.rPayment.get('chargesIfAny').invalid) {
-      this.rPayment.get('chargesIfAny').markAsTouched();
+    if (this.rPayment.get('amountReceived').value==null || this.rPayment.get('amountReceived').value=="") {
+      this.rPayment.get('amountReceived').markAsTouched();
       return
-
     } else if (this.rPayment.get('tds').invalid) {
       this.rPayment.get('tds').markAsTouched();
       return
-    } else
-    if (this.rPayment.get('paymentDate').invalid) {
+    } else if (this.rPayment.get('paymentDate').invalid) {
       this.rPayment.get('paymentDate').markAsTouched();
       return
     } else if (this.rPayment.get('paymentMode').invalid) {
@@ -128,7 +136,9 @@ export class RecordPaymentComponent implements OnInit {
     } else if (this.rPayment.get('gstTreatment').invalid) {
       this.rPayment.get('gstTreatment').markAsTouched();
       return
-    } else {
+    } else if(this.showError==true){
+      return false
+     }else {
       this.formObj = [{
         advisorId: this.advisorId,
         // advisorId: 12345,
@@ -208,7 +218,7 @@ export class RecordPaymentComponent implements OnInit {
     this.subService.getPaymentReceive(obj).subscribe(
       data => this.getPaymentReceivedRes(data)
     );
-    this.cancel();
+    this.cancel(data);
   }
 
 }

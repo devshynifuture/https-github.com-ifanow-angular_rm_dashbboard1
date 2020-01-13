@@ -5,53 +5,46 @@
   <div class="align-center">
     <div class="row">
       <div class="col-md-12 pt-150">
-        <h5 class="pt-44">Hey, it seems {{clientData.name}} hasn’t been subscribed to any Services
+        <h5 class="pt-44">Hey, it seems {{clientData.name}} hasn't been subscribed to any Services
           yet. You need to add a Plan to get going. </h5>
         <h5>Once a Plan is added, all the associated Services (along with the fee structure) will be added. If
           you want, you can customize the fee structure for this client. Each Service will have it’s own
           Subscription attached to it.
         </h5>
         <h5>Next, you will be able to send Quotations, sign Documents etc.</h5>
-        <h5>Let’s get started!</h5>
+        <h5>Let's get started!</h5>
         <button (click)="openPlanSlider('planRightSlider','open',null)" class="btn-primary br-0 mt-44"
-                mat-stroked-button>Add
+          mat-stroked-button>Add
           Plan
         </button>
       </div>
     </div>
   </div>
 </div>
-
 <div class="bg-white">
   <!-- <div class="bg-grey lter heading-fix p-20 b-a">
-     <div class="row">
-       <div class="col-md-12">
-         <h2 class="m-0">{{clientData.name}}</h2>
+       <div class="row">
+         <div class="col-md-12">
+           <h2 class="m-0">{{clientData.name}}</h2>
+         </div>
        </div>
-     </div>
-   </div>-->
-
+     </div>-->
   <div *ngIf="subscriptionData.length > 0" class="wrapper-20 pb-0 pt-180 mt-0">
     <div class="row">
       <div class="col-md-12 p-0 pt-32">
         <button (click)="openPlanSlider('planRightSlider','open',null)" class="btn-primary br-0 right text-right addon"
-                mat-stroked-button>ADD PLAN
+          mat-stroked-button>ADD PLAN
         </button>
       </div>
     </div>
   </div>
-
   <div *ngFor="let sub of subscriptionData" class="pl-40 pr-40 pb-40 mt-12 col-md-12">
     <!--    *ngIf="clientData.length > 0"-->
     <h4 class="pb-8 text-black">{{sub.planName}}</h4>
-
     <div class="overflow-hidden">
-
       <table *ngIf="sub!=undefined" [appSkeletonLoading]="isLoading"
-             [dataSource]="checkAndGenerateTableSource(sub.subscriptions)"
-             appSkeletonLoading
-             class="mt-8 skeletonAnimation" id="table-low"
-             mat-table matSort>
+        [dataSource]="checkAndGenerateTableSource(sub.subscriptions)" appSkeletonLoading class="mt-8 skeletonAnimation"
+        id="table-low" mat-table matSort>
         <ng-container matColumnDef="service">
           <th *matHeaderCellDef class="f-18 w-23" mat-header-cell mat-sort-header="serviceName">
             Service name
@@ -64,12 +57,15 @@
         </ng-container>
         <ng-container matColumnDef="amt">
           <th *matHeaderCellDef class="f-18" mat-header-cell> Fee amount</th>
-          <td (click)="Open('open',element)" *matCellDef="let element" class="c-p text-primary text-underline"
-              mat-cell>
-            <div class="bar"> {{isLoading ? ' ' : 'View details'}} </div>
+          <td (click)="Open('open',element)" *matCellDef="let element" class="c-p" mat-cell>
+            <div class="bar text-primary text-underline" (click)="Open('open',element)"
+              *ngIf="element.startsOn==undefined"> {{isLoading ? ' ' : 'View details'}} </div>
+            <div *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==1">
+              {{element.subscriptionPricing.subscriptionAssetPricingList[0].pricing}}</div>
+            <div *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==2">
+              {{element.subscriptionPricing.subscriptionAssetPricingList[2].pricing}}</div>
           </td>
         </ng-container>
-
         <ng-container matColumnDef="type">
           <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="feeTypeId"> Fee type
           </th>
@@ -79,7 +75,6 @@
             </div>
           </td>
         </ng-container>
-
         <ng-container matColumnDef="subs">
           <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="subscriptionNumber">
             Subscription #
@@ -90,7 +85,6 @@
             {{element.subscriptionNumber}}
           </td>
         </ng-container>
-
         <ng-container matColumnDef="status">
           <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="status"> Status</th>
           <td *matCellDef="let element" mat-cell>
@@ -102,7 +96,6 @@
             </div>
           </td>
         </ng-container>
-
         <ng-container matColumnDef="date">
           <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="startsOn"> Activation date
           </th>
@@ -114,7 +107,6 @@
                 <button class="btn-header btn-xs ml-8 br-0 btn-sm" mat-stroked-button>START</button>
               </div>
             </div>
-
           </td>
         </ng-container>
         <ng-container matColumnDef="bdate">
@@ -146,20 +138,18 @@
         <ng-container matColumnDef="icons">
           <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;"></th>
           <td *matCellDef="let element" mat-cell style="width: 2%;">
-
-            <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu"
-               class="material-icons c-p iconscolors">
+            <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu" class="material-icons c-p iconscolors">
               more_vert
             </i>
             <mat-menu #menu="matMenu">
-              <a (click)="Open('open',element)" mat-menu-item>View & Edit fee structure</a>
-              <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1"
-                 mat-menu-item>Change
+              <a (click)="Open('open',element)" *ngIf="element.startsOn==undefined" mat-menu-item>View & Edit fee
+                structure</a>
+              <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change
                 Biller</a>
               <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change
                 Payee</a>
               <a (click)="delete('cancelSubscription',element)" *ngIf="element.status!=1" class="bt-1"
-                 mat-menu-item>Cancel subscription</a>
+                mat-menu-item>Cancel subscription</a>
               <a (click)="deleteModal('SUBSCRIPTION',element)" mat-menu-item>Delete
                 subscription</a>
             </mat-menu>
@@ -168,9 +158,6 @@
         <tr *matHeaderRowDef="displayedColumns; sticky : true" mat-header-row></tr>
         <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
       </table>
-
     </div>
-
-
   </div>
 </div>

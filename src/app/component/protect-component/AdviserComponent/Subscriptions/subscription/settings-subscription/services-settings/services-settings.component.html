@@ -26,8 +26,8 @@
                             </mat-card-title>
 
                             <mat-card-subtitle class="pt-4 pb-12 relClass">
-                                {{singleService.serviceCode}}
-
+                                <div class="bar" [ngClass]="{'height23': isLoading}"> {{singleService.serviceCode}}
+                                </div>
                                 <p class="m-0 text-sl" matTooltip="{{singleService.description}}" aria-label="Button that displays a tooltip when focused or hovered over">
                                     {{singleService.description}}</p>
                             </mat-card-subtitle>
@@ -75,16 +75,16 @@
                             <div class="col-md-5 p-0">
                                 <p class="f-12 mb-0 text-primitive" *ngIf="feesDisplay==true">
                                     Fees</p>
-                                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==1 && feesDisplay==false" class="f-12 mb-0 text-primitive">
-                                    Fees
+                                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==1" class="f-12 mb-0 text-primitive">
+                                    FEES
                                 </p>
-                                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2 && feesDisplay==false" class="f-12 mb-0 text-primitive">Other asset fees</p>
+                                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2" class="f-12 mb-0 text-primitive">OTHER ASSET FEES</p>
                                 <div class="relClass">
                                     <div class="bar" [ngClass]="{'height23': isLoading}">
                                         <h4 *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2" class="m-0 p-0 text-lighter lh-16 f-16">
-                                            {{singleService.averageFees}}%/ Year</h4>
+                                            {{singleService.averageFees}}%</h4>
                                         <h4 *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==1" class="m-0 p-0 text-lighter lh-16 f-16">
-                                            Rs{{singleService.averageFees}}/ Year</h4>
+                                            Rs{{singleService.averageFees}}</h4>
                                     </div>
                                 </div>
                             </div>
