@@ -335,24 +335,6 @@ export class InvoiceComponent implements OnInit {
   getRecordPayment(data) {
     this.recordData = data
     this.getPayReceive(data.id);
-    // console.log('payee data', data);
-    // this.rPayment = this.fb.group({
-    //   amountReceived: [data.amountReceived, [Validators.required, Validators.min(0), Validators.max(10)]],
-    //   chargesIfAny: [data.chargesIfAny, [Validators.required]],
-    //   tds: [data.tds, [Validators.required]],
-    //   paymentDate: [new Date(data.paymentDate), [Validators.required]],
-    //   paymentMode: [data.paymentMode, [Validators.required]],
-    //   gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business', [Validators.required]],
-    //   notes: [data.notes],
-    //   id: [data.id],
-    //   editFormData: [true]
-    // });
-
-    // this.getFormControl().amountReceived.maxLength = 10;
-    // this.getFormControl().chargesIfAny.maxLength = 10;
-    // this.getFormControl().tds.maxLength = 10;
-    // this.getFormControl().notes.maxLength = 40;
-
   }
 
   getInvoiceData(data) {
@@ -536,14 +518,14 @@ export class InvoiceComponent implements OnInit {
   updateInvoiceInfoRes(data) {
     console.log('updateInvoiceInfoRes', data);
     if (data == 1) {
-      this.Close('close');
+      this.Close('close', true);
     }
   }
 
   addInvoiceRes(data) {
     console.log('addInvoiceRes', data);
     if (data == 1) {
-      this.Close('close');
+      this.Close('close',true);
     }
   }
 
@@ -624,7 +606,11 @@ export class InvoiceComponent implements OnInit {
     }
   }
 
-  Close(state) {
+  Close(state, dismiss) {
+    const closeObj = {
+      dataString : this.invoiceInSub,
+      closingState : dismiss
+    }
     if (this.showRecord == true) {
       this.showRecord = false;
       const obj = {
@@ -637,8 +623,9 @@ export class InvoiceComponent implements OnInit {
     } else if (this.feeCalc == true) {
       this.feeCalc = false;
     } else {
+      
       (this.invoiceTab == 'invoiceUpperSlider') ? this.subInjectService.rightSliderData(state) : this.subInjectService.rightSideData(state);
-      this.valueChange.emit(this.invoiceInSub);
+      this.valueChange.emit(closeObj);
     }
 
   }
@@ -726,7 +713,7 @@ export class InvoiceComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('this is template result delete::', result);
 
-      this.Close(result);
+      this.Close(result, true);
     });
 
   }
