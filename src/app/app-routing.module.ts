@@ -7,7 +7,6 @@ import {SelectivePreloadingStrategyService} from './services/selective-preloadin
 import {ErrorPageComponent} from './component/protect-component/common-component/error-page/error-page.component';
 import {DataNotFoundComponent} from './component/protect-component/common-component/data-not-found/data-not-found.component';
 import {AuthGuard} from './guards/auth.guard';
-import {ProgressButtonComponent} from './common/progress-button/progress-button.component';
 import {FormTestComponent} from './test/form-test/form-test.component';
 
 const routes: Routes = [
@@ -112,10 +111,10 @@ const routes: Routes = [
     path: 'data-not-found',
     component: DataNotFoundComponent
   },
-  {
+ /* {
     path: 'buttons',
     component: ProgressButtonComponent
-  },
+  },*/
   {
     path: 'test',
     component: FormTestComponent
