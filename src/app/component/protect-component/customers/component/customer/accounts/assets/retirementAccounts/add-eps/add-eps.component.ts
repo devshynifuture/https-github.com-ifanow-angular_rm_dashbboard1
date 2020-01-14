@@ -94,6 +94,9 @@ export class AddEPSComponent implements OnInit {
     if (this.eps.get('commencementDate').invalid) {
       this.eps.get('commencementDate').markAsTouched();
       return;
+    } else if (this.eps.get('ownerName').invalid) {
+      this.eps.get('ownerName').markAsTouched();
+      return
     } else if (this.eps.get('pensionAmount').invalid) {
       this.eps.get('pensionAmount').markAsTouched();
       return;

@@ -230,6 +230,10 @@ export class FixedDepositComponent implements OnInit {
       this.fixedDeposit.get('FDType').markAsTouched();
       return
     }
+    else if (this.fixedDeposit.get('ownerName').invalid) {
+      this.fixedDeposit.get('ownerName').markAsTouched();
+      return
+    }
     else if (this.fixedDeposit.get('amountInvest').invalid) {
       this.fixedDeposit.get('amountInvest').markAsTouched();
       return

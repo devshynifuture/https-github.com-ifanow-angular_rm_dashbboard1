@@ -309,7 +309,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     if (this.filterDate.length >= 1) {
       this.filterDate = []
     }
-    this.filterDate.push((dateFilter == "1: Object") ? 1 : (dateFilter == "2: Object") ? 2 : 3);
+    this.filterDate.push(dateFilter.value);
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     UtilService.getStartOfTheDay(beginDate);

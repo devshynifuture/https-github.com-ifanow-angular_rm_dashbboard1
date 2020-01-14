@@ -7,14 +7,12 @@ import {AuthService} from 'src/app/auth-service/authService';
   selector: 'app-owner-column',
   templateUrl: './owner-column.component.html',
   styleUrls: ['./owner-column.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 
 })
 export class OwnerColumnComponent implements OnInit {
 
   isownerName = false;
   owner;
-  // s: string[] = ['Sneha', 'gayatri', 'Shivani'];
   family = [];
   advisorId: any;
   ownerData: any;
@@ -32,9 +30,7 @@ export class OwnerColumnComponent implements OnInit {
     this.ownerData = data;
     console.log('1111121212121212121212 OwnerColumnComponent data : ', data);
     if (data) {
-      // this.owner = data;
     }
-    // this.getListFamilyMem();
   }
 
   get data() {
@@ -45,11 +41,7 @@ export class OwnerColumnComponent implements OnInit {
     console.log('ownerData', this.ownerData);
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    // this.getListFamilyMem();
-
-    // this.getListFamilyMem('');
     this.getdataForm();
-    // this.family = this.s;
     this.getListFamilyMem();
 
   }

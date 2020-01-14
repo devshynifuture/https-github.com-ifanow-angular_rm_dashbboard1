@@ -1,5 +1,5 @@
-import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { ProgressSpinnerMode, ThemePalette } from '@angular/material';
+import {AfterViewInit, Component, EventEmitter, HostListener, Input, Output} from '@angular/core';
+import {ProgressSpinnerMode, ThemePalette} from '@angular/material';
 
 // import { MatProgressButtonOptions } from '../../mat-progress-buttons.interface';
 
@@ -8,15 +8,29 @@ import { ProgressSpinnerMode, ThemePalette } from '@angular/material';
   templateUrl: './progress-button.component.html',
   styleUrls: ['./progress-button.component.scss']
 })
-export class ProgressButtonComponent {
+export class ProgressButtonComponent implements AfterViewInit {
   @Input() options: MatProgressButtonOptions;
   @Output() btnClick: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
+
+  /*@ViewChild('progressBar', {
+    static: false, read: ElementRef,
+  }) progressBar: ElementRef;*/
+
+  // progressBarStyle;
 
   @HostListener('click', ['$event'])
   public onClick(event: MouseEvent) {
     if (!this.options.disabled && !this.options.active) {
       this.btnClick.emit(event);
+    } else if (this.options.active) {
+      // console.log(' progressBar : ', this.progressBar);
+      // console.log(' progressBar nativeElement : ', this.progressBar.nativeElement);
     }
+  }
+
+  ngAfterViewInit(): void {
+    // this.progressBarStyle = '{\'background-color\': \'red\'}';
+
   }
 
 }

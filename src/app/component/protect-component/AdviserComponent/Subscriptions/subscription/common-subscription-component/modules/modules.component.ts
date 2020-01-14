@@ -82,14 +82,24 @@ export class ModulesComponent implements OnInit {
     const data = {
       serviceModuleMappingList: []
     };
-    this.mappedData.forEach(element => {
+    if(this.mappedData.length!=0){
+      this.mappedData.forEach(element => {
+        const obj = {
+          active: element.selected,
+          serviceId: this.upperData.id,
+          subModuleId: element.subModuleId
+        };
+        data.serviceModuleMappingList.push(obj);
+      });
+    }else{
       const obj = {
-        active: element.selected,
+        active:true,
         serviceId: this.upperData.id,
-        subModuleId: element.subModuleId
+        subModuleId: 0
       };
       data.serviceModuleMappingList.push(obj);
-    });
+    }
+    
     this.subService.mapModuleToplanData(data).subscribe(
       data => this.mapModuleToPlanResponse(data)
     );
@@ -98,6 +108,10 @@ export class ModulesComponent implements OnInit {
   mapModuleToPlanResponse(data) {
     this.dialogClose();
     console.log('Module Map data', data);
-    this.eventService.openSnackBar('Module is mapped', 'OK');
+    if(this.mappedData.length!=0){
+      this.eventService.openSnackBar('Module is mapped', 'OK');
+    }else{
+      this.eventService.openSnackBar('No module is mapped', 'OK');
+    }
   }
 }

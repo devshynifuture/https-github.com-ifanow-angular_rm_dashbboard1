@@ -40,7 +40,7 @@
                                 <li class="breadcrumb-item c-p" (click)="reset()">
                                     <span>{{tabValue || 'Documents'}}</span></li>
 
-                                <li class="breadcrumb-item active c-p" (click)="getFolders(folder)" *ngFor="let folder of openFolderName">{{ folder.openFolderNm }}</li>
+                                <li class="breadcrumb-item active c-p" (click)="getFolders(folder)" *ngFor="let folder of openFolderName">{{folder.openFolderNm }}</li>
                             </ol>
                         </div>
                         <div class="col-md-6 p-0 d-flex justify-content-end">
@@ -89,13 +89,13 @@
                     </div>
 
                     <!-- <div *ngIf="showLoader==true">
-                        <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-                    </div> -->
+                            <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+                        </div> -->
 
                     <div class="row">
                         <div class="col-md-9 p-0 documentsTable" *ngSwitchCase="viewMode">
                             <div *ngIf="!areFoldersAndFilesEmpty">
-                                <table mat-table matSort [dataSource]="commonFileFolders" id="table-low">
+                                <table mat-table matSort [dataSource]="commonFileFolders" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                                     <ng-container matColumnDef="emptySpace">
                                         <th mat-header-cell *matHeaderCellDef> </th>
                                         <td mat-cell *matCellDef="let element"> </td>
@@ -103,9 +103,16 @@
                                     <!-- Name Column -->
                                     <ng-container matColumnDef="name">
                                         <th mat-sort-header="folderName" mat-header-cell *matHeaderCellDef> Name </th>
-                                        <td mat-cell class="c-p" *matCellDef="let element" (click)="openFolder(element)">
-                                            <img *ngIf="element.folderName != undefined" class="mr-12" src="/assets/images/svg/folder-icon.svg"> {{element.folderName}} <img *ngIf="element.isStarred == 1" class="mr-12">
-                                            <img *ngIf="element.fileName != undefined" class="mr-12" src="/assets/images/svg/file-lines.svg"> {{element.fileName}} <img *ngIf="element.isStarred == 1" class="mr-12" src="/assets/images/svg/document-star.svg">                                            </td>
+                                        <td mat-cell class="c-p" *matCellDef="let element">
+                                            <div (click)="openFolder(element)">
+                                                <div class="bar">
+                                                    <img *ngIf="element.folderName != undefined" class="mr-12" src="/assets/images/svg/folder-icon.svg"> {{element.folderName}}
+                                                    <img *ngIf="element.isStarred == 1" class="mr-12">
+                                                    <img *ngIf="element.fileName != undefined" class="mr-12" src="/assets/images/svg/file-lines.svg"> {{element.fileName}}
+                                                    <img *ngIf="element.isStarred == 1" class="mr-12" src="/assets/images/svg/document-star.svg">
+                                                </div>
+                                            </div>
+                                        </td>
                                     </ng-container>
 
                                     <!-- Weight Column -->
@@ -120,12 +127,20 @@
                                     <!-- Symbol Column -->
                                     <ng-container matColumnDef="type">
                                         <th mat-sort-header="fileTypeId" mat-header-cell *matHeaderCellDef> Type </th>
-                                        <td mat-cell *matCellDef="let element"> {{element.fileTypeId}} </td>
+                                        <td mat-cell *matCellDef="let element">
+                                            <div class="bar">
+                                                {{element.fileTypeId}}
+                                            </div>
+                                        </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="size">
                                         <th mat-sort-header="size" mat-header-cell *matHeaderCellDef> Size </th>
-                                        <td mat-cell *matCellDef="let element"> {{element.size}} </td>
+                                        <td mat-cell *matCellDef="let element">
+                                            <div class="bar">
+                                                {{element.size}}
+                                            </div>
+                                        </td>
                                     </ng-container>
                                     <ng-container matColumnDef="icons">
                                         <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
