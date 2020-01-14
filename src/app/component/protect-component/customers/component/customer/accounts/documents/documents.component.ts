@@ -53,7 +53,8 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   clientId: any;
   allFiles: any;
   AllDocs: any;
-  commonFileFolders: any;
+  data: Array<any> = [{}, {}, {}];
+  commonFileFolders = new MatTableDataSource(this.data);
   openFolderName: any;
   backUpfiles: any;
   i = 0;
@@ -63,6 +64,8 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   valueFirst: any;
   animal: any;
   name: string;
+  isLoading = false;
+  dataToCommon: any;
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private event: EventService, private router: Router, private fb: FormBuilder,
@@ -87,7 +90,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   viewMode;
 
   ngAfterViewInit(): void {
-    this.commonFileFolders = new MatTableDataSource(this.getSort);
+    this.commonFileFolders = new MatTableDataSource(this.data);
     this.commonFileFolders.sort = this.sort;
     console.log('sorted', this.commonFileFolders);
   }
@@ -95,7 +98,6 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     const tabValue = 'Documents';
     this.viewMode = 'tab1';
-    this.commonFileFolders = [];
     this.backUpfiles = [];
     this.openFolderName = [];
     this.advisorId = AuthService.getAdvisorId();
@@ -198,7 +200,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   }
 
   fileSizeConversion() {
-    this.commonFileFolders.forEach(element => {
+    this.commonFileFolders.filteredData.forEach(element => {
       const data = parseInt(element.size);
       if (data >= 1024) {
         element.size = data / 1024;
@@ -212,10 +214,11 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
 
 
   getAllFileList(tabValue) {
+
     tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : 4;
     this.valueTab = tabValue;
     this.backUpfiles = [];
-    this.commonFileFolders = [];
+    this.commonFileFolders.data = [];
     this.openFolderName = [];
     const obj = {
       advisorId: this.advisorId,
@@ -223,13 +226,19 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
       docGetFlag: tabValue,
       folderParentId: 0,
     };
-    this.showLoader = true;
+    this.isLoading = true;
+    this.commonFileFolders.data = [{}, {}, {}];
     this.custumService.getAllFiles(obj).subscribe(
-      data => this.getAllFilesRes(data, 'value')
+      data => this.getAllFilesRes(data, 'value'), (error) => {
+        this.eventService.showErrorMessage(error);
+        this.commonFileFolders.data = [];
+        this.isLoading = false;
+      }
     );
   }
 
   getAllFilesRes(data, value) {
+    this.isLoading = false;
     console.log("this is folder length and files length ")
     console.log(data.folders.length, data.files.length);
     if (data.folders.length === 0 && data.files.length === 0) {
@@ -237,35 +246,37 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
     }
     this.allFiles = data.files;
     this.AllDocs = data.folders;
-    this.commonFileFolders = data.folders;
-    this.getSort = this.commonFileFolders;
-    this.commonFileFolders.push.apply(this.commonFileFolders, this.allFiles);
-    if (this.commonFileFolders.openFolderId == undefined || this.openFolderName.length == 0) {
-      Object.assign(this.commonFileFolders, { openFolderNm: value.folderName });
-      Object.assign(this.commonFileFolders, { openFolderId: value.id });
+    this.dataToCommon = data.folders;
+    this.getSort = this.dataToCommon;
+    this.dataToCommon.push.apply(this.dataToCommon, this.allFiles);
+    if (this.dataToCommon.openFolderId == undefined || this.openFolderName.length == 0) {
+      Object.assign(this.dataToCommon, { openFolderNm: value.folderName });
+      Object.assign(this.dataToCommon, { openFolderId: value.id });
       this.parentId = (value.id == undefined) ? 0 : value.id;
       console.log('parentId', this.parentId);
-      this.openFolderName.push(this.commonFileFolders);
+      this.openFolderName.push(this.dataToCommon);
       this.valueFirst = this.openFolderName[0];
-      if (this.commonFileFolders.length > 0) {
+      if (this.dataToCommon.length > 0) {
+        this.commonFileFolders = this.dataToCommon
+        this.commonFileFolders = new MatTableDataSource(this.dataToCommon);
+        this.commonFileFolders.sort = this.sort;
         this.fileTypeGet();
-        this.backUpfiles.push(this.commonFileFolders);
+        this.backUpfiles.push(this.dataToCommon);
       }
       console.log('this.backUpfiles', this.backUpfiles);
+      this.commonFileFolders = this.dataToCommon
+      this.commonFileFolders = new MatTableDataSource(this.dataToCommon);
+      this.commonFileFolders.sort = this.sort;
     }
-    this.showLoader = false;
     if (this.openFolderName.length > 2) {
       this.showDots = true;
     }
     this.fileSizeConversion();
-    this.showLoader = false;
-    this.commonFileFolders = new MatTableDataSource(this.getSort);
-    this.commonFileFolders.sort = this.sort;
     console.log('sorted', this.commonFileFolders);
   }
 
   fileTypeGet() {
-    this.commonFileFolders.forEach(p => {
+    this.commonFileFolders.filteredData.forEach(p => {
       this.fileType.forEach(n => {
         if (n.id == p.fileTypeId) {
           p.fileTypeId = n.name;
@@ -284,7 +295,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
     this.openFolderName = _.reject(this.openFolderName, function (n) {
       return n.openFolderId > data.openFolderId;
     });
-    this.commonFileFolders = data;
+    this.commonFileFolders.filteredData = data;
     this.fileTypeGet();
     this.valueFirst = this.openFolderName[0];
   }
@@ -303,7 +314,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
     if (value.fileName != undefined) {
       return
     } else {
-      this.showLoader = true
+      this.isLoading = true;
       const obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
@@ -583,4 +594,3 @@ const ELEMENT_DATA: PeriodicElement[] = [
   { emptySpace: '', name: 'Agreements & invoices', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
 
 ];
-

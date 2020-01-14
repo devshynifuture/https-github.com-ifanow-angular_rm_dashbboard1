@@ -95,6 +95,9 @@ export class CashInHandComponent implements OnInit {
     if (this.cashInHand.get('cashBalance').invalid) {
       this.cashInHand.get('cashBalance').markAsTouched();
       return;
+    } else if (this.cashInHand.get('ownerName').invalid) {
+      this.cashInHand.get('ownerName').markAsTouched();
+      return
     } else if (this.cashInHand.get('balanceAsOn').invalid) {
       this.cashInHand.get('balanceAsOn').markAsTouched();
       return;
