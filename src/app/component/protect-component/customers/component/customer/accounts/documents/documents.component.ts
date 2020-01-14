@@ -300,10 +300,10 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   }
 
   openFolder(value) {
-    this.showLoader = true
     if (value.fileName != undefined) {
       return
     } else {
+      this.showLoader = true
       const obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
