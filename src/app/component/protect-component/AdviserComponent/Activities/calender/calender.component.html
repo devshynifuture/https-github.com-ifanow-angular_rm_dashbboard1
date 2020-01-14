@@ -365,7 +365,7 @@
                     [class.text-primitive]="i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1" 
                     >{{day}}</mat-chip>
                     
-                    <div *ngFor="let event of formatedEvent;" class="date-info" [hidden]="day != event.day || month + 1 != event.month || year != event.year">
+                    <div *ngFor="let event of formatedEvent;" class="date-info" [hidden]="day != event.day || month + 1 != event.month || year != event.year || i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1">
                         <mat-chip-list style="visibility: hidden;" *ngFor="let list of event.attendeeList;"  class="pink mt-8" >
                             <mat-chip >{{list}}</mat-chip>
                         </mat-chip-list>

@@ -46,13 +46,11 @@ import {DynamicComponentService} from './services/dynamic-component.service';
 import {SubscriptionEntry} from './component/protect-component/AdviserComponent/Subscriptions/subscription.entry.module';
 import {EmailEntryModule} from './component/protect-component/AdviserComponent/Email/email.entry.module';
 import 'zone.js/dist/zone';
-import {
-  CalenderComponent,
-  EventDialog
-} from './component/protect-component/AdviserComponent/Email/calender/calender.component';
+
 import {SubscriptionUpperEntry} from './component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
 import {FormTestComponent} from "./test/form-test/form-test.component";
 import {CustomDirectiveModule} from "./common/directives/common-directive.module";
+import { CalenderComponent, EventDialog } from './component/protect-component/AdviserComponent/Activities/calender/calender.component';
 // import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
