@@ -422,52 +422,6 @@
         </div>
       </div>
     </div>
-    <div class="wrapper-20">
-      <div *ngIf="storeData.services[0].id != undefined" class="row bg-grey lter ">
-        <div class="col-md-10 pt-20">
-          <p class="m-0 text-black f-500">Fee calculation - Attachment</p>
-        </div>
-        <div class="col-md-2 wrapper-9 right">
-          <button (click)="OpenFeeCalc()" class="btn-primary br-0" mat-stroked-button>View</button>
-        </div>
-      </div>
-      <div *ngIf="showPaymentRecive == true" class="row pt-32">
-        <div class="col-md-12 p-0">
-          <h5 class="m-0 text-black wrapper-20">Payments recieved</h5>
-        </div>
-      </div>
-      <table *ngIf="showPaymentRecive == true" [dataSource]="dataSource" class="mt-8" id="table-low" mat-table>
-        <ng-container matColumnDef="date">
-          <th *matHeaderCellDef mat-header-cell>Date</th>
-          <td *matCellDef="let element" mat-cell> {{element.paymentDate | date:'dd/MM/yyyy'}} </td>
-        </ng-container>
-        <ng-container matColumnDef="reference">
-          <th *matHeaderCellDef mat-header-cell> Reference</th>
-          <td *matCellDef="let element" mat-cell> {{storeData.invoiceNumber}} </td>
-        </ng-container>
-        <ng-container matColumnDef="paymentMode">
-          <th *matHeaderCellDef mat-header-cell> Payment mode</th>
-          <td *matCellDef="let element" mat-cell> {{element.paymentMode}} </td>
-        </ng-container>
-        <ng-container matColumnDef="amount">
-          <th *matHeaderCellDef mat-header-cell> Amount(₹)</th>
-          <td *matCellDef="let element" mat-cell> {{element.amountReceived}} </td>
-        </ng-container>
-        <ng-container matColumnDef="icons">
-          <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
-          <td *matCellDef="let element" class="t-2" mat-cell>
-            <i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
-              more_vert
-            </i>
-            <mat-menu #menu="matMenu">
-              <a (click)="editForm(element)" mat-menu-item>Edit</a>
-            </mat-menu>
-          </td>
-        </ng-container>
-        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-        <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-      </table>
-    </div>
   </div>
   <!--show record in client invoice-->
   <div *ngIf="showRecord==true" class="pt-72">

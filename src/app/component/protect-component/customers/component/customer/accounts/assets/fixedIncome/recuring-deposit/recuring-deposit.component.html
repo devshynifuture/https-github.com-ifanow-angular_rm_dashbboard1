@@ -174,7 +174,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input type="text" matInput #linkBankAc appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="16" class="form-control br-0"
+                        <input type="text" matInput #linkBankAc appInputValueValidation  (keypress)="utils.keyPress($event)" [maxLength]="16" class="form-control br-0"
                             formControlName="linkBankAc">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{linkBankAc.value.length}}/16</mat-hint>

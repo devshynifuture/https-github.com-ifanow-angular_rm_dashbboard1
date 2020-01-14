@@ -7,16 +7,18 @@ import { CustomerDocumentsComponent } from '../customer-documents/customer-docum
 import { MaterialModule } from 'src/app/material/material';
 import { FormBuilder, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DocumentsComponent } from '../documents/documents.component';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 
 
 @NgModule({
-  declarations: [AccountsDocumentsComponent, DocumentsComponent,CustomerDocumentsComponent],
+  declarations: [AccountsDocumentsComponent, DocumentsComponent, CustomerDocumentsComponent],
   imports: [
     CommonModule,
     AccountsDocumentsRoutingModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CustomDirectiveModule
   ]
 })
 export class AccountsDocumentsModule { }

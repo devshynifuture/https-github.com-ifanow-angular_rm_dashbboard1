@@ -101,6 +101,9 @@ export class OthersComponent implements OnInit {
     if (this.others.get('typeOfCommodity').invalid) {
       this.others.get('typeOfCommodity').markAsTouched();
       return;
+    } else if (this.others.get('ownerName').invalid) {
+      this.others.get('ownerName').markAsTouched();
+      return
     } else if (this.others.get('marketValue').invalid) {
       this.others.get('marketValue').markAsTouched();
       return;

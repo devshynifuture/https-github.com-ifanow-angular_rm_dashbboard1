@@ -1,15 +1,15 @@
-import { ValidatorType } from './../../../../../../../services/util.service';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EnumServiceService } from '../../../../../../../services/enum-service.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { UtilService } from 'src/app/services/util.service';
-import { EmailOnlyComponent } from '../email-only/email-only.component';
-import { PdfService } from '../../../../../../../services/pdf.service';
+import {ValidatorType} from './../../../../../../../services/util.service';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EnumServiceService} from '../../../../../../../services/enum-service.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {UtilService} from 'src/app/services/util.service';
+import {EmailOnlyComponent} from '../email-only/email-only.component';
+import {PdfService} from '../../../../../../../services/pdf.service';
 
 
 export interface PeriodicElement {
@@ -211,7 +211,7 @@ export class InvoiceComponent implements OnInit {
       this.showPaymentRecive = true;
     }
     if (data) {
-      
+
       this.feeCollectionMode.forEach(o => {
         o.value = parseInt(o.value);
         this.dataSource.forEach(sub => {
@@ -335,24 +335,6 @@ export class InvoiceComponent implements OnInit {
   getRecordPayment(data) {
     this.recordData = data
     this.getPayReceive(data.id);
-    // console.log('payee data', data);
-    // this.rPayment = this.fb.group({
-    //   amountReceived: [data.amountReceived, [Validators.required, Validators.min(0), Validators.max(10)]],
-    //   chargesIfAny: [data.chargesIfAny, [Validators.required]],
-    //   tds: [data.tds, [Validators.required]],
-    //   paymentDate: [new Date(data.paymentDate), [Validators.required]],
-    //   paymentMode: [data.paymentMode, [Validators.required]],
-    //   gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business', [Validators.required]],
-    //   notes: [data.notes],
-    //   id: [data.id],
-    //   editFormData: [true]
-    // });
-
-    // this.getFormControl().amountReceived.maxLength = 10;
-    // this.getFormControl().chargesIfAny.maxLength = 10;
-    // this.getFormControl().tds.maxLength = 10;
-    // this.getFormControl().notes.maxLength = 40;
-
   }
 
   getInvoiceData(data) {
@@ -507,10 +489,10 @@ export class InvoiceComponent implements OnInit {
           auto: this.editPayment.value.auto,
           billerAddress: this.editPayment.value.billerAddress,
           billingAddress: this.editPayment.value.billingAddress,
-          finalAmount: this.editPayment.value.finalAmount,
+          // finalAmount: this.editPayment.value.finalAmount,
           invoiceNumber: this.editPayment.value.invoiceNumber,
           subTotal: this.editPayment.value.finalAmount,
-          total: (parseInt(this.editPayment.value.finalAmount) - parseInt(this.editPayment.value.discount)) + parseInt(this.finAmount),
+          finalAmount: (parseInt(this.editPayment.value.finalAmount) - parseInt(this.editPayment.value.discount)) + parseInt(this.finAmount),
           discount: this.editPayment.value.discount,
           invoiceDate: this.editPayment.value.invoiceDate,
           dueDate: this.editPayment.value.dueDate,
@@ -641,7 +623,7 @@ export class InvoiceComponent implements OnInit {
     } else if (this.feeCalc == true) {
       this.feeCalc = false;
     } else {
-      
+
       (this.invoiceTab == 'invoiceUpperSlider') ? this.subInjectService.rightSliderData(state) : this.subInjectService.rightSideData(state);
       this.valueChange.emit(closeObj);
     }
@@ -755,7 +737,7 @@ export class InvoiceComponent implements OnInit {
       PdfService.generatePdfFromHtmlText(this.invoiceTemplate.nativeElement.innerHTML, opt);
 
     } catch (e) {
-      console.log('    PdfService.generatePdfFromElement(this.renderElement, docName); e : ', e);
+      console.log('PdfService.generatePdfFromElement(this.renderElement, docName); e : ', e);
     }
   }
 
