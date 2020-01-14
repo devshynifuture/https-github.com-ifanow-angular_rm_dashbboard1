@@ -8,7 +8,7 @@ import {DataNotFoundComponent} from './component/protect-component/common-compon
 import {AuthGuard} from './guards/auth.guard';
 import {ProgressButtonComponent} from './common/progress-button/progress-button.component';
 import {FormTestComponent} from './test/form-test/form-test.component';
-import { CalenderComponent } from './component/protect-component/AdviserComponent/Activities/calender/calender.component';
+import { calendarComponent } from './component/protect-component/AdviserComponent/Activities/calendar/calendar.component';
 
 const routes: Routes = [
   {
@@ -47,16 +47,16 @@ const routes: Routes = [
         data: {animation: 'Tab1', preload: true}
       },
       {
-        path: 'calender',
-        component: CalenderComponent
+        path: 'calendar',
+        component: calendarComponent
       },
     ],
     canActivate: [AuthGuard],
 
   },
   // {
-  //   path: 'calender',
-  //   component: CalenderComponent
+  //   path: 'calendar',
+  //   component: calendarComponent
   // },
   {
     path: 'customer',

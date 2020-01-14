@@ -50,7 +50,7 @@ import 'zone.js/dist/zone';
 import {SubscriptionUpperEntry} from './component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
 import {FormTestComponent} from "./test/form-test/form-test.component";
 import {CustomDirectiveModule} from "./common/directives/common-directive.module";
-import { CalenderComponent, EventDialog } from './component/protect-component/AdviserComponent/Activities/calender/calender.component';
+import { calendarComponent, EventDialog } from './component/protect-component/AdviserComponent/Activities/calendar/calendar.component';
 // import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -89,7 +89,7 @@ import { CalenderComponent, EventDialog } from './component/protect-component/Ad
     // CustomDialogContainerComponent,
     // AddLiabilitiesComponent,
     // AddInsuranceComponent
-    CalenderComponent,
+    calendarComponent,
     EventDialog,
     FormTestComponent
 
