@@ -98,6 +98,9 @@ export class GoldComponent implements OnInit {
     if (this.gold.get('appPurValue').invalid) {
       this.gold.get('appPurValue').markAsTouched();
       return;
+    } else if (this.gold.get('ownerName').invalid) {
+      this.gold.get('ownerName').markAsTouched();
+      return
     } else if (this.gold.get('totalsGrams').invalid) {
       this.gold.get('totalsGrams').markAsTouched();
       return;

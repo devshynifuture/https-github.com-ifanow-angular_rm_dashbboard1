@@ -34,6 +34,7 @@ export class AddEPFComponent implements OnInit {
   ownerData: any;
   advisorId: any;
   clientId: any;
+  isOwnerName = false;
 
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
   @Input()
@@ -53,6 +54,7 @@ export class AddEPFComponent implements OnInit {
     console.log('value selected', value)
     this.ownerName = value.userName;
     this.familyMemberId = value.id
+    this.isOwnerName = false
   }
   showLess(value) {
     if (value == true) {
@@ -100,7 +102,10 @@ export class AddEPFComponent implements OnInit {
     if (this.epf.get('employeeContry').invalid) {
       this.epf.get('employeeContry').markAsTouched();
       return;
-    } else if (this.epf.get('employerContry').invalid) {
+    } else if (this.epf.controls.ownerName.value == null || this.ownerName == undefined) {
+      this.isOwnerName = true
+      return
+    }else if (this.epf.get('employerContry').invalid) {
       this.epf.get('employerContry').markAsTouched();
       return;
     } else if (this.epf.get('currentEPFBal').invalid) {

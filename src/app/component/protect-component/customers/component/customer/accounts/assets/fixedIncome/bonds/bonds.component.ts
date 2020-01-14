@@ -1,14 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {CustomerService} from '../../../../customer.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {DatePipe} from '@angular/common';
-import {MAT_DATE_FORMATS} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { CustomerService } from '../../../../customer.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { DatePipe } from '@angular/common';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import * as moment from 'moment';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
 
 
 @Component({
@@ -17,7 +17,7 @@ import {UtilService} from 'src/app/services/util.service';
   styleUrls: ['./bonds.component.scss'],
   providers: [
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class BondsComponent implements OnInit {
@@ -41,7 +41,7 @@ export class BondsComponent implements OnInit {
   ownerData: any;
   clientId: any;
 
-  constructor( public utils: UtilService,private eventService: EventService, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
+  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe) {
   }
   @Input()
   set data(data) {
@@ -64,7 +64,7 @@ export class BondsComponent implements OnInit {
     this.familyMemberId = value.id
   }
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
   getDateYMD() {
     let now = moment();
@@ -107,7 +107,7 @@ export class BondsComponent implements OnInit {
     this.familyMemberId = this.bonds.controls.familyMemberId.value
     this.familyMemberId = this.familyMemberId[0]
   }
-  onChange(event,value) {
+  onChange(event, value) {
     if (parseInt(event.target.value) > 100) {
       event.target.value = "100";
       this.bonds.get(value).setValue(event.target.value);
@@ -116,9 +116,10 @@ export class BondsComponent implements OnInit {
   getFormControl(): any {
     return this.bonds.controls;
   }
-  keyPress(event) {
+  onlyTextNotSplChar(event: any) {
+    var k = event.keyCode;
+    return ((k > 64 && k < 91) || (k == 32) || (k > 96 && k < 123) || k == 8);
   }
-
   isMonthlyContribution;
   isInterestRate;
   isCompound;
@@ -140,7 +141,7 @@ export class BondsComponent implements OnInit {
     } else if (this.bonds.get('amountInvest').invalid) {
       this.bonds.get('amountInvest').markAsTouched();
       return;
-    }else if (this.bonds.get('commencementDate').invalid) {
+    } else if (this.bonds.get('commencementDate').invalid) {
       this.bonds.get('commencementDate').markAsTouched();
       return;
     } else if (this.bonds.get('rateReturns').invalid) {
@@ -149,59 +150,59 @@ export class BondsComponent implements OnInit {
     } else if (this.bonds.get('compound').invalid) {
       this.bonds.get('compound').markAsTouched();
       return;
-    }else if (this.bonds.get('tenure').invalid) {
+    } else if (this.bonds.get('tenure').invalid) {
       this.bonds.get('tenure').markAsTouched();
       this.tenure = this.getDateYMD()
       return;
     } else if (this.bonds.get('type').invalid) {
       this.bonds.get('type').markAsTouched();
       return;
-    } else{
-      let obj = {
-      advisorId: this.advisorId,
-      clientId: this.clientId,
-      familyMemberId: this.familyMemberId,
-      ownerName: (this.ownerName == undefined) ? this.bonds.controls.ownerName.value : this.ownerName,
-      amountInvested: this.bonds.controls.amountInvest.value,
-      bondName: this.bonds.controls.bondName.value,
-      // couponAmount: this.bonds.controls.couponAmount.value,
-      couponPayoutFrequencyId: this.bonds.controls.couponOption.value,
-      couponRate: this.bonds.controls.interestRate.value,
-      commencementDate: this.datePipe.transform(this.bonds.controls.commencementDate.value, 'yyyy-MM-dd'),
-      rateOfReturn: this.bonds.controls.rateReturns.value,
-      linkedBankAccount: this.bonds.controls.linkBankAc.value,
-      description: this.bonds.controls.description.value,
-      maturityDate: this.datePipe.transform(this.maturityDate, 'yyyy-MM-dd'),
-      bankName: this.bonds.controls.bankName.value,
-      tenure: this.bonds.controls.tenure.value,
-      type: this.bonds.controls.type.value,
-      compounding: this.bonds.controls.compound.value,
-      id: this.bonds.controls.id.value
-    }
-    console.log('bonds', obj)
-    this.dataSource = obj
-    if (this.bonds.controls.id.value == undefined) {
-      this.custumService.addBonds(obj).subscribe(
-        data => this.addBondsRes(data),
-        error => this.eventService.showErrorMessage(error)
-      );
     } else {
-      //edit call
-      this.custumService.editBonds(obj).subscribe(
-        data => this.editBondsRes(data),
-        error => this.eventService.showErrorMessage(error)
-      );
+      let obj = {
+        advisorId: this.advisorId,
+        clientId: this.clientId,
+        familyMemberId: this.familyMemberId,
+        ownerName: (this.ownerName == undefined) ? this.bonds.controls.ownerName.value : this.ownerName,
+        amountInvested: this.bonds.controls.amountInvest.value,
+        bondName: this.bonds.controls.bondName.value,
+        // couponAmount: this.bonds.controls.couponAmount.value,
+        couponPayoutFrequencyId: this.bonds.controls.couponOption.value,
+        couponRate: this.bonds.controls.interestRate.value,
+        commencementDate: this.datePipe.transform(this.bonds.controls.commencementDate.value, 'yyyy-MM-dd'),
+        rateOfReturn: this.bonds.controls.rateReturns.value,
+        linkedBankAccount: this.bonds.controls.linkBankAc.value,
+        description: this.bonds.controls.description.value,
+        maturityDate: this.datePipe.transform(this.maturityDate, 'yyyy-MM-dd'),
+        bankName: this.bonds.controls.bankName.value,
+        tenure: this.bonds.controls.tenure.value,
+        type: this.bonds.controls.type.value,
+        compounding: this.bonds.controls.compound.value,
+        id: this.bonds.controls.id.value
+      }
+      console.log('bonds', obj)
+      this.dataSource = obj
+      if (this.bonds.controls.id.value == undefined) {
+        this.custumService.addBonds(obj).subscribe(
+          data => this.addBondsRes(data),
+          error => this.eventService.showErrorMessage(error)
+        );
+      } else {
+        //edit call
+        this.custumService.editBonds(obj).subscribe(
+          data => this.editBondsRes(data),
+          error => this.eventService.showErrorMessage(error)
+        );
+      }
     }
   }
-}
   addBondsRes(data) {
     console.log('addrecuringDepositRes', data)
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:true })
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
     this.eventService.openSnackBar('Added successfully!', 'dismiss');
 
   }
   editBondsRes(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data,refreshRequired:true})
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
     this.eventService.openSnackBar('Updated successfully!', 'dismiss');
 
   }
