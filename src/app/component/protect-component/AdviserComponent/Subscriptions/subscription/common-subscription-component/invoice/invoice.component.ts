@@ -335,24 +335,6 @@ export class InvoiceComponent implements OnInit {
   getRecordPayment(data) {
     this.recordData = data
     this.getPayReceive(data.id);
-    // console.log('payee data', data);
-    // this.rPayment = this.fb.group({
-    //   amountReceived: [data.amountReceived, [Validators.required, Validators.min(0), Validators.max(10)]],
-    //   chargesIfAny: [data.chargesIfAny, [Validators.required]],
-    //   tds: [data.tds, [Validators.required]],
-    //   paymentDate: [new Date(data.paymentDate), [Validators.required]],
-    //   paymentMode: [data.paymentMode, [Validators.required]],
-    //   gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business', [Validators.required]],
-    //   notes: [data.notes],
-    //   id: [data.id],
-    //   editFormData: [true]
-    // });
-
-    // this.getFormControl().amountReceived.maxLength = 10;
-    // this.getFormControl().chargesIfAny.maxLength = 10;
-    // this.getFormControl().tds.maxLength = 10;
-    // this.getFormControl().notes.maxLength = 40;
-
   }
 
   getInvoiceData(data) {
