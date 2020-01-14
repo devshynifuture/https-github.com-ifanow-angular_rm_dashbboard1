@@ -245,6 +245,9 @@ export class NpsSchemeHoldingComponent implements OnInit {
     if (this.schemeHoldingsNPS.get('pran').invalid) {
       this.schemeHoldingsNPS.get('pran').markAsTouched();
       return;
+    } else if (this.schemeHoldingsNPS.get('ownerName').invalid) {
+      this.schemeHoldingsNPS.get('ownerName').markAsTouched();
+      return
     }  else if (this.schemeHoldingsNPS.get('holdingList').invalid) {
       this.schemeHoldingsNPS.get('holdingList').markAsTouched();
       return

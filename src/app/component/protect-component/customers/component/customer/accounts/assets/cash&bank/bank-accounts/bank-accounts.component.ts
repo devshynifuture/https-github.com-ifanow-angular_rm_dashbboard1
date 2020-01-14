@@ -100,6 +100,9 @@ export class BankAccountsComponent implements OnInit {
     if (this.bankAccounts.get('accountType').invalid) {
       this.bankAccounts.get('accountType').markAsTouched();
       return;
+    } else if (this.bankAccounts.get('ownerName').invalid) {
+      this.bankAccounts.get('ownerName').markAsTouched();
+      return
     } else if (this.bankAccounts.get('accountBalance').invalid) {
       this.bankAccounts.get('accountBalance').markAsTouched();
       return;

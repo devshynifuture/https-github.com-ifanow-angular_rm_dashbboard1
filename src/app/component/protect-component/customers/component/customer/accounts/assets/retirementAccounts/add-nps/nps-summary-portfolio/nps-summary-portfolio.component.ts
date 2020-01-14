@@ -220,6 +220,9 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     if (this.summaryNPS.get('currentValue').invalid) {
       this.summaryNPS.get('currentValue').markAsTouched();
       return;
+    } else if (this.summaryNPS.get('ownerName').invalid) {
+      this.summaryNPS.get('ownerName').markAsTouched();
+      return
     } else if (this.summaryNPS.get('valueAsOn').invalid) {
       this.summaryNPS.get('valueAsOn').markAsTouched();
       return;

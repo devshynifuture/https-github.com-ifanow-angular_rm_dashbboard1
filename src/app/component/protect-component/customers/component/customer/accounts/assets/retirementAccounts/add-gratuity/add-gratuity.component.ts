@@ -94,7 +94,10 @@ export class AddGratuityComponent implements OnInit {
     if (this.gratuity.get('noOfcompleteYrs').invalid) {
       this.gratuity.get('noOfcompleteYrs').markAsTouched();
       return;
-    } else if (this.gratuity.get('amountRecived').invalid) {
+    } else if (this.gratuity.get('ownerName').invalid) {
+      this.gratuity.get('ownerName').markAsTouched();
+      return
+    }else if (this.gratuity.get('amountRecived').invalid) {
       this.gratuity.get('amountRecived').markAsTouched();
       return;
     } else {
