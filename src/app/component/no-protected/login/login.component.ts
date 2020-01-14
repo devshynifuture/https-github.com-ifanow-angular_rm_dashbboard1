@@ -1,12 +1,12 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { BackOfficeService } from '../../protect-component/AdviserComponent/backOffice/back-office.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {BackOfficeService} from '../../protect-component/AdviserComponent/backOffice/back-office.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import $ from 'jquery';
-import { MatProgressButtonOptions } from "../../../common/progress-button/progress-button.component";
+import {MatProgressButtonOptions} from "../../../common/progress-button/progress-button.component";
 
 @Component({
   selector: 'app-login',
@@ -121,6 +121,8 @@ export class LoginComponent implements OnInit {
       this.backOfficeService.loginApi(loginData).subscribe(
         data => {
           this.isLoading = false;
+          this.barButtonOptions.active = false;
+
           // this.setTimeOutRecursive(event, 100)
           if (data) {
             console.log('data: ', data);
@@ -150,11 +152,11 @@ export class LoginComponent implements OnInit {
   setTimeOutRecursive(event, widthPercent) {
     setTimeout(() => {
       if (this.isLoading && widthPercent <= 90) {
-        $(event.toElement).animate({ width: widthPercent + '%' }, '500ms').css({ width: '0%' });
+        $(event.toElement).animate({width: widthPercent + '%'}, '500ms').css({width: '0%'});
         this.setTimeOutRecursive(event, widthPercent + 10);
         // this.animationSpan.nativeElement.animate({width: i + '%'}, '100ms');
       } else if (!this.isLoading) {
-        $(event.toElement).animate({ width: '100%' }, '500ms').css({ width: '0%' });
+        $(event.toElement).animate({width: '100%'}, '500ms').css({width: '0%'});
       }
     }, 500);
   }
@@ -202,16 +204,16 @@ export class LoginComponent implements OnInit {
     this.setTimeOutRecursiveForProgressValue(0);
     this.onSubmit();
     // this.barButtonOptions.text = 'Saving Data...';
-    setTimeout(() => {
-      this.barButtonOptions.active = false;
-      // this.barButtonOptions.disabled = true;
-      // this.barButtonOptions.text = 'Login';
-    }, 3500);
+    /* setTimeout(() => {
+       this.barButtonOptions.active = false;
+       // this.barButtonOptions.disabled = true;
+       // this.barButtonOptions.text = 'Login';
+     }, 3500);*/
   }
 
   setTimeOutRecursiveForProgressValue(progressValue) {
     setTimeout(() => {
-      if (this.barButtonOptions.active) {
+      if (this.barButtonOptions.active && progressValue < 100) {
         this.barButtonOptions.value = progressValue;
         this.setTimeOutRecursiveForProgressValue(progressValue + 10);
       } else {
