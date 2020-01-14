@@ -575,7 +575,7 @@
                   <mat-error class="f-12 pt-4">Invoice date is required
                   </mat-error>
                 </mat-form-field>
-                <mat-error class="f-12 pt-4" *ngIf="showDateError">{{showDateError}}</mat-error>
+                <mat-error class="f-12 pt-4" [ngClass]="{'v-h': showDateError==undefined}">{{showDateError}}</mat-error>
               </div>
             </div>
           </div>
