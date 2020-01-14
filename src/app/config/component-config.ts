@@ -314,9 +314,9 @@ export const appConfig = {
   GET_GMAIL_INBOX_LIST: 'user/thread/list/get',
   CREATE_DRAFT: 'user/draft/create',
   UPDATE_DRAFT: 'user/draft/modify/put',
-  GET_MESSAGE_DETAIL: 'user/message/details'
+  GET_MESSAGE_DETAIL: 'user/message/details',
 
   ////////////////////////////// calendar////////////////////////////////////////////
-
+  GET_EVENT: 'crm/calendar/event/list/get'
   ////////////////////////////// calendar////////////////////////////////////////////
 };

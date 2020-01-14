@@ -11,8 +11,8 @@ export class calendarService {
 
   constructor(public https: HttpClient, public http: HttpService) { }
 
-  getInvoiceData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBSCRIPTION_INVOICE, httpParams);
+  getEvent(data) {
+    const httpParams = new HttpParams().set('calendarId', data.calendarId).set('userId', data.userId);
+    return this.http.get(apiConfig.CALENDAR_URL + appConfig.GET_EVENT, httpParams);
   }
 }

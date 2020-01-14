@@ -4,6 +4,9 @@ import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { variable } from '@angular/compiler/src/output/output_ast';
+import { calendarService } from './calendar.service';
+import { AuthService } from '../../../../../auth-service/authService';
+
 
 export interface DialogData {
   animal: string;
@@ -36,13 +39,16 @@ export class calendarComponent implements OnInit {
   startTime;
   endTime;
   current_day = new Date();
-  constructor(public dialog: MatDialog) { }
+  userInfo:any;
+  constructor(public dialog: MatDialog, private canlenderService : calendarService) { }
 
   ngOnInit() {
     this.currentMonth = new Date().getMonth();
     this.viewDate = new Date();
+    this.userInfo = AuthService.getUserInfo()
     this.updatecalendar();
-    console.log(Intl.DateTimeFormat().resolvedOptions().timeZone, "test date");
+    this.getEvent();
+    console.log(Intl.DateTimeFormat().resolvedOptions().timeZone, localStorage.getItem('userInfo'), "test date");
 
     // demo get data calendar
     this.eventData = [{
@@ -78,6 +84,16 @@ export class calendarComponent implements OnInit {
       this.formatedEvent.push(e);
     }
     console.log(this.formatedEvent, "this.eventData 12345", this.viewDate.toISOString());
+  }
+
+  getEvent(){
+    let eventData = {
+      "calendarId": this.userInfo.emailId,
+      "userId": this.userInfo.userId
+    }
+    this.canlenderService.getEvent(eventData).subscribe((data)=>{
+      console.log(data, "event data");
+    });
   }
 
   updatecalendar() {
