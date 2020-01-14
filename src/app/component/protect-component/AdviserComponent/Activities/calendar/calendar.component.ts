@@ -96,13 +96,25 @@ export class calendarComponent implements OnInit {
     });
   }
 
+  getDaysCount(month: number, year: number, ch: number): number{
+    switch(ch){
+      case 1: return 32 - new Date(year, month, 32).getDate();
+      
+      case 2: return 32 - new Date(year - 1, month - 1, 32).getDate();
+
+      case 3: return 32 - new Date(year + 1, month + 1, 32).getDate();
+    }
+
+  }
+
   updatecalendar() {
     this.month = this.viewDate.getMonth();
     this.year = this.viewDate.getFullYear();
     this.todayDate = this.viewDate.getDate();
-    this.numbersOfDays = this.daysInMonth(this.month, this.year)
-    this.lastMonthDays = this.daysInLastMonth(this.month, this.year)
-    this.nextMonthDays = this.daysInNextMonth(this.month, this.year)
+    // this.numbersOfDays = this.daysInMonth(this.month, this.year)
+    this.numbersOfDays = this.getDaysCount(this.month, this.year, 1);
+    this.lastMonthDays = this.getDaysCount(this.month, this.year, 2);
+    this.nextMonthDays = this.getDaysCount(this.month, this.year, 3);
     // console.log(this.numbersOfDays, this.lastMonthDays, this.nextMonthDays, "this.numbersOfDays");
     let firstDay = (new Date(this.year, this.month)).getDay();
     // console.log(firstDay, "firstDay", this.month);
@@ -130,17 +142,17 @@ export class calendarComponent implements OnInit {
     console.log(this.daysArr, "daysArr 123");
   }
 
-  daysInMonth(month, year) {
-    return 32 - new Date(year, month, 32).getDate();
-  }
+  // daysInMonth(month, year) {
+  //   return 32 - new Date(year, month, 32).getDate();
+  // }
 
-  daysInLastMonth(month, year) {
-    return 32 - new Date(year - 1, month - 1, 32).getDate();
-  }
+  // daysInLastMonth(month, year) {
+  //   return 32 - new Date(year - 1, month - 1, 32).getDate();
+  // }
 
-  daysInNextMonth(month, year) {
-    return 32 - new Date(year + 1, month + 1, 32).getDate();
-  }
+  // daysInNextMonth(month, year) {
+  //   return 32 - new Date(year + 1, month + 1, 32).getDate();
+  // }
 
   persentMonth(){
     this.viewDate = new Date();
