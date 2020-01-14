@@ -175,7 +175,7 @@ export class CopyDocumentsComponent implements OnInit {
         const obj = {
           clientId: this.clientId,
           advisorId: this.advisorId,
-          parentFolderId: value.parentId,
+          parentFolderId: this.parentId,
           id: value.id
         };
         this.custumService.moveFiles(obj).subscribe(
