@@ -4,6 +4,7 @@ import {MaterialModule} from '../material/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {ProgressButtonComponent} from './progress-button/progress-button.component';
+import {CustomDirectiveModule} from "./directives/common-directive.module";
 
 // import {AppModule} from "../app.module";
 
@@ -23,6 +24,7 @@ import {ProgressButtonComponent} from './progress-button/progress-button.compone
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    CustomDirectiveModule,
     // EmailModule
     // DynamicComponentModule,
     // AccountEntryModule,

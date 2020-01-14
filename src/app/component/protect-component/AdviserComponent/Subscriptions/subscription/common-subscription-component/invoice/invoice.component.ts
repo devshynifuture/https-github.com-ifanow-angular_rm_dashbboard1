@@ -10,7 +10,6 @@ import { MatDialog } from '@angular/material';
 import { UtilService } from 'src/app/services/util.service';
 import { EmailOnlyComponent } from '../email-only/email-only.component';
 import { PdfService } from '../../../../../../../services/pdf.service';
-import { DatePipe } from '@angular/common';
 
 
 export interface PeriodicElement {
@@ -55,7 +54,7 @@ export class InvoiceComponent implements OnInit {
   @ViewChild('invoiceTemplate', { static: false }) invoiceTemplate: ElementRef;
 
   constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
-    private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog, private datePipe: DatePipe) {
+    private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getInvoiceData(data)
     );
@@ -752,7 +751,7 @@ export class InvoiceComponent implements OnInit {
       PdfService.generatePdfFromHtmlText(this.invoiceTemplate.nativeElement.innerHTML, opt);
 
     } catch (e) {
-      console.log('    PdfService.generatePdfFromElement(this.renderElement, docName); e : ', e);
+      console.log('PdfService.generatePdfFromElement(this.renderElement, docName); e : ', e);
     }
   }
 
