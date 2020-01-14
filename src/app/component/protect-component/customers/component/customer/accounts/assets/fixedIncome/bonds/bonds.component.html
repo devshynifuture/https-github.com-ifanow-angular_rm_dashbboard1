@@ -28,7 +28,7 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput #bondName type="text" (keypress)="utils.onlyText($event)" maxlength="50"
+                    <input matInput #bondName type="text" (keypress)="onlyTextNotSplChar($event)" maxlength="50"
                         class="form-control br-0" formControlName="bondName">
                     <mat-error class="f-12 pt-4"
                         [ngClass]="{'v-h':!(isBondName && getFormControl().bondName.invalid || getFormControl().bondName.touched && getFormControl().bondName.invalid)}">
