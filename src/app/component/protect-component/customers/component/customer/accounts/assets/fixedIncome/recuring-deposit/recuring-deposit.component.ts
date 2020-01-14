@@ -143,7 +143,8 @@ export class RecuringDepositComponent implements OnInit {
   }
 
   saveRecuringDeposit() {
-
+    this.tenure = this.getDateYMD()
+    this.maturityDate = this.tenure
     if (this.recuringDeposit.get('monthlyContribution').invalid) {
       this.recuringDeposit.get('monthlyContribution').markAsTouched();
       this.isMonthlyContribution = true;
@@ -162,8 +163,6 @@ export class RecuringDepositComponent implements OnInit {
       return;
     } else if (this.recuringDeposit.get('tenure').invalid) {
       this.recuringDeposit.get('tenure').markAsTouched();
-      this.tenure = this.getDateYMD()
-      this.maturityDate = this.tenure
       return;
     } else if (this.recuringDeposit.get('ownerType').invalid) {
       this.recuringDeposit.get('ownerType').markAsTouched();
