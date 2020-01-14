@@ -29,6 +29,8 @@ export class AddPoMisComponent implements OnInit {
   advisorId: any;
   clientId: number;
   familyMemberId: any;
+  nominees: any;
+  nomineesList: any;
 
   constructor(public utils: UtilService,private fb: FormBuilder, public subInjectService: SubscriptionInject,
     public custumService: CustomerService, public eventService: EventService) {
@@ -63,6 +65,7 @@ export class AddPoMisComponent implements OnInit {
   }
 
   getPomisData(data) {
+  
     if (data == undefined) {
       data = {};
     }
@@ -90,8 +93,24 @@ export class AddPoMisComponent implements OnInit {
   getFormControl() {
     return this.pomisForm.controls;
   }
-
+  getFormData(data) {
+    console.log(data)
+    this.nomineesList = data.controls
+  }
   saveFormData(state) {
+    this.nominees = []
+    if (this.nomineesList) {
+
+      this.nomineesList.forEach(element => {
+        let obj = {
+          "name": element.controls.name.value,
+          "sharePercentage": element.controls.share.value,
+          "id": 0,
+          "familyMemberId":0
+        }
+        this.nominees.push(obj)
+      });
+    }
     if (this.pomisForm.controls.amtInvested.invalid) {
       this.pomisForm.get('amtInvested').markAsTouched();
       return;
@@ -110,7 +129,7 @@ export class AddPoMisComponent implements OnInit {
         commencementdate: this.pomisForm.controls.commencementdate.value,
         ownershipType: this.pomisForm.controls.ownershipType.value,
         poBranch: this.pomisForm.controls.poBranch.value,
-        nominee: this.pomisForm.controls.nominee.value,
+        nominees: this.nominees,
         accNumber: this.pomisForm.controls.accNumber.value,
         description: this.pomisForm.controls.description.value,
         familyMemberId: this.familyMemberId.id
@@ -133,7 +152,7 @@ export class AddPoMisComponent implements OnInit {
           postOfficeBranch: obj.poBranch,
           bankAccountNumber: obj.accNumber,
           ownerTypeId: obj.ownershipType,
-          nominee: obj.nominee,
+          nominees: obj.nominees,
           description: obj.description,
           // "createdDate":obj.createdDate,
         };
@@ -153,7 +172,7 @@ export class AddPoMisComponent implements OnInit {
           postOfficeBranch: obj.poBranch,
           bankAccountNumber: obj.accNumber,
           ownerTypeId: obj.ownershipType,
-          nominee: obj.nominee,
+          nominees: obj.nominees,
           description: obj.description,
           // "createdDate":"2001-01-01"
         };

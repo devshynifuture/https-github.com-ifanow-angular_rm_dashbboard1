@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../../customer.service';
@@ -15,6 +15,8 @@ export class AddNomineeComponent implements OnInit {
   clientId: any;
   familyList: any;
   @Input() ownerName;
+  @Output() outputEvent=new EventEmitter();
+
   constructor(private fb: FormBuilder, private custumService: CustomerService) { }
 
   ngOnInit() {
@@ -29,11 +31,14 @@ export class AddNomineeComponent implements OnInit {
   get getNomineeList() { return this.getNomineeForm.nomineeList as FormArray; }
 
   addNominee() {
+    if(this.getNomineeList){
+      this.getNomineeList.push(this.fb.group({
+        name: [, [Validators.required]],
+        share: [, [Validators.required]],
+      }))
+    }
+    this.outputEvent.emit(this.getNomineeList)
 
-    this.getNomineeList.push(this.fb.group({
-      name: [, [Validators.required]],
-      share: [, [Validators.required]],
-    }))
   }
   removeNominee(index) {
     if (this.getNomineeList.length == 1) {
