@@ -166,7 +166,8 @@
                                 <h5 class="m-0 f-14 text-black">Invoice next number</h5>
                                 <div class="form-group relClass">
                                     <div class="bar height23"> </div>
-                                    <input type="text" class="form-control br-0" formControlName="nextNo">
+                                    <input *ngIf="!isLoading" class="form-control br-0" formControlName="nextNo"
+                                           type="text">
                                 </div>
                             </div>
                             <div class="col-md-12 pt-40">

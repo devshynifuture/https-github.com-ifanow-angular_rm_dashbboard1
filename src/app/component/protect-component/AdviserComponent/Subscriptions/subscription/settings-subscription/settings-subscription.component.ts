@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatTabGroup } from '@angular/material';
-import { Router } from '@angular/router';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {MatTabGroup} from '@angular/material';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-settings-subscription',
@@ -17,7 +17,8 @@ export class SettingsSubscriptionComponent implements OnInit {
     } else if (navigation.extras.replaceUrl == undefined && navigation.extras.state != undefined) {
       this.selected = navigation.extras.state.example;
     } else {
-      this.selected = 3;
+      this.selected = 0;
+      // this.selected = 3;
     }
   }
   @ViewChild(MatTabGroup, { static: true }) tabGroup: MatTabGroup;
