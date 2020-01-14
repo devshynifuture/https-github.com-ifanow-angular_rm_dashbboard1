@@ -536,14 +536,14 @@ export class InvoiceComponent implements OnInit {
   updateInvoiceInfoRes(data) {
     console.log('updateInvoiceInfoRes', data);
     if (data == 1) {
-      this.Close('close');
+      this.Close('close', true);
     }
   }
 
   addInvoiceRes(data) {
     console.log('addInvoiceRes', data);
     if (data == 1) {
-      this.Close('close');
+      this.Close('close',true);
     }
   }
 
@@ -624,7 +624,11 @@ export class InvoiceComponent implements OnInit {
     }
   }
 
-  Close(state) {
+  Close(state, dismiss) {
+    const closeObj = {
+      dataString : this.invoiceInSub,
+      closingState : dismiss
+    }
     if (this.showRecord == true) {
       this.showRecord = false;
       const obj = {
@@ -637,8 +641,9 @@ export class InvoiceComponent implements OnInit {
     } else if (this.feeCalc == true) {
       this.feeCalc = false;
     } else {
+      
       (this.invoiceTab == 'invoiceUpperSlider') ? this.subInjectService.rightSliderData(state) : this.subInjectService.rightSideData(state);
-      this.valueChange.emit(this.invoiceInSub);
+      this.valueChange.emit(closeObj);
     }
 
   }
@@ -726,7 +731,7 @@ export class InvoiceComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('this is template result delete::', result);
 
-      this.Close(result);
+      this.Close(result, true);
     });
 
   }

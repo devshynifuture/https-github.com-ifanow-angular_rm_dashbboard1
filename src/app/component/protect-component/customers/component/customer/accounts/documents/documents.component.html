@@ -43,14 +43,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item c-p" (click)="reset()">
                                     <span>{{tabValue || 'Documents'}}</span></li>
-                                <!-- <li class="breadcrumb-item c-p" *ngIf="showDots == true">
-                                    <mat-icon class="c-p" [matMenuTriggerFor]="menu"> more_horiz</mat-icon>
-                                    <mat-menu #menu="matMenu">
-                                        <button mat-menu-item (click)="getFolders(folder)"
-                                            *ngFor="let folder of openFolderName | slice:1:openFolderName.length - 1">
-                                            {{folder.openFolderNm}}</button>
-                                    </mat-menu>
-                                </li> -->
+
                                 <li class="breadcrumb-item active c-p" (click)="getFolders(folder)"
                                     *ngFor="let folder of openFolderName">{{ folder.openFolderNm }}</li>
                             </ol>
