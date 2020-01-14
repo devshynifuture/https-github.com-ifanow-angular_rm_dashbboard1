@@ -19,7 +19,7 @@
           <div class="col-md-10">
             <h3 class="f-400 wrapper-16 pl-8 mb-0">{{storeData.invoiceNumber}}</h3>
           </div>
-          <div (click)="Close('close')" class="col-md-2">
+          <div (click)="Close('close', false)" class="col-md-2">
             <i class="material-icons text-right pt-16 c-p right">
               clear
             </i>
@@ -269,7 +269,7 @@
       <h4 class="f-400 wrapper-20 mb-0">{{storeData.invoiceNumber}}</h4>
     </div>
     <div class="col-md-2">
-      <i (click)="Close('close')" class="material-icons text-right pt-16 pr-16 c-p right">
+      <i (click)="Close('close', false)" class="material-icons text-right pt-16 pr-16 c-p right">
         clear
       </i>
     </div>
@@ -481,7 +481,7 @@
   <div class="bottom-fixed wrapper-12">
     <div class="row">
       <div class="col-md-12">
-        <h5 (click)="Close('close')" class="mb-0 pt-8 pb-8 text-white c-p">Cancel</h5>
+        <h5 (click)="Close('close', false)" class="mb-0 pt-8 pb-8 text-white c-p">Cancel</h5>
       </div>
     </div>
   </div>
