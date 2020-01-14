@@ -150,20 +150,22 @@
                     </div>
                 </div>
                 <div *ngSwitchCase="'tab2'">
-                    <div *ngIf="showLoader">
+                    <!-- <div *ngIf="showLoader">
                         <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-                    </div>
-                    <div [formGroup]="prefixData" class="wrapper-44" *ngIf="showLoader==false">
+                    </div> -->
+                    <div [formGroup]="prefixData" class="wrapper-44 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <div class="row pl-44">
                             <div class="col-md-3 pr-0 mr-40">
                                 <h5 class="m-0 f-14 text-black">Invoice prefix</h5>
-                                <div class="form-group pt-12">
+                                <div class="form-group relClass">
+                                    <div class="bar height23"> </div>
                                     <input type="text" class="form-control br-0" formControlName="prefix">
                                 </div>
                             </div>
                             <div class="col-md-3 pr-0 ">
                                 <h5 class="m-0 f-14 text-black">Invoice next number</h5>
-                                <div class="form-group pt-12">
+                                <div class="form-group relClass">
+                                    <div class="bar height23"> </div>
                                     <input type="text" class="form-control br-0" formControlName="nextNo">
                                 </div>
                             </div>
@@ -176,15 +178,17 @@
                     </div>
                 </div>
                 <div *ngSwitchCase="'tab3'">
-                    <div *ngIf="showLoader">
+                    <!-- <div *ngIf="showLoader">
                         <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-                    </div>
-                    <div [formGroup]="prefixData" class="wrapper-44" *ngIf="showLoader==false">
+                    </div> -->
+                    <div [formGroup]="prefixData" class="wrapper-44">
                         <div class="row pl-44">
                             <div class="col-md-3 pr-0 mr-40">
                                 <h5 class="m-0 f-14 text-black">Quotation prefix</h5>
-                                <div class="form-group pt-12">
+                                <div class="form-group pt-12 ">
+
                                     <input type="text" class="form-control br-0" formControlName="prefix">
+
                                 </div>
 
                             </div>

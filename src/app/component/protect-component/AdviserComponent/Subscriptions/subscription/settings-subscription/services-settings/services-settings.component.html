@@ -26,17 +26,22 @@
                             </mat-card-title>
 
                             <mat-card-subtitle class="pt-4 pb-12 relClass">
-                                {{singleService.serviceCode}}
+                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                    {{singleService.serviceCode}}
+                                </div>
 
                                 <p class="m-0 text-sl" matTooltip="{{singleService.description}}" aria-label="Button that displays a tooltip when focused or hovered over">
-                                    {{singleService.description}}</p>
+
+                                    {{singleService.description}}
+
+                                </p>
                             </mat-card-subtitle>
                         </div>
                     </mat-card-header>
 
                     <mat-card-content class="bg-white mb-0">
                         <div class="row wrapper-20">
-                            <div class="col-md-7 p-0 overflow-hidden">
+                            <div class="col-md-7 pl-0 overflow-hidden">
                                 <p class="mb-0 text-primitive f-12">FEE TYPE</p>
                                 <div class="relClass">
                                     <div class="bar" [ngClass]="{'height23': isLoading}">
@@ -59,7 +64,7 @@
                         </div>
 
                         <div class="row wrapper-20 pt-0 overflow-hidden">
-                            <div class="col-md-7 p-0">
+                            <div class="col-md-7 pl-0">
                                 <p class="mb-0 text-primitive f-12">BILLING MODE</p>
                                 <div class="relClass">
                                     <div class="bar" [ngClass]="{'height23': isLoading}">
@@ -93,7 +98,7 @@
 
 
                         <div class="row wrapper-20 bt-1 bb-1 overflow-hidden">
-                            <div class="col-md-4 p-0">
+                            <div class="col-md-4 p1-0">
                                 <p class="f-14 text-primitive">PLANS</p>
                                 <div class="f-24 relClass">
                                     <div class="bar" [ngClass]="{'height23': isLoading}"> {{singleService.planCount}}
@@ -108,7 +113,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 p-0">
+                            <div class="col-md-4 pr-0">
                                 <p class="f-14 text-primitive">DOCUMENTS</p>
                                 <div class="f-24 relClass">
                                     <div class="bar" [ngClass]="{'height23': isLoading}">

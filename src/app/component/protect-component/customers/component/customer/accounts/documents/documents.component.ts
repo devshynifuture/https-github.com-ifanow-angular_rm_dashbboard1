@@ -53,8 +53,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   clientId: any;
   allFiles: any;
   AllDocs: any;
-  data: Array<any> = [{}, {}, {}];
-  commonFileFolders = new MatTableDataSource(this.data);
+  commonFileFolders: any;
   openFolderName: any;
   backUpfiles: any;
   i = 0;
@@ -64,7 +63,6 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   valueFirst: any;
   animal: any;
   name: string;
-  isLoading = false;
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private event: EventService, private router: Router, private fb: FormBuilder,
@@ -97,6 +95,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     const tabValue = 'Documents';
     this.viewMode = 'tab1';
+    this.commonFileFolders = [];
     this.backUpfiles = [];
     this.openFolderName = [];
     this.advisorId = AuthService.getAdvisorId();
@@ -213,11 +212,10 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
 
 
   getAllFileList(tabValue) {
-
     tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : 4;
     this.valueTab = tabValue;
     this.backUpfiles = [];
-    this.commonFileFolders.data = [];
+    this.commonFileFolders = [];
     this.openFolderName = [];
     const obj = {
       advisorId: this.advisorId,
@@ -225,7 +223,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
       docGetFlag: tabValue,
       folderParentId: 0,
     };
-    this.isLoading = true;
+    this.showLoader = true;
     this.custumService.getAllFiles(obj).subscribe(
       data => this.getAllFilesRes(data, 'value')
     );
@@ -255,7 +253,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
       }
       console.log('this.backUpfiles', this.backUpfiles);
     }
-    this.isLoading = false;
+    this.showLoader = false;
     if (this.openFolderName.length > 2) {
       this.showDots = true;
     }
@@ -585,4 +583,3 @@ const ELEMENT_DATA: PeriodicElement[] = [
   { emptySpace: '', name: 'Agreements & invoices', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
 
 ];
-
