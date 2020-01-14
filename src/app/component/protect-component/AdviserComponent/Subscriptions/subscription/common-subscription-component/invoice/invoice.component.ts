@@ -1,15 +1,15 @@
-import { ValidatorType } from './../../../../../../../services/util.service';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EnumServiceService } from '../../../../../../../services/enum-service.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { UtilService } from 'src/app/services/util.service';
-import { EmailOnlyComponent } from '../email-only/email-only.component';
-import { PdfService } from '../../../../../../../services/pdf.service';
+import {ValidatorType} from './../../../../../../../services/util.service';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EnumServiceService} from '../../../../../../../services/enum-service.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {UtilService} from 'src/app/services/util.service';
+import {EmailOnlyComponent} from '../email-only/email-only.component';
+import {PdfService} from '../../../../../../../services/pdf.service';
 
 
 export interface PeriodicElement {
@@ -211,7 +211,7 @@ export class InvoiceComponent implements OnInit {
       this.showPaymentRecive = true;
     }
     if (data) {
-      
+
       this.feeCollectionMode.forEach(o => {
         o.value = parseInt(o.value);
         this.dataSource.forEach(sub => {
@@ -623,7 +623,7 @@ export class InvoiceComponent implements OnInit {
     } else if (this.feeCalc == true) {
       this.feeCalc = false;
     } else {
-      
+
       (this.invoiceTab == 'invoiceUpperSlider') ? this.subInjectService.rightSliderData(state) : this.subInjectService.rightSideData(state);
       this.valueChange.emit(closeObj);
     }
@@ -737,7 +737,7 @@ export class InvoiceComponent implements OnInit {
       PdfService.generatePdfFromHtmlText(this.invoiceTemplate.nativeElement.innerHTML, opt);
 
     } catch (e) {
-      console.log('    PdfService.generatePdfFromElement(this.renderElement, docName); e : ', e);
+      console.log('PdfService.generatePdfFromElement(this.renderElement, docName); e : ', e);
     }
   }
 
