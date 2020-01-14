@@ -31,9 +31,9 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
 
   chips = [
-    { name: 'UNPAID', value: 0 },
-    { name: 'PAID', value: 1 },
-    { name: 'OVERDUE', value: 2 }
+    { name: 'UNPAID', value: 1 },
+    { name: 'PAID', value: 2 },
+    { name: 'OVERDUE', value: 3 }
   ];
   dateChips = [
     { name: 'Date', value: 1 },
@@ -283,12 +283,16 @@ export class InvoicesSubscriptionComponent implements OnInit {
   // }
 
   display(data) {
-    console.log(data, "edited data invoice");
-    this.dataSource.data = [{}, {}, {}]
-    this.tableData = [];
-    this.getInvoiceSubData(false);
-    this.invoiceSubscription = 'false';
-    this.dataCount = 0;
+
+    if(data.closingState){
+      console.log(data, "edited data invoice");
+      this.dataSource.data = [{}, {}, {}]
+      this.tableData = [];
+      this.getInvoiceSubData(false);
+      this.dataCount = 0;
+    }
+      this.invoiceSubscription = 'false';
+    
     // this.ngOnInit();
   }
 
