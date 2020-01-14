@@ -249,6 +249,8 @@ export class InvoicesSubscriptionComponent implements OnInit {
   selectAll(event) {
     this.dataCount = 0;
     if (this.dataSource != undefined) {
+      console.log(this.dataSource.filteredData, this.dataSource.data, "data check api 123");
+      
       this.dataSource.filteredData.forEach(item => {
         item.selected = event.checked;
         if (item.selected) {
@@ -261,7 +263,6 @@ export class InvoicesSubscriptionComponent implements OnInit {
   changeSelect() {
     this.dataCount = 0;
     this.dataSource.filteredData.forEach(item => {
-      console.log('item item ', item);
       if (item.selected) {
         this.dataCount++;
       }
@@ -269,17 +270,17 @@ export class InvoicesSubscriptionComponent implements OnInit {
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    if (this.dataSource != undefined) {
-      return this.dataCount === this.dataSource.filteredData.length;
-    }
-  }
+  // isAllSelected() {
+  //   if (this.dataSource != undefined) {
+  //     return this.dataCount === this.dataSource.filteredData.length;
+  //   }
+  // }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selectAll({ checked: false }) : this.selectAll({ checked: true });
-  }
+  // masterToggle() {
+  //   this.isAllSelected() ?
+  //     this.selectAll({ checked: false }) : this.selectAll({ checked: true });
+  // }
 
   display(data) {
     console.log(data, "edited data invoice");
@@ -466,7 +467,7 @@ export class InvoicesSubscriptionComponent implements OnInit {
           data => {
             this.dataCount = 0;
             this.eventService.openSnackBar('invoice deleted successfully.', 'dismiss');
-            dialogRef.close(listIndex);
+            dialogRef.close(this.list);
 
           },
           error => this.eventService.showErrorMessage(error)
@@ -489,13 +490,17 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result,this.dataSource.data,"delete result");
-      const tempList = []
-      this.dataSource.data.forEach(singleElement => {
-        if (!singleElement.selected) {
-          tempList.push(singleElement);
-        }
-      });
-      this.dataSource.data = tempList;
+      if(result.length > 0 ){
+        const tempList = []
+        this.dataSource.data.forEach(singleElement => {
+          if (!singleElement.selected) {
+            tempList.push(singleElement);
+          }
+          singleElement.selected = false;
+        });
+        this.dataSource.data = tempList;
+        this.dataCount = 0;
+      }
 
      
     });

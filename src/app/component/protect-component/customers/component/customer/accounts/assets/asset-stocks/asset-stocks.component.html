@@ -24,9 +24,11 @@
       <img src="assets/images/svg/up-down.svg" class="c-p">
       <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
       <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
-          class="material-icons">filter_list</i>FILTERS</button>
+        class="material-icons">filter_list</i>FILTERS
+      </button>
       <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"><i
-          class="material-icons">add</i>ADD NEW</button>
+        class="material-icons">add</i>ADD NEW
+      </button>
       <mat-menu #menu1="matMenu" class="add-new">
         <button (click)="openAddStock('addPortfolio',null)" mat-menu-item class="b-b">
           <div class="row">
@@ -98,8 +100,8 @@
               <p class="text-custom m-0">Returns</p>
               <h5 *ngIf="assetStockData" class="m-0 text-danger">{{assetStockData.grandTotalAbsReturns}}
               </h5> <i class="material-icons text-danger v-sub f-18 f-700">
-                arrow_upward
-              </i>
+              arrow_upward
+            </i>
             </div>
           </div>
         </div>
@@ -204,7 +206,8 @@
           <th *matHeaderCellDef class="br" mat-header-cell> Scrip</th>
           <td *matCellDef="let element" class="br" mat-cell> {{element.scripName}} </td>
           <th *matFooterCellDef [attr.colspan]="5" class="br text-right" mat-header-cell
-            style="background-color: #fff !important;"> Total</th>
+              style="background-color: #fff !important;"> Total
+          </th>
         </ng-container>
         <ng-container matColumnDef="owner">
           <th *matHeaderCellDef class="br" mat-header-cell> Owner</th>
@@ -277,9 +280,9 @@
         <ng-container matColumnDef="icons">
           <th *matHeaderCellDef class="" mat-header-cell></th>
           <td *matCellDef="let element" class="" mat-cell><i [matMenuTriggerFor]="menu25"
-              class="material-icons c-p text-black">
-              more_vert
-            </i>
+                                                             class="material-icons c-p text-black">
+            more_vert
+          </i>
             <mat-menu #menu25="matMenu">
               <button mat-menu-item (click)="editStock(element,singlePortfolio)">Edit</button>
               <button mat-menu-item>Detailed view</button>

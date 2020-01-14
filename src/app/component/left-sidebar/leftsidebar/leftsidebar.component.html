@@ -74,10 +74,10 @@
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
 
-
             <mat-form-field class="width40 serachbox">
                 <div class="form-group searchBoxHeader">
-                    <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control" matInput type="text">
+                    <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control pl-40" matInput type="text">
+                    <i class="material-icons searchIcon"> search </i>
                     <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
                         <!-- <mat-option>
                 <p>Start typing to search clients,leads otr team members</p>
@@ -127,7 +127,7 @@
 
                     <mat-menu #appMenu="matMenu">
 
-                        <button (click)="logout()" mat-menu-item>LogOut</button>
+                        <button (click)="logout()" mat-menu-item>Logout</button>
                     </mat-menu>
                 </a>
             </div>

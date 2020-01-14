@@ -7,6 +7,7 @@ import {MAT_DATE_FORMATS} from '@angular/material';
 import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
 import {AuthService} from 'src/app/auth-service/authService';
 import {UtilService} from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-cash-in-hand',
@@ -30,7 +31,7 @@ export class CashInHandComponent implements OnInit {
   private clientId: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService,
-              public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
+              public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService,public eventService:EventService) {
   }
 
   @Input()
@@ -56,8 +57,8 @@ export class CashInHandComponent implements OnInit {
     this.familyMemberId = value.id;
   }
 
-  Close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({state: 'close',refreshRequired:flag});
   }
 
   showLess(value) {
@@ -124,11 +125,15 @@ export class CashInHandComponent implements OnInit {
 
   addCashInHandRes(data) {
     console.log('addrecuringDepositRes', data);
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({state: 'close', data,refreshRequired:true});
+    this.eventService.openSnackBar('Cash In Hand added successfully', 'OK');
+
   }
 
   editCashInHandRes(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({state: 'close', data,refreshRequired:true});
+    this.eventService.openSnackBar('Cash In Hand added successfully', 'OK');
+
   }
 
 }

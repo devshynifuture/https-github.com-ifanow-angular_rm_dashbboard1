@@ -39,7 +39,7 @@
                             <div class="bg-grey lter text-left">
                                 <mat-checkbox class="custom-checkbox" [ngStyle]="{'pointer-events':(serviceData.selected)?'none':'all'}" checked="false" [ngClass]="{'v-h':serviceData.selected==false }"></mat-checkbox>
 
-                                <div class="pl-24 pt-20 height130">
+                                <div class="pl-24 pt-20 height155">
                                     <h3 class="f-24 p-0 l-26 mb-8">{{serviceData.serviceName}} </h3>
                                     {{serviceData.serviceCode}}
                                     <p class="mb-0 pb-32 pt-4" matTooltip="{{serviceData.description}}" aria-label="Button that displays a tooltip when focused or hovered over">
@@ -72,12 +72,15 @@
                                         </p>
                                     </div>
                                     <div class="col-md-6">
-                                        <p class="text-primitive f-12">FEES</p>
+                                        <p *ngIf="serviceData&&serviceData.feeTypeId==1" class="text-primitive f-12">
+                                            FEES</p>
+                                        <p *ngIf="serviceData&&serviceData.feeTypeId==2" class="text-primitive f-12">
+                                            OTHER ASSET FEES</p>
                                         <p class="f-18" *ngIf="serviceData&&serviceData.feeTypeId==1">
                                             ₹{{serviceData.averageFees}}
                                         </p>
                                         <p class="f-18" *ngIf="serviceData&&serviceData.feeTypeId==2">
-                                            {{serviceData.averageFees}}% / year
+                                            {{serviceData.averageFees}}%
                                         </p>
                                     </div>
                                 </div>

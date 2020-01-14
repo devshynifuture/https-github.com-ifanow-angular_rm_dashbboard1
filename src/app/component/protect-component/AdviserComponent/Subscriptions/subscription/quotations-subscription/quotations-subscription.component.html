@@ -9,31 +9,33 @@
                 <div class="row">
                     <div class="col-md-3" *ngIf="dataSource.data.length > 0">
                         <button [matMenuTriggerFor]="menu" class="b-a pr-0 br-0" mat-button>Actions <i
-                class="material-icons text-custom">
-                arrow_drop_down
-              </i></button>
+                                class="material-icons text-custom">
+                                arrow_drop_down
+                            </i></button>
                         <mat-menu #menu="matMenu">
                             <button *ngIf="dataCount == 0" mat-menu-item>Select quotation to see more
-                actions
-              </button>
+                                actions
+                            </button>
                             <button (click)="deleteModal(null)" *ngIf="dataCount != 0" mat-menu-item>Delete
-                Quotation
-              </button>
+                                Quotation
+                            </button>
                         </mat-menu>
                     </div>
                     <div class="col-md-8" *ngIf="dataSource.data.length > 0 && dataCount > 0">
-                        <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}} quotation selected</p>
-                        <p class="m-0 text-black text-left pt-12" *ngIf="dataCount > 1">{{dataCount}} quotations selected</p>
+                        <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}} quotation selected
+                        </p>
+                        <p class="m-0 text-black text-left pt-12" *ngIf="dataCount > 1">{{dataCount}} quotations selected
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 right text-right p-0">
                 <i class="material-icons mr-12 icon-light c-p v-sub">
-          search
-        </i>
+                    search
+                </i>
                 <button (click)="showFilters(showFilter)" class="btn-default addon" mat-stroked-button><i
-            class="material-icons">filter_list</i>FILTERS
-        </button>
+                        class="material-icons">filter_list</i>FILTERS
+                </button>
             </div>
         </div>
         <div [ngClass]="showFilter === true ? 'block' : 'none'" class="row pt-12">
@@ -43,8 +45,8 @@
                         <mat-chip *ngFor="let status of filterStatus; let ind = index" class="bg-white b-a c-p f-400 p-12">
                             {{status.name}}
                             <i (click)="remove(ind)" class="material-icons text-custom ml-12">
-                cancel
-              </i>
+                                cancel
+                            </i>
                         </mat-chip>
                         <mat-chip-list>
                             <mat-chip *ngFor="let dateFilter of filterDate; let i = index" class="bg-white newDateClass b-a c-p f-400 p-12 w-220">
@@ -55,8 +57,8 @@
                                 </sat-datepicker>
                                 <sat-datepicker-toggle [for]="picker2" matSuffix></sat-datepicker-toggle>
                                 <i (click)="removeDate(i)" class="material-icons text-custom c-p">
-                  cancel
-                </i>
+                                    cancel
+                                </i>
                             </mat-chip>
                         </mat-chip-list>
                     </mat-chip-list>
@@ -100,17 +102,17 @@
             <div [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'" class="tableClass">
                 <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table matSort>
                     <ng-container matColumnDef="checkbox">
-                        <th *matHeaderCellDef class="f-18" mat-header-cell>
-                            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0" [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll">
-                            </mat-checkbox>
-                        </th>
-                        <td *matCellDef="let element" mat-cell>
-                            <mat-checkbox (change)="changeSelect()" [(ngModel)]="element.selected" class="c-p" name="selectedData">
-                            </mat-checkbox>
-                        </td>
-                    </ng-container>
+                        <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"  >
+                          <mat-checkbox (change)="selectAll($event)" name="selectAll" [checked]="dataCount == dataSource.data.length"></mat-checkbox>
+                      </th>
+                      <td mat-cell *matCellDef="let element" style="width: 2%;" class="c-p">
+                          <mat-checkbox name="selectedData" [(ngModel)]="element.selected" (change)="changeSelect()">
+                          </mat-checkbox>
+                      </td>
+                      </ng-container>
                     <ng-container matColumnDef="name">
-                        <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="clientName"> Client name</th>
+                        <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="clientName"> Client name
+                        </th>
                         <td (click)="Open('viewQuotation',element)" *matCellDef="let element" class="c-p" mat-cell>
                             <div class="bar"> {{element.clientName}} </div>
                         </td>
@@ -130,7 +132,8 @@
                     </ng-container>
 
                     <ng-container matColumnDef="cdate">
-                        <th mat-sort-header="createdDate" mat-header-cell *matHeaderCellDef class="f-18"> Created date </th>
+                        <th mat-sort-header="createdDate" mat-header-cell *matHeaderCellDef class="f-18"> Created date
+                        </th>
                         <td mat-cell *matCellDef="let element">
                             <div class="bar"> {{element.createdDate | date:'dd/MM/yyyy'}} </div>
                         </td>
@@ -159,8 +162,10 @@
                         <td *matCellDef="let element" mat-cell>
                             <div class="bar">
                                 <span>
-                  <span class="text-success t-12 f-500 c-p" *ngIf="element.status==1">READY TO SEND</span>
-                                <span class="text-success t-12 f-500 c-p" *ngIf="element.status==0">NOT STARTED</span>
+                                    <span class="text-success t-12 f-500 c-p" *ngIf="element.status==1">READY TO
+                                        SEND</span>
+                                <span class="text-success t-12 f-500 c-p" *ngIf="element.status==0">NOT
+                                        STARTED</span>
                                 </span>
                             </div>
                         </td>
@@ -168,8 +173,8 @@
                     <ng-container matColumnDef="icons">
                         <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;"></th>
                         <td *matCellDef="let element" mat-cell style="width: 2%;"><i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
-                more_vert
-              </i>
+                                more_vert
+                            </i>
                             <mat-menu #menu="matMenu">
                                 <a (click)="Open('emailQuotation',element)" mat-menu-item>View & Edit Quotation</a>
                                 <a (click)="deleteModal(element)" mat-menu-item>Delete document</a>
@@ -224,7 +229,7 @@
                         <button mat-stroked-button class="btn-default addon mr-12" (click)="showFilters(showFilter)"><i
                                 class="material-icons">filter_list</i>FILTERS
                         </button>
-                        <button mat-stroked-button class="btn-primary addon"><i class="material-icons">add</i>ADD NEW</button>
+                        <button mat-stroked-button class="btn-primary addon"> ADD NEW</button>
                     </div>
                 </div>
                 <div class="row pt-12">

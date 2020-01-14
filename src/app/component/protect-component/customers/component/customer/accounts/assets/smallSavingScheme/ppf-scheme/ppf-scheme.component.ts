@@ -55,7 +55,7 @@ export class PPFSchemeComponent implements OnInit {
 
     } else {
       this.noData = 'No scheme found';
-      //this.dataSource.data = []
+      this.dataSource.data = []
     }
   }
   deleteModal(value, data) {
@@ -104,7 +104,7 @@ export class PPFSchemeComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
           this.getPpfSchemeData();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();

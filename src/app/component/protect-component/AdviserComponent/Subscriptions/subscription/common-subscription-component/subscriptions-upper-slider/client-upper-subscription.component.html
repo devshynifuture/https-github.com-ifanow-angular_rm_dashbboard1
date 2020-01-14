@@ -1,172 +1,163 @@
 <!--<div class="wrapper-20 bg-grey lter heading-fix">
     <h3 class="m-0 text-center f-24">{{clientSubscriptionData.name}} </h3>
 </div>-->
-<div class="bg-white" *ngIf="sub==undefined">
-    <div class="align-center">
-        <div class="row">
-            <div class="col-md-12 pt-150">
-                <h5 class="pt-44">Hey, it seems {{clientSubscriptionData.name}} hasn’t been subscribed to any Services
-                    yet. You need to add a Plan to get going. </h5>
-                <h5>Once a Plan is added, all the associated Services (along with the fee structure) will be added. If
-                    you want, you can customize the fee structure for this client. Each Service will have it’s own
-                    Subscription attached to it.
-                </h5>
-                <h5>Next, you will be able to send Quotations, sign Documents etc.</h5>
-                <h5>Let’s get started!</h5>
-                <button mat-stroked-button class="btn-primary br-0 mt-44"
-                    (click)="openPlanSlider('planRightSlider','open',null)">Add
-                    Plan
-                </button>
-            </div>
-        </div>
+<div *ngIf="subscriptionData.length==0" class="bg-white">
+  <div class="align-center">
+    <div class="row">
+      <div class="col-md-12 pt-150">
+        <h5 class="pt-44">Hey, it seems {{clientData.name}} hasn't been subscribed to any Services
+          yet. You need to add a Plan to get going. </h5>
+        <h5>Once a Plan is added, all the associated Services (along with the fee structure) will be added. If
+          you want, you can customize the fee structure for this client. Each Service will have it’s own
+          Subscription attached to it.
+        </h5>
+        <h5>Next, you will be able to send Quotations, sign Documents etc.</h5>
+        <h5>Let's get started!</h5>
+        <button (click)="openPlanSlider('planRightSlider','open',null)" class="btn-primary br-0 mt-44"
+          mat-stroked-button>Add
+          Plan
+        </button>
+      </div>
     </div>
+  </div>
 </div>
-
 <div class="bg-white">
-    <div class="bg-grey lter heading-fix p-20 b-a">
-        <div class="row">
-            <div class="col-md-12">
-                <h2 class="m-0">{{clientData[0].clientName}}</h2>
+  <!-- <div class="bg-grey lter heading-fix p-20 b-a">
+       <div class="row">
+         <div class="col-md-12">
+           <h2 class="m-0">{{clientData.name}}</h2>
+         </div>
+       </div>
+     </div>-->
+  <div *ngIf="subscriptionData.length > 0" class="wrapper-20 pb-0 pt-180 mt-0">
+    <div class="row">
+      <div class="col-md-12 p-0 pt-32">
+        <button (click)="openPlanSlider('planRightSlider','open',null)" class="btn-primary br-0 right text-right addon"
+          mat-stroked-button>ADD PLAN
+        </button>
+      </div>
+    </div>
+  </div>
+  <div *ngFor="let sub of subscriptionData; let i = index" class="pl-40 pr-40 pb-40 mt-12 col-md-12">
+    <!--    *ngIf="clientData.length > 0"-->
+    <h4 class="pb-8 text-black">{{sub.planName}}</h4>
+    <div class="overflow-hidden">
+      <table *ngIf="sub!=undefined" [appSkeletonLoading]="isLoading"
+        [dataSource]="checkAndGenerateTableSource(sub.subscriptions)" appSkeletonLoading class="mt-8 skeletonAnimation"
+        id="table-low" mat-table matSort>
+        <ng-container matColumnDef="service">
+          <th *matHeaderCellDef class="f-18 w-23" mat-header-cell mat-sort-header="serviceName">
+            Service name
+          </th>
+          <td *matCellDef="let element" class="w-23" mat-cell>
+            <div class="bar">
+              {{element.serviceName}}
             </div>
-        </div>
-    </div>
-
-    <div class="wrapper-20 pb-0 pt-180 mt-0" *ngIf="clientData.length > 0">
-        <div class="row">
-            <div class="col-md-12 p-0 pt-32">
-                <button mat-stroked-button class="btn-primary br-0 right text-right addon"
-                    (click)="openPlanSlider('planRightSlider','open',null)">ADD PLAN
-                </button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="amt">
+          <th *matHeaderCellDef class="f-18" mat-header-cell> Fee amount</th>
+          <td (click)="Open('open',element)" *matCellDef="let element" class="c-p" mat-cell>
+            <div class="bar text-primary text-underline" (click)="Open('open',element)"
+              *ngIf="element.startsOn==undefined"> {{isLoading ? ' ' : 'View details'}} </div>
+            <div *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==1">
+              {{element.subscriptionPricing.subscriptionAssetPricingList[0].pricing}}</div>
+            <div *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==2">
+              {{element.subscriptionPricing.subscriptionAssetPricingList[2].pricing}}</div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="feeTypeId"> Fee type
+          </th>
+          <td *matCellDef="let element" mat-cell>
+            <div class="bar">
+              {{element.serviceTypeName}}
             </div>
-        </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="subs">
+          <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="subscriptionNumber">
+            Subscription #
+          </th>
+          <td *matCellDef="let element" mat-cell>
+            <div class="bar">
+            </div>
+            {{element.subscriptionNumber}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="status"> Status</th>
+          <td *matCellDef="let element" mat-cell>
+            <div class="bar">
+              <span *ngIf="element.status==1" class="text-success t-10 ">NOT STARTED</span>
+              <span *ngIf="element.status==2" class="text-primary t-10 ">LIVE</span>
+              <span *ngIf="element.status==3" class="text-custom t-10 ">FUTURE</span>
+              <span *ngIf="element.status==4" class="text-danger t-10 ">CANCELLED</span>
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="date">
+          <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="startsOn"> Activation date
+          </th>
+          <th *matHeaderCellDef mat-header-cell> Activation date</th>
+          <td *matCellDef="let element" mat-cell>
+            <div class="bar">
+              <div *ngIf="element.status!=1"> {{element.startsOn | date:'dd/MM/yyyy'}}</div>
+              <div (click)="openPlanSlider('createSub','open',element)" *ngIf="element.status==1">
+                <button class="btn-header btn-xs ml-8 br-0 btn-sm" mat-stroked-button>START</button>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="bdate">
+          <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="prevBillingDate"> Last billing
+            date
+          </th>
+          <td *matCellDef="let element" mat-cell>
+            <div class="bar">
+              {{element.prevBillingDate | date:'dd/MM/yyyy'}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="ndate">
+          <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="nextBillingDate"> Next billing
+            date
+          </th>
+          <td *matCellDef="let element" mat-cell>
+            <div class="bar">
+              {{element.nextBillingDate | date:'dd/MM/yyyy'}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="mode">
+          <th *matHeaderCellDef class="f-18" mat-header-cell> Fee collection mode</th>
+          <td *matCellDef="let element" mat-cell>
+            <div class="bar"></div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="icons">
+          <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;"></th>
+          <td *matCellDef="let element" mat-cell style="width: 2%;">
+            <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu" class="material-icons c-p iconscolors">
+              more_vert
+            </i>
+            <mat-menu #menu="matMenu">
+              <a (click)="Open('open',element)" *ngIf="element.startsOn==undefined" mat-menu-item>View & Edit fee
+                structure</a>
+              <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change
+                Biller</a>
+              <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change
+                Payee</a>
+              <a (click)="delete('cancelSubscription',element)" *ngIf="element.status!=1" class="bt-1"
+                mat-menu-item>Cancel subscription</a>
+              <a (click)="deleteModal('SUBSCRIPTION',element, sub.subscriptions, i)" mat-menu-item>Delete
+                subscription</a>
+            </mat-menu>
+          </td>
+        </ng-container>
+        <tr *matHeaderRowDef="displayedColumns; sticky : true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+      </table>
     </div>
-
-    <div class="pl-40 pr-40 pb-40 mt-12 col-md-12" *ngFor="let sub of subcr">
-
-        <h4 class="pb-8 text-black" *ngIf="clientData.length > 0">{{sub.plan}}</h4>
-
-        <div class="overflow-hidden">
-
-            <table matSort mat-table [dataSource]="sub" id="table-low" class="mt-8 skeletonAnimation" appSkeletonLoading
-                [appSkeletonLoading]="isLoading" *ngIf="sub!=undefined">
-                <ng-container matColumnDef="service">
-                    <th mat-sort-header="serviceName" mat-header-cell *matHeaderCellDef class="f-18 w-23">
-                        Service name
-                    </th>
-                    <td mat-cell *matCellDef="let element" class="w-23">
-                        <div class="bar">
-                            {{element.serviceName}}
-                        </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="amt">
-                    <th mat-header-cell *matHeaderCellDef class="f-18"> Fee amount</th>
-                    <td mat-cell *matCellDef="let element" (click)="Open('open',element)"
-                        class="c-p text-primary text-underline">
-                        <div class="bar"> {{isLoading ? ' ' : 'View details'}} </div>
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="type">
-                    <th mat-sort-header="feeTypeId" mat-header-cell *matHeaderCellDef class="f-18"> Fee type
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="bar">
-                            {{element.feeTypeId}}
-                        </div>
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="subs">
-                    <th mat-sort-header="subscriptionNumber" mat-header-cell *matHeaderCellDef class="f-18">
-                        Subscription #
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="bar">
-                        </div>{{element.subscriptionNumber}}
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="status">
-                    <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="f-18"> Status</th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="bar">
-                            <span class="text-success t-10 " *ngIf="element.status==1">NOT STARTED</span>
-                            <span class="text-primary t-10 " *ngIf="element.status==2">LIVE</span>
-                            <span class="text-custom t-10 " *ngIf="element.status==3">FUTURE</span>
-                            <span class="text-danger t-10 " *ngIf="element.status==4">CANCELLED</span>
-                        </div>
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="date">
-                    <th mat-sort-header="startsOn" mat-header-cell *matHeaderCellDef class="f-18"> Activation date
-                    </th>
-                    <th mat-header-cell *matHeaderCellDef> Activation date</th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="bar">
-                            <div *ngIf="element.status!=1"> {{element.startsOn | date:'dd/MM/yyyy'}}</div>
-                            <div *ngIf="element.status==1" (click)="openPlanSlider('createSub','open',element)">
-                                <button mat-stroked-button class="btn-header btn-xs ml-8 br-0 btn-sm">START</button>
-                            </div>
-                        </div>
-
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="bdate">
-                    <th mat-sort-header="prevBillingDate" mat-header-cell *matHeaderCellDef class="f-18"> Last billing
-                        date
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="bar">
-                            {{element.prevBillingDate | date:'dd/MM/yyyy'}}
-                        </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="ndate">
-                    <th mat-sort-header="nextBillingDate" mat-header-cell *matHeaderCellDef class="f-18"> Next billing
-                        date
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="bar">
-                            {{element.nextBillingDate | date:'dd/MM/yyyy'}}
-                        </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="mode">
-                    <th mat-header-cell *matHeaderCellDef class="f-18"> Fee collection mode</th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="bar"> </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="icons">
-                    <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"></th>
-                    <td mat-cell *matCellDef="let element" style="width: 2%;">
-
-                        <i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu"
-                            [matMenuTriggerFor]="belowMenu">
-                            more_vert
-                        </i>
-                        <mat-menu #menu="matMenu">
-                            <a mat-menu-item (click)="Open('open',element)">View & Edit fee structure</a>
-                            <a mat-menu-item class="bt-1"
-                                (click)="openPlanSlider('billerSettings','open',element)">Change
-                                Biller</a>
-                            <a mat-menu-item (click)="openPlanSlider('changePayee','open',element)">Change
-                                Payee</a>
-                            <a *ngIf="element.status!=1" class="bt-1" mat-menu-item
-                                (click)="delete('cancelSubscription',element)">Cancel subscription</a>
-                            <a mat-menu-item (click)="deleteModal('SUBSCRIPTION',element)">Delete
-                                subscription</a>
-                        </mat-menu>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-
-        </div>
-
-
-    </div>
+  </div>
 </div>

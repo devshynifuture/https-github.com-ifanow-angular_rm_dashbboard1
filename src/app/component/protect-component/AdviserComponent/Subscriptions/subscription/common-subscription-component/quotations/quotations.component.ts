@@ -1,15 +1,15 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
 
 
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
-import { SubscriptionService } from '../../../subscription.service';
-import { ConsentTandCComponent } from '../consent-tand-c/consent-tand-c.component';
-import { UtilService } from '../../../../../../../services/util.service';
-import { AuthService } from '../../../../../../../auth-service/authService';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
+import {SubscriptionService} from '../../../subscription.service';
+import {ConsentTandCComponent} from '../consent-tand-c/consent-tand-c.component';
+import {UtilService} from '../../../../../../../services/util.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
 
 export interface PeriodicElement {
   document: string;
@@ -32,7 +32,7 @@ export class QuotationsComponent implements OnInit {
   noData: string;
   quotationData: any[];
 
-  constructor(public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog,
+  constructor(public subInjectService: SubscriptionInject, private subService: SubscriptionService, private eventService: EventService, public dialog: MatDialog,
     private subAService: SubscriptionService) {
     // this.subInjectService.closeRightSlider.subscribe(
     //   data => this.getQuotationDesignData(data)
@@ -114,7 +114,7 @@ export class QuotationsComponent implements OnInit {
     this.dataCount = 0;
     if (this.dataSource != undefined) {
       this.dataSource.filteredData.forEach(item => {
-        console.log('item item ', item);
+        // console.log('item item ', item);
         if (item.selected) {
           this.dataCount++;
         }
@@ -122,18 +122,18 @@ export class QuotationsComponent implements OnInit {
     }
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    if (this.dataSource != undefined) {
-      return this.dataCount === this.dataSource.filteredData.length;
-    }
-  }
+  // /** Whether the number of selected elements matches the total number of rows. */
+  // isAllSelected() {
+  //   if (this.dataSource != undefined) {
+  //     return this.dataCount === this.dataSource.filteredData.length;
+  //   }
+  // }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selectAll({ checked: false }) : this.selectAll({ checked: true });
-  }
+  // /** Selects all rows if they are not all selected; otherwise clear selection. */
+  // masterToggle() {
+  //   this.isAllSelected() ?
+  //     this.selectAll({ checked: false }) : this.selectAll({ checked: true });
+  // }
 
   getQuotationsListResponse(data) {
     this.isLoading = false;
@@ -168,35 +168,63 @@ export class QuotationsComponent implements OnInit {
     this.quotationDesignEmail = this.quotationDesign;
   }
 
-  deleteModal(value) {
+ list:any = [];
+
+  deleteModal(data) {
+    this.list = [];
+    if(data == null){
+      this.dataSource.filteredData.forEach(singleElement => {
+        if (singleElement.selected) {
+          this.list.push(singleElement.documentRepositoryId);
+        }
+      });
+    }
+    else{
+     this.list = [data.documentRepositoryId];
+    }
     const dialogData = {
-      data: value,
+      data: 'DOCUMENT',
       header: 'DELETE',
-      body: 'Are you sure you want to delete?',
+      body: 'Are you sure you want to delete the document?',
       body2: 'This cannot be undone',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        console.log('11111111111111111111111111111111111111111111');
+        this.subService.deleteSettingsDocument(this.list).subscribe(
+          data => {
+            this.eventService.openSnackBar('document is deleted', 'dismiss');
+            // this.valueChange.emit('close');
+            dialogRef.close(this.list);
+            // this.getRealEstate();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
       },
       negativeMethod: () => {
+        this.list = []
         console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
       autoFocus: false,
 
-
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
+      console.log(result,this.dataSource.data,"delete result");
+      if(this.list.length > 0){
+        const tempList = []
+        this.dataSource.data.forEach(singleElement => {
+          if (!singleElement.selected) {
+            tempList.push(singleElement);
+          }
+        });
+        this.dataSource.data = tempList;
+      }
     });
-
   }
 
   openSendEmail(element) {

@@ -99,20 +99,20 @@
 
   <!-- (scroll)="scrollCall()" -->
   <!-- id="pdfDoc"  removed from above div-->
+
   <div class="wrapper-20 pt-0 bg-white" id="wrapper" *ngIf="dataSource.data.length > 0">
+    {{dataCount == dataSource.data.length}} {{dataCount}} {{dataSource.data.length}}
     <div class="tableClass">
       <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
         class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
         <ng-container matColumnDef="checkbox">
-          <th *matHeaderCellDef class="f-18" mat-header-cell>
-            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0"
-                          [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll">
+          <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"  >
+            <mat-checkbox (change)="selectAll($event)" name="selectAll" [checked]="dataCount == dataSource.data.length"></mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let element" style="width: 2%;" class="c-p">
+            <mat-checkbox name="selectedData" [(ngModel)]="element.selected" (change)="changeSelect()">
             </mat-checkbox>
-          </th>
-          <td *matCellDef="let element" mat-cell>
-            <mat-checkbox (change)="changeSelect()" [(ngModel)]="element.selected" class="c-p" name="selectedData">
-            </mat-checkbox>
-          </td>
+        </td>
         </ng-container>
         <ng-container matColumnDef="date">
           <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="invoiceDate"> Date</th>

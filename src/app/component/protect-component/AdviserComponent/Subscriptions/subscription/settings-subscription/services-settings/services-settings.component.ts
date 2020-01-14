@@ -12,6 +12,7 @@ import { SubscriptionUpperSliderComponent } from '../../common-subscription-comp
   styleUrls: ['./services-settings.component.scss']
 })
 export class ServicesSettingsComponent implements OnInit {
+  feesDisplay: boolean;
 
   constructor(public dialog: MatDialog, private subService: SubscriptionService,
     private dataService: EventService, private eventService: EventService) {
@@ -28,6 +29,7 @@ export class ServicesSettingsComponent implements OnInit {
   ngOnInit() {
 
     this.advisorId = AuthService.getAdvisorId();
+    this.feesDisplay = true;
     this.getServiceSettingSubData();
   }
 
@@ -95,6 +97,7 @@ export class ServicesSettingsComponent implements OnInit {
   getServiceSettingSubResponse(data) {
     console.log('service data', data);
     this.isLoading = false;
+    this.feesDisplay = false
     this.serviceSettingData = data;
     // this.showLoader = false;
   }

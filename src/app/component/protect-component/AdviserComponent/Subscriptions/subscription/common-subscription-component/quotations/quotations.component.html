@@ -1,5 +1,5 @@
-<div *ngIf="dataSource.data.length > 0">
-    <div *ngIf="quotationDesign=='true'" class="bg-white">
+<div>
+    <div *ngIf="quotationDesign=='true' && dataSource.data.length > 0" class="bg-white">
         <div class="wrapper-40  pr-20">
             <div class="row pt-180">
                 <div class="col-md-1 p-0">
@@ -13,7 +13,7 @@
                         <button *ngIf="dataCount != 0" (click)="openSendEmail('')" mat-menu-item>Email
                             only
                         </button>
-                        <button (click)="deleteModal('QUOTATION')" *ngIf="dataCount != 0" class="b-t" mat-menu-item>Delete
+                        <button (click)="deleteModal(null)" *ngIf="dataCount != 0" class="b-t" mat-menu-item>Delete
                             Quotations
                         </button>
                     </mat-menu>
@@ -30,13 +30,13 @@
             <div class="overflow-hidden">
                 <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-8" class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
                     <ng-container matColumnDef="checkbox">
-                        <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;">
-                            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="dataCount > 0 && isAllSelected()" [indeterminate]="dataCount > 0 && !isAllSelected()" name="selectAll"></mat-checkbox>
-                        </th>
-                        <td *matCellDef="let element" mat-cell>
-                            <mat-checkbox (change)="selectedInvoice()" [(ngModel)]="element.selected" class="c-p" name="selectedData">
-                            </mat-checkbox>
-                        </td>
+                        <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"  >
+                          <mat-checkbox (change)="selectAll($event)" name="selectAll" [checked]="dataCount == dataSource.data.length"></mat-checkbox>
+                      </th>
+                      <td mat-cell *matCellDef="let element" style="width: 2%;" class="c-p">
+                          <mat-checkbox name="selectedData" [(ngModel)]="element.selected" (change)="changeSelect()">
+                          </mat-checkbox>
+                      </td>
                     </ng-container>
                     <ng-container matColumnDef="document">
                         <th *matHeaderCellDef mat-header-cell mat-sort-header="documentName"> Document name </th>
@@ -109,7 +109,7 @@
                             <mat-menu #menu="matMenu">
                                 <a (click)="Open('viewQuotation','open',element)" mat-menu-item>View & edit
                                     quotation</a>
-                                <a (click)="deleteModal('QUOTATION')" class="bt-1" mat-menu-item>Delete quotation</a>
+                                <a (click)="deleteModal(element)" class="bt-1" mat-menu-item>Delete quotation</a>
                             </mat-menu>
                         </td>
                     </ng-container>
@@ -141,3 +141,4 @@
     <div>
         <app-terms-agreement (valueChange)='display($event)' *ngIf="quotationDesign=='email'" [quotationDesignE]="quotationDesignEmail"></app-terms-agreement>
     </div>
+</div>

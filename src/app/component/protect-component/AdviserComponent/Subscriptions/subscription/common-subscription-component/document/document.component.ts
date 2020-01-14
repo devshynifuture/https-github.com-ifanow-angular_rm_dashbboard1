@@ -786,39 +786,25 @@ export class DocumentComponent implements OnInit {
       });
     }
   }
-
-  changeSelect(element) {
+  changeSelect() {
     this.dataCount = 0;
-    if (this.dataSource != undefined) {
-      this.dataSource.filteredData.forEach(item => {
-        console.log('item item ', item);
-        if (item.selected) {
-          this.dataCount++;
-        }
-      });
-    }
-    // if(data.selected==false)
-    // {
-    //   data.selected = true;
-    //   this.dataCount++;
-    //   data.dataCountd =this.dataCount;
-    // }else{
-    //   data.selected = false;
-    //   this.dataCount--;
-    //   data.dataCountd =this.dataCount;
-    // }
+    this.dataSource.filteredData.forEach(item => {
+      if (item.selected) {
+        this.dataCount++;
+      }
+    });
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    if (this.dataSource != undefined) {
-      return this.dataCount === this.dataSource.filteredData.length;
-    }
-  }
+  // /** Whether the number of selected elements matches the total number of rows. */
+  // isAllSelected() {
+  //   if (this.dataSource != undefined) {
+  //     return this.dataCount === this.dataSource.filteredData.length;
+  //   }
+  // }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selectAll({ checked: false }) : this.selectAll({ checked: true });
-  }
+  // /** Selects all rows if they are not all selected; otherwise clear selection. */
+  // masterToggle() {
+  //   this.isAllSelected() ?
+  //     this.selectAll({ checked: false }) : this.selectAll({ checked: true });
+  // }
 }

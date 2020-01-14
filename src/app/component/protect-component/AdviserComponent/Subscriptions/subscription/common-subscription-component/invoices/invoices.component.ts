@@ -104,11 +104,10 @@ export class InvoicesComponent implements OnInit {
 
   }
 
-  changeSelect(data) {
+  changeSelect() {
     this.dataCount = 0;
     if (this.dataSource != undefined) {
       this.dataSource.filteredData.forEach(item => {
-        console.log('item item ', item);
         if (item.selected) {
           this.dataCount++;
         }
@@ -213,8 +212,10 @@ export class InvoicesComponent implements OnInit {
 
   deleteModal(value) {
     this.list = [];
+    let listIndex = [];
     this.dataSource.filteredData.forEach(singleElement => {
       if (singleElement.selected) {
+        listIndex.push(this.dataSource.filteredData.indexOf(singleElement));
         this.list.push(singleElement.id);
       }
     });
@@ -230,11 +231,13 @@ export class InvoicesComponent implements OnInit {
           data => {
             this.dataCount = 0;
             this.eventService.openSnackBar('invoice deleted successfully.', 'dismiss');
-            dialogRef.close();
-            this.getInvoiceList();
+            dialogRef.close(this.list);
+
           },
           error => this.eventService.showErrorMessage(error)
         );
+            dialogRef.close(listIndex);
+
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -250,7 +253,18 @@ export class InvoicesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result,this.dataSource.data,"delete result");
+      if(result.length > 0 ){
+        const tempList = []
+        this.dataSource.data.forEach(singleElement => {
+          if (!singleElement.selected) {
+            tempList.push(singleElement);
+          }
+        });
+        this.dataSource.data = tempList;
+      }
 
+     
     });
   }
 }

@@ -1,17 +1,17 @@
-import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from '../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {GoldComponent} from '../gold/gold.component';
-import {OthersComponent} from '../others/others.component';
-import {DetailedViewGoldComponent} from '../gold/detailed-view-gold/detailed-view-gold.component';
-import {DetailedViewOthersComponent} from '../others/detailed-view-others/detailed-view-others.component';
-import {FormatNumberDirective} from 'src/app/format-number.directive';
-import {ExcelService} from '../../../../excel.service';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { GoldComponent } from '../gold/gold.component';
+import { OthersComponent } from '../others/others.component';
+import { DetailedViewGoldComponent } from '../gold/detailed-view-gold/detailed-view-gold.component';
+import { DetailedViewOthersComponent } from '../others/detailed-view-others/detailed-view-others.component';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../../excel.service';
 
 @Component({
   selector: 'app-commodities',
@@ -232,13 +232,14 @@ export class CommoditiesComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        if (value == 'addedGold') {
-          this.getGoldList()
-        } else {
-          this.getOtherList()
-        }
+       
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          if (value == 'addGold') {
+            this.getGoldList()
+          } else {
+            this.getOtherList()
+          }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 
@@ -257,13 +258,14 @@ export class CommoditiesComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        if (value == 'addedGold') {
-          this.getGoldList()
-        } else {
-          this.getOtherList()
-        }
+        
         console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          if (value == 'addGold') {
+            this.getGoldList()
+          } else {
+            this.getOtherList()
+          }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 

@@ -16,29 +16,6 @@ export class CustomerActivityComponent implements OnInit {
   }
 
   goToAdvisorHome() {
-    /*this.router.navigateByUrl('/admin/subscription').then(e => {
-      if (e) {
-        console.log('Navigation is successful!');
-      } else {
-        console.log('Navigation has failed!');
-      }
-    });*/
-    // this.locationService.go('/admin/subscription');
-    /* this.ngZone.run(() => {
-       // this.navigateTo('/');
-
-       this.router.navigate(['/admin', 'subscription'], {/!*replaceUrl: true*!/}).then(e => {
-         if (e) {
-           // this.router.navigate(['/admin', 'subscription']);
-           console.log('Navigation is successful!');
-           // this.locationService.go('/admin/subscription');
-
-         } else {
-           console.log('Navigation has failed!');
-         }
-       });
-     });*/
-
-    this.routingStateService.goToSpecificRoute('/admin/subscription');
+    this.routingStateService.goToSpecificRoute('/admin/subscription/dashboard');
   }
 }

@@ -136,11 +136,11 @@ export class AddPoRdComponent implements OnInit {
   addPORDResponse(data) {
     (this.editApi) ? this.eventService.openSnackBar('PO_RD is edited', 'dismiss') : this.eventService.openSnackBar('PO_RD is edited', 'added');
     console.log(data);
-    this.close();
+    this.close(true);
   }
 
-  close() {
+  close(flag) {
     this.isOptionalField = true;
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({state: 'close',refreshRequired:flag});
   }
 }

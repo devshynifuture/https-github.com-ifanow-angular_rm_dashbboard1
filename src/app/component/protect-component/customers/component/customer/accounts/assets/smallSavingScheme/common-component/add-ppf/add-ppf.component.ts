@@ -168,11 +168,11 @@ export class AddPpfComponent implements OnInit {
   addPPFResponse(data) {
     (this.editApi) ? this.eventService.openSnackBar("PPF is edited", "dismiss") : this.eventService.openSnackBar("PPF is added", "dismiss")
     console.log(data)
-    this.close();
+    this.close(true);
   }
-  close() {
+  close(flag) {
     this.isOptionalField = true
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag});
   }
 
 }

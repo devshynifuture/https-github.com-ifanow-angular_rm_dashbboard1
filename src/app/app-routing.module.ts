@@ -2,14 +2,13 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LeftsidebarComponent} from './component/left-sidebar/leftsidebar/leftsidebar.component';
 import {LoginComponent} from './component/no-protected/login/login.component';
-import {CalenderComponent} from "./component/protect-component/AdviserComponent/Email/calender/calender.component";
-import {SelectivePreloadingStrategyService} from "./services/selective-preloading-strategy.service";
+import {CalenderComponent} from './component/protect-component/AdviserComponent/Email/calender/calender.component';
+import {SelectivePreloadingStrategyService} from './services/selective-preloading-strategy.service';
 import {ErrorPageComponent} from './component/protect-component/common-component/error-page/error-page.component';
 import {DataNotFoundComponent} from './component/protect-component/common-component/data-not-found/data-not-found.component';
-import {AuthGuard} from "./guards/auth.guard";
+import {AuthGuard} from './guards/auth.guard';
 import {ProgressButtonComponent} from './common/progress-button/progress-button.component';
-import {FormTestComponent} from "./test/form-test/form-test.component";
-import { GoogleConnectComponent } from './component/protect-component/AdviserComponent/Email/email-component/email-list/email-listing/google-connect/google-connect.component';
+import {FormTestComponent} from './test/form-test/form-test.component';
 
 const routes: Routes = [
   {

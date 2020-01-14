@@ -3,7 +3,7 @@
         <h4 class="wrapper-20 m-0 roboto">SELECT A PLAN</h4>
     </div>
     <div class="col-md-2 text-right">
-        <i class="material-icons pt-16 pr-16 c-p" (click)="Close()"> clear</i>
+        <i class="material-icons pt-16 pr-16 c-p" (click)="Close(false)"> clear</i>
     </div>
 </div>
 <div class="wrapper-16 pb-44 mb-44 mt-44">
@@ -16,10 +16,12 @@
     <div class="row">
         <div class="col-md-6 mt-20 c-p" *ngFor="let singlePlan of planSettingData">
             <div class="example-card">
-                <mat-card class="p-0 pa-blue" (click)="select(singlePlan)" [ngClass]="singlePlan.selected == true ? 'ba-blue' : 'b-ua'">
+                <mat-card class="p-0 pa-blue" (click)="select(singlePlan)"
+                    [ngClass]="singlePlan.selected == true ? 'ba-blue' : 'b-ua'">
                     <div class="row bg-grey lter">
                         <div class="col-md-12 p-0">
-                            <mat-checkbox class="right text-right" *ngIf="singlePlan.selected == true" [(ngModel)]="singlePlan.selected"></mat-checkbox>
+                            <mat-checkbox class="right text-right" *ngIf="singlePlan.selected == true"
+                                [(ngModel)]="singlePlan.selected"></mat-checkbox>
                             <div class="col-md-12 p-0 height115">
                                 <h3 class="m-0 pt-20 pl-24">{{singlePlan.name}}</h3>
                                 <h5 class="m-0 pt-4 pb-24 pl-24 text-custom">{{singlePlan.code}}</h5>
@@ -49,7 +51,7 @@
 <div class="bottom-fixed wrapper-12">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit" (click)="createSubscription()">Save</button>
