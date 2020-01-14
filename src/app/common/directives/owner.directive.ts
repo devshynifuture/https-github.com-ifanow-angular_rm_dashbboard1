@@ -1,16 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {CustomerService} from '../../../customer.service';
-import {AuthService} from 'src/app/auth-service/authService';
+import { Directive, Output, EventEmitter, Input } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
-@Component({
-  selector: 'app-owner-column',
-  templateUrl: './owner-column.component.html',
-  styleUrls: ['./owner-column.component.scss'],
-
+@Directive({
+  selector: '[appOwner]'
 })
-export class OwnerColumnComponent implements OnInit {
 
+export class OwnerDirective {
   isownerName = false;
   owner;
   family = [];
@@ -18,10 +15,7 @@ export class OwnerColumnComponent implements OnInit {
   ownerData: any;
   clientId: any;
   sendData: any;
-
-  constructor(private fb: FormBuilder, private custumService: CustomerService/*, private ref: ChangeDetectorRef*/) {
-  }
-
+  constructor(private fb: FormBuilder, private custumService: CustomerService) { }
   @Output() valueChange = new EventEmitter();
   @Output() valueChange1 = new EventEmitter();
 
@@ -30,22 +24,13 @@ export class OwnerColumnComponent implements OnInit {
     this.ownerData = data;
     console.log('1111121212121212121212 OwnerColumnComponent data : ', data);
     if (data) {
+      this.getListFamilyMem()
     }
   }
 
   get data() {
     return this.ownerData;
   }
-
-  ngOnInit() {
-    console.log('ownerData', this.ownerData);
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
-    this.getdataForm();
-    this.getListFamilyMem();
-
-  }
-
   getListFamilyMem() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();

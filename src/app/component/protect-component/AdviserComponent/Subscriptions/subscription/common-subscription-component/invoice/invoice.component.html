@@ -66,7 +66,8 @@
               src="assets/images/svg/delete.svg">
           </div>
           <div class="col-md-4 right text-right">
-            <button (click)="recordPayment()" class="btn-primary br-0 mb-12" *ngIf="rpyment==true" mat-stroked-button>RECORD
+            <button (click)="recordPayment()" class="btn-primary br-0 mb-12" *ngIf="rpyment==true"
+              mat-stroked-button>RECORD
               PAYMENT
             </button>
           </div>
@@ -283,7 +284,8 @@
       <img (click)="deleteModal('INVOICE',element)" class="b-a wrapper-9 ml-8" src="assets/images/svg/delete.svg">
     </div>
     <div class="col-md-4 right text-right">
-      <button (click)="recordPayment()" class="btn-primary br-0 mb-8" *ngIf="rpyment==true" mat-stroked-button>RECORD PAYMENT</button>
+      <button (click)="recordPayment()" class="btn-primary br-0 mb-8" *ngIf="rpyment==true" mat-stroked-button>RECORD
+        PAYMENT</button>
     </div>
   </div>
   <div *ngIf="showRecord==false && feeCalc==false" class="b-a m-20 mb-100 pb-28">
@@ -411,7 +413,7 @@
                 <div class="col-md-4 text-right">
                   <!-- <p class="f-500 roboto pt-8 ">{{formatter(storeData.balanceDue)}}</p> -->
                   <p class="f-500 roboto pt-8 ">{{formatter(storeData.balanceDue)}}</p>
-                  
+
                 </div>
               </div>
             </div>
@@ -546,8 +548,8 @@
             <div class="col-md-6 p-0">
               <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                  <input [matDatepicker]="picker" class="form-control b-0" formControlName="invoiceDate" matInput
-                    readonly>
+                  <input [matDatepicker]="picker" (dateChange)="checkDateDiff($event)" class="form-control b-0"
+                    formControlName="invoiceDate" matInput readonly>
                   <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                   <mat-error class="f-12 pt-4">Invoice date is required
@@ -566,13 +568,14 @@
             <div class="col-md-6 p-0">
               <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                  <input [matDatepicker]="dueDatePicker" [min]="maxDate" class="form-control b-0"
-                    formControlName="dueDate" matInput readonly>
+                  <input [matDatepicker]="dueDatePicker" (dateChange)="checkDateDiff($event)" [min]="maxDate"
+                    class="form-control b-0" formControlName="dueDate" matInput readonly>
                   <mat-datepicker-toggle [for]="dueDatePicker" matSuffix></mat-datepicker-toggle>
                   <mat-datepicker #dueDatePicker></mat-datepicker>
                   <mat-error class="f-12 pt-4">Invoice date is required
                   </mat-error>
                 </mat-form-field>
+                <mat-error class="f-12 pt-4" [ngClass]="{'v-h': showDateError==undefined}">{{showDateError}}</mat-error>
               </div>
             </div>
           </div>

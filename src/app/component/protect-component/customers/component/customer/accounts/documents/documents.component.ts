@@ -594,4 +594,3 @@ const ELEMENT_DATA: PeriodicElement[] = [
   { emptySpace: '', name: 'Agreements & invoices', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
 
 ];
-

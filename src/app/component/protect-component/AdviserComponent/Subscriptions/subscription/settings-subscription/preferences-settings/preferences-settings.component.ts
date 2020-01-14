@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionService} from '../../../subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {FormBuilder} from '@angular/forms';
-import {PreferenceEmailInvoiceComponent} from '../../common-subscription-component/preference-email-invoice/preference-email-invoice.component';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {UtilService} from 'src/app/services/util.service';
-import {BillerProfileAdvisorComponent} from '../../common-subscription-component/biller-profile-advisor/biller-profile-advisor.component';
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionService } from '../../../subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { FormBuilder } from '@angular/forms';
+import { PreferenceEmailInvoiceComponent } from '../../common-subscription-component/preference-email-invoice/preference-email-invoice.component';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
+import { BillerProfileAdvisorComponent } from '../../common-subscription-component/biller-profile-advisor/biller-profile-advisor.component';
 
 @Component({
   selector: 'app-preferences-settings',
@@ -27,10 +27,9 @@ export class PreferencesSettingsComponent implements OnInit {
     public subInjectService: SubscriptionInject, private eventService: EventService) {
   }
   prefixData;
-  showLoader = false;
-  billerProfileData: Array<any> = [{ isPrimary: false }];
   isLoading = false;
-  PrefixData;
+  billerProfileData: Array<any> = [{ isPrimary: false }];
+  // PrefixData;
 
   selected;
 
@@ -92,11 +91,11 @@ export class PreferencesSettingsComponent implements OnInit {
     });
   }
   getPrefixData(type) {
+    this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       type
     };
-    this.showLoader = true;
     this.subscription.getPreferenceInvoiceQuotations(obj).subscribe(
       data => this.getInvoiceQuotationResponse(data, type)
     );
@@ -134,7 +133,7 @@ export class PreferencesSettingsComponent implements OnInit {
   }
 
   getInvoiceQuotationResponse(data, type) {
-    this.showLoader = false;
+    this.isLoading = false;
     this.saveUpdateFlag = data;
     this.prefixData = this.fb.group({
       prefix: [data.prefix],
