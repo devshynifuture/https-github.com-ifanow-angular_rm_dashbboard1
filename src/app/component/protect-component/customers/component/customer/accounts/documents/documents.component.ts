@@ -228,6 +228,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
     };
     this.isLoading = true;
     this.commonFileFolders.data = [{}, {}, {}];
+    this.commonFileFolders = new MatTableDataSource(this.data);
     this.custumService.getAllFiles(obj).subscribe(
       data => this.getAllFilesRes(data, 'value'), (error) => {
         this.eventService.showErrorMessage(error);
@@ -311,6 +312,9 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   }
 
   openFolder(value) {
+    if (this.isLoading) {
+      return
+    }
     if (value.fileName != undefined) {
       return
     } else {
@@ -323,6 +327,8 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
       };
       console.log('this.parentId', this.parentId);
       console.log('backUpfiles', this.backUpfiles);
+      this.commonFileFolders.data = [{}, {}, {}];
+    this.commonFileFolders = new MatTableDataSource(this.data);
       this.custumService.getAllFiles(obj).subscribe(
         data => this.getAllFilesRes(data, value)
       );
