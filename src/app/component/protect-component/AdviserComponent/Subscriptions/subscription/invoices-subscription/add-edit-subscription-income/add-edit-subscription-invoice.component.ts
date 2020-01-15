@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {ValidatorType} from 'src/app/services/util.service';
-import {SubscriptionService} from '../../../subscription.service';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ValidatorType } from 'src/app/services/util.service';
+import { SubscriptionService } from '../../../subscription.service';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-add-edit-subscription-invoice',
@@ -228,8 +228,8 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       dueDate = new Date((this.editPayment.get('dueDate').value._d) ? this.editPayment.get('dueDate').value._d : this.editPayment.get('dueDate').value).getTime();
       (invoiceDate == undefined && dueDate == undefined) ? ''
         : (dueDate <= invoiceDate)
-        ? this.showDateError = "Due date should be greater than invoice date" :
-        this.showDateError = undefined;
+          ? this.showDateError = "Due date should be greater than invoice date" :
+          this.showDateError = undefined;
     }
   }
 

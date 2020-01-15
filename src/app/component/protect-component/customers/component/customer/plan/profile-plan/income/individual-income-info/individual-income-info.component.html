@@ -226,8 +226,9 @@
                             <div class="col-md-6 pl-0 pr-4">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input matInput autocomplete="off" formControlName="incomeStartDate"
-                                            class="form-control br-0" [matDatepicker]="incomeStartdate">
+                                        <input (dateChange)="checkDateDiff($event)" matInput autocomplete="off"
+                                            formControlName="incomeStartDate" class="form-control br-0"
+                                            [matDatepicker]="incomeStartdate">
                                         <mat-datepicker-toggle matSuffix [for]="incomeStartdate">
                                         </mat-datepicker-toggle>
                                         <mat-datepicker #incomeStartdate></mat-datepicker>
@@ -239,14 +240,17 @@
                             <div class="col-md-6 pl-4 pr-0">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input matInput autocomplete="off" formControlName="incomeEndDate"
-                                            class="form-control br-0" [matDatepicker]="incomeEndDate">
+                                        <input (dateChange)="checkDateDiff($event)" matInput autocomplete="off"
+                                            formControlName="incomeEndDate" class="form-control br-0"
+                                            [matDatepicker]="incomeEndDate">
                                         <mat-datepicker-toggle matSuffix [for]="incomeEndDate"></mat-datepicker-toggle>
                                         <mat-datepicker #incomeEndDate></mat-datepicker>
                                         <mat-error class="f-12 pt-4">This field is required
                                         </mat-error>
                                     </mat-form-field>
-
+                                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h': showDateError==undefined}">End date
+                                        should be greater than start date
+                                    </mat-error>
                                 </div>
                             </div>
                         </div>
