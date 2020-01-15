@@ -358,7 +358,7 @@
                 </button>
             </div>
         </div>
-        <div class="example-container p-0 col-md-12 overflow-hidden mt-8 mb-44 fixed-deposite">
+        <div class="example-container p-0 col-md-12 overflow-auto mt-8 mb-44 fixed-deposite">
 
             <table *ngIf="dataSourceBond.filteredData.length > 0" matSort #bondListTable="matSort" mat-table [dataSource]="dataSourceBond" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
