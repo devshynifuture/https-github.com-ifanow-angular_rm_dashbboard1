@@ -13,6 +13,7 @@ import {
   TextOnlyDirective
 } from './number-only.directive';
 import {InputValueValidationDirective} from './input-value-validation.directive';
+import { OwnerDirective } from './owner.directive';
 
 // import {AppModule} from "../app.module";
 
@@ -29,10 +30,11 @@ import {InputValueValidationDirective} from './input-value-validation.directive'
     CodeTextDirective,
     Formatter,
     InputValueValidationDirective,
+    OwnerDirective,
 
   ],
   exports: [RadioGroupDirectiveDirective, SkeletonLoadingDirective, FormatNumberDirective, NumberOnlyDirective,
-    AlphaNumericDirective, CodeTextDirective, TextOnlyDirective, Formatter, InputValueValidationDirective],
+    AlphaNumericDirective, CodeTextDirective, TextOnlyDirective, Formatter, InputValueValidationDirective,OwnerDirective],
   imports: [
 
     // AppModule

@@ -6,15 +6,8 @@
                 <span>{{f.userName}}</span>
             </mat-option>
         </mat-select>
-        <mat-error class="f-12 pt-4"
-            [ngClass]="{'v-h':!(isownerName && getFormControl().ownerName.invalid || getFormControl().ownerName.touched && getFormControl().ownerName.invalid)}">
+        <mat-error class="f-12 pt-4">
             This field is required
         </mat-error>
     </mat-form-field>
-
-    <!-- <select class="form-control br-0" formControlName="ownerName">
-                <option value="" disabled>Search family members</option>
-                <option *ngFor="let f of family" [ngValue]="f.userName">{{f.userName}}</option>
-             </select>  -->
-
 </div>

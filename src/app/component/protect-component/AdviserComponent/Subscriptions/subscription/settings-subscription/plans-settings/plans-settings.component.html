@@ -17,7 +17,7 @@
             <div class="col-md-4  pr-20 pb-20 pl-0 d-flex skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngFor="let singlePlan of planSettingData">
                 <mat-card class="example-card b-a  bg-grey lter p-0 flex-fill">
                     <mat-card-header class="overflow-hidden">
-                        <div class="wrapper-20 pb-10 height120" style="width: 100%;">
+                        <div class="wrapper-20 pb-10 height120 width100per">
 
                             <mat-card-title class="mb-0 text-break f-24 relClass  mb-10 l-26">
                                 <div class="bar" [ngClass]="{'height23': isLoading}">
@@ -25,23 +25,25 @@
                                 </div>
                             </mat-card-title>
                             <mat-card-subtitle class="pt-4 pb-12 relClass mb-0">
-                                {{singlePlan.code}}
+                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                    {{singlePlan.code}}
+                                </div>
                             </mat-card-subtitle>
                         </div>
                     </mat-card-header>
-
                     <mat-card-content class="bg-white mb-0">
                         <div class="row wrapper-20 overflow-hidden">
                             <div class="col-md-12 height120 p-0 ">
                                 <p class="mb-0 text-primitive f-12">DESCRIPTION</p>
                                 <div class="mb-0 pt-8 plan-description relClass">
-                                    <div class="bar" [ngClass]="{'height23': isLoading}"> {{singlePlan.description}}
+                                    <div class="bar" [ngClass]="{'height23': isLoading}">
+                                        {{singlePlan.description}}
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row wrapper-20 bt-1 bb-1 overflow-hidden">
-                            <div class="col-md-6 p-0 relClass ">
+                            <div class="col-md-6 pl-0 relClass ">
                                 <p class="f-14 text-primitive mb-8">SERVICES</p>
                                 <div class="f-24 mb-0 relClass">
                                     <div class="bar" [ngClass]="{'height23': isLoading}">
@@ -60,7 +62,7 @@
                             </div>
                         </div>
                     </mat-card-content>
-                    <mat-card-actions class="block text-center pt-20 pb-20 mb-0">
+                    <mat-card-actions class="block text-center paddTopBottom18 mb-0">
                         <button mat-stroked-button class="btn-header addon mb-12 mt-12 br-0" (click)="openFragment(singlePlan,'plan')">INFO
                         </button>
                     </mat-card-actions>
