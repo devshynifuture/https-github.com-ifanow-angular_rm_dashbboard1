@@ -26,6 +26,7 @@ export class MFSchemeLevelTransactionsComponent implements OnInit {
   portfolioData: any;
   scriptForm: any;
   portfolioFieldData: { familyMemberId: any; };
+  nomineesListFM: any;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   @Input() set data(data) {
@@ -112,6 +113,10 @@ export class MFSchemeLevelTransactionsComponent implements OnInit {
     this.portfolioFieldData = {
       familyMemberId: this.familyMemberId
     }
+  }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   getPortfolioData(data) {
     console.log("", data)

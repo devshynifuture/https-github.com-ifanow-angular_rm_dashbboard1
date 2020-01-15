@@ -18,8 +18,18 @@
             <p class="m-0 f-12 text-custom">In whose name is this asset</p>
         </div>
         <div class="col-md-5">
-            <app-owner-column (valueChange)='display($event)' (valueChange1)='display($event)' [data]='ownerData'>
-            </app-owner-column>
+            <mat-form-field class="w-100">
+                <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                    <mat-option value=''>Search family members</mat-option>
+                    <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                        <span>{{f.userName}}</span>
+                    </mat-option>
+                </mat-select>
+                <mat-error class="f-12 pt-4">
+                    This field is required
+                </mat-error>
+            </mat-form-field>
             <!-- <app-owner-column [data]='ownerData' (valueChange)='display($event)'></app-owner-column>-->
             <!-- <mat-error class="f-12 pt-4">
                 This field is required
@@ -293,7 +303,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput #fdNo  type="text" (keypress)="keyPress($event)" maxlength="20"
+                            <input matInput #fdNo type="text" (keypress)="keyPress($event)" maxlength="20"
                                 class="form-control br-0" formControlName="fdNo">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{fdNo.value.length}}/20</mat-hint>

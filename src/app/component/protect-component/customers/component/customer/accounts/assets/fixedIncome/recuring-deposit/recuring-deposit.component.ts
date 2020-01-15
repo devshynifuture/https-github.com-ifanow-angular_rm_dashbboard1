@@ -51,6 +51,7 @@ export class RecuringDepositComponent implements OnInit {
   ownerData: any;
   familyMemberId: any;
   clientId: any;
+  nomineesListFM: any;
 
   constructor(private event: EventService, private fb: FormBuilder, private custumService: CustomerService,
     public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
@@ -85,7 +86,10 @@ export class RecuringDepositComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
-
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
   keyPressRdNumber(event: any) {
     var k = event.keyCode;
     return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 45 || k == 47 || k == 8 || (k >= 48 && k <= 57));

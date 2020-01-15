@@ -32,6 +32,7 @@ export class BankAccountsComponent implements OnInit {
   showHide = false;
   advisorId: any;
   clientId: any;
+  nomineesListFM: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe,public utils: UtilService,public eventService:EventService) { }
 
@@ -54,6 +55,10 @@ export class BankAccountsComponent implements OnInit {
     console.log('value selected', value)
     this.ownerName = value.userName;
     this.familyMemberId = value.id
+  }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   showLess(value) {
     if (value == true) {

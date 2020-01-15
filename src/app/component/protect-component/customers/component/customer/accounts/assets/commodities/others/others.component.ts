@@ -27,6 +27,7 @@ export class OthersComponent implements OnInit {
   ownerData: any;
   advisorId: any;
   clientId: any;
+  nomineesListFM: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) {
   }
@@ -54,7 +55,10 @@ export class OthersComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id;
   }
-
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({state: 'close',refreshRequired:flag});
   }
