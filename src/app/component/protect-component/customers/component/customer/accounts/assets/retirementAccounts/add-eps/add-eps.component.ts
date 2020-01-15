@@ -30,6 +30,7 @@ export class AddEPSComponent implements OnInit {
   isDate = false;
   isPensionPayFreq = false;
   clientId: any;
+  nomineesListFM: any;
 
   constructor(private event: EventService,private fb: FormBuilder, private custumService : CustomerService,public subInjectService: SubscriptionInject,private datePipe: DatePipe,public utils: UtilService) { }
 
@@ -50,6 +51,10 @@ export class AddEPSComponent implements OnInit {
     console.log('value selected', value)
     this.ownerName = value.userName;
     this.familyMemberId = value.id
+  }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   showLess(value) {
     if (value == true) {

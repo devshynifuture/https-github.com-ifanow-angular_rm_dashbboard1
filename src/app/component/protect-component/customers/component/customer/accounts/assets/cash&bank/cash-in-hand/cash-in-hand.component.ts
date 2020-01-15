@@ -29,6 +29,7 @@ export class CashInHandComponent implements OnInit {
   showHide = false;
   advisorId: any;
   private clientId: any;
+  nomineesListFM: any;
 
   constructor(private fb: FormBuilder, private custumService: CustomerService,
               public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService,public eventService:EventService) {
@@ -56,7 +57,10 @@ export class CashInHandComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id;
   }
-
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({state: 'close',refreshRequired:flag});
   }
