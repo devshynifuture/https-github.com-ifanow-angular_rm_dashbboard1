@@ -13,6 +13,6 @@ export class calendarService {
 
   getEvent(data) {
     const httpParams = new HttpParams().set('calendarId', data.calendarId).set('userId', data.userId);
-    return this.http.get(apiConfig.CALENDAR_URL + appConfig.GET_EVENT, httpParams);
+    return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_EVENT, httpParams);
   }
 }

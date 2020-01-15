@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef} from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
@@ -25,6 +25,7 @@ export class calendarComponent implements OnInit {
   lastMonthDays: any;
   nextMonthDays: any;
   updateDate: any;
+  isEditEvent:boolean = false;
   month;
   year;
   todayDate;
@@ -33,7 +34,7 @@ export class calendarComponent implements OnInit {
   addLastMonthDays;
   daysArr = [];
   formatedEvent = []
-  eventData:any;
+  eventData:any = [];
   eventTitle;
   eventDescription;
   startTime;
@@ -51,58 +52,65 @@ export class calendarComponent implements OnInit {
     console.log(Intl.DateTimeFormat().resolvedOptions().timeZone, localStorage.getItem('userInfo'), "test date");
 
     // demo get data calendar
-    this.eventData = [{
-      "eventId":"02megf77o1dqjkhevj9udlfh25",
-      "userId":2808,
-      "fileId":12345,
-      "calendarId":"chetan@futurewise.co.in",
-      "summary":"doom event",
-        "location":"800 Howard St., San Francisco, CA 94103",
-        "title":"it is successful",
-        "description":"it is successful",
-        "start":{
-          "dateTime":"2020-01-03T05:00:00-07:00",
-          "timeZone":"America/Los_Angeles"
-        },
-        "end":{
-          "dateTime":"2020-01-03T06:00:00-07:00",
-          "timeZone":"America/Los_Angeles"
-        },
-        "timeZone":"America/Los_Angeles",
-        "recurrence":["RRULE:FREQ=DAILY;COUNT=2"],
-        "attendeeList":["chetan@futurewise.co.in","chetan@futurewise.co.in"]
-    }]
+    // this.eventData = [{
+    //   "eventId":"02megf77o1dqjkhevj9udlfh25",
+    //   "userId":2808,
+    //   "fileId":12345,
+    //   "calendarId":"chetan@futurewise.co.in",
+    //   "summary":"doom event",
+    //     "location":"800 Howard St., San Francisco, CA 94103",
+    //     "title":"it is successful",
+    //     "description":"it is successful",
+    //     "start":{
+    //       "dateTime":"2020-01-03T05:00:00-07:00",
+    //       "timeZone":"America/Los_Angeles"
+    //     },
+    //     "end":{
+    //       "dateTime":"2020-01-03T06:00:00-07:00",
+    //       "timeZone":"America/Los_Angeles"
+    //     },
+    //     "timeZone":"America/Los_Angeles",
+    //     "recurrence":["RRULE:FREQ=DAILY;COUNT=2"],
+    //     "attendeeList":["chetan@futurewise.co.in","chetan@futurewise.co.in"]
+    // }]
     // demo get data calendar
+    // console.log(this.eventData, "this.eventData 12345");
 
-    this.formatedEvent = [];
-    for(let e of this.eventData){
-      e["day"] = this.formateDate(new Date(e.start.dateTime));
-      e["month"] = this.formateMonth(new Date(e.start.dateTime));
-      e["year"] = this.formateYear(new Date(e.start.dateTime));
-      e["time"] = this.formateTime(new Date(e.start.dateTime));
-     
-      this.formatedEvent.push(e);
-    }
-    console.log(this.formatedEvent, "this.eventData 12345", this.viewDate.toISOString());
+    
   }
 
   getEvent(){
     let eventData = {
-      "calendarId": this.userInfo.emailId,
-      "userId": this.userInfo.userId
+      "calendarId": "gaurav@futurewise.co.in",
+      "userId": this.userInfo.advisorId
     }
     this.canlenderService.getEvent(eventData).subscribe((data)=>{
-      console.log(data, "event data");
+      if(data != undefined){
+
+        this.eventData = data;
+
+        console.log(this.eventData, data, "event data");
+        this.formatedEvent = [];
+        for(let e of this.eventData){
+          e["day"] = this.formateDate(new Date(e.start.dateTime));
+          e["month"] = this.formateMonth(new Date(e.start.dateTime));
+          e["year"] = this.formateYear(new Date(e.start.dateTime)); 
+          e["time"] = this.formateTime(new Date(e.start.dateTime));
+          
+          this.formatedEvent.push(e);
+        }
+        console.log(this.formatedEvent, "this.eventData 12345");
+      }
     });
   }
 
-  getDaysCount(month: number, year: number, ch: number): number{
+  getDaysCount(month: number, year: number, ch: string): any{
     switch(ch){
-      case 1: return 32 - new Date(year, month, 32).getDate();
+      case "currentMonthDays": return 32 - new Date(year, month, 32).getDate();
       
-      case 2: return 32 - new Date(year - 1, month - 1, 32).getDate();
+      case "lastMonthDays": return 32 - new Date(year - 1, month - 1, 32).getDate();
 
-      case 3: return 32 - new Date(year + 1, month + 1, 32).getDate();
+      case "nextMonthDays": return 32 - new Date(year + 1, month + 1, 32).getDate();
     }
 
   }
@@ -112,9 +120,9 @@ export class calendarComponent implements OnInit {
     this.year = this.viewDate.getFullYear();
     this.todayDate = this.viewDate.getDate();
     // this.numbersOfDays = this.daysInMonth(this.month, this.year)
-    this.numbersOfDays = this.getDaysCount(this.month, this.year, 1);
-    this.lastMonthDays = this.getDaysCount(this.month, this.year, 2);
-    this.nextMonthDays = this.getDaysCount(this.month, this.year, 3);
+    this.numbersOfDays = this.getDaysCount(this.month, this.year, "currentMonthDays");
+    this.lastMonthDays = this.getDaysCount(this.month, this.year, "lastMonthDays");
+    this.nextMonthDays = this.getDaysCount(this.month, this.year, "nextMonthDays");
     // console.log(this.numbersOfDays, this.lastMonthDays, this.nextMonthDays, "this.numbersOfDays");
     let firstDay = (new Date(this.year, this.month)).getDay();
     // console.log(firstDay, "firstDay", this.month);
@@ -193,10 +201,15 @@ export class calendarComponent implements OnInit {
     return hh + ":" + mm;
   }
 
-  openDialog(): void {
+  openDialog(eventData): void {
+    let event:any;
+    if(eventData != null){
+      this.isEditEvent = true;
+      event = eventData;
+    }
     const dialogRef = this.dialog.open(EventDialog, {
       width: '50%',
-      data: this.eventData
+      data: event
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -204,7 +217,7 @@ export class calendarComponent implements OnInit {
       
       this.dialogData = 
       {
-        "summary": result.summary,
+        "summary": result.title,
         "location": result.location,
         "description": result.description,
         "start": {
@@ -221,30 +234,21 @@ export class calendarComponent implements OnInit {
         "attendees":result.attendeesList
       }
 
-      // summary: ["new event",[Validators.required]],
-      // location: ["800 Howard St., San Francisco, CA 94103"],
-      // title: ["it is successful",[Validators.required]],
       
-      // {
-        //   "eventId": "v8o6srjpr3kqa50a0cu2f2abls",
-        //   "userId": 2727,
-        //   "fileId": 12345,
-      //   "calendarId": "gaurav@futurewise.co.in",
-      //   "summary": "new event",
-      //   "location": "800 Howard St., San Francisco, CA 94103",
-      //   "title": "it is successful",
-      //   "description": "it is successful",
-      //   "startDateTime": "",
-      //   "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone,
-      //   "endDateTime": "",
-      //   "recurrence": ["RRULE:FREQ=DAILY;COUNT=2"],
-      //   "attendees": result.attendeesList
-      // }
       this.startTime = result.startTime;
       this.endTime = result.endTime;
       this.dialogData.start.dateTime = this.googleDate(result.startDateTime._d == undefined? this.current_day : result.startDateTime._d , "start");
       this.dialogData.end.dateTime = this.googleDate(result.endDateTime._d == undefined? this.current_day : result.endDateTime._d, "end");
       console.log(this.dialogData, 'The dialog was closed');
+
+      if(this.isEditEvent){
+        this.canlenderService.getEvent(this.dialogData).subscribe((data)=>{
+
+        })
+      }
+      else{
+
+      }
     });
   }
 
@@ -320,13 +324,13 @@ export class EventDialog implements OnInit{
       // userId: [2727,[Validators.required]],
       // fileId: [12345,[Validators.required]],
       // calendarId:["gaurav@futurewise.co.in",[Validators.required]],
-      summary: ["",[Validators.required]],
-      location: ["800 Howard St., San Francisco, CA 94103"],
-      title: ["it is successful",[Validators.required]],
-      description: ["it is successful"],
-      startDateTime: [new Date(),[Validators.required]],
-      endDateTime: [new Date(),[Validators.required]],
-      recurrence: ["RRULE:FREQ=DAILY;COUNT=2"],
+      summary: [this.eventData.summary,[Validators.required]],
+      location: [this.eventData.location],
+      title: [this.eventData.summary,[Validators.required]],
+      description: [this.eventData.description],
+      startDateTime: ["",[Validators.required]],
+      endDateTime: ["",[Validators.required]],
+      recurrence: [this.eventData.recurrence],
       attendee:  ["",[Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
       attendeesList:  [this.attendeesArr],
       startTime:[this.startTime],
@@ -334,14 +338,17 @@ export class EventDialog implements OnInit{
     });
 
     console.log(this.eventForm.get("attendee").value == "", "see value");
-    
-
+    if(this.eventData.attendees != undefined){
+      for(let att of this.eventData.attendees){
+        this.attendeesArr.push({"email":att.email});
+      }
+    }
+    this.setEndDate();
   }
 
   addAttendee(){
     this.attendeesArr.push({"email":this.eventForm.value.attendee});
     this.eventForm.get("attendee").setValue("");
-   
   }
 
   removeMember(member){
@@ -353,6 +360,23 @@ export class EventDialog implements OnInit{
     this.showTime = true;
     this.eventForm.get("startTime").setValue("09:00"); 
     this.eventForm.get("endTime").setValue("10:00"); 
+  }
+
+  setEndDate(){
+    
+    if(this.eventForm.value.startDateTime._d != undefined){
+      if(new Date(this.eventForm.value.startDateTime._d).getTime() > new Date(this.eventForm.value.endDateTime).getTime()){
+        this.eventForm.get("endDateTime").setValue(this.eventForm.value.startDateTime._d);
+      }
+    }
+    else{
+      if(this.eventData.end.dateTime != undefined){
+        this.eventForm.get("endDateTime").setValue(this.eventData.end.dateTime);
+      }
+      else{
+        this.eventForm.get("endDateTime").setValue(this.startDate);
+      }
+    }
   }
 
   setTime(mood){
@@ -370,5 +394,6 @@ export class EventDialog implements OnInit{
     this.dialogRef.close();
   }
 
+  
 }
 

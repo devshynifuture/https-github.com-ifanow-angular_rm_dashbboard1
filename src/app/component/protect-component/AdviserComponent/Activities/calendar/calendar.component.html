@@ -245,7 +245,7 @@
     <div class="row h-100vh pt-72">
         <div class="col-md-2 p-0 bg-grey lter">
             <div class="p-12 text-right">
-                <button mat-raised-button class="btn-primary br-0" (click)="openDialog()" ><img src="/assets/images/svg/plus.svg"
+                <button mat-raised-button class="btn-primary br-0" (click)="openDialog(null)" ><img src="/assets/images/svg/plus.svg"
                         class="pr-12">ADD
                     NEW</button>
             </div>
@@ -370,11 +370,11 @@
                             <mat-chip >{{list}}</mat-chip>
                         </mat-chip-list>
                         <ul class="blue">
-                            <li>8.30 <span class="f-700 m-0">Prospect meeting</span></li>
+                            <li (click)="openDialog(event)">{{event.time}} <span class="f-700 m-0">{{event.summary}}</span></li>
                         </ul>
-                        <ul class="yellow" >
+                        <!-- <ul class="yellow" >
                             <li>11.00 <span class="f-700 m-0">Srinivas chandra</span></li>
-                        </ul>
+                        </ul> -->
                     </div>
                 </div>
             </div>

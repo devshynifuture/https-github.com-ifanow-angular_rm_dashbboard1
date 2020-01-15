@@ -317,6 +317,8 @@ export const appConfig = {
   GET_MESSAGE_DETAIL: 'user/message/details',
 
   ////////////////////////////// calendar////////////////////////////////////////////
-  GET_EVENT: 'crm/calendar/event/list/get'
+  GET_EVENT: 'calendar/event/list/get',
+  GET_UPDATE: 'calendar/event/list/get'
+
   ////////////////////////////// calendar////////////////////////////////////////////
 };
