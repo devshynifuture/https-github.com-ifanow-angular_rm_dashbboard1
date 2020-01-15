@@ -81,7 +81,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
 
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
-    console.log('@@@@@@@@', data);
+    // console.log('@@@@@@@@', data);
     this.copyStoreData = data;
     this.storeData = data;
     if (this.storeData.balanceDue == 0) {
