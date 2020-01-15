@@ -155,7 +155,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       this.changeTaxStatus(val, this.editPayment.value.discount, this.editPayment.value.taxStatus);
     });
     this.editPayment.controls.discount.valueChanges.subscribe(val => {
-      console.log('this.editPayment.controls.discount : ', val);
+      // console.log('this.editPayment.controls.discount : ', val);
       if (val == null) {
         val = 0;
         this.editPayment.controls.discount.setValue(val);
@@ -273,31 +273,18 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     if (changeTaxStatus == 'SGST(9%)|CGST(9%)') {
       this.finAmountC = price - parseInt(discount);
       this.cgstTaxAmount = this.finAmountC * 9 / 100;
-      console.log('changeTaxStatus cgstTaxAmount : ', this.cgstTaxAmount);
-
+      // console.log('changeTaxStatus cgstTaxAmount : ', this.cgstTaxAmount);
       this.cgstTaxAmount = UtilService.roundOff(this.cgstTaxAmount, 2);
-      console.log('changeTaxStatus cgstTaxAmount : ', this.cgstTaxAmount);
-
-      // this.finAmountS = this.editPayment.controls.finalAmount.value - parseInt(this.editPayment.value.discount);
       this.sgstTaxAmount = this.finAmountC * 9 / 100;
       this.sgstTaxAmount = UtilService.roundOff(this.sgstTaxAmount, 2);
-
       this.finAmount = this.finAmountC + this.sgstTaxAmount + this.cgstTaxAmount;
-      console.log('changeTaxStatus finAmount : ', this.finAmount);
-
       this.finAmount = UtilService.roundOff(this.finAmount, 2);
 
     } else {
       this.finAmount = price - parseInt(discount);
       this.igstTaxAmount = (this.finAmount) * 18 / 100;
-      console.log('changeTaxStatus igstTaxAmount : ', this.igstTaxAmount);
-
       this.igstTaxAmount = UtilService.roundOff(this.igstTaxAmount, 2);
-      console.log('changeTaxStatus igstTaxAmount : ', this.igstTaxAmount);
-
       this.finAmount = this.finAmount + this.igstTaxAmount;
-      console.log('changeTaxStatus before roundoff finAmount : ', this.finAmount);
-
       this.finAmount = UtilService.roundOff(this.finAmount, 2);
 
     }
