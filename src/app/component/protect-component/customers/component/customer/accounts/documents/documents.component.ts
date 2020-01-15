@@ -296,7 +296,9 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
     this.openFolderName = _.reject(this.openFolderName, function (n) {
       return n.openFolderId > data.openFolderId;
     });
-    this.commonFileFolders.filteredData = data;
+    this.commonFileFolders = new MatTableDataSource(data);
+    this.commonFileFolders.sort = this.sort;
+    // this.commonFileFolders.filteredData = data;
     this.fileTypeGet();
     this.valueFirst = this.openFolderName[0];
   }
