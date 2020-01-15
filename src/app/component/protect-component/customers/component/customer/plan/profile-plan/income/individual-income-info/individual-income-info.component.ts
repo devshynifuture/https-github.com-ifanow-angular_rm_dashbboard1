@@ -162,7 +162,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
           // "bonusOrInflow":0,
           "amount": element.get('amount').value,
           "receivingMonth": new Date(element.get('receivingDate').value).getMonth(),
-          "receivingDate": new Date(element.get('receivingDate').value).getFullYear(),
+          "receivingYear": new Date(element.get('receivingDate').value).getFullYear(),
         }
         this.finalBonusList.push(obj)
       })
@@ -237,7 +237,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       "incomeStyleId": 20,
       "continueTill": parseInt(this.incomeNetForm.get("continousTill").value),
       "nextAppraisalOrNextRenewal": this.incomeNetForm.get('nextAppraisal').value,
-      "incomeTypeId": this.singleIndividualIncome.finalIncomeList.incomeTypeId,
+      "incomeTypeId": this.singleIndividualIncome.finalIncomeList.incomeTypeList,
       "realEstateId": 20,
       "basicIncome": (this.incomeNetForm.get('basicIncome').value) ? (this.incomeNetForm.get('basicIncome').value) : 0,
       "standardDeduction": (this.incomeNetForm.get('standardDeduction').value) ? this.incomeNetForm.get('standardDeduction').value : 0,

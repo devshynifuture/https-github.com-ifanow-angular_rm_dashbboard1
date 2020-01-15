@@ -35,6 +35,9 @@ import { ServicesSettingsComponent } from './subscription/settings-subscription/
 import { SettingsSubscriptionComponent } from './subscription/settings-subscription/settings-subscription.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
 import { SubscriptionsSubscriptionComponent } from './subscription/subscriptions-subscription/subscriptions-subscription.component';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 
 
 export const componentList = [SubscriptionComponent,
@@ -118,7 +121,12 @@ export const componentList = [SubscriptionComponent,
     DeleteSubscriptionComponent,
     DeleteSubscriptionComponent, HowToUseDialogComponent,
     PreferenceEmailInvoiceComponent,
-    ModifyFeeDialogComponent, ConsentTandCComponent, HowItWorksComponent, AddQuotationComponent]
+    ModifyFeeDialogComponent, ConsentTandCComponent, HowItWorksComponent, AddQuotationComponent],
+  providers: [
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  ],
 })
 export class SubscriptionModule {
 }
