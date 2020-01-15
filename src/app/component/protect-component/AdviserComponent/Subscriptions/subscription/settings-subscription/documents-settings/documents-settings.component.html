@@ -26,8 +26,14 @@
                         </mat-card>
                     </div>
                     <div [hidden]="!documentSettingData" *ngFor="let singleDocument of documentSettingData" class="col-md-4 pr-20 pb-20 pl-0 documents-body">
-                        <app-single-document-view class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" [singleDocument]="singleDocument" (valueChange)='display($event)'>
-                        </app-single-document-view>
+                        <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                            <div class="relClass">
+                                <div class="bar">
+                                    <app-single-document-view [singleDocument]="singleDocument" (valueChange)='display($event)'>
+                                    </app-single-document-view>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
