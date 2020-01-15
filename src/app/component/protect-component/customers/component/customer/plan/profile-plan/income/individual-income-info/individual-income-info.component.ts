@@ -162,7 +162,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
           // "bonusOrInflow":0,
           "amount": element.get('amount').value,
           "receivingMonth": new Date(element.get('receivingDate').value).getMonth(),
-          "receivingDate": element.get('receivingDate').value
+          "receivingDate": new Date(element.get('receivingDate').value).getFullYear(),
         }
         this.finalBonusList.push(obj)
       })
