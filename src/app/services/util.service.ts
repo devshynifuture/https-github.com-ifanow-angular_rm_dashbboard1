@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { DatePipe } from '@angular/common';
-import { EventService } from '../Data-service/event.service';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {DatePipe, DecimalPipe} from '@angular/common';
+import {EventService} from '../Data-service/event.service';
+import {HttpClient} from '@angular/common/http';
 
 
 @Injectable({
@@ -9,10 +9,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UtilService {
 
-  getFamilyMemberData: any;
+  private static decimalPipe = new DecimalPipe('en-US');
 
   constructor(private eventService: EventService, private http: HttpClient) {
   }
+
+  getFamilyMemberData: any;
 
   static convertObjectToArray(inputObject: object): object[] {
     const outputArray = [];
@@ -30,7 +32,7 @@ export class UtilService {
   static convertObjectToCustomArray(inputObject: object, keyNameForOutput: string, keyValueForOutput: string): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
-      const object = { selected: false };
+      const object = {selected: false};
       object[keyNameForOutput] = inputObject[key];
       object[keyValueForOutput] = key;
 
@@ -80,6 +82,13 @@ export class UtilService {
     console.log('Status >>>>>>', element);
   }
 
+  static roundOff(data: number, noOfPlaces: number = 0) {
+    // return (Math.round(data * 10 ^ noOfPlaces) / 10 ^ noOfPlaces);
+    // console.log(' roundedOffString', this.decimalPipe.transform(data, '9.0-2', null).replace(/,/g, ''));
+
+    return parseFloat(this.decimalPipe.transform(data, '9.0-' + noOfPlaces, null).replace(/,/g, ''));
+  }
+
 
   totalCalculator(data: number[]) {
     return data.reduce((accumulator, currentValue) => {
@@ -108,7 +117,7 @@ export class UtilService {
     return this.getFamilyMemberData;
   }
 
-  //Allows only numbers
+  // Allows only numbers
   keyPress(event: any) {
     const pattern = /[0-9\+\-\. ]/;
 
@@ -118,7 +127,7 @@ export class UtilService {
     }
   }
 
-  //Allow Only text NOT number and special character
+  // Allow Only text NOT number and special character
   onlyText(event: any) {
     const pattern = /[0-9\+\-\. ]/;
 
@@ -126,17 +135,17 @@ export class UtilService {
     if (event.keyCode != 8 && pattern.test(inputChar)) {
       event.preventDefault();
     }
-    var k = event.keyCode;
+    const k = event.keyCode;
     return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
   }
 
   // allows text and number NOT special character
   alphaNumric(event: any) {
-    var k = event.keyCode;
+    const k = event.keyCode;
     return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
   }
 
-  //used for dateFormat allows numbers and / character
+  // used for dateFormat allows numbers and / character
   dateFormat(event: any) {
     let res: string;
     if (this.alphaNumric(event)) {
@@ -159,20 +168,19 @@ export class UtilService {
   }
 
   htmlToPdf(inputData, pdfName) {
-    let obj =
-    {
-      "htmlInput": inputData,
-      "name": pdfName
-    }
-    this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, { responseType: 'blob' }).subscribe(
+    const obj = {
+      htmlInput: inputData,
+      name: pdfName
+    };
+    this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, {responseType: 'blob'}).subscribe(
       data => {
-        var file = new Blob([data], { type: 'application/pdf' });
-        var fileURL = URL.createObjectURL(file);
+        const file = new Blob([data], {type: 'application/pdf'});
+        const fileURL = URL.createObjectURL(file);
         window.open(fileURL);
-        let a = document.createElement('a');
+        const a = document.createElement('a');
         a.download = fileURL;
       }
-    )
+    );
   }
 
 }
