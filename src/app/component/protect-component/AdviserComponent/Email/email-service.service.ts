@@ -16,10 +16,9 @@ export class EmailServiceService {
   private dataSourceOneMailView = new BehaviorSubject<Object>('');
   data = this.dataSourceOneMailView.asObservable();
   paginatorLength;
-  
+
   constructor(public https: HttpClient,
     public http: HttpService,
-    private authService: AuthService,
     private subInjectService: SubscriptionInject) { }
 
   getProfile() {
@@ -105,14 +104,13 @@ export class EmailServiceService {
     });
   }
 
-  async gmailMessageDetail(messageId: string) {
+  gmailMessageDetail(messageId: string) {
     const userInfo = AuthService.getUserInfo();
-    const val = await this.http.get(apiConfig.GMAIL_URL + appConfig.GET_MESSAGE_DETAIL, {
+    return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_MESSAGE_DETAIL, {
       email: userInfo.emailId,
       userId: userInfo.advisorId,
       messageId
-    }).toPromise();
-    return val;
+    });
   }
 
   getRightSideNavList() {

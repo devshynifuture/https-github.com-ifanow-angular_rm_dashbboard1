@@ -14,9 +14,18 @@ export class EmailUtilService {
     return btoa(value);
   }
 
+  static isTheStringBase64Format(value: string) {
+    try {
+      return btoa(atob(value)) == value;
+    } catch (err) {
+      return false;
+    }
+
+  }
+
   static parseBase64AndDecodeGoogleUrlEncoding(contentInBase64) {
     // console.log("parseBase64AndDecodeGoogleUrlEncoding ->> ", contentInBase64);
-    if(contentInBase64){
+    if (contentInBase64) {
       return atob(contentInBase64.replace(/\-/g, '+').replace(/_/g, '/'));
     }
   }
@@ -69,9 +78,9 @@ export class EmailUtilService {
           if (part.body.data) {
             let decodedValue = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data)
             // console.log("this is decoded Value:::::::::::::::", decodedValue);
-            if(decodedValue === null){
+            if (decodedValue === null) {
               decodedPartArray.push(part.body.data);
-            } else if(decodedValue !== ''){
+            } else if (decodedValue !== '') {
               decodedPartArray.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data));
             }
           }
@@ -112,6 +121,15 @@ export class EmailUtilService {
   static getIdsOfGmailThreads(gmailThread: GmailInboxResponseI): Object {
     const { historyId, id } = gmailThread;
     return { historyId, id };
+  }
+
+  static getIdsOfGmailMessages(gmailThread: GmailInboxResponseI): string[] {
+    let idArray: string[] = [];
+    gmailThread.messages.forEach(message => {
+      const { id } = message;
+      idArray.push(id);
+    });
+    return idArray;
   }
 
   static getSubjectAndFromOfGmailHeaders(gmailThread: GmailInboxResponseI): Object {

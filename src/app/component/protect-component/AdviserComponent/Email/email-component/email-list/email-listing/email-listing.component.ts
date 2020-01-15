@@ -17,7 +17,7 @@ import { EmailUtilService } from 'src/app/services/email-util.service';
   templateUrl: './email-listing.component.html',
   styleUrls: ['./email-listing.component.scss']
 })
-export class EmailListingComponent implements OnInit{
+export class EmailListingComponent implements OnInit {
 
 
   constructor(
@@ -61,26 +61,26 @@ export class EmailListingComponent implements OnInit{
     this.getPaginatorLengthRes(location);
   }
 
-  redirectMessages(element){
+  redirectMessages(element) {
     element.labelIdsfromMessages.forEach(labelArr => {
       labelArr.labelIds.forEach(label => {
-        if(label === 'DRAFT'){
+        if (label === 'DRAFT') {
           this.showDraftView = true;
         }
       });
     });
-    this.showDraftView ? this.openDraftView(element): this.gotoEmailView(element);
+    this.showDraftView ? this.openDraftView(element) : this.gotoEmailView(element);
   }
 
   ngOnDestroy() {
     this.paginatorSubscription.unsubscribe();
-    if(this.listSubscription !== null){
+    if (this.listSubscription !== null) {
       this.listSubscription.unsubscribe();
     }
   }
 
   getPaginatorLengthRes(location) {
-    if(localStorage.getItem('associatedGoogleEmailId')){
+    if (localStorage.getItem('associatedGoogleEmailId')) {
       const userInfo = AuthService.getUserInfo();
       userInfo['emailId'] = localStorage.getItem('associatedGoogleEmailId');
       this.authService.setUserInfo(userInfo);
@@ -88,11 +88,11 @@ export class EmailListingComponent implements OnInit{
 
     this.paginatorSubscription = this.emailService.getProfile().subscribe(response => {
       console.log('paginator response=>>>>', response);
-      if(response === undefined){
+      if (response === undefined) {
         this.eventService.openSnackBar("You must connect your gmail account", "DISMISS");
         this.router.navigate(['google-connect'], { relativeTo: this.activatedRoute });
       } else {
-        
+
         this.paginatorLength = response.threadsTotal;
         this.getGmailList(location.toUpperCase());
       }
@@ -235,47 +235,10 @@ export class EmailListingComponent implements OnInit{
           // });
           console.log("this is main thread -:::::", thread);
 
-
-          thread.messages.forEach((message) => {
-            const id = thread.id;
-            if (message.payload.parts !== null) {
-              const newParts = message.payload.parts.map((part)=>{
-                if(part.body.data === null){
-                  const res = this.getGmailDetailMessageRaw(id);
-                  console.log("this is result of async await", res);
-                  part.body.data = res;
-                }
-                return part
-              });
-              message.payload.parts = newParts;
-            }
-
-            // if (message.payload.parts !== null){ 
-            //   const newParts = message.payload.parts.map((part) => {
-            //     if (part.body.data == null) {
-            //       // get message object;
-            //       console.log("tghi sus to debug:::::::::::::" ,part.body.data);
-            //       this.emailService.gmailMessageDetail(id)
-            //         .subscribe((response) => {
-            //           const raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
-            //           // console.log('response of detailed gmail threadL:::::::', response);
-            //           // console.log("this is raw of detail api...::::::::::::", raw);
-            //           if(raw !== null){
-            //             part.body.data = raw;
-            //             console.log("this is raw value of detailed gmail thread::::::::::" ,raw)
-            //             console.log("tghis is part boyd data of gmail thread :::::::::::;", part.body.data);
-            //           }
-            //         });
-            //     }
-            //     return part;
-            //   });
-            //   message.payload.parts = newParts;
-            // }
-          });
-
-          console.log("modified thread::::::::::::::::::",thread);
+          console.log("modified thread::::::::::::::::::", thread);
           let parsedData: any; // object containing array of decoded parts and headers
           let idsOfThread: any; // Object of historyId and Id of thread
+          let idsOfMessages: string[]; // ids of messages
           let dateIdsSnippetsOfMessages: any; // array of Objects having ids, date snippets of messages
           let labelIdsfromMessages;
           let extractSubjectFromHeaders;
@@ -286,6 +249,7 @@ export class EmailListingComponent implements OnInit{
 
           parsedData = EmailUtilService.decodeGmailThreadExtractMessage(thread);
           idsOfThread = EmailUtilService.getIdsOfGmailThreads(thread);
+          idsOfMessages = EmailUtilService.getIdsOfGmailMessages(thread);
           dateIdsSnippetsOfMessages = EmailUtilService.getIdAndDateAndSnippetOfGmailThreadMessages(thread);
           labelIdsfromMessages = EmailUtilService.getGmailLabelIdsFromMessages(thread);
           extractSubjectFromHeaders = EmailUtilService.getSubjectAndFromOfGmailHeaders(thread);
@@ -306,6 +270,7 @@ export class EmailListingComponent implements OnInit{
           const Obj1 = {
             position: index + 1,
             idsOfThread,
+            idsOfMessages,
             parsedData,
             attachmentFiles,
             messageHeaders: extractSubjectFromHeaders['headerFromArray'],
@@ -356,21 +321,6 @@ export class EmailListingComponent implements OnInit{
       this.createUpdateDraft(null, ['gaurav@futurewise.co.in'],
         'This is a test message', 'This is a test message body', fileData);
     });
-
-  }
-
-  getGmailDetailMessageRaw(id): string{
-    let raw;
-    this.emailService.gmailMessageDetail(id)
-      .then((response) => {
-        if(raw){
-          raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
-        }
-        console.log('response of detailed gmail threadL:::::::', response);
-        console.log("this is raw of detail api...::::::::::::", raw);
-
-      });
-      return raw;
 
   }
 
@@ -428,9 +378,9 @@ export class EmailListingComponent implements OnInit{
 
   // routing to view page
   gotoEmailView(dataObj: Object) {
-    
+
     console.log("this is dataObject  =>>>>>>>>>>>>>", dataObj);
-    
+
     this.emailService.sendNextData(dataObj);
     this.router.navigate(['view'], { relativeTo: this.activatedRoute });
   }
@@ -461,7 +411,7 @@ export class EmailListingComponent implements OnInit{
       ids.push(id);
     });
 
-    if(ids.length === 0){
+    if (ids.length === 0) {
       this.eventService.openSnackBar("Please select email or emails to Delete!", "DISMISS");
     } else {
       this.threadsToTrashService(ids);

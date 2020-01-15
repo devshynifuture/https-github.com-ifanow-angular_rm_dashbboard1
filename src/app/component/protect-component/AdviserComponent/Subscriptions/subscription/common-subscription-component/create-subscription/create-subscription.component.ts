@@ -290,7 +290,7 @@ export class CreateSubscriptionComponent implements OnInit {
       };
       console.log(obj, 'start subscription');
       this.subService.startSubscription(obj).subscribe(
-        data => this.startSubscsriptionResponse(data)
+        data => this.startSubscriptionResponse(data)
       );
     } else {
 
@@ -344,12 +344,12 @@ export class CreateSubscriptionComponent implements OnInit {
       };
       console.log(obj, 'start subscription');
       this.subService.startSubscription(obj).subscribe(
-        data => this.startSubscsriptionResponse(data)
+        data => this.startSubscriptionResponse(data)
       );
     }
   }
 
-  startSubscsriptionResponse(data) {
+  startSubscriptionResponse(data) {
     console.log(data);
     this.Close(true);
   }
