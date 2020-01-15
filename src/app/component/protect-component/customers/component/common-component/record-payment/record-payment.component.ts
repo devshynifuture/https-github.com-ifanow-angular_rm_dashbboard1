@@ -16,16 +16,16 @@ export class RecordPaymentComponent implements OnInit {
   showPaymentRecive: boolean;
   feeCollectionMode: any;
   formObj: {
-  advisorId: any;
+    advisorId: any;
     // advisorId: 12345,
     amountReceived: any; chargeIfAny: any; TDS: any; paymentDate: any; paymentMode: any; gstTreatment: any; notes: any;
   }[];
   advisorId: any;
   balDue: any;
   tdsAmt: any;
-  showError=false;
+  showError = false;
 
-  constructor(public subService: SubscriptionService, private fb: FormBuilder, public enumService: EnumServiceService,public AuthService:AuthService,public utils:UtilService) { }
+  constructor(public subService: SubscriptionService, private fb: FormBuilder, public enumService: EnumServiceService, public AuthService: AuthService, public utils: UtilService) { }
   @Input() InvRecordData;
   @Input() padding;
   @Output() outputData = new EventEmitter<Object>();
@@ -42,16 +42,16 @@ export class RecordPaymentComponent implements OnInit {
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
   }
   getRecordPayment(data) {
-    this.balDue=data.balanceDue
+    this.balDue = data.balanceDue
 
-    if(data.add==true){
-      data=""
+    if (data.add == true) {
+      data = ""
     }
     console.log('payee data', data);
     this.rPayment = this.fb.group({
       amountReceived: [data.amountReceived, [Validators.required, Validators.max(this.balDue)]],
       chargesIfAny: [data.chargesIfAny, [Validators.required]],
-      tds: [data.tds, [Validators.required,Validators.max(this.tdsAmt)]],
+      tds: [data.tds, [Validators.required, Validators.max(this.tdsAmt)]],
       paymentDate: [new Date(data.paymentDate), [Validators.required]],
       paymentMode: [data.paymentMode, [Validators.required]],
       gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business', [Validators.required]],
@@ -92,12 +92,12 @@ export class RecordPaymentComponent implements OnInit {
     //   data => this.getPaymentReceivedRes(data)
     // );
   }
-  onChange(){
-    this.tdsAmt=this.balDue-this.rPayment.get('amountReceived').value
-    if(this.rPayment.get('tds').value>this.tdsAmt){
-      this.showError=true
-    }else{
-      this.showError=false;
+  onChange() {
+    this.tdsAmt = this.balDue - this.rPayment.get('amountReceived').value
+    if (this.rPayment.get('tds').value > this.tdsAmt) {
+      this.showError = true
+    } else {
+      this.showError = false;
     }
     // this.rPayment.get('tds').errors.max=this.tdsAmt
   }
@@ -120,7 +120,7 @@ export class RecordPaymentComponent implements OnInit {
     }
   }
   saveFormData() {
-    if (this.rPayment.get('amountReceived').value==null || this.rPayment.get('amountReceived').value=="") {
+    if (this.rPayment.get('amountReceived').value == null || this.rPayment.get('amountReceived').value == "") {
       this.rPayment.get('amountReceived').markAsTouched();
       return
     } else if (this.rPayment.get('tds').invalid) {
@@ -136,9 +136,9 @@ export class RecordPaymentComponent implements OnInit {
     } else if (this.rPayment.get('gstTreatment').invalid) {
       this.rPayment.get('gstTreatment').markAsTouched();
       return
-    } else if(this.showError==true){
+    } else if (this.showError == true) {
       return false
-     }else {
+    } else {
       this.formObj = [{
         advisorId: this.advisorId,
         // advisorId: 12345,
@@ -170,7 +170,7 @@ export class RecordPaymentComponent implements OnInit {
     this.dataSource[0].gstTreatment = parseInt(this.dataSource[0].gstTreatment);
     this.dataSource[0].TDS = parseInt(this.dataSource[0].TDS);
     this.dataSource[0].paymentDate = this.dataSource[0].paymentDate.toISOString().slice(0, 10);
-    if (this.InvRecordData.add!=true) {
+    if (this.InvRecordData.add != true) {
       const obj = {
         id: this.rPayment.controls.id.value,
         paymentMode: this.dataSource[0].paymentMode,

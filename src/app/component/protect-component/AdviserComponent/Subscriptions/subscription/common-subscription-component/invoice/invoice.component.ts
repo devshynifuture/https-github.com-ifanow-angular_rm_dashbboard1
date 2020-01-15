@@ -106,7 +106,7 @@ export class InvoiceComponent implements OnInit {
   @Input() upperData;
   editPayment;
   @Output() valueChange = new EventEmitter();
-
+  @Output() cancelInvoiceSubscription = new EventEmitter();
   @Input() invoiceTab;
   // rPayment;
   advisorId;
@@ -190,7 +190,9 @@ export class InvoiceComponent implements OnInit {
   preventDefault(e) {
     e.preventDefault();
   }
-
+  getCancelFlag(data) {
+    this.showEdit = false;
+  }
   getPayReceive(data) {
     const obj = {
       invoiceId: data
@@ -535,7 +537,9 @@ export class InvoiceComponent implements OnInit {
       this.Close('close', true);
     }
   }
-
+  getAddCancelFlag(data) {
+    this.cancelInvoiceSubscription.emit(data)
+  }
   addInvoiceRes(data) {
     console.log('addInvoiceRes', data);
     if (data == 1) {

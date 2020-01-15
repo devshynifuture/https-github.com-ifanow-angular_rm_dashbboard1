@@ -116,6 +116,9 @@ export class AddPpfComponent implements OnInit {
     if (this.ppfSchemeForm.get('accountBalance').invalid) {
       this.ppfSchemeForm.get('accountBalance').markAsTouched();
       return;
+    } else if (this.ppfSchemeForm.get('ownerName').invalid) {
+      this.ppfSchemeForm.get('ownerName').markAsTouched();
+      return;
     }
     else if (this.ppfSchemeForm.get('balanceAsOn').invalid) {
       this.ppfSchemeForm.get('balanceAsOn').markAsTouched();
