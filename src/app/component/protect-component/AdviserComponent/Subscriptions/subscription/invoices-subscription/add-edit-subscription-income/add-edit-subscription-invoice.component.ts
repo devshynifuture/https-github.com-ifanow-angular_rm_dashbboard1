@@ -1,17 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/auth-service/authService';
-import { ValidatorType } from 'src/app/services/util.service';
-import { SubscriptionService } from '../../../subscription.service';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {AuthService} from 'src/app/auth-service/authService';
+import {ValidatorType} from 'src/app/services/util.service';
+import {SubscriptionService} from '../../../subscription.service';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
 
 @Component({
-  selector: 'app-add-edit-subscription-income',
-  templateUrl: './add-edit-subscription-income.component.html',
-  styleUrls: ['./add-edit-subscription-income.component.scss']
+  selector: 'app-add-edit-subscription-invoice',
+  templateUrl: './add-edit-subscription-invoice.component.html',
+  styleUrls: ['./add-edit-subscription-invoice.component.scss']
 })
-export class AddEditSubscriptionIncomeComponent implements OnInit {
+export class AddEditSubscriptionInvoiceComponent implements OnInit {
   validatorType = ValidatorType;
   editPayment: any;
   igstTaxAmount: any;
@@ -54,7 +54,8 @@ export class AddEditSubscriptionIncomeComponent implements OnInit {
   defaultVal: any;
   serviceList: any;
 
-  constructor(public enumService: EnumServiceService, private fb: FormBuilder, private subService: SubscriptionService, public subInjectService: SubscriptionInject) { }
+  constructor(public enumService: EnumServiceService, private fb: FormBuilder, private subService: SubscriptionService, public subInjectService: SubscriptionInject) {
+  }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -77,6 +78,7 @@ export class AddEditSubscriptionIncomeComponent implements OnInit {
 
     }
   }
+
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     console.log('@@@@@@@@', data);
@@ -130,9 +132,11 @@ export class AddEditSubscriptionIncomeComponent implements OnInit {
       this.editPayment.controls.serviceName.disable();
     }
   }
+
   getFormControledit() {
     return this.editPayment.controls;
   }
+
   selectClient(c, data) {
     console.log(c);
     console.log('ssss', data);
@@ -197,6 +201,7 @@ export class AddEditSubscriptionIncomeComponent implements OnInit {
       this.editAdd2 = false;
     }
   }
+
   changeTaxStatus(changeTaxStatus) {
     console.log('changeTaxStatus', changeTaxStatus);
     if (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') {
@@ -213,6 +218,7 @@ export class AddEditSubscriptionIncomeComponent implements OnInit {
     this.taxStatus = changeTaxStatus;
     console.log('finAmount', this.finAmount);
   }
+
   checkDateDiff(event) {
     let invoiceDate;
     let dueDate;
@@ -222,10 +228,11 @@ export class AddEditSubscriptionIncomeComponent implements OnInit {
       dueDate = new Date((this.editPayment.get('dueDate').value._d) ? this.editPayment.get('dueDate').value._d : this.editPayment.get('dueDate').value).getTime();
       (invoiceDate == undefined && dueDate == undefined) ? ''
         : (dueDate <= invoiceDate)
-          ? this.showDateError = "Due date should be greater than invoice date" :
-          this.showDateError = undefined;
+        ? this.showDateError = "Due date should be greater than invoice date" :
+        this.showDateError = undefined;
     }
   }
+
   updateInvoice() {
     this.showErr = false
     if (this.editPayment.value.discount == "") {
@@ -341,6 +348,7 @@ export class AddEditSubscriptionIncomeComponent implements OnInit {
     }
 
   }
+
   updateInvoiceInfoRes(data) {
     console.log('updateInvoiceInfoRes', data);
     if (data == 1) {
@@ -348,6 +356,7 @@ export class AddEditSubscriptionIncomeComponent implements OnInit {
       // this.Close('close', true);
     }
   }
+
   getClients() {
     const obj = {
       advisorId: this.advisorId
@@ -367,6 +376,7 @@ export class AddEditSubscriptionIncomeComponent implements OnInit {
     this.editPayment.controls.terms.setValue(data.biller.terms);
     this.editPayment.controls.invoiceNumber.setValue(data.invoiceNumber);
   }
+
   getServicesList() {
     const obj = {
       advisorId: this.advisorId
@@ -381,6 +391,7 @@ export class AddEditSubscriptionIncomeComponent implements OnInit {
     console.log('getServicesListForInvoiceRes', data);
     this.serviceList = data;
   }
+
   addInvoiceRes(data) {
     console.log('addInvoiceRes', data);
     if (data == 1) {
@@ -413,6 +424,7 @@ export class AddEditSubscriptionIncomeComponent implements OnInit {
     }
 
   }
+
   getPaymentReceivedRes(data) {
     this.dataSource = data;
     if (data == undefined) {
@@ -432,6 +444,7 @@ export class AddEditSubscriptionIncomeComponent implements OnInit {
       });
     }
   }
+
   closeEditInv() {
     // this.editPayment.reset();
     if (this.invoiceValue == 'EditInInvoice' || this.invoiceValue == 'edit') {
