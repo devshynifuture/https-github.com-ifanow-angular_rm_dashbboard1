@@ -208,10 +208,10 @@
                     </div>
                 </div>
                 <div *ngSwitchCase="'tab4'">
-                    <div *ngIf="showLoader">
+                    <div>
                         <mat-spinner class="loader" [diameter]="30"></mat-spinner>
                     </div>
-                    <div [formGroup]="prefixData" class="wrapper-44" *ngIf="showLoader==false">
+                    <div [formGroup]="prefixData" class="wrapper-44">
                         <div class="row pl-44">
                             <div class="col-md-3 pr-0 mr-40">
                                 <h5 class="m-0 f-14 text-black">Subscription prefix</h5>
