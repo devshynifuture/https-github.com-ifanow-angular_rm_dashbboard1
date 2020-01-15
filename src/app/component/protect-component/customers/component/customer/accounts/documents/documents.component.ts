@@ -24,7 +24,6 @@ import { EmailQuotationComponent } from 'src/app/component/protect-component/Adv
 })
 
 export class DocumentsComponent implements AfterViewInit, OnInit {
-  areFoldersAndFilesEmpty: boolean = false;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   fileType = [
@@ -66,6 +65,7 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   name: string;
   isLoading = false;
   dataToCommon: any;
+  showMsg = false;
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private event: EventService, private router: Router, private fb: FormBuilder,
@@ -102,7 +102,6 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
     this.openFolderName = [];
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.areFoldersAndFilesEmpty = false;
     this.getAllFileList(tabValue);
     this.showLoader = true;
   }
@@ -239,12 +238,12 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
   }
 
   getAllFilesRes(data, value) {
+    if(data.files.length == 0 && data.folders.length == 0){
+      this.showMsg = true
+    }
     this.isLoading = false;
     console.log("this is folder length and files length ")
     console.log(data.folders.length, data.files.length);
-    if (data.folders.length === 0 && data.files.length === 0) {
-      this.areFoldersAndFilesEmpty = true;
-    }
     this.allFiles = data.files;
     this.AllDocs = data.folders;
     this.dataToCommon = data.folders;
@@ -275,36 +274,57 @@ export class DocumentsComponent implements AfterViewInit, OnInit {
     this.fileSizeConversion();
     console.log('sorted', this.commonFileFolders);
   }
-
+  keyPress(event){
+    console.log('search',event)
+    let obj = {
+      clientId : this.clientId,
+      advisorId :  this.advisorId,
+      name : '%'+event.key+'%'
+    }
+    this.custumService.searchFile(obj).subscribe(
+      data => this.searchFileRes(data,'value')
+    ); 
+  }
+  searchFileRes(data,value){
+    let obj = []
+    console.log(data)
+    Object.assign(obj, {'files': data.SEARCHED_FILE})
+    Object.assign(obj, {'folders': data.SEARCHED_FOLDER})
+    this.getAllFilesRes(obj, value)
+  }
   fileTypeGet() {
     this.commonFileFolders.filteredData.forEach(p => {
       this.fileType.forEach(n => {
         if (n.id == p.fileTypeId) {
           p.fileTypeId = n.name;
         }
+        this.isLoading = false
       });
     });
   }
 
   getFolders(data) {
+    this.isLoading = true;
+    this.showMsg = false
+    this.commonFileFolders.data = [{}, {}, {}];
+    this.commonFileFolders = new MatTableDataSource(this.data);
     this.parentId = (data == undefined) ? 0 : data[0].folderParentId;
     console.log('parentId', this.parentId);
     this.openFolderName = _.reject(this.openFolderName, function (n) {
       return n.openFolderId > data.openFolderId + 1;
     });
     this.commonFileFolders = this.openFolderName[this.openFolderName.length - 1];
-    this.openFolderName = _.reject(this.openFolderName, function (n) {
-      return n.openFolderId > data.openFolderId;
-    });
+    // this.openFolderName = _.reject(this.openFolderName, function (n) {
+    //   return n.openFolderId > data.openFolderId;
+    // });
     this.commonFileFolders = new MatTableDataSource(data);
     this.commonFileFolders.sort = this.sort;
-    // this.commonFileFolders.filteredData = data;
     this.fileTypeGet();
     this.valueFirst = this.openFolderName[0];
   }
 
   reset() {
-    this.areFoldersAndFilesEmpty = false;
+    this.showMsg = false
     if (this.openFolderName.length > 0) {
       this.commonFileFolders = this.backUpfiles[0];
     }

@@ -551,4 +551,7 @@ export class CustomerService {
   editScriplevelHoldingAndTransaction(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_SCRIP_HOLDING_TRANSACTION, data);
   }
+  searchFile(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.SEARCH_FILE, data);
+  }
 }
