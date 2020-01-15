@@ -73,7 +73,6 @@ export class AddSsyComponent implements OnInit {
       agentName: [data.agentName]
     })
     this.ownerData = this.ssySchemeForm.controls;
-    this.familyMemberId = this.familyMemberId[0]
   }
   ngOnInit() {
     this.clientId = AuthService.getClientId();
