@@ -131,6 +131,7 @@ export const appConfig = {
   RENAME_FILE: 'document/account/document/all-file/file/rename',
   RENAME_FOLDER: 'document/account/document/all-file/folder/rename',
   DELETE_FOLDER: 'document/account/document/all-file/folder/trash',
+  SEARCH_FILE:'document/account/document/all-file/search',
   STAR_FILE: 'document/document/all-file/star',
   VIEW_ACTIVITY_FILE: 'document/account/document/all-file/file/view-activity/get',
   VIEW_ACTIVITY_FOLDER: 'document/account/document/all-file/folder/view-activity/get',
