@@ -1,23 +1,28 @@
 .max100 {
-  max-width: 100%;
+    max-width: 100%;
 }
 
 .cashflowTable {
-  #table-low {
-    tr.mat-header-row {
-      height: 30px;
-
-      th {
-        padding: 10px 8px !important;
-      }
+    #table-low {
+        tr.mat-header-row {
+            height: 35px !important;
+        }
+        tr.mat-row {
+            height: 30px !important;
+            th {
+                padding: 10px 8px !important;
+            }
+            td {
+                padding: 8px !important;
+            }
+        }
     }
-  }
 }
 
 .widht145 {
-  width: 145px;
+    width: 145px;
 }
 
 #cashFlow {
-  height: 400px;
+    height: 400px;
 }

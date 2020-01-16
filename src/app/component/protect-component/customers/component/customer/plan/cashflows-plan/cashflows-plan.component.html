@@ -1,20 +1,20 @@
 <div id="scenariosPlan">
 
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-4">
             <div id="surplus"></div>
         </div>
 
-        <div class="col-md-7">
+        <div class="col-md-8">
             <div class=" bl-grey">
                 <div class="d-flex scenariosHeadingTwo bb-grey justify-content-md-between align-items-center">
                     <p class="f-20 pb-20 pt-20 roboto m-0 pl-16"> Life cash flows</p>
                 </div>
                 <div class="row">
-                    <div class="col-md-9 p-0">
+                    <div class="col-md-9 pl-0 br">
                         <div class="d-flex justify-content-md-between align-items-center">
-                            <p class="f-20 pb-20 pt-20 roboto m-0 pl-16"> Income</p>
-                            <img src="assets/images/svg/income-setting.svg" class="c-p">
+                            <p class="f-20 pb-20 pt-20 roboto m-0 pl-16"> Incomes</p>
+
                         </div>
 
                         <div class="row">
@@ -27,13 +27,14 @@
                                     <!-- Position Column -->
                                     <ng-container matColumnDef="year">
                                         <th class="br-grey f-14" mat-header-cell *matHeaderCellDef> Year </th>
-                                        <td class="br-grey f-14" mat-cell *matCellDef="let element"> {{element.year}}
-                                            <img src="assets/images/svg/plus-icon.svg" class="c-p ml-8"> </td>
+                                        <td class="br-grey f-14" mat-cell *matCellDef="let element">
+                                            {{element.year}}
+                                        </td>
                                     </ng-container>
 
                                     <!-- Name Column -->
                                     <ng-container matColumnDef="age">
-                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Age (H)
+                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Group head age
                                         </th>
                                         <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
                                             {{element.age}} </td>
@@ -41,7 +42,7 @@
 
                                     <!-- Weight Column -->
                                     <ng-container matColumnDef="age2">
-                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Age (W)
+                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Spouse age
                                         </th>
                                         <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
                                             {{element.age2}} </td>
@@ -49,14 +50,14 @@
 
                                     <!-- Symbol Column -->
                                     <ng-container matColumnDef="salary">
-                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Salary
+                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Total incomes
                                         </th>
                                         <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
                                             {{element.salary}} </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="salary2">
-                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Salary 2
+                                        <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef> Monthly view
                                         </th>
                                         <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
                                             {{element.salary2}} </td>
@@ -71,8 +72,7 @@
 
                                     <ng-container matColumnDef="view">
                                         <th mat-header-cell *matHeaderCellDef> </th>
-                                        <td class="c-p text-primary text-center f-14" mat-cell
-                                            *matCellDef="let element"> {{element.view}} </td>
+                                        <td class="c-p text-primary text-center f-14" mat-cell *matCellDef="let element"> {{element.view}} </td>
                                     </ng-container>
 
 
