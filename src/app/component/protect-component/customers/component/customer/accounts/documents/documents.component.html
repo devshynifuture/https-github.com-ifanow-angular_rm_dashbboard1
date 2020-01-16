@@ -45,10 +45,10 @@
                         </div>
                         <div class="col-md-6 p-0 d-flex justify-content-end">
                             <div class="input_class">
-                                <input class="b-a bg-grey lter mr-8" matInput value=" ">
+                                <input class="b-a bg-grey lter mr-8" matInput value=" " (keypress)="keyPress($event)">
                                 <img src="assets/images/svg/document-search-icon.svg">
                             </div>
-                            <img src="assets/images/svg/grid.svg" class="c-p gridIcon mr-12">
+                            <!-- <img src="assets/images/svg/grid.svg" class="c-p gridIcon mr-12"> -->
                             <button mat-stroked-button class="text-custom br-0 mr-12"> HELP</button>
                             <button mat-stroked-button class="btn-primary br-0 pl-8" [matMenuTriggerFor]="menu1"> ADD
                                 NEW</button>
@@ -94,7 +94,7 @@
 
                     <div class="row">
                         <div class="col-md-9 p-0 documentsTable" *ngSwitchCase="viewMode">
-                            <div *ngIf="!areFoldersAndFilesEmpty">
+                            <div *ngIf="!areFoldersAndFilesEmpty && showMsg == false">
                                 <table mat-table matSort [dataSource]="commonFileFolders" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                                     <ng-container matColumnDef="emptySpace">
                                         <th mat-header-cell *matHeaderCellDef> </th>
@@ -114,7 +114,6 @@
                                             </div>
                                         </td>
                                     </ng-container>
-
                                     <!-- Weight Column -->
                                     <ng-container matColumnDef="lastModi">
                                         <th mat-sort-header="createdDate" mat-header-cell *matHeaderCellDef> Last modified
@@ -190,8 +189,10 @@
                                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                 </table>
                             </div>
-                            <div *ngIf="areFoldersAndFilesEmpty">
-                                No files or folders available
+                            <div *ngIf="showMsg == true"  class="d-flex flex-column align-items-center">
+                                    <img class="mr-12" src="/assets/images/svg/folder-icon.svg">
+                             Folder is empty<br>
+                             <p class="m-0 f-12 text-custom">Drop files here</p> 
                             </div>
                         </div>
                         <div class="col-md-3">

@@ -49,6 +49,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   selectedFamilyData: any;
   loanTypeView: any;
   clientId: any;
+  nomineesListFM: any;
 
 
   constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private fb: FormBuilder,
@@ -136,7 +137,10 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     this.ownerName = value.userName;
     this.selectedFamilyData = value;
   }
-
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
   keyPress(event: any) {
     const pattern = /[0-9\+\-\ ]/;
 

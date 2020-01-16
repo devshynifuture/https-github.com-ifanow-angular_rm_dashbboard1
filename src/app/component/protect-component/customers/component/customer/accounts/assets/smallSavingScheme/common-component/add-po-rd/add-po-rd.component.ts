@@ -27,6 +27,7 @@ export class AddPoRdComponent implements OnInit {
   PORDForm: any;
   PORDFormoptionalForm: any;
   editApi: any;
+  nomineesListFM: any;
 
   constructor(public utils: UtilService,private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService,
               private subInjectService: SubscriptionInject) {
@@ -58,7 +59,10 @@ export class AddPoRdComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id;
   }
-
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
   getdataForm(data) {
     if (data == undefined) {
       data = {};
@@ -85,6 +89,9 @@ export class AddPoRdComponent implements OnInit {
   addPORD() {
     if (this.PORDForm.get('monthlyContribution').invalid) {
       this.PORDForm.get('monthlyContribution').markAsTouched();
+      return;
+    } else if (this.PORDForm.get('ownerName').invalid) {
+      this.PORDForm.get('ownerName').markAsTouched();
       return;
     } else if (this.PORDForm.get('commDate').invalid) {
       this.PORDForm.get('commDate').markAsTouched();
