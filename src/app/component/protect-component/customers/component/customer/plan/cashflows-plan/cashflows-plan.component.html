@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-md-9 pl-0 br">
                         <div class="d-flex justify-content-md-between align-items-center">
-                            <p class="f-20 pb-20 pt-20 roboto m-0 pl-16"> Incomes</p>
+                            <p class="f-20 pb-20 pt-20 roboto m-0 pl-16"> {{ tableInUse | titlecase }}</p>
 
                         </div>
 
@@ -55,14 +55,15 @@
                                         <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
                                             Total incomes
                                         </th>
-                                        <td class="br-grey text-right f-14 f-bold" mat-cell *matCellDef="let element">
+                                        <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                                             {{element.total}} </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="view">
                                         <th mat-header-cell *matHeaderCellDef> Monthly View </th>
-                                        <td class="c-p text-primary text-center f-14" mat-cell *matCellDef="let element"
-                                            (click)="openUpperSlider(element)"> {{element.view}} </td>
+                                        <td class="c-p text-primary text-center f-400 f-14" mat-cell
+                                            *matCellDef="let element" (click)="openUpperSlider(element)">
+                                            {{element.view}} </td>
                                     </ng-container>
 
 
@@ -126,12 +127,12 @@
                                         <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
                                             Balance Surplus
                                         </th>
-                                        <td class="br-grey text-right f-14 f-bold" mat-cell *matCellDef="let element">
+                                        <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
                                             {{element.balanceSurplus}} </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="view">
-                                        <th mat-header-cell *matHeaderCellDef> View </th>
+                                        <th mat-header-cell *matHeaderCellDef> </th>
                                         <td class="c-p text-primary text-center f-14" mat-cell *matCellDef="let element"
                                             (click)="openUpperSlider(element)"> {{element.view}} Allocate </td>
                                     </ng-container>
@@ -144,22 +145,22 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
-                        <button mat-stroked-button class="height145"
+                    <div class="col-md-3 text-center">
+                        <button mat-stroked-button class="btn-cash-flow"
                             (click)="filterCashFlowTableUsing('income')">Income</button>
-                        <button mat-stroked-button class="height145"
+                        <button mat-stroked-button class="btn-cash-flow"
                             (click)="filterCashFlowTableUsing('expenses')">Expenses</button>
-                        <button mat-stroked-button class="height145"
-                            (click)="filterCashFlowTableUsing('insurance')">Insurance</button>
-                        <button mat-stroked-button class="height145"
-                            (click)="filterCashFlowTableUsing('liabilities')">Liabilities</button>
-                        <button mat-stroked-button class="height145"
+                        <button mat-stroked-button class="btn-cash-flow"
                             (click)="filterCashFlowTableUsing('assets')">Assets</button>
-                        <button mat-stroked-button class="height145"
-                            (click)="filterCashFlowTableUsing('commited-outflows')">Committed outflows</button>
-                        <button mat-stroked-button class="height145"
-                            (click)="filterCashFlowTableUsing('goals')">Goals</button>
-                        <button mat-stroked-button class="height145"
+                        <button mat-stroked-button class="btn-cash-flow"
+                            (click)="filterCashFlowTableUsing('insurance')">Insurance</button>
+                        <button mat-stroked-button class="btn-cash-flow"
+                            (click)="filterCashFlowTableUsing('liabilities')">Liabilities</button>
+
+                        <!-- <button mat-stroked-button class="btn-cash-flow" (click)="filterCashFlowTableUsing('commited-outflows')">Committed
+                            outflows</button> -->
+                        <!-- <button mat-stroked-button class="btn-cash-flow" (click)="filterCashFlowTableUsing('goals')">Goals</button> -->
+                        <button mat-stroked-button class="btn-cash-flow"
                             (click)="filterCashFlowTableUsing('surplus')">Surplus</button>
                     </div>
                 </div>
