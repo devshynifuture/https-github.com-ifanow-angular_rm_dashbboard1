@@ -29,7 +29,7 @@
                                     <ng-container matColumnDef="year">
                                         <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Year </th>
                                         <td class="br-grey f-14" mat-cell *matCellDef="let element">
-                                            {{element.financialYear}}
+                                            {{element.year}}
                                         </td>
                                     </ng-container>
 
@@ -39,7 +39,7 @@
                                             Group head age
                                         </th>
                                         <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                                            {{element.ageH}} </td>
+                                            {{element.age}} </td>
                                     </ng-container>
 
                                     <!-- Weight Column -->
@@ -48,36 +48,19 @@
                                             Spouse age
                                         </th>
                                         <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                                            {{element.ageW}} </td>
-                                    </ng-container>
-
-                                    <!-- Symbol Column -->
-                                    <ng-container matColumnDef="salary">
-                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
-                                            Total incomes
-                                        </th>
-                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                                            {{element.originalSurplus}} </td>
-                                    </ng-container>
-
-                                    <ng-container matColumnDef="salary2">
-                                        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
-                                            Monthly view
-                                        </th>
-                                        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                                            {{element.surplusAllocated}} </td>
+                                            {{element.age2}} </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="total">
                                         <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
-                                            Total
+                                            Total incomes
                                         </th>
                                         <td class="br-grey text-right f-14 f-bold" mat-cell *matCellDef="let element">
-                                            {{element.balanceSurplus}} </td>
+                                            {{element.total}} </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="view">
-                                        <th mat-header-cell *matHeaderCellDef> </th>
+                                        <th mat-header-cell *matHeaderCellDef> Monthly View </th>
                                         <td class="c-p text-primary text-center f-14" mat-cell
                                             *matCellDef="let element"> {{element.view}} </td>
                                     </ng-container>
@@ -96,61 +79,61 @@
                                                       The actual rendered columns are set as a property on the row definition" -->
 
                                     <!-- Position Column -->
-                                    <ng-container matColumnDef="year">
+                                    <ng-container matColumnDef="financialYear">
                                         <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Financial year
                                         </th>
                                         <td class="br-grey f-14" mat-cell *matCellDef="let element">
-                                            {{element.year}}
+                                            {{element.financialYear}}
                                         </td>
                                     </ng-container>
 
                                     <!-- Name Column -->
-                                    <ng-container matColumnDef="age">
+                                    <ng-container matColumnDef="ageH">
                                         <th class="br-grey f-400 text-right f-14" mat-header-cell *matHeaderCellDef> Age
                                             (H)
                                         </th>
                                         <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                                            {{element.age}} </td>
+                                            {{element.ageH}} </td>
                                     </ng-container>
 
                                     <!-- Weight Column -->
-                                    <ng-container matColumnDef="age2">
+                                    <ng-container matColumnDef="ageW">
                                         <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef> Age
                                             (W)
                                         </th>
                                         <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                                            {{element.age2}} </td>
+                                            {{element.ageW}} </td>
                                     </ng-container>
 
                                     <!-- Symbol Column -->
-                                    <ng-container matColumnDef="salary">
+                                    <ng-container matColumnDef="originalSurplus">
                                         <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
                                             Original surplus
                                         </th>
                                         <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                                            {{element.salary}} </td>
+                                            {{element.originalSurplus}} </td>
                                     </ng-container>
 
-                                    <ng-container matColumnDef="salary2">
+                                    <ng-container matColumnDef="surplusAllocated">
                                         <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
                                             Surplus allocated
                                         </th>
                                         <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
-                                            {{element.salary2}} </td>
+                                            {{element.surplusAllocated}} </td>
                                     </ng-container>
 
-                                    <ng-container matColumnDef="total">
+                                    <ng-container matColumnDef="balanceSurplus">
                                         <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
                                             Balance Surplus
                                         </th>
                                         <td class="br-grey text-right f-14 f-bold" mat-cell *matCellDef="let element">
-                                            {{element.total}} </td>
+                                            {{element.balanceSurplus}} </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="view">
-                                        <th mat-header-cell *matHeaderCellDef> </th>
+                                        <th mat-header-cell *matHeaderCellDef> View </th>
                                         <td class="c-p text-primary text-center f-14" mat-cell *matCellDef="let element"
-                                            (click)="openUpperSlider(element)"> {{element.view}} </td>
+                                            (click)="openUpperSlider(element)"> {{element.view}} Allocate </td>
                                     </ng-container>
 
 
