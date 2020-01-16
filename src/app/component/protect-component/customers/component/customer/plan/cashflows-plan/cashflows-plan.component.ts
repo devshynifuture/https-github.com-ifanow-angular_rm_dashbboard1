@@ -23,8 +23,7 @@ export class CashflowsPlanComponent implements OnInit {
   tableInUse: string = 'income';
 
   constructor(private eventService: EventService,
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
     this.cashFlow('surplus');

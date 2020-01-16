@@ -1,9 +1,8 @@
-import { DialogComponent } from './../../../../../../../dialog/dialog.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CashflowAddExpenseComponent } from './cashflow-add-expense/cashflow-add-expense.component';
+import { CashflowAddComponent } from './cashflow-add/cashflow-add.component';
 
 @Component({
   selector: 'app-cashflow-upper-slider',
@@ -33,9 +32,9 @@ export class CashflowUpperSliderComponent implements OnInit {
   }
 
   addExpense(data) {
-    const dialogRef = this.dialog.open(CashflowAddExpenseComponent, {
-      width: '250px',
-      data: { ...data }
+    const dialogRef = this.dialog.open(CashflowAddComponent, {
+      width: '750px',
+      data: { ...data, tableData: this.data }
     });
 
     dialogRef.afterClosed().subscribe(result => {
