@@ -69,9 +69,10 @@ export class ExpensesComponent implements OnInit {
     }
   }
 
-  openExpenses(value) {
+  openExpenses(value,data) {
     const fragmentData = {
       flag: value,
+      data:data,
       id: 1,
       state: 'open35',
       componentName: AddExpensesComponent
@@ -87,7 +88,6 @@ export class ExpensesComponent implements OnInit {
       }
     );
   }
-
   openExpensesB(value) {
     const fragmentData = {
       flag: value,
