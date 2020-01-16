@@ -79,7 +79,8 @@
                                         </ng-container>
                                         <ng-container matColumnDef="expense">
                                             <th mat-header-cell *matHeaderCellDef class="br t-15"> Expense </th>
-                                            <td mat-cell *matCellDef="let element" class="br t-15"> {{element.expenseCategoryId}}
+                                            <td *matCellDef="let element" class="br t-15"
+                                                mat-cell> {{element.expenseType}}
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="date">
