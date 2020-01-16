@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {AuthService} from 'src/app/auth-service/authService';
 import {PlanService} from '../../customer/plan/plan.service';
+import { ConstantsService } from 'src/app/constants/constants.service';
 
 @Component({
   selector: 'app-add-expenses',
@@ -18,20 +19,33 @@ export class AddExpensesComponent implements OnInit {
   familyMemberId: any;
   ownerName: any;
   nomineesListFM: any;
+  inputData: any;
+  isViewInitCalled: any;
+  expenseList: {};
+  category: any;
 
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
-              private planService: PlanService) {
+              private planService: PlanService, private constantService: ConstantsService) {
+  }
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    console.log('This is Input data of FixedDepositComponent ', data);
+
+    if (this.isViewInitCalled) {
+      this.getdataForm(data);
+    }
   }
 
+  get data() {
+    return this.inputData;
+  }
   ngOnInit() {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
     this.getListFamilyMem();
-
-
-    // expenseJsonMap =
-    this.getdataForm('');
+    this.getdataForm(this.inputData);
   }
   display(value) {
     console.log('value selected', value)
@@ -55,12 +69,13 @@ export class AddExpensesComponent implements OnInit {
       timeInMilliSec: [(data == undefined) ? '' : data.timeInMilliSec, [Validators.required]],
       expenseDoneOn: [(data == undefined) ? '' : new Date(data.expenseDoneOn), [Validators.required]],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
-      category: [(data == undefined) ? '' : (data.category) + '', [Validators.required]],
-      familyMember: [(data == undefined) ? '' : this.familyMember, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      paymentModeId: [[(data == undefined) ? '' : data.paymentModeId], [Validators.required]]
+      category:[(data == undefined) ? '' : data.expenseCategoryId, [Validators.required]],
+      familyMember: [(data == undefined) ? '' : data.familyMember, [Validators.required]],
+      paymentModeId: [[(data == undefined) ? '' : data.paymentModeId], [Validators.required]],
     });
+    this.expenseList = this.constantService.expenseList
   }
 
   getFormControl(): any {
@@ -111,7 +126,6 @@ export class AddExpensesComponent implements OnInit {
           familyMemberId: this.familyMemberId,
           expenseDoneOn: this.expenses.controls.expenseDoneOn.value,
           amount: this.expenses.controls.amount.value,
-          pensionPayoutFrequencyId: this.expenses.controls.amount.value,
           timeInMilliSec: this.expenses.controls.timeInMilliSec.value,
           paymentModeId:this.expenses.controls.paymentModeId.value,
           expenseCategoryId: this.expenses.controls.category.value,
