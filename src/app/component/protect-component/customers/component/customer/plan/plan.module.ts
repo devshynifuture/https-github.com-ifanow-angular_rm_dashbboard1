@@ -18,10 +18,10 @@ import { AddProfilePlanComponent } from './profile-plan/add-profile-plan/add-pro
 import { HistoryRiskProfileComponent } from './profile-plan/history-risk-profile/history-risk-profile.component';
 // import {BrowserModule} from '@angular/platform-browser';
 import { PlanRoutingModule } from "./plan-routing.module";
-import { IncomeComponent } from './profile-plan/income/income.component';
-import { ExpensesComponent } from '../accounts/expenses/expenses.component';
-import { RiskProfileComponent } from './profile-plan/riskProfile/risk-profile/risk-profile.component';
-import { CashflowUpperSliderComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-slider.component';
+// import { IncomeComponent } from './profile-plan/income/income.component';
+// import { ExpensesComponent } from '../accounts/expenses/expenses.component';
+// import { RiskProfileComponent } from './profile-plan/riskProfile/risk-profile/risk-profile.component';
+// import { CashflowUpperSliderComponent } from './cashflows-plan/cashflow-upper-slider/cashflow-upper-slider.component';
 
 // import { AddGoalsComponent } from './add-goals/add-goals.component';
 
@@ -44,7 +44,6 @@ import { CashflowUpperSliderComponent } from './cashflows-plan/cashflow-upper-sl
     TexesPlanComponent,
     AddScenariosComponent,
     AddInvestmentPlanComponent,
-    CashflowUpperSliderComponent,
     // AddProfilePlanComponent,
     // IncomeComponent,
     // ExpensesComponent,

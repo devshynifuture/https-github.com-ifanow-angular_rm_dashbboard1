@@ -1,3 +1,5 @@
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CashflowUpperSliderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private subInjectService: SubscriptionInject,
+    private eventService: EventService) { }
 
   ngOnInit() {
+  }
+
+  close() {
+    this.eventService.changeUpperSliderState({ state: 'close' });
   }
 
 }
