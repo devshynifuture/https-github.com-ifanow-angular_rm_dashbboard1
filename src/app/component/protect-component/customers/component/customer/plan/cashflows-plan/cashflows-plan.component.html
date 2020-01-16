@@ -59,8 +59,9 @@
                                     </ng-container>
 
                                     <ng-container matColumnDef="view">
-                                        <th class="f-400 f-14" mat-header-cell *matHeaderCellDef> Monthly View </th>
-                                        <td class="c-p text-primary text-center f-14" mat-cell *matCellDef="let element"> {{element.view}} </td>
+                                        <th mat-header-cell *matHeaderCellDef> Monthly View </th>
+                                        <td class="c-p text-primary text-center f-400 f-14" mat-cell *matCellDef="let element" (click)="openUpperSlider(element)">
+                                            {{element.view}} </td>
                                     </ng-container>
 
 
