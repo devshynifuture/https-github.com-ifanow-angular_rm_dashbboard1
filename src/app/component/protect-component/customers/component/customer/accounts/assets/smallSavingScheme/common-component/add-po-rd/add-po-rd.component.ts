@@ -28,6 +28,9 @@ export class AddPoRdComponent implements OnInit {
   PORDFormoptionalForm: any;
   editApi: any;
   nomineesListFM: any;
+  pordData: any;
+  nomineesList: any;
+  nominees: any[];
 
   constructor(public utils: UtilService,private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService,
               private subInjectService: SubscriptionInject) {
@@ -56,12 +59,16 @@ export class AddPoRdComponent implements OnInit {
 
   display(value) {
     console.log('value selected', value);
-    this.ownerName = value.userName;
+    this.ownerName = value;
     this.familyMemberId = value.id;
   }
   lisNominee(value) {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
+  getFormDataNominee(data) {
+    console.log(data)
+    this.nomineesList = data.controls
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -69,6 +76,7 @@ export class AddPoRdComponent implements OnInit {
     } else {
       this.editApi = data;
     }
+    this.pordData=data;
     this.PORDForm = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       monthlyContribution: [data.monthlyContribution, [Validators.required, Validators.min(10)]],
@@ -78,7 +86,7 @@ export class AddPoRdComponent implements OnInit {
     this.PORDFormoptionalForm = this.fb.group({
       rdNum: [data.rdNumber],
       poBranch: [data.postOfficeBranch],
-      nominee: [data.nominee],
+      nominees: this.nominees,
       linkedBankAcc: [],
       description: [data.description]
     });
@@ -87,6 +95,19 @@ export class AddPoRdComponent implements OnInit {
   }
 
   addPORD() {
+    this.nominees = []
+    if (this.nomineesList) {
+
+      this.nomineesList.forEach(element => {
+        let obj = {
+          "name": element.controls.name.value,
+          "sharePercentage": element.controls.sharePercentage.value,
+          "id":element.controls.id.value,
+          "familyMemberId":element.controls.familyMemberId.value
+        }
+        this.nominees.push(obj)
+      });
+    }
     if (this.PORDForm.get('monthlyContribution').invalid) {
       this.PORDForm.get('monthlyContribution').markAsTouched();
       return;
@@ -107,7 +128,7 @@ export class AddPoRdComponent implements OnInit {
           rdNumber: this.PORDFormoptionalForm.get('rdNum').value,
           postOfficeBranch: this.PORDFormoptionalForm.get('poBranch').value,
           ownerTypeId: this.PORDForm.get('ownership').value,
-          nominee: this.PORDFormoptionalForm.get('nominee').value,
+          nominees: this.nominees,
           description: this.PORDFormoptionalForm.get('description').value,
           isActive: 1,
           id: this.editApi.id
@@ -128,7 +149,7 @@ export class AddPoRdComponent implements OnInit {
           rdNumber: this.PORDFormoptionalForm.get('rdNum').value,
           postOfficeBranch: this.PORDFormoptionalForm.get('poBranch').value,
           ownerTypeId: this.PORDForm.get('ownership').value,
-          nominee: this.PORDFormoptionalForm.get('nominee').value,
+          nominees: this.nominees,
           description: this.PORDFormoptionalForm.get('description').value
 
         };

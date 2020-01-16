@@ -189,7 +189,7 @@
                 </div>
             </div>
         </div>
-        <app-add-nominee [ownerName]="ownerName"></app-add-nominee>
+        <app-add-nominee [ownerName]="ownerName"  [data]="ppfData" (outputEvent)="getFormDataNominee($event)"></app-add-nominee>
     </div>
     <app-add-transaction (outputEvent)="getFormData($event)"></app-add-transaction>
 </div>

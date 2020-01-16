@@ -31,6 +31,9 @@ export class AddNscComponent implements OnInit {
   commDate: any;
   clientId: any;
   nomineesListFM: any;
+  nscData: any;
+  nomineesList: any;
+  nominees: any;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -55,6 +58,10 @@ export class AddNscComponent implements OnInit {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
+  getFormDataNominee(data) {
+    console.log(data)
+    this.nomineesList = data.controls
+  }
   getdataForm(data) {
     if (data == undefined) {
       data = {};
@@ -63,6 +70,7 @@ export class AddNscComponent implements OnInit {
       this.editApi = data
       this.commDate = new Date(data.commencementDate)
     }
+    this.nscData=data
     this.nscFormField = this.fb.group({
       ownerName: [data.ownerName, [Validators.required]],
       amountInvested: [data.amountInvested, [Validators.required, Validators.min(100)]],
@@ -74,7 +82,7 @@ export class AddNscComponent implements OnInit {
     this.nscFormOptionalField = this.fb.group({
       cNo: [data.certificateNumber, [Validators.required]],
       poBranch: [data.postOfficeBranch, [Validators.required]],
-      nominee: [data.nominee, [Validators.required]],
+      nominees: this.nominees,
       linkedBankAccount: [data.bankAccountNumber, [Validators.required]],
       description: [data.description, [Validators.required]]
     })
@@ -85,7 +93,7 @@ export class AddNscComponent implements OnInit {
   }
   display(value) {
     console.log('value selected', value)
-    this.ownerName = value.userName;
+    this.ownerName = value;
     this.familyMemberId = value.id
   }
   // getFormData(data) {
@@ -93,7 +101,19 @@ export class AddNscComponent implements OnInit {
   //   this.transactionData = data.controls
   // }
   addNSC() {
+    this.nominees = []
+    if (this.nomineesList) {
 
+      this.nomineesList.forEach(element => {
+        let obj = {
+          "name": element.controls.name.value,
+          "sharePercentage": element.controls.sharePercentage.value,
+          "id":element.id,
+          "familyMemberId":element.familyMemberId
+        }
+        this.nominees.push(obj)
+      });
+    }
     // if (this.transactionData) {
     //   let finalTransctList = []
     //   this.transactionData.forEach(element => {
@@ -138,7 +158,7 @@ export class AddNscComponent implements OnInit {
           "postOfficeBranch": this.nscFormOptionalField.get('poBranch').value,
           "bankAccountNumber": this.nscFormOptionalField.get('linkedBankAccount').value,
           "ownerTypeId": parseInt(this.nscFormField.get('ownershipType').value),
-          "nominee": this.nscFormOptionalField.get('nominee').value,
+          "nominees": this.nominees,
           "description": this.nscFormOptionalField.get('description').value,
         }
         this.cusService.editNSCData(obj).subscribe(
@@ -160,7 +180,7 @@ export class AddNscComponent implements OnInit {
           "postOfficeBranch": this.nscFormOptionalField.get('poBranch').value,
           "bankAccountNumber": this.nscFormOptionalField.get('linkedBankAccount').value,
           "ownerTypeId": parseInt(this.nscFormField.get('ownershipType').value),
-          "nominee": this.nscFormOptionalField.get('nominee').value,
+          "nominees":this.nominees,
           "description": this.nscFormOptionalField.get('description').value
         }
         console.log(obj)
