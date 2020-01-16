@@ -6,6 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../../../../../material/material';
 import { PreferencesComponent } from './goals-plan/preferences/preferences.component';
 import { AddGoalComponent } from './goals-plan/add-goal/add-goal.component';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 
 export const componentList = [
   PreferencesComponent,
@@ -32,6 +35,11 @@ export const componentList = [
     FormsModule,
     ReactiveFormsModule],
   entryComponents: [componentList]
+  , providers: [
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  ],
 })
 
 export class PlanEntryModule {

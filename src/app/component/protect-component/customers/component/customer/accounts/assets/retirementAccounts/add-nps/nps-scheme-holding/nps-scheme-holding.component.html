@@ -16,8 +16,18 @@
     <div class="row pt-100 pl-28">
         <div class="col-md-3 p-0">
                 <h5 class="m-0 pb-8">Owner</h5>
-          <app-owner-column (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData'>
-          </app-owner-column>
+                <mat-form-field class="w-100">
+                    <mat-select appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                        [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                        <mat-option value=''>Search family members</mat-option>
+                        <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                            <span>{{f.userName}}</span>
+                        </mat-option>
+                    </mat-select>
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
         </div>
 
         <div class="col-md-3">

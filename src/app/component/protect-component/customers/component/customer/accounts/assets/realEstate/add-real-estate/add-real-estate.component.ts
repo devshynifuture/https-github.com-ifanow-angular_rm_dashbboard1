@@ -367,6 +367,9 @@ export class AddRealEstateComponent implements OnInit {
     if (this.addrealEstateForm.get('type').invalid) {
       this.addrealEstateForm.get('type').markAsTouched();
       return
+    } else if (this.addrealEstateForm.get('ownerName').invalid) {
+      this.addrealEstateForm.get('ownerName').markAsTouched();
+      return;
     } else if (this.addrealEstateForm.get('marketValue').invalid) {
       this.addrealEstateForm.get('marketValue').markAsTouched();
       return

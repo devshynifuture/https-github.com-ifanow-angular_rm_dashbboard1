@@ -1,0 +1,339 @@
+<div [formGroup]="editPayment"
+     [ngClass]="{'pt-72': invoiceInSub=='invoiceSubscription','mt-0':invoiceInSub!='invoiceSubscription'}"
+     class="bg-white pb-44 ">
+  <div class="row  popup-header">
+    <div class="col-md-10 pl-0">
+      <h2 *ngIf="showEditIn == true" class="f-400 wrapper-20 mb-0">Edit Invoice of
+        {{storeData.invoiceNumber}}
+      </h2>
+      <h4 *ngIf="invoiceInSub!='invoiceSubscription'" class="f-400 wrapper-20 mb-0">Add Invoice</h4>
+    </div>
+  </div>
+  <div class="row pt-40">
+    <div class="col-md-3 pr-0">
+      <h5 class="m-0 text-right pt-8">Client name</h5>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12 p-0">
+            <div class="form-group">
+              <mat-form-field>
+                <input [matAutocomplete]="auto1" [readonly]="invoiceInSub =='invoiceSubscription'"
+                       aria-label="client" class="form-control br-0 pl-8" formControlName="clientName"
+                       matInput>
+                <mat-autocomplete #auto1="matAutocomplete">
+                  <mat-option (onSelectionChange)="selectClient($event, c)"
+                              *ngFor="let c of clientList" [value]="c.clientName">
+                    <span>{{c.clientName}}</span>
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error
+                  *ngIf="getFormControledit().clientName.invalid || (getFormControledit().clientName.touched && getFormControledit().clientName.invalid)"
+                  class="f-12 pt-4">
+                  Client name is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-10">
+        <div class="col-md-6 pl-0">
+          <p class="m-0 text-custom f-12">BILLER ADDRESS</p>
+          <p *ngIf="editAdd1 == false" class="m-0 text-black text-break w-90 l-21">{{storeData.billerAddress}}
+          </p>
+          <textarea *ngIf="editAdd1 == true" class="form-control br-0" formControlName="billerAddress"
+                    maxlength="150" rows="5"></textarea>
+          <p (click)="onclickChangeAdd1(editAdd1)" class="m-0 text-primary c-p f-12">CHANGE</p>
+          <p class="mb-0 f-12 text-custom text-right pt-4 pr-36">
+            {{getFormControledit().billerAddress.value?.length ? getFormControledit().billerAddress.value.length : 0}}
+            /150
+          </p>
+        </div>
+        <div class="col-md-6 pl-0">
+          <p class="m-0 text-custom f-12">PAYEE ADDRESS</p>
+          <p *ngIf="editAdd2 == false" class="m-0 text-black text-break l-21 w-90">
+            {{storeData.billingAddress}}
+          </p>
+          <textarea *ngIf="editAdd2 == true" class="form-control br-0" formControlName="billingAddress"
+                    maxlength="150" rows="5"></textarea>
+          <p (click)="onclickChangeAdd2(editAdd2)" class="m-0 text-primary c-p f-12">CHANGE</p>
+          <p class="mb-0 f-12 text-custom text-right pt-4 pr-12">
+            {{getFormControledit().billingAddress.value?.length ? getFormControledit().billingAddress.value.length : 0}}
+            /150
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper-20 pb-0">
+    <div class="bt-grey">
+      <div class="row pt-28">
+        <div class="col-md-4 p-0">
+          <div class="row">
+            <div class="col-md-5 pl-0 pt-8">
+              <h5 class="m-0 text-right">Invoice No.</h5>
+            </div>
+            <div class="col-md-7 p-0">
+              <div class="form-group mb-0">
+                <input class="form-control br-0" formControlName="invoiceNumber"
+                       maxlength="20" type="text">
+              </div>
+              <div class="col-md-12 pl-0">
+                <mat-error
+                  *ngIf="getFormControledit().invoiceNumber.invalid || (getFormControledit().invoiceNumber.touched && getFormControledit().invoiceNumber.invalid)"
+                  class="f-12 pt-4">
+                  Invoice no. is required
+                </mat-error>
+              </div>
+              <div class="col-md-12">
+                <p class="mb-0 f-12 text-custom text-right pt-4">
+                  {{getFormControledit().invoiceNumber.value?.length ? getFormControledit().invoiceNumber.value.length : 0}}
+                  /20
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 p-0">
+          <div class="row">
+            <div class="col-md-6">
+              <h5 class="m-0 pt-8 text-right">Invoice Date</h5>
+            </div>
+            <div class="col-md-6 p-0">
+              <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                  <input (dateChange)="checkDateDiff($event)" [matDatepicker]="picker"
+                         class="form-control b-0" formControlName="invoiceDate" matInput readonly>
+                  <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                  <mat-error class="f-12 pt-4">Invoice date is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-6"></div>
+          </div>
+        </div>
+        <div class="col-md-4 p-0">
+          <div class="row">
+            <div class="col-md-6">
+              <h5 class="m-0 pt-8 text-right">Due Date</h5>
+            </div>
+            <div class="col-md-6 p-0">
+              <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                  <input (dateChange)="checkDateDiff($event)" [matDatepicker]="dueDatePicker"
+                         [min]="maxDate" class="form-control b-0" formControlName="dueDate" matInput
+                         readonly>
+                  <mat-datepicker-toggle [for]="dueDatePicker" matSuffix></mat-datepicker-toggle>
+                  <mat-datepicker #dueDatePicker></mat-datepicker>
+                  <mat-error class="f-12 pt-4">Invoice date is required
+                  </mat-error>
+                </mat-form-field>
+                <mat-error [ngClass]="{'v-h': showDateError==undefined}" class="f-12 pt-4">
+                  {{showDateError}}
+                </mat-error>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-28 b-a">
+        <div class="row bg-grey lter b-a">
+          <div class="col-md-6 p-0">
+            <p class="m-0 text-black wrapper-16 f-500">Service Details</p>
+          </div>
+          <div class="col-md-2 p-0">
+            <p class="m-0 text-black f-500 wrapper-16">Price ₹ </p>
+          </div>
+          <div class="col-md-2 p-0">
+            <p class="m-0 text-black f-500 wrapper-16">Tax</p>
+          </div>
+          <div class="col-md-2 p-0">
+            <p class="m-0 text-black f-500 wrapper-16 text-right">Amount</p>
+          </div>
+        </div>
+        <div class="row bg-white pb-8 pt-8">
+          <div class="col-md-6 pl-0">
+            <div class="row">
+              <div class="form-group mb-0 ml-8 w-100">
+                <input [matAutocomplete]="auto" [readonly]="invoiceInSub =='invoiceSubscription'"
+                       aria-label="State" class="form-control w-100 br-0 pl-8"
+                       formControlName="serviceName" list="serviceName" matInput
+                       placeholder="You can search service">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let s of serviceList" [value]="s.serviceName">
+                    <span>{{s.serviceName}}</span>
+                  </mat-option>
+                </mat-autocomplete>
+              </div>
+              <div class="col-md-8">
+                <mat-error
+                  *ngIf="getFormControledit().serviceName.invalid || (getFormControledit().serviceName.touched && getFormControledit().serviceName.invalid)"
+                  class="f-12 pt-4">
+                  Service name is required
+                </mat-error>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 pl-0">
+            <input #finalAmountInput [(ngModel)]="finalAmount" [inputValidator]="validatorType.NUMBER_ONLY"
+                   appInputValueValidation
+                   class="form-control br-0" formControlName="finalAmount" type="number">
+            <div class="col-md-8">
+              <mat-error
+                *ngIf=" getFormControledit().finalAmount.invalid || (getFormControledit().finalAmount.touched && getFormControledit().finalAmount.invalid)"
+                class="f-12 pt-4">
+                Price is required
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-md-2 pl-0">
+            <!--            (change)="changeTaxStatus($event.target.value)"-->
+            <select class="form-control"
+                    formControlName="taxStatus" id="serviceName">
+              <option value="">Select tax type</option>
+              <option value="IGST(18%)">IGST(18%)</option>
+              <option value="SGST(9%)|CGST(9%)">SGST(9%) | CGST(9%)</option>
+            </select>
+            <div class="col-md-8">
+              <mat-error
+                *ngIf=" getFormControledit().taxStatus.invalid || (getFormControledit().taxStatus.touched && getFormControledit().taxStatus.invalid)"
+                class="f-12 pt-4">
+                Tax status is required
+              </mat-error>
+            </div>
+          </div>
+          {{storeData.taxStatus}}
+          <div class="col-md-2 d-flex align-items-center justify-content-end">
+            <h5 class="m-0 text-right ">
+              {{finalAmount}}
+            </h5>
+            <h5 *ngIf="storeData.sgst != undefined" [hidden]="finalAmount !=undefined"
+                class="m-0 text-right ">
+              {{storeData.cgstTaxAmount}}</h5>
+            <h5 *ngIf="storeData.igst != undefined" [hidden]="finalAmount !=undefined"
+                class="m-0 text-right ">
+              {{storeData.igstTaxAmount}}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-12">
+    <div class="col-md-8"></div>
+    <div class="col-md-2">
+      <h5 class="m-0">Sub total ₹</h5>
+    </div>
+    <div class="col-md-2 pr-24">
+      <h5 class="m-0 text-right pr-8">{{finalAmount}} </h5>
+    </div>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-8"></div>
+    <div class="col-md-2 pt-12">
+      <h5 class="m-0">Discount ₹</h5>
+    </div>
+    <div class="col-md-2 pr-24">
+      <input (changedValue)="discount = $event" [(ngModel)]="discount"
+             [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="finalAmountInput.value" appInputValueValidation
+             class="form-control br-0 text-right" formControlName="discount" type="number">
+    </div>
+  </div>
+  <div class="row pt-20 pb-12">
+    <div class="col-md-8"></div>
+    <div *ngIf="taxStatus == 'IGST(18%)'" class="col-md-2 pr-24">
+      <h5 class="m-0">IGST(18%)</h5>
+    </div>
+    <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 pr-24">
+      <h5 class="m-0">SGST(9%)</h5>
+    </div>
+    <div *ngIf="taxStatus == 'IGST(18%)'" class="col-md-2 pr-24">
+      <h5 class="m-0 text-right pr-8">₹{{igstTaxAmount}}</h5>
+    </div>
+    <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 pr-24">
+      <h5 class="m-0 text-right pr-8">₹{{sgstTaxAmount}}</h5>
+    </div>
+  </div>
+  <div class="row pt-20 pb-12">
+    <div class="col-md-8"></div>
+    <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 pr-24">
+      <h5 class="m-0">CGST(9%)</h5>
+    </div>
+    <div *ngIf="taxStatus == 'SGST(9%)|CGST(9%)'" class="col-md-2 pr-24">
+      <h5 class="m-0 text-right pr-8">₹{{cgstTaxAmount}}</h5>
+      <!--      | number:'1.2-2'-->
+    </div>
+  </div>
+  <div class="row pb-12 ">
+    <div class="col-md-8"></div>
+    <div class="col-md-2 pt-4 bt-grey">
+      <h5 class="m-0 text-black pt-8 f-500">Total</h5>
+    </div>
+    <div class="col-md-2 pt-4 bt-grey pr-24">
+      <h5 class="m-0 text-right pr-8 pt-8 text-black f-500">
+        {{finAmount}}
+      </h5>
+    </div>
+  </div>
+  <div class="bg-grey lter wrapper-28">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-3 pl-0">
+            <h5 class="m-0 pt-24 text-black text-right">Footnote Description</h5>
+          </div>
+          <div class="col-md-9 p-0">
+            <div class="form-group mb-0">
+                            <textarea class="form-control" formControlName="footnote"
+                                      maxlength="100" rows="5"></textarea>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <p class="f-12 m-0 text-custom roboto">Optional</p>
+              </div>
+              <div class="col-md-6">
+                <p class="mb-0 f-12 text-custom text-right pt-4">
+                  {{getFormControledit().footnote.value?.length ? getFormControledit().footnote.value.length : 0}}
+                  /100
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 pr-0">
+        <div class="row">
+          <div class="col-md-3 pl-0">
+            <h5 class="m-0 text-black pt-24 text-right">Terms & Conditions</h5>
+          </div>
+          <div class="col-md-9 p-0">
+            <div class="form-group mb-0">
+                            <textarea class="form-control" formControlName="terms"
+                                      maxlength="150" rows="5"></textarea>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <p class="f-12 m-0 text-custom roboto">Optional</p>
+              </div>
+              <div class="col-md-6">
+                <p class="mb-0 f-12 text-custom text-right pt-4">
+                  {{getFormControledit().terms.value?.length ? getFormControledit().terms.value.length : 0}}
+                  /150
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-44 mt-44">
+    <div class="col-md-12 right text-right">
+      <h5 (click)="closeEditInv()" class="mat-stroked-button br-0 text-light mr-20">CANCEL</h5>
+      <button (click)="updateInvoice()" class="btn-bottom br-0 text-inherit" mat-button>SAVE</button>
+    </div>
+  </div>
+</div>

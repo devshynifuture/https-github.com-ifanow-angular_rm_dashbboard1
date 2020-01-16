@@ -1,19 +1,19 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {CustomerService} from '../../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {MAT_DATE_FORMATS} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {UtilService} from 'src/app/services/util.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { CustomerService } from '../../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-po-td',
   templateUrl: './add-po-td.component.html',
   styleUrls: ['./add-po-td.component.scss'],
   providers: [
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ]
 })
 export class AddPoTdComponent implements OnInit {
@@ -28,8 +28,9 @@ export class AddPoTdComponent implements OnInit {
   transactionData: any;
   editApi: any;
   clientId: any;
+  nomineesListFM: any;
 
-  constructor(public utils: UtilService,private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
+  constructor(public utils: UtilService, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -43,6 +44,10 @@ export class AddPoTdComponent implements OnInit {
     console.log('value selected', value)
     this.ownerName = value.userName;
     this.familyMemberId = value.id
+  }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -96,6 +101,9 @@ export class AddPoTdComponent implements OnInit {
     if (this.POTDForm.get('amtInvested').invalid) {
       this.POTDForm.get('amtInvested').markAsTouched();
       return
+    } else if (this.POTDForm.get('ownerName').invalid) {
+      this.POTDForm.get('ownerName').markAsTouched();
+      return;
     }
     else if (this.POTDForm.get('commDate').invalid) {
       this.POTDForm.get('commDate').markAsTouched();
@@ -144,7 +152,7 @@ export class AddPoTdComponent implements OnInit {
   }
   close(flag) {
     this.isOptionalField = true
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
 }

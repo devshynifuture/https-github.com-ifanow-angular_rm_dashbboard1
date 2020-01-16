@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { SubscriptionService } from '../../../subscription.service';
-import * as _ from 'lodash';
 import { ValidatorType } from "../../../../../../../services/util.service";
 
 @Component({
@@ -123,8 +122,8 @@ export class VariableFeeComponent implements OnInit {
   }
 
   close(flag) {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close',refreshRequired:flag });
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag});
+    this.subInjectService.changeUpperRightSliderState({ state: 'close', refreshRequired: flag });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   select(assetData) {
@@ -141,9 +140,7 @@ export class VariableFeeComponent implements OnInit {
 
   unselectAssets(data) {
     data.selected = false;
-    _.remove(this.selectedOtherAssets, delData => {
-      return delData.subAssetClassId == data.subAssetClassId;
-    });
+    this.selectedOtherAssets = this.selectedOtherAssets.filter(delData => delData != data.subAssetClassId)
     console.log(this.selectedOtherAssets);
   }
 

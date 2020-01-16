@@ -31,8 +31,9 @@ export class AddPoMisComponent implements OnInit {
   familyMemberId: any;
   nominees: any;
   nomineesList: any;
+  nomineesListFM: any;
 
-  constructor(public utils: UtilService,private fb: FormBuilder, public subInjectService: SubscriptionInject,
+  constructor(public utils: UtilService, private fb: FormBuilder, public subInjectService: SubscriptionInject,
     public custumService: CustomerService, public eventService: EventService) {
   }
 
@@ -55,7 +56,7 @@ export class AddPoMisComponent implements OnInit {
 
   close(flag) {
     // let data=this._inputData.loanTypeId;
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   display(value) {
@@ -63,7 +64,10 @@ export class AddPoMisComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value;
   }
-
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
   getPomisData(data) {
   
     if (data == undefined) {
@@ -113,6 +117,9 @@ export class AddPoMisComponent implements OnInit {
     }
     if (this.pomisForm.controls.amtInvested.invalid) {
       this.pomisForm.get('amtInvested').markAsTouched();
+      return;
+    } else if (this.pomisForm.get('ownerName').invalid) {
+      this.pomisForm.get('ownerName').markAsTouched();
       return;
     } else if (this.pomisForm.controls.commencementdate.invalid) {
       this.pomisForm.get('commencementdate').markAsTouched();
@@ -187,7 +194,7 @@ export class AddPoMisComponent implements OnInit {
     console.log(data);
     if (data) {
       console.log(data);
-      this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:true });
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
       this.eventService.openSnackBar('Pomis added successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');
@@ -199,7 +206,7 @@ export class AddPoMisComponent implements OnInit {
     console.log(data);
     if (data) {
       console.log(data);
-      this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:true });
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
       this.eventService.openSnackBar('Pomis edited successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'dismiss');

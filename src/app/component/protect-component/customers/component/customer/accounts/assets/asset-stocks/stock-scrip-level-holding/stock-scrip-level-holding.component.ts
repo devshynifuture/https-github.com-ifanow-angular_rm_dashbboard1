@@ -26,6 +26,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
   portfolioData: any;
   scripForm: any;
   portfolioFieldData: { familyMemberId: any; };
+  nomineesListFM: any;
 
   constructor(public dialog: MatDialog, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
@@ -45,6 +46,10 @@ export class StockScripLevelHoldingComponent implements OnInit {
     this.portfolioFieldData = {
       familyMemberId: this.familyMemberId
     }
+  }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   getPortfolioData(data) {
     console.log("", data)

@@ -71,6 +71,7 @@ export class FixedDepositComponent implements OnInit {
   recuringDeposit: any;
   clientId: any;
   isViewInitCalled = false;
+  nomineesListFM: any;
 
   constructor( public utils: UtilService,private event: EventService, private router: Router,
     private fb: FormBuilder, private custumService: CustomerService,
@@ -131,7 +132,10 @@ export class FixedDepositComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id;
   }
-
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
   showLess(value) {
     if (value) {
       this.showHide = false;
