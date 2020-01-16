@@ -49,7 +49,7 @@
                 </li>
 
                 <li (click)="getFolders(folder,i)" *ngFor="let folder of openFolderName; let i = index"
-                    class="breadcrumb-item active c-p">{{folder.openFolderNm }}</li>
+                  class="breadcrumb-item active c-p">{{folder.openFolderNm }}</li>
               </ol>
             </div>
             <div class="col-md-6 p-0 d-flex justify-content-end">
@@ -106,8 +106,7 @@
             <div *ngSwitchCase="viewMode" class="col-md-9 p-0 documentsTable">
               <div *ngIf="showMsg == false && noResult == false">
                 <table [appSkeletonLoading]="isLoading" [dataSource]="commonFileFolders" appSkeletonLoading
-                       class="skeletonAnimation"
-                       id="table-low" mat-table matSort>
+                  class="skeletonAnimation" id="table-low" mat-table matSort>
                   <ng-container matColumnDef="emptySpace">
                     <th *matHeaderCellDef mat-header-cell></th>
                     <td *matCellDef="let element" mat-cell></td>
@@ -119,12 +118,11 @@
                       <div (click)="openFolder(element)">
                         <div class="bar">
                           <img *ngIf="element.folderName != undefined" class="mr-12"
-                               src="/assets/images/svg/folder-icon.svg"> {{element.folderName}}
+                            src="/assets/images/svg/folder-icon.svg"> {{element.folderName}}
                           <img *ngIf="element.isStarred == 1" class="mr-12">
                           <img *ngIf="element.fileName != undefined" class="mr-12"
-                               src="/assets/images/svg/file-lines.svg"> {{element.fileName}}
-                          <img *ngIf="element.isStarred == 1" class="mr-12"
-                               src="/assets/images/svg/document-star.svg">
+                            src="/assets/images/svg/file-lines.svg"> {{element.fileName}}
+                          <img *ngIf="element.isStarred == 1" class="mr-12" src="/assets/images/svg/document-star.svg">
                         </div>
                       </div>
                     </td>
@@ -164,8 +162,7 @@
                         more_vert
                       </i>
                       <mat-menu #menu4="matMenu">
-                        <button *ngIf="element.folderName == undefined" class="f-14"
-                                mat-menu-item>
+                        <button *ngIf="element.folderName == undefined" class="f-14" mat-menu-item>
                           <img class="mr-20" src="assets/images/svg/preview.svg">
                           Preview
                         </button>
@@ -177,44 +174,32 @@
                           <img class="mr-20" src="assets/images/svg/shareable.svg">
                           Get shareable link
                         </button>
-                        <button (click)="starFiles(element)" class="f-14" mat-menu-item><img
-                          class="mr-20" src="assets/images/svg/star-border-icon.svg">Add
+                        <button (click)="starFiles(element)" class="f-14" mat-menu-item><img class="mr-20"
+                            src="assets/images/svg/star-border-icon.svg">Add
                           to
                           starred
                         </button>
-                        <button (click)="openDialog('RENAME',element)" class="f-14"
-                                mat-menu-item><img class="mr-20"
-                                                   src="assets/images/svg/edit-name.svg">Rename
+                        <button (click)="openDialog('RENAME',element)" class="f-14" mat-menu-item><img class="mr-20"
+                            src="assets/images/svg/edit-name.svg">Rename
                         </button>
-                        <button (click)="viewActivities(element)" class="f-14"
-                                mat-menu-item><img
-                          class="mr-20" src="assets/images/svg/info-icon.svg">View
+                        <button (click)="viewActivities(element)" class="f-14" mat-menu-item><img class="mr-20"
+                            src="assets/images/svg/info-icon.svg">View
                           activity
                         </button>
-                        <button (click)="openDialogCopy(element, 'Move')" class="f-14"
-                                mat-menu-item><img class="mr-20"
-                                                   src="assets/images/svg/move-to-icon.svg">Move to
+                        <button (click)="openDialogCopy(element, 'Move')" class="f-14" mat-menu-item><img class="mr-20"
+                            src="assets/images/svg/move-to-icon.svg">Move to
                         </button>
-                        <button (click)="openDialogCopy(element, 'Copy')"
-                                *ngIf="element.folderName == undefined" class="f-14"
-                                mat-menu-item><img class="mr-20"
-                                                   src="assets/images/svg/file-copy.svg">Copy to
+                        <button (click)="openDialogCopy(element, 'Copy')" *ngIf="element.folderName == undefined"
+                          class="f-14" mat-menu-item><img class="mr-20" src="assets/images/svg/file-copy.svg">Copy to
                         </button>
-                        <button (click)="downlodFiles(element)" *ngIf="element.folderName == undefined"
-                                class="f-14" mat-menu-item><img
-                          class="mr-20"
-                          src="assets/images/svg/download-icon.svg">Download
+                        <button (click)="downlodFiles(element)" *ngIf="element.folderName == undefined" class="f-14"
+                          mat-menu-item><img class="mr-20" src="assets/images/svg/download-icon.svg">Download
                         </button>
                         <button (click)="deleteModal('FILE',element)" *ngIf="element.folderName == undefined"
-                                class="f-14" mat-menu-item><img
-                          class="mr-4"
-                          src="assets/images/svg/delete-icon.svg">Delete
+                          class="f-14" mat-menu-item><img class="mr-4" src="assets/images/svg/delete-icon.svg">Delete
                         </button>
                         <button (click)="deleteModal('FOLDER',element)" *ngIf="element.fileName == undefined"
-                                class="f-14"
-                                mat-menu-item><img
-                          class="mr-4"
-                          src="assets/images/svg/delete-icon.svg">Delete
+                          class="f-14" mat-menu-item><img class="mr-4" src="assets/images/svg/delete-icon.svg">Delete
                         </button>
                       </mat-menu>
                     </td>
@@ -256,18 +241,16 @@
                 <div class="col">
                   <ul class="d-block options">
                     <li class="p-0"><input (change)="getFileDetails($event)" class="inputfile inputfile-3" id="file-3"
-                                           multiple type="file">
+                        multiple type="file">
                       <label class="uploadLabel c-p text-primary f-14 c-p" for="file-3">
                         <img class="mr-8" src="/assets/images/svg/upload-document-icon.svg">
                         <span>Upload file</span></label></li>
 
                     <li class="p-0"><input (change)="uploadDocumentFolder($event)" class="inputfile inputfile-4 "
-                                           directory
-                                           id="file-4" multiple type="file"
-                                           webkitdirectory>
+                        directory id="file-4" multiple type="file" webkitdirectory>
                       <label class="uploadLabel text-primary f-14 c-p pl-4 " for="file-4"><img
-                        src="/assets/images/svg/upload-folder-document-icon.svg"><span>
-                                                    Upload folder</span></label></li>
+                          src="/assets/images/svg/upload-folder-document-icon.svg"><span>
+                          Upload folder</span></label></li>
 
                     <li class="p-0">
                       <p (click)="openDialog('CREATE','')" class="text-primary pt-8 f-14 c-p">
