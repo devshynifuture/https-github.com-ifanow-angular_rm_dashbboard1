@@ -35,8 +35,7 @@
 
             <!-- Name Column -->
             <ng-container matColumnDef="month1">
-                <th *ngIf="data.tableInUse !== 'surplus'" class="br-grey text-right f-400 f-14" mat-header-cell
-                    *matHeaderCellDef>
+                <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
                     Apr-{{ year.slice(-2) }}
                 </th>
                 <th *ngIf="data.tableInUse === 'surplus'">
