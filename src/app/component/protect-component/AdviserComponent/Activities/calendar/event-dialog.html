@@ -8,13 +8,10 @@
                     <input matInput formControlName="title" class="form-control br-0">
                 </mat-form-field>
             </div>
-            <h5 class="m-0 text-black">Description</h5>
-            <div class="form-group">
-                <mat-form-field>
-                    <textarea matInput class="form-control br-0 p-8" rows="4" formControlName="description" ></textarea>
-                </mat-form-field>
-            </div>
-            <h5 class="m-0 text-black pt-28">Event address</h5>
+            <h5 class="m-0 mb-2 text-black">Description</h5>
+            <app-froala [(model)]="eventData.description" modelChange="saveData($event)"></app-froala>
+
+            <h5 class="m-0 text-black" style="margin-top:-46px !important">Event address</h5>
             <div class="form-group">
                 <mat-form-field>
                     <textarea matInput rows="4" formControlName="location" class="form-control p-8"></textarea>

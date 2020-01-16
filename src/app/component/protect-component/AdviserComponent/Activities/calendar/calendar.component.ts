@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef, Input} from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
@@ -323,6 +323,15 @@ export class EventDialog implements OnInit{
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
       console.log(data, "this.eventData 111");
       this.eventData = data;
+  }
+  model:any;
+  writeValue(content: any): void {
+    this.model = content;
+  }
+
+  saveData(data) {
+    console.log(data);
+
   }
 
   ngOnInit(){
