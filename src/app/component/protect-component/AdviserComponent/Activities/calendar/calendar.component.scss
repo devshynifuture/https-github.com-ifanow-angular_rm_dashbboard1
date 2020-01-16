@@ -20,7 +20,7 @@
   }
 
   
-  #ui-calender{
+  #ui-calendar{
     position: relative;
     .main-header {
       position: fixed;
@@ -46,7 +46,7 @@
 }
 
 
-.calender-column {
+.calendar-column {
   div {
     height: 106px;
     width: 106px;
@@ -67,14 +67,15 @@
   background-color: transparent;
 }
 .actived {
-  padding: 5px 8px;
+  padding: 2px 5px;
   color: #fff !important;
   background-color: #008FFF !important;
   float: right;
+  border-radius: 12px;
 }
 
 .date-info{
-position: absolute; top:0px; right: 0px; border: none !important; height: 100%; width: 100%;
+ border: none !important; height: 100%; width: 100%;
 }
 
 .pink {
@@ -95,12 +96,25 @@ position: absolute; top:0px; right: 0px; border: none !important; height: 100%; 
        
 
 ul.blue {
-  padding-top: 32px;
+  height: auto;
   display: block;
-
+  width: 100%;
   li {
-    font-size: 12px;
+    font-size: 10px !important ;
     cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: left;
+  }
+
+  li:hover{
+    overflow: visible;
+    background-color: #fff;
+    position: absolute;
+    z-index: 10;
+    white-space: initial;
+    box-shadow: 1px 1px 1px #ccc;
   }
 
   li:before {
