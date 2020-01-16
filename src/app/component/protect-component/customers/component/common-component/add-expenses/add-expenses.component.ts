@@ -3,6 +3,7 @@ import {SubscriptionInject} from 'src/app/component/protect-component/AdviserCom
 import {FormBuilder, Validators} from '@angular/forms';
 import {AuthService} from 'src/app/auth-service/authService';
 import {PlanService} from '../../customer/plan/plan.service';
+import {ConstantsService} from "../../../../../../constants/constants.service";
 
 @Component({
   selector: 'app-add-expenses',
@@ -18,10 +19,13 @@ export class AddExpensesComponent implements OnInit {
   familyMemberId: any;
   ownerName: any;
   nomineesListFM: any;
-
+  expenseList;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
-              private planService: PlanService) {
+              private planService: PlanService, private contantService: ConstantsService) {
+    contantService.expenseList.forEach((singleExpense) => {
+      this.expenseList.push(Object.assign({}, singleExpense));
+    });
   }
 
   ngOnInit() {
@@ -33,17 +37,20 @@ export class AddExpensesComponent implements OnInit {
     // expenseJsonMap =
     this.getdataForm('');
   }
+
   display(value) {
     console.log('value selected', value)
     this.ownerName = value.userName;
     this.familyMemberId = value.id
   }
+
   lisNominee(value) {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);
-    console.log('list of family',this.nomineesListFM)
+    console.log('list of family', this.nomineesListFM)
   }
-  preventDefault(e){
+
+  preventDefault(e) {
     e.preventDefault();
   }
 
@@ -81,55 +88,57 @@ export class AddExpensesComponent implements OnInit {
     console.log('family Memebers', data);
     this.familyMember = data.familyMembersList;
   }
-  selectClient(event, selected){
+
+  selectClient(event, selected) {
     console.log(selected)
-    this.familyMemberId =  selected.id
+    this.familyMemberId = selected.id
   }
+
   saveExpenses() {
     if (this.expenses.get('expenseDoneOn').invalid) {
       this.expenses.get('expenseDoneOn').markAsTouched();
       return
-      }else if (this.expenses.get('timeInMilliSec').invalid) {
-        this.expenses.get('timeInMilliSec').markAsTouched();
-        return
-      }else if (this.expenses.get('amount').invalid) {
-        this.expenses.get('amount').markAsTouched();
-        return
-      }else if (this.expenses.get('category').invalid) {
-        this.expenses.get('category').markAsTouched();
-        return
-      }else if (this.expenses.get('paymentModeId').invalid) {
-        this.expenses.get('paymentModeId').markAsTouched();
-        return
-      }else if (this.expenses.get('familyMember').invalid) {
-        this.expenses.get('familyMember').markAsTouched();
-        return
+    } else if (this.expenses.get('timeInMilliSec').invalid) {
+      this.expenses.get('timeInMilliSec').markAsTouched();
+      return
+    } else if (this.expenses.get('amount').invalid) {
+      this.expenses.get('amount').markAsTouched();
+      return
+    } else if (this.expenses.get('category').invalid) {
+      this.expenses.get('category').markAsTouched();
+      return
+    } else if (this.expenses.get('paymentModeId').invalid) {
+      this.expenses.get('paymentModeId').markAsTouched();
+      return
+    } else if (this.expenses.get('familyMember').invalid) {
+      this.expenses.get('familyMember').markAsTouched();
+      return
+    } else {
+      let obj = {
+        advisorId: this.advisorId,
+        clientId: this.clientId,
+        familyMemberId: this.familyMemberId,
+        expenseDoneOn: this.expenses.controls.expenseDoneOn.value,
+        amount: this.expenses.controls.amount.value,
+        pensionPayoutFrequencyId: this.expenses.controls.amount.value,
+        timeInMilliSec: this.expenses.controls.timeInMilliSec.value,
+        paymentModeId: this.expenses.controls.paymentModeId.value,
+        expenseCategoryId: this.expenses.controls.category.value,
+        description: this.expenses.controls.description.value,
+        id: this.expenses.controls.id.value
+      }
+      if (this.expenses.controls.id.value == undefined) {
+        this.planService.addExpense(obj).subscribe(
+          data => this.addExpenseRes(data)
+        );
       } else {
-        let obj = {
-          advisorId: this.advisorId,
-          clientId: this.clientId,
-          familyMemberId: this.familyMemberId,
-          expenseDoneOn: this.expenses.controls.expenseDoneOn.value,
-          amount: this.expenses.controls.amount.value,
-          pensionPayoutFrequencyId: this.expenses.controls.amount.value,
-          timeInMilliSec: this.expenses.controls.timeInMilliSec.value,
-          paymentModeId:this.expenses.controls.paymentModeId.value,
-          expenseCategoryId: this.expenses.controls.category.value,
-          description: this.expenses.controls.description.value,
-          id: this.expenses.controls.id.value
-        }
-        if (this.expenses.controls.id.value == undefined) {
-          this.planService.addExpense(obj).subscribe(
-            data => this.addExpenseRes(data)
-          );
-        } else {
-          //edit call
-          this.planService.editExpense(obj).subscribe(
-            data => this.editExpenseRes(data)
-          );
-        }
+        //edit call
+        this.planService.editExpense(obj).subscribe(
+          data => this.editExpenseRes(data)
+        );
       }
     }
+  }
 
   addExpenseRes(data) {
     console.log('addExpenseRes', data);

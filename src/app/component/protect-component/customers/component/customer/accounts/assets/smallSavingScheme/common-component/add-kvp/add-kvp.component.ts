@@ -30,7 +30,7 @@ export class AddKvpComponent implements OnInit {
   nomineesListFM: any;
   nomineesList: any;
   nominees: any[];
-
+  kvpData;
   constructor(public utils: UtilService,private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   ngOnInit() {
     this.isOptionalField = true;
