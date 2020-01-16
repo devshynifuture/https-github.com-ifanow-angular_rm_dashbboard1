@@ -323,11 +323,11 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   docSentSignedCountResponse(data) {
     console.log('SentSignedCountResponse', data);
-    if (data){
+    if (data) {
       this.isLoadingDocsSent = false;
       this.dataSourceSingCount = data;
     }
-    else{
+    else {
       this.dataSourceSingCount = {};
     }
   }

@@ -1,18 +1,18 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {MAT_DATE_FORMATS} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {AuthService} from 'src/app/auth-service/authService';
-import {PlanService} from '../../../plan.service';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PlanService } from '../../../plan.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-individual-income-info',
   templateUrl: './individual-income-info.component.html',
   styleUrls: ['./individual-income-info.component.scss'],
   providers: [
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ]
 })
 export class IndividualIncomeInfoComponent implements OnInit {
@@ -28,6 +28,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
   editApiData: any;
   finalBonusList: any[];
   bonusList: any;
+  showDateError: string;
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService) { }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -138,6 +139,19 @@ export class IndividualIncomeInfoComponent implements OnInit {
     this.incomeNetForm.controls.continousTill.setValue('1');
     console.log(data.value)
   }
+  checkDateDiff(event) {
+    let incomeStartDate;
+    let incomeEndDate;
+
+    if (this.incomeNetForm.get('incomeStartDate').value !== null && this.incomeNetForm.get('incomeEndDate').value !== null) {
+      incomeStartDate = new Date((this.incomeNetForm.get('incomeStartDate').value._d) ? this.incomeNetForm.get('incomeStartDate').value._d : this.incomeNetForm.get('incomeStartDate').value).getTime();
+      incomeEndDate = new Date((this.incomeNetForm.get('incomeEndDate').value._d) ? this.incomeNetForm.get('incomeEndDate').value._d : this.incomeNetForm.get('incomeEndDate').value).getTime();
+      (incomeStartDate == undefined && incomeEndDate == undefined) ? ''
+        : (incomeEndDate <= incomeStartDate)
+          ? this.showDateError = "Due date should be greater than invoice date" :
+          this.showDateError = undefined;
+    }
+  }
   submitIncomeForm() {
     if (this.getBonusList) {
       this.finalBonusList = []
@@ -147,7 +161,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
           // "id":0,
           // "bonusOrInflow":0,
           "amount": element.get('amount').value,
-          "receivingDate": element.get('receivingDate').value
+          "receivingMonth": new Date(element.get('receivingDate').value).getMonth(),
+          "receivingYear": new Date(element.get('receivingDate').value).getFullYear(),
         }
         this.finalBonusList.push(obj)
       })
@@ -203,22 +218,26 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeNetForm.get('incomeEndDate').markAsTouched();
       return;
     }
+    if (this.showDateError) {
+      return
+    }
     let obj =
     {
+      "familyMemberId": this.singleIndividualIncome.id,
       "clientId": this.clientId,
       "advisorId": this.advisorId,
-      "familyMemberId": this.singleIndividualIncome.id,
       "ownerName": this.singleIndividualIncome.userName,
       "monthlyIncome": this.incomeNetForm.get('monthlyAmount').value,
-      "incomeStartDate": this.incomeNetForm.get('incomeStartDate').value,
-      "incomeEndDate": this.incomeNetForm.get('incomeEndDate').value,
-      "incomeGrowthRateId": 20,
+      "incomeStartMonth": new Date(this.incomeNetForm.get('incomeStartDate').value).getMonth(),
+      "incomeStartYear": new Date(this.incomeNetForm.get('incomeStartDate').value).getFullYear(),
+      "incomeEndMonth": new Date(this.incomeNetForm.get('incomeEndDate').value).getMonth(),
+      "incomeEndYear": new Date(this.incomeNetForm.get('incomeEndDate').value).getFullYear(),
+      "incomeGrowthRateId": 50,
       "growthRate": (this.incomeNetForm.get('incomeGrowthRate').value) ? this.incomeNetForm.get('incomeGrowthRate').value : 0,
       "incomeStyleId": 20,
       "continueTill": parseInt(this.incomeNetForm.get("continousTill").value),
-      "numberOfYear": (this.incomeNetForm.get("continousTillYear").value) ? (this.incomeNetForm.get("continousTillYear").value) : 0,
       "nextAppraisalOrNextRenewal": this.incomeNetForm.get('nextAppraisal').value,
-      "incomeTypeId": this.singleIndividualIncome.finalIncomeList.incomeTypeId,
+      "incomeTypeId": this.singleIndividualIncome.finalIncomeList.incomeTypeList,
       "realEstateId": 20,
       "basicIncome": (this.incomeNetForm.get('basicIncome').value) ? (this.incomeNetForm.get('basicIncome').value) : 0,
       "standardDeduction": (this.incomeNetForm.get('standardDeduction').value) ? this.incomeNetForm.get('standardDeduction').value : 0,
@@ -226,8 +245,9 @@ export class IndividualIncomeInfoComponent implements OnInit {
       "hraRecieved": (this.incomeNetForm.get('hraRecieved').value) ? this.incomeNetForm.get('hraRecieved').value : 0,
       "totalRentPaid": (this.incomeNetForm.get('totalRentPaid').value) ? this.incomeNetForm.get('totalRentPaid').value : 0,
       "description": this.incomeNetForm.get('description').value,
-      "bonusOrInflows": this.finalBonusList
+      "monthlyContributions": this.finalBonusList
     }
+
     console.log(obj)
     if (this.editApiData) {
       obj['id'] = this.editApiData.id;

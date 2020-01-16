@@ -46,10 +46,11 @@ export class DocumentsSettingsComponent implements OnInit {
     };
     // const data = [{}, {}];
     // this.getDocumentsSettingResponse(data);
+    this.documentSettingData = [{}, {}];
     this.subService.getSubscriptionDocumentSetting(obj).subscribe(
       data => this.getDocumentsSettingResponse(data), (error) => {
         this.eventService.showErrorMessage(error);
-        // this.dataSource.data = [];
+        this.documentSettingData = [];
         this.isLoading = false;
       }
     );

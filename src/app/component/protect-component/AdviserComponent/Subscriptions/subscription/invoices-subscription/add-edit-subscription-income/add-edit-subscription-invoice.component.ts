@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {SubscriptionService} from '../../../subscription.service';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { SubscriptionService } from '../../../subscription.service';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-add-edit-subscription-invoice',
@@ -55,7 +55,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   serviceList: any;
 
   constructor(public enumService: EnumServiceService, private fb: FormBuilder, private subService: SubscriptionService,
-              public subInjectService: SubscriptionInject) {
+    public subInjectService: SubscriptionInject) {
   }
 
   @Input() set data(data) {
@@ -121,7 +121,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       terms: [data.terms, [Validators.required]],
       taxStatus: [(!data.igstTaxAmount) ? 'SGST(9%)|CGST(9%)' : 'IGST(18%)'],
       serviceName: [(!data.services) ? '0' : (data.services.length == 0) ? '0' : data.services[0].serviceName,
-        [Validators.required]],
+      [Validators.required]],
       subTotal: [(!data.subTotal) ? '' : data.subTotal],
       igstTaxAmount: [data.igstTaxAmount],
       cgstTaxAmount: [data.cgstTaxAmount],
@@ -302,8 +302,8 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       dueDate = new Date((this.editPayment.get('dueDate').value._d) ? this.editPayment.get('dueDate').value._d : this.editPayment.get('dueDate').value).getTime();
       (invoiceDate == undefined && dueDate == undefined) ? ''
         : (dueDate <= invoiceDate)
-        ? this.showDateError = 'Due date should be greater than invoice date' :
-        this.showDateError = undefined;
+          ? this.showDateError = 'Due date should be greater than invoice date' :
+          this.showDateError = undefined;
     }
   }
 

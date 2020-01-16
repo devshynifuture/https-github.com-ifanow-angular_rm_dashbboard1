@@ -88,7 +88,7 @@ export class ServicesSettingsComponent implements OnInit {
     this.subService.getSubscriptionServiceSettingsData(obj).subscribe(
       data => this.getServiceSettingSubResponse(data), (error) => {
         this.eventService.showErrorMessage(error);
-        // this.dataSource.data = [];
+        this.serviceSettingData = [];
         this.isLoading = false;
       }
     );
