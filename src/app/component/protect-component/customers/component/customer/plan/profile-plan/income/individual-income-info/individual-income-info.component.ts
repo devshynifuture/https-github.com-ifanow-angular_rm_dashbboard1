@@ -103,7 +103,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeNetForm.controls.incomeEndDate.setValue(new Date(data.incomeEndDate));
       this.incomeNetForm.controls.nextAppraisal.setValue(new Date(data.nextAppraisalOrNextRenewal));
       this.incomeNetForm.controls.description.setValue(data.description);
-      data.bonusOrInflows.forEach(element => {
+      data.monthlyContributions.forEach(element => {
         this.getBonusList.push(this.fb.group({
           id: [element.id, [Validators.required]],
           bonusOrInflow: [element.bonusOrInflow, [Validators.required]],
