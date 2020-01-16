@@ -17,6 +17,8 @@ export class CashflowsPlanComponent implements OnInit {
 
   showSurplusTable: boolean = false;
 
+  tableInUse: string = 'income';
+
   constructor() {
   }
 
@@ -26,15 +28,40 @@ export class CashflowsPlanComponent implements OnInit {
   }
 
   filterCashFlowTableUsing(flag: string): void {
+    this.tableInUse = flag;
 
-    if (flag === 'surplus') {
-      this.showSurplusTable = true;
-    } else {
+    if (flag !== 'surplus') {
       this.showSurplusTable = false;
     }
+
+    switch (flag) {
+      case 'income': this.dataSource = ELEMENT_DATA;
+        break;
+      case 'expenses': this.dataSource = ELEMENT_DATA1;
+        break;
+      case 'insurance': this.dataSource = ELEMENT_DATA2;
+        break;
+      case 'liabilities': this.dataSource = ELEMENT_DATA3;
+        break;
+      case 'assets': this.dataSource = ELEMENT_DATA4;
+        break;
+      case 'commited-outflows': this.dataSource = ELEMENT_DATA5;
+        break;
+      case 'goals': this.dataSource = ELEMENT_DATA6;
+        break;
+      case 'surplus': this.showSurplusTable = true;
+        break;
+      default: this.dataSource = ELEMENT_DATA;
+    }
+
+    // this.dataSource =
     // call api and consume data
 
     // update table dataSource
+
+  }
+
+  openUpperSlider(element, flag) {
 
   }
 
@@ -125,7 +152,7 @@ const SURPLUS_DATA: SurplusInterface[] = [
   { financialYear: "2027", ageH: '46', ageW: '37', originalSurplus: '37000', surplusAllocated: '4300', balanceSurplus: "3000" },
   { financialYear: "2028", ageH: '47', ageW: '38', originalSurplus: '5600', surplusAllocated: '4000', balanceSurplus: "9800" },
   { financialYear: "2029", ageH: '48', ageW: '39', originalSurplus: '54400', surplusAllocated: '8000', balanceSurplus: "2300" },
-]
+];
 
 const ELEMENT_DATA: IncomeTableI[] = [
   { year: '2020', age: '25', age2: '21', total: '2,10,000', view: 'view' },
@@ -135,4 +162,75 @@ const ELEMENT_DATA: IncomeTableI[] = [
   { year: '2024', age: '29', age2: '25', total: '2,40,000', view: 'view' },
   { year: '2025', age: '30', age2: '26', total: '2,80,000', view: 'view' },
   { year: '2026', age: '31', age2: '27', total: '2,20,000', view: 'view' },
+];
+
+
+const ELEMENT_DATA1: IncomeTableI[] = [
+  { year: '2023', age: '28', age2: '24', total: '2,10,000', view: 'view' },
+  { year: '2022', age: '27', age2: '23', total: '2,30,000', view: 'view' },
+  { year: '2024', age: '29', age2: '25', total: '2,40,000', view: 'view' },
+  { year: '2020', age: '25', age2: '21', total: '2,10,000', view: 'view' },
+  { year: '2021', age: '26', age2: '22', total: '2,10,400', view: 'view' },
+  { year: '2026', age: '31', age2: '27', total: '2,20,000', view: 'view' },
+  { year: '2025', age: '30', age2: '26', total: '2,80,000', view: 'view' },
+];
+
+const ELEMENT_DATA2: IncomeTableI[] = [
+  { year: '2120', age: '25', age2: '21', total: '2,10,000', view: 'view' },
+  { year: '2121', age: '26', age2: '22', total: '2,10,400', view: 'view' },
+  { year: '2122', age: '27', age2: '23', total: '2,30,000', view: 'view' },
+  { year: '2123', age: '28', age2: '24', total: '2,10,000', view: 'view' },
+  { year: '2124', age: '29', age2: '25', total: '2,40,000', view: 'view' },
+  { year: '2125', age: '30', age2: '26', total: '2,80,000', view: 'view' },
+  { year: '2126', age: '31', age2: '27', total: '2,20,000', view: 'view' },
+];
+const ELEMENT_DATA3: IncomeTableI[] = [
+  { year: '2020', age: '15', age2: '21', total: '2,10,000', view: 'view' },
+  { year: '2021', age: '16', age2: '22', total: '2,10,400', view: 'view' },
+  { year: '2022', age: '17', age2: '23', total: '2,30,000', view: 'view' },
+  { year: '2023', age: '18', age2: '24', total: '2,10,000', view: 'view' },
+  { year: '2024', age: '19', age2: '25', total: '2,40,000', view: 'view' },
+  { year: '2025', age: '10', age2: '26', total: '2,80,000', view: 'view' },
+  { year: '2026', age: '11', age2: '27', total: '2,20,000', view: 'view' },
+];
+
+const ELEMENT_DATA4: IncomeTableI[] = [
+  { year: '2020', age: '25', age2: '1', total: '2,10,000', view: 'view' },
+  { year: '2021', age: '26', age2: '2', total: '2,10,400', view: 'view' },
+  { year: '2022', age: '27', age2: '3', total: '2,30,000', view: 'view' },
+  { year: '2023', age: '28', age2: '4', total: '2,10,000', view: 'view' },
+  { year: '2024', age: '29', age2: '5', total: '2,40,000', view: 'view' },
+  { year: '2025', age: '30', age2: '6', total: '2,80,000', view: 'view' },
+  { year: '2026', age: '31', age2: '7', total: '2,20,000', view: 'view' },
+];
+
+const ELEMENT_DATA5: IncomeTableI[] = [
+  { year: '2020', age: '25', age2: '21', total: '2000', view: 'view' },
+  { year: '2021', age: '26', age2: '22', total: '2400', view: 'view' },
+  { year: '2022', age: '27', age2: '23', total: '2,30,000', view: 'view' },
+  { year: '2023', age: '28', age2: '24', total: '2000', view: 'view' },
+  { year: '2024', age: '29', age2: '25', total: '2,40,000', view: 'view' },
+  { year: '2025', age: '30', age2: '26', total: '2000', view: 'view' },
+  { year: '2026', age: '31', age2: '27', total: '2,20,000', view: 'view' },
+];
+
+const ELEMENT_DATA6: IncomeTableI[] = [
+  { year: '2020', age: '25', age2: '21', total: '2,10', view: 'view' },
+  { year: '2021', age: '26', age2: '22', total: '2,100', view: 'view' },
+  { year: '2022', age: '27', age2: '23', total: '2,30,000', view: 'view' },
+  { year: '2023', age: '28', age2: '24', total: '2,10', view: 'view' },
+  { year: '2024', age: '29', age2: '25', total: '2,40,000', view: 'view' },
+  { year: '2025', age: '30', age2: '26', total: '200', view: 'view' },
+  { year: '2026', age: '31', age2: '27', total: '2,200', view: 'view' },
+];
+
+
+const ELEMENT_DATA7: IncomeTableI[] = [
+  { year: '2020', age: '25', age2: '21', total: '2,00', view: 'view' },
+  { year: '20', age: '2', age2: '22', total: '2,10', view: 'view' },
+  { year: '2022', age: '27', age2: '23', total: '2,30,000', view: 'view' },
+  { year: '2023', age: '28', age2: '24', total: '2,10,000', view: 'view' },
+  { year: '2024', age: '2', age2: '2', total: '2,40,000', view: 'view' },
+  { year: '25', age: '0', age2: '6', total: '2,80,000', view: 'view' },
+  { year: '26', age: '31', age2: '27', total: '2,20,0', view: 'view' },
 ];
