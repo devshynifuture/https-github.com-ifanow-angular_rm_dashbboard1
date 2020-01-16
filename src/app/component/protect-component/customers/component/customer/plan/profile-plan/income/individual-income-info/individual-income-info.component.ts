@@ -29,10 +29,15 @@ export class IndividualIncomeInfoComponent implements OnInit {
   finalBonusList: any[];
   bonusList: any;
   showDateError: string;
+  expectedBonusForm: any;
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService) { }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.expectedBonusForm = this.fb.group({
+      bonusList: new FormArray([])
+    })
+
   }
   incomeNetForm = this.fb.group({
     incomeOption: [, [Validators.required]],
@@ -86,7 +91,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.editApiData = data;
       this.singleIndividualIncome = data;
       this.singleIndividualIncome['userName'] = data.ownerName;
-      this.singleIndividualIncome["finalIncomeList"] = { incomeTypeId: data.incomeTypeId }
+      this.singleIndividualIncome["finalIncomeList"] = { incomeTypeList: data.incomeTypeId }
       this.addMoreFlag = false;
       this.incomeOption = String(data.incomeTypeId);
       this.incomeNetForm.controls.incomeOption.setValue((data.incomeTypeId) ? String(data.incomeTypeId) : '2');
@@ -99,8 +104,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeNetForm.controls.deamessAlowance.setValue((data.deamessAlowance == 0) ? '' : data.deamessAlowance);
       this.incomeNetForm.controls.hraRecieved.setValue((data.hraRecieved == 0) ? '' : data.hraRecieved);
       this.incomeNetForm.controls.totalRentPaid.setValue((data.totalRentPaid == 0) ? '' : data.totalRentPaid);
-      this.incomeNetForm.controls.incomeStartDate.setValue(new Date(data.incomeStartDate));
-      this.incomeNetForm.controls.incomeEndDate.setValue(new Date(data.incomeEndDate));
+      this.incomeNetForm.controls.incomeStartDate.setValue(new Date(data.incomeStartYear, data.incomeStartMonth));
+      this.incomeNetForm.controls.incomeEndDate.setValue(new Date(data.incomeEndYear, data.incomeEndMonth));
       this.incomeNetForm.controls.nextAppraisal.setValue(new Date(data.nextAppraisalOrNextRenewal));
       this.incomeNetForm.controls.description.setValue(data.description);
       data.monthlyContributions.forEach(element => {
@@ -153,21 +158,6 @@ export class IndividualIncomeInfoComponent implements OnInit {
     }
   }
   submitIncomeForm() {
-    if (this.getBonusList) {
-      this.finalBonusList = []
-      this.getBonusList.controls.forEach(element => {
-        let obj =
-        {
-          // "id":0,
-          // "bonusOrInflow":0,
-          "amount": element.get('amount').value,
-          "receivingMonth": new Date(element.get('receivingDate').value).getMonth(),
-          "receivingYear": new Date(element.get('receivingDate').value).getFullYear(),
-        }
-        this.finalBonusList.push(obj)
-      })
-
-    }
     if (this.singleIndividualIncome.finalIncomeList.incomeTypeId == 1) {
       if (this.incomeOption == '1') {
         if (this.incomeNetForm.get('basicIncome').invalid) {
@@ -245,7 +235,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       "hraRecieved": (this.incomeNetForm.get('hraRecieved').value) ? this.incomeNetForm.get('hraRecieved').value : 0,
       "totalRentPaid": (this.incomeNetForm.get('totalRentPaid').value) ? this.incomeNetForm.get('totalRentPaid').value : 0,
       "description": this.incomeNetForm.get('description').value,
-      "monthlyContributions": this.finalBonusList
+      "monthlyContributions": {}
     }
 
     console.log(obj)
@@ -257,6 +247,21 @@ export class IndividualIncomeInfoComponent implements OnInit {
       )
     }
     else {
+      if (this.getBonusList) {
+        this.finalBonusList = []
+        this.getBonusList.controls.forEach(element => {
+          let obj =
+          {
+            // "id":0,
+            // "bonusOrInflow":0,
+            "amount": element.get('amount').value,
+            "receivingMonth": new Date(element.get('receivingDate').value).getMonth(),
+            "receivingYear": new Date(element.get('receivingDate').value).getFullYear(),
+          }
+          this.finalBonusList.push(obj)
+        })
+      }
+      obj['monthlyContributions'] = this.finalBonusList;
       this.planService.addIncomeData(obj).subscribe(
         data => this.submitIncomeFormRes(data),
         error => this.eventService.showErrorMessage(error)
@@ -274,9 +279,6 @@ export class IndividualIncomeInfoComponent implements OnInit {
     }
   }
   //  expected bonus array logic
-  expectedBonusForm = this.fb.group({
-    bonusList: new FormArray([])
-  })
 
   get getExpectedBonusForm() { return this.expectedBonusForm.controls };
   get getBonusList() { return this.getExpectedBonusForm.bonusList as FormArray };
@@ -291,7 +293,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     console.log(this.getBonusList)
   }
   removeExpectedBonus(index) {
-    // this.expectedBonusForm.controls.bonusList.remove
+    this.expectedBonusForm.controls.bonusList.removeAt(index)
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
