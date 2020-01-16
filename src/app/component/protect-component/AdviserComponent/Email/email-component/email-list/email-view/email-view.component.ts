@@ -1,6 +1,6 @@
+import { EventService } from './../../../../../../../Data-service/event.service';
 // import { EmailUtilService } from './../../../../../../../services/email-util.service';
 import { ComposeEmailComponent } from './../../compose-email/compose-email.component';
-import { Router, ActivatedRoute } from '@angular/router';
 // import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 // import { UtilService } from '../../../../../../../services/util.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -10,6 +10,7 @@ import { EmailReplyComponent } from '../email-reply/email-reply.component';
 // import { EmailAddTaskComponent } from '../email-add-task/email-add-task.component';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { EmailUtilService } from 'src/app/services/email-util.service';
 
 @Component({
   selector: 'app-email-view',
@@ -21,15 +22,18 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   subject: string;
   from: string;
   body;
+  raw;
   emailSubscription: Subscription;
+  isLoading: boolean = true;
   messagesHeaders: string[];
 
   constructor(private emailService: EmailServiceService,
     private _bottomSheet: MatBottomSheet,
-    private route: Router,
-    private location: Location) { }
+    private location: Location,
+    private eventService: EventService) { }
 
   ngOnInit() {
+
     this.getEmailThread();
   }
 
@@ -37,13 +41,84 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     this.emailSubscription.unsubscribe();
   }
 
+  ifDecodedPartIsEmptyString() {
+    if (JSON.stringify(this.emailObj.parsedData.decodedPart) === `[""]`) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getGmailDetailMessageRaw(id) {
+
+    this.emailService.gmailMessageDetail(id)
+      .subscribe((response) => {
+
+        console.log("this is response of detailed api:::::::::::::::", response)
+
+        this.raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
+        this.isLoading = false;
+
+        console.log('response of detailed gmail threadL:::::::', response);
+        console.log("this is raw of detail api...::::::::::::", this.raw);
+
+      });
+  }
+
   getEmailThread() {
     this.emailSubscription = this.emailService.data.subscribe(response => {
       this.emailObj = response;
 
+
       console.log("this is email Object passed from list component ->>>  ", this.emailObj);
       if (this.emailObj) {
 
+        if (this.emailObj.parsedData.decodedPart.length === 0 || this.ifDecodedPartIsEmptyString()) {
+          this.emailObj.idsOfMessages.forEach((element, index) => {
+            const id = element;
+            this.getGmailDetailMessageRaw(id);
+
+            console.log('detailed api data merged ::::::::', this.emailObj);
+            //       console.log("this is result of async await", res);
+            //       part.body.data = res;
+          });
+          // thread.messages.forEach((message) => {
+          // const id = thread.id;
+          // if (message.payload.parts !== null) {
+          //   const newParts = message.payload.parts.map((part)=>{
+          //     if(part.body.data === null){
+          //       const res = this.getGmailDetailMessageRaw(id);
+          //       console.log("this is result of async await", res);
+          //       part.body.data = res;
+          //     }
+          //     return part
+          //   });
+          //   message.payload.parts = newParts;
+          // }
+
+          // if (message.payload.parts !== null){ 
+          //   const newParts = message.payload.parts.map((part) => {
+          //     if (part.body.data == null) {
+          //       // get message object;
+          //       console.log("tghi sus to debug:::::::::::::" ,part.body.data);
+          //       this.emailService.gmailMessageDetail(id)
+          //         .subscribe((response) => {
+          //           const raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
+          //           // console.log('response of detailed gmail threadL:::::::', response);
+          //           // console.log("this is raw of detail api...::::::::::::", raw);
+          //           if(raw !== null){
+          //             part.body.data = raw;
+          //             console.log("this is raw value of detailed gmail thread::::::::::" ,raw)
+          //             console.log("tghis is part boyd data of gmail thread :::::::::::;", part.body.data);
+          //           }
+          //         });
+          //     }
+          //     return part;
+          //   });
+          //   message.payload.parts = newParts;
+          // }
+          // });
+        }
         let { parsedData: { headers } } = this.emailObj;
 
         let { messageHeaders } = this.emailObj;

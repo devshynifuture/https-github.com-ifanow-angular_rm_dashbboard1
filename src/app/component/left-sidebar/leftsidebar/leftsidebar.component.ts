@@ -21,12 +21,14 @@ export class LeftsidebarComponent implements OnInit {
   arrow = false;
   userInfo: any;
   sideNavContainerClass;
-  filteredOptions: any;
+  filteredOptions: any = null;
   advisorId: any;
   clientList: any;
   myControl: FormControl;
   advisorName;
   loginType = 1;
+  showDefaultDropDownOnSearch: boolean;
+
   logoText: string = "Your Logo here"
   constructor(private authService: AuthService, private _eref: ElementRef,
     private eventService: EventService, private subinject: SubscriptionInject,
@@ -56,6 +58,12 @@ export class LeftsidebarComponent implements OnInit {
       map(value => typeof value == 'string' ? value : value.name),
       map(name => name ? this._filter(name) : this.clientList.slice())
     );
+
+    if(data){
+      this.showDefaultDropDownOnSearch = false;
+     } else {
+      this.showDefaultDropDownOnSearch = true;
+    }
   }
 
   selectClient(singleClientData) {

@@ -36,6 +36,7 @@ export class GoogleConnectComponent implements OnInit {
     this.redirectForm = this.fb.group({
       googleConnectEmail: ['', Validators.required]
     });
+    
     localStorage.removeItem('googleOAuthToken');
     localStorage.removeItem('successStoringToken');
     localStorage.removeItem('associatedGoogleEmailId');
@@ -51,14 +52,14 @@ export class GoogleConnectComponent implements OnInit {
     localStorage.removeItem('associatedGoogleEmailId');
     localStorage.setItem('associatedGoogleEmailId' ,this.redirectForm.get('googleConnectEmail').value)
     const redirectWindow = window.open(hitGmailUrl);
-
     setTimeout(() => {
       redirectWindow.close();
-
+      console.log("tis is something to work with");
       if(localStorage.getItem('successStoringToken') === 'true'){
         this.router.navigate(['../'], {relativeTo: this.activatedRoute});
       }
     } , 15000);
+    
   }
 
 }

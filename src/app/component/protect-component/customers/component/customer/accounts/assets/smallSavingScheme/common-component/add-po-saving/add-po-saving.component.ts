@@ -28,6 +28,7 @@ export class AddPoSavingComponent implements OnInit {
   poSavingOptionalForm: any;
   editApi: any;
   accBalance: number;
+  nomineesListFM: any;
 
   constructor(public utils: UtilService,private fb: FormBuilder, private cusService: CustomerService,
               private eventService: EventService, private subInjectService: SubscriptionInject) {
@@ -49,7 +50,10 @@ export class AddPoSavingComponent implements OnInit {
     this.ownerName = value.userName;
     this.familyMemberId = value.id;
   }
-
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+  }
   changeAccountBalance(data) {
     (this.poSavingForm.get('ownershipType').value == 1) ? (this.accBalance = 1500000,
         this.poSavingForm.get('ownershipType').setValidators([Validators.max(1500000)])
@@ -88,7 +92,6 @@ export class AddPoSavingComponent implements OnInit {
     this.ownerData = this.poSavingForm.controls;
     this.familyMemberId = this.poSavingForm.controls.familyMemberId.value,
     this.familyMemberId = this.familyMemberId[0];
-
   }
 
   moreFields() {
@@ -98,6 +101,9 @@ export class AddPoSavingComponent implements OnInit {
   addPOSaving() {
     if (this.poSavingForm.get('accBal').invalid) {
       this.poSavingForm.get('accBal').markAsTouched();
+      return;
+    } else if (this.poSavingForm.get('ownerName').invalid) {
+      this.poSavingForm.get('ownerName').markAsTouched();
       return;
     } else if (this.poSavingForm.get('balAsOn').invalid) {
       this.poSavingForm.get('balAsOn').markAsTouched();

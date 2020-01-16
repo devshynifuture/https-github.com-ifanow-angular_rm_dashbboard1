@@ -30,6 +30,7 @@ export class AddNscComponent implements OnInit {
   transactionData: any;
   commDate: any;
   clientId: any;
+  nomineesListFM: any;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -49,6 +50,10 @@ export class AddNscComponent implements OnInit {
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
 
+  }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -103,6 +108,9 @@ export class AddNscComponent implements OnInit {
     if (this.nscFormField.get('amountInvested').invalid) {
       this.nscFormField.get('amountInvested').markAsTouched();
       return
+    } else if (this.nscFormField.get('ownerName').invalid) {
+      this.nscFormField.get('ownerName').markAsTouched();
+      return;
     }
     else if (this.nscFormField.get('commDate').invalid) {
       this.nscFormField.get('commDate').markAsTouched();

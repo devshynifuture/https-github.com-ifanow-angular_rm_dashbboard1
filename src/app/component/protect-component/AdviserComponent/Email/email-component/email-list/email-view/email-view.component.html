@@ -13,6 +13,9 @@
 </mat-toolbar>
 <div class="chatBox">
     <h2>{{ subject }}</h2>
+
+    <p *ngIf="raw" [innerHTML]="raw">
+    </p>
     <div class="messengerDiv" *ngFor="let part of body; let i=index">
         <!-- Vaibhav new design  -->
 
@@ -68,3 +71,6 @@
         </div>
     </div>
 </div>
+<!-- <div *ngIf="!dataSource">
+    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+</div> -->

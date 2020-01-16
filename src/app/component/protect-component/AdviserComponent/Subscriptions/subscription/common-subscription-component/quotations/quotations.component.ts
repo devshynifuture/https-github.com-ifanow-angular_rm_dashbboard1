@@ -69,7 +69,9 @@ export class QuotationsComponent implements OnInit {
     // this.getQuotationsList();
     this.dataCount = 0;
   }
-
+  changeSelect(){
+    
+  }
   Open(value, state, data) {
     if (this.isLoading) {
       return

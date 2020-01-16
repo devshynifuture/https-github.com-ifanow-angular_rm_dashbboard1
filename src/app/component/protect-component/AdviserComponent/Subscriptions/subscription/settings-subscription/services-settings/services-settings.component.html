@@ -4,7 +4,7 @@
 <div class="wrapper-20  pr-0">
 
 
-    <div class="row" *ngIf="serviceSettingData != undefined">
+    <div class="row" *ngIf="serviceSettingData != undefined && serviceSettingData.length > 0">
         <div (click)="openFragment('','services')" class="col-md-4 pr-20 pb-20 pl-0 c-p">
             <mat-card class="example-card h-460 bg-grey lter">
 
@@ -134,7 +134,7 @@
         </div>
     </div>
 
-    <div class="row" *ngIf="serviceSettingData == undefined || !serviceSettingData">
+    <div class="row" *ngIf="serviceSettingData == undefined || serviceSettingData.length == 0">
         <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
             <img class="width200" src="assets/images/svg/add-services-img.svg">
             <p class="f-22 f-600 pt-28">Create Services </p>
