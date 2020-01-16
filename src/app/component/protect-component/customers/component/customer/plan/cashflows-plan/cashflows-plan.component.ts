@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
-import {SeriesBarOptions, SeriesSplineOptions} from 'highcharts';
+import { SeriesBarOptions, SeriesSplineOptions } from 'highcharts';
 
 @Component({
   selector: 'app-cashflows-plan',
@@ -11,6 +11,9 @@ export class CashflowsPlanComponent implements OnInit {
 
   displayedColumns: string[] = ['year', 'age', 'age2', 'salary', 'salary2', 'total', 'view'];
   dataSource = ELEMENT_DATA;
+
+  displayedColumns2: string[] = ['year', 'age', 'age2', 'salary', 'salary2', 'total', 'view'];
+  dataSource2 = ELEMENT_DATA2;
 
   constructor() {
   }
@@ -148,12 +151,36 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view'},
-  {year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view'},
-  {year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view'},
-  {year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view'},
-  {year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view'},
-  {year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view'},
-  {year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view'},
+  { year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view' },
+  { year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view' },
+  { year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view' },
+  { year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view' },
+  { year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view' },
+  { year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view' },
+  { year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view' },
+
+];
+
+
+
+export interface PeriodicElement2 {
+  year: string;
+  age: string;
+  age2: string;
+  salary: string;
+  salary2: string;
+  total: string;
+  view: string;
+
+}
+
+const ELEMENT_DATA2: PeriodicElement2[] = [
+  { year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view' },
+  { year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view' },
+  { year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view' },
+  { year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view' },
+  { year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view' },
+  { year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view' },
+  { year: '2020', age: '25', age2: '21', salary: '1,20,000', salary2: '90,000', total: '2,10,000', view: 'view' },
 
 ];
