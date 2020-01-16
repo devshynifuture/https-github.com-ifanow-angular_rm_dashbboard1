@@ -15,6 +15,9 @@ export class AddExpensesComponent implements OnInit {
   clientId: any;
   advisorId: any;
   familyMember: any;
+  familyMemberId: any;
+  ownerName: any;
+  nomineesListFM: any;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,private planService:PlanService) { }
 
@@ -256,7 +259,16 @@ export class AddExpensesComponent implements OnInit {
     ]
     this.getdataForm('')
   }
-
+  display(value) {
+    console.log('value selected', value)
+    this.ownerName = value.userName;
+    this.familyMemberId = value.id
+  }
+  lisNominee(value) {
+    console.log(value)
+    this.nomineesListFM = Object.assign([], value.familyMembersList);
+    console.log('list of family',this.nomineesListFM)
+  }
   preventDefault(e){
     e.preventDefault();
   }
@@ -265,14 +277,14 @@ export class AddExpensesComponent implements OnInit {
       data = {}
     }
     this.expenses = this.fb.group({
-      time: [(data == undefined) ? '' : data.time, [Validators.required]],
-      date: [(data == undefined) ? '' : new Date(data.date), [Validators.required]],
+      timeInMilliSec: [(data == undefined) ? '' : data.timeInMilliSec, [Validators.required]],
+      expenseDoneOn: [(data == undefined) ? '' : new Date(data.expenseDoneOn), [Validators.required]],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
       category: [(data == undefined) ? '' : (data.category) + "", [Validators.required]],
       familyMember: [(data == undefined) ? '' :  this.familyMember, [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      paymentMode: [[(data == undefined) ? '' : data.paymentMode], [Validators.required]]
+      paymentModeId: [[(data == undefined) ? '' : data.paymentModeId], [Validators.required]]
     });
   }
   getFormControl(): any {
@@ -291,12 +303,16 @@ export class AddExpensesComponent implements OnInit {
     console.log('family Memebers', data);
     this.familyMember = data.familyMembersList
   }
+  selectClient(event, selected){
+    console.log(selected)
+    this.familyMemberId =  selected.id
+  }
   saveExpenses() {
-    if (this.expenses.get('date').invalid) {
-      this.expenses.get('date').markAsTouched();
+    if (this.expenses.get('expenseDoneOn').invalid) {
+      this.expenses.get('expenseDoneOn').markAsTouched();
       return
-      }else if (this.expenses.get('time').invalid) {
-        this.expenses.get('time').markAsTouched();
+      }else if (this.expenses.get('timeInMilliSec').invalid) {
+        this.expenses.get('timeInMilliSec').markAsTouched();
         return
       }else if (this.expenses.get('amount').invalid) {
         this.expenses.get('amount').markAsTouched();
@@ -304,28 +320,23 @@ export class AddExpensesComponent implements OnInit {
       }else if (this.expenses.get('category').invalid) {
         this.expenses.get('category').markAsTouched();
         return
-      }else if (this.expenses.get('paymentMode').invalid) {
-        this.expenses.get('paymentMode').markAsTouched();
+      }else if (this.expenses.get('paymentModeId').invalid) {
+        this.expenses.get('paymentModeId').markAsTouched();
         return
       }else if (this.expenses.get('familyMember').invalid) {
         this.expenses.get('familyMember').markAsTouched();
         return
-      }else if (this.expenses.get('date').invalid) {
-        this.expenses.get('date').markAsTouched();
-        return
-      }else if (this.expenses.get('date').invalid) {
-        this.expenses.get('date').markAsTouched();
-        return
-       } else {
+      } else {
         let obj = {
           advisorId: this.advisorId,
           clientId: this.clientId,
-          // familyMemberId: this.familyMemberId,
-          // ownerName: (this.ownerName == undefined) ? this.expenses.controls.ownerName.value : this.ownerName,
-          commencementDate: this.expenses.controls.date.value,
-          pensionAmount: this.expenses.controls.time.value,
+          familyMemberId: this.familyMemberId,
+          expenseDoneOn: this.expenses.controls.expenseDoneOn.value,
+          amount: this.expenses.controls.amount.value,
           pensionPayoutFrequencyId: this.expenses.controls.amount.value,
-          linkedBankAccount: this.expenses.controls.category.value,
+          timeInMilliSec: this.expenses.controls.timeInMilliSec.value,
+          paymentModeId:this.expenses.controls.paymentModeId.value,
+          expenseCategoryId: this.expenses.controls.category.value,
           description: this.expenses.controls.description.value,
           id: this.expenses.controls.id.value
         }

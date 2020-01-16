@@ -28,6 +28,7 @@ export class ExpensesComponent implements OnInit {
     this.viewMode="tab1"
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId()
+    this.getTransaction()
   }
 
   getTransaction(){
@@ -35,8 +36,8 @@ export class ExpensesComponent implements OnInit {
       advisorId: this.advisorId,
       clientId : this.clientId,
       allOrSingle: 1,
-      endDate : '2020-01-01',
-      startDate:'2020-01-10',
+      endDate : '2020-01-10',
+      startDate:'2020-01-01',
       limit:10,
       offset:1,
       familyMemberId: 0,
@@ -47,6 +48,7 @@ export class ExpensesComponent implements OnInit {
   }
   getTransactionExpenseRes(data){
     console.log(data)
+    this.dataSource = data
   }
     openExpenses(value) {
       const fragmentData = {
