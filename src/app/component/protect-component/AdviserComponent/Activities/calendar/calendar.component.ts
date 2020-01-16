@@ -201,11 +201,63 @@ export class calendarComponent implements OnInit {
     return hh + ":" + mm;
   }
 
+  addEvent(day,month,year){
+    let event:any;
+    day.length == 1? "0"+day : day;
+    month.length == 1? "0"+month : month;
+    let eventDate = month + "/" + day + "/" + year;
+    console.log(eventDate, "eventDate 123");
+    
+      event = {
+          "eventId": "",
+          "summary": "",
+          "location": "",
+          "title": "",
+          "description":"",
+          "start": {
+            "dateTime": new Date(eventDate),
+            "timeZone": null
+          },
+          "end": {
+            "dateTime": new Date(eventDate),
+            "timeZone": null
+          },
+          "recurrence": "",
+          "attendee": "",
+          "attendeesList":""
+        }
+    
+    const dialogRef = this.dialog.open(EventDialog, {
+      width: '50%',
+      data: event
+    });
+  }
+
   openDialog(eventData): void {
     let event:any;
     if(eventData != null){
       this.isEditEvent = true;
       event = eventData;
+    }
+    else{
+      event = {
+          "eventId": "",
+          "summary": "",
+          "location": "",
+          "title": "",
+          "description":"",
+          "start": {
+            "dateTime": null,
+            "timeZone": null
+          },
+          "end": {
+            "dateTime": null,
+            "timeZone": null
+          },
+          "recurrence": "",
+          "attendee": "",
+          "attendeesList":""
+        }
     }
     const dialogRef = this.dialog.open(EventDialog, {
       width: '50%',
@@ -214,12 +266,12 @@ export class calendarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result, "result 123");
-      let eventData = {
-        "calendarId": "gaurav@futurewise.co.in",
-        "userId": this.userInfo.advisorId,
-        "eventId": result.eventId
-      }
-
+      // let eventData = {
+      //   "calendarId": "gaurav@futurewise.co.in",
+      //   "userId": this.userInfo.advisorId,
+      //   "eventId": result.eventId
+      // }
+    if(result != undefined){
       this.dialogData = 
       {
         "calendarId": "gaurav@futurewise.co.in",
@@ -257,6 +309,7 @@ export class calendarComponent implements OnInit {
       else{
 
       }
+    }
     });
   }
 
@@ -312,6 +365,7 @@ export class EventDialog implements OnInit{
   startDate = new Date();
   startTime="";
   endTime="";
+  eventDescription:any;
   eventForm: FormGroup;
   showTime:boolean = false;
   eventData:any;
@@ -329,9 +383,9 @@ export class EventDialog implements OnInit{
     this.model = content;
   }
 
-  saveData(data) {
+  descriptionData(data) {
     console.log(data);
-
+    this.eventDescription = data;
   }
 
   ngOnInit(){
@@ -345,7 +399,7 @@ export class EventDialog implements OnInit{
       summary: [this.eventData.summary,[Validators.required]],
       location: [this.eventData.location],
       title: [this.eventData.summary,[Validators.required]],
-      description: [this.eventData.description],
+      description: [this.eventDescription],
       startDateTime: ["",[Validators.required]],
       endDateTime: ["",[Validators.required]],
       recurrence: [this.eventData.recurrence],

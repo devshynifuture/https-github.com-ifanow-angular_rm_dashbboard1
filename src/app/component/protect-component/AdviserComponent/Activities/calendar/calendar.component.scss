@@ -99,6 +99,7 @@ ul.blue {
   height: auto;
   display: block;
   width: 100%;
+  
   li {
     font-size: 10px !important ;
     cursor: pointer;
@@ -106,13 +107,15 @@ ul.blue {
     text-overflow: ellipsis;
     overflow: hidden;
     text-align: left;
+    position: relative;
+    z-index: 1;
   }
 
   li:hover{
     overflow: visible;
     background-color: #fff;
     position: absolute;
-    z-index: 10;
+    z-index: 11;
     white-space: initial;
     box-shadow: 1px 1px 1px #ccc;
   }
