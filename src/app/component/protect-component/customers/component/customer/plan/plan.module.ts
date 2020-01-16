@@ -18,6 +18,7 @@ import { AddProfilePlanComponent } from './profile-plan/add-profile-plan/add-pro
 import { HistoryRiskProfileComponent } from './profile-plan/history-risk-profile/history-risk-profile.component';
 // import {BrowserModule} from '@angular/platform-browser';
 import { PlanRoutingModule } from "./plan-routing.module";
+
 // import { IncomeComponent } from './profile-plan/income/income.component';
 // import { ExpensesComponent } from '../accounts/expenses/expenses.component';
 // import { RiskProfileComponent } from './profile-plan/riskProfile/risk-profile/risk-profile.component';
