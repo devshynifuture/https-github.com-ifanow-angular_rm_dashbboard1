@@ -50,7 +50,7 @@ import 'zone.js/dist/zone';
 import {SubscriptionUpperEntry} from './component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
 import {FormTestComponent} from "./test/form-test/form-test.component";
 import {CustomDirectiveModule} from "./common/directives/common-directive.module";
-import { calendarComponent, EventDialog } from './component/protect-component/AdviserComponent/Activities/calendar/calendar.component';
+import { CalendarModule } from './component/protect-component/AdviserComponent/Activities/calendar/calendar.module';
 // import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -89,13 +89,12 @@ import { calendarComponent, EventDialog } from './component/protect-component/Ad
     // CustomDialogContainerComponent,
     // AddLiabilitiesComponent,
     // AddInsuranceComponent
-    calendarComponent,
-    EventDialog,
+    
     FormTestComponent
 
   ],
   imports: [
-
+    CalendarModule,
     SubscriptionEntry,
     SubscriptionUpperEntry,
     BrowserModule,
@@ -122,7 +121,7 @@ import { calendarComponent, EventDialog } from './component/protect-component/Ad
   ],
   providers: [AuthService, HttpService, DatePipe, DynamicComponentService],
   bootstrap: [AppComponent],
-  entryComponents: [SubscriptionEntry.getComponentList(), SubscriptionUpperEntry.getComponentList(), EventDialog]
+  entryComponents: [SubscriptionEntry.getComponentList(), SubscriptionUpperEntry.getComponentList()]
   // entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), PlanEntryModule.getComponentList()]
 })
 export class AppModule {
